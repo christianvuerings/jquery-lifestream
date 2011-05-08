@@ -62,7 +62,7 @@
           if($.fn.lifestream.data[element].items[i].html){
             div.append('<li class="'+ settings.classname + "-"
               + $.fn.lifestream.data[element].items[i].service + '">'
-              + $.fn.lifestream.data[element].items[i].html + "</li>");  
+              + $.fn.lifestream.data[element].items[i].html + "</li>");
           }
         }
 
