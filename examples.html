@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>jquery.lifestream.js examples</title>
+
+  <style type="text/css">
+    body {
+      margin: 1.0em;
+      background-color: #fff;
+      font-family: Helvetica, Arial, FreeSans, sans-serif;
+      color: #000000;
+    }
+    h1 { font-size: 3.8em; color: #3908bc; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #3908bc; clear: both;}
+    h3 { text-align: center; color: #3908bc; }
+    a { color: #3908bc; }
+    ul li { list-style-type: none;}
+    
+    #lifestream_css_v1 {
+      width: 400px;
+    }
+    #lifestream_css_v1 li {
+      padding-left: 20px;
+      background-repeat: no-repeat;
+    }
+    #lifestream_css_v1 .lifestream-twitter {
+      background-image: url("images/twitter_black.png");
+    }
+    #lifestream_css_v1 .lifestream-github {
+      background-image: url("images/github_text.png");
+    }
+
+    #lifestream_css_v2 {
+      background: #333;
+      border-radius: 7px;
+      color: #d4d4d4;
+      width: 450px;
+      font-size:11px;
+    }
+    #lifestream_css_v2 a {
+      color: #f6dd97;
+      text-decoration: none;
+    }
+    #lifestream_css_v2 a:hover {
+      color: #fff5d8;
+      text-decoration: underline;
+    }
+    #lifestream_css_v2 ul {
+      padding: 10px;
+    }
+    #lifestream_css_v2 li {
+      padding: 3px 3px 3px 25px;
+      background-repeat: no-repeat;
+    }
+    #lifestream_css_v2 li:hover {
+      color: #e9e9e9;
+    }
+    #lifestream_css_v2 .lifestream-twitter {
+      background-image: url("images/twitter_text.gif");
+    }
+    #lifestream_css_v2 .lifestream-github {
+      background-image: url("images/github_text_color.png");
+    }
+  </style>
+
+</head>
+<body>
+  <a href="http://github.com/christianv/jquery-lifestream">
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" />
+  </a>
+  <h1>jQuery Lifestream Examples</h1>
+  <p>Find more information about this plug-in on the <a href="http://github.com/christianv/jquery-lifestream">project page</a>.</p>
+
+  <h2>Standard Lifestream</h2>
+  <div id="lifestream_standard">&nbsp;</div>
+
+  <h2>Lifestream v1</h2>
+  <div id="lifestream_css_v1">&nbsp;</div>
+  
+  <h2>Lifestream v2</h2>
+  <div id="lifestream_css_v2">&nbsp;</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
+  <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.min.js"><\/script>');</script>
+
+  <script src="jquery.lifestream.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    $("#lifestream_standard").lifestream({
+      "list":[
+        {
+          "service" : "twitter",
+          "user": "denbuzze"
+        },
+        {
+          "service" : "github",
+          "user": "christianv"
+        }
+      ]
+    });
+    $("#lifestream_css_v1").lifestream({
+      "list":[
+        {
+          "service" : "twitter",
+          "user": "denbuzze"
+        },
+        {
+          "service" : "github",
+          "user": "christianv"
+        }
+      ]
+    });
+    $("#lifestream_css_v2").lifestream({
+      "limit": 15,
+      "list":[
+        {
+          "service" : "twitter",
+          "user": "denbuzze"
+        },
+        {
+          "service" : "github",
+          "user": "christianv"
+        }
+      ]
+    });
+  </script>
+
+  <script>
+    var _gaq=[["_setAccount","UA-190225-11"],["_trackPageview"],["_trackPageLoadTime"]];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+    s.parentNode.insertBefore(g,s)}(document,"script"));
+  </script>
+
+</body>
+</html>
