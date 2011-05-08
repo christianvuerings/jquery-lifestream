@@ -59,11 +59,13 @@
           : settings.limit
 
         for(var i = 0, j=length; i<j; i++){
-          div.append('<li class="'+ settings.classname + "-"
-            + $.fn.lifestream.data[element].items[i].service + '">'
-            + $.fn.lifestream.data[element].items[i].html + "</li>");
+          if($.fn.lifestream.data[element].items[i].html){
+            div.append('<li class="'+ settings.classname + "-"
+              + $.fn.lifestream.data[element].items[i].service + '">'
+              + $.fn.lifestream.data[element].items[i].html + "</li>");  
+          }
         }
-        
+
         element.html(div);
 
         $.fn.lifestream.data[element] = {
@@ -144,7 +146,7 @@ console.log(outputElement);
     };
 
     $.ajax({
-      "url": createYqlUrl('select status.id, status.created_at, status.text' 
+      "url": createYqlUrl('select status.id, status.created_at, status.text'
         + ' from twitter.user.timeline where screen_name="'+ obj.user +'"')
     }).success(function(data){
       $.merge($.fn.lifestream.data[outputElement].items, parseTwitter(data));
@@ -169,21 +171,29 @@ console.log(outputElement);
           +'">' + status.payload.repo + "</a>";
       }
       else if (status.type === "PullRequestEvent"){
-        output += '<a href="' + status.url + '">' + status.payload.action 
+        output += '<a href="' + status.url + '">' + status.payload.action
           + '</a> pull request on '
           + '<a href="http://github.com/'+ status.payload.repo
           +'">' + status.payload.repo + "</a>";
       }
       else if (status.type === "CreateEvent"){
-        output += 'created ' + status.payload.object 
-          +' <a href="' + status.url + '">' 
-          + status.payload.object_name 
+        var name = (status.payload.object_name === "null")
+          ? status.payload.name
+          : status.payload.object_name
+        output += 'created ' + status.payload.object
+          +' <a href="' + status.url + '">'
+          + name
           + '</a>';
       }
-      else {
-        $.error(status.type + " is not supported yet by this plug-in");
+      else if (status.type === "DeleteEvent"){
+        output += 'deleted ' + status.payload.ref_type
+          +' <a href="http://github.com/' + status.repository.owner + "/"
+          + status.repository.name + '">'
+          + status.payload.ref
+          + '</a>';
       }
       return output;
+
     }
 
     var parseGithub = function(input){
@@ -205,13 +215,14 @@ console.log(outputElement);
     };
 
     $.ajax({
-      "url": createYqlUrl('select json.respository.url,json.payload,json.type'
+      "url": createYqlUrl('select json.repository.owner,json.repository.name'
+        + ',json.payload,json.type'
         + ',json.url, json.created_at from json where url="http://github.com/'
         + obj.user + '.json"')
     }).success(function(github_data){
       $.merge($.fn.lifestream.data[outputElement].items, parseGithub(github_data));
     }).complete(callback);
-    
+
 
   };
 
