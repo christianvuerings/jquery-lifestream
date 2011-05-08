@@ -32,16 +32,16 @@
     }, config);
 
     $.fn.lifestream.data = {};
-    $.fn.lifestream.data[outputElement] = {
+    $.fn.lifestream.data = {
       "count": settings.list.length,
       "items": []
     };
 
-    var finished = function(element){
-      $.fn.lifestream.data[element].count--;
-      if($.fn.lifestream.data[element].count === 0){
+    var finished = function(){
+      $.fn.lifestream.data.count--;
+      if($.fn.lifestream.data.count === 0){
 
-        $.fn.lifestream.data[element].items.sort(function(a,b){
+        $.fn.lifestream.data.items.sort(function(a,b){
             if(a.date > b.date){
                 return -1;
             } else if(a.date === b.date){
@@ -50,25 +50,25 @@
                 return 1;
             }
         });
-        $.fn.lifestream.data[element].items;
+        $.fn.lifestream.data.items;
 
         var div = $('<ul class="' + settings.classname + '"/>');
 
-        var length = ($.fn.lifestream.data[element].items.length < settings.limit)
-          ? $.fn.lifestream.data[element].items.length
+        var length = ($.fn.lifestream.data.items.length < settings.limit)
+          ? $.fn.lifestream.data.items.length
           : settings.limit
 
         for(var i = 0, j=length; i<j; i++){
-          if($.fn.lifestream.data[element].items[i].html){
+          if($.fn.lifestream.data.items[i].html){
             div.append('<li class="'+ settings.classname + "-"
-              + $.fn.lifestream.data[element].items[i].service + '">'
-              + $.fn.lifestream.data[element].items[i].html + "</li>");
+              + $.fn.lifestream.data.items[i].service + '">'
+              + $.fn.lifestream.data.items[i].html + "</li>");
           }
         }
 
-        element.html(div);
+        outputElement.html(div);
 
-        $.fn.lifestream.data[element] = {
+        $.fn.lifestream.data = {
           "count": settings.list.length,
           "items": []
         };
@@ -78,17 +78,17 @@
     var load = function(){
 
       // Run over all the items in the list
-      for(var i=0, j=$.fn.lifestream.data[outputElement].count; i<j; i++) {
+      for(var i=0, j=$.fn.lifestream.data.count; i<j; i++) {
         var item = settings.list[i];
         if($.fn.lifestream.feeds[item.service] &&
             $.isFunction($.fn.lifestream.feeds[item.service])){
 
-          $.fn.lifestream.feeds[item.service](item, outputElement, function(){
+          $.fn.lifestream.feeds[item.service](item, function(){
             finished(outputElement);
           });
         }
         else {
-          $.fn.lifestream.feeds.default(item, outputElement, finished);
+          $.fn.lifestream.feeds.default(item, finished);
         }
       }
     }
@@ -108,8 +108,8 @@
 
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
-  $.fn.lifestream.feeds.twitter = function(obj, outputElement, callback){
-console.log(outputElement);
+  $.fn.lifestream.feeds.twitter = function(obj, callback){
+
     /**
      * Add clickable links to a tweet.
      */
@@ -149,23 +149,34 @@ console.log(outputElement);
       "url": createYqlUrl('select status.id, status.created_at, status.text'
         + ' from twitter.user.timeline where screen_name="'+ obj.user +'"')
     }).success(function(data){
-      $.merge($.fn.lifestream.data[outputElement].items, parseTwitter(data));
+      if(typeof data === "string"){
+        data = $.parseJSON(data);
+      }
+      $.merge($.fn.lifestream.data.items, parseTwitter(data));
     }).complete(callback);
 
   };
 
-  $.fn.lifestream.feeds.github = function(obj, outputElement, callback){
+  $.fn.lifestream.feeds.github = function(obj, callback){
 
     var parseGithubStatus = function(status){
       var output="";
       if(status.type === "PushEvent"){
-        output += '<a href="' + status.url + '">pushed</a> to '
+        var title = "";
+
+        if(status.payload && status.payload.shas && status.payload.shas.json
+          && status.payload.shas.json[2]){
+            title = status.payload.shas.json[2] + " by "
+                  + status.payload.shas.json[3]
+        }
+        output += '<a href="' + status.url + '" title="'+ title
+          +'">pushed</a> to '
           + '<a href="http://github.com/'+status.payload.repo
           +'">' + status.payload.repo + "</a>";
       }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {
-        //console.log(status);
+
         output += '<a href="' + status.url + '">commented</a> on '
           + '<a href="http://github.com/'+ status.payload.repo
           +'">' + status.payload.repo + "</a>";
@@ -218,11 +229,70 @@ console.log(outputElement);
       "url": createYqlUrl('select json.repository.owner,json.repository.name'
         + ',json.payload,json.type'
         + ',json.url, json.created_at from json where url="http://github.com/'
-        + obj.user + '.json"')
-    }).success(function(github_data){
-      $.merge($.fn.lifestream.data[outputElement].items, parseGithub(github_data));
-    }).complete(callback);
+        + obj.user + '.json"'),
+      "success" : function(github_data){
+        if(typeof github_data === "string"){
+          github_data = $.parseJSON(github_data);
+        }
+        $.merge($.fn.lifestream.data.items, parseGithub(github_data));
+      },
+      "complete": callback
+    });
 
+  };
+
+  $.fn.lifestream.feeds.stackoverflow = function(obj, callback){
+
+    var parseStackoverflowItem = function(item){
+      var output="", text="", title="", link="";
+      var stackoverflow_link = "http://stackoverflow.com/users/" + obj.user;
+      var question_link = "http://stackoverflow.com/questions/";
+
+      if(item.timeline_type === "badge"){
+        text = item.timeline_type + " " + item.action + ": " + item.description;
+        title = item.detail;
+        link = stackoverflow_link + "?tab=reputation";
+      }
+      else if (item.timeline_type === "revision"
+            || item.timeline_type === "accepted"
+            || item.timeline_type === "askoranswered"){
+        text = item.post_type + " " + item.action;
+        title = item.detail || item.description || "";
+        link = question_link + item.post_id;
+      }
+      output += '<a href="' + link + '" title="' + title + '">'
+             + text + "</a>";
+      return output;
+    };
+
+    var convertDate = function(date){
+      return new Date(date * 1000);
+    }
+
+    $.fn.lifestream.feeds.stackoverflow.parseStackOverflow = function(data){
+      var output = [];
+
+      if(data && data.total && data.total > 0 && data.user_timelines){
+        for(var i=0, j=data.user_timelines.length; i<j; i++){
+          var item = data.user_timelines[i];
+          output.push({
+            "date": convertDate(item.creation_date),
+            "service": obj.service,
+            "html": parseStackoverflowItem(item)
+          });
+        }
+      };
+
+      $.merge($.fn.lifestream.data.items, output);
+    }
+
+    $.ajax({
+      "url": "http://api.stackoverflow.com/1.1/users/" + obj.user
+             + "/timeline?"
+             + "jsonp=$.fn.lifestream.feeds.stackoverflow.parseStackOverflow",
+      "dataType": "jsonp",
+      "crossDomain": true
+    }).complete(callback);
 
   };
 
