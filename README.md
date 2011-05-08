@@ -9,4 +9,5 @@ Show a stream of your online activity.
 
 ## Ideas
 Stuff that isn"t implemented yet, but would be nice to have:
+
 * Add support for [Twitter Web Intents](http://dev.twitter.com/pages/intents)
