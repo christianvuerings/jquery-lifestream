@@ -97,13 +97,13 @@
         });
   }
 
+  $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
+
   $.fn.lifestream.feeds.defaultf = function(obj, callback){
 
     //
 
   };
-
-  $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
   $.fn.lifestream.feeds.github = function(obj, callback){
 
