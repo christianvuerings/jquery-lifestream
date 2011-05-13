@@ -97,13 +97,13 @@
         });
   }
 
-  $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
-
   $.fn.lifestream.feeds.defaultf = function(obj, callback){
 
     //
 
   };
+
+  $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
   $.fn.lifestream.feeds.github = function(obj, callback){
 
@@ -285,5 +285,52 @@
   };
 
   $.fn.lifestream.feeds.twitter = function(obj, callback){
+
+    /**
+     * Add clickable links to a tweet.
+     */
+    var addTwitterLinks = function(tweet){
+      return $.fn.lifestream.linkify(tweet)
+        .replace(/#([A-Za-z0-9\/\.]*)/g, function(m) {
+            // Link # tags
+            return '<a target="_new" href="http://twitter.com/search?q='
+              + m.replace('#','%23') + '">' + m + "</a>";
+      }).replace(/@[\w]+/g, function(m) {
+            // Link @username
+            return '<a href="http://www.twitter.com/'
+              + m.replace('@','') + '">' + m + "</a>";
+      });
+    };
+
+    /**
+     * Parse the input from twitter
+     */
+    var parseTwitter = function(input){
+      var output = [];
+
+      if(input.query && input.query.count && input.query.count >0){
+        for(var i=0, j=input.query.count; i<j; i++){
+          var status = input.query.results.statuses[i].status;
+          output.push({
+            "date": new Date(status.created_at),
+            "service": obj.service,
+            "html": addTwitterLinks(status.text)
+          });
+        }
+      }
+      return output;
+    };
+
+    $.ajax({
+      "url": createYqlUrl('select status.id, status.created_at, status.text'
+        + ' from twitter.user.timeline where screen_name="'+ obj.user +'"')
+    }).success(function(data){
+      if(typeof data === "string"){
+        data = $.parseJSON(data);
+      }
+      callback(parseTwitter(data));
+    });
+
+  };
 
 })( jQuery );
