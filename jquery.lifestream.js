@@ -99,52 +99,9 @@
 
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
-  $.fn.lifestream.feeds.twitter = function(obj, callback){
+  $.fn.lifestream.feeds.defaultf = function(obj, callback){
 
-    /**
-     * Add clickable links to a tweet.
-     */
-    var addTwitterLinks = function(tweet){
-      return $.fn.lifestream.linkify(tweet)
-        .replace(/#([A-Za-z0-9\/\.]*)/g, function(m) {
-            // Link # tags
-            return '<a target="_new" href="http://twitter.com/search?q='
-              + m.replace('#','%23') + '">' + m + "</a>";
-      }).replace(/@[\w]+/g, function(m) {
-            // Link @username
-            return '<a href="http://www.twitter.com/'
-              + m.replace('@','') + '">' + m + "</a>";
-      });
-    };
-
-    /**
-     * Parse the input from twitter
-     */
-    var parseTwitter = function(input){
-      var output = [];
-
-      if(input.query && input.query.count && input.query.count >0){
-        for(var i=0, j=input.query.count; i<j; i++){
-          var status = input.query.results.statuses[i].status;
-          output.push({
-            "date": new Date(status.created_at),
-            "service": obj.service,
-            "html": addTwitterLinks(status.text)
-          });
-        }
-      }
-      return output;
-    };
-
-    $.ajax({
-      "url": createYqlUrl('select status.id, status.created_at, status.text'
-        + ' from twitter.user.timeline where screen_name="'+ obj.user +'"')
-    }).success(function(data){
-      if(typeof data === "string"){
-        data = $.parseJSON(data);
-      }
-      callback(parseTwitter(data));
-    });
+    //
 
   };
 
@@ -231,6 +188,47 @@
 
   };
 
+  $.fn.lifestream.feeds.googlereader = function(obj, callback){
+
+    var parseReaderEntry = function(entry){
+      return 'starred post <a href="' + entry.link.href + '">'
+        + entry.title.content
+        + "</a>"
+    }
+
+    /**
+     * Parse the input from google reader
+     */
+    var parseReader = function(input){
+      var output = [];
+
+      if(input.query && input.query.count && input.query.count >0){
+        var list = input.query.results.feed.entry;
+        for(var i=0, j=list.length; i<j; i++){
+          var entry = list[i];
+          output.push({
+            "date": new Date(parseInt(entry["crawl-timestamp-msec"], 10)),
+            "service": obj.service,
+            "html": parseReaderEntry(entry)
+          });
+        }
+      }
+      return output;
+    };
+
+    $.ajax({
+      "url": createYqlUrl('select * from xml where url="'
+      + 'www.google.com/reader/public/atom/user%2F'
+      + obj.user + '%2Fstate%2Fcom.google%2Fstarred"')
+    }).success(function(data){
+      if(typeof data === "string"){
+        data = $.parseJSON(data);
+      }
+      callback(parseReader(data));
+    });
+
+  };
+
   $.fn.lifestream.feeds.stackoverflow = function(obj, callback){
 
     var parseStackoverflowItem = function(item){
@@ -286,51 +284,6 @@
 
   };
 
-  $.fn.lifestream.feeds.googlereader = function(obj, callback){
-
-    var parseReaderEntry = function(entry){
-      return 'starred post <a href="' + entry.link.href + '">'
-        + entry.title.content
-        + "</a>"
-    }
-
-    /**
-     * Parse the input from google reader
-     */
-    var parseReader = function(input){
-      var output = [];
-
-      if(input.query && input.query.count && input.query.count >0){
-        var list = input.query.results.feed.entry;
-        for(var i=0, j=list.length; i<j; i++){
-          var entry = list[i];
-          output.push({
-            "date": new Date(parseInt(entry["crawl-timestamp-msec"], 10)),
-            "service": obj.service,
-            "html": parseReaderEntry(entry)
-          });
-        }
-      }
-      return output;
-    };
-
-    $.ajax({
-      "url": createYqlUrl('select * from xml where url="'
-      + 'www.google.com/reader/public/atom/user%2F'
-      + obj.user + '%2Fstate%2Fcom.google%2Fstarred"')
-    }).success(function(data){
-      if(typeof data === "string"){
-        data = $.parseJSON(data);
-      }
-      callback(parseReader(data));
-    });
-
-  };
-
-  $.fn.lifestream.feeds.defaultf = function(obj, callback){
-
-    //alert("default");
-
-  };
+  $.fn.lifestream.feeds.twitter = function(obj, callback){
 
 })( jQuery );
