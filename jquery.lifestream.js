@@ -337,8 +337,7 @@
   $.fn.lifestream.feeds.youtube = function(obj, callback){
 
     var parseYoutubeItem = function(item){
-      return item.author
-        + ' favorited <a href="' + item.video.player["default"] + '"'
+      return ' favorited <a href="' + item.video.player["default"] + '"'
         + ' title="' + item.video.description + '">'
         + item.video.title + "</a>"
     }
