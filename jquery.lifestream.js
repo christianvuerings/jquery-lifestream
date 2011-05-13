@@ -1,5 +1,6 @@
 /**
- * jQuery Lifestream Plug-in v0.1
+ * jQuery Lifestream Plug-in
+ * @version 0.0.2
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -29,55 +30,48 @@
     var settings = jQuery.extend({
       "classname": "lifestream",
       "limit": 10
-    }, config);
-
-    $.fn.lifestream.data = {};
-    $.fn.lifestream.data = {
+    }, config),
+    data = {
       "count": settings.list.length,
       "items": []
     };
 
-    var finished = function(){
-      $.fn.lifestream.data.count--;
-      if($.fn.lifestream.data.count === 0){
+    var finished = function(inputdata){
 
-        $.fn.lifestream.data.items.sort(function(a,b){
-            if(a.date > b.date){
-                return -1;
-            } else if(a.date === b.date){
-                return 0;
-            } else {
-                return 1;
-            }
-        });
+      $.merge(data.items, inputdata);
 
-        var div = $('<ul class="' + settings.classname + '"/>');
-
-        var length = ($.fn.lifestream.data.items.length < settings.limit)
-          ? $.fn.lifestream.data.items.length
-          : settings.limit
-
-        for(var i = 0, j=length; i<j; i++){
-          if($.fn.lifestream.data.items[i].html){
-            div.append('<li class="'+ settings.classname + "-"
-              + $.fn.lifestream.data.items[i].service + '">'
-              + $.fn.lifestream.data.items[i].html + "</li>");
+      data.items.sort(function(a,b){
+          if(a.date > b.date){
+              return -1;
+          } else if(a.date === b.date){
+              return 0;
+          } else {
+              return 1;
           }
+      });
+
+      var div = $('<ul class="' + settings.classname + '"/>');
+
+      var length = (data.items.length < settings.limit)
+        ? data.items.length
+        : settings.limit
+
+      for(var i = 0, j=length; i<j; i++){
+        if(data.items[i].html){
+          div.append('<li class="'+ settings.classname + "-"
+            + data.items[i].service + '">'
+            + data.items[i].html + "</li>");
         }
-
-        outputElement.html(div);
-
-        $.fn.lifestream.data = {
-          "count": settings.list.length,
-          "items": []
-        };
       }
+
+      outputElement.html(div);
+
     }
 
     var load = function(){
 
       // Run over all the items in the list
-      for(var i=0, j=$.fn.lifestream.data.count; i<j; i++) {
+      for(var i=0, j=data.count; i<j; i++) {
         var item = settings.list[i];
         if($.fn.lifestream.feeds[item.service] &&
             $.isFunction($.fn.lifestream.feeds[item.service])){
@@ -149,8 +143,8 @@
       if(typeof data === "string"){
         data = $.parseJSON(data);
       }
-      $.merge($.fn.lifestream.data.items, parseTwitter(data));
-    }).complete(callback);
+      callback(parseTwitter(data));
+    });
 
   };
 
@@ -227,13 +221,12 @@
         + ',json.payload,json.type'
         + ',json.url, json.created_at from json where url="http://github.com/'
         + obj.user + '.json"'),
-      "success" : function(github_data){
-        if(typeof github_data === "string"){
-          github_data = $.parseJSON(github_data);
+      "success" : function(data){
+        if(typeof data === "string"){
+          data = $.parseJSON(data);
         }
-        $.merge($.fn.lifestream.data.items, parseGithub(github_data));
-      },
-      "complete": callback
+        callback(parseGithub(data));
+      }
     });
 
   };
@@ -280,7 +273,7 @@
         }
       };
 
-      $.merge($.fn.lifestream.data.items, output);
+      callback(output);
     }
 
     $.ajax({
@@ -329,8 +322,8 @@
       if(typeof data === "string"){
         data = $.parseJSON(data);
       }
-      $.merge($.fn.lifestream.data.items, parseReader(data));
-    }).complete(callback);
+      callback(parseReader(data));
+    });
 
   };
 
