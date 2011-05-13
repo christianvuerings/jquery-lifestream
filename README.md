@@ -13,6 +13,7 @@ Currently supports the following feeds natively:
 * Google Reader
 * Stackoverflow
 * Twitter
+* Youtube
 
 But feel free to fork the project and add your own feeds in.  
 Just send a pull request to christianv when you're finished.

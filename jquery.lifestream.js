@@ -71,7 +71,7 @@
     var load = function(){
 
       // Run over all the items in the list
-      for(var i=0, j=data.count; i<j; i++) {
+      for(var i=0, j=settings.list.length; i<j; i++) {
         var item = settings.list[i];
         if($.fn.lifestream.feeds[item.service] &&
             $.isFunction($.fn.lifestream.feeds[item.service])){
@@ -237,7 +237,8 @@
       var question_link = "http://stackoverflow.com/questions/";
 
       if(item.timeline_type === "badge"){
-        text = item.timeline_type + " " + item.action + ": " + item.description;
+        text = item.timeline_type + " " + item.action + ": "
+          + item.description;
         title = item.detail;
         link = stackoverflow_link + "?tab=reputation";
       }
@@ -329,6 +330,44 @@
         data = $.parseJSON(data);
       }
       callback(parseTwitter(data));
+    });
+
+  };
+
+  $.fn.lifestream.feeds.youtube = function(obj, callback){
+
+    var parseYoutubeItem = function(item){
+      return item.author
+        + ' favorited <a href="' + item.video.player["default"] + '"'
+        + ' title="' + item.video.description + '">'
+        + item.video.title + "</a>"
+    }
+
+    var parseYoutube = function(input){
+      var output = [];
+
+      if(input.data && input.data.items){
+        for(var i=0, j=input.data.items.length; i<j; i++){
+          var item = input.data.items[i];
+          output.push({
+            "date": new Date(item.created),
+            "service": obj.service,
+            "html": parseYoutubeItem(item)
+          })
+        }
+      }
+
+      return output;
+    }
+
+    $.ajax({
+      "url": "http://gdata.youtube.com/feeds/api/users/"
+        + obj.user + "/favorites?v=2&alt=jsonc"
+    }).success(function(data){
+      if(typeof data === "string"){
+        data = $.parseJSON(data);
+      }
+      callback(parseYoutube(data));
     });
 
   };
