@@ -136,12 +136,42 @@
     $.ajax({
       "url": "http://feeds.delicious.com/v2/json/" + obj.user + "/?callback="
         +"$.fn.lifestream.feeds.delicious.parseDelious",
-      "success" : function(data){
-        if(typeof data === "string"){
-          data = $.parseJSON(data);
+      "dataType": "jsonp",
+      "crossDomain": true
+    });
+
+  };
+
+  $.fn.lifestream.feeds.flickr = function(obj, callback){
+
+    var parseFlickrItem = function(item){
+      var output = 'posted a photo <a href="' + item.link + '">'
+        + item.title + "</a>";
+
+      return output;
+    }
+
+    $.fn.lifestream.feeds.flickr.parseFlickr = function(data){
+      var output = [];
+console.log(data);
+      if(data && data.items && data.items.length > 0){
+        for(var i=0, j=data.items.length; i<j; i++){
+          var item = data.items[i];
+          output.push({
+            "date": new Date(item.published),
+            "service": obj.service,
+            "html": parseFlickrItem(item)
+          });
         }
-        callback(parseDelicious(data));
-      },
+      };
+
+      callback(output);
+    }
+
+    $.ajax({
+      "url": "http://api.flickr.com/services/feeds/photos_public.gne?id="
+        + obj.user + "&lang=en-us&format=json&jsoncallback="
+        + "jQuery.fn.lifestream.feeds.flickr.parseFlickr",
       "dataType": "jsonp",
       "crossDomain": true
     });

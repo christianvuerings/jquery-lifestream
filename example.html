@@ -61,6 +61,7 @@
       color: #e9e9e9;
     }
     #lifestream_css_v2 .lifestream-delicious { background-image: url("images/delicious_color.gif"); }
+    #lifestream_css_v2 .lifestream-flickr { background-image: url("images/flickr_color_white.png"); }
     #lifestream_css_v2 .lifestream-github { background-image: url("images/github_text_color.png"); }
     #lifestream_css_v2 .lifestream-googlereader { background-image: url("images/googlereader_color.png"); }
     #lifestream_css_v2 .lifestream-lastfm { background-image: url("images/lastfm_color.png"); }
@@ -92,6 +93,13 @@
           "service": "delicious",
           "user": "denbuzze"
         },
+        // find your flickr id @
+        // http://www.flickr.com/services/api/explore/?method=flickr.people.findByUsername
+        {
+          "service": "flickr",
+          "user": "60378309@N02"
+        },
+        // Run javascript:alert(_USER_ID); when you're logged in at google reader
         {
           "service": "googlereader",
           "user": "16243859758547797209"
@@ -104,6 +112,7 @@
           "service": "lastfm",
           "user": "denbuzze"
         },
+        // Run javascript:alert(userid); when you're logged in at stackoverflow
         {
           "service": "stackoverflow",
           "user": "117193"
