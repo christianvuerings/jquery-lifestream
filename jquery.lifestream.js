@@ -1,6 +1,6 @@
 /**
  * jQuery Lifestream Plug-in
- * @version 0.0.2
+ * @version 0.0.3
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -102,6 +102,49 @@
   $.fn.lifestream.feeds.defaultf = function(obj, callback){
 
     //
+
+  };
+
+  $.fn.lifestream.feeds.delicious = function(obj, callback){
+
+    var parseDeliciousItem = function(item){
+      var output="";
+
+      output += 'added bookmark <a href="' + item.u + '">'
+        + item.d + '</a>';
+
+      return output;
+    }
+
+    $.fn.lifestream.feeds.delicious.parseDelious = function(data){
+      var output = [];
+
+      if(data && data.length && data.length > 0){
+        for(var i=0, j=data.length; i<j; i++){
+          var item = data[i];
+          output.push({
+            "date": new Date(item.dt),
+            "service": obj.service,
+            "html": parseDeliciousItem(item)
+          });
+        }
+      };
+
+      callback(output);
+    }
+
+    $.ajax({
+      "url": "http://feeds.delicious.com/v2/json/" + obj.user + "/?callback="
+        +"$.fn.lifestream.feeds.delicious.parseDelious",
+      "success" : function(data){
+        if(typeof data === "string"){
+          data = $.parseJSON(data);
+        }
+        callback(parseDelicious(data));
+      },
+      "dataType": "jsonp",
+      "crossDomain": true
+    });
 
   };
 
