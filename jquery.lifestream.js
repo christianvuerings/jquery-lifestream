@@ -281,7 +281,7 @@
              + "jsonp=$.fn.lifestream.feeds.stackoverflow.parseStackOverflow",
       "dataType": "jsonp",
       "crossDomain": true
-    }).complete(callback);
+    });
 
   };
 
