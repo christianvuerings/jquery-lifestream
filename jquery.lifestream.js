@@ -272,6 +272,50 @@
 
   };
 
+  $.fn.lifestream.feeds.lastfm = function(obj, callback){
+
+    var parseLastfmEntry = function(entry){
+      var output = "";
+
+      output +='loved <a href="'+ entry.url + '">'
+        + entry.name + '</a> by <a href="' + entry.artist.url + '">'
+        + entry.artist.name + "</a>";
+
+      return output;
+    }
+
+    var parseLastfm = function(input){
+      var output = [];
+
+      if(input.query && input.query.count && input.query.count > 0
+          && input.query.results.lovedtracks
+          && input.query.results.lovedtracks.track){
+        var list = input.query.results.lovedtracks.track;
+        for(var i=0, j=list.length; i<j; i++){
+          var entry = list[i];
+          output.push({
+            "date": new Date(parseInt((entry.date.uts * 1000), 10)),
+            "service": obj.service,
+            "html": parseLastfmEntry(entry)
+          });
+        }
+      }
+      return output;
+    };
+
+    $.ajax({
+      "url": createYqlUrl('select * from xml where url='
+        + '"http://ws.audioscrobbler.com/2.0/user/'
+        + obj.user + '/lovedtracks.xml"')
+    }).success(function(data){
+      if(typeof data === "string"){
+        data = $.parseJSON(data);
+      }
+      callback(parseLastfm(data));
+    });
+
+  };
+
   $.fn.lifestream.feeds.stackoverflow = function(obj, callback){
 
     var parseStackoverflowItem = function(item){
