@@ -1,7 +1,7 @@
 # jQuery Lifestream Plug-in
 
 Show a stream of your online activity.  
-Check out [the example][example]).
+Check out [the example][example].
 
 ## Requirements
 * [jQuery 1.3+](http://www.jquery.com)
@@ -20,11 +20,11 @@ Currently supports the following feeds natively:
 * [Youtube](http://youtube.com)
 
 Feel free to fork the project and add your own feeds in.  
-Just send a pull request to christianv when you're finished.
+Just send a pull request to [christianv/jquery-lifestream](https://github.com/christianv/jquery-lifestream) when you're finished.
 
 ## Usage
 
-Add the following to the head or body tag of your HTML page.
+Add the following to the <head> or <body> tag of your HTML page.
 
 ``` html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
@@ -46,7 +46,7 @@ Add the following to the head or body tag of your HTML page.
 ```
 The above code will always use the latest version of the script.  
 If you want to use it in production, download the [compressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream-compiled.js)
-or [uncompressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.js) file locally.
+or [uncompressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.js) file and host it yourself.
 
 ## Configuration
 
@@ -68,9 +68,9 @@ $("#lifestream").lifestream({
 });
 ```
 
-`limit` (_integer_): Specify how many elements you want in your lifestream (default = 10).
+`limit`: (_integer_) Specify how many elements you want in your lifestream (default = 10).
 
-`list` (_array_): Array containing other JSON objects with information about each item.  
+`list`: (_array_) Array containing other JSON objects with information about each item.  
 Each item should have a _service_ and a _user_.  
 For more information about each _service_, check out the [source code][examplesource] of the [example page][example].
 
@@ -95,4 +95,4 @@ Stuff that isn"t implemented yet, but would be nice to have:
 
 [example]: http://christianv.github.com/jquery-lifestream/example.html 
 "Example page"
-[examplesource]: https://github.com/christianv/jquery-lifestream/blob/master/example.html "Source code of the example page"
+[examplesource]: https://github.com/christianv/jquery-lifestream/blob/master/example.html#files "Source code of the example page"
