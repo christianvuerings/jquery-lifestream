@@ -153,7 +153,7 @@
 
     $.fn.lifestream.feeds.flickr.parseFlickr = function(data){
       var output = [];
-console.log(data);
+
       if(data && data.items && data.items.length > 0){
         for(var i=0, j=data.items.length; i<j; i++){
           var item = data.items[i];
