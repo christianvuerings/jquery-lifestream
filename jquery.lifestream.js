@@ -78,9 +78,6 @@
 
           $.fn.lifestream.feeds[item.service](item, finished);
         }
-        else {
-          $.fn.lifestream.feeds.defaultf(item, finished);
-        }
       }
     }
 
@@ -88,7 +85,7 @@
 
   };
 
-  window.linkify = (function(){
+  $.fn.lifestream.linkify = (function(){
     var
       SCHEME = "[a-z\\d.-]+://",
       IPV4 = "(?:(?:[0-9]|[1-9]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}(?:[0-9]|"
@@ -257,12 +254,6 @@
   })();
 
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
-
-  $.fn.lifestream.feeds.defaultf = function(obj, callback){
-
-    //
-
-  };
 
   $.fn.lifestream.feeds.delicious = function(obj, callback){
 
@@ -567,7 +558,7 @@
      * Add clickable links to a tweet.
      */
     var addTwitterLinks = function(tweet){
-      return linkify(tweet)
+      return $.fn.lifestream.linkify(tweet)
         .replace(/ #([A-Za-z0-9\/\.]*)/g, function(m) {
             // Link # tags
             return ' <a target="_new" href="http://twitter.com/search?q='
