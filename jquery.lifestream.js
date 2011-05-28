@@ -510,6 +510,7 @@
         link = stackoverflow_link + "?tab=reputation";
       }
       else if (item.timeline_type === "revision"
+            || item.timeline_type === "comment"
             || item.timeline_type === "accepted"
             || item.timeline_type === "askoranswered"){
         text = item.post_type + " " + item.action;
@@ -517,7 +518,7 @@
         link = question_link + item.post_id;
       }
       output += '<a href="' + link + '" title="' + title + '">'
-             + text + "</a>";
+             + text + "</a> - " + title;
       return output;
     };
 
