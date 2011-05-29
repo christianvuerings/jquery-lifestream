@@ -231,7 +231,7 @@
       $(window).bind( "hashchange", function(e) {
         var input = $.bbq.getState(),
             list=[],
-            limit=20;
+            limit=1000;
 
         for(var i in input){
           if(input.hasOwnProperty(i)){
