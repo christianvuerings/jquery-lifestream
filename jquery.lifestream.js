@@ -334,17 +334,19 @@
     var parseGithubStatus = function(status){
       var output="";
       if(status.type === "PushEvent"){
-        var title = "";
+        var title = "", repo="";
 
         if(status.payload && status.payload.shas && status.payload.shas.json
           && status.payload.shas.json[2]){
             title = status.payload.shas.json[2] + " by "
                   + status.payload.shas.json[3]
         }
+        repo = status.payload.repo || status.repository.owner + "/"
+                                    + status.repository.name;
         output += '<a href="' + status.url + '" title="'+ title
           +'">pushed</a> to '
-          + '<a href="http://github.com/'+status.payload.repo
-          +'">' + status.payload.repo + "</a>";
+          + '<a href="http://github.com/'+repo
+          +'">' + repo + "</a>";
       }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {
