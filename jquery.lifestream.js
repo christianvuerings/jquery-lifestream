@@ -331,35 +331,47 @@
 
   $.fn.lifestream.feeds.github = function(obj, callback){
 
+    var returnRepo = function(status){
+      return status.payload.repo || status.repository.owner + "/"
+                                  + status.repository.name;
+    }
+
     var parseGithubStatus = function(status){
       var output="";
       if(status.type === "PushEvent"){
-        var title = "", repo="";
+        var title = "", repo=returnRepo(status);
 
         if(status.payload && status.payload.shas && status.payload.shas.json
           && status.payload.shas.json[2]){
             title = status.payload.shas.json[2] + " by "
                   + status.payload.shas.json[3]
         }
-        repo = status.payload.repo || status.repository.owner + "/"
-                                    + status.repository.name;
         output += '<a href="' + status.url + '" title="'+ title
           +'">pushed</a> to '
           + '<a href="http://github.com/'+repo
           +'">' + repo + "</a>";
       }
+      else if (status.type === "GistEvent"){
+        var title = status.payload.desc || "";
+        output += status.payload.action + 'd '
+            + '<a href="'+status.payload.url
+            + '" title ="' + title
+            + '">' + status.payload.name + "</a>";
+      }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {
-
+        var repo = returnRepo(status);
         output += '<a href="' + status.url + '">commented</a> on '
-          + '<a href="http://github.com/'+ status.payload.repo
-          +'">' + status.payload.repo + "</a>";
+          + '<a href="http://github.com/'+ repo
+          +'">' + repo + "</a>";
       }
       else if (status.type === "PullRequestEvent"){
+        var repo = status.payload.repo || status.repository.owner + "/"
+                                        + status.repository.name;
         output += '<a href="' + status.url + '">' + status.payload.action
           + '</a> pull request on '
-          + '<a href="http://github.com/'+ status.payload.repo
-          +'">' + status.payload.repo + "</a>";
+          + '<a href="http://github.com/'+ repo
+          +'">' + repo + "</a>";
       }
       else if (status.type === "CreateEvent"){
         var name = (status.payload.object_name === "null")
