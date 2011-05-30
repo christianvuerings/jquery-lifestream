@@ -181,6 +181,23 @@
     .ir { display: block;text-indent: -999em;overflow: hidden;background-repeat: no-repeat;text-align: left;direction: ltr;}
 
     #footer {clear: both; padding: 2em 0 0em;}
+    #footer p {clear: both; padding-bottom: 1em;}
+
+    /* twitter */
+    .twitterbutton {
+      float: left;
+      margin-right: 1em;
+    }
+    .twitterbutton a {
+      background: no-repeat 0 0;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA8CAMAAAD1wtK3AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkY3QTZDMUM3RkEzMTFFMEIyNkZFOUNCNTU3MDIzRDYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkY3QTZDMUQ3RkEzMTFFMEIyNkZFOUNCNTU3MDIzRDYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpCRjdBNkMxQTdGQTMxMUUwQjI2RkU5Q0I1NTcwMjNENiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCRjdBNkMxQjdGQTMxMUUwQjI2RkU5Q0I1NTcwMjNENiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PscuP8YAAAHyUExURc7l9P///+jz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);
+      border-radius: 3px;
+      display: block;
+      height: 20px;
+      width: 55px;
+    }
+    .twitterbutton a:hover {background-position:0 -20px;}
+    .twitterbutton a:active {background-position:0 -40px;}
 
     @media (max-width: 1005px) {
 
@@ -219,6 +236,10 @@
   <div id="lifestream">&nbsp;</div>
 
   <div id="footer">
+    <p class="twitterbutton ir">
+      <a href="http://twitter.com/share?original_referer=http%3A%2F%2Fdenbuzze.com&amp;url=http%3A%2F%2Fchristianv.github.com%2Fjquery-lifestream%2Fme&amp;text=My+lifestream&amp;via=denbuzze" target="_blank">Tweet</a>
+    </p>
+    <iframe src="https://www.facebook.com/plugins/like.php?layout=button_count&amp;href=http://christianv.github.com/jquery-lifestream/me" scrolling="no" frameborder="0" style="border:none; width:120px; height:25px"></iframe>
     <p>Created by <a href="http://denbuzze.com">Christian Vuerings</a></p>
   </div>
 
@@ -234,6 +255,7 @@
           $form,
           $lifestream = $("#lifestream"),
           $options = $("#options"),
+          $twitterbutton = $(".twitterbutton"),
           help = {
             "flickr": "http://idgettr.com/",
             "googlereader": "http://tech.lakhiyan.com/post/1330978632/google-reader-and-mac-screensaver",
@@ -275,7 +297,18 @@
       generateform();
       bindSubmit();
 
+      var generateTwitter = function(isempty){
+        var output = {
+          "original_referer": "http://denbuzze.com",
+          "url": isempty ? "http://christianv.github.com/jquery-lifestream/me" : window.location.href,
+          "text": "My lifestream",
+          "via": "denbuzze"
+        }
+        $twitterbutton.attr("href", "http://twitter.com/share?" + $.param(output, true));
+      }
+
       $(window).bind( "hashchange", function(e) {
+
         var input = $.bbq.getState(),
             list=[],
             limit=1000,
@@ -292,10 +325,13 @@
           }
         }
 
+        generateTwitter(showempty);
+
         if(showempty){
           $empty.show();
           $lifestream.hide();
-        } else {
+        }
+        else {
           $empty.hide();
           $lifestream.lifestream({
             "limit": limit,
@@ -303,8 +339,6 @@
           });
           $lifestream.show();
         }
-
-
 
       });
 
