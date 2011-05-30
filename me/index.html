@@ -2,8 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="description" content="Create your own lifestream with the jQuery lifestream plug-in">
+  <meta name="keywords" content="jQuery, plugin, lifestream, jquery-lifestream, twitter, delicious, github, stackoverflow, flickr, lastfm, youtube">
 
-  <title>jquery.lifestream.js example</title>
+  <title>Your lifestream</title>
 
   <style type="text/css">
     @font-face {
@@ -32,22 +34,31 @@
         -webkit-radial-gradient(black 15%, transparent 16%) 8px 8px,
         -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
         -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+      background:
+        -moz-radial-gradient(black 15%, transparent 16%) 0 0,
+        -moz-radial-gradient(black 15%, transparent 16%) 8px 8px,
+        -moz-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+        -moz-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
       background-color:#282828;
       background-size:16px 16px;
       color: #fff;
     	font: 16px/100% "AftasansRegular", Helvetica, Arial, sans-serif;
       margin: 1.0em;
+      max-width: 1000px;
     }
     h1 { font-size: 3.8em; color: #fff; margin-bottom: 3px; }
     h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
     h2 { font-size: 1.5em; color: #3908bc; clear: both;}
     h3 { text-align: center; color: #3908bc; }
-    a { color: #3908bc; }
+    a { color: #F6DD97; text-decoration: none}
+    a:hover {text-decoration: underline;}
     ul li { list-style-type: none;}
+    ol { margin-left: 1.5em;}
+    ol li {padding: 0.5em 0;}
 
     #options {
-      float:right;
+      float: right;
+      margin-left: 1em;
       width: 21em;
     }
 
@@ -78,6 +89,9 @@
       margin: 0.3em 0;
       width: 11em;
     }
+    #options input[type=text]:focus, #options input[type=text]:hover {
+      background: rgba(255,255,255,0.2);
+    }
     #options a {
       background: no-repeat center center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAAZNpQ0NQSUNDIFByb2ZpbGUAAHiclZE9S1tRGMd/54o4GOJyKdLFI33BIZZgECrtoncIhQxpyJAEl5t7rzFyzT2cnPgCfgQHwcWWQq1+ASedBPeqi+gkfgZB6FLkdjgtWZTqHx74PX8eeN7AOfWVih1guWN0pTgna/WGHLpkkDGGGQc/6KrZcrnEo/p1hQC4mPSVih+ve1AZXas3QLiA27I8AbhNyx8Bd9UoA6IMuMGiH4IIgZyuVjwQW0C2ZXkXyDYtHwDZlaBlQJwA+U7Y7oC4Bd6HUTcAZwIwgdIGnG/AZK3ekHa0ZBdmXsHAZt9r7sDRMYz+7Huvv8PIBzg873t3nxGAeHHRXShMASAyHgzepOndGxjahvutNP39I03v92DgGk6Wgp5e+XsX4RTgf7ndzeb2B2D7Psx2fwDysH8F1Q0oncGXr/B2AUbmoZyB6gxOYfpf2FsB8NLz43ZT+yYKZaU4J70kTnRX+UH0nK8/QSZaMwBeotZ1u7Vo5KxScSS9ZFn1TKRz8lMneJeTU/n8NMAfDPNxzOGn0hYAAAAgY0hSTQAAeiUAAHolAAAAAAAAeiUAAAAAAAB6JQAAAAAAAHolcjIeYAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAl1JREFUOI11U79PWlEYPdcHl3DvY+FOGvOaPBIXVyNGE6S85+6PoZudmUwc27nd/AuYTCQ84qDsmIoTJejcGBMKuJG0to0k3PvC16W8gNKz3XznnHz3+77DlFKYBhFhNBrltNa5eDz+BgCMMV3O+U0ikbhhjM3wY9MPrXWWiD5ns9m853kLjuMAAHq9Hq6ursatVuuaMfaBc/41EimloJSClHLfdd0f5XKZ5sEYQ+VymVzX/Sml3J/ooJRCKpXKuq77q91uExHRYDCgWq1GpVKJzs/PqdvtRkbtdptc1/2dSqU2lFJAOp22bNu+DoKAiIi01uT7Pi0uLtLq6irZtk2O49Dl5WVkEgQB2bZ9nU6nLQghcp7njcMwjAzq9Tr1+30aDod0dHREAGh3dzcyCMOQPM8bCyFyC8aYbd/3mWVZAIB4PA7P87C8vIxkMonRaAQAWFtbi+ZmWRZ832fGmG1IKU8n7b/E2dkZcc7p8PCQnp+fZ2pBEJCU8nRmjdO4u7tDsVjE5uYmSqUSOOdzeQta64dOp/OqcHFxAa019vb25oo7nQ601g8QQuQKhUI0xAnu7++p0WjQ4+Pjq6+FYUiFQmEshMhFa6xWqzOk4+NjSiaTdHJy8sqgWq1Ga7SEEDQej781m813W1tbiaWlJQDAYDAA5xz5fB4rKytR67e3tygWi3+Gw+H7WCzWnz7lg0wm81SpVMgYM/eUK5UKZTKZJynlwUTHptOotd4gok/r6+tvd3Z2mOM4ICL0ej3U63VqtVpfGGMfOefNiYb9J87bU3Fmxpjv/+LceBnnv3C2ynWz8FAEAAAAAElFTkSuQmCC);
       display: block;
@@ -91,9 +105,6 @@
       -webkit-box-shadow: 0 0 8px rgba(255,255,255,0.8);
     	-moz-box-shadow: 0 0 8px rgba(255,255,255,0.8);
     	box-shadow: 0 0 8px rgba(255,255,255,0.8);
-    }
-    #options input:focus, #options input:hover {
-      background: rgba(255,255,255,0.2);
     }
     .button {
       background: rgb(0,0,0);
@@ -121,20 +132,21 @@
     }
     .button:hover {
     	text-decoration: none;
-    	-webkit-box-shadow: 0 0 8px rgba(255,255,255,0.8);
-    	-moz-box-shadow: 0 0 8px rgba(255,255,255,0.8);
-    	box-shadow: 0 0 8px rgba(255,255,255,0.8);
+    	background: rgba(255,255,255,0.4);
     }
     .button:active {
     	position: relative;
     	top: 1px;
     }
 
+    #empty, #lifestream {
+      float: left;
+      max-width: 40em;
+    }
+
     #lifestream {
       color: #d4d4d4;
-      float: left;
       font-size: 0.95em;
-      max-width: 40em;
     }
     #lifestream a {
       color: #f6dd97;
@@ -168,14 +180,47 @@
 
     .ir { display: block;text-indent: -999em;overflow: hidden;background-repeat: no-repeat;text-align: left;direction: ltr;}
 
+    #footer {clear: both; padding: 2em 0 0em;}
+
+    @media (max-width: 1005px) {
+
+      #lifestream {
+      	max-width: 50%;
+      }
+
+    }
+    @media (max-width: 750px) {
+
+      #options, #lifestream, #empty {
+        max-width: 100%;
+        clear: both;
+        float: none;
+        overflow: hidden;
+      }
+
+      #options, #empty {
+        margin: 0 0 20px 0;
+        width: auto;
+      }
+
+    }
   </style>
 
 </head>
 <body>
 
+  <div id="empty">
+    <ol>
+      <li>Fill in your usernames and ids</li>
+      <li>hit Create</li>
+    </ol>
+  </div>
   <div id="options">&nbsp;</div>
-
   <div id="lifestream">&nbsp;</div>
+
+  <div id="footer">
+    <p>Created by <a href="http://denbuzze.com">Christian Vuerings</a></p>
+  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
@@ -185,8 +230,10 @@
   <script>
     $(function(){
 
-      var $options = $("#options"),
+      var $empty = $("#empty"),
           $form,
+          $lifestream = $("#lifestream"),
+          $options = $("#options"),
           help = {
             "flickr": "http://idgettr.com/",
             "googlereader": "http://tech.lakhiyan.com/post/1330978632/google-reader-and-mac-screensaver",
@@ -231,7 +278,8 @@
       $(window).bind( "hashchange", function(e) {
         var input = $.bbq.getState(),
             list=[],
-            limit=1000;
+            limit=1000,
+            showempty=true;
 
         for(var i in input){
           if(input.hasOwnProperty(i)){
@@ -239,14 +287,24 @@
             list.push({
               "service": i,
               "user": input[i]
-            })
+            });
+            if(input[i]) {showempty = false};
           }
         }
 
-        $("#lifestream").lifestream({
-          "limit": limit,
-          "list": list
-        });
+        if(showempty){
+          $empty.show();
+          $lifestream.hide();
+        } else {
+          $empty.hide();
+          $lifestream.lifestream({
+            "limit": limit,
+            "list": list
+          });
+          $lifestream.show();
+        }
+
+
 
       });
 
