@@ -1,7 +1,7 @@
 # jQuery Lifestream Plug-in
 
 Show a stream of your online activity.  
-Check out [the example][example].
+Check out [the example][example] or create [your own lifestream][melifestream] instantly.
 
 ## Requirements
 * [jQuery 1.3+](http://www.jquery.com)
@@ -93,6 +93,7 @@ Stuff that isn"t implemented yet, but would be nice to have:
 * 0.0.1 Initial version
 
 
+[melifestream]: http://christianv.github.com/jquery-lifestream/me/
 [example]: http://christianv.github.com/jquery-lifestream/example.html 
 "Example page"
 [examplesource]: https://github.com/christianv/jquery-lifestream/blob/master/example.html#files "Source code of the example page"
