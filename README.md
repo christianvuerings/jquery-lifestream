@@ -13,6 +13,7 @@ Currently supports the following feeds natively:
 * [Delicious](http://delicious.com)
 * [Dribbble](http://dribbble.com)
 * [Flickr](http://flickr.com)
+* [Foursquare](http://foursquare.com)
 * [Github](http://github.com)
 * [Google Reader](http://google.com/reader)
 * [Last.fm](http://last.fm)
@@ -97,6 +98,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.9 Foursquare support
 * 0.0.8 Add support for Github tags
 * 0.0.7 Dribbble support
 * 0.0.6 Update links in twitter to be able to have hashes in them

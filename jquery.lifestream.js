@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.0.8
+ * @version 0.0.9
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -24,19 +24,17 @@
    */
   $.fn.lifestream = function(config){
 
-    var outputElement = this;
-
+    var outputElement = this,
     // Extend the default settings with the values passed
-    var settings = jQuery.extend({
+    settings = jQuery.extend({
       "classname": "lifestream",
       "limit": 10
     }, config),
     data = {
       "count": settings.list.length,
       "items": []
-    };
-
-    var finished = function(inputdata){
+    },
+    finished = function(inputdata){
 
       $.merge(data.items, inputdata);
 
@@ -50,9 +48,8 @@
           }
       });
 
-      var div = $('<ul class="' + settings.classname + '"/>');
-
-      var length = (data.items.length < settings.limit)
+      var div = $('<ul class="' + settings.classname + '"/>'),
+      length = (data.items.length < settings.limit)
         ? data.items.length
         : settings.limit
 
@@ -66,9 +63,8 @@
 
       outputElement.html(div);
 
-    }
-
-    var load = function(){
+    },
+    load = function(){
 
       // Run over all the items in the list
       for(var i=0, j=settings.list.length; i<j; i++) {
@@ -279,7 +275,7 @@
             "html": parseDeliciousItem(item)
           });
         }
-      };
+      }
 
       callback(output);
     }
@@ -314,7 +310,7 @@
             "html": parseDribbbleItem(item)
           });
         }
-      };
+      }
 
       callback(output);
     }
@@ -352,7 +348,7 @@
             "html": parseFlickrItem(item)
           });
         }
-      };
+      }
 
       callback(output);
     }
@@ -367,14 +363,52 @@
 
   };
 
+  $.fn.lifestream.feeds.foursquare = function(obj, callback){
+
+    var parseFoursquareStatus = function(item){
+      var output = 'checked in @ <a href="' + item.link + '">'
+        + item.title + "</a>";
+
+      return output;
+    },
+    parseFoursquare = function(input){
+      var output = [];
+
+      if(input.query && input.query.count && input.query.count >0){
+        for(var i=0, j=input.query.count; i<j; i++){
+          var status = input.query.results.item[i];
+          output.push({
+            "date": new Date(status.pubDate),
+            "service": obj.service,
+            "html": parseFoursquareStatus(status)
+          });
+        }
+      }
+
+      return output;
+    }
+
+    $.ajax({
+      "url": createYqlUrl('select * from rss where url='
+        + '"https://feeds.foursquare.com/history/'
+        + obj.user + '.rss"'),
+      "success" : function(data){
+        if(typeof data === "string"){
+          data = $.parseJSON(data);
+        }
+        callback(parseFoursquare(data));
+      }
+    });
+
+  };
+
   $.fn.lifestream.feeds.github = function(obj, callback){
 
     var returnRepo = function(status){
       return status.payload.repo || status.repository.owner + "/"
                                   + status.repository.name;
-    }
-
-    var parseGithubStatus = function(status){
+    },
+    parseGithubStatus = function(status){
       var output="";
       if(status.type === "PushEvent"){
         var title = "", repo=returnRepo(status);
@@ -444,9 +478,8 @@
       }
       return output;
 
-    }
-
-    var parseGithub = function(input){
+    },
+    parseGithub = function(input){
       var output = [];
 
       if(input.query && input.query.count && input.query.count >0){
@@ -485,12 +518,11 @@
       return 'starred post <a href="' + entry.link.href + '">'
         + entry.title.content
         + "</a>"
-    }
-
+    },
     /**
      * Parse the input from google reader
      */
-    var parseReader = function(input){
+    parseReader = function(input){
       var output = [];
 
       if(input.query && input.query.count && input.query.count >0){
@@ -530,9 +562,8 @@
         + entry.artist.name + "</a>";
 
       return output;
-    }
-
-    var parseLastfm = function(input){
+    },
+    parseLastfm = function(input){
       var output = [];
 
       if(input.query && input.query.count && input.query.count > 0
@@ -567,9 +598,9 @@
   $.fn.lifestream.feeds.stackoverflow = function(obj, callback){
 
     var parseStackoverflowItem = function(item){
-      var output="", text="", title="", link="";
-      var stackoverflow_link = "http://stackoverflow.com/users/" + obj.user;
-      var question_link = "http://stackoverflow.com/questions/";
+      var output="", text="", title="", link="",
+      stackoverflow_link = "http://stackoverflow.com/users/" + obj.user,
+      question_link = "http://stackoverflow.com/questions/";
 
       if(item.timeline_type === "badge"){
         text = item.timeline_type + " " + item.action + ": "
@@ -588,9 +619,8 @@
       output += '<a href="' + link + '" title="' + title + '">'
              + text + "</a> - " + title;
       return output;
-    };
-
-    var convertDate = function(date){
+    },
+    convertDate = function(date){
       return new Date(date * 1000);
     }
 
@@ -637,12 +667,11 @@
             return '<a href="http://www.twitter.com/'
               + m.replace('@','') + '">' + m + "</a>";
       });
-    };
-
+    },
     /**
      * Parse the input from twitter
      */
-    var parseTwitter = function(input){
+    parseTwitter = function(input){
       var output = [];
 
       if(input.query && input.query.count && input.query.count >0){
@@ -676,9 +705,8 @@
       return ' favorited <a href="' + item.video.player["default"] + '"'
         + ' title="' + item.video.description + '">'
         + item.video.title + "</a>"
-    }
-
-    var parseYoutube = function(input){
+    },
+    parseYoutube = function(input){
       var output = [];
 
       if(input.data && input.data.items){
