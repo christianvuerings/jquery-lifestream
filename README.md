@@ -83,9 +83,21 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 Stuff that isn"t implemented yet, but would be nice to have:
 
 * Add support for [Twitter Web Intents](http://dev.twitter.com/pages/intents)
+* Add support for [Dribbble](http://dribbble.com/)
+
+## Mentions
+
+Places on the web where this plug-in got mentioned:
+
+* [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
+* [designbeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
+* [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
+* [html.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
+* [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
 
 ## Version log
 
+* 0.0.6 Update links in twitter to be able to have hashes in them
 * 0.0.5 Flickr support
 * 0.0.4 Last.fm support
 * 0.0.3 Delicious support + minor bug fix in the stackoverflow code
