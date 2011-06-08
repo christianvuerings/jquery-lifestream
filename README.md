@@ -11,6 +11,7 @@ Check out [the example][example] or create [your own lifestream][melifestream] i
 Currently supports the following feeds natively:
 
 * [Delicious](http://delicious.com)
+* [Dribbble](http://dribbble.com)
 * [Flickr](http://flickr.com)
 * [Github](http://github.com)
 * [Google Reader](http://google.com/reader)
@@ -83,7 +84,6 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 Stuff that isn"t implemented yet, but would be nice to have:
 
 * Add support for [Twitter Web Intents](http://dev.twitter.com/pages/intents)
-* Add support for [Dribbble](http://dribbble.com/)
 
 ## Mentions
 
