@@ -1,6 +1,6 @@
-/**
+/*!
  * jQuery Lifestream Plug-in
- * @version 0.0.7
+ * @version 0.0.8
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -408,6 +408,21 @@
                                         + status.repository.name;
         output += '<a href="' + status.url + '">' + status.payload.action
           + '</a> pull request on '
+          + '<a href="http://github.com/'+ repo
+          +'">' + repo + "</a>";
+      }
+      // Github has several syntaxes for create tag events
+      else if (status.type === "CreateEvent" &&
+               (status.payload.ref_type === "tag" ||
+                status.payload.object === "tag")){
+        var repo = returnRepo(status),
+            name = status.payload.ref
+                 ? status.payload.ref
+                 : status.payload.object_name;
+        output += 'created tag'
+          +' <a href="' + status.url + '">'
+          + name
+          + '</a> for '
           + '<a href="http://github.com/'+ repo
           +'">' + repo + "</a>";
       }
