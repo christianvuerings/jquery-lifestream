@@ -97,6 +97,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.7 Dribbble support
 * 0.0.6 Update links in twitter to be able to have hashes in them
 * 0.0.5 Flickr support
 * 0.0.4 Last.fm support
