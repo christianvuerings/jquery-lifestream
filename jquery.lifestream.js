@@ -263,28 +263,26 @@
       return output;
     }
 
-    $.fn.lifestream.feeds.delicious.parseDelious = function(data){
-      var output = [];
-
-      if(data && data.length && data.length > 0){
-        for(var i=0, j=data.length; i<j; i++){
-          var item = data[i];
-          output.push({
-            "date": new Date(item.dt),
-            "service": obj.service,
-            "html": parseDeliciousItem(item)
-          });
-        }
-      }
-
-      callback(output);
-    }
-
     $.ajax({
-      "url": "http://feeds.delicious.com/v2/json/" + obj.user + "/?callback="
-        +"$.fn.lifestream.feeds.delicious.parseDelious",
+      url: "http://feeds.delicious.com/v2/json/" + obj.user,
       "dataType": "jsonp",
-      "crossDomain": true
+      "crossDomain": true,
+      success: function(data){
+        var output = [];
+
+        if(data && data.length && data.length > 0){
+          for(var i=0, j=data.length; i<j; i++){
+            var item = data[i];
+            output.push({
+              "date": new Date(item.dt),
+              "service": obj.service,
+              "html": parseDeliciousItem(item)
+            });
+          }
+        }
+
+        callback(output);
+      }
     });
 
   };
@@ -298,31 +296,26 @@
       return output;
     }
 
-    $.fn.lifestream.feeds.dribbble.parseDribbble = function(data){
-      var output = [];
-
-      if(data && data.total){
-        for(var i=0, j=data.shots.length; i<j; i++){
-          var item = data.shots[i];
-          output.push({
-            "date": new Date(item.created_at),
-            "service": obj.service,
-            "html": parseDribbbleItem(item)
-          });
-        }
-      }
-
-      callback(output);
-    }
-
     $.ajax({
-      "url": "http://api.dribbble.com/players/"
-        + obj.user + "/shots?callback=",
-      "data": {
-        "callback" : "jQuery.fn.lifestream.feeds.dribbble.parseDribbble"
-      },
-      "dataType": "jsonp",
-      "crossDomain": true
+      url: "http://api.dribbble.com/players/" + obj.user + "/shots",
+      dataType: "jsonp",
+      crossDomain: true,
+      success: function(data){
+        var output = [];
+
+        if(data && data.total){
+          for(var i=0, j=data.shots.length; i<j; i++){
+            var item = data.shots[i];
+            output.push({
+              "date": new Date(item.created_at),
+              "service": obj.service,
+              "html": parseDribbbleItem(item)
+            });
+          }
+        }
+
+        callback(output);
+      }
     });
 
   };
@@ -336,29 +329,28 @@
       return output;
     }
 
-    $.fn.lifestream.feeds.flickr.parseFlickr = function(data){
-      var output = [];
-
-      if(data && data.items && data.items.length > 0){
-        for(var i=0, j=data.items.length; i<j; i++){
-          var item = data.items[i];
-          output.push({
-            "date": new Date(item.published),
-            "service": obj.service,
-            "html": parseFlickrItem(item)
-          });
-        }
-      }
-
-      callback(output);
-    }
-
     $.ajax({
-      "url": "http://api.flickr.com/services/feeds/photos_public.gne?id="
-        + obj.user + "&lang=en-us&format=json&jsoncallback="
-        + "jQuery.fn.lifestream.feeds.flickr.parseFlickr",
+      url: "http://api.flickr.com/services/feeds/photos_public.gne?id="
+        + obj.user + "&lang=en-us&format=json",
       "dataType": "jsonp",
-      "crossDomain": true
+      "crossDomain": true,
+      jsonp: 'jsoncallback',
+      success: function(data){
+        var output = [];
+
+        if(data && data.items && data.items.length > 0){
+          for(var i=0, j=data.items.length; i<j; i++){
+            var item = data.items[i];
+            output.push({
+              "date": new Date(item.published),
+              "service": obj.service,
+              "html": parseFlickrItem(item)
+            });
+          }
+        }
+
+        callback(output);
+      }
     });
 
   };
@@ -624,29 +616,29 @@
       return new Date(date * 1000);
     }
 
-    $.fn.lifestream.feeds.stackoverflow.parseStackOverflow = function(data){
-      var output = [];
-
-      if(data && data.total && data.total > 0 && data.user_timelines){
-        for(var i=0, j=data.user_timelines.length; i<j; i++){
-          var item = data.user_timelines[i];
-          output.push({
-            "date": convertDate(item.creation_date),
-            "service": obj.service,
-            "html": parseStackoverflowItem(item)
-          });
-        }
-      };
-
-      callback(output);
-    }
-
     $.ajax({
-      "url": "http://api.stackoverflow.com/1.1/users/" + obj.user
+      url: "http://api.stackoverflow.com/1.1/users/" + obj.user
              + "/timeline?"
-             + "jsonp=$.fn.lifestream.feeds.stackoverflow.parseStackOverflow",
+             + "jsonp",
       "dataType": "jsonp",
-      "crossDomain": true
+      jsonp: 'jsonp',
+      "crossDomain": true,
+      success: function(data){
+        var output = [];
+
+        if(data && data.total && data.total > 0 && data.user_timelines){
+          for(var i=0, j=data.user_timelines.length; i<j; i++){
+            var item = data.user_timelines[i];
+            output.push({
+              "date": convertDate(item.creation_date),
+              "service": obj.service,
+              "html": parseStackoverflowItem(item)
+            });
+          }
+        };
+
+        callback(output);
+      }
     });
 
   };
