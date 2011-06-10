@@ -251,6 +251,29 @@
   })();
 
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
+  
+  $.fn.lifestream.feeds.deviantart = function(obj,callback) {
+		$.ajax({
+			//url: 'http://pipes.yahoo.com/pipes/pipe.run?_id=e432ecdea1a468cb9e72bc6e4ffa8f44&_render=json&deviant=' + obj.user,
+      url: createYqlUrl('select * from rss where url="backend.deviantart.com/rss.xml?q=gallery:giuliom/1507141"'),
+			dataType: 'jsonp',
+			success: function(data) {
+        console.log(data);
+        return;
+				var output = [];
+				if (data && data.length && data.length > 0)
+					for (var i = 0, j = data.length; i < j; i++) {
+						var item = data[i];
+						output.push({
+							date: new Date(),
+							service: obj.service,
+							html: 'faved <a href="' + item.link + '">' + item.title + '</a>'
+						});
+					}
+				callback(output);
+			}
+		});
+	};
 
   $.fn.lifestream.feeds.delicious = function(obj, callback){
 
