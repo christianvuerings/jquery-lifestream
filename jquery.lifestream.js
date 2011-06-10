@@ -14,7 +14,7 @@
    */
   var createYqlUrl = function(query){
       return ("http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env="+
-      "store://datatables.org/alltableswithkeys&format=json&callback=")
+      "store://datatables.org/alltableswithkeys&format=json")
         .replace("__QUERY__", encodeURIComponent(query));
   };
 
@@ -384,10 +384,8 @@
       url: createYqlUrl('select * from rss where url='
         + '"https://feeds.foursquare.com/history/'
         + obj.user + '.rss"'),
+      dataType: 'jsonp',
       success: function(data){
-        if(typeof data === "string"){
-          data = $.parseJSON(data);
-        }
         callback(parseFoursquare(data));
       }
     });
@@ -494,10 +492,8 @@
         + ',json.payload,json.type'
         + ',json.url, json.created_at from json where url="http://github.com/'
         + obj.user + '.json"'),
+      dataType: 'jsonp',
       success: function(data){
-        if(typeof data === "string"){
-          data = $.parseJSON(data);
-        }
         callback(parseGithub(data));
       }
     });
@@ -533,12 +529,10 @@
 
     $.ajax({
       url: createYqlUrl('select * from xml where url="'
-      + 'www.google.com/reader/public/atom/user%2F'
-      + obj.user + '%2Fstate%2Fcom.google%2Fstarred"')
+        + 'www.google.com/reader/public/atom/user%2F'
+        + obj.user + '%2Fstate%2Fcom.google%2Fstarred"'),
+      dataType: 'jsonp',
     }).success(function(data){
-      if(typeof data === "string"){
-        data = $.parseJSON(data);
-      }
       callback(parseReader(data));
     });
 
@@ -577,11 +571,9 @@
     $.ajax({
       url: createYqlUrl('select * from xml where url='
         + '"http://ws.audioscrobbler.com/2.0/user/'
-        + obj.user + '/lovedtracks.xml"')
+        + obj.user + '/lovedtracks.xml"'),
+      dataType: 'jsonp'
     }).success(function(data){
-      if(typeof data === "string"){
-        data = $.parseJSON(data);
-      }
       callback(parseLastfm(data));
     });
 
@@ -681,11 +673,9 @@
 
     $.ajax({
       url: createYqlUrl('select status.id, status.created_at, status.text'
-        + ' from twitter.user.timeline where screen_name="'+ obj.user +'"')
+        + ' from twitter.user.timeline where screen_name="'+ obj.user +'"'),
+      dataType: 'jsonp',
     }).success(function(data){
-      if(typeof data === "string"){
-        data = $.parseJSON(data);
-      }
       callback(parseTwitter(data));
     });
 
