@@ -68,12 +68,8 @@
   <script src="jquery.lifestream.js" type="text/javascript" charset="utf-8"></script>
   <script>
     $("#lifestream").lifestream({
-      "limit": 30,
+      "limit": 100,
       "list":[
-        {
-          service: 'deviantart',
-          user: 'giuliom'
-        },
         {
           "service": "delicious",
           "user": "denbuzze"
@@ -113,6 +109,13 @@
         {
           "service": "youtube",
           "user": "denbuzze"
+        },
+        // The value for user must be the RSS url of a DA gallery:
+        // Go to the gallery page, find the RSS feed icon, copy its link address and
+        // past here
+        {
+          service: 'deviantart',
+          user: 'http://backend.deviantart.com/rss.xml?q=favby%3Agiuliom%2F8206647&type=deviation'
         }
       ]
     });
