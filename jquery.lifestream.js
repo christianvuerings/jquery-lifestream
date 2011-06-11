@@ -531,7 +531,7 @@
       url: createYqlUrl('select * from xml where url="'
         + 'www.google.com/reader/public/atom/user%2F'
         + obj.user + '%2Fstate%2Fcom.google%2Fstarred"'),
-      dataType: 'jsonp',
+      dataType: 'jsonp'
     }).success(function(data){
       callback(parseReader(data));
     });
@@ -674,7 +674,7 @@
     $.ajax({
       url: createYqlUrl('select status.id, status.created_at, status.text'
         + ' from twitter.user.timeline where screen_name="'+ obj.user +'"'),
-      dataType: 'jsonp',
+      dataType: 'jsonp'
     }).success(function(data){
       callback(parseTwitter(data));
     });
