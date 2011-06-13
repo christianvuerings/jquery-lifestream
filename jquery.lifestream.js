@@ -719,9 +719,14 @@
   
   $.fn.lifestream.feeds.deviantart = function(obj, callback) {
 		$.ajax({
-      url: createYqlUrl('select * from rss where url="' + obj.user + '"'),
+      url: createYqlUrl(
+        //'select title,link,pubDate from rss where url="' + obj.user + '" | unique(field="title")'
+        //'select title,link,pubdate from rss where url="' + obj.user + '"'
+        'select * from rss where url="' + obj.user + '"'
+      ),
 			dataType: 'jsonp',
 			success: function(resp) {
+        console.log(resp);
 				var output = [],
             items = resp.query.results.item,
             item
@@ -731,7 +736,7 @@
 						output.push({
 							date: new Date(item.pubDate),
 							service: obj.service,
-							html: 'posted <a href="' + item.link + '">' + item.title[0] + '</a>'
+							html: 'posted <a href="' + item.link + '">' + item.title/*[0]*/ + '</a>'
 						});
 					}
 				callback(output);
