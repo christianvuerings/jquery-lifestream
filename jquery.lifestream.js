@@ -535,9 +535,10 @@
       url: createYqlUrl('select * from xml where url="'
         + 'www.google.com/reader/public/atom/user%2F'
         + obj.user + '%2Fstate%2Fcom.google%2Fstarred"'),
-      dataType: 'jsonp'
-    }).success(function(data){
-      callback(parseReader(data));
+      dataType: 'jsonp',
+      success: function(data) {
+        callback(parseReader(data));
+      }
     });
 
   };
@@ -576,9 +577,10 @@
       url: createYqlUrl('select * from xml where url='
         + '"http://ws.audioscrobbler.com/2.0/user/'
         + obj.user + '/lovedtracks.xml"'),
-      dataType: 'jsonp'
-    }).success(function(data){
-      callback(parseLastfm(data));
+      dataType: 'jsonp',
+      success: function(data) {
+        callback(parseLastfm(data));
+      }
     });
 
   };
@@ -678,9 +680,10 @@
     $.ajax({
       url: createYqlUrl('select status.id, status.created_at, status.text'
         + ' from twitter.user.timeline where screen_name="'+ obj.user +'"'),
-      dataType: 'jsonp'
-    }).success(function(data){
-      callback(parseTwitter(data));
+      dataType: 'jsonp',
+      success: function(data) {
+        callback(parseTwitter(data));
+      }
     });
 
   };
@@ -710,13 +713,13 @@
     }
 
     $.ajax({
-      url: "http://gdata.youtube.com/feeds/api/users/"
-        + obj.user + "/favorites?v=2&alt=jsonc"
-    }).success(function(data){
-      if(typeof data === "string"){
-        data = $.parseJSON(data);
+      url: "http://gdata.youtube.com/feeds/api/users/" + obj.user + "/favorites?v=2&alt=jsonc",
+      success: function(data) {
+        if (typeof data === "string") {
+          data = $.parseJSON(data);
+        }
+        callback(parseYoutube(data));
       }
-      callback(parseYoutube(data));
     });
 
   };
