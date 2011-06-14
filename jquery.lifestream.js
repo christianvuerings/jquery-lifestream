@@ -270,7 +270,6 @@
     $.ajax({
       url: "http://feeds.delicious.com/v2/json/" + obj.user,
       dataType: "jsonp",
-      crossDomain: true,
       success: function(data){
         var output = [];
 
@@ -303,7 +302,6 @@
     $.ajax({
       url: "http://api.dribbble.com/players/" + obj.user + "/shots",
       dataType: "jsonp",
-      crossDomain: true,
       success: function(data){
         var output = [];
 
@@ -337,7 +335,6 @@
       url: "http://api.flickr.com/services/feeds/photos_public.gne?id="
         + obj.user + "&lang=en-us&format=json",
       dataType: "jsonp",
-      crossDomain: true,
       jsonp: 'jsoncallback',
       success: function(data){
         var output = [];
@@ -620,7 +617,6 @@
              + "jsonp",
       dataType: "jsonp",
       jsonp: 'jsonp',
-      crossDomain: true,
       success: function(data){
         var output = [];
 
