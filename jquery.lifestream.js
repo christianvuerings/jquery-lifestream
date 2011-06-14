@@ -713,7 +713,8 @@
     }
 
     $.ajax({
-      url: "http://gdata.youtube.com/feeds/api/users/" + obj.user + "/favorites?v=2&alt=jsonc",
+      url: "http://gdata.youtube.com/feeds/api/users/" + obj.user
+        + "/favorites?v=2&alt=jsonc",
       success: function(data) {
         if (typeof data === "string") {
           data = $.parseJSON(data);
