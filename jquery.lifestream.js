@@ -34,6 +34,7 @@
       count: settings.list.length,
       items: []
     },
+    itemsettings = jQuery.extend(true, {}, settings),
     finished = function(inputdata){
 
       $.merge(data.items, inputdata);
@@ -66,13 +67,16 @@
     },
     load = function(){
 
+      delete itemsettings.list;
+
       // Run over all the items in the list
       for(var i=0, j=settings.list.length; i<j; i++) {
         var item = settings.list[i];
         if($.fn.lifestream.feeds[item.service] &&
             $.isFunction($.fn.lifestream.feeds[item.service])
             && item.user){
-
+          // You'll be able to get the global settings by using item._settings
+          item._settings = itemsettings;
           $.fn.lifestream.feeds[item.service](item, finished);
         }
       }
