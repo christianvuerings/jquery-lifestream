@@ -22,7 +22,7 @@ Currently supports the following feeds natively:
 * [Youtube](http://youtube.com)
 
 Feel free to fork the project and add your own feeds in.  
-Just send a pull request to [christianv/jquery-lifestream](https://github.com/christianv/jquery-lifestream) when you're finished.
+Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] when you're finished.
 
 ## Usage
 
@@ -76,10 +76,23 @@ $("#lifestream").lifestream({
 Each item should have a _service_ and a _user_.  
 For more information about each _service_, check out the [source code][examplesource] of the [example page][example].
 
-## Add your own feed
+## Commit to the project
+
+### Add your own feed
 
 Adding in your own feed is pretty easy.  
 Have a look at [this commit](https://github.com/christianv/jquery-lifestream/commit/529a06db159b4123ee3b2cc604f3a3ed698c6e9a) which adds support for the last.fm feed.
+
+### How to commit?
+
+1. Push the finished code to your own remote repository.
+2. Send a pull request to [christianv/jquery-lifestream][jquery-lifestream].
+
+### Code Style Guidelines
+
+* Indentation: 2 spaces
+* Max column width: 78 characters
+* Trailing spaces: not allowed
 
 ## Ideas
 Stuff that isn"t implemented yet, but would be nice to have:
@@ -109,6 +122,7 @@ Places on the web where this plug-in got mentioned:
 * 0.0.1 Initial version
 
 
+[jquery-lifestream]: https://github.com/christianv/jquery-lifestream
 [melifestream]: http://christianv.github.com/jquery-lifestream/me/
 [example]: http://christianv.github.com/jquery-lifestream/example.html 
 "Example page"
