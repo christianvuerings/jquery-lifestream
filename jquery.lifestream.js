@@ -709,12 +709,10 @@
     }
 
     $.ajax({
-      url: "http://gdata.youtube.com/feeds/api/users/" + obj.user
+      url: "http://gdata.youtube.com/feeds/api/users/" + obj.user 
         + "/favorites?v=2&alt=jsonc",
+      dataType: 'jsonp',
       success: function(data) {
-        if (typeof data === "string") {
-          data = $.parseJSON(data);
-        }
         callback(parseYoutube(data));
       }
     });
