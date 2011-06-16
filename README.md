@@ -93,6 +93,10 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 * Indentation: 2 spaces
 * Max column width: 78 characters
 * Trailing spaces: not allowed
+* We use the following spacing rules:
+``` javascript
+for (var i = 0, j = length; i < j; i++) {
+```
 
 ## Ideas
 Stuff that isn"t implemented yet, but would be nice to have:
