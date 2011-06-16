@@ -49,20 +49,20 @@
           }
       });
 
-      var div = $('<ul class="' + settings.classname + '"/>'),
+      var ul = $('<ul class="' + settings.classname + '"/>'),
       length = (data.items.length < settings.limit)
         ? data.items.length
         : settings.limit
 
       for(var i = 0, j=length; i<j; i++){
         if(data.items[i].html){
-          div.append('<li class="'+ settings.classname + "-"
+          ul.append('<li class="'+ settings.classname + "-"
             + data.items[i].service + '">'
             + data.items[i].html + "</li>");
         }
       }
 
-      outputElement.html(div);
+      outputElement.html(ul);
 
     },
     load = function(){
