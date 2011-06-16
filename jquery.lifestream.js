@@ -439,12 +439,16 @@
       // Github has several syntaxes for create tag events
       else if (status.type === "CreateEvent" &&
                (status.payload.ref_type === "tag" ||
+                status.payload.ref_type === "branch" ||
                 status.payload.object === "tag")){
         var repo = returnRepo(status),
+            type = status.payload.ref_type
+                 ? status.payload.ref_type
+                 : status.payload.object;
             name = status.payload.ref
                  ? status.payload.ref
                  : status.payload.object_name;
-        output += 'created tag'
+        output += 'created ' + type
           +' <a href="' + status.url + '">'
           + name
           + '</a> for '
@@ -454,7 +458,7 @@
       else if (status.type === "CreateEvent"){
         var name = (status.payload.object_name === "null")
           ? status.payload.name
-          : status.payload.object_name
+          : status.payload.object_name;
         output += 'created ' + status.payload.object
           +' <a href="' + status.url + '">'
           + name
