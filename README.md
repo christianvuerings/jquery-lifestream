@@ -22,6 +22,7 @@ Currently supports the following feeds natively:
 * [Stackoverflow](http://stackoverflow.com)
 * [Tumblr](http://tumblr.com)
 * [Twitter](http://twitter.com)
+* [Vimeo](http://vimeo.com)
 * [Youtube](http://youtube.com)
 
 Feel free to fork the project and add your own feeds in.  
@@ -118,6 +119,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.13 Vimeo support
 * 0.0.12 Reddit support
 * 0.0.11 Tumblr support
 * 0.0.10 DeviantART support
