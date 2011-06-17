@@ -665,6 +665,61 @@
 
   };
 
+  $.fn.lifestream.feeds.reddit = function(obj, callback){
+
+    /**
+     * Parsed one item from the Reddit API.
+     * item.kind == t1 is a reply, t2 is a new thread
+     */
+    var parseRedditItem = function(item){
+      // t1 = reply, t3 = new thread
+      var output="", subreddit_link = "http://www.reddit.com/r/" + item.data.subreddit;
+      var score = item.data.ups - item.data.downs;
+      score = (score > 0) ? "+" + score : score;
+	  if (item.kind === "t1") {
+	    var thread_link = "http://www.reddit.com/r/" + item.data.subreddit + "/comments/"
+      				+ item.data.link_id.substring(3) + "/u/" + item.data.name.substring(3) + "?context=3";
+        output += '<a href="' + thread_link + '">commented (' + score +')</a> ';
+      }
+      else if (item.kind === "t3") {
+        output += '<a href="http://www.reddit.com' + item.data.permalink + '">created new thread (' + score +')</a> ';
+      }
+	  output += ' in <a href="' + subreddit_link + '">/r/' + item.data.subreddit + '</a>';
+      return output;
+    },
+    /**
+     * Reddit date's are simple epochs.
+     * seconds*1000 = milliseconds
+     */
+    convertDate = function(date){
+      return new Date(date * 1000);
+    }
+
+    $.ajax({
+      url: "http://www.reddit.com/user/" + obj.user
+             + ".json",
+      dataType: "jsonp",
+      jsonp: 'jsonp',
+      success: function(data){
+        var output = [];
+
+        if(data && data.data && data.data.children && data.data.children.length > 0){
+          for(var i=0, j=data.data.children.length; i<j; i++){
+            var item = data.data.children[i];
+            output.push({
+              date: convertDate(item.data.created),
+              service: obj.service,
+              html: parseRedditItem(item)
+            });
+          }
+        };
+
+        callback(output);
+      }
+    });
+
+  };
+
   $.fn.lifestream.feeds.tumblr = function(obj, callback){
     /**
      * get title text
