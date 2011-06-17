@@ -11,6 +11,7 @@ Check out [the example][example] or create [your own lifestream][melifestream] i
 Currently supports the following feeds natively:
 
 * [Delicious](http://delicious.com)
+* [DeviantART](http://deviantart.com)
 * [Dribbble](http://dribbble.com)
 * [Flickr](http://flickr.com)
 * [Foursquare](http://foursquare.com)
@@ -115,6 +116,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.10 DeviantART support
 * 0.0.9 Foursquare support
 * 0.0.8 Add support for Github tags
 * 0.0.7 Dribbble support

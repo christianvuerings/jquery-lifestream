@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.0.9
+ * @version 0.0.10
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -288,6 +288,30 @@
       }
     });
 
+  };
+
+  $.fn.lifestream.feeds.deviantart = function(obj, callback) {
+    $.ajax({
+      url: createYqlUrl(
+        'select title,link,pubDate from rss where url="' + obj.user +
+        '" | unique(field="title")'
+      ),
+      dataType: 'jsonp',
+      success: function(resp) {
+        var output = [],
+          items = resp.query.results.item,
+          item;
+        for (var i = 0, n = items.length; i < n; ++i) {
+          item = items[i];
+          output.push({
+            date: new Date(item.pubDate),
+            service: obj.service,
+            html: 'posted <a href="' + item.link + '">' + item.title + '</a>'
+          });
+        }
+        callback(output);
+      }
+    });
   };
 
   $.fn.lifestream.feeds.dribbble = function(obj, callback){
@@ -721,30 +745,6 @@
       }
     });
 
-  };
-  
-  $.fn.lifestream.feeds.deviantart = function(obj, callback) {
-    $.ajax({
-      url: createYqlUrl(
-        'select title,link,pubDate from rss where url="' + obj.user + 
-        '" | unique(field="title")'
-      ),
-      dataType: 'jsonp',
-      success: function(resp) {
-        var output = [],
-          items = resp.query.results.item,
-          item;
-        for (var i = 0, n = items.length; i < n; ++i) {
-          item = items[i];
-          output.push({
-            date: new Date(item.pubDate),
-            service: obj.service,
-            html: 'posted <a href="' + item.link + '">' + item.title + '</a>'
-          });
-        }
-        callback(output);
-      }
-    });
   };
 
 })( jQuery );
