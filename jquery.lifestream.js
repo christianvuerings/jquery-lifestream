@@ -821,7 +821,45 @@
     });
 
   };
-
+  
+  $.fn.lifestream.feeds.vimeo = function (obj, callback) {
+    
+    var parseVimeoItem = function (item) {
+      return 'published the video <a href="' + item.url + '" title="' + item.description + '">' + item.title + '</a>'
+    },
+    parseVimeo = function (input) {
+      var output = [];
+      
+      if (input) {
+        var dateParams;
+        
+        $.each(input, function (i, item) {
+          dateParams = item.upload_date.replace(/(-| |:)/g, ',');
+          
+          output.push({
+            date: new Date(dateParams),
+            service: obj.service,
+            html: parseVimeoItem(item)
+          })
+        });
+      }
+      
+      return output;
+    }
+    
+    $.ajax({
+      url: "http://vimeo.com/api/v2/" + obj.user + "/videos.json",
+      dataType: "jsonp",
+      crossDomain: true,
+      success: function (data) {
+        if (typeof data === "string") {
+          data = $.parseJSON(data);
+        }
+        callback(parseVimeo(data));
+      }
+    });
+  };
+  
   $.fn.lifestream.feeds.youtube = function(obj, callback){
 
     var parseYoutubeItem = function(item){
