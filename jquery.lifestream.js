@@ -724,30 +724,27 @@
   };
   
   $.fn.lifestream.feeds.deviantart = function(obj, callback) {
-		$.ajax({
+    $.ajax({
       url: createYqlUrl(
-        //'select title,link,pubDate from rss where url="' + obj.user + '" | unique(field="title")'
-        //'select title,link,pubdate from rss where url="' + obj.user + '"'
-        'select * from rss where url="' + obj.user + '"'
+        'select title,link,pubDate from rss where url="' + obj.user + 
+        '" | unique(field="title")'
       ),
-			dataType: 'jsonp',
-			success: function(resp) {
-        console.log(resp);
-				var output = [],
-            items = resp.query.results.item,
-            item
-        ;
-				for (var i = 0, n = items.length; i < n; ++i) {
-						item = items[i];
-						output.push({
-							date: new Date(item.pubDate),
-							service: obj.service,
-							html: 'posted <a href="' + item.link + '">' + item.title/*[0]*/ + '</a>'
-						});
-					}
-				callback(output);
-			}
-		});
-	};
+      dataType: 'jsonp',
+      success: function(resp) {
+        var output = [],
+          items = resp.query.results.item,
+          item;
+        for (var i = 0, n = items.length; i < n; ++i) {
+          item = items[i];
+          output.push({
+            date: new Date(item.pubDate),
+            service: obj.service,
+            html: 'posted <a href="' + item.link + '">' + item.title + '</a>'
+          });
+        }
+        callback(output);
+      }
+    });
+  };
 
 })( jQuery );
