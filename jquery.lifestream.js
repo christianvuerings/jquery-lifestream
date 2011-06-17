@@ -34,6 +34,7 @@
       count: settings.list.length,
       items: []
     },
+    itemsettings = jQuery.extend(true, {}, settings),
     finished = function(inputdata){
 
       $.merge(data.items, inputdata);
@@ -48,23 +49,25 @@
           }
       });
 
-      var div = $('<ul class="' + settings.classname + '"/>'),
+      var ul = $('<ul class="' + settings.classname + '"/>'),
       length = (data.items.length < settings.limit)
         ? data.items.length
         : settings.limit
 
       for(var i = 0, j=length; i<j; i++){
         if(data.items[i].html){
-          div.append('<li class="'+ settings.classname + "-"
+          ul.append('<li class="'+ settings.classname + "-"
             + data.items[i].service + '">'
             + data.items[i].html + "</li>");
         }
       }
 
-      outputElement.html(div);
+      outputElement.html(ul);
 
     },
     load = function(){
+
+      delete itemsettings.list;
 
       // Run over all the items in the list
       for(var i=0, j=settings.list.length; i<j; i++) {
@@ -72,7 +75,8 @@
         if($.fn.lifestream.feeds[item.service] &&
             $.isFunction($.fn.lifestream.feeds[item.service])
             && item.user){
-
+          // You'll be able to get the global settings by using item._settings
+          item._settings = itemsettings;
           $.fn.lifestream.feeds[item.service](item, finished);
         }
       }
@@ -266,7 +270,6 @@
     $.ajax({
       url: "http://feeds.delicious.com/v2/json/" + obj.user,
       dataType: "jsonp",
-      crossDomain: true,
       success: function(data){
         var output = [];
 
@@ -299,7 +302,6 @@
     $.ajax({
       url: "http://api.dribbble.com/players/" + obj.user + "/shots",
       dataType: "jsonp",
-      crossDomain: true,
       success: function(data){
         var output = [];
 
@@ -333,7 +335,6 @@
       url: "http://api.flickr.com/services/feeds/photos_public.gne?id="
         + obj.user + "&lang=en-us&format=json",
       dataType: "jsonp",
-      crossDomain: true,
       jsonp: 'jsoncallback',
       success: function(data){
         var output = [];
@@ -438,12 +439,16 @@
       // Github has several syntaxes for create tag events
       else if (status.type === "CreateEvent" &&
                (status.payload.ref_type === "tag" ||
+                status.payload.ref_type === "branch" ||
                 status.payload.object === "tag")){
         var repo = returnRepo(status),
+            type = status.payload.ref_type
+                 ? status.payload.ref_type
+                 : status.payload.object;
             name = status.payload.ref
                  ? status.payload.ref
                  : status.payload.object_name;
-        output += 'created tag'
+        output += 'created ' + type
           +' <a href="' + status.url + '">'
           + name
           + '</a> for '
@@ -453,7 +458,7 @@
       else if (status.type === "CreateEvent"){
         var name = (status.payload.object_name === "null")
           ? status.payload.name
-          : status.payload.object_name
+          : status.payload.object_name;
         output += 'created ' + status.payload.object
           +' <a href="' + status.url + '">'
           + name
@@ -616,7 +621,6 @@
              + "jsonp",
       dataType: "jsonp",
       jsonp: 'jsonp',
-      crossDomain: true,
       success: function(data){
         var output = [];
 
@@ -709,11 +713,10 @@
     }
 
     $.ajax({
-      url: "http://gdata.youtube.com/feeds/api/users/" + obj.user + "/favorites?v=2&alt=jsonc",
+      url: "http://gdata.youtube.com/feeds/api/users/" + obj.user
+        + "/favorites?v=2&alt=jsonc",
+      dataType: 'jsonp',
       success: function(data) {
-        if (typeof data === "string") {
-          data = $.parseJSON(data);
-        }
         callback(parseYoutube(data));
       }
     });
