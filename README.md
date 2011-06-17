@@ -19,6 +19,7 @@ Currently supports the following feeds natively:
 * [Google Reader](http://google.com/reader)
 * [Last.fm](http://last.fm)
 * [Stackoverflow](http://stackoverflow.com)
+* [Tumblr](http://tumblr.com)
 * [Twitter](http://twitter.com)
 * [Youtube](http://youtube.com)
 
@@ -116,6 +117,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.11 Tumblr support
 * 0.0.10 DeviantART support
 * 0.0.9 Foursquare support
 * 0.0.8 Add support for Github tags
