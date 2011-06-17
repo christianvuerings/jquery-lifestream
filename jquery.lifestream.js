@@ -719,4 +719,56 @@
 
   };
 
+
+  $.fn.lifestream.feeds.tumblr = function(obj, callback){
+    /**
+     * get title text
+     */
+    var getTitle = function(post){
+      var title = post["regular-title"]
+        || post["quote-text"]
+        || post["conversation-title"]
+        || post["photo-caption"]
+        || post["video-caption"]
+        || post["audio-caption"]
+        || post["regular-body"]
+        || post["link-text"]
+        || post["type"]
+        || "";
+
+      // remove tags
+      title = title.replace( /\<.+?\>/gi, "");
+      return title;
+    },
+    /**
+     * Parse the input from tumblr
+     */
+    parseTumblr = function(input){
+      var output = [];
+      if(input.query && input.query.count && input.query.count >0){
+        $.each(input.query.results.posts.post, function(i, post) {
+          output.push({
+            date: new Date(post.date),
+            service: obj.service,
+            html: 'posted the ' + post.type + ' <a href="' + post.url
+              + '">' + getTitle(post) + '</a>'
+          });
+        });
+      }
+      return output;
+    };
+
+    $.ajax({
+      url: createYqlUrl('select *'
+        + ' from tumblr.posts where username="'+ obj.user +'"'),
+      dataType: 'jsonp',
+      success: function(data) {
+        callback(parseTumblr(data));
+      }
+    });
+
+  };
+
+
+
 })( jQuery );
