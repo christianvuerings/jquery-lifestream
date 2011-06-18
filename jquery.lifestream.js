@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.0.13
+ * @version 0.0.14
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -324,7 +324,7 @@
   $.fn.lifestream.feeds.dribbble = function(obj, callback){
 
     var parseDribbbleItem = function(item){
-      var output = 'posted the shot <a href="' + item.url + '">'
+      var output = 'posted a shot <a href="' + item.url + '">'
         + item.title + "</a>";
 
       return output;
@@ -682,6 +682,40 @@
 
   };
 
+  $.fn.lifestream.feeds.slideshare = function (obj, callback) {
+
+    var parseSlideshare = function (input) {
+      var output = [], list, i = 0, j, item;
+
+      if (input.query && input.query.count && input.query.count > 0) {
+        list = input.query.results.rss.channel.item;
+        j = list.length;
+        for ( ; i < j; i++) {
+          item = list[i];
+
+          output.push({
+            date: new Date(item.pubDate),
+            service: obj.service,
+            html: 'uploaded a presentation <a href="' + item.link + '">'
+              + item.title + '</a>'
+          });
+
+        }
+      }
+
+      return output;
+    };
+
+    $.ajax({
+      url: createYqlUrl('select * from xml where '
+        + 'url="http://www.slideshare.net/rss/user/' + obj.user + '"'),
+      dataType: "jsonp",
+      success: function (data) {
+        callback(parseSlideshare(data));
+      }
+    });
+  };
+
   $.fn.lifestream.feeds.stackoverflow = function(obj, callback){
 
     var parseStackoverflowItem = function(item){
@@ -761,7 +795,7 @@
       return {
         date: new Date(post.date),
         service: obj.service,
-        html: 'posted the ' + post.type + ' <a href="' + post.url
+        html: 'posted a ' + post.type + ' <a href="' + post.url
           + '">' + getTitle(post) + '</a>'
       };
     },
@@ -846,7 +880,7 @@
   $.fn.lifestream.feeds.vimeo = function (obj, callback) {
 
     var parseVimeoItem = function (item) {
-      return 'published the video <a href="' + item.url + '" title="'
+      return 'published a video <a href="' + item.url + '" title="'
         + item.description.replace(/"/g, "'").replace( /\<.+?\>/gi, "")
         + '">' + item.title + '</a>';
     },

@@ -19,6 +19,7 @@ Currently supports the following feeds natively:
 * [Google Reader](http://google.com/reader)
 * [Last.fm](http://last.fm)
 * [Reddit](http://reddit.com)
+* [Slideshare](http://slideshare.com)
 * [Stackoverflow](http://stackoverflow.com)
 * [Tumblr](http://tumblr.com)
 * [Twitter](http://twitter.com)
@@ -119,6 +120,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.14 Slideshare support
 * 0.0.13 Vimeo support
 * 0.0.12 Reddit support
 * 0.0.11 Tumblr support
