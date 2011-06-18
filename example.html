@@ -74,12 +74,17 @@
           "service": "delicious",
           "user": "denbuzze"
         },
-        // The value for user must be the RSS url of a DA gallery:
-        // Go to the gallery page, find the RSS feed icon, copy its link address and
-        // past here
+        // If you want to fetch your main gallery use your DeviantART nickname.
+        //
+        // To fetch a gallery folder, add the id after a slash character.
+        // Example:
+        // Pick the gallery folder url: e.g.
+        // http://giuliom.deviantart.com/gallery/30227724 .
+        // Append the id, which is 30227724, to your nick obtaining
+        // something like 'mgiulio/30227724'
         {
           service: 'deviantart',
-          user: 'http://backend.deviantart.com/rss.xml?q=gallery%3Agiuliom%2F15071412&type=deviation'
+          user: 'mgiulio'
         },
         {
           "service": "dribbble",
