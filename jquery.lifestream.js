@@ -671,6 +671,38 @@
 
   };
 
+  $.fn.lifestream.feeds.slideshare = function (obj, callback) {
+
+    parseSlideshare = function (input) {
+      var output = [];
+
+      if (input.query && input.query.count && input.query.count > 0) {
+        var list = input.query.results.rss.channel.item;
+        
+        for (var i = 0, j = list.length; i < j; i++) {
+          var item = list[i];
+          
+          output.push({
+            date: new Date(item.pubDate),
+            service: obj.service,
+            html: 'uploaded the presentation <a href="' + item.link + '">' + item.title + '</a>'
+          })
+        }
+      }
+
+      return output;
+    }
+
+    $.ajax({
+      url: createYqlUrl('select * from xml where url="http://www.slideshare.net/rss/user/'
+        + obj.user + '"'),
+      dataType: "jsonp",
+      success: function (data) {
+        callback(parseSlideshare(data));
+      }
+    });
+  };
+  
   $.fn.lifestream.feeds.stackoverflow = function(obj, callback){
 
     var parseStackoverflowItem = function(item){
