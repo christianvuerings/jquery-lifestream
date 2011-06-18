@@ -5,6 +5,7 @@
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
  */
+/*globals jQuery */
 (function( $ ){
 
   /**
@@ -52,9 +53,10 @@
       var ul = $('<ul class="' + settings.classname + '"/>'),
       length = (data.items.length < settings.limit)
         ? data.items.length
-        : settings.limit
+        : settings.limit,
+      i=0;
 
-      for(var i = 0, j=length; i<j; i++){
+      for( ; i<length; i++){
         if(data.items[i].html){
           ul.append('<li class="'+ settings.classname + "-"
             + data.items[i].service + '">'
@@ -67,10 +69,12 @@
     },
     load = function(){
 
+      var i=0, j=settings.list.length;
+
       delete itemsettings.list;
 
       // Run over all the items in the list
-      for(var i=0, j=settings.list.length; i<j; i++) {
+      for( ; i<j; i++) {
         var item = settings.list[i];
         if($.fn.lifestream.feeds[item.service] &&
             $.isFunction($.fn.lifestream.feeds[item.service])
@@ -80,7 +84,7 @@
           $.fn.lifestream.feeds[item.service](item, finished);
         }
       }
-    }
+    };
 
     load();
 
@@ -170,7 +174,7 @@
 
       // Initialize options.
       for ( i in default_options ) {
-        if ( options[ i ] === undefined ) {
+        if ( default_options.hasOwnProperty(i)&& options[ i ] === undefined ){
           options[ i ] = default_options[ i ];
         }
       }
@@ -192,7 +196,7 @@
           // If no changes are made, we don't want to loop forever!
           link_last = link;
 
-          quote_end = link.substr( -1 )
+          quote_end = link.substr( -1 );
           quote_begin = quotes[ quote_end ];
 
           // Ending quote character?
@@ -238,7 +242,7 @@
 
         // Push massaged link onto the array
         parts.push([ link, href ]);
-      };
+      }
 
       // Push remaining non-link text onto the array.
       parts.push([ txt.substr( idx_prev ) ]);
@@ -252,7 +256,7 @@
       return html || txt;
     };
 
-  })();
+  }());
 
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
@@ -265,16 +269,17 @@
         + item.d + '</a>';
 
       return output;
-    }
+    };
 
     $.ajax({
       url: "http://feeds.delicious.com/v2/json/" + obj.user,
       dataType: "jsonp",
       success: function(data){
-        var output = [];
+        var output = [], i=0, j;
 
         if(data && data.length && data.length > 0){
-          for(var i=0, j=data.length; i<j; i++){
+          j = data.length;
+          for( ; i<j; i++){
             var item = data[i];
             output.push({
               date: new Date(item.dt),
@@ -300,8 +305,10 @@
       success: function(resp) {
         var output = [],
           items = resp.query.results.item,
-          item;
-        for (var i = 0, n = items.length; i < n; ++i) {
+          item,
+          i = 0,
+          j = items.length;
+        for (; i < j; ++i) {
           item = items[i];
           output.push({
             date: new Date(item.pubDate),
@@ -321,16 +328,17 @@
         + item.title + "</a>";
 
       return output;
-    }
+    };
 
     $.ajax({
       url: "http://api.dribbble.com/players/" + obj.user + "/shots",
       dataType: "jsonp",
       success: function(data){
-        var output = [];
+        var output = [], i = 0, j;
 
         if(data && data.total){
-          for(var i=0, j=data.shots.length; i<j; i++){
+          j = data.shots.length;
+          for( ; i<j; i++){
             var item = data.shots[i];
             output.push({
               date: new Date(item.created_at),
@@ -353,7 +361,7 @@
         + item.title + "</a>";
 
       return output;
-    }
+    };
 
     $.ajax({
       url: "http://api.flickr.com/services/feeds/photos_public.gne?id="
@@ -361,10 +369,11 @@
       dataType: "jsonp",
       jsonp: 'jsoncallback',
       success: function(data){
-        var output = [];
+        var output = [], i = 0, j;
 
         if(data && data.items && data.items.length > 0){
-          for(var i=0, j=data.items.length; i<j; i++){
+          j = data.items.length;
+          for( ; i<j; i++){
             var item = data.items[i];
             output.push({
               date: new Date(item.published),
@@ -389,10 +398,11 @@
       return output;
     },
     parseFoursquare = function(input){
-      var output = [];
+      var output = [], i = 0, j;
 
       if(input.query && input.query.count && input.query.count >0){
-        for(var i=0, j=input.query.count; i<j; i++){
+        j = input.query.count;
+        for( ; i<j; i++){
           var status = input.query.results.item[i];
           output.push({
             date: new Date(status.pubDate),
@@ -403,7 +413,7 @@
       }
 
       return output;
-    }
+    };
 
     $.ajax({
       url: createYqlUrl('select * from rss where url='
@@ -424,14 +434,15 @@
                                   + status.repository.name;
     },
     parseGithubStatus = function(status){
-      var output="";
+      var output = "", name, repo, title, type;
       if(status.type === "PushEvent"){
-        var title = "", repo=returnRepo(status);
+        title = "";
+        repo = returnRepo(status);
 
         if(status.payload && status.payload.shas && status.payload.shas.json
           && status.payload.shas.json[2]){
             title = status.payload.shas.json[2] + " by "
-                  + status.payload.shas.json[3]
+                  + status.payload.shas.json[3];
         }
         output += '<a href="' + status.url + '" title="'+ title
           +'">pushed</a> to '
@@ -439,7 +450,7 @@
           +'">' + repo + "</a>";
       }
       else if (status.type === "GistEvent"){
-        var title = status.payload.desc || "";
+        title = status.payload.desc || "";
         output += status.payload.action + 'd '
             + '<a href="'+status.payload.url
             + '" title ="' + title
@@ -447,14 +458,14 @@
       }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {
-        var repo = returnRepo(status);
+        repo = returnRepo(status);
         output += '<a href="' + status.url + '">commented</a> on '
           + '<a href="http://github.com/'+ repo
           +'">' + repo + "</a>";
       }
       else if (status.type === "PullRequestEvent"){
-        var repo = status.payload.repo || status.repository.owner + "/"
-                                        + status.repository.name;
+        repo = status.payload.repo || status.repository.owner + "/"
+                                    + status.repository.name;
         output += '<a href="' + status.url + '">' + status.payload.action
           + '</a> pull request on '
           + '<a href="http://github.com/'+ repo
@@ -465,13 +476,9 @@
                (status.payload.ref_type === "tag" ||
                 status.payload.ref_type === "branch" ||
                 status.payload.object === "tag")){
-        var repo = returnRepo(status),
-            type = status.payload.ref_type
-                 ? status.payload.ref_type
-                 : status.payload.object;
-            name = status.payload.ref
-                 ? status.payload.ref
-                 : status.payload.object_name;
+        repo = returnRepo(status);
+        type = status.payload.ref_type || status.payload.object;
+        name = status.payload.ref || status.payload.object_name;
         output += 'created ' + type
           +' <a href="' + status.url + '">'
           + name
@@ -480,7 +487,7 @@
           +'">' + repo + "</a>";
       }
       else if (status.type === "CreateEvent"){
-        var name = (status.payload.object_name === "null")
+        name = (status.payload.object_name === "null")
           ? status.payload.name
           : status.payload.object_name;
         output += 'created ' + status.payload.object
@@ -499,10 +506,11 @@
 
     },
     parseGithub = function(input){
-      var output = [];
+      var output = [], i = 0, j;
 
       if(input.query && input.query.count && input.query.count >0){
-        for(var i=0, j=input.query.count; i<j; i++){
+        j = input.query.count;
+        for( ; i<j; i++){
           var status = input.query.results.json[i].json;
           output.push({
             date: new Date(status.created_at),
@@ -534,17 +542,18 @@
     var parseReaderEntry = function(entry){
       return 'starred post <a href="' + entry.link.href + '">'
         + entry.title.content
-        + "</a>"
+        + "</a>";
     },
     /**
      * Parse the input from google reader
      */
     parseReader = function(input){
-      var output = [];
+      var output = [], list, i = 0, j;
 
       if(input.query && input.query.count && input.query.count >0){
-        var list = input.query.results.feed.entry;
-        for(var i=0, j=list.length; i<j; i++){
+        list = input.query.results.feed.entry;
+        j = list.length;
+        for( ; i<j; i++){
           var entry = list[i];
           output.push({
             date: new Date(parseInt(entry["crawl-timestamp-msec"], 10)),
@@ -580,13 +589,14 @@
       return output;
     },
     parseLastfm = function(input){
-      var output = [];
+      var output = [], list, i = 0, j;
 
       if(input.query && input.query.count && input.query.count > 0
           && input.query.results.lovedtracks
           && input.query.results.lovedtracks.track){
-        var list = input.query.results.lovedtracks.track;
-        for(var i=0, j=list.length; i<j; i++){
+        list = input.query.results.lovedtracks.track;
+        j = list.length;
+        for( ; i<j; i++){
           var entry = list[i];
           output.push({
             date: new Date(parseInt((entry.date.uts * 1000), 10)),
@@ -624,7 +634,7 @@
         score = item.data.ups - item.data.downs;
       score = (score > 0) ? "+" + score : score;
 	    if (item.kind === "t1") {
-	      var thread_link = "http://www.reddit.com/r/" + item.data.subreddit
+	      thread_link = "http://www.reddit.com/r/" + item.data.subreddit
 	            + "/comments/" + item.data.link_id.substring(3) + "/u/"
 	            + item.data.name.substring(3) + "?context=3";
         output += '<a href="' + thread_link + '">commented ('
@@ -644,18 +654,19 @@
      */
     convertDate = function(date){
       return new Date(date * 1000);
-    }
+    };
 
     $.ajax({
       url: "http://www.reddit.com/user/" + obj.user + ".json",
       dataType: "jsonp",
       jsonp:"jsonp",
       success: function(data){
-        var output = [];
+        var output = [], i = 0, j;
 
         if(data && data.data && data.data.children
             && data.data.children.length > 0){
-          for(var i=0, j=data.data.children.length; i<j; i++){
+          j = data.data.children.length;
+          for( ; i<j; i++){
             var item = data.data.children[i];
             output.push({
               date: convertDate(item.data.created),
@@ -663,7 +674,7 @@
               html: parseRedditItem(item)
             });
           }
-        };
+        }
 
         callback(output);
       }
@@ -698,7 +709,7 @@
     },
     convertDate = function(date){
       return new Date(date * 1000);
-    }
+    };
 
     $.ajax({
       url: "http://api.stackoverflow.com/1.1/users/" + obj.user
@@ -707,10 +718,11 @@
       dataType: "jsonp",
       jsonp: 'jsonp',
       success: function(data){
-        var output = [];
+        var output = [], i = 0, j;
 
         if(data && data.total && data.total > 0 && data.user_timelines){
-          for(var i=0, j=data.user_timelines.length; i<j; i++){
+          j = data.user_timelines.length;
+          for( ; i<j; i++){
             var item = data.user_timelines[i];
             output.push({
               date: convertDate(item.creation_date),
@@ -718,7 +730,7 @@
               html: parseStackoverflowItem(item)
             });
           }
-        };
+        }
 
         callback(output);
       }
@@ -739,27 +751,35 @@
         || post["audio-caption"]
         || post["regular-body"]
         || post["link-text"]
-        || post["type"]
+        || post.type
         || "";
 
       // remove tags
-      title = title.replace( /\<.+?\>/gi, "");
-      return title;
+      return title.replace( /\<.+?\>/gi, " ");
     },
-    /**
-     * Parse the input from tumblr
-     */
+    createTumblrOutput = function(obj, post){
+      return {
+        date: new Date(post.date),
+        service: obj.service,
+        html: 'posted the ' + post.type + ' <a href="' + post.url
+          + '">' + getTitle(post) + '</a>'
+      };
+    },
     parseTumblr = function(input){
-      var output = [];
-      if(input.query && input.query.count && input.query.count >0){
-        $.each(input.query.results.posts.post, function(i, post) {
-          output.push({
-            date: new Date(post.date),
-            service: obj.service,
-            html: 'posted the ' + post.type + ' <a href="' + post.url
-              + '">' + getTitle(post) + '</a>'
-          });
-        });
+      var output = [], i = 0, j, post;
+      if(input.query && input.query.count && input.query.count > 0){
+        // If a user only has one post, post is a plain object, otherwise it
+        // is an array
+        if ( $.isArray(input.query.results.posts.post) ){
+          j = input.query.results.posts.post.length;
+          for( ; i < j; i++){
+            post = input.query.results.posts.post[i];
+            output.push(createTumblrOutput(obj, post));
+          }
+        }
+        else if ( $.isPlainObject(input.query.results.posts.post) ) {
+          output.push(createTumblrOutput(obj,input.query.results.posts.post));
+        }
       }
       return output;
     };
@@ -796,10 +816,11 @@
      * Parse the input from twitter
      */
     parseTwitter = function(input){
-      var output = [];
+      var output = [], i = 0, j;
 
       if(input.query && input.query.count && input.query.count >0){
-        for(var i=0, j=input.query.count; i<j; i++){
+        j = input.query.count;
+        for( ; i<j; i++){
           var status = input.query.results.statuses[i].status;
           output.push({
             date: new Date(status.created_at),
@@ -830,23 +851,22 @@
         + '">' + item.title + '</a>';
     },
     parseVimeo = function (input) {
-      var output = [];
+      var output = [], i = 0, j, item;
 
       if (input) {
-        var dateParams;
-
-        $.each(input, function (i, item) {
-
+        j = input.length;
+        for( ; i < j; i++){
+          item = input[i];
           output.push({
             date: new Date(item.upload_date),
             service: obj.service,
             html: parseVimeoItem(item)
-          })
-        });
+          });
+        }
       }
 
       return output;
-    }
+    };
 
     $.ajax({
       url: "http://vimeo.com/api/v2/" + obj.user + "/videos.json",
@@ -864,24 +884,25 @@
     var parseYoutubeItem = function(item){
       return ' favorited <a href="' + item.video.player["default"] + '"'
         + ' title="' + item.video.description + '">'
-        + item.video.title + "</a>"
+        + item.video.title + "</a>";
     },
     parseYoutube = function(input){
-      var output = [];
+      var output = [], i = 0, j, item;
 
       if(input.data && input.data.items){
-        for(var i=0, j=input.data.items.length; i<j; i++){
-          var item = input.data.items[i];
+        j = input.data.items.length;
+        for( ; i<j; i++){
+          item = input.data.items[i];
           output.push({
             date: new Date(item.created),
             service: obj.service,
             html: parseYoutubeItem(item)
-          })
+          });
         }
       }
 
       return output;
-    }
+    };
 
     $.ajax({
       url: "http://gdata.youtube.com/feeds/api/users/" + obj.user
@@ -894,4 +915,4 @@
 
   };
 
-})( jQuery );
+}( jQuery ));
