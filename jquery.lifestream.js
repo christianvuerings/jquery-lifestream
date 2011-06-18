@@ -291,10 +291,14 @@
   };
 
   $.fn.lifestream.feeds.deviantart = function(obj, callback) {
+    var parts = obj.user.split('/');
     $.ajax({
       url: createYqlUrl(
-        'select title,link,pubDate from rss where url="' + obj.user +
-        '" | unique(field="title")'
+        'select title,link,pubDate from rss where '
+        + 'url="http://backend.deviantart.com/rss.xml?q=gallery%3A' 
+        + parts[0] + ((parts[1])? '%2F' + parts[1] : '') 
+        + '&type=deviation'
+        + '" | unique(field="title")'
       ),
       dataType: 'jsonp',
       success: function(resp) {
@@ -623,10 +627,10 @@
         subreddit_link = "http://www.reddit.com/r/" + item.data.subreddit,
         score = item.data.ups - item.data.downs;
       score = (score > 0) ? "+" + score : score;
-	    if (item.kind === "t1") {
-	      var thread_link = "http://www.reddit.com/r/" + item.data.subreddit
-	            + "/comments/" + item.data.link_id.substring(3) + "/u/"
-	            + item.data.name.substring(3) + "?context=3";
+      if (item.kind === "t1") {
+        var thread_link = "http://www.reddit.com/r/" + item.data.subreddit
+              + "/comments/" + item.data.link_id.substring(3) + "/u/"
+              + item.data.name.substring(3) + "?context=3";
         output += '<a href="' + thread_link + '">commented ('
               + score +')</a> ';
       }
@@ -634,8 +638,8 @@
         output += '<a href="http://www.reddit.com' + item.data.permalink
                 + '">created new thread (' + score +')</a> ';
       }
-	    output += ' in <a href="' + subreddit_link + '">/r/'
-	           + item.data.subreddit + '</a>';
+      output += ' in <a href="' + subreddit_link + '">/r/'
+             + item.data.subreddit + '</a>';
       return output;
     },
     /**
