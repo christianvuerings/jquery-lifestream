@@ -626,6 +626,41 @@
 
   };
 
+  $.fn.lifestream.feeds.pinboard = function (obj, callback) {
+
+      var parsePinboard = function (input) {
+        var output = [], list, i = 0, j, item;
+
+        if (input.query && input.query.count && input.query.count > 0) {
+          list = input.query.results.RDF.item;
+          j = list.length;
+          for ( ; i < j; i++) {
+            item = list[i];
+
+            output.push({
+              date: new Date(item.date),
+              service: obj.service,
+              html: 'added bookmark <a href="' + item.link + '">'
+                + item.title + '</a>'
+            });
+
+          }
+        }
+
+        return output;
+      };
+
+      $.ajax({
+        url: createYqlUrl('select * from xml where '
+          + 'url="http://feeds.pinboard.in/rss/u:' + obj.user + '"'),
+        dataType: "jsonp",
+        success: function (data) {
+          callback(parsePinboard(data));
+        }
+      });
+
+    };
+
   $.fn.lifestream.feeds.reddit = function(obj, callback){
 
     /**
