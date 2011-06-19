@@ -260,6 +260,38 @@
 
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
+  $.fn.lifestream.feeds.dailymotion = function (obj, callback) {
+
+      var parseDailymotion = function (input) {
+        var output = [], list, i = 0, j, item;
+
+        if (input.query && input.query.count && input.query.count > 0) {
+          list = input.query.results.rss.channel.item;
+          j = list.length;
+          for ( ; i < j; i++) {
+            item = list[i];
+
+            output.push({
+              date: new Date(item.pubDate),
+              service: obj.service,
+              html: 'uploaded a video <a href="' + item.link + '">' + item.title + '</a>'
+            })
+          }
+        }
+
+        return output;
+      }
+
+      $.ajax({
+        url: createYqlUrl('select * from xml where url="http://www.dailymotion.com/rss/user/'
+          + obj.user + '"'),
+        dataType: "jsonp",
+        success: function (data) {
+          callback(parseDailymotion(data));
+        }
+      });
+    };
+
   $.fn.lifestream.feeds.delicious = function(obj, callback){
 
     var parseDeliciousItem = function(item){
