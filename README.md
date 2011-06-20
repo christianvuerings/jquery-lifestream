@@ -10,6 +10,7 @@ Check out [the example][example] or create [your own lifestream][melifestream] i
 
 Currently supports the following feeds natively:
 
+* [Dailymotion](http://dailymotion.com)
 * [Delicious](http://delicious.com)
 * [DeviantART](http://deviantart.com)
 * [Dribbble](http://dribbble.com)
