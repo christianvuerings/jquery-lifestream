@@ -19,6 +19,7 @@ Currently supports the following feeds natively:
 * [Github](http://github.com)
 * [Google Reader](http://google.com/reader)
 * [Last.fm](http://last.fm)
+* [Pinboard](http://pinboard.com)
 * [Reddit](http://reddit.com)
 * [Slideshare](http://slideshare.com)
 * [Stackoverflow](http://stackoverflow.com)
@@ -121,6 +122,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.15 Dailymotion & Pinboard support
 * 0.0.14 Slideshare support
 * 0.0.13 Vimeo support
 * 0.0.12 Reddit support
