@@ -1,5 +1,7 @@
 # jQuery Lifestream Plug-in
 
+![jQuery Lifestream Logo](http://christianv.github.com/jquery-lifestream/design/logo_v1_64.png)
+
 Show a stream of your online activity.  
 Check out [the example][example] or create [your own lifestream][melifestream] instantly.
 
