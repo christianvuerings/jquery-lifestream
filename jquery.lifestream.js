@@ -646,8 +646,8 @@
           else if (title.indexOf('updated entry for') != -1) {
             action = 'updated entry for ';
           }
-          else if (title.indexOf('loving') != -1) {
-            action = 'loving ';
+          else if (title.indexOf('started loving') != -1) {
+            action = 'started loving ';
           }
           else if (title.indexOf('registered') != -1) {
             action = 'registered ';
