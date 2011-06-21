@@ -618,6 +618,62 @@
 
   };
 
+  $.fn.lifestream.feeds.iusethis = function (obj, callback) {
+    var parseIusethis = function (input) {
+      var output = [], list, i = 0, j, item, title, action, substr;
+      
+      if (input.query && input.query.count && input.query.count > 0 && input.query.results.rss.channel.item) {
+        list = input.query.results.rss.channel.item;
+        j = list.length;
+        
+        for ( ; i < j; i++) {
+          item = list[i];
+          title = item.title.replace(obj.user + ' ', '');
+          
+          if (title.indexOf('started using') != -1) {
+            action = 'started using ';
+          }
+          else if (title.indexOf('stopped using') != -1) {
+            action = 'stopped using ';
+          }
+          else if (title.indexOf('Downloaded') != -1) {
+            title = title.replace('Downloaded', 'downloaded');
+            action = 'downloaded ';
+          }
+          else if (title.indexOf('commented on') != -1) {
+            action = 'commented on ';
+          }
+          else if (title.indexOf('updated entry for') != -1) {
+            action = 'updated entry for ';
+          }
+          else if (title.indexOf('loving') != -1) {
+            action = 'loving ';
+          }
+          else if (title.indexOf('registered') != -1) {
+            action = 'registered ';
+          }
+          substr = title.split(action);
+          
+          output.push({
+            date: new Date(item.pubDate),
+            service: obj.service,
+            html: action + '<a href="' + item.link + '">' + substr[1] + '</a>'
+          });
+        }
+      }
+    
+      return output;
+    };
+    
+    $.ajax({
+      url: createYqlUrl('select * from xml where ' + 'url="http://osx.iusethis.com/user/feed.rss/' + obj.user + '"'),
+      dataType: "jsonp",
+      success: function (data) {
+        callback(parseIusethis(data));
+      }
+    });
+  };
+
   $.fn.lifestream.feeds.lastfm = function(obj, callback){
 
     var parseLastfmEntry = function(entry){
