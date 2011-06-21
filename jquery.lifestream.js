@@ -619,7 +619,7 @@
   };
 
   $.fn.lifestream.feeds.iusethis = function (obj, callback) {
-    var parseIusethis = function (input) {
+    var parseIusethis = function (input, os) {
       var output = [], list, i = 0, j, item, title, action, substr;
       
       if (input.query && input.query.count && input.query.count > 0 && input.query.results.rss.channel.item) {
@@ -657,7 +657,7 @@
           output.push({
             date: new Date(item.pubDate),
             service: obj.service,
-            html: action + '<a href="' + item.link + '">' + substr[1] + '</a>'
+            html: action + '<a href="' + item.link + '">' + substr[1] + '</a> (' + os + ')'
           });
         }
       }
@@ -669,7 +669,23 @@
       url: createYqlUrl('select * from xml where ' + 'url="http://osx.iusethis.com/user/feed.rss/' + obj.user + '"'),
       dataType: "jsonp",
       success: function (data) {
-        callback(parseIusethis(data));
+        callback(parseIusethis(data, 'Mac OS X'));
+      }
+    });
+    
+    $.ajax({
+      url: createYqlUrl('select * from xml where ' + 'url="http://win.iusethis.com/user/feed.rss/' + obj.user + '"'),
+      dataType: "jsonp",
+      success: function (data) {
+        callback(parseIusethis(data, 'Windows'));
+      }
+    });
+    
+    $.ajax({
+      url: createYqlUrl('select * from xml where ' + 'url="http://iphone.iusethis.com/user/feed.rss/' + obj.user + '"'),
+      dataType: "jsonp",
+      success: function (data) {
+        callback(parseIusethis(data, 'iPhone'));
       }
     });
   };
