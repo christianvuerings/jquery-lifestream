@@ -117,10 +117,13 @@ Stuff that isn"t implemented yet, but would be nice to have:
 Places on the web where this plug-in got mentioned:
 
 * [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
-* [designbeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
+* [DesignBeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
 * [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
-* [html.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
+* [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
 * [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
+* [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
+* [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
+* [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
 
 ## Version log
 
