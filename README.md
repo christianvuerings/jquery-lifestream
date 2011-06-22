@@ -93,6 +93,12 @@ For more information about each _service_, check out the [source code][exampleso
 Adding in your own feed is pretty easy.  
 Have a look at [this commit](https://github.com/christianv/jquery-lifestream/commit/529a06db159b4123ee3b2cc604f3a3ed698c6e9a) which adds support for the last.fm feed.
 
+### Create data:URI for an icon
+
+1. [Convert](http://converticon.com/) the favicon.ico of a site to a .png file. (e.g. http://google.com/favicon.ico)
+2. [Make](http://www.dopiaza.org/tools/datauri/) a data:URI for it.
+3. Put the data:URI in css/lifestream.css (alphabetical order).
+
 ### How to commit?
 
 1. Push the finished code to your own remote repository.
