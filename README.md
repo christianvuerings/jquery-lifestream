@@ -5,6 +5,8 @@
 Show a stream of your online activity.  
 Check out [the example][example] or create [your own lifestream][melifestream] instantly.
 
+[![Follow us on twitter](http://f.cl.ly/items/2z1p0w320g1q0T061m1u/twitter_follow.png)](http://twitter.com/jq_lifestream)
+
 ## Requirements
 * [jQuery 1.3+](http://www.jquery.com)
 
