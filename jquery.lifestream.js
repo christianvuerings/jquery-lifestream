@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.0.16
+ * @version 0.0.17
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -430,13 +430,10 @@
 
   };
 
-	// FORRST
 	$.fn.lifestream.feeds.forrst = function( obj, callback ){
-		var parseForrstItem = function( item ) {	
-			var output="";
-			output += 'Posted a ' + item.post_type 
-			+ ' titled <a href="'+item.post_url+'">' + item.title + '</a>';
-			return output;
+		var parseForrstItem = function( item ) {
+			return 'Posted a ' + item.post_type
+			  + ' titled <a href="'+item.post_url+'">' + item.title + '</a>';
 		};
 		$.ajax({
 			url: "http://forrst.com/api/v2/users/posts?username=" + obj.user + "",
@@ -751,31 +748,21 @@
 
   };
 
-	// PICPLZ
 	$.fn.lifestream.feeds.picplz = function( obj, callback ){
 		var parsePicplzItem = function( item ){
-			var output="",
-			imgName ="",
-			date = new Date( ( item.date ) * 1000 );	
-			if ( item.caption != "" ) {
-				imgName = item.caption;
-			}
-			else {
-				imgName = item.id;
-			}
-			output += 'Uploaded <a href="' + item.pic_files["640r"].img_url + '">' 
-			+ imgName + '</a>';
-			return output;
+			var imagename = item.caption || item.id;
+			return 'Uploaded <a href="' + item.pic_files["640r"].img_url + '">'
+			  + imagename + '</a>';
 		};
-		
+
 		$.ajax({
-			url: "http://picplz.com/api/v2/user.json?username=" 
+			url: "http://picplz.com/api/v2/user.json?username="
 			+ obj.user + "&include_pics=1",
 			dataType: "jsonp",
 			success: function( data ) {
 				var output = [], i=0, j, images;
-				images = data.value.users[0].pics;			
-				if( images && images.length && images.length > 0 ) {       
+				images = data.value.users[0].pics;
+				if( images && images.length && images.length > 0 ) {
 					j = images.length;
 					for( ; i < j; i++ ) {
 						var item = images[i];
@@ -783,7 +770,7 @@
 							date: new Date( ( item.date ) * 1000 ),
 							service: obj.service,
 							html: parsePicplzItem( item )
-						});	
+						});
 					}
 				}
 				callback( output );

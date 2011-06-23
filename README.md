@@ -17,11 +17,13 @@ Currently supports the following feeds natively:
 * [DeviantART](http://deviantart.com)
 * [Dribbble](http://dribbble.com)
 * [Flickr](http://flickr.com)
+* [Forrst](http://forrst.com)
 * [Foursquare](http://foursquare.com)
 * [Github](http://github.com)
 * [Google Reader](http://google.com/reader)
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
+* [PicPlz](http://picplz.com)
 * [Pinboard](http://pinboard.com)
 * [Reddit](http://reddit.com)
 * [Slideshare](http://slideshare.com)
@@ -134,6 +136,7 @@ Places on the web where this plug-in got mentioned:
 
 ## Version log
 
+* 0.0.17 Forrst & PicPlz support
 * 0.0.16 Iusethis support
 * 0.0.15 Dailymotion & Pinboard support
 * 0.0.14 Slideshare support
