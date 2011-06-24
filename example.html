@@ -65,7 +65,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
-
+  <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
   <script src="jquery.lifestream.js" type="text/javascript" charset="utf-8"></script>
   <script>
     $("#lifestream").lifestream({
@@ -76,8 +76,8 @@
           user: "VideojugTechnologyandCars"
         },
         {
-          service: "delicious",
-          user: "denbuzze"
+          service: 'delicious',
+          user: 'denbuzze'
         },
         // If you want to fetch your main gallery use your DeviantART nickname.
         //
@@ -89,7 +89,10 @@
         // something like 'mgiulio/30227724'
         {
           service: 'deviantart',
-          user: 'mgiulio'
+          user: 'gabbyd70',
+          template: {
+            deviationpost: '<a href="http://gabbyd70.deviantart.com/">gabbyd70</a> uploaded a deviation: <a href="${url}">${title}</a>'
+          }
         },
         {
           service: "dribbble",
@@ -101,10 +104,10 @@
           service: "flickr",
           user: "60378309@N02"
         },
-	      {
-      	  service: "forrst",
-      	  user: "thatryan"
-      	},
+        {
+          service: "forrst",
+          user: "thatryan"
+        },
         // Run javascript:alert(_USER_ID); when you're logged in at google reader
         {
           service: "googlereader",
@@ -117,15 +120,15 @@
         {
           service: "iusethis",
           user: "marcus"
-	      },
+        },
         {
           service: "lastfm",
           user: "denbuzze"
         },
-	      {
-      	  service: "picplz",
-      	  user: "thatryan"
-      	},
+        {
+          service: "picplz",
+          user: "thatryan"
+        },
         {
           service: "pinboard",
           user: "mattandrews"
