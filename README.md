@@ -64,6 +64,23 @@ The above code will always use the latest version of the script.
 If you want to use it in production, download the [compressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream-compiled.js)
 or [uncompressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.js) file and host it yourself.
 
+### jQuery Templates
+
+You have the ability to use jQuery templates for your feed.  
+Checkout the [template page](http://christianv.github.com/jquery-lifestream/template.html) to see an overview of the current available templates.
+
+Usage:
+
+``` javascript
+{
+  service: 'deviantart',
+  user: 'gabbyd70',
+  template: {
+    deviationpost: 'heeft hetvolgende gepost: <a href="${url}">${title}</a>'
+  }
+}
+```
+
 ## Configuration
 
 The plug-in accepts one configuration JSON object:
@@ -96,23 +113,6 @@ For more information about each _service_, check out the [source code][exampleso
 
 Adding in your own feed is pretty easy.  
 Have a look at [this commit](https://github.com/christianv/jquery-lifestream/commit/529a06db159b4123ee3b2cc604f3a3ed698c6e9a) which adds support for the last.fm feed.
-
-### jQuery Templates
-
-You have the ability to use jQuery templates for your feed.  
-Checkout the [template page](http://christianv.github.com/jquery-lifestream/template.html) to see an overview of the current available templates.
-
-Usage:
-
-``` javascript
-{
-  service: 'deviantart',
-  user: 'gabbyd70',
-  template: {
-    deviationpost: 'heeft hetvolgende gepost: <a href="${url}">${title}</a>'
-  }
-}
-```
 
 ### Create data:URI for an icon
 
