@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.0.17
+ * @version 0.1.0
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -50,26 +50,19 @@
           }
       });
 
-      var
-        items = data.items,
-        length = (items.length < settings.limit)? 
-          items.length : 
-          settings.limit,
-        i = 0, item,
-        ul = $('<ul class="' + settings.classname + '"/>')
-      ;
+      var items = data.items,
+          length = (items.length < settings.limit) ?
+            items.length :
+            settings.limit,
+          i = 0, item,
+          ul = $('<ul class="' + settings.classname + '"/>');
 
       for ( ; i < length; ++i) {
         item = items[i];
-        if (item.config.template)
-          $('<li class="'+ settings.classname + '-' + item.config.service + '">')
-            .append(
-              $.tmpl(item.config.template[item.data.activity], item.data))
-            .appendTo(ul)
-        else if (item.html)
-          ul.append('<li class="'+ settings.classname + '-'
-            + item.config.service + '">'
-            + item.html + '</li>');
+        if (item.html) {
+          $('<li class="'+ settings.classname + '-'
+            + item.config.service + '">').append(item.html).appendTo(ul);
+        }
       }
 
       outputElement.html(ul);
@@ -93,7 +86,14 @@
       }
     };
 
-    load();
+    // If the jQuery templates plug-in wasn't included before, we load it here.
+    if(!jQuery.tmpl){
+      jQuery.getScript(
+        "https://raw.github.com/jquery/jquery-tmpl/master/jquery.tmpl.min.js",
+        load);
+    } else {
+      load();
+    }
 
   };
 
@@ -266,7 +266,7 @@
   }());
 
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
-  
+
   $.fn.lifestream.feeds.dailymotion = function (config, callback) {
 
     var parseDailymotion = function (input) {
@@ -303,10 +303,8 @@
   };
 
   $.fn.lifestream.feeds.delicious = function f(config, callback) {
-    config.template = $.extend({}, 
-      f.template,
-      config.template);
-    
+    config.template = $.extend({}, f.template, config.template);
+
     $.ajax({
       url: "http://feeds.delicious.com/v2/json/" + config.user,
       dataType: "jsonp",
@@ -319,11 +317,10 @@
             output.push({
               date: new Date(item.dt),
               config: config,
-              data: {
-                activity: 'bookmarkcreation',
+              html: $.tmpl(config.template.bookmarkcreation, {
                 url: item.u,
                 title: item.d
-              }
+              })
             });
           }
         }
@@ -336,9 +333,7 @@
   };
 
   $.fn.lifestream.feeds.deviantart = function f(config, callback) {
-    config.template = $.extend({}, 
-      f.template, 
-      config.template);
+    config.template = $.extend({}, f.template, config.template);
 
     $.ajax({
       url: createYqlUrl(
@@ -361,11 +356,10 @@
             output.push({
               date: new Date(item.pubDate),
               config: config,
-              data: {
-                activity: 'deviationpost',
-                title: item.title,
-                url: item.link
-              }
+              html: $.tmpl(config.template.deviationpost, {
+                url: item.link,
+                title: item.title
+              })
             });
           }
         }
@@ -470,7 +464,7 @@
       }
     });
   };
-  
+
   $.fn.lifestream.feeds.foursquare = function(config, callback){
 
     var parseFoursquareStatus = function(item){
@@ -719,7 +713,7 @@
     });
 
   };
-  
+
   $.fn.lifestream.feeds.lastfm = function(config, callback){
     var parseLastfmEntry = function(entry){
       var output = "";
@@ -826,7 +820,7 @@
     });
 
   };
-  
+
   $.fn.lifestream.feeds.reddit = function(config, callback){
 
     /**

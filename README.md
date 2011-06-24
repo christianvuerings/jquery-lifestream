@@ -8,7 +8,7 @@ Check out [the example][example] or create [your own lifestream][melifestream] i
 [![Follow us on twitter](http://f.cl.ly/items/2z1p0w320g1q0T061m1u/twitter_follow.png)](http://twitter.com/jq_lifestream)
 
 ## Requirements
-* [jQuery 1.3+](http://www.jquery.com)
+* [jQuery 1.4.2+](http://www.jquery.com)
 
 ## Supported feeds
 
@@ -97,6 +97,23 @@ For more information about each _service_, check out the [source code][exampleso
 Adding in your own feed is pretty easy.  
 Have a look at [this commit](https://github.com/christianv/jquery-lifestream/commit/529a06db159b4123ee3b2cc604f3a3ed698c6e9a) which adds support for the last.fm feed.
 
+### jQuery Templates
+
+You have the ability to use jQuery templates for your feed.  
+Checkout the [template page](http://christianv.github.com/jquery-lifestream/template.html) to see an overview of the current available templates.
+
+Usage:
+
+``` javascript
+{
+  service: 'deviantart',
+  user: 'gabbyd70',
+  template: {
+    deviationpost: 'heeft hetvolgende gepost: <a href="${url}">${title}</a>'
+  }
+}
+```
+
 ### Create data:URI for an icon
 
 1. [Convert](http://converticon.com/) the favicon.ico of a site to a .png file. (e.g. http://google.com/favicon.ico)
@@ -136,8 +153,13 @@ Places on the web where this plug-in got mentioned:
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
 * [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
 
+## Special Thanks
+
+Special thanks all the [committers](https://raw.github.com/christianv/jquery-lifestream/master/COMMITTERS) and [gabbyd70](http://gabbyd70.deviantart.com/) for letting us use her DeviantART username.
+
 ## Version log
 
+* 0.1.0 jQuery Template support
 * 0.0.17 Forrst & PicPlz support
 * 0.0.16 Iusethis support
 * 0.0.15 Dailymotion & Pinboard support

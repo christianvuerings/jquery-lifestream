@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="The jQuery Lifestream plug-in enables you to show a stream of your online activity. On this page you can check out the examples">
+  <meta name="keywords" content="jQuery, plugin, lifestream, jquery-lifestream, twitter, delicious, github, stackoverflow, flickr, lastfm, youtube">
+
+  <title>jQuery Lifestream example</title>
+
+  <style type="text/css">
+    body {
+      margin: 1.0em;
+      background-color: #fff;
+      font-family: Helvetica, Arial, FreeSans, sans-serif;
+      color: #000000;
+    }
+    h1 { font-size: 3.8em; color: #3908bc; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #3908bc; clear: both;}
+    h3 { text-align: center; color: #3908bc; }
+    a { color: #3908bc; }
+    ul li { list-style-type: none;}
+    
+    .fadeout {color: #999;}
+  </style>
+  <link href="css/lifestream.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <a href="http://github.com/christianv/jquery-lifestream">
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" />
+  </a>
+  <h1>jQuery Lifestream Templates</h1>
+  <p>Find more information about this plug-in on the <a href="http://github.com/christianv/jquery-lifestream">project page</a>.</p>
+  <p>Go ahead and <a href="http://christianv.github.com/jquery-lifestream/me/">create your own lifestream</a>.</p>
+
+  <h2>Currently supported templates:</h2>
+  <div id="tempates"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
+  <script src="jquery.lifestream.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    var $templates = $("#tempates"),
+        output=$('<ul>'), listitem, count, template, templateitems;
+    for(var i in $.fn.lifestream.feeds){
+      if($.fn.lifestream.feeds.hasOwnProperty(i)){
+        listitem = $('<li>');
+        count = 0;
+        listitem.append(i);
+        template = $.fn.lifestream.feeds[i].template;
+        if(template) {
+          templateitems = $('<ul>');
+          for(var j in template){
+            if(template.hasOwnProperty(j)){
+              console.log(template[j]);
+              templateitem = $('<li>');
+              templateitem.append(j + ": <br />");
+              var code = $("<code><pre>t");
+              templateitem.append(code.text(template[j]));
+              templateitems.append(templateitem);
+              count++;
+            }
+          }
+          listitem.append(' <span class="fadeout">(' + count + ')</span>');
+          listitem.append(templateitems);
+        }
+        else {
+          listitem.append(' <span class="fadeout">(' + count + ')</span>');
+        }
+      }
+      output.append(listitem);
+    }
+    $templates.html(output);
+  </script>
+
+  <script>
+    var _gaq=[["_setAccount","UA-190225-11"],["_trackPageview"],["_trackPageLoadTime"]];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+    s.parentNode.insertBefore(g,s)}(document,"script"));
+  </script>
+
+</body>
+</html>
