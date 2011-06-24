@@ -1113,6 +1113,41 @@
     });
 
   };
+  
+  $.fn.lifestream.feeds.wordpress = function (config, callback) {
+
+    var parseWordpress = function (input) {
+      var output = [], list, i = 0, j, item;
+
+      if (input.query && input.query.count && input.query.count > 0
+          && input.query.results.rss.channel.item) {
+        list = input.query.results.rss.channel.item;
+        j = list.length;
+        for ( ; i < j; i++) {
+          item = list[i];
+
+          output.push({
+            date: new Date(item.pubDate),
+            config: config,
+            html: 'posted "<a href="' + item.link + '">'
+            + item.title + '</a>"'
+          });
+        }
+      }
+
+      return output;
+    }
+
+    $.ajax({
+      url: createYqlUrl('select * from xml where '
+        + 'url="http://' + config.user + '.wordpress.com/feed"'),
+      dataType: "jsonp",
+      success: function (data) {
+        callback(parseWordpress(data));
+      }
+    });
+
+  };
 
   $.fn.lifestream.feeds.youtube = function(config, callback){
 
