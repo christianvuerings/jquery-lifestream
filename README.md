@@ -152,6 +152,8 @@ Places on the web where this plug-in got mentioned:
 * [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
 * [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
+* [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
+* [BlogUpstairs](http://blogupstairs.com/framework/javascript-framework/jquery/jquery-lifestream-show-a-stream-of-your-online-activity-with-jquery/)
 
 ## Special Thanks
 
