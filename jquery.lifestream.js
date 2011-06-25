@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.1.0
+ * @version 0.1.1
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -174,8 +174,8 @@
     }
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
-        + 'url="http://' + config.user + '.blogspot.com/feeds/posts/default"'),
+      url: createYqlUrl('select * from xml where url="http://'
+        + config.user + '.blogspot.com/feeds/posts/default"'),
       dataType: "jsonp",
       success: function ( data ) {
         callback(parseBlogger(data));
@@ -183,6 +183,7 @@
     });
 
   };
+
   $.fn.lifestream.feeds.dailymotion = function( config, callback ) {
 
     var parseDailymotion = function( input ) {
@@ -356,6 +357,7 @@
     });
 
   };
+
   $.fn.lifestream.feeds.formspring = function ( config, callback ) {
 
     var parseFormspring = function ( input ) {
@@ -371,7 +373,7 @@
           output.push({
             date: new Date( item.pubDate ),
             config: config,
-            html: 'answered a question : <a href="' + item.link + '">'
+            html: 'answered a question <a href="' + item.link + '">'
             + item.title + '</a>'
           });
         }
@@ -1141,7 +1143,7 @@
     });
 
   };
-  
+
   $.fn.lifestream.feeds.wordpress = function ( config, callback ) {
 
     var parseWordpress = function ( input ) {

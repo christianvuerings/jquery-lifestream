@@ -12,13 +12,15 @@ Check out [the example][example] or create [your own lifestream][melifestream] i
 
 ## Supported feeds
 
-Currently supports the following feeds natively:
+Currently supports the following feeds:
 
+* [Blogger](http://blogger.com)
 * [Dailymotion](http://dailymotion.com)
 * [Delicious](http://delicious.com)
 * [DeviantART](http://deviantart.com)
 * [Dribbble](http://dribbble.com)
 * [Flickr](http://flickr.com)
+* [Formspring](http://formspring.com)
 * [Forrst](http://forrst.com)
 * [Foursquare](http://foursquare.com)
 * [Github](http://github.com)
@@ -27,12 +29,14 @@ Currently supports the following feeds natively:
 * [Last.fm](http://last.fm)
 * [PicPlz](http://picplz.com)
 * [Pinboard](http://pinboard.com)
+* [Posterous](http://posterous.com)
 * [Reddit](http://reddit.com)
 * [Slideshare](http://slideshare.com)
 * [Stackoverflow](http://stackoverflow.com)
 * [Tumblr](http://tumblr.com)
 * [Twitter](http://twitter.com)
 * [Vimeo](http://vimeo.com)
+* [Wordpress](http://wordpress.com)
 * [Youtube](http://youtube.com)
 
 Feel free to fork the project and add your own feeds in.  
@@ -161,6 +165,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.1.1 Blogger, Formspring, Posterous & Wordpress support
 * 0.1.0 jQuery Template support
 * 0.0.17 Forrst & PicPlz support
 * 0.0.16 Iusethis support
