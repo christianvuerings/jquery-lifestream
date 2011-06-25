@@ -63,6 +63,8 @@
     }
 
     #options label {
+      background-repeat: no-repeat;
+      background-position: left center;
       color: rgb(255,255,255);
       color: rgba(255,255,255,0.8);
       clear: both;
@@ -70,7 +72,7 @@
       text-transform: capitalize;
       float:left;
       position: relative;
-      padding: 0.5em 0;
+      padding: 0.5em 0 0.5em 1.5em;
       width: 7em;
     }
     #options input[type=text] {
@@ -87,7 +89,7 @@
       font: 1em "MuseoSans500", Helvetica, Arial, sans-serif;
       padding: 0.2em 0.5em;
       margin: 0.3em 0;
-      width: 11em;
+      width: 9.5em;
     }
     #options input[type=text]:focus, #options input[type=text]:hover {
       background: rgba(255,255,255,0.2);
@@ -275,7 +277,8 @@
         // Get all the current available services
         for(var i in $.fn.lifestream.feeds){
           if($.fn.lifestream.feeds.hasOwnProperty(i)){
-            form += '<label for="' + i + '">' + i + "</label>"
+            form += '<label for="' + i + '" class="lifestream-' + i + '">'
+                 + i + "</label>"
                  + '<input type="text" name="' + i + '" id="' + i + '" />';
             if(help[i]){
               form += '<a href="' + help[i] + '" title="Find your '
