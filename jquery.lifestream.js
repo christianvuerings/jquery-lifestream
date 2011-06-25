@@ -1018,7 +1018,7 @@
         for( ; i < j; i++) {
           item = input[i];
           output.push({
-            date: new Date(item.upload_date),
+            date: new Date(item.upload_date.replace(' ', 'T')),
             config: config,
             html: parseVimeoItem(item)
           });
