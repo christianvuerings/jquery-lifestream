@@ -338,7 +338,7 @@
           for( ; i < j; i++ ) {
             var item = data.resp[i];
             output.push({
-              date: new Date( item.created_at ),
+              date: new Date( item.created_at.replace(' ', 'T') ),
               config: config,
               html: parseForrstItem( item )
             });
