@@ -356,20 +356,20 @@
     });
 
   };
-  $.fn.lifestream.feeds.formspring = function (config, callback) {
+  $.fn.lifestream.feeds.formspring = function ( config, callback ) {
 
-    var parseFormspring = function (input) {
+    var parseFormspring = function ( input ) {
       var output = [], list, i = 0, j, item;
 
-      if (input.query && input.query.count && input.query.count > 0
-          && input.query.results.rss.channel.item) {
+      if ( input.query && input.query.count && input.query.count > 0
+          && input.query.results.rss.channel.item ) {
         list = input.query.results.rss.channel.item;
         j = list.length;
         for ( ; i < j; i++) {
           item = list[i];
 
           output.push({
-            date: new Date(item.pubDate),
+            date: new Date( item.pubDate ),
             config: config,
             html: 'answered a question : <a href="' + item.link + '">'
             + item.title + '</a>'
@@ -384,7 +384,7 @@
       url: createYqlUrl('select * from xml where '
         + 'url="http://www.formspring.me/profile/' + config.user + '.rss"'),
       dataType: "jsonp",
-      success: function (data) {
+      success: function ( data ) {
         callback(parseFormspring(data));
       }
     });
