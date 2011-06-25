@@ -408,7 +408,7 @@
           for( ; i < j; i++ ) {
             var item = data.resp[i];
             output.push({
-              date: new Date( item.created_at ),
+              date: new Date( item.created_at.replace(' ', 'T') ),
               config: config,
               html: parseForrstItem( item )
             });
@@ -1123,7 +1123,7 @@
         for( ; i < j; i++) {
           item = input[i];
           output.push({
-            date: new Date(item.upload_date),
+            date: new Date( item.upload_date.replace(' ', 'T') ),
             config: config,
             html: parseVimeoItem(item)
           });
