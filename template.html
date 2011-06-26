@@ -20,9 +20,12 @@
     h2 { font-size: 1.5em; color: #3908bc; clear: both;}
     h3 { text-align: center; color: #3908bc; }
     a { color: #3908bc; }
-    ul li { list-style-type: none;}
-    
-    .fadeout {color: #999;}
+    ul li { list-style-type: none;margin: 1em 0;}
+
+    code {display: block-inline; float:left; padding: 0.2em 1em; background: #ddd; line-height: 2em; margin-bottom: 1em; max-width: 800px; word-wrap:break-word;}
+    .item {clear: both; display:block; float:left; font-weight: bold;}
+    .subitem {display: block-inline; line-height: 2em; clear: both; float: left; width: 120px;}
+    .fadeout {color: #999; float: left; margin-left: 3px;}
   </style>
   <link href="css/lifestream.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -43,20 +46,20 @@
   <script src="jquery.lifestream.js" type="text/javascript" charset="utf-8"></script>
   <script>
     var $templates = $("#tempates"),
-        output=$('<ul>'), listitem, count, template, templateitems;
+        output=$('<ul>'), listitem, count, template, templateitems, f;
     for(var i in $.fn.lifestream.feeds){
       if($.fn.lifestream.feeds.hasOwnProperty(i)){
         listitem = $('<li>');
         count = 0;
-        listitem.append(i);
-        template = $.fn.lifestream.feeds[i].template;
-        if(template) {
+        listitem.append('<span class="item">' + i + "</span>");
+        f = $.fn.lifestream.feeds[i]("a", function(){});
+        if(f && f.template) {
+          template = f.template;
           templateitems = $('<ul>');
           for(var j in template){
             if(template.hasOwnProperty(j)){
-              console.log(template[j]);
-              templateitem = $('<li>');
-              templateitem.append(j + ": <br />");
+              templateitem = $('<li>"');
+              templateitem.append('<span class="subitem">' + j + "</span> ");
               var code = $("<code><pre>t");
               templateitem.append(code.text(template[j]));
               templateitems.append(templateitem);
