@@ -1229,7 +1229,7 @@
 
     var template = $.extend({},
       {
-        posted: '{{ html tweet }}'
+        posted: '{{html tweet}}'
       },
       config.template),
 
