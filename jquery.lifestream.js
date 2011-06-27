@@ -1365,7 +1365,7 @@
 
     var template = $.extend({},
       {
-        posted: 'bookmarked <a href="${link}">${title}</a>'
+        posted: 'posted <a href="${link}">${title}</a>'
       },
       config.template);
 
