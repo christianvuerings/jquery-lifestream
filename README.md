@@ -48,7 +48,7 @@ Add the following to the <head> or <body> tag of your HTML page.
 
 ``` html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script src="https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream-compiled.js"></script>
+<script src="https://raw.github.com/christianv/jquery-lifestream/master/jquery.lifestream-compiled.js"></script>
 <script>
   $("#lifestream").lifestream({
     "list":[
