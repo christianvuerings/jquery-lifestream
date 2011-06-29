@@ -44,21 +44,21 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 
 ## Usage
 
-Add the following to the <head> or <body> tag of your HTML page.
+Add the following to the &lt;head&gt; or &lt;body&gt; tag of your HTML page.
 
 ``` html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 <script src="https://raw.github.com/christianv/jquery-lifestream/master/jquery.lifestream-compiled.js"></script>
 <script>
   $("#lifestream").lifestream({
-    "list":[
+    list:[
       {
-        "service": "github",
-        "user": "christianv"
+        service: "github",
+        user: "christianv"
       },
       {
-        "service": "twitter",
-        "user": "denbuzze"
+        service: "twitter",
+        user: "denbuzze"
       }
     ]
   });
@@ -91,19 +91,25 @@ The plug-in accepts one configuration JSON object:
 
 ``` javascript
 $("#lifestream").lifestream({
-  "limit": 30,
-  "list":[
+  classname: "lifestream",
+  feedloaded: feedcallback,
+  limit: 30,
+  list:[
     {
-      "service": "github",
-      "user": "christianv"
+      service: "github",
+      user: "christianv"
     },
     {
-      "service": "twitter",
-      "user": "denbuzze"
+      service: "twitter",
+      user: "denbuzze"
     }
   ]
 });
 ```
+
+`classname`: The name of the main lifestream class. We use this for the main ul class e.g. lifestream and for the specific feeds e.g. lifestream-twitter
+
+`feedloaded`: (_function_) A callback function which is triggered each time a feed was loaded.
 
 `limit`: (_integer_) Specify how many elements you want in your lifestream (default = 10).
 

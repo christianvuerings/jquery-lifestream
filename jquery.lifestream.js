@@ -37,8 +37,12 @@
         // We use this for the main ul class e.g. lifestream
         // and for the specific feeds e.g. lifestream-twitter
         classname: "lifestream",
+        // Callback function which will be triggered when a feed is loaded
+        feedloaded: null,
         // The amount of feed items you want to show
-        limit: 10
+        limit: 10,
+        // An array of feed items which you want to use
+        list: []
       }, config),
 
       // The data object contains all the feed items
@@ -99,6 +103,11 @@
         // Change the innerHTML with a list of all the feeditems in
         // chronological order
         outputElement.html( ul );
+
+        // Trigger the feedloaded callback, if it is a function
+        if ( $.isFunction( settings.feedloaded ) ) {
+          settings.feedloaded();
+        }
 
       },
 
