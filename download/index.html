@@ -3,11 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Custom Download Builder</title>
-  <style type="text/css">
-    #app {
-      background-color: #aaaaaa;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
   <script type="text/javascript" src="js/swfobject.js"></script> 
 	<script type="text/javascript" src="js/downloadify.min.js"></script> 
 </head>
@@ -15,54 +11,69 @@
   <div id="app">
     <h1>Custom Download Builder</h1>
     
-    <div id="service-ui">
-      <ul> <!-- This will be dynamically generated from services included in jlf src -->
-        <li><img src="twitter-icon"><label for="twitter">Twitter</label><input type="checkbox"></li>
-      </ul>
-    </div> <!-- #service-ui -->
+    <p>Pick your services:</p>
+    <ul id="services"></ul>
     
-    <p>Services included: </p>
-    <ul id="services-included"></ul>
-    
-    <textarea id="extracted-source" rows="20" cols="82"></textarea>
-    
-    <p id="downloadify"> 
-      You must have Flash 10 installed to download this file.
-		</p> 
+    <a id="button" href="#">Build script</a> 
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
     <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
     <script>
     // TODO: Check if we have all deps loading
     
-    concatMinifiedScripts(
-      ['delicious', 'deviantart', 'blogger', 'dailymotion', 'dribbble'], 
-      {core: '../src/', feeds: '../src/feeds/'},
-      function(out) { 
-        $('#extracted-source').html(out);
-        
-        Downloadify.create('downloadify',{
-          filename: function(){
-            return 'jquery.lifestream.js';
-          },
-          data: function(){ 
-            return out;
-          },
-          onComplete: function(){ alert('Your File Has Been Saved!'); },
-          onCancel: function(){ alert('You have cancelled the saving of this file.'); },
-          onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
-          transparent: false,
-          swf: 'media/downloadify.swf',
-          downloadImage: 'img/download.png',
-          width: 100,
-          height: 30,
-          transparent: true,
-          append: false
-        });
-      }
-    );
+    // Create the feeds list.
+    // Geecky Js lang issues:
+    //   - Use of underscore reduce?
+    //   - Use of (underscore?)templates?
+    var feeds = [ // If we could fetch the available services form somewhere ...
+      'blogger',
+      'dailymotion',
+      'delicious',
+      'deviantart',
+      'dribbble',
+      'flickr',
+      'formspring',
+    ],
+    out = [];
+    $.each(feeds, function(i, f) { out.push(
+      '<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>'); });
+    $('#services').append(out.join(''));
+    
+    $('#button').click(function() {
+      concatMinifiedScripts(
+        $('#services input[type="checkbox"]')
+          .filter(':checked')
+          .map(function() { return $(this).attr('id')})
+          .get(), 
+        {core: '../src/', feeds: '../src/feeds/'},
+        function(out) { 
+          Downloadify.create('button',{
+            filename: function(){
+              return 'jquery.lifestream.js';
+            },
+            data: function(){ 
+              return out;
+            },
+            onComplete: function(){ alert('Your File Has Been Saved!'); },
+            onCancel: function(){ alert('You have cancelled the saving of this file.'); },
+            onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
+            transparent: false,
+            swf: 'media/downloadify.swf',
+            downloadImage: 'img/download.png',
+            width: 100,
+            height: 30,
+            transparent: true,
+            append: false
+          });
+        }
+      );
+      return false;
+    });
     
     function concatMinifiedScripts(feeds, paths, success) {
+      console.log(feeds);
+      if (feeds.length === 0)
+        return;
       var 
         out = [],
         countdown = 1 + feeds.length,
@@ -88,7 +99,5 @@
     }
     </script>
   </div> <!-- #app -->
-  
-  
 </body>
 </html>
