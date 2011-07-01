@@ -1,6 +1,69 @@
-ul {
-  list-style: none;
+body {
+  background: #444444;
 }
-#app {
-      background-color: #aaaaaa;
-    }
+#widget {
+  width: 500px;
+  margin: 0 auto;
+  background: #808080;
+  padding: 0;
+}
+#widget h1 {
+  margin: 0;
+  padding: 0;
+}
+.clear {
+  clear: both;
+}
+#button {
+}
+#widget #services {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#services li {
+  float: left;
+  margin: 10px;
+  padding: 0;
+}
+#services .ui-button-icon-only .ui-icon {
+  position: absolute; 
+  top: 50%; 
+  margin-top: -24px; 
+}
+#services .ui-button-icon-only .ui-icon { 
+  left: 50%; 
+  margin-left: -24px; 
+}
+#services .ui-icon { 
+  width: 48px; 
+  height: 48px; 
+  background-image: url(../img/services.png); 
+}
+#services .ui-state-default .ui-icon { 
+  background-image: url(../img/services.png);
+}  
+#services .ui-state-hover .ui-icon {
+  /*background-image: url(TODO); */
+}
+#services .ui-state-focus .ui-icon {
+  /*background-image: url(TODO); */
+}
+#services .ui-state-active .ui-icon {
+  /*background-image: url(TODO); */
+}
+#services .ui-state-highlight .ui-icon {
+  /*background-image: url(TODO); */ 
+}
+.ui-icon-service-blogger { background-position: 0 0; }
+.ui-icon-service-delicious { background-position: 0 -48px; }
+.ui-icon-service-deviantart { background-position: 0 -96px; }
+.ui-icon-service-flickr { background-position: 0 -144px; }
+.ui-icon-service-lastfm { background-position: 0 -192px; }
+.ui-icon-service-posterous { background-position: 0 -240px; }
+.ui-icon-service-reddit { background-position: 0 -288px; }
+.ui-icon-service-tumblr { background-position: 0 -336px; }
+.ui-icon-service-twitter { background-position: 0 -384px; }
+.ui-icon-service-youtube { background-position: 0 -428px; }
+.ui-icon-service-vimeo { background-position: 0 -476px; }
+.ui-icon-service-wordpress { background-position: 0 -524px; }
