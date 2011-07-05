@@ -1,20 +1,52 @@
 body {
-  background: #444444;
+  background: #7f7f7f url(../img/bg-page.png) repeat-x left top;
+  font-size: 16px;
+}
+body.waiting {
+  cursor: wait;
 }
 #widget {
-  width: 500px;
-  margin: 0 auto;
-  background: #808080;
-  padding: 0;
 }
-#widget h1 {
-  margin: 0;
-  padding: 0;
+#header {
+	margin: 65px auto 0;
+	width: 438px; /* 438-40(padding) */
+	height: 65px; /* 65-padding */
+	background: transparent url(../img/bg-header.png) no-repeat top left;
+	  /*padding-left: 40px;
+	  padding-top: 1px;*/
+	  /*outline: 1px solid red;*/
+}
+#header h1 {
+	display: none;
+	margin-top: 16px;
+	margin-left: 5px;
+	padding: 0;
+	/*padding-left: 40px;*/
+	font-family: helvetica;
+	font-size: 20px;
+	color: #aaaaaa;
+	/*outline: 1px solid red;*/
+}
+#footer {
+  width: 438px;
+  height: 65px;
+  margin: 0 auto;
+  background: transparent url(../img/bg-footer.png) no-repeat top left;
+}
+#content {
+  width: 395px;
+  margin: 0 auto;
+  background: url(../img/bg-content.png) repeat top left #000000;
 }
 .clear {
   clear: both;
 }
 #button {
+  margin-left: 125px;
+  margin-bottom: 20px;
+}
+#button .ui-icon-spinner {
+    background-image: url(../img/spinner.gif); 
 }
 #widget #services {
   list-style: none;
@@ -41,20 +73,22 @@ body {
   background-image: url(../img/services.png); 
 }
 #services .ui-state-default .ui-icon { 
-  background-image: url(../img/services.png);
+  background-image: url(../img/services-deselected.png);
 }  
 #services .ui-state-hover .ui-icon {
-  /*background-image: url(TODO); */
+  background-image: url(../img/services-hover.png);
 }
 #services .ui-state-focus .ui-icon {
-  /*background-image: url(TODO); */
+  background-image: url(../img/services-selected.png);
 }
 #services .ui-state-active .ui-icon {
-  /*background-image: url(TODO); */
+  background-image: url(../img/services-selected.png);
 }
+/*
 #services .ui-state-highlight .ui-icon {
-  /*background-image: url(TODO); */ 
+  background-image: url(../img/services.png);
 }
+*/
 .ui-icon-service-blogger { background-position: 0 0; }
 .ui-icon-service-delicious { background-position: 0 -48px; }
 .ui-icon-service-deviantart { background-position: 0 -96px; }
@@ -67,3 +101,59 @@ body {
 .ui-icon-service-youtube { background-position: 0 -428px; }
 .ui-icon-service-vimeo { background-position: 0 -476px; }
 .ui-icon-service-wordpress { background-position: 0 -524px; }
+/* Follow the -48 pxprogression to add a newservice icon */
+#services label.ui-state-default {
+  border: none;
+  background: transparent;
+}
+/* jQuery Notifications plugin - http://programmingmind.com */
+/* notification container */
+#jquery-notifications {
+  position: fixed; /*was relative*/
+  width: 25%;
+  right: 0;
+  /*width: 100%;
+  left: 0;*/
+  top: 0;
+  z-index: 100000;
+}
+#jquery-notifications p {
+  text-align: center;
+  position: relative;
+  margin: 0;
+  padding: 5px;
+  padding-left: 10px;
+  border-bottom: 2px solid;
+  /* style property for the close text */
+}
+#jquery-notifications p a {
+  position: absolute;
+  right: 10px;
+  margin-right: 10px;
+  color: black;
+  text-decoration: none;
+  border: 1px solid black;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+#jquery-notifications .notice {
+  background: #6c9ffc;
+  color: #061a72;
+  border-color: #061a72;
+  opacity: 0.9;
+}
+#jquery-notifications .success {
+  background: #96f96f;
+  color: #045419;
+  border-color: #045419;
+}
+#jquery-notifications .warning {
+  background: #f7ae57;
+  color: #753903;
+  border-color: #753903;
+}
+#jquery-notifications .error {
+  background: #f97c6f;
+  color: #570f01;
+  border-color: #570f01;
+}
