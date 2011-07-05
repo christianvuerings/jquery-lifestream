@@ -20,6 +20,7 @@ Currently supports the following feeds:
 * [DeviantART](http://deviantart.com)
 * [Dribbble](http://dribbble.com)
 * [Flickr](http://flickr.com)
+* [Foomark](http://foomark.com)
 * [Formspring](http://formspring.com)
 * [Forrst](http://forrst.com)
 * [Foursquare](http://foursquare.com)
@@ -171,6 +172,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.1.2 Foomark support
 * 0.1.1 Blogger, Formspring, Posterous & Wordpress support
 * 0.1.0 jQuery Template support
 * 0.0.17 Forrst & PicPlz support
