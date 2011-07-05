@@ -6,7 +6,7 @@
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
  */
 /*globals jQuery, $ */
-(function( $ ){
+;(function( $ ){
 
   /**
    * Create a valid YQL URL by passing in a query
@@ -614,8 +614,10 @@
       config.template);
 
     var returnRepo = function( status ) {
-      return status.payload.repo || status.repository.owner + "/"
-                                  + status.repository.name;
+      return status.payload.repo
+        || ( status.repository ? status.repository.owner + "/"
+          + status.repository.name : null )
+        || status.url.split("/")[3] + "/" + status.url.split("/")[4];
     },
     parseGithubStatus = function( status ) {
       var repo, title;
