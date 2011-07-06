@@ -166,6 +166,7 @@ Places on the web where this plug-in got mentioned:
 * [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
 * [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
 * [BlogUpstairs](http://blogupstairs.com/framework/javascript-framework/jquery/jquery-lifestream-show-a-stream-of-your-online-activity-with-jquery/)
+* [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
 
 ## Special Thanks
 
@@ -173,6 +174,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.1.3 Mlkshk support
 * 0.1.2 Foomark support
 * 0.1.1 Blogger, Formspring, Posterous & Wordpress support
 * 0.1.0 jQuery Template support
