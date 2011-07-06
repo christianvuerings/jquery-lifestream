@@ -28,6 +28,7 @@ Currently supports the following feeds:
 * [Google Reader](http://google.com/reader)
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
+* [Mlkshk](http://mlkshk.com)
 * [PicPlz](http://picplz.com)
 * [Pinboard](http://pinboard.com)
 * [Posterous](http://posterous.com)
