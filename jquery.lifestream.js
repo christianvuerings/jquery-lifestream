@@ -170,7 +170,7 @@
 
     var template = $.extend({},
       {
-        posted: 'posted <a href="${origLink}">${title}</a>'
+        posted: 'posted <a href="${origLink}">${title.content}</a>'
       },
       config.template),
 
@@ -183,6 +183,13 @@
         j = list.length;
         for ( ; i < j; i++) {
           item = list[i];
+
+          if(!item.origLink) {
+            for (var n = 0; n < item.link.length; n++) {
+              if(item.link[n].rel == 'alternate')
+                item.origLink = item.link[n].href;
+            }
+          }
 
           output.push({
             date: new Date( item.published ),
@@ -635,7 +642,9 @@
         } );
       }
       else if (status.type === "GistEvent") {
-        return $.tmpl( template.gist, status );
+        return $.tmpl( template.gist, {
+          status: status
+        });
       }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {
