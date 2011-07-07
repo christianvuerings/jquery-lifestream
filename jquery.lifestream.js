@@ -189,6 +189,8 @@
               if(item.link[n].rel == 'alternate')
                 item.origLink = item.link[n].href;
             }
+            // ignore items that have no link.
+            if(!item.origLink) continue;
           }
           if(item.title.content) {
             item.title = item.title.content;
