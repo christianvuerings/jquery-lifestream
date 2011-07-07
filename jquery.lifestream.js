@@ -170,7 +170,7 @@
 
     var template = $.extend({},
       {
-        posted: 'posted <a href="${origLink}">${title.content}</a>'
+        posted: 'posted <a href="${origLink}">${title}</a>'
       },
       config.template),
 
@@ -189,6 +189,9 @@
               if(item.link[n].rel == 'alternate')
                 item.origLink = item.link[n].href;
             }
+          }
+          if(item.title.content) {
+            item.title = item.title.content;
           }
 
           output.push({
