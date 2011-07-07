@@ -16,7 +16,7 @@
     </div>
     <div id="content">
       <ul id="services"></ul>
-      <a id="button" href="#">Build script</a>
+      <div id="button-bar"><a id="button" href="#">Build script</a></div>
     </div>
     <div id="footer">
     </div>
@@ -37,25 +37,39 @@
 	// Fetch the feeds list.
 	var feeds = [ // If we could fetch the available services form somewhere ...
 		'blogger',
+		'dailymotion',
 		'delicious',
 		'deviantart',
+		'dribbble',
 		'flickr',
+		'formspring',
+		'forrst',
+		'foursquare',
+		'github',
+		'googlereader',
+		'iusethis',
 		'lastfm',
+		'picplz',
+		'pinboard',
 		'posterous',
 		'reddit',
+		'slideshare',
+		'stackoverflow',
 		'tumblr',
 		'twitter',
-		'youtube',
 		'vimeo',
-		'wordpress'
+		'wordpress',
+		'youtube'
 	];
   
-  // Build the service checkboxes
-  var out = [];
-  $.each(feeds.sort(), function(i, f) { out.push(
-    '<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>'); });
-  out.push('<br class="clear">');
-  $('#services').append(out.join(''));
+	// Build the service checkboxes
+	var out = [];
+	$.each(feeds.sort(), function(i, f) { 
+		out.push(
+			'<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>');
+	});
+	out.push('<br class="clear">');
+	$('#services').append(out.join(''));
   
   // PE of service checkboxes
   var c = 0;

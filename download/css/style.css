@@ -1,11 +1,11 @@
 body {
-  background: #7f7f7f url(../img/bg-page.png) repeat-x left top;
-  font-size: 16px;
+  background: #666666 url(../img/bg-page.png) repeat-x left top;
 }
 body.waiting {
   cursor: wait;
 }
 #widget {
+	font-size: 14px;
 }
 #header {
 	margin: 65px auto 0;
@@ -41,14 +41,15 @@ body.waiting {
 .clear {
   clear: both;
 }
-#button {
-  margin-left: 125px;
-  margin-bottom: 20px;
+#button-bar {
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px; 
 }
 #button .ui-icon-spinner {
     background-image: url(../img/spinner.gif); 
 }
-#widget #services {
+#services {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -71,6 +72,7 @@ body.waiting {
   width: 48px; 
   height: 48px; 
   background-image: url(../img/services.png); 
+  /*background-position: 0 0;*/
 }
 #services .ui-state-default .ui-icon { 
   background-image: url(../img/services-deselected.png);
@@ -89,7 +91,7 @@ body.waiting {
   background-image: url(../img/services.png);
 }
 */
-.ui-icon-service-blogger { background-position: 0 0; }
+.ui-icon-service-blogger { background-position: 0 0px; }
 .ui-icon-service-delicious { background-position: 0 -48px; }
 .ui-icon-service-deviantart { background-position: 0 -96px; }
 .ui-icon-service-flickr { background-position: 0 -144px; }
@@ -98,10 +100,21 @@ body.waiting {
 .ui-icon-service-reddit { background-position: 0 -288px; }
 .ui-icon-service-tumblr { background-position: 0 -336px; }
 .ui-icon-service-twitter { background-position: 0 -384px; }
-.ui-icon-service-youtube { background-position: 0 -428px; }
-.ui-icon-service-vimeo { background-position: 0 -476px; }
-.ui-icon-service-wordpress { background-position: 0 -524px; }
-/* Follow the -48 pxprogression to add a newservice icon */
+.ui-icon-service-youtube { background-position: 0 -432px; }
+.ui-icon-service-vimeo { background-position: 0 -480px; }
+.ui-icon-service-wordpress { background-position: 0 -528px; }
+.ui-icon-service-github { background-position: 0 -576px; }
+.ui-icon-service-foursquare { background-position: 0 -624px; }
+.ui-icon-service-slideshare { background-position: 0 -672px; }
+.ui-icon-service-forrst { background-position: 0 -720px; }
+.ui-icon-service-dribbble { background-position: 0 -768px; }
+.ui-icon-service-googlereader{ background-position: 0 -816px; }
+.ui-icon-service-dailymotion { background-position: 0 -864px; }
+.ui-icon-service-formspring { background-position: 0 -912px; }
+.ui-icon-service-iusethis { background-position: 0 -960px; }
+.ui-icon-service-picplz { background-position: 0 -1008px; }
+.ui-icon-service-pinboard { background-position: 0 -1056px; }
+.ui-icon-service-stackoverflow { background-position: 0 -1104px; }
 #services label.ui-state-default {
   border: none;
   background: transparent;
