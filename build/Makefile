@@ -1,12 +1,15 @@
 srcPath = ../src
 servicesDir = $(srcPath)/services
-modules = $(srcPath)/core.js $(servicesDir)/*.js
 buildDir = .
+dist = ../dist
+modules = $(srcPath)/core.js $(servicesDir)/*.js
 serviceListPath = ../download/services.txt
+jls = $(dist)/jquery.lifestream.js
 
-all: serviceList
+all: $(jls) serviceList
 
-jquery.lifestream.min.js: $(modules)
+$(jls): $(modules)
+	cat $^ > $@
 
 serviceList:
 #	grep -l $.fn.lifestream.feeds. $(servicesDir)/*.js
