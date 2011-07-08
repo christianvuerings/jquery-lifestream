@@ -22,16 +22,21 @@
     </div>
   </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
-  <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="js/swfobject.js"></script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+	<script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/swfobject.js"></script> 
 	<script type="text/javascript" src="js/downloadify.min.js"></script> 
-  <script src="js/jquery.notifications.js"></script>
-  <script>
-  // TODO: Check if we have all deps loading
-  
-	// Configure the notification system
+	<script src="js/jquery.notifications.js"></script>
+	<script>
+		// TODO: Check if we have all deps loading
+		
+		imagePreloading(
+			'img/services-deselected.png',
+			'img/services-hover.png',
+			'img/services-selected.png'
+		);
+		
 	$.n.defaults.timeout = 10000;
   
 	// Fetch the feeds list.
@@ -186,6 +191,12 @@
 		});
     });
   }
-  </script>
+		
+		function imagePreloading() {
+			var img = new Image(), i = 0, n = arguments.length;
+			while (i < n)
+				img.src = arguments[i++];
+		}
+	</script>
 </body>
 </html>
