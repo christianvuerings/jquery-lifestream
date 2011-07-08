@@ -38,8 +38,8 @@
 		
 		$.n.defaults.timeout = 10000;
   
-		// Fetch the feeds list.
-		var feeds = [ // If we could fetch the available services form somewhere ...
+		// Fetch the service list.
+		var services = [ // If we could fetch the available services form somewhere ...
 			'blogger',
 			'dailymotion',
 			'delicious',
@@ -68,7 +68,7 @@
   
 		// Build the service checkboxes
 		var out = [];
-		$.each(feeds.sort(), function(i, f) { 
+		$.each(services.sort(), function(i, f) { 
 			out.push(
 				'<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>');
 		});
@@ -122,7 +122,7 @@
 					.filter(':checked')
 					.map(function() { return $(this).attr('id')})
 					.get(), 
-				{core: '../src/', feeds: '../src/feeds/'},
+				{core: '../src/', services: '../src/services/'},
 				function(out) {
 					$.n('Build completed');
 					
@@ -161,10 +161,10 @@
 			return false;
 		});
   
-		function concatMinifiedScripts(feeds, paths, success) {
+		function concatMinifiedScripts(services, paths, success) {
 			var 
 				out = [],
-				countdown = 1 + feeds.length,
+				countdown = 1 + services.length,
 				concat = function(scriptText) {
 					out.push(scriptText);
 					if (!--countdown)
@@ -177,14 +177,14 @@
 				$.n('Received core.js');
 				concat(scriptText);
 				
-				// The feeds scripts are not (necessarily) 
-				// concatened in the same order as in the feeds array.
+				// The services scripts are not (necessarily) 
+				// concatened in the same order as in the services array.
 				// We don't need to preserve that order so we can
 				// just fire all the script requests (potentially)
 				// speeding up the process.
-				$.each(feeds, function(i, f) {
+				$.each(services, function(i, f) {
 					$.n('Sent request for ' + f + '.js');
-					$.getScript(paths['feeds'] + f + '.js', function(scriptText) {
+					$.getScript(paths['services'] + f + '.js', function(scriptText) {
 						$.n('Received ' + f + '.js');
 						concat(scriptText);
 					});
