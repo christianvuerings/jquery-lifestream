@@ -159,16 +159,17 @@ Stuff that isn"t implemented yet, but would be nice to have:
 
 Places on the web where this plug-in got mentioned:
 
-* [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
-* [DesignBeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
-* [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
-* [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
-* [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
-* [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
-* [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
-* [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
-* [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
 * [BlogUpstairs](http://blogupstairs.com/framework/javascript-framework/jquery/jquery-lifestream-show-a-stream-of-your-online-activity-with-jquery/)
+* [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
+* [DesignBeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
+* [doejo](http://doejo.com/blog/jquery-lifestream-a-simple-way-to-track-your-online-activity-in-one-spot)
+* [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
+* [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
+* [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
+* [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
+* [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
+* [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
+* [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
 * [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
 
 ## Special Thanks
