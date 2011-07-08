@@ -2,6 +2,7 @@ srcPath = ../src
 servicesDir = $(srcPath)/services
 modules = $(srcPath)/core.js $(servicesDir)/*.js
 buildDir = .
+serviceListPath = ../download/services.txt
 
 all: serviceList
 
@@ -13,7 +14,7 @@ serviceList:
 #	ls -l $(servicesDir) | awk '{print $$9}'
 #	ls -l $(servicesDir) | grep -v '^total' | awk '{print $$9}' 
 #	find $(servicesDir) -name '*.js' -exec echo '{}' \;
-	ls -l $(servicesDir) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(buildDir)/services.txt
+	ls -l $(servicesDir) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(serviceListPath)
 
 printVars:
 	@echo $(srcPath)

@@ -38,128 +38,111 @@
 		
 		$.n.defaults.timeout = 10000;
   
-		// Fetch the service list.
-		var services = [ // If we could fetch the available services form somewhere ...
-			'blogger',
-			'dailymotion',
-			'delicious',
-			'deviantart',
-			'dribbble',
-			'flickr',
-			'formspring',
-			'forrst',
-			'foursquare',
-			'github',
-			'googlereader',
-			'iusethis',
-			'lastfm',
-			'picplz',
-			'pinboard',
-			'posterous',
-			'reddit',
-			'slideshare',
-			'stackoverflow',
-			'tumblr',
-			'twitter',
-			'vimeo',
-			'wordpress',
-			'youtube'
-		];
-  
-		// Build the service checkboxes
-		var out = [];
-		$.each(services.sort(), function(i, f) { 
-			out.push(
-				'<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>');
+		// Fetch the service list
+		$.ajax({
+			url: 'services.txt',
+			dataType: 'text',
+			success: function(data) {
+				onServicesAvailable(data.trim().split('\n'));
+			}
 		});
-		out.push('<br class="clear">');
-		$('#services').append(out.join(''));
-  
-		// PE of service checkboxes
-		var c = 0;
-		$('#services input[type="checkbox"]')
-			.each(function() {
-				$(this).button({
-					text: false,
-					icons: {
-						primary: 'ui-icon-service-' + this.id
-					},
-				});
-			})
-			.change(function(e) {
-				if (this.checked)
-					c++;
-				else
-					c--;
-				if (c > 0)
-					$('#button').button('enable');
-				else
-					$('#button').button('disable');
-			})
-		;
-  
-		// PE of the button
-		$('#button').button({
-			icons: { primary: 'ui-icon-gear' },
-			disabled: true
-		}); //chain it!
-  
-		$('#button').click(function() {
-			$.n('Build started');
-    
-			// Disable UI
-			//$('body').addClass('waiting');
-			$('#services input[type="checkbox"]').button('disable');
-			$(this)
-				.button({
-					disabled: true,
-					label: 'Wait...',
-					icons: { primary: 'ui-icon-spinner' }
-				});
 		
-			concatMinifiedScripts(
-				$('#services input[type="checkbox"]')
-					.filter(':checked')
-					.map(function() { return $(this).attr('id')})
-					.get(), 
-				{core: '../src/', services: '../src/services/'},
-				function(out) {
-					$.n('Build completed');
-					
-					$('#button')
-					  .button('disable')
-					  .button('destroy')
-					;
-					Downloadify.create('button', {
-						filename: function(){
-							return 'jquery.lifestream.js';
+		function onServicesAvailable(services) {
+			// Build the service checkboxes
+			var out = [];
+			$.each(services.sort(), function(i, f) { 
+				out.push(
+					'<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>');
+			});
+			out.push('<br class="clear">');
+			$('#services').append(out.join(''));
+	  
+			// PE of service checkboxes
+			var c = 0;
+			$('#services input[type="checkbox"]')
+				.each(function() {
+					$(this).button({
+						text: false,
+						icons: {
+							primary: 'ui-icon-service-' + this.id
 						},
-						data: function(){ 
-							return out;
-						},
-						onComplete: function() { 
-							// Re-enable UI
-							//$('body').removeClass('waiting');
-							$('#services input[type="checkbox"]').button('enable');
-							$('#button').button({
-								icons: { primary: 'ui-icon-gear' },
-								label: 'Build script'
-							});
-						},
-						//onCancel: function(){ alert('You have cancelled the saving of this file.'); },
-						onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
-						transparent: false,
-						swf: 'media/downloadify.swf',
-						downloadImage: 'img/download-new.png',
-						width: 144, //100,
-						height: 41, //30,
-						transparent: false,
-						append: false
 					});
-				}
-			);
-			return false;
-		});
+				})
+				.change(function(e) {
+					if (this.checked)
+						c++;
+					else
+						c--;
+					if (c > 0)
+						$('#button').button('enable');
+					else
+						$('#button').button('disable');
+				})
+			;
+	  
+			// PE of the button
+			$('#button').button({
+				icons: { primary: 'ui-icon-gear' },
+				disabled: true
+			}); //chain it!
+	  
+			$('#button').click(function() {
+				$.n('Build started');
+		 
+				// Disable UI
+				//$('body').addClass('waiting');
+				$('#services input[type="checkbox"]').button('disable');
+				$(this)
+					.button({
+						disabled: true,
+						label: 'Wait...',
+						icons: { primary: 'ui-icon-spinner' }
+					});
+			
+				concatMinifiedScripts(
+					$('#services input[type="checkbox"]')
+						.filter(':checked')
+						.map(function() { return $(this).attr('id')})
+						.get(), 
+					{core: '../src/', services: '../src/services/'},
+					function(out) {
+						$.n('Build completed');
+						
+						$('#button')
+						  .button('disable')
+						  .button('destroy')
+						;
+						Downloadify.create('button', {
+							filename: function(){
+								return 'jquery.lifestream.js';
+							},
+							data: function(){ 
+								return out;
+							},
+							onComplete: function() { 
+								// Re-enable UI
+								//$('body').removeClass('waiting');
+								$('#services input[type="checkbox"]').button('enable');
+								$('#button').button({
+									icons: { primary: 'ui-icon-gear' },
+									label: 'Build script'
+								});
+							},
+							//onCancel: function(){ alert('You have cancelled the saving of this file.'); },
+							onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
+							transparent: false,
+							swf: 'media/downloadify.swf',
+							downloadImage: 'img/download-new.png',
+							width: 144, //100,
+							height: 41, //30,
+							transparent: false,
+							append: false
+						});
+					}
+				);
+				return false;
+			});
+		}
   
 		function concatMinifiedScripts(services, paths, success) {
 			var 
