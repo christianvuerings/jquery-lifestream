@@ -26,6 +26,7 @@ Currently supports the following feeds:
 * [Foursquare](http://foursquare.com)
 * [Github](http://github.com)
 * [Google Reader](http://google.com/reader)
+* [Instapaper](http://www.instapaper.com)
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
 * [Mlkshk](http://mlkshk.com)
@@ -178,6 +179,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.1.4 Instapaper support
 * 0.1.3 Mlkshk support
 * 0.1.2 Foomark support
 * 0.1.1 Blogger, Formspring, Posterous & Wordpress support
