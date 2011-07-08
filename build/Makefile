@@ -5,11 +5,18 @@ dist = ../dist
 modules = $(srcPath)/core.js $(servicesDir)/*.js
 serviceListPath = ../download/services.txt
 jls = $(dist)/jquery.lifestream.js
+jlsMin = $(dist)/jquery.lifestream.min.js
 
-all: $(jls) serviceList
+all: $(jls) $(jlsMin) serviceList
 
 $(jls): $(modules)
 	cat $^ > $@
+	
+$(jlsMin): $(dist)/*.min.js
+	@echo Concatenation of $(jlsMin)
+	
+$(dist)/%.min.js: $(servicesDir)/%.js
+	@echo $^
 
 serviceList:
 #	grep -l $.fn.lifestream.feeds. $(servicesDir)/*.js
