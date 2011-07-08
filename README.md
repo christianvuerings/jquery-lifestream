@@ -172,6 +172,7 @@ Places on the web where this plug-in got mentioned:
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
 * [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
 * [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
+* [The Next Web](http://thenextweb.com/dd/2011/07/08/jquery-lifestream-makes-it-easy-to-pop-your-online-activity-onto-any-page/)
 
 ## Special Thanks
 
