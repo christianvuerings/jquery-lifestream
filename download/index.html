@@ -30,24 +30,27 @@
 	<script>
 		// TODO: Check if we have all deps loading
 		
+		$.n.defaults.timeout = 10000;
+		var
+			$button = $('#button')
+		;
+		
 		imagePreloading(
 			'img/services-deselected.png',
 			'img/services-hover.png',
 			'img/services-selected.png'
 		);
-		
-		$.n.defaults.timeout = 10000;
   
 		// Fetch the service list
 		$.ajax({
 			url: 'services.txt',
 			dataType: 'text',
 			success: function(data) {
-				onServicesAvailable(data.trim().split('\n'));
+				buildUI(data.trim().split('\n'));
 			}
 		});
 		
-		function onServicesAvailable(services) {
+		function buildUI(services) {
 			// Build the service checkboxes
 			var out = [];
 			$.each(services.sort(), function(i, f) { 
@@ -74,73 +77,80 @@
 					else
 						c--;
 					if (c > 0)
-						$('#button').button('enable');
+						$button.button('enable');
 					else
-						$('#button').button('disable');
+						$button.button('disable');
 				})
 			;
 	  
-			// PE of the button
-			$('#button').button({
-				icons: { primary: 'ui-icon-gear' },
-				disabled: true
-			}); //chain it!
-	  
-			$('#button').click(function() {
-				$.n('Build started');
+			$button
+				.button({
+					icons: { primary: 'ui-icon-gear' },
+					disabled: true
+				})
+				.click(function() {
+					build();
+					return false;
+				});
+		}
+		
+		function build() {
+			$.n('Build started');
 		 
-				// Disable UI
-				//$('body').addClass('waiting');
-				$('#services input[type="checkbox"]').button('disable');
-				$(this)
-					.button({
-						disabled: true,
-						label: 'Wait...',
-						icons: { primary: 'ui-icon-spinner' }
-					});
+			// Disable UI
+			//$('body').addClass('waiting');
+			$('#services input[type="checkbox"]').button('disable');
+			$button
+				.button({
+					disabled: true,
+					label: 'Wait...',
+					icons: { primary: 'ui-icon-spinner' }
+				});
+		
+			concatMinifiedScripts(
+				$('#services input[type="checkbox"]')
+					.filter(':checked')
+					.map(function() { return $(this).attr('id')})
+					.get(), 
+				{core: '../src/', services: '../src/services/'},
+				onBuildCompleted
+			);
+		}
+		
+		function onBuildCompleted(out) {
+			$.n('Build completed');
 			
-				concatMinifiedScripts(
-					$('#services input[type="checkbox"]')
-						.filter(':checked')
-						.map(function() { return $(this).attr('id')})
-						.get(), 
-					{core: '../src/', services: '../src/services/'},
-					function(out) {
-						$.n('Build completed');
-						
-						$('#button')
-						  .button('disable')
-						  .button('destroy')
-						;
-						Downloadify.create('button', {
-							filename: function(){
-								return 'jquery.lifestream.js';
-							},
-							data: function(){ 
-								return out;
-							},
-							onComplete: function() { 
-								// Re-enable UI
-								//$('body').removeClass('waiting');
-								$('#services input[type="checkbox"]').button('enable');
-								$('#button').button({
-									icons: { primary: 'ui-icon-gear' },
-									label: 'Build script'
-								});
-							},
-							//onCancel: function(){ alert('You have cancelled the saving of this file.'); },
-							onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
-							transparent: false,
-							swf: 'media/downloadify.swf',
-							downloadImage: 'img/download-new.png',
-							width: 144, //100,
-							height: 41, //30,
-							transparent: false,
-							append: false
-						});
-					}
-				);
-				return false;
+			$button
+			  .button('disable')
+			  .button('destroy')
+			;
+			Downloadify.create('button', {
+				filename: function(){
+					return 'jquery.lifestream.js';
+				},
+				data: function(){ 
+					return out;
+				},
+				onComplete: onDownloadComplete,
+				//onCancel: function(){ alert('You have cancelled the saving of this file.'); },
+				onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
+				transparent: false,
+				swf: 'media/downloadify.swf',
+				downloadImage: 'img/download-new.png',
+				width: 144, //100,
+				height: 41, //30,
+				transparent: false,
+				append: false
+			});
+		}
+		
+		function onDownloadComplete() { 
+			// Re-enable UI
+			//$('body').removeClass('waiting');
+			$('#services input[type="checkbox"]').button('enable');
+			$button.button({
+				icons: { primary: 'ui-icon-gear' },
+				label: 'Build script'
 			});
 		}
   
