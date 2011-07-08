@@ -1,12 +1,12 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.1.1
+ * @version 0.1.3
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
  */
 /*globals jQuery, $ */
-(function( $ ){
+;(function( $ ){
 
   /**
    * Create a valid YQL URL by passing in a query
@@ -175,7 +175,7 @@
       config.template),
 
     parseBlogger = function ( input ) {
-      var output = [], list, i = 0, j, item;
+      var output = [], list, i = 0, j, item, k, l;
 
       if ( input.query && input.query.count && input.query.count > 0
           && input.query.results.feed.entry ) {
@@ -184,11 +184,27 @@
         for ( ; i < j; i++) {
           item = list[i];
 
-          output.push({
-            date: new Date( item.published ),
-            config: config,
-            html: $.tmpl( template.posted, item )
-          });
+          if( !item.origLink ) {
+            k = 0;
+            l = item.link.length;
+            for ( ; k < l ; k++ ) {
+              if( item.link[k].rel === 'alternate' ) {
+                item.origLink = item.link[k].href;
+              }
+            }
+          }
+          // ignore items that have no link.
+          if ( item.origLink ){
+            if( item.title.content ) {
+              item.title = item.title.content;
+            }
+
+            output.push({
+              date: new Date( item.published ),
+              config: config,
+              html: $.tmpl( template.posted, item )
+            });
+          }
         }
       }
 
@@ -418,6 +434,49 @@
 
   };
 
+	$.fn.lifestream.feeds.foomark = function( config, callback ) {
+
+	  var template = $.extend({},
+
+	    {
+	      bookmarked: 'bookmarked <a href="${url}">${url}</a>'
+
+	    },
+	    config.template);
+
+	  $.ajax({
+	    url: "http://api.foomark.com/urls/list/",
+	    data: {
+	      format: "jsonp",
+	      username: config.user
+	    },
+	    dataType: "jsonp",
+	    success: function( data ) {
+
+	      var output = [], i=0, j;
+	      if( data && data.length && data.length > 0 ) {
+	        j = data.length;
+	        for( ; i < j; i++ ) {
+	          var item = data[i];
+	          output.push({
+	            date: new Date( item.created_at.replace(' ', 'T') ),
+	            config: config,
+	            html: $.tmpl( template.bookmarked, item )
+	          });
+	        }
+	      }
+	      callback( output );
+	    }
+	  });
+
+	  // Expose the template.
+	  // We use this to check which templates are available
+	  return {
+	    "template" : template
+	  };
+
+	};
+
   $.fn.lifestream.feeds.formspring = function( config, callback ) {
 
     var template = $.extend({},
@@ -571,8 +630,10 @@
       config.template);
 
     var returnRepo = function( status ) {
-      return status.payload.repo || status.repository.owner + "/"
-                                  + status.repository.name;
+      return status.payload.repo
+        || ( status.repository ? status.repository.owner + "/"
+          + status.repository.name : null )
+        || status.url.split("/")[3] + "/" + status.url.split("/")[4];
     },
     parseGithubStatus = function( status ) {
       var repo, title;
@@ -590,7 +651,9 @@
         } );
       }
       else if (status.type === "GistEvent") {
-        return $.tmpl( template.gist, status );
+        return $.tmpl( template.gist, {
+          status: status
+        } );
       }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {
@@ -832,6 +895,52 @@
       dataType: 'jsonp',
       success: function( data ) {
         callback(parseLastfm(data));
+      }
+    });
+
+    // Expose the template.
+    // We use this to check which templates are available
+    return {
+      "template" : template
+    };
+
+  };
+
+  $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
+
+    var template = $.extend({},
+      {
+        posted: 'posted <a href="${link}">${title}</a>'
+      },
+      config.template);
+
+
+    var parseMlkshk = function ( input ) {
+
+      var output = [], list, i = 0, j, item;
+
+      if ( input.query && input.query.count && input.query.count > 0
+          && input.query.results.rss.channel.item ) {
+        list = input.query.results.rss.channel.item;
+        j = list.length;
+        for ( ; i < j; i++) {
+          item = list[i];
+          output.push({
+            date: new Date( item.pubDate ),
+            config: config,
+            html: $.tmpl( template.posted, item )
+          });
+        }
+      }
+      return output;
+    };
+
+    $.ajax({
+      url: createYqlUrl('select * from xml where '
+        + 'url="http://mlkshk.com/user/' + config.user + '/rss"'),
+      dataType: "jsonp",
+      success: function ( data ) {
+        callback(parseMlkshk(data));
       }
     });
 
