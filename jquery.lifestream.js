@@ -175,7 +175,7 @@
       config.template),
 
     parseBlogger = function ( input ) {
-      var output = [], list, i = 0, j, item;
+      var output = [], list, i = 0, j, item, k, l;
 
       if ( input.query && input.query.count && input.query.count > 0
           && input.query.results.feed.entry ) {
@@ -184,23 +184,27 @@
         for ( ; i < j; i++) {
           item = list[i];
 
-          if(!item.origLink) {
-            for (var n = 0; n < item.link.length; n++) {
-              if(item.link[n].rel == 'alternate')
-                item.origLink = item.link[n].href;
+          if( !item.origLink ) {
+            k = 0;
+            l = item.link.length;
+            for ( ; k < l ; k++ ) {
+              if( item.link[k].rel === 'alternate' ) {
+                item.origLink = item.link[k].href;
+              }
             }
-            // ignore items that have no link.
-            if(!item.origLink) continue;
           }
-          if(item.title.content) {
-            item.title = item.title.content;
-          }
+          // ignore items that have no link.
+          if ( item.origLink ){
+            if( item.title.content ) {
+              item.title = item.title.content;
+            }
 
-          output.push({
-            date: new Date( item.published ),
-            config: config,
-            html: $.tmpl( template.posted, item )
-          });
+            output.push({
+              date: new Date( item.published ),
+              config: config,
+              html: $.tmpl( template.posted, item )
+            });
+          }
         }
       }
 
@@ -649,7 +653,7 @@
       else if (status.type === "GistEvent") {
         return $.tmpl( template.gist, {
           status: status
-        });
+        } );
       }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {

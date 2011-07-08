@@ -142,7 +142,10 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 * Indentation: 2 spaces
 * Max column width: 78 characters
 * Trailing spaces: not allowed
-* We use the following spacing rules:
+* Always use curly brackets {} for if/else/for
+* Put all `var` statements in the beginning of a function
+* Use === & !== for comparing variables
+* Use the following spacing rules:
 ``` javascript
 for (var i = 0, j = length; i < j; i++) {
 ```
