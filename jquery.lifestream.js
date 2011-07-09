@@ -627,7 +627,7 @@
           +'<a href="${status.url}">${title}</a>',
         deleted: 'deleted ${status.payload.ref_type} '
           +'<a href="http://github.com/${status.repository.owner}/'
-          +'${status.repository.name}">status.payload.ref</a>'
+          +'${status.repository.name}">${status.payload.ref}</a>'
       },
       config.template);
 
@@ -693,8 +693,10 @@
           status: status
         } );
       }
-      else if (status.type === "DeleteEvent") {
-        return $.tmpl( template.deleted, status );
+      else if (status.type === "DeleteEvent") {console.log(status);
+        return $.tmpl( template.deleted, {
+          status: status
+        } );
       }
 
     },
