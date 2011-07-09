@@ -611,7 +611,6 @@
         pushed: '<a href="${status.url}" title="{{if title}}${title} '
           +'by ${author} {{/if}}">pushed</a> to <a href="http://github.com/'
           +'${repo}/tree/${branchname}">${branchname}</a> at '
-          //+'by ${author} {{/if}}">pushed</a> to '
           +'<a href="http://github.com/${repo}">${repo}</a>',
         gist: '<a href="${status.payload.url}" title="'
           +'${status.payload.desc || ""}">${status.payload.name}</a>',
