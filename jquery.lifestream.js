@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.1.4
+ * @version 0.1.5
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -1290,7 +1290,7 @@
         callback(parseSnipplr(data));
       }
     });
-  
+
   };
 
   $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {

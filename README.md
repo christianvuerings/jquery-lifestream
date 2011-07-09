@@ -35,6 +35,7 @@ Currently supports the following feeds:
 * [Posterous](http://posterous.com)
 * [Reddit](http://reddit.com)
 * [Slideshare](http://slideshare.com)
+* [Snipplr](http://snipplr.com)
 * [Stackoverflow](http://stackoverflow.com)
 * [Tumblr](http://tumblr.com)
 * [Twitter](http://twitter.com)
@@ -180,6 +181,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.1.5 Snipplr support
 * 0.1.4 Instapaper support
 * 0.1.3 Mlkshk support
 * 0.1.2 Foomark support
