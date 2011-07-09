@@ -60,85 +60,85 @@ $(dist)/core.min.js: $(srcPath)/core.js
 	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/blogger.min.js: $(servicesDir)/blogger.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/dailymotion.min.js: $(servicesDir)/dailymotion.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/delicious.min.js: $(servicesDir)/delicious.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/deviantart.min.js: $(servicesDir)/deviantart.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/dribbble.min.js: $(servicesDir)/dribbble.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/flickr.min.js: $(servicesDir)/flickr.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/foomark.min.js: $(servicesDir)/foomark.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/formspring.min.js: $(servicesDir)/formspring.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/forrst.min.js: $(servicesDir)/forrst.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/foursquare.min.js: $(servicesDir)/foursquare.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/github.min.js: $(servicesDir)/github.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/googlereader.min.js: $(servicesDir)/googlereader.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/instapaper.min.js: $(servicesDir)/instapaper.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/iusethis.min.js: $(servicesDir)/iusethis.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/lastfm.min.js: $(servicesDir)/lastfm.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/mlkshk.min.js: $(servicesDir)/mlkshk.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/picplz.min.js: $(servicesDir)/picplz.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/pinboard.min.js: $(servicesDir)/pinboard.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/posterous.min.js: $(servicesDir)/posterous.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/reddit.min.js: $(servicesDir)/reddit.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/slideshare.min.js: $(servicesDir)/slideshare.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/stackoverflow.min.js: $(servicesDir)/stackoverflow.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/tumblr.min.js: $(servicesDir)/tumblr.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/twitter.min.js: $(servicesDir)/twitter.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/vimeo.min.js: $(servicesDir)/vimeo.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/wordpress.min.js: $(servicesDir)/wordpress.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/youtube.min.js: $(servicesDir)/youtube.js
-	uglify $(uglifyOpts) $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 serviceList:
 #	grep -l $.fn.lifestream.feeds. $(servicesDir)/*.js
