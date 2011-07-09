@@ -617,8 +617,9 @@
           +'${status.payload.desc || ""}">${status.payload.name}</a>',
         commented: '<a href="${status.url}">commented</a> on '
           +'<a href="http://github.com/${repo}">${repo}</a>',
-        pullrequest: '<a href="${status.url}">${status.payload.action}</a> '
-          +'pull request on <a href="http://github.com/${repo}">${repo}</a>',
+        pullrequest: '${status.payload.action} <a href="${status.url}">'
+          +'pull request #${status.payload.number}</a> on '
+          +'<a href="http://github.com/${repo}">${repo}</a>',
         created: 'created ${status.payload.ref_type || status.payload.object}'
           +' <a href="${status.url}">${status.payload.ref || '
           +'status.payload.object_name}</a> for '
