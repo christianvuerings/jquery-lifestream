@@ -625,9 +625,10 @@
           +'<a href="http://github.com/${repo}">${repo}</a>',
         createdglobal: 'created ${status.payload.object} '
           +'<a href="${status.url}">${title}</a>',
-        deleted: 'deleted ${status.payload.ref_type} '
-          +'<a href="http://github.com/${status.repository.owner}/'
-          +'${status.repository.name}">${status.payload.ref}</a>'
+        deleted: 'deleted ${status.payload.ref_type} ${status.payload.ref} '
+          +'at <a href="http://github.com/${status.repository.owner}/'
+          +'${status.repository.name}">${status.repository.owner}/'
+          +'${status.repository.name}</a>'
       },
       config.template);
 
