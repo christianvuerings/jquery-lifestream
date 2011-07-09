@@ -1,0 +1,18 @@
+# Development Notes
+
+Abbreviations:
+- BS: Build System
+- CDB: Custom Download Builder
+
+## Milestones
+
+### Milestone #1
+- BS: Building of services.txt with make rules?
+- BS: A clean target?
+- BS: Makefile identifiers case
+- BS: Write installation instructions for build tools
+	- Make
+	- Node.js
+	- UglifyJS
+
+### Later milestones
