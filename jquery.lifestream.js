@@ -693,7 +693,7 @@
           status: status
         } );
       }
-      else if (status.type === "DeleteEvent") {console.log(status);
+      else if (status.type === "DeleteEvent") {
         return $.tmpl( template.deleted, {
           status: status
         } );
