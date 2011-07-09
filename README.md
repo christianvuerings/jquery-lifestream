@@ -26,6 +26,7 @@ Currently supports the following feeds:
 * [Foursquare](http://foursquare.com)
 * [Github](http://github.com)
 * [Google Reader](http://google.com/reader)
+* [Instapaper](http://www.instapaper.com)
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
 * [Mlkshk](http://mlkshk.com)
@@ -171,6 +172,7 @@ Places on the web where this plug-in got mentioned:
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
 * [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
 * [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
+* [The Next Web](http://thenextweb.com/dd/2011/07/08/jquery-lifestream-makes-it-easy-to-pop-your-online-activity-onto-any-page/)
 
 ## Special Thanks
 
@@ -178,6 +180,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.1.4 Instapaper support
 * 0.1.3 Mlkshk support
 * 0.1.2 Foomark support
 * 0.1.1 Blogger, Formspring, Posterous & Wordpress support

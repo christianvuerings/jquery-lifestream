@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.1.3
+ * @version 0.1.4
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -769,6 +769,51 @@
       dataType: 'jsonp',
       success: function( data ) {
         callback(parseReader(data));
+      }
+    });
+
+    // Expose the template.
+    // We use this to check which templates are available
+    return {
+      "template" : template
+    };
+
+  };
+
+  $.fn.lifestream.feeds.instapaper = function( config, callback ) {
+    var template = $.extend({},
+      {
+        loved: 'loved <a href="${link}">${title}</a>'
+      },
+      config.template),
+
+    parseInstapaper = function( input ) {
+      var output = [], list, i = 0, j, item;
+
+      if(input.query && input.query.count && input.query.count > 0
+          && input.query.results.rss.channel.item) {
+
+        list = input.query.results.rss.channel.item;
+        j = list.length;
+        for( ; i<j; i++) {
+          item = list[i];
+          output.push({
+            date: new Date( item.pubDate ),
+            config: config,
+            html: $.tmpl( template.loved, item )
+          });
+        }
+      }
+      return output;
+    };
+
+    $.ajax({
+      url: createYqlUrl('select * from xml where url='
+        + '"http://www.instapaper.com/starred/rss/'
+        + config.user + '"'),
+      dataType: 'jsonp',
+      success: function( data ) {
+        callback(parseInstapaper(data));
       }
     });
 
