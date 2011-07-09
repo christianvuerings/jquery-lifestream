@@ -14,5 +14,6 @@ Abbreviations:
 	- Make
 	- Node.js
 	- UglifyJS
+- CDB: Fetch minified modules when they are done
 
 ### Later milestones
