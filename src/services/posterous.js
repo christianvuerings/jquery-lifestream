@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.posterous = function( config, callback ) {
+;$.fn.lifestream.feeds.posterous = function( config, callback ) {
 
     var template = $.extend({},
       {

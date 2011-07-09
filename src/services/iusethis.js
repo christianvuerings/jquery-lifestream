@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.iusethis = function( config, callback ) {
+;$.fn.lifestream.feeds.iusethis = function( config, callback ) {
 
     var template = $.extend({},
       {

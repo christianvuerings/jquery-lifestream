@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.mlkshk = function( config, callback ) {
+;$.fn.lifestream.feeds.mlkshk = function( config, callback ) {
 
     var template = $.extend({},
       {
@@ -28,7 +28,7 @@ $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://mlkshk.com/user/' + config.user + '/rss"'),
       dataType: "jsonp",
       success: function ( data ) {

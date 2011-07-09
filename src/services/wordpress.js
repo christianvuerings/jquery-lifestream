@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.wordpress = function( config, callback ) {
+;$.fn.lifestream.feeds.wordpress = function( config, callback ) {
 
     var template = $.extend({},
       {

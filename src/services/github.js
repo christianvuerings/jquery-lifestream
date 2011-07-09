@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.github = function( config, callback ) {
+;$.fn.lifestream.feeds.github = function( config, callback ) {
 
     var template = $.extend({},
       {
@@ -24,8 +24,10 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
       config.template);
 
     var returnRepo = function( status ) {
-      return status.payload.repo || status.repository.owner + "/"
-                                  + status.repository.name;
+      return status.payload.repo
+        || ( status.repository ? status.repository.owner + "/"
+          + status.repository.name : null )
+        || status.url.split("/")[3] + "/" + status.url.split("/")[4];
     },
     parseGithubStatus = function( status ) {
       var repo, title;
@@ -43,7 +45,9 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
         } );
       }
       else if (status.type === "GistEvent") {
-        return $.tmpl( template.gist, status );
+        return $.tmpl( template.gist, {
+          status: status
+        } );
       }
       else if (status.type === "CommitCommentEvent" ||
                status.type === "IssueCommentEvent") {

@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.vimeo = function( config, callback ) {
+;$.fn.lifestream.feeds.vimeo = function( config, callback ) {
 
     var template = $.extend({},
       {

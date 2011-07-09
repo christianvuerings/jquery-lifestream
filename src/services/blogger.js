@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.blogger = function( config, callback ) {
+;$.fn.lifestream.feeds.blogger = function( config, callback ) {
 
     var template = $.extend({},
       {
@@ -7,7 +7,7 @@ $.fn.lifestream.feeds.blogger = function( config, callback ) {
       config.template),
 
     parseBlogger = function ( input ) {
-      var output = [], list, i = 0, j, item;
+      var output = [], list, i = 0, j, item, k, l;
 
       if ( input.query && input.query.count && input.query.count > 0
           && input.query.results.feed.entry ) {
@@ -16,11 +16,27 @@ $.fn.lifestream.feeds.blogger = function( config, callback ) {
         for ( ; i < j; i++) {
           item = list[i];
 
-          output.push({
-            date: new Date( item.published ),
-            config: config,
-            html: $.tmpl( template.posted, item )
-          });
+          if( !item.origLink ) {
+            k = 0;
+            l = item.link.length;
+            for ( ; k < l ; k++ ) {
+              if( item.link[k].rel === 'alternate' ) {
+                item.origLink = item.link[k].href;
+              }
+            }
+          }
+          // ignore items that have no link.
+          if ( item.origLink ){
+            if( item.title.content ) {
+              item.title = item.title.content;
+            }
+
+            output.push({
+              date: new Date( item.published ),
+              config: config,
+              html: $.tmpl( template.posted, item )
+            });
+          }
         }
       }
 

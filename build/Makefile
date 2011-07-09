@@ -55,6 +55,8 @@ compressed: $(jlsMin)
 #$(jlsMin): $(dist)/core.min.js $(dist)/blogger.min.js $(dist)/dailymotion.min.js
 $(jlsMin): $(minifiedModules)
 	cat $^ > $@
+#$(jlsMin): $(jls)
+#	uglifyjs $(uglifyOpts) $^ > $@
 
 $(dist)/core.min.js: $(srcPath)/core.js
 	uglifyjs $(uglifyOpts) $^ > $@

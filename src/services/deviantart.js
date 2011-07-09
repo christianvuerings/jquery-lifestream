@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.deviantart = function( config, callback ) {
+;$.fn.lifestream.feeds.deviantart = function( config, callback ) {
 
     var template = $.extend({},
       {

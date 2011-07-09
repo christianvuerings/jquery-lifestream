@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.googlereader = function( config, callback ) {
+;$.fn.lifestream.feeds.googlereader = function( config, callback ) {
 
     var template = $.extend({},
       {

@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.instapaper = function( config, callback ) {
+;$.fn.lifestream.feeds.instapaper = function( config, callback ) {
     var template = $.extend({},
       {
         loved: 'loved <a href="${link}">${title}</a>'
@@ -26,7 +26,7 @@ $.fn.lifestream.feeds.instapaper = function( config, callback ) {
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where url='
+      url: $.fn.lifestream.createYqlUrl('select * from xml where url='
         + '"http://www.instapaper.com/starred/rss/'
         + config.user + '"'),
       dataType: 'jsonp',

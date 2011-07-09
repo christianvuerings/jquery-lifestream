@@ -1,4 +1,4 @@
-$.fn.lifestream.feeds.dribbble = function( config, callback ) {
+;$.fn.lifestream.feeds.dribbble = function( config, callback ) {
 
     var template = $.extend({},
       {

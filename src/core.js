@@ -1,12 +1,13 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.1.1
+ * @version 0.1.4
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
  */
 /*globals jQuery, $ */
-(function( $ ){
+;(function( $ ){
+
   /**
    * Initialize the lifestream plug-in
    * @param {Object} config Configuration object
@@ -154,15 +155,15 @@
    * @param {String} query The query you want to convert into a valid yql url
    * @return {String} A valid YQL URL
    */
-  $.fn.lifestream.createYqlFromUrl = function( query ) {
-    return ( "http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=" +
+  $.fn.lifestream.createYqlUrl = function( query ) {
+      return ( "http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=" +
       "store://datatables.org/alltableswithkeys&format=json")
-      .replace( "__QUERY__" , encodeURIComponent( query ) );
+        .replace( "__QUERY__" , encodeURIComponent( query ) );
   };
 
   /**
    * A big container which contains all available feeds
    */
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
-  
+
 }( jQuery ));
