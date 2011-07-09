@@ -15,5 +15,7 @@ Abbreviations:
 	- Node.js
 	- UglifyJS
 - CDB: Fetch minified modules when they are done
+- CDB: Test minified file
+	- Semicolens
 
 ### Later milestones

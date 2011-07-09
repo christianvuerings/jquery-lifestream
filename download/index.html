@@ -111,8 +111,7 @@
 				$('#services input[type="checkbox"]')
 					.filter(':checked')
 					.map(function() { return $(this).attr('id')})
-					.get(), 
-				{core: '../src/', services: '../src/services/'},
+					.get(),
 				onBuildCompleted
 			);
 		}
@@ -126,7 +125,7 @@
 			;
 			Downloadify.create('button', {
 				filename: function(){
-					return 'jquery.lifestream.js';
+					return 'jquery.lifestream.min.js';
 				},
 				data: function(){ 
 					return out;
@@ -154,7 +153,7 @@
 			});
 		}
   
-		function concatMinifiedScripts(services, paths, success) {
+		function concatMinifiedScripts(services, success) {
 			var 
 				out = [],
 				countdown = 1 + services.length,
@@ -165,9 +164,9 @@
 				}
 			;
 			
-			$.n('Sent request for core.js');
-			$.getScript(paths['core'] + 'core.js', function(scriptText) {
-				$.n('Received core.js');
+			$.n('Sent request for core.min.js');
+			$.getScript('../dist/core.min.js', function(scriptText) {
+				$.n('Received core.min.js');
 				concat(scriptText);
 				
 				// The services scripts are not (necessarily) 
@@ -176,9 +175,9 @@
 				// just fire all the script requests (potentially)
 				// speeding up the process.
 				$.each(services, function(i, f) {
-					$.n('Sent request for ' + f + '.js');
-					$.getScript(paths['services'] + f + '.js', function(scriptText) {
-						$.n('Received ' + f + '.js');
+					$.n('Sent request for ' + f + '.min.js');
+					$.getScript('../dist/' + f + '.min.js', function(scriptText) {
+						$.n('Received ' + f + '.min.js');
 						concat(scriptText);
 					});
 				});

@@ -10,6 +10,7 @@ jlsMin = $(dist)/jquery.lifestream.min.js
 #minifiedServiceModules := $(patsubst %.js,%.min.js,$(wildcard $(servicesDir)/*.js))
 minifiedModules = $(dist)/core.min.js\
 $(dist)/blogger.min.js\
+$(dist)/dailymotion.min.js\
 $(dist)/delicious.min.js\
 $(dist)/deviantart.min.js\
 $(dist)/dribbble.min.js\
@@ -35,7 +36,6 @@ $(dist)/twitter.min.js\
 $(dist)/vimeo.min.js\
 $(dist)/wordpress.min.js\
 $(dist)/youtube.min.js 
-
  
 all: uncompressed compressed serviceList
 
