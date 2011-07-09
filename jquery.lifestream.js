@@ -614,7 +614,7 @@
           +'<a href="http://github.com/${repo}">${repo}</a>',
         gist: '<a href="${status.payload.url}" title="'
           +'${status.payload.desc || ""}">${status.payload.name}</a>',
-        commented: '<a href="${status.url}">commented</a> on '
+        commented: 'commented on <a href="${status.url}">${what}</a> on '
           +'<a href="http://github.com/${repo}">${repo}</a>',
         pullrequest: '${status.payload.action} <a href="${status.url}">'
           +'pull request #${status.payload.number}</a> on '
@@ -639,7 +639,7 @@
         || status.url.split("/")[3] + "/" + status.url.split("/")[4];
     },
     parseGithubStatus = function( status ) {
-      var repo, title;
+      var repo, title, what;
       if(status.type === "PushEvent") {
         title = status.payload && status.payload.shas
           && status.payload.shas.json
@@ -659,10 +659,21 @@
           status: status
         } );
       }
-      else if (status.type === "CommitCommentEvent" ||
-               status.type === "IssueCommentEvent") {
+      else if (status.type === "CommitCommentEvent") {
+        what = 'commit ' 
+             + status.url.split('commit/')[1].split('#')[0].substring(0, 7);
         repo = returnRepo(status);
         return $.tmpl( template.commented, {
+          what: what,
+          repo: repo,
+          status: status
+        } );
+      }
+      else if (status.type === "IssueCommentEvent") {
+        what = 'issue ' + status.url.split('issues/')[1].split('#')[0];
+        repo = returnRepo(status);
+        return $.tmpl( template.commented, {
+          what: what,
           repo: repo,
           status: status
         } );
