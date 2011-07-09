@@ -6,6 +6,7 @@ modules = $(srcPath)/core.js $(servicesDir)/*.js
 serviceListPath = ../download/services.txt
 jls = $(dist)/jquery.lifestream.js
 jlsMin = $(dist)/jquery.lifestream.min.js
+uglifyOpts =
 # minifiedModules = $(dist)/*.min.js
 #minifiedServiceModules := $(patsubst %.js,%.min.js,$(wildcard $(servicesDir)/*.js))
 minifiedModules = $(dist)/core.min.js\
@@ -56,88 +57,88 @@ $(jlsMin): $(minifiedModules)
 	cat $^ > $@
 
 $(dist)/core.min.js: $(srcPath)/core.js
-	uglifyjs $^ > $@
+	uglifyjs $(uglifyOpts) $^ > $@
 	
 $(dist)/blogger.min.js: $(servicesDir)/blogger.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/dailymotion.min.js: $(servicesDir)/dailymotion.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/delicious.min.js: $(servicesDir)/delicious.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/deviantart.min.js: $(servicesDir)/deviantart.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/dribbble.min.js: $(servicesDir)/dribbble.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/flickr.min.js: $(servicesDir)/flickr.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/foomark.min.js: $(servicesDir)/foomark.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/formspring.min.js: $(servicesDir)/formspring.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/forrst.min.js: $(servicesDir)/forrst.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/foursquare.min.js: $(servicesDir)/foursquare.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/github.min.js: $(servicesDir)/github.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/googlereader.min.js: $(servicesDir)/googlereader.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/instapaper.min.js: $(servicesDir)/instapaper.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/iusethis.min.js: $(servicesDir)/iusethis.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/lastfm.min.js: $(servicesDir)/lastfm.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 
 $(dist)/mlkshk.min.js: $(servicesDir)/mlkshk.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/picplz.min.js: $(servicesDir)/picplz.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/pinboard.min.js: $(servicesDir)/pinboard.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/posterous.min.js: $(servicesDir)/posterous.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/reddit.min.js: $(servicesDir)/reddit.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/slideshare.min.js: $(servicesDir)/slideshare.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/stackoverflow.min.js: $(servicesDir)/stackoverflow.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/tumblr.min.js: $(servicesDir)/tumblr.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/twitter.min.js: $(servicesDir)/twitter.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/vimeo.min.js: $(servicesDir)/vimeo.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/wordpress.min.js: $(servicesDir)/wordpress.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 $(dist)/youtube.min.js: $(servicesDir)/youtube.js
-	uglifyjs $^ > $@
+	uglify $(uglifyOpts) $^ > $@
 	
 serviceList:
 #	grep -l $.fn.lifestream.feeds. $(servicesDir)/*.js
@@ -147,6 +148,9 @@ serviceList:
 #	find $(servicesDir) -name '*.js' -exec echo '{}' \;
 	ls -l $(servicesDir) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(serviceListPath)
 
+clean: 
+	rm $(dist)/*
+	
 printVars:
 	@echo $(srcPath)
 	@echo $(modules)
