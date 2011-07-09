@@ -7,11 +7,16 @@ serviceListPath = ../download/services.txt
 jls = $(dist)/jquery.lifestream.js
 jlsMin = $(dist)/jquery.lifestream.min.js
 
-all: $(jls) $(jlsMin) serviceList
+all: uncompressed compressed serviceList
+
+uncompressed: $(jls)
 
 $(jls): $(modules)
 	cat $^ > $@
 	
+compressed: $(jlsMin)
+	
+# jlsMin is the concatenation of the minified modules
 $(jlsMin): $(dist)/*.min.js
 	@echo Concatenation of $(jlsMin)
 	
