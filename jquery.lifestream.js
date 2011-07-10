@@ -609,23 +609,26 @@
     var template = $.extend({},
       {
         pushed: '<a href="${status.url}" title="{{if title}}${title} '
-          +'by ${author} {{/if}}">pushed</a> to '
+          +'by ${author} {{/if}}">pushed</a> to <a href="http://github.com/'
+          +'${repo}/tree/${branchname}">${branchname}</a> at '
           +'<a href="http://github.com/${repo}">${repo}</a>',
         gist: '<a href="${status.payload.url}" title="'
           +'${status.payload.desc || ""}">${status.payload.name}</a>',
-        commented: '<a href="${status.url}">commented</a> on '
+        commented: 'commented on <a href="${status.url}">${what}</a> on '
           +'<a href="http://github.com/${repo}">${repo}</a>',
-        pullrequest: '<a href="${status.url}">${status.payload.action}</a> '
-          +'pull request on <a href="http://github.com/${repo}">${repo}</a>',
+        pullrequest: '${status.payload.action} <a href="${status.url}">'
+          +'pull request #${status.payload.number}</a> on '
+          +'<a href="http://github.com/${repo}">${repo}</a>',
         created: 'created ${status.payload.ref_type || status.payload.object}'
           +' <a href="${status.url}">${status.payload.ref || '
           +'status.payload.object_name}</a> for '
           +'<a href="http://github.com/${repo}">${repo}</a>',
         createdglobal: 'created ${status.payload.object} '
           +'<a href="${status.url}">${title}</a>',
-        deleted: 'deleted ${status.payload.ref_type} '
-          +'<a href="http://github.com/${status.repository.owner}/'
-          +'${status.repository.name}">status.payload.ref</a>'
+        deleted: 'deleted ${status.payload.ref_type} ${status.payload.ref} '
+          +'at <a href="http://github.com/${status.repository.owner}/'
+          +'${status.repository.name}">${status.repository.owner}/'
+          +'${status.repository.name}</a>'
       },
       config.template);
 
@@ -636,7 +639,7 @@
         || status.url.split("/")[3] + "/" + status.url.split("/")[4];
     },
     parseGithubStatus = function( status ) {
-      var repo, title;
+      var repo, title, what;
       if(status.type === "PushEvent") {
         title = status.payload && status.payload.shas
           && status.payload.shas.json
@@ -647,6 +650,7 @@
           status: status,
           title: title,
           author: title ? status.payload.shas.json[3] : "",
+          branchname: status.payload.ref.split('/')[2],
           repo: returnRepo(status)
         } );
       }
@@ -655,10 +659,21 @@
           status: status
         } );
       }
-      else if (status.type === "CommitCommentEvent" ||
-               status.type === "IssueCommentEvent") {
+      else if (status.type === "CommitCommentEvent") {
+        what = 'commit ' 
+             + status.url.split('commit/')[1].split('#')[0].substring(0, 7);
         repo = returnRepo(status);
         return $.tmpl( template.commented, {
+          what: what,
+          repo: repo,
+          status: status
+        } );
+      }
+      else if (status.type === "IssueCommentEvent") {
+        what = 'issue ' + status.url.split('issues/')[1].split('#')[0];
+        repo = returnRepo(status);
+        return $.tmpl( template.commented, {
+          what: what,
           repo: repo,
           status: status
         } );
@@ -691,7 +706,9 @@
         } );
       }
       else if (status.type === "DeleteEvent") {
-        return $.tmpl( template.deleted, status );
+        return $.tmpl( template.deleted, {
+          status: status
+        } );
       }
 
     },
