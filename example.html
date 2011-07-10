@@ -66,137 +66,153 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
   <script src="jquery.lifestream.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://raw.github.com/rmm5t/jquery-timeago/master/jquery.timeago.js" type="text/javascript" charset="utf-8"></script>
   <script>
-    $("#lifestream").lifestream({
-      limit: 400,
-      list:[
-        {
-          service: 'blogger',
-          user: 'googleblog'
-        },
-        {
-          service: 'dailymotion',
-          user: 'VideojugTechnologyandCars'
-        },
-        {
-          service: 'delicious',
-          user: 'denbuzze'
-        },
-        // If you want to fetch your main gallery use your DeviantART nickname.
-        //
-        // To fetch a gallery folder, add the id after a slash character.
-        // Example:
-        // Pick the gallery folder url: e.g.
-        // http://giuliom.deviantart.com/gallery/30227724 .
-        // Append the id, which is 30227724, to your nick obtaining
-        // something like 'mgiulio/30227724'
-        {
-          service: 'deviantart',
-          user: 'gabbyd70',
-          template: {
-            deviationpost: '<a href="http://gabbyd70.deviantart.com/">gabbyd70</a> uploaded a deviation: <a href="${url}">${title}</a>'
+    (function(){
+      var count = 0,
+          list = [
+            {
+              service: 'blogger',
+              user: 'googleblog'
+            },
+            {
+              service: 'dailymotion',
+              user: 'VideojugTechnologyandCars'
+            },
+            {
+              service: 'delicious',
+              user: 'denbuzze'
+            },
+            // If you want to fetch your main gallery use your DeviantART nickname.
+            //
+            // To fetch a gallery folder, add the id after a slash character.
+            // Example:
+            // Pick the gallery folder url: e.g.
+            // http://giuliom.deviantart.com/gallery/30227724 .
+            // Append the id, which is 30227724, to your nick obtaining
+            // something like 'mgiulio/30227724'
+            {
+              service: 'deviantart',
+              user: 'gabbyd70',
+              template: {
+                deviationpost: '<a href="http://gabbyd70.deviantart.com/">gabbyd70</a> uploaded a deviation: <a href="${url}">${title}</a>'
+              }
+            },
+            {
+              service: 'dribbble',
+              user: 'flarup'
+            },
+            // find your flickr id @
+            // http://www.flickr.com/services/api/explore/?method=flickr.people.findByUsername
+            {
+              service: 'flickr',
+              user: '60378309@N02'
+            },
+            {
+              service: 'foomark',
+              user: 'thatryan'
+            },
+            {
+              service: 'formspring',
+              user: 'formspring'
+            },
+            {
+              service: 'forrst',
+              user: 'thatryan'
+            },
+            // Run javascript:alert(_USER_ID); when you're logged in at google reader
+            {
+              service: 'googlereader',
+              user: '16243859758547797209'
+            },
+            {
+              service: 'github',
+              user: 'christianv'
+            },
+            // Go to instapaper.com, click Liked and open rss feed, copy last two parts of the url
+            // including the slash
+            {
+              service: 'instapaper',
+              user: '339501/W2nHbK9Bo4Q1wgd2irogorycEV0'
+            },
+            {
+              service: 'iusethis',
+              user: 'marcus'
+            },
+            {
+              service: 'lastfm',
+              user: 'denbuzze'
+            },
+            {
+              service: 'mlkshk',
+              user: 'billturner'
+            },
+            {
+              service: 'picplz',
+              user: 'thatryan'
+            },
+            {
+              service: 'pinboard',
+              user: 'mattandrews'
+            },
+            {
+              service: 'posterous',
+              user: 'techcrunch'
+            },
+            {
+              service: 'reddit',
+              user: 'simongee'
+            },
+            {
+              service: 'slideshare',
+              user: 'denbuzze'
+            },
+            {
+              service: 'snipplr',
+              user: 'sdxxx'
+            },
+            // Run javascript:alert(userid); when you're logged in at stackoverflow
+            {
+              service: 'stackoverflow',
+              user: '117193'
+            },
+            {
+              service: 'tumblr',
+              user: 'hiromitz'
+            },
+            {
+              service: 'twitter',
+              user: 'scobleizer'
+            },
+            {
+              service: 'vimeo',
+              user: 'denbuzze'
+            },
+            {
+              service: 'wordpress',
+              user: 'pixartimes'
+            },
+            {
+              service: 'youtube',
+              user: 'denbuzze'
+            }
+          ];
+      $("#lifestream").lifestream({
+        limit: 400,
+        list: list,
+        feedloaded: function(){
+          count++;
+          if( count === list.length ){
+            $("#lifestream li").each(function(){
+              var element = $(this),
+                  time = $.timeago(element.data("time"));
+              element.append(" <span>" + time + "</span>");
+            })
           }
-        },
-        {
-          service: 'dribbble',
-          user: 'flarup'
-        },
-        // find your flickr id @
-        // http://www.flickr.com/services/api/explore/?method=flickr.people.findByUsername
-        {
-          service: 'flickr',
-          user: '60378309@N02'
-        },
-        {
-          service: 'foomark',
-          user: 'thatryan'
-        },
-        {
-          service: 'formspring',
-          user: 'formspring'
-        },
-        {
-          service: 'forrst',
-          user: 'thatryan'
-        },
-        // Run javascript:alert(_USER_ID); when you're logged in at google reader
-        {
-          service: 'googlereader',
-          user: '16243859758547797209'
-        },
-        {
-          service: 'github',
-          user: 'christianv'
-        },
-        // Go to instapaper.com, click Liked and open rss feed, copy last two parts of the url
-        // including the slash
-        {
-          service: 'instapaper',
-          user: '339501/W2nHbK9Bo4Q1wgd2irogorycEV0'
-        },
-        {
-          service: 'iusethis',
-          user: 'marcus'
-        },
-        {
-          service: 'lastfm',
-          user: 'denbuzze'
-        },
-        {
-          service: 'mlkshk',
-          user: 'billturner'
-        },
-        {
-          service: 'picplz',
-          user: 'thatryan'
-        },
-        {
-          service: 'pinboard',
-          user: 'mattandrews'
-        },
-        {
-          service: 'posterous',
-          user: 'techcrunch'
-        },
-        {
-          service: 'reddit',
-          user: 'simongee'
-        },
-        {
-          service: 'slideshare',
-          user: 'denbuzze'
-        },
-        {
-          service: 'snipplr',
-          user: 'sdxxx'
-        },
-        // Run javascript:alert(userid); when you're logged in at stackoverflow
-        {
-          service: 'stackoverflow',
-          user: '117193'
-        },
-        {
-          service: 'tumblr',
-          user: 'hiromitz'
-        },
-        {
-          service: 'twitter',
-          user: 'denbuzze'
-        },
-        {
-          service: 'vimeo',
-          user: 'denbuzze'
-        },
-        {
-          service: 'wordpress',
-          user: 'pixartimes'
-        },
-        {
-          service: 'youtube',
-          user: 'denbuzze'
         }
-      ]
-    });
+      });
+      
+    })();
   </script>
 
   <script>

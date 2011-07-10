@@ -95,7 +95,8 @@
           item = items[i];
           if ( item.html ) {
             $('<li class="'+ settings.classname + '-'
-              + item.config.service + '">').append( item.html )
+              + item.config.service + '">').data( "time", item.date )
+                                           .append( item.html )
                                            .appendTo( ul );
           }
         }
