@@ -7,6 +7,8 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
+- CDB: Update button images for Downloadify
+- CDB: Downloadify white flash 
 - BS: smarter Makefile and cleanup
 - BS: Building of services.txt with make rules?
 - BS: Makefile identifiers case
