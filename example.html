@@ -48,6 +48,9 @@
     #lifestream li:hover {
       color: #e9e9e9;
     }
+    #lifestream .timeago {
+      opacity: .5;
+    }
   </style>
   <link href="css/lifestream.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -70,144 +73,167 @@
   <script>
     (function(){
       var count = 0,
-          list = [
-            {
-              service: 'blogger',
-              user: 'googleblog'
-            },
-            {
-              service: 'dailymotion',
-              user: 'VideojugTechnologyandCars'
-            },
-            {
-              service: 'delicious',
-              user: 'denbuzze'
-            },
-            // If you want to fetch your main gallery use your DeviantART nickname.
-            //
-            // To fetch a gallery folder, add the id after a slash character.
-            // Example:
-            // Pick the gallery folder url: e.g.
-            // http://giuliom.deviantart.com/gallery/30227724 .
-            // Append the id, which is 30227724, to your nick obtaining
-            // something like 'mgiulio/30227724'
-            {
-              service: 'deviantart',
-              user: 'gabbyd70',
-              template: {
-                deviationpost: '<a href="http://gabbyd70.deviantart.com/">gabbyd70</a> uploaded a deviation: <a href="${url}">${title}</a>'
-              }
-            },
-            {
-              service: 'dribbble',
-              user: 'flarup'
-            },
-            // find your flickr id @
-            // http://www.flickr.com/services/api/explore/?method=flickr.people.findByUsername
-            {
-              service: 'flickr',
-              user: '60378309@N02'
-            },
-            {
-              service: 'foomark',
-              user: 'thatryan'
-            },
-            {
-              service: 'formspring',
-              user: 'formspring'
-            },
-            {
-              service: 'forrst',
-              user: 'thatryan'
-            },
-            // Run javascript:alert(_USER_ID); when you're logged in at google reader
-            {
-              service: 'googlereader',
-              user: '16243859758547797209'
-            },
-            {
-              service: 'github',
-              user: 'christianv'
-            },
-            // Go to instapaper.com, click Liked and open rss feed, copy last two parts of the url
-            // including the slash
-            {
-              service: 'instapaper',
-              user: '339501/W2nHbK9Bo4Q1wgd2irogorycEV0'
-            },
-            {
-              service: 'iusethis',
-              user: 'marcus'
-            },
-            {
-              service: 'lastfm',
-              user: 'denbuzze'
-            },
-            {
-              service: 'mlkshk',
-              user: 'billturner'
-            },
-            {
-              service: 'picplz',
-              user: 'thatryan'
-            },
-            {
-              service: 'pinboard',
-              user: 'mattandrews'
-            },
-            {
-              service: 'posterous',
-              user: 'techcrunch'
-            },
-            {
-              service: 'reddit',
-              user: 'simongee'
-            },
-            {
-              service: 'slideshare',
-              user: 'denbuzze'
-            },
-            {
-              service: 'snipplr',
-              user: 'sdxxx'
-            },
-            // Run javascript:alert(userid); when you're logged in at stackoverflow
-            {
-              service: 'stackoverflow',
-              user: '117193'
-            },
-            {
-              service: 'tumblr',
-              user: 'hiromitz'
-            },
-            {
-              service: 'twitter',
-              user: 'scobleizer'
-            },
-            {
-              service: 'vimeo',
-              user: 'denbuzze'
-            },
-            {
-              service: 'wordpress',
-              user: 'pixartimes'
-            },
-            {
-              service: 'youtube',
-              user: 'denbuzze'
-            }
-          ];
+      list = [
+        {
+          service: 'blogger',
+          user: 'googleblog'
+        },
+        {
+          service: 'dailymotion',
+          user: 'VideojugTechnologyandCars'
+        },
+        {
+          service: 'delicious',
+          user: 'denbuzze'
+        },
+        // If you want to fetch your main gallery use your DeviantART nickname.
+        //
+        // To fetch a gallery folder, add the id after a slash character.
+        // Example:
+        // Pick the gallery folder url: e.g.
+        // http://giuliom.deviantart.com/gallery/30227724 .
+        // Append the id, which is 30227724, to your nick obtaining
+        // something like 'mgiulio/30227724'
+        {
+          service: 'deviantart',
+          user: 'gabbyd70',
+          template: {
+            deviationpost: '<a href="http://gabbyd70.deviantart.com/">gabbyd70</a> uploaded a deviation: <a href="${url}">${title}</a>'
+          }
+        },
+        {
+          service: 'dribbble',
+          user: 'flarup'
+        },
+        // find your flickr id @
+        // http://www.flickr.com/services/api/explore/?method=flickr.people.findByUsername
+        {
+          service: 'flickr',
+          user: '60378309@N02'
+        },
+        {
+          service: 'foomark',
+          user: 'thatryan'
+        },
+        {
+          service: 'formspring',
+          user: 'formspring'
+        },
+        {
+          service: 'forrst',
+          user: 'thatryan'
+        },
+        // Run javascript:alert(_USER_ID); when you're logged in at google reader
+        {
+          service: 'googlereader',
+          user: '16243859758547797209'
+        },
+        {
+          service: 'github',
+          user: 'christianv'
+        },
+        // Go to instapaper.com, click Liked and open rss feed, copy last two parts of the url
+        // including the slash
+        {
+          service: 'instapaper',
+          user: '339501/W2nHbK9Bo4Q1wgd2irogorycEV0'
+        },
+        {
+          service: 'iusethis',
+          user: 'marcus'
+        },
+        {
+          service: 'lastfm',
+          user: 'denbuzze'
+        },
+        {
+          service: 'mlkshk',
+          user: 'billturner'
+        },
+        {
+          service: 'picplz',
+          user: 'thatryan'
+        },
+        {
+          service: 'pinboard',
+          user: 'mattandrews'
+        },
+        {
+          service: 'posterous',
+          user: 'techcrunch'
+        },
+        {
+          service: 'reddit',
+          user: 'simongee'
+        },
+        {
+          service: 'slideshare',
+          user: 'denbuzze'
+        },
+        {
+          service: 'snipplr',
+          user: 'sdxxx'
+        },
+        // Run javascript:alert(userid); when you're logged in at stackoverflow
+        {
+          service: 'stackoverflow',
+          user: '117193'
+        },
+        {
+          service: 'tumblr',
+          user: 'hiromitz'
+        },
+        {
+          service: 'twitter',
+          user: 'scobleizer'
+        },
+        {
+          service: 'vimeo',
+          user: 'denbuzze'
+        },
+        {
+          service: 'wordpress',
+          user: 'pixartimes'
+        },
+        {
+          service: 'youtube',
+          user: 'denbuzze'
+        }
+      ];
+
+      Date.prototype.toISO8601 = function(date) {
+          var pad = function (amount, width) {
+              var padding = "";
+              while (padding.length < width - 1 && amount < Math.pow(10, width - padding.length - 1))
+                  padding += "0";
+              return padding + amount.toString();
+          }
+          date = date ? date : new Date();
+          var offset = date.getTimezoneOffset();
+          return pad(date.getFullYear(), 4)
+              + "-" + pad(date.getMonth() + 1, 2)
+              + "-" + pad(date.getDate(), 2)
+              + "T" + pad(date.getHours(), 2)
+              + ":" + pad(date.getMinutes(), 2)
+              + ":" + pad(date.getUTCSeconds(), 2)
+              + (offset > 0 ? "-" : "+")
+              + pad(Math.floor(Math.abs(offset) / 60), 2)
+              + ":" + pad(Math.abs(offset) % 60, 2);
+      };
+
       $("#lifestream").lifestream({
         limit: 400,
         list: list,
         feedloaded: function(){
           count++;
+          // Check if all the feeds have been loaded
           if( count === list.length ){
             $("#lifestream li").each(function(){
               var element = $(this),
-                  time = $.timeago(element.data("time"));
-              element.append(" <span>" + time + "</span>");
+                  date = new Date(element.data("time"));
+              element.append(' <abbr class="timeago" title="' + date.toISO8601(date) + '">' + date + "</abbr>");
             })
+            $("#lifestream .timeago").timeago();
           }
         }
       });
