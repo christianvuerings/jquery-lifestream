@@ -6,7 +6,9 @@ modules = $(srcPath)/core.js $(servicesDir)/*.js
 serviceListPath = ../download/services.txt
 jls = $(dist)/jquery.lifestream.js
 jlsMin = $(dist)/jquery.lifestream.min.js
+
 uglifyOpts =
+
 # minifiedModules = $(dist)/*.min.js
 #minifiedServiceModules := $(patsubst %.js,%.min.js,$(wildcard $(servicesDir)/*.js))
 minifiedModules = $(dist)/core.min.js\
@@ -52,7 +54,6 @@ compressed: $(jlsMin) $(minifiedModules)
 #$(jlsMin): $(minifiedModules)
 #$(dist)/%.min.js: $(servicesDir)/%.js
 #	uglifyjs $^
-#$(jlsMin): $(dist)/core.min.js $(dist)/blogger.min.js $(dist)/dailymotion.min.js
 #$(jlsMin): $(minifiedModules)
 #	cat $^ > $@
 $(jlsMin): $(jls)
