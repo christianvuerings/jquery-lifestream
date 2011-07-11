@@ -12,11 +12,15 @@
 <body>
 	<div id="widget">
 		<div id="header">
-			<h1><a href="#"><img src="img/widget-header-logo.png"></a>Custom Download Builder</h1>
+			<h1><a href="#"><!--<img src="img/widget-header-logo.png">--></a>Custom Download Builder</h1>
 		</div>
 		<div id="content">
 			<ul id="services"></ul>
-			<div id="button-bar"><a id="button" href="#">Build Script</a></div>
+			<div id="button-bar">
+				<span id="startup-feedback">Loading, Please wait...</span>
+				<button id="button" style="display: none;">Build Script</button>
+				<!-- <span id="downloadify"></span> -->
+			</div>
 		</div>
 		<div id="footer"></div>
 	</div>
@@ -32,16 +36,19 @@
 		
 		$.n.defaults.timeout = 10000;
 		var
-			$button = $('#button')
+			$button = $('#button'),
+			builtScript = ''
 		;
 		
 		imagePreloading(
 			'img/services-deselected.png',
 			'img/services-hover.png',
-			'img/services-selected.png'
+			'img/services-selected.png',
+			'img/button-download.png'
 		);
   
 		// Fetch the service list
+		// $.n('Fetching available services...');
 		$.ajax({
 			url: 'services.txt',
 			dataType: 'text',
@@ -51,6 +58,8 @@
 		});
 		
 		function buildUI(services) {
+			$('#startup-feedback').hide();
+			
 			// Build the service checkboxes
 			var out = [];
 			$.each(services.sort(), function(i, f) { 
@@ -91,7 +100,29 @@
 				.click(function() {
 					build();
 					return false;
-				});
+				})
+				.show()
+			;
+			
+			// Downloadify
+			Downloadify.create('button-bar', {
+				filename: function(){
+					return 'jquery.lifestream.min.js';
+				},
+				data: function(){ 
+					return builtScript;
+				},
+				onComplete: onDownloadComplete,
+				//onCancel: function(){ alert('You have cancelled the saving of this file.'); },
+				onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
+				transparent: false,
+				swf: 'media/downloadify.swf',
+				downloadImage: 'img/button-download.png',
+				width: 123, //144, //100,
+				height: 35, //41, //30,
+				append: true
+			});
+			$('#button-bar > object').css({visibility: 'hidden'});
 		}
 		
 		function build() {
@@ -119,38 +150,33 @@
 		function onBuildCompleted(out) {
 			$.n('Build completed');
 			
+			builtScript = out;
+			
 			$button
 			  .button('disable')
-			  .button('destroy')
+			  //.button('destroy')
+			  .hide()
 			;
-			Downloadify.create('button', {
-				filename: function(){
-					return 'jquery.lifestream.min.js';
-				},
-				data: function(){ 
-					return out;
-				},
-				onComplete: onDownloadComplete,
-				//onCancel: function(){ alert('You have cancelled the saving of this file.'); },
-				onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
-				transparent: false,
-				swf: 'media/downloadify.swf',
-				downloadImage: 'img/button-download.png',
-				width: 123, //144, //100,
-				height: 35, //41, //30,
-				transparent: false,
-				append: false
-			});
+			
+			//$('#downloadify').show();
+			//$('#button-bar > object').show();
+			$('#button-bar > object').css({visibility: 'visible'});
 		}
 		
 		function onDownloadComplete() { 
 			// Re-enable UI
 			//$('body').removeClass('waiting');
 			$('#services input[type="checkbox"]').button('enable');
+			
+			//$('#downloadify').hide();
+			$('#button-bar > object').css({visibility: 'hidden'});
+			
 			$button.button({
 				icons: { primary: 'ui-icon-gear' },
 				label: 'Build script'
-			});
+			})
+			.button('enable')
+			.show();
 		}
   
 		function concatMinifiedScripts(services, success) {

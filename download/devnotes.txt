@@ -3,20 +3,36 @@
 Abbreviations:
 - BS: Build System
 - CDB: Custom Download Builder
+- JUI: jQuery UI 
 
 ## Milestones
 
 ### Milestone #1
-- CDB: Downloadify: button state images
 - CDB: Downloadify: white flash
-- CDB: Downloadify 
-- CDB: jui sprite
+	Resolved using 'visibility: hidden' instead of 'display: none', 
+	but in this way we introduce problems with the horizontal
+	alignment of the button
+- CDB: Downloadify: button state images
+- CDB: Downloadify: jQuery helper
+- CDB: Downloadify: assets(.SWF)
+- CDB: $('#startup-feedback').hide();
+- design git?
+- CDB: Wait button gears icon bg on disabled button
+	- spinner.gif
+	- See the build button icon in disabled mode
+- CDB: JUI: custom download script 
+- CDB: JUI: sprite
+- CDB: Use of notifications?
+	- If yes, minify it
 - BS: smarter Makefile and cleanup
 - BS: Building of services.txt with make rules?
 - BS: Makefile identifiers case
+- CDB: concat&minify *.css
 - CDB: Cross browser testing 
 
 ### Later milestones
+- CDB: Downloadify: UX: delays without user feedback
+- CDB: Downloadify: further investigations
 - BS: Enforcing coding style guidelines
 	- Tabs removal
 		- tr?

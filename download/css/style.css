@@ -46,6 +46,9 @@ body.waiting {
 	padding-top: 15px;
 	padding-bottom: 20px; 
 }
+#startup-feedback {
+	color: #ffffff;
+}
 #button .ui-icon-spinner {
     background-image: url(../img/spinner.gif); 
 }
