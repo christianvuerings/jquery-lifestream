@@ -7,17 +7,26 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
-- Evaluation of Ant
-- TOTRY: Minification in CDB with UglifyJS
-- TOFIX: semicolon in module concatenation
-	The aggressive removal of semicolons performed by UglifyJS generates
-	an error between the end of thecore module and the first service one.
-	As a temporarely fix, CDB add the missing semicolon between modules during concatenation
+- BS: smarter Makefile and cleanup
 - BS: Building of services.txt with make rules?
 - BS: Makefile identifiers case
+- CDB: Cross browser testing 
+
+### Later milestones
+- BS: Enforcing coding style guidelines
+	- Tabs removal
+		- tr?
+- BS: Add support for JsLint
+- BS: Must remove last line terminator of services.txt
+- CDB: minification of concatenation with patched UglifyJS
+- Support for other compressors
+	- YUI Compressor
+	- Google Closure Compiler
+	- ...
+- Jake
 - BS: Write installation instructions for build tools
 	- Make
 	- Node.js
 	- UglifyJS
-
-### Later milestones
+- Evaluation of Apache Ant
+- CDB: Improve header and footer design
