@@ -45,7 +45,7 @@ uncompressed: $(jls)
 $(jls): $(modules)
 	cat $^ > $@
 	
-compressed: $(jlsMin)
+compressed: $(jlsMin) $(minifiedModules)
 
 # jlsMin is the concatenation of the minified modules
 # TODO: Use implicit and pattern rules
@@ -53,11 +53,11 @@ compressed: $(jlsMin)
 #$(dist)/%.min.js: $(servicesDir)/%.js
 #	uglifyjs $^
 #$(jlsMin): $(dist)/core.min.js $(dist)/blogger.min.js $(dist)/dailymotion.min.js
-$(jlsMin): $(minifiedModules)
-	cat $^ > $@
-#$(jlsMin): $(jls)
-#	uglifyjs $(uglifyOpts) $^ > $@
-
+#$(jlsMin): $(minifiedModules)
+#	cat $^ > $@
+$(jlsMin): $(jls)
+	uglifyjs $(uglifyOpts) $^ > $@
+	
 $(dist)/core.min.js: $(srcPath)/core.js
 	uglifyjs $(uglifyOpts) $^ > $@
 	
