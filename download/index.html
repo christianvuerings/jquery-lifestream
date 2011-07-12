@@ -34,7 +34,7 @@
 	<script>
 		// TODO: Check if we have all deps loading
 		
-		$.n.defaults.timeout = 10000;
+		$.n.defaults.timeout = 8000;
 		var
 			$button = $('#button'),
 			$downloadify,
@@ -49,7 +49,7 @@
 		);
   
 		// Fetch the service list
-		// $.n('Fetching available services...');
+		$.n('Fetching available services...');
 		$.ajax({
 			url: 'services.txt',
 			dataType: 'text',
@@ -60,6 +60,7 @@
 		
 		function buildUI(services) {
 			$('#startup-feedback').hide();
+			$.n(services.length + ' services available');
 			
 			// Build the service checkboxes
 			var out = [];
@@ -202,9 +203,7 @@
 				}
 			;
 			
-			$.n('Sent request for core.js');
 			$.getScript('../src/core.js', function(scriptText) {
-				$.n('Received core.js');
 				concat(scriptText);
 				
 				// The services scripts are not (necessarily) 
@@ -213,9 +212,7 @@
 				// just fire all the script requests (potentially)
 				// speeding up the process.
 				$.each(services, function(i, f) {
-					$.n('Sent request for ' + f + '.js');
 					$.getScript('../src/services/' + f + '.js', function(scriptText) {
-						$.n('Received ' + f + '.js');
 						concat(scriptText);
 					});
 				});

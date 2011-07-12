@@ -162,7 +162,7 @@ body.waiting {
 }
 #jquery-notifications .notice {
   background: #6c9ffc;
-  color: #061a72;
+  color: #ffffff; /*#061a72;*/
   border-color: #061a72;
   opacity: 0.9;
 }
