@@ -8,7 +8,6 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
-- BS: delete .min module rules
 - CDB: notifications: scrolling issue
 - CDB: Downloadify: assets(.SWF)
 - CDB: $('#startup-feedback').hide();
@@ -20,13 +19,11 @@ Abbreviations:
 - CDB: JUI: sprite
 - CDB: Use of notifications?
 	- If yes, minify it
-- BS: smarter Makefile and cleanup
-- BS: Building of services.txt with make rules?
-- BS: Makefile identifiers case
 - CDB: concat&minify *.css
 - CDB: Cross browser testing 
 
 ### Later milestones
+- BS: Building of services.txt with make rules?
 - CDB: Downloadify: UX: delays without user feedback
 - CDB: Downloadify: further investigations
 - BS: Enforcing coding style guidelines
@@ -34,8 +31,6 @@ Abbreviations:
 		- tr?
 - BS: Add support for JsLint
 - BS: Must remove last line terminator of services.txt
-- CDB: minification of concatenation with patched UglifyJS
-	- How to keep the patch in sync with upstream updates?
 - Support for other compressors
 	- YUI Compressor
 	- Google Closure Compiler
@@ -45,7 +40,6 @@ Abbreviations:
 	- Make
 	- Node.js
 	- UglifyJS
-- Evaluation of Apache Ant
 - CDB: Improve header and footer design
 - CDB: http://www.w3.org/TR/2011/WD-file-writer-api-20110419/#examples
 	- http://dret.typepad.com/dretblog/2010/04/html5-file-writer-api.html

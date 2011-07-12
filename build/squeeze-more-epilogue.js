@@ -1,0 +1,1 @@
+})(modules['./squeeze-more']);

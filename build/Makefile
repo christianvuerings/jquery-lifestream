@@ -7,7 +7,7 @@ serviceListPath = ../download/services.txt
 jls = $(dist)/jquery.lifestream.js
 jlsMin = $(dist)/jquery.lifestream.min.js
 
-all: uncompressed compressed serviceList
+all: uncompressed compressed serviceList uglifyjs-cs
 
 uncompressed: $(jls)
 
@@ -27,8 +27,13 @@ serviceList:
 #	find $(servicesDir) -name '*.js' -exec echo '{}' \;
 	ls -l $(servicesDir) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(serviceListPath)
 	
-../download/js/uglifyjs-cs.js: parse-js.js process.js squeeze-more.js
-	cat uglifyjs-cs-prologue.js parse-js-prologue parse-js.js parse-js-epilogue process-prologue process.js process-epilogue squeeze-more-prologue squeeze-more.js squeeze-more-epilogue uglifyjs-cs-epilogue.js
+uglifyjs-cs: ../download/js/uglifyjs-cs.min.js
+
+../download/js/uglifyjs-cs.min.js: ../download/js/uglifyjs-cs.js
+	uglifyjs $^ > $@
+	
+../download/js/uglifyjs-cs.js: $(buildDir)/parse-js.js $(buildDir)/process.js $(buildDir)/squeeze-more.js
+	cat uglifyjs-cs-prologue.js parse-js-prologue.js parse-js.js parse-js-epilogue.js process-prologue.js process.js process-epilogue.js squeeze-more-prologue.js squeeze-more.js squeeze-more-epilogue.js uglifyjs-cs-epilogue.js > $@
 
 clean: 
 	rm $(dist)/*
