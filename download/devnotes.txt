@@ -8,8 +8,6 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
-- CDB: Downloadify: button state images
-- CDB: Downloadify: jQuery helper
 - CDB: Downloadify: assets(.SWF)
 - CDB: $('#startup-feedback').hide();
 - design git?
