@@ -7,19 +7,17 @@ Abbreviations:
 
 ## Milestones
 
-### Milestone #1
-- CDB: JUI: CSS weight loss
-- CDB: JUI: the sprite
+### Milestone #1	
 - design git?
-- CDB: Wait button gears icon bg on disabled button
-	- spinner.gif
-	- See the build button icon in disabled mode
-- CDB: concat&minify *.css
 - CDB: Cross browser testing 
+- CDB: code cleanup
 - CDB: notifications: plugin credits
 	- I patched it
 
 ### Later milestones
+- CDB: JUI: drop JUI?
+	- CDB: JUI: CSS weight loss
+	- CDB: JUI: the sprite
 - CDB: scripts loading 
 	- performance investifgations
 	- Errors
