@@ -45,9 +45,14 @@ body.waiting {
 	text-align: center;
 	padding-top: 15px;
 	padding-bottom: 20px; 
+	margin: 0;
 }
 #startup-feedback {
 	color: #ffffff;
+}
+#button {
+	margin: 0 0 0 120px;
+	display: none;
 }
 #button .ui-icon-spinner {
     background-image: url(../img/spinner.gif); 
