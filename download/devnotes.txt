@@ -8,6 +8,8 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
+- BS: delete .min module rules
+- CDB: notifications: scrolling issue
 - CDB: Downloadify: assets(.SWF)
 - CDB: $('#startup-feedback').hide();
 - design git?

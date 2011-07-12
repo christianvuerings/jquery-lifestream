@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="js/swfobject.js"></script> 
 	<script type="text/javascript" src="js/downloadify.min.js"></script> 
 	<script src="js/jquery.notifications.js"></script>
+	<script src="js/uglifyjs-cs.js"></script>
 	<script>
 		// TODO: Check if we have all deps loading
 		
@@ -138,7 +139,15 @@
 					label: 'Wait...',
 					icons: { primary: 'ui-icon-spinner' }
 				});
-		
+				
+			buildScript(
+				$('#services input[type="checkbox"]')
+					.filter(':checked')
+					.map(function() { return $(this).attr('id')})
+					.get(),
+				onBuildCompleted
+			);
+			/*
 			concatMinifiedScripts(
 				$('#services input[type="checkbox"]')
 					.filter(':checked')
@@ -146,6 +155,7 @@
 					.get(),
 				onBuildCompleted
 			);
+			*/
 		}
 		
 		function onBuildCompleted(out) {
@@ -177,21 +187,24 @@
 			.button('enable')
 			.show();
 		}
-  
-		function concatMinifiedScripts(services, success) {
+
+		function buildScript(services, success) {
 			var 
 				out = [],
 				countdown = 1 + services.length,
 				concat = function(scriptText) {
 					out.push(scriptText);
-					if (!--countdown)
-						success(out.join(';'));
+					if (!--countdown) {
+						$.n('All src moduled received');
+						$.n('Uglification...');
+						success(uglify(out.join(';')));
+					}
 				}
 			;
 			
-			$.n('Sent request for core.min.js');
-			$.getScript('../dist/core.min.js', function(scriptText) {
-				$.n('Received core.min.js');
+			$.n('Sent request for core.js');
+			$.getScript('../src/core.js', function(scriptText) {
+				$.n('Received core.js');
 				concat(scriptText);
 				
 				// The services scripts are not (necessarily) 
@@ -200,9 +213,9 @@
 				// just fire all the script requests (potentially)
 				// speeding up the process.
 				$.each(services, function(i, f) {
-					$.n('Sent request for ' + f + '.min.js');
-					$.getScript('../dist/' + f + '.min.js', function(scriptText) {
-						$.n('Received ' + f + '.min.js');
+					$.n('Sent request for ' + f + '.js');
+					$.getScript('../src/services/' + f + '.js', function(scriptText) {
+						$.n('Received ' + f + '.js');
 						concat(scriptText);
 					});
 				});
