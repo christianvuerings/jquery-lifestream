@@ -27,8 +27,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
 	<script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/swfobject.js"></script> 
-	<script type="text/javascript" src="js/downloadify.min.js"></script> 
+	<script src="js/swfobject.min.js"></script> 
+	<script src="js/downloadify.min.js"></script> 
 	<script src="js/jquery.notifications.min.js"></script>
 	<script src="js/uglifyjs-cs.min.js"></script>
 	<script>
@@ -106,7 +106,6 @@
 				.show()
 			;
 			
-			// Downloadify
 			Downloadify.create('button-bar', {
 				filename: function(){
 					return 'jquery.lifestream.min.js';
@@ -118,7 +117,7 @@
 				//onCancel: function(){ alert('You have cancelled the saving of this file.'); },
 				onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
 				transparent: false,
-				swf: 'media/downloadify.swf',
+				swf: 'js/downloadify.swf',
 				downloadImage: 'img/button-download.png',
 				width: 123, //144, //100,
 				height: 35, //41, //30,
