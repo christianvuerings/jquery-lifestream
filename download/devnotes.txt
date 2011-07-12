@@ -8,10 +8,6 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
-- CDB: Downloadify: white flash
-	Resolved using 'visibility: hidden' instead of 'display: none', 
-	but in this way we introduce problems with the horizontal
-	alignment of the button
 - CDB: Downloadify: button state images
 - CDB: Downloadify: jQuery helper
 - CDB: Downloadify: assets(.SWF)
@@ -39,6 +35,7 @@ Abbreviations:
 - BS: Add support for JsLint
 - BS: Must remove last line terminator of services.txt
 - CDB: minification of concatenation with patched UglifyJS
+	- How to keep the patch in sync with upstream updates?
 - Support for other compressors
 	- YUI Compressor
 	- Google Closure Compiler
@@ -50,3 +47,10 @@ Abbreviations:
 	- UglifyJS
 - Evaluation of Apache Ant
 - CDB: Improve header and footer design
+- CDB: http://www.w3.org/TR/2011/WD-file-writer-api-20110419/#examples
+	- http://dret.typepad.com/dretblog/2010/04/html5-file-writer-api.html
+- CDB: Downloadify: white flash
+	Resolved using 'visibility: hidden' instead of 'display: none', 
+	but in this way we introduce problems:
+		- with the horizontal alignment of the button
+		- little vertical jump

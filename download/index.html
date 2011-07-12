@@ -19,7 +19,6 @@
 			<div id="button-bar">
 				<span id="startup-feedback">Loading, Please wait...</span>
 				<button id="button">Build Script</button>
-				<!-- <span id="downloadify"></span> -->
 			</div>
 		</div>
 		<div id="footer"></div>
@@ -37,6 +36,7 @@
 		$.n.defaults.timeout = 10000;
 		var
 			$button = $('#button'),
+			$downloadify,
 			builtScript = ''
 		;
 		
@@ -122,7 +122,8 @@
 				height: 35, //41, //30,
 				append: true
 			});
-			$('#button-bar > object').css({visibility: 'hidden'});
+			$downloadify = $('#button-bar > object')
+				.css({visibility: 'hidden'});
 		}
 		
 		function build() {
@@ -158,9 +159,7 @@
 			  .hide()
 			;
 			
-			//$('#downloadify').show();
-			//$('#button-bar > object').show();
-			$('#button-bar > object').css({visibility: 'visible'});
+			$downloadify.css({visibility: 'visible'});
 		}
 		
 		function onDownloadComplete() { 
