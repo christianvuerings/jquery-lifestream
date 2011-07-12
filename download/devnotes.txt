@@ -8,19 +8,17 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
-- CDB: notifications: scrolling issue
-- CDB: Downloadify: assets(.SWF)
-- CDB: $('#startup-feedback').hide();
+- CDB: jQuery UI weight loss diet and minification
 - design git?
 - CDB: Wait button gears icon bg on disabled button
 	- spinner.gif
 	- See the build button icon in disabled mode
 - CDB: JUI: custom download script 
 - CDB: JUI: sprite
-- CDB: Use of notifications?
-	- If yes, minify it
 - CDB: concat&minify *.css
 - CDB: Cross browser testing 
+- CDB: notifications: plugin credits
+	- I patched it
 
 ### Later milestones
 - BS: Building of services.txt with make rules?
@@ -48,3 +46,8 @@ Abbreviations:
 	but in this way we introduce problems:
 		- with the horizontal alignment of the button
 		- little vertical jump
+- CDB:	service icons: 
+	- enlarge base
+	- remake N/A
+	- missin icons
+		- merge favicon on base icon
