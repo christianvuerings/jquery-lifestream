@@ -8,20 +8,24 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
-- CDB: jQuery UI weight loss diet and minification
+- CDB: JUI: CSS
+- CDB: JUI: the sprite
 - design git?
 - CDB: Wait button gears icon bg on disabled button
 	- spinner.gif
 	- See the build button icon in disabled mode
-- CDB: JUI: custom download script 
-- CDB: JUI: sprite
 - CDB: concat&minify *.css
 - CDB: Cross browser testing 
 - CDB: notifications: plugin credits
 	- I patched it
 
 ### Later milestones
+- CDB: scripts loading 
+	- performance investifgations
+	- Errors
+		- CDN fallback
 - BS: Building of services.txt with make rules?
+	- with js?
 - CDB: Downloadify: UX: delays without user feedback
 - CDB: Downloadify: further investigations
 - BS: Enforcing coding style guidelines
