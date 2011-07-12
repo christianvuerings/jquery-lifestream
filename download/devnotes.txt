@@ -8,7 +8,7 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1
-- CDB: JUI: CSS
+- CDB: JUI: CSS weight loss
 - CDB: JUI: the sprite
 - design git?
 - CDB: Wait button gears icon bg on disabled button
