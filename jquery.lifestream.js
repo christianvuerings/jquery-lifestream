@@ -661,7 +661,7 @@
         } );
       }
       else if (status.type === "CommitCommentEvent") {
-        what = 'commit ' 
+        what = 'commit '
              + status.url.split('commit/')[1].split('#')[0].substring(0, 7);
         repo = returnRepo(status);
         return $.tmpl( template.commented, {
@@ -755,7 +755,7 @@
 
     var template = $.extend({},
       {
-        starred: 'starred post <a href="${link.href}">${title.content}</a>'
+        starred: 'shared post <a href="${link.href}">${title.content}</a>'
       },
       config.template),
 
@@ -783,7 +783,7 @@
     $.ajax({
       url: createYqlUrl('select * from xml where url="'
         + 'www.google.com/reader/public/atom/user%2F'
-        + config.user + '%2Fstate%2Fcom.google%2Fstarred"'),
+        + config.user + '%2Fstate%2Fcom.google%2Fbroadcast"'),
       dataType: 'jsonp',
       success: function( data ) {
         callback(parseReader(data));
