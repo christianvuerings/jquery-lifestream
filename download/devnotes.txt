@@ -10,10 +10,6 @@ Abbreviations:
 ### Milestone #1	
 - design git?
 - CDB: Cross browser testing 
-	- FF
-		- 4
-	- IE
-	- Opera
 - CDB: service list left padding
 - CDB: code cleanup
 	Button disabled if no service selected
@@ -27,6 +23,12 @@ Abbreviations:
 		camelCase?
 - CDB: notifications: plugin credits
 	- I patched it
+- CDB:	service icons: 
+	- enlarge base
+	- remake N/A
+	- missin icons
+		- merge favicon on base icon
+- CDB: Improve header and footer design
 
 ### Later milestones
 - CDB: JUI: drop JUI?
@@ -38,6 +40,7 @@ Abbreviations:
 		- CDN fallback
 - BS: Building of services.txt with make rules?
 	- with js?
+- BS: Must remove last line terminator of services.txt
 - CDB: Downloadify: UX: delays without user feedback
 	- Chrome 11
 - CDB: Downloadify: further investigations
@@ -45,7 +48,6 @@ Abbreviations:
 	- Tabs removal
 		- tr?
 - BS: Add support for JsLint
-- BS: Must remove last line terminator of services.txt
 - Support for other compressors
 	- YUI Compressor
 	- Google Closure Compiler
@@ -55,7 +57,6 @@ Abbreviations:
 	- Make
 	- Node.js
 	- UglifyJS
-- CDB: Improve header and footer design
 - CDB: http://www.w3.org/TR/2011/WD-file-writer-api-20110419/#examples
 	- http://dret.typepad.com/dretblog/2010/04/html5-file-writer-api.html
 - CDB: Downloadify: white flash
@@ -63,11 +64,6 @@ Abbreviations:
 	but in this way we introduce problems:
 		- with the horizontal alignment of the button
 		- little vertical jump
-- CDB:	service icons: 
-	- enlarge base
-	- remake N/A
-	- missin icons
-		- merge favicon on base icon
 - CDB: keyboard support
 	- focus
 - CDB: dark-hive button focus state
