@@ -8,14 +8,13 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1  
-dist add?
-.zipcheck?
+- BS: Makefile must create dist dir if not exists
+- .zip check
 - CDB: Cross browser testing 
   - IE
 - CDB: code cleanup
-  src formatting
-    Tab removal
-    camelCase?
+- CDB: src formatting
+  - camelCase
 - CDB: make script.js?
   - minify it
 - CDB: notifications: plugin credits
