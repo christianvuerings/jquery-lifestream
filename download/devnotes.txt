@@ -10,7 +10,21 @@ Abbreviations:
 ### Milestone #1	
 - design git?
 - CDB: Cross browser testing 
+	- FF
+		- 4
+	- IE
+	- Opera
+- CDB: service list left padding
 - CDB: code cleanup
+	Button disabled if no service selected
+		http://api.jquery.com/change/
+		http://api.jquery.com/delegate/
+		http://api.jquery.com/live/
+		http://api.jquery.com/select/
+		http://api.jquery.com/toggle-event/
+	src formatting
+		Tab removal
+		camelCase?
 - CDB: notifications: plugin credits
 	- I patched it
 
@@ -25,6 +39,7 @@ Abbreviations:
 - BS: Building of services.txt with make rules?
 	- with js?
 - CDB: Downloadify: UX: delays without user feedback
+	- Chrome 11
 - CDB: Downloadify: further investigations
 - BS: Enforcing coding style guidelines
 	- Tabs removal
@@ -53,3 +68,7 @@ Abbreviations:
 	- remake N/A
 	- missin icons
 		- merge favicon on base icon
+- CDB: keyboard support
+	- focus
+- CDB: dark-hive button focus state
+- CDB: review image preloading

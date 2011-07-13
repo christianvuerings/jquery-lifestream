@@ -222,9 +222,11 @@
 		}
 		
 		function imagePreloading() {
-			var img = new Image(), i = 0, n = arguments.length;
-			while (i < n)
-				img.src = arguments[i++];
+			var images = [], i = 0, n = arguments.length;
+			while (i < n) {
+				images[i] = new Image();
+				images[i].src = arguments[i++];
+			}
 		}
 	</script>
 </body>
