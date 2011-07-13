@@ -20,6 +20,9 @@ Abbreviations:
 	src formatting
 		Tab removal
 		camelCase?
+		
+- CDB: make script.js?
+	- minify it
 - CDB: notifications: plugin credits
 	- I patched it
 - CDB:	service icons: 
@@ -65,3 +68,4 @@ Abbreviations:
 	- focus
 - CDB: dark-hive button focus state
 - CDB: review image preloading
+- CDB: UX: use of mouse cursors

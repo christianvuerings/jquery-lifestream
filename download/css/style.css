@@ -315,8 +315,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 body {
   background: #666666 url(../img/bg-page.png) repeat-x left top;
 }
-body.waiting {
-  cursor: wait;
+body {
 }
 #widget {
 	font-size: 14px;

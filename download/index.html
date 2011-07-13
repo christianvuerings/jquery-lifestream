@@ -23,16 +23,14 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>-->
 	<script src="js/jquery-ui-1.8.14.custom.min.js"></script>
 	<script src="js/swfobject.min.js"></script> 
 	<script src="js/downloadify.min.js"></script> 
 	<script src="js/jquery.notifications.min.js"></script>
 	<script src="js/uglifyjs-cs.min.js"></script>
 	<script>
-		// TODO: Check if we have all deps loading
-		
 		$.n.defaults.timeout = 8000;
+		
 		var
 			$button = $('#button'),
 			$downloadify,
@@ -128,8 +126,6 @@
 		function build() {
 			$.n('Build started');
 		 
-			// Disable UI
-			//$('body').addClass('waiting');
 			$('#services input[type="checkbox"]').button('disable');
 			$button
 				.button({
@@ -148,25 +144,15 @@
 					.get(),
 				onBuildCompleted
 			);
-			/*
-			concatMinifiedScripts(
-				$('#services input[type="checkbox"]')
-					.filter(':checked')
-					.map(function() { return $(this).attr('id')})
-					.get(),
-				onBuildCompleted
-			);
-			*/
 		}
 		
-		function onBuildCompleted(out) {
+		function onBuildCompleted(minifiedScript) {
 			$.n('Build completed');
 			
-			builtScript = out;
+			builtScript = minifiedScript;
 			
 			$button
 			  .button('disable')
-			  //.button('destroy')
 			  .hide()
 			;
 			
@@ -174,20 +160,18 @@
 		}
 		
 		function onDownloadComplete() { 
-			// Re-enable UI
-			//$('body').removeClass('waiting');
 			$('#services input[type="checkbox"]').button('enable');
 			
-			//$('#downloadify').hide();
 			$('#button-bar > object').css({visibility: 'hidden'});
 			
-			$button.button({
-				icons: { primary: 'ui-icon-gear' },
-				label: 'Build script'
-			})
-			.button('enable') // FIXME
-			.show()
-			.blur(); // Temp hack for the button focus issue
+			$button
+				.button({
+					icons: { primary: 'ui-icon-gear' },
+					label: 'Build script'
+				})
+				.button('enable') // FIXME
+				.show()
+				.blur(); // Temp hack for the button focus issue
 		}
 
 		function buildScript(services, success) {
