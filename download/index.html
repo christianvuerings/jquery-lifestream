@@ -136,7 +136,10 @@
 					disabled: true,
 					label: 'Wait...',
 					icons: { primary: 'ui-icon-spinner' }
-				});
+				})
+				.button('widget')
+					.removeClass('ui-state-hover')
+			;
 				
 			buildScript(
 				$('#services input[type="checkbox"]')
@@ -182,8 +185,9 @@
 				icons: { primary: 'ui-icon-gear' },
 				label: 'Build script'
 			})
-			.button('enable')
-			.show();
+			.button('enable') // FIXME
+			.show()
+			.blur(); // Temp hack for the button focus issue
 		}
 
 		function buildScript(services, success) {

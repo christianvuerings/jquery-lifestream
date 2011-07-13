@@ -393,8 +393,6 @@ body.waiting {
 #services .ui-icon { 
   width: 48px; 
   height: 48px; 
-  background-image: url(../img/services.png); 
-  /*background-position: 0 0;*/
 }
 #services .ui-state-default .ui-icon { 
   background-image: url(../img/services-deselected.png);
@@ -402,12 +400,13 @@ body.waiting {
 #services .ui-state-hover .ui-icon {
   background-image: url(../img/services-hover.png);
 }
-#services .ui-state-focus .ui-icon {
-  background-image: url(../img/services-selected.png);
-}
 #services .ui-state-active .ui-icon {
   background-image: url(../img/services-selected.png);
 }
+#services .ui-state-focus .ui-icon {
+  /*background-image: url(../img/services-selected.png);*/
+}
+
 /*
 #services .ui-state-highlight .ui-icon {
   background-image: url(../img/services.png);
