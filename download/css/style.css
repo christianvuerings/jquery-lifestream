@@ -318,27 +318,27 @@ body {
 body {
 }
 #widget {
-	font-size: 14px;
+  font-size: 14px;
 }
 #header {
-	margin: 65px auto 0;
-	width: 438px; /* 438-40(padding) */
-	height: 65px; /* 65-padding */
-	background: transparent url(../img/bg-header.png) no-repeat top left;
-	  /*padding-left: 40px;
-	  padding-top: 1px;*/
-	  /*outline: 1px solid red;*/
+  margin: 65px auto 0;
+  width: 438px; /* 438-40(padding) */
+  height: 65px; /* 65-padding */
+  background: transparent url(../img/bg-header.png) no-repeat top left;
+    /*padding-left: 40px;
+    padding-top: 1px;*/
+    /*outline: 1px solid red;*/
 }
 #header h1 {
-	display: none;
-	margin-top: 16px;
-	margin-left: 5px;
-	padding: 0;
-	/*padding-left: 40px;*/
-	font-family: helvetica;
-	font-size: 20px;
-	color: #aaaaaa;
-	/*outline: 1px solid red;*/
+  display: none;
+  margin-top: 16px;
+  margin-left: 5px;
+  padding: 0;
+  /*padding-left: 40px;*/
+  font-family: helvetica;
+  font-size: 20px;
+  color: #aaaaaa;
+  /*outline: 1px solid red;*/
 }
 #footer {
   width: 438px;
@@ -355,17 +355,17 @@ body {
   clear: both;
 }
 #button-bar {
-	text-align: center;
-	padding-top: 15px;
-	padding-bottom: 20px; 
-	margin: 0;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 20px; 
+  margin: 0;
 }
 #startup-feedback {
-	color: #ffffff;
+  color: #ffffff;
 }
 #button {
-	margin: 0 0 0 120px;
-	display: none;
+  margin: 0 0 0 120px;
+  display: none;
 }
 #button .ui-icon-spinner {
     background-image: url(../img/spinner.gif); 

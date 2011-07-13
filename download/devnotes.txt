@@ -7,58 +7,60 @@ Abbreviations:
 
 ## Milestones
 
-### Milestone #1	
+### Milestone #1  
+dist add?
+.zipcheck?
 - CDB: Cross browser testing 
-	- IE
+  - IE
 - CDB: code cleanup
-	src formatting
-		Tab removal
-		camelCase?
+  src formatting
+    Tab removal
+    camelCase?
 - CDB: make script.js?
-	- minify it
+  - minify it
 - CDB: notifications: plugin credits
-	- I patched it
-- CDB:	service icons: 
-	- missin icons
-		- merge favicon on base icon
+  - I patched it
+- CDB:  service icons: 
+  - missin icons
+    - merge favicon on base icon
 - CDB: Improve header and footer design
 
 ### Later milestones
 - CDB: JUI: drop JUI?
-	- CDB: JUI: CSS weight loss
-	- CDB: JUI: the sprite
+  - CDB: JUI: CSS weight loss
+  - CDB: JUI: the sprite
 - CDB: scripts loading 
-	- performance investifgations
-	- Errors
-		- CDN fallback
+  - performance investifgations
+  - Errors
+    - CDN fallback
 - BS: Building of services.txt with make rules?
-	- with js?
+  - with js?
 - BS: Must remove last line terminator of services.txt
 - CDB: Downloadify: UX: delays without user feedback
-	- Chrome 11
+  - Chrome 11
 - CDB: Downloadify: further investigations
 - BS: Enforcing coding style guidelines
-	- Tabs removal
-		- tr?
+  - Tabs removal
+    - tr?
 - BS: Add support for JsLint
 - Support for other compressors
-	- YUI Compressor
-	- Google Closure Compiler
-	- ...
+  - YUI Compressor
+  - Google Closure Compiler
+  - ...
 - Jake
 - BS: Write installation instructions for build tools
-	- Make
-	- Node.js
-	- UglifyJS
+  - Make
+  - Node.js
+  - UglifyJS
 - CDB: http://www.w3.org/TR/2011/WD-file-writer-api-20110419/#examples
-	- http://dret.typepad.com/dretblog/2010/04/html5-file-writer-api.html
+  - http://dret.typepad.com/dretblog/2010/04/html5-file-writer-api.html
 - CDB: Downloadify: white flash
-	Resolved using 'visibility: hidden' instead of 'display: none', 
-	but in this way we introduce problems:
-		- with the horizontal alignment of the button
-		- little vertical jump
+  Resolved using 'visibility: hidden' instead of 'display: none', 
+  but in this way we introduce problems:
+    - with the horizontal alignment of the button
+    - little vertical jump
 - CDB: keyboard support
-	- focus
+  - focus
 - CDB: dark-hive button focus state
 - CDB: review image preloading
 - CDB: UX: use of mouse cursors
