@@ -24,8 +24,6 @@ Abbreviations:
 - CDB: notifications: plugin credits
 	- I patched it
 - CDB:	service icons: 
-	- enlarge base
-	- remake N/A
 	- missin icons
 		- merge favicon on base icon
 - CDB: Improve header and footer design
