@@ -11,16 +11,9 @@ Abbreviations:
 - CDB: Cross browser testing 
 	- IE
 - CDB: code cleanup
-	Button disabled if no service selected
-		http://api.jquery.com/change/
-		http://api.jquery.com/delegate/
-		http://api.jquery.com/live/
-		http://api.jquery.com/select/
-		http://api.jquery.com/toggle-event/
 	src formatting
 		Tab removal
 		camelCase?
-		
 - CDB: make script.js?
 	- minify it
 - CDB: notifications: plugin credits

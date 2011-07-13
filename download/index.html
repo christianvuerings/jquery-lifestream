@@ -68,7 +68,6 @@
 			$('#services').append(out.join(''));
 	  
 			// PE of service checkboxes
-			var c = 0;
 			$('#services input[type="checkbox"]')
 				.each(function() {
 					$(this).button({
@@ -76,19 +75,23 @@
 						icons: {
 							primary: 'ui-icon-service-' + this.id
 						},
-					});
-				})
-				.change(function(e) {
-					if (this.checked)
-						c++;
-					else
-						c--;
-					if (c > 0)
-						$button.button('enable');
-					else
-						$button.button('disable');
+					})
 				})
 			;
+			
+			// 'Build Script' button must be enabled only
+			// if there is >= 1 services selected
+			$('#services').delegate(
+				'#services input[type="checkbox"]',
+				'change',
+				(function() {
+					var c = 0;
+					return function() {
+						this.checked? c++ : c--;
+						$button.button(c > 0 ? 'enable' : 'disable');
+					}
+				})()
+			);
 	  
 			$button
 				.button({
