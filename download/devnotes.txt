@@ -8,9 +8,8 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1	
-- design git?
 - CDB: Cross browser testing 
-- CDB: service list left padding
+	- IE
 - CDB: code cleanup
 	Button disabled if no service selected
 		http://api.jquery.com/change/

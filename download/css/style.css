@@ -373,7 +373,7 @@ body.waiting {
 }
 #services {
   list-style: none;
-  padding: 0;
+  padding: 0 5px 0 10px;
   margin: 0;
 }
 #services li {
