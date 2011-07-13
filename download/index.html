@@ -128,7 +128,7 @@
 		 
 			$('#services input[type="checkbox"]').button('disable');
 			$button
-				.button({
+				.button('option', {
 					disabled: true,
 					label: 'Wait...',
 					icons: { primary: 'ui-icon-spinner' }
@@ -165,11 +165,11 @@
 			$('#button-bar > object').css({visibility: 'hidden'});
 			
 			$button
-				.button({
+				.button('option', {
 					icons: { primary: 'ui-icon-gear' },
-					label: 'Build script'
+					label: 'Build script',
+					disabled: false
 				})
-				.button('enable') // FIXME
 				.show()
 				.blur(); // Temp hack for the button focus issue
 		}
