@@ -4,100 +4,28 @@
   <meta charset="utf-8">
   <title>Custom Download Builder</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <script type="text/javascript" src="js/swfobject.js"></script> 
-	<script type="text/javascript" src="js/downloadify.min.js"></script> 
 </head>
 <body>
-  <div id="app">
-    <h1>Custom Download Builder</h1>
-    
-    <p>Pick your services:</p>
-    <ul id="services"></ul>
-    
-    <a id="button" href="#">Build script</a> 
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
-    <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
-    <script>
-    // TODO: Check if we have all deps loading
-    
-    // Create the feeds list.
-    // Geecky Js lang issues:
-    //   - Use of underscore reduce?
-    //   - Use of (underscore?)templates?
-    var feeds = [ // If we could fetch the available services form somewhere ...
-      'blogger',
-      'dailymotion',
-      'delicious',
-      'deviantart',
-      'dribbble',
-      'flickr',
-      'formspring',
-    ],
-    out = [];
-    $.each(feeds, function(i, f) { out.push(
-      '<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>'); });
-    $('#services').append(out.join(''));
-    
-    $('#button').click(function() {
-      concatMinifiedScripts(
-        $('#services input[type="checkbox"]')
-          .filter(':checked')
-          .map(function() { return $(this).attr('id')})
-          .get(), 
-        {core: '../src/', feeds: '../src/feeds/'},
-        function(out) { 
-          Downloadify.create('button',{
-            filename: function(){
-              return 'jquery.lifestream.js';
-            },
-            data: function(){ 
-              return out;
-            },
-            onComplete: function(){ alert('Your File Has Been Saved!'); },
-            onCancel: function(){ alert('You have cancelled the saving of this file.'); },
-            onError: function(){ alert('You must put something in the File Contents or there will be nothing to save!'); },
-            transparent: false,
-            swf: 'media/downloadify.swf',
-            downloadImage: 'img/download.png',
-            width: 100,
-            height: 30,
-            transparent: true,
-            append: false
-          });
-        }
-      );
-      return false;
-    });
-    
-    function concatMinifiedScripts(feeds, paths, success) {
-      console.log(feeds);
-      if (feeds.length === 0)
-        return;
-      var 
-        out = [],
-        countdown = 1 + feeds.length,
-        concat = function(scriptText) {
-          out.push(scriptText);
-          if (!--countdown)
-            success(out.join(''));
-        }
-      ;
-      $.getScript(paths['core'] + 'core.js', function(scriptText) {
-        concat(scriptText);
-        // The feeds scripts are not (necessarily) 
-        // concatened in the same order as in the feeds array.
-        // We don't need to preserve that order so we can
-        // just fire all the script requests (potentially)
-        // speeding up the process.
-        $.each(feeds, function(i, f) {
-          $.getScript(paths['feeds'] + f + '.js', function(scriptText) {
-            concat(scriptText);
-          });
-        });
-      });
-    }
-    </script>
-  </div> <!-- #app -->
+  <div id="widget">
+    <div id="header">
+      <h1><a href="#"><!--<img src="img/widget-header-logo.png">--></a>Custom Download Builder</h1>
+    </div>
+    <div id="content">
+      <ul id="services"></ul>
+      <div id="button-bar">
+        <span id="startup-feedback">Loading, Please wait...</span>
+        <button id="button">Build Script</button>
+      </div>
+    </div>
+    <div id="footer"></div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
+  <script src="js/jquery-ui-1.8.14.custom.min.js"></script>
+  <script src="js/swfobject.min.js"></script> 
+  <script src="js/downloadify.min.js"></script> 
+  <script src="js/jquery.notifications.min.js"></script>
+  <script src="js/uglifyjs-cs.min.js"></script>
+  <script src="js/script.min.js"></script>
 </body>
 </html>

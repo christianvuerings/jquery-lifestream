@@ -1,0 +1,62 @@
+# Development Notes
+
+Abbreviations:
+- BS: Build System
+- CDB: Custom Download Builder
+- JUI: jQuery UI 
+
+## Milestones
+The following lists are roughly sorted in todo order but they are not set 
+in stone and are rather dynamic. Tasks can shift up and down
+(also across milestone boundaries) to adapt to the development process.
+
+### Milestone #1  
+- CDB: Cross browser testing 
+  - IE
+    - http://blogs.msdn.com/b/ie/archive/2010/10/19/testing-sites-with-browser-mode-vs-doc-mode.aspx
+    - https://blogs.msdn.com/b/ie/archive/2010/06/16/ie-s-compatibility-features-for-site-developers.aspx
+    - http://blogs.msdn.com/b/ie/archive/2011/02/04/testing-multiple-versions-of-ie-on-one-pc.aspx
+    - http://samuli.hakoniemi.net/debugging-and-testing-in-internet-explorer-made-easy/
+    http://googlesystem.blogspot.com/2006/04/test-internet-explorer-7-without.html
+    http://ie.microsoft.com/testdrive/
+    http://technet.microsoft.com/it-it/library/cc721989(v=ws.10).aspx
+- CDB: code cleanup
+- CDB: src formatting
+  - camelCase
+- CDB:  service icons: 
+  - missin icons
+    - merge favicon on base icon
+- CDB: Improve header and footer design
+
+### Later milestones
+- CDB: JUI: drop JUI?
+  - CDB: JUI: CSS weight loss
+  - CDB: JUI: the sprite
+- CDB: scripts loading 
+  - performance investifgations
+  - Errors
+    - CDN fallback
+- CDB: Downloadify: UX: delays without user feedback
+  - Chrome 11
+- CDB: Downloadify: further investigations
+- BS: Enforcing coding style guidelines
+  - Tabs removal
+    - tr?
+- BS: Add support for JsLint
+- Support for other compressors
+  - YUI Compressor
+  - Google Closure Compiler
+  - ...
+- Jake
+- CDB: http://www.w3.org/TR/2011/WD-file-writer-api-20110419/#examples
+  - http://dret.typepad.com/dretblog/2010/04/html5-file-writer-api.html
+- CDB: Downloadify: white flash
+  Resolved using 'visibility: hidden' instead of 'display: none', 
+  but in this way we introduce problems:
+    - with the horizontal alignment of the button
+    - little vertical jump
+- CDB: keyboard support
+  - focus
+- CDB: dark-hive button focus state
+- CDB: review image preloading
+- CDB: UX: use of mouse cursors
