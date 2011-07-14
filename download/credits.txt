@@ -1,0 +1,5 @@
+# Credits
+
+- Icons
+- Notifications jQuery plugin
+  - I patched it
