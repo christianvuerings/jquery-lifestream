@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.1.4
+ * @version 0.1.5
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -84,7 +84,8 @@
           item = items[i];
           if ( item.html ) {
             $('<li class="'+ settings.classname + '-'
-              + item.config.service + '">').append( item.html )
+              + item.config.service + '">').data( "time", item.date )
+                                           .append( item.html )
                                            .appendTo( ul );
           }
         }
@@ -149,7 +150,7 @@
     });
 
   };
-  
+
   /**
    * Create a valid YQL URL by passing in a query
    * @param {String} query The query you want to convert into a valid yql url
