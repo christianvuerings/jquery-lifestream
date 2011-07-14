@@ -28,6 +28,10 @@ service-list:
 #	find $(services) -name '*.js' -exec echo '{}' \;
 	@ls -l $(services) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(service_list)
 	@echo "$(service_list) build complete"
+	
+service-list-js:
+	node service-list.js > $(service-list)
+	@echo "$(service_list) build complete"
 
 $(jls): $(modules) | $(dist)
 	@cat $^ > $@
