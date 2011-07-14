@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.instapaper = function( config, callback ) {
+$.fn.lifestream.feeds.instapaper = function( config, callback ) {
 
   var template = $.extend({},
     {

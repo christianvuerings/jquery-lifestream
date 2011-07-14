@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.slideshare = function( config, callback ) {
+$.fn.lifestream.feeds.slideshare = function( config, callback ) {
 
   var template = $.extend({},
     {

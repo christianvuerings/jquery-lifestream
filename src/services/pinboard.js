@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.pinboard = function( config, callback ) {
+$.fn.lifestream.feeds.pinboard = function( config, callback ) {
 
   var template = $.extend({},
     {

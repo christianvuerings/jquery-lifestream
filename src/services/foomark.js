@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.foomark = function( config, callback ) {
+$.fn.lifestream.feeds.foomark = function( config, callback ) {
 
   var template = $.extend({},
     {

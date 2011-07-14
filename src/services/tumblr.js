@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.tumblr = function( config, callback ) {
+$.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
   var template = $.extend({},
     {

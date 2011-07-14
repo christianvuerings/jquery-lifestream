@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.delicious = function( config, callback ) {
+$.fn.lifestream.feeds.delicious = function( config, callback ) {
 
   var template = $.extend({},
     {

@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.snipplr = function( config, callback ) {
+$.fn.lifestream.feeds.snipplr = function( config, callback ) {
 
   var template = $.extend({},
     {

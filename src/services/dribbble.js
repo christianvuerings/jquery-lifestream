@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.flickr = function( config, callback ) {
+$.fn.lifestream.feeds.flickr = function( config, callback ) {
 
   var template = $.extend({},
     {

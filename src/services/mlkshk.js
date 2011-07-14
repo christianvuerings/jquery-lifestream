@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.mlkshk = function( config, callback ) {
+$.fn.lifestream.feeds.mlkshk = function( config, callback ) {
 
   var template = $.extend({},
     {

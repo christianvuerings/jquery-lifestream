@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.twitter = function( config, callback ) {
+$.fn.lifestream.feeds.twitter = function( config, callback ) {
 
   var template = $.extend({},
     {

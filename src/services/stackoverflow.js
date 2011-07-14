@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
+$.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
 
   var template = $.extend({},
     {

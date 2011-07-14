@@ -1,4 +1,4 @@
-;$.fn.lifestream.feeds.formspring = function( config, callback ) {
+$.fn.lifestream.feeds.formspring = function( config, callback ) {
 
   var template = $.extend({},
     {
