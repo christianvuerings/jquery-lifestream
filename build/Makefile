@@ -8,10 +8,13 @@ jls = $(dist)/jquery.lifestream.js
 jls_min = $(dist)/jquery.lifestream.min.js
 uglifyjs = ../download/js/uglifyjs-cs.js
 uglifyjs_min = ../download/js/uglifyjs-cs.min.js
+script = ../download/js/script.js
+script_min = ../download/js/script.min.js
 
-.PHONY: all jls jls-min uglifyjs uglifyjs-min service-list empty-dist
+.PHONY: all jls jls-min uglifyjs uglifyjs-min service-list empty-dist \
+script-min
 
-all: jls jls-min uglifyjs uglifyjs-min service-list
+all: jls jls-min uglifyjs uglifyjs-min service-list script-min
 jls: $(jls)
 	@echo "$^ build complete"
 jls-min: $(jls_min)
@@ -19,6 +22,8 @@ jls-min: $(jls_min)
 uglifyjs: $(uglifyjs)
 	@echo "$^ build complete"
 uglifyjs-min: $(uglifyjs_min)
+	@echo "$^ build complete"
+script-min: $(script_min)
 	@echo "$^ build complete"
 service-list:
 #	grep -l $.fn.lifestream.feeds. $(services)/*.js
@@ -54,6 +59,9 @@ $(uglifyjs): $(build)/parse-js.js $(build)/process.js $(build)/squeeze-more.js
 	> $@
 	
 $(uglifyjs_min): $(uglifyjs)
+	@uglifyjs $^ > $@
+  
+$(script_min): $(script)
 	@uglifyjs $^ > $@
 	
 $(dist): 
