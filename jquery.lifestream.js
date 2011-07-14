@@ -9,17 +9,6 @@
 ;(function( $ ){
 
   /**
-   * Create a valid YQL URL by passing in a query
-   * @param {String} query The query you want to convert into a valid yql url
-   * @return {String} A valid YQL URL
-   */
-  var createYqlUrl = function( query ) {
-      return ( "http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=" +
-      "store://datatables.org/alltableswithkeys&format=json")
-        .replace( "__QUERY__" , encodeURIComponent( query ) );
-  };
-
-  /**
    * Initialize the lifestream plug-in
    * @param {Object} config Configuration object
    */
@@ -163,6 +152,17 @@
   };
 
   /**
+   * Create a valid YQL URL by passing in a query
+   * @param {String} query The query you want to convert into a valid yql url
+   * @return {String} A valid YQL URL
+   */
+  $.fn.lifestream.createYqlUrl = function( query ) {
+      return ( "http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=" +
+      "store://datatables.org/alltableswithkeys&format=json")
+        .replace( "__QUERY__" , encodeURIComponent( query ) );
+  };
+
+  /**
    * A big container which contains all available feeds
    */
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
@@ -213,7 +213,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where url="http://'
+      url: $.fn.lifestream.createYqlUrl('select * from xml where url="http://'
         + config.user + '.blogspot.com/feeds/posts/default"'),
       dataType: "jsonp",
       success: function ( data ) {
@@ -260,7 +260,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://www.dailymotion.com/rss/user/' + config.user + '"'),
       dataType: "jsonp",
       success: function( data ) {
@@ -321,7 +321,7 @@
       config.template);
 
     $.ajax({
-      url: createYqlUrl(
+      url: $.fn.lifestream.createYqlUrl(
         'select title,link,pubDate from rss where '
         + 'url="http://backend.deviantart.com/rss.xml?q=gallery%3A'
         + encodeURIComponent(config.user)
@@ -508,7 +508,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://www.formspring.me/profile/' + config.user + '.rss"'),
       dataType: "jsonp",
       success: function ( data ) {
@@ -588,7 +588,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from rss where url='
+      url: $.fn.lifestream.createYqlUrl('select * from rss where url='
         + '"https://feeds.foursquare.com/history/'
         + config.user + '.rss"'),
       dataType: 'jsonp',
@@ -733,8 +733,8 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select json.repository.owner,json.repository.name'
-        + ',json.payload,json.type'
+      url: $.fn.lifestream.createYqlUrl('select json.repository.owner,'
+        + 'json.repository.name,json.payload,json.type'
         + ',json.url, json.created_at from json where url="http://github.com/'
         + config.user + '.json"'),
       dataType: 'jsonp',
@@ -781,7 +781,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where url="'
+      url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
         + 'www.google.com/reader/public/atom/user%2F'
         + config.user + '%2Fstate%2Fcom.google%2Fbroadcast"'),
       dataType: 'jsonp',
@@ -826,7 +826,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where url='
+      url: $.fn.lifestream.createYqlUrl('select * from xml where url='
         + '"http://www.instapaper.com/starred/rss/'
         + config.user + '"'),
       dataType: 'jsonp',
@@ -902,7 +902,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://iphone.iusethis.com/user/feed.rss/' + config.user
         + '" or '
         + 'url="http://osx.iusethis.com/user/feed.rss/' + config.user
@@ -952,7 +952,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where url='
+      url: $.fn.lifestream.createYqlUrl('select * from xml where url='
         + '"http://ws.audioscrobbler.com/2.0/user/'
         + config.user + '/lovedtracks.xml"'),
       dataType: 'jsonp',
@@ -999,7 +999,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://mlkshk.com/user/' + config.user + '/rss"'),
       dataType: "jsonp",
       success: function ( data ) {
@@ -1086,7 +1086,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://feeds.pinboard.in/rss/u:' + config.user + '"'),
       dataType: "jsonp",
       success: function( data ) {
@@ -1132,7 +1132,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://' + config.user + '.posterous.com/rss.xml"'),
       dataType: "jsonp",
       success: function ( data ) {
@@ -1255,7 +1255,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://www.slideshare.net/rss/user/' + config.user + '"'),
       dataType: "jsonp",
       success: function( data ) {
@@ -1301,7 +1301,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://snipplr.com/rss/users/' + config.user + '"'),
       dataType: "jsonp",
       success: function ( data ) {
@@ -1438,7 +1438,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select *'
+      url: $.fn.lifestream.createYqlUrl('select *'
         + ' from tumblr.posts where username="'+ config.user +'"'),
       dataType: 'jsonp',
       success: function( data ) {
@@ -1526,8 +1526,9 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select status.id, status.created_at, status.text'
-        + ' from twitter.user.timeline where screen_name="'+ config.user +'"'),
+      url: $.fn.lifestream.createYqlUrl('select status.id, status.created_at,'
+        + 'status.text from twitter.user.timeline where screen_name="'
+        + config.user +'"'),
       dataType: 'jsonp',
       success: function( data ) {
         callback(parseTwitter(data));
@@ -1620,7 +1621,7 @@
     };
 
     $.ajax({
-      url: createYqlUrl('select * from xml where '
+      url: $.fn.lifestream.createYqlUrl('select * from xml where '
         + 'url="http://' + config.user + '.wordpress.com/feed"'),
       dataType: "jsonp",
       success: function ( data ) {
