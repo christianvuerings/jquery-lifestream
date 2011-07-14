@@ -16,11 +16,9 @@ imagePreloading(
 // Fetch the service list
 $.n('Fetching available services...');
 $.ajax({
-  url: 'services.txt',
-  dataType: 'text',
-  success: function(data) {
-    buildUI(data.trim().split('\n'));
-  }
+  url: 'services.json',
+  dataType: 'json',
+  success: buildUI
 });
 
 function buildUI(services) {
@@ -29,7 +27,7 @@ function buildUI(services) {
   
   // Build the service checkboxes
   var out = [];
-  $.each(services.sort(), function(i, f) { 
+  $.each(services, function(i, f) { 
     out.push(
       '<li><input id="' + f + '" type="checkbox"><label for="' + f + '">' + f + '</label></li>');
   });

@@ -3,7 +3,7 @@ services = $(src)/services
 build = .
 dist = ../dist
 modules = $(src)/core.js $(services)/*.js
-service_list = ../download/services.txt
+service_list = ../download/services.json
 jls = $(dist)/jquery.lifestream.js
 jls_min = $(dist)/jquery.lifestream.min.js
 uglifyjs = ../download/js/uglifyjs-cs.js
@@ -26,18 +26,15 @@ uglifyjs-min: $(uglifyjs_min)
 script-min: $(script_min)
 	@echo "$^ build complete"
 service-list:
+	@node service-list.js $(services) > $(service_list)
 #	grep -l $.fn.lifestream.feeds. $(services)/*.js
 #	ls -l $(services) | awk '{print $$NF}'
 #	ls -l $(services) | awk '{print $$9}'
 #	ls -l $(services) | grep -v '^total' | awk '{print $$9}' 
 #	find $(services) -name '*.js' -exec echo '{}' \;
-	@ls -l $(services) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(service_list)
+#	We used this: @ls -l $(services) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(service_list)
 	@echo "$(service_list) build complete"
 	
-service-list-js:
-	node service-list.js > $(service-list)
-	@echo "$(service_list) build complete"
-
 $(jls): $(modules) | $(dist)
 	@cat $^ > $@
 
