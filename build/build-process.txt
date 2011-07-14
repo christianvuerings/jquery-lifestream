@@ -1,0 +1,16 @@
+# Build Process
+
+## Required Tools
+- GNU Make
+- Node.js
+- UglifyJS
+
+## Tools Installation Tips
+- Make
+- Node
+- UglifyJS
+
+## Building
+### Directory Structure
+### Use of Make
+#### Available targets
