@@ -8,10 +8,16 @@ Abbreviations:
 ## Milestones
 
 ### Milestone #1  
-- BS: Makefile must create dist dir if not exists
 - .zip check
 - CDB: Cross browser testing 
   - IE
+    - http://blogs.msdn.com/b/ie/archive/2010/10/19/testing-sites-with-browser-mode-vs-doc-mode.aspx
+    - https://blogs.msdn.com/b/ie/archive/2010/06/16/ie-s-compatibility-features-for-site-developers.aspx
+    - http://blogs.msdn.com/b/ie/archive/2011/02/04/testing-multiple-versions-of-ie-on-one-pc.aspx
+    - http://samuli.hakoniemi.net/debugging-and-testing-in-internet-explorer-made-easy/
+    http://googlesystem.blogspot.com/2006/04/test-internet-explorer-7-without.html
+    http://ie.microsoft.com/testdrive/
+    http://technet.microsoft.com/it-it/library/cc721989(v=ws.10).aspx
 - CDB: code cleanup
 - CDB: src formatting
   - camelCase

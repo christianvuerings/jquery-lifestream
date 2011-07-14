@@ -1,50 +1,59 @@
-srcPath = ../src
-servicesDir = $(srcPath)/services
-buildDir = .
+src = ../src
+services = $(src)/services
+build = .
 dist = ../dist
-srcModules = $(srcPath)/core.js $(servicesDir)/*.js
-serviceListPath = ../download/services.txt
+modules = $(src)/core.js $(services)/*.js
+service_list = ../download/services.txt
 jls = $(dist)/jquery.lifestream.js
-jlsMin = $(dist)/jquery.lifestream.min.js
+jls_min = $(dist)/jquery.lifestream.min.js
+uglifyjs = ../download/js/uglifyjs-cs.js
+uglifyjs_min = ../download/js/uglifyjs-cs.min.js
 
-all: uncompressed compressed serviceList uglifyjs-cs
+.PHONY: all jls jls-min uglifyjs uglifyjs-min service-list empty-dist
 
+all: jls jls-min uglifyjs uglifyjs-min service-list
+jls: $(jls)
+	@echo "$^ build complete"
+jls-min: $(jls_min)
+	@echo "$^ build complete"
+uglifyjs: $(uglifyjs)
+	@echo "$^ build complete"
+uglifyjs-min: $(uglifyjs_min)
+	@echo "$^ build complete"
+service-list:
+#	grep -l $.fn.lifestream.feeds. $(services)/*.js
+#	ls -l $(services) | awk '{print $$NF}'
+#	ls -l $(services) | awk '{print $$9}'
+#	ls -l $(services) | grep -v '^total' | awk '{print $$9}' 
+#	find $(services) -name '*.js' -exec echo '{}' \;
+	@ls -l $(services) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(service_list)
+	@echo "$(service_list) build complete"
+
+$(jls): $(modules) | $(dist)
+	@cat $^ > $@
+
+$(jls_min): $(jls)
+	@uglifyjs $^ > $@
+	
+$(uglifyjs): $(build)/parse-js.js $(build)/process.js $(build)/squeeze-more.js
+	@cat uglifyjs-cs-prologue.js \
+	parse-js-prologue.js \
+	parse-js.js \
+	parse-js-epilogue.js \
+	process-prologue.js \
+	process.js \
+	process-epilogue.js \
+	squeeze-more-prologue.js \
+	squeeze-more.js \
+	squeeze-more-epilogue.js \
+	uglifyjs-cs-epilogue.js \
+	> $@
+	
+$(uglifyjs_min): $(uglifyjs)
+	@uglifyjs $^ > $@
+	
 $(dist): 
-	mkdir -p $(dist)
+	@mkdir -p $(dist)
 
-uncompressed: $(jls)
-
-$(jls): $(srcModules) | $(dist)
-	cat $^ > $@
-	
-compressed: $(jlsMin)
-
-$(jlsMin): $(jls) | $(dist)
-	uglifyjs $^ > $@
-	
-serviceList:
-#	grep -l $.fn.lifestream.feeds. $(servicesDir)/*.js
-#	ls -l $(servicesDir) | awk '{print $$NF}'
-#	ls -l $(servicesDir) | awk '{print $$9}'
-#	ls -l $(servicesDir) | grep -v '^total' | awk '{print $$9}' 
-#	find $(servicesDir) -name '*.js' -exec echo '{}' \;
-	ls -l $(servicesDir) | grep -v '^total' | awk '{print $$9}' | sed 's;\(.*\)\.js;\1;' > $(serviceListPath)
-	
-uglifyjs-cs: ../download/js/uglifyjs-cs.min.js
-
-../download/js/uglifyjs-cs.min.js: ../download/js/uglifyjs-cs.js
-	uglifyjs $^ > $@
-	
-../download/js/uglifyjs-cs.js: $(buildDir)/parse-js.js $(buildDir)/process.js $(buildDir)/squeeze-more.js
-	cat uglifyjs-cs-prologue.js parse-js-prologue.js parse-js.js parse-js-epilogue.js process-prologue.js process.js process-epilogue.js squeeze-more-prologue.js squeeze-more.js squeeze-more-epilogue.js uglifyjs-cs-epilogue.js > $@
-
-clean: 
-	rm $(dist)/*
-	
-printVars:
-	@echo $(srcPath)
-	@echo $(srcModules)
-	@echo $(servicesDir)
-	@echo $(buildDir)
-	
-.PHONY: all compressed uncompressed serviceList printVars
+empty-dist: 
+	@rm $(dist)/*
