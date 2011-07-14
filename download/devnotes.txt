@@ -20,8 +20,6 @@ in stone and are rather dynamic. Tasks can shift up and down
     http://googlesystem.blogspot.com/2006/04/test-internet-explorer-7-without.html
     http://ie.microsoft.com/testdrive/
     http://technet.microsoft.com/it-it/library/cc721989(v=ws.10).aspx
-- CDB: make script.js?
-  - minify it
 - CDB: code cleanup
 - CDB: src formatting
   - camelCase
