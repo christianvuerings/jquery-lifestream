@@ -6,9 +6,11 @@ Abbreviations:
 - JUI: jQuery UI 
 
 ## Milestones
+The following lists are roughly sorted in todo order but they are not set 
+in stone and are rather dynamic. Tasks can shift up and down
+(also across milestone boundaries) to adapt to the development process.
 
 ### Milestone #1  
-- .zip check
 - CDB: Cross browser testing 
   - IE
     - http://blogs.msdn.com/b/ie/archive/2010/10/19/testing-sites-with-browser-mode-vs-doc-mode.aspx
@@ -18,13 +20,11 @@ Abbreviations:
     http://googlesystem.blogspot.com/2006/04/test-internet-explorer-7-without.html
     http://ie.microsoft.com/testdrive/
     http://technet.microsoft.com/it-it/library/cc721989(v=ws.10).aspx
+- CDB: make script.js?
+  - minify it
 - CDB: code cleanup
 - CDB: src formatting
   - camelCase
-- CDB: make script.js?
-  - minify it
-- CDB: notifications: plugin credits
-  - I patched it
 - CDB:  service icons: 
   - missin icons
     - merge favicon on base icon
@@ -53,10 +53,6 @@ Abbreviations:
   - Google Closure Compiler
   - ...
 - Jake
-- BS: Write installation instructions for build tools
-  - Make
-  - Node.js
-  - UglifyJS
 - CDB: http://www.w3.org/TR/2011/WD-file-writer-api-20110419/#examples
   - http://dret.typepad.com/dretblog/2010/04/html5-file-writer-api.html
 - CDB: Downloadify: white flash
