@@ -20,18 +20,22 @@ Currently supports the following feeds:
 * [DeviantART](http://deviantart.com)
 * [Dribbble](http://dribbble.com)
 * [Flickr](http://flickr.com)
+* [Foomark](http://foomark.com)
 * [Formspring](http://formspring.com)
 * [Forrst](http://forrst.com)
 * [Foursquare](http://foursquare.com)
 * [Github](http://github.com)
 * [Google Reader](http://google.com/reader)
+* [Instapaper](http://www.instapaper.com)
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
+* [Mlkshk](http://mlkshk.com)
 * [PicPlz](http://picplz.com)
 * [Pinboard](http://pinboard.com)
 * [Posterous](http://posterous.com)
 * [Reddit](http://reddit.com)
 * [Slideshare](http://slideshare.com)
+* [Snipplr](http://snipplr.com)
 * [Stackoverflow](http://stackoverflow.com)
 * [Tumblr](http://tumblr.com)
 * [Twitter](http://twitter.com)
@@ -140,7 +144,10 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 * Indentation: 2 spaces
 * Max column width: 78 characters
 * Trailing spaces: not allowed
-* We use the following spacing rules:
+* Always use curly brackets {} for if/else/for
+* Put all `var` statements in the beginning of a function
+* Use === & !== for comparing variables
+* Use the following spacing rules:
 ``` javascript
 for (var i = 0, j = length; i < j; i++) {
 ```
@@ -154,16 +161,19 @@ Stuff that isn"t implemented yet, but would be nice to have:
 
 Places on the web where this plug-in got mentioned:
 
-* [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
-* [DesignBeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
-* [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
-* [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
-* [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
-* [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
-* [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
-* [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
-* [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
 * [BlogUpstairs](http://blogupstairs.com/framework/javascript-framework/jquery/jquery-lifestream-show-a-stream-of-your-online-activity-with-jquery/)
+* [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
+* [DesignBeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
+* [doejo](http://doejo.com/blog/jquery-lifestream-a-simple-way-to-track-your-online-activity-in-one-spot)
+* [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
+* [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
+* [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
+* [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
+* [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
+* [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
+* [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
+* [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
+* [The Next Web](http://thenextweb.com/dd/2011/07/08/jquery-lifestream-makes-it-easy-to-pop-your-online-activity-onto-any-page/)
 
 ## Special Thanks
 
@@ -171,6 +181,10 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.1.5 Snipplr support
+* 0.1.4 Instapaper support
+* 0.1.3 Mlkshk support
+* 0.1.2 Foomark support
 * 0.1.1 Blogger, Formspring, Posterous & Wordpress support
 * 0.1.0 jQuery Template support
 * 0.0.17 Forrst & PicPlz support
