@@ -46,13 +46,27 @@ Currently supports the following feeds:
 Feel free to fork the project and add your own feeds in.  
 Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] when you're finished.
 
+## Build
+
+    cd build
+    make
+
+### Requirements
+
+* **Node**
+  https://github.com/joyent/node/wiki/Installation
+* **Npm**
+  `curl http://npmjs.org/install.sh | sh`
+* **UglifyJS**
+  `npm install uglify-js -g`
+
 ## Usage
 
 Add the following to the &lt;head&gt; or &lt;body&gt; tag of your HTML page.
 
 ``` html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script src="https://raw.github.com/christianv/jquery-lifestream/master/jquery.lifestream-compiled.js"></script>
+<script src="https://raw.github.com/christianv/jquery-lifestream/master/jquery.lifestream.min.js"></script>
 <script>
   $("#lifestream").lifestream({
     list:[
@@ -69,7 +83,7 @@ Add the following to the &lt;head&gt; or &lt;body&gt; tag of your HTML page.
 </script>
 ```
 The above code will always use the latest version of the script.  
-If you want to use it in production, download the [compressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream-compiled.js)
+If you want to use it in production, download the [minified](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.min.js)
 or [uncompressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.js) file and host it yourself.
 
 ### jQuery Templates
