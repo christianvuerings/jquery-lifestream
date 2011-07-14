@@ -36,9 +36,6 @@ in stone and are rather dynamic. Tasks can shift up and down
   - performance investifgations
   - Errors
     - CDN fallback
-- BS: Building of services.txt with make rules?
-  - with js?
-- BS: Must remove last line terminator of services.txt
 - CDB: Downloadify: UX: delays without user feedback
   - Chrome 11
 - CDB: Downloadify: further investigations
