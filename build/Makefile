@@ -9,14 +9,17 @@ jlsMin = $(dist)/jquery.lifestream.min.js
 
 all: uncompressed compressed serviceList uglifyjs-cs
 
+$(dist): 
+	mkdir -p $(dist)
+
 uncompressed: $(jls)
 
-$(jls): $(srcModules)
+$(jls): $(srcModules) | $(dist)
 	cat $^ > $@
 	
 compressed: $(jlsMin)
 
-$(jlsMin): $(jls)
+$(jlsMin): $(jls) | $(dist)
 	uglifyjs $^ > $@
 	
 serviceList:
