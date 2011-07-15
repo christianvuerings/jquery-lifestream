@@ -34,19 +34,11 @@ $(jls): $(modules) | $(main)
 $(jls_min): $(jls)
 	@uglifyjs $^ > $@
 	
-$(uglifyjs): $(build)/parse-js.js $(build)/process.js $(build)/squeeze-more.js
-	@cat uglifyjs-cs-prologue.js \
-	parse-js-prologue.js \
-	parse-js.js \
-	parse-js-epilogue.js \
-	process-prologue.js \
-	process.js \
-	process-epilogue.js \
-	squeeze-more-prologue.js \
-	squeeze-more.js \
-	squeeze-more-epilogue.js \
-	uglifyjs-cs-epilogue.js \
-	> $@
+$(uglifyjs): uglifyjs-cs-prologue.js parse-js-prologue.js parse-js.js \
+parse-js-epilogue.js process-prologue.js process.js process-epilogue.js \
+squeeze-more-prologue.js squeeze-more.js squeeze-more-epilogue.js \
+uglifyjs-cs-epilogue.js
+	@cat $^ > $@
 
 $(uglifyjs_min): $(uglifyjs)
 	@uglifyjs $^ > $@
