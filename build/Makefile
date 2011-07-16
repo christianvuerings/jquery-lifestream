@@ -14,34 +14,40 @@ script_min = ../download/js/script.min.js
 .PHONY: all jls jls-min uglifyjs uglifyjs-min service-list script-min
 
 all: jls jls-min uglifyjs uglifyjs-min service-list script-min
+
 jls: $(jls)
-	@echo "$^ build complete"
+	
 jls-min: $(jls_min)
-	@echo "$^ build complete"
+	
 uglifyjs: $(uglifyjs)
-	@echo "$^ build complete"
+	
 uglifyjs-min: $(uglifyjs_min)
-	@echo "$^ build complete"
+	
 script-min: $(script_min)
-	@echo "$^ build complete"
+	
 service-list:
+	@echo "Building $(service_list)"
 	@node service-list.js $(services) > $(service_list)
-	@echo "$(service_list) build complete"
 	
 $(jls): $(modules) | $(main)
+	@echo "Building $@"
 	@cat $^ > $@
 
 $(jls_min): $(jls)
+	@echo "Building $@"
 	@uglifyjs $^ > $@
 	
 $(uglifyjs): uglifyjs-cs-prologue.js parse-js-prologue.js parse-js.js \
 parse-js-epilogue.js process-prologue.js process.js process-epilogue.js \
 squeeze-more-prologue.js squeeze-more.js squeeze-more-epilogue.js \
 uglifyjs-cs-epilogue.js
+	@echo "Building $@"
 	@cat $^ > $@
 
 $(uglifyjs_min): $(uglifyjs)
+	@echo "Building $@"
 	@uglifyjs $^ > $@
 	
 $(script_min): $(script)
+	@echo "Building $@"
 	@uglifyjs $^ > $@
