@@ -41,7 +41,7 @@ function buildUI(services) {
         text: false,
         icons: {
           primary: 'ui-icon-service-' + this.id
-        },
+        }
       })
     })
   ;
