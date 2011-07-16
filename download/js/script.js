@@ -89,8 +89,10 @@ function buildUI(services) {
     height: 35, //41, //30,
     append: true
   });
-  $downloadify = $('#button-bar > object')
-    .css({visibility: 'hidden'});
+  setTimeout(function() { 
+    $downloadify = $('#button-bar > object')
+      .css({visibility: 'hidden'});
+   }, 0);
 }
 
 function build() {
