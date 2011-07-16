@@ -53,23 +53,23 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 		
 #### Available targets
 
-* jls
+* **jls**:
   Build jquery.lifestream.js
 
-* jls-min 
+* **jls-min**: 
   Build jquery.lifestream.min.js
   
-* script-min
+* **script-min**:
   Build download/js/script.min.js
 
-* uglifyjs 
+* **uglifyjs**: 
   Build download/js/uglify-cs.js, a custom version of UglifyJS patched
   to work in the browser
 
-* uglifyjs-min 
+* **uglifyjs-min**:
   Build download/js/uglify-cs.min.js
 
-* service-list
+* **service-list**:
   Build download/services.json
 
 ### Requirements
