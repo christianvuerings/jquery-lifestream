@@ -50,6 +50,27 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 
     cd build
     make
+		
+#### Available targets
+
+* jls
+  Build jquery.lifestream.js
+
+* jls-min 
+  Build jquery.lifestream.min.js
+  
+* script-min
+  Build download/js/script.min.js
+
+* uglifyjs 
+  Build download/js/uglify-cs.js, a custom version of UglifyJS patched
+  to work in the browser
+
+* uglifyjs-min 
+  Build download/js/uglify-cs.min.js
+
+* service-list
+  Build download/services.json
 
 ### Requirements
 
