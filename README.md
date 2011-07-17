@@ -53,7 +53,7 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 		
 ### Available targets
 
-Use `make _target_` and replace _target_ with the target you want to use.
+Use `make target` and replace _target_ with the target you want to use.
 
 * **jls**:
   Build jquery.lifestream.js, the non-minified version of jQuery Lifestream
