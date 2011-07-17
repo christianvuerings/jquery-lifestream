@@ -51,26 +51,29 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
     cd build
     make
 		
-#### Available targets
+### Available targets
+
+Use `make _target_` and replace _target_ with the target you want to use.
 
 * **jls**:
-  Build jquery.lifestream.js
+  Build jquery.lifestream.js, the non-minified version of jQuery Lifestream
 
 * **jls-min**: 
-  Build jquery.lifestream.min.js
+  Build jquery.lifestream.min.js, the minified version of jQuery Lifestream
   
 * **script-min**:
-  Build download/js/script.min.js
+  Build download/js/script.min.js, this script is the main script for the
+  download page
 
 * **uglifyjs**: 
   Build download/js/uglify-cs.js, a custom version of UglifyJS patched
   to work in the browser
 
 * **uglifyjs-min**:
-  Build download/js/uglify-cs.min.js
+  Build download/js/uglify-cs.min.js, minified version of UglifyJS
 
 * **service-list**:
-  Build download/services.json
+  Build download/services.json, a list of all the services which are available
 
 ### Requirements
 
