@@ -51,12 +51,12 @@ $.fn.lifestream.feeds.twitter = function( config, callback ) {
    * Parse the input from twitter
    */
   parseTwitter = function( input ) {
-    var output = [], i = 0, j;
+    var output = [], i = 0, j, status;
 
-    if(input.query && input.query.count && input.query.count >0) {
-      j = input.query.count;
-      for( ; i<j; i++) {
-        var status = input.query.results.statuses[i].status;
+    if( input && input.length > 0 ) {
+      j = input.length;
+      for( ; i<j; i++ ) {
+        status = input[i];
         output.push({
           date: new Date(status.created_at),
           config: config,
@@ -70,9 +70,11 @@ $.fn.lifestream.feeds.twitter = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select status.id, status.created_at,'
-      + 'status.text from twitter.user.timeline where screen_name="'
-      + config.user +'"'),
+    url: "https://api.twitter.com/1/statuses/user_timeline.json",
+    data: {
+      screen_name: config.user,
+      include_rts: 1 // Include retweets
+    },
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseTwitter(data));
