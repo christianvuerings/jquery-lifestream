@@ -57,32 +57,24 @@ Use `make _target_` and replace _target_ with the target you want to use.
 
 * **jls**:
   Build jquery.lifestream.js, the non-minified version of jQuery Lifestream
-
 * **jls-min**: 
   Build jquery.lifestream.min.js, the minified version of jQuery Lifestream
-  
 * **script-min**:
   Build download/js/script.min.js, this script is the main script for the
   download page
-
 * **uglifyjs**: 
   Build download/js/uglify-cs.js, a custom version of UglifyJS patched
   to work in the browser
-
 * **uglifyjs-min**:
   Build download/js/uglify-cs.min.js, minified version of UglifyJS
-
 * **service-list**:
   Build download/services.json, a list of all the services which are available
 
 ### Requirements
 
-* **Node**
-  https://github.com/joyent/node/wiki/Installation
-* **Npm**
-  `curl http://npmjs.org/install.sh | sh`
-* **UglifyJS**
-  `npm install uglify-js -g`
+* [Node](https://github.com/joyent/node/wiki/Installation)
+* [Npm](http://npmjs.org/)
+* [UglifyJS](https://github.com/mishoo/UglifyJS/)
 
 ## Usage
 
