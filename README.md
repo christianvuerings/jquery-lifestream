@@ -49,7 +49,7 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 ## Build
 
     cd build
-    make
+    make -B
 		
 ### Available targets
 

@@ -4,13 +4,16 @@ var
   modules = {
     './parse-js': {},
     './process': {},
-    './squeeze-more': {} // Watchout for the strange cyclic dep
+    './squeeze-more': {}
   },
   require = function(module) {
     return modules[module];
   }
 ;
 
+// For older browsers that does not support
+// the ECMA 5 Array.prototype.reduce() method.
+// This implemention come from
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
 if (!Array.prototype.reduce) {
   Array.prototype.reduce = function reduce(accumlator) {
@@ -40,8 +43,11 @@ if (!Array.prototype.reduce) {
   };
 }
 
-// Production steps of ECMA-262, Edition 5, 15.4.4.18
+// For older browsers that does not support
+// the ECMA 5 Array.prototype.forEach() method.
+// This implemention come from
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/foreach
+// Production steps of ECMA-262, Edition 5, 15.4.4.18
 if (!Array.prototype.forEach) {
   Array.prototype.forEach = function( callbackfn, thisArg ) {
     var T,
