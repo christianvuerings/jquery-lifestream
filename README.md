@@ -50,8 +50,8 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 ## Build
 
     cd build
-    make -B
-		
+    make
+
 ### Available targets
 
 Use `make target` and replace _target_ with the target you want to use.
