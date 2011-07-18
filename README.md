@@ -212,6 +212,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.2.0 Modular builds
 * 0.1.6 Bitly support
 * 0.1.5 Snipplr support
 * 0.1.4 Instapaper support
