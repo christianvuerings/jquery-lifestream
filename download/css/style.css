@@ -309,9 +309,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 /* Overlays */
 .ui-widget-overlay { background: #5c5c5c url(../img/jui-dark-hive-img/ui-bg_flat_50_5c5c5c_40x100.png) 50% 50% repeat-x; opacity: .80;filter:Alpha(Opacity=80); }
 .ui-widget-shadow { margin: -7px 0 0 -7px; padding: 7px; background: #cccccc url(../img/jui-dark-hive-img/ui-bg_flat_30_cccccc_40x100.png) 50% 50% repeat-x; opacity: .60;filter:Alpha(Opacity=60); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }
-
-
-
 body {
   background: #666666 url(../img/bg-page.png) repeat-x left top;
 }
