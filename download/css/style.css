@@ -27,7 +27,7 @@ form div {
 	clear: both;
 }
 .col {
-  width: 8em;
+  width: 10em;
 	float: left;
 	clear: none;
 }
@@ -40,4 +40,55 @@ form div {
 #button {
   /* margin: 0 0 0 120px;
   display: none; */
+}
+/* jQuery Notifications plugin - http://programmingmind.com */
+/* notification container */
+#jquery-notifications {
+  position: fixed; /*was relative*/
+  width: 25%;
+  right: 0;
+  /*width: 100%;
+  left: 0;*/
+  top: 0;
+  z-index: 100000;
+}
+#jquery-notifications p {
+  text-align: center;
+  position: relative;
+  margin: 0;
+  padding: 5px;
+  padding-left: 10px;
+  border-bottom: 2px solid;
+  /* style property for the close text */
+}
+#jquery-notifications p a {
+  position: absolute;
+  right: 10px;
+  margin-right: 10px;
+  color: black;
+  text-decoration: none;
+  border: 1px solid black;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+#jquery-notifications .notice {
+  background: #6c9ffc;
+  color: #ffffff; /*#061a72;*/
+  border-color: #061a72;
+  opacity: 0.9;
+}
+#jquery-notifications .success {
+  background: #96f96f;
+  color: #045419;
+  border-color: #045419;
+}
+#jquery-notifications .warning {
+  background: #f7ae57;
+  color: #753903;
+  border-color: #753903;
+}
+#jquery-notifications .error {
+  background: #f97c6f;
+  color: #570f01;
+  border-color: #570f01;
 }
