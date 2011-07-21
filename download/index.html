@@ -27,11 +27,17 @@
     $.n.defaults.timeout = 8000;
     
     var
-      $button = $('#button'),
-      $downloadify,
-      builtScript = '',
-      downloadifyContainer
+      buttons = {
+        build: $('#button').extend({
+          enable: function() { this.removeAttr('disabled'); return this; },
+          disable: function() { this.attr('disabled', 'disabled'); return this; }
+        }),
+        download: undefined // It's defined later in buildUI()
+      },
+      checkboxes,
+      builtScript = ''
     ;
+
     // Fetch the service list
     $.n('Fetching available services...');
     $.ajax({
@@ -60,10 +66,24 @@
                 services[i] + '</label></div>');
       })(4);
       
-      $button
-        .attr('disabled', 'disabled')
+      checkboxes = $('input[type="checkbox"]').extend({
+        enable: function() {
+          this.each(function() {
+            $(this).removeAttr('disabled');
+          });
+          return this;
+        },
+        disable: function() {
+          this.each(function() {
+            $(this).attr('disabled', 'disabled');
+          });
+          return this;
+        }
+      });
+
+      buttons.build
+        .disable()
         .click(function (e) { e.preventDefault(); build(); })
-        //.show()
       ;
 
       // 'Build Script' button must be enabled only
@@ -75,15 +95,12 @@
           var c = 0;
           return function() {
             this.checked? c++ : c--;
-            if (c > 0)
-              $button.removeAttr('disabled');
-            else
-              $button.attr('disabled', 'disabled');
+            c > 0 ? buttons.build.enable() : buttons.build.disable();
           }
         })()
       );
 
-      downloadifyContainer = Downloadify.create('button-bar', {
+      Downloadify.create('button-bar', {
         filename: function(){
           return 'jquery.lifestream.min.js';
         },
@@ -100,16 +117,24 @@
         height: 35, //41, //30,
         append: true
       });
+      
+      // Disable download button.
+      // Use the zero timer hack because in some browsers
+      // (IE<9 if I remember) theobject isn't readily available
+      setTimeout(function() {
+        buttons.download = $('#button-bar > object').extend({
+          enable: function() { this.css({visibility: 'visible'}); return this; },
+          disable: function() { this.css({visibility: 'hidden'}); return this; },
+        });
+        buttons.download.disable();
+      }, 0);
     }
-    downloadifyContainer.disable();
     
     function build() {
       $.n('Build started');
      
-      // Disable checkboxes?
-      
-      // Disable Build button
-      //$('#services input[type="checkbox"]').button('disable');
+      checkboxes.disable();
+      buttons.build.disable();
         
       buildScript(
         $('input[type="checkbox"]')
@@ -125,18 +150,13 @@
       
       builtScript = minifiedScript;
       
-      // Enable Download button
-      //$downloadify.css({visibility: 'visible'});
+      buttons.download.enable();
     }
     
     function onDownloadComplete() { 
-      // Enablecheckboxes?
-      //$('#services input[type="checkbox"]').button('enable');
-      
-      // Disable Download button
-      //$('#button-bar > object').css({visibility: 'hidden'});
-      
-      // Enable Buildbutton
+      checkboxes.enable();
+      buttons.download.disable();
+      buttons.build.enable();
     }
     
     function buildScript(services, success) {
