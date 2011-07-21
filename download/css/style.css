@@ -1,3 +1,4 @@
+* {margin: 0; padding: 0; }
 body {
   background: url(../img/bg-content.png) repeat top left #000000;
   color: #aaaaaa;
@@ -7,7 +8,7 @@ body {
   clear: both;
 }
 form {
-  width: 500px;
+  width: 470px;
   margin: 0 auto;
   /* font-size: 1.4em; */
 }
@@ -27,19 +28,28 @@ form div {
 	clear: both;
 }
 .col {
-  width: 10em;
+  width: 11em;
 	float: left;
 	clear: none;
+}
+input[type="checkbox"] {
+  margin-right: 10px;
 }
 #button-bar {
   /* text-align: center; */
   /* padding-top: 15px;
   padding-bottom: 20px; 
   margin: 0; */
+  margin-top: 10px;
 }
 #button {
   /* margin: 0 0 0 120px;
   display: none; */
+  padding: 5px 5px 8px;
+  margin-right: 10px;
+}
+#button-bar > object {
+  vertical-align: middle;
 }
 /* jQuery Notifications plugin - http://programmingmind.com */
 /* notification container */
