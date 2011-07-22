@@ -135,31 +135,26 @@ $.n.defaults.timeout = 8000;
     
     function buildScript(services, success) {
       var 
-        out = [],
-        countdown = 1 + services.length,
-        concat = function(scriptText) {
-          out.push(scriptText);
-          if (!--countdown) {
-            $.n('All src moduled received');
-            $.n('Uglification...');
-            success(uglify(out.join(';')));
-          }
-        }
+        out = []
       ;
       
       $.n('Fetching src modules...');
       $.getScript('../src/core.js', function(scriptText) {
-        concat(scriptText);
-        
+        out.push(scriptText);
         // The services scripts are not (necessarily) 
         // concatened in the same order as in the services array.
         // We don't need to preserve that order so we can
         // just fire all the script requests (potentially)
         // speeding up the process.
-        $.each(services, function(i, f) {
-          $.getScript('../src/services/' + f + '.js', function(scriptText) {
-            concat(scriptText);
-          });
+        $.when.apply($, 
+          $.map(services, function(s) {
+            return $.getScript('../src/services/' + s + '.js', function(scriptText) {
+              out.push(scriptText);
+            });
+          })).then(function() {
+            $.n('All src moduled received');
+            $.n('Uglification...');
+            success(uglify(out.join(';')));
         });
       });
     }
