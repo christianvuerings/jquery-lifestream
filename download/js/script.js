@@ -136,22 +136,23 @@ $.n.defaults.timeout = 8000;
     function buildScript(services, success) {
       var out = [];
       $.n('Fetching src modules...');
-      $.getScript('../src/core.js', function(scriptText) {
-        out.push(scriptText);
-        // The services scripts are not (necessarily) 
-        // concatened in the same order as in the services array.
-        // We don't need to preserve that order so we can
-        // just fire all the script requests (potentially)
-        // speeding up the process.
-        $.when.apply($, 
-          $.map(services, function(s) {
-            return $.getScript('../src/services/' + s + '.js', function(scriptText) {
-              out.push(scriptText);
-            });
-          })).then(function() {
-            $.n('All src moduled received');
-            $.n('Uglification...');
-            success(uglify(out.join(';')));
-        });
+      $.getScript('../src/core.js')
+        .done(function(scriptText) {
+          out.push(scriptText);
+          // The services scripts are not (necessarily) 
+          // concatened in the same order as in the services array.
+          // We don't need to preserve that order so we can
+          // just fire all the script requests (potentially)
+          // speeding up the process.
+          $.when.apply($, 
+            $.map(services, function(s) {
+              return $.getScript('../src/services/' + s + '.js', function(scriptText) {
+                out.push(scriptText);
+              });
+            })).then(function() {
+              $.n('All src moduled received');
+              $.n('Uglification...');
+              success(uglify(out.join(';')));
+          });
       });
     }
