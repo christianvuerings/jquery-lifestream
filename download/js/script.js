@@ -1,3 +1,11 @@
+/**
+ * Helper function for passing arrays of promises to $.when
+ * https://gist.github.com/830561
+ */
+jQuery.whenArray = function(array) {
+	return jQuery.when.apply(this, array);
+};
+
 $.n.defaults.timeout = 8000;
     
     var
@@ -144,15 +152,15 @@ $.n.defaults.timeout = 8000;
           // We don't need to preserve that order so we can
           // just fire all the script requests (potentially)
           // speeding up the process.
-          $.when.apply($, 
+          $.whenArray( 
             $.map(services, function(s) {
               return $.getScript('../src/services/' + s + '.js', function(scriptText) {
                 out.push(scriptText);
               });
-            })).then(function() {
-              $.n('All src moduled received');
-              $.n('Uglification...');
-              success(uglify(out.join(';')));
+          })).then(function() {
+            $.n('All src moduled received');
+            $.n('Uglification...');
+            success(uglify(out.join(';')));
           });
       });
     }
