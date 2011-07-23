@@ -134,10 +134,7 @@ $.n.defaults.timeout = 8000;
     }
     
     function buildScript(services, success) {
-      var 
-        out = []
-      ;
-      
+      var out = [];
       $.n('Fetching src modules...');
       $.getScript('../src/core.js', function(scriptText) {
         out.push(scriptText);
