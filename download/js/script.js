@@ -123,16 +123,22 @@ function build() {
       .filter(':checked')
       .map(function() { return $(this).attr('id')})
       .get(),
-    onBuildCompleted
+    onBuildCompleted,
+    onBuildFailure
   );
 }
 
 function onBuildCompleted(minifiedScript) {
   $.n('Build completed');
-  
   builtScript = minifiedScript;
-  
   buttons.download.enable();
+}
+
+function onBuildFailure() {
+  $.n.error('Build failed, please retry');
+  builtScript = '';
+  checkboxes.enable();
+  buttons.build.enable();
 }
 
 function onDownloadComplete() { 
@@ -141,33 +147,58 @@ function onDownloadComplete() {
   buttons.build.enable();
 }
 
-function buildScript(services, success) {
-  var out = [];
+function buildScript(services, ok, ko) {
+  var 
+    concatenatedSrc = [], 
+    jqXHR = []
+  ;
+  
   $.n('Fetching src modules...');
   $.ajax({
     url: '../src/core.js', 
     dataType: 'text',
     cache: false
-  }).done(function(src) {
-      out.push(src);
-      // The services scripts are not (necessarily) 
-      // concatened in the same order as in the services array.
-      // We don't need to preserve that order so we can
-      // just fire all the script requests (potentially)
-      // speeding up the process.
-      $.whenArray( 
-        $.map(services, function(s) {
-          return $.ajax({
-            url: '../src/services/' + s + '.js',
-            dataType: 'text',
-            cache: false
-          }).done(function(src) {
-            out.push(src);
-          });
-      })).then(function() {
-        $.n('All src moduled received');
-        $.n('Uglification...');
-        success(uglify(out.join(';')));
-      });
+  })
+  .fail(function() {
+    $.n.error('Could not retrieve core module');
+    ko();
+  })
+  .done(function(src) {
+    concatenatedSrc.push(src);
+    // The services scripts are not (necessarily) 
+    // concatened in the same order as in the services array.
+    // We don't need to preserve that order so we can
+    // just fire all the script requests (potentially)
+    // speeding up the process.
+    $.whenArray(jqXHR =  
+      $.map(services, function(s) {
+        return $.ajax({
+          url: '../src/services/' + s + '.js',
+          dataType: 'text',
+          cache: false
+        })
+        .fail(function(jqXHR, err, ex) {
+          if (err == 'abort')
+            $.n.error('Aborted ' + s);
+          else
+            $.n.error('Could not retrieve module ' + s);// + ': ' + err + ', ' + ex);
+        });
+    }))
+    .done(function() {
+      $.n('All src moduled received');
+      $.n('Uglification...');
+      for (var i = 0; i < arguments.length; i++)
+        concatenatedSrc.push(arguments[i][0]);
+      ok(uglify(concatenatedSrc.join(';')));
+    })
+    .fail(function() {
+        var i, x;
+        for (i = 0; i < jqXHR.length; ++i) {
+          x = jqXHR[i];
+          if (!x.isResolved())
+            x.abort();
+        }
+        ko();
+    });
   });
 }
