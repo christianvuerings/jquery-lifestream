@@ -3,7 +3,7 @@
  * https://gist.github.com/830561
  */
 jQuery.whenArray = function(array) {
-	return jQuery.when.apply(this, array);
+  return jQuery.when.apply(this, array);
 };
 
 $.n.defaults.timeout = 8000;
@@ -144,9 +144,12 @@ function onDownloadComplete() {
 function buildScript(services, success) {
   var out = [];
   $.n('Fetching src modules...');
-  $.getScript('../src/core.js')
-    .done(function(scriptText) {
-      out.push(scriptText);
+  $.ajax({
+    url: '../src/core.js', 
+    dataType: 'text',
+    cache: false
+  }).done(function(src) {
+      out.push(src);
       // The services scripts are not (necessarily) 
       // concatened in the same order as in the services array.
       // We don't need to preserve that order so we can
@@ -154,8 +157,12 @@ function buildScript(services, success) {
       // speeding up the process.
       $.whenArray( 
         $.map(services, function(s) {
-          return $.getScript('../src/services/' + s + '.js', function(scriptText) {
-            out.push(scriptText);
+          return $.ajax({
+            url: '../src/services/' + s + '.js',
+            dataType: 'text',
+            cache: false
+          }).done(function(src) {
+            out.push(src);
           });
       })).then(function() {
         $.n('All src moduled received');
