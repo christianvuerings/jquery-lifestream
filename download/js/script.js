@@ -6,7 +6,10 @@ jQuery.whenArray = function(array) {
   return jQuery.when.apply(this, array);
 };
 
-$.n.defaults.timeout = 8000;
+parseQueryString();
+
+// Setup notifications
+$.n.defaults.timeout = 16000;
     
 var
   buttons = {
@@ -152,15 +155,15 @@ function buildScript(services, ok, ko) {
     concatenatedSrc = [], 
     jqXHR = []
   ;
-  
+
   $.n('Fetching src modules...');
   $.ajax({
     url: '../src/core.js', 
     dataType: 'text',
     cache: false
   })
-  .fail(function() {
-    $.n.error('Could not retrieve core module');
+  .fail(function(jqXHR, err, ex) {
+    logError.apply(this, arguments);
     ko();
   })
   .done(function(src) {
@@ -177,18 +180,16 @@ function buildScript(services, ok, ko) {
           dataType: 'text',
           cache: false
         })
+        .done(function(src) {
+          concatenatedSrc.push(src);
+        })
         .fail(function(jqXHR, err, ex) {
-          if (err == 'abort')
-            $.n.error('Aborted ' + s);
-          else
-            $.n.error('Could not retrieve module ' + s);// + ': ' + err + ', ' + ex);
+          logError.apply(this, arguments);
         });
     }))
     .done(function() {
       $.n('All src moduled received');
       $.n('Uglification...');
-      for (var i = 0; i < arguments.length; i++)
-        concatenatedSrc.push(arguments[i][0]);
       ok(uglify(concatenatedSrc.join(';')));
     })
     .fail(function() {
@@ -201,4 +202,67 @@ function buildScript(services, ok, ko) {
         ko();
     });
   });
+  
+  function logError(jqXHR, err, ex) {
+    if (err == 'abort')
+      $.n.error('Aborted ' + this.url);
+    else
+      $.n.error('Could not retrieve module ' + this.url + ': ' + jqXHR.status);
+  }
+}
+
+function parseQueryString() {
+  var qp = {};
+  
+  // http://www.bennadel.com/blog/695-Ask-Ben-Getting-Query-String-Values-In-JavaScript.htm
+  window.location.search.replace(
+    new RegExp('([^?=&]+)(=([^&]*))?', 'g'),
+    function($0, $1, $2, $3) {
+      qp[$1] = $3;
+    }
+  );
+  
+  qp.mock = qp.mock === 'true';
+  
+  if (!qp.mock)
+    return;
+    
+  $.n('Fetching Mockjax...');
+  $.getScript('js/jquery.mockjax.min.js')
+    .fail(function() {
+      $.warning('Could not load Mockjax');
+    })
+    .done(function() {
+      var params = {
+        errorProb: 0.5,
+        minTime: 0,
+        maxTime: 10000
+      };
+  
+      if (qp.errorProb)
+        qp.errorProb = Number(qp.errorProb);
+      if (qp.minTime)
+        qp.minTime = Number(qp.minTime);
+      if (qp.maxTime)
+        qp.maxTime = Number(qp.maxTime);
+      
+      $.extend(params, qp);
+      
+      $.n('Start mocking: ' + JSON.stringify(params));
+      $.mockjax(function(settings) {
+        var 
+          error = Math.random() < params.errorProb,
+          o = {
+            responseTime: params.minTime + Math.random()*(params.maxTime-params.minTime)
+          }
+        ;
+          
+        if (error)
+          o.status = 404;
+        else
+          o.proxy = settings.url;
+        
+        return o;
+      });
+    });
 }
