@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.flickr = function( config, callback ) {
 
   var template = $.extend({},
@@ -37,3 +38,4 @@ $.fn.lifestream.feeds.flickr = function( config, callback ) {
   };
 
 };
+})(jQuery);
