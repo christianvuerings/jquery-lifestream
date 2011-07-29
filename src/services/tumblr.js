@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
   var template = $.extend({},
@@ -70,3 +71,4 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
   };
 
 };
+})(jQuery);

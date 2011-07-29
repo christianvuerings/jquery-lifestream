@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.foursquare = function( config, callback ) {
 
   var template = $.extend({},
@@ -41,3 +42,4 @@ $.fn.lifestream.feeds.foursquare = function( config, callback ) {
   };
 
 };
+})(jQuery);

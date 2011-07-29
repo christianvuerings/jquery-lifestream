@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.vimeo = function( config, callback ) {
 
   var template = $.extend({},
@@ -45,3 +46,4 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
   };
 
 };
+})(jQuery);
