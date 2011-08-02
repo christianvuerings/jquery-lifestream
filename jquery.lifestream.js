@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.2.0
+ * @version 0.2.1
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -167,8 +167,7 @@
    */
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
-}( jQuery ));
-$.fn.lifestream.feeds.bitbucket = function( config, callback ) {
+}( jQuery ));$.fn.lifestream.feeds.bitbucket = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -212,7 +211,6 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
 
   parseBitbucket = function( input ) {
     var output = [], i = 0;
-
     if (input.query && input.query.count && input.query.count > 0) {
       $.each(input.query.results.json, function () {
         output.push({
@@ -241,7 +239,6 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
   return {
     'template' : template
   };
-
 };
 $.fn.lifestream.feeds.bitly = function( config, callback ) {
 
