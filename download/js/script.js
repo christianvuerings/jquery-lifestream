@@ -87,7 +87,7 @@ function buildUI(services) {
 
   Downloadify.create('button-bar', {
     filename: function(){
-      return 'jquery.lifestream.min.js';
+      return 'jquery.lifestream.custom.min.js';
     },
     data: function(){ 
       return builtScript;
