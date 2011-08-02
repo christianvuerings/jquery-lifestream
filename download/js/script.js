@@ -6,7 +6,10 @@ jQuery.whenArray = function(array) {
   return jQuery.when.apply(this, array);
 };
 
-$.n.defaults.timeout = 8000;
+parseQueryString();
+
+// Setup notifications
+$.n.defaults.timeout = 16000;
     
 var
   buttons = {
@@ -123,16 +126,22 @@ function build() {
       .filter(':checked')
       .map(function() { return $(this).attr('id')})
       .get(),
-    onBuildCompleted
+    onBuildCompleted,
+    onBuildFailure
   );
 }
 
 function onBuildCompleted(minifiedScript) {
   $.n('Build completed');
-  
   builtScript = minifiedScript;
-  
   buttons.download.enable();
+}
+
+function onBuildFailure() {
+  $.n.error('Build failed, please retry');
+  builtScript = '';
+  checkboxes.enable();
+  buttons.build.enable();
 }
 
 function onDownloadComplete() { 
@@ -141,33 +150,119 @@ function onDownloadComplete() {
   buttons.build.enable();
 }
 
-function buildScript(services, success) {
-  var out = [];
+function buildScript(services, ok, ko) {
+  var 
+    concatenatedSrc = [], 
+    jqXHR = []
+  ;
+
   $.n('Fetching src modules...');
   $.ajax({
     url: '../src/core.js', 
     dataType: 'text',
     cache: false
-  }).done(function(src) {
-      out.push(src);
-      // The services scripts are not (necessarily) 
-      // concatened in the same order as in the services array.
-      // We don't need to preserve that order so we can
-      // just fire all the script requests (potentially)
-      // speeding up the process.
-      $.whenArray( 
-        $.map(services, function(s) {
-          return $.ajax({
-            url: '../src/services/' + s + '.js',
-            dataType: 'text',
-            cache: false
-          }).done(function(src) {
-            out.push(src);
-          });
-      })).then(function() {
-        $.n('All src moduled received');
-        $.n('Uglification...');
-        success(uglify(out.join(';')));
-      });
+  })
+  .fail(function(jqXHR, err, ex) {
+    logError.apply(this, arguments);
+    ko();
+  })
+  .done(function(src) {
+    concatenatedSrc.push(src);
+    // The services scripts are not (necessarily) 
+    // concatened in the same order as in the services array.
+    // We don't need to preserve that order so we can
+    // just fire all the script requests (potentially)
+    // speeding up the process.
+    $.whenArray(jqXHR =  
+      $.map(services, function(s) {
+        return $.ajax({
+          url: '../src/services/' + s + '.js',
+          dataType: 'text',
+          cache: false
+        })
+        .done(function(src) {
+          concatenatedSrc.push(src);
+        })
+        .fail(function(jqXHR, err, ex) {
+          logError.apply(this, arguments);
+        });
+    }))
+    .done(function() {
+      $.n('All src moduled received');
+      $.n('Uglification...');
+      ok(uglify(concatenatedSrc.join(';')));
+    })
+    .fail(function() {
+        var i, x;
+        for (i = 0; i < jqXHR.length; ++i) {
+          x = jqXHR[i];
+          if (!x.isResolved())
+            x.abort();
+        }
+        ko();
+    });
   });
+  
+  function logError(jqXHR, err, ex) {
+    if (err == 'abort')
+      $.n.error('Aborted ' + this.url);
+    else
+      $.n.error('Could not retrieve module ' + this.url + ': ' + jqXHR.status);
+  }
+}
+
+function parseQueryString() {
+  var qp = {};
+  
+  // http://www.bennadel.com/blog/695-Ask-Ben-Getting-Query-String-Values-In-JavaScript.htm
+  window.location.search.replace(
+    new RegExp('([^?=&]+)(=([^&]*))?', 'g'),
+    function($0, $1, $2, $3) {
+      qp[$1] = $3;
+    }
+  );
+  
+  qp.mock = qp.mock === 'true';
+  
+  if (!qp.mock)
+    return;
+    
+  $.n('Fetching Mockjax...');
+  $.getScript('js/jquery.mockjax.min.js')
+    .fail(function() {
+      $.warning('Could not load Mockjax');
+    })
+    .done(function() {
+      var params = {
+        errorProb: 0.5,
+        minTime: 0,
+        maxTime: 10000
+      };
+  
+      if (qp.errorProb)
+        qp.errorProb = Number(qp.errorProb);
+      if (qp.minTime)
+        qp.minTime = Number(qp.minTime);
+      if (qp.maxTime)
+        qp.maxTime = Number(qp.maxTime);
+      
+      $.extend(params, qp);
+      
+      $.n('Start mocking: ' + JSON.stringify(params));
+      $.mockjax(function(settings) {
+        var 
+          error = Math.random() < params.errorProb,
+          o = {
+            responseTime: params.minTime + Math.random()*(params.maxTime-params.minTime)
+          }
+        ;
+          
+        if (error)
+          o.status = 404;
+        else
+          o.proxy = settings.url;
+        
+        return o;
+      });
+    });
 }
