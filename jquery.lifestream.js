@@ -167,7 +167,8 @@
    */
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
-}( jQuery ));$.fn.lifestream.feeds.bitbucket = function( config, callback ) {
+}( jQuery ));(function($) {
+$.fn.lifestream.feeds.bitbucket = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -240,7 +241,7 @@
     'template' : template
   };
 };
-(function($) {
+})(jQuery);(function($) {
 $.fn.lifestream.feeds.bitly = function( config, callback ) {
 
   var template = $.extend({},
