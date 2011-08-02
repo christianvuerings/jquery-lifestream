@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
 
   var template = $.extend({},
@@ -43,3 +44,4 @@ $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
   };
 
 };
+})(jQuery);

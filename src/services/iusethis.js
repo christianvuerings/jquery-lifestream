@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.iusethis = function( config, callback ) {
 
   var template = $.extend({},
@@ -76,3 +77,4 @@ $.fn.lifestream.feeds.iusethis = function( config, callback ) {
   };
 
 };
+})(jQuery);

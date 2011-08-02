@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.posterous = function( config, callback ) {
 
   var template = $.extend({},
@@ -43,3 +44,4 @@ $.fn.lifestream.feeds.posterous = function( config, callback ) {
   };
 
 };
+})(jQuery);

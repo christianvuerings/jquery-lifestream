@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.delicious = function( config, callback ) {
 
   var template = $.extend({},
@@ -33,3 +34,4 @@ $.fn.lifestream.feeds.delicious = function( config, callback ) {
   };
 
 };
+})(jQuery);

@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.youtube = function( config, callback ) {
 
   var template = $.extend({},
@@ -41,3 +42,4 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   };
 
 };
+})(jQuery);

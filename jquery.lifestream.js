@@ -240,6 +240,7 @@
     'template' : template
   };
 };
+(function($) {
 $.fn.lifestream.feeds.bitly = function( config, callback ) {
 
   var template = $.extend({},
@@ -278,7 +279,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.blogger = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.blogger = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -338,7 +341,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.dailymotion = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.dailymotion = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -383,7 +388,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.delicious = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.delicious = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -417,7 +424,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.deviantart = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.deviantart = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -460,7 +469,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};;$.fn.lifestream.feeds.dribbble = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.dribbble = function( config, callback ) {
 
     var template = $.extend({},
       {
@@ -496,7 +507,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
       "template" : template
     };
 
-  };$.fn.lifestream.feeds.flickr = function( config, callback ) {
+  };
+  })(jQuery);(function($) {
+$.fn.lifestream.feeds.flickr = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -534,7 +547,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.foomark = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.foomark = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -573,7 +588,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.formspring = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.formspring = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -617,7 +634,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.forrst = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.forrst = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -652,7 +671,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.foursquare = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.foursquare = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -694,7 +715,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.github = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.github = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -838,7 +861,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.googlereader = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.googlereader = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -883,7 +908,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.instapaper = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.instapaper = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -927,7 +954,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.iusethis = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.iusethis = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1004,7 +1033,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.lastfm = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.lastfm = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1049,7 +1080,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.mlkshk = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.mlkshk = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1093,7 +1126,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.picplz = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.picplz = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1132,7 +1167,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.pinboard = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.pinboard = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1176,7 +1213,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.posterous = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.posterous = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1220,7 +1259,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.reddit = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.reddit = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1295,7 +1336,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.slideshare = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.slideshare = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1339,7 +1382,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.snipplr = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.snipplr = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1377,7 +1422,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     }
   });
 
-};$.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1445,7 +1492,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.tumblr = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1516,7 +1565,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.twitter = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.twitter = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1605,7 +1656,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.vimeo = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.vimeo = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1651,7 +1704,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.wordpress = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.wordpress = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1695,7 +1750,9 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.youtube = function( config, callback ) {
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.youtube = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -1738,3 +1795,4 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
   };
 
 };
+})(jQuery);

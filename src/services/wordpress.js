@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.wordpress = function( config, callback ) {
 
   var template = $.extend({},
@@ -43,3 +44,4 @@ $.fn.lifestream.feeds.wordpress = function( config, callback ) {
   };
 
 };
+})(jQuery);

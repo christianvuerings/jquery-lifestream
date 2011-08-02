@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.reddit = function( config, callback ) {
 
   var template = $.extend({},
@@ -74,3 +75,4 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
   };
 
 };
+})(jQuery);

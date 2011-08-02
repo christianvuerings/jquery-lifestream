@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.lastfm = function( config, callback ) {
 
   var template = $.extend({},
@@ -44,3 +45,4 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
   };
 
 };
+})(jQuery);
