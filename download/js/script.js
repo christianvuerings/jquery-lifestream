@@ -1,35 +1,42 @@
-/**
- * Helper function for passing arrays of promises to $.when
- * https://gist.github.com/830561
- */
-jQuery.whenArray = function(array) {
-  return jQuery.when.apply(this, array);
-};
-
-parseQueryString();
-
-// Setup notifications
-$.n.defaults.timeout = 16000;
-    
 var
   buttons = {
     build: $('#button').extend({
       enable: function() { this.removeAttr('disabled'); return this; },
       disable: function() { this.attr('disabled', 'disabled'); return this; }
-    }),
+    }).disable(),
     download: undefined // It's defined later in buildUI()
   },
   checkboxes,
   builtScript = ''
 ;
 
-// Fetch the service list
-$.n('Fetching available services...');
-$.ajax({
-  url: 'services.json',
-  dataType: 'json',
-  success: buildUI
-});
+/**
+ * Helper function for passing arrays of promises to $.when
+ * https://gist.github.com/830561
+ */
+$.whenArray = function(array) {
+  return $.when.apply(this, array);
+};
+
+// Setup notifications
+$.n.defaults.timeout = 16000;
+
+parseQueryString();
+
+/*
+ * Function declarations
+ */
+function fetchServices() {
+  $.n('Fetching available services...');
+  $.ajax({
+    url: 'services.json',
+    dataType: 'json'
+  })
+  .done(buildUI)
+  .fail(function() {
+    $.n.error('Could not load service list. Please try reloading page.');
+  });
+}
 
 function buildUI(services) {
   //$('#startup-feedback').hide();
@@ -80,6 +87,9 @@ function buildUI(services) {
       var c = 0;
       return function() {
         this.checked? c++ : c--;
+        console.log(uglify);
+        if (typeof uglify === 'undefined') // Lockbutton until UglifyJS is loaded
+          return;
         c > 0 ? buttons.build.enable() : buttons.build.disable();
       }
     })()
@@ -87,7 +97,7 @@ function buildUI(services) {
 
   Downloadify.create('button-bar', {
     filename: function(){
-      return 'jquery.lifestream.min.js';
+      return 'jquery.lifestream.custom.min.js';
     },
     data: function(){ 
       return builtScript;
@@ -113,6 +123,15 @@ function buildUI(services) {
     });
     buttons.download.disable();
   }, 0);
+  
+  $.n('Loading UglifyJS...');
+  $.getScript('js/uglifyjs-cs.min.js')
+    .fail(function() {
+      $.n.error('Could not load UglifyJS. Please reload the page');
+    })
+    .done(function() {
+      $.n('UglifyJS received');
+    });
 }
 
 function build() {
@@ -212,6 +231,7 @@ function buildScript(services, ok, ko) {
 }
 
 function parseQueryString() {
+console.log('parse');
   var qp = {};
   
   // http://www.bennadel.com/blog/695-Ask-Ben-Getting-Query-String-Values-In-JavaScript.htm
@@ -225,44 +245,47 @@ function parseQueryString() {
   qp.mock = qp.mock === 'true';
   
   if (!qp.mock)
-    return;
+    fetchServices();
+  else {
+    $.n('Fetching Mockjax...');
+    $.getScript('js/jquery.mockjax.min.js')
+      .fail(function() {
+        $.n.warning('Could not load Mockjax');
+      })
+      .done(function() {
+        $.n('Received Mockjax');
+        var params = {
+          errorProb: 0.5,
+          minTime: 0,
+          maxTime: 10000
+        };
     
-  $.n('Fetching Mockjax...');
-  $.getScript('js/jquery.mockjax.min.js')
-    .fail(function() {
-      $.warning('Could not load Mockjax');
-    })
-    .done(function() {
-      var params = {
-        errorProb: 0.5,
-        minTime: 0,
-        maxTime: 10000
-      };
-  
-      if (qp.errorProb)
-        qp.errorProb = Number(qp.errorProb);
-      if (qp.minTime)
-        qp.minTime = Number(qp.minTime);
-      if (qp.maxTime)
-        qp.maxTime = Number(qp.maxTime);
-      
-      $.extend(params, qp);
-      
-      $.n('Start mocking: ' + JSON.stringify(params));
-      $.mockjax(function(settings) {
-        var 
-          error = Math.random() < params.errorProb,
-          o = {
-            responseTime: params.minTime + Math.random()*(params.maxTime-params.minTime)
-          }
-        ;
-          
-        if (error)
-          o.status = 404;
-        else
-          o.proxy = settings.url;
+        if (qp.errorProb)
+          qp.errorProb = Number(qp.errorProb);
+        if (qp.minTime)
+          qp.minTime = Number(qp.minTime);
+        if (qp.maxTime)
+          qp.maxTime = Number(qp.maxTime);
         
-        return o;
-      });
-    });
+        $.extend(params, qp);
+        
+        $.n('Start mocking: ' + JSON.stringify(params));
+        $.mockjax(function(settings) {
+          var 
+            error = Math.random() < params.errorProb,
+            o = {
+              responseTime: params.minTime + Math.random()*(params.maxTime-params.minTime)
+            }
+          ;
+          if (error)
+            o.status = 404;
+          else
+            o.proxy = settings.url;
+          
+          return o;
+        });
+      })
+      .always(fetchServices)
+    ;
+  }
 }
