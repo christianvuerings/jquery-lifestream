@@ -87,7 +87,6 @@ function buildUI(services) {
       var c = 0;
       return function() {
         this.checked? c++ : c--;
-        console.log(uglify);
         if (typeof uglify === 'undefined') // Lockbutton until UglifyJS is loaded
           return;
         c > 0 ? buttons.build.enable() : buttons.build.disable();
@@ -231,7 +230,6 @@ function buildScript(services, ok, ko) {
 }
 
 function parseQueryString() {
-console.log('parse');
   var qp = {};
   
   // http://www.bennadel.com/blog/695-Ask-Ben-Getting-Query-String-Values-In-JavaScript.htm
