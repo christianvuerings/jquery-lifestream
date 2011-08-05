@@ -1503,6 +1503,36 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
 })(jQuery);(function($) {
 $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
+  function getImage( post ) {
+    switch(post.type) {
+    case 'photo':
+      var images = post['photo-url'];
+      return $('<img width="75" height="75"/>')
+        .attr({
+          src: images[images.length - 1].content,
+          title: getTitle(post),
+          alt: getTitle(post)
+        }).wrap('<div/>').parent().html(); // generate an HTML string
+    case 'video':
+      var videos = post['video-player'];
+      var video = videos[videos.length - 1].content;
+      // Videos hosted on Tumblr use JavaScript to render the
+      // video, but the JavaScript doesn't work when we call it
+      // from a lifestream - so don't try to embed these.
+      if (video.match(/<\s*script/)) { return null; }
+
+      return video;
+    case 'audio':
+      // Unlike photo and video, audio gives you no visual indication
+      // of what it contains, so we append the "title" text.
+      return post['audio-player'] + ' ' +
+        // HTML-escape the text.
+        $('<div/>').text(getTitle(post)).html();
+    default:
+      return null;
+    }
+  };
+
   function getFirstElementOfBody( post, bodyAttribute ) {
     return $(post[bodyAttribute]).filter(':not(:empty):first').text();
   };
@@ -1565,6 +1595,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
       html: $.tmpl( template.posted, {
           type: post.type,
           url: post.url,
+          image: getImage(post),
           title: getTitle(post)
         } )
     };
