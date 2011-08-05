@@ -1441,16 +1441,20 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
     question_link = "http://stackoverflow.com/questions/";
 
     if(item.timeline_type === "badge") {
-      text = item.timeline_type + " " + item.action + ": "
-        + item.description;
+      text = "was " + item.action + " the '" + item.description + "' badge";
       title = item.detail;
       link = stackoverflow_link + "?tab=reputation";
     }
+    else if (item.timeline_type === "comment") {
+      text = "commented on";
+      title = item.description;
+      link = question_link + item.post_id;
+    }
     else if (item.timeline_type === "revision"
-          || item.timeline_type === "comment"
           || item.timeline_type === "accepted"
           || item.timeline_type === "askoranswered") {
-      text = item.post_type + " " + item.action;
+      text = (item.timeline_type === 'askoranswered' ?
+        item.action : item.action + ' ' + item.post_type);
       title = item.detail || item.description || "";
       link = question_link + item.post_id;
     }
