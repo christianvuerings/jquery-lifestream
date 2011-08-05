@@ -811,9 +811,11 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
       } );
     }
     else if (status.type === "CreateEvent") {
-      title = (status.payload.object_name === "null")
-        ? status.payload.name
-        : status.payload.object_name;
+      title = (status.payload.object_name ?
+        ((status.payload.object_name === "null")
+          ? status.payload.name
+          : status.payload.object_name) :
+        returnRepo(status));
       return $.tmpl( template.createdglobal, {
         title: title,
         status: status
