@@ -557,7 +557,7 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
         for( ; i < j; i++ ) {
           var item = data[i];
           output.push({
-            date: new Date( item.created_at.replace(' ', 'T') ),
+            date: new Date( item.created_at.replace(/-/g, '/') ),
             config: config,
             html: $.tmpl( template.bookmarked, item )
           });
@@ -573,7 +573,8 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
     "template" : template
   };
 
-};$.fn.lifestream.feeds.formspring = function( config, callback ) {
+};
+$.fn.lifestream.feeds.formspring = function( config, callback ) {
 
   var template = $.extend({},
     {
