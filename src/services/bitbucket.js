@@ -46,7 +46,7 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
     if (input.query && input.query.count && input.query.count > 0) {
       $.each(input.query.results.json, function () {
         output.push({
-          date: new Date(this.events.created_on),
+          date: new Date(this.events.created_on.replace(/-/g, '/')),
           config: config,
           html: parseBitbucketStatus(this.events)
         });

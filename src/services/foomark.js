@@ -22,7 +22,7 @@ $.fn.lifestream.feeds.foomark = function( config, callback ) {
         for( ; i < j; i++ ) {
           var item = data[i];
           output.push({
-            date: new Date( item.created_at.replace(' ', 'T') ),
+            date: new Date( item.created_at.replace(/-/g, '/') ),
             config: config,
             html: $.tmpl( template.bookmarked, item )
           });

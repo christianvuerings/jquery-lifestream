@@ -215,7 +215,7 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
     if (input.query && input.query.count && input.query.count > 0) {
       $.each(input.query.results.json, function () {
         output.push({
-          date: new Date(this.events.created_on),
+          date: new Date(this.events.created_on.replace(/-/g, '/')),
           config: config,
           html: parseBitbucketStatus(this.events)
         });
@@ -573,7 +573,7 @@ $.fn.lifestream.feeds.foomark = function( config, callback ) {
         for( ; i < j; i++ ) {
           var item = data[i];
           output.push({
-            date: new Date( item.created_at.replace(' ', 'T') ),
+            date: new Date( item.created_at.replace(/-/g, '/') ),
             config: config,
             html: $.tmpl( template.bookmarked, item )
           });
@@ -590,7 +590,8 @@ $.fn.lifestream.feeds.foomark = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.formspring = function( config, callback ) {
 
   var template = $.extend({},
@@ -1593,7 +1594,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
       date: new Date(post.date),
       config: config,
       html: $.tmpl( template.posted, {
-          type: post.type,
+          type: post.type.replace('regular', 'blog entry'),
           url: post.url,
           image: getImage(post),
           title: getTitle(post)
