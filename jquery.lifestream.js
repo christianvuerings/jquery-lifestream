@@ -167,8 +167,7 @@
    */
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
 
-}( jQuery ));
-$.fn.lifestream.feeds.bitbucket = function( config, callback ) {
+}( jQuery ));$.fn.lifestream.feeds.bitbucket = function( config, callback ) {
 
   var template = $.extend({},
     {
@@ -212,11 +211,10 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
 
   parseBitbucket = function( input ) {
     var output = [], i = 0;
-
     if (input.query && input.query.count && input.query.count > 0) {
       $.each(input.query.results.json, function () {
         output.push({
-          date: new Date(this.events.created_on),
+          date: new Date(this.events.created_on.replace(/-/g, '/')),
           config: config,
           html: parseBitbucketStatus(this.events)
         });
@@ -241,7 +239,6 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
   return {
     'template' : template
   };
-
 };
 $.fn.lifestream.feeds.bitly = function( config, callback ) {
 
