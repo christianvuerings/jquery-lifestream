@@ -812,10 +812,10 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
     }
     else if (status.type === "CreateEvent") {
       title = (status.payload.object_name ?
-        ((status.payload.object_name === "null")
-          ? status.payload.name
-          : status.payload.object_name) :
-        returnRepo(status));
+              ((status.payload.object_name === "null")
+                ? status.payload.name
+                : status.payload.object_name) :
+              returnRepo(status));
       return $.tmpl( template.createdglobal, {
         title: title,
         status: status
@@ -1446,15 +1446,15 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
       link = stackoverflow_link + "?tab=reputation";
     }
     else if (item.timeline_type === "comment") {
-      text = "commented on";
-      title = item.description;
-      link = question_link + item.post_id;
+     	text = "commented on";
+     	title = item.description;
+     	link = question_link + item.post_id;
     }
     else if (item.timeline_type === "revision"
           || item.timeline_type === "accepted"
           || item.timeline_type === "askoranswered") {
       text = (item.timeline_type === 'askoranswered' ?
-        item.action : item.action + ' ' + item.post_type);
+             item.action : item.action + ' ' + item.post_type);
       title = item.detail || item.description || "";
       link = question_link + item.post_id;
     }
@@ -1503,41 +1503,47 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
 })(jQuery);(function($) {
 $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
-  function getImage( post ) {
+  var template = $.extend({},
+    {
+      posted: 'posted a ${type} <a href="${url}">${title}</a>'
+    },
+    config.template),
+
+  getImage = function( post ) {
     switch(post.type) {
-    case 'photo':
-      var images = post['photo-url'];
-      return $('<img width="75" height="75"/>')
-        .attr({
-          src: images[images.length - 1].content,
-          title: getTitle(post),
-          alt: getTitle(post)
-        }).wrap('<div/>').parent().html(); // generate an HTML string
-    case 'video':
-      var videos = post['video-player'];
-      var video = videos[videos.length - 1].content;
-      // Videos hosted on Tumblr use JavaScript to render the
-      // video, but the JavaScript doesn't work when we call it
-      // from a lifestream - so don't try to embed these.
-      if (video.match(/<\s*script/)) { return null; }
+      case 'photo':
+        var images = post['photo-url'];
+        return $('<img width="75" height="75"/>')
+          .attr({
+            src: images[images.length - 1].content,
+            title: getTitle(post),
+            alt: getTitle(post)
+          }).wrap('<div/>').parent().html(); // generate an HTML string
+      case 'video':
+        var videos = post['video-player'];
+        var video = videos[videos.length - 1].content;
+        // Videos hosted on Tumblr use JavaScript to render the
+        // video, but the JavaScript doesn't work when we call it
+        // from a lifestream - so don't try to embed these.
+        if (video.match(/<\s*script/)) { return null; }
 
-      return video;
-    case 'audio':
-      // Unlike photo and video, audio gives you no visual indication
-      // of what it contains, so we append the "title" text.
-      return post['audio-player'] + ' ' +
-        // HTML-escape the text.
-        $('<div/>').text(getTitle(post)).html();
-    default:
-      return null;
+        return video;
+      case 'audio':
+        // Unlike photo and video, audio gives you no visual indication
+        // of what it contains, so we append the "title" text.
+        return post['audio-player'] + ' ' +
+          // HTML-escape the text.
+          $('<div/>').text(getTitle(post)).html();
+      default:
+        return null;
     }
-  };
+  },
 
-  function getFirstElementOfBody( post, bodyAttribute ) {
+  getFirstElementOfBody = function( post, bodyAttribute ) {
     return $(post[bodyAttribute]).filter(':not(:empty):first').text();
-  };
+  },
 
-  function getTitleForPostType( post ) {
+  getTitleForPostType = function( post ) {
     var title;
 
     switch(post.type) {
@@ -1547,7 +1553,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
     case 'link':
       title = post['link-text'] ||
         getFirstElementOfBody(post, 'link-description');
-      if (title == '') { title = post['link-url']; }
+      if (title === '') { title = post['link-url']; }
       return title;
     case 'video':
       return getFirstElementOfBody(post, 'video-caption');
@@ -1561,7 +1567,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
       title = post['conversation-title'];
       if (!title) {
         title = post['conversation'].line;
-        if (typeof(title) != 'string') {
+        if (typeof(title) !== 'string') {
           title = line[0].label + ' ' + line[0].content + ' ....';
         }
       }
@@ -1571,13 +1577,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
     default:
       return post.type;
     }
-  };
-
-  var template = $.extend({},
-    {
-      posted: 'posted a ${type} <a href="${url}">${title}</a>'
-    },
-    config.template),
+  },
 
   /**
    * get title text
