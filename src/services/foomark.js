@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.foomark = function( config, callback ) {
 
   var template = $.extend({},
@@ -38,3 +39,4 @@ $.fn.lifestream.feeds.foomark = function( config, callback ) {
   };
 
 };
+})(jQuery);

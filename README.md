@@ -14,6 +14,7 @@ Check out [the example][example] or create [your own lifestream][melifestream] i
 
 Currently supports the following feeds:
 
+* [Bitbucket](https://bitbucket.org/)
 * [Bitly](http://bitly.com)
 * [Blogger](http://blogger.com)
 * [Dailymotion](http://dailymotion.com)
@@ -212,6 +213,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.2.1 Bitbucket support
 * 0.2.0 Modular builds
 * 0.1.6 Bitly support
 * 0.1.5 Snipplr support

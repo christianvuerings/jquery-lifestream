@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
 
   var template = $.extend({},
@@ -67,3 +68,4 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
   };
 
 };
+})(jQuery);

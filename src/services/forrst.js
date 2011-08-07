@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.forrst = function( config, callback ) {
 
   var template = $.extend({},
@@ -34,3 +35,4 @@ $.fn.lifestream.feeds.forrst = function( config, callback ) {
   };
 
 };
+})(jQuery);

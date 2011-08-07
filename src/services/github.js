@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.github = function( config, callback ) {
 
   var template = $.extend({},
@@ -143,3 +144,4 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
   };
 
 };
+})(jQuery);

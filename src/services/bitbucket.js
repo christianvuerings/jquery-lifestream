@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
 
   var template = $.extend({},
@@ -71,3 +72,4 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
     'template' : template
   };
 };
+})(jQuery);

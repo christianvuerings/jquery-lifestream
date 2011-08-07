@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.deviantart = function( config, callback ) {
 
   var template = $.extend({},
@@ -42,3 +43,4 @@ $.fn.lifestream.feeds.deviantart = function( config, callback ) {
   };
 
 };
+})(jQuery);

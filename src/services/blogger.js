@@ -1,3 +1,4 @@
+(function($) {
 $.fn.lifestream.feeds.blogger = function( config, callback ) {
 
   var template = $.extend({},
@@ -59,3 +60,4 @@ $.fn.lifestream.feeds.blogger = function( config, callback ) {
   };
 
 };
+})(jQuery);

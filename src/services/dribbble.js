@@ -1,4 +1,5 @@
-;$.fn.lifestream.feeds.dribbble = function( config, callback ) {
+(function($) {
+$.fn.lifestream.feeds.dribbble = function( config, callback ) {
 
     var template = $.extend({},
       {
@@ -35,3 +36,4 @@
     };
 
   };
+  })(jQuery);
