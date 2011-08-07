@@ -29,7 +29,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
       date: new Date(post.date),
       config: config,
       html: $.tmpl( template.posted, {
-          type: post.type,
+          type: post.type.replace('regular', 'blog entry'),
           url: post.url,
           title: getTitle(post)
         } )
