@@ -28,9 +28,14 @@ $.fn.lifestream.feeds.wordpress = function( config, callback ) {
     return output;
   };
 
+  // If the config.user property starts with http:// we assume that is the 
+  // full url to the user his blog. We append the /feed to the url.
+  var url = (config.user.indexOf('http://') == 0 
+             ? config.user + '/feed' 
+             : 'http://' + config.user + '.wordpress.com/feed');
   $.ajax({
     url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://' + config.user + '.wordpress.com/feed"'),
+      + 'url="' + url + '"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseWordpress(data));
