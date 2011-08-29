@@ -57,7 +57,7 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
         for( ; i<j; i++) {
           var item = data.data.children[i];
           output.push({
-            date: convertDate(item.data.created),
+            date: convertDate(item.data.created_utc),
             config: config,
             html: parseRedditItem(item)
           });
