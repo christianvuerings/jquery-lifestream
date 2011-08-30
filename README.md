@@ -206,12 +206,21 @@ Places on the web where this plug-in got mentioned:
 * [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
 * [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
 * [Lifestream Blog](http://lifestreamblog.com/create-a-dynamic-activity-stream-with-the-jquery-lifestream-script/)
+* [Simong Gaeremynck Blog](http://blog.gaeremynck.com/jquery-lifestream-and-followmy-tv/)
 * [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
 * [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
 * [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
 * [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
 * [The Next Web](http://thenextweb.com/dd/2011/07/08/jquery-lifestream-makes-it-easy-to-pop-your-online-activity-onto-any-page/)
+
+## Used By
+
+A list of sites that use the jQuery Lifestream plug-in:
+
+[BrainDump2.0](http://mgiulio.altervista.org/), 
+[Sam Tardif](http://www.codeandstuff.com/), 
+[Simon Gaeremynck](http://gaeremynck.com/)
 
 ## Special Thanks
 
