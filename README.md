@@ -48,6 +48,10 @@ Currently supports the following feeds:
 Feel free to fork the project and add your own feeds in.  
 Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] when you're finished.
 
+## Extensions
+
+[Filter feeds](https://gist.github.com/1170205) - used by [codeandstuff.com](http://www.codeandstuff.com/)
+
 ## Build
 
     cd build
