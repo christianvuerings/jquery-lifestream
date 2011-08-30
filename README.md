@@ -204,6 +204,7 @@ Places on the web where this plug-in got mentioned:
 * [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
 * [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
 * [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
+* [Lifestream Blog](http://lifestreamblog.com/create-a-dynamic-activity-stream-with-the-jquery-lifestream-script/)
 * [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
 * [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
