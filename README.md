@@ -50,7 +50,7 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 
 ## Extensions
 
-[Filter feeds](https://gist.github.com/1170205) - used by [codeandstuff.com](http://www.codeandstuff.com/)
+* [Filter feeds](https://gist.github.com/1170205) - used by [codeandstuff.com](http://www.codeandstuff.com/)
 
 ## Build
 
