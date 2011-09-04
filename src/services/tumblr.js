@@ -60,7 +60,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
     case 'photo':
       return getFirstElementOfBody(post, 'photo-caption');
     case 'quote':
-      return '"' + post['quote-text'] + '"';
+      return '"' + post['quote-text'].replace(/<.+?>/g, ' ').trim() + '"';
     case 'conversation':
       title = post['conversation-title'];
       if (!title) {
