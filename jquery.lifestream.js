@@ -1871,7 +1871,7 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
 
   var template = $.extend({},
     {
-      wall_post: 'post on wall <a href="${link}">${title}</a>'
+      wall_post: 'posted <a href="${link}">${title}</a>',
     },
     config.template),
 
@@ -1882,13 +1882,12 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
     var output = [], list, i = 0, j;
 
     if(input.query && input.query.count && input.query.count >0) {
-      //alert(dump(input.query.results.rss.channel.item));
 	  list = input.query.results.rss.channel.item;
       j = list.length;
-	  //alert(j)
       for( ; i<j; i++) {
-        var item = list[i];
-		//alert(dump(item));
+        var item = list[i];		
+		//handle link posts with no title
+		if(item['title'] == ' ') item['title'] = 'link';		
         output.push({
           date: new Date(item["pubDate"]),
           config: config,
@@ -1898,7 +1897,7 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
     }
     return output;
   };
-
+  
   $.ajax({
     url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
       + 'www.facebook.com/feeds/page.php?id='
