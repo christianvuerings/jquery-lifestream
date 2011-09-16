@@ -221,6 +221,7 @@ A list of sites that use the jQuery Lifestream plug-in:
 
 [BrainDump2.0](http://mgiulio.altervista.org/), 
 [Erik Ostrom](http://www.erikostrom.com/), 
+[Robie.io](http://robbie.io/life.html), 
 [Sam Tardif](http://www.codeandstuff.com/), 
 [Simon Gaeremynck](http://gaeremynck.com/)
 
