@@ -1323,7 +1323,7 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
         for( ; i<j; i++) {
           var item = data.data.children[i];
           output.push({
-            date: convertDate(item.data.created),
+            date: convertDate(item.data.created_utc),
             config: config,
             html: parseRedditItem(item)
           });
@@ -1563,7 +1563,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
     case 'photo':
       return getFirstElementOfBody(post, 'photo-caption');
     case 'quote':
-      return '"' + post['quote-text'] + '"';
+      return '"' + post['quote-text'].replace(/<.+?>/g, ' ').trim() + '"';
     case 'conversation':
       title = post['conversation-title'];
       if (!title) {
@@ -1805,9 +1805,14 @@ $.fn.lifestream.feeds.wordpress = function( config, callback ) {
     return output;
   };
 
+  // If the config.user property starts with http:// we assume that is the
+  // full url to the user his blog. We append the /feed to the url.
+  var url = (config.user.indexOf('http://') === 0
+             ? config.user + '/feed'
+             : 'http://' + config.user + '.wordpress.com/feed');
   $.ajax({
     url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://' + config.user + '.wordpress.com/feed"'),
+      + 'url="' + url + '"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseWordpress(data));
@@ -1858,56 +1863,6 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
     }
   });
 
-  // Expose the template.
-  // We use this to check which templates are available
-  return {
-    "template" : template
-  };
-
-};
-})(jQuery);
-(function($) {
-$.fn.lifestream.feeds.facebook_page = function( config, callback ) {
-
-  var template = $.extend({},
-    {
-      wall_post: 'posted <a href="${link}">${title}</a>',
-    },
-    config.template),
-
-  /**
-   * Parse the input from google reader
-   */
-  parseFBPage = function( input ) {
-    var output = [], list, i = 0, j;
-
-    if(input.query && input.query.count && input.query.count >0) {
-	  list = input.query.results.rss.channel.item;
-      j = list.length;
-      for( ; i<j; i++) {
-        var item = list[i];		
-		//handle link posts with no title
-		if(item['title'] == ' ') item['title'] = 'link';		
-        output.push({
-          date: new Date(item["pubDate"]),
-          config: config,
-          html: $.tmpl( template.wall_post, item )
-        });
-      }
-    }
-    return output;
-  };
-  
-  $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + 'www.facebook.com/feeds/page.php?id='
-      + config.user + '&format=rss20"'),
-    dataType: 'jsonp',
-    success: function( data ) {      
-	  callback(parseFBPage(data));
-    }
-  });
-  
   // Expose the template.
   // We use this to check which templates are available
   return {
