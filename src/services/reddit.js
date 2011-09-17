@@ -59,7 +59,8 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
           output.push({
             date: convertDate(item.data.created_utc),
             config: config,
-            html: parseRedditItem(item)
+            html: parseRedditItem(item),
+            url: 'http://reddit.com/user/' + config.user
           });
         }
       }

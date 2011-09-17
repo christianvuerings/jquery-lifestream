@@ -63,7 +63,8 @@ $.fn.lifestream.feeds.twitter = function( config, callback ) {
           config: config,
           html: $.tmpl( template.posted, {
             tweet: linkify(status.text)
-          } )
+          } ),
+          url: 'http://twitter.com/#!/' + config.user
         });
       }
     }
