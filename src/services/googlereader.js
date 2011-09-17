@@ -20,10 +20,10 @@ $.fn.lifestream.feeds.googlereader = function( config, callback ) {
       for( ; i<j; i++) {
         var item = list[i];
         output.push({
+          url: 'http://www.google.com/reader/shared' + config.user,
           date: new Date(parseInt(item["crawl-timestamp-msec"], 10)),
           config: config,
-          html: $.tmpl( template.starred, item ),
-          url: 'http://google.com/reader/shared/' + config.user
+          html: $.tmpl( template.starred, item )
         });
       }
     }

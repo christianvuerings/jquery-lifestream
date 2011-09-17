@@ -22,7 +22,6 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
           date: new Date(parseInt((item.date.uts * 1000), 10)),
           config: config,
           html: $.tmpl( template.loved, item ),
-          url: 'http://last.fm/user/' + config.user
         });
       }
     }
