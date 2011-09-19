@@ -547,11 +547,11 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
       + 'www.facebook.com/feeds/page.php?id='
       + config.user + '&format=rss20"'),
     dataType: 'jsonp',
-    success: function( data ) {      
+    success: function( data ) {
 	  callback(parseFBPage(data));
     }
   });
-  
+
   // Expose the template.
   // We use this to check which templates are available
   return {
