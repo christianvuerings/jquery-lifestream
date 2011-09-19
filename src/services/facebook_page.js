@@ -18,11 +18,13 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
       j = list.length;
       for( ; i<j; i++) {
         var item = list[i];
-        output.push({
-          date: new Date(item["pubDate"]),
-          config: config,
-          html: $.tmpl( template.wall_post, item )
-        });
+        if( $.trim( item.title ) ){
+          output.push({
+            date: new Date(item["pubDate"]),
+            config: config,
+            html: $.tmpl( template.wall_post, item )
+          });
+        }
       }
     }
     return output;

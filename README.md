@@ -21,6 +21,7 @@ Currently supports the following feeds:
 * [Delicious](http://delicious.com)
 * [DeviantART](http://deviantart.com)
 * [Dribbble](http://dribbble.com)
+* [Facebook Pages](http://www.facebook.com/pages)
 * [Flickr](http://flickr.com)
 * [Foomark](http://foomark.com)
 * [Formspring](http://formspring.com)
@@ -221,7 +222,7 @@ A list of sites that use the jQuery Lifestream plug-in:
 
 [BrainDump2.0](http://mgiulio.altervista.org/), 
 [Erik Ostrom](http://www.erikostrom.com/), 
-[Robie.io](http://robbie.io/life.html), 
+[Robbie.io](http://robbie.io/life.html), 
 [Sam Tardif](http://www.codeandstuff.com/), 
 [Simon Gaeremynck](http://gaeremynck.com/)
 
@@ -231,6 +232,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.2.2 Facebook Pages support
 * 0.2.1 Bitbucket support
 * 0.2.0 Modular builds
 * 0.1.6 Bitly support

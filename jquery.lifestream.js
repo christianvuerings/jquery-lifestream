@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.2.1
+ * @version 0.2.2
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -532,11 +532,13 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
       j = list.length;
       for( ; i<j; i++) {
         var item = list[i];
-        output.push({
-          date: new Date(item["pubDate"]),
-          config: config,
-          html: $.tmpl( template.wall_post, item )
-        });
+        if( $.trim( item.title ) ){
+          output.push({
+            date: new Date(item["pubDate"]),
+            config: config,
+            html: $.tmpl( template.wall_post, item )
+          });
+        }
       }
     }
     return output;

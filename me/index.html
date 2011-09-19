@@ -272,13 +272,14 @@
       }
 
       var generateform = function(){
-        var form = '<form method="post" action="index.html">';
+        var form = '<form method="post" action="index.html">', name;
 
         // Get all the current available services
         for(var i in $.fn.lifestream.feeds){
           if($.fn.lifestream.feeds.hasOwnProperty(i)){
+			name = i.replace("_", " ");
             form += '<label for="' + i + '" class="lifestream-' + i + '">'
-                 + i + "</label>"
+                 + name + "</label>"
                  + '<input type="text" name="' + i + '" id="' + i + '" />';
             if(help[i]){
               form += '<a href="' + help[i] + '" title="Find your '
