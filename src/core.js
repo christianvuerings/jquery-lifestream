@@ -83,21 +83,12 @@
         for ( ; i < length; i++ ) {
           item = items[i];
           if ( item.html ) {
-            if ( item.url ) {
-              $('<li class="'+ settings.classname + '-'
-                + item.config.service + '">').data( "name", item.config.service )
-                                             .data( "url", item.url )
-                                             .data( "time", item.date )
-                                             .append( item.html )
-                                             .appendTo( ul );
-            } else {
-              $('<li class="'+ settings.classname + '-'
-                + item.config.service + '">').data( "name", item.config.service )
-                                             .data( "url", "#" )
-                                             .data( "time", item.date )
-                                             .append( item.html )
-                                             .appendTo( ul );
-            }
+            $('<li class="'+ settings.classname + '-'
+              + item.config.service + '">').data( "name", item.config.service )
+                                           .data( "url", item.url || "#" )
+                                           .data( "time", item.date )
+                                           .append( item.html )
+                                           .appendTo( ul );
           }
         }
 
