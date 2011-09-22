@@ -220,6 +220,7 @@ Places on the web where this plug-in got mentioned:
 
 A list of sites that use the jQuery Lifestream plug-in:
 
+[Armin Roșu](http://armin.ro/), 
 [BrainDump2.0](http://mgiulio.altervista.org/), 
 [Erik Ostrom](http://www.erikostrom.com/), 
 [Robbie.io](http://robbie.io/life.html), 
