@@ -11,7 +11,7 @@ $.fn.lifestream.feeds.digg = function( config, callback ) {
 
   $.ajax({
     url: "http://services.digg.com/2.0/user.getActivity?username="
-    + config.user + "&type=javascript",
+      + config.user + "&type=javascript",
     dataType: "jsonp",
     success: function( data ) {
       var output = [], i = 0, j;
@@ -29,17 +29,18 @@ $.fn.lifestream.feeds.digg = function( config, callback ) {
           for( l = 0; l<k; l++) {
           	// Get most accurate date
           	var time;
-          	if( item.activity[l] == 'submission' || item.promote_date == null ) {
+          	if( item.activity[l] === 'submission'
+          	    || item.promote_date === null ) {
           	  time = item.date_created;
           	} else {
           	  time = item.promote_date;
           	}
 
             output.push({
-	          date: new Date( time * 1000 ),
-	          config: config,
-	          html: $.tmpl( template[item.activity[l]], item )
-	        });
+	            date: new Date( time * 1000 ),
+  	          config: config,
+  	          html: $.tmpl( template[item.activity[l]], item )
+  	        });
           }
         }
       }

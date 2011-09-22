@@ -57,10 +57,10 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select events.event,' 
+    url: $.fn.lifestream.createYqlUrl('select events.event,'
        + 'events.node, events.created_on,'
        + 'events.repository.name, events.repository.owner '
-       + 'from json where url = "https://api.bitbucket.org/1.0/users/' 
+       + 'from json where url = "https://api.bitbucket.org/1.0/users/'
        + config.user + '/events/"'),
     dataType: 'jsonp',
     success: function( data ) {

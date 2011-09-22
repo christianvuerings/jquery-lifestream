@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.2.2
+ * @version 0.2.3
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -229,10 +229,10 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select events.event,' 
+    url: $.fn.lifestream.createYqlUrl('select events.event,'
        + 'events.node, events.created_on,'
        + 'events.repository.name, events.repository.owner '
-       + 'from json where url = "https://api.bitbucket.org/1.0/users/' 
+       + 'from json where url = "https://api.bitbucket.org/1.0/users/'
        + config.user + '/events/"'),
     dataType: 'jsonp',
     success: function( data ) {
@@ -487,7 +487,7 @@ $.fn.lifestream.feeds.digg = function( config, callback ) {
 
   $.ajax({
     url: "http://services.digg.com/2.0/user.getActivity?username="
-    + config.user + "&type=javascript",
+      + config.user + "&type=javascript",
     dataType: "jsonp",
     success: function( data ) {
       var output = [], i = 0, j;
@@ -505,17 +505,18 @@ $.fn.lifestream.feeds.digg = function( config, callback ) {
           for( l = 0; l<k; l++) {
           	// Get most accurate date
           	var time;
-          	if( item.activity[l] == 'submission' || item.promote_date == null ) {
+          	if( item.activity[l] === 'submission'
+          	    || item.promote_date === null ) {
           	  time = item.date_created;
           	} else {
           	  time = item.promote_date;
           	}
 
             output.push({
-	          date: new Date( time * 1000 ),
-	          config: config,
-	          html: $.tmpl( template[item.activity[l]], item )
-	        });
+	            date: new Date( time * 1000 ),
+  	          config: config,
+  	          html: $.tmpl( template[item.activity[l]], item )
+  	        });
           }
         }
       }
