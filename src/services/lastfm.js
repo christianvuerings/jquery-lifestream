@@ -18,8 +18,9 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
       j = list.length;
       for( ; i<j; i++) {
         var item = list[i];
+        var itemDate = (item.nowplaying == "true")? new Date() : item.date.uts;
         output.push({
-          date: new Date(parseInt((item.date.uts * 1000), 10)),
+          date: new Date(parseInt((itemDate * 1000), 10)),
           config: config,
           html: $.tmpl( template.loved, item )
         });
