@@ -1172,9 +1172,10 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
       list = input.query.results.recenttracks.track;
       j = list.length;
       for( ; i<j; i++) {
-        var item = list[i];
+        var item = list[i],
+            itemDate =  item.nowplaying ? new Date() : item.date.uts;
         output.push({
-          date: new Date(parseInt((item.date.uts * 1000), 10)),
+          date: new Date(parseInt((itemDate * 1000), 10)),
           config: config,
           html: $.tmpl( template.loved, item )
         });
