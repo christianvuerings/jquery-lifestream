@@ -203,6 +203,8 @@ Places on the web where this plug-in got mentioned:
 * [BlogUpstairs](http://blogupstairs.com/framework/javascript-framework/jquery/jquery-lifestream-show-a-stream-of-your-online-activity-with-jquery/)
 * [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
 * [DesignBeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
+* [Devl.im](http://devl.im/jquery-lifestream-show-a-stream-of-your-online-activity/)
+* [Elliptips](http://elliptips.info/2011/09/lifestream-votre-vie-virtuelle-sous-forme-de-timeline-en-jquery/) - French
 * [Erik Ostrom Blog](http://slapdash.erikostrom.com/post/9797738423/just-finally-added-something-to-my-ostensible-web)
 * [doejo](http://doejo.com/blog/jquery-lifestream-a-simple-way-to-track-your-online-activity-in-one-spot)
 * [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
