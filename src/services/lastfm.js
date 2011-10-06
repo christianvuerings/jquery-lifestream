@@ -3,8 +3,8 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
 
   var template = $.extend({},
     {
-      loved: 'listened to <a href="${artist.mbid}">${artist.content}</a> - '
-        + '<a href="${url}">${name}</a>'
+      loved: 'loved <a href="${url}">${name}</a> by '
+        + '<a href="${artist.url}">${artist.name}</a>'
     },
     config.template),
 
@@ -12,9 +12,9 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
     var output = [], list, i = 0, j;
 
     if(input.query && input.query.count && input.query.count > 0
-        && input.query.results.recenttracks
-        && input.query.results.recenttracks.track) {
-      list = input.query.results.recenttracks.track;
+        && input.query.results.lovedtracks
+        && input.query.results.lovedtracks.track) {
+      list = input.query.results.lovedtracks.track;
       j = list.length;
       for( ; i<j; i++) {
         var item = list[i],
@@ -32,7 +32,7 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
   $.ajax({
     url: $.fn.lifestream.createYqlUrl('select * from xml where url='
       + '"http://ws.audioscrobbler.com/2.0/user/'
-      + config.user + '/recenttracks.xml"'),
+      + config.user + '/lovedtracks.xml"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseLastfm(data));
