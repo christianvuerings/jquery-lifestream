@@ -33,6 +33,7 @@ Currently supports the following feeds:
 * [Instapaper](http://www.instapaper.com)
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
+* [LibraryThing.com](http://librarything.com)
 * [Mlkshk](http://mlkshk.com)
 * [PicPlz](http://picplz.com)
 * [Pinboard](http://pinboard.com)
