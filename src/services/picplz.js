@@ -22,7 +22,7 @@ $.fn.lifestream.feeds.picplz = function( config, callback ) {
             date: new Date( ( item.date ) * 1000 ),
             config: config,
             html: $.tmpl( template.uploaded, {
-              url: item.pic_files["640r"].img_url,
+              url: 'http://picplz.com' + item.url,
               title: item.caption || item.id
               } )
           });
