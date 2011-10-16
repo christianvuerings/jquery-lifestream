@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.2.4
+ * @version 0.2.5
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
@@ -1318,7 +1318,7 @@ $.fn.lifestream.feeds.picplz = function( config, callback ) {
             date: new Date( ( item.date ) * 1000 ),
             config: config,
             html: $.tmpl( template.uploaded, {
-              url: item.pic_files["640r"].img_url,
+              url: 'http://picplz.com' + item.url,
               title: item.caption || item.id
               } )
           });
@@ -1932,6 +1932,52 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
     crossDomain: true,
     success: function( data ) {
       callback(parseVimeo(data));
+    }
+  });
+
+  // Expose the template.
+  // We use this to check which templates are available
+  return {
+    "template" : template
+  };
+
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.wikipedia = function( config, callback ) {
+
+  var template = $.extend({},
+    {
+      contribution: 'contributed to <a href="${url}">${title}</a>'
+    },
+    config.template);
+
+  $.ajax({
+    url: "http://en.wikipedia.org/w/api.php?action=query&ucuser="
+    + config.user + "&list=usercontribs&ucdir=older&format=json",
+    dataType: "jsonp",
+    success: function( data ) {
+      var output = [], i = 0, j;
+
+      if(data && data.query.usercontribs) {
+        j = data.query.usercontribs.length;
+        for( ; i<j; i++) {
+
+          var item = data.query.usercontribs[i];
+          
+          // Fastest way to get the URL. 
+          // Alternatively, we'd have to poll wikipedia for the pageid's link
+          item.url = 'http://en.wikipedia.org/wiki/' 
+          + item.title.replace(' ', '_');
+
+          output.push({
+            date: new Date( item.timestamp ),
+            config: config,
+            html: $.tmpl( template.contribution, item )
+          });
+        }
+      }
+
+      callback(output);
     }
   });
 

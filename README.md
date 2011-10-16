@@ -45,6 +45,7 @@ Currently supports the following feeds:
 * [Tumblr](http://tumblr.com)
 * [Twitter](http://twitter.com)
 * [Vimeo](http://vimeo.com)
+* [Wikipedia](http://wikipedia.com)
 * [Wordpress](http://wordpress.com)
 * [Youtube](http://youtube.com)
 
@@ -237,6 +238,9 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.2.5 Wikipedia support
+* 0.2.4 LibraryThing support
+* 0.2.3 Digg support
 * 0.2.2 Facebook Pages support
 * 0.2.1 Bitbucket support
 * 0.2.0 Modular builds
