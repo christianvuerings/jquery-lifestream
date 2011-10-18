@@ -1,9 +1,9 @@
 (function($) {
 $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
   // default to english if no language was set
-  var language = config.language || 'en';
+  var language = config.language || 'en',
 
-  var template = $.extend({},
+  template = $.extend({},
     {
       contribution: 'contributed to <a href="${url}">${title}</a>'
     },
@@ -25,7 +25,7 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
           
           // Fastest way to get the URL. 
           // Alternatively, we'd have to poll wikipedia for the pageid's link
-          item.url = 'http://' + language + '.wikipedia.org/wiki/' 
+          item.url = 'http://' + language + '.wikipedia.org/wiki/'
           + item.title.replace(' ', '_');
 
           output.push({
