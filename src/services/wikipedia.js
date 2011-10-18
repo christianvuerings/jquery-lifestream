@@ -1,5 +1,7 @@
 (function($) {
 $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
+  // default to english if no language was set
+  var language = config.language || 'en';
 
   var template = $.extend({},
     {
@@ -8,7 +10,8 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://en.wikipedia.org/w/api.php?action=query&ucuser="
+    url: "http://" + language
+    + ".wikipedia.org/w/api.php?action=query&ucuser="
     + config.user + "&list=usercontribs&ucdir=older&format=json",
     dataType: "jsonp",
     success: function( data ) {
@@ -22,7 +25,7 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
           
           // Fastest way to get the URL. 
           // Alternatively, we'd have to poll wikipedia for the pageid's link
-          item.url = 'http://en.wikipedia.org/wiki/' 
+          item.url = 'http://' + language + '.wikipedia.org/wiki/' 
           + item.title.replace(' ', '_');
 
           output.push({
