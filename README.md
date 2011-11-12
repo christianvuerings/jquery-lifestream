@@ -230,6 +230,7 @@ A list of sites that use the jQuery Lifestream plug-in:
 [Erik Ostrom](http://www.erikostrom.com/), 
 [Robbie.io](http://robbie.io/life.html), 
 [Sam Tardif](http://www.codeandstuff.com/), 
+[Sebastix](http://www.sebastix.nl/), 
 [Simon Gaeremynck](http://gaeremynck.com/)
 
 ## Special Thanks
