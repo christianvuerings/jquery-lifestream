@@ -234,7 +234,8 @@ A list of sites that use the jQuery Lifestream plug-in:
 [Robbie.io](http://robbie.io/life.html), 
 [Sam Tardif](http://www.codeandstuff.com/), 
 [Sebastix](http://www.sebastix.nl/), 
-[Simon Gaeremynck](http://gaeremynck.com/)
+[Simon Gaeremynck](http://gaeremynck.com/), 
+[Sunny Walker](http://miraclesalad.com/)
 
 ## Special Thanks
 
