@@ -120,7 +120,7 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
           date: new Date(status.created_at),
           config: config,
           html: parseGithubStatus(status),
-          url: 'http://github.com/' + config.user
+          url: 'https://github.com/' + config.user
         });
       }
     }

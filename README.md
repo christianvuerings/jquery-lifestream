@@ -29,6 +29,7 @@ Currently supports the following feeds:
 * [Forrst](http://forrst.com)
 * [Foursquare](http://foursquare.com)
 * [Github](http://github.com)
+* [Google+](http://plus.google.com)
 * [Google Reader](http://google.com/reader)
 * [Instapaper](http://www.instapaper.com)
 * [Iusethis](http://osx.iusethis.com/)

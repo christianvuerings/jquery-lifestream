@@ -22,8 +22,8 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
         for( ; i<j; i++) {
 
           var item = data.query.usercontribs[i];
-          
-          // Fastest way to get the URL. 
+
+          // Fastest way to get the URL.
           // Alternatively, we'd have to poll wikipedia for the pageid's link
           item.url = 'http://' + language + '.wikipedia.org/wiki/'
           + item.title.replace(' ', '_');
