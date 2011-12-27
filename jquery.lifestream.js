@@ -142,8 +142,7 @@
       // At then end we call the load method.
       if( !jQuery.tmpl ) {
         jQuery.getScript(
-          "https://raw.github.com/jquery/jquery-tmpl/master/"
-            + "jquery.tmpl.min.js",
+          "http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js",
           load);
       } else {
         load();
@@ -950,7 +949,7 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
           date: new Date(status.created_at),
           config: config,
           html: parseGithubStatus(status),
-          url: 'http://github.com/' + config.user
+          url: 'https://github.com/' + config.user
         });
       }
     }
@@ -2076,6 +2075,60 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseYoutube(data));
+    }
+  });
+
+  // Expose the template.
+  // We use this to check which templates are available
+  return {
+    "template" : template
+  };
+
+};
+})(jQuery);(function($) {
+$.fn.lifestream.feeds.googleplus = function( config, callback ) {
+
+  var template = $.extend({},
+    {
+    posted: '<a href="${actor.url}">${actor.displayName}</a> has posted a new entry <a href="${url}" '
+        + 'title="${id}">${title}</a> <!--With--> ${object.replies.totalItems} replies, ${object.plusoners.totalItems} +1s, ${object.resharers.totalItems} Reshares'
+    },
+    config.template),
+
+  parseGooglePlus = function( input ) {
+    var output = [], i = 0, j, item;
+
+    if(input && input.items) {
+      j = input.items.length;
+      for( ; i<j; i++) {
+        item = input.items[i];
+        output.push({
+          date: new Date(item.published),
+          config: config,
+          html: $.tmpl( template.posted, item )
+        });
+      }
+    }
+
+    return output;
+  };
+
+  $.ajax({
+    url: "https://www.googleapis.com/plus/v1/people/" + config.user +
+	"/activities/public",
+	data:{
+	key: config.key
+	},
+    dataType: 'jsonp',
+    success: function( data ) {
+	   if (data.error) {
+        callback([]);
+        if (console && console.error) {
+          console.error('Error loading Google+ stream.', data.error);
+        }
+        return;
+      }
+      callback(parseGooglePlus(data));
     }
   });
 
