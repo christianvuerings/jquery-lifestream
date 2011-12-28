@@ -49,6 +49,7 @@ Currently supports the following feeds:
 * [Wikipedia](http://wikipedia.com)
 * [Wordpress](http://wordpress.com)
 * [Youtube](http://youtube.com)
+* [Zotero](http://zotero.com)
 
 Feel free to fork the project and add your own feeds in.  
 Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] when you're finished.
@@ -244,6 +245,8 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.2.7 Zotero support
+* 0.2.6 Google+ support
 * 0.2.5 Wikipedia support
 * 0.2.4 LibraryThing support
 * 0.2.3 Digg support
