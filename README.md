@@ -28,6 +28,7 @@ Currently supports the following feeds:
 * [Formspring](http://formspring.com)
 * [Forrst](http://forrst.com)
 * [Foursquare](http://foursquare.com)
+* [Gimmebar](http://gimmebar.com)
 * [Github](http://github.com)
 * [Google+](http://plus.google.com)
 * [Google Reader](http://google.com/reader)
@@ -245,6 +246,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.2.8 Gimmebar support
 * 0.2.7 Zotero support
 * 0.2.6 Google+ support
 * 0.2.5 Wikipedia support
