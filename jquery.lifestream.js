@@ -827,8 +827,7 @@ $.fn.lifestream.feeds.foursquare = function( config, callback ) {
   };
 
 };
-})(jQuery);
-(function($) {
+})(jQuery);(function($) {
 $.fn.lifestream.feeds.gimmebar = function( config, callback ) {
 
   var template = $.extend({},
