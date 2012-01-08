@@ -239,6 +239,7 @@ A list of sites that use the jQuery Lifestream plug-in:
 [Alex Buznik (Russian)](http://buznik.net/j/my-social-media), 
 [Armin Roșu](http://armin.ro/), 
 [Bender Rodriges](http://bbrodriges.github.com/blog/), 
+[Blake Embrey](http://blakeembrey.me/#lifestream), 
 [BrainDump2.0](http://mgiulio.altervista.org/), 
 [Dennis Metzcher](http://lifestream.metzcher.com/), 
 [Erik Ostrom](http://www.erikostrom.com/), 
