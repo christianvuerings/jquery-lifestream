@@ -20,11 +20,11 @@
     h2 { font-size: 1.5em; color: #3908bc; clear: both;}
     h3 { text-align: center; color: #3908bc; }
     a { color: #3908bc; }
-    ul li { list-style-type: none;margin: 1em 0;}
+    ul li { clear: both;list-style-type: none;margin: 1em 0;}
 
-    code {display: block-inline; float:left; padding: 0.2em 1em; background: #ddd; line-height: 2em; margin-bottom: 1em; max-width: 800px; word-wrap:break-word;}
+    code {display: block-inline; float:left; padding: 0.2em 1em; background: #ddd; line-height: 2em; margin-bottom: 1em; word-wrap:break-word;}
     .item {clear: both; display:block; float:left; font-weight: bold;}
-    .subitem {display: block-inline; line-height: 2em; clear: both; float: left; width: 120px;}
+    .subitem {display: block; line-height: 2em; width: 120px;}
     .fadeout {color: #999; float: left; margin-left: 3px;}
   </style>
   <link href="css/lifestream.css" rel="stylesheet" type="text/css">
@@ -41,8 +41,9 @@
   <h2>Current available templates:</h2>
   <div id="tempates"></div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.6.1.min.js"><\/script>');</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write('<script src="http://code.jquery.com/jquery-1.7.1.min.js"><\/script>');</script>
+  <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="jquery.lifestream.js" type="text/javascript" charset="utf-8"></script>
   <script>
     var $templates = $("#tempates"),
