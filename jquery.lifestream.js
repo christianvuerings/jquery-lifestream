@@ -1,12 +1,14 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.2.8
+ * @version 0.2.9
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
  */
 /*globals jQuery, $ */
 ;(function( $ ){
+
+  "use strict";
 
   /**
    * Initialize the lifestream plug-in
@@ -83,8 +85,8 @@
         for ( ; i < length; i++ ) {
           item = items[i];
           if ( item.html ) {
-            $('<li class="'+ settings.classname + '-'
-              + item.config.service + '">').data( "name", item.config.service )
+            $('<li class="'+ settings.classname + '-' +
+               item.config.service + '">').data( "name", item.config.service )
                                            .data( "url", item.url || "#" )
                                            .data( "time", item.date )
                                            .append( item.html )
@@ -123,8 +125,8 @@
           // Check whether the feed exists, if the feed is a function and if a
           // user has been filled in
           if ( $.fn.lifestream.feeds[config.service] &&
-               $.isFunction( $.fn.lifestream.feeds[config.service] )
-               && config.user) {
+               $.isFunction( $.fn.lifestream.feeds[config.service] ) &&
+               config.user) {
 
             // You'll be able to get the global settings by using
             // config._settings in your feed
@@ -167,6 +169,25 @@
    * A big container which contains all available feeds
    */
   $.fn.lifestream.feeds = $.fn.lifestream.feeds || {};
+
+  /**
+   * Add compatible Object.keys support in older environments that do not natively support it
+   * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object/keys#section_6
+   */
+  if(!Object.keys) {
+    Object.keys = function(o){
+      if (o !== Object(o)){
+        throw new TypeError('Object.keys called on non-object');
+      }
+      var ret=[],p;
+      for(p in o) {
+        if(Object.prototype.hasOwnProperty.call(o,p)) {
+          ret.push(p);
+        }
+      }
+      return ret;
+    };
+  }
 
 }( jQuery ));
 (function($) {
@@ -1122,6 +1143,49 @@ $.fn.lifestream.feeds.googlereader = function( config, callback ) {
 };
 })(jQuery);
 (function($) {
+$.fn.lifestream.feeds.hypem = function( config, callback ) {
+
+  if( !config.type || config.type !== "history" || config.type !== "loved" ) { config.type = "loved"; }
+
+  var template = $.extend({},
+  {
+    loved: 'loved <a href="http://hypem.com/item/${mediaid}">${title}</a> by <a href="http://hypem.com/artist/${artist}">${artist}</a>',
+    history: 'listened to <a href="http://hypem.com/item/${mediaid}">${title}</a> by <a href="http://hypem.com/artist/${artist}">${artist}</a>'
+  },
+  config.template);
+
+  $.ajax({
+    url: "http://hypem.com/playlist/" + config.type + "/" + config.user + "/json/1/data.js",
+    dataType: "json",
+    success: function( data ) {
+      var output = [], i = 0, j = -1;
+      for (var k in data) {
+        if (data.hasOwnProperty(k)) {
+          j++;
+        }
+      }
+      if (data && j > 0) {
+        for( ; i < j; i++) {
+          var item = data[i];
+          output.push({
+            date: new Date( (config.type === "history" ? item.dateplayed : item.dateloved) * 1000 ),
+            config: config,
+            html: $.tmpl( (config.type === "history" ? template.history : template.loved) , item )
+          });
+        }
+      }
+      callback(output);
+    }
+  });
+
+  // Expose the template.
+  // We use this to check which templates are available
+  return {
+    "template" : template
+  };
+
+};
+})(jQuery);(function($) {
 $.fn.lifestream.feeds.instapaper = function( config, callback ) {
 
   var template = $.extend({},

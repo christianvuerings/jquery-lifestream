@@ -217,6 +217,7 @@ Places on the web where this plug-in got mentioned:
 * [Erik Ostrom Blog](http://slapdash.erikostrom.com/post/9797738423/just-finally-added-something-to-my-ostensible-web)
 * [doejo](http://doejo.com/blog/jquery-lifestream-a-simple-way-to-track-your-online-activity-in-one-spot)
 * [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
+* [Hypem](http://hypem.com/)
 * [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
 * [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
 * [Lifestream Blog](http://lifestreamblog.com/create-a-dynamic-activity-stream-with-the-jquery-lifestream-script/)
@@ -255,6 +256,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.2.9 Hypem support
 * 0.2.8 Gimmebar support
 * 0.2.7 Zotero support
 * 0.2.6 Google+ support
