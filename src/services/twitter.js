@@ -62,7 +62,8 @@ $.fn.lifestream.feeds.twitter = function( config, callback ) {
           date: new Date(status.created_at),
           config: config,
           html: $.tmpl( template.posted, {
-            tweet: linkify(status.text)
+            tweet: linkify(status.text),
+            complete_url: 'http://twitter.com/#!/' + config.user + "/status/" + status.id
           } ),
           url: 'http://twitter.com/#!/' + config.user
         });
