@@ -41,6 +41,7 @@ Currently supports the following feeds:
 * [Pinboard](http://pinboard.com)
 * [Posterous](http://posterous.com)
 * [Reddit](http://reddit.com)
+* [RSS](http://en.wikipedia.org/wiki/RSS)
 * [Slideshare](http://slideshare.com)
 * [Snipplr](http://snipplr.com)
 * [Stackoverflow](http://stackoverflow.com)
@@ -256,6 +257,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.3.0 RSS support
 * 0.2.9 Hypem support
 * 0.2.8 Gimmebar support
 * 0.2.7 Zotero support
