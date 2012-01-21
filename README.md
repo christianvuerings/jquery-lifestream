@@ -59,7 +59,7 @@ Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] wh
 ## Extensions
 
 * [Filter feeds](https://gist.github.com/1170205) - used by [codeandstuff.com](http://www.codeandstuff.com/)
-* [Drupal module](https://github.com/dineshcooper/Social-River) - jQuery lifestream as a drupal module called Social River.
+* [Drupal module](http://drupal.org/project/social_river) - jQuery lifestream as a drupal module called Social River.
 
 ## Build
 
