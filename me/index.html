@@ -316,10 +316,20 @@
         for(var i in input){
           if(input.hasOwnProperty(i)){
             $("#" + i, $form).val(input[i]);
-            list.push({
-              "service": i,
-              "user": input[i]
-            });
+
+            if(i !== "googleplus"){
+                list.push({
+                  "service": i,
+                  "user": input[i]
+                });
+            }
+            else {
+                list.push({
+                  "service": i,
+                  "user": input[i],
+                  "key": 'AIzaSyCB8pKtPwGWkOMfe49CopUM40F6seVv5AE'
+                });
+            }
             if(input[i]) {showempty = false};
           }
         }
