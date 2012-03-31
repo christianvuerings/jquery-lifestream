@@ -17,6 +17,7 @@ Currently supports the following feeds:
 * [Bitbucket](https://bitbucket.org/)
 * [Bitly](http://bitly.com)
 * [Blogger](http://blogger.com)
+* [Citeulike](http://www.citeulike.org)
 * [Digg](http://digg.com)
 * [Dailymotion](http://dailymotion.com)
 * [Delicious](http://delicious.com)
