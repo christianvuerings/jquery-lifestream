@@ -245,6 +245,7 @@ A list of sites that use the jQuery Lifestream plug-in:
 [Blake Embrey](http://blakeembrey.me/#lifestream), 
 [BrainDump2.0](http://mgiulio.altervista.org/), 
 [Dennis Metzcher](http://lifestream.metzcher.com/), 
+[Devin Berg](http://www.devinberg.com/), 
 [Erik Ostrom](http://www.erikostrom.com/), 
 [Libby Baldwin](http://libbybaldwin.github.com/), 
 [Robbie.io](http://robbie.io/life.html), 
