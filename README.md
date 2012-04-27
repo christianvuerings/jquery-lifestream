@@ -119,6 +119,12 @@ The above code will always use the latest version of the script.
 If you want to use it in production, download the [minified](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.min.js)
 or [uncompressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.js) file and host it yourself.
 
+You also need to add a bit of HTML:
+
+```html
+<div id="lifestream">&nbsp;</div>
+```
+
 ### jQuery Templates
 
 You have the ability to use jQuery templates for your feed.  
