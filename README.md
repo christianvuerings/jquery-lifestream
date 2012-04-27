@@ -33,6 +33,7 @@ Currently supports the following feeds:
 * [Github](http://github.com)
 * [Google+](http://plus.google.com)
 * [Google Reader](http://google.com/reader)
+* [Hypem](http://hypem.com/)
 * [Instapaper](http://www.instapaper.com)
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
@@ -219,17 +220,20 @@ Places on the web where this plug-in got mentioned:
 * [Erik Ostrom Blog](http://slapdash.erikostrom.com/post/9797738423/just-finally-added-something-to-my-ostensible-web)
 * [doejo](http://doejo.com/blog/jquery-lifestream-a-simple-way-to-track-your-online-activity-in-one-spot)
 * [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
-* [Hypem](http://hypem.com/)
+* [JavaScript Experiments](http://javascriptexperiments.blogspot.com/2012/03/my-lifestream-example.html)
 * [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
 * [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
+* [jQuery this](http://www.jquerythisplugin.com/plugins/jquery-lifestream-your-social-feed/)
 * [Lifestream Blog](http://lifestreamblog.com/create-a-dynamic-activity-stream-with-the-jquery-lifestream-script/)
 * [Simong Gaeremynck Blog](http://blog.gaeremynck.com/jquery-lifestream-and-followmy-tv/)
+* [Slodive.com](http://slodive.com/web-development/jquery-plugins/)
 * [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
 * [Speckyboy](http://speckyboy.com/2011/12/07/the-50-most-useful-jquery-plugins-from-2011/)
 * [Spyrestudios](http://spyrestudios.com/31-fantastic-new-jquery-plugins-for-web-developers/)
 * [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
 * [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
+* [Splashnology](http://www.splashnology.com/article/50-new-jquery-plugins-for-web-developers/4141/)
 * [Tactoom.com](http://tactoom.com/interest/Hardcore/4ed34793de3b117715002952)
 * [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
 * [The Next Web](http://thenextweb.com/dd/2011/07/08/jquery-lifestream-makes-it-easy-to-pop-your-online-activity-onto-any-page/)
