@@ -8,7 +8,7 @@ $.fn.lifestream.feeds.gimmebar = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "https://gimmebar.com/api/v0/public/assets/" + config.user + ".js?jsonp_callback=?",
+    url: "https://gimmebar.com/api/v0/public/assets/" + config.user + ".json?jsonp_callback=?",
     dataType: "json",
     success: function( data ) {
       data = data.records;
