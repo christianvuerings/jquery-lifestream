@@ -28,7 +28,10 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
         +'${status.repository.name}</a>',
       forked: 'forked <a href="http://github.com/${status.repository.owner}/'
         +'${status.repository.name}">${status.repository.owner}/'
-        +'${status.repository.name}</a>'
+        +'${status.repository.name}</a>',
+      watch: '${status.payload.action} watching <a href="http://github.com/'
+        +'${status.repository.owner}/${status.repository.name}">'
+        +'${status.repository.owner}/${status.repository.name}</a>'
     },
     config.template);
 
@@ -125,6 +128,11 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
     }
     else if (status.type === "ForkEvent") {
       return $.tmpl( template.forked, {
+        status: status
+      } );
+    }
+    else if (status.type === "WatchEvent") {
+      return $.tmpl( template.watch, {
         status: status
       } );
     }
