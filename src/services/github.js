@@ -9,6 +9,8 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
         +'<a href="http://github.com/${repo}">${repo}</a>',
       gist: '<a href="${status.payload.url}" title="'
         +'${status.payload.desc || ""}">${status.payload.name}</a>',
+      issue: '${action} <a href="${status.url}">${what}</a> on '
+        +'<a href="http://github.com/${repo}">${repo}</a>',
       commented: 'commented on <a href="${status.url}">${what}</a> on '
         +'<a href="http://github.com/${repo}">${repo}</a>',
       pullrequest: '${status.payload.action} <a href="${status.url}">'
@@ -59,6 +61,17 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
            + status.url.split('commit/')[1].split('#')[0].substring(0, 7);
       repo = returnRepo(status);
       return $.tmpl( template.commented, {
+        what: what,
+        repo: repo,
+        status: status
+      } );
+    }
+    else if (status.type === "IssuesEvent") {
+      action = status.payload.action;
+      what = 'issue ' + status.url.split('issues/')[1].split('#')[0];
+      repo = returnRepo(status);
+      return $.tmpl( template.issue, {
+        action: action,
         what: what,
         repo: repo,
         status: status
