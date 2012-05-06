@@ -25,6 +25,9 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
       deleted: 'deleted ${status.payload.ref_type} ${status.payload.ref} '
         +'at <a href="http://github.com/${status.repository.owner}/'
         +'${status.repository.name}">${status.repository.owner}/'
+        +'${status.repository.name}</a>',
+      forked: 'forked <a href="http://github.com/${status.repository.owner}/'
+        +'${status.repository.name}">${status.repository.owner}/'
         +'${status.repository.name}</a>'
     },
     config.template);
@@ -117,6 +120,11 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
     }
     else if (status.type === "DeleteEvent") {
       return $.tmpl( template.deleted, {
+        status: status
+      } );
+    }
+    else if (status.type === "ForkEvent") {
+      return $.tmpl( template.forked, {
         status: status
       } );
     }
