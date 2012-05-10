@@ -31,7 +31,9 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
         +'${status.repository.name}</a>',
       watch: '${status.payload.action} watching <a href="http://github.com/'
         +'${status.repository.owner}/${status.repository.name}">'
-        +'${status.repository.owner}/${status.repository.name}</a>'
+        +'${status.repository.owner}/${status.repository.name}</a>',
+      follow: 'started following <a href="http://github.com/'
+        +'${status.payload.target.login}">${status.payload.target.login}</a>'
     },
     config.template);
 
@@ -133,6 +135,11 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
     }
     else if (status.type === "WatchEvent") {
       return $.tmpl( template.watch, {
+        status: status
+      } );
+    }
+    else if (status.type === "FollowEvent") {
+      return $.tmpl( template.follow, {
         status: status
       } );
     }
