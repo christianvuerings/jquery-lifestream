@@ -3,154 +3,116 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
 
   var template = $.extend({},
     {
-      pushed: '<a href="${status.url}" title="{{if title}}${title} '
-        +'by ${author} {{/if}}">pushed</a> to <a href="http://github.com/'
-        +'${repo}/tree/${branchname}">${branchname}</a> at '
-        +'<a href="http://github.com/${repo}">${repo}</a>',
-      gist: '<a href="${status.payload.url}" title="'
-        +'${status.payload.desc || ""}">${status.payload.name}</a>',
-      issue: '${action} <a href="${status.url}">${what}</a> on '
-        +'<a href="http://github.com/${repo}">${repo}</a>',
-      commented: 'commented on <a href="${status.url}">${what}</a> on '
-        +'<a href="http://github.com/${repo}">${repo}</a>',
-      pullrequest: '${status.payload.action} <a href="${status.url}">'
-        +'pull request #${status.payload.number}</a> on '
-        +'<a href="http://github.com/${repo}">${repo}</a>',
-      created: 'created ${status.payload.ref_type || status.payload.object}'
-        +' <a href="${status.url}">${status.payload.ref || '
-        +'status.payload.object_name}</a> for '
-        +'<a href="http://github.com/${repo}">${repo}</a>',
-      createdglobal: 'created ${status.payload.object} '
-        +'<a href="${status.url}">${title}</a>',
-      deleted: 'deleted ${status.payload.ref_type} ${status.payload.ref} '
-        +'at <a href="http://github.com/${status.repository.owner}/'
-        +'${status.repository.name}">${status.repository.owner}/'
-        +'${status.repository.name}</a>',
-      forked: 'forked <a href="http://github.com/${status.repository.owner}/'
-        +'${status.repository.name}">${status.repository.owner}/'
-        +'${status.repository.name}</a>',
-      watch: '${status.payload.action} watching <a href="http://github.com/'
-        +'${status.repository.owner}/${status.repository.name}">'
-        +'${status.repository.owner}/${status.repository.name}</a>',
-      follow: 'started following <a href="http://github.com/'
-        +'${status.payload.target.login}">${status.payload.target.login}</a>'
+      commitCommentEvent: 'commented on <a href="http://github.com/'
+      + '${status.repo.name}">${status.repo.name}</a>',
+      createBranchEvent: 'created branch <a href="http://github.com/'
+      + '${status.repo.name}/tree/${status.payload.ref}">'
+      + '${status.payload.ref}</a> at <a href="http://github.com/'
+      + '${status.repo.name}">${status.repo.name}</a>',
+      createRepositoryEvent: 'created repository <a href="http://github.com/'
+      + '${status.repo.name}">${status.repo.name}</a>',
+      createTagEvent: 'created tag <a href="http://github.com/'
+      + '${status.repo.name}/tree/${status.payload.ref}">'
+      + '${status.payload.ref}</a> at <a href="http://github.com/'
+      + '${status.repo.name}">${status.repo.name}</a>',
+      deleteBranchEvent: 'deleted branch ${status.payload.ref} at '
+      + '<a href="http://github.com/${status.repo.name}">'
+      + '${status.repo.name}</a>',
+      deleteTagEvent: 'deleted tag ${status.payload.ref} at '
+      + '<a href="http://github.com/${status.repo.name}">'
+      + '${status.repo.name}</a>',
+      followEvent: 'started following <a href="http://github.com/'
+      + '${status.payload.target.login}">${status.payload.target.login}</a>',
+      forkEvent: 'forked <a href="http://github.com/${status.repo.name}">'
+      + '${status.repo.name}</a>',
+      gistEvent: '${status.payload.action} gist '
+      + '<a href="http://gist.github.com/${status.payload.gist.id}">'
+      + '${status.payload.gist.id}</a>',
+      issueCommentEvent: 'commented on issue <a href="http://github.com/'
+      + '${status.repo.name}/issues/${status.payload.issue.number}">'
+      + '${status.payload.issue.number}</a> on <a href="http://github.com/'
+      + '${status.repo.name}">${status.repo.name}</a>',
+      issuesEvent: '${status.payload.action} issue '
+      + '<a href="http://github.com/${status.repo.name}/issues/'
+      + '${status.payload.issue.number}">${status.payload.issue.number}</a> '
+      + 'on <a href="http://github.com/${status.repo.name}">'
+      + '${status.repo.name}</a>',
+      pullRequestEvent: '${status.payload.action} pull request '
+      + '<a href="http://github.com/${status.repo.name}/pull/'
+      + '${status.payload.number}">${status.payload.number}</a> on '
+      + '<a href="http://github.com/${status.repo.name}">'
+      + '${status.repo.name}</a>',
+      pushEvent: 'pushed to <a href="http://github.com/${status.repo.name}'
+      + '/tree/${status.payload.ref}">${status.payload.ref}</a> at '
+      + '<a href="http://github.com/${status.repo.name}">'
+      + '${status.repo.name}</a>',
+      watchEvent: 'started watching <a href="http://github.com/'
+      + '${status.repo.name}">${status.repo.name}</a>'
     },
-    config.template);
+    config.template),
 
-  var returnRepo = function( status ) {
-    return status.payload.repo
-      || ( status.repository ? status.repository.owner + "/"
-        + status.repository.name : null )
-      || status.url.split("/")[3] + "/" + status.url.split("/")[4];
-  },
   parseGithubStatus = function( status ) {
-    var repo, title, what;
-    if(status.type === "PushEvent") {
-      title = status.payload && status.payload.shas
-        && status.payload.shas.json
-        && status.payload.shas.json[2];
-      repo = returnRepo(status);
-
-      return $.tmpl( template.pushed, {
-        status: status,
-        title: title,
-        author: title ? status.payload.shas.json[3] : "",
-        branchname: status.payload.ref.split('/')[2],
-        repo: returnRepo(status)
-      } );
+    if (status.type === 'CommitCommentEvent' ) {
+      return $.tmpl( template.commitCommentEvent, {status: status} );
     }
-    else if (status.type === "GistEvent") {
-      return $.tmpl( template.gist, {
-        status: status
-      } );
+    else if (status.type === 'CreateEvent'
+          && status.payload.ref_type === 'branch') {
+      return $.tmpl( template.createBranchEvent, {status: status} );
     }
-    else if (status.type === "CommitCommentEvent") {
-      what = 'commit '
-           + status.url.split('commit/')[1].split('#')[0].substring(0, 7);
-      repo = returnRepo(status);
-      return $.tmpl( template.commented, {
-        what: what,
-        repo: repo,
-        status: status
-      } );
+    else if (status.type === 'CreateEvent'
+          && status.payload.ref_type === 'repository') {
+      return $.tmpl( template.createRepositoryEvent, {status: status} );
     }
-    else if (status.type === "IssuesEvent") {
-      action = status.payload.action;
-      what = 'issue ' + status.url.split('issues/')[1].split('#')[0];
-      repo = returnRepo(status);
-      return $.tmpl( template.issue, {
-        action: action,
-        what: what,
-        repo: repo,
-        status: status
-      } );
+    else if (status.type === 'CreateEvent'
+          && status.payload.ref_type === 'tag') {
+      return $.tmpl( template.createTagEvent, {status: status} );
     }
-    else if (status.type === "IssueCommentEvent") {
-      what = 'issue ' + status.url.split('issues/')[1].split('#')[0];
-      repo = returnRepo(status);
-      return $.tmpl( template.commented, {
-        what: what,
-        repo: repo,
-        status: status
-      } );
+    else if (status.type === 'DeleteEvent'
+          && status.payload.ref_type === 'branch') {
+      return $.tmpl( template.deleteBranchEvent, {status: status} );
     }
-    else if (status.type === "PullRequestEvent") {
-      repo = returnRepo(status);
-      return $.tmpl( template.pullrequest, {
-        repo: repo,
-        status: status
-      } );
+    else if (status.type === 'DeleteEvent'
+          && status.payload.ref_type === 'tag') {
+      return $.tmpl( template.deleteTagEvent, {status: status} );
     }
-    // Github has several syntaxes for create tag events
-    else if (status.type === "CreateEvent" &&
-             (status.payload.ref_type === "tag" ||
-              status.payload.ref_type === "branch" ||
-              status.payload.object === "tag")) {
-      repo = returnRepo(status);
-      return $.tmpl( template.created, {
-        repo: repo,
-        status: status
-      } );
+    else if (status.type === 'FollowEvent' ) {
+      return $.tmpl( template.followEvent, {status: status} );
     }
-    else if (status.type === "CreateEvent") {
-      title = (status.payload.object_name ?
-              ((status.payload.object_name === "null")
-                ? status.payload.name
-                : status.payload.object_name) :
-              returnRepo(status));
-      return $.tmpl( template.createdglobal, {
-        title: title,
-        status: status
-      } );
+    else if (status.type === 'ForkEvent' ) {
+      return $.tmpl( template.forkEvent, {status: status} );
     }
-    else if (status.type === "DeleteEvent") {
-      return $.tmpl( template.deleted, {
-        status: status
-      } );
+    else if (status.type === 'GistEvent' ) {
+      if (status.payload.action === 'create') {
+        status.payload.action = 'created'
+      } else if (status.payload.action === 'update') {
+        status.payload.action = 'updated'
+      }
+      return $.tmpl( template.gistEvent, {status: status} );
     }
-    else if (status.type === "ForkEvent") {
-      return $.tmpl( template.forked, {
-        status: status
-      } );
+    else if (status.type === 'IssueCommentEvent' ) {
+      return $.tmpl( template.issueCommentEvent, {status: status} );
     }
-    else if (status.type === "WatchEvent") {
-      return $.tmpl( template.watch, {
-        status: status
-      } );
+    else if (status.type === 'IssuesEvent' ) {
+      return $.tmpl( template.issuesEvent, {status: status} );
     }
-    else if (status.type === "FollowEvent") {
-      return $.tmpl( template.follow, {
-        status: status
-      } );
+    else if (status.type === 'PullRequestEvent' ) {
+      return $.tmpl( template.pullRequestEvent, {status: status} );
     }
-
+    else if (status.type === 'PushEvent' ) {
+      status.payload.ref = status.payload.ref.split('/')[2];
+      return $.tmpl( template.pushEvent, {status: status} );
+    }
+    else if (status.type === 'WatchEvent' ) {
+      return $.tmpl( template.watchEvent, {status: status} );
+    }
   },
+
   parseGithub = function( input ) {
     var output = [], i = 0, j;
 
-    if(input.query && input.query.count && input.query.count >0) {
+    if (input.query && input.query.count && input.query.count >0) {
       j = input.query.count;
-      for( ; i<j; i++) {
+      for ( ; i<j; i++) {
         var status = input.query.results.json[i].json;
         output.push({
           date: new Date(status.created_at),
@@ -166,10 +128,10 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select json.repository.owner,'
-      + 'json.repository.name, json.payload, json.type,'
-      + 'json.url, json.created_at from json where url="http://github.com/'
-      + config.user + '.json"'),
+    url: $.fn.lifestream.createYqlUrl('select '
+      + 'json.type, json.actor, json.repo, json.payload, json.created_at '
+      + 'from json where url="https://api.github.com/users/' + config.user
+      + '/events/public?per_page=100"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseGithub(data));
