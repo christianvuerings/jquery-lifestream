@@ -6,6 +6,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
       posted: 'posted a ${type} <a href="${url}">${title}</a>'
     },
     config.template),
+  limit = config.limit || 20,
 
   getImage = function( post ) {
     switch(post.type) {
@@ -119,7 +120,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
   $.ajax({
     url: $.fn.lifestream.createYqlUrl('select *'
-      + ' from tumblr.posts where username="'+ config.user +'"'),
+      + ' from tumblr.posts where username="'+ config.user +'" and num="' + limit + '"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseTumblr(data));
