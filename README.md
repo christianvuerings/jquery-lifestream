@@ -231,6 +231,7 @@ Places on the web where this plug-in got mentioned:
 * [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
 * [jQuery this](http://www.jquerythisplugin.com/plugins/jquery-lifestream-your-social-feed/)
 * [Lifestream Blog](http://lifestreamblog.com/create-a-dynamic-activity-stream-with-the-jquery-lifestream-script/)
+* [Script Tutorials](http://www.script-tutorials.com/10-interesting-jquery-plugins-november-2011/)
 * [Simong Gaeremynck Blog](http://blog.gaeremynck.com/jquery-lifestream-and-followmy-tv/)
 * [Slodive.com](http://slodive.com/web-development/jquery-plugins/)
 * [Softpedia](http://webscripts.softpedia.com/script/Modules/jQuery-Plugins/jQuery-Lifestream-68762.html) - Softpedia pick
