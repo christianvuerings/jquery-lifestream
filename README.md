@@ -40,7 +40,7 @@ Currently supports the following feeds:
 * [LibraryThing.com](http://librarything.com)
 * [Mlkshk](http://mlkshk.com)
 * [PicPlz](http://picplz.com)
-* [Pinboard](http://pinboard.com)
+* [Pinboard](http://pinboard.in)
 * [Posterous](http://posterous.com)
 * [Reddit](http://reddit.com)
 * [RSS](http://en.wikipedia.org/wiki/RSS)
