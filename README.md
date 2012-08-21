@@ -245,6 +245,7 @@ Places on the web where this plug-in got mentioned:
 * [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
 * [The Next Web](http://thenextweb.com/dd/2011/07/08/jquery-lifestream-makes-it-easy-to-pop-your-online-activity-onto-any-page/)
 * [Weboptimize](http://www.aranda.se/2011/12/17/10-interesting-jquery-plugins/)
+* [YJL](http://blog.yjl.im/2012/02/jquery-lifestream-plugin.html)
 
 ## Used By
 
