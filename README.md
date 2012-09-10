@@ -42,6 +42,7 @@ Currently supports the following feeds:
 * [PicPlz](http://picplz.com)
 * [Pinboard](http://pinboard.in)
 * [Posterous](http://posterous.com)
+* [Quora](http://quora.com)
 * [Reddit](http://reddit.com)
 * [RSS](http://en.wikipedia.org/wiki/RSS)
 * [Slideshare](http://slideshare.com)
@@ -273,6 +274,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.3.2 Quora support
 * 0.3.1 Citeulike support
 * 0.3.0 RSS support
 * 0.2.9 Hypem support
