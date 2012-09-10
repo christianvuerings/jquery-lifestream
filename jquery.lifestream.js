@@ -2067,11 +2067,11 @@ $.fn.lifestream.feeds.twitter = function( config, callback ) {
 
     var link = function( t ) {
       return t.replace(
-        /[a-z]+:\/\/[a-z0-9-_]+\.[a-z0-9-_:~%&\?\/.=]+[^:\.,\)\s*$]/ig,
+        /[a-z]+:\/\/[a-z0-9\-_]+\.[a-z0-9\-_:~%&\?\/.=]+[^:\.,\)\s*$]/ig,
         function( m ) {
-          return '<a href="' + m + '">'
-            + ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m )
-            + '</a>';
+          return '<a href="' + m + '">' +
+            ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m ) +
+            '</a>';
         }
       );
     },
@@ -2079,17 +2079,17 @@ $.fn.lifestream.feeds.twitter = function( config, callback ) {
       return t.replace(
         /(^|[^\w]+)\@([a-zA-Z0-9_]{1,15})/g,
         function( m, m1, m2 ) {
-          return m1 + '<a href="http://twitter.com/' + m2 + '">@'
-            + m2 + '</a>';
+          return m1 + '<a href="http://twitter.com/' + m2 + '">@' +
+            m2 + '</a>';
         }
       );
     },
     hash = function( t ) {
       return t.replace(
-        /(^|[^\w'"]+)\#([a-zA-Z0-9_]+)/g,
+        /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
         function( m, m1, m2 ) {
-          return m1 + '<a href="http://search.twitter.com/search?q=%23'
-          + m2 + '">#' + m2 + '</a>';
+          return m1 + '<a href="http://search.twitter.com/search?q=%23' +
+          m2 + '">#' + m2 + '</a>';
         }
       );
     };
