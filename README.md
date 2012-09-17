@@ -258,6 +258,7 @@ A list of sites that use the jQuery Lifestream plug-in:
 [Bender Rodriges](http://bbrodriges.github.com/blog/), 
 [Blake Embrey](http://blakeembrey.me/#lifestream), 
 [BrainDump2.0](http://mgiulio.altervista.org/), 
+[Cirle of Hope](http://www.circleofhope.net/), 
 [Dennis Metzcher](http://lifestream.metzcher.com/), 
 [Devin Berg](http://www.devinberg.com/), 
 [Erik Ostrom](http://www.erikostrom.com/), 
