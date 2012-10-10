@@ -97,7 +97,7 @@ Use `make target` and replace _target_ with the target you want to use.
 Add the following to the &lt;head&gt; or &lt;body&gt; tag of your HTML page.
 
 ``` html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="https://raw.github.com/christianv/jquery-lifestream/master/jquery.lifestream.min.js"></script>
 <script>
   $("#lifestream").lifestream({
