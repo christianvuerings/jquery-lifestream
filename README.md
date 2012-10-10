@@ -18,7 +18,6 @@ Currently supports the following feeds:
 * [Bitly](http://bitly.com)
 * [Blogger](http://blogger.com)
 * [Citeulike](http://www.citeulike.org)
-* [Digg](http://digg.com)
 * [Dailymotion](http://dailymotion.com)
 * [Delicious](http://delicious.com)
 * [DeviantART](http://deviantart.com)
@@ -275,6 +274,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
+* 0.3.3 Remove Digg v1 support
 * 0.3.2 Quora support
 * 0.3.1 Citeulike support
 * 0.3.0 RSS support
