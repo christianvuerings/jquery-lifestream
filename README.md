@@ -38,7 +38,6 @@ Currently supports the following feeds:
 * [Last.fm](http://last.fm)
 * [LibraryThing.com](http://librarything.com)
 * [Mlkshk](http://mlkshk.com)
-* [PicPlz](http://picplz.com)
 * [Pinboard](http://pinboard.in)
 * [Posterous](http://posterous.com)
 * [Quora](http://quora.com)
@@ -274,7 +273,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
-* 0.3.3 Remove Digg v1 support
+* 0.3.3 Remove Digg v1 & picplz support
 * 0.3.2 Quora support
 * 0.3.1 Citeulike support
 * 0.3.0 RSS support
