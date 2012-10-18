@@ -275,44 +275,7 @@ Special thanks all the [committers](https://raw.github.com/christianv/jquery-lif
 
 ## Version log
 
-* 0.3.3 Remove Digg v1 & picplz support
-* 0.3.2 Quora support
-* 0.3.1 Citeulike support
-* 0.3.0 RSS support
-* 0.2.9 Hypem support
-* 0.2.8 Gimmebar support
-* 0.2.7 Zotero support
-* 0.2.6 Google+ support
-* 0.2.5 Wikipedia support
-* 0.2.4 LibraryThing support
-* 0.2.3 Digg support
-* 0.2.2 Facebook Pages support
-* 0.2.1 Bitbucket support
-* 0.2.0 Modular builds
-* 0.1.6 Bitly support
-* 0.1.5 Snipplr support
-* 0.1.4 Instapaper support
-* 0.1.3 Mlkshk support
-* 0.1.2 Foomark support
-* 0.1.1 Blogger, Formspring, Posterous & Wordpress support
-* 0.1.0 jQuery Template support
-* 0.0.17 Forrst & PicPlz support
-* 0.0.16 Iusethis support
-* 0.0.15 Dailymotion & Pinboard support
-* 0.0.14 Slideshare support
-* 0.0.13 Vimeo support
-* 0.0.12 Reddit support
-* 0.0.11 Tumblr support
-* 0.0.10 DeviantART support
-* 0.0.9 Foursquare support
-* 0.0.8 Add support for Github tags
-* 0.0.7 Dribbble support
-* 0.0.6 Update links in twitter to be able to have hashes in them
-* 0.0.5 Flickr support
-* 0.0.4 Last.fm support
-* 0.0.3 Delicious support + minor bug fix in the stackoverflow code
-* 0.0.2 Youtube support
-* 0.0.1 Initial version
+Have a look at [our tags](https://github.com/christianv/jquery-lifestream/tags) to see what we've been working on.
 
 
 [jquery-lifestream]: https://github.com/christianv/jquery-lifestream
