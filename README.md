@@ -37,6 +37,7 @@ Currently supports the following feeds:
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
 * [LibraryThing.com](http://librarything.com)
+* [Miso](http://gomiso.com)
 * [Mlkshk](http://mlkshk.com)
 * [Pinboard](http://pinboard.in)
 * [Posterous](http://posterous.com)
