@@ -184,7 +184,7 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 ### Create data:URI for an icon
 
 1. [Convert](http://converticon.com/) the favicon.ico of a site to a .png file. (e.g. http://google.com/favicon.ico)
-2. [Optimize](http://www.smushit.com/ysmush.it/) the .png file.
+2. [Optimize](http://www.smushit.com/ysmush.it/) the .png file. Save it in src/favicons/.
 3. [Make](http://www.dopiaza.org/tools/datauri/) a data:URI for it.
 4. Put the data:URI in css/lifestream.css (alphabetical order).
 
