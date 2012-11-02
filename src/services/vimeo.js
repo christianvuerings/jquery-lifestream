@@ -2,41 +2,66 @@
 $.fn.lifestream.feeds.vimeo = function( config, callback ) {
 
   var template = $.extend({},
-    {
-      posted: 'posted <a href="${url}" title="${description}">${title}</a>'
-    },
-    config.template),
+  {
+    liked: 'liked <a href="${url}" title="${description}">${title}</a>',
+    posted: 'posted <a href="${url}" title="${description}">${title}</a>'
+  },
+  config.template),
 
-  parseVimeo = function( input ) {
-    var output = [], i = 0, j, item;
+  parseVimeo = function( input, item_type ) {
+    var output = [], i = 0, j, item, type = item_type || 'liked', date;
 
     if (input) {
       j = input.length;
       for( ; i < j; i++) {
         item = input[i];
+        if (type === 'posted') {
+          date = new Date( item.upload_date.replace(' ', 'T') );
+        } else {
+          date = new Date( item.liked_on.replace(' ', 'T') );
+        }
+
         output.push({
-          date: new Date( item.upload_date.replace(' ', 'T') ),
+          date: date,
           config: config,
-          html: $.tmpl( template.posted, {
+          html: $.tmpl( template[type], {
             url: item.url,
             description: item.description.replace(/"/g, "'")
-                                         .replace( /<.+?>/gi, ""),
+              .replace( /<.+?>/gi, ""),
             title: item.title
-          } )
+          })
         });
       }
     }
 
     return output;
+  },
+
+  pollVimeo = function( endpoint ) {
+    return $.ajax({
+      url: "http://vimeo.com/api/v2/" + config.user +
+        "/" + endpoint + ".json",
+      dataType: "jsonp",
+      crossDomain: true
+    });
   };
 
-  $.ajax({
-    url: "http://vimeo.com/api/v2/" + config.user + "/videos.json",
-    dataType: "jsonp",
-    crossDomain: true,
-    success: function( data ) {
-      callback(parseVimeo(data));
+  // wait for both requests to finish
+  $.when(pollVimeo('likes'), pollVimeo('videos')).
+  	done(function(likes, uploads) {
+    var output = [];
+
+    // check for likes & parse
+    if ( typeof likes === 'object' && likes[0].length > 0 ) {
+      output = output.concat(parseVimeo(likes[0]));
     }
+
+    // check for uploads & parse
+    if ( typeof uploads === 'object' && uploads[0].length > 0 ) {
+      output = output.concat(parseVimeo(uploads[0], 'posted'));
+    }
+
+    callback(output);
   });
 
   // Expose the template.
