@@ -33,35 +33,34 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
         });
       }
     }
-
+    
     return output;
-  },
-
-  pollVimeo = function( endpoint ) {
-    return $.ajax({
-      url: "http://vimeo.com/api/v2/" + config.user +
-        "/" + endpoint + ".json",
-      dataType: "jsonp",
-      crossDomain: true
-    });
   };
-
-  // wait for both requests to finish
-  $.when(pollVimeo('likes'), pollVimeo('videos')).
-  	done(function(likes, uploads) {
-    var output = [];
-
-    // check for likes & parse
-    if ( typeof likes === 'object' && likes[0].length > 0 ) {
-      output = output.concat(parseVimeo(likes[0]));
+  
+  $.ajax({
+    url: $.fn.lifestream.createYqlUrl('SELECT * FROM xml WHERE '
+      + 'url="http://vimeo.com/api/v2/' + config.user + '/likes.xml" OR '
+      + 'url="http://vimeo.com/api/v2/' + config.user + '/videos.xml"'),
+    dataType: "jsonp",
+    success: function( response ) {
+      var output = [];
+      
+      // check for likes & parse
+      if ( response.query.results.videos[0].video.length > 0 ) {
+        output = output.concat(parseVimeo(
+          response.query.results.videos[0].video
+        ));
+      }
+  
+      // check for uploads & parse
+      if ( response.query.results.videos[1].video.length > 0 ) {
+        output = output.concat(
+          parseVimeo(response.query.results.videos[1].video, 'posted')
+        );
+      }
+  
+      callback(output);
     }
-
-    // check for uploads & parse
-    if ( typeof uploads === 'object' && uploads[0].length > 0 ) {
-      output = output.concat(parseVimeo(uploads[0], 'posted'));
-    }
-
-    callback(output);
   });
 
   // Expose the template.
