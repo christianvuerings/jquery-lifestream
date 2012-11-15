@@ -150,7 +150,7 @@
   <!-- Begin Tasks / Assignments column -->
 
 
-    <div class="cc-container-widget" id="cc-widget-tasks">
+    <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
     <div class="cc-widget-title">
         <h2>Assignments and Tasks</h2>
     </div>
@@ -160,91 +160,21 @@
             <a href="#" data-notreal="standard">
                 <img src="/assets/dummy_task_slider.png" alt="Task slider placeholder" class="cc-widget-tasks-taskslider">
             </a>
-            <div class="cc-widget-section-label">Due</div>
-            <ul class="cc-widget-notifications-list cc-widget-section-list">
+            <div data-ng-repeat="section in tasks">
 
+            <div class="cc-widget-section-label">{{section.title}}</div>
+              <ul class="cc-widget-notifications-list cc-widget-section-list">
 
+                <li class="cc-widget-list-icon-big cc-icon-big-{{task.status}}" data-ng-repeat="task in section.tasks">
+                    <a href="{{task.link_url}}" class="cc-widget-tasks-notifications-short-title cc-ellipsis cc-alert">{{task.title}}</a>
+                    <div class="cc-right" data-ng-show="$parent.section.title == 'Upcoming'">{{task.due_date | date:'M/dd'}}</div>
+                    <div class="cc-widget-task-notifications-list-source">
+                      <em>{{task.source || task.emitter}}</em>
+                    </div>
+                </li>
 
-        <li class="cc-widget-list-icon-big cc-icon-big-overdue">
-            <a href="https://mail.google.com/tasks/canvas?pli=1" class="cc-widget-tasks-notifications-short-title cc-ellipsis cc-alert">Box of Bandaids</a>
-
-            <div class="cc-widget-task-notifications-list-source">
-
-                    <em>Google Tasks</em>
-
+              </ul>
             </div>
-        </li>
-
-
-
-        <li class="cc-widget-list-icon-big cc-icon-big-overdue">
-            <a href="https://mail.google.com/tasks/canvas?pli=1" class="cc-widget-tasks-notifications-short-title cc-ellipsis cc-alert">Alphabetize MP3s</a>
-
-            <div class="cc-widget-task-notifications-list-source">
-
-                    <em>Google Tasks</em>
-
-            </div>
-        </li>
-
-
-
-            </ul>
-
-
-            <div class="cc-widget-section-label">Due Tomorrow</div>
-            <ul class="cc-widget-notifications-list cc-widget-section-list">
-
-                <li class="cc-widget-tasks-notifications-short-title">Nothing due tomorrow</li>
-
-            </ul>
-
-            <div class="cc-widget-section-label">Upcoming</div>
-            <ul class="cc-widget-notifications-list cc-widget-section-list">
-
-                <li class="cc-widget-tasks-notifications-short-title">No tasks or assignments</li>
-
-            </ul>
-
-            <div class="cc-widget-section-label">Unscheduled</div>
-            <ul class="cc-widget-notifications-list cc-widget-section-list">
-
-
-
-        <li class="cc-widget-list-icon-big cc-icon-big-inprogress">
-            <a href="https://mail.google.com/tasks/canvas?pli=1" class="cc-widget-tasks-notifications-short-title cc-ellipsis ">Break bread with the Mllers</a>
-
-            <div class="cc-widget-task-notifications-list-source">
-
-                    <em>Google Tasks</em>
-
-            </div>
-        </li>
-
-
-
-        <li class="cc-widget-list-icon-big cc-icon-big-inprogress">
-            <a href="https://mail.google.com/tasks/canvas?pli=1" class="cc-widget-tasks-notifications-short-title cc-ellipsis ">Get new headphone cable</a>
-
-            <div class="cc-widget-task-notifications-list-source">
-
-                    <em>Google Tasks</em>
-
-            </div>
-        </li>
-
-
-
-        <li class="cc-widget-list-icon-big cc-icon-big-inprogress">
-            <a href="https://mail.google.com/tasks/canvas?pli=1" class="cc-widget-tasks-notifications-short-title cc-ellipsis ">Learn to repair alternator</a>
-
-            <div class="cc-widget-task-notifications-list-source">
-
-                    <em>Google Tasks</em>
-
-            </div>
-        </li>
-            </ul>
         </div>
     </div>
     </div>
@@ -263,7 +193,7 @@
 
     <!-- MAIN VIEW -->
     <div class="cc-notifications-list">
-      <div class="cc-widget-body" data-ng-repeat="(key,section) in notifications.sections">
+      <div class="cc-widget-body" data-ng-repeat="section in notifications.sections">
       <div ng-switch on="section.title">
         <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
       </div>
@@ -272,7 +202,7 @@
                 <a href="{{notification.url}}" class="cc-widget-tasks-notifications-short-title cc-alert cc-ellipsis" data-notreal="details">{{notification.title}}</a>
                 <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
                 <div class="cc-right cc-alert" data-ng-show="$parent.section.title == 'Alerts'">Today</div>
-                <div class="cc-right" data-ng-show="$parent.section.title == 'Recent'">{{notification.notificationDate * 1000 | date:'M/yy'}}</div>
+                <div class="cc-right" data-ng-show="$parent.section.title == 'Recent'">{{notification.notificationDate * 1000 | date:'M/dd'}}</div>
 
                 <div class="cc-widget-notifications-summary">{{notification.summary}}</div>
                 <div class="cc-widget-task-notifications-list-source"><a href="{{notification.sourceURL}}">{{notification.source}}</a></div>
