@@ -1,0 +1,5 @@
+bundler_args: --without development testext production
+rvm:
+  - "jruby-19mode"
+env:
+  - JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"

@@ -1,0 +1,46 @@
+development:
+  adapter: jdbcpostgresql
+  database: eggshell_development
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  username: eggshell_development
+  host: localhost
+
+production:
+  adapter: jdbcpostgresql
+  database: <%= Settings.postgres.database %>
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  username: <%= Settings.postgres.username %>
+  password: <%= Settings.postgres.password %>
+  host: <%= Settings.postgres.host %>
+  port: <%= Settings.postgres.port %>
+
+test:
+  adapter: jdbcsqlite3
+  encoding: utf8
+  database: ':memory:'
+  pool: 1
+
+testext:
+  adapter: jdbcpostgresql
+  database: eggshell_test
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+  username: postgres
+  password: secret
+
+# The places where these settings are filled out are settings.yml, testext.yml, and production.yml
+# You should only be filling in custom values and secrets for testext.local.yml and production.local.yml
+campusdb:
+  adapter: <%= Settings.campusdb.adapter %>
+  driver: <%=Settings.campusdb.driver %>
+  url: <%=Settings.campusdb.url %>
+  username: <%=Settings.campusdb.username %>
+  password: <%=Settings.campusdb.password %>
+  pool: <%=Settings.campusdb.pool %>
+  timeout: <%=Settings.campusdb.timeout %>
+

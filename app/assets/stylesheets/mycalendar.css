@@ -1,0 +1,60 @@
+/* Icon */
+#cc-widget-mycalendar .cc-widget-title .cc-icon {
+  margin-top: 3px;
+}
+
+.cc-widget-mycalendar-datelist {
+  list-style-type: none;
+  margin: 0;
+  max-height: 160px;
+  overflow: auto;
+  padding: 0;
+}
+
+/* List items */
+.cc-widget-mycalendar-datelist li {
+  border-bottom: 1px dotted #CACACA;
+  color: #474747;
+  overflow: hidden;
+}
+.cc-widget-mycalendar-datelist .cc-widget-mycalendar-isupcoming {
+  background: #f2fef3;
+  color: #000;
+}
+.cc-widget-mycalendar-datelist li:last-child {
+  border-bottom: none;
+}
+
+/* Time */
+.cc-widget-mycalendar-datelist-time {
+  font-family: 'Arial Narrow', sans-serif;
+  margin-right: 5px;
+}
+.cc-widget-mycalendar-datelist-time-hour {
+  font-size: 29px;
+  text-align: right;
+  width: 30px;
+}
+.cc-widget-mycalendar-datelist-time-minutes {
+  font-size: 14px;
+  line-height: 12px;
+  padding-top: 10px;
+}
+.cc-widget-mycalendar-datelist-time-ampm {
+  font-size: 11px;
+}
+.cc-widget-mycalendar-datelist-time-allday {
+  line-height: 27px;
+  text-align: right;
+  width: 44px;
+}
+
+/* Summary & location */
+.cc-widget-mycalendar-datelist-summary {
+  font-size: 12px;
+  line-height: 13px;
+  padding-top: 8px;
+}
+.cc-widget-mycalendar-datelist-location {
+  font-size: 10px;
+}

@@ -1,0 +1,107 @@
+{
+  "sections": [
+    {
+      "title": "Alerts",
+      "notifications": [
+        {
+          "id": 1,
+          "userId": 177914,
+          "title": "Evacuate Dwinelle Hall",
+          "summary": "Evacuate Dwinelle Hall immediately, gas leak",
+          "source": "WARN ME",
+          "type": "alert",
+          "notificationDate": 1349049728,
+          "url": "https://warnme.berkeley.edu/",
+          "sourceUrl": "https://warnme.berkeley.edu/"
+        },
+        {
+          "id": 2,
+          "userId": 177914,
+          "title": "Incomplete Grade Notice - Math 1B",
+          "summary": "You have 90 days to complete Math 1B and submit a Petition to Remove an Incomplete",
+          "source": "Bear Facts",
+          "type": "alert",
+          "notificationDate": 1349049728,
+          "url": "https://bearfacts.berkeley.edu/",
+          "sourceUrl": "https://bearfacts.berkeley.edu/"
+        }
+      ]
+    },
+    {
+      "title": "Today",
+      "notifications": [
+        {
+          "id": 3,
+          "userId": 177914,
+          "title": "Spring Registration Block - Unpaid CARS Bill",
+          "summary": "You have an unpaid CARS balance of $673.  Action Required.",
+          "source": "Student Billing Services",
+          "type": "block",
+          "notificationDate": 1348185901,
+          "url": "http://studentbilling.berkeley.edu",
+          "sourceUrl": "http://studentbilling.berkeley.edu"
+        },
+        {
+          "id": 4,
+          "userId": 177914,
+          "title": "Grade Posted - Midterm Exam",
+          "summary": "87 out of 100",
+          "source": "ETH STD 21AC",
+          "type": "classes",
+          "notificationDate": 1348268251,
+          "url": "https://ucberkeley.instructure.com/courses/833384",
+          "sourceUrl": "https://ucberkeley.instructure.com/courses/833384"
+        },
+        {
+          "id": 5,
+          "userId": 177914,
+          "title": "November CARS bill Posted",
+          "summary": "Your November CARS bill of $987 is due by October 22",
+          "source": "Student Billing Services",
+          "type": "finances",
+          "notificationDate": 1349956800,
+          "url": "http://studentbilling.berkeley.edu/",
+          "sourceUrl": false
+        }
+      ]
+    },
+    {
+      "title": "Recent",
+      "notifications": [
+        {
+          "id": 6,
+          "userId": 177914,
+          "title": "Appointment Signups Updated - Office Hours",
+          "summary": "Student may sign up for office hours once per week",
+          "source": "EE 20N",
+          "type": "classes",
+          "notificationDate": 1349546400,
+          "url": "https://ucberkeley.instructure.com/courses/833382",
+          "sourceUrl": false
+        },
+        {
+          "id": 7,
+          "userId": 177914,
+          "title": "TeleBears Phase I Appointment - Oct 26 at 11am",
+          "summary": "Your Phase I appointment is scheduled for Oct 26 at 11am",
+          "source": "TeleBears",
+          "type": "academics",
+          "notificationDate": 1348682400,
+          "url": "https://telebears.berkeley.edu",
+          "sourceUrl": false
+        },
+        {
+          "id": 8,
+          "userId": 177914,
+          "title": "Incomplete Emergency Loan Application Notice",
+          "summary": "Your Loan Promissory Note has not been submitted with a signature",
+          "source": "MyFinAid",
+          "type": "finances",
+          "notificationDate": 1348164000,
+          "url": "http://example.com",
+          "sourceUrl": false
+        }
+      ]
+    }
+  ]
+}

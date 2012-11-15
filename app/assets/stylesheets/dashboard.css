@@ -1,0 +1,8 @@
+.cc-page-dashboard-column-shadow {
+  border-left: none;
+  box-shadow: -3px -1px 4px 0 #ccc;
+}
+
+.cc-page-dashboard-column-wide {
+  border-left: 1px solid #838383;
+}

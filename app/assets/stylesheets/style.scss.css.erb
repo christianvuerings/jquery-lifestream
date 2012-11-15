@@ -1,0 +1,336 @@
+/* Body Foundation override */
+body {
+	background-color: #F2F2F2;
+}
+
+/* Masthead */
+body > header {
+	background: url(<%= asset_path 'calcentral_masthead_landing.png' %>);
+	background-repeat: no-repeat;
+	border: 1px solid #d3d8d8;
+	border-top: none;
+	cursor: pointer;
+	margin: 0 auto;
+	height: 90px;
+	position: relative;
+}
+
+body > header > h1 {
+	margin: 0;
+	text-indent: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+
+/* Container */
+.cc-container-main {
+	background-color: #FFFFFF;
+	padding: 0 10px;
+}
+
+/* Launcher */
+.cc-launcher {
+	padding: 0;
+	position: absolute;
+	right: -1px;
+	top: 0;
+}
+.cc-launcher, .cc-launcher .cc-launcher-dropdown {
+	background: #fff;
+	border: 1px solid #114d80;
+	border-bottom-left-radius: 6px;
+	border-top: none;
+}
+.cc-launcher a {
+	color: #15315C;
+	font-weight: bold;
+}
+.cc-launcher .cc-launcher-icons {
+	border-right: 1px solid #114d80;
+	padding: 1px 10px 3px 5px;
+}
+.cc-launcher .cc-icon {
+	margin: 2px 0 0 5px;
+}
+.cc-launcher .cc-launcher-info {
+	padding: 2px 10px;
+}
+.cc-launcher .cc-launcher-icon-dropdown {
+	font-size: 8px;
+}
+.cc-launcher .cc-launcher-dropdown {
+	display: none;
+	position: absolute;
+	right: -1px;
+	z-index: 4;
+}
+.cc-launcher .cc-launcher-dropdown a {
+	display: block;
+	padding: 4px 10px;
+	text-align: right;
+}
+
+/* Footer */
+body > footer {
+	clear: both;
+	font-size: 0.85em;
+	margin: 0 auto;
+	overflow: hidden;
+	padding: 10px 10px 15px;
+	width: 960px;
+}
+
+body > footer a {
+	float: right;
+	font-weight: bold;
+	padding-left: 21px;
+}
+
+/* Foundation navbar overrides */
+.nav-bar {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.nav-bar > li > a {
+	font-weight: bold;
+}
+
+/* Useful classes */
+.cc-alert {
+	color: #FB0007 !important;
+}
+.cc-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.cc-icon, .cc-icon-big {
+	background: no-repeat;
+}
+.cc-icon {
+	height: 16px;
+	width: 16px;
+}
+
+.cc-icon-alert {
+	background-image: url(<%= asset_path 'icon_alert_16x16.png' %>);
+
+}
+.cc-icon-arrow-right-brown {
+	background-image: url(<%= asset_path 'icon_arrow_right_brown_16x16.png' %>);
+
+}
+.cc-icon-arrow-right {
+	background-image: url(<%= asset_path 'icon_arrow_right_16x16.png' %>);
+
+}
+.cc-icon-big {
+	height: 24px;
+	width: 24px;
+}
+
+.cc-container-widget .cc-widget-list-icon-big {
+  background-color: transparent;
+  background-position: 0 2px;
+  background-repeat: no-repeat;
+}
+
+.cc-icon-big-academics {
+	background-image: url(<%= asset_path 'icon_academics_24x24.png' %>);
+}
+.cc-icon-big-alert {
+	background-image: url(<%= asset_path 'icon_alert_24x24.png' %>);
+}
+.cc-icon-big-block {
+	background-image: url(<%= asset_path 'icon_block_24x24.png' %>);
+}
+.cc-icon-big-classes {
+	background-image: url(<%= asset_path 'icon_classes_24x24.png' %>);
+}
+.cc-icon-big-completed {
+	background-image: url(<%= asset_path 'icon_completed_24x24.png' %>);
+}
+.cc-icon-big-enrollment {
+	background-image: url(<%= asset_path 'icon_enrollment_24x24.png' %>);
+}
+.cc-icon-big-finances {
+	background-image: url(<%= asset_path 'icon_finances_24x24.png' %>);
+}
+.cc-icon-big-inprogress {
+	background-image: url(<%= asset_path 'icon_inprogress_24x24.png' %>);
+}
+.cc-icon-big-overdue {
+	background-image: url(<%= asset_path 'icon_overdue_24x24.png' %>);
+}
+.cc-icon-bspace {
+	background-image: url(<%= asset_path 'icon_bspace_16x16.png' %>);
+}
+.cc-icon-calendar {
+	background-image: url(<%= asset_path 'icon_calendar_16x16.png' %>);
+}
+.cc-icon-canvas {
+	background-image: url(<%= asset_path 'icon_canvas_16x16.png' %>);
+}
+.cc-icon-close {
+	background-image: url(<%= asset_path 'icon_close_16x16.png' %>);
+}
+.cc-icon-drive {
+	background-image: url(<%= asset_path 'icon_drive_16x16.png' %>);
+}
+.cc-icon-email {
+	background-image: url(<%= asset_path 'icon_message_16x16.png' %>);
+}
+.cc-icon-info {
+	background-image: url(<%= asset_path 'icon_info_16x16.png' %>);
+}
+.cc-icon-mail {
+	background-image: url(<%= asset_path 'icon_mail_16x16.png' %>);
+}
+
+/* 150x150 icons */
+.cc-icon-advising {
+	background-image: url(<%= asset_path 'icon_campus_advising_150x150.png' %>);
+}
+.cc-icon-academicplan {
+	background-image: url(<%= asset_path 'icon_campus_academicplan_150x150.png' %>);
+}
+.cc-icon-campusdepartments {
+	background-image: url(<%= asset_path 'icon_campus_campusdepartments_150x150.png' %>);
+}
+.cc-icon-career {
+	background-image: url(<%= asset_path 'icon_campus_career_150x150.png' %>);
+}
+.cc-icon-finances {
+	background-image: url(<%= asset_path 'icon_campus_finances_150x150.png' %>);
+}
+.cc-icon-gettingaround {
+	background-image: url(<%= asset_path 'icon_campus_gettingaround_150x150.png' %>);
+}
+.cc-icon-foodhousing {
+	background-image: url(<%= asset_path 'icon_campus_foodhousing_150x150.png' %>);
+}
+.cc-icon-healthsafety {
+	background-image: url(<%= asset_path 'icon_campus_healthsafety_150x150.png' %>);
+}
+.cc-icon-newtocampus {
+	background-image: url(<%= asset_path 'icon_campus_newtocampus_150x150.png' %>);
+}
+.cc-icon-researchstudying {
+	background-image: url(<%= asset_path 'icon_campus_researchstudying_150x150.png' %>);
+}
+.cc-icon-studentgroups {
+	background-image: url(<%= asset_path 'icon_campus_studentgroups_150x150.png' %>);
+}
+.cc-icon-socialrecreation {
+	background-image: url(<%= asset_path 'icon_campus_socialrecreation_150x150.png' %>);
+}
+
+.cc-left {
+	float: left;
+}
+.cc-right {
+	float: right;
+}
+.cc-input-search {
+	background: #fff url(<%= asset_path 'icon_magnifying_glass_16x16.png' %>) 98% center no-repeat;
+	border-radius: 4px;
+	padding: 2px 20px 2px 4px;
+}
+.cc-top-20 {
+	margin-top: 20px;
+}
+
+/* Widgets */
+
+.cc-container-widget .cc-widget-list {
+  margin: 0;
+  max-height: 200px;
+  overflow: auto;
+  padding: 0;
+}
+
+.cc-container-widget .cc-widget-list li {
+  border-bottom: 1px dotted #CACACA;
+  list-style-type: none;
+}
+
+.cc-widget-list-icon {
+  background-color: transparent;
+  background-position: 0 4px;
+  background-repeat: no-repeat;
+}
+
+.cc-widget-title {
+  border-bottom: 1px solid #999;
+  color: #474747;
+}
+
+.cc-widget-title h2 {
+  margin: 4px 0;
+  padding: 2px 0;
+  font-size: 16px;
+}
+
+.cc-widget-title-small {
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.cc-widget-list-subtitle {
+  font-size: 11px;
+  line-height: 8px;
+  margin-left: 21px;
+  padding-bottom: 7px;
+}
+
+.cc-widget-section-label {
+  clear: both;
+  color: #232323;
+  font-size: 1.2em;
+  margin-top: 5px;
+}
+
+.cc-container-widget {
+  float: left;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 100%;
+}
+
+.cc-widget-main {
+  padding: 0 17px;
+}
+
+.cc-container-widgets {
+  margin: 0 15px;
+  overflow: hidden;
+}
+
+.cc-container-widget .cc-widget-list li:last-child {
+  border-bottom: none;
+}
+.cc-container-widget .cc-widget-list li a {
+  display: block;
+  padding: 4px 0 3px 21px;
+}
+.cc-container-widget .cc-widget-list li:last-child {
+  border-bottom: none;
+}
+
+.cc-container-widget .cc-widget-list {
+  margin: 0;
+  max-height: 200px;
+  overflow: auto;
+  padding: 0;
+}
+
+/* ==|== non-semantic helper classes ========================================
+	 Please define your styles before this section.
+	 ========================================================================== */
+
+/* For image replacement */
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; *line-height: 0; }
+.ir br { display: none; }

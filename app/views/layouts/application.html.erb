@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="calcentral">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title data-ng-bind="title">CalCentral</title>
+
+  <meta name="description" content="CalCentral is a new resource for the UC Berkeley community." />
+
+  <link rel="icon" href="/assets/favicon.png" type="image/png" />
+
+  <link rel="shortcut icon" href="/assets/favicon.ico" />
+
+  <!-- Included CSS Files -->
+  <%= stylesheet_link_tag "application" %>
+
+  <!-- Included JS Files  -->
+  <%= javascript_include_tag "application" %>
+
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="cc-page-index">
+
+    <%= render 'templates/launcher' %>
+
+    <!-- Top Navbar -->
+    <div class="row">
+      <ul class="nav-bar">
+        <li class="active"><a href="/">Splash</a></li>
+        <li><a href="/dashboard">My Dashboard</a></li>
+        <li><a href="/secure/campus">My Campus</a></li>
+      </ul>
+    </div>
+
+      <div class="row cc-container-main" role="main">
+        <%= yield %>
+      </div>
+
+    <footer class="row">
+      <div class="cc-left">Copyright © 2012 The Regents of the University of California</div>
+      <a href="#">Help</a>
+      <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
+    </footer>
+
+    <%= render 'templates/all' %>
+
+  </body>
+</html>

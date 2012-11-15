@@ -1,0 +1,25 @@
+/* Tasks and Assigments */
+.cc-widget-tasks-taskslider {
+  margin: 10px 0;
+}
+
+.cc-widget-tasks-notifications-short-title {
+  display: block;
+  font-size: 14px;
+  padding-left: 30px;
+  width: 90%;
+}
+
+.cc-widget-notifications-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 0 10px 0;
+}
+
+.cc-widget-notifications-list li {
+  margin-top: 10px;
+}
+
+.cc-widget-task-notifications-list-source {
+  padding-left: 30px;
+}
