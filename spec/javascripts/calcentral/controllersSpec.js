@@ -22,7 +22,7 @@ describe('CalCentral controllers', function() {
     });
 
     it('should set the page title', function() {
-      expect(rootScope.title).toBe('Dashboard | Calcentral');
+      expect(rootScope.title).toBe('Dashboard | CalCentral');
     });
 
   });
@@ -36,7 +36,7 @@ describe('CalCentral controllers', function() {
     beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
       // Inject the HTTP Back-end
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('/api/user/my/status.json').
+      $httpBackend.expectGET('/api/my/status').
         respond([{
           'is_logged_in': false
         }]);
