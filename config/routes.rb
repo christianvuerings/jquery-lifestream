@@ -58,8 +58,8 @@ Calcentral::Application.routes.draw do
 
   # Rails API endpoints.
 
-  # This should shortly be replaced by "/api/user/:uid/status".
-  match '/api/user/my/status' => 'user_api#status'
+  match '/api/user/my/status' => 'user_api#mystatus', :as => :mystatus
+  match '/api/user/:uid/status' => 'user_api#userstatus', :as => :userstatus
 
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
