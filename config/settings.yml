@@ -11,8 +11,8 @@ campusdb:
   password: sa
 
 postgres:
-  database: eggshell_production
-  username: eggshell_production
+  database: calcentral_production
+  username: calcentral_production
   password: secret
   host: localhost
   port: 5432
