@@ -20,6 +20,25 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "user_data", ["uid"], :name => "index_user_data_on_uid"
+  add_index "user_data", ["uid"], :name => "index_user_data_on_uid", :unique => true
 
+  create_table "widget_data", :force => true do |t|
+    t.string   "uid"
+    t.string   "widget_id"
+    t.text     "data"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "widget_data", ["uid", "widget_id"], :name => "index_widget_data_on_uid_widget_id", :unique => true
+
+  create_table :oauth2_data do |t|
+    t.string :uid
+    t.string :app_id
+    t.text :token
+    t.text :refresh_token
+    t.integer :expiration_time, :limit => 8
+  end
+
+  add_index "oauth2_data", ["uid", "app_id"], :name => "index_oauth2_data_on_uid_app_id", :unique => true
 end
