@@ -5,6 +5,7 @@ development:
   pool: 5
   timeout: 5000
   username: calcentral_development
+  password: <%= Settings.development.password %>
   host: localhost
 
 production:
