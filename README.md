@@ -72,7 +72,7 @@ bundle install
 ```
 cp config/settings.yml config/settings.local.yml
 cp config/settings/testext.yml config/settings/testext.local.yml
-cp config/settings/development.yml config/development/testext.local.yml
+cp config/settings/development.yml config/settings/development.local.yml
 ```
 and update the settings in the `.local.yml` files.
 These won't be committed to the repository.
