@@ -19,10 +19,4 @@ describe UserApiController do
     json_response["preferred_name"].should == "Yu-Hung Lin"
   end
 
-  it "should show Oliver's status'" do
-    get :userstatus, :uid => "2040"
-    json_response = JSON.parse(response.body)
-    json_response["preferred_name"].should == "Oliver Heyer"
-  end
-
 end

@@ -162,16 +162,14 @@ If you use VPN, use group #1 (1-Campus_VPN)
 
 Projected endpoints:
 
-* ``` /api/user/:uid/status ```
-* ``` /api/user/:uid/course_sites ```
-* ``` /api/user/:uid/group_sites ```
-* ``` /api/user/:uid/upcoming_events ```
-* ``` /api/user/:uid/assignments_tasks ```
-
-To bootstrap the project, we currently have one static endpoint. It should be replaced soon.
+* ``` /api/my/status ```
+* ``` /api/my/course_sites ```
+* ``` /api/my/group_sites ```
+* ``` /api/my/upcoming_events ```
+* ``` /api/my/assignments_tasks ```
 
 ```
-/api/user/my/status :
+/api/my/status :
   is_logged_in: <boolean>
   preferred_name: <string if exists else "">
   uid: <string uid if logged in>

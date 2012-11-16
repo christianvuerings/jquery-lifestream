@@ -9,7 +9,7 @@
 
     $scope.user = {};
 
-    $http.get('/api/user/my/status.json').success(function(data) {
+    $http.get('/api/my/status.json').success(function(data) {
       $scope.user = data;
     });
 
