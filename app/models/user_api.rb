@@ -23,6 +23,7 @@ class UserApi
   end
 
   def save
+    expire self.uid
     if !@calcentral_user_data
       @calcentral_user_data = UserData.create(uid: self.uid, preferred_name: @override_name)
     else
@@ -38,6 +39,25 @@ class UserApi
       self.preferred_name = attributes[:preferred_name]
     end
     save
+  end
+
+  def self.get_user_data(uid)
+    Rails.cache.fetch(UserApi.cache_key(uid)) do
+      user = UserApi.new(uid)
+      {
+          :uid => user.uid,
+          :preferred_name => user.preferred_name || "",
+          :widget_data => {}
+      }
+    end
+  end
+
+  def self.cache_key(uid)
+    "user_#{uid}"
+  end
+
+  def expire(uid)
+    Rails.cache.delete(UserApi.cache_key(uid), :force => true)
   end
 
 end

@@ -31,4 +31,8 @@ describe "UserApi" do
     u = UserApi.new(@random_id)
     u.preferred_name.should == @default_name
   end
+  it "should return a user data structure" do
+    user_data = UserApi.get_user_data(@random_id)
+    user_data[:preferred_name].should == @default_name
+  end
 end
