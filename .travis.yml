@@ -3,4 +3,4 @@ rvm:
   - "jruby-19mode"
   - "jruby-head"
 env:
-  - JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
+  - JRUBY_OPTS="--client -Xcext.enabled=false"
