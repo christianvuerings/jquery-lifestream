@@ -53,7 +53,7 @@ class UserApi
   end
 
   def self.cache_key(uid)
-    "user_#{uid}"
+    "user/#{uid}/UserApi/get_user_data"
   end
 
   def expire(uid)
