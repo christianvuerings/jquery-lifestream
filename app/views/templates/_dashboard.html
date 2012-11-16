@@ -60,54 +60,22 @@
 
     </div>
 
-    <div class="cc-container-widget" id="cc-widget-myclasses">
-    <div class="cc-widget-title">
-        <h2>My Classes <span class="cc-right cc-widget-title-small">Fall 2012</span></h2>
-    </div>
-    <!-- MAIN VIEW -->
-    <div class="cc-widget-myclasses-list">
-
-            <ul class="cc-widget-list">
-
-                <li class="cc-widget-list-icon cc-icon-canvas">
-                    <a href="https://ucberkeley.instructure.com/courses/832071" class="cc-ellipsis cc-myclasses-link-with-title">Biology</a>
-                    <div class="cc-widget-list-subtitle cc-ellipsis">Biology for Poets</div>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-bspace">
-                    <a href="https://sakai-dev.berkeley.edu/portal/site/ba324114-0f04-4167-b2da-93c0df28d9d2" class="cc-ellipsis">Endurance Running 101</a>
-
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-canvas">
-                    <a href="https://ucberkeley.instructure.com/courses/830013" class="cc-ellipsis cc-myclasses-link-with-title">Javascript-101</a>
-                    <div class="cc-widget-list-subtitle cc-ellipsis">Intermediate JavaScript</div>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-bspace">
-                    <a href="https://sakai-dev.berkeley.edu/portal/site/cddb1acd-3e57-4f6a-9e66-a27a9a59b55f" class="cc-ellipsis cc-myclasses-link-with-title">PHYSICS 7B</a>
-                    <div class="cc-widget-list-subtitle cc-ellipsis">Physics for Scientists and Engineers</div>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-canvas">
-                    <a href="https://ucberkeley.instructure.com/courses/750027" class="cc-ellipsis cc-myclasses-link-with-title">PLEO 22</a>
-                    <div class="cc-widget-list-subtitle cc-ellipsis">Lessons from the Cambrian Explosion</div>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-canvas">
-                    <a href="https://ucberkeley.instructure.com/courses/830065" class="cc-ellipsis cc-myclasses-link-with-title">Responsive-Design</a>
-                    <div class="cc-widget-list-subtitle cc-ellipsis">Responsive Design Workshop</div>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-canvas">
-                    <a href="https://ucberkeley.instructure.com/courses/760795" class="cc-ellipsis cc-myclasses-link-with-title">Stat 150C</a>
-                    <div class="cc-widget-list-subtitle cc-ellipsis">Applied Sabrmetrics</div>
-                </li>
-
-            </ul>
-
-    </div>
-
+    <div class="cc-container-widget" id="cc-widget-myclasses" data-ng-controller="MyClassesController">
+      <div class="cc-widget-title">
+          <h2>My Classes <span class="cc-right cc-widget-title-small">Fall 2012</span></h2>
+      </div>
+      <!-- MAIN VIEW -->
+      <div class="cc-widget-myclasses-list">
+        <ul class="cc-widget-list">
+          <li class="cc-widget-list-icon"
+            data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']"
+            data-ng-repeat="class in myclasses">
+            <a data-ng-show="class.emitter == 'Canvas'" href="https://ucberkeley.instructure.com/courses/{{class.id}}" class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}</a>
+            <a data-ng-show="class.emitter == 'bSpace'" href="https://sakai-dev.berkeley.edu/portal/site/{{class.id}}" class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}</a>
+            <div class="cc-widget-list-subtitle cc-ellipsis">{{class.name}}</div>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="cc-container-widget" id="cc-widget-mygroups">
