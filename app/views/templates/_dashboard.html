@@ -166,7 +166,8 @@
               <ul class="cc-widget-notifications-list cc-widget-section-list">
 
                 <li class="cc-widget-list-icon-big cc-icon-big-{{task.status}}" data-ng-repeat="task in section.tasks">
-                    <a href="{{task.link_url}}" class="cc-widget-tasks-notifications-short-title cc-ellipsis cc-alert">{{task.title}}</a>
+                    <a href="{{task.link_url}}" class="cc-widget-tasks-notifications-short-title cc-ellipsis"
+                    data-ng-class="{true:'cc-alert'}[task.status=='overdue']">{{task.title}}</a>
                     <div class="cc-right" data-ng-show="$parent.section.title == 'Upcoming'">{{task.due_date | date:'M/dd'}}</div>
                     <div class="cc-widget-task-notifications-list-source">
                       <em>{{task.source || task.emitter}}</em>
@@ -194,14 +195,16 @@
     <!-- MAIN VIEW -->
     <div class="cc-notifications-list">
       <div class="cc-widget-body" data-ng-repeat="section in notifications.sections">
-      <div ng-switch on="section.title">
+      <div data-ng-switch on="section.title">
         <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
       </div>
           <ul class="cc-widget-notifications-list cc-widget-section-list">
             <li data-ng-repeat="notification in section.notifications | orderBy: 'notificationDate'" class="cc-widget-list-icon-big cc-icon-big-{{notification.type}}">
-                <a href="{{notification.url}}" class="cc-widget-tasks-notifications-short-title cc-alert cc-ellipsis" data-notreal="details">{{notification.title}}</a>
-                <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
+                <a href="{{notification.url}}" class="cc-widget-tasks-notifications-short-title cc-ellipsis" data-notreal="details"
+                  data-ng-class="{true:'cc-alert'}[$parent.section.title == 'Alerts']"
+                >{{notification.title}}</a>
                 <div class="cc-right cc-alert" data-ng-show="$parent.section.title == 'Alerts'">Today</div>
+                <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
                 <div class="cc-right" data-ng-show="$parent.section.title == 'Recent'">{{notification.notificationDate * 1000 | date:'M/dd'}}</div>
 
                 <div class="cc-widget-notifications-summary">{{notification.summary}}</div>
