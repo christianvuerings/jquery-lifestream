@@ -116,6 +116,7 @@ GEM
     libwebsocket (0.1.5)
       addressable
     listen (0.5.3)
+    log4r (1.1.10)
     lumberjack (1.0.2)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -269,6 +270,7 @@ DEPENDENCIES
   jasmine (~> 1.2.1)
   jruby-openssl (~> 0.7.7)
   json (~> 1.7.5)
+  log4r (~> 1.1.10)
   minitest-reporters
   omniauth-cas (~> 0.0.7)
   posix-spawn (~> 0.3.6)
