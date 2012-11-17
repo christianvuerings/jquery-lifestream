@@ -9,26 +9,26 @@
     <!-- MAIN VIEW -->
     <div class="cc-widget-mycalendar-container">
       <ul class="cc-widget-mycalendar-datelist">
-      <!-- First loop renders timed calendar items -->
-        <li data-ng-repeat="item in items" data-ng-show="item.start.dateTime">
+      <!-- First loop: timestamped items -->
+        <li data-ng-repeat="item in items | filter:notAllDay">
           <div class="cc-widget-mycalendar-datelist-time cc-left">
             <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.dateTime | date:'H'}}</div>
-            <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.dateTime | date:'mm'}}<br>
-              <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.dateTime | date:'a' | uppercase}}</span>
+              <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.dateTime | date:'mm'}}<br>
+                <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.dateTime | date:'a' | uppercase}}</span>
+              </div>
             </div>
-          </div>
           <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-              <a data-ng-href="{{item.htmlLink}}">{{item.summary}}</a>
+            <a data-ng-href="{{item.htmlLink}}">{{item.summary}}</a>
           </div>
         </li>
 
-      <!-- Second loop shows UNtimed (all-day) calendar items -->
-        <li data-ng-repeat="item in items" data-ng-show="item.start.date">
+      <!-- Second loop: UNtimed (all-day) items -->
+        <li data-ng-repeat="item in items | filter:isAllDay">
           <div class="cc-widget-mycalendar-datelist-time cc-left">
             <div class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
           </div>
           <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-              <a data-ng-href="{{item.htmlLink}}">{{item.summary}}</a>
+            <a data-ng-href="{{item.htmlLink}}">{{item.summary}}</a>
           </div>
         </li>
       </ul>
