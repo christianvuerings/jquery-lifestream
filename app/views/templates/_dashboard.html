@@ -78,38 +78,22 @@
       </div>
     </div>
 
-    <div class="cc-container-widget" id="cc-widget-mygroups">
-    <div class="cc-widget-title">
-        <h2>My Groups</h2>
+    <div class="cc-container-widget" id="cc-widget-mygroups" data-ng-controller="MyGroupsController">
+      <div class="cc-widget-title">
+          <h2>My Groups</h2>
+      </div>
+      <!-- MAIN VIEW -->
+      <div class="cc-widget-mygroups-list">
+        <ul class="cc-widget-list">
+          <li class="cc-widget-list-icon"
+            data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']"
+            data-ng-repeat="group in mygroups">
+            <a data-ng-show="group.emitter == 'Canvas'" class="cc-ellipsis" href="https://ucberkeley.instructure.com/groups/{{group.id}}">{{group.title}}</a>
+            <a data-ng-show="group.emitter == 'bSpace'" class="cc-ellipsis" href="https://sakai-dev.berkeley.edu/portal/site/{{group.id}}">{{group.title}}</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <!-- MAIN VIEW -->
-    <div class="cc-widget-mygroups-list">
-
-            <ul class="cc-widget-list">
-
-                <li class="cc-widget-list-icon cc-icon-canvas">
-                    <a class="cc-ellipsis" href="https://ucberkeley.instructure.com/groups/49957" title="">Canvas/ETS Collaboration</a>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-bspace">
-                    <a class="cc-ellipsis" href="https://sakai-dev.berkeley.edu/portal/site/7ea7d89c-b87c-4221-a2ea-16aee252b967" title="">OE IT Design Initiative</a>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-bspace">
-                    <a class="cc-ellipsis" href="https://sakai-dev.berkeley.edu/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497" title="">UIE Seminars &amp; UCD Group Resources</a>
-                </li>
-
-                <li class="cc-widget-list-icon cc-icon-bspace">
-                    <a class="cc-ellipsis" href="https://sakai-dev.berkeley.edu/portal/site/b3833e7d-fab2-42ae-80d8-2fad0e1dd147" title="">shacker  test site</a>
-                </li>
-
-            </ul>
-
-    </div>
-
-    </div>
-
-
   <!-- End Calendar / Classes / Groups column -->
   </div>
 
