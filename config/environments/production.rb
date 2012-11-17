@@ -66,4 +66,6 @@ Calcentral::Application.configure do
   config.cache_store.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log")
   config.cache_store.logger.level = Logger::INFO
 
+  # log less chattily
+  Rails.logger.level = WARN
 end
