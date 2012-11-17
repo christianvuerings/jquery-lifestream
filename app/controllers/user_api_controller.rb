@@ -1,10 +1,10 @@
 class UserApiController < ApplicationController
 
-  caches_action :status, :cache_path => proc {
+  caches_action :mystatus, :cache_path => proc {
     if session[:user_id]
-      "#{mystatus_url}?uid=#{session[:user_id]}"
+      "user/#{session[:user_id]}/api/my/status"
     else
-      "#{mystatus_url}?uid=anonymous"
+      "user/anonymous/api/my/status"
     end
   }
 
