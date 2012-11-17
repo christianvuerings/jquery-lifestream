@@ -1,6 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'log4r'
+include Log4r
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -63,6 +65,18 @@ module Calcentral
 
     # always be caching
     config.action_controller.perform_caching = true
+
+    # log in our own way
+    format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
+    Rails.logger = Log4r::Logger.new '[CalCentral]'
+    stdout = Outputter.stdout
+    stdout.formatter = format
+    file = FileOutputter.new('outputter', {
+            :filename => "#{Rails.root}/log/#{Rails.env}.log",
+        })
+    file.formatter = format
+    Rails.logger.outputters = [ stdout, file ]
+    Rails.logger.level = DEBUG
 
   end
 end

@@ -9,6 +9,7 @@ class UserApiController < ApplicationController
   }
 
   def mystatus
+    logger.debug "mystatus for uid '#{session[:user_id]}'"
     if session[:user_id]
       user_data = UserApi.get_user_data session[:user_id]
       render :json => {
