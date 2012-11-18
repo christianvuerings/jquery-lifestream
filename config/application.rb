@@ -76,7 +76,7 @@ module Calcentral
         })
     file.formatter = format
     Rails.logger.outputters = [ stdout, file ]
-    Rails.logger.level = 3
+    Rails.logger.level = WARN
 
   end
 end
