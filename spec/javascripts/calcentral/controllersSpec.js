@@ -4,6 +4,44 @@ describe('CalCentral controllers', function() {
   // Usually we can do this within the HTML but here we need to initialize it manually
   beforeEach(module('calcentral'));
 
+  describe('CalCentral controller', function() {
+
+    var ctrl;
+    var scope;
+
+    beforeEach(inject(function($rootScope, $controller) {
+      scope = $rootScope.$new();
+
+      ctrl = $controller('CalcentralController', {
+        $scope: scope
+      });
+    }));
+
+    it('should have a defined calcentral controller', function() {
+      expect(ctrl).toBeDefined();
+    });
+
+    it('should set the anonymous userdata correctly', function() {
+      scope.user.handleUserLoaded({
+        "is_logged_in": false
+      });
+      expect(scope.user.isAuthenticated()).toBeFalsy();
+    });
+
+    it('should set the signed in userdata correctly', function() {
+      scope.user.handleUserLoaded({
+        "is_logged_in": true,
+        "uid": "978966",
+        "preferred_name": "Christian Raymond Marcel Vuerings",
+        "widget_data": {}
+      });
+      expect(scope.user.isAuthenticated()).toBeTruthy();
+      expect(scope.user.profile.uid).toBeDefined();
+      expect(scope.user.profile.preferred_name).toBeDefined();
+    });
+
+  });
+
   describe('Dashboard controller', function() {
 
     var ctrl;
@@ -23,44 +61,6 @@ describe('CalCentral controllers', function() {
 
     it('should set the page title', function() {
       expect(rootScope.title).toBe('Dashboard | CalCentral');
-    });
-
-  });
-
-  describe('User controller', function() {
-
-    var $httpBackend;
-    var ctrl;
-    var scope;
-
-    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
-      // Inject the HTTP Back-end
-      $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('/api/my/status').
-        respond([{
-          'is_logged_in': false
-        }]);
-
-      scope = $rootScope.$new();
-
-      ctrl = $controller('UserController', {
-        $scope: scope
-      });
-    }));
-
-    afterEach(function() {
-      $httpBackend.verifyNoOutstandingExpectation();
-      $httpBackend.verifyNoOutstandingRequest();
-    });
-
-    it('should have a defined user controller', function() {
-      expect(ctrl).toBeDefined();
-      $httpBackend.flush();
-    });
-
-    it('should make sure that the user is logged out', function() {
-      expect(scope.user.is_logged_in).toBeFalsy();
-      $httpBackend.flush();
     });
 
   });

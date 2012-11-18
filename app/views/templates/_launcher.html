@@ -1,14 +1,14 @@
-<header data-ng-controller="UserController" class="row">
+<header class="row">
   <h1>CalCentral</h1>
   <nav class="cc-launcher cc-right">
-    <div data-ng-show="user.is_logged_in">
+    <div data-ng-show="user.isAuthenticated()">
       <div class="cc-left cc-launcher-icons">
         <a href="http://bmail.berkeley.edu" class="ir cc-left cc-icon cc-icon-mail" title="bMail">bMail</a>
         <a href="http://bcal.berkeley.edu" class="ir cc-left cc-icon cc-icon-calendar" title="bCal">bCal</a>
         <a href="https://drive.google.com/a/berkeley.edu/" class="ir cc-left cc-icon cc-icon-drive" title="bDrive">bDrive</a>
       </div>
-      <a class="cc-launcher-info cc-right" data-ng-click="signOut()" aria-haspopup="true">{{user.preferred_name}}</a>
+      <a class="cc-launcher-info cc-right" data-ng-click="user.signOut()" aria-haspopup="true">{{user.profile.preferred_name}}</a>
     </div>
-    <a data-ng-click="signIn()" data-ng-hide="user.is_logged_in" class="cc-launcher-info cc-right">Sign In</a>
+    <a data-ng-click="user.signIn()" data-ng-hide="user.isAuthenticated()" class="cc-launcher-info cc-right">Sign In</a>
   </nav>
 </header>
