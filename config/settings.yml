@@ -1,3 +1,6 @@
+logger:
+  level: <%= WARN %>
+
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
 canvas_proxy:
@@ -22,3 +25,7 @@ postgres:
   port: 5432
 
 freshen_vcr: <%= ENV['freshen_vcr'] %>
+
+sakai_proxy:
+  shared_secret: secret set in production
+  host: "https://sakai-dev.berkeley.edu"
