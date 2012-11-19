@@ -2,7 +2,7 @@
   <div class="three columns">
 
   <!-- Begin Calendar / Classes / Groups column -->
-    <div class="cc-container-widget" id="cc-widget-mycalendar"  data-ng-controller="UpNextController">
+    <div class="cc-container-widget" id="cc-widget-mycalendar" data-ng-controller="UpNextController">
     <div class="cc-widget-title">
         <h2>Up Next <a href="http://bcal.berkeley.edu" class="ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
     </div>
@@ -12,13 +12,13 @@
       <!-- First loop: timestamped items -->
         <li data-ng-repeat="item in items | filter:notAllDay">
           <div class="cc-widget-mycalendar-datelist-time cc-left">
-            <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.dateTime | date:'H'}}</div>
-              <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.dateTime | date:'mm'}}<br>
-                <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.dateTime | date:'a' | uppercase}}</span>
+            <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.date_time | date:'H'}}</div>
+              <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.date_time | date:'mm'}}<br>
+                <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.date_time | date:'a' | uppercase}}</span>
               </div>
             </div>
           <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-            <a data-ng-href="{{item.htmlLink}}">{{item.summary}}</a>
+            <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
           </div>
         </li>
 
@@ -28,7 +28,7 @@
             <div class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
           </div>
           <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-            <a data-ng-href="{{item.htmlLink}}">{{item.summary}}</a>
+            <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
           </div>
         </li>
       </ul>
