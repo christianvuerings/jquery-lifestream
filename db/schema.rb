@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table :oauth2_data do |t|
     t.string :uid
     t.string :app_id
-    t.text :token
+    t.text :access_token
     t.text :refresh_token
     t.integer :expiration_time, :limit => 8
   end

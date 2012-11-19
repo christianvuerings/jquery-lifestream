@@ -32,6 +32,10 @@ gem "omniauth-cas", "~> 0.0.7"
 # https://rubygems.org/gems/rest-client
 gem "rest-client", "~> 1.6.7"
 
+# OAuth2 support
+gem "signet", "~> 0.4.3"
+gem "google-api-client", "~> 0.5.0"
+
 # for VCR http recording tool
 gem "vcr", "~> 2.3.0"
 gem "fakeweb", "~> 1.3.0"
