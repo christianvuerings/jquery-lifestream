@@ -133,7 +133,7 @@
           </div>
 
           <ul class="cc-widget-notifications-list cc-widget-section-list">
-            <li data-ng-repeat="notification in section.notifications | orderBy: 'notificationDate'"
+            <li data-ng-repeat="notification in section.notifications | orderBy: 'notification_date'"
               class="cc-widget-list-icon-big cc-icon-big-{{notification.type}}">
               <a data-ng-href="{{notification.url}}"
                 class="cc-widget-tasks-notifications-short-title cc-ellipsis"
@@ -142,9 +142,9 @@
               </a>
               <div class="cc-right cc-alert" data-ng-show="$parent.section.title == 'Alerts'">Today</div>
               <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
-              <div class="cc-right" data-ng-show="$parent.section.title == 'Recent'">{{notification.notificationDate * 1000 | date:'M/dd'}}</div>
+              <div class="cc-right" data-ng-show="$parent.section.title == 'Recent'">{{notification.notification_date * 1000 | date:'M/dd'}}</div>
               <div class="cc-widget-notifications-summary">{{notification.summary}}</div>
-              <div class="cc-widget-task-notifications-list-source"><a data-ng-href="{{notification.sourceURL}}">{{notification.source}}</a></div>
+              <div class="cc-widget-task-notifications-list-source"><a data-ng-href="{{notification.source_url}}">{{notification.source}}</a></div>
             </li>
           </ul>
         </div>
