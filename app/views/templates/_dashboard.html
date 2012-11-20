@@ -1,54 +1,58 @@
 <script type="text/ng-template" id="templates/dashboard.html">
-  <div class="three columns">
 
-  <!-- Begin Calendar / Classes / Groups column -->
+  <div class="three columns">
+    <!-- Begin Calendar / Classes / Groups column -->
+
     <div class="cc-container-widget" id="cc-widget-mycalendar" data-ng-controller="UpNextController">
-    <div class="cc-widget-title">
+      <div class="cc-widget-title">
         <h2>Up Next <a href="http://bcal.berkeley.edu" class="ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
-    </div>
-    <!-- MAIN VIEW -->
-    <div class="cc-widget-mycalendar-container">
-      <ul class="cc-widget-mycalendar-datelist">
-      <!-- First loop: timestamped items -->
-        <li data-ng-repeat="item in items | filter:notAllDay">
-          <div class="cc-widget-mycalendar-datelist-time cc-left">
+      </div>
+      <div class="cc-widget-mycalendar-container">
+        <ul class="cc-widget-mycalendar-datelist">
+          <!-- First loop: timestamped items -->
+          <li data-ng-repeat="item in items | filter:notAllDay">
+            <div class="cc-widget-mycalendar-datelist-time cc-left">
             <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.date_time | date:'H'}}</div>
               <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.date_time | date:'mm'}}<br>
-                <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.date_time | date:'a' | uppercase}}</span>
+              <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.date_time | date:'a' | uppercase}}</span>
               </div>
             </div>
-          <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-            <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
-          </div>
-        </li>
+            <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
+              <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
+            </div>
+          </li>
 
-      <!-- Second loop: UNtimed (all-day) items -->
-        <li data-ng-repeat="item in items | filter:isAllDay">
-          <div class="cc-widget-mycalendar-datelist-time cc-left">
-            <div class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
-          </div>
-          <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-            <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-
+          <!-- Second loop: UNtimed (all-day) items -->
+          <li data-ng-repeat="item in items | filter:isAllDay">
+            <div class="cc-widget-mycalendar-datelist-time cc-left">
+              <div class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
+            </div>
+            <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
+              <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="cc-container-widget" id="cc-widget-myclasses" data-ng-controller="MyClassesController">
       <div class="cc-widget-title">
-          <h2>My Classes <span class="cc-right cc-widget-title-small">Fall 2012</span></h2>
+        <h2>My Classes <span class="cc-right cc-widget-title-small">Fall 2012</span></h2>
       </div>
-      <!-- MAIN VIEW -->
       <div class="cc-widget-myclasses-list">
         <ul class="cc-widget-list">
           <li class="cc-widget-list-icon"
             data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']"
             data-ng-repeat="class in myclasses">
-            <a data-ng-show="class.emitter == 'Canvas'" href="https://ucberkeley.instructure.com/courses/{{class.id}}" class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}</a>
-            <a data-ng-show="class.emitter == 'bSpace'" href="https://sakai-dev.berkeley.edu/portal/site/{{class.id}}" class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}</a>
-            <div class="cc-widget-list-subtitle cc-ellipsis">{{class.name}}</div>
+            <a data-ng-show="class.emitter == 'Canvas'"
+              data-ng-href="https://ucberkeley.instructure.com/courses/{{class.id}}"
+              class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
+              </a>
+            <a data-ng-show="class.emitter == 'bSpace'"
+              data-ng-href="https://sakai-dev.berkeley.edu/portal/site/{{class.id}}"
+              class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
+            </a>
+          <div class="cc-widget-list-subtitle cc-ellipsis">{{class.name}}</div>
           </li>
         </ul>
       </div>
@@ -56,92 +60,97 @@
 
     <div class="cc-container-widget" id="cc-widget-mygroups" data-ng-controller="MyGroupsController">
       <div class="cc-widget-title">
-          <h2>My Groups</h2>
+        <h2>My Groups</h2>
       </div>
-      <!-- MAIN VIEW -->
       <div class="cc-widget-mygroups-list">
         <ul class="cc-widget-list">
           <li class="cc-widget-list-icon"
             data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']"
             data-ng-repeat="group in mygroups">
-            <a data-ng-show="group.emitter == 'Canvas'" class="cc-ellipsis" href="https://ucberkeley.instructure.com/groups/{{group.id}}">{{group.title}}</a>
-            <a data-ng-show="group.emitter == 'bSpace'" class="cc-ellipsis" href="https://sakai-dev.berkeley.edu/portal/site/{{group.id}}">{{group.title}}</a>
+            <a data-ng-show="group.emitter == 'Canvas'"
+              class="cc-ellipsis"
+              data-ng-href="https://ucberkeley.instructure.com/groups/{{group.id}}">{{group.title}}
+            </a>
+            <a data-ng-show="group.emitter == 'bSpace'"
+              class="cc-ellipsis"
+              data-ng-href="https://sakai-dev.berkeley.edu/portal/site/{{group.id}}">{{group.title}}
+            </a>
           </li>
         </ul>
       </div>
     </div>
-  <!-- End Calendar / Classes / Groups column -->
+    <!-- End Calendar / Classes / Groups column -->
   </div>
 
 
   <div class="four columns cc-page-dashboard-column-shadow">
-  <!-- Begin Tasks / Assignments column -->
-
+    <!-- Begin Tasks / Assignments column -->
 
     <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
-    <div class="cc-widget-title">
+      <div class="cc-widget-title">
         <h2>Assignments and Tasks</h2>
-    </div>
-    <!-- MAIN VIEW -->
-    <div class="cc-tasks-list">
+      </div>
+      <div class="cc-tasks-list">
         <div class="cc-widget-body">
-            <a href="#" data-notreal="standard">
-                <img src="/assets/dummy_task_slider.png" alt="Task slider placeholder" class="cc-widget-tasks-taskslider">
-            </a>
-            <div data-ng-repeat="section in tasks">
+          <a href="#" data-notreal="standard">
+            <img src="/assets/dummy_task_slider.png" alt="Task slider placeholder" class="cc-widget-tasks-taskslider">
+          </a>
+          <div data-ng-repeat="section in tasks">
 
-            <div class="cc-widget-section-label">{{section.title}}</div>
-              <ul class="cc-widget-notifications-list cc-widget-section-list">
-
-                <li class="cc-widget-list-icon-big cc-icon-big-{{task.status}}" data-ng-repeat="task in section.tasks">
-                    <a href="{{task.link_url}}" class="cc-widget-tasks-notifications-short-title cc-ellipsis"
-                    data-ng-class="{true:'cc-alert'}[task.status=='overdue']">{{task.title}}</a>
-                    <div class="cc-right" data-ng-show="$parent.section.title == 'Upcoming'">{{task.due_date | date:'M/dd'}}</div>
-                    <div class="cc-widget-task-notifications-list-source">
-                      <em>{{task.source || task.emitter}}</em>
-                    </div>
-                </li>
-
-              </ul>
-            </div>
+          <div class="cc-widget-section-label">{{section.title}}</div>
+            <ul class="cc-widget-notifications-list cc-widget-section-list">
+              <li class="cc-widget-list-icon-big cc-icon-big-{{task.status}}" data-ng-repeat="task in section.tasks">
+                <a data-ng-href="{{task.link_url}}"
+                  class="cc-widget-tasks-notifications-short-title cc-ellipsis"
+                  data-ng-class="{true:'cc-alert'}[task.status=='overdue']">{{task.title}}</a>
+                  <div class="cc-right" data-ng-show="$parent.section.title == 'Upcoming'">{{task.due_date | date:'M/dd'}}</div>
+                  <div class="cc-widget-task-notifications-list-source">
+                    <em>{{task.source || task.emitter}}</em>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-
-  <!-- End Tasks / Assignments column -->
+    <!-- End Tasks / Assignments column -->
   </div>
 
+
   <div class="five columns cc-page-dashboard-column-wide">
-    <!-- Begin Notificiations column -->
+    <!-- Begin Notifications column -->
 
     <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="NotificationsController">
 
-    <div class="cc-widget-title">
+      <div class="cc-widget-title">
         <h2>Notifications</h2>
-    </div>
-
-    <!-- MAIN VIEW -->
-    <div class="cc-notifications-list">
-      <div class="cc-widget-body" data-ng-repeat="section in notifications.sections">
-      <div data-ng-switch on="section.title">
-        <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
       </div>
-          <ul class="cc-widget-notifications-list cc-widget-section-list">
-            <li data-ng-repeat="notification in section.notifications | orderBy: 'notificationDate'" class="cc-widget-list-icon-big cc-icon-big-{{notification.type}}">
-                <a href="{{notification.url}}" class="cc-widget-tasks-notifications-short-title cc-ellipsis" data-notreal="details"
-                  data-ng-class="{true:'cc-alert'}[$parent.section.title == 'Alerts']"
-                >{{notification.title}}</a>
-                <div class="cc-right cc-alert" data-ng-show="$parent.section.title == 'Alerts'">Today</div>
-                <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
-                <div class="cc-right" data-ng-show="$parent.section.title == 'Recent'">{{notification.notificationDate * 1000 | date:'M/dd'}}</div>
 
-                <div class="cc-widget-notifications-summary">{{notification.summary}}</div>
-                <div class="cc-widget-task-notifications-list-source"><a href="{{notification.sourceURL}}">{{notification.source}}</a></div>
+      <div class="cc-notifications-list">
+        <div class="cc-widget-body" data-ng-repeat="section in notifications.sections">
+          <div data-ng-switch on="section.title">
+            <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
+          </div>
+
+          <ul class="cc-widget-notifications-list cc-widget-section-list">
+            <li data-ng-repeat="notification in section.notifications | orderBy: 'notificationDate'"
+              class="cc-widget-list-icon-big cc-icon-big-{{notification.type}}">
+              <a data-ng-href="{{notification.url}}"
+                class="cc-widget-tasks-notifications-short-title cc-ellipsis"
+                data-notreal="details"
+                data-ng-class="{true:'cc-alert'}[$parent.section.title == 'Alerts']">{{notification.title}}
+              </a>
+              <div class="cc-right cc-alert" data-ng-show="$parent.section.title == 'Alerts'">Today</div>
+              <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
+              <div class="cc-right" data-ng-show="$parent.section.title == 'Recent'">{{notification.notificationDate * 1000 | date:'M/dd'}}</div>
+              <div class="cc-widget-notifications-summary">{{notification.summary}}</div>
+              <div class="cc-widget-task-notifications-list-source"><a data-ng-href="{{notification.sourceURL}}">{{notification.source}}</a></div>
             </li>
           </ul>
+        </div>
       </div>
     </div>
 
-  <!-- End Notificiations column -->
+  <!-- End Notifications column -->
   </div>
 </script>
