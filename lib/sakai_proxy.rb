@@ -13,16 +13,24 @@ class SakaiProxy
   def self.do_get(uid, url)
     token = build_token uid
     Rails.logger.info "SakaiProxy: Making request to #{url} on behalf of user #{uid} with x-sakai-token = #{token}"
-    response = Faraday::Connection.new(
-        :url => url,
-        :headers => {
-            'x-sakai-token' => token
-        }).get
-    Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
-    {
-        :body => JSON.parse(response.body),
-        :status_code => response.status
-    }
+    begin
+      response = Faraday::Connection.new(
+          :url => url,
+          :headers => {
+              'x-sakai-token' => token
+          }).get
+      Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
+      {
+          :body => JSON.parse(response.body),
+          :status_code => response.status
+      }
+    rescue Faraday::Error::ConnectionFailed
+      {
+          :body => "Remote server unreachable",
+          :status_code => 503
+      }
+    end
+
   end
 
   def self.build_token(uid)
