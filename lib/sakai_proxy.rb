@@ -18,8 +18,11 @@ class SakaiProxy
         :headers => {
             'x-sakai-token' => token
         }).get
-    Rails.logger.debug "SakaiProxy response from remote server: #{response.body}"
-    JSON.parse response.body
+    Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
+    {
+        :body => JSON.parse(response.body),
+        :status_code => response.status
+    }
   end
 
   def self.build_token(uid)
