@@ -32,6 +32,9 @@ grant all privileges on database calcentral_development to calcentral_developmen
 create database calcentral;
 create user calcentral with password 'secret';
 grant all privileges on database calcentral to calcentral;
+create database calcentral_test;
+create user calcentral_test with password 'secret';
+grant all privileges on database calcentral_test to calcentral_test;
 ```
 
 3. Fork this repository, then:
@@ -186,3 +189,11 @@ rake spec freshen_vcr=true
 git add fixtures/fakeable_proxy_data
 git commit -a -m "Helpful commit message"
 ```
+
+## Rake tasks:
+
+To view other rake task for the project: ```rake -T```
+
+* ```rake calcentral:copy_yamls[src_dir,force]``` - DEPRECATED! Need to refactor to do something more useful for developers, like make symlinks...
+
+* ```rake spec:xml``` - Runs rake spec, but pipes the output to xml using the rspec_junit_formatter gem, for JUnit compatible test result reports

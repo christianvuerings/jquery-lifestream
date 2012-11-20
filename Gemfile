@@ -113,3 +113,9 @@ end
 group :test do
   gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.2.1"
 end
+
+group :test, :testext do
+  # RSpec results that Hudson + Bamboo + xml happy CI servers can read.
+  # https://rubygems.org/gems/rspec_junit_formatter
+  gem "rspec_junit_formatter", "~> 0.1.2"
+end
