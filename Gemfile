@@ -28,9 +28,7 @@ gem "rails_config", "~> 0.3.1"
 # https://rubygems.org/gems/omniauth-cas
 gem "omniauth-cas", "~> 0.0.7"
 
-# Rest-Client: barebones rest-client proxy
-# https://rubygems.org/gems/rest-client
-gem "rest-client", "~> 1.6.7"
+gem "faraday", "~> 0.8.4"
 
 # OAuth2 support
 gem "signet", "~> 0.4.3"
