@@ -1,6 +1,9 @@
 Calcentral::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # Have calcentral settings override rails_config/integration/rails.rb hook settings
+  append_settings
+
   # Enable rack-livereload
   config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
 
@@ -41,5 +44,4 @@ Calcentral::Application.configure do
   config.cache_store = ActiveSupport::Cache.lookup_store(:memory_store, :size => 16.megabytes)
   config.cache_store.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log")
   config.cache_store.logger.level = Logger::INFO
-
 end

@@ -27,12 +27,12 @@ test:
 
 testext:
   adapter: jdbcpostgresql
-  database: calcentral_test
+  database: <%= Settings.testext.database %>
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: postgres
-  password: secret
+  username: <%= Settings.testext.username %>
+  password: <%= Settings.testext.password %>
 
 # The places where these settings are filled out are settings.yml, testext.yml, and production.yml
 # You should only be filling in custom values and secrets for testext.local.yml and production.local.yml
