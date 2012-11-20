@@ -194,6 +194,4 @@ git commit -a -m "Helpful commit message"
 
 To view other rake task for the project: ```rake -T```
 
-* ```rake calcentral:copy_yamls[src_dir,force]``` - DEPRECATED! Need to refactor to do something more useful for developers, like make symlinks...
-
 * ```rake spec:xml``` - Runs rake spec, but pipes the output to xml using the rspec_junit_formatter gem, for JUnit compatible test result reports
