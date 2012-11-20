@@ -26,13 +26,12 @@
 <body class="cc-page-index">
 
     <%= render 'templates/launcher' %>
-
     <!-- Top Navbar -->
     <div class="row">
       <ul class="nav-bar">
-        <li class="active"><a href="/">Splash</a></li>
-        <li><a href="/dashboard">My Dashboard</a></li>
-        <li><a href="/secure/campus">My Campus</a></li>
+        <li data-ng-class="{true:'active'}[controller_name=='SplashController']"><a href="/">Splash</a></li>
+        <li data-ng-class="{true:'active'}[controller_name=='DashboardController']"><a href="/dashboard">My Dashboard</a></li>
+        <li data-ng-class="{true:'active'}[controller_name=='MyCampusController']"><a href="/secure/campus">My Campus</a></li>
       </ul>
     </div>
 

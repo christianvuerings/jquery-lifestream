@@ -35,6 +35,8 @@
       } else if(!$route.current.isPublic && !$scope.user.isAuthenticated()) {
         $scope.user.signIn();
       }
+      // Pass in controller name so we can set active location in menu
+      $scope.controller_name = $route.current.controller;
     });
 
   }]);
