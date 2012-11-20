@@ -2,60 +2,36 @@
   <div class="three columns">
 
   <!-- Begin Calendar / Classes / Groups column -->
-    <div class="cc-container-widget" id="cc-widget-mycalendar">
+    <div class="cc-container-widget" id="cc-widget-mycalendar" data-ng-controller="UpNextController">
     <div class="cc-widget-title">
         <h2>Up Next <a href="http://bcal.berkeley.edu" class="ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
     </div>
     <!-- MAIN VIEW -->
     <div class="cc-widget-mycalendar-container">
+      <ul class="cc-widget-mycalendar-datelist">
+      <!-- First loop: timestamped items -->
+        <li data-ng-repeat="item in items | filter:notAllDay">
+          <div class="cc-widget-mycalendar-datelist-time cc-left">
+            <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.date_time | date:'H'}}</div>
+              <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.date_time | date:'mm'}}<br>
+                <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.date_time | date:'a' | uppercase}}</span>
+              </div>
+            </div>
+          <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
+            <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
+          </div>
+        </li>
 
-            <ul class="cc-widget-mycalendar-datelist">
-
-                <li>
-                    <div class="cc-widget-mycalendar-datelist-time cc-left">
-
-                                <div class="cc-widget-mycalendar-datelist-time-hour cc-left">12</div>
-                                <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">
-                                    30<br>
-                                    <span class="cc-widget-mycalendar-datelist-time-ampm">PM</span>
-                                </div>
-                    </div>
-                    <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-                        <a href="https://www.google.com/calendar/event?eid=aDVsZDE2NWZsdGVzNDBldGpraWFiZ2ZnaDAgc2hhY2tlckBiZXJrZWxleS5lZHU">Bart</a>
-
-                    </div>
-                </li>
-
-                <li>
-                    <div class="cc-widget-mycalendar-datelist-time cc-left">
-                                <div class="cc-widget-mycalendar-datelist-time-hour cc-left">2</div>
-                                <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">
-                                    00<br>
-                                    <span class="cc-widget-mycalendar-datelist-time-ampm">PM</span>
-                                </div>
-                    </div>
-                    <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-                        <a href="https://www.google.com/calendar/event?eid=MjNlMjZnaTFxOWtka2RtdjF1M2x0Nmc1ODQgc2hhY2tlckBiZXJrZWxleS5lZHU">Discuss Foundation</a>
-
-                            <br><span class="cc-widget-mycalendar-datelist-location cc-ellipsis">Dwinelle 0004-Faculty Lab</span>
-
-                    </div>
-                    <a href="" title=""></a>
-                </li>
-
-                <li>
-                    <div class="cc-widget-mycalendar-datelist-time cc-left">
-                                <div class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
-
-                    </div>
-                    <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-                        <a href="https://www.google.com/calendar/event?eid=XzY4bzMyY2hnNjhvM2l0MWg2c3EzMGNwa2Y4bW04ZTlnY29zaXFjOWQ2b3EzZW9qNTc0c20yYmJmZTlnbTZyMzVfMjAxMjExMDUgc2hhY2tlckBiZXJrZWxleS5lZHU">Daphne OOO</a>
-
-                    </div>
-                    <a href="" title=""></a>
-                </li>
-            </ul>
-
+      <!-- Second loop: UNtimed (all-day) items -->
+        <li data-ng-repeat="item in items | filter:isAllDay">
+          <div class="cc-widget-mycalendar-datelist-time cc-left">
+            <div class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
+          </div>
+          <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
+            <a data-ng-href="{{item.html_link}}">{{item.summary}}</a>
+          </div>
+        </li>
+      </ul>
     </div>
 
     </div>
