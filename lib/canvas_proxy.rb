@@ -12,16 +12,11 @@ class CanvasProxy
                    elsif options[:admin]
                      @settings.admin_access_token
                    elsif options[:user_id]
-                     self.class.user_access_token(options[:user_id])
+                     Oauth2Data.get_access_token(options[:user_id], @@app_id)
                    else
                      options[:access_token]
                    end
     @client = Signet::OAuth2::Client.new(:access_token => access_token)
-  end
-
-  def self.user_access_token(user_id)
-    oauth2_data = Oauth2Data.where(uid: user_id, app_id: @@app_id).first
-    oauth2_data.access_token
   end
 
   def request(api_path, fetch_options = {})

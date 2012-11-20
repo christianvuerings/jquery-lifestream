@@ -45,6 +45,9 @@ gem "dalli", "~> 2.5.0"
 # smarter logging
 gem "log4r", "~> 1.1.10"
 
+# for easier non-DB-backed models
+gem "active_attr", "~> 0.6.0"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
