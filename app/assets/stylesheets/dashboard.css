@@ -1,8 +1,27 @@
-.cc-page-dashboard-column-shadow {
+.cc-container-main {
+  overflow: hidden;
+}
+.cc-page-dashboard-column-a,
+.cc-page-dashboard-column-b,
+.cc-page-dashboard-column-c {
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
+.cc-page-dashboard-column-b {
   border-left: none;
   box-shadow: -3px -1px 4px 0 #ccc;
 }
 
-.cc-page-dashboard-column-wide {
+.cc-page-dashboard-column-c {
   border-left: 1px solid #838383;
+}
+
+@media only screen and (max-width: 767px) {
+  .cc-page-dashboard-column-b {
+    box-shadow: none;
+  }
+  .cc-page-dashboard-column-c {
+    border: none;
+  }
 }
