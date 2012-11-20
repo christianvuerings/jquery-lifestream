@@ -1,8 +1,3 @@
-require 'uri'
-require 'base64'
-require 'cgi'
-require 'openssl'
-
 class SakaiProxy
 
   def self.get_categorized_sites(uid)
