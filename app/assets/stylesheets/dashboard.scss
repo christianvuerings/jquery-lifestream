@@ -1,0 +1,31 @@
+@import "compass/css3";
+
+.cc-container-main {
+  overflow: hidden;
+
+  .cc-page-dashboard-column-a,
+  .cc-page-dashboard-column-b,
+  .cc-page-dashboard-column-c {
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+  }
+
+  .cc-page-dashboard-column-b {
+    @include box-shadow(#ccc -3px -1px 4px 0);
+  }
+
+  .cc-page-dashboard-column-c {
+    border-left: 1px solid #838383;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cc-container-main {
+    .cc-page-dashboard-column-b {
+      box-shadow: none;
+    }
+    .cc-page-dashboard-column-c {
+      border: none;
+    }
+  }
+}
