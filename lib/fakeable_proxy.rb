@@ -15,7 +15,7 @@ module FakeableProxy
     if force_fake || Settings.freshen_vcr
       VCR.use_cassette(proxy_id,
                        :allow_playback_repeats => true,
-                       :match_requests_on => [:method, :path],
+                       :match_requests_on => [:uri, :path],
                        :record => :new_episodes,
                        :serialize_with => :json,
                        :preserve_exact_body_bytes => false) do

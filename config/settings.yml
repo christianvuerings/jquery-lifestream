@@ -37,3 +37,4 @@ freshen_vcr: <%= ENV['freshen_vcr'] %>
 sakai_proxy:
   shared_secret: secret set in production
   host: "https://sakai-dev.berkeley.edu"
+  fake: false

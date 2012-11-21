@@ -1,12 +1,11 @@
 require 'signet/oauth_2/client'
 
-class CanvasProxy
-  attr_accessor :client, :fake, :settings
+class CanvasProxy < BaseProxy
+  attr_accessor :client
   @@app_id = "canvas"
 
   def initialize(options = {})
-    @settings = Settings.canvas_proxy
-    @fake = (options[:fake] != nil) ? options[:fake] : @settings.fake
+    super(Settings.canvas_proxy, options)
     access_token = if @fake
                      'fake_access_token'
                    elsif options[:admin]
@@ -24,7 +23,8 @@ class CanvasProxy
         :method => :get,
         :uri => "#{@settings.url_root}/api/v1/#{api_path}"
     )
-    FakeableProxy.wrap_request(@@app_id, @fake) {@client.fetch_protected_resource(fetch_options)}
+    Rails.logger.info "CanvasProxy - Making request with @fake = #{@fake}, options = #{fetch_options}"
+    FakeableProxy.wrap_request(@@app_id, @fake) { @client.fetch_protected_resource(fetch_options) }
   end
 
   def courses()
