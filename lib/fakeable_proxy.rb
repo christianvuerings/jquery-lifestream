@@ -6,8 +6,7 @@ module FakeableProxy
     c.debug_logger = File.open(Rails.root.join("log", "vcr-debug.log"), 'w')
     c.after_http_request do |request,response|
       # so we don't record sensitive auth headers
-      response.headers['Authorization'] = ''
-      request.headers['Authorization'] = ''
+      response.headers['Authorization'], request.headers['Authorization'], response.headers['x-sakai-token'], request.headers['x-sakai-token'] = ''
     end
   end
 
