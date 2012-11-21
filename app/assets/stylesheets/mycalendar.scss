@@ -1,0 +1,63 @@
+/* Icon */
+#cc-widget-mycalendar {
+  .cc-widget-title .cc-icon {
+    margin-top: 3px;
+  }
+
+  /* List */
+  .cc-widget-mycalendar-datelist {
+    list-style-type: none;
+    margin: 0;
+    max-height: 160px;
+    overflow: auto;
+    padding: 0;
+
+    /* List items */
+    li {
+      border-bottom: 1px dotted #cacaca;
+      color: #474747;
+      overflow: hidden;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    .cc-widget-mycalendar-isupcoming {
+      background: #f2fef3;
+      color: #000;
+    }
+  }
+}
+
+/* Time */
+.cc-widget-mycalendar-datelist-time {
+  font-family: 'Arial Narrow', sans-serif;
+  margin-right: 5px;
+
+  .cc-widget-mycalendar-datelist-time-hour {
+    font-size: 29px;
+    text-align: right;
+    width: 30px;
+  }
+  .cc-widget-mycalendar-datelist-time-minutes {
+    font-size: 14px;
+    line-height: 12px;
+    padding-top: 10px;
+  }
+  .cc-widget-mycalendar-datelist-time-ampm {
+    font-size: 11px;
+  }
+  .cc-widget-mycalendar-datelist-time-allday {
+    line-height: 27px;
+    text-align: right;
+    width: 44px;
+  }
+  .cc-widget-mycalendar-datelist-location {
+    font-size: 10px;
+  }
+}
+/* Summary & location */
+.cc-widget-mycalendar-datelist-summary {
+  font-size: 12px;
+  line-height: 13px;
+  padding-top: 8px;
+}
