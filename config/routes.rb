@@ -59,6 +59,7 @@ Calcentral::Application.routes.draw do
   # Rails API endpoints.
 
   match '/api/my/status' => 'user_api#mystatus', :as => :mystatus, :defaults => { :format => 'json' }
+  match '/api/my/course_sites' => 'my_course_sites#get_feed', :as => :my_course_sites, :defaults => { :format => 'json' }
 
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
