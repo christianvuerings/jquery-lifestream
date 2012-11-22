@@ -14,16 +14,16 @@
 
     /* List items */
     li {
-      border-bottom: 1px dotted #cacaca;
-      color: #474747;
+      border-bottom: 1px dotted $cc-list-border-color;
+      color: $cc-light-grey;
       overflow: hidden;
       &:last-child {
         border-bottom: none;
       }
     }
     .cc-widget-mycalendar-isupcoming {
-      background: #f2fef3;
-      color: #000;
+      background: $cc-widget-highlight-background-color;
+      color: $black;
     }
   }
 }

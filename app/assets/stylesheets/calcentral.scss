@@ -1,3 +1,15 @@
+$cc-alert-color: #fb0007;
+$cc-border-color: #999;
+$cc-launcher-border-color: #114d80;
+$cc-launcher-link-color: #15315c;
+$cc-light-grey: #474747;
+$cc-list-border-color: #cacaca;
+$cc-main-background-color: #f2f2f2;
+$cc-main-header-border-color: #d3d8d8;
+$cc-shadow-color: #ccc;
+$cc-widget-section-label-color: #232323;
+$cc-widget-highlight-background-color: #f2fef3;
+
 /* Foundation navbar overrides */
 .nav-bar {
   margin-top: 0;
@@ -14,13 +26,13 @@ ul {
 
 /* Body */
 body {
-  background-color: #f2f2f2;
+  background-color: $cc-main-background-color;
 
   /* Masthead */
   > header {
-    background: url(<%= asset_path 'calcentral_masthead_landing.png' %>);
+    background: image-url('calcentral_masthead_landing.png');
     background-repeat: no-repeat;
-    border: 1px solid #d3d8d8;
+    border: 1px solid $cc-main-header-border-color;
     border-top: none;
     cursor: pointer;
     margin: 0 auto;
@@ -55,7 +67,7 @@ body {
 
 /* Container */
 .cc-container-main {
-  background-color: #fff;
+  background-color: $white;
   padding: 0 10px;
 }
 
@@ -67,11 +79,11 @@ body {
   top: 0;
 
   a {
-    color: #15315c;
+    color: $cc-launcher-link-color;
     font-weight: bold;
   }
   .cc-launcher-icons {
-    border-right: 1px solid #114d80;
+    border-right: 1px solid $cc-launcher-border-color;
     padding: 1px 10px 3px 5px;
   }
   .cc-icon {
@@ -97,15 +109,15 @@ body {
   }
 }
 .cc-launcher, .cc-launcher .cc-launcher-dropdown {
-  background: #fff;
-  border: 1px solid #114d80;
+  background: $white;
+  border: 1px solid $cc-launcher-border-color;
   border-bottom-left-radius: 6px;
   border-top: none;
 }
 
 /* Useful classes */
 .cc-alert {
-  color: #FB0007 !important;
+  color: $cc-alert-color !important;
 }
 .cc-ellipsis {
   overflow: hidden;
@@ -121,13 +133,13 @@ body {
 }
 
 .cc-icon-alert {
-  background-image: url(<%= asset_path 'icon_alert_16x16.png' %>);
+  background-image: image-url('icon_alert_16x16.png');
 }
 .cc-icon-arrow-right-brown {
-  background-image: url(<%= asset_path 'icon_arrow_right_brown_16x16.png' %>);
+  background-image: image-url('icon_arrow_right_brown_16x16.png');
 }
 .cc-icon-arrow-right {
-  background-image: url(<%= asset_path 'icon_arrow_right_16x16.png' %>);
+  background-image: image-url('icon_arrow_right_16x16.png');
 }
 .cc-icon-big {
   height: 24px;
@@ -141,93 +153,93 @@ body {
 }
 
 .cc-icon-big-academics {
-  background-image: url(<%= asset_path 'icon_academics_24x24.png' %>);
+  background-image: image-url('icon_academics_24x24.png');
 }
 .cc-icon-big-alert {
-  background-image: url(<%= asset_path 'icon_alert_24x24.png' %>);
+  background-image: image-url('icon_alert_24x24.png');
 }
 .cc-icon-big-block {
-  background-image: url(<%= asset_path 'icon_block_24x24.png' %>);
+  background-image: image-url('icon_block_24x24.png');
 }
 .cc-icon-big-classes {
-  background-image: url(<%= asset_path 'icon_classes_24x24.png' %>);
+  background-image: image-url('icon_classes_24x24.png');
 }
 .cc-icon-big-completed {
-  background-image: url(<%= asset_path 'icon_completed_24x24.png' %>);
+  background-image: image-url('icon_completed_24x24.png');
 }
 .cc-icon-big-enrollment {
-  background-image: url(<%= asset_path 'icon_enrollment_24x24.png' %>);
+  background-image: image-url('icon_enrollment_24x24.png');
 }
 .cc-icon-big-finances {
-  background-image: url(<%= asset_path 'icon_finances_24x24.png' %>);
+  background-image: image-url('icon_finances_24x24.png');
 }
 .cc-icon-big-inprogress {
-  background-image: url(<%= asset_path 'icon_inprogress_24x24.png' %>);
+  background-image: image-url('icon_inprogress_24x24.png');
 }
 .cc-icon-big-overdue {
-  background-image: url(<%= asset_path 'icon_overdue_24x24.png' %>);
+  background-image: image-url('icon_overdue_24x24.png');
 }
 .cc-icon-bspace {
-  background-image: url(<%= asset_path 'icon_bspace_16x16.png' %>);
+  background-image: image-url('icon_bspace_16x16.png');
 }
 .cc-icon-calendar {
-  background-image: url(<%= asset_path 'icon_calendar_16x16.png' %>);
+  background-image: image-url('icon_calendar_16x16.png');
 }
 .cc-icon-canvas {
-  background-image: url(<%= asset_path 'icon_canvas_16x16.png' %>);
+  background-image: image-url('icon_canvas_16x16.png');
 }
 .cc-icon-close {
-  background-image: url(<%= asset_path 'icon_close_16x16.png' %>);
+  background-image: image-url('icon_close_16x16.png');
 }
 .cc-icon-drive {
-  background-image: url(<%= asset_path 'icon_drive_16x16.png' %>);
+  background-image: image-url('icon_drive_16x16.png');
 }
 .cc-icon-email {
-  background-image: url(<%= asset_path 'icon_message_16x16.png' %>);
+  background-image: image-url('icon_message_16x16.png');
 }
 .cc-icon-info {
-  background-image: url(<%= asset_path 'icon_info_16x16.png' %>);
+  background-image: image-url('icon_info_16x16.png');
 }
 .cc-icon-mail {
-  background-image: url(<%= asset_path 'icon_mail_16x16.png' %>);
+  background-image: image-url('icon_mail_16x16.png');
 }
 
 /* 150x150 icons */
 .cc-icon-advising {
-  background-image: url(<%= asset_path 'icon_campus_advising_150x150.png' %>);
+  background-image: image-url('icon_campus_advising_150x150.png');
 }
 .cc-icon-academicplan {
-  background-image: url(<%= asset_path 'icon_campus_academicplan_150x150.png' %>);
+  background-image: image-url('icon_campus_academicplan_150x150.png');
 }
 .cc-icon-campusdepartments {
-  background-image: url(<%= asset_path 'icon_campus_campusdepartments_150x150.png' %>);
+  background-image: image-url('icon_campus_campusdepartments_150x150.png');
 }
 .cc-icon-career {
-  background-image: url(<%= asset_path 'icon_campus_career_150x150.png' %>);
+  background-image: image-url('icon_campus_career_150x150.png');
 }
 .cc-icon-finances {
-  background-image: url(<%= asset_path 'icon_campus_finances_150x150.png' %>);
+  background-image: image-url('icon_campus_finances_150x150.png');
 }
 .cc-icon-gettingaround {
-  background-image: url(<%= asset_path 'icon_campus_gettingaround_150x150.png' %>);
+  background-image: image-url('icon_campus_gettingaround_150x150.png');
 }
 .cc-icon-foodhousing {
-  background-image: url(<%= asset_path 'icon_campus_foodhousing_150x150.png' %>);
+  background-image: image-url('icon_campus_foodhousing_150x150.png');
 }
 .cc-icon-healthsafety {
-  background-image: url(<%= asset_path 'icon_campus_healthsafety_150x150.png' %>);
+  background-image: image-url('icon_campus_healthsafety_150x150.png');
 }
 .cc-icon-newtocampus {
-  background-image: url(<%= asset_path 'icon_campus_newtocampus_150x150.png' %>);
+  background-image: image-url('icon_campus_newtocampus_150x150.png');
 }
 .cc-icon-researchstudying {
-  background-image: url(<%= asset_path 'icon_campus_researchstudying_150x150.png' %>);
+  background-image: image-url('icon_campus_researchstudying_150x150.png');
 }
 .cc-icon-studentgroups {
-  background-image: url(<%= asset_path 'icon_campus_studentgroups_150x150.png' %>);
+  background-image: image-url('icon_campus_studentgroups_150x150.png');
 }
 .cc-icon-socialrecreation {
-  background-image: url(<%= asset_path 'icon_campus_socialrecreation_150x150.png' %>);
+  background-image: image-url('icon_campus_socialrecreation_150x150.png');
 }
 
 .cc-left {
@@ -245,7 +257,7 @@ body {
   padding: 0;
 
   li {
-    border-bottom: 1px dotted #cacaca;
+    border-bottom: 1px dotted $cc-list-border-color;
     list-style-type: none;
   }
 }
@@ -257,10 +269,10 @@ body {
 }
 
 .cc-widget-title {
-  border-bottom: 1px solid #999;
-  color: #474747;
+  border-bottom: 1px solid $cc-border-color;
 
   h2 {
+    color: $cc-light-grey;
     margin: 4px 0;
     padding: 2px 0;
     font-size: 16px;
@@ -282,7 +294,7 @@ body {
 
 .cc-widget-section-label {
   clear: both;
-  color: #232323;
+  color: $cc-widget-section-label-color;
   font-size: 1.2em;
   margin-top: 5px;
 }
@@ -321,7 +333,7 @@ body {
 }
 
 .cc-widget-section-list {
-  border-bottom: 1px dotted #cacaca;
+  border-bottom: 1px dotted $cc-list-border-color;
 }
 
 .cc-widget-tasks-notifications-short-title {
@@ -360,3 +372,20 @@ body {
     display: none;
   }
 }
+
+
+/*
+Read more about why we're using @import instead of require at
+http://stackoverflow.com/questions/6269420
+*/
+/* Dashboard */
+@import "dashboard.scss";
+@import "mycalendar.scss";
+@import "notifications.scss";
+@import "tasks.scss";
+
+/* Preferences */
+@import "preferences.scss";
+
+/* Splash */
+@import "splash.scss";
