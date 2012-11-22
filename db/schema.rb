@@ -32,12 +32,12 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "widget_data", ["uid", "widget_id"], :name => "index_widget_data_on_uid_widget_id", :unique => true
 
-  create_table :oauth2_data do |t|
-    t.string :uid
-    t.string :app_id
-    t.text :access_token
-    t.text :refresh_token
-    t.integer :expiration_time, :limit => 8
+  create_table "oauth2_data", :force => true do |t|
+    t.string   "uid"
+    t.string   "app_id"
+    t.text     "access_token"
+    t.text     "refresh_token"
+    t.integer  "expiration_time", :limit => 8
   end
 
   add_index "oauth2_data", ["uid", "app_id"], :name => "index_oauth2_data_on_uid_app_id", :unique => true
