@@ -1,0 +1,59 @@
+<script type="text/ng-template" id="templates/preferences.html">
+  <div class="twelve columns" data-ng-controller="PreferencesController">
+    <h3>CalCentral Preferences</h3>
+
+    <p>
+      In order to display your latest tasks, assignments and alerts on the Dashboard,
+      CalCentral needs permission to access information stored in your bConnected, bSpace,
+      and Canvas accounts.
+    </p>
+
+    <p>
+      Please click the Authorize button next to each service you wish to enable.
+      You can revoke these permissions at any time.
+    </p>
+
+    <p>
+      <strong>Temporary: Connection statuses below are mocked via dummy/mystatus.json. Button clicks do live interaction with internal Angular model representations.</strong>
+      </p>
+
+    <!-- bConnected/Google status button -->
+    <p>
+      <img src="/assets/logo_bconnected.png" alt="bConnected (campus Google services)" class="preferences_service_logo" />
+      <a
+        class="radius button"
+        data-ng-switch on="status.has_google_access_token"
+        data-ng-click="status.has_google_access_token = !status.has_google_access_token"
+        data-ng-class="{true:'success',false:'secondary'}[status.has_google_access_token]">
+        <span data-ng-switch-when="false">Enable bConnected</span>
+        <span data-ng-switch-when="true">Authorized (Revoke?)</span>
+      </a>
+    </p>
+
+    <!-- Canvas status button -->
+    <p>
+      <img src="/assets/logo_canvas.png" alt="Canvas" class="preferences_service_logo" />
+      <a
+        class="radius button"
+        data-ng-switch on="status.has_canvas_access_token"
+        data-ng-click="status.has_canvas_access_token = !status.has_canvas_access_token"
+        data-ng-class="{true:'success',false:'secondary'}[status.has_canvas_access_token]">
+        <span data-ng-switch-when="false">Enable Canvas</span>
+        <span data-ng-switch-when="true">Authorized (Revoke?)</span>
+      </a>
+    </p>
+
+    <!-- bSpace status button -->
+    <p>
+      <img src="/assets/logo_bspace.gif" alt="bSpace" class="preferences_service_logo" />
+      <a
+        class="radius button"
+        data-ng-switch on="status.has_bspace_access_token"
+        data-ng-click="status.has_bspace_access_token = !status.has_bspace_access_token"
+        data-ng-class="{true:'success',false:'secondary'}[status.has_bspace_access_token]">
+        <span data-ng-switch-when="false">Enable bSpace</span>
+        <span data-ng-switch-when="true">Authorized (Revoke?)</span>
+      </a>
+    </p>
+  </div>
+</script>
