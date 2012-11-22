@@ -11,11 +11,11 @@
   }
 
   .cc-page-dashboard-column-b {
-    @include box-shadow(#ccc -3px -1px 4px 0);
+    @include box-shadow($cc-shadow-color -3px -1px 4px 0);
   }
 
   .cc-page-dashboard-column-c {
-    border-left: 1px solid #838383;
+    border-left: 1px solid $cc-border-color;
   }
 }
 

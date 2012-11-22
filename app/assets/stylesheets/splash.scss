@@ -1,6 +1,9 @@
+$cc-page-index-header-border-color: #3f8bbf;
+$cc-page-index-header-brown-background-color: #c68811;
+
 .cc-page-index .panel {
   padding: 0;
-  background-color: #fff;
+  background-color: $white;
 }
 
 .cc-page-index-welcome1, .cc-page-index-welcome2 {
@@ -9,16 +12,16 @@
 
 .cc-page-index-welcome1 {
   p {
-    background: url(<%= asset_path 'calcentral_homepage_collage.png' %>) no-repeat top left scroll;
+    background: image-url('calcentral_homepage_collage.png') no-repeat top left scroll;
     font-size: 1.3em;
     height: 329px;
     margin: 0;
     padding: 10px;
   }
   h3 {
-    color: #fff;
-    background-color: #c68811;
-    border-bottom: 5px solid #3f8bbf;
+    color: $white;
+    background-color: $cc-page-index-header-brown-background-color;
+    border-bottom: 5px solid $cc-page-index-header-border-color;
     font-size: 1.5em;
     font-weight: normal;
     margin: 0;
@@ -28,14 +31,14 @@
 
 .cc-page-index-welcome2 .cc-page-index-welcome2-handshake {
   padding-left: 50px;
-  background: url(<%= asset_path 'icon_handshake_38x33.png' %>) no-repeat top left scroll;
+  background: image-url('icon_handshake_38x33.png') no-repeat top left scroll;
 }
 
 
 .cc-page-index-welcome2 {
   height: 412px;
   h3 {
-    border-bottom: 5px solid #3f8bbf;
+    border-bottom: 5px solid $cc-page-index-header-border-color;
     font-size: 1.4em;
     margin: 0;
     padding: 10px;
@@ -45,14 +48,14 @@
   }
   li {
     line-height: 1.5em;
-    list-style-image: url(<%= asset_path 'icon_speech_bubble_12x13.png' %>);
+    list-style-image: image-url('icon_speech_bubble_12x13.png');
   }
   .cc-page-index-welcome2-herefromyou {
     font-size: 1.1em;
     font-weight: bold;
   }
   .cc-page-index-welcome2-handshake {
-    background: url(<%= asset_path 'icon_handshake_38x33.png' %>) no-repeat top left scroll;
+    background: image-url('icon_handshake_38x33.png') no-repeat top left scroll;
     padding-left: 50px;
   }
 }
