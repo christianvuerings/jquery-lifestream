@@ -1,7 +1,7 @@
 module FakeableProxy
   VCR.configure do |c|
     c.cassette_library_dir = 'fixtures/fakeable_proxy_data'
-    c.hook_into :fakeweb, :faraday
+    c.hook_into :webmock, :faraday
     c.allow_http_connections_when_no_cassette = true
     c.debug_logger = File.open(Rails.root.join("log", "vcr-debug.log"), 'w')
     c.after_http_request do |request, response|

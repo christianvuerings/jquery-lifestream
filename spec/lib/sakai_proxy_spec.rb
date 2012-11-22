@@ -22,4 +22,12 @@ describe SakaiProxy do
     end
   end
 
+  it "should hit errors while connecting to bspace" do
+    stub_request(:any, "#{Settings.sakai_proxy.host}/sakai-hybrid/sites?unread=true").to_timeout
+    data = @client.get_unread_sites "2040"
+    data[:status_code].should == 503
+    data[:body].should == "Remote server unreachable"
+    WebMock.reset!
+  end
+
 end
