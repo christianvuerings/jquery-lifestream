@@ -24,6 +24,10 @@
       templateUrl: 'templates/dashboard.html',
       controller: 'DashboardController'
     }).
+    when('/preferences', {
+      templateUrl: 'templates/preferences.html',
+      controller: 'PreferencesController'
+    }).
 
     // Redirect to a 404 page
     otherwise({

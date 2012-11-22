@@ -1,0 +1,11 @@
+.preferences_service_logo {
+  width: 143px;
+  margin-right: 10px;
+}
+
+/* Service logos need bottom alignment unless viewport is narrow */
+@media only screen and (min-width: 767px) {
+  .preferences_service_logo {
+    vertical-align: bottom;
+  }
+}
