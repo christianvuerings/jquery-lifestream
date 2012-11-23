@@ -60,6 +60,8 @@ Calcentral::Application.routes.draw do
 
   match '/api/my/status' => 'user_api#mystatus', :as => :mystatus, :defaults => { :format => 'json' }
   match '/api/my/course_sites' => 'my_course_sites#get_feed', :as => :my_course_sites, :defaults => { :format => 'json' }
+  match '/api/my/up_next' => 'my_up_next#get_feed', :as => :my_up_next, :defaults => { :format => 'json' }
+  match '/api/my/tasks' => 'my_tasks#get_feed', :as => :my_tasks, :defaults => { :format => 'json' }
 
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
