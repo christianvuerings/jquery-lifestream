@@ -9,6 +9,13 @@ describe CanvasProxy do
     accounts.size.should > 0
   end
 
+  it "should see the same account list as admin, initiating CanvasProxy with a passed in token" do
+    client = CanvasProxy.new(:access_token => Settings.canvas_proxy.admin_access_token)
+    response = client.request('accounts')
+    accounts = JSON.parse(response.body)
+    accounts.size.should > 0
+  end
+
   it "should get own profile as authorized user" do
     user_id = '211159'
     client = CanvasProxy.new(user_id: user_id)

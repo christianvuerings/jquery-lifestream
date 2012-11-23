@@ -36,7 +36,6 @@ gem "google-api-client", "~> 0.5.0"
 
 # for VCR http recording tool
 gem "vcr", "~> 2.3.0"
-gem "fakeweb", "~> 1.3.0"
 gem "jruby-openssl", "~> 0.7.7"
 
 # for memcached connection
@@ -119,4 +118,6 @@ group :test, :testext do
   # RSpec results that Hudson + Bamboo + xml happy CI servers can read.
   # https://rubygems.org/gems/rspec_junit_formatter
   gem "rspec_junit_formatter", "~> 0.1.2"
+
+  gem "webmock", "~> 1.9.0"
 end

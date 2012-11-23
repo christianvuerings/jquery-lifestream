@@ -32,7 +32,7 @@ class SakaiProxy < BaseProxy
           :body => JSON.parse(response.body),
           :status_code => response.status
       }
-    rescue Faraday::Error::ConnectionFailed
+    rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
       {
           :body => "Remote server unreachable",
           :status_code => 503
