@@ -7,10 +7,6 @@ class Oauth2Data < ActiveRecord::Base
   after_find :decrypt_tokens
   @@encryption_algorithm = Settings.oauth2.encryption || 'aes-256-cbc'
 
-  def self.access_granted?(user_id, app_id)
-    get_access_token(user_id, app_id) != nil
-  end
-
   def self.get_access_token(user_id, app_id)
     oauth2_data = Oauth2Data.where(uid: user_id, app_id: app_id).first
     oauth2_data && oauth2_data.access_token

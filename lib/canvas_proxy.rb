@@ -27,6 +27,10 @@ class CanvasProxy < BaseProxy
     FakeableProxy.wrap_request(@@app_id, @fake) { @client.fetch_protected_resource(fetch_options) }
   end
 
+  def self.access_granted?(user_id)
+    Oauth2Data.get_access_token(user_id, @@app_id) != nil
+  end
+
   def courses()
     request("courses")
   end
