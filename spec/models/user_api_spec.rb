@@ -34,5 +34,14 @@ describe "UserApi" do
   it "should return a user data structure" do
     user_data = UserApi.get_user_data(@random_id)
     user_data[:preferred_name].should == @default_name
+    user_data[:has_canvas_access_token].should_not be_nil
+  end
+  it "should return whether Canvas access is granted" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    user_data = UserApi.get_user_data(@random_id)
+    user_data[:has_canvas_access_token].should be_true
+    CanvasProxy.stub(:access_granted?).and_return(false)
+    user_data = UserApi.get_user_data(@random_id)
+    user_data[:has_canvas_access_token].should be_false
   end
 end

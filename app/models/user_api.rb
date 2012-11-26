@@ -47,7 +47,8 @@ class UserApi
       {
           :uid => user.uid,
           :preferred_name => user.preferred_name || "",
-          :widget_data => {}
+          :widget_data => {},
+          :has_canvas_access_token => CanvasProxy.access_granted?(user.uid)
       }
     end
   end

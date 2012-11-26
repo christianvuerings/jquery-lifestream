@@ -3,6 +3,7 @@ logger:
 
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
+
 canvas_proxy:
   admin_access_token: "someMumboJumbo"
   url_root: "http://localhost:12345"
@@ -38,3 +39,8 @@ sakai_proxy:
   shared_secret: secret set in production
   host: "https://sakai-dev.berkeley.edu"
   fake: false
+
+# MUST BE SET FOR DEVELOPMENT & PRODUCTION
+# Example generated with SecureRandom.base64(32)
+oauth2:
+  key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="

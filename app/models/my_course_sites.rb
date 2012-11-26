@@ -4,7 +4,7 @@ class MyCourseSites
   def self.get_feed(uid)
     Rails.cache.fetch(self.cache_key(uid)) do
       course_sites = []
-      if Oauth2Data.access_granted?(uid, "canvas")
+      if CanvasProxy.access_granted?(uid)
         canvas_proxy = CanvasProxy.new(user_id: uid)
         JSON.parse(canvas_proxy.courses.body).each do |course|
           course_sites.push({name: course["name"], course_code: course["course_code"], id: course["id"].to_s, emitter: "Canvas"})
