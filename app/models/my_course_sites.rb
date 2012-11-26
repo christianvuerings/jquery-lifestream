@@ -21,8 +21,8 @@ class MyCourseSites
     key
   end
 
-  def expire(uid)
-    Rails.cache.delete(self.class.cache_key(uid), :force => true)
+  def self.expire(uid)
+    Rails.cache.delete(self.cache_key(uid), :force => true)
   end
 
 end
