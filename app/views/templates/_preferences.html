@@ -4,8 +4,7 @@
 
     <p>
       In order to display your latest tasks, assignments and alerts on the Dashboard,
-      CalCentral needs permission to access information stored in your bConnected, bSpace,
-      and Canvas accounts.
+      CalCentral needs permission to access information stored in your bConnected and Canvas accounts.
     </p>
 
     <p>
@@ -43,17 +42,5 @@
       </a>
     </p>
 
-    <!-- bSpace status button -->
-    <p>
-      <img src="/assets/logo_bspace.gif" alt="bSpace" class="preferences_service_logo" />
-      <a
-        class="radius button"
-        data-ng-switch on="status.has_bspace_access_token"
-        data-ng-click="status.has_bspace_access_token = !status.has_bspace_access_token"
-        data-ng-class="{true:'success',false:'secondary'}[status.has_bspace_access_token]">
-        <span data-ng-switch-when="false">Enable bSpace</span>
-        <span data-ng-switch-when="true">Authorized (Revoke?)</span>
-      </a>
-    </p>
   </div>
 </script>
