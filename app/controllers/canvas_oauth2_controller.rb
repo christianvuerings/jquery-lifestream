@@ -22,15 +22,17 @@ class CanvasOauth2Controller < ApplicationController
   def handle_callback
     client = get_client
     Rails.logger.debug "Handling Oauth2 authorization callback for user #{session[:user_id]}, fetching token from #{client.token_credential_uri}"
-    client.code = request.parameters[:code]
-    token_response = client.fetch_access_token
-    oauth2 = Oauth2Data.where(
-        uid: session[:user_id],
-        app_id: "canvas").first_or_initialize
-    oauth2.access_token = token_response["access_token"]
-    oauth2.save
-    MyCourseSites.expire session[:user_id]
-    redirect_to "/dashboard"
+    if request.parameters[:code]
+      client.code = request.parameters[:code]
+      token_response = client.fetch_access_token
+      oauth2 = Oauth2Data.where(
+          uid: session[:user_id],
+          app_id: "canvas").first_or_initialize
+      oauth2.access_token = token_response["access_token"]
+      oauth2.save
+      MyCourseSites.expire session[:user_id]
+    end
+    redirect_to "/profile"
   end
 
 end
