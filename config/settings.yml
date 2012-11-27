@@ -17,7 +17,6 @@ google_proxy:
   fake: false
   client_id: 1
   client_secret: 'someMumboJumbo'
-  client_scope: "userinfo.email,userinfo.profile"
   client_redirect_uri: "http://localhost:54321/response"
 
 development:
