@@ -16,7 +16,7 @@ describe "MyCourseSites" do
     my_classes = MyCourseSites.get_feed(@user_id)
     my_classes.size.should == @fake_canvas_courses.size
     my_classes.each do |my_class|
-      my_class[:emitter].should == "Canvas"
+      my_class[:emitter].should == CanvasProxy::APP_ID
       my_class[:course_code].should_not == nil
       my_class[:id].instance_of?(String).should == true
     end

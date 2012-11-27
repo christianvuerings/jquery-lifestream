@@ -1,6 +1,6 @@
 class SakaiProxy < BaseProxy
 
-  @@app_id = "sakai"
+  APP_ID = "bSpace"
 
   def initialize(options = {})
     super(Settings.sakai_proxy, options)
@@ -25,7 +25,7 @@ class SakaiProxy < BaseProxy
     token = build_token uid
     Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #{uid} with x-sakai-token = #{token}"
     begin
-      response = FakeableProxy.wrap_request(@@app_id, @fake) {
+      response = FakeableProxy.wrap_request(APP_ID, @fake) {
         Faraday::Connection.new(
             :url => url,
             :headers => {
