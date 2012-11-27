@@ -52,9 +52,12 @@
               data-ng-href="https://sakai-dev.berkeley.edu/portal/site/{{class.id}}"
               class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
             </a>
-          <div class="cc-widget-list-subtitle cc-ellipsis">{{class.name}}</div>
+            <div class="cc-widget-list-subtitle cc-ellipsis">{{class.name}}</div>
           </li>
         </ul>
+      </div>
+      <div ng-show="!myclasses.length" class="cc-widget-text">
+        There are currently no classes available.
       </div>
     </div>
 

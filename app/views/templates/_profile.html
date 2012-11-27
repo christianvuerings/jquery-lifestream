@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/profile.html">
   <div class="twelve columns" data-ng-controller="ProfileController">
-    <h3>CalCentral Preferences</h3>
+    <h3>CalCentral Profile</h3>
 
     <p>
       In order to display your latest tasks, assignments and alerts on the Dashboard,
@@ -12,37 +12,36 @@
       You can revoke these permissions at any time.
     </p>
 
-    <!-- bConnected/Google status button -->
-    <p data-ng-switch on="status.has_google_access_token">
+    <!-- bConnected/Google status button
+    <p data-ng-switch on="user.profile.has_google_access_token">
       <img data-ng-switch-when="true" data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-left profile_connection_status_icon" />
       <img data-ng-switch-when="false" data-ng-src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-left profile_connection_status_icon" />
       <img src="/assets/logo_bconnected.png" alt="bConnected" class="profile_service_logo" />
 
       <a
         class="radius button"
-        data-ng-switch on="status.has_google_access_token"
-        data-ng-click="status.has_google_access_token = !status.has_google_access_token"
-        data-ng-class="{true:'success',false:'secondary'}[status.has_google_access_token]">
+        data-ng-switch on="user.profile.has_google_access_token"
+        data-ng-click="user.profile.has_google_access_token = !user.profile.has_google_access_token"
+        data-ng-class="{true:'success',false:'secondary'}[user.profile.has_google_access_token]">
         <span data-ng-switch-when="false">Enable bConnected Access</span>
         <span data-ng-switch-when="true">Revoke bConnected Access</span>
       </a>
-    </p>
+    </p>-->
 
     <!-- Canvas status button -->
-    <p  data-ng-switch on="status.has_canvas_access_token">
-      <img data-ng-switch-when="true" data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-left profile_connection_status_icon" />
-      <img data-ng-switch-when="false" data-ng-src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-left profile_connection_status_icon" />
-      <img src="/assets/logo_canvas.png" alt="Canvas" class="profile_service_logo" />
+    <div data-ng-switch on="user.profile.has_canvas_access_token">
+      <div data-ng-switch-when="true">
+        <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-left profile_connection_status_icon" />
+        <img src="/assets/logo_canvas.png" alt="Canvas" class="profile_service_logo" />
+        <a class="radius button success">Revoke Canvas Access</a>
+      </div>
 
-      <a
-        class="radius button"
-        data-ng-switch on="status.has_canvas_access_token"
-        data-ng-click="status.has_canvas_access_token = !status.has_canvas_access_token"
-        data-ng-class="{true:'success',false:'secondary'}[status.has_canvas_access_token]">
-        <span data-ng-switch-when="false">Enable Canvas Access</span>
-        <span data-ng-switch-when="true">Revoke Canvas Access</span>
-      </a>
-    </p>
+      <div data-ng-switch-when="false">
+        <img data-ng-src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-left profile_connection_status_icon" />
+        <img src="/assets/logo_canvas.png" alt="Canvas" class="profile_service_logo" />
+        <a class="radius button secondary" href="/api/canvas/request_authorization" target="_self">Enable Canvas Access</a>
+      </div>
+    </div>
 
     <hr />
     <p>

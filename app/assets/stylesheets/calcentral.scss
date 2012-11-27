@@ -246,18 +246,6 @@ a:hover {
 }
 
 /* Widgets */
-.cc-container-widget .cc-widget-list {
-  margin: 0;
-  max-height: 200px;
-  overflow: auto;
-  padding: 0;
-
-  li {
-    border-bottom: 1px dotted $cc-list-border-color;
-    list-style-type: none;
-  }
-}
-
 .cc-widget-list-icon {
   background-color: transparent;
   background-position: 0 4px;
@@ -301,6 +289,11 @@ a:hover {
   margin-right: 10px;
   width: 100%;
 
+  .cc-widget-text {
+    color: #666;
+    padding: 20px;
+  }
+
   .cc-widget-list {
     margin: 0;
     max-height: 200px;
@@ -308,6 +301,7 @@ a:hover {
     padding: 0;
 
     li {
+      border-bottom: 1px dotted $cc-list-border-color;
       &:last-child {
         border-bottom: none;
       }
@@ -380,7 +374,7 @@ http://stackoverflow.com/questions/6269420
 @import "notifications.scss";
 @import "tasks.scss";
 
-/* Preferences */
+/* Profile */
 @import "profile.scss";
 
 /* Splash */
