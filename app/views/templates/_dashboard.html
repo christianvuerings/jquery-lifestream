@@ -95,9 +95,29 @@
       </div>
       <div class="cc-tasks-list">
         <div class="cc-widget-body">
-          <a href="#" data-notreal="standard">
-            <img src="/assets/dummy_task_slider.png" alt="Task slider placeholder" class="cc-widget-tasks-taskslider">
-          </a>
+
+        <div class="row cc-widget-tasks-button-top-pad">
+          <div class="twelve columns centered">
+            <ul class="button-group even three-up">
+              <li><a href="#" class="button"
+                    data-ng-click="switchTasksMode('scheduled')"
+                    data-ng-class="{false:'secondary'}[tasks_mode=='scheduled']">Scheduled {{scheduled}}
+                  </a>
+              </li>
+              <li><a href="#" class="button"
+                    data-ng-click="switchTasksMode('unscheduled')"
+                    data-ng-class="{false:'secondary'}[tasks_mode=='unscheduled']">Unscheduled {{unscheduled}}
+                  </a>
+              </li>
+              <li><a href="#" class="button"
+                    data-ng-click="switchTasksMode('completed')"
+                    data-ng-class="{false:'secondary'}[tasks_mode=='completed']">Completed {{completed}}
+                  </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
           <div data-ng-repeat="section in tasks">
 
           <div class="cc-widget-section-label">{{section.title}}</div>
