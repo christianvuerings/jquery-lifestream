@@ -18,22 +18,22 @@ describe Oauth2Data do
   end
 
   it "should be able to update existing tokens" do
-    Oauth2Data.new_or_update(uid="test-user", app_id="test-app", access_token="new-token",
-                                      refresh_token="some-token", expiration_time=1)
+    Oauth2Data.new_or_update("test-user", "test-app", "new-token",
+                                      "some-token", 1)
     token_hash = Oauth2Data.get_token_and_expiration("test-user", "test-app")
     token_hash["access_token"].should == "new-token"
     token_hash["refresh_token"].should == "some-token"
     token_hash["expiration_time"].should == 1
-    Oauth2Data.new_or_update(uid="test-user", app_id="test-app", access_token="updated-token")
+    Oauth2Data.new_or_update("test-user", "test-app", "updated-token")
     updated_token_hash = Oauth2Data.get_token_and_expiration("test-user", "test-app")
     updated_token_hash["access_token"].should == "updated-token"
     updated_token_hash["refresh_token"].should be nil
     updated_token_hash["expiration_time"].should be nil
-    updated_token_hash.should_not == access_token
+    updated_token_hash.should_not == token_hash
   end
 
   it "should be able to gracefully recover from badly stored tokens" do
-    Oauth2Data.new_or_update(uid="test-user", app_id="test-app", access_token="updated-token")
+    Oauth2Data.new_or_update("test-user", "test-app", "updated-token")
     #update_all skips filters
     Oauth2Data.update_all({:access_token => "foo"}, {:uid => "test-user", :app_id => "test-app"})
     access_token = Oauth2Data.get_access_token("test-user", "test-app")

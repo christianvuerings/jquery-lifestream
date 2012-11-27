@@ -39,11 +39,11 @@ class AuthController < ApplicationController
       new_auth.code = params[:code]
       new_auth.fetch_access_token!
       Oauth2Data.new_or_update(
-        user_id = session[:user_id],
-        app_id = "google",
-        access_token = new_auth.access_token.to_s,
-        refresh_token = new_auth.refresh_token,
-        expiration_time = new_auth.issued_at.to_i + new_auth.expires_in
+        session[:user_id],
+        "google",
+        new_auth.access_token.to_s,
+        new_auth.refresh_token,
+        new_auth.issued_at.to_i + new_auth.expires_in
       )
     end
 
