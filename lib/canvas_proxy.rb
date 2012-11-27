@@ -2,7 +2,7 @@ require 'signet/oauth_2/client'
 
 class CanvasProxy < BaseProxy
   attr_accessor :client
-  @@app_id = "canvas"
+  APP_ID = "canvas"
 
   def initialize(options = {})
     super(Settings.canvas_proxy, options)
@@ -11,7 +11,7 @@ class CanvasProxy < BaseProxy
                    elsif options[:admin]
                      @settings.admin_access_token
                    elsif options[:user_id]
-                     Oauth2Data.get(options[:user_id], @@app_id)["access_token"]
+                     Oauth2Data.get(options[:user_id], APP_ID)["access_token"]
                    else
                      options[:access_token]
                    end
@@ -31,7 +31,7 @@ class CanvasProxy < BaseProxy
     access_token = token_response["access_token"]
     oauth2 = Oauth2Data.new(
         uid: session[:user_id],
-        app_id: "canvas",
+        app_id: APP_ID,
         access_token: access_token)
     oauth2.save
     redirect_to "/dashboard"
@@ -43,11 +43,11 @@ class CanvasProxy < BaseProxy
         :uri => "#{@settings.url_root}/api/v1/#{api_path}"
     )
     Rails.logger.info "CanvasProxy - Making request with @fake = #{@fake}, options = #{fetch_options}"
-    FakeableProxy.wrap_request(@@app_id, @fake) { @client.fetch_protected_resource(fetch_options) }
+    FakeableProxy.wrap_request(APP_ID, @fake) { @client.fetch_protected_resource(fetch_options) }
   end
 
   def self.access_granted?(user_id)
-    Settings.canvas_proxy.fake || (Oauth2Data.get(user_id, @@app_id)["access_token"] != nil)
+    Settings.canvas_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"] != nil)
   end
 
   def courses()
