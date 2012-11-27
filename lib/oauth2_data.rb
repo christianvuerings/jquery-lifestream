@@ -2,8 +2,10 @@ class Oauth2Data < ActiveRecord::Base
   attr_accessible :uid, :app_id, :access_token, :expiration_time, :refresh_token
   serialize :access_token
   serialize :refresh_token
+  before_update :encrypt_tokens
   before_save :encrypt_tokens
   after_save :decrypt_tokens
+  after_update :decrypt_tokens
   after_find :decrypt_tokens
   @@encryption_algorithm = Settings.oauth2.encryption || 'aes-256-cbc'
 

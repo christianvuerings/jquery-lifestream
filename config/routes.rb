@@ -65,6 +65,8 @@ Calcentral::Application.routes.draw do
 
   match '/api/canvas/request_authorization' => 'canvasOauth2#request_authorization'
   match '/api/canvas/handle_callback' => 'canvasOauth2#handle_callback'
+  match '/api/google/authorize'=> 'auth#google_request_access'
+  match '/api/google/gappsOAuthResponse' => 'auth#google_auth_callback'
 
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
