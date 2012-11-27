@@ -1,0 +1,21 @@
+.profile_service_logo {
+  width: 150px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.profile_connection_status_icon {
+  padding: 10px 15px 0 0;
+  vertical-align: middle;
+}
+
+.profile_status_icon_nopad {
+  padding-top: 0;
+}
+
+/* Service logos need bottom alignment unless viewport is narrow */
+@media only screen and (min-width: 767px) {
+  .preferences_service_logo {
+    vertical-align: bottom;
+  }
+}
