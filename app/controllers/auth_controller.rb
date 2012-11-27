@@ -32,13 +32,13 @@ class AuthController < ApplicationController
 
     if !params[:error].blank?
       # remove token if access_denied
-      Oauth2Data.delete_all(:uid => session[:user_id], :app_id => "google") if params[:error] == "access_denied"
+      Oauth2Data.delete_all(:uid => session[:user_id], :app_id => GoogleProxy::APP_ID) if params[:error] == "access_denied"
     elsif !params[:code].blank?
       new_auth.code = params[:code]
       new_auth.fetch_access_token!
       Oauth2Data.new_or_update(
         session[:user_id],
-        "google",
+        GoogleProxy::APP_ID,
         new_auth.access_token.to_s,
         new_auth.refresh_token,
         new_auth.issued_at.to_i + new_auth.expires_in

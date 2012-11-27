@@ -2,7 +2,7 @@ require 'signet/oauth_2/client'
 
 class CanvasProxy < BaseProxy
   attr_accessor :client
-  APP_ID = "canvas"
+  APP_ID = "Canvas"
 
   def initialize(options = {})
     super(Settings.canvas_proxy, options)
@@ -16,25 +16,6 @@ class CanvasProxy < BaseProxy
                      options[:access_token]
                    end
     @client = Signet::OAuth2::Client.new(:access_token => access_token)
-  end
-
-  def request_authorization
-    url = @client.authorization_uri.to_s
-    Rails.logger.info "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
-    redirect_to url
-  end
-
-  def handle_callback
-    Rails.logger.info "Handling Oauth2 authorization callback for user #{session[:user_id]}, fetching token from #{@client.token_credential_uri}"
-    @client.code = request.parameters[:code]
-    token_response = @client.fetch_access_token
-    access_token = token_response["access_token"]
-    oauth2 = Oauth2Data.new(
-        uid: session[:user_id],
-        app_id: APP_ID,
-        access_token: access_token)
-    oauth2.save
-    redirect_to "/dashboard"
   end
 
   def request(api_path, fetch_options = {})

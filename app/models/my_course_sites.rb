@@ -11,7 +11,7 @@ class MyCourseSites
                                 name: course["name"],
                                 course_code: course["course_code"],
                                 id: course["id"].to_s,
-                                emitter: "Canvas"
+                                emitter: CanvasProxy::APP_ID
                             })
         end
       end
