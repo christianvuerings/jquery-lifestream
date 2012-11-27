@@ -6,6 +6,11 @@ class SakaiProxy < BaseProxy
     super(Settings.sakai_proxy, options)
   end
 
+  def self.access_granted?
+    settings = Settings.sakai_proxy
+    settings.fake || (settings.host && settings.shared_secret)
+  end
+
   def get_categorized_sites(uid)
     url = "#{@settings.host}/sakai-hybrid/sites?categorized=true"
     do_get(uid, url)
