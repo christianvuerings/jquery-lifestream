@@ -12,21 +12,20 @@
       You can revoke these permissions at any time.
     </p>
 
-    <!-- bConnected/Google status button
-    <p data-ng-switch on="user.profile.has_google_access_token">
-      <img data-ng-switch-when="true" data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-left profile_connection_status_icon" />
-      <img data-ng-switch-when="false" data-ng-src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-left profile_connection_status_icon" />
-      <img src="/assets/logo_bconnected.png" alt="bConnected" class="profile_service_logo" />
+    <!-- bConnected/Google status button-->
+    <div data-ng-switch on="user.profile.has_google_access_token">
+      <div data-ng-switch-when="true">
+        <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-left profile_connection_status_icon" />
+        <img src="/assets/logo_bconnected.png" alt="bConnected" class="profile_service_logo" />
+        <a class="radius button success">Revoke bConnected Access</a>
+      </div>
 
-      <a
-        class="radius button"
-        data-ng-switch on="user.profile.has_google_access_token"
-        data-ng-click="user.profile.has_google_access_token = !user.profile.has_google_access_token"
-        data-ng-class="{true:'success',false:'secondary'}[user.profile.has_google_access_token]">
-        <span data-ng-switch-when="false">Enable bConnected Access</span>
-        <span data-ng-switch-when="true">Revoke bConnected Access</span>
-      </a>
-    </p>-->
+      <div data-ng-switch-when="false">
+        <img data-ng-src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-left profile_connection_status_icon" />
+        <img src="/assets/logo_bconnected.png" alt="bConnected" class="profile_service_logo" />
+        <a class="radius button secondary" href="/api/google/request_authorization" target="_self">Enable bConnected Access</a>
+      </div>
+    </div>
 
     <!-- Canvas status button -->
     <div data-ng-switch on="user.profile.has_canvas_access_token">
