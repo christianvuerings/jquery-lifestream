@@ -3,7 +3,7 @@
   'use strict';
 
   /**
-   * Preferences controller
+   * Profile controller
    */
   calcentral.controller('ProfileController', ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope) {
 
