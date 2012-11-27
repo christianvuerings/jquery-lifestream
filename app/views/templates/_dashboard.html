@@ -96,27 +96,30 @@
       <div class="cc-tasks-list">
         <div class="cc-widget-body">
 
-        <div class="row cc-widget-tasks-button-top-pad">
-          <div class="twelve columns centered">
-            <ul class="button-group even three-up">
-              <li><a class="button"
+          <div class="row cc-widget-tasks-button-top-pad">
+            <div class="twelve columns centered">
+              <ul class="button-group even three-up">
+                <li>
+                  <a class="button"
                     data-ng-click="switchTasksMode('scheduled')"
                     data-ng-class="{false:'secondary'}[tasks_mode=='scheduled']">Scheduled
                   </a>
-              </li>
-              <li><a class="button"
+                </li>
+                <li>
+                  <a class="button"
                     data-ng-click="switchTasksMode('unscheduled')"
                     data-ng-class="{false:'secondary'}[tasks_mode=='unscheduled']">Unscheduled
                   </a>
-              </li>
-              <li><a class="button"
+                </li>
+                <li>
+                  <a class="button"
                     data-ng-click="switchTasksMode('completed')"
                     data-ng-class="{false:'secondary'}[tasks_mode=='completed']">Completed
                   </a>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
 
           <div data-ng-repeat="section in tasks">
 
