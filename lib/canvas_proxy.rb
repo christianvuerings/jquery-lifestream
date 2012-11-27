@@ -47,7 +47,7 @@ class CanvasProxy < BaseProxy
   end
 
   def self.access_granted?(user_id)
-    Oauth2Data.get_access_token(user_id, @@app_id) != nil
+    Settings.canvas_proxy.fake || (Oauth2Data.get_access_token(user_id, @@app_id) != nil)
   end
 
   def courses()

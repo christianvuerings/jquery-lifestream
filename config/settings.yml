@@ -39,6 +39,7 @@ sakai_proxy:
   shared_secret: secret set in production
   host: "https://sakai-dev.berkeley.edu"
   fake: false
+  current_terms: ["Fall 2012"]
 
 # MUST BE SET FOR DEVELOPMENT & PRODUCTION
 # Example generated with SecureRandom.base64(32)
