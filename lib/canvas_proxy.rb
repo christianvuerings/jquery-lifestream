@@ -11,7 +11,7 @@ class CanvasProxy < BaseProxy
                    elsif options[:admin]
                      @settings.admin_access_token
                    elsif options[:user_id]
-                     Oauth2Data.get_access_token(options[:user_id], @@app_id)
+                     Oauth2Data.get(options[:user_id], @@app_id)["access_token"]
                    else
                      options[:access_token]
                    end
@@ -47,7 +47,7 @@ class CanvasProxy < BaseProxy
   end
 
   def self.access_granted?(user_id)
-    Settings.canvas_proxy.fake || (Oauth2Data.get_access_token(user_id, @@app_id) != nil)
+    Settings.canvas_proxy.fake || (Oauth2Data.get(user_id, @@app_id)["access_token"] != nil)
   end
 
   def courses()
