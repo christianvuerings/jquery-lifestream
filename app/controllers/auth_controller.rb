@@ -3,11 +3,11 @@ require 'google/api_client'
 class AuthController < ApplicationController
   before_filter :authenticate
 
-  def self.new_google_authorization
+  def new_google_authorization
     client = Google::APIClient.new
     client.authorization.client_id = Settings.google_proxy.client_id
     client.authorization.client_secret = Settings.google_proxy.client_secret
-    client.authorization.redirect_uri = url_for(:only_path => false, :controller => 'auth', :action => "handle_callback")
+    client.authorization.redirect_uri = url_for(:only_path => false, :controller => 'auth', :action => "google_auth_callback")
     client.authorization.scope = ['https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email',
       'https://www.googleapis.com/auth/calendar',
@@ -16,7 +16,7 @@ class AuthController < ApplicationController
   end
 
   def google_request_access
-    new_auth = self.class.new_google_authorization
+    new_auth = new_google_authorization
     new_auth.state = params[:final_redirect]
     new_auth.state ||= "/profile"
     new_auth.state = Base64.encode64 new_auth.state
@@ -24,7 +24,7 @@ class AuthController < ApplicationController
   end
 
   def google_auth_callback
-    new_auth = self.class.new_google_authorization
+    new_auth = new_google_authorization
 
     final_redirect = params[:state]
     final_redirect ||= "/profile"
