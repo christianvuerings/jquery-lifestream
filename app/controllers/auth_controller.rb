@@ -1,51 +1,63 @@
-require 'google/api_client'
-
 class AuthController < ApplicationController
+
   before_filter :authenticate
 
-  def new_google_authorization
-    client = Google::APIClient.new
-    client.authorization.client_id = Settings.google_proxy.client_id
-    client.authorization.client_secret = Settings.google_proxy.client_secret
-    client.authorization.redirect_uri = url_for(:only_path => false, :controller => 'auth', :action => "google_auth_callback")
-    client.authorization.scope = ['https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email',
-      'https://www.googleapis.com/auth/calendar',
-      'https://www.googleapis.com/auth/tasks']
-    client.authorization
+  def app_id
+    nil
   end
 
-  def google_request_access
-    new_auth = new_google_authorization
-    new_auth.state = params[:final_redirect]
-    new_auth.state ||= "/profile"
-    new_auth.state = Base64.encode64 new_auth.state
-    redirect_to new_auth.authorization_uri.to_s
+  def get_client(final_redirect = "")
+    nil
   end
 
-  def google_auth_callback
-    new_auth = new_google_authorization
+  def request_authorization
+    final_redirect = params[:final_redirect] || "/profile"
+    client = get_client final_redirect
+    url = client.authorization_uri.to_s
+    Rails.logger.debug "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
+    redirect_to url
+  end
 
-    final_redirect = params[:state]
-    final_redirect ||= "/profile"
-    final_redirect = Base64.decode64 final_redirect
-
-    if !params[:error].blank?
-      # remove token if access_denied
-      Oauth2Data.delete_all(:uid => session[:user_id], :app_id => GoogleProxy::APP_ID) if params[:error] == "access_denied"
-    elsif !params[:code].blank?
-      new_auth.code = params[:code]
-      new_auth.fetch_access_token!
+  def handle_callback
+    client = get_client
+    Rails.logger.debug "Handling Oauth2 authorization callback for user #{session[:user_id]}, fetching token from #{client.token_credential_uri}"
+    if params[:code] && params[:error].blank?
+      client.code = params[:code]
+      client.fetch_access_token!
+      Rails.logger.debug "Saving #{app_id} token for user #{session[:user_id]}"
       Oauth2Data.new_or_update(
-        session[:user_id],
-        GoogleProxy::APP_ID,
-        new_auth.access_token.to_s,
-        new_auth.refresh_token,
-        new_auth.issued_at.to_i + new_auth.expires_in
+          session[:user_id],
+          app_id,
+          client.access_token.to_s,
+          client.refresh_token,
+          if client.expires_in.blank?
+            0
+          else
+            client.issued_at.to_i + client.expires_in
+          end
       )
+    else
+      Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
+      Oauth2Data.delete_all(:uid => session[:user_id], :app_id => app_id)
     end
 
+    expire_feeds
+
+    final_redirect = params[:state] || "/profile"
+    final_redirect = Base64.decode64 final_redirect
     redirect_to final_redirect
+  end
+
+  def remove_authorization
+    Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
+    Oauth2Data.delete_all(:uid => session[:user_id], :app_id => app_id)
+    expire_feeds
+    render :nothing => true, :status => 204
+  end
+
+  def expire_feeds
+    MyCourseSites.expire session[:user_id]
+    # TODO also expire /api/my/status feed
   end
 
 end
