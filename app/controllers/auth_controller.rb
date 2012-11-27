@@ -3,22 +3,20 @@ require 'google/api_client'
 class AuthController < ApplicationController
   before_filter :authenticate
 
-  def self.google_authorization
-    if @client.blank?
-      @client = Google::APIClient.new
-      @client.authorization.client_id = Settings.google_proxy.client_id
-      @client.authorization.client_secret = Settings.google_proxy.client_secret
-      @client.authorization.redirect_uri = url_for(:only_path => false, :controller => 'auth', :action => "handle_callback")
-      @client.authorization.scope = ['https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email',
-        'https://www.googleapis.com/auth/calendar',
-        'https://www.googleapis.com/auth/tasks']
-    end
-    @client.authorization
+  def self.new_google_authorization
+    client = Google::APIClient.new
+    client.authorization.client_id = Settings.google_proxy.client_id
+    client.authorization.client_secret = Settings.google_proxy.client_secret
+    client.authorization.redirect_uri = url_for(:only_path => false, :controller => 'auth', :action => "handle_callback")
+    client.authorization.scope = ['https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/calendar',
+      'https://www.googleapis.com/auth/tasks']
+    client.authorization
   end
 
   def google_request_access
-    new_auth = self.class.google_authorization.dup
+    new_auth = self.class.new_google_authorization
     new_auth.state = params[:final_redirect]
     new_auth.state ||= "/profile"
     new_auth.state = Base64.encode64 new_auth.state
@@ -26,7 +24,7 @@ class AuthController < ApplicationController
   end
 
   def google_auth_callback
-    new_auth = self.class.google_authorization.dup
+    new_auth = self.class.new_google_authorization
 
     final_redirect = params[:state]
     final_redirect ||= "/profile"

@@ -32,12 +32,4 @@ describe Oauth2Data do
     updated_token_hash.should_not == token_hash
   end
 
-  it "should be able to gracefully recover from badly stored tokens" do
-    Oauth2Data.new_or_update("test-user", "test-app", "updated-token")
-    #update_all skips filters
-    Oauth2Data.update_all({:access_token => "foo"}, {:uid => "test-user", :app_id => "test-app"})
-    access_token = Oauth2Data.get("test-user", "test-app")["access_token"]
-    access_token.should == ""
-  end
-
 end

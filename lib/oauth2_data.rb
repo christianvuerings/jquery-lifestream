@@ -35,7 +35,6 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.encrypt_with_iv(value, key)
-    return value if value.blank?
     cipher = OpenSSL::Cipher::Cipher.new(@@encryption_algorithm)
     cipher.encrypt
     iv = cipher.random_iv
@@ -46,17 +45,12 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.decrypt_with_iv(value_with_iv, key)
-    return value_with_iv if value_with_iv.blank?
-    begin
-      cipher = OpenSSL::Cipher::Cipher.new(@@encryption_algorithm)
-      cipher.decrypt
-      cipher.key = key
-      cipher.iv = Base64.decode64(value_with_iv[1])
-      decrypted = cipher.update(Base64.decode64(value_with_iv[0])) + cipher.final
-      decrypted.to_s
-    rescue
-      ""
-    end
+    cipher = OpenSSL::Cipher::Cipher.new(@@encryption_algorithm)
+    cipher.decrypt
+    cipher.key = key
+    cipher.iv = Base64.decode64(value_with_iv[1])
+    decrypted = cipher.update(Base64.decode64(value_with_iv[0])) + cipher.final
+    decrypted.to_s
   end
 
 end
