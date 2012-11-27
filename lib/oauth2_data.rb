@@ -7,23 +7,31 @@ class Oauth2Data < ActiveRecord::Base
   after_find :decrypt_tokens
   @@encryption_algorithm = Settings.oauth2.encryption || 'aes-256-cbc'
 
-  def self.get_access_token(user_id, app_id)
-    oauth2_data = Oauth2Data.where(uid: user_id, app_id: app_id).first
-    oauth2_data && oauth2_data.access_token
+  def self.get(user_id, app_id)
+    oauth2_data = self.where(uid: user_id, app_id: app_id).first
+    hash = {}
+    if oauth2_data
+      oauth2_data.attributes.each { |key, value| hash[key] = value }
+    end
+    hash
+  end
+
+  def self.new_or_update(user_id, app_id, access_token, refresh_token=nil, expiration_time=nil)
+    entry = self.where(:uid => user_id, :app_id => app_id).first_or_initialize
+    entry.access_token = access_token
+    entry.refresh_token = refresh_token
+    entry.expiration_time = expiration_time
+    entry.save
   end
 
   def encrypt_tokens
-    self.access_token = Oauth2Data.encrypt_with_iv(self.access_token, Settings.oauth2.key)
-    if (self.refresh_token)
-      self.refresh_token = Oauth2Data.encrypt_with_iv(self.refresh_token, Settings.oauth2.key)
-    end
+    self.access_token = self.class.encrypt_with_iv(self.access_token, Settings.oauth2.key)
+    self.refresh_token = self.class.encrypt_with_iv(self.refresh_token, Settings.oauth2.key) if self.refresh_token
   end
 
   def decrypt_tokens
-    self.access_token = Oauth2Data.decrypt_with_iv(self.access_token, Settings.oauth2.key)
-    if (self.refresh_token)
-      self.refresh_token = Oauth2Data.decrypt_with_iv(self.refresh_token, Settings.oauth2.key)
-    end
+    self.access_token = self.class.decrypt_with_iv(self.access_token, Settings.oauth2.key)
+    self.refresh_token = self.class.decrypt_with_iv(self.refresh_token, Settings.oauth2.key) if self.refresh_token
   end
 
   def self.encrypt_with_iv(value, key)

@@ -10,7 +10,7 @@ describe "MyCourseSites" do
 
   it "should contain all my Canvas courses" do
     @fake_canvas_courses.size.should be > 0
-    Oauth2Data.stub(:get_access_token).and_return("something")
+    Oauth2Data.stub(:get).and_return({"access_token" => "something"})
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     SakaiProxy.stub(:access_granted?).and_return(false)
     my_classes = MyCourseSites.get_feed(@user_id)
