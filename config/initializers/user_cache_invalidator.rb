@@ -14,9 +14,14 @@ module Calcentral
   end
 
   USER_CACHE_EXPIRATION = Calcentral::UserCacheInvalidator.new
-  USER_CACHE_EXPIRATION.add_observer(UserApi, :expire)
-  USER_CACHE_EXPIRATION.add_observer(UserApiController, :expire)
-  USER_CACHE_EXPIRATION.add_observer(MyCourseSites, :expire)
+
+  {
+      UserApi => :expire,
+      UserApiController => :expire,
+      MyCourseSites => :expire
+  }.each do |key, value|
+    USER_CACHE_EXPIRATION.add_observer(key, value)
+  end
 
 end
 
