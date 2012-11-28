@@ -1,21 +1,19 @@
-.profile_service_logo {
-  width: 150px;
-  margin-right: 10px;
-  vertical-align: middle;
+.cc-profile .row {
+  margin-top: 10px;
 }
 
-.profile_connection_status_icon {
-  padding: 10px 15px 0 0;
-  vertical-align: middle;
+.cc-profile-header div {
+  font-size: 16px;
+  font-weight: bold;
 }
 
-.profile_status_icon_nopad {
-  padding-top: 0;
+.cc-profile-service {
+  font-size: 16px;
+  margin-top: 10px;
 }
 
-/* Service logos need bottom alignment unless viewport is narrow */
-@media only screen and (min-width: 767px) {
-  .profile_service_logo {
-    vertical-align: bottom;
-  }
+.cc-profile-connection-status-icon {
+  height: 24px;
+  margin-top: 8px;
+  width: 24px;
 }

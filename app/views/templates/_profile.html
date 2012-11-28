@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/profile.html">
-  <div class="twelve columns" data-ng-controller="ProfileController">
+  <div class="twelve columns cc-profile" data-ng-controller="ProfileController">
     <h3>CalCentral Profile for {{user.profile.preferred_name}}</h3>
 
     <p>
@@ -12,43 +12,75 @@
       You can revoke these permissions at any time.
     </p>
 
-    <!-- bConnected/Google status button-->
+    <div class="cc-profile-header row">
+      <div class="one columns mobile-one">
+        Service
+      </div>
+      <div class="one columns mobile-one">
+        Status
+      </div>
+      <div class="ten columns mobile-two">
+        Action
+      </div>
+    </div>
+
+    <!-- bConnected/Google status button -->
     <div data-ng-switch on="user.profile.has_google_access_token">
-      <div data-ng-switch-when="true">
-        <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-left profile_connection_status_icon" />
-        <img src="/assets/logo_bconnected.png" alt="bConnected" class="profile_service_logo" />
-        <a class="radius button success">Revoke bConnected Access</a>
+
+      <div class="row" data-ng-switch-when="false">
+        <div class="one columns mobile-one cc-profile-service">bConnected</div>
+        <div class="one columns mobile-one">
+          <img data-ng-src="/assets/icon_block_24x24.png" alt="Not Connected icon" class="cc-profile-connection-status-icon" />
+        </div>
+        <div class="ten columns mobile-two">
+          <a class="radius button success" href="/api/google/request_authorization" target="_self">Enable <span class="visuallyhidden">Google Access</span></a>
+        </div>
       </div>
 
-      <div data-ng-switch-when="false">
-        <img data-ng-src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-left profile_connection_status_icon" />
-        <img src="/assets/logo_bconnected.png" alt="bConnected" class="profile_service_logo" />
-        <a class="radius button secondary" href="/api/google/request_authorization" target="_self">Enable bConnected Access</a>
+      <div class="row" data-ng-switch-when="true">
+        <div class="one columns mobile-one cc-profile-service">bConnected</div>
+        <div class="one columns mobile-one">
+          <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-profile-connection-status-icon" />
+        </div>
+        <div class="ten columns mobile-two">
+          <a class="radius button" href="/api/google/remove_authorization" target="_self">Revoke <span class="visuallyhidden">Google Access</span></a>
+        </div>
       </div>
+
     </div>
 
     <!-- Canvas status button -->
     <div data-ng-switch on="user.profile.has_canvas_access_token">
-      <div data-ng-switch-when="true">
-        <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-left profile_connection_status_icon" />
-        <img src="/assets/logo_canvas.png" alt="Canvas" class="profile_service_logo" />
-        <a class="radius button success">Revoke Canvas Access</a>
+
+      <div class="row" data-ng-switch-when="false">
+        <div class="one columns mobile-one cc-profile-service">Canvas</div>
+        <div class="one columns mobile-one">
+          <img data-ng-src="/assets/icon_block_24x24.png" alt="Not Connected icon" class="cc-profile-connection-status-icon" />
+        </div>
+        <div class="ten columns mobile-two">
+          <a class="radius button success" href="/api/canvas/request_authorization" target="_self">Enable <span class="visuallyhidden">Canvas Access</span></a>
+        </div>
       </div>
 
-      <div data-ng-switch-when="false">
-        <img data-ng-src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-left profile_connection_status_icon" />
-        <img src="/assets/logo_canvas.png" alt="Canvas" class="profile_service_logo" />
-        <a class="radius button secondary" href="/api/canvas/request_authorization" target="_self">Enable Canvas Access</a>
+      <div class="row" data-ng-switch-when="true">
+        <div class="one columns mobile-one cc-profile-service">Canvas</div>
+        <div class="one columns mobile-one">
+          <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-profile-connection-status-icon" />
+        </div>
+        <div class="ten columns mobile-two">
+          <a class="radius button" href="/api/canvas/remove_authorization" target="_self">Revoke <span class="visuallyhidden">Canvas Access</span></a>
+        </div>
       </div>
+
     </div>
 
     <hr />
     <p>
       <p>
-        <img src="/assets/icon_completed_24x24.png" alt="Connected icon" class="profile_connection_status_icon profile_status_icon_nopad" /> Service is connected to your account
+        <img src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-profile-connection-status-icon" /> Service is connected to your account
       </p>
       <p>
-        <img src="/assets/icon_block_24x24.png" alt="Not connected icon" class="profile_connection_status_icon profile_status_icon_nopad" /> Please connect this service to your account
+        <img src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-profile-connection-status-icon" /> Please connect this service to your account
       </p>
     </p>
 
