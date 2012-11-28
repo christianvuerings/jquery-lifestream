@@ -11,9 +11,13 @@ describe('CalCentral controllers', function() {
 
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
+      // We need to stub out the route, otherwise a redirect will happen
+      var route = jasmine.createSpyObj('$route', ['current']);
+      route.current.isPublic = true;
 
       ctrl = $controller('CalcentralController', {
-        $scope: scope
+        $scope: scope,
+        $route: route
       });
     }));
 

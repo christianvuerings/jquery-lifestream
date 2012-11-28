@@ -9,8 +9,15 @@
 
     $scope.user = {};
 
+    $scope.user.handleAccessToPage = function() {
+      if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
+        $scope.user.signIn();
+      }
+    };
+
     $scope.user.handleUserLoaded = function(data) {
       $scope.user.profile = data;
+      $scope.user.handleAccessToPage();
     };
 
     $scope.user.fetch = function(){
@@ -32,8 +39,8 @@
     $scope.$on('$routeChangeSuccess', function() {
       if(!$scope.user.profile) {
         $scope.user.fetch();
-      } else if(!$route.current.isPublic && !$scope.user.isAuthenticated()) {
-        $scope.user.signIn();
+      } else {
+        $scope.user.handleAccessToPage();
       }
       // Pass in controller name so we can set active location in menu
       $scope.controller_name = $route.current.controller;
