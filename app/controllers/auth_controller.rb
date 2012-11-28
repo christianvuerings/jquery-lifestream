@@ -11,6 +11,7 @@ class AuthController < ApplicationController
   end
 
   def request_authorization
+    expire
     final_redirect = params[:final_redirect] || "/profile"
     client = get_client final_redirect
     url = client.authorization_uri.to_s
@@ -41,7 +42,7 @@ class AuthController < ApplicationController
       Oauth2Data.delete_all(:uid => session[:user_id], :app_id => app_id)
     end
 
-    expire_feeds
+    expire
 
     final_redirect = params[:state] || "/profile"
     final_redirect = Base64.decode64 final_redirect
@@ -51,13 +52,12 @@ class AuthController < ApplicationController
   def remove_authorization
     Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
     Oauth2Data.delete_all(:uid => session[:user_id], :app_id => app_id)
-    expire_feeds
+    expire
     render :nothing => true, :status => 204
   end
 
-  def expire_feeds
-    MyCourseSites.expire session[:user_id]
-    # TODO also expire /api/my/status feed
+  def expire
+    Calcentral::USER_CACHE_EXPIRATION.notify session[:user_id]
   end
 
 end
