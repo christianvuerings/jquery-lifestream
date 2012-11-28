@@ -47,6 +47,9 @@ gem "log4r", "~> 1.1.10"
 # for easier non-DB-backed models
 gem "active_attr", "~> 0.6.0"
 
+# for production deployment
+gem "trinidad", "~> 1.4.4"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
