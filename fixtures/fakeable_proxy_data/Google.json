@@ -1,0 +1,277 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=10&calendarId=primary",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": []
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "expires": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "date": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "cache-control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "etag": [
+            "\"NybCyMgjkLQM6Il-p8A5652MtaE/at-uhQslQjUGe-DCjIZ97QATWBU\""
+          ],
+          "content-type": [
+            "application/json; charset=UTF-8"
+          ],
+          "x-content-type-options": [
+            "nosniff"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-xss-protection": [
+            "1; mode=block"
+          ],
+          "server": [
+            "GSE"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"calendar#events\",\n \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/at-uhQslQjUGe-DCjIZ97QATWBU\\\"\",\n \"summary\": \"tammi.chang.clc@gmail.com\",\n \"updated\": \"2012-11-16T20:41:41.000Z\",\n \"timeZone\": \"America/Los_Angeles\",\n \"accessRole\": \"owner\",\n \"defaultReminders\": [\n  {\n   \"method\": \"popup\",\n   \"minutes\": 30\n  },\n  {\n   \"method\": \"email\",\n   \"minutes\": 30\n  }\n ],\n \"nextPageToken\": \"CksKPV9lZGhtZ3BiNGVsbTZhYjluNnNzamNkaGRjcGttc29iYzgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWcYASCAgICsyJCf0hM=\",\n \"items\": [\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp34c1d7106sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODIzVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Lecture\",\n   \"location\": \"105 STANLEY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-23T12:30:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-23T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=TU,TH\"\n   ],\n   \"iCalUID\": \"schedule-74220-8@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp34c9d64o40rj9dpl62orfelp76pbj5phmur8\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGM5ZDY0bzQwcmo5ZHBsNjJvcmZlbHA3NnBiajVwaG11cjhfMjAxMjA4MjdUMTUwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Lab\",\n   \"location\": \"105 CORY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-27T08:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-27T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO\"\n   ],\n   \"iCalUID\": \"schedule-74221-10@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp36c9d7506sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI5VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Discussion\",\n   \"location\": \"241 CORY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T09:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T10:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-74231-9@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjge1d6p06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqZ2UxZDZwMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Lecture\",\n   \"location\": \"155 DWINELLE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T12:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T13:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-76588-6@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjge1dcpkmsobc81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqZ2UxZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Final\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-12-14T11:30:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-12-14T14:30:00-08:00\"\n   },\n   \"iCalUID\": \"schedule-76588-final@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjid9d6t06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Discussion\",\n   \"location\": \"219 DWINELLE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T13:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-76595-7@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6os3ib9i81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMjA4MjNUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"ETH STD 21AC\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-23T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-23T15:30:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=TU,TH\"\n   ],\n   \"iCalUID\": \"schedule-7689-2@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6osj0b9h81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMjA4MjlUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"ETH STD 21AC DIS 101\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T10:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-7690-1@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDE4MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Lecture\",\n   \"location\": \"1 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T12:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-77966-3@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhdcpkmsobc81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Final\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-12-10T11:30:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-12-10T14:30:00-08:00\"\n   },\n   \"iCalUID\": \"schedule-77966-final@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 29 Nov 2012 07:30:29 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=10",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": []
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "expires": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "date": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "cache-control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "etag": [
+            "\"NybCyMgjkLQM6Il-p8A5652MtaE/at-uhQslQjUGe-DCjIZ97QATWBU\""
+          ],
+          "content-type": [
+            "application/json; charset=UTF-8"
+          ],
+          "x-content-type-options": [
+            "nosniff"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-xss-protection": [
+            "1; mode=block"
+          ],
+          "server": [
+            "GSE"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"calendar#events\",\n \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/at-uhQslQjUGe-DCjIZ97QATWBU\\\"\",\n \"summary\": \"tammi.chang.clc@gmail.com\",\n \"updated\": \"2012-11-16T20:41:41.000Z\",\n \"timeZone\": \"America/Los_Angeles\",\n \"accessRole\": \"owner\",\n \"defaultReminders\": [\n  {\n   \"method\": \"popup\",\n   \"minutes\": 30\n  },\n  {\n   \"method\": \"email\",\n   \"minutes\": 30\n  }\n ],\n \"nextPageToken\": \"CksKPV9lZGhtZ3BiNGVsbTZhYjluNnNzamNkaGRjcGttc29iYzgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWcYASCAgICsyJCf0hM=\",\n \"items\": [\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp34c1d7106sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODIzVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Lecture\",\n   \"location\": \"105 STANLEY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-23T12:30:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-23T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=TU,TH\"\n   ],\n   \"iCalUID\": \"schedule-74220-8@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp34c9d64o40rj9dpl62orfelp76pbj5phmur8\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGM5ZDY0bzQwcmo5ZHBsNjJvcmZlbHA3NnBiajVwaG11cjhfMjAxMjA4MjdUMTUwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Lab\",\n   \"location\": \"105 CORY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-27T08:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-27T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO\"\n   ],\n   \"iCalUID\": \"schedule-74221-10@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp36c9d7506sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI5VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Discussion\",\n   \"location\": \"241 CORY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T09:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T10:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-74231-9@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjge1d6p06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqZ2UxZDZwMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Lecture\",\n   \"location\": \"155 DWINELLE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T12:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T13:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-76588-6@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjge1dcpkmsobc81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqZ2UxZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Final\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-12-14T11:30:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-12-14T14:30:00-08:00\"\n   },\n   \"iCalUID\": \"schedule-76588-final@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjid9d6t06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Discussion\",\n   \"location\": \"219 DWINELLE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T13:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-76595-7@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6os3ib9i81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMjA4MjNUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"ETH STD 21AC\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-23T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-23T15:30:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=TU,TH\"\n   ],\n   \"iCalUID\": \"schedule-7689-2@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6osj0b9h81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMjA4MjlUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"ETH STD 21AC DIS 101\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T10:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-7690-1@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDE4MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Lecture\",\n   \"location\": \"1 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T12:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-77966-3@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhdcpkmsobc81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Final\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-12-10T11:30:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-12-10T14:30:00-08:00\"\n   },\n   \"iCalUID\": \"schedule-77966-final@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 29 Nov 2012 07:30:29 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=10&pageToken=CksKPV9lZGhtZ3BiNGVsbTZhYjluNnNzamNkaGRjcGttc29iYzgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWcYASCAgICsyJCf0hM=",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "expires": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "date": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "cache-control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "etag": [
+            "\"NybCyMgjkLQM6Il-p8A5652MtaE/RPFhM9XfQaq7GDWH24K4TpW6C6I\""
+          ],
+          "content-type": [
+            "application/json; charset=UTF-8"
+          ],
+          "x-content-type-options": [
+            "nosniff"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-xss-protection": [
+            "1; mode=block"
+          ],
+          "server": [
+            "GSE"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"calendar#events\",\n \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/RPFhM9XfQaq7GDWH24K4TpW6C6I\\\"\",\n \"summary\": \"tammi.chang.clc@gmail.com\",\n \"updated\": \"2012-11-16T20:41:41.000Z\",\n \"timeZone\": \"America/Los_Angeles\",\n \"accessRole\": \"owner\",\n \"defaultReminders\": [\n  {\n   \"method\": \"popup\",\n   \"minutes\": 30\n  },\n  {\n   \"method\": \"email\",\n   \"minutes\": 30\n  }\n ],\n \"items\": [\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjgcpd6l06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2NwZDZsMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI5VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Discussion\",\n   \"location\": \"225 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T16:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-77983-5@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjgd1d6h06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2QxZDZoMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI3VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Lab\",\n   \"location\": \"245 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-27T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-27T16:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO\"\n   ],\n   \"iCalUID\": \"schedule-77984-4@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q0lpMzB0ZXdKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq_20121116T190000Z\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIxMTE2VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-11-16T20:41:41.908Z\",\n   \"summary\": \"PHYSICS 7B Lecture\",\n   \"location\": \"1 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-11-16T16:00:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-11-16T17:00:00-08:00\"\n   },\n   \"recurringEventId\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq\",\n   \"originalStartTime\": {\n    \"dateTime\": \"2012-11-16T11:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"iCalUID\": \"schedule-77966-3@ninjacourses.com\",\n   \"sequence\": 1,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 29 Nov 2012 07:30:29 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=10&calendarId=primary&pageToken=CksKPV9lZGhtZ3BiNGVsbTZhYjluNnNzamNkaGRjcGttc29iYzgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWcYASCAgICsyJCf0hM%3D",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "expires": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "date": [
+            "Thu, 29 Nov 2012 07:30:29 GMT"
+          ],
+          "cache-control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "etag": [
+            "\"NybCyMgjkLQM6Il-p8A5652MtaE/RPFhM9XfQaq7GDWH24K4TpW6C6I\""
+          ],
+          "content-type": [
+            "application/json; charset=UTF-8"
+          ],
+          "x-content-type-options": [
+            "nosniff"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-xss-protection": [
+            "1; mode=block"
+          ],
+          "server": [
+            "GSE"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"calendar#events\",\n \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/RPFhM9XfQaq7GDWH24K4TpW6C6I\\\"\",\n \"summary\": \"tammi.chang.clc@gmail.com\",\n \"updated\": \"2012-11-16T20:41:41.000Z\",\n \"timeZone\": \"America/Los_Angeles\",\n \"accessRole\": \"owner\",\n \"defaultReminders\": [\n  {\n   \"method\": \"popup\",\n   \"minutes\": 30\n  },\n  {\n   \"method\": \"email\",\n   \"minutes\": 30\n  }\n ],\n \"items\": [\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjgcpd6l06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2NwZDZsMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI5VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Discussion\",\n   \"location\": \"225 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T16:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-77983-5@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjgd1d6h06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2QxZDZoMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI3VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Lab\",\n   \"location\": \"245 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-27T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-27T16:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO\"\n   ],\n   \"iCalUID\": \"schedule-77984-4@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q0lpMzB0ZXdKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq_20121116T190000Z\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIxMTE2VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-11-16T20:41:41.908Z\",\n   \"summary\": \"PHYSICS 7B Lecture\",\n   \"location\": \"1 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-11-16T16:00:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-11-16T17:00:00-08:00\"\n   },\n   \"recurringEventId\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq\",\n   \"originalStartTime\": {\n    \"dateTime\": \"2012-11-16T11:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"iCalUID\": \"schedule-77966-3@ninjacourses.com\",\n   \"sequence\": 1,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 29 Nov 2012 07:30:29 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.3.0"
+}
