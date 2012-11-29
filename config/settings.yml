@@ -15,6 +15,9 @@ canvas_proxy:
 
 google_proxy:
   fake: false
+  #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
+  test_user_access_token: "someMumboJumbo"
+  test_user_refresh_token: "someMumboJumbo"
   client_id: 1
   client_secret: 'someMumboJumbo'
 
