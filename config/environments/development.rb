@@ -1,9 +1,6 @@
 Calcentral::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # Have calcentral settings override rails_config/integration/rails.rb hook settings
-  append_settings
-
   # Enable rack-livereload
   config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
 

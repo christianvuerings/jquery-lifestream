@@ -1,9 +1,6 @@
 Calcentral::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # Have calcentral settings override rails_config/integration/rails.rb hook settings
-  append_settings
-
   # Code is not reloaded between requests
   config.cache_classes = true
 
