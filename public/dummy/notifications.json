@@ -8,12 +8,13 @@
           "user_id": 177914,
           "title": "Evacuate Dwinelle Hall",
           "summary": "Evacuate Dwinelle Hall immediately, gas leak",
-          "source": "WARN ME",
+          "source": "Warn Me",
           "type": "alert",
-          "notification_date": 1349049728,
+          "epoch": 1349049728,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
           "url": "https://warnme.berkeley.edu/",
           "source_url": "https://warnme.berkeley.edu/",
-          "color_class": "campus"
+          "color_class": "class5"
         },
         {
           "id": 2,
@@ -22,10 +23,11 @@
           "summary": "You have 90 days to complete Math 1B and submit a Petition to Remove an Incomplete",
           "source": "Bear Facts",
           "type": "alert",
-          "notification_date": 1349049728,
+          "epoch": 1349049728,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
           "url": "https://bearfacts.berkeley.edu/",
           "source_url": "https://bearfacts.berkeley.edu/",
-          "color_class": "allgroups"
+          "color_class": "class5"
         }
       ]
     },
@@ -37,12 +39,13 @@
           "user_id": 177914,
           "title": "Spring Registration Block - Unpaid CARS Bill",
           "summary": "You have an unpaid CARS balance of $673.  Action Required.",
-          "source": "BILLING",
+          "source": "Billing",
           "type": "block",
-          "notification_date": 1348185901,
+          "epoch": 1348185901,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
           "url": "http://studentbilling.berkeley.edu",
           "source_url": "http://studentbilling.berkeley.edu",
-          "color_class": "usertasks"
+          "color_class": "class5"
         },
         {
           "id": 4,
@@ -51,22 +54,24 @@
           "summary": "87 out of 100",
           "source": "ETH STD 21AC",
           "type": "classes",
-          "notification_date": 1348268251,
+          "epoch": 1348268251,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
           "url": "https://ucberkeley.instructure.com/courses/833384",
           "source_url": "https://ucberkeley.instructure.com/courses/833384",
-          "color_class": "campus"
+          "color_class": "class5"
         },
         {
           "id": 5,
           "user_id": 177914,
           "title": "November CARS bill Posted",
           "summary": "Your November CARS bill of $987 is due by October 22",
-          "source": "BILLING",
+          "source": "Billing",
           "type": "finances",
-          "notification_date": 1349956800,
+          "epoch": 1349956800,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
           "url": "http://studentbilling.berkeley.edu/",
           "source_url": false,
-          "color_class": "allgroups"
+          "color_class": "class5"
         }
       ]
     },
@@ -80,34 +85,37 @@
           "summary": "Student may sign up for office hours once per week",
           "source": "EE 20N",
           "type": "classes",
-          "notification_date": 1349546400,
+          "epoch": 1349546400,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
           "url": "https://ucberkeley.instructure.com/courses/833382",
           "source_url": false,
-          "color_class": "usertasks"
+          "color_class": "class3"
         },
         {
           "id": 7,
           "user_id": 177914,
-          "title": "TELEBEARS Phase I Appointment - Oct 26 at 11am",
+          "title": "Telebears Phase I Appointment - Oct 26 at 11am",
           "summary": "Your Phase I appointment is scheduled for Oct 26 at 11am",
-          "source": "TELEBEARS",
+          "source": "Telebears",
           "type": "academics",
-          "notification_date": 1348682400,
-          "url": "https://TELEBEARS.berkeley.edu",
+          "epoch": 1348682400,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+          "url": "https://telebears.berkeley.edu",
           "source_url": false,
-          "color_class": "campus"
+          "color_class": "class5"
         },
         {
           "id": 8,
           "user_id": 177914,
           "title": "Incomplete Emergency Loan Application Notice",
           "summary": "Your Loan Promissory Note has not been submitted with a signature",
-          "source": "MYFINAID",
+          "source": "MyFinAid",
           "type": "finances",
-          "notification_date": 1348164000,
+          "epoch": 1348164000,
+          "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
           "url": "http://example.com",
           "source_url": false,
-          "color_class": "allgroups"
+          "color_class": "class5"
         }
       ]
     }
