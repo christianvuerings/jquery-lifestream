@@ -72,6 +72,78 @@
     {
       "request": {
         "method": "get",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?tasklist=%40default&maxResults=100",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "Accept": [
+            "*/*"
+          ],
+          "x-sakai-token": []
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Expires": [
+            "Fri, 30 Nov 2012 09:27:28 GMT"
+          ],
+          "Date": [
+            "Fri, 30 Nov 2012 09:27:28 GMT"
+          ],
+          "Cache-Control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "Etag": [
+            "\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\""
+          ],
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Xss-Protection": [
+            "1; mode=block"
+          ],
+          "Server": [
+            "GSE"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"tasks#tasks\",\n \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\\\"\",\n \"items\": [\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE3NzU2NDcwNTQ\\\"\",\n   \"title\": \"Math 53 Midterm Teaching Evaluation \",\n   \"updated\": \"2012-11-28T20:20:56.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1\",\n   \"position\": \"00000000000033554431\",\n   \"notes\": \"Turn in your teaching evaluation for Math 53\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-29T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/Mzg2MDQzMTg2\\\"\",\n   \"title\": \"Telebears Phase II Appointment\",\n   \"updated\": \"2012-11-28T20:23:38.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz\",\n   \"position\": \"00000000000134217727\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-30T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTA1MjgyOTA0MA\\\"\",\n   \"title\": \"Pay December CARS Bill\",\n   \"updated\": \"2012-11-28T20:21:45.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk\",\n   \"position\": \"00000000000268435455\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-30T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTExMjc2NjM0MzU\\\"\",\n   \"title\": \"Pay November CARS Bill\",\n   \"updated\": \"2012-11-28T20:22:08.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU\",\n   \"position\": \"00000000000402653183\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-10-31T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTk2NDA5NDQ0Mg\\\"\",\n   \"title\": \"Buy goggles for lab experiment\",\n   \"updated\": \"2012-11-30T08:59:46.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1\",\n   \"position\": \"00000000001073741823\",\n   \"status\": \"needsAction\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTIxMTgxMzQyMDQ\\\"\",\n   \"title\": \"Emergency Loan Application\",\n   \"updated\": \"2012-11-28T20:22:52.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5\",\n   \"position\": \"00000000002147483647\",\n   \"notes\": \"Submit a signed Emergency Loan promissory note\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-12-03T00:00:00.000Z\"\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 30 Nov 2012 09:27:28 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
         "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=10",
         "body": {
           "encoding": "US-ASCII",
@@ -150,14 +222,16 @@
           "User-Agent": [
             "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
           ],
-          "Authorization": "",
+          "Authorization": [
+            ""
+          ],
           "Cache-Control": [
             "no-store"
           ],
           "Content-Type": [
             "application/x-www-form-urlencoded"
           ],
-          "x-sakai-token": null
+          "x-sakai-token": []
         }
       },
       "response": {
@@ -217,14 +291,16 @@
           "User-Agent": [
             "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
           ],
-          "Authorization": "",
+          "Authorization": [
+            ""
+          ],
           "Cache-Control": [
             "no-store"
           ],
           "Content-Type": [
             "application/x-www-form-urlencoded"
           ],
-          "x-sakai-token": null
+          "x-sakai-token": []
         }
       },
       "response": {
@@ -271,6 +347,220 @@
         "http_version": null
       },
       "recorded_at": "Thu, 29 Nov 2012 07:30:29 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?maxResults=100&tasklist=@default",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "Accept": [
+            "*/*"
+          ],
+          "x-sakai-token": []
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Expires": [
+            "Fri, 30 Nov 2012 09:27:28 GMT"
+          ],
+          "Date": [
+            "Fri, 30 Nov 2012 09:27:28 GMT"
+          ],
+          "Cache-Control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "Etag": [
+            "\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\""
+          ],
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Xss-Protection": [
+            "1; mode=block"
+          ],
+          "Server": [
+            "GSE"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"tasks#tasks\",\n \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\\\"\",\n \"items\": [\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE3NzU2NDcwNTQ\\\"\",\n   \"title\": \"Math 53 Midterm Teaching Evaluation \",\n   \"updated\": \"2012-11-28T20:20:56.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1\",\n   \"position\": \"00000000000033554431\",\n   \"notes\": \"Turn in your teaching evaluation for Math 53\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-29T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/Mzg2MDQzMTg2\\\"\",\n   \"title\": \"Telebears Phase II Appointment\",\n   \"updated\": \"2012-11-28T20:23:38.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz\",\n   \"position\": \"00000000000134217727\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-30T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTA1MjgyOTA0MA\\\"\",\n   \"title\": \"Pay December CARS Bill\",\n   \"updated\": \"2012-11-28T20:21:45.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk\",\n   \"position\": \"00000000000268435455\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-30T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTExMjc2NjM0MzU\\\"\",\n   \"title\": \"Pay November CARS Bill\",\n   \"updated\": \"2012-11-28T20:22:08.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU\",\n   \"position\": \"00000000000402653183\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-10-31T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTk2NDA5NDQ0Mg\\\"\",\n   \"title\": \"Buy goggles for lab experiment\",\n   \"updated\": \"2012-11-30T08:59:46.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1\",\n   \"position\": \"00000000001073741823\",\n   \"status\": \"needsAction\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTIxMTgxMzQyMDQ\\\"\",\n   \"title\": \"Emergency Loan Application\",\n   \"updated\": \"2012-11-28T20:22:52.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5\",\n   \"position\": \"00000000002147483647\",\n   \"notes\": \"Submit a signed Emergency Loan promissory note\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-12-03T00:00:00.000Z\"\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 30 Nov 2012 09:27:28 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?tasklist=@default&maxResults=100",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "Accept": [
+            "*/*"
+          ],
+          "x-sakai-token": []
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Expires": [
+            "Fri, 30 Nov 2012 09:27:28 GMT"
+          ],
+          "Date": [
+            "Fri, 30 Nov 2012 09:27:28 GMT"
+          ],
+          "Cache-Control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "Etag": [
+            "\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\""
+          ],
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Xss-Protection": [
+            "1; mode=block"
+          ],
+          "Server": [
+            "GSE"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"tasks#tasks\",\n \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\\\"\",\n \"items\": [\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE3NzU2NDcwNTQ\\\"\",\n   \"title\": \"Math 53 Midterm Teaching Evaluation \",\n   \"updated\": \"2012-11-28T20:20:56.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1\",\n   \"position\": \"00000000000033554431\",\n   \"notes\": \"Turn in your teaching evaluation for Math 53\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-29T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/Mzg2MDQzMTg2\\\"\",\n   \"title\": \"Telebears Phase II Appointment\",\n   \"updated\": \"2012-11-28T20:23:38.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz\",\n   \"position\": \"00000000000134217727\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-30T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTA1MjgyOTA0MA\\\"\",\n   \"title\": \"Pay December CARS Bill\",\n   \"updated\": \"2012-11-28T20:21:45.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk\",\n   \"position\": \"00000000000268435455\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-11-30T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTExMjc2NjM0MzU\\\"\",\n   \"title\": \"Pay November CARS Bill\",\n   \"updated\": \"2012-11-28T20:22:08.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU\",\n   \"position\": \"00000000000402653183\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-10-31T00:00:00.000Z\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTk2NDA5NDQ0Mg\\\"\",\n   \"title\": \"Buy goggles for lab experiment\",\n   \"updated\": \"2012-11-30T08:59:46.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1\",\n   \"position\": \"00000000001073741823\",\n   \"status\": \"needsAction\"\n  },\n  {\n   \"kind\": \"tasks#task\",\n   \"id\": \"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5\",\n   \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTIxMTgxMzQyMDQ\\\"\",\n   \"title\": \"Emergency Loan Application\",\n   \"updated\": \"2012-11-28T20:22:52.000Z\",\n   \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5\",\n   \"position\": \"00000000002147483647\",\n   \"notes\": \"Submit a signed Emergency Loan promissory note\",\n   \"status\": \"needsAction\",\n   \"due\": \"2012-12-03T00:00:00.000Z\"\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 30 Nov 2012 09:27:28 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=1000",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "Accept": [
+            "*/*"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Expires": [
+            "Fri, 30 Nov 2012 09:27:29 GMT"
+          ],
+          "Date": [
+            "Fri, 30 Nov 2012 09:27:29 GMT"
+          ],
+          "Cache-Control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "Etag": [
+            "\"NybCyMgjkLQM6Il-p8A5652MtaE/Zt0uNunhtP3a8a3Y1CNWk3ELfxY\""
+          ],
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Xss-Protection": [
+            "1; mode=block"
+          ],
+          "Server": [
+            "GSE"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"calendar#events\",\n \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Zt0uNunhtP3a8a3Y1CNWk3ELfxY\\\"\",\n \"summary\": \"tammi.chang.clc@gmail.com\",\n \"updated\": \"2012-11-16T20:41:41.000Z\",\n \"timeZone\": \"America/Los_Angeles\",\n \"accessRole\": \"owner\",\n \"defaultReminders\": [\n  {\n   \"method\": \"popup\",\n   \"minutes\": 30\n  },\n  {\n   \"method\": \"email\",\n   \"minutes\": 30\n  }\n ],\n \"items\": [\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp34c1d7106sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODIzVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Lecture\",\n   \"location\": \"105 STANLEY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-23T12:30:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-23T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=TU,TH\"\n   ],\n   \"iCalUID\": \"schedule-74220-8@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp34c9d64o40rj9dpl62orfelp76pbj5phmur8\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGM5ZDY0bzQwcmo5ZHBsNjJvcmZlbHA3NnBiajVwaG11cjhfMjAxMjA4MjdUMTUwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Lab\",\n   \"location\": \"105 CORY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-27T08:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-27T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO\"\n   ],\n   \"iCalUID\": \"schedule-74221-10@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6gp36c9d7506sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI5VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"EE 20N Discussion\",\n   \"location\": \"241 CORY\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T09:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T10:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-74231-9@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjge1d6p06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqZ2UxZDZwMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Lecture\",\n   \"location\": \"155 DWINELLE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T12:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T13:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-76588-6@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjge1dcpkmsobc81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqZ2UxZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Final\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-12-14T11:30:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-12-14T14:30:00-08:00\"\n   },\n   \"iCalUID\": \"schedule-76588-final@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6oqjid9d6t06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"MATH 53 Discussion\",\n   \"location\": \"219 DWINELLE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T13:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-76595-7@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6os3ib9i81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMjA4MjNUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"ETH STD 21AC\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-23T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-23T15:30:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=TU,TH\"\n   ],\n   \"iCalUID\": \"schedule-7689-2@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6osj0b9h81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMjA4MjlUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"ETH STD 21AC DIS 101\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T10:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-7690-1@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI0VDE4MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Lecture\",\n   \"location\": \"1 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-24T11:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-24T12:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO,WE,FR\"\n   ],\n   \"iCalUID\": \"schedule-77966-3@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhdcpkmsobc81n6irjac5hmutbiedin6bj3dtmg\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Final\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-12-10T11:30:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-12-10T14:30:00-08:00\"\n   },\n   \"iCalUID\": \"schedule-77966-final@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjgcpd6l06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2NwZDZsMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI5VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Discussion\",\n   \"location\": \"225 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-29T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-29T16:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE\"\n   ],\n   \"iCalUID\": \"schedule-77983-5@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjgd1d6h06sqbed9gm6rrle9pmaspecdnmq\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2QxZDZoMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI3VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-10-09T23:07:19.000Z\",\n   \"summary\": \"PHYSICS 7B Lab\",\n   \"location\": \"245 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-08-27T14:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-08-27T16:00:00-07:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"recurrence\": [\n    \"RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO\"\n   ],\n   \"iCalUID\": \"schedule-77984-4@ninjacourses.com\",\n   \"sequence\": 0,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"etag\": \"\\\"NybCyMgjkLQM6Il-p8A5652MtaE/Q0lpMzB0ZXdKeEVBQUFBQUFBQUFBQT09\\\"\",\n   \"id\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq_20121116T190000Z\",\n   \"status\": \"confirmed\",\n   \"htmlLink\": \"https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIxMTE2VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0\",\n   \"created\": \"1900-01-01T12:00:00.000Z\",\n   \"updated\": \"2012-11-16T20:41:41.908Z\",\n   \"summary\": \"PHYSICS 7B Lecture\",\n   \"location\": \"1 LECONTE\",\n   \"creator\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"organizer\": {\n    \"email\": \"tammi.chang.clc@gmail.com\",\n    \"displayName\": \"Tammi Chang\",\n    \"self\": true\n   },\n   \"start\": {\n    \"dateTime\": \"2012-11-16T16:00:00-08:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2012-11-16T17:00:00-08:00\"\n   },\n   \"recurringEventId\": \"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq\",\n   \"originalStartTime\": {\n    \"dateTime\": \"2012-11-16T11:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"iCalUID\": \"schedule-77966-3@ninjacourses.com\",\n   \"sequence\": 1,\n   \"reminders\": {\n    \"useDefault\": true\n   }\n  }\n ]\n}\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 30 Nov 2012 09:27:29 GMT"
     }
   ],
   "recorded_with": "VCR 2.3.0"

@@ -34,7 +34,8 @@ class GoogleProxy < BaseProxy
   def request(request_params={})
     params = request_params[:params]
 
-    service = @client.discovered_api(request_params[:api], request_params[:version])
+    version = @client.preferred_version(request_params[:api]).version
+    service = @client.discovered_api(request_params[:api], version)
     resource_method = service.send(request_params[:resource].to_sym).send(request_params[:method].to_sym)
 
     #will record pages of results
@@ -43,7 +44,8 @@ class GoogleProxy < BaseProxy
 
     Rails.logger.info "GoogleProxy - Making request with @fake = #{@fake}, params = #{request_params}"
     begin
-      params.reverse_merge!(:pageToken => page_token) unless page_token.blank?
+      params["pageToken"] = page_token unless page_token.blank?
+
       result_page = FakeableProxy.wrap_request(APP_ID, @fake) {
         api_request =  @client.generate_request(options={:api_method => resource_method, :parameters => params})
         # Unfortunately, this seems to be as far as I can log.
@@ -52,6 +54,9 @@ class GoogleProxy < BaseProxy
       }
       page_token = result_page.data.next_page_token
       result_pages << result_page
+      if result_page.response.status != 200
+        break
+      end
     end while page_token
 
     #update tokens if necessary
@@ -72,8 +77,13 @@ class GoogleProxy < BaseProxy
   end
 
   def events_list(optional_params={})
-    optional_params.reverse_merge!(:calendarId => 'primary')
-    request :api => "calendar", :version => "v3", :resource => "events", :method => "list", :params => optional_params
+    optional_params.reverse_merge!(:calendarId => 'primary', :maxResults => 1000)
+    request :api => "calendar", :resource => "events", :method => "list", :params => optional_params
+  end
+
+  def tasks_list(optional_params={})
+    optional_params.reverse_merge!(:tasklist => '@default', :maxResults => 100)
+    request :api => "tasks", :resource => "tasks", :method => "list", :params => optional_params
   end
 
 end

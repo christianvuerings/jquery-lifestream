@@ -6,7 +6,7 @@ describe GoogleProxy do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
   end
 
-  it "should simulate a fake, valid response (assuming a valid recorded fixture)" do
+  it "should simulate a fake, valid event list response (assuming a valid recorded fixture)" do
     #Pre-recorded response has 13 entries, split into batches of 10.
     proxy = GoogleProxy.new(:fake => true)
     response_array = proxy.events_list({:maxResults => 10})
@@ -15,6 +15,16 @@ describe GoogleProxy do
     response_array[0].data["kind"].should == "calendar#events"
     response_array.size.should == 2
     (response_array[0].data["items"].size + response_array[1].data["items"].size).should == 13
+  end
+
+  it "should simulate a fake, valid task list response (assuming a valid recorded fixture)" do
+    #Pre-recorded response has 13 entries, split into batches of 10.
+    proxy = GoogleProxy.new(:fake => true)
+    response_array = proxy.tasks_list
+
+    #sample response payload: https://developers.google.com/google-apps/tasks/v1/reference/tasks/list
+    response_array[0].data["kind"].should == "tasks#tasks"
+    response_array[0].data["items"].size.should == 6
   end
 
   it "should simulate a token update before a real request using the Tammi account", :testext => true do
@@ -47,6 +57,16 @@ describe GoogleProxy do
     )
     response_array = proxy.events_list()
     response_array[0].data["kind"].should == "calendar#events"
+  end
+
+  it "should simulate a task list request", :testext => true do
+    proxy = GoogleProxy.new(
+      :access_token => Settings.google_proxy.test_user_access_token,
+      :refresh_token => Settings.google_proxy.test_user_refresh_token,
+      :expiration_time => 0
+    )
+    response_array = proxy.tasks_list
+    response_array[0].data["kind"].should == "tasks#tasks"
   end
 
 end
