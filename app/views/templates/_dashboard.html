@@ -167,7 +167,7 @@
           </div>
 
           <ul class="cc-widget-tasks-notifications-list cc-widget-section-list">
-            <li data-ng-repeat="notification in section.notifications | orderBy: 'notification_date'">
+            <li data-ng-repeat="notification in section.notifications | orderBy: 'epoch'">
             <div class="row">
 
                 <div class="seven columns">
@@ -185,7 +185,7 @@
 
                 <div class="two columns cc-right">
                   <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
-                  {{notification.notification_date * 1000 | date:'M/dd'}}
+                  {{notification.epoch * 1000 | date:'M/dd'}}
                 </div>
 
             </div>
