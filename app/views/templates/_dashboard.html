@@ -12,9 +12,9 @@
           <!-- First loop: timestamped items -->
           <li data-ng-repeat="item in items | filter:notAllDay">
             <div class="cc-widget-mycalendar-datelist-time cc-left">
-            <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.date_time | date:'H'}}</div>
-              <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.date_time | date:'mm'}}<br>
-              <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.date_time | date:'a' | uppercase}}</span>
+            <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.epoch * 1000 | date:'H'}}</div>
+              <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.epoch * 1000 | date:'mm'}}<br>
+              <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.epoch * 1000 | date:'a' | uppercase}}</span>
               </div>
             </div>
             <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">

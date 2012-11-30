@@ -7,7 +7,7 @@
    */
   calcentral.controller('TasksController', ['$http', '$scope', function($http, $scope) {
 
-    $http.get('/dummy/tasks.json').success(function(data) {
+    $http.get('/api/my/tasks').success(function(data) {
 
       $scope.tasks = data.sections;
 
