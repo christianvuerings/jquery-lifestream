@@ -21,7 +21,7 @@ describe MyTasksController do
     json_response["sections"].length.should == 4
     default_sections = ["Due", "Due Tomorrow", "Upcoming", "Unscheduled"]
     json_response["sections"].each do |section|
-      default_sections.include?(section["title"]).should be true
+      default_sections.include?(section["title"]).should == true
     end
 
   end

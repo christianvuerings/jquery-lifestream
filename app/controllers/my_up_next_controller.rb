@@ -2,8 +2,7 @@ class MyUpNextController < ApplicationController
 
   def get_feed
     if session[:user_id]
-      dummyjson = File.read(Rails.root.join('public/dummy/upnext.json'))
-      render :json => dummyjson
+      render :json => MyUpNext.get_feed(session[:user_id]).to_json
     else
       render :json => {}.to_json
     end

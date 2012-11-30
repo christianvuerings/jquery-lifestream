@@ -2,8 +2,7 @@ class MyTasksController < ApplicationController
 
   def get_feed
     if session[:user_id]
-      dummyjson = File.read(Rails.root.join('public/dummy/tasks.json'))
-      render :json => dummyjson
+      render :json => MyTasks.get_feed(session[:user_id]).to_json
     else
       render :json => {}.to_json
     end
