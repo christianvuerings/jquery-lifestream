@@ -5,25 +5,25 @@
       "tasks": [
         {
           "type": "task",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
           "title": "Lunch with study group",
-          "updated": "2012-10-19T21:45:03.000Z",
           "status": "overdue",
           "due_date": "2012-09-05T00:00:00.000Z",
+          "epoch": "1354310962",
           "link_url": "https://mail.google.com/tasks/canvas?pli=1",
           "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-          "emitter": "Google Tasks"
+          "emitter": "Canvas",
+          "color_class": "class1"
         },
         {
           "type": "task",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNDE0NjY0NTc2",
           "title": "Return keys to lab partner",
-          "updated": "2012-10-08T21:31:18.000Z",
           "status": "overdue",
           "due_date": "2012-10-07T00:00:00.000Z",
+          "epoch": "1354397362",
           "link_url": "https://mail.google.com/tasks/canvas?pli=1",
           "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNDE0NjY0NTc2",
-          "emitter": "Google Tasks"
+          "emitter": "Google Tasks",
+          "color_class": "class2"
         }
       ]
     },
@@ -32,24 +32,26 @@
       "tasks": [
         {
           "type": "task",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDo5NDQyODE1NjU",
           "title": "Adjust valves on the Ghia",
-          "updated": "2012-11-15T19:43:52.000Z",
           "status": "inprogress",
           "due_date": "2012-11-16T00:00:00.000Z",
+          "epoch": "1354310962",
           "link_url": "https://mail.google.com/tasks/canvas?pli=1",
           "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDo5NDQyODE1NjU",
-          "emitter": "Google Tasks"
+          "emitter": "Google Tasks",
+          "color_class": "class2"
         },
         {
           "type": "assignment",
           "due_date": "2012-11-16T23:59:00-08:00",
+          "epoch": "1354397362",
           "title": "Report on frog dissection",
           "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
           "source_url": "https://ucberkeley.instructure.com/courses/832071",
-          "emitter": "Canvas Assignments",
-          "source": "Biology",
-          "status": "inprogress"
+          "emitter": "Canvas",
+          "source": "BIOLOGY",
+          "status": "inprogress",
+          "color_class": "class1"
         }
       ]
     },
@@ -59,12 +61,35 @@
         {
           "type": "assignment",
           "due_date": "2012-11-20T23:59:00-08:00",
+          "epoch": "1354915762",
           "title": "Bring highlighter to lecture",
           "link_url": "https://ucberkeley.instructure.com/courses/750027/assignments/2494095",
           "source_url": "https://ucberkeley.instructure.com/courses/750027",
-          "emitter": "Canvas Assignments",
+          "emitter": "Canvas",
           "source": "PLEO 22",
-          "status": "inprogress"
+          "status": "inprogress",
+          "color_class": "class1"
+        },
+        {
+          "type": "assignment",
+          "due_date": "2012-11-20T23:59:00-08:00",
+          "epoch": "1354915762",
+          "title": "Register for classes",
+          "link_url": "https://mail.google.com/tasks/canvas?pli=1",
+          "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDo5NDQyODE1NjU",
+          "emitter": "SAIT",
+          "source": "Campus",
+          "color_class": "campus"
+        },
+        {
+          "type": "task",
+          "title": "BIOLOGY 5 assignment",
+          "due_date": "2012-09-05T00:00:00.000Z",
+          "epoch": "1355174962",
+          "link_url": "https://mail.google.com/tasks/canvas?pli=1",
+          "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
+          "emitter": "Canvas",
+          "color_class": "class1"
         }
       ]
     },
@@ -73,27 +98,24 @@
       "tasks": [
         {
           "type": "task",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxMDUwODc2ODM",
           "title": "Buy goggles for lab experiment",
-          "updated": "2012-10-19T21:45:04.000Z",
           "parent": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
           "status": "inprogress",
           "link_url": "https://mail.google.com/tasks/canvas?pli=1",
           "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxMDUwODc2ODM",
-          "emitter": "Google Tasks"
+          "emitter": "Google Tasks",
+          "color_class": "class2"
         },
         {
           "type": "task",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxMTc0Mzg2MzUz",
           "title": "Get refund on Chemistry textbook",
-          "updated": "2012-10-19T21:44:44.000Z",
           "status": "inprogress",
           "link_url": "https://mail.google.com/tasks/canvas?pli=1",
           "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxMTc0Mzg2MzUz",
-          "emitter": "Google Tasks"
+          "emitter": "Google Tasks",
+          "color_class": "class2"
         }
       ]
     }
   ]
 }
-

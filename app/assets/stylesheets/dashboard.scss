@@ -17,6 +17,46 @@
   .cc-page-dashboard-column-c {
     border-left: 1px solid $cc-border-color;
   }
+  .cc-emitter-col {
+    padding: 0;
+  }
+  .cc-emitter {
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 100%;
+  }
+
+  // Emitter button colors
+  .cc-emitter-class1 {
+    background: #5da323;
+  }
+  .cc-emitter-class2 {
+    background: #a52a2a;
+  }
+  .cc-emitter-class3 {
+    background: #800080;
+  }
+  .cc-emitter-class4 {
+    background: #f73c07;
+  }
+  .cc-emitter-class5 {
+    background: #16ae7b;
+  }
+  .cc-emitter-class6 {
+    background: #0a516c;
+  }
+  .cc-emitter-campus {
+    background: #0000ff;
+  }
+  .cc-emitter-allgroups {
+    background: #b8850b;
+  }
+  .cc-emitter-usertasks {
+    background: #db108c;
+  }
+
+
+
 }
 
 @media only screen and (max-width: 767px) {

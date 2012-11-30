@@ -141,13 +141,6 @@ a:hover {
   height: 24px;
   width: 24px;
 }
-
-.cc-container-widget .cc-widget-list-icon-big {
-  background-color: transparent;
-  background-position: 0 2px;
-  background-repeat: no-repeat;
-}
-
 .cc-icon-big-academics {
   background-image: image-url('icon_academics_24x24.png');
 }
@@ -326,14 +319,14 @@ a:hover {
   border-bottom: 1px dotted $cc-list-border-color;
 }
 
-.cc-widget-tasks-notifications-short-title {
-  display: block;
-  font-size: 14px;
-  padding-left: 30px;
-  width: 90%;
+.cc-widget-short-title {
+  display: inline-block;
+  font-size: 12px;
+  width: 100%;
 }
-.cc-widget-tasks-notifications-list-source {
-  padding-left: 30px;
+
+.cc-widget-tasks-short-title {
+  font-size: 14px;
 }
 
 .cc-widget-tasks-notifications-list {
