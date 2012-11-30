@@ -1,19 +1,20 @@
 {
   "items": [
     {
-      "id": "h1ifrb5qm7ubd6ue713o45m9t4",
       "status": "confirmed",
       "html_link": "https://www.google.com/calendar/event?eid=aDFpZnJiNXFtN3ViZDZ1ZTcxM280NW05dDQgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Scot out (Stone Soup)",
       "start": {
-        "date": "2012-11-16"
+        "date_time": "2012-11-16"
       },
       "end": {
-        "date": "2012-11-17"
-      }
+        "date_time": "2012-11-17"
+      },
+      "epoch": 1353052800,
+      "is_all_day": true,
+      "emitter": "Google Calendar"
     },
     {
-      "id": "f3o6t9mgnuhjvhjrler8vtii1o",
       "status": "confirmed",
       "html_link": "https://www.google.com/calendar/event?eid=ZjNvNnQ5bWdudWhqdmhqcmxlcjh2dGlpMW8gc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Breakfast at Tiffany's",
@@ -23,10 +24,12 @@
       },
       "end": {
         "date_time": "2012-11-16T19:30:00-08:00"
-      }
+      },
+      "epoch": 1353052800,
+      "is_all_day": false,
+      "emitter": "Google Calendar"
     },
     {
-      "id": "d9n2klbblob7ubb5ruov1v4e0s",
       "status": "confirmed",
       "html_link": "https://www.google.com/calendar/event?eid=ZDluMmtsYmJsb2I3dWJiNXJ1b3YxdjRlMHMgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Meet w/Study Group",
@@ -35,10 +38,12 @@
       },
       "end": {
         "date_time": "2012-11-16T21:00:00-08:00"
-      }
+      },
+      "epoch": 1353052800,
+      "is_all_day": false,
+      "emitter": "Google Calendar"
     },
     {
-      "id": "hi51pe4mbp59j03t39ks04ttbk",
       "status": "confirmed",
       "html_link": "https://www.google.com/calendar/event?eid=aGk1MXBlNG1icDU5ajAzdDM5a3MwNHR0Ymsgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Renew journal subscription",
@@ -47,10 +52,12 @@
       },
       "end": {
         "date_time": "2012-11-16T22:30:00-08:00"
-      }
+      },
+      "epoch": 1353052800,
+      "is_all_day": false,
+      "emitter": "Google Calendar"
     },
     {
-      "id": "68t9rnhudurr4nbg87mh9q9vl0",
       "status": "confirmed",
       "html_link": "https://www.google.com/calendar/event?eid=Njh0OXJuaHVkdXJyNG5iZzg3bWg5cTl2bDAgc2hhY2tlckBiZXJrZWxleS5lZHU",
       "summary": "Bring back film and LPs",
@@ -59,7 +66,10 @@
       },
       "end": {
         "date_time": "2012-11-17T00:00:00-08:00"
-      }
+      },
+      "epoch": 1353052800,
+      "is_all_day": false,
+      "emitter": "Google Calendar"
     }
   ]
 }
