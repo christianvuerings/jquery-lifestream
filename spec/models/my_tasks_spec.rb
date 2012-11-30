@@ -19,8 +19,8 @@ describe "MyTasks" do
     #valid_feed["sections"][1]["tasks"].size.should == 1
     valid_feed["sections"][2]["title"].should == "Upcoming"
     valid_feed["sections"][2]["tasks"].size.should == 3
-    valid_feed["sections"][3]["title"].should == "Unscheduled"
-    valid_feed["sections"][3]["tasks"].size.should == 1
+    #valid_feed["sections"][3]["title"].should == "Unscheduled"
+    #valid_feed["sections"][3]["tasks"].size.should == 1
     valid_feed["sections"].each do |section|
       section["tasks"].each do |task|
         task["link_url"].blank?.should == false
