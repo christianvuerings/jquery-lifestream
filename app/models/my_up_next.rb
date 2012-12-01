@@ -11,7 +11,7 @@ class MyUpNext
         # Setting up a rolling +/- 1 month window as default
         past_month = DateTime.now.advance(:months => -1).to_formatted_s
         next_month = DateTime.now.advance(:months => 1).to_formatted_s
-        opts.reverse_merge!({"timeMin" => past_month, "timeMax" => next_month})
+        opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime", "timeMin" => past_month, "timeMax" => next_month})
 
         events_array = google_proxy.events_list(opts)
         events_array.each do |response_page|
@@ -27,7 +27,7 @@ class MyUpNext
             # date mangling to harmonize the different date formats.
             start_end_hash = determine_start_end(entry["start"], entry["end"])
             start_end_hash.each do |key, value|
-              formatted_entry[key] = value unless value.blank?
+              formatted_entry[key] = value unless value.nil?
             end
 
             up_next["items"].push(formatted_entry)
@@ -55,7 +55,7 @@ class MyUpNext
     start_date = start_hash && (start_hash["date"] || start_hash["dateTime"])
     if !start_date.blank?
       start_entry = {
-        "epoch" => start_date.to_i,
+        "epoch" => DateTime.parse(start_date.to_s).strftime("%s").to_i,
         "datetime" => DateTime.parse(start_date.to_s).rfc3339(3)
       }
     end
@@ -63,7 +63,7 @@ class MyUpNext
     end_date = end_hash && (end_hash["date"] || end_hash["dateTime"])
     if !end_date.blank?
       end_entry = {
-        "epoch" => end_date.to_i,
+        "epoch" => DateTime.parse(end_date.to_s).strftime("%s").to_i,
         "datetime" => DateTime.parse(end_date.to_s).rfc3339(3)
       }
     end
