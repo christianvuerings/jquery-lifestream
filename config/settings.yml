@@ -1,6 +1,12 @@
 logger:
   level: <%= WARN %>
 
+application:
+  # Set to true if testing production env without Apache/Nginx
+  serve_static_assets: false
+  # Set if running behind Apache/Nginx + https
+  # protocol: "https://"
+
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
 

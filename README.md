@@ -61,7 +61,7 @@ cd calcentral
 ```bash
 export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C"
 ```
-  * __WARNING__: Do switch between 32-bit and 64-bit JRuby after your gemset has been initialized (your bundle library will have serious issues). If you do need to change settings, make sure to reinitialize your gemset:
+  * __WARNING__: Do not switch between 32-bit and 64-bit JRuby after your gemset has been initialized (your bundle library will have serious issues). If you do need to change settings, make sure to reinitialize your gemset:
      * ```rvm gemset delete calcentral```
      * (set your JRUBY_OPTS)
      * ```bundle install```
