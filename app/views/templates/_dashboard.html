@@ -117,34 +117,37 @@
 
           <div data-ng-repeat="section in tasks">
             <div class="cc-widget-section-label">{{section.title}}</div>
-              <ul class="cc-widget-tasks-notifications-list cc-widget-section-list">
-                <li data-ng-repeat="task in section.tasks">
-                  <div class="row">
+            <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom" ng-show="section.tasks.length">
+              <li data-ng-repeat="task in section.tasks">
+                <div class="row">
 
-                    <div class="one columns">
-                      <input type="checkbox" ng-model="task.done">
-                    </div>
-
-                    <div class="six columns">
-                      <a data-ng-href="{{task.link_url}}"
-                        class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-task-done-{{task.done}}"
-                        data-ng-class="{true:'cc-alert'}[task.status=='overdue']">{{task.title}}
-                      </a>
-                    </div>
-
-                    <div class="three columns cc-emitter-col">
-                      <button class="button tiny cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</button>
-                    </div>
-
-                    <div class="two columns cc-right" data-ng-show="$parent.section.title != 'Due Today'">
-                      {{task.due_date | date:'M/dd'}}
-                    </div>
+                  <div class="one columns">
+                    <input type="checkbox" ng-model="task.done">
                   </div>
-                </li>
-              </ul>
+
+                  <div class="six columns">
+                    <a data-ng-href="{{task.link_url}}"
+                      class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-task-done-{{task.done}}"
+                      data-ng-class="{true:'cc-alert'}[task.status=='overdue']">{{task.title}}
+                    </a>
+                  </div>
+
+                  <div class="three columns cc-emitter-col">
+                    <button class="button tiny cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</button>
+                  </div>
+
+                  <div class="two columns cc-right" data-ng-show="$parent.section.title != 'Unscheduled'">
+                    {{task.due_date.date_string}}
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div ng-show="!section.tasks.length" class="cc-widget-text cc-widget-section-bottom">
+              There are currently no tasks/assignments that are <span class="cc-lowercase">{{section.title}}</span>.
             </div>
           </div>
         </div>
+      </div>
 
     </div>
     <!-- End Tasks / Assignments column -->
@@ -166,7 +169,7 @@
             <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
           </div>
 
-          <ul class="cc-widget-tasks-notifications-list cc-widget-section-list">
+          <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
             <li data-ng-repeat="notification in section.notifications | orderBy: 'epoch'">
             <div class="row">
 

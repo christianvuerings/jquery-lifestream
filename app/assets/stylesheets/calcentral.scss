@@ -231,6 +231,10 @@ a:hover {
   background-image: image-url('icon_campus_socialrecreation_150x150.png');
 }
 
+.cc-lowercase {
+  text-transform: lowercase;
+}
+
 .cc-left {
   float: left;
 }
@@ -315,7 +319,7 @@ a:hover {
   overflow: hidden;
 }
 
-.cc-widget-section-list {
+.cc-widget-section-bottom {
   border-bottom: 1px dotted $cc-list-border-color;
 }
 
