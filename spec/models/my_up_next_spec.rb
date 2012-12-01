@@ -15,11 +15,14 @@ describe "MyUpNext" do
     valid_feed = MyUpNext.get_feed(@user_id)
     valid_feed["items"].size.should == 13
     valid_feed["items"].each do |entry|
+      entry["status"].should_not == "cancelled"
       if !entry["start"].blank?
         entry["start"]["epoch"].is_a?(Integer).should be true
+        entry["start"]["epoch"].should > Time.new(1970, 1, 1).to_i
       end
       if !entry["end"].blank?
         entry["end"]["epoch"].is_a?(Integer).should be true
+        entry["end"]["epoch"].should > Time.new(1970, 1, 1).to_i
       end
       entry["id"].should_not be blank?
     end
