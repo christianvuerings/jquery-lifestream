@@ -7,7 +7,7 @@
    */
   calcentral.controller('UpNextController', ['$http', '$scope', function($http, $scope) {
 
-    $http.get('/dummy/upnext.json').success(function(data) {
+    $http.get('/api/my/up_next').success(function(data) {
 
       $scope.items = data.items;
 
