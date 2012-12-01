@@ -19,11 +19,13 @@ class MyTasks
           next unless response_page.response.status == 200
 
           response_page.data["items"].each do |entry|
+            next if entry["title"].blank?
             formatted_entry = {
               "type" => "task",
               "title" => entry["title"] || "",
               "emitter" => "Google Tasks",
-              "link_url" => entry["selfLink"] || "",
+              "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
+              "source_url" => entry["selfLink"] || "",
               "class" => "class2"
             }
 
@@ -34,7 +36,8 @@ class MyTasks
             if !due_date.blank?
               formatted_entry["due_date"] = {
                 "epoch" => due_date.to_i,
-                "datetime" => DateTime.parse(due_date.to_s).rfc3339(3)
+                "datetime" => DateTime.parse(due_date.to_s).rfc3339(3),
+                "date_string" => DateTime.parse(due_date.to_s).strftime("%-m/%d")
               }
             end
 
