@@ -73,12 +73,14 @@ bundle install
 
 8. Copy and update the settings
 ```
-cp config/settings.yml config/settings.local.yml
-cp config/settings/testext.yml config/settings/testext.local.yml
-cp config/settings/development.yml config/settings/development.local.yml
+mkdir ~/.calcentral_config
+cp config/settings.yml ~/.calcentral_config/settings.local.yml
+cp config/settings/testext.yml ~/.calcentral_config/testext.local.yml
+cp config/settings/development.yml ~/.calcentral_config/development.local.yml
+cp config/settings/production.yml ~/.calcentral_config/production.local.yml
 ```
 and update the settings in the `.local.yml` files.
-These won't be committed to the repository.
+Settings live outside of the project dir to prevent accidental commits to the repo.
 
 9. Install JDBC driver (for Oracle connection)
 You may already have an Oracle driver from MyBerkeley-OAE development, in which case you just need to copy it to your local JRuby installation:
