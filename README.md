@@ -163,24 +163,6 @@ If you use VPN, use group #1 (1-Campus_VPN)
 <span data-ng-bind="name"></span>
 ```
 
-## API Endpoints:
-
-Projected endpoints:
-
-* ``` /api/my/status ```
-* ``` /api/my/course_sites ```
-* ``` /api/my/group_sites ```
-* ``` /api/my/upcoming_events ```
-* ``` /api/my/assignments_tasks ```
-
-```
-/api/my/status :
-  is_logged_in: <boolean>
-  preferred_name: <string if exists else "">
-  uid: <string uid if logged in>
-  widget_data: <object>
-```
-
 ## Freshening fake data feeds
 
 Make sure your test.local.yml file has real connections to real external services that are fakeable (Canvas, Google, etc).
