@@ -27,5 +27,8 @@
 # Ignore compiled CSS files (these will be auto-generated on server start)
 app/assets/stylesheets/application.css
 
+# Ignore precompiled assets
+/public/assets
+
 # Ignore the coverage directory (for checking in, otherwise useful)
 /coverage

@@ -6,3 +6,6 @@ campusdb:
   password: <yer_password>
   pool: 5
   timeout: 5000
+application:
+  # Set if running behind Apache/Nginx + https
+  protocol: "https://"
