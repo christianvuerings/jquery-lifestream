@@ -7,8 +7,9 @@ class MyGroupSites
       if SakaiProxy.access_granted?
         sakai_proxy = SakaiProxy.new
         sakai_categories = sakai_proxy.get_categorized_sites(uid)[:body]["categories"] || []
+        filter_categories = ["Projects"]
         sakai_categories.each do |section|
-          if %w(Other Projects).include?(section["category"])
+          if filter_categories.include?(section["category"])
             section["sites"].each do |site|
               next if site["url"].blank? || site["id"].blank?
               site_hash = {
