@@ -7,7 +7,7 @@
    */
   calcentral.controller('MyGroupsController', ['$http', '$scope', function($http, $scope) {
 
-    $http.get('/dummy/mygroups.json').success(function(data) {
+    $http.get('/api/my/groups').success(function(data) {
 
       $scope.mygroups = data;
 
