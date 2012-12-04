@@ -27,9 +27,8 @@ describe "MyGroupSites" do
   it "should reject malformed Sakai2 entries" do
     SakaiProxy.stub(:access_granted?).and_return(true)
     site_template = @fake_sakai_proxy.get_categorized_sites(@user_id)
-    num_projects = 0
     site_template[:body]["categories"].each do |category|
-      if category["category"] == "Other" && category["sites"].size >= 1
+      if category["category"] == "Projects" && category["sites"].size >= 1
         #One valid entry
         test_sites = category["sites"].slice(0,1)
         test_sites[0]["title"] = ""
@@ -39,13 +38,11 @@ describe "MyGroupSites" do
         test_sites << {"title"=>"My Bad Url",
                        "id"=>"1", "url"=>"",
                        "description"=>"<p>My Bad Url Site</p>"}
-      elsif category["category"] == "Projects"
-        num_projects = category["sites"].size
       end
     end
     SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(site_template)
     my_groups = MyGroupSites.get_feed(@user_id)
-    my_groups.size.should == num_projects + 1
+    my_groups.size.should == 1
   end
 
 end
