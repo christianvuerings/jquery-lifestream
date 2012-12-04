@@ -70,13 +70,8 @@
           <li class="cc-widget-list-icon"
             data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']"
             data-ng-repeat="group in mygroups">
-              <a data-ng-show="group.emitter == 'Canvas'"
-                class="cc-ellipsis"
-                data-ng-href="https://ucberkeley.instructure.com/groups/{{group.id}}">{{group.title}}
-              </a>
-              <a data-ng-show="group.emitter == 'bSpace'"
-                class="cc-ellipsis"
-                data-ng-href="https://sakai-dev.berkeley.edu/portal/site/{{group.id}}">{{group.title}}
+              <a class="cc-ellipsis"
+                data-ng-href="{{group.site_url}}">{{group.title}}
               </a>
           </li>
         </ul>
