@@ -3,8 +3,5 @@ rvm:
   - "jruby-19mode"
   - "jruby-head"
 env:
-  - JRUBY_OPTS="--client -Xcext.enabled=false" DISPLAY=:99.0
+  - JRUBY_OPTS="--client -Xcext.enabled=false" DISPLAY=:99.0 logger.level=DEBUG
 before_install: sh -e /etc/init.d/xvfb start
-
-logger:
-  level: <%= DEBUG %>
