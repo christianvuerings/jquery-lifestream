@@ -1,5 +1,5 @@
 logger:
-  level: <%= WARN %>
+  level: <%= ENV['logger.level'] || WARN %>
 
 application:
   # Set to true if testing production env without Apache/Nginx
