@@ -2,10 +2,15 @@ require "spec_helper"
 
 describe "MyTasks" do
   before(:each) do
+    Time.zone = 'Pacific Time (US & Canada)'
     @user_id = rand(99999).to_s
     @fake_google_proxy = GoogleProxy.new({fake: true})
     @fake_google_tasks_array = @fake_google_proxy.tasks_list()
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
+  end
+
+  after(:each) do
+    Time.zone = 'Pacific Time (US & Canada)'
   end
 
   it "should load nicely with the pre-recorded fake Google and Canvas proxy feeds using the server's timezone" do
@@ -49,9 +54,7 @@ describe "MyTasks" do
   end
 
   it "should shift tasks into different buckets with a different timezone " do
-    #(since Berkeley assignments are probably always due at -0800, irregardless of where the student is)
-    old_time_zone = Time.zone
-    Time.zone = 13.hours
+    Time.zone = 'Pacific/Tongatapu'
 
     GoogleProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:access_granted?).and_return(true)
@@ -67,8 +70,5 @@ describe "MyTasks" do
     valid_feed["sections"][2]["tasks"].size.should == 4
     valid_feed["sections"][3]["title"].should == "Unscheduled"
     valid_feed["sections"][3]["tasks"].size.should == 1
-
-    Time.zone = old_time_zone
-
   end
 end
