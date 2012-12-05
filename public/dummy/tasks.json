@@ -1,8 +1,5 @@
 {
-  "sections": [
-    {
-      "title": "Due",
-      "tasks": [
+    "sections": [
         {
           "type": "task",
           "title": "Lunch with study group",
@@ -79,7 +76,5 @@
           "class": "class2",
           "status": "needs_action"
         }
-      ]
-    }
-  ]
+    ]
 }
