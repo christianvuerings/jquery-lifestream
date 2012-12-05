@@ -110,36 +110,20 @@
             </div>
           </div>
 
-          <div data-ng-repeat="section in tasks">
-            <div class="cc-widget-section-label">{{section.title}}</div>
-            <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom" ng-show="section.tasks.length">
-              <li data-ng-repeat="task in section.tasks">
-                <div class="row">
+          <div data-ng-switch on="tasks_mode">
 
-                  <div class="one columns">
-                    <input type="checkbox" ng-model="task.done">
-                  </div>
-
-                  <div class="six columns">
-                    <a data-ng-href="{{task.link_url}}"
-                      class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-task-done-{{task.done}}"
-                      data-ng-class="{true:'cc-alert'}[task.status=='overdue']">{{task.title}}
-                    </a>
-                  </div>
-
-                  <div class="three columns cc-emitter-col">
-                    <button class="button tiny cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</button>
-                  </div>
-
-                  <div class="two columns cc-right" data-ng-show="$parent.section.title != 'Unscheduled'">
-                    {{task.due_date.date_string}}
-                  </div>
-                </div>
-              </li>
-            </ul>
-            <div ng-show="!section.tasks.length" class="cc-widget-text cc-widget-section-bottom">
-              There are currently no tasks/assignments that are <span class="cc-lowercase">{{section.title}}</span>.
+            <div data-ng-switch-when="scheduled">
+              <div data-ng-repeat="section in sections" ng-show="section.title != 'Unscheduled'">
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </div>
             </div>
+
+            <div data-ng-switch-when="unscheduled">
+              <div data-ng-repeat="section in sections" ng-show="section.title == 'Unscheduled'">
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
