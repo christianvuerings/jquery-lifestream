@@ -9,22 +9,22 @@
     <li data-ng-repeat="task in section.tasks">
       <div class="row">
 
-        <div class="one columns">
+        <div class="one mobile-two columns">
           <input type="checkbox" label="Done" ng-model="task.done">
         </div>
 
-        <div class="six columns">
+        <div class="six mobile-two columns">
           <a data-ng-href="{{task.link_url}}"
             class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-task-done-{{task.done}}"
             data-ng-class="{true:'cc-alert'}[task.status=='overdue']">{{task.title}}
           </a>
         </div>
 
-        <div class="three columns cc-emitter-col">
-          <button class="button tiny cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</button>
+        <div class="three mobile-two columns cc-emitter-col">
+          <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
         </div>
 
-        <div class="two columns cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
+        <div class="two mobile-two columns cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
           {{task.due_date.date_string}}
         </div>
       </div>

@@ -152,7 +152,7 @@
             <li data-ng-repeat="notification in section.notifications | orderBy: 'epoch'">
             <div class="row">
 
-                <div class="seven columns">
+                <div class="seven mobile-two columns">
                   <a data-ng-href="{{notification.url}}"
                     class="cc-widget-short-title"
                     data-notreal="details"
@@ -161,11 +161,11 @@
                   </a>
                 </div>
 
-                <div class="three columns cc-emitter-col">
-                  <button class="button tiny cc-emitter cc-emitter-{{notification.color_class}}">{{notification.source || notification.emitter}}</button>
+                <div class="three mobile-one columns cc-emitter-col">
+                  <div class="cc-emitter cc-emitter-{{notification.color_class}}">{{notification.source || notification.emitter}}</div>
                 </div>
 
-                <div class="two columns cc-right">
+                <div class="two mobile-one columns cc-right">
                   <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
                   {{notification.epoch * 1000 | date:'M/dd'}}
                 </div>
