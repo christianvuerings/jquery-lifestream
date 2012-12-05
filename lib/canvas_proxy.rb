@@ -35,4 +35,8 @@ class CanvasProxy < BaseProxy
     request("courses")
   end
 
+  def coming_up()
+    request("users/self/coming_up")
+  end
+
 end
