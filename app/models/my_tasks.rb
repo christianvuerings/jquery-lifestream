@@ -6,9 +6,10 @@ class MyTasks
     #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
     @starting_date = starting_date
     @buckets = {
-        "due" => {"title" => "Due", "tasks" => []},
-        "due_tomorrow" => {"title" => "Due Tomorrow", "tasks" => []},
-        "upcoming" => {"title" => "Upcoming", "tasks" => []},
+        "overdue" => {"title" => "Overdue", "tasks" => []},
+        "due_today" => {"title" => "Due Today", "tasks" => []},
+        "due_this_week" => {"title" => "Due This Week", "tasks" => []},
+        "due_next_week" => {"title" => "Due Next Week", "tasks" => []},
         "unscheduled" => {"title" => "Unscheduled", "tasks" => []}
     }
   end
@@ -18,7 +19,7 @@ class MyTasks
       fetch_google_tasks
       fetch_canvas_tasks
       my_tasks = {
-          "sections" => [@buckets["due"], @buckets["due_tomorrow"], @buckets["upcoming"], @buckets["unscheduled"]]
+          "sections" => [@buckets["overdue"], @buckets["due_today"], @buckets["due_this_week"], @buckets["due_next_week"], @buckets["unscheduled"]]
       }
       logger.debug "#{self.class.name} get_feed is #{my_tasks.inspect}"
       my_tasks
@@ -118,18 +119,20 @@ class MyTasks
     if !due_date.blank?
       due = due_date.to_time_in_current_zone if due_date.is_a?(Date)
       due ||= DateTime.parse(due_date.to_s)
+      due = due.to_i
       @starting_date = @starting_date.to_time.in_time_zone.to_i unless @starting_date.is_a?(Time)
       today = @starting_date.to_i
       tomorrow = @starting_date.advance(:days => 1).to_i
-      day_after_tomorrow = @starting_date.advance(:days => 2).to_i
+      end_of_this_week = @starting_date.sunday.to_i
 
-      if due.to_i < tomorrow
-        bucket = "due"
-        formatted_entry["status"] = "overdue" if (status == "needs_action" && (due.to_i < today))
-      elsif due.to_i >= tomorrow && due.to_i < day_after_tomorrow
-        bucket = "due_tomorrow"
-      elsif due.to_i >= day_after_tomorrow
-        bucket = "upcoming"
+      if due < today
+        bucket = "overdue"
+      elsif due >= today && due < tomorrow
+        bucket = "due_today"
+      elsif due >= tomorrow && due < end_of_this_week
+        bucket = "due_this_week"
+      elsif due >= end_of_this_week
+        bucket = "due_next_week"
       end
 
       logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{@starting_date}, today = #{today}; formatted entry = #{formatted_entry}"
