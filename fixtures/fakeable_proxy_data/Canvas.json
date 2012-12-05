@@ -2,7 +2,7 @@
     {
         "request":{
             "method":"get",
-            "uri":"http://localhost:3100/api/v1/users/self/profile",
+            "uri":"https://ucberkeley.instructure.com/api/v1/users/self/coming_up",
             "body":{
                 "encoding":"US-ASCII",
                 "string":""
@@ -10,7 +10,8 @@
             "headers":{
                 "Authorization":[""],
                 "Cache-Control":["no-store"],
-                "Content-Type":["application/x-www-form-urlencoded"]
+                "Content-Type":["application/x-www-form-urlencoded"],
+                "x-sakai-token":[]
             }
         },
         "response":{
@@ -19,32 +20,35 @@
                 "message":null
             },
             "headers":{
-                "x-ua-compatible":["IE=edge,chrome=1"],
-                "x-request-context-id":["c9b4b870-14c9-0130-2268-002500a40708"],
-                "etag":["\"9a55bbdab7da4f3d9294b17e0f89663c\""],
-                "connection":["close"],
+                "cache-control":["private, max-age=0, must-revalidate"],
                 "content-type":["application/json; charset=utf-8"],
-                "date":["Mon, 19 Nov 2012 22:52:58 GMT"],
-                "server":["WEBrick/1.3.1 (Ruby/1.8.7/2011-06-30)"],
-                "x-runtime":["54"],
-                "content-length":["479"],
-                "x-canvas-user-id":["7"],
-                "cache-control":["no-cache, no-store, max-age=0, must-revalidate"],
-                "pragma":["no-cache"],
-                "set-cookie":["_normandy_session=ObfQobPXjwYT-_3TKXf9Pg.i2k3ymxUeGrsdNrzTwEowJJYrH9lYRWOG2WqRxGG-B1d9CR06JbMNEVTS96dMyeuPQkJFbROqfd3WAJdVIyHgw.Z3g3OdXz5b8BnT5KyBDzJjnkHVY.UKq4Sg; path=/; HttpOnly"]
+                "date":["Tue, 04 Dec 2012 16:32:24 GMT"],
+                "etag":["\"15c4e88be57fba1e2915e2e8625c49c2\""],
+                "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
+                "server":["Apache"],
+                "set-cookie":["canvas_session=luyW5hGGX66TA_vxML_sDQ.whZHYUdc8JM7R5Hu6_wLf2VXEAVFRiulAZlwTqBqrXcQkkCXRFmc7O6Y9wDlIjlcaCQwdAYPm3QWopk22FT-PA.Jiq3H5-v8fo5YB7oeHBb5hFXHLc.UL4lmA; path=/; secure; HttpOnly"],
+                "status":["200"],
+                "vary":["Accept-Encoding"],
+                "x-canvas-user-id":["10000003357913"],
+                "x-frame-options":["SAMEORIGIN"],
+                "x-request-context-id":["1bb888a0-205e-0130-0333-02e33ab5736e"],
+                "x-runtime":["249"],
+                "x-ua-compatible":["IE=edge,chrome=1"],
+                "content-length":["349"],
+                "connection":["keep-alive"]
             },
             "body":{
                 "encoding":"US-ASCII",
-                "string":"{\"name\":\"Ray Davis\",\"avatar_url\":\"https://secure.gravatar.com/avatar/d0b6e9129b4580037c0c24a33f4c9577?s=50\\u0026d=http%3A%2F%2Flocalhost%3A3100%2Fimages%2Fmessages%2Favatar-50.png\",\"primary_email\":\"211159@example.edu\",\"title\":null,\"sortable_name\":\"Davis, Ray\",\"sis_user_id\":\"211159\",\"id\":7,\"short_name\":\"Ray Davis\",\"bio\":null,\"login_id\":\"211159\",\"calendar\":{\"ics\":\"http://localhost:3100/feeds/calendars/user_9t7TrbJZ4SJ7U39WiLF9GSOE3jiC23sbmLXdfD78.ics\"},\"sis_login_id\":\"211159\"}"
+                "string":"[{\"type\":\"Assignment\",\"title\":\"Annotated Bibliography\",\"start_at\":\"2012-11-27T23:59:00-08:00\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2546730\"},{\"type\":\"Assignment\",\"title\":\"Week 10 Homework\",\"start_at\":\"2012-11-27T16:00:00-08:00\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833382/assignments/2241829\"}]"
             },
             "http_version":null
         },
-        "recorded_at":"Mon, 19 Nov 2012 22:52:58 GMT"
+        "recorded_at":"Tue, 04 Dec 2012 16:32:24 GMT"
     },
     {
         "request":{
             "method":"get",
-            "uri":"http://localhost:3100/api/v1/accounts",
+            "uri":"https://ucberkeley.instructure.com/api/v1/accounts",
             "body":{
                 "encoding":"US-ASCII",
                 "string":""
@@ -52,7 +56,8 @@
             "headers":{
                 "Authorization":[""],
                 "Cache-Control":["no-store"],
-                "Content-Type":["application/x-www-form-urlencoded"]
+                "Content-Type":["application/x-www-form-urlencoded"],
+                "x-sakai-token":[]
             }
         },
         "response":{
@@ -61,33 +66,82 @@
                 "message":null
             },
             "headers":{
-                "x-ua-compatible":["IE=edge,chrome=1"],
-                "x-request-context-id":["c9c72900-14c9-0130-2268-002500a40708"],
-                "etag":["\"5fa1161252d7f5a00879185c4aa192ba\""],
-                "connection":["close"],
+                "cache-control":["private, max-age=0, must-revalidate"],
                 "content-type":["application/json; charset=utf-8"],
-                "date":["Mon, 19 Nov 2012 22:52:59 GMT"],
-                "server":["WEBrick/1.3.1 (Ruby/1.8.7/2011-06-30)"],
-                "x-runtime":["382"],
-                "content-length":["155"],
-                "link":["</api/v1/accounts?page=1&per_page=10>; rel=\"first\""],
-                "x-canvas-user-id":["1"],
-                "cache-control":["no-cache, no-store, max-age=0, must-revalidate"],
-                "pragma":["no-cache"],
-                "set-cookie":["_normandy_session=-uzK_PgjpfbtcZCAhmp2UQ.jjMLgmLdwpZ6OSi6f2o2wsQ44YI1hRkpvaTXerS5NPNGcRpMbNpyzP8y9G5CKX-k2DyObkb3VPLWtPclACN1EA.hGuEzFieF2nhEGwllxI7gsbP5wM.UKq4Sw; path=/; HttpOnly"]
+                "date":["Tue, 04 Dec 2012 16:32:25 GMT"],
+                "etag":["\"7838cddf89b41b5480675609283043be\""],
+                "link":["<https://ucberkeley.instructure.com/api/v1/accounts?page=1&per_page=10>; rel=\"first\""],
+                "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
+                "server":["Apache"],
+                "set-cookie":["canvas_session=aJcTWp-opDndzPpvEFm35Q._swrcAUShOtsUXsts9skEm623whxe30m1gy5hpsAkBUrlFUekEgg0RH8UeZ9Ji45FKsDv1uxZCG_ACjlyszzcw.Fr4aIJMJpYxqqyunoT5jmttU7Ok.UL4lmg; path=/; secure; HttpOnly"],
+                "status":["200"],
+                "vary":["Accept-Encoding"],
+                "x-canvas-user-id":["10000003075914"],
+                "x-frame-options":["SAMEORIGIN"],
+                "x-request-context-id":["1cb9ba20-205e-0130-7b22-02e33a88cded"],
+                "x-runtime":["48"],
+                "x-ua-compatible":["IE=edge,chrome=1"],
+                "content-length":["83"],
+                "connection":["keep-alive"]
             },
             "body":{
                 "encoding":"US-ASCII",
-                "string":"[{\"name\":\"CalCentral\",\"root_account_id\":null,\"parent_account_id\":null,\"id\":2},{\"name\":\"Site Admin\",\"root_account_id\":null,\"parent_account_id\":null,\"id\":1}]"
+                "string":"[{\"name\":\"UC Berkeley\",\"id\":90242,\"parent_account_id\":null,\"root_account_id\":null}]"
             },
             "http_version":null
         },
-        "recorded_at":"Mon, 19 Nov 2012 22:52:59 GMT"
+        "recorded_at":"Tue, 04 Dec 2012 16:32:26 GMT"
     },
     {
         "request":{
             "method":"get",
-            "uri":"http://localhost:3100/api/v1/courses",
+            "uri":"https://ucberkeley.instructure.com/api/v1/users/self/profile",
+            "body":{
+                "encoding":"US-ASCII",
+                "string":""
+            },
+            "headers":{
+                "Authorization":[""],
+                "Cache-Control":["no-store"],
+                "Content-Type":["application/x-www-form-urlencoded"],
+                "x-sakai-token":[]
+            }
+        },
+        "response":{
+            "status":{
+                "code":200,
+                "message":null
+            },
+            "headers":{
+                "cache-control":["private, max-age=0, must-revalidate"],
+                "content-type":["application/json; charset=utf-8"],
+                "date":["Tue, 04 Dec 2012 16:32:27 GMT"],
+                "etag":["\"4ac9892d0b7287c38b1ef5930c16b413\""],
+                "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
+                "server":["Apache"],
+                "set-cookie":["canvas_session=L9SXnrwu2pvETEytH2jtHg.4l-y-UdEfA1q-zpZawNTMyoUP6CjMD5KObSQcU3twn37Pcui3V_fpOCSkHIBptIGHzCSiEFqZQ1vXnrcc9aecg.LzUMvqfctg_uH6B-vEIP_a57gC8.UL4lmw; path=/; secure; HttpOnly"],
+                "status":["200"],
+                "vary":["Accept-Encoding"],
+                "x-canvas-user-id":["10000003357913"],
+                "x-frame-options":["SAMEORIGIN"],
+                "x-request-context-id":["1d7e0dd0-205e-0130-7be1-02e33ab5736e"],
+                "x-runtime":["173"],
+                "x-ua-compatible":["IE=edge,chrome=1"],
+                "content-length":["475"],
+                "connection":["keep-alive"]
+            },
+            "body":{
+                "encoding":"US-ASCII",
+                "string":"{\"avatar_url\":\"https://secure.gravatar.com/avatar/b63c1553cb24e97d43612618975ebef6?s=50\\u0026d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png\",\"title\":null,\"primary_email\":\"tammi.chang.clc@gmail.com\",\"bio\":null,\"name\":\"Tammi Chang\",\"sortable_name\":\"Chang, Tammi\",\"short_name\":\"Tammi Chang\",\"login_id\":\"300939\",\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/user_3vRQADOzy7H9mHvE2kYVqCHnfiVK6g3LHPR4dkjp.ics\"},\"id\":3357913}"
+            },
+            "http_version":null
+        },
+        "recorded_at":"Tue, 04 Dec 2012 16:32:27 GMT"
+    },
+    {
+        "request":{
+            "method":"get",
+            "uri":"https://ucberkeley.instructure.com/api/v1/courses",
             "body":{
                 "encoding":"US-ASCII",
                 "string":""
@@ -95,7 +149,8 @@
             "headers":{
                 "Authorization":"",
                 "Cache-Control":["no-store"],
-                "Content-Type":["application/x-www-form-urlencoded"]
+                "Content-Type":["application/x-www-form-urlencoded"],
+                "x-sakai-token":null
             }
         },
         "response":{
@@ -104,26 +159,29 @@
                 "message":null
             },
             "headers":{
-                "x-ua-compatible":["IE=edge,chrome=1"],
-                "x-request-context-id":["ca0ba9c0-14c9-0130-2268-002500a40708"],
-                "etag":["\"73af5051ca37420553922faaf0cb8ba7\""],
-                "connection":["close"],
+                "cache-control":["private, max-age=0, must-revalidate"],
                 "content-type":["application/json; charset=utf-8"],
-                "date":["Mon, 19 Nov 2012 22:52:59 GMT"],
-                "server":["WEBrick/1.3.1 (Ruby/1.8.7/2011-06-30)"],
-                "x-runtime":["44"],
-                "content-length":["666"],
-                "x-canvas-user-id":["7"],
-                "cache-control":["no-cache, no-store, max-age=0, must-revalidate"],
-                "pragma":["no-cache"],
-                "set-cookie":["_normandy_session=Zb9MR242Rrcc3ySnJu_Ywg.J8M6mTrAP1lFeZTyIjmQ19Ratcd4ZGI9R72GQ4TeoRED0mapPRSvYBGAYdG4UIyy15MPRETyR9Tbdgb1AcX7xA.zwfXhRGPYZEDyWMbxqIem4S4Yso.UKq4Sw; path=/; HttpOnly"]
+                "date":["Tue, 04 Dec 2012 16:32:28 GMT"],
+                "etag":["\"45b66ef2b429a8cd0c3a50276b412831\""],
+                "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
+                "server":["Apache"],
+                "set-cookie":["canvas_session=TFrgBIsGDCHj6x7k8wzcOg.8HS8-m5FsMsmqfp-sZ6c-TJqgAN2Xt5PhkC_GTZiyAutWOwjA6SZ0IIbKIHgJKtBZMap3bwZhcyU5FWpr6ukDw.RSwVqFpFnW7raDm7kXJtpmj7fVo.UL4lnA; path=/; secure; HttpOnly"],
+                "status":["200"],
+                "vary":["Accept-Encoding"],
+                "x-canvas-user-id":["10000003357913"],
+                "x-frame-options":["SAMEORIGIN"],
+                "x-request-context-id":["1e3a6df0-205e-0130-292a-02e33abab6c6"],
+                "x-runtime":["40"],
+                "x-ua-compatible":["IE=edge,chrome=1"],
+                "content-length":["773"],
+                "connection":["keep-alive"]
             },
             "body":{
                 "encoding":"US-ASCII",
-                "string":"[{\"name\":\"Elementary Spanish\",\"end_at\":null,\"account_id\":5,\"start_at\":\"2012-10-09T09:06:02-07:00\",\"id\":3,\"enrollments\":[{\"type\":\"teacher\"}],\"course_code\":\"SPANISH 1\",\"sis_course_id\":\"2012-D-SPANISH-1\",\"calendar\":{\"ics\":\"http://localhost:3100/feeds/calendars/course_5j0JAcxe1l6Aeuji94kMI5iO6Y6V7kl43gC8d1ZN.ics\"}},{\"name\":\"Research and Data Analysis in Psychology\",\"end_at\":null,\"account_id\":4,\"start_at\":\"2012-09-21T13:28:59-07:00\",\"id\":1,\"enrollments\":[{\"type\":\"student\"},{\"type\":\"student\"}],\"course_code\":\"PSYCH 101\",\"sis_course_id\":\"2012-D-PSYCH-101\",\"calendar\":{\"ics\":\"http://localhost:3100/feeds/calendars/course_6vtDFhHoGL4mFW7KOdkWbYRFyk8TTKZkqYfn5wog.ics\"}}]"
+                "string":"[{\"account_id\":90242,\"course_code\":\"EE 20N\",\"end_at\":null,\"default_view\":\"feed\",\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/course_SMIaFMD5gDiViGXUX73oA8pfABQwRI94uFIoOvbT.ics\"},\"hide_final_grades\":false,\"name\":\"Structure and Interpretation of Systems and Signals\",\"start_at\":\"2012-10-04T00:00:00-07:00\",\"enrollments\":[{\"type\":\"student\"}],\"id\":833382},{\"account_id\":90242,\"course_code\":\"ETH STD 21AC\",\"end_at\":null,\"default_view\":\"feed\",\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/course_pHuUhYE8aWl1qmffaMWGKT9xPXrLw5vWI62VrI2k.ics\"},\"hide_final_grades\":false,\"name\":\"A Comparative Survey of Race and Ethnicity in the United States\",\"start_at\":\"2012-08-23T00:00:00-07:00\",\"enrollments\":[{\"type\":\"student\"}],\"id\":833384}]"
             },
             "http_version":null
         },
-        "recorded_at":"Mon, 19 Nov 2012 22:52:59 GMT"
+        "recorded_at":"Tue, 04 Dec 2012 16:32:28 GMT"
     }
 ], "recorded_with":"VCR 2.3.0"}
