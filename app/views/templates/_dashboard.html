@@ -114,28 +114,13 @@
 
             <div data-ng-switch-when="scheduled">
               <div data-ng-repeat="section in sections" ng-show="section.title != 'Unscheduled'">
-                <div ng-show="!section.tasks.length" class="cc-widget-text cc-widget-section-bottom">
-                  There are currently no tasks/assignments that are <span class="cc-lowercase">{{section.title}}</span>.
-                </div>
-                <div class="cc-widget-section-label">{{section.title}}</div>
-                  <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom" ng-show="section.tasks.length">
-                    <li data-ng-repeat="task in section.tasks">
-                      <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-                    </li>
-                  </ul>
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </div>
             </div>
 
             <div data-ng-switch-when="unscheduled">
               <div data-ng-repeat="section in sections" ng-show="section.title == 'Unscheduled'">
-                <div ng-show="!section.tasks.length" class="cc-widget-text cc-widget-section-bottom">
-                  There are currently no tasks/assignments that are <span class="cc-lowercase">{{section.title}}</span>.
-                </div>
-                <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom" ng-show="section.tasks.length">
-                  <li data-ng-repeat="task in section.tasks">
-                    <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-                  </li>
-                </ul>
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </div>
             </div>
 
