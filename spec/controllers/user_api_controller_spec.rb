@@ -19,4 +19,16 @@ describe UserApiController do
     json_response["preferred_name"].should == "Yu-Hung Lin"
   end
 
+  it "should record first login for a new user" do
+    session[:user_id] = "192517"
+    get :mystatus
+    json_response = JSON.parse(response.body)
+    json_response["first_login_at"].should == nil
+    get :record_first_login
+    response.status.should == 204
+    get :mystatus
+    json_response = JSON.parse(response.body)
+    json_response["first_login_at"].should_not == nil
+  end
+
 end
