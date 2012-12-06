@@ -40,5 +40,5 @@ Calcentral::Application.configure do
   # Caching store
   config.cache_store = ActiveSupport::Cache.lookup_store(:memory_store, :size => 16.megabytes)
   config.cache_store.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log")
-  config.cache_store.logger.level = Logger::DEBUG
+  config.cache_store.logger.level = Logger::INFO
 end
