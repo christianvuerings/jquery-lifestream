@@ -43,7 +43,7 @@
           <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-profile-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button" href="/api/google/remove_authorization" target="_self">Revoke <span class="visuallyhidden">Google Access</span></a>
+          <a class="radius button" data-ng-click="user.removeOAuth('google')">Revoke <span class="visuallyhidden">Google Access</span></a>
         </div>
       </div>
 
@@ -68,7 +68,7 @@
           <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-profile-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button" href="/api/canvas/remove_authorization" target="_self">Revoke <span class="visuallyhidden">Canvas Access</span></a>
+          <a class="radius button" data-ng-click="user.removeOAuth('canvas')">Revoke <span class="visuallyhidden">Canvas Access</span></a>
         </div>
       </div>
 
