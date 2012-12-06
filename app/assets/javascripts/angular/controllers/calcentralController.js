@@ -12,6 +12,10 @@
     $scope.user.handleAccessToPage = function() {
       if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
         $scope.user.signIn();
+      } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
+        $http.get('/api/my/record_first_login').success(function(){
+          window.location = '/profile';
+        });
       }
     };
 

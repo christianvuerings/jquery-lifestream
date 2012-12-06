@@ -9,11 +9,14 @@ describe('CalCentral controllers', function() {
     var ctrl;
     var scope;
 
-    beforeEach(inject(function($rootScope, $controller) {
+    beforeEach(inject(function($rootScope, $controller, $injector) {
       scope = $rootScope.$new();
       // We need to stub out the route, otherwise a redirect will happen
       var route = jasmine.createSpyObj('$route', ['current']);
       route.current.isPublic = true;
+
+      $httpBackend = $injector.get('$httpBackend');
+      $httpBackend.when('GET', '/api/my/record_first_login').respond({});
 
       ctrl = $controller('CalcentralController', {
         $scope: scope,
