@@ -28,6 +28,18 @@
       return ($scope.user.profile && $scope.user.profile.is_logged_in);
     };
 
+    /**
+     * Remove OAuth permissions for a service for the currently logged in user
+     * @param {String} authorizationService The authorization service (e.g. 'google')
+     */
+    $scope.user.removeOAuth = function(authorizationService) {
+      // Send the request to remove the authorization for the specific OAuth service
+      // Only when the request was successful, we update the UI
+      $http.get('/api/' + authorizationService + '/remove_authorization').success(function(){
+        $scope.user.profile['has_' + authorizationService + '_access_token'] = false;
+      });
+    };
+
     $scope.user.signIn = function() {
       window.location = '/login';
     };
