@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table "user_data", :force => true do |t|
     t.string   "uid"
     t.string   "preferred_name"
+    t.datetime "first_login_at", :null => true
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end

@@ -47,4 +47,14 @@ describe "UserApi" do
     user_data = UserApi.get_user_data(@random_id)
     user_data[:has_canvas_access_token].should be_false
   end
+  it "should have a null first_login time for a new user" do
+    user_data = UserApi.get_user_data(@random_id)
+    user_data[:first_login_at].should be_nil
+  end
+  it "should properly register a call to record_first_login" do
+    UserApi.get_user_data(@random_id)
+    UserApi.record_first_login(@random_id)
+    updated_data = UserApi.get_user_data(@random_id)
+    updated_data[:first_login_at].should_not be_nil
+  end
 end
