@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "MyGroupSites" do
+describe "MyGroups" do
   before(:each) do
     @user_id = rand(99999).to_s
     @fake_sakai_proxy = SakaiProxy.new({fake: true})
@@ -8,9 +8,9 @@ describe "MyGroupSites" do
 
   it "should return a valid feed for a user granted access" do
     SakaiProxy.stub(:access_granted?).and_return(true)
-    my_groups = MyGroupSites.get_feed(@user_id)
-    my_groups.is_a?(Array).should == true
-    my_groups.each do |group_hash|
+    my_groups = MyGroups.get_feed(@user_id)
+    my_groups[:groups].is_a?(Array).should == true
+    my_groups[:groups].each do |group_hash|
       group_hash.keys do |key|
         group_hash[key].should_not be_nil
       end
@@ -19,9 +19,9 @@ describe "MyGroupSites" do
 
   it "should return a empty array for non-authenticated users" do
     SakaiProxy.stub(:access_granted?).and_return(false)
-    empty_groups = MyGroupSites.get_feed(@user_id)
-    empty_groups.is_a?(Array).should == true
-    empty_groups.size.should == 0
+    empty_groups = MyGroups.get_feed(@user_id)
+    empty_groups[:groups].is_a?(Array).should == true
+    empty_groups[:groups].size.should == 0
   end
 
   it "should reject malformed Sakai2 entries" do
@@ -41,7 +41,7 @@ describe "MyGroupSites" do
       end
     end
     SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(site_template)
-    my_groups = MyGroupSites.get_feed(@user_id)
+    my_groups = MyGroups.get_feed(@user_id)
     my_groups.size.should == 1
   end
 

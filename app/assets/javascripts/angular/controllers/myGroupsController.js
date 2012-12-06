@@ -9,7 +9,7 @@
 
     $http.get('/api/my/groups').success(function(data) {
 
-      $scope.mygroups = data;
+      $scope.mygroups = data.groups;
 
     });
 
