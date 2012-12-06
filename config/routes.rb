@@ -59,10 +59,10 @@ Calcentral::Application.routes.draw do
   # Rails API endpoints.
 
   match '/api/my/status' => 'user_api#mystatus', :as => :mystatus, :defaults => { :format => 'json' }
-  match '/api/my/classes' => 'my_course_sites#get_feed', :as => :my_course_sites, :defaults => { :format => 'json' }
+  match '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
   match '/api/my/up_next' => 'my_up_next#get_feed', :as => :my_up_next, :defaults => { :format => 'json' }
   match '/api/my/tasks' => 'my_tasks#get_feed', :as => :my_tasks, :defaults => { :format => 'json' }
-  match '/api/my/groups' => 'my_group_sites#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
+  match '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
 
   match '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
   match '/api/canvas/handle_callback' => 'canvas_auth#handle_callback'
@@ -78,7 +78,7 @@ Calcentral::Application.routes.draw do
   match '/login' => 'sessions#new', :as => :login
 
   # All the other paths should use the bootstrap page
-  # We need this if we use html5mode=true
+  # We need this because we use html5mode=true
   #
   # This should ALWAYS be the last rule on the routes list!
   match '/*url' => 'bootstrap#index'

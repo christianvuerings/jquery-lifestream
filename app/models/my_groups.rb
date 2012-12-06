@@ -1,9 +1,11 @@
-class MyGroupSites
+class MyGroups
   include ActiveAttr::Model
 
   def self.get_feed(uid)
     Rails.cache.fetch(self.cache_key(uid)) do
-      group_sites = []
+      response = {
+        :groups => []
+      }
       if SakaiProxy.access_granted?
         sakai_proxy = SakaiProxy.new
         sakai_categories = sakai_proxy.get_categorized_sites(uid)[:body]["categories"] || []
@@ -19,13 +21,13 @@ class MyGroupSites
                   emitter: "bSpace"
                 }
               site_hash["short_description"] = site["shortDescription"] unless site["shortDescription"].blank?
-              group_sites.push(site_hash)
+              response[:groups].push(site_hash)
             end
           end
         end
       end
-      logger.debug "#{self.name} get_feed is #{group_sites.inspect}"
-      group_sites
+      logger.debug "#{self.name} get_feed is #{response.inspect}"
+      response
     end
   end
 

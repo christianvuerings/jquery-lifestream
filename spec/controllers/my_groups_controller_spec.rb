@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyGroupSitesController do
+describe MyGroupsController do
 
   before(:each) do
     @user_id = rand(99999).to_s
@@ -18,8 +18,8 @@ describe MyGroupSitesController do
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
-    json_response.is_a?(Array).should == true
-    json_response.each do |group_entry|
+    json_response["groups"].is_a?(Array).should == true
+    json_response["groups"].each do |group_entry|
       group_entry["id"].blank?.should_not == true
       group_entry["site_url"].blank?.should_not == true
       (group_entry["emitter"] =~ (/(canvas|bspace)$/i)).should_not == nil?

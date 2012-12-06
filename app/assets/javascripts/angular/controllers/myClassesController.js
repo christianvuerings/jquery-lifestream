@@ -9,7 +9,7 @@
 
     $http.get('/api/my/classes').success(function(data) {
 
-      $scope.myclasses = data;
+      $scope.myclasses = data.classes;
 
     });
 

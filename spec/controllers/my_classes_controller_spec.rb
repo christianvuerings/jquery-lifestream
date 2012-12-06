@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyCourseSitesController do
+describe MyClassesController do
 
   before(:each) do
     @user_id = rand(99999).to_s
@@ -14,7 +14,7 @@ describe MyCourseSitesController do
   end
 
   it "should be an non-empty course feed on authenticated user" do
-    MyCourseSites.stub(:get_feed).and_return(
+    MyClasses.stub(:get_feed).and_return(
       [{course_code: "PLEO 22",
       id: "750027",
       emitter: CanvasProxy::APP_ID}])

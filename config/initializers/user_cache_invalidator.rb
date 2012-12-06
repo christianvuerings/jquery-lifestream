@@ -18,10 +18,10 @@ module Calcentral
   {
       UserApi => :expire,
       UserApiController => :expire,
-      MyCourseSites => :expire,
+      MyClasses => :expire,
       MyTasks => :expire,
       MyUpNext => :expire,
-      MyGroupSites => :expire
+      MyGroups => :expire
   }.each do |key, value|
     USER_CACHE_EXPIRATION.add_observer(key, value)
   end
