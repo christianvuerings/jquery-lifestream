@@ -6,21 +6,6 @@ describe GoogleProxy do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
   end
 
-  before(:faketasklist => true) do
-    @proxy = GoogleProxy.new(
-      :access_token => Settings.google_proxy.test_user_access_token,
-      :refresh_token => Settings.google_proxy.test_user_refresh_token,
-      :expiration_time => 0
-    )
-    @test_task_list = @proxy.create_task_list
-  end
-
-  after(:faketasklist => true) do
-    if @test_task_list.data["kind"] == "tasks#taskList"
-      @proxy.delete_task_list(@test_task_list.data["id"])
-    end
-  end
-
   it "should simulate a fake, valid event list response (assuming a valid recorded fixture)" do
     #Pre-recorded response has 13 entries, split into batches of 10.
     proxy = GoogleProxy.new(:fake => true)
@@ -44,13 +29,20 @@ describe GoogleProxy do
 
   # simulates creating a tasklist, create a task, toggle statuses back and forth, delete tasklist.
   it "should simulate a fake task toggle between statuses" do
-    proxy = GoogleProxy.new(:fake => true)
-    test_task_list = proxy.create_task_list
+    if ENV["RAILS_ENV"] == "testext"
+      proxy = GoogleProxy.new(
+        :access_token => Settings.google_proxy.test_user_access_token,
+        :refresh_token => Settings.google_proxy.test_user_refresh_token,
+        :expiration_time => 0
+      )
+    end
+    proxy ||= GoogleProxy.new(:fake => true)
+    test_task_list = proxy.create_task_list '{"title": "test"}'
     test_task_list.response.status.should == 200
     test_task_list.data["kind"].should == "tasks#taskList"
     test_task_list_id = test_task_list.data["id"]
     test_task_list_id.blank?.should_not == true
-    new_task = proxy.insert_task(task_list_id=test_task_list_id)
+    new_task = proxy.insert_task(body='{"title": "New Task", "notes": "Please Complete me"}', task_list_id=test_task_list_id)
     new_task.response.status.should == 200
     new_task.data["title"].should == "New Task"
     new_task.data["status"].should == "needsAction"
@@ -114,15 +106,6 @@ describe GoogleProxy do
     )
     response_array = proxy.tasks_list
     response_array[0].data["kind"].should == "tasks#tasks"
-  end
-
-  # Create a fake tasklist, create a task, toggle between needsAction and completed, and delete the fake tasklist
-  it "should help setup the test environment", :faketasklist => true, :testext => true do
-    if @test_task_list.data["kind"] == "tasks#taskList"
-      new_task = @proxy.insert_task(task_list_id=@test_task_list.data["id"])
-      @proxy.update_task(task_list_id=@test_task_list.data["id"], task_id=new_task.data["id"], body={id: new_task.data["id"], status: "needsAction"})
-      @proxy.update_task(task_list_id=@test_task_list.data["id"], task_id=new_task.data["id"], body={id: new_task.data["id"], status: "completed"})
-    end
   end
 
 end
