@@ -39,4 +39,8 @@ class CanvasProxy < BaseProxy
     request("users/self/coming_up")
   end
 
+  def todo()
+    request("users/self/todo")
+  end
+
 end

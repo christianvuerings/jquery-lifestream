@@ -183,5 +183,53 @@
             "http_version":null
         },
         "recorded_at":"Tue, 04 Dec 2012 16:32:28 GMT"
+    },
+    {
+        "request":{
+            "method":"get",
+            "uri":"https://ucberkeley.instructure.com/api/v1/users/self/todo",
+            "body":{
+                "encoding":"US-ASCII",
+                "string":""
+            },
+            "headers":{
+                "Authorization":[""],
+                "Cache-Control":["no-store"],
+                "Content-Type":["application/x-www-form-urlencoded"],
+                "Accept":["*/*"],
+                "User-Agent":["Ruby"],
+                "x-sakai-token":[]
+            }
+        },
+        "response":{
+            "status":{
+                "code":200,
+                "message":"OK"
+            },
+            "headers":{
+                "Cache-Control":["private, max-age=0, must-revalidate"],
+                "Content-Type":["application/json; charset=utf-8"],
+                "Date":["Fri, 07 Dec 2012 00:51:18 GMT"],
+                "Etag":["\"1061ab7592e8be9ea0b1790a0882a1a3\""],
+                "P3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
+                "Server":["Apache"],
+                "Set-Cookie":["canvas_session=9QWlXuFJkbeRC6XkUxjQFQ.jTm2Ph8mDH7CPLezasED7MhL4QlHg1eej21jDoT_xkkfj92N8VWsYyzuxrdnWUVUEnk9arOSk2CUzg6e6cUsTQ.Z1e3L-nduXkQK2o2rxWrTj_e6sw.UME9hg; path=/; secure; HttpOnly"],
+                "Status":["200"],
+                "Vary":["Accept-Encoding"],
+                "X-Canvas-User-Id":["10000003357913"],
+                "X-Frame-Options":["SAMEORIGIN"],
+                "X-Request-Context-Id":["226da930-2236-0130-71c9-02e33ab4feba"],
+                "X-Runtime":["194"],
+                "X-Ua-Compatible":["IE=edge,chrome=1"],
+                "Content-Length":["3054"],
+                "Connection":["keep-alive"]
+            },
+            "body":{
+                "encoding":"US-ASCII",
+                "string":"[{\"type\":\"submitting\",\"course_id\":833384,\"assignment\":{\"course_id\":833384,\"submission_types\":[\"external_tool\"],\"points_possible\":50,\"due_at\":\"2012-11-26T23:59:00-08:00\",\"muted\":false,\"name\":\"discuss this page\",\"description\":\"\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555997\",\"id\":2555997},\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555997/submitting?permanent=1\",\"context_type\":\"Course\",\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555997/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555997#submit\"},{\"type\":\"submitting\",\"course_id\":833384,\"assignment\":{\"course_id\":833384,\"submission_types\":[\"discussion_topic\"],\"points_possible\":10,\"due_at\":\"2012-11-20T23:59:00-08:00\",\"muted\":false,\"name\":\"Who will with the fiesta bowl?\",\"description\":\"\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555962\",\"discussion_topic\":{\"require_initial_post\":null,\"unread_count\":0,\"permissions\":{\"delete\":false,\"update\":false,\"attach\":false},\"url\":\"https://ucberkeley.instructure.com/courses/833384/discussion_topics/1622248\",\"delayed_post_at\":null,\"last_reply_at\":\"2012-12-05T11:49:38-08:00\",\"posted_at\":\"2012-12-05T11:49:38-08:00\",\"podcast_url\":null,\"locked\":false,\"user_name\":\"Jon Hays\",\"discussion_type\":\"side_comment\",\"author\":{\"avatar_image_url\":\"https://ucberkeley.instructure.com/images/thumbnails/23224147/DqEzK08tCoo5bix29FCWSUZuZYfDSM5dVCtG5Ceu\",\"display_name\":\"Jon Hays\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/users/3075912\",\"id\":3075912},\"podcast_has_student_posts\":false,\"message\":\"\",\"root_topic_id\":null,\"discussion_subentry_count\":0,\"attachments\":[],\"assignment_id\":2555962,\"title\":\"Who will with the fiesta bowl?\",\"read_state\":\"unread\",\"topic_children\":[],\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/discussion_topics/1622248\",\"id\":1622248},\"id\":2555962},\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555962/submitting?permanent=1\",\"context_type\":\"Course\",\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555962/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555962#submit\"},{\"type\":\"submitting\",\"course_id\":833384,\"assignment\":{\"course_id\":833384,\"submission_types\":[\"online_quiz\"],\"points_possible\":1,\"due_at\":\"2012-11-08T23:59:00-08:00\",\"anonymous_submissions\":false,\"muted\":false,\"name\":\"Who will win the fiesta bowl\",\"description\":\"\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555990\",\"id\":2555990},\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555990/submitting?permanent=1\",\"context_type\":\"Course\",\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555990/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555990#submit\"}]"
+            },
+            "http_version":null
+        },
+        "recorded_at":"Fri, 07 Dec 2012 00:51:18 GMT"
     }
 ], "recorded_with":"VCR 2.3.0"}

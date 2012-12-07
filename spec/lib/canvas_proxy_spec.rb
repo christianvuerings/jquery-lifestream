@@ -43,4 +43,12 @@ describe CanvasProxy do
     tasks[0]["title"].should_not be_nil
   end
 
+  it "should get the todo feed for a known user", :testext => true do
+    response = @client.todo
+    tasks = JSON.parse(response.body)
+    p tasks
+    tasks[0]["assignment"]["name"].should_not be_nil
+    tasks[0]["assignment"]["course_id"].should_not be_nil
+  end
+
 end

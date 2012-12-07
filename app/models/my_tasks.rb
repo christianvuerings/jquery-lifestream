@@ -105,6 +105,8 @@ class MyTasks < MyMergedModel
     if CanvasProxy.access_granted?(@uid)
       canvas_proxy = CanvasProxy.new(:user_id => @uid)
       response = canvas_proxy.coming_up
+      # TODO for CLC-680, get the results from canvas_proxy.todo and merge them into @buckets in the same way.
+      # Beware! The todo feed's format is a little different from the coming_up feed's.
       if response.status == 200
         results = JSON.parse response.body
         logger.info "#{self.class.name} Sorting Canvas tasks into buckets with starting_date #{@starting_date}"
