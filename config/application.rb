@@ -13,6 +13,14 @@ end
 
 module Calcentral
   class Application < Rails::Application
+    initializer :amend_yaml_config, :before => :load_environment_config do
+      amended_config = CalcentralConfig.load_settings
+      Kernel.const_set(:Settings, amended_config)
+    end
+    initializer :amend_rb_config, :after => :load_environment_config do
+      CalcentralConfig.load_ruby_configs
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

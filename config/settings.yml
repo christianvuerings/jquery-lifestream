@@ -63,3 +63,4 @@ sakai_proxy:
 # Example generated with SecureRandom.base64(32)
 oauth2:
   key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
+  encryption: "aes-256-cbc"
