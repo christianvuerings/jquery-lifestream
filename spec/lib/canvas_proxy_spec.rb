@@ -39,7 +39,6 @@ describe CanvasProxy do
   it "should get the coming_up feed for a known user", :testext => true do
     response = @client.coming_up
     tasks = JSON.parse(response.body)
-    p tasks
     tasks[0]["type"].should_not be_nil
     tasks[0]["title"].should_not be_nil
   end
