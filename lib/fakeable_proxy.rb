@@ -22,7 +22,7 @@ module FakeableProxy
       end
       VCR.use_cassette(proxy_id,
                        :allow_playback_repeats => true,
-                       :match_requests_on => [:method, :path, query_string_matcher],
+                       :match_requests_on => [:method, :path, query_string_matcher, :body],
                        :record => :new_episodes,
                        :serialize_with => :json,
                        :preserve_exact_body_bytes => false) do

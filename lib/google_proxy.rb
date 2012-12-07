@@ -33,11 +33,12 @@ class GoogleProxy < BaseProxy
 
   def request(request_params={})
     params = request_params[:params]
+    body = request_params[:body]
+    headers = request_params[:headers]
 
     version = @client.preferred_version(request_params[:api]).version
     service = @client.discovered_api(request_params[:api], version)
     resource_method = service.send(request_params[:resource].to_sym).send(request_params[:method].to_sym)
-
     #will record pages of results
     page_token = nil
     result_pages = []
@@ -47,12 +48,22 @@ class GoogleProxy < BaseProxy
       params["pageToken"] = page_token unless page_token.blank?
 
       result_page = FakeableProxy.wrap_request(APP_ID, @fake) {
-        api_request =  @client.generate_request(options={:api_method => resource_method, :parameters => params})
+        request_hash = { :api_method => resource_method }
+        request_hash[:parameters] = params unless params.blank?
+        if !body.blank? && !headers.blank?
+          request_hash[:body] = body
+          request_hash[:headers] = headers
+        end
+        api_request =  @client.generate_request(options=request_hash)
         # Unfortunately, this seems to be as far as I can log.
         Rails.logger.info "GoogleProxy - Request #{api_request.to_http_request}"
         @client.execute(api_request)
       }
-      page_token = result_page.data.next_page_token
+      if result_page.data.respond_to?("next_page_token")
+        page_token = result_page.data.next_page_token
+      else
+        page_token = nil
+      end
       result_pages << result_page
       if result_page.response.status != 200
         break
@@ -86,4 +97,39 @@ class GoogleProxy < BaseProxy
     request :api => "tasks", :resource => "tasks", :method => "list", :params => optional_params
   end
 
+  def create_task_list(body)
+    parsed_body = stringify_body(body)
+    request(:api => "tasks", :resource => "tasklists", :method => "insert",
+            :body => parsed_body, :headers => {"Content-Type" => "application/json"})[0]
+  end
+
+  def delete_task_list(task_list_id)
+    response = request(:api => "tasks", :resource => "tasklists", :method => "delete",
+                       :params => {tasklist: task_list_id})[0]
+    #According to the API, empty response body == successful
+    response.data.blank?
+  end
+
+  def insert_task(body, task_list_id)
+    parsed_body = stringify_body(body)
+    request(:api => "tasks", :resource => "tasks", :method => "insert", :params => {tasklist: task_list_id},
+            :body => parsed_body, :headers => {"Content-Type" => "application/json"})[0]
+  end
+
+  def update_task(task_list_id, task_id, body)
+    parsed_body = stringify_body(body)
+    request(:api => "tasks", :resource => "tasks", :method => "update",
+            :params => {tasklist: task_list_id, task: task_id},
+            :body => parsed_body, :headers => {"Content-Type" => "application/json"})[0]
+  end
+
+  private
+  def stringify_body(bodyParam)
+    if bodyParam.is_a?(Hash)
+      parsed_body = bodyParam.to_json.to_s
+    else
+      parsed_body = bodyParam.to_s
+    end
+    parsed_body
+  end
 end
