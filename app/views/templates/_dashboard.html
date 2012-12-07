@@ -1,6 +1,118 @@
 <script type="text/ng-template" id="templates/dashboard.html">
 
-  <div class="three columns cc-page-dashboard-column-a">
+  <div class="five columns push-three cc-page-dashboard-column-b">
+    <!-- Begin Tasks / Assignments column -->
+
+    <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
+      <div class="cc-widget-title">
+        <a
+          class="cc-right cc-widget-tasks-completed-toggle"
+          data-ng-click="switchCompletedMode('completed')"
+          data-ng-show="completed_mode == 'incomplete'">
+          View completed
+        </a>
+        <a
+          class="cc-right cc-widget-tasks-completed-toggle"
+          data-ng-click="switchCompletedMode('incomplete')"
+          data-ng-show="completed_mode == 'completed'">
+          View incomplete
+        </a>
+        <h2>Assignments and Tasks</h2>
+      </div>
+      <div class="cc-tasks-list">
+        <div class="cc-widget-body">
+
+          <div class="row cc-widget-tasks-button-top-pad">
+            <div class="ten columns centered">
+              <ul class="button-group even two-up">
+                <li>
+                  <a class="button"
+                    data-ng-click="switchTasksMode('scheduled')"
+                    data-ng-class="{false:'secondary'}[tasks_mode=='scheduled']">Scheduled
+                  </a>
+                </li>
+                <li>
+                  <a class="button"
+                    data-ng-click="switchTasksMode('unscheduled')"
+                    data-ng-class="{false:'secondary'}[tasks_mode=='unscheduled']">Unscheduled
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div data-ng-switch on="tasks_mode">
+
+            <div data-ng-switch-when="scheduled">
+              <div data-ng-repeat="section in sections" ng-show="section.title != 'Unscheduled'">
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </div>
+            </div>
+
+            <div data-ng-switch-when="unscheduled">
+              <div data-ng-repeat="section in sections" ng-show="section.title == 'Unscheduled'">
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- End Tasks / Assignments column -->
+  </div>
+
+
+  <div class="four columns push-three cc-page-dashboard-column-c">
+    <!-- Begin Notifications column -->
+
+    <div class="cc-container-widget" id="cc-widget-notifications" data-ng-controller="NotificationsController">
+
+      <div class="cc-widget-title">
+        <h2>Notifications</h2>
+      </div>
+
+      <div class="cc-notifications-list">
+        <div class="cc-widget-body" data-ng-repeat="section in notifications.sections">
+          <div data-ng-switch on="section.title">
+            <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
+          </div>
+
+          <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+            <li data-ng-repeat="notification in section.notifications | orderBy: 'epoch'">
+            <div class="row">
+
+                <div class="seven mobile-two columns">
+                  <a data-ng-href="{{notification.url}}"
+                    class="cc-widget-short-title"
+                    data-notreal="details"
+                    data-ng-class="{true:'cc-alert'}[$parent.section.title == 'Alerts']">
+                    {{notification.title}}
+                  </a>
+                </div>
+
+                <div class="three mobile-one columns cc-emitter-col">
+                  <div class="cc-emitter cc-emitter-{{notification.color_class}}">{{notification.source || notification.emitter}}</div>
+                </div>
+
+                <div class="two mobile-one columns cc-right">
+                  <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
+                  {{notification.epoch * 1000 | date:'M/dd'}}
+                </div>
+
+            </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  <!-- End Notifications column -->
+  </div>
+
+  <div class="three columns pull-nine cc-page-dashboard-column-a">
     <!-- Begin Calendar / Classes / Groups column -->
 
     <div class="cc-container-widget" id="cc-widget-mycalendar" data-ng-controller="UpNextController">
@@ -80,116 +192,4 @@
     <!-- End Calendar / Classes / Groups column -->
   </div>
 
-
-  <div class="five columns cc-page-dashboard-column-b">
-    <!-- Begin Tasks / Assignments column -->
-
-    <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
-      <div class="cc-widget-title">
-        <a
-          class="cc-right cc-widget-tasks-completed-toggle"
-          data-ng-click="switchCompletedMode('completed')"
-          data-ng-show="completed_mode == 'incomplete'">
-          View completed
-        </a>
-        <a
-          class="cc-right cc-widget-tasks-completed-toggle"
-          data-ng-click="switchCompletedMode('incomplete')"
-          data-ng-show="completed_mode == 'completed'">
-          View incomplete
-        </a>
-        <h2>Assignments and Tasks</h2>
-      </div>
-      <div class="cc-tasks-list">
-        <div class="cc-widget-body">
-
-          <div class="row cc-widget-tasks-button-top-pad">
-            <div class="ten columns centered">
-              <ul class="button-group even two-up">
-                <li>
-                  <a class="button"
-                    data-ng-click="switchTasksMode('scheduled')"
-                    data-ng-class="{false:'secondary'}[tasks_mode=='scheduled']">Scheduled
-                  </a>
-                </li>
-                <li>
-                  <a class="button"
-                    data-ng-click="switchTasksMode('unscheduled')"
-                    data-ng-class="{false:'secondary'}[tasks_mode=='unscheduled']">Unscheduled
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div data-ng-switch on="tasks_mode">
-
-            <div data-ng-switch-when="scheduled">
-              <div data-ng-repeat="section in sections" ng-show="section.title != 'Unscheduled'">
-                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-              </div>
-            </div>
-
-            <div data-ng-switch-when="unscheduled">
-              <div data-ng-repeat="section in sections" ng-show="section.title == 'Unscheduled'">
-                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <!-- End Tasks / Assignments column -->
-  </div>
-
-
-  <div class="four columns cc-page-dashboard-column-c">
-    <!-- Begin Notifications column -->
-
-    <div class="cc-container-widget" id="cc-widget-notifications" data-ng-controller="NotificationsController">
-
-      <div class="cc-widget-title">
-        <h2>Notifications</h2>
-      </div>
-
-      <div class="cc-notifications-list">
-        <div class="cc-widget-body" data-ng-repeat="section in notifications.sections">
-          <div data-ng-switch on="section.title">
-            <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
-          </div>
-
-          <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-            <li data-ng-repeat="notification in section.notifications | orderBy: 'epoch'">
-            <div class="row">
-
-                <div class="seven mobile-two columns">
-                  <a data-ng-href="{{notification.url}}"
-                    class="cc-widget-short-title"
-                    data-notreal="details"
-                    data-ng-class="{true:'cc-alert'}[$parent.section.title == 'Alerts']">
-                    {{notification.title}}
-                  </a>
-                </div>
-
-                <div class="three mobile-one columns cc-emitter-col">
-                  <div class="cc-emitter cc-emitter-{{notification.color_class}}">{{notification.source || notification.emitter}}</div>
-                </div>
-
-                <div class="two mobile-one columns cc-right">
-                  <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
-                  {{notification.epoch * 1000 | date:'M/dd'}}
-                </div>
-
-            </div>
-
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-  <!-- End Notifications column -->
-  </div>
 </script>
