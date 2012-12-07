@@ -5,7 +5,12 @@
       <div class="row">
 
         <div class="one mobile-two columns">
-          <input type="checkbox" label="Done" ng-model="task.done">
+          <input type="checkbox" label="Done"
+            data-ng-disabled="task.emitter=='Canvas'"
+            data-ng-model="task.status"
+            data-ng-true-value="completed"
+            data-ng-false-value="needs_action"
+          >
         </div>
 
         <div class="six mobile-two columns">
@@ -17,7 +22,7 @@
         </div>
 
         <div class="three mobile-two columns cc-emitter-col">
-          <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
+          <div class="button radius cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
         </div>
 
         <div class="two mobile-two columns cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
