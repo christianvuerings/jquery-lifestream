@@ -14,8 +14,9 @@
 /log/*.log
 /tmp
 
-# Ignore RailsConfig local settings.
+# Ignore local settings.
 *.local.yml
+*.local.rb
 
 # Ignore IDE settings.
 .idea/

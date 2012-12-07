@@ -81,6 +81,7 @@ cp config/settings/production.yml ~/.calcentral_config/production.local.yml
 ```
 and update the settings in the `.local.yml` files.
 Settings live outside of the project dir to prevent accidental commits to the repo.
+You can also create Ruby configuration files like "settings.local.rb" and "development.local.rb" to amend the standard `config/environments/*.rb` files.
 
 9. Install JDBC driver (for Oracle connection)
 You may already have an Oracle driver from MyBerkeley-OAE development, in which case you just need to copy it to your local JRuby installation:
