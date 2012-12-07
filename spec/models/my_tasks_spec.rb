@@ -2,15 +2,10 @@ require "spec_helper"
 
 describe "MyTasks" do
   before(:each) do
-    Time.zone = 'Pacific Time (US & Canada)'
     @user_id = rand(99999).to_s
     @fake_google_proxy = GoogleProxy.new({fake: true})
     @fake_google_tasks_array = @fake_google_proxy.tasks_list()
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
-  end
-
-  after(:each) do
-    Time.zone = 'Pacific Time (US & Canada)'
   end
 
   it "should load nicely with the pre-recorded fake Google and Canvas proxy feeds using the server's timezone" do
@@ -56,23 +51,27 @@ describe "MyTasks" do
   end
 
   it "should shift tasks into different buckets with a different timezone " do
-    Time.zone = 'Pacific/Tongatapu'
-
-    GoogleProxy.stub(:access_granted?).and_return(true)
-    CanvasProxy.stub(:access_granted?).and_return(true)
-    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-    my_tasks_model = MyTasks.new(@user_id, Date.new(2012, 11, 27).to_time_in_current_zone)
-    valid_feed = my_tasks_model.get_feed
-    valid_feed["sections"][0]["title"].should == "Overdue"
-    valid_feed["sections"][0]["tasks"].size.should == 1
-    valid_feed["sections"][1]["title"].should == "Due Today"
-    valid_feed["sections"][1]["tasks"].size.should == 0
-    valid_feed["sections"][2]["title"].should == "Due This Week"
-    valid_feed["sections"][2]["tasks"].size.should == 5
-    valid_feed["sections"][3]["title"].should == "Due Next Week"
-    valid_feed["sections"][3]["tasks"].size.should == 1
-    valid_feed["sections"][4]["title"].should == "Unscheduled"
-    valid_feed["sections"][4]["tasks"].size.should == 1
+    original_time_zone = Time.zone
+    begin
+      Time.zone = 'Pacific/Tongatapu'
+      GoogleProxy.stub(:access_granted?).and_return(true)
+      CanvasProxy.stub(:access_granted?).and_return(true)
+      GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+      CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+      my_tasks_model = MyTasks.new(@user_id, Date.new(2012, 11, 27).to_time_in_current_zone)
+      valid_feed = my_tasks_model.get_feed
+      valid_feed["sections"][0]["title"].should == "Overdue"
+      valid_feed["sections"][0]["tasks"].size.should == 1
+      valid_feed["sections"][1]["title"].should == "Due Today"
+      valid_feed["sections"][1]["tasks"].size.should == 0
+      valid_feed["sections"][2]["title"].should == "Due This Week"
+      valid_feed["sections"][2]["tasks"].size.should == 5
+      valid_feed["sections"][3]["title"].should == "Due Next Week"
+      valid_feed["sections"][3]["tasks"].size.should == 1
+      valid_feed["sections"][4]["title"].should == "Unscheduled"
+      valid_feed["sections"][4]["tasks"].size.should == 1
+    ensure
+      Time.zone = original_time_zone
+    end
   end
 end
