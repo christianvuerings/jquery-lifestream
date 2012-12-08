@@ -74,4 +74,71 @@ describe "MyTasks" do
       Time.zone = original_time_zone
     end
   end
+
+  it "should fail general update_tasks param validation, missing required parameters" do
+    my_tasks = MyTasks.new @user_id
+    expect {
+      my_tasks.update_task({"foo" => "badly formatted entry"})
+    }.to raise_error { |error|
+      error.should be_a(ArgumentError)
+      (error.message =~ (/Missing parameter\(s\). Required: \[/)).nil?.should_not == true
+    }
+  end
+
+  it "should fail general update_tasks param validation, invalid parameter(s)" do
+    my_tasks = MyTasks.new @user_id
+    expect {
+      my_tasks.update_task({"type" => "sometype", "emitter" => "Canvas", "status" => "half-baked" })
+    }.to raise_error { |error|
+      error.should be_a(ArgumentError)
+      error.message.should == "Invalid parameter for: status"
+    }
+  end
+
+  it "should fail google update_tasks param validation, invalid parameter(s)" do
+    my_tasks = MyTasks.new @user_id
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    expect {
+      my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed" })
+    }.to raise_error { |error|
+      error.should be_a(ArgumentError)
+      error.message.should == "Missing parameter(s). Required: [\"id\"]"
+    }
+  end
+
+  it "should fail google update_tasks with unauthorized access" do
+    my_tasks = MyTasks.new @user_id
+    GoogleProxy.stub(:access_granted?).and_return(false)
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => "foo"})
+    response.should == {}
+  end
+
+  # Will fail in this case since the task_list_id won't match what's recorded in vcr, nor is a valid "remote" task id.
+  it "should fail google update_tasks with a remote proxy error" do
+    my_tasks = MyTasks.new @user_id
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => "foo"})
+    response.should == {}
+  end
+
+  it "should succeed google update_tasks with a properly formatted params" do
+    my_tasks = MyTasks.new @user_id
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    #slightly roundabout way to get the task_list_ids and task_ids
+    proxy = GoogleProxy.new(:fake => true)
+    test_task_list = proxy.create_task_list '{"title": "test"}'
+    test_task_list.response.status.should == 200
+    task_list_id = test_task_list.data["id"]
+    new_task = proxy.insert_task(body='{"title": "New Task", "notes": "Please Complete me"}', task_list_id=task_list_id)
+    new_task.response.status.should == 200
+    task_id = new_task.data["id"]
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => task_id}, task_list_id)
+    response["type"].should == "task"
+    response["id"].should == task_id
+    response["emitter"].should == "Google Tasks"
+    response["status"].should == "completed"
+  end
+
 end

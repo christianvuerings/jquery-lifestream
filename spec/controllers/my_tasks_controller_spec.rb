@@ -23,6 +23,26 @@ describe MyTasksController do
     json_response["sections"].each do |section|
       default_sections.include?(section["title"]).should == true
     end
+  end
 
+  it "should return a valid json object on a successful task update" do
+    session[:user_id] = @user_id
+    hash = {"someKey" => "someValue"}
+    MyTasks.any_instance.stub(:update_task).and_return(hash)
+    post :update_task, {key: "value"}
+    json_response = JSON.parse(response.body)
+    json_response.should_not == {}
+    json_response.should == hash
+  end
+
+  it "should return a 400 error on some ArgumentError with the task model object" do
+    session[:user_id] = @user_id
+    error_msg = "some fatal issue"
+    MyTasks.any_instance.stub(:update_task).and_raise(ArgumentError, error_msg)
+    post :update_task, {key: "value"}
+    response.status.should == 400
+    json_response = JSON.parse(response.body)
+    json_response["error"].should == "Invalid Arguments"
+    json_response["message"].should == error_msg
   end
 end
