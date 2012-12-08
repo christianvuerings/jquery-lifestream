@@ -13,7 +13,7 @@
       if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
         $scope.user.signIn();
       } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
-        $http.get('/api/my/record_first_login').success(function(){
+        $http.post('/api/my/record_first_login').success(function(data){
           window.location = '/profile';
         });
       }
@@ -39,7 +39,7 @@
     $scope.user.removeOAuth = function(authorizationService) {
       // Send the request to remove the authorization for the specific OAuth service
       // Only when the request was successful, we update the UI
-      $http.get('/api/' + authorizationService + '/remove_authorization').success(function(){
+      $http.post('/api/' + authorizationService + '/remove_authorization').success(function(){
         $scope.user.profile['has_' + authorizationService + '_access_token'] = false;
       });
     };
