@@ -26,7 +26,7 @@ class MyTasks
     end
   end
 
-  def update_task(params, task_list_id=@default)
+  def update_task(params, task_list_id="@default")
     validate_general_params params
     if params["emitter"] == "Google Tasks"
       if GoogleProxy.access_granted?(@uid)
