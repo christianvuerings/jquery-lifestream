@@ -17,6 +17,11 @@
     $scope.tasks_mode = 'scheduled';
     $scope.completed_mode = 'incomplete';
 
+    // Post changed tasks back to Google through our API proxy
+    $scope.changeTaskState = function(task) {
+      $http.post('/api/my/tasks', task);
+    };
+
     // Switch mode for scheduled/unscheduled tasks
     $scope.switchTasksMode = function(tasks_mode) {
       $scope.tasks_mode = tasks_mode;
