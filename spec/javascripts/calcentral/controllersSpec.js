@@ -16,7 +16,7 @@ describe('CalCentral controllers', function() {
       route.current.isPublic = true;
 
       $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('GET', '/api/my/record_first_login').respond({});
+      $httpBackend.when('POST', '/api/my/record_first_login').respond({});
 
       ctrl = $controller('CalcentralController', {
         $scope: scope,
