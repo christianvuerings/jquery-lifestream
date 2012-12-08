@@ -26,6 +26,26 @@ class MyTasks
     end
   end
 
+  def update_task(params, task_list_id=@default)
+    validate_general_params params
+    if params["emitter"] == "Google Tasks"
+      if GoogleProxy.access_granted?(@uid)
+        validate_google_params params
+        body = format_google_task_request params
+        google_proxy = GoogleProxy.new(user_id: @uid)
+        response = google_proxy.update_task(task_list_id, params["id"], body)
+        if (response.response.status == 200)
+          format_google_task_response response.data
+        else
+          logger.info "Errors in proxy response: #{response.inspect}"
+          {}
+        end
+      else
+        {}
+      end
+    end
+  end
+
   def self.cache_key(uid)
     key = "user/#{uid}/#{self.name}"
     logger.debug "#{self.class.name} cache_key will be #{key}"
@@ -49,29 +69,45 @@ class MyTasks
 
         response_page.data["items"].each do |entry|
           next if entry["title"].blank?
-          formatted_entry = {
-              "type" => "task",
-              "title" => entry["title"] || "",
-              "emitter" => "Google Tasks",
-              "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
-              "source_url" => entry["selfLink"] || "",
-              "class" => "class2"
-          }
 
-          status = "needs_action" if entry["status"] == "needsAction"
-          status ||= "completed"
-          formatted_entry["status"] = status
-          # Google task dates have misleading datetime accuracy. There is no way to record a specific due time
-          # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
-          # accuracy so the application will apply the proper timezone when needed.
+          formatted_entry = format_google_task_response(entry)
           due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
-          convert_due_date(due_date, formatted_entry)
-          bucket = determine_bucket(due_date, status, formatted_entry)
+          bucket = determine_bucket(due_date, formatted_entry)
           logger.info "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
           @buckets[bucket]["tasks"].push(formatted_entry)
         end
       end
     end
+  end
+
+  def format_google_task_response(entry)
+    formatted_entry = {
+      "type" => "task",
+      "title" => entry["title"] || "",
+      "emitter" => "Google Tasks",
+      "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
+      "id" => entry["id"],
+      "source_url" => entry["selfLink"] || "",
+      "class" => "class2"
+    }
+
+    status = "needs_action" if entry["status"] == "needsAction"
+    status ||= "completed"
+    formatted_entry["status"] = status
+    # Google task dates have misleading datetime accuracy. There is no way to record a specific due time
+    # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
+    # accuracy so the application will apply the proper timezone when needed.
+    due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
+    convert_due_date!(due_date, formatted_entry)
+    formatted_entry
+  end
+
+  def format_google_task_request(entry)
+    formatted_entry = { "id" => entry["id"] }
+    formatted_entry["status"] = "needsAction" if entry["status"] == "needs_action"
+    formatted_entry["status"] ||= "completed"
+    logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
+    formatted_entry
   end
 
   def fetch_canvas_tasks
@@ -92,8 +128,8 @@ class MyTasks
               "status" => "inprogress"
           }
           due_date = result["start_at"]
-          convert_due_date(due_date, formatted_entry)
-          bucket = determine_bucket(due_date, "inprogress", formatted_entry)
+          convert_due_date!(due_date, formatted_entry)
+          bucket = determine_bucket(due_date, formatted_entry)
           logger.info "#{self.class.name} Putting Canvas task with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
           @buckets[bucket]["tasks"].push(formatted_entry)
         end
@@ -101,7 +137,7 @@ class MyTasks
     end
   end
 
-  def convert_due_date(due_date, formatted_entry)
+  def convert_due_date!(due_date, formatted_entry)
     if !due_date.blank?
       due = due_date.to_time_in_current_zone.to_datetime if due_date.is_a?(Date)
       due ||= DateTime.parse(due_date.to_s)
@@ -114,7 +150,7 @@ class MyTasks
   end
 
   # Helps determine what section category for a task
-  def determine_bucket(due_date, status, formatted_entry)
+  def determine_bucket(due_date, formatted_entry)
     bucket = "unscheduled"
     if !due_date.blank?
       due = due_date.to_time_in_current_zone if due_date.is_a?(Date)
@@ -138,5 +174,37 @@ class MyTasks
       logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{@starting_date}, today = #{today}; formatted entry = #{formatted_entry}"
     end
     bucket
+  end
+
+  def includes_whitelist_values?(whitelist_array=[])
+    Proc.new{|status_arg| !status_arg.blank? && whitelist_array.include?(status_arg)}
+  end
+
+  def validate_params(initial_hash={}, filters={})
+    filter_keys = filters.keys
+    params_to_check = initial_hash.select {|key, value| filter_keys.include? key}
+    raise ArgumentError, "Missing parameter(s). Required: #{filter_keys}" if params_to_check.length != filter_keys.length
+    filters.keep_if{|key, value| value.is_a?(Proc)}
+    filters.each do |filter_key, filter_proc|
+      logger.debug "Validating params for #{filter_key}"
+      if !(filter_proc.call(params_to_check[filter_key]))
+        raise ArgumentError, "Invalid parameter for: #{filter_key}"
+      end
+    end
+  end
+
+  def validate_general_params(params)
+    filters = {
+      "type" => Proc.new { |arg| !arg.blank? && arg.is_a?(String) },
+      "emitter" => includes_whitelist_values?(["Canvas", "Google Tasks"]),
+      "status" => includes_whitelist_values?(%w(needs_action completed))
+    }
+    validate_params(params, filters)
+  end
+
+  def validate_google_params(params)
+    # just need to make sure ID is non-blank, general_params caught the rest.
+    google_filters = {"id" => ""}
+    validate_params(params, google_filters)
   end
 end
