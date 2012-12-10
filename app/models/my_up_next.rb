@@ -8,10 +8,11 @@ class MyUpNext
       if GoogleProxy.access_granted?(uid)
         google_proxy = GoogleProxy.new(user_id: uid)
 
-        # Setting up a rolling +/- 1 month window as default
-        past_month = DateTime.now.advance(:months => -1).to_formatted_s
-        next_month = DateTime.now.advance(:months => 1).to_formatted_s
-        opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime", "timeMin" => past_month, "timeMax" => next_month})
+        # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
+        begin_today = Date.today.to_datetime
+        next_day = begin_today.advance(:days => 1)
+        opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime",
+                             "timeMin" => begin_today.to_formatted_s, "timeMax" => next_day.to_formatted_s})
 
         events_array = google_proxy.events_list(opts)
         events_array.each do |response_page|
