@@ -10,7 +10,7 @@ application:
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
 
-# Database setup
+# Database settings
 postgres:
   database: calcentral_production
   username: calcentral_production
@@ -32,7 +32,8 @@ oauth2:
   key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
   encryption: "aes-256-cbc"
 
-# Proxy setups - set "fake: true" for any inaccessible ones
+# Proxy settings
+# Set "fake: true" for any inaccessible ones
 canvas_proxy:
   admin_access_token: "someMumboJumbo"
   url_root: "http://localhost:12345"
@@ -53,3 +54,8 @@ sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
   current_terms: ["Fall 2012"]
+
+# Cache settings
+cache:
+  # Array of server addresses in cluster (for memcached)
+  servers: ["localhost"]
