@@ -10,6 +10,30 @@ application:
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
 
+# Database settings
+postgres:
+  database: calcentral_production
+  username: calcentral_production
+  password: secret
+  host: localhost
+  port: 5432
+campusdb:
+  adapter: jdbch2
+  driver: org.h2.Driver
+  url: jdbc:h2:mem:h2CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
+  username: sa
+  password: sa
+
+# Proxy support
+freshen_vcr: <%= ENV['freshen_vcr'] %>
+# MUST BE SET FOR DEVELOPMENT & PRODUCTION
+# Example generated with SecureRandom.base64(32)
+oauth2:
+  key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
+  encryption: "aes-256-cbc"
+
+# Proxy settings
+# Set "fake: true" for any inaccessible ones
 canvas_proxy:
   admin_access_token: "someMumboJumbo"
   url_root: "http://localhost:12345"
@@ -18,7 +42,6 @@ canvas_proxy:
   client_secret: "someMumboJumbo"
   token_credential_uri: "http://localhost:12345/login/oauth2/token"
   authorization_uri: "http://localhost:12345/login/oauth2/auth"
-
 google_proxy:
   fake: false
   #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
@@ -26,41 +49,13 @@ google_proxy:
   test_user_refresh_token: "someMumboJumbo"
   client_id: 1
   client_secret: 'someMumboJumbo'
-
-development:
-  password: secret
-
-testext:
-  database: calcentral_test
-  username: calcentral_test
-  password: secret
-  host: localhost
-  port: 5432
-
-campusdb:
-  adapter: jdbch2
-  driver: org.h2.Driver
-  url: jdbc:h2:mem:h2CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
-  username: sa
-  password: sa
-
-postgres:
-  database: calcentral_production
-  username: calcentral_production
-  password: secret
-  host: localhost
-  port: 5432
-
-freshen_vcr: <%= ENV['freshen_vcr'] %>
-
 sakai_proxy:
   shared_secret: secret set in production
   host: "https://sakai-dev.berkeley.edu"
   fake: false
   current_terms: ["Fall 2012"]
 
-# MUST BE SET FOR DEVELOPMENT & PRODUCTION
-# Example generated with SecureRandom.base64(32)
-oauth2:
-  key: "IeGpe9iq27Glqujd8pGH1+xM8C/ofm97Lp74N+6cN0I="
-  encryption: "aes-256-cbc"
+# Cache settings
+cache:
+  # Array of server addresses in cluster (for memcached)
+  servers: ["localhost"]

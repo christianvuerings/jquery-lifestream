@@ -1,3 +1,9 @@
+postgres:
+  database: calcentral_test
+  username: calcentral_test
+  password: secret
+  host: localhost
+  port: 5432
 campusdb:
   adapter: jdbc
   driver: oracle.jdbc.OracleDriver

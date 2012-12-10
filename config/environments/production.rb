@@ -62,7 +62,7 @@ Calcentral::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Caching store
-  config.cache_store = ActiveSupport::Cache.lookup_store(:dalli_store, "localhost")
+  config.cache_store = ActiveSupport::Cache.lookup_store(:dalli_store, *Settings.cache.servers, { expires_in: 1.day })
   config.cache_store.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log")
   config.cache_store.logger.level = Logger::INFO
 
