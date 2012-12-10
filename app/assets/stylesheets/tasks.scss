@@ -13,3 +13,21 @@
     text-decoration: line-through;
   }
 }
+
+/* Mobile only */
+@media only screen and (max-width: 767px) {
+  .row .cc-mobile-task-checkbox-column {
+    width: 10% !important;
+  }
+  .row .cc-mobile-task-title-column {
+    width: 40% !important;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .row .cc-mobile-task-emitter-column {
+    width: 30% !important;
+  }
+  .row .cc-mobile-task-date-column {
+    width: 20% !important;
+  }
+}

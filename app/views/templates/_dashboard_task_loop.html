@@ -4,7 +4,7 @@
     <li data-ng-repeat="task in section.tasks | filter:filterCompleted">
       <div class="row">
 
-        <div class="one mobile-two columns">
+        <div class="one mobile-one columns cc-mobile-task-checkbox-column">
           <input type="checkbox" label="Done"
             data-ng-disabled="task.emitter=='Canvas'"
             data-ng-model="task.status"
@@ -14,7 +14,7 @@
           >
         </div>
 
-        <div class="six mobile-two columns">
+        <div class="six mobile-one columns cc-mobile-task-title-column">
           <a data-ng-href="{{task.link_url}}"
             class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-widget-tasks-status-{{task.status}}"
             data-ng-class="{true:'cc-alert'}[task.status=='overdue']">
@@ -22,11 +22,11 @@
           </a>
         </div>
 
-        <div class="three mobile-two columns cc-emitter-col">
+        <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
           <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
         </div>
 
-        <div class="two mobile-two columns cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
+        <div class="two mobile-one columns cc-mobile-task-date-column cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
           {{task.due_date.date_string}}
         </div>
       </div>
