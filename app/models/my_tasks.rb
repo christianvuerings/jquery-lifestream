@@ -33,6 +33,8 @@ class MyTasks
         validate_google_params params
         body = format_google_task_request params
         google_proxy = GoogleProxy.new(user_id: @uid)
+        logger.debug "#{self.class.name} update_task, sending to Google (task_list_id, task_id, body):
+          {#{task_list_id}, #{params["id"]}, #{body.inspect}}"
         response = google_proxy.update_task(task_list_id, params["id"], body)
         if (response.response.status == 200)
           format_google_task_response response.data
@@ -99,6 +101,7 @@ class MyTasks
     # accuracy so the application will apply the proper timezone when needed.
     due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
     convert_due_date!(due_date, formatted_entry)
+    logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
     formatted_entry
   end
 
@@ -180,6 +183,10 @@ class MyTasks
     Proc.new{|status_arg| !status_arg.blank? && whitelist_array.include?(status_arg)}
   end
 
+  # Validate params does two different type of validations. 1) Required - existance of key validation. A key specified in
+  # filter_keys must exist in initial_hash, or else the Missing parameter argumentError is thrown. 2) Optional - Proc function
+  # validation on initial_hash values. If a Proc is provided as a value for a filter_key, the proc will be executed and expect
+  # a boolean result of whether or not validation passed. Anything other than a Proc is treated as noop.
   def validate_params(initial_hash={}, filters={})
     filter_keys = filters.keys
     params_to_check = initial_hash.select {|key, value| filter_keys.include? key}
@@ -204,7 +211,7 @@ class MyTasks
 
   def validate_google_params(params)
     # just need to make sure ID is non-blank, general_params caught the rest.
-    google_filters = {"id" => ""}
+    google_filters = {"id" => "noop, not a Proc type"}
     validate_params(params, google_filters)
   end
 end
