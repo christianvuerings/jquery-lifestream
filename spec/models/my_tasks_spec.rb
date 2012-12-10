@@ -33,7 +33,7 @@ describe "MyTasks" do
 
         if task["emitter"] == "Google Tasks"
           task["link_url"].should == "https://mail.google.com/tasks/canvas?pli=1"
-          task["class"].should == "class2"
+          task["class"].should == "google-task"
           if task["due_date"]
             task["due_date"]["date_string"] =~ /\d\d\/\d\d/
             task["due_date"]["epoch"].should >= 1351641600
@@ -42,7 +42,7 @@ describe "MyTasks" do
         if task["emitter"] == CanvasProxy::APP_ID
           task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
           task["link_url"].should == task["source_url"]
-          task["color_class"].should == "class1"
+          task["color_class"].should == "canvas-class"
           task["due_date"]["date_string"] =~ /\d\d\/\d\d/
           task["due_date"]["epoch"].should >= 1354060800
         end
