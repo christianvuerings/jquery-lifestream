@@ -1,12 +1,13 @@
 development:
   adapter: jdbcpostgresql
-  database: calcentral_development
+  database: <%= Settings.postgres.database %>
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: calcentral_development
-  password: <%= Settings.development.password %>
-  host: localhost
+  username: <%= Settings.postgres.username %>
+  password: <%= Settings.postgres.password %>
+  host: <%= Settings.postgres.host %>
+  port: <%= Settings.postgres.port %>
 
 production:
   adapter: jdbcpostgresql
@@ -27,12 +28,14 @@ test:
 
 testext:
   adapter: jdbcpostgresql
-  database: <%= Settings.testext.database %>
+  database: <%= Settings.postgres.database %>
   encoding: unicode
   pool: 5
   timeout: 5000
-  username: <%= Settings.testext.username %>
-  password: <%= Settings.testext.password %>
+  username: <%= Settings.postgres.username %>
+  password: <%= Settings.postgres.password %>
+  host: <%= Settings.postgres.host %>
+  port: <%= Settings.postgres.port %>
 
 # The places where these settings are filled out are settings.yml, testext.yml, and production.yml
 # You should only be filling in custom values and secrets for testext.local.yml and production.local.yml

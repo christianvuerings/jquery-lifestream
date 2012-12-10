@@ -1,0 +1,6 @@
+postgres:
+  database: calcentral_development
+  username: calcentral_development
+  password: secret
+  host: localhost
+  port: 5432
