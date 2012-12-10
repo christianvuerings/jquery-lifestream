@@ -90,7 +90,7 @@ class MyTasks
       "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
       "id" => entry["id"],
       "source_url" => entry["selfLink"] || "",
-      "class" => "class2"
+      "class" => "google-task"
     }
 
     status = "needs_action" if entry["status"] == "needsAction"
@@ -127,7 +127,7 @@ class MyTasks
               "emitter" => CanvasProxy::APP_ID,
               "link_url" => result["html_url"],
               "source_url" => result["html_url"],
-              "color_class" => "class1",
+              "color_class" => "canvas-class",
               "status" => "inprogress"
           }
           due_date = result["start_at"]
