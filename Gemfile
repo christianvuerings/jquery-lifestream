@@ -46,6 +46,10 @@ gem "active_attr", "~> 0.6.0"
 # for production deployment
 gem "trinidad", "~> 1.4.4"
 
+# Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
+# https://github.com/sporkmonger/addressable
+gem "addressable", "~> 2.3.2"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
