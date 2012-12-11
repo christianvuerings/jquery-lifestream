@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'log4r'
 include Log4r
+# Let configuration use Rails core extensions like "1.day" and "hash.deep_merge"
 require 'active_support/core_ext'
 
 if defined?(Bundler)

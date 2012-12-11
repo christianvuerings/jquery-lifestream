@@ -59,3 +59,6 @@ sakai_proxy:
 cache:
   # Array of server addresses in cluster (for memcached)
   servers: ["localhost"]
+  maximum_expires_in: <%= 1.day %>
+  # Must be less than the shortest-lived source cache. 0 to pass-through.
+  api_expires_in: <%= 15.minutes %>
