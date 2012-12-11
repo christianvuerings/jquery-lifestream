@@ -1,67 +1,53 @@
-class MyUpNext
-  include ActiveAttr::Model
+class MyUpNext < MyMergedModel
 
-  def self.get_feed(uid, opts={})
-    Rails.cache.fetch(self.cache_key(uid)) do
-      up_next = {}
-      up_next["items"] = []
-      if GoogleProxy.access_granted?(uid)
-        google_proxy = GoogleProxy.new(user_id: uid)
+  def get_feed_internal(opts={})
+    up_next = {}
+    up_next["items"] = []
+    if GoogleProxy.access_granted?(@uid)
+      google_proxy = GoogleProxy.new(user_id: @uid)
 
-        # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
-        begin_today = Date.today.to_datetime
-        next_day = begin_today.advance(:days => 1)
-        opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime",
-                             "timeMin" => begin_today.to_formatted_s, "timeMax" => next_day.to_formatted_s})
+      # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
+      begin_today = Date.today.to_datetime
+      next_day = begin_today.advance(:days => 1)
+      opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime",
+                           "timeMin" => begin_today.to_formatted_s, "timeMax" => next_day.to_formatted_s})
 
-        events_array = google_proxy.events_list(opts)
-        events_array.each do |response_page|
-          next unless response_page.response.status == 200
+      events_array = google_proxy.events_list(opts)
+      events_array.each do |response_page|
+        next unless response_page.response.status == 200
 
-          response_page.data["items"].each do |entry|
-            formatted_entry = {
+        response_page.data["items"].each do |entry|
+          formatted_entry = {
               :attendees => entry["attendees"] || "",
               :organizer => entry["organizer"].to_hash || "",
               :html_link => entry["htmlLink"] || "",
               :location => entry["location"] || "",
               :status => entry["status"] || "",
               :summary => entry["summary"] || ""
-            }
-
-            if entry["location"]
-              uri = Addressable::URI.new
-              uri.query_values = {:q => entry["location"]}
-              formatted_entry[:location_url] = "https://maps.google.com/maps?" + uri.query
-            end
-
-            # date mangling to harmonize the different date formats.
-            start_end_hash = determine_start_end(entry["start"], entry["end"])
-            start_end_hash.each do |key, value|
-              formatted_entry[key] = value unless value.nil?
-            end
-
-            up_next["items"].push(formatted_entry)
+          }
+          if entry["location"]
+            uri = Addressable::URI.new
+            uri.query_values = {:q => entry["location"]}
+            formatted_entry[:location_url] = "https://maps.google.com/maps?" + uri.query
           end
+
+          # date mangling to harmonize the different date formats.
+          start_end_hash = determine_start_end(entry["start"], entry["end"])
+          start_end_hash.each do |key, value|
+            formatted_entry[key] = value unless value.nil?
+          end
+
+          up_next["items"].push(formatted_entry)
         end
       end
-
-      logger.debug "MyUpNext get_feed is #{up_next.inspect}"
-      up_next
     end
-  end
 
-  def self.cache_key(uid)
-    key = "user/#{uid}/#{self.name}"
-    logger.debug "MyUpNext cache_key will be #{key}"
-    key
-  end
-
-  def self.expire(uid)
-    Rails.cache.delete(self.cache_key(uid), :force => true)
+    logger.debug "MyUpNext get_feed is #{up_next.inspect}"
+    up_next
   end
 
   private
-  def self.determine_start_end(start_hash, end_hash)
+  def determine_start_end(start_hash, end_hash)
     start_date = start_hash && (start_hash["date"] || start_hash["dateTime"])
     if !start_date.blank?
       start_entry = {

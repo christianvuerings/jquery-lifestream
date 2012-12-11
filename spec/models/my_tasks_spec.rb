@@ -126,14 +126,7 @@ describe "MyTasks" do
     my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    #slightly roundabout way to get the task_list_ids and task_ids
-    proxy = GoogleProxy.new(:fake => true)
-    test_task_list = proxy.create_task_list '{"title": "test"}'
-    test_task_list.response.status.should == 200
-    task_list_id = test_task_list.data["id"]
-    new_task = proxy.insert_task(body='{"title": "New Task", "notes": "Please Complete me"}', task_list_id=task_list_id)
-    new_task.response.status.should == 200
-    task_id = new_task.data["id"]
+    task_list_id, task_id = get_task_list_id_and_task_id
     response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => task_id}, task_list_id)
     response["type"].should == "task"
     response["id"].should == task_id
@@ -141,4 +134,27 @@ describe "MyTasks" do
     response["status"].should == "completed"
   end
 
+  it "should invalidate cache on an update_task" do
+    my_tasks = MyTasks.new @user_id
+    Rails.cache.should_receive(:fetch).with(MyTasks.cache_key(@user_id), anything())
+    my_tasks.get_feed
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    Rails.cache.should_receive(:delete).with(MyTasks.cache_key(@user_id), anything())
+    task_list_id, task_id = get_task_list_id_and_task_id
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => task_id}, task_list_id)
+  end
+
+end
+
+def get_task_list_id_and_task_id
+  #slightly roundabout way to get the task_list_ids and task_ids
+  proxy = GoogleProxy.new(:fake => true)
+  test_task_list = proxy.create_task_list '{"title": "test"}'
+  test_task_list.response.status.should == 200
+  task_list_id = test_task_list.data["id"]
+  new_task = proxy.insert_task(body='{"title": "New Task", "notes": "Please Complete me"}', task_list_id=task_list_id)
+  new_task.response.status.should == 200
+  task_id = new_task.data["id"]
+  [task_list_id, task_id]
 end

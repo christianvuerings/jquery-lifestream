@@ -8,7 +8,7 @@ describe "MyGroups" do
 
   it "should return a valid feed for a user granted access" do
     SakaiProxy.stub(:access_granted?).and_return(true)
-    my_groups = MyGroups.get_feed(@user_id)
+    my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].is_a?(Array).should == true
     my_groups[:groups].each do |group_hash|
       group_hash.keys do |key|
@@ -19,7 +19,7 @@ describe "MyGroups" do
 
   it "should return a empty array for non-authenticated users" do
     SakaiProxy.stub(:access_granted?).and_return(false)
-    empty_groups = MyGroups.get_feed(@user_id)
+    empty_groups = MyGroups.new(@user_id).get_feed
     empty_groups[:groups].is_a?(Array).should == true
     empty_groups[:groups].size.should == 0
   end
@@ -41,7 +41,7 @@ describe "MyGroups" do
       end
     end
     SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(site_template)
-    my_groups = MyGroups.get_feed(@user_id)
+    my_groups = MyGroups.new(@user_id).get_feed
     my_groups.size.should == 1
   end
 

@@ -12,7 +12,7 @@ describe "MyUpNext" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     GoogleProxy.any_instance.stub(:events_list).and_return(@fake_google_events_array)
-    valid_feed = MyUpNext.get_feed(@user_id)
+    valid_feed = MyUpNext.new(@user_id).get_feed
     valid_feed["items"].size.should == 13
     valid_feed["items"].each do |entry|
       entry["status"].should_not == "cancelled"
@@ -31,7 +31,7 @@ describe "MyUpNext" do
   it "should return an empty feed for non-authorized users" do
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     GoogleProxy.any_instance.stub(:events_list).and_return(@fake_google_events_array)
-    empty_feed = MyUpNext.get_feed(@user_id)
+    empty_feed = MyUpNext.new(@user_id).get_feed
     empty_feed["items"].empty?.should be_true
   end
 
