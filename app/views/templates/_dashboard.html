@@ -74,38 +74,27 @@
       </div>
 
       <div class="cc-notifications-list">
-        <div class="cc-widget-body" data-ng-repeat="section in notifications.sections">
-          <div data-ng-switch on="section.title">
-            <div class="cc-widget-section-label" data-ng-hide="section.title == 'Alerts'">{{section.title}}</div>
-          </div>
 
           <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-            <li data-ng-repeat="notification in section.notifications | orderBy: 'epoch'">
+            <li data-ng-repeat="notification in notifications | orderBy:'epoch':true">
             <div class="row">
 
-                <div class="seven mobile-two columns">
-                  <a data-ng-href="{{notification.url}}"
-                    class="cc-widget-short-title"
-                    data-notreal="details"
-                    data-ng-class="{true:'cc-alert'}[$parent.section.title == 'Alerts']">
-                    {{notification.title}}
-                  </a>
+                <div class="two mobile-one columns">
+                  <div class="cc-emitter-square cc-emitter-{{notification.color_class}}"></div>
                 </div>
 
-                <div class="three mobile-one columns cc-emitter-col">
-                  <div class="cc-emitter cc-emitter-{{notification.color_class}}">{{notification.source || notification.emitter}}</div>
+                <div class="eight mobile-two columns cc-notification-text-column">
+                  {{notification.title}}
                 </div>
 
-                <div class="two mobile-one columns cc-right">
-                  <!-- We use epoch rather than milliseconds, so multiply by 1,000 -->
-                  {{notification.epoch * 1000 | date:'M/dd'}}
+                <div class="two mobile-one columns cc-right cc-widget-notifications-date-string">
+                  {{notification.date_string}}
                 </div>
 
             </div>
 
             </li>
           </ul>
-        </div>
       </div>
     </div>
 
