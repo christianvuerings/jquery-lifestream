@@ -1,6 +1,6 @@
 #CalCentral
 
-Home of CalCentral. [![Build status for calcentral](https://secure.travis-ci.org/ets-berkeley-edu/calcentral.png)](http://travis-ci.org/ets-berkeley-edu/calcentral)
+Home of CalCentral. [![Build status for calcentral](https://secure.travis-ci.org/ets-berkeley-edu/calcentral.png)](http://travis-ci.org/ets-berkeley-edu/calcentral) [![Dependency Status](https://gemnasium.com/ets-berkeley-edu/calcentral.png)](https://gemnasium.com/ets-berkeley-edu/calcentral)
 
 ## Dependencies
 
