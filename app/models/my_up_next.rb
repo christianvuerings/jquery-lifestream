@@ -20,10 +20,19 @@ class MyUpNext
 
           response_page.data["items"].each do |entry|
             formatted_entry = {
-              :status => entry["status"] || "",
+              :attendees => entry["attendees"] || "",
+              :organizer => entry["organizer"].to_hash || "",
               :html_link => entry["htmlLink"] || "",
+              :location => entry["location"] || "",
+              :status => entry["status"] || "",
               :summary => entry["summary"] || ""
             }
+
+            if entry["location"]
+              uri = Addressable::URI.new
+              uri.query_values = {:q => entry["location"]}
+              formatted_entry[:location_url] = "https://maps.google.com/maps?" + uri.query
+            end
 
             # date mangling to harmonize the different date formats.
             start_end_hash = determine_start_end(entry["start"], entry["end"])
@@ -70,15 +79,15 @@ class MyUpNext
     end
 
     if start_hash && start_hash["date"] && end_hash && end_hash["date"]
-      all_day_event = true
+      is_all_day = true
     else
-      all_day_event = false
+      is_all_day = false
     end
 
     {
       "start" => start_entry,
       "end" => end_entry,
-      "all_day_event" => all_day_event
+      "is_all_day" => is_all_day
     }
   end
 

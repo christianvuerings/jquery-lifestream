@@ -287,7 +287,6 @@ a:hover {
   width: 100%;
 
   .cc-widget-text {
-    color: #666;
     padding: 20px;
   }
 
@@ -297,7 +296,7 @@ a:hover {
     overflow: auto;
     padding: 0;
 
-    li {
+    > li {
       border-bottom: 1px dotted $cc-list-border-color;
       &:last-child {
         border-bottom: none;

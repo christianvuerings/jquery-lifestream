@@ -296,6 +296,7 @@ DEPENDENCIES
   activerecord-jdbcpostgresql-adapter (~> 1.2.2.1)
   activerecord-jdbcsqlite3-adapter (~> 1.2.2.1)
   activerecord-oracle_enhanced-adapter (~> 1.4.1)
+  addressable (~> 2.3.2)
   angular-rails (~> 0.0.12)
   capybara (~> 1.1.3)
   coffee-rails (~> 3.2.1)
