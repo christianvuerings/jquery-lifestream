@@ -99,6 +99,9 @@ rake db:schema:load
 rails s
 ```
 
+12. Access your development server at [localhost:3000](http://localhost:3000/).
+Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
+
 ## LiveReload & Testing
 
 See code changes happening live in the browser and look at the testing
