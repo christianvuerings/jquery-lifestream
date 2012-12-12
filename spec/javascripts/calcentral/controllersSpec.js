@@ -22,6 +22,7 @@ describe('CalCentral controllers', function() {
         $scope: scope,
         $route: route
       });
+
     }));
 
     it('should have a defined calcentral controller', function() {
@@ -36,12 +37,9 @@ describe('CalCentral controllers', function() {
     });
 
     it('should set the signed in userdata correctly', function() {
-      scope.user.handleUserLoaded({
-        "is_logged_in": true,
-        "uid": "978966",
-        "preferred_name": "Christian Raymond Marcel Vuerings",
-        "widget_data": {}
-      });
+      var status = getJSONFixture('status.json');
+      scope.user.handleUserLoaded(status);
+
       expect(scope.user.isAuthenticated()).toBeTruthy();
       expect(scope.user.profile.uid).toBeDefined();
       expect(scope.user.profile.preferred_name).toBeDefined();
