@@ -1,13 +1,8 @@
-// Helper example file
-
-/*
 beforeEach(function() {
-  this.addMatchers({
-    toBePlaying: function(expectedSong) {
-      var player = this.actual;
-      return player.currentlyPlayingSong === expectedSong
-          && player.isPlaying;
-    }
-  })
+	'use strict';
+
+  /*global jasmine*/
+
+  jasmine.getFixtures().fixturesPath = 'public/dummy';
+  jasmine.getJSONFixtures().fixturesPath = 'public/dummy/json';
 });
-*/

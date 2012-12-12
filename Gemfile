@@ -7,12 +7,6 @@ gem "rails", "3.2.8"
 # Postgresql adapter
 gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.2.1"
 
-# Oracle adapter
-# Purposely excluding this for test environments since folks have to install ojdbc6
-group :development, :testext, :production do
-  gem "activerecord-oracle_enhanced-adapter", "~> 1.4.1"
-end
-
 # H2 adapter
 gem "activerecord-jdbch2-adapter", "~> 1.2.2.1"
 
@@ -70,15 +64,25 @@ group :assets do
   gem "uglifier", "~> 1.3.0"
 end
 
+# Oracle adapter
+# Purposely excluding this for test environments since folks have to install ojdbc6
+group :development, :testext, :production do
+  gem "activerecord-oracle_enhanced-adapter", "~> 1.4.1"
+end
+
 group :development, :test , :testext do
   gem "rspec-rails", "~> 2.0"
   gem "minitest-reporters"
 
   # Test our JavaScript code.
   # https://github.com/pivotal/jasmine-gem
-  gem "jasmine", "~> 1.2.1"
+  gem "jasmine", "~> 1.3.1"
+  gem "jquery-rails", "~> 2.1.4"
+  gem "jasmine-jquery-rails", "~> 1.4.2"
+
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem "selenium-webdriver", "~> 2.26.0"
+  gem "selenium-webdriver", "~> 2.27.2"
+
   gem "therubyrhino", "~> 2.0.1"
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites

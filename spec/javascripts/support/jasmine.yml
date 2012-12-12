@@ -12,6 +12,8 @@
 #
 src_files:
   - assets/application.js
+  - assets/jquery.js
+  - assets/jasmine-jquery.js
 
 
 # stylesheets
