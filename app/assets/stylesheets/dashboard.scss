@@ -18,7 +18,7 @@
     border-left: 1px solid $cc-border-color;
   }
   .cc-emitter-col {
-    padding: 0;
+    padding-right: 0;
   }
   .cc-emitter {
     color: #fff;
@@ -52,6 +52,7 @@
   }
   .cc-emitter-google-task {
     background: #b7dca6;
+    color: #000;
   }
   .cc-emitter-campus-item {
     background: image-url('icon_notifications_campus_16x16.png') no-repeat;

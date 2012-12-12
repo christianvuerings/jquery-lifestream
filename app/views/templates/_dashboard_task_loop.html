@@ -4,7 +4,11 @@
     <li data-ng-repeat="task in section.tasks | filter:filterCompleted">
       <div class="row">
 
-        <div class="one mobile-one columns cc-mobile-task-checkbox-column">
+        <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
+          <div class="cc-emitter cc-emitter-{{task.class}}">{{task.source || task.emitter}}</div>
+        </div>
+
+        <div class="one mobile-one columns cc-task-checkbox-column cc-mobile-task-checkbox-column">
           <input type="checkbox" label="Done"
             data-ng-disabled="task.emitter=='Canvas'"
             data-ng-model="task.status"
@@ -14,16 +18,12 @@
           >
         </div>
 
-        <div class="six mobile-one columns cc-mobile-task-title-column">
+        <div class="six mobile-one columns cc-task-title-column cc-mobile-task-title-column">
           <a data-ng-href="{{task.link_url}}"
             class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-widget-tasks-status-{{task.status}}"
-            data-ng-class="{true:'cc-alert'}[task.status=='overdue']">
+            data-ng-class="{true:'cc-alert'}[this.$parent.section.title=='Overdue']">
             {{task.title}}
           </a>
-        </div>
-
-        <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
-          <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
         </div>
 
         <div class="two mobile-one columns cc-mobile-task-date-column cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
@@ -33,7 +33,7 @@
     </li>
   </ul>
 
-  <div ng-show="displayedTasksCount(section) == 0" class="cc-widget-text cc-widget-section-bottom">
+  <div ng-show="displayedTasksCount(section) == 0" class="cc-widget-text">
     There are currently no {{completed_mode}} tasks/assignments that are <span class="cc-lowercase">{{section.title}}</span>.
   </div>
 </script>
