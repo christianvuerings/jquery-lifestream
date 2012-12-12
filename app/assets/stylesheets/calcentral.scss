@@ -115,6 +115,9 @@ a:hover {
 .cc-alert {
   color: $cc-alert-color !important;
 }
+.cc-alert:before {
+   content: "! ";
+}
 .cc-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -320,6 +323,9 @@ a:hover {
 
 .cc-widget-section-bottom {
   border-bottom: 1px dotted $cc-list-border-color;
+    &:last-child {
+      border-bottom: none;
+    }
 }
 
 .cc-widget-short-title {
