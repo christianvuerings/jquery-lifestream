@@ -1,8 +1,7 @@
-class MyTasks
-  include ActiveAttr::Model
+class MyTasks < MyMergedModel
 
   def initialize(uid, starting_date=Date.today.to_time_in_current_zone)
-    @uid = uid
+    super(uid)
     #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
     @starting_date = starting_date
     @buckets = {
@@ -14,16 +13,14 @@ class MyTasks
     }
   end
 
-  def get_feed
-    Rails.cache.fetch(self.class.cache_key(@uid)) do
-      fetch_google_tasks
-      fetch_canvas_tasks
-      my_tasks = {
-          "sections" => [@buckets["overdue"], @buckets["due_today"], @buckets["due_this_week"], @buckets["due_next_week"], @buckets["unscheduled"]]
-      }
-      logger.debug "#{self.class.name} get_feed is #{my_tasks.inspect}"
-      my_tasks
-    end
+  def get_feed_internal
+    fetch_google_tasks
+    fetch_canvas_tasks
+    my_tasks = {
+        "sections" => [@buckets["overdue"], @buckets["due_today"], @buckets["due_this_week"], @buckets["due_next_week"], @buckets["unscheduled"]]
+    }
+    logger.debug "#{self.class.name} get_feed is #{my_tasks.inspect}"
+    my_tasks
   end
 
   def update_task(params, task_list_id="@default")
@@ -37,6 +34,7 @@ class MyTasks
           {#{task_list_id}, #{params["id"]}, #{body.inspect}}"
         response = google_proxy.update_task(task_list_id, params["id"], body)
         if (response.response.status == 200)
+          expire_cache
           format_google_task_response response.data
         else
           logger.info "Errors in proxy response: #{response.inspect}"
@@ -46,16 +44,6 @@ class MyTasks
         {}
       end
     end
-  end
-
-  def self.cache_key(uid)
-    key = "user/#{uid}/#{self.name}"
-    logger.debug "#{self.class.name} cache_key will be #{key}"
-    key
-  end
-
-  def self.expire(uid)
-    Rails.cache.delete(self.cache_key(uid), :force => true)
   end
 
   private

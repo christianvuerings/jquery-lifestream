@@ -2,7 +2,7 @@ class MyUpNextController < ApplicationController
 
   def get_feed
     if session[:user_id]
-      render :json => MyUpNext.get_feed(session[:user_id]).to_json
+      render :json => MyUpNext.new(session[:user_id]).get_feed.to_json
     else
       render :json => {}.to_json
     end

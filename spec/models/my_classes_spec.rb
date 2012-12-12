@@ -13,7 +13,7 @@ describe "MyClasses" do
     Oauth2Data.stub(:get).and_return({"access_token" => "something"})
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     SakaiProxy.stub(:access_granted?).and_return(false)
-    my_classes = MyClasses.get_feed(@user_id)
+    my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should == @fake_canvas_courses.size
     my_classes[:classes].each do |my_class|
       my_class[:emitter].should == CanvasProxy::APP_ID
@@ -27,7 +27,7 @@ describe "MyClasses" do
     SakaiProxy.stub(:access_granted?).and_return(false)
     CanvasProxy.should_not_receive(:new)
     SakaiProxy.should_not_receive(:new)
-    my_classes = MyClasses.get_feed(@user_id)
+    my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should == 0
   end
 
@@ -35,7 +35,7 @@ describe "MyClasses" do
     CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:new).and_return(@fake_sakai_proxy)
-    my_classes = MyClasses.get_feed(@user_id)
+    my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should be > 0
     my_classes[:classes].each do |my_class|
       my_class[:emitter].should == "bSpace"

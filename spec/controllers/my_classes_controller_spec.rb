@@ -14,7 +14,7 @@ describe MyClassesController do
   end
 
   it "should be an non-empty course feed on authenticated user" do
-    MyClasses.stub(:get_feed).and_return(
+    MyClasses.any_instance.stub(:get_feed).and_return(
       [{course_code: "PLEO 22",
       id: "750027",
       emitter: CanvasProxy::APP_ID}])

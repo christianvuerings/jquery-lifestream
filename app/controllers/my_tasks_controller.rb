@@ -3,8 +3,7 @@ class MyTasksController < ApplicationController
   before_filter :check_authentication
 
   def get_feed
-    my_tasks_model = MyTasks.new session[:user_id]
-    render :json => my_tasks_model.get_feed.to_json
+    render :json => MyTasks.new(session[:user_id]).get_feed.to_json
   end
 
   def update_task

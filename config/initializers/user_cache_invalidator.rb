@@ -17,7 +17,6 @@ module Calcentral
 
   {
       UserApi => :expire,
-      UserApiController => :expire,
       MyClasses => :expire,
       MyTasks => :expire,
       MyUpNext => :expire,
