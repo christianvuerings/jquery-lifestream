@@ -1,5 +1,5 @@
 (function() {
-  /*global calcentral, angular*/
+  /*global calcentral */
   'use strict';
 
   /**
@@ -24,16 +24,6 @@
         }
         return false;
 
-      };
-
-      $scope.isAllDay = function(item) {
-        // Filter for all-day calendar items
-        return !!item.is_all_day;
-      };
-
-      $scope.notAllDay = function(item) {
-        // Filter for timed calendar items
-        return !item.is_all_day;
       };
 
     });
