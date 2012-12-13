@@ -166,20 +166,37 @@
       <div class="cc-widget-title">
         <h2>My Classes <span class="cc-right cc-widget-title-small">Fall 2012</span></h2>
       </div>
-      <div class="cc-widget-myclasses-list">
+      <div class="cc-widget-mygroups-myclasses-list">
         <ul class="cc-widget-list">
-          <li class="cc-widget-list-icon"
-            data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']"
-            data-ng-repeat="class in myclasses">
-            <a data-ng-show="class.emitter == 'Canvas'"
-              data-ng-href="https://ucberkeley.instructure.com/courses/{{class.id}}"
-              class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
-              </a>
-            <a data-ng-show="class.emitter == 'bSpace'"
-              data-ng-href="https://sakai-dev.berkeley.edu/portal/site/{{class.id}}"
-              class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
-            </a>
-            <div class="cc-widget-list-subtitle cc-ellipsis">{{class.name}}</div>
+          <li data-ng-repeat="class in myclasses" class="cc-widget-mygroups-myclasses-list-item">
+            <div class="row">
+
+              <div class="three mobile-one columns cc-widget-mygroups-myclasses-icon-column">
+                <div
+                  class="cc-widget-list-icon cc-widget-mygroups-myclasses-icon-column"
+                  data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']">
+                </div>
+              </div>
+
+              <div class="seven mobile-two columns cc-widget-mygroups-myclasses-title-column">
+               <a data-ng-show="class.emitter == 'Canvas'"
+                  data-ng-href="https://ucberkeley.instructure.com/courses/{{class.id}}"
+                  class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
+                </a>
+                <a data-ng-show="class.emitter == 'bSpace'"
+                  data-ng-href="https://sakai-dev.berkeley.edu/portal/site/{{class.id}}"
+                  class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
+                </a>
+                <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
+                  data-ng-href="{{class.site_url}}">{{class.name}}
+                </a>
+              </div>
+
+              <div class="two mobile-one columns cc-widget-mygroups-myclasses-emitter-column">
+                <div class="cc-emitter-square cc-emitter-{{class.color_class}}"></div>
+              </div>
+
+            </div>
           </li>
         </ul>
       </div>
@@ -192,27 +209,27 @@
       <div class="cc-widget-title">
         <h2>My Groups</h2>
       </div>
-      <div id="cc-widget-mygroups-list">
+      <div class="cc-widget-mygroups-myclasses-list">
         <ul class="cc-widget-list">
-          <li data-ng-repeat="group in mygroups" class="cc-widget-mygroups-list-item">
-              <div class="row">
+          <li data-ng-repeat="group in mygroups" class="cc-widget-mygroups-myclasses-list-item">
+            <div class="row">
 
-                <div class="three mobile-one columns cc-widget-mygroups-icon-column">
-                  <div
-                    class="cc-widget-list-icon cc-widget-mygroups-icon-column"
-                    data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']">
-                  </div>
+              <div class="three mobile-one columns cc-widget-mygroups-myclasses-icon-column">
+                <div
+                  class="cc-widget-list-icon cc-widget-mygroups-myclasses-icon-column"
+                  data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']">
                 </div>
+              </div>
 
-                <div class="seven mobile-two columns cc-widget-mygroups-title-column">
-                  <a class="cc-ellipsis cc-widget-mygroups-title-link"
-                    data-ng-href="{{group.site_url}}">{{group.title}}
-                  </a>
-                </div>
+              <div class="seven mobile-two columns cc-widget-mygroups-myclasses-title-column">
+                <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
+                  data-ng-href="{{group.site_url}}">{{group.title}}
+                </a>
+              </div>
 
-                <div class="two mobile-one columns cc-widget-mygroups-emitter-column">
-                  <div class="cc-emitter-square cc-emitter-{{group.color_class}}"></div>
-                </div>
+              <div class="two mobile-one columns cc-widget-mygroups-myclasses-emitter-column">
+                <div class="cc-emitter-square cc-emitter-{{group.color_class}}"></div>
+              </div>
 
             </div>
           </li>
