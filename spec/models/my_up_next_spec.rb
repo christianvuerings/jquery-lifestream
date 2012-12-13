@@ -13,8 +13,8 @@ describe "MyUpNext" do
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     GoogleProxy.any_instance.stub(:events_list).and_return(@fake_google_events_array)
     valid_feed = MyUpNext.new(@user_id).get_feed
-    valid_feed["items"].size.should == 13
-    valid_feed["items"].each do |entry|
+    valid_feed[:items].size.should == 13
+    valid_feed[:items].each do |entry|
       entry["status"].should_not == "cancelled"
       if !entry["start"].blank?
         entry["start"]["epoch"].is_a?(Integer).should be true
