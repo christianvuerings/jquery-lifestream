@@ -12,6 +12,8 @@ class MyUpNext < MyMergedModel
       opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime",
                            "timeMin" => begin_today.to_formatted_s, "timeMax" => next_day.to_formatted_s})
 
+      day_events = []
+      timed_events = []
       events_array = google_proxy.events_list(opts)
       events_array.each do |response_page|
         next unless response_page.response.status == 200
@@ -37,9 +39,17 @@ class MyUpNext < MyMergedModel
             formatted_entry[key] = value unless value.nil?
           end
 
-          up_next["items"].push(formatted_entry)
+          if formatted_entry["is_all_day"]
+            day_events.push(formatted_entry)
+          else
+            timed_events.push(formatted_entry)
+          end
         end
       end
+
+      # Sort the day events based on their summary
+      day_events.sort! { |a,b| a[:summary].downcase <=> b[:summary].downcase }
+      up_next[:items] = timed_events.concat(day_events)
     end
 
     logger.debug "MyUpNext get_feed is #{up_next.inspect}"
