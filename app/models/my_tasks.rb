@@ -72,13 +72,13 @@ class MyTasks < MyMergedModel
 
   def format_google_task_response(entry)
     formatted_entry = {
-      "type" => "task",
-      "title" => entry["title"] || "",
-      "emitter" => "Google Tasks",
-      "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
-      "id" => entry["id"],
-      "source_url" => entry["selfLink"] || "",
-      "class" => "google-task"
+        "type" => "task",
+        "title" => entry["title"] || "",
+        "emitter" => "Google Tasks",
+        "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
+        "id" => entry["id"],
+        "source_url" => entry["selfLink"] || "",
+        "class" => "google-task"
     }
 
     status = "needs_action" if entry["status"] == "needsAction"
@@ -88,13 +88,13 @@ class MyTasks < MyMergedModel
     # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
     # accuracy so the application will apply the proper timezone when needed.
     due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
-    convert_due_date!(due_date, formatted_entry)
+    format_date_into_entry!(convert_due_date(due_date), formatted_entry)
     logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
     formatted_entry
   end
 
   def format_google_task_request(entry)
-    formatted_entry = { "id" => entry["id"] }
+    formatted_entry = {"id" => entry["id"]}
     formatted_entry["status"] = "needsAction" if entry["status"] == "needs_action"
     formatted_entry["status"] ||= "completed"
     logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
@@ -104,36 +104,77 @@ class MyTasks < MyMergedModel
   def fetch_canvas_tasks
     if CanvasProxy.access_granted?(@uid)
       canvas_proxy = CanvasProxy.new(:user_id => @uid)
-      response = canvas_proxy.coming_up
-      # TODO for CLC-680, get the results from canvas_proxy.todo and merge them into @buckets in the same way.
-      # Beware! The todo feed's format is a little different from the coming_up feed's.
-      if response.status == 200
-        results = JSON.parse response.body
-        logger.info "#{self.class.name} Sorting Canvas tasks into buckets with starting_date #{@starting_date}"
-        results.each do |result|
-          formatted_entry = {
-              "type" => result["type"].downcase,
-              "title" => result["title"],
-              "emitter" => CanvasProxy::APP_ID,
-              "link_url" => result["html_url"],
-              "source_url" => result["html_url"],
-              "color_class" => "canvas-class",
-              "status" => "inprogress"
-          }
-          due_date = result["start_at"]
-          convert_due_date!(due_date, formatted_entry)
-          bucket = determine_bucket(due_date, formatted_entry)
-          logger.info "#{self.class.name} Putting Canvas task with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-          @buckets[bucket]["tasks"].push(formatted_entry)
+      fetch_canvas_coming_up canvas_proxy
+      fetch_canvas_todo canvas_proxy
+    end
+  end
+
+  def fetch_canvas_coming_up(canvas_proxy)
+    response = canvas_proxy.coming_up
+    if response.status == 200
+      results = JSON.parse response.body
+      logger.info "#{self.class.name} Sorting Canvas coming_up feed into buckets with starting_date #{@starting_date}"
+      results.each do |result|
+        formatted_entry = {
+            "type" => result["type"].downcase,
+            "title" => result["title"],
+            "emitter" => CanvasProxy::APP_ID,
+            "link_url" => result["html_url"],
+            "source_url" => result["html_url"],
+            "color_class" => "canvas-class",
+            "status" => "inprogress"
+        }
+        due_date = result["start_at"]
+        format_date_into_entry!(convert_due_date(due_date), formatted_entry)
+        bucket = determine_bucket(due_date, formatted_entry)
+        logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+        @buckets[bucket]["tasks"].push(formatted_entry)
+      end
+    end
+  end
+
+  def fetch_canvas_todo(canvas_proxy)
+    response = canvas_proxy.todo
+    if response.status == 200
+      results = JSON.parse response.body
+      logger.info "#{self.class.name} Sorting Canvas todo feed into buckets with starting_date #{@starting_date}; #{results}"
+      results.each do |result|
+        if result["assignment"] != nil
+          due_date = result["assignment"]["due_at"]
+          due_date = convert_due_date(due_date)
+          if due_date.to_i < @starting_date.to_i
+            formatted_entry = {
+                "type" => "assignment",
+                "title" => result["assignment"]["name"],
+                "emitter" => CanvasProxy::APP_ID,
+                "link_url" => result["assignment"]["html_url"],
+                "source_url" => result["assignment"]["html_url"],
+                "color_class" => "canvas-class",
+                "status" => "inprogress"
+            }
+            format_date_into_entry!(due_date, formatted_entry)
+            bucket = determine_bucket(due_date, formatted_entry)
+            logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+            @buckets[bucket]["tasks"].push(formatted_entry)
+          else
+            logger.info "#{self.class.name} Skipping Canvas todo with due_date that's in the future: #{result}'"
+          end
         end
       end
     end
   end
 
-  def convert_due_date!(due_date, formatted_entry)
+  def convert_due_date(due_date)
     if !due_date.blank?
       due = due_date.to_time_in_current_zone.to_datetime if due_date.is_a?(Date)
       due ||= DateTime.parse(due_date.to_s)
+
+    end
+    due || nil
+  end
+
+  def format_date_into_entry!(due, formatted_entry)
+    if !due.blank?
       formatted_entry["due_date"] = {
           "epoch" => due.to_i,
           "datetime" => due.rfc3339(3),
@@ -170,7 +211,7 @@ class MyTasks < MyMergedModel
   end
 
   def includes_whitelist_values?(whitelist_array=[])
-    Proc.new{|status_arg| !status_arg.blank? && whitelist_array.include?(status_arg)}
+    Proc.new { |status_arg| !status_arg.blank? && whitelist_array.include?(status_arg) }
   end
 
   # Validate params does two different type of validations. 1) Required - existance of key validation. A key specified in
@@ -179,9 +220,9 @@ class MyTasks < MyMergedModel
   # a boolean result of whether or not validation passed. Anything other than a Proc is treated as noop.
   def validate_params(initial_hash={}, filters={})
     filter_keys = filters.keys
-    params_to_check = initial_hash.select {|key, value| filter_keys.include? key}
+    params_to_check = initial_hash.select { |key, value| filter_keys.include? key }
     raise ArgumentError, "Missing parameter(s). Required: #{filter_keys}" if params_to_check.length != filter_keys.length
-    filters.keep_if{|key, value| value.is_a?(Proc)}
+    filters.keep_if { |key, value| value.is_a?(Proc) }
     filters.each do |filter_key, filter_proc|
       logger.debug "Validating params for #{filter_key}"
       if !(filter_proc.call(params_to_check[filter_key]))
@@ -192,9 +233,9 @@ class MyTasks < MyMergedModel
 
   def validate_general_params(params)
     filters = {
-      "type" => Proc.new { |arg| !arg.blank? && arg.is_a?(String) },
-      "emitter" => includes_whitelist_values?(["Canvas", "Google Tasks"]),
-      "status" => includes_whitelist_values?(%w(needs_action completed))
+        "type" => Proc.new { |arg| !arg.blank? && arg.is_a?(String) },
+        "emitter" => includes_whitelist_values?(["Canvas", "Google Tasks"]),
+        "status" => includes_whitelist_values?(%w(needs_action completed))
     }
     validate_params(params, filters)
   end
