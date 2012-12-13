@@ -16,7 +16,8 @@ class MyGroups < MyMergedModel
                 title: site["title"] || "",
                 id: site["id"],
                 site_url: site["url"],
-                emitter: "bSpace"
+                emitter: "bSpace",
+                color_class: "bspace-group"
             }
             site_hash["short_description"] = site["shortDescription"] unless site["shortDescription"].blank?
             response[:groups].push(site_hash)
