@@ -11,7 +11,8 @@ class MyClasses < MyMergedModel
                                     name: course["name"],
                                     course_code: course["course_code"],
                                     id: course["id"].to_s,
-                                    emitter: CanvasProxy::APP_ID
+                                    emitter: CanvasProxy::APP_ID,
+                                    color_class: 'canvas-class'
                                 })
       end
     end
@@ -26,7 +27,8 @@ class MyClasses < MyMergedModel
                                         name: site["shortDescription"],
                                         course_code: site["title"],
                                         id: site["id"],
-                                        emitter: "bSpace"
+                                        emitter: "bSpace",
+                                        color_class: 'bspace-class'
                                     })
           end
         end
