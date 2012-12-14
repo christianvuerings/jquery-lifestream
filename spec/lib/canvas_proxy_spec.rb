@@ -33,7 +33,7 @@ describe CanvasProxy do
     response = @client.courses
     courses = JSON.parse(response.body)
     courses.size.should > 0
-    courses[1]['course_code'].should_not be_nil
+    courses[0]['course_code'].should_not be_nil
   end
 
   it "should get the coming_up feed for a known user", :testext => true do
@@ -41,6 +41,14 @@ describe CanvasProxy do
     tasks = JSON.parse(response.body)
     tasks[0]["type"].should_not be_nil
     tasks[0]["title"].should_not be_nil
+  end
+
+  it "should get the todo feed for a known user", :testext => true do
+    response = @client.todo
+    tasks = JSON.parse(response.body)
+    p tasks
+    tasks[0]["assignment"]["name"].should_not be_nil
+    tasks[0]["assignment"]["course_id"].should_not be_nil
   end
 
 end

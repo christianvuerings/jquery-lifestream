@@ -17,13 +17,13 @@ describe "MyTasks" do
     valid_feed = my_tasks_model.get_feed
     valid_feed["sections"].length.should == 5
     valid_feed["sections"][0]["title"].should == "Overdue"
-    valid_feed["sections"][0]["tasks"].size.should == 1
+    valid_feed["sections"][0]["tasks"].size.should == 5
     valid_feed["sections"][1]["title"].should == "Due Today"
     valid_feed["sections"][1]["tasks"].size.should == 2
     valid_feed["sections"][2]["title"].should == "Due This Week"
     valid_feed["sections"][2]["tasks"].size.should == 3
     valid_feed["sections"][3]["title"].should == "Due Next Week"
-    valid_feed["sections"][3]["tasks"].size.should == 1
+    valid_feed["sections"][3]["tasks"].size.should == 6
     valid_feed["sections"][4]["title"].should == "Unscheduled"
     valid_feed["sections"][4]["tasks"].size.should == 1
     valid_feed["sections"].each do |section|
@@ -44,7 +44,7 @@ describe "MyTasks" do
           task["link_url"].should == task["source_url"]
           task["color_class"].should == "canvas-class"
           task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-          task["due_date"]["epoch"].should >= 1354060800
+          task["due_date"]["epoch"].should >= 1352447940
         end
       end
     end
@@ -61,13 +61,13 @@ describe "MyTasks" do
       my_tasks_model = MyTasks.new(@user_id, Date.new(2012, 11, 27).to_time_in_current_zone)
       valid_feed = my_tasks_model.get_feed
       valid_feed["sections"][0]["title"].should == "Overdue"
-      valid_feed["sections"][0]["tasks"].size.should == 1
+      valid_feed["sections"][0]["tasks"].size.should == 5
       valid_feed["sections"][1]["title"].should == "Due Today"
-      valid_feed["sections"][1]["tasks"].size.should == 0
+      valid_feed["sections"][1]["tasks"].size.should == 1
       valid_feed["sections"][2]["title"].should == "Due This Week"
-      valid_feed["sections"][2]["tasks"].size.should == 5
+      valid_feed["sections"][2]["tasks"].size.should == 4
       valid_feed["sections"][3]["title"].should == "Due Next Week"
-      valid_feed["sections"][3]["tasks"].size.should == 1
+      valid_feed["sections"][3]["tasks"].size.should == 6
       valid_feed["sections"][4]["title"].should == "Unscheduled"
       valid_feed["sections"][4]["tasks"].size.should == 1
     ensure
