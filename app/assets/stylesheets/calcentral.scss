@@ -296,7 +296,8 @@ a:hover {
   .cc-widget-list {
     margin: 0;
     max-height: 200px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 0;
 
     > li {
