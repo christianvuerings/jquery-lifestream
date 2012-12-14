@@ -166,12 +166,13 @@ class MyTasks < MyMergedModel
   end
 
   def convert_due_date(due_date)
-    if !due_date.blank?
-      due = due_date.to_time_in_current_zone.to_datetime if due_date.is_a?(Date)
-      due ||= DateTime.parse(due_date.to_s)
-
+    if due_date.blank?
+      nil
+    elsif due_date.is_a?(Date)
+      due_date.to_time_in_current_zone.to_datetime
+    else
+      DateTime.parse(due_date.to_s)
     end
-    due || nil
   end
 
   def format_date_into_entry!(due, formatted_entry)
