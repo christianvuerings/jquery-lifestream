@@ -183,3 +183,5 @@ git commit -a -m "Helpful commit message"
 To view other rake task for the project: ```rake -T```
 
 * ```rake spec:xml``` - Runs rake spec, but pipes the output to xml using the rspec_junit_formatter gem, for JUnit compatible test result reports
+* ```rake vcr:record``` - Refresh vcr recordings and reformats the fixtures with formatted JSON output. Will also parse the reponse body's string into json output for legibility.
+* ```rake vcr:list``` - List the available recordings captured in the fixtures.
