@@ -38,7 +38,7 @@ canvas_proxy:
   admin_access_token: "someMumboJumbo"
   url_root: "http://localhost:12345"
   fake: false
-  client_id: "300939"
+  client_id: "300846"
   client_secret: "someMumboJumbo"
   token_credential_uri: "http://localhost:12345/login/oauth2/token"
   authorization_uri: "http://localhost:12345/login/oauth2/auth"
