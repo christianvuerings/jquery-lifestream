@@ -16,6 +16,7 @@ class MyTasks < MyMergedModel
   def get_feed_internal
     fetch_google_tasks
     fetch_canvas_tasks
+    # TODO sort the tasks in their buckets by due_date.epoch
     my_tasks = {
         "sections" => [@buckets["overdue"], @buckets["due_today"], @buckets["due_this_week"], @buckets["due_next_week"], @buckets["unscheduled"]]
     }

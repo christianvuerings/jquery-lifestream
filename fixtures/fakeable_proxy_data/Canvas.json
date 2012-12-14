@@ -2,7 +2,7 @@
     {
         "request":{
             "method":"get",
-            "uri":"https://ucberkeley.instructure.com/api/v1/users/self/coming_up",
+            "uri":"https://ucberkeley.instructure.com/api/v1/users/self/todo",
             "body":{
                 "encoding":"US-ASCII",
                 "string":""
@@ -22,28 +22,74 @@
             "headers":{
                 "cache-control":["private, max-age=0, must-revalidate"],
                 "content-type":["application/json; charset=utf-8"],
-                "date":["Tue, 04 Dec 2012 16:32:24 GMT"],
-                "etag":["\"15c4e88be57fba1e2915e2e8625c49c2\""],
+                "date":["Thu, 13 Dec 2012 23:55:20 GMT"],
+                "etag":["\"e071af08b2b5529937ac009354b5f21f\""],
                 "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
                 "server":["Apache"],
-                "set-cookie":["canvas_session=luyW5hGGX66TA_vxML_sDQ.whZHYUdc8JM7R5Hu6_wLf2VXEAVFRiulAZlwTqBqrXcQkkCXRFmc7O6Y9wDlIjlcaCQwdAYPm3QWopk22FT-PA.Jiq3H5-v8fo5YB7oeHBb5hFXHLc.UL4lmA; path=/; secure; HttpOnly"],
+                "set-cookie":["canvas_session=CQLBgzujTWDgIOuaNj2JwA.zbNS5wZnPFW3DgsrKTxEnIVoOQ0tbGTKJ9tKXZQElFfmPYgVrgLAkX6oaAlm5hGnQmtYMzPlWo3GoFsKa3l_7g.UvJ6s6elc0dIR9otzhB04pILipg.UMpq6Q; path=/; secure; HttpOnly"],
                 "status":["200"],
                 "vary":["Accept-Encoding"],
-                "x-canvas-user-id":["10000003357913"],
+                "x-canvas-user-id":["10000003323890"],
                 "x-frame-options":["SAMEORIGIN"],
-                "x-request-context-id":["1bb888a0-205e-0130-0333-02e33ab5736e"],
-                "x-runtime":["249"],
+                "x-request-context-id":["7a478380-27ae-0130-1490-02e33ab4feba"],
+                "x-runtime":["365"],
                 "x-ua-compatible":["IE=edge,chrome=1"],
-                "content-length":["349"],
+                "content-length":["7667"],
                 "connection":["keep-alive"]
             },
             "body":{
                 "encoding":"US-ASCII",
-                "string":"[{\"type\":\"Assignment\",\"title\":\"Annotated Bibliography\",\"start_at\":\"2012-11-27T23:59:00-08:00\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2546730\"},{\"type\":\"Assignment\",\"title\":\"Week 10 Homework\",\"start_at\":\"2012-11-27T16:00:00-08:00\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833382/assignments/2241829\"}]"
+                "string":"[{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588302/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588302/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588302#submit\",\"context_type\":\"Course\",\"assignment\":{\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-11-25T23:59:00-08:00\",\"description\":\"\",\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588302\",\"discussion_topic\":{\"locked\":false,\"attachments\":[],\"author\":{\"avatar_image_url\":\"https://secure.gravatar.com/avatar/963423426d6da2a4d30657d90310098e?s=50\\u0026d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png\",\"display_name\":\"Chris Tweney\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/users/3075914\",\"id\":3075914},\"assignment_id\":2588302,\"delayed_post_at\":null,\"podcast_has_student_posts\":null,\"discussion_subentry_count\":0,\"permissions\":{\"delete\":false,\"attach\":false,\"update\":false},\"read_state\":\"unread\",\"unread_count\":0,\"last_reply_at\":\"2012-12-13T15:49:21-08:00\",\"require_initial_post\":null,\"url\":\"https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646260\",\"topic_children\":[],\"user_name\":\"Chris Tweney\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646260\",\"posted_at\":\"2012-12-13T15:49:21-08:00\",\"discussion_type\":\"side_comment\",\"id\":1646260,\"root_topic_id\":null,\"title\":\"Past Discussion\",\"podcast_url\":null,\"message\":\"\"},\"submission_types\":[\"discussion_topic\"],\"name\":\"Past Discussion\",\"id\":2588302}},{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588242/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588242/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588242#submit\",\"context_type\":\"Course\",\"assignment\":{\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-11-25T23:59:00-08:00\",\"description\":\"\",\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588242\",\"submission_types\":[\"online_upload\",\"online_text_entry\",\"online_url\",\"media_recording\"],\"name\":\"Online-Submission Past Assignment\",\"id\":2588242}},{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588304/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588304/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588304#submit\",\"context_type\":\"Course\",\"assignment\":{\"anonymous_submissions\":false,\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-11-25T23:59:00-08:00\",\"description\":\"\",\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588304\",\"submission_types\":[\"online_quiz\"],\"name\":\"Past Quiz\",\"id\":2588304}},{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588306/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588306/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588306#submit\",\"context_type\":\"Course\",\"assignment\":{\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-11-25T23:59:00-08:00\",\"description\":null,\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588306\",\"submission_types\":[\"external_tool\"],\"name\":\"Past External Tool Assignment\",\"id\":2588306}},{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588244/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588244/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588244#submit\",\"context_type\":\"Course\",\"assignment\":{\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-12-03T00:00:00-08:00\",\"description\":\"\",\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588244\",\"submission_types\":[\"online_upload\",\"online_text_entry\",\"online_url\",\"media_recording\"],\"name\":\"Online-Submission Future Assignment\",\"id\":2588244}},{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588303/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588303/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588303#submit\",\"context_type\":\"Course\",\"assignment\":{\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-12-03T23:59:00-08:00\",\"description\":\"\",\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588303\",\"discussion_topic\":{\"locked\":false,\"attachments\":[],\"author\":{\"avatar_image_url\":\"https://secure.gravatar.com/avatar/963423426d6da2a4d30657d90310098e?s=50\\u0026d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png\",\"display_name\":\"Chris Tweney\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/users/3075914\",\"id\":3075914},\"assignment_id\":2588303,\"delayed_post_at\":null,\"podcast_has_student_posts\":null,\"discussion_subentry_count\":0,\"permissions\":{\"delete\":false,\"attach\":false,\"update\":false},\"read_state\":\"unread\",\"unread_count\":0,\"last_reply_at\":\"2012-12-13T15:49:48-08:00\",\"require_initial_post\":null,\"url\":\"https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646261\",\"topic_children\":[],\"user_name\":\"Chris Tweney\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646261\",\"posted_at\":\"2012-12-13T15:49:48-08:00\",\"discussion_type\":\"side_comment\",\"id\":1646261,\"root_topic_id\":null,\"title\":\"Future Discussion\",\"podcast_url\":null,\"message\":\"\"},\"submission_types\":[\"discussion_topic\"],\"name\":\"Future Discussion\",\"id\":2588303}},{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588305/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588305/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588305#submit\",\"context_type\":\"Course\",\"assignment\":{\"anonymous_submissions\":false,\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-12-03T23:59:00-08:00\",\"description\":null,\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588305\",\"submission_types\":[\"online_quiz\"],\"name\":\"Future Quiz\",\"id\":2588305}},{\"type\":\"submitting\",\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588307/submitting?permanent=1\",\"course_id\":767330,\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588307/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588307#submit\",\"context_type\":\"Course\",\"assignment\":{\"course_id\":767330,\"points_possible\":null,\"due_at\":\"2012-12-03T23:59:00-08:00\",\"description\":null,\"muted\":false,\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588307\",\"submission_types\":[\"external_tool\"],\"name\":\"Future External Tool Assignment\",\"id\":2588307}}]"
             },
             "http_version":null
         },
-        "recorded_at":"Tue, 04 Dec 2012 16:32:24 GMT"
+        "recorded_at":"Thu, 13 Dec 2012 23:55:21 GMT"
+    },
+    {
+        "request":{
+            "method":"get",
+            "uri":"https://ucberkeley.instructure.com/api/v1/courses",
+            "body":{
+                "encoding":"US-ASCII",
+                "string":""
+            },
+            "headers":{
+                "Authorization":[""],
+                "Cache-Control":["no-store"],
+                "Content-Type":["application/x-www-form-urlencoded"],
+                "x-sakai-token":[]
+            }
+        },
+        "response":{
+            "status":{
+                "code":200,
+                "message":null
+            },
+            "headers":{
+                "cache-control":["private, max-age=0, must-revalidate"],
+                "content-type":["application/json; charset=utf-8"],
+                "date":["Thu, 13 Dec 2012 23:55:22 GMT"],
+                "etag":["\"4b680dc594f297e0f884ebd575ee5fd9\""],
+                "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
+                "server":["Apache"],
+                "set-cookie":["canvas_session=FAZXL9ymhUBTrb8CYNFmXA.rmcZdRLdW-e9VKfatF-Y4bsgA1kTljHf5Y1y2m3Sk_gHmD9eWC3jd2XzDngl5WFEe7kVeVtCoQoFpe83cHaI4Q.HwvUdqI2LP2KThiIzSSW4rVda2w.UMpq6g; path=/; secure; HttpOnly"],
+                "status":["200"],
+                "vary":["Accept-Encoding"],
+                "x-canvas-user-id":["10000003323890"],
+                "x-frame-options":["SAMEORIGIN"],
+                "x-request-context-id":["7af98a60-27ae-0130-f61c-02e33ab9a62d"],
+                "x-runtime":["107"],
+                "x-ua-compatible":["IE=edge,chrome=1"],
+                "content-length":["353"],
+                "connection":["keep-alive"]
+            },
+            "body":{
+                "encoding":"US-ASCII",
+                "string":"[{\"course_code\":\"API101\",\"enrollments\":[{\"type\":\"student\"}],\"name\":\"API Testing and Design 101\",\"start_at\":\"2012-09-04T00:00:00-07:00\",\"end_at\":null,\"account_id\":90243,\"hide_final_grades\":false,\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/course_zEaJooSacLbZBLIdPKqIdFKwRpSGm7c2PpdG4ulA.ics\"},\"default_view\":\"feed\",\"id\":767330}]"
+            },
+            "http_version":null
+        },
+        "recorded_at":"Thu, 13 Dec 2012 23:55:22 GMT"
     },
     {
         "request":{
@@ -68,29 +114,29 @@
             "headers":{
                 "cache-control":["private, max-age=0, must-revalidate"],
                 "content-type":["application/json; charset=utf-8"],
-                "date":["Tue, 04 Dec 2012 16:32:25 GMT"],
-                "etag":["\"7838cddf89b41b5480675609283043be\""],
+                "date":["Thu, 13 Dec 2012 23:55:23 GMT"],
+                "etag":["\"78c36321f3c90d5b7188846465006bf7\""],
                 "link":["<https://ucberkeley.instructure.com/api/v1/accounts?page=1&per_page=10>; rel=\"first\""],
                 "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
                 "server":["Apache"],
-                "set-cookie":["canvas_session=aJcTWp-opDndzPpvEFm35Q._swrcAUShOtsUXsts9skEm623whxe30m1gy5hpsAkBUrlFUekEgg0RH8UeZ9Ji45FKsDv1uxZCG_ACjlyszzcw.Fr4aIJMJpYxqqyunoT5jmttU7Ok.UL4lmg; path=/; secure; HttpOnly"],
+                "set-cookie":["canvas_session=NUckeQGUBYJH9GzZcmDHEQ.YQZr6UleWbTR3I8fl5JeWGXbb3QT5UgfOlaj2-oYuWlijqqmefTTHKCGK4Zudw7Sb1iNdIob0tYSXYf9K79Gsg.A7waUDLzfR2SqqKmH7CJQ_VMBu4.UMpq6w; path=/; secure; HttpOnly"],
                 "status":["200"],
                 "vary":["Accept-Encoding"],
                 "x-canvas-user-id":["10000003075914"],
                 "x-frame-options":["SAMEORIGIN"],
-                "x-request-context-id":["1cb9ba20-205e-0130-7b22-02e33a88cded"],
-                "x-runtime":["48"],
+                "x-request-context-id":["7ba41330-27ae-0130-46ef-02e33ab9a62d"],
+                "x-runtime":["86"],
                 "x-ua-compatible":["IE=edge,chrome=1"],
                 "content-length":["83"],
                 "connection":["keep-alive"]
             },
             "body":{
                 "encoding":"US-ASCII",
-                "string":"[{\"name\":\"UC Berkeley\",\"id\":90242,\"parent_account_id\":null,\"root_account_id\":null}]"
+                "string":"[{\"name\":\"UC Berkeley\",\"root_account_id\":null,\"parent_account_id\":null,\"id\":90242}]"
             },
             "http_version":null
         },
-        "recorded_at":"Tue, 04 Dec 2012 16:32:26 GMT"
+        "recorded_at":"Thu, 13 Dec 2012 23:55:23 GMT"
     },
     {
         "request":{
@@ -115,33 +161,33 @@
             "headers":{
                 "cache-control":["private, max-age=0, must-revalidate"],
                 "content-type":["application/json; charset=utf-8"],
-                "date":["Tue, 04 Dec 2012 16:32:27 GMT"],
-                "etag":["\"4ac9892d0b7287c38b1ef5930c16b413\""],
+                "date":["Thu, 13 Dec 2012 23:55:24 GMT"],
+                "etag":["\"27b25661792bd59e3e500e996895eb68\""],
                 "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
                 "server":["Apache"],
-                "set-cookie":["canvas_session=L9SXnrwu2pvETEytH2jtHg.4l-y-UdEfA1q-zpZawNTMyoUP6CjMD5KObSQcU3twn37Pcui3V_fpOCSkHIBptIGHzCSiEFqZQ1vXnrcc9aecg.LzUMvqfctg_uH6B-vEIP_a57gC8.UL4lmw; path=/; secure; HttpOnly"],
+                "set-cookie":["canvas_session=6OISeTtjNW-TJet3VthByg.jFuuRIA38J9vfyRR8MaqOgRM9aJXEKIPncm9vuIRXnr1ULvfIUxrg2ZSAj-BtvJsC3OKGC3z05txh88Mv_BH0g.m7dS87oE05tvZ-G6LoYACEXRnYI.UMpq7A; path=/; secure; HttpOnly"],
                 "status":["200"],
                 "vary":["Accept-Encoding"],
-                "x-canvas-user-id":["10000003357913"],
+                "x-canvas-user-id":["10000003323890"],
                 "x-frame-options":["SAMEORIGIN"],
-                "x-request-context-id":["1d7e0dd0-205e-0130-7be1-02e33ab5736e"],
-                "x-runtime":["173"],
+                "x-request-context-id":["7c5d57b0-27ae-0130-6852-02e33a92ca49"],
+                "x-runtime":["139"],
                 "x-ua-compatible":["IE=edge,chrome=1"],
-                "content-length":["475"],
+                "content-length":["468"],
                 "connection":["keep-alive"]
             },
             "body":{
                 "encoding":"US-ASCII",
-                "string":"{\"avatar_url\":\"https://secure.gravatar.com/avatar/b63c1553cb24e97d43612618975ebef6?s=50\\u0026d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png\",\"title\":null,\"primary_email\":\"tammi.chang.clc@gmail.com\",\"bio\":null,\"name\":\"Tammi Chang\",\"sortable_name\":\"Chang, Tammi\",\"short_name\":\"Tammi Chang\",\"login_id\":\"300939\",\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/user_3vRQADOzy7H9mHvE2kYVqCHnfiVK6g3LHPR4dkjp.ics\"},\"id\":3357913}"
+                "string":"{\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/user_u3U82KgzE24stb9utKXb5YYxaXV3xFsq5jKvKdfd.ics\"},\"login_id\":\"300846\",\"primary_email\":\"test-300846@berkeley.edu\",\"sortable_name\":\"Testb, Stu\",\"name\":\"Stu Testb\",\"short_name\":\"Stu Testb\",\"avatar_url\":\"https://secure.gravatar.com/avatar/595e055e30397015914b97402393a291?s=50\\u0026d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png\",\"id\":3323890,\"title\":null,\"bio\":null}"
             },
             "http_version":null
         },
-        "recorded_at":"Tue, 04 Dec 2012 16:32:27 GMT"
+        "recorded_at":"Thu, 13 Dec 2012 23:55:24 GMT"
     },
     {
         "request":{
             "method":"get",
-            "uri":"https://ucberkeley.instructure.com/api/v1/courses",
+            "uri":"https://ucberkeley.instructure.com/api/v1/users/self/coming_up",
             "body":{
                 "encoding":"US-ASCII",
                 "string":""
@@ -161,75 +207,27 @@
             "headers":{
                 "cache-control":["private, max-age=0, must-revalidate"],
                 "content-type":["application/json; charset=utf-8"],
-                "date":["Tue, 04 Dec 2012 16:32:28 GMT"],
-                "etag":["\"45b66ef2b429a8cd0c3a50276b412831\""],
+                "date":["Thu, 13 Dec 2012 23:55:25 GMT"],
+                "etag":["\"1fb60eacca81abddeb06a18db153d980\""],
                 "p3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
                 "server":["Apache"],
-                "set-cookie":["canvas_session=TFrgBIsGDCHj6x7k8wzcOg.8HS8-m5FsMsmqfp-sZ6c-TJqgAN2Xt5PhkC_GTZiyAutWOwjA6SZ0IIbKIHgJKtBZMap3bwZhcyU5FWpr6ukDw.RSwVqFpFnW7raDm7kXJtpmj7fVo.UL4lnA; path=/; secure; HttpOnly"],
+                "set-cookie":["canvas_session=kbe13l87Ecxw_46yX0VphA.fOOEyMQT80RTAfmngr8Pu1helRP-5l-hdQN9BwPABS6p3jlOQEyxPqBMC9MIsiglPyrFj8gpktl-EGq7dWxyVw.CSyEloJBZXG9JvrDHsm0OCM_3dQ.UMpq7Q; path=/; secure; HttpOnly"],
                 "status":["200"],
                 "vary":["Accept-Encoding"],
-                "x-canvas-user-id":["10000003357913"],
+                "x-canvas-user-id":["10000003323890"],
                 "x-frame-options":["SAMEORIGIN"],
-                "x-request-context-id":["1e3a6df0-205e-0130-292a-02e33abab6c6"],
-                "x-runtime":["40"],
+                "x-request-context-id":["7d117330-27ae-0130-3f90-02e33a92f9bc"],
+                "x-runtime":["104"],
                 "x-ua-compatible":["IE=edge,chrome=1"],
-                "content-length":["773"],
+                "content-length":["1271"],
                 "connection":["keep-alive"]
             },
             "body":{
                 "encoding":"US-ASCII",
-                "string":"[{\"account_id\":90242,\"course_code\":\"EE 20N\",\"end_at\":null,\"default_view\":\"feed\",\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/course_SMIaFMD5gDiViGXUX73oA8pfABQwRI94uFIoOvbT.ics\"},\"hide_final_grades\":false,\"name\":\"Structure and Interpretation of Systems and Signals\",\"start_at\":\"2012-10-04T00:00:00-07:00\",\"enrollments\":[{\"type\":\"student\"}],\"id\":833382},{\"account_id\":90242,\"course_code\":\"ETH STD 21AC\",\"end_at\":null,\"default_view\":\"feed\",\"calendar\":{\"ics\":\"https://ucberkeley.instructure.com/feeds/calendars/course_pHuUhYE8aWl1qmffaMWGKT9xPXrLw5vWI62VrI2k.ics\"},\"hide_final_grades\":false,\"name\":\"A Comparative Survey of Race and Ethnicity in the United States\",\"start_at\":\"2012-08-23T00:00:00-07:00\",\"enrollments\":[{\"type\":\"student\"}],\"id\":833384}]"
+                "string":"[{\"type\":\"Assignment\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588244\",\"title\":\"Online-Submission Future Assignment\",\"start_at\":\"2012-11-27T00:00:00-08:00\"},{\"type\":\"Assignment\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588303\",\"title\":\"Future Discussion\",\"start_at\":\"2012-11-27T23:59:00-08:00\"},{\"type\":\"Assignment\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588307\",\"title\":\"Future External Tool Assignment\",\"start_at\":\"2012-12-03T23:59:00-08:00\"},{\"type\":\"Assignment\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588305\",\"title\":\"Future Quiz\",\"start_at\":\"2012-12-03T23:59:00-08:00\"},{\"type\":\"Assignment\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588310\",\"title\":\"Future Ungraded Assignment\",\"start_at\":\"2012-12-03T23:59:00-08:00\"},{\"type\":\"Assignment\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588234\",\"title\":\"No-Submission Future Assignment\",\"start_at\":\"2012-12-03T23:59:00-08:00\"},{\"type\":\"Assignment\",\"html_url\":\"https://ucberkeley.instructure.com/courses/767330/assignments/2588250\",\"title\":\"Paper Submission Future Assignment\",\"start_at\":\"2012-12-03T23:59:00-08:00\"}]"
             },
             "http_version":null
         },
-        "recorded_at":"Tue, 04 Dec 2012 16:32:28 GMT"
-    },
-    {
-        "request":{
-            "method":"get",
-            "uri":"https://ucberkeley.instructure.com/api/v1/users/self/todo",
-            "body":{
-                "encoding":"US-ASCII",
-                "string":""
-            },
-            "headers":{
-                "Authorization":[""],
-                "Cache-Control":["no-store"],
-                "Content-Type":["application/x-www-form-urlencoded"],
-                "Accept":["*/*"],
-                "User-Agent":["Ruby"],
-                "x-sakai-token":[]
-            }
-        },
-        "response":{
-            "status":{
-                "code":200,
-                "message":"OK"
-            },
-            "headers":{
-                "Cache-Control":["private, max-age=0, must-revalidate"],
-                "Content-Type":["application/json; charset=utf-8"],
-                "Date":["Fri, 07 Dec 2012 00:51:18 GMT"],
-                "Etag":["\"1061ab7592e8be9ea0b1790a0882a1a3\""],
-                "P3p":["CP=\"None, see http://www.instructure.com/privacy-policy\""],
-                "Server":["Apache"],
-                "Set-Cookie":["canvas_session=9QWlXuFJkbeRC6XkUxjQFQ.jTm2Ph8mDH7CPLezasED7MhL4QlHg1eej21jDoT_xkkfj92N8VWsYyzuxrdnWUVUEnk9arOSk2CUzg6e6cUsTQ.Z1e3L-nduXkQK2o2rxWrTj_e6sw.UME9hg; path=/; secure; HttpOnly"],
-                "Status":["200"],
-                "Vary":["Accept-Encoding"],
-                "X-Canvas-User-Id":["10000003357913"],
-                "X-Frame-Options":["SAMEORIGIN"],
-                "X-Request-Context-Id":["226da930-2236-0130-71c9-02e33ab4feba"],
-                "X-Runtime":["194"],
-                "X-Ua-Compatible":["IE=edge,chrome=1"],
-                "Content-Length":["3054"],
-                "Connection":["keep-alive"]
-            },
-            "body":{
-                "encoding":"US-ASCII",
-                "string":"[{\"type\":\"submitting\",\"course_id\":833384,\"assignment\":{\"course_id\":833384,\"submission_types\":[\"external_tool\"],\"points_possible\":50,\"due_at\":\"2012-12-01T23:59:00-08:00\",\"muted\":false,\"name\":\"discuss this page\",\"description\":\"\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555997\",\"id\":2555997},\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555997/submitting?permanent=1\",\"context_type\":\"Course\",\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555997/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555997#submit\"},{\"type\":\"submitting\",\"course_id\":833384,\"assignment\":{\"course_id\":833384,\"submission_types\":[\"discussion_topic\"],\"points_possible\":10,\"due_at\":\"2012-11-20T23:59:00-08:00\",\"muted\":false,\"name\":\"Who will with the fiesta bowl?\",\"description\":\"\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555962\",\"discussion_topic\":{\"require_initial_post\":null,\"unread_count\":0,\"permissions\":{\"delete\":false,\"update\":false,\"attach\":false},\"url\":\"https://ucberkeley.instructure.com/courses/833384/discussion_topics/1622248\",\"delayed_post_at\":null,\"last_reply_at\":\"2012-12-05T11:49:38-08:00\",\"posted_at\":\"2012-12-05T11:49:38-08:00\",\"podcast_url\":null,\"locked\":false,\"user_name\":\"Jon Hays\",\"discussion_type\":\"side_comment\",\"author\":{\"avatar_image_url\":\"https://ucberkeley.instructure.com/images/thumbnails/23224147/DqEzK08tCoo5bix29FCWSUZuZYfDSM5dVCtG5Ceu\",\"display_name\":\"Jon Hays\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/users/3075912\",\"id\":3075912},\"podcast_has_student_posts\":false,\"message\":\"\",\"root_topic_id\":null,\"discussion_subentry_count\":0,\"attachments\":[],\"assignment_id\":2555962,\"title\":\"Who will with the fiesta bowl?\",\"read_state\":\"unread\",\"topic_children\":[],\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/discussion_topics/1622248\",\"id\":1622248},\"id\":2555962},\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555962/submitting?permanent=1\",\"context_type\":\"Course\",\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555962/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555962#submit\"},{\"type\":\"submitting\",\"course_id\":833384,\"assignment\":{\"course_id\":833384,\"submission_types\":[\"online_quiz\"],\"points_possible\":1,\"due_at\":\"2012-11-08T23:59:00-08:00\",\"anonymous_submissions\":false,\"muted\":false,\"name\":\"Who will win the fiesta bowl\",\"description\":\"\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555990\",\"id\":2555990},\"ignore_permanently\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555990/submitting?permanent=1\",\"context_type\":\"Course\",\"ignore\":\"https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2555990/submitting?permanent=0\",\"html_url\":\"https://ucberkeley.instructure.com/courses/833384/assignments/2555990#submit\"}]"
-            },
-            "http_version":null
-        },
-        "recorded_at":"Fri, 07 Dec 2012 00:51:18 GMT"
+        "recorded_at":"Thu, 13 Dec 2012 23:55:25 GMT"
     }
 ], "recorded_with":"VCR 2.3.0"}

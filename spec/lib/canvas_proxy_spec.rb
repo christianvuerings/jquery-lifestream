@@ -33,7 +33,7 @@ describe CanvasProxy do
     response = @client.courses
     courses = JSON.parse(response.body)
     courses.size.should > 0
-    courses[1]['course_code'].should_not be_nil
+    courses[0]['course_code'].should_not be_nil
   end
 
   it "should get the coming_up feed for a known user", :testext => true do
