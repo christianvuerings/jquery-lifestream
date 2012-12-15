@@ -12,7 +12,8 @@ class MyClasses < MyMergedModel
                                     course_code: course["course_code"],
                                     id: course["id"].to_s,
                                     emitter: CanvasProxy::APP_ID,
-                                    color_class: 'canvas-class'
+                                    color_class: "canvas-class",
+                                    site_url: "https://ucberkeley.instructure.com/courses/#{course['id']}"
                                 })
       end
     end
@@ -28,7 +29,9 @@ class MyClasses < MyMergedModel
                                         course_code: site["title"],
                                         id: site["id"],
                                         emitter: "bSpace",
-                                        color_class: 'bspace-class'
+                                        color_class: "bspace-class",
+                                        # Todo make this configurable
+                                        site_url: "https://sakai-dev.berkeley.edu/portal/site/#{site['id']}"
                                     })
           end
         end
