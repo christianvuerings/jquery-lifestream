@@ -8,17 +8,17 @@ describe SakaiProxy do
 
   it "should get the categorized sites from bspace" do
     data = @client.get_categorized_sites "300939"
-    data[:status_code].should_not == nil
+    data[:status_code].should_not be_nil
     if data[:status_code] == 200
-      data[:body]["principal"].should_not == nil
+      data[:body]["principal"].should_not be_nil
     end
   end
 
   it "should get the unread sites from bspace" do
     data = @client.get_unread_sites "300939"
-    data[:status_code].should_not == nil
+    data[:status_code].should_not be_nil
     if data[:status_code] == 200
-      data[:body]["principal"].should_not == nil
+      data[:body]["principal"].should_not be_nil
     end
   end
 
@@ -33,7 +33,7 @@ describe SakaiProxy do
 
   it "should make sure there are project or 'other' sites from the bSpace proxy (for groups)" do
     data = @client.get_categorized_sites "300939"
-    data[:status_code].should_not == nil
+    data[:status_code].should_not be_nil
     if data[:status_code] == 200 && data[:body]["categories"] != nil
       if !data[:body]["categories"].empty?
         non_course_categories = data[:body]["categories"].select do |category|

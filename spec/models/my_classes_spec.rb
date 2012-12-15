@@ -17,8 +17,9 @@ describe "MyClasses" do
     my_classes[:classes].size.should == @fake_canvas_courses.size
     my_classes[:classes].each do |my_class|
       my_class[:emitter].should == CanvasProxy::APP_ID
-      my_class[:course_code].should_not == nil
+      my_class[:course_code].should_not be_nil
       my_class[:id].instance_of?(String).should == true
+      my_class[:site_url].should_not be_nil
     end
   end
 
@@ -39,8 +40,9 @@ describe "MyClasses" do
     my_classes[:classes].size.should be > 0
     my_classes[:classes].each do |my_class|
       my_class[:emitter].should == "bSpace"
-      my_class[:course_code].should_not == nil
+      my_class[:course_code].should_not be_nil
       my_class[:id].instance_of?(String).should == true
+      my_class[:site_url].should_not be_nil
     end
   end
 

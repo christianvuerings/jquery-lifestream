@@ -28,7 +28,7 @@ describe UserApiController do
     response.status.should == 204
     get :mystatus
     json_response = JSON.parse(response.body)
-    json_response["first_login_at"].should_not == nil
+    json_response["first_login_at"].should_not be_nil
   end
 
 end
