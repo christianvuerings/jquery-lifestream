@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.8"
+gem "rails", "3.2.9"
 
 # Postgresql adapter
 gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.2.1"
@@ -16,7 +16,7 @@ gem "json", "~> 1.7.5"
 
 # CAS Strategy for OmniAuth
 # https://rubygems.org/gems/omniauth-cas
-gem "omniauth-cas", "~> 0.0.7"
+gem "omniauth-cas", "~> 1.0.1"
 
 gem "faraday", "~> 0.8.4"
 
@@ -26,7 +26,7 @@ gem "google-api-client", "~> 0.5.0"
 
 # for VCR http recording tool
 gem "vcr", "~> 2.3.0"
-gem "jruby-openssl", "~> 0.7.7"
+gem "jruby-openssl", "~> 0.8.2"
 
 # for memcached connection
 gem "dalli", "~> 2.5.0"
@@ -92,7 +92,7 @@ group :development, :test , :testext do
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
   # https://rubygems.org/gems/capybara
-  gem "capybara", "~> 1.1.3"
+  gem "capybara", "~> 1.1.4"
 end
 
 group :development do
