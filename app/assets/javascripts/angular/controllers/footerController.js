@@ -5,10 +5,10 @@
   /**
    * Footer controller
    */
-  calcentral.controller('FooterController', ['$http', '$scope', function($http, $scope) {
+  calcentral.controller('FooterController', ['$scope', function($scope) {
 
     $scope.currentTime = function() {
-        return new Date();
+      return new Date();
     };
 
   }]);
