@@ -4,9 +4,11 @@ describe "MyGroups" do
   before(:each) do
     @user_id = rand(99999).to_s
     @fake_sakai_proxy = SakaiProxy.new({fake: true})
+    @fake_canvas_proxy = CanvasProxy.new({fake: true})
   end
 
   it "should return a valid feed for a user granted access" do
+    CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(true)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].is_a?(Array).should == true
@@ -18,6 +20,7 @@ describe "MyGroups" do
   end
 
   it "should return a empty array for non-authenticated users" do
+    CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(false)
     empty_groups = MyGroups.new(@user_id).get_feed
     empty_groups[:groups].is_a?(Array).should == true
@@ -25,6 +28,7 @@ describe "MyGroups" do
   end
 
   it "should reject malformed Sakai2 entries" do
+    CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(true)
     site_template = @fake_sakai_proxy.get_categorized_sites(@user_id)
     site_template[:body]["categories"].each do |category|
@@ -43,6 +47,26 @@ describe "MyGroups" do
     SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(site_template)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups.size.should == 1
+  end
+
+  it "should include Canvas groups" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+    SakaiProxy.stub(:access_granted?).and_return(false)
+    my_groups = MyGroups.new(@user_id).get_feed
+    my_groups[:groups].is_a?(Array).should == true
+    my_groups[:groups].size.should be > 0
+    my_groups[:groups].each do |group_hash|
+      group_hash.keys do |key|
+        group_hash[key].should_not be_nil
+        group = group_hash[key]
+        group[:id].blank?.should be_false
+        group[:title].blank?.should be_false
+        group[:site_url].blank?.should be_false
+        group[:emitter].should == "Canvas"
+        group[:color_class].should == "canvas-group"
+      end
+    end
   end
 
 end

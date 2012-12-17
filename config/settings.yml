@@ -38,17 +38,20 @@ canvas_proxy:
   admin_access_token: "someMumboJumbo"
   url_root: "http://localhost:12345"
   fake: false
-  client_id: "300846"
+  client_id: 2
   client_secret: "someMumboJumbo"
   token_credential_uri: "http://localhost:12345/login/oauth2/token"
   authorization_uri: "http://localhost:12345/login/oauth2/auth"
+  # Only used for testing + recording responses
+  test_user_id: "300846"
+  test_user_access_token: "someMumboJumbo"
 google_proxy:
+  client_id: 1
+  client_secret: 'someMumboJumbo'
   fake: false
   #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
   test_user_access_token: "someMumboJumbo"
   test_user_refresh_token: "someMumboJumbo"
-  client_id: 1
-  client_secret: 'someMumboJumbo'
 sakai_proxy:
   shared_secret: secret set in production
   host: "https://sakai-dev.berkeley.edu"
