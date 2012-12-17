@@ -25,6 +25,18 @@ class MyGroups < MyMergedModel
         end
       end
     end
+    if CanvasProxy.access_granted?(@uid)
+      canvas_proxy = CanvasProxy.new(user_id: @uid)
+      JSON.parse(canvas_proxy.groups.body).each do |group|
+        response[:groups].push({
+                                    title: group["name"],
+                                    id: group["id"].to_s,
+                                    emitter: CanvasProxy::APP_ID,
+                                    color_class: "canvas-group",
+                                    site_url: "#{canvas_proxy.url_root}/groups/#{group['id']}"
+                                })
+      end
+    end
     logger.debug "#{self.class.name} get_feed is #{response.inspect}"
     response
   end

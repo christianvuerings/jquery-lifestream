@@ -3,9 +3,9 @@ require "spec_helper"
 describe CanvasProxy do
 
   before do
-    @user_id = Settings.canvas_proxy.client_id
+    @user_id = Settings.canvas_proxy.test_user_id
     Oauth2Data.new_or_update(@user_id, CanvasProxy::APP_ID,
-                             Settings.canvas_proxy.client_secret)
+                             Settings.canvas_proxy.test_user_access_token)
     @client = CanvasProxy.new(:user_id => @user_id)
   end
 
@@ -48,6 +48,13 @@ describe CanvasProxy do
     tasks = JSON.parse(response.body)
     tasks[0]["assignment"]["name"].should_not be_nil
     tasks[0]["assignment"]["course_id"].should_not be_nil
+  end
+
+  it "should get groups as known member", :testext => true do
+    response = @client.groups
+    groups = JSON.parse(response.body)
+    groups.size.should > 0
+    groups[0]['name'].should_not be_nil
   end
 
 end

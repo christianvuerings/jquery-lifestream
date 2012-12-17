@@ -31,16 +31,24 @@ class CanvasProxy < BaseProxy
     Settings.canvas_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"] != nil)
   end
 
-  def courses()
+  def url_root
+    @settings.url_root
+  end
+
+  def courses
     request("courses")
   end
 
-  def coming_up()
+  def coming_up
     request("users/self/coming_up")
   end
 
-  def todo()
+  def todo
     request("users/self/todo")
+  end
+
+  def groups
+    request("users/self/groups")
   end
 
 end
