@@ -76,23 +76,34 @@
       <div class="cc-notifications-list">
 
           <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-            <li data-ng-repeat="notification in notifications | orderBy:'epoch':true">
-            <div class="row">
+            <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
+              <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification)">
 
                 <div class="two mobile-one columns">
                   <div class="cc-emitter-square cc-emitter-{{notification.color_class}}"></div>
                 </div>
 
-                <div class="eight mobile-two columns cc-notification-text-column">
+                <div class="seven mobile-two columns cc-widget-notifications-text-column cc-widget-list-selected-title">
                   {{notification.title}}
                 </div>
 
-                <div class="two mobile-one columns cc-right cc-widget-notifications-date-string">
+                <div class="three mobile-one columns cc-right cc-widget-notifications-date-string">
                   {{notification.date_string}}
                 </div>
+              </div>
 
-            </div>
-
+              <div class="cc-widget-notifications-more" data-ng-show="notification.show">
+                <div class="row">
+                  <div class="ten columns offset-by-two cc-not cc-widget-notifications-text-column">
+                    {{notification.summary}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="ten columns offset-by-two cc-not cc-widget-notifications-text-column">
+                    <a href="{{notification.source_url}}">View in {{notification.source}}</a>
+                  </div>
+                </div>
+              </div>
             </li>
           </ul>
       </div>
@@ -109,10 +120,10 @@
         <h2>Up Next <a href="http://bcal.berkeley.edu" class="ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
       </div>
       <div class="cc-widget-mycalendar-container">
-        <ul class="cc-widget-mycalendar-datelist" data-ng-class="{'cc-widget-mycalendar-containsopen': containsOpen()}">
+        <ul class="cc-widget-mycalendar-datelist" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
           <!-- First loop: timestamped items -->
-          <li data-ng-repeat="item in items" data-ng-class="{'cc-selected': item.show}">
-            <div class="cc-widget-mycalendar-short" data-ng-click="upnextToggleShow(item)">
+          <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
+            <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(item)">
               <div class="cc-widget-mycalendar-datelist-time cc-left">
                 <div data-ng-switch on="item.is_all_day">
                   <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
@@ -125,7 +136,7 @@
                 </div>
               </div>
               <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
-                <div class="cc-widget-mycalendar-datelist-title cc-ellipsis">
+                <div class="cc-widget-list-selected-title cc-ellipsis">
                   {{item.summary}}
                 </div>
                 <div class="cc-ellipsis">

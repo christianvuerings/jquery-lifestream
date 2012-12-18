@@ -81,6 +81,38 @@
       window.location = '/logout';
     };
 
+    // API
+    $scope.api = {};
+
+    // Widgets
+    $scope.api.widget = {};
+
+    /**
+     * Toggle whether an item for a widget should be shown or not
+     */
+    $scope.api.widget.toggleShow = function(item) {
+      item.show = !item.show;
+    };
+
+    /**
+     * Check whether there is one item in the list that is shown
+     * @return {Boolean} Will be true when there is one item in the list that is shown
+     */
+    $scope.api.widget.containsOpen = function(items) {
+
+      if (!items) {
+        return;
+      }
+
+      for(var i = 0; i < items.length; i++){
+        if (items[i].show) {
+          return true;
+        }
+      }
+      return false;
+
+    };
+
     /**
      * Will be executed on every route change
      *  - Get the user information when it hasn't been loaded yet
