@@ -9,51 +9,41 @@
 
     $http.get('/api/my/tasks').success(function(data) {
 
-      $scope.sections = data.sections;
+      $scope.tasks = data.tasks;
 
     });
 
-    // Initial mode values for Tasks view
+    // Initial mode for Tasks view
     $scope.tasks_mode = 'scheduled';
-    $scope.completed_mode = 'incomplete';
 
-    // Post changed tasks back to Google through our API proxy
+    // Post changed tasks back to Google through our proxy
     $scope.changeTaskState = function(task) {
       $http.post('/api/my/tasks', task);
     };
 
-    // Switch mode for scheduled/unscheduled tasks
+    // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasks_mode) {
       $scope.tasks_mode = tasks_mode;
     };
 
-    // Switch mode for completed/incomplete tasks
-    $scope.switchCompletedMode = function(completed_mode) {
-      $scope.completed_mode = completed_mode;
+    $scope.filterOverdue = function(task) {
+      return (task.status !== 'completed' && task.bucket === 'Overdue');
     };
 
-    // Filter out completed/incomplete tasks based on current mode
-    $scope.filterCompleted = function(task) {
-        if (
-            ($scope.completed_mode === 'completed' && task.status === 'completed') ||
-            ($scope.completed_mode !== 'completed' && task.status !== 'completed')) {
-          return true;
-        }
+    $scope.filterDueToday = function(task) {
+      return (task.status !== 'completed' && task.bucket === 'Due Today');
     };
 
-    // Get a count of all *displayed* tasks in a section (which is different from the total number per section)
-    $scope.displayedTasksCount = function(section) {
-      var sectionLength = section.tasks.length;
+    $scope.filterDueThisWeek = function(task) {
+      return (task.status !== 'completed' && task.bucket === 'Due This Week');
+    };
 
-      angular.forEach(section.tasks, function(task) {
-        if (
-            ($scope.completed_mode === 'completed' && task.status !== 'completed') ||
-            ($scope.completed_mode !== 'completed' && task.status === 'completed')) {
-          sectionLength = sectionLength - 1;
-        }
+    $scope.filterDueNextWeek = function(task) {
+      return (task.status !== 'completed' && task.bucket === 'Due Next Week');
+    };
 
-      });
-      return sectionLength;
+    $scope.filterUnScheduled = function(task) {
+      return (!task.due_date && task.status !== 'completed');
     };
 
   }]);

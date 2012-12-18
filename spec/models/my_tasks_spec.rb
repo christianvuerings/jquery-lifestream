@@ -15,39 +15,57 @@ describe "MyTasks" do
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     my_tasks_model = MyTasks.new(@user_id, Date.new(2012, 11, 27).to_time_in_current_zone)
     valid_feed = my_tasks_model.get_feed
-    valid_feed["sections"].length.should == 5
-    valid_feed["sections"][0]["title"].should == "Overdue"
-    valid_feed["sections"][0]["tasks"].size.should == 5
-    valid_feed["sections"][1]["title"].should == "Due Today"
-    valid_feed["sections"][1]["tasks"].size.should == 2
-    valid_feed["sections"][2]["title"].should == "Due This Week"
-    valid_feed["sections"][2]["tasks"].size.should == 3
-    valid_feed["sections"][3]["title"].should == "Due Next Week"
-    valid_feed["sections"][3]["tasks"].size.should == 6
-    valid_feed["sections"][4]["title"].should == "Unscheduled"
-    valid_feed["sections"][4]["tasks"].size.should == 1
-    valid_feed["sections"].each do |section|
-      section["tasks"].each do |task|
-        task["title"].blank?.should == false
-        task["source_url"].blank?.should == false
 
-        if task["emitter"] == "Google Tasks"
-          task["link_url"].should == "https://mail.google.com/tasks/canvas?pli=1"
-          task["class"].should == "google-task"
-          if task["due_date"]
-            task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-            task["due_date"]["epoch"].should >= 1351641600
-          end
-        end
-        if task["emitter"] == CanvasProxy::APP_ID
-          task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
-          task["link_url"].should == task["source_url"]
-          task["color_class"].should == "canvas-class"
+    # Counts for task types in VCR recording
+    overdue_counter = 5
+    today_counter = 2
+    this_week_counter = 3
+    next_week_counter = 6
+    unscheduled_counter = 1
+
+    valid_feed["tasks"].each do |task|
+      task["title"].blank?.should == false
+      task["source_url"].blank?.should == false
+
+      # Whitelist allowed property strings
+      whitelist = task["bucket"] =~ (/(Overdue|Due\ Today|Due\ This\ Week|Due\ Next\ Week|Unscheduled)$/i)
+      whitelist.should_not be_nil
+
+      case task["bucket"]
+        when "Overdue"
+          overdue_counter -= 1
+        when "Due Today"
+          today_counter -= 1
+        when "Due This Week"
+          this_week_counter -= 1
+        when "Due Next Week"
+          next_week_counter -= 1
+        when "Unscheduled"
+          unscheduled_counter -= 1
+      end
+
+      if task["emitter"] == "Google Tasks"
+        task["link_url"].should == "https://mail.google.com/tasks/canvas?pli=1"
+        task["color_class"].should == "google-task"
+        if task["due_date"]
           task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-          task["due_date"]["epoch"].should >= 1352447940
+          task["due_date"]["epoch"].should >= 1351641600
         end
       end
+      if task["emitter"] == CanvasProxy::APP_ID
+        task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
+        task["link_url"].should == task["source_url"]
+        task["color_class"].should == "canvas-class"
+        task["due_date"]["date_string"] =~ /\d\d\/\d\d/
+        task["due_date"]["epoch"].should >= 1352447940
+      end
     end
+
+    overdue_counter.should == 0
+    today_counter.should == 0
+    this_week_counter.should == 0
+    next_week_counter.should == 0
+    unscheduled_counter.should == 0
   end
 
   it "should shift tasks into different buckets with a different timezone " do
@@ -60,16 +78,6 @@ describe "MyTasks" do
       CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
       my_tasks_model = MyTasks.new(@user_id, Date.new(2012, 11, 27).to_time_in_current_zone)
       valid_feed = my_tasks_model.get_feed
-      valid_feed["sections"][0]["title"].should == "Overdue"
-      valid_feed["sections"][0]["tasks"].size.should == 5
-      valid_feed["sections"][1]["title"].should == "Due Today"
-      valid_feed["sections"][1]["tasks"].size.should == 1
-      valid_feed["sections"][2]["title"].should == "Due This Week"
-      valid_feed["sections"][2]["tasks"].size.should == 4
-      valid_feed["sections"][3]["title"].should == "Due Next Week"
-      valid_feed["sections"][3]["tasks"].size.should == 6
-      valid_feed["sections"][4]["title"].should == "Unscheduled"
-      valid_feed["sections"][4]["tasks"].size.should == 1
     ensure
       Time.zone = original_time_zone
     end
