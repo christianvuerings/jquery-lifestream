@@ -69,4 +69,24 @@ describe "MyGroups" do
     end
   end
 
+  it "should sort groups alphabetically" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    SakaiProxy.stub(:access_granted?).and_return(true)
+    sakai_project_site_feed = {body: {"categories" => [
+        "category" => "Projects",
+        "sites" => [
+            {"title" => "Zsite", "id" => "zsite-id", "url" => "http://sakai/zsite-id"},
+            {"title" => "csite", "id" => "csite-id", "url" => "http://sakai/csite-id"}
+        ]
+    ]}}
+    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
+    canvas_groups_feed = '[{"name": "Agroup", "id": "agroup-id"}]'
+    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+    @fake_canvas_proxy.stub_chain(:groups, :body).and_return(canvas_groups_feed)
+    my_groups = MyGroups.new(@user_id).get_feed
+    my_groups[:groups][0][:title].should == "Agroup"
+    my_groups[:groups][1][:title].should == "csite"
+    my_groups[:groups][2][:title].should == "Zsite"
+  end
+
 end
