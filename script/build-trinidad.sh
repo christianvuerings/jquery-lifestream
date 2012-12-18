@@ -26,7 +26,6 @@ echo "`date`: Rebuilding static assets..." | $LOGIT
 bundle exec rake assets:clean
 bundle exec rake assets:precompile
 
-# Update database schema after update.
-# TODO Will be "rake db:migrate" after we stabilize.
-echo "`date`: Updating database..." | $LOGIT
-bundle exec rake db:reset
+# TODO Update database schema after update.
+# echo "`date`: Updating database..." | $LOGIT
+# bundle exec rake db:migrate
