@@ -18,7 +18,7 @@ describe MyTasksController do
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
-    json_response["tasks"].length.should == 15
+    json_response["tasks"].length.should == 11
     json_response["tasks"].each do |task|
       task.include?("title").should == true
     end

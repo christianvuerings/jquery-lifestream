@@ -7,13 +7,17 @@ Rails.application.config.after_initialize do
   today = Date.today.to_time_in_current_zone.to_datetime
 
   substitutions = {
-      ":::TWO_DAYS_AGO_PST:::" => today.advance(:days => -1, :minutes => -1).rfc3339,
+      ":::TWENTY_SEVEN_DAYS_AGO:::" => today.advance(:days => -27).rfc3339,
+      ":::TWO_DAYS_AGO_MIDNIGHT_PST:::" => today.advance(:days => -1, :minutes => -1).rfc3339,
+      ":::TODAY_MIDNIGHT_PST:::" => today.rfc3339,
       ":::TODAY_AT_TEA_TIME:::" => today.advance(:hours => 15, :minutes => 47, :seconds => 13).rfc3339,
+      ":::TWO_DAYS_HENCE:::" => today.advance(:days => 2).rfc3339,
+      ":::THREE_DAYS_HENCE:::" => today.advance(:days => 3).rfc3339,
       ":::SIX_DAYS_HENCE:::" => today.advance(:days => 6).rfc3339,
-      ":::EIGHT_DAYS_HENCE:::" => today.advance(:days => 8).rfc3339,
   }
 
   Rails.logger.info "Timeshifter: Today = #{today}; epoch = #{today.to_i}"
+  Rails.logger.info "Timeshifter: Substitutions = #{substitutions.inspect}"
 
   processed_dir = Rails.root.join("fixtures", "vcr_cassettes")
 

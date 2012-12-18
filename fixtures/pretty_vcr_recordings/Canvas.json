@@ -92,7 +92,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-11-25T23:59:00-08:00",
+                "due_at": ":::TWO_DAYS_AGO_MIDNIGHT_PST:::",
                 "description": "",
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588302",
@@ -151,7 +151,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-11-25T23:59:00-08:00",
+                "due_at": ":::TWO_DAYS_AGO_MIDNIGHT_PST:::",
                 "description": "",
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588242",
@@ -176,7 +176,7 @@
                 "anonymous_submissions": false,
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-11-25T23:59:00-08:00",
+                "due_at": ":::TWO_DAYS_AGO_MIDNIGHT_PST:::",
                 "description": "",
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588304",
@@ -197,7 +197,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-11-25T23:59:00-08:00",
+                "due_at": ":::TWO_DAYS_AGO_MIDNIGHT_PST:::",
                 "description": null,
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588306",
@@ -218,7 +218,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-12-03T00:00:00-08:00",
+                "due_at": ":::SIX_DAYS_HENCE:::",
                 "description": "",
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588244",
@@ -242,7 +242,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-12-03T23:59:00-08:00",
+                "due_at": ":::SIX_DAYS_HENCE:::",
                 "description": "",
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588303",
@@ -302,7 +302,7 @@
                 "anonymous_submissions": false,
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-12-03T23:59:00-08:00",
+                "due_at": ":::SIX_DAYS_HENCE:::",
                 "description": null,
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588305",
@@ -323,7 +323,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": "2012-12-03T23:59:00-08:00",
+                "due_at": ":::SIX_DAYS_HENCE:::",
                 "description": null,
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588307",
@@ -725,43 +725,43 @@
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588244",
               "title": "Online-Submission Future Assignment",
-              "start_at": "2012-11-27T00:00:00-08:00"
+              "start_at": ":::TODAY_MIDNIGHT_PST:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588303",
               "title": "Future Discussion",
-              "start_at": "2012-11-27T23:59:00-08:00"
+              "start_at": ":::TODAY_MIDNIGHT_PST:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588307",
               "title": "Future External Tool Assignment",
-              "start_at": "2012-12-03T23:59:00-08:00"
+              "start_at": ":::SIX_DAYS_HENCE:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588305",
               "title": "Future Quiz",
-              "start_at": "2012-12-03T23:59:00-08:00"
+              "start_at": ":::SIX_DAYS_HENCE:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588310",
               "title": "Future Ungraded Assignment",
-              "start_at": "2012-12-03T23:59:00-08:00"
+              "start_at": ":::SIX_DAYS_HENCE:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588234",
               "title": "No-Submission Future Assignment",
-              "start_at": "2012-12-03T23:59:00-08:00"
+              "start_at": ":::SIX_DAYS_HENCE:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588250",
               "title": "Paper Submission Future Assignment",
-              "start_at": "2012-12-03T23:59:00-08:00"
+              "start_at": ":::SIX_DAYS_HENCE:::"
             }
           ]
         },
