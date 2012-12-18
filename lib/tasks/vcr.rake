@@ -2,7 +2,7 @@ require 'json'
 
 namespace :vcr do
 
-  desc "Records new fixtures with ENV=testext & pretty-print json result files"
+  desc "Records new fixtures with ENV=testext"
   task :record do
     ENV["RAILS_ENV"] = "testext"
     ENV["freshen_vcr"] = "true"
@@ -12,25 +12,41 @@ namespace :vcr do
     rescue RuntimeError => e
       #Don't let spec failures stop json prettifying.
     end
+  end
 
-    Dir.glob("#{Rails.root}/fixtures/fakeable_proxy_data/*.json").each do |file|
-      json_string = File.read(file)
-      json = JSON.parse(json_string)
-      json["http_interactions"].each do |interaction|
-        body_string = interaction["response"]["body"]["string"]
-        if body_string.length >= 2
-          interaction["response"]["body"]["debug_json"] = JSON.parse(body_string)
+  desc "Pretties up the json result files"
+  task :prettify do
+    processed_dir = Rails.root.join("fixtures", "pretty_vcr_recordings")
+    Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |filename|
+      Rails.logger.info "Prettifying #{filename}"
+      begin
+        input_file = File.open filename
+        content = input_file.read
+        output_file = File.open(processed_dir.join(File.basename(input_file)), "w")
+
+        # convert debug_json back to string representation
+        json = JSON.parse(content)
+        json["http_interactions"].each do |interaction|
+          original_string = interaction["response"]["body"]["string"]
+          if original_string.length >= 2
+            interaction["response"]["body"]["debug_json"] = JSON.parse(original_string)
+          end
         end
+
+        Rails.logger.info "Pretty Output file = #{output_file.path}"
+        output_file.write(JSON.pretty_generate(json))
+      rescue JSON::ParserError
+        Rails.logger.info "Got a JSON parse error prettiyfing #{filename}"
+      ensure
+        output_file.close
       end
-      pretty_json =  JSON.pretty_generate(json)
-      File.open(file, 'w') { |f| f.write(pretty_json)}
     end
   end
 
-  desc "Dumps out the requests that have been recorded in /fixtures/fakeable_proxy/"
+  desc "Dumps out the requests that have been recorded in /fixtures/raw_vcr_recordings/"
   task :list do
     recordings_hash = {}
-    Dir.glob("#{Rails.root}/fixtures/fakeable_proxy_data/*.json").each do |file|
+    Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |file|
       json_string = File.read(file)
       json = JSON.parse(json_string)
       json["http_interactions"].each do |interaction|
