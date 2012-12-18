@@ -10,12 +10,8 @@
     padding-bottom: 99999px;
   }
 
-  .cc-page-dashboard-column-b {
-    @include box-shadow($cc-shadow-color -3px -1px 4px 0);
-  }
-
-  .cc-page-dashboard-column-c {
-    border-left: 1px solid $cc-border-color;
+  .cc-page-dashboard-column-b, .cc-page-dashboard-column-c {
+    border-left: 5px solid $cc-column-border-color;
   }
   .cc-emitter-col {
     padding-right: 0;
