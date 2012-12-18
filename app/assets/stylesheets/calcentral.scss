@@ -7,18 +7,12 @@ $cc-light-grey: #474747;
 $cc-list-border-color: #cacaca;
 $cc-main-background-color: #f2f2f2;
 $cc-main-header-border-color: #d3d8d8;
+$cc-nav-gradient1-color: #012955;
+$cc-nav-gradient2-color: #3b5d86;
+$cc-nav-link-color: #fdd692;
 $cc-shadow-color: #ccc;
 $cc-widget-section-label-color: #232323;
 $cc-widget-highlight-background-color: #f2fef3;
-
-/* Foundation navbar overrides */
-.nav-bar {
-  margin-top: 0;
-  margin-bottom: 0;
-  > li > a {
-    font-weight: bold;
-  }
-}
 
 /* Foundation button overrides */
 .button.small {
@@ -401,6 +395,10 @@ a:hover {
 Read more about why we're using @import instead of require at
 http://stackoverflow.com/questions/6269420
 */
+
+/* Top navigation */
+@import "navigation.scss";
+
 /* Dashboard */
 @import "dashboard.scss";
 @import "mycalendar.scss";
