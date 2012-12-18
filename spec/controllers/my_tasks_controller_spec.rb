@@ -18,10 +18,9 @@ describe MyTasksController do
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
-    json_response["sections"].length.should == 5
-    default_sections = ["Overdue", "Due Today", "Due This Week", "Due Next Week", "Unscheduled"]
-    json_response["sections"].each do |section|
-      default_sections.include?(section["title"]).should == true
+    json_response["tasks"].length.should == 15
+    json_response["tasks"].each do |task|
+      task.include?("title").should == true
     end
   end
 

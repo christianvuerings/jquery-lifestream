@@ -4,7 +4,7 @@ class MyTasks < MyMergedModel
     super(uid)
     #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
     @starting_date = starting_date
-    @buckets = {
+    @response = {
       "tasks" => []
     }
   end
@@ -13,8 +13,8 @@ class MyTasks < MyMergedModel
     fetch_google_tasks
     fetch_canvas_tasks
     # TODO sort the tasks by due_date.epoch
-    logger.debug "#{self.class.name} get_feed is #{@buckets.inspect}"
-    @buckets
+    logger.debug "#{self.class.name} get_feed is #{@response.inspect}"
+    @response
   end
 
   def update_task(params, task_list_id="@default")
@@ -59,7 +59,7 @@ class MyTasks < MyMergedModel
           bucket = determine_bucket(due_date, formatted_entry)
           formatted_entry["bucket"] = bucket
           logger.info "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-          @buckets["tasks"].push(formatted_entry)
+          @response["tasks"].push(formatted_entry)
         end
       end
     end
@@ -124,7 +124,7 @@ class MyTasks < MyMergedModel
         bucket = determine_bucket(due_date, formatted_entry)
         formatted_entry["bucket"] = bucket
         logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-        @buckets["tasks"].push(formatted_entry)
+        @response["tasks"].push(formatted_entry)
       end
     end
   end
@@ -152,7 +152,7 @@ class MyTasks < MyMergedModel
             bucket = determine_bucket(due_date, formatted_entry)
             formatted_entry["bucket"] = bucket
             logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-            @buckets["tasks"].push(formatted_entry)
+            @response["tasks"].push(formatted_entry)
           else
             logger.info "#{self.class.name} Skipping Canvas todo with due_date that's in the future: #{result}'"
           end
