@@ -31,12 +31,12 @@ body {
 
   /* Masthead */
   > header {
-    background: image-url('calcentral_masthead_landing.png');
+    background-image: image-url('calcentral_branding_strip.png');
     background-repeat: no-repeat;
     border: 1px solid $cc-main-header-border-color;
     border-top: none;
     margin: 0 auto;
-    height: 90px;
+    height: 42px;
     position: relative;
 
     > h1 {

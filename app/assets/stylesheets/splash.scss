@@ -1,9 +1,17 @@
 $cc-page-index-header-border-color: #3f8bbf;
 $cc-page-index-header-brown-background-color: #c68811;
 
-.cc-page-index .panel {
-  padding: 0;
-  background-color: $white;
+.cc-page-index {
+  body {
+    > header {
+      background-image: image-url('calcentral_masthead_landing.png');
+      height: 90px;
+    }
+  }
+  .panel {
+    padding: 0;
+    background-color: $white;
+  }
 }
 
 .cc-page-index-welcome1, .cc-page-index-welcome2 {
