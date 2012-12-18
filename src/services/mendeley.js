@@ -16,21 +16,13 @@ $.fn.lifestream.feeds.mendeley = function( config, callback ) {
       j = list.length;
       for( ; i<j; i++) {
         var item = list[i];
-        if(item.link.charAt(0)=='/') {
-          output.push({
-            date: new Date(item.pubDate),
-            config: config,
-            url: 'http://mendeley.com/groups/' + config.user,
-            html: $.tmpl( template.flagged1, item ),
-          });
-        } else {
-          output.push({
-            date: new Date(item.pubDate),
-            config: config,
-            url: 'http://mendeley.com/groups/' + config.user,
-            html: $.tmpl( template.flagged2, item ),
-          });
-        }
+        var tmplt = ( (item.link.charAt(0) === '/') ? template.flagged1 : template.flagged2 );
+        output.push({
+          date: new Date(item.pubDate),
+          config: config,
+          url: 'http://mendeley.com/groups/' + config.user,
+          html: $.tmpl( tmplt, item ),
+        });
       }
     }
     return output;
