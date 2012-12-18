@@ -32,18 +32,7 @@
         border-bottom: none;
       }
     }
-    .cc-widget-mycalendar-short {
-      overflow: hidden;
-      &:hover {
-        cursor: pointer;
-        background: #e3ffff;
-      }
-    }
-    .cc-selected {
-      background: #c8deea;
-      .cc-widget-mycalendar-datelist-title {
-        font-weight: bold;
-      }
+    .cc-widget-list-selected {
       .cc-widget-mycalendar-datelist-time {
         color: #232323;
       }

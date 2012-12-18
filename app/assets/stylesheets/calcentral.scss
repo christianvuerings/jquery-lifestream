@@ -73,7 +73,6 @@ a:hover {
 /* Container */
 .cc-container-main {
   background-color: $white;
-  padding: 0 10px;
 }
 
 /* Launcher */
@@ -312,6 +311,19 @@ a:hover {
       }
     }
   }
+  .cc-widget-list-hover {
+    overflow: hidden;
+    &:hover {
+      cursor: pointer;
+      background: #e3ffff;
+    }
+  }
+  .cc-widget-list-selected {
+    background: #c8deea;
+    .cc-widget-list-selected-title {
+      font-weight: bold;
+    }
+  }
 }
 
 .cc-widget-main {
@@ -345,8 +357,8 @@ a:hover {
   margin: 0;
   padding: 0 0 10px 0;
 
-  li {
-    margin-top: 10px;
+  li .row {
+    padding: 5px 0;
   }
 }
 
