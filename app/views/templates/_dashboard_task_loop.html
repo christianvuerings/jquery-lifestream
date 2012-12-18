@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
 
-  <div class="row">
+  <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(task)">
 
     <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
       <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
@@ -17,17 +17,31 @@
       >
     </div>
 
-    <div class="six mobile-one columns cc-task-title-column cc-mobile-task-title-column">
-      <a data-ng-href="{{task.link_url}}"
+    <div class="six mobile-one columns cc-task-title-column cc-mobile-task-title-column cc-widget-list-selected-title">
+      <div
         class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-widget-tasks-status-{{task.status}}"
         data-ng-class="{true:'cc-alert'}[this.$parent.section.title=='Overdue']">
         {{task.title}}
-      </a>
+      </div>
     </div>
 
     <div class="two mobile-one columns cc-mobile-task-date-column cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
-      <span data-ng-show="task.due_date && task.bucket != 'Due Today'">{{task.due_date.epoch * 1000 | date:'M/yy'}}</span>
+      <span data-ng-show="task.due_date && task.bucket != 'Due Today'">{{task.due_date.epoch * 1000 | date:'d/yy'}}</span>
+    </div>
+  </div>
+
+  <div class="cc-widget-notifications-more" data-ng-show="task.show">
+    <div class="row">
+      <div class="nine columns offset-by-three cc-widget-tasks-notifications-text-column">
+        <p data-ng-show="task.note">{{task.note}}</p>
+        <p data-ng-show="!task.note">Details not available.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="nine columns offset-by-three cc-widget-notifications-text-column">
+        <a data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a>
+      </div>
     </div>
   </div>
 
