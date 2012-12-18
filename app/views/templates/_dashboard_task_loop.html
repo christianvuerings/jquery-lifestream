@@ -1,40 +1,34 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
-  <h3 data-ng-show="section.title != 'Unscheduled'" class="cc-widget-section-label">{{section.title}}</h3>
-  <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom" ng-show="section.tasks.length">
-    <li data-ng-repeat="task in section.tasks | filter:filterCompleted">
-      <div class="row">
 
-        <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
-          <div class="cc-emitter cc-emitter-{{task.class}}">{{task.source || task.emitter}}</div>
-        </div>
+  <div class="row">
 
-        <div class="one mobile-one columns cc-task-checkbox-column cc-mobile-task-checkbox-column">
-          <input type="checkbox" label="Done"
-            data-ng-disabled="task.emitter=='Canvas'"
-            data-ng-model="task.status"
-            data-ng-true-value="completed"
-            data-ng-false-value="needs_action"
-            data-ng-change="changeTaskState(task)"
-            data-ng-show="task.emitter!='Canvas'"
-          >
-        </div>
+    <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
+      <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
+    </div>
 
-        <div class="six mobile-one columns cc-task-title-column cc-mobile-task-title-column">
-          <a data-ng-href="{{task.link_url}}"
-            class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-widget-tasks-status-{{task.status}}"
-            data-ng-class="{true:'cc-alert'}[this.$parent.section.title=='Overdue']">
-            {{task.title}}
-          </a>
-        </div>
+    <div class="one mobile-one columns cc-task-checkbox-column cc-mobile-task-checkbox-column">
+      <input type="checkbox"
+        data-ng-disabled="task.emitter=='Canvas'"
+        data-ng-model="task.status"
+        data-ng-true-value="completed"
+        data-ng-false-value="needs_action"
+        data-ng-change="changeTaskState(task)"
+        data-ng-show="task.emitter!='Canvas'"
+      >
+    </div>
 
-        <div class="two mobile-one columns cc-mobile-task-date-column cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
-          {{task.due_date.date_string}}
-        </div>
-      </div>
-    </li>
-  </ul>
+    <div class="six mobile-one columns cc-task-title-column cc-mobile-task-title-column">
+      <a data-ng-href="{{task.link_url}}"
+        class="cc-widget-short-title cc-widget-tasks-short-title cc-ellipsis cc-widget-tasks-status-{{task.status}}"
+        data-ng-class="{true:'cc-alert'}[this.$parent.section.title=='Overdue']">
+        {{task.title}}
+      </a>
+    </div>
 
-  <div ng-show="displayedTasksCount(section) == 0" class="cc-widget-text">
-    There are currently no {{completed_mode}} tasks/assignments that are <span class="cc-lowercase">{{section.title}}</span>.
+    <div class="two mobile-one columns cc-mobile-task-date-column cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
+      <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
+      <span data-ng-show="task.due_date && task.bucket != 'Due Today'">{{task.due_date.epoch * 1000 | date:'M/yy'}}</span>
+    </div>
   </div>
+
 </script>

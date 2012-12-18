@@ -20,6 +20,12 @@ $cc-widget-highlight-background-color: #f2fef3;
   }
 }
 
+/* Foundation button overrides */
+.button.small {
+  font-size: 13px;
+  padding: 7px 8px 8px;
+}
+
 /* Inset list items */
 ul {
   padding: 0 0 0 40px;

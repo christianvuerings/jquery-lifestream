@@ -4,24 +4,17 @@ class MyTasks < MyMergedModel
     super(uid)
     #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
     @starting_date = starting_date
-    @buckets = {
-        "overdue" => {"title" => "Overdue", "tasks" => []},
-        "due_today" => {"title" => "Due Today", "tasks" => []},
-        "due_this_week" => {"title" => "Due This Week", "tasks" => []},
-        "due_next_week" => {"title" => "Due Next Week", "tasks" => []},
-        "unscheduled" => {"title" => "Unscheduled", "tasks" => []}
+    @response = {
+      "tasks" => []
     }
   end
 
   def get_feed_internal
     fetch_google_tasks
     fetch_canvas_tasks
-    # TODO sort the tasks in their buckets by due_date.epoch
-    my_tasks = {
-        "sections" => [@buckets["overdue"], @buckets["due_today"], @buckets["due_this_week"], @buckets["due_next_week"], @buckets["unscheduled"]]
-    }
-    logger.debug "#{self.class.name} get_feed is #{my_tasks.inspect}"
-    my_tasks
+    # TODO sort the tasks by due_date.epoch
+    logger.debug "#{self.class.name} get_feed is #{@response.inspect}"
+    @response
   end
 
   def update_task(params, task_list_id="@default")
@@ -64,8 +57,9 @@ class MyTasks < MyMergedModel
           formatted_entry = format_google_task_response(entry)
           due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
           bucket = determine_bucket(due_date, formatted_entry)
+          formatted_entry["bucket"] = bucket
           logger.info "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-          @buckets[bucket]["tasks"].push(formatted_entry)
+          @response["tasks"].push(formatted_entry)
         end
       end
     end
@@ -79,7 +73,7 @@ class MyTasks < MyMergedModel
         "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
         "id" => entry["id"],
         "source_url" => entry["selfLink"] || "",
-        "class" => "google-task"
+        "color_class" => "google-task"
     }
 
     status = "needs_action" if entry["status"] == "needsAction"
@@ -128,8 +122,9 @@ class MyTasks < MyMergedModel
         due_date = result["start_at"]
         format_date_into_entry!(convert_due_date(due_date), formatted_entry)
         bucket = determine_bucket(due_date, formatted_entry)
+        formatted_entry["bucket"] = bucket
         logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-        @buckets[bucket]["tasks"].push(formatted_entry)
+        @response["tasks"].push(formatted_entry)
       end
     end
   end
@@ -155,8 +150,9 @@ class MyTasks < MyMergedModel
             }
             format_date_into_entry!(due_date, formatted_entry)
             bucket = determine_bucket(due_date, formatted_entry)
+            formatted_entry["bucket"] = bucket
             logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-            @buckets[bucket]["tasks"].push(formatted_entry)
+            @response["tasks"].push(formatted_entry)
           else
             logger.info "#{self.class.name} Skipping Canvas todo with due_date that's in the future: #{result}'"
           end
@@ -187,7 +183,7 @@ class MyTasks < MyMergedModel
 
   # Helps determine what section category for a task
   def determine_bucket(due_date, formatted_entry)
-    bucket = "unscheduled"
+    bucket = "Unscheduled"
     if !due_date.blank?
       due = due_date.to_time_in_current_zone if due_date.is_a?(Date)
       due ||= DateTime.parse(due_date.to_s)
@@ -198,13 +194,13 @@ class MyTasks < MyMergedModel
       end_of_this_week = @starting_date.sunday.to_i
 
       if due < today
-        bucket = "overdue"
+        bucket = "Overdue"
       elsif due >= today && due < tomorrow
-        bucket = "due_today"
+        bucket = "Due Today"
       elsif due >= tomorrow && due < end_of_this_week
-        bucket = "due_this_week"
+        bucket = "Due This Week"
       elsif due >= end_of_this_week
-        bucket = "due_next_week"
+        bucket = "Due Next Week"
       end
 
       logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{@starting_date}, today = #{today}; formatted entry = #{formatted_entry}"
