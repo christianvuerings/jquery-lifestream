@@ -1,0 +1,50 @@
+.nav-bar {
+  /* IE9 */
+  $experimental-support-for-svg: true;
+  @include background(linear-gradient(top, $cc-nav-gradient1-color, $cc-nav-gradient2-color));
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  > li {
+    @include box-shadow(none);
+    border: none;
+    line-height: 32px;
+    &:hover {
+      background: transparent;
+    }
+    &.active {
+      background: transparent;
+      &:hover {
+        background: transparent;
+      }
+      &::before, &::after {
+        bottom: 0;
+        content: "";
+        height: 0;
+        left: 50%;
+        position: absolute;
+        width: 0;
+      }
+      &::before {
+        border-bottom: 6px solid white;
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        margin-left: -6px;
+      }
+      a {
+        color: $cc-nav-link-color;
+      }
+    }
+    &:last-child {
+      border: none;
+      @include box-shadow(none);
+    }
+    > a {
+      font-weight: bold;
+      &:hover {
+        color: $cc-nav-link-color;
+        background: transparent;
+      }
+    }
+  }
+}
