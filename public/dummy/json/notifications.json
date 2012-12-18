@@ -11,6 +11,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "https://warnme.berkeley.edu/",
       "source_url": "https://warnme.berkeley.edu/",
+      "emitter": "bSpace",
       "color_class": "bspace-class",
       "date_string": "Today"
     },
@@ -25,6 +26,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "https://bearfacts.berkeley.edu/",
       "source_url": "https://bearfacts.berkeley.edu/",
+      "emitter": "Campus",
       "color_class": "campus-item",
       "date_string": "Today"
     },
@@ -39,6 +41,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "http://studentbilling.berkeley.edu",
       "source_url": "http://studentbilling.berkeley.edu",
+      "emitter": "Canvas",
       "color_class": "canvas-class",
       "date_string": "12/30"
     },
@@ -53,6 +56,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "https://ucberkeley.instructure.com/courses/833384",
       "source_url": "https://ucberkeley.instructure.com/courses/833384",
+      "emitter": "Canvas",
       "color_class": "canvas-class",
       "date_string": "12/29"
     },
@@ -67,6 +71,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "http://studentbilling.berkeley.edu/",
       "source_url": false,
+      "emitter": "Campus",
       "color_class": "campus-item",
       "date_string": "12/28"
     },
@@ -81,6 +86,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "https://ucberkeley.instructure.com/courses/833382",
       "source_url": false,
+      "emitter": "bSpace",
       "color_class": "bspace-group",
       "date_string": "12/26"
 
@@ -96,6 +102,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "https://telebears.berkeley.edu",
       "source_url": false,
+      "emitter": "Campus",
       "color_class": "campus-item",
       "date_string": "12/18"
     },
@@ -110,6 +117,7 @@
       "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
       "url": "http://example.com",
       "source_url": false,
+      "emitter": "bSpace",
       "color_class": "bspace-group",
       "date_string": "12/2"
     }
