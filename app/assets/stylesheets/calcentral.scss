@@ -365,8 +365,14 @@ a:hover {
     padding: 5px 0;
   }
 
-  .cc-widget-tasks-notifications-text-column p {
-    margin-bottom: 0;
+  .cc-widget-tasks-notifications-more {
+    .cc-widget-tasks-notifications-text-column {
+      margin-bottom: 0;
+      padding-left: 0;
+    }
+  }
+  .cc-widget-more-view-in {
+    font-size: 11px;
   }
 }
 

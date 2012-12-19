@@ -156,15 +156,15 @@
                 </div>
               </div>
 
-              <div class="cc-widget-notifications-more" data-ng-show="notification.show">
+              <div class="cc-widget-tasks-notifications-more" data-ng-show="notification.show">
                 <div class="row">
                   <div class="ten columns offset-by-two cc-widget-tasks-notifications-text-column">
-                    <p>{{notification.summary}}</p>
+                    {{notification.summary}}
                   </div>
                 </div>
                 <div class="row">
-                  <div class="ten columns offset-by-two cc-widget-notifications-text-column">
-                    <p><a data-ng-href="{{notification.source_url}}">View in {{notification.source}}</a></p>
+                  <div class="ten columns offset-by-two cc-widget-tasks-notifications-text-column">
+                    <a data-ng-href="{{notification.source_url}}" class="cc-widget-more-view-in">View in {{notification.source}}</a>
                   </div>
                 </div>
               </div>
