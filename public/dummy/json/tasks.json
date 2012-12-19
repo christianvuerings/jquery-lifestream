@@ -1,89 +1,144 @@
 {
-  "sections": [
+  "tasks": [
     {
-      "title": "Due Tomorrow",
-      "tasks": [
-        {
-          "type": "task",
-          "title": "Lunch with study group",
-          "status": "overdue",
-          "due_date": {
-            "epoch": 1354320000,
-            "datetime": "2012-12-01T00:00:00.000+00:00",
-            "date_string": "12/01"
-          },
-          "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-          "source": "PLEO 22",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-          "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-          "emitter": "Canvas",
-          "color_class": "class1"
-        },
-        {
-          "type": "task",
-          "title": "test2",
-          "emitter": "Google Tasks",
-          "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-          "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMDQxODM3NTEx",
-          "class": "class2",
-          "status": "overdue",
-          "due_date": {
-            "epoch": 1354320000,
-            "datetime": "2012-12-01T00:00:00.000+00:00",
-            "date_string": "12/01"
-          }
-        }
-      ]
+      "type": "task",
+      "title": "Lunch with study group",
+      "status": "overdue",
+      "due_date": {
+        "epoch": 1354320000,
+        "datetime": "2012-12-01T00:00:00.000+00:00",
+        "date_string": "12/01"
+      },
+      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
+      "source": "PLEO 22",
+      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
+      "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
+      "emitter": "Canvas",
+      "bucket": "Overdue",
+      "note": "Everyone needs to bring something to read aloud, and a snack to share.",
+      "color_class": "canvas-class"
     },
     {
-      "title": "Due Tomorrow",
-      "tasks": [
-        {
-          "type": "assignment",
-          "due_date": {
-            "epoch": 1354320000,
-            "datetime": "2012-12-05T00:00:00.000+00:00",
-            "date_string": "12/05"
-          },
-          "title": "Report on frog dissection",
-          "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
-          "source_url": "https://ucberkeley.instructure.com/courses/832071",
-          "emitter": "Canvas",
-          "source": "Biology",
-          "status": "inprogress",
-          "color_class": "class1"
-        }
-      ]
+      "type": "task",
+      "title": "test2",
+      "emitter": "Google Tasks",
+      "bucket": "Overdue",
+      "note": "Null and void",
+      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
+      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
+      "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMDQxODM3NTEx",
+      "color_class": "google-task",
+      "status": "overdue",
+      "due_date": {
+        "epoch": 1354320000,
+        "datetime": "2012-12-01T00:00:00.000+00:00",
+        "date_string": "12/01"
+      }
     },
     {
-      "title": "Upcoming",
-      "tasks": []
+      "type": "assignment",
+      "due_date": {
+        "epoch": 1354320000,
+        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_string": "12/05"
+      },
+      "title": "Run fourier transforms on buzz saw",
+      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
+      "source_url": "https://ucberkeley.instructure.com/courses/832071",
+      "emitter": "Canvas",
+      "bucket": "Due Today",
+      "note": "This is a test of the emergency broadcast system",
+      "source": "Biology",
+      "status": "needs_action",
+      "color_class": "canvas-assignment"
     },
     {
-      "title": "Unscheduled",
-      "tasks": [
-        {
-          "type": "task",
-          "title": "1",
-          "emitter": "Google Tasks",
-          "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-          "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoxNjYzMjE0NDg0",
-          "class": "class2",
-          "status": "needs_action"
-        },
-        {
-          "type": "task",
-          "title": "234",
-          "emitter": "Google Tasks",
-          "link_url": "https://mail.google.com/tasks/canvas?pli=1",
-          "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
-          "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMTExODI3NTU1",
-          "class": "class2",
-          "status": "needs_action"
-        }
-      ]
+      "type": "assignment",
+      "due_date": {
+        "epoch": 1354320000,
+        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_string": "12/05"
+      },
+      "title": "Report on frog dissection",
+      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
+      "source_url": "https://ucberkeley.instructure.com/courses/832071",
+      "emitter": "Canvas",
+      "bucket": "Due This Week",
+      "source": "Biology",
+      "status": "inprogress",
+      "color_class": "canvas-class"
+    },
+    {
+      "type": "assignment",
+      "due_date": {
+        "epoch": 1354320000,
+        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_string": "12/05"
+      },
+      "title": "Finish Shakespeare",
+      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
+      "source_url": "https://ucberkeley.instructure.com/courses/832071",
+      "emitter": "Google Tasks",
+      "bucket": "Due This Week",
+      "note": "Adieu, adieu, adieu",
+      "source": "Biology",
+      "status": "completed",
+      "color_class": "canvas-class"
+    },
+    {
+      "type": "assignment",
+      "due_date": {
+        "epoch": 1354320000,
+        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_string": "12/05"
+      },
+      "title": "Chapter Seven",
+      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
+      "source_url": "https://ucberkeley.instructure.com/courses/832071",
+      "emitter": "Canvas",
+      "bucket": "Due Next Week",
+      "source": "Biology",
+      "status": "completed",
+      "color_class": "canvas-class"
+    },
+    {
+      "type": "assignment",
+      "due_date": {
+        "epoch": 1354320000,
+        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_string": "12/05"
+      },
+      "title": "Bring tweezers",
+      "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
+      "source_url": "https://ucberkeley.instructure.com/courses/832071",
+      "emitter": "Canvas",
+      "bucket": "Due Today",
+      "source": "Biology",
+      "status": "completed",
+      "color_class": "canvas-class"
+    },
+    {
+      "type": "task",
+      "title": "Break bread",
+      "emitter": "Google Tasks",
+      "bucket": "Unscheduled",
+      "note": "Bring enough butter for everyone.",
+      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
+      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
+      "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoxNjYzMjE0NDg0",
+      "color_class": "google-task",
+      "status": "needs_action"
+    },
+    {
+      "type": "task",
+      "title": "Alphabetize Kleenex boxes",
+      "emitter": "Google Tasks",
+      "bucket": "Unscheduled",
+      "link_url": "https://mail.google.com/tasks/canvas?pli=1",
+      "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
+      "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMTExODI3NTU1",
+      "color_class": "google-task",
+      "status": "needs_action"
     }
   ]
 }

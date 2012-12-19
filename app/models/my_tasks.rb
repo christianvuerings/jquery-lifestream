@@ -76,6 +76,10 @@ class MyTasks < MyMergedModel
         "color_class" => "google-task"
     }
 
+    if entry["notes"]
+      formatted_entry["note"] = entry["notes"]
+    end
+
     status = "needs_action" if entry["status"] == "needsAction"
     status ||= "completed"
     formatted_entry["status"] = status

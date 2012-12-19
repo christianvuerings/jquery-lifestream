@@ -41,7 +41,9 @@
 
               <h3 class="cc-widget-section-label">Overdue</h3>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-                <li data-ng-repeat="task in filtered = (tasks | filter:filterOverdue) ">
+                <li
+                  data-ng-repeat="task in filtered = (tasks | filter:filterOverdue)"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
@@ -51,7 +53,9 @@
 
               <h3 class="cc-widget-section-label">Due Today</h3>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-                <li data-ng-repeat="task in filtered = (tasks | filter:filterDueToday) ">
+                <li
+                  data-ng-repeat="task in filtered = (tasks | filter:filterDueToday)"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
@@ -61,7 +65,9 @@
 
               <h3 class="cc-widget-section-label">Due This Week</h3>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-                <li data-ng-repeat="task in filtered = (tasks | filter:filterDueThisWeek) ">
+                <li
+                  data-ng-repeat="task in filtered = (tasks | filter:filterDueThisWeek)"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
@@ -71,7 +77,9 @@
 
               <h3 class="cc-widget-section-label">Due Next Week</h3>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-                <li data-ng-repeat="task in filtered = (tasks | filter:filterDueNextWeek) ">
+                <li
+                  data-ng-repeat="task in filtered = (tasks | filter:filterDueNextWeek)"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
@@ -85,7 +93,9 @@
             <div data-ng-switch-when="unscheduled">
               <h3 class="cc-widget-section-label">Unscheduled</h3>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-                <li data-ng-repeat="task in filtered = (tasks | filter:filterUnScheduled) ">
+                <li
+                  data-ng-repeat="task in filtered = (tasks | filter:filterUnScheduled)"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
@@ -98,12 +108,14 @@
             <div data-ng-switch-when="completed">
               <h3 class="cc-widget-section-label">Completed</h3>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
-                <li data-ng-repeat="task in filtered = (tasks | filter:{status:'completed'}) ">
+                <li
+                  data-ng-repeat="task in filtered = (tasks | filter:{status:'completed'})"
+                  data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
               <p ng-show="!filtered.length" class="cc-widget-text">
-                There are currently no completed {{tasks_mode}} tasks/assignments.
+                There are currently no completed tasks/assignments.
               </p>
             </div>
 
@@ -146,13 +158,13 @@
 
               <div class="cc-widget-notifications-more" data-ng-show="notification.show">
                 <div class="row">
-                  <div class="ten columns offset-by-two cc-not cc-widget-notifications-text-column">
-                    {{notification.summary}}
+                  <div class="ten columns offset-by-two cc-widget-tasks-notifications-text-column">
+                    <p>{{notification.summary}}</p>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="ten columns offset-by-two cc-not cc-widget-notifications-text-column">
-                    <a href="{{notification.source_url}}">View in {{notification.source}}</a>
+                  <div class="ten columns offset-by-two cc-widget-notifications-text-column">
+                    <p><a data-ng-href="{{notification.source_url}}">View in {{notification.source}}</a></p>
                   </div>
                 </div>
               </div>

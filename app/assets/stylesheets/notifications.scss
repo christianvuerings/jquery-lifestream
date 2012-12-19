@@ -1,8 +1,6 @@
 /* Notifications widget */
 #cc-widget-notifications {
-  .cc-widget-list-selected .row {
-    background: #c8deea;
-  }
+
   .cc-widget-notifications-summary {
     padding-left: 30px;
     width: 270px;
@@ -13,9 +11,8 @@
     text-transform: uppercase;
   }
   .row {
-    .cc-widget-notifications-text-column {
+    .cc-widget-tasks-notifications-text-column {
       font-size: 14px;
-      padding-left: 0;
     }
     .cc-emitter-square {
       margin-top: 5px;

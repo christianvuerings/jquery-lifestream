@@ -13,6 +13,7 @@ $cc-nav-link-color: #fdd692;
 $cc-shadow-color: #ccc;
 $cc-widget-section-label-color: #232323;
 $cc-widget-highlight-background-color: #f2fef3;
+$cc-widget-more-background-color: #c8deea;
 
 /* Foundation button overrides */
 .button.small {
@@ -323,6 +324,9 @@ a:hover {
     .cc-widget-list-selected-title {
       font-weight: bold;
     }
+    .row {
+      background: $cc-widget-more-background-color;
+    }
   }
 }
 
@@ -360,7 +364,12 @@ a:hover {
   li .row {
     padding: 5px 0;
   }
+
+  .cc-widget-tasks-notifications-text-column p {
+    margin-bottom: 0;
+  }
 }
+
 
 /* Image replacement */
 .ir {
