@@ -17,6 +17,21 @@ describe GoogleProxy do
     (response_array[0].data["items"].size + response_array[1].data["items"].size).should == 13
   end
 
+  it "should return a fake event list response that matches what the UI sends for the up-next widget in fake mode" do
+    today = Date.today.to_time_in_current_zone.to_datetime
+    proxy = GoogleProxy.new(:fake => true)
+    response_array = proxy.events_list(
+        {
+            :maxResults => 1000,
+            :timeMin => today.rfc3339,
+            :timeMax => today.advance(:days => 1).rfc3339,
+            :orderBy => "startTime",
+            :singleEvents => true
+        })
+    response_array.size.should == 1
+    response_array[0].data["items"].size.should == 3
+  end
+
   it "should simulate a fake, valid task list response (assuming a valid recorded fixture)" do
     #Pre-recorded response has 13 entries, split into batches of 10.
     proxy = GoogleProxy.new(:fake => true)
