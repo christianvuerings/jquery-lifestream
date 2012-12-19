@@ -13,7 +13,7 @@ describe "MyTasks" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-    my_tasks_model = MyTasks.new(@user_id, Date.new(2012, 11, 27).to_time_in_current_zone)
+    my_tasks_model = MyTasks.new(@user_id)
     valid_feed = my_tasks_model.get_feed
 
     # Counts for task types in VCR recording
@@ -76,7 +76,7 @@ describe "MyTasks" do
       CanvasProxy.stub(:access_granted?).and_return(true)
       GoogleProxy.stub(:new).and_return(@fake_google_proxy)
       CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-      my_tasks_model = MyTasks.new(@user_id, Date.new(2012, 11, 27).to_time_in_current_zone)
+      my_tasks_model = MyTasks.new(@user_id)
       valid_feed = my_tasks_model.get_feed
     ensure
       Time.zone = original_time_zone

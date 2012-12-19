@@ -33,3 +33,6 @@ app/assets/stylesheets/application.css
 
 # Ignore the coverage directory (for checking in, otherwise useful)
 /coverage
+
+# Ignore processed VCR files
+/fixtures/vcr_cassettes/*.json
