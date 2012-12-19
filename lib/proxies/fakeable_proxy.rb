@@ -46,7 +46,7 @@ module FakeableProxy
     rescue VCR::Errors::UnhandledHTTPRequestError => e
       logger_hash = {:method => e.request.method,
                      :uri => e.request.uri,
-                     :body => JSON.parse(e.request.body)
+                     :body => e.request.body
       }
       Rails.logger.info "Unrecorded VCR response for: #{logger_hash}"
       proc_block.call
