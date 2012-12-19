@@ -11,20 +11,20 @@ describe CanvasProxy do
 
   it "should see an account list as admin" do
     admin_client = CanvasProxy.new(admin: true)
-    response = admin_client.request('accounts')
+    response = admin_client.request('accounts', '_admin')
     accounts = JSON.parse(response.body)
     accounts.size.should > 0
   end
 
   it "should see the same account list as admin, initiating CanvasProxy with a passed in token" do
     admin_client = CanvasProxy.new(:access_token => Settings.canvas_proxy.admin_access_token)
-    response = admin_client.request('accounts')
+    response = admin_client.request('accounts', '_admin')
     accounts = JSON.parse(response.body)
     accounts.size.should > 0
   end
 
   it "should get own profile as authorized user", :testext => true do
-    response = @client.request('users/self/profile')
+    response = @client.request('users/self/profile', '_admin')
     profile = JSON.parse(response.body)
     profile['login_id'].should == @user_id.to_s
   end
