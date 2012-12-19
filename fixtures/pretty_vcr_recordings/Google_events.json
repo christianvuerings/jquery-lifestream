@@ -1306,7 +1306,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=1000&orderBy=startTime&singleEvents=true&timeMax=:::TOMORROW_MIDNIGHT_GMT:::&timeMin=:::TODAY_MIDNIGHT_GMT:::",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=1000&orderBy=startTime&singleEvents=true&timeMax=:::TOMORROW_MIDNIGHT_PST:::&timeMin=:::TODAY_MIDNIGHT_PST:::",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

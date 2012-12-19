@@ -7,7 +7,7 @@ class MyUpNext < MyMergedModel
       google_proxy = GoogleProxy.new(user_id: @uid)
 
       # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
-      begin_today = Date.today.to_datetime
+      begin_today = Date.today.to_time_in_current_zone.to_datetime
       next_day = begin_today.advance(:days => 1)
       opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime",
                            "timeMin" => begin_today.to_formatted_s, "timeMax" => next_day.to_formatted_s})
