@@ -35,6 +35,7 @@ class GoogleProxy < BaseProxy
     params = request_params[:params]
     body = request_params[:body]
     headers = request_params[:headers]
+    vcr_id = request_params[:vcr_id] || ""
 
     version = @client.preferred_version(request_params[:api]).version
     service = @client.discovered_api(request_params[:api], version)
@@ -47,7 +48,7 @@ class GoogleProxy < BaseProxy
     begin
       params["pageToken"] = page_token unless page_token.blank?
 
-      result_page = FakeableProxy.wrap_request(APP_ID, @fake) {
+      result_page = FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) {
         request_hash = { :api_method => resource_method }
         request_hash[:parameters] = params unless params.blank?
         if !body.blank? && !headers.blank?
@@ -89,23 +90,23 @@ class GoogleProxy < BaseProxy
 
   def events_list(optional_params={})
     optional_params.reverse_merge!(:calendarId => 'primary', :maxResults => 1000)
-    request :api => "calendar", :resource => "events", :method => "list", :params => optional_params
+    request :api => "calendar", :resource => "events", :method => "list", :params => optional_params, :vcr_id => "_events"
   end
 
   def tasks_list(optional_params={})
     optional_params.reverse_merge!(:tasklist => '@default', :maxResults => 100)
-    request :api => "tasks", :resource => "tasks", :method => "list", :params => optional_params
+    request :api => "tasks", :resource => "tasks", :method => "list", :params => optional_params, :vcr_id => "_tasks"
   end
 
   def create_task_list(body)
     parsed_body = stringify_body(body)
     request(:api => "tasks", :resource => "tasklists", :method => "insert",
-            :body => parsed_body, :headers => {"Content-Type" => "application/json"})[0]
+            :body => parsed_body, :headers => {"Content-Type" => "application/json"}, :vcr_id => "_tasks")[0]
   end
 
   def delete_task_list(task_list_id)
     response = request(:api => "tasks", :resource => "tasklists", :method => "delete",
-                       :params => {tasklist: task_list_id})[0]
+                       :params => {tasklist: task_list_id}, :vcr_id => "_tasks")[0]
     #According to the API, empty response body == successful
     response.data.blank?
   end
@@ -113,14 +114,14 @@ class GoogleProxy < BaseProxy
   def insert_task(body, task_list_id)
     parsed_body = stringify_body(body)
     request(:api => "tasks", :resource => "tasks", :method => "insert", :params => {tasklist: task_list_id},
-            :body => parsed_body, :headers => {"Content-Type" => "application/json"})[0]
+            :body => parsed_body, :headers => {"Content-Type" => "application/json"}, :vcr_id => "_tasks")[0]
   end
 
   def update_task(task_list_id, task_id, body)
     parsed_body = stringify_body(body)
     request(:api => "tasks", :resource => "tasks", :method => "update",
             :params => {tasklist: task_list_id, task: task_id},
-            :body => parsed_body, :headers => {"Content-Type" => "application/json"})[0]
+            :body => parsed_body, :headers => {"Content-Type" => "application/json"}, :vcr_id => "_tasks")[0]
   end
 
   private
