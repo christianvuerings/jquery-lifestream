@@ -167,16 +167,20 @@ If you use VPN, use group #1 (1-Campus_VPN)
 <span data-ng-bind="name"></span>
 ```
 
-## Freshening fake data feeds
+## Recording fake data feeds and timeshifting them
 
 Make sure your test.local.yml file has real connections to real external services that are fakeable (Canvas, Google, etc).
 Now do:
 
 ```bash
-rake spec freshen_vcr=true
-git add fixtures/fakeable_proxy_data
-git commit -a -m "Helpful commit message"
+rake vcr:record
+rake vcr:prettify
 ```
+
+You can now find the prettified files in fixtures/pretty_vcr_recordings. You can edit these files to put in tokens that
+will be substituted on server startup. See config/initializers/timeshift.rb for the dictionary of substitutions. Edit
+ the debug_json property of each response, and timeshift.rb will automatically convert debug_json to the format actually
+ used by VCR.
 
 ## Rake tasks:
 
