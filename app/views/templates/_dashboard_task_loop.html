@@ -31,16 +31,16 @@
     </div>
   </div>
 
-  <div class="cc-widget-notifications-more" data-ng-show="task.show">
+  <div class="cc-widget-tasks-notifications-more" data-ng-show="task.show">
     <div class="row">
-      <div class="nine columns offset-by-three cc-widget-tasks-notifications-text-column">
-        <p data-ng-show="task.note">{{task.note}}</p>
-        <p data-ng-show="!task.note">Details not available.</p>
+      <div class="eight columns offset-by-four cc-widget-tasks-notifications-text-column">
+        <span data-ng-show="task.note">{{task.note}}</span>
+        <span data-ng-show="!task.note">Details not available.</span>
       </div>
     </div>
     <div class="row">
-      <div class="nine columns offset-by-three cc-widget-notifications-text-column">
-        <a data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a>
+      <div class="eight columns offset-by-four cc-widget-tasks-notifications-text-column">
+        <a data-ng-href="{{task.link_url}}" class="cc-widget-more-view-in">View in {{task.emitter}}</a>
       </div>
     </div>
   </div>
