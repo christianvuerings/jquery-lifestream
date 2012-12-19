@@ -67,7 +67,7 @@ Calcentral::Application.routes.draw do
   match '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
 
   match '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
-  match '/api/canvas/handle_callback' => 'canvas_auth#handle_callback'
+  match '/canvas/oAuthResponse' => 'canvas_auth#handle_callback'
   match '/api/canvas/remove_authorization' => 'canvas_auth#remove_authorization', :via => :post
 
   match '/api/google/request_authorization'=> 'google_auth#request_authorization'
