@@ -192,7 +192,7 @@
                 <div data-ng-switch on="item.is_all_day">
                   <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
                   <div data-ng-switch-when="false">
-                    <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.epoch * 1000 | date:'H'}}</div>
+                    <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.epoch * 1000 | date:'h'}}</div>
                     <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.epoch * 1000 | date:'mm'}}<br>
                       <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.epoch * 1000 | date:'a' | uppercase}}</span>
                     </div>
