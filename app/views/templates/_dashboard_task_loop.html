@@ -13,7 +13,7 @@
         data-ng-true-value="completed"
         data-ng-false-value="needs_action"
         data-ng-change="changeTaskState(task)"
-        data-ng-show="task.emitter!='Canvas'"
+        data-ng-disabled="task.emitter=='Canvas'"
       >
     </div>
 
@@ -25,17 +25,19 @@
       </div>
     </div>
 
-    <div class="two mobile-one columns cc-mobile-task-date-column cc-right" data-ng-show="this.$parent.section.title != 'Unscheduled'">
+    <div
+      class="two mobile-one columns cc-mobile-task-date-column cc-widget-tasks-notifications-date-string cc-right"
+      data-ng-show="this.$parent.section.title != 'Unscheduled'">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
-      <span data-ng-show="task.due_date && task.bucket != 'Due Today'">{{task.due_date.epoch * 1000 | date:'d/yy'}}</span>
+      <span data-ng-show="task.due_date && task.bucket != 'Due Today'">{{task.due_date.epoch * 1000 | date:'MM/d'}}</span>
     </div>
   </div>
 
   <div class="cc-widget-tasks-notifications-more" data-ng-show="task.show">
     <div class="row">
       <div class="eight columns offset-by-four cc-widget-tasks-notifications-text-column">
-        <span data-ng-show="task.note">{{task.note}}</span>
-        <span data-ng-show="!task.note">Details not available.</span>
+        <span data-ng-show="task.note" class="cc-widget-task-note-text">{{task.note}}</span>
+        <span data-ng-show="!task.note" class="cc-widget-task-note-text">Details not available.</span>
       </div>
     </div>
     <div class="row">

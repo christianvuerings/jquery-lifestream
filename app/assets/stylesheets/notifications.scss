@@ -8,14 +8,9 @@
     padding-left: 30px;
     width: 270px;
   }
-  .cc-widget-notifications-date-string {
-    color: #999999;
-    text-align: right;
-    text-transform: uppercase;
-  }
   .row {
-    .cc-widget-tasks-notifications-text-column {
-      font-size: 14px;
+    .cc-widget-notifications-text-column {
+      line-height: 1.4;
       padding-left: 0;
     }
     .cc-emitter-square {
@@ -27,5 +22,9 @@
       font-size: 11px;
       padding-left: 0;
     }
+    .cc-widget-notification-note-text {
+      font-size: 12px;
+    }
+
   }
 }
