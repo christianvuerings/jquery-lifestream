@@ -39,7 +39,10 @@
 
             <div data-ng-switch-when="scheduled">
 
-              <h3 class="cc-widget-section-label">Overdue</h3>
+            <div class="row">
+              <h3 class="ten columns cc-widget-section-label">Overdue</h3>
+              <div class="two columns cc-right cc-widget-section-label-due">Due</div>
+            </div>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
                 <li
                   data-ng-repeat="task in filtered = (tasks | filter:filterOverdue)"
@@ -151,7 +154,7 @@
                   {{notification.title}}
                 </div>
 
-                <div class="three mobile-one columns cc-right cc-widget-notifications-date-string">
+                <div class="three mobile-one columns cc-right cc-widget-tasks-notifications-date-string">
                   {{notification.date_string}}
                 </div>
               </div>
@@ -159,7 +162,7 @@
               <div class="cc-widget-tasks-notifications-more" data-ng-show="notification.show">
                 <div class="row">
                   <div class="ten columns offset-by-two cc-widget-tasks-notifications-text-column">
-                    {{notification.summary}}
+                    <span class="cc-widget-notification-note-text">{{notification.summary}}</span>
                   </div>
                 </div>
                 <div class="row">

@@ -11,9 +11,10 @@ $cc-nav-gradient1-color: #012955;
 $cc-nav-gradient2-color: #3b5d86;
 $cc-nav-link-color: #fdd692;
 $cc-shadow-color: #ccc;
-$cc-widget-section-label-color: #232323;
+$cc-widget-section-label-color: #515151;
 $cc-widget-highlight-background-color: #f2fef3;
-$cc-widget-more-background-color: #c8deea;
+$cc-widget-more-background-color: #f5f5f5;
+
 
 /* Foundation button overrides */
 .button.small {
@@ -280,7 +281,7 @@ a:hover {
 .cc-widget-section-label {
   clear: both;
   color: $cc-widget-section-label-color;
-  font-size: 1.2em;
+  font-size: 14px;
   margin-top: 5px;
 }
 
@@ -316,11 +317,11 @@ a:hover {
     overflow: hidden;
     &:hover {
       cursor: pointer;
-      background: #e3ffff;
+      background: #e5eded;
     }
   }
   .cc-widget-list-selected {
-    background: #c8deea;
+    background: $cc-widget-more-background-color;
     .cc-widget-list-selected-title {
       font-weight: bold;
     }
