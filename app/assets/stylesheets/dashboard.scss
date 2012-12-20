@@ -66,6 +66,23 @@
     text-align: right;
     text-transform: uppercase;
   }
+  .cc-widget-add-icon {
+    background: #ccc;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    height: 20px;
+    line-height: 0.8;
+    margin: 5px 0 0 5px;
+    text-align: center;
+    width: 20px;
+  }
+}
+
+.cc-widget-tasks-form {
+  margin-top: 5px;
 }
 
 /* Shared between mygroups and myclasses */

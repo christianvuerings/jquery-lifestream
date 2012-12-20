@@ -5,12 +5,31 @@
 
     <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
       <div class="cc-widget-title">
-        <h2>Assignments and Tasks</h2>
+        <h2 class="cc-left">Assignments and Tasks</h2>
+        <div class="cc-widget-add-icon cc-left" tabindex="-1" title="Add a task" data-ng-click="toggleAddTask()">+</div>
       </div>
       <div class="cc-tasks-list">
         <div class="cc-widget-body">
+          <form class="cc-widget-tasks-form" name="cc-widget-tasks-form" data-ng-show="show_add_task" data-ng-submit="addTask()">
+            <div class="row">
+              <div class="two columns">
+                <label for="cc-widget-tasks-addtask-title">Task:</label>
+              </div>
+              <div class="ten columns">
+                <input data-ng-model="add_task.title" id="cc-widget-tasks-addtask-title" type="text" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="two columns offset-by-six">
+                <input class="cc-button-reset" type="reset" value="Cancel" />
+              </div>
+              <div class="four columns">
+                <input class="cc-button-submit cc-right" type="submit" value="Add Task" />
+              </div>
+            </div>
+          </form>
 
-          <div class="row cc-widget-tasks-button-top-pad">
+          <div class="row cc-widget-tasks-button-top-margin">
             <div class="ten columns centered">
               <ul class="button-group radius even three-up">
                 <li>
