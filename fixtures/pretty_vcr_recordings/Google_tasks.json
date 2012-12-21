@@ -84,7 +84,7 @@
                 "position": "00000000000033554431",
                 "notes": "Turn in your teaching evaluation for Math 53",
                 "status": "needsAction",
-                "due": ":::TWO_DAYS_HENCE:::"
+                "due": ":::UTC_LATER_IN_WEEK:::"
               },
               {
                 "kind": "tasks#task",
@@ -95,7 +95,7 @@
                 "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz",
                 "position": "00000000000134217727",
                 "status": "needsAction",
-                "due": ":::THREE_DAYS_HENCE:::"
+                "due": ":::UTC_LATER_IN_WEEK:::"
               },
               {
                 "kind": "tasks#task",
@@ -106,7 +106,7 @@
                 "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
                 "position": "00000000000268435455",
                 "status": "needsAction",
-                "due": ":::THREE_DAYS_HENCE:::"
+                "due": ":::UTC_LATER_IN_WEEK:::"
               },
               {
                 "kind": "tasks#task",
@@ -139,7 +139,7 @@
                 "position": "00000000002147483647",
                 "notes": "Submit a signed Emergency Loan promissory note",
                 "status": "needsAction",
-                "due": ":::SIX_DAYS_HENCE:::"
+                "due": ":::UTC_NEXT_WEEK:::"
               }
             ]
           }
@@ -234,7 +234,7 @@
                       "position":"00000000000033554431",
                       "notes":"Turn in your teaching evaluation for Math 53",
                       "status":"needsAction",
-                      "due":":::TWO_DAYS_HENCE:::"
+                      "due":":::UTC_LATER_IN_WEEK:::"
                   },
                   {
                       "kind":"tasks#task",
@@ -245,7 +245,7 @@
                       "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz",
                       "position":"00000000000134217727",
                       "status":"needsAction",
-                      "due":":::THREE_DAYS_HENCE:::"
+                      "due":":::UTC_LATER_IN_WEEK:::"
                   },
                   {
                       "kind":"tasks#task",
@@ -256,7 +256,7 @@
                       "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
                       "position":"00000000000268435455",
                       "status":"needsAction",
-                      "due":":::THREE_DAYS_HENCE:::"
+                      "due":":::UTC_LATER_IN_WEEK:::"
                   },
                   {
                       "kind":"tasks#task",
@@ -289,7 +289,7 @@
                       "position":"00000000002147483647",
                       "notes":"Submit a signed Emergency Loan promissory note",
                       "status":"needsAction",
-                      "due":":::SIX_DAYS_HENCE:::"
+                      "due":":::UTC_NEXT_WEEK:::"
                   }
               ]
           }
@@ -381,7 +381,7 @@
                     "position": "00000000000033554431",
                     "notes": "Turn in your teaching evaluation for Math 53",
                     "status": "needsAction",
-                    "due": ":::TWO_DAYS_HENCE:::"
+                    "due": ":::UTC_LATER_IN_WEEK:::"
                 },
                 {
                     "kind": "tasks#task",
@@ -392,7 +392,7 @@
                     "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz",
                     "position": "00000000000134217727",
                     "status": "needsAction",
-                    "due": ":::THREE_DAYS_HENCE:::"
+                    "due": ":::UTC_LATER_IN_WEEK:::"
                 },
                 {
                     "kind": "tasks#task",
@@ -403,7 +403,7 @@
                     "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
                     "position": "00000000000268435455",
                     "status": "needsAction",
-                    "due": ":::THREE_DAYS_HENCE:::"
+                    "due": ":::UTC_LATER_IN_WEEK:::"
                 },
                 {
                     "kind": "tasks#task",
@@ -436,7 +436,7 @@
                     "position": "00000000002147483647",
                     "notes": "Submit a signed Emergency Loan promissory note",
                     "status": "needsAction",
-                    "due": ":::SIX_DAYS_HENCE:::"
+                    "due": ":::UTC_NEXT_WEEK:::"
                 }
             ]
           }

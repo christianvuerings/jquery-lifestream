@@ -62,6 +62,8 @@ describe "MyTasks" do
     end
 
     overdue_counter.should == 0
+    # On Sundays, this test will fail because no "Due This Week" tasks will escape
+    # the "Due Today" bucket.
     today_counter.should == 0
     this_week_counter.should == 0
     next_week_counter.should == 0

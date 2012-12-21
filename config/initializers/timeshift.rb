@@ -6,14 +6,16 @@ Rails.application.config.after_initialize do
   # midnight on the current day
   today = Date.today.to_time_in_current_zone.to_datetime
 
+  # Google tasks store due dates as zero-hour Z-time
+  end_of_week_utc = today.sunday.to_date.to_datetime
+  next_week_utc = end_of_week_utc.advance(days: 2)
+
   substitutions = {
       ":::TWENTY_SEVEN_DAYS_AGO:::" => today.advance(:days => -27).rfc3339,
       ":::TWO_DAYS_AGO_MIDNIGHT_PST:::" => today.advance(:days => -1, :minutes => -1).rfc3339,
       ":::TODAY_MIDNIGHT_PST:::" => today.rfc3339,
       ":::TOMORROW_MIDNIGHT_PST:::" => today.advance(:days => 1).rfc3339,
       ":::TODAY_AT_TEA_TIME:::" => today.advance(:hours => 15, :minutes => 47, :seconds => 13).rfc3339,
-      ":::TWO_DAYS_HENCE:::" => today.advance(:days => 2).rfc3339,
-      ":::THREE_DAYS_HENCE:::" => today.advance(:days => 3).rfc3339,
       ":::SIX_DAYS_HENCE:::" => today.advance(:days => 6).rfc3339,
       ":::TODAY_NINE:::" => today.advance(:hours => 9, :minutes => 00, :seconds => 00).rfc3339,
       ":::TODAY_TEN:::" => today.advance(:hours => 10, :minutes => 00, :seconds => 00).rfc3339,
@@ -21,6 +23,8 @@ Rails.application.config.after_initialize do
       ":::TODAY_AFTER_LUNCH:::" => today.advance(:hours => 14, :minutes => 00, :seconds => 00).rfc3339,
       ":::TODAY_THREE_THIRTY:::" => today.advance(:hours => 15, :minutes => 30, :seconds => 00).rfc3339,
       ":::TODAY_FOUR_THIRTY:::" => today.advance(:hours => 16, :minutes => 30, :seconds => 00).rfc3339,
+      ":::UTC_LATER_IN_WEEK:::" => end_of_week_utc.rfc3339(3),
+      ":::UTC_NEXT_WEEK:::" => next_week_utc.rfc3339(3),
   }
 
   Rails.logger.info "Timeshifter: Today = #{today}; epoch = #{today.to_i}"
