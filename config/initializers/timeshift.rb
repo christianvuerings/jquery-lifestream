@@ -25,6 +25,9 @@ Rails.application.config.after_initialize do
       ":::TODAY_FOUR_THIRTY:::" => today.advance(:hours => 16, :minutes => 30, :seconds => 00).rfc3339,
       ":::UTC_LATER_IN_WEEK:::" => end_of_week_utc.rfc3339(3),
       ":::UTC_NEXT_WEEK:::" => next_week_utc.rfc3339(3),
+      ":::TODAY:::" => Date.today.rfc3339,
+      ":::TOMORROW:::" => Date.today.advance(days: 1).rfc3339,
+      ":::DAY_AFTER_TOMORROW:::" => Date.today.advance(days: 2).rfc3339,
   }
 
   Rails.logger.info "Timeshifter: Today = #{today}; epoch = #{today.to_i}"

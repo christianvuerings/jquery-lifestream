@@ -1387,6 +1387,38 @@
             ],
               "items":[
                   {
+                      "kind": "calendar#event",
+                      "etag": "\"fi3QRdJKQhyHAzX8fKt0yeht0TY/Z2NhbDAwMDAxMzU2MDQyOTA3NzIzMDAw\"",
+                      "id": "24mvjaandpak0tnc74p4ooqcag",
+                      "status": "confirmed",
+                      "htmlLink": "https://www.google.com/calendar/event?eid=MjRtdmphYW5kcGFrMHRuYzc0cDRvb3FjYWcgdGFtbWkuY2hhbmcuY2xjQG0",
+                      "created": "2012-12-20T22:35:07.000Z",
+                      "updated": "2012-12-20T22:35:07.723Z",
+                      "summary": "Math library closed",
+                      "creator": {
+                          "email": "tammi.chang.clc@gmail.com",
+                          "displayName": "Tammi Chang",
+                          "self": true
+                      },
+                      "organizer": {
+                          "email": "tammi.chang.clc@gmail.com",
+                          "displayName": "Tammi Chang",
+                          "self": true
+                      },
+                      "start": {
+                          "date": ":::TODAY:::"
+                      },
+                      "end": {
+                          "date": ":::TOMORROW:::"
+                      },
+                      "transparency": "transparent",
+                      "iCalUID": "24mvjaandpak0tnc74p4ooqcag@google.com",
+                      "sequence": 0,
+                      "reminders": {
+                          "useDefault": true
+                      }
+                  },
+                  {
                       "kind":"calendar#event",
                       "etag":"\"NybCyMgjkLQM6Il-p8A5652MtaE/Q0lpMzB0ZXdKeEVBQUFBQUFBQUFBQT09\"",
                       "id":"_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq_20121116T190000Z",
@@ -1489,6 +1521,38 @@
                       "sequence":0,
                       "reminders":{
                           "useDefault":true
+                      }
+                  },
+                  {
+                      "kind": "calendar#event",
+                      "etag": "\"fi3QRdJKQhyHAzX8fKt0yeht0TY/Z2NhbDAwMDAxMzU2MDQyOTIxMDE3MDAw\"",
+                      "id": "3bq5gvvu0dduqrr7gqm3jchfds",
+                      "status": "confirmed",
+                      "htmlLink": "https://www.google.com/calendar/event?eid=M2JxNWd2dnUwZGR1cXJyN2dxbTNqY2hmZHMgdGFtbWkuY2hhbmcuY2xjQG0",
+                      "created": "2012-12-20T22:35:21.000Z",
+                      "updated": "2012-12-20T22:35:21.017Z",
+                      "summary": "Tomorrow all-day",
+                      "creator": {
+                          "email": "tammi.chang.clc@gmail.com",
+                          "displayName": "Tammi Chang",
+                          "self": true
+                      },
+                      "organizer": {
+                          "email": "tammi.chang.clc@gmail.com",
+                          "displayName": "Tammi Chang",
+                          "self": true
+                      },
+                      "start": {
+                          "date": ":::TOMORROW:::"
+                      },
+                      "end": {
+                          "date": ":::DAY_AFTER_TOMORROW:::"
+                      },
+                      "transparency": "transparent",
+                      "iCalUID": "3bq5gvvu0dduqrr7gqm3jchfds@google.com",
+                      "sequence": 0,
+                      "reminders": {
+                          "useDefault": true
                       }
                   }
               ]

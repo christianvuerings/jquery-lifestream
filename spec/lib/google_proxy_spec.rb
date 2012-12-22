@@ -29,7 +29,7 @@ describe GoogleProxy do
             :singleEvents => true
         })
     response_array.size.should == 1
-    response_array[0].data["items"].size.should == 3
+    response_array[0].data["items"].size.should == 5
   end
 
   it "should simulate a fake, valid task list response (assuming a valid recorded fixture)" do
