@@ -167,7 +167,7 @@ def get_task_list_id_and_task_id
   test_task_list = proxy.create_task_list '{"title": "test"}'
   test_task_list.response.status.should == 200
   task_list_id = test_task_list.data["id"]
-  new_task = proxy.insert_task(body='{"title": "New Task", "notes": "Please Complete me"}', task_list_id=task_list_id)
+  new_task = proxy.insert_task(task_list_id=task_list_id, body='{"title": "New Task", "notes": "Please Complete me"}')
   new_task.response.status.should == 200
   task_id = new_task.data["id"]
   [task_list_id, task_id]

@@ -57,7 +57,7 @@ describe GoogleProxy do
     test_task_list.data["kind"].should == "tasks#taskList"
     test_task_list_id = test_task_list.data["id"]
     test_task_list_id.blank?.should_not == true
-    new_task = proxy.insert_task(body='{"title": "New Task", "notes": "Please Complete me"}', task_list_id=test_task_list_id)
+    new_task = proxy.insert_task(task_list_id=test_task_list_id, body='{"title": "New Task", "notes": "Please Complete me"}')
     new_task.response.status.should == 200
     new_task.data["title"].should == "New Task"
     new_task.data["status"].should == "needsAction"
