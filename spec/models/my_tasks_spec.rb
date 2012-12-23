@@ -18,8 +18,14 @@ describe "MyTasks" do
 
     # Counts for task types in VCR recording
     overdue_counter = 5
-    today_counter = 2
-    this_week_counter = 3
+    # On Sundays, no "Due This Week" tasks can escape the "Due Today" bucket.
+    if Date.today.sunday?
+      today_counter = 5
+      this_week_counter = 0
+    else
+      today_counter = 2
+      this_week_counter = 3
+    end
     next_week_counter = 6
     unscheduled_counter = 1
 
@@ -62,8 +68,6 @@ describe "MyTasks" do
     end
 
     overdue_counter.should == 0
-    # On Sundays, this test will fail because no "Due This Week" tasks will escape
-    # the "Due Today" bucket.
     today_counter.should == 0
     this_week_counter.should == 0
     next_week_counter.should == 0
