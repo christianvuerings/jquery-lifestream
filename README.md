@@ -21,6 +21,7 @@ Currently supports the following feeds:
 * [Dailymotion](http://dailymotion.com)
 * [Delicious](http://delicious.com)
 * [DeviantART](http://deviantart.com)
+* [Disqus](http://disqus.com)
 * [Dribbble](http://dribbble.com)
 * [Facebook Pages](http://www.facebook.com/pages)
 * [Flickr](http://flickr.com)
