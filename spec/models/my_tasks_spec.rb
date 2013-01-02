@@ -50,7 +50,7 @@ describe "MyTasks" do
           unscheduled_counter -= 1
       end
 
-      if task["emitter"] == "Google Tasks"
+      if task["emitter"] == GoogleProxy::APP_ID
         task["link_url"].should == "https://mail.google.com/tasks/canvas?pli=1"
         task["color_class"].should == "google-task"
         if task["due_date"]
@@ -113,7 +113,7 @@ describe "MyTasks" do
     my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
     expect {
-      my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed" })
+      my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed" })
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       error.message.should == "Missing parameter(s). Required: [\"id\"]"
@@ -123,7 +123,7 @@ describe "MyTasks" do
   it "should fail google update_tasks with unauthorized access" do
     my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(false)
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => "foo"})
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "foo"})
     response.should == {}
   end
 
@@ -132,7 +132,7 @@ describe "MyTasks" do
     my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => "foo"})
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "foo"})
     response.should == {}
   end
 
@@ -141,10 +141,10 @@ describe "MyTasks" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     task_list_id, task_id = get_task_list_id_and_task_id
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => task_id}, task_list_id)
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
     response["type"].should == "task"
     response["id"].should == task_id
-    response["emitter"].should == "Google Tasks"
+    response["emitter"].should == GoogleProxy::APP_ID
     response["status"].should == "completed"
   end
 
@@ -156,7 +156,7 @@ describe "MyTasks" do
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     Rails.cache.should_receive(:delete).with(MyTasks.cache_key(@user_id), anything())
     task_list_id, task_id = get_task_list_id_and_task_id
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => "Google Tasks", "status" => "completed", "id" => task_id}, task_list_id)
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
   end
 
 end

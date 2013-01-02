@@ -19,7 +19,7 @@ class MyTasks < MyMergedModel
 
   def update_task(params, task_list_id="@default")
     validate_update_params params
-    if params["emitter"] == "Google Tasks"
+    if params["emitter"] == GoogleProxy::APP_ID
       if GoogleProxy.access_granted?(@uid)
         validate_google_params params
         body = format_google_update_task_request params
@@ -41,7 +41,7 @@ class MyTasks < MyMergedModel
   end
 
   def insert_task(params, task_list_id="@default")
-    if params["emitter"] == "Google Tasks"
+    if params["emitter"] == GoogleProxy::APP_ID
       if GoogleProxy.access_granted?(@uid)
         body = format_google_insert_task_request params
         google_proxy = GoogleProxy.new(user_id: @uid)
@@ -90,7 +90,7 @@ class MyTasks < MyMergedModel
     formatted_entry = {
         "type" => "task",
         "title" => entry["title"] || "",
-        "emitter" => "Google Tasks",
+        "emitter" => GoogleProxy::APP_ID,
         "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
         "id" => entry["id"],
         "source_url" => entry["selfLink"] || "",
@@ -263,7 +263,7 @@ class MyTasks < MyMergedModel
   def validate_update_params(params)
     filters = {
         "type" => Proc.new { |arg| !arg.blank? && arg.is_a?(String) },
-        "emitter" => includes_whitelist_values?(["Canvas", "Google Tasks"]),
+        "emitter" => includes_whitelist_values?([CanvasProxy::APP_ID, GoogleProxy::APP_ID]),
         "status" => includes_whitelist_values?(%w(needs_action completed))
     }
     validate_params(params, filters)

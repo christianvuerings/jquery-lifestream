@@ -21,7 +21,7 @@
     {
       "type": "task",
       "title": "test2",
-      "emitter": "Google Tasks",
+      "emitter": "Google",
       "bucket": "Overdue",
       "note": "Null and void",
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
@@ -78,7 +78,7 @@
       "title": "Finish Shakespeare",
       "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
       "source_url": "https://ucberkeley.instructure.com/courses/832071",
-      "emitter": "Google Tasks",
+      "emitter": "Google",
       "bucket": "Due This Week",
       "note": "Adieu, adieu, adieu",
       "source": "Biology",
@@ -120,7 +120,7 @@
     {
       "type": "task",
       "title": "Break bread",
-      "emitter": "Google Tasks",
+      "emitter": "Google",
       "bucket": "Unscheduled",
       "note": "Bring enough butter for everyone.",
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
@@ -132,7 +132,7 @@
     {
       "type": "task",
       "title": "Alphabetize Kleenex boxes",
-      "emitter": "Google Tasks",
+      "emitter": "Google",
       "bucket": "Unscheduled",
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
       "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
