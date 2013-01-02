@@ -18,7 +18,7 @@ postgres:
   host: localhost
   port: 5432
 campusdb:
-  adapter: jdbch2
+  adapter: h2
   driver: org.h2.Driver
   url: jdbc:h2:mem:h2CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
   username: sa

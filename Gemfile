@@ -2,13 +2,13 @@ source "https://rubygems.org"
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.9"
+gem "rails", "3.2.10"
 
 # Postgresql adapter
-gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.2.1"
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.5"
 
 # H2 adapter
-gem "activerecord-jdbch2-adapter", "~> 1.2.2.1"
+gem "activerecord-jdbch2-adapter", "~> 1.2.5"
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -118,7 +118,7 @@ group :development do
 end
 
 group :test do
-  gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.2.1"
+  gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.5"
 end
 
 group :test, :testext do
