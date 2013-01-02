@@ -16,16 +16,21 @@
       $scope.tasks = data.tasks;
     });
 
-    $scope.addTaskCompleted = function(){
+    $scope.addTaskCompleted = function(data){
+      $scope.tasks.push(data);
       $scope.add_task = {};
       $scope.show_add_task = false;
     };
 
     $scope.addTask = function() {
-      $http.post('/api/my/tasks/create', {
+      var newtask = {
         "title": $scope.add_task.title,
-        "emitter": "Google"
-      }).success($scope.addTaskCompleted);
+        "emitter": "Google",
+        "color_class": "google-task"
+      };
+      $http.post('/api/my/tasks/create', newtask).success(function(data) {
+        $scope.addTaskCompleted(data);
+      });
     };
 
     $scope.toggleAddTask = function() {
