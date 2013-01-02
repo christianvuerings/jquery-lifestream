@@ -1,5 +1,6 @@
 $cc-alert-color: #fb0007;
 $cc-border-color: #999;
+$cc-button-color: #72cb12;
 $cc-column-border-color: #dedede;
 $cc-launcher-border-color: #114d80;
 $cc-launcher-link-color: #15315c;
@@ -69,6 +70,47 @@ body {
 
 /* Anchor tag */
 a:hover {
+  text-decoration: underline;
+}
+
+/* Form */
+form {
+  background: #eaeaea;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  padding: 5px;
+}
+form input[type="text"] {
+  border: 1px solid #aeaeae;
+  border-radius: 3px;
+  width: 100%;
+}
+form label {
+  display: block;
+  margin-top: 5px;
+  text-align: right;
+}
+
+/* Buttons */
+.cc-button-submit {
+  background: $cc-button-color;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 3px 15px;
+}
+.cc-button-reset {
+  background: transparent;
+  border: none;
+  color: $cc-light-grey;
+  font-size: 13px;
+  padding: 3px 15px;
+}
+
+.cc-button-submit:hover, .cc-button-reset:hover {
+  cursor: pointer;
   text-decoration: underline;
 }
 
@@ -256,6 +298,7 @@ a:hover {
 
 .cc-widget-title {
   border-bottom: 1px solid $cc-border-color;
+  overflow: hidden;
 
   h2 {
     color: $cc-light-grey;
