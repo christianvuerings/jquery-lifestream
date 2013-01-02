@@ -33,15 +33,20 @@ class MyUpNext < MyMergedModel
             formatted_entry[:location_url] = "https://maps.google.com/maps?" + uri.query
           end
 
-          # date mangling to harmonize the different date formats.
-          start_end_hash = determine_start_end(entry["start"], entry["end"])
-          start_end_hash.each do |key, value|
-            formatted_entry[key] = value unless value.nil?
-          end
+          # The Google Calendar API will return all-day events outside the specified
+          # event range.
+          start_datetime = parse_date(entry["start"])
+          next unless start_datetime < next_day
 
-          if formatted_entry["is_all_day"]
+          # date mangling to harmonize the different date formats.
+          formatted_entry["start"] = date_entry(start_datetime)
+          formatted_entry["end"] = date_entry(parse_date(entry["end"]))
+
+          if entry["start"]["date"] && entry["end"]["date"]
+            formatted_entry["is_all_day"] = true
             day_events.push(formatted_entry)
           else
+            formatted_entry["is_all_day"] = false
             timed_events.push(formatted_entry)
           end
         end
@@ -57,33 +62,19 @@ class MyUpNext < MyMergedModel
   end
 
   private
-  def determine_start_end(start_hash, end_hash)
-    start_date = start_hash && (start_hash["date"] || start_hash["dateTime"])
-    if !start_date.blank?
-      start_entry = {
-        "epoch" => DateTime.parse(start_date.to_s).strftime("%s").to_i,
-        "datetime" => DateTime.parse(start_date.to_s).rfc3339(3)
-      }
-    end
 
-    end_date = end_hash && (end_hash["date"] || end_hash["dateTime"])
-    if !end_date.blank?
-      end_entry = {
-        "epoch" => DateTime.parse(end_date.to_s).strftime("%s").to_i,
-        "datetime" => DateTime.parse(end_date.to_s).rfc3339(3)
-      }
-    end
-
-    if start_hash && start_hash["date"] && end_hash && end_hash["date"]
-      is_all_day = true
+  def parse_date(hash)
+    if hash["date"]
+      date = Date.parse(hash["date"].to_s).to_time_in_current_zone.to_datetime
     else
-      is_all_day = false
+      date = DateTime.parse(hash["dateTime"].to_s)
     end
+  end
 
+  def date_entry(date)
     {
-      "start" => start_entry,
-      "end" => end_entry,
-      "is_all_day" => is_all_day
+        "epoch" => date.strftime("%s").to_i,
+        "datetime" => date.rfc3339(3)
     }
   end
 

@@ -111,7 +111,7 @@ class GoogleProxy < BaseProxy
     response.data.blank?
   end
 
-  def insert_task(body, task_list_id)
+  def insert_task(task_list_id, body)
     parsed_body = stringify_body(body)
     request(:api => "tasks", :resource => "tasks", :method => "insert", :params => {tasklist: task_list_id},
             :body => parsed_body, :headers => {"Content-Type" => "application/json"}, :vcr_id => "_tasks")[0]

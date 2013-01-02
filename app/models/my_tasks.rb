@@ -18,15 +18,36 @@ class MyTasks < MyMergedModel
   end
 
   def update_task(params, task_list_id="@default")
-    validate_general_params params
+    validate_update_params params
     if params["emitter"] == "Google Tasks"
       if GoogleProxy.access_granted?(@uid)
         validate_google_params params
-        body = format_google_task_request params
+        body = format_google_update_task_request params
         google_proxy = GoogleProxy.new(user_id: @uid)
         logger.debug "#{self.class.name} update_task, sending to Google (task_list_id, task_id, body):
           {#{task_list_id}, #{params["id"]}, #{body.inspect}}"
         response = google_proxy.update_task(task_list_id, params["id"], body)
+        if (response.response.status == 200)
+          expire_cache
+          format_google_task_response response.data
+        else
+          logger.info "Errors in proxy response: #{response.inspect}"
+          {}
+        end
+      else
+        {}
+      end
+    end
+  end
+
+  def insert_task(params, task_list_id="@default")
+    if params["emitter"] == "Google Tasks"
+      if GoogleProxy.access_granted?(@uid)
+        body = format_google_insert_task_request params
+        google_proxy = GoogleProxy.new(user_id: @uid)
+        logger.debug "#{self.class.name} insert_task, sending to Google (task_list_id, body):
+          {#{task_list_id}, #{body.inspect}}"
+        response = google_proxy.insert_task(task_list_id, body)
         if (response.response.status == 200)
           expire_cache
           format_google_task_response response.data
@@ -92,10 +113,16 @@ class MyTasks < MyMergedModel
     formatted_entry
   end
 
-  def format_google_task_request(entry)
+  def format_google_update_task_request(entry)
     formatted_entry = {"id" => entry["id"]}
     formatted_entry["status"] = "needsAction" if entry["status"] == "needs_action"
     formatted_entry["status"] ||= "completed"
+    logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
+    formatted_entry
+  end
+
+  def format_google_insert_task_request(entry)
+    formatted_entry = {"title" => entry["title"]}
     logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
     formatted_entry
   end
@@ -233,7 +260,7 @@ class MyTasks < MyMergedModel
     end
   end
 
-  def validate_general_params(params)
+  def validate_update_params(params)
     filters = {
         "type" => Proc.new { |arg| !arg.blank? && arg.is_a?(String) },
         "emitter" => includes_whitelist_values?(["Canvas", "Google Tasks"]),

@@ -169,7 +169,7 @@ If you use VPN, use group #1 (1-Campus_VPN)
 
 ## Recording fake data feeds and timeshifting them
 
-Make sure your test.local.yml file has real connections to real external services that are fakeable (Canvas, Google, etc).
+Make sure your testext.local.yml file has real connections to real external services that are fakeable (Canvas, Google, etc).
 Now do:
 
 ```bash
