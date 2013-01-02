@@ -24,7 +24,7 @@
     $scope.addTask = function() {
       $http.post('/api/my/tasks/create', {
         "title": $scope.add_task.title,
-        "emitter": "Google Tasks"
+        "emitter": "Google"
       }).success($scope.addTaskCompleted);
     };
 
