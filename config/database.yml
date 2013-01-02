@@ -1,5 +1,5 @@
 development:
-  adapter: jdbcpostgresql
+  adapter: postgresql
   database: <%= Settings.postgres.database %>
   encoding: unicode
   pool: 5
@@ -10,7 +10,7 @@ development:
   port: <%= Settings.postgres.port %>
 
 production:
-  adapter: jdbcpostgresql
+  adapter: postgresql
   database: <%= Settings.postgres.database %>
   encoding: unicode
   pool: 5
@@ -21,13 +21,13 @@ production:
   port: <%= Settings.postgres.port %>
 
 test:
-  adapter: jdbcsqlite3
+  adapter: sqlite3
   encoding: utf8
   database: ':memory:'
   pool: 1
 
 testext:
-  adapter: jdbcpostgresql
+  adapter: postgresql
   database: <%= Settings.postgres.database %>
   encoding: unicode
   pool: 5
