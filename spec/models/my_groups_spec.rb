@@ -3,7 +3,7 @@ require "spec_helper"
 describe "MyGroups" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_sakai_proxy = SakaiProxy.new({fake: true})
+    @fake_sakai_proxy = SakaiCategorizedProxy.new({fake: true})
     @fake_canvas_proxy = CanvasGroupsProxy.new({fake: true})
   end
 
@@ -79,7 +79,7 @@ describe "MyGroups" do
             {"title" => "csite", "id" => "csite-id", "url" => "http://sakai/csite-id"}
         ]
     ]}}
-    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
+    SakaiCategorizedProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
     canvas_groups_feed = '[{"name": "Agroup", "id": "agroup-id"}]'
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     @fake_canvas_proxy.stub_chain(:groups, :body).and_return(canvas_groups_feed)

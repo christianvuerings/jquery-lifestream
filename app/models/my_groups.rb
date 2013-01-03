@@ -5,7 +5,7 @@ class MyGroups < MyMergedModel
         :groups => []
     }
     if SakaiProxy.access_granted?
-      sakai_proxy = SakaiProxy.new
+      sakai_proxy = SakaiCategorizedProxy.new
       sakai_categories = sakai_proxy.get_categorized_sites(@uid)[:body]["categories"] || []
       filter_categories = ["Projects"]
       sakai_categories.each do |section|
