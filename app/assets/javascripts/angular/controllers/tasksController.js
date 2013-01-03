@@ -25,9 +25,8 @@
     $scope.addTask = function() {
       var newtask = {
         "title": $scope.add_task.title,
-        "emitter": "Google",
-        "color_class": "google-task"
-      };
+        "emitter": "Google"
+        };
       $http.post('/api/my/tasks/create', newtask).success(function(data) {
         $scope.addTaskCompleted(data);
       });
