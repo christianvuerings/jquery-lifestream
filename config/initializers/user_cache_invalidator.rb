@@ -20,7 +20,10 @@ module Calcentral
       MyClasses => :expire,
       MyTasks => :expire,
       MyUpNext => :expire,
-      MyGroups => :expire
+      MyGroups => :expire,
+      GoogleProxy => :expire,
+      CanvasProxy => :expire,
+      SakaiProxy => :expire
   }.each do |key, value|
     USER_CACHE_EXPIRATION.add_observer(key, value)
   end
