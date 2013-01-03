@@ -6,7 +6,7 @@
     <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
       <div class="cc-widget-title">
         <h2 class="cc-left">Assignments and Tasks</h2>
-        <div class="cc-widget-add-icon cc-left" tabindex="-1" title="Add a task" data-ng-click="toggleAddTask()">+</div>
+        <button class="cc-widget-add-icon cc-left" title="Add a task" data-ng-click="toggleAddTask()">+</button>
       </div>
       <div class="cc-tasks-list">
         <div class="cc-widget-body">
@@ -16,7 +16,7 @@
                 <label for="cc-widget-tasks-addtask-title">Task:</label>
               </div>
               <div class="ten columns">
-                <input data-ng-model="add_task.title" id="cc-widget-tasks-addtask-title" type="text" />
+                <input data-ng-model="add_task.title" id="cc-widget-tasks-addtask-title" type="text" required />
               </div>
             </div>
             <div class="row">
