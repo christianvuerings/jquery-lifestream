@@ -3,7 +3,7 @@ require "spec_helper"
 describe "MyClasses" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_canvas_proxy = CanvasProxy.new({fake: true})
+    @fake_canvas_proxy = CanvasCoursesProxy.new({fake: true})
     @fake_canvas_courses = JSON.parse(@fake_canvas_proxy.courses.body)
     @fake_sakai_proxy = SakaiProxy.new({fake: true})
   end

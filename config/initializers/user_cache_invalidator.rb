@@ -23,6 +23,10 @@ module Calcentral
       MyGroups => :expire,
       GoogleProxy => :expire,
       CanvasProxy => :expire,
+      CanvasComingUpProxy => :expire,
+      CanvasCoursesProxy => :expire,
+      CanvasGroupsProxy => :expire,
+      CanvasTodoProxy => :expire,
       SakaiProxy => :expire
   }.each do |key, value|
     USER_CACHE_EXPIRATION.add_observer(key, value)

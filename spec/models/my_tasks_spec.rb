@@ -6,13 +6,16 @@ describe "MyTasks" do
     @fake_google_proxy = GoogleProxy.new({fake: true})
     @fake_google_tasks_array = @fake_google_proxy.tasks_list()
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
+    @fake_canvas_coming_up_proxy = CanvasComingUpProxy.new({fake: true})
+    @fake_canvas_todo_proxy = CanvasTodoProxy.new({fake: true})
   end
 
   it "should load nicely with the pre-recorded fake Google and Canvas proxy feeds using the server's timezone" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+    CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
+    CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
     my_tasks_model = MyTasks.new(@user_id)
     valid_feed = my_tasks_model.get_feed
 
@@ -81,7 +84,8 @@ describe "MyTasks" do
       GoogleProxy.stub(:access_granted?).and_return(true)
       CanvasProxy.stub(:access_granted?).and_return(true)
       GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-      CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+      CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
+      CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
       my_tasks_model = MyTasks.new(@user_id)
       valid_feed = my_tasks_model.get_feed
     ensure

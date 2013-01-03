@@ -4,7 +4,7 @@ describe "MyGroups" do
   before(:each) do
     @user_id = rand(99999).to_s
     @fake_sakai_proxy = SakaiProxy.new({fake: true})
-    @fake_canvas_proxy = CanvasProxy.new({fake: true})
+    @fake_canvas_proxy = CanvasGroupsProxy.new({fake: true})
   end
 
   it "should return a valid feed for a user granted access" do

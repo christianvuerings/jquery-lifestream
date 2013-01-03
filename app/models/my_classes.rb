@@ -5,7 +5,7 @@ class MyClasses < MyMergedModel
         :classes => []
     }
     if CanvasProxy.access_granted?(@uid)
-      canvas_proxy = CanvasProxy.new(user_id: @uid)
+      canvas_proxy = CanvasCoursesProxy.new(user_id: @uid)
       JSON.parse(canvas_proxy.courses.body).each do |course|
         response[:classes].push({
                                     name: course["name"],

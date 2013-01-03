@@ -129,9 +129,8 @@ class MyTasks < MyMergedModel
 
   def fetch_canvas_tasks
     if CanvasProxy.access_granted?(@uid)
-      canvas_proxy = CanvasProxy.new(:user_id => @uid)
-      fetch_canvas_coming_up canvas_proxy
-      fetch_canvas_todo canvas_proxy
+      fetch_canvas_coming_up CanvasComingUpProxy.new(:user_id => @uid)
+      fetch_canvas_todo CanvasTodoProxy.new(:user_id => @uid)
     end
   end
 

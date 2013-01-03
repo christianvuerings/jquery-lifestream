@@ -26,7 +26,7 @@ class MyGroups < MyMergedModel
       end
     end
     if CanvasProxy.access_granted?(@uid)
-      canvas_proxy = CanvasProxy.new(user_id: @uid)
+      canvas_proxy = CanvasGroupsProxy.new(user_id: @uid)
       JSON.parse(canvas_proxy.groups.body).each do |group|
         response[:groups].push({
                                     title: group["name"],
