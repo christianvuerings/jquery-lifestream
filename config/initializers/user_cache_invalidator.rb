@@ -21,13 +21,23 @@ module Calcentral
       MyTasks => :expire,
       MyUpNext => :expire,
       MyGroups => :expire,
-      GoogleProxy => :expire,
+
       CanvasProxy => :expire,
       CanvasComingUpProxy => :expire,
       CanvasCoursesProxy => :expire,
       CanvasGroupsProxy => :expire,
       CanvasTodoProxy => :expire,
+
+      GoogleProxy => :expire,
+      GoogleCreateTaskListProxy => :expire,
+      GoogleDeleteTaskListProxy => :expire,
+      GoogleEventsListProxy => :expire,
+      GoogleInsertTaskProxy => :expire,
+      GoogleTasksListProxy => :expire,
+      GoogleUpdateTaskProxy => :expire,
+
       SakaiProxy => :expire
+
   }.each do |key, value|
     USER_CACHE_EXPIRATION.add_observer(key, value)
   end

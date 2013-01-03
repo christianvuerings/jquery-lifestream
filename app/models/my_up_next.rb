@@ -4,7 +4,7 @@ class MyUpNext < MyMergedModel
     up_next = {}
     up_next["items"] = []
     if GoogleProxy.access_granted?(@uid)
-      google_proxy = GoogleProxy.new(user_id: @uid)
+      google_proxy = GoogleEventsListProxy.new(user_id: @uid)
 
       # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
       begin_today = Date.today.to_time_in_current_zone.to_datetime

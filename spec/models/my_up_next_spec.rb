@@ -3,15 +3,15 @@ require "spec_helper"
 describe "MyUpNext" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_google_proxy = GoogleProxy.new({fake: true})
+    @fake_google_proxy = GoogleEventsListProxy.new({fake: true})
 
   end
 
   it "should load nicely with the pre-recorded fake Google proxy feed for event#list" do
     GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    GoogleEventsListProxy.stub(:new).and_return(@fake_google_proxy)
     fake_google_events_array = @fake_google_proxy.events_list({:maxResults => 10})
-    GoogleProxy.any_instance.stub(:events_list).and_return(fake_google_events_array)
+    GoogleEventsListProxy.any_instance.stub(:events_list).and_return(fake_google_events_array)
     valid_feed = MyUpNext.new(@user_id).get_feed
     valid_feed[:items].size.should == 13
     valid_feed[:items].each do |entry|

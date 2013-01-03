@@ -88,42 +88,6 @@ class GoogleProxy < BaseProxy
     Settings.google_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"] != nil)
   end
 
-  def events_list(optional_params={})
-    optional_params.reverse_merge!(:calendarId => 'primary', :maxResults => 1000)
-    request :api => "calendar", :resource => "events", :method => "list", :params => optional_params, :vcr_id => "_events"
-  end
-
-  def tasks_list(optional_params={})
-    optional_params.reverse_merge!(:tasklist => '@default', :maxResults => 100)
-    request :api => "tasks", :resource => "tasks", :method => "list", :params => optional_params, :vcr_id => "_tasks"
-  end
-
-  def create_task_list(body)
-    parsed_body = stringify_body(body)
-    request(:api => "tasks", :resource => "tasklists", :method => "insert",
-            :body => parsed_body, :headers => {"Content-Type" => "application/json"}, :vcr_id => "_tasks")[0]
-  end
-
-  def delete_task_list(task_list_id)
-    response = request(:api => "tasks", :resource => "tasklists", :method => "delete",
-                       :params => {tasklist: task_list_id}, :vcr_id => "_tasks")[0]
-    #According to the API, empty response body == successful
-    response.data.blank?
-  end
-
-  def insert_task(task_list_id, body)
-    parsed_body = stringify_body(body)
-    request(:api => "tasks", :resource => "tasks", :method => "insert", :params => {tasklist: task_list_id},
-            :body => parsed_body, :headers => {"Content-Type" => "application/json"}, :vcr_id => "_tasks")[0]
-  end
-
-  def update_task(task_list_id, task_id, body)
-    parsed_body = stringify_body(body)
-    request(:api => "tasks", :resource => "tasks", :method => "update",
-            :params => {tasklist: task_list_id, task: task_id},
-            :body => parsed_body, :headers => {"Content-Type" => "application/json"}, :vcr_id => "_tasks")[0]
-  end
-
   private
   def stringify_body(bodyParam)
     if bodyParam.is_a?(Hash)
