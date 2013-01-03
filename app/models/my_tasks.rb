@@ -93,6 +93,7 @@ class MyTasks < MyMergedModel
         "emitter" => GoogleProxy::APP_ID,
         "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
         "id" => entry["id"],
+        "updated" => entry["updated"],
         "source_url" => entry["selfLink"] || "",
         "color_class" => "google-task"
     }
