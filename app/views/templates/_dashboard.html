@@ -116,7 +116,7 @@
               <h3 class="cc-widget-section-label">Unscheduled</h3>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
                 <li
-                  data-ng-repeat="task in filtered = (tasks | filter:filterUnScheduled)"
+                  data-ng-repeat="task in filtered = (tasks | orderBy:'updated' | filter:filterUnScheduled)"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
