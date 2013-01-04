@@ -1,4 +1,7 @@
+require 'lib/cacheable.rb'
+
 class BaseProxy
+  extend Calcentral::Cacheable
 
   attr_accessor :fake, :settings
 

@@ -1,5 +1,8 @@
+require 'lib/cacheable.rb'
+
 class MyMergedModel
   include ActiveAttr::Model
+  extend Calcentral::Cacheable
 
   def initialize(uid)
     @uid = uid
@@ -13,16 +16,6 @@ class MyMergedModel
     ) do
       get_feed_internal(*opts)
     end
-  end
-
-  def self.cache_key(uid)
-    key = "user/#{uid}/#{self.name}"
-    logger.debug "#{self.name} cache_key will be #{key}"
-    key
-  end
-
-  def self.expire(uid)
-    Rails.cache.delete(cache_key(uid), :force => true)
   end
 
   def expire_cache

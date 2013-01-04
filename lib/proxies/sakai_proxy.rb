@@ -11,37 +11,33 @@ class SakaiProxy < BaseProxy
     settings.fake || (settings.host && settings.shared_secret)
   end
 
-  def get_categorized_sites(uid)
-    url = "#{@settings.host}/sakai-hybrid/sites?categorized=true"
-    do_get(uid, url)
-  end
-
-  def get_unread_sites(uid)
-    url = "#{@settings.host}/sakai-hybrid/sites?unread=true"
-    do_get(uid, url)
-  end
-
   def do_get(uid, url)
-    token = build_token uid
-    Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #{uid} with x-sakai-token = #{token}"
-    begin
-      response = FakeableProxy.wrap_request(APP_ID, @fake) {
-        Faraday::Connection.new(
-            :url => url,
-            :headers => {
-                'x-sakai-token' => token
-            }).get
-      }
-      Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
-      {
-          :body => JSON.parse(response.body),
-          :status_code => response.status
-      }
-    rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
-      {
-          :body => "Remote server unreachable",
-          :status_code => 503
-      }
+    Rails.cache.fetch(
+        self.class.cache_key(uid),
+        :expires_in => Settings.cache.api_expires_in,
+        :race_condition_ttl => 2.seconds
+    ) do
+      token = build_token uid
+      Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #{uid} with x-sakai-token = #{token}"
+      begin
+        response = FakeableProxy.wrap_request(APP_ID, @fake) {
+          Faraday::Connection.new(
+              :url => url,
+              :headers => {
+                  'x-sakai-token' => token
+              }).get
+        }
+        Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
+        {
+            :body => JSON.parse(response.body),
+            :status_code => response.status
+        }
+      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+        {
+            :body => "Remote server unreachable",
+            :status_code => 503
+        }
+      end
     end
   end
 

@@ -30,28 +30,32 @@ describe CanvasProxy do
   end
 
   it "should get courses as known student", :testext => true do
-    response = @client.courses
+    client = CanvasCoursesProxy.new(:user_id => @user_id)
+    response = client.courses
     courses = JSON.parse(response.body)
     courses.size.should > 0
     courses[0]['course_code'].should_not be_nil
   end
 
   it "should get the coming_up feed for a known user", :testext => true do
-    response = @client.coming_up
+    client = CanvasComingUpProxy.new(:user_id => @user_id)
+    response = client.coming_up
     tasks = JSON.parse(response.body)
     tasks[0]["type"].should_not be_nil
     tasks[0]["title"].should_not be_nil
   end
 
   it "should get the todo feed for a known user", :testext => true do
-    response = @client.todo
+    client = CanvasTodoProxy.new(:user_id => @user_id)
+    response = client.todo
     tasks = JSON.parse(response.body)
     tasks[0]["assignment"]["name"].should_not be_nil
     tasks[0]["assignment"]["course_id"].should_not be_nil
   end
 
   it "should get groups as known member", :testext => true do
-    response = @client.groups
+    client = CanvasGroupsProxy.new(:user_id => @user_id)
+    response = client.groups
     groups = JSON.parse(response.body)
     groups.size.should > 0
     groups[0]['name'].should_not be_nil

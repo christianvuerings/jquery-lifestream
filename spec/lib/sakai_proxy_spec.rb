@@ -3,11 +3,12 @@ require "spec_helper"
 describe SakaiProxy do
 
   before do
-    @client = SakaiProxy.new
+    @client_categorized = SakaiCategorizedProxy.new
+    @client_unread = SakaiUnreadProxy.new
   end
 
   it "should get the categorized sites from bspace" do
-    data = @client.get_categorized_sites "300939"
+    data = @client_categorized.get_categorized_sites "300939"
     data[:status_code].should_not be_nil
     if data[:status_code] == 200
       data[:body]["principal"].should_not be_nil
@@ -15,7 +16,7 @@ describe SakaiProxy do
   end
 
   it "should get the unread sites from bspace" do
-    data = @client.get_unread_sites "300939"
+    data = @client_unread.get_unread_sites "300939"
     data[:status_code].should_not be_nil
     if data[:status_code] == 200
       data[:body]["principal"].should_not be_nil
@@ -23,7 +24,7 @@ describe SakaiProxy do
   end
 
   it "should pass through errors while connecting to bspace" do
-    bad_client = SakaiProxy.new(fake: false)
+    bad_client = SakaiUnreadProxy.new(fake: false)
     stub_request(:any, "#{Settings.sakai_proxy.host}/sakai-hybrid/sites?unread=true").to_timeout
     data = bad_client.get_unread_sites "300939"
     data[:status_code].should == 503
@@ -32,7 +33,7 @@ describe SakaiProxy do
   end
 
   it "should make sure there are project or 'other' sites from the bSpace proxy (for groups)" do
-    data = @client.get_categorized_sites "300939"
+    data = @client_categorized.get_categorized_sites "300939"
     data[:status_code].should_not be_nil
     if data[:status_code] == 200 && data[:body]["categories"] != nil
       if !data[:body]["categories"].empty?

@@ -23,7 +23,7 @@ class MyTasks < MyMergedModel
       if GoogleProxy.access_granted?(@uid)
         validate_google_params params
         body = format_google_update_task_request params
-        google_proxy = GoogleProxy.new(user_id: @uid)
+        google_proxy = GoogleUpdateTaskProxy.new(user_id: @uid)
         logger.debug "#{self.class.name} update_task, sending to Google (task_list_id, task_id, body):
           {#{task_list_id}, #{params["id"]}, #{body.inspect}}"
         response = google_proxy.update_task(task_list_id, params["id"], body)
@@ -44,7 +44,7 @@ class MyTasks < MyMergedModel
     if params["emitter"] == GoogleProxy::APP_ID
       if GoogleProxy.access_granted?(@uid)
         body = format_google_insert_task_request params
-        google_proxy = GoogleProxy.new(user_id: @uid)
+        google_proxy = GoogleInsertTaskProxy.new(user_id: @uid)
         logger.debug "#{self.class.name} insert_task, sending to Google (task_list_id, body):
           {#{task_list_id}, #{body.inspect}}"
         response = google_proxy.insert_task(task_list_id, body)
@@ -65,7 +65,7 @@ class MyTasks < MyMergedModel
 
   def fetch_google_tasks
     if GoogleProxy.access_granted?(@uid)
-      google_proxy = GoogleProxy.new(user_id: @uid)
+      google_proxy = GoogleTasksListProxy.new(user_id: @uid)
 
       google_tasks_results = google_proxy.tasks_list
       logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
@@ -130,9 +130,8 @@ class MyTasks < MyMergedModel
 
   def fetch_canvas_tasks
     if CanvasProxy.access_granted?(@uid)
-      canvas_proxy = CanvasProxy.new(:user_id => @uid)
-      fetch_canvas_coming_up canvas_proxy
-      fetch_canvas_todo canvas_proxy
+      fetch_canvas_coming_up CanvasComingUpProxy.new(:user_id => @uid)
+      fetch_canvas_todo CanvasTodoProxy.new(:user_id => @uid)
     end
   end
 

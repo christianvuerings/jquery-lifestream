@@ -3,9 +3,9 @@ require "spec_helper"
 describe "MyClasses" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_canvas_proxy = CanvasProxy.new({fake: true})
+    @fake_canvas_proxy = CanvasCoursesProxy.new({fake: true})
     @fake_canvas_courses = JSON.parse(@fake_canvas_proxy.courses.body)
-    @fake_sakai_proxy = SakaiProxy.new({fake: true})
+    @fake_sakai_proxy = SakaiCategorizedProxy.new({fake: true})
   end
 
   it "should contain all my Canvas courses" do
@@ -35,7 +35,7 @@ describe "MyClasses" do
   it "should return bSpace course sites for the current term" do
     CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(true)
-    SakaiProxy.stub(:new).and_return(@fake_sakai_proxy)
+    SakaiCategorizedProxy.stub(:new).and_return(@fake_sakai_proxy)
     my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should be > 0
     my_classes[:classes].each do |my_class|

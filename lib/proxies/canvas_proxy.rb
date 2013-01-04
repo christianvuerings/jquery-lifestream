@@ -16,15 +16,22 @@ class CanvasProxy < BaseProxy
                      options[:access_token]
                    end
     @client = Signet::OAuth2::Client.new(:access_token => access_token)
+    @uid = options[:user_id]
   end
 
   def request(api_path, vcr_id = "", fetch_options = {})
-    fetch_options.reverse_merge!(
-        :method => :get,
-        :uri => "#{@settings.url_root}/api/v1/#{api_path}"
-    )
-    Rails.logger.info "CanvasProxy - Making request with @fake = #{@fake}, options = #{fetch_options}"
-    FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) { @client.fetch_protected_resource(fetch_options) }
+    Rails.cache.fetch(
+        self.class.cache_key(@uid),
+        :expires_in => Settings.cache.api_expires_in,
+        :race_condition_ttl => 2.seconds
+    ) do
+      fetch_options.reverse_merge!(
+          :method => :get,
+          :uri => "#{@settings.url_root}/api/v1/#{api_path}"
+      )
+      Rails.logger.info "CanvasProxy - Making request with @fake = #{@fake}, options = #{fetch_options}"
+      FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) { @client.fetch_protected_resource(fetch_options) }
+    end
   end
 
   def self.access_granted?(user_id)
@@ -33,22 +40,6 @@ class CanvasProxy < BaseProxy
 
   def url_root
     @settings.url_root
-  end
-
-  def courses
-    request("courses", "_courses")
-  end
-
-  def coming_up
-    request("users/self/coming_up", "_coming_up")
-  end
-
-  def todo
-    request("users/self/todo", "_todo")
-  end
-
-  def groups
-    request("users/self/groups", "_groups")
   end
 
 end

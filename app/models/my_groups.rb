@@ -5,7 +5,7 @@ class MyGroups < MyMergedModel
         :groups => []
     }
     if SakaiProxy.access_granted?
-      sakai_proxy = SakaiProxy.new
+      sakai_proxy = SakaiCategorizedProxy.new
       sakai_categories = sakai_proxy.get_categorized_sites(@uid)[:body]["categories"] || []
       filter_categories = ["Projects"]
       sakai_categories.each do |section|
@@ -26,7 +26,7 @@ class MyGroups < MyMergedModel
       end
     end
     if CanvasProxy.access_granted?(@uid)
-      canvas_proxy = CanvasProxy.new(user_id: @uid)
+      canvas_proxy = CanvasGroupsProxy.new(user_id: @uid)
       JSON.parse(canvas_proxy.groups.body).each do |group|
         response[:groups].push({
                                     title: group["name"],

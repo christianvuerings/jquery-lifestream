@@ -3,16 +3,20 @@ require "spec_helper"
 describe "MyTasks" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_google_proxy = GoogleProxy.new({fake: true})
-    @fake_google_tasks_array = @fake_google_proxy.tasks_list()
+    @fake_google_tasks_list_proxy = GoogleTasksListProxy.new({fake: true})
+    @fake_google_update_task_proxy = GoogleUpdateTaskProxy.new({fake: true})
+    @fake_google_tasks_array = @fake_google_tasks_list_proxy.tasks_list()
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
+    @fake_canvas_coming_up_proxy = CanvasComingUpProxy.new({fake: true})
+    @fake_canvas_todo_proxy = CanvasTodoProxy.new({fake: true})
   end
 
   it "should load nicely with the pre-recorded fake Google and Canvas proxy feeds using the server's timezone" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:access_granted?).and_return(true)
-    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+    GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
+    CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
+    CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
     my_tasks_model = MyTasks.new(@user_id)
     valid_feed = my_tasks_model.get_feed
 
@@ -80,8 +84,9 @@ describe "MyTasks" do
       Time.zone = 'Pacific/Tongatapu'
       GoogleProxy.stub(:access_granted?).and_return(true)
       CanvasProxy.stub(:access_granted?).and_return(true)
-      GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-      CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+      GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
+      CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
+      CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
       my_tasks_model = MyTasks.new(@user_id)
       valid_feed = my_tasks_model.get_feed
     ensure
@@ -131,7 +136,7 @@ describe "MyTasks" do
   it "should fail google update_tasks with a remote proxy error" do
     my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "foo"})
     response.should == {}
   end
@@ -139,7 +144,7 @@ describe "MyTasks" do
   it "should succeed google update_tasks with a properly formatted params" do
     my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
     task_list_id, task_id = get_task_list_id_and_task_id
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
     response["type"].should == "task"
@@ -153,7 +158,7 @@ describe "MyTasks" do
     Rails.cache.should_receive(:fetch).with(MyTasks.cache_key(@user_id), anything())
     my_tasks.get_feed
     GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
     Rails.cache.should_receive(:delete).with(MyTasks.cache_key(@user_id), anything())
     task_list_id, task_id = get_task_list_id_and_task_id
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
@@ -163,11 +168,12 @@ end
 
 def get_task_list_id_and_task_id
   #slightly roundabout way to get the task_list_ids and task_ids
-  proxy = GoogleProxy.new(:fake => true)
-  test_task_list = proxy.create_task_list '{"title": "test"}'
+  create_proxy = GoogleCreateTaskListProxy.new(:fake => true)
+  test_task_list = create_proxy.create_task_list '{"title": "test"}'
   test_task_list.response.status.should == 200
   task_list_id = test_task_list.data["id"]
-  new_task = proxy.insert_task(task_list_id=task_list_id, body='{"title": "New Task", "notes": "Please Complete me"}')
+  insert_proxy = GoogleInsertTaskProxy.new(:fake => true)
+  new_task = insert_proxy.insert_task(task_list_id=task_list_id, body='{"title": "New Task", "notes": "Please Complete me"}')
   new_task.response.status.should == 200
   task_id = new_task.data["id"]
   [task_list_id, task_id]
