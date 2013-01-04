@@ -43,7 +43,7 @@
       "source_url": "http://studentbilling.berkeley.edu",
       "emitter": "Canvas",
       "color_class": "canvas-class",
-      "date_string": "12/30"
+      "date_string": "12/30/12"
     },
     {
       "id": 4,
@@ -58,7 +58,7 @@
       "source_url": "https://ucberkeley.instructure.com/courses/833384",
       "emitter": "Canvas",
       "color_class": "canvas-class",
-      "date_string": "12/29"
+      "date_string": "12/29/12"
     },
     {
       "id": 5,
@@ -73,7 +73,7 @@
       "source_url": false,
       "emitter": "Campus",
       "color_class": "campus-item",
-      "date_string": "12/28"
+      "date_string": "12/28/12"
     },
     {
       "id": 6,
@@ -88,7 +88,7 @@
       "source_url": false,
       "emitter": "bSpace",
       "color_class": "bspace-group",
-      "date_string": "12/26"
+      "date_string": "12/26/12"
 
     },
     {
@@ -104,7 +104,7 @@
       "source_url": false,
       "emitter": "Campus",
       "color_class": "campus-item",
-      "date_string": "12/18"
+      "date_string": "12/18/12"
     },
     {
       "id": 8,
@@ -119,7 +119,7 @@
       "source_url": false,
       "emitter": "bSpace",
       "color_class": "bspace-group",
-      "date_string": "12/2"
+      "date_string": "12/2/12"
     }
   ]
 }
