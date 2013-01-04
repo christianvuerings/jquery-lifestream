@@ -59,8 +59,8 @@
             <div data-ng-switch-when="scheduled">
 
             <div class="row">
-              <h3 class="ten columns cc-widget-section-label">Overdue</h3>
-              <div class="two columns cc-right cc-widget-section-label-due">Due</div>
+              <h3 class="nine columns end cc-widget-section-label">Overdue</h3>
+              <div class="three columns cc-right cc-widget-section-label-due">Due</div>
             </div>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
                 <li
@@ -113,7 +113,9 @@
 
 
             <div data-ng-switch-when="unscheduled">
-              <h3 class="cc-widget-section-label">Unscheduled</h3>
+              <div class="row">
+                <h3 class="nine columns end cc-widget-section-label">Unscheduled</h3>
+              </div>
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
                 <li
                   data-ng-repeat="task in filtered = (tasks | orderBy:'updated' | filter:filterUnScheduled)"
@@ -128,10 +130,13 @@
 
 
             <div data-ng-switch-when="completed">
-              <h3 class="cc-widget-section-label">Completed</h3>
+              <div class="row">
+                <div class="three columns end cc-right cc-widget-section-label-due">Completed</div>
+              </div>
+
               <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
                 <li
-                  data-ng-repeat="task in filtered = (tasks | filter:{status:'completed'})"
+                  data-ng-repeat="task in filtered = (tasks | orderBy:'completed_date.epoch':true | filter:{status:'completed'})"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>

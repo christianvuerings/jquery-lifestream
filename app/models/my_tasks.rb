@@ -98,8 +98,13 @@ class MyTasks < MyMergedModel
         "color_class" => "google-task"
     }
 
+    # Some fields may or may not be present in Google feed
     if entry["notes"]
       formatted_entry["note"] = entry["notes"]
+    end
+
+    if entry["completed"]
+      format_date_into_entry!(convert_due_date(entry["completed"]), formatted_entry, "completed_date")
     end
 
     status = "needs_action" if entry["status"] == "needsAction"
@@ -109,7 +114,7 @@ class MyTasks < MyMergedModel
     # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
     # accuracy so the application will apply the proper timezone when needed.
     due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
-    format_date_into_entry!(convert_due_date(due_date), formatted_entry)
+    format_date_into_entry!(convert_due_date(due_date), formatted_entry, "due_date")
     logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
     formatted_entry
   end
@@ -151,7 +156,7 @@ class MyTasks < MyMergedModel
             "status" => "inprogress"
         }
         due_date = result["start_at"]
-        format_date_into_entry!(convert_due_date(due_date), formatted_entry)
+        format_date_into_entry!(convert_due_date(due_date), formatted_entry, "due_date")
         bucket = determine_bucket(due_date, formatted_entry)
         formatted_entry["bucket"] = bucket
         logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
@@ -179,7 +184,7 @@ class MyTasks < MyMergedModel
                 "color_class" => "canvas-class",
                 "status" => "inprogress"
             }
-            format_date_into_entry!(due_date, formatted_entry)
+            format_date_into_entry!(due_date, formatted_entry, "due_date")
             bucket = determine_bucket(due_date, formatted_entry)
             formatted_entry["bucket"] = bucket
             logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
@@ -202,9 +207,9 @@ class MyTasks < MyMergedModel
     end
   end
 
-  def format_date_into_entry!(due, formatted_entry)
+  def format_date_into_entry!(due, formatted_entry, field_name)
     if !due.blank?
-      formatted_entry["due_date"] = {
+      formatted_entry[field_name] = {
           "epoch" => due.to_i,
           "datetime" => due.rfc3339(3),
           "date_string" => due.strftime("%-m/%d")
