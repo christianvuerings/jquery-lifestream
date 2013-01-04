@@ -4,7 +4,6 @@ describe UserCacheWarmer do
 
   before(:each) do
     @user_id = rand(99999).to_s
-    @warmer = UserCacheWarmer.new @user_id
   end
 
   it "should warm the cache when told" do
@@ -16,7 +15,8 @@ describe UserCacheWarmer do
       model.should_receive(:get_feed)
     end
 
-    @warmer.warm
+    worker = UserCacheWarmer::WarmingWorker.new
+    worker.warm @user_id
   end
 
 end

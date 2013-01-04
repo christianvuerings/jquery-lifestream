@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
   def lookup
     auth = request.env["omniauth.auth"]
     session[:user_id] = auth['uid']
+    Calcentral::USER_CACHE_WARMER.warm session[:user_id]
     redirect_to '/dashboard', :notice => "Signed in!"
   end
 

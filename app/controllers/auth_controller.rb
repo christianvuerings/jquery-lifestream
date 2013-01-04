@@ -37,6 +37,7 @@ class AuthController < ApplicationController
             client.issued_at.to_i + client.expires_in
           end
       )
+      Calcentral::USER_CACHE_WARMER.warm session[:user_id]
     else
       Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
       Oauth2Data.delete_all(:uid => session[:user_id], :app_id => app_id)
