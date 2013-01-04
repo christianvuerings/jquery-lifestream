@@ -44,6 +44,9 @@ gem "trinidad", "~> 1.4.4"
 # https://github.com/sporkmonger/addressable
 gem "addressable", "~> 2.3.2"
 
+# for concurrency management
+gem "celluloid", "~> 0.12.4"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
