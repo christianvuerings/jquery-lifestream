@@ -113,6 +113,16 @@
 
     };
 
+    // Util
+    $scope.api.util = {};
+
+    /**
+     * Prevent a click event from bubbling up to its parents
+     */
+    $scope.api.util.preventBubble = function($event) {
+      $event.stopPropagation();
+    };
+
     /**
      * Will be executed on every route change
      *  - Get the user information when it hasn't been loaded yet
