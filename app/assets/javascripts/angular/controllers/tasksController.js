@@ -3,7 +3,7 @@
   'use strict';
 
   /**
-   * Notifications controller
+   * Tasks controller
    */
   calcentral.controller('TasksController', ['$http', '$scope', function($http, $scope) {
 
@@ -36,8 +36,16 @@
       $scope.show_add_task = !$scope.show_add_task;
     };
 
-    // Post changed tasks back to Google through our proxy
+    // Post changed tasks back to Google through our proxy.
+    // If completed, give task a completed date epoch *before* sending to
+    // Google so model can reflect it immediately. Otherwise, remove completed_date prop.
     $scope.changeTaskState = function(task) {
+      if (task.status === 'completed') {
+        task['completed_date'] = {};
+        task['completed_date']['epoch'] = (new Date()).getTime() / 1000;
+      } else {
+        delete task['completed_date'];
+      }
       $http.post('/api/my/tasks', task);
     };
 
