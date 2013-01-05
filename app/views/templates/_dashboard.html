@@ -31,19 +31,19 @@
             <div class="ten columns centered">
               <ul class="button-group radius even three-up">
                 <li>
-                  <a class="small button"
+                  <a class="tiny button"
                     data-ng-click="switchTasksMode('scheduled')"
                     data-ng-class="{false:'secondary'}[tasks_mode=='scheduled']">Scheduled
                   </a>
                 </li>
                 <li>
-                  <a class="small button"
+                  <a class="tiny button"
                     data-ng-click="switchTasksMode('unscheduled')"
                     data-ng-class="{false:'secondary'}[tasks_mode=='unscheduled']">Unscheduled
                   </a>
                 </li>
                 <li>
-                  <a class="small button"
+                  <a class="tiny button"
                     data-ng-click="switchTasksMode('completed')"
                     data-ng-class="{false:'secondary'}[tasks_mode=='completed']">Completed
                   </a>
@@ -168,15 +168,16 @@
             <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
               <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification)">
 
-                <div class="two mobile-one columns">
+                <div class="one mobile-one columns cc-widget-notifications-emitter-column">
                   <div class="cc-emitter-square cc-emitter-{{notification.color_class}}" title="{{notification.emitter}} notification"></div>
                 </div>
 
                 <div class="seven mobile-two columns cc-widget-notifications-text-column cc-widget-list-selected-title">
-                  {{notification.title}}
+                  {{notification.title}}<br />
+                  <span class="cc-widget-notification-source">{{notification.source}}</span>
                 </div>
 
-                <div class="three mobile-one columns cc-right cc-widget-tasks-notifications-date-string">
+                <div class="three mobile-one columns end cc-right cc-widget-tasks-notifications-date-string">
                   {{notification.date_string}}
                 </div>
               </div>
