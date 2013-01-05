@@ -55,6 +55,8 @@
     background: image-url('icon_notifications_campus_16x16.png') no-repeat;
   }
   .cc-widget-section-label-due {
+    color: $cc-widget-section-label-color;
+    font-size: 14px;
     font-weight: bold;
     margin-top: 5px;
     padding-right: 15px;
@@ -78,7 +80,7 @@
     padding: 1px 4px;
     text-align: center;
     &:focus, &:hover {
-      background: $cc-button-color;
+      background: $cc-action-button-color;
     }
   }
 }

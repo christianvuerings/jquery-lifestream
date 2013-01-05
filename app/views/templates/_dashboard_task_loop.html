@@ -35,10 +35,9 @@
   </div>
 
   <div class="cc-widget-tasks-notifications-more" data-ng-show="task.show">
-    <div class="row">
+    <div class="row" data-ng-show="task.note">
       <div class="eight columns offset-by-four cc-widget-tasks-notifications-text-column">
-        <span data-ng-show="task.note" class="cc-widget-task-note-text">{{task.note}}</span>
-        <span data-ng-show="!task.note" class="cc-widget-task-note-text">Details not available.</span>
+        <span class="cc-widget-task-note-text">{{task.note}}</span>
       </div>
     </div>
     <div class="row">

@@ -1,13 +1,14 @@
 @import "compass/css3";
 @import "compass/css3/user-interface";
 
+$cc-action-button-color: #72cb12;
 $cc-alert-color: #fb0007;
 $cc-border-color: #999;
-$cc-button-color: #72cb12;
+$cc-button-color: #80c7de;
 $cc-column-border-color: #dedede;
 $cc-launcher-border-color: #114d80;
 $cc-launcher-link-color: #15315c;
-$cc-light-grey: #474747;
+$cc-light-grey: #5c5c5c;
 $cc-list-border-color: #cacaca;
 $cc-main-background-color: #f2f2f2;
 $cc-main-header-border-color: #d3d8d8;
@@ -21,9 +22,15 @@ $cc-widget-more-background-color: #f5f5f5;
 
 
 /* Foundation button overrides */
-.button.small {
-  font-size: 13px;
-  padding: 7px 8px 8px;
+
+.button {
+  background-color: $cc-button-color;
+}
+
+.button.tiny {
+  font-size: 11px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 /* Inset list items */
@@ -83,6 +90,9 @@ form {
   border-radius: 5px;
   padding: 5px;
 }
+form input {
+  font-family: Arial;
+}
 form input[type="text"] {
   border: 1px solid #aeaeae;
   border-radius: 3px;
@@ -96,7 +106,7 @@ form label {
 
 /* Buttons */
 .cc-button-submit {
-  background: $cc-button-color;
+  background: $cc-action-button-color;
   border: none;
   border-radius: 4px;
   color: #fff;
@@ -109,7 +119,7 @@ form label {
   border: none;
   color: $cc-light-grey;
   font-size: 13px;
-  padding: 3px 15px;
+  padding: 3px 5px;
 }
 
 .cc-button-submit:hover, .cc-button-reset:hover {

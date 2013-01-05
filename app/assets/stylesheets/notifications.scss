@@ -4,6 +4,10 @@
   .cc-widget-list-selected-title {
     padding-left: 0;
   }
+  .cc-widget-notification-source {
+    color: $cc-light-grey;
+    font-size: 11px;
+  }
   .cc-widget-notifications-summary {
     padding-left: 30px;
     width: 270px;
@@ -13,8 +17,8 @@
       line-height: 1.4;
       padding-left: 0;
     }
-    .cc-emitter-square {
-      margin-top: 5px;
+    .cc-widget-notifications-emitter-column {
+      margin-right: 15px;
     }
   }
   .cc-widget-notifications-more {
@@ -22,9 +26,9 @@
       font-size: 11px;
       padding-left: 0;
     }
-    .cc-widget-notification-note-text {
-      font-size: 12px;
-    }
-
+  }
+  .cc-widget-notification-note-text {
+    font-size: 12px;
+    line-height: 1.3;
   }
 }
