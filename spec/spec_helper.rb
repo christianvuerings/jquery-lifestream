@@ -52,6 +52,11 @@ RSpec.configure do |config|
 
   # Include Auth helper:
   config.include IntegrationSpecHelper, :type => :request
+
+  # Clear out cache at the beginning of each test.
+  config.before :each do
+    Rails.cache.clear
+  end
 end
 
 Capybara.default_host = 'http://localhost:3000'
