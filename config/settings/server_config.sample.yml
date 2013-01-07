@@ -1,0 +1,17 @@
+# This should be moved to wherever deploy.rb references (~/.calcentral_config/)
+common:
+  repository: "some git repo"
+  user: "some user"
+  branch: "a branch"
+  root: "remote root project directory"
+dev:
+  servers:
+    - "server 1"
+    - "server 2"
+    - "server 3"
+
+sandbox:
+  servers:
+    - "server 1"
+  branch: "a branch"
+  root: "remote root project directory"
