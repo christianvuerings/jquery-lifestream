@@ -234,9 +234,9 @@ class MyTasks < MyMergedModel
         bucket = "Overdue"
       elsif due >= today && due < tomorrow
         bucket = "Due Today"
-      elsif due >= tomorrow && due < end_of_this_week
+      elsif due >= tomorrow && due <= end_of_this_week
         bucket = "Due This Week"
-      elsif due >= end_of_this_week
+      elsif due > end_of_this_week
         bucket = "Due Next Week"
       end
 
