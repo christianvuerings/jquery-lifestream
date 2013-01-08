@@ -95,31 +95,31 @@
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588307",
               "title": "Future External Tool Assignment",
-              "start_at": ":::SIX_DAYS_HENCE:::"
+              "start_at": ":::UTC_LATER_IN_WEEK:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588305",
               "title": "Future Quiz",
-              "start_at": ":::SIX_DAYS_HENCE:::"
+              "start_at": ":::UTC_LATER_IN_WEEK:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588310",
               "title": "Future Ungraded Assignment",
-              "start_at": ":::SIX_DAYS_HENCE:::"
+              "start_at": ":::UTC_LATER_IN_WEEK:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588234",
               "title": "No-Submission Future Assignment",
-              "start_at": ":::SIX_DAYS_HENCE:::"
+              "start_at": ":::UTC_NEXT_WEEK:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588250",
               "title": "Paper Submission Future Assignment",
-              "start_at": ":::SIX_DAYS_HENCE:::"
+              "start_at": ":::UTC_NEXT_WEEK:::"
             }
           ]
         },
