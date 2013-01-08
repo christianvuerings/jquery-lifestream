@@ -24,13 +24,13 @@ describe "MyTasks" do
     overdue_counter = 5
     # On Sundays, no "Due This Week" tasks can escape the "Due Today" bucket.
     if Date.today.sunday?
-      today_counter = 5
+      today_counter = 8
       this_week_counter = 0
     else
       today_counter = 2
-      this_week_counter = 3
+      this_week_counter = 6
     end
-    next_week_counter = 6
+    next_week_counter = 3
     unscheduled_counter = 1
 
     valid_feed["tasks"].each do |task|
