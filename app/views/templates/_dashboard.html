@@ -6,7 +6,16 @@
     <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
       <div class="cc-widget-title">
         <h2 class="cc-left">Assignments and Tasks</h2>
-        <button class="cc-widget-add-icon cc-left" title="Add a task" data-ng-click="toggleAddTask()">+</button>
+        <button
+            class="cc-widget-add-icon cc-left"
+            title="Add a task"
+            data-ng-click="toggleAddTask()"
+            data-ng-mouseenter="show_task_plus=true"
+            data-ng-mouseleave="show_task_plus=false">
+          <div class="cc-widget-add-icon-plus">+</div>
+          <div class="cc-widget-add-icon-text" data-ng-show="show_task_plus" aria-labelledby="addTaskLabel">Task</div>
+          <div id="addTaskLabel" class="visuallyhidden">Add a task</div>
+        </button>
       </div>
       <div class="cc-tasks-list">
         <div class="cc-widget-body">
@@ -20,9 +29,9 @@
               </div>
             </div>
             <div class="row">
-              <div class="twelve columns cc-widget-tasks-form-buttons">
-                <input class="cc-button-reset" type="reset" value="Cancel" data-ng-click="toggleAddTask()" />
+              <div class="ten columns offset-by-two cc-widget-tasks-form-buttons">
                 <input class="cc-button-submit" type="submit" value="Add Task" />
+                <input class="cc-button-reset" type="reset" value="Cancel" data-ng-click="toggleAddTask()" />
               </div>
             </div>
           </form>

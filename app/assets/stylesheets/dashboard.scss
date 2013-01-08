@@ -69,27 +69,40 @@
   }
   .cc-widget-add-icon {
     @include user-select("none");
-    background: #ccc;
-    border: none;
+    background: #fff;
+    // Start with white (not clear) border so button doesn't jump when hover border appears
+    border: 2px solid #fff;
     border-radius: 4px;
-    color: #fff;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    margin: 5px 0 0 5px;
-    padding: 1px 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin: 3px 0 0 5px;
+    padding: 1px 3px 0 2px;
     text-align: center;
     &:focus, &:hover {
-      background: $cc-action-button-color;
+      border: 2px solid $cc-action-button-color;
     }
+  }
+  .cc-widget-add-icon-plus {
+    background-color: #ccc;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 2px;
+    padding: 2px 5px 2px 5px;
+    &:focus, &:hover {
+      background-color: $cc-action-button-color;
+      color: #fff;
+    }
+  }
+  .cc-widget-add-icon-text {
+    display: inline-block;
+    margin-top: 2px;
+    margin-bottom: 0;
   }
 }
 
 .cc-widget-tasks-form {
   margin-top: 5px;
-  .cc-widget-tasks-form-buttons {
-    text-align: right;
-  }
 }
 
 /* Shared between mygroups and myclasses */
