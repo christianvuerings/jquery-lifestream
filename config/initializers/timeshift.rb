@@ -5,6 +5,8 @@ Rails.application.config.after_initialize do
 
   # midnight on the current day
   today = Date.today.to_time_in_current_zone.to_datetime
+  end_of_week = today.sunday
+  next_week = end_of_week.advance(days: 2)
 
   # Google tasks store due dates as zero-hour Z-time
   end_of_week_utc = today.sunday.to_date.to_datetime
@@ -23,6 +25,8 @@ Rails.application.config.after_initialize do
       ":::TODAY_AFTER_LUNCH:::" => today.advance(:hours => 14, :minutes => 00, :seconds => 00).rfc3339,
       ":::TODAY_THREE_THIRTY:::" => today.advance(:hours => 15, :minutes => 30, :seconds => 00).rfc3339,
       ":::TODAY_FOUR_THIRTY:::" => today.advance(:hours => 16, :minutes => 30, :seconds => 00).rfc3339,
+      ":::LATER_IN_WEEK:::" => end_of_week.rfc3339,
+      ":::NEXT_WEEK:::" => next_week.rfc3339,
       ":::UTC_LATER_IN_WEEK:::" => end_of_week_utc.strftime('%FT%T.000Z'),
       ":::UTC_NEXT_WEEK:::" => next_week_utc.strftime('%FT%T.000Z'),
       ":::TODAY:::" => Date.today.rfc3339,
