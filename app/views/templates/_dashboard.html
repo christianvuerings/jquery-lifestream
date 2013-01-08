@@ -57,10 +57,10 @@
             <div data-ng-switch-when="scheduled">
 
             <div class="row">
-              <h3 class="nine columns end cc-widget-section-label">Overdue</h3>
+              <h3 class="nine columns end cc-widget-section-label cc-widget-tasks-section-top">Overdue</h3>
               <div class="three columns cc-right cc-widget-section-label-due">Due</div>
             </div>
-              <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+              <ul class="cc-widget-tasks-notifications-list">
                 <li
                   data-ng-repeat="task in filtered = (tasks | filter:filterOverdue)"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -71,8 +71,8 @@
                 There are currently no {{tasks_mode}} tasks/assignments that are overdue.
               </p>
 
-              <h3 class="cc-widget-section-label">Due Today</h3>
-              <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+              <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Today</h3>
+              <ul class="cc-widget-tasks-notifications-list">
                 <li
                   data-ng-repeat="task in filtered = (tasks | filter:filterDueToday)"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -83,8 +83,8 @@
                 There are currently no {{tasks_mode}} tasks/assignments that are due today.
               </p>
 
-              <h3 class="cc-widget-section-label">Due This Week</h3>
-              <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+              <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due This Week</h3>
+              <ul class="cc-widget-tasks-notifications-list">
                 <li
                   data-ng-repeat="task in filtered = (tasks | filter:filterDueThisWeek)"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -95,8 +95,8 @@
                 There are currently no {{tasks_mode}} tasks/assignments that are due this week.
               </p>
 
-              <h3 class="cc-widget-section-label">Due Next Week</h3>
-              <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+              <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Next Week</h3>
+              <ul class="cc-widget-tasks-notifications-list">
                 <li
                   data-ng-repeat="task in filtered = (tasks | filter:filterDueNextWeek)"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -112,9 +112,9 @@
 
             <div data-ng-switch-when="unscheduled">
               <div class="row">
-                <h3 class="nine columns end cc-widget-section-label">Unscheduled</h3>
+                <h3 class="nine columns end cc-widget-section-label cc-widget-tasks-section-top">Unscheduled</h3>
               </div>
-              <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+              <ul class="cc-widget-tasks-notifications-list">
                 <li
                   data-ng-repeat="task in filtered = (tasks | orderBy:'updated' | filter:filterUnScheduled)"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -132,7 +132,7 @@
                 <div class="three columns end cc-right cc-widget-section-label-due">Completed</div>
               </div>
 
-              <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+              <ul class="cc-widget-tasks-notifications-list">
                 <li
                   data-ng-repeat="task in filtered = (tasks | orderBy:'completed_date.epoch':true | filter:{status:'completed'})"
                   data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -164,7 +164,7 @@
 
       <div class="cc-notifications-list">
 
-          <ul class="cc-widget-tasks-notifications-list cc-widget-section-bottom">
+          <ul class="cc-widget-tasks-notifications-list">
             <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
               <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification)">
 
