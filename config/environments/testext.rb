@@ -37,4 +37,9 @@ Calcentral::Application.configure do
 
   # Fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
+
+  # Caching store
+  config.cache_store = ActiveSupport::Cache.lookup_store(:memory_store, :size => 16.megabytes)
+  config.cache_store.logger = Logger.new("#{Rails.root}/log/#{Rails.env}-cache.log")
+  config.cache_store.logger.level = Logger::DEBUG
 end
