@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def clear_cache
+    Rails.logger.info "Clearing all cache entries"
+    Rails.cache.clear
+    render :nothing => true, :status => 204
+  end
+
 end
