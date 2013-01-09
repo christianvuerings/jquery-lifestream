@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.10"
+gem "rails", "3.2.11"
 
 # Postgresql adapter
 gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.5"
