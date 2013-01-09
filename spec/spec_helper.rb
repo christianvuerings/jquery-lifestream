@@ -7,6 +7,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
+require 'capybara/rails'
 require 'webmock/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -51,7 +52,7 @@ RSpec.configure do |config|
   end
 
   # Include Auth helper:
-  config.include IntegrationSpecHelper, :type => :request
+  config.include IntegrationSpecHelper, :type => :feature
 
   # Clear out cache at the beginning of each test.
   config.before :each do

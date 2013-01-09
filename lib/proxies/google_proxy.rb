@@ -21,7 +21,7 @@ class GoogleProxy < BaseProxy
       token_settings["expiration_time"] = options[:expiration_time].to_i
     end
     @current_token = token_settings["access_token"]
-    @client = Google::APIClient.new
+    @client = Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1"})
     @client.authorization.client_id = Settings.google_proxy.client_id
     @client.authorization.client_secret = Settings.google_proxy.client_secret
     @client.authorization.access_token = token_settings["access_token"]

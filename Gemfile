@@ -22,20 +22,20 @@ gem "faraday", "~> 0.8.4"
 
 # OAuth2 support
 gem "signet", "~> 0.4.3"
-gem "google-api-client", "~> 0.5.0"
+gem "google-api-client", "~> 0.6.0"
 
 # for VCR http recording tool
-gem "vcr", "~> 2.3.0"
+gem "vcr", "~> 2.4.0"
 gem "jruby-openssl", "~> 0.8.2"
 
 # for memcached connection
-gem "dalli", "~> 2.5.0"
+gem "dalli", "~> 2.6.0"
 
 # smarter logging
 gem "log4r", "~> 1.1.10"
 
 # for easier non-DB-backed models
-gem "active_attr", "~> 0.6.0"
+gem "active_attr", "~> 0.7.0"
 
 # for production deployment
 gem "trinidad", "~> 1.4.4"
@@ -76,7 +76,7 @@ group :development, :testext, :production do
 end
 
 group :development, :test , :testext do
-  gem "rspec-rails", "~> 2.0"
+  gem "rspec-rails", "~> 2.12.1"
   gem "minitest-reporters"
 
   # Test our JavaScript code.
@@ -97,7 +97,7 @@ group :development, :test , :testext do
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
   # https://rubygems.org/gems/capybara
-  gem "capybara", "~> 1.1.4"
+  gem "capybara", "~> 2.0.2"
 end
 
 group :development do

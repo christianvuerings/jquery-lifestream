@@ -7,7 +7,7 @@ class GoogleAuthController < AuthController
   end
 
   def get_client(final_redirect = "")
-    google_client = Google::APIClient.new
+    google_client = Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1"})
     client = google_client.authorization
     client.client_id = Settings.google_proxy.client_id
     client.client_secret = Settings.google_proxy.client_secret
