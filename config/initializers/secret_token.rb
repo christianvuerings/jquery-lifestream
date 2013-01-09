@@ -4,4 +4,13 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Calcentral::Application.config.secret_token = '343ea0b6fb29ab1148117ba3b1c0f40222268a547d3efddfe8e7646430178a8e8d8dab2fc7c2a1eefedd665585bee3d78bb57f603830fd078855ccdef8eca236'
+
+# Enforce the secured secret_token in production environments
+if Rails.env.production?
+  if Settings.secret_token.blank? || Settings.secret_token == "some 128 char random hex string"
+    raise "Secret_token must be specified in settings for production environments!"
+  end
+  Calcentral::Application.config.secret_token = Settings.secret_token
+else
+  Calcentral::Application.config.secret_token = Settings.secret_token || SecureRandom.hex(128)
+end
