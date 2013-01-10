@@ -12,7 +12,7 @@ class AuthController < ApplicationController
 
   def request_authorization
     expire
-    final_redirect = params[:final_redirect] || "/profile"
+    final_redirect = params[:final_redirect] || "/settings"
     client = get_client final_redirect
     url = client.authorization_uri.to_s
     Rails.logger.debug "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
@@ -45,7 +45,7 @@ class AuthController < ApplicationController
 
     expire
 
-    final_redirect = params[:state] || "/profile"
+    final_redirect = params[:state] || "/settings"
     final_redirect = Base64.decode64 final_redirect
     redirect_to final_redirect
   end

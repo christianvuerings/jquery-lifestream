@@ -12,10 +12,10 @@
     // Private methods that are only exposed for testing but shouldn't be used within the views
 
     /**
-     * Redirect to the profile page
+     * Redirect to the settings page
      */
-    $scope.user._redirectToProfilePage = function() {
-      window.location = '/profile';
+    $scope.user._redirectToSettingsPage = function() {
+      window.location = '/settings';
     };
 
     /**
@@ -28,7 +28,7 @@
       if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
         $scope.user.signIn();
       } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
-        $http.post('/api/my/record_first_login').success($scope.user._redirectToProfilePage);
+        $http.post('/api/my/record_first_login').success($scope.user._redirectToSettingsPage);
       }
     };
 
