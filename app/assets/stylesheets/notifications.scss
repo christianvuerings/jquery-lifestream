@@ -1,9 +1,5 @@
 /* Notifications widget */
 #cc-widget-notifications {
-
-  .cc-widget-list-selected-title {
-    padding-left: 0;
-  }
   .cc-widget-notification-source {
     color: $cc-light-grey;
     font-size: 11px;
@@ -15,17 +11,13 @@
   .row {
     .cc-widget-notifications-text-column {
       line-height: 1.4;
-      padding-left: 0;
-    }
-    .cc-widget-notifications-emitter-column {
-      margin-right: 15px;
     }
   }
-  .cc-widget-notifications-more {
-    .cc-widget-notifications-text-column {
-      font-size: 11px;
-      padding-left: 0;
-    }
+  .cc-widget-tasks-notifications-more {
+    padding-left: 15px;
+  }
+  .cc-widget-notifications-text-margin {
+    margin-left: 30px;
   }
   .cc-widget-notification-note-text {
     font-size: 12px;
