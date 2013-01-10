@@ -175,13 +175,12 @@
             <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
               <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification)">
 
-                <div class="one mobile-one columns cc-widget-notifications-emitter-column">
-                  <div class="cc-emitter-square cc-emitter-{{notification.color_class}}" title="{{notification.emitter}} notification"></div>
-                </div>
-
-                <div class="seven mobile-two columns cc-widget-notifications-text-column cc-widget-list-selected-title">
-                  {{notification.title}}<br />
-                  <span class="cc-widget-notification-source">{{notification.source}}</span>
+                <div class="eight mobile-three columns cc-widget-notifications-text-column cc-widget-list-selected-title">
+                  <div class="cc-emitter-square cc-left cc-emitter-{{notification.color_class}}" title="{{notification.emitter}} notification"></div>
+                  <div class="cc-widget-notifications-text-margin">
+                    {{notification.title}}<br />
+                    <span class="cc-widget-notification-source">{{notification.source}}</span>
+                  </div>
                 </div>
 
                 <div class="three mobile-one columns end cc-right cc-widget-tasks-notifications-date-string">
@@ -189,16 +188,12 @@
                 </div>
               </div>
 
-              <div class="cc-widget-tasks-notifications-more" data-ng-show="notification.show">
-                <div class="row">
-                  <div class="ten columns offset-by-two cc-widget-tasks-notifications-text-column">
-                    <span class="cc-widget-notification-note-text">{{notification.summary}}</span>
-                  </div>
+              <div class="row cc-widget-tasks-notifications-more" data-ng-show="notification.show">
+                <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
+                  <span class="cc-widget-notification-note-text">{{notification.summary}}</span>
                 </div>
-                <div class="row">
-                  <div class="ten columns offset-by-two cc-widget-tasks-notifications-text-column">
-                    <a data-ng-href="{{notification.source_url}}" class="cc-widget-more-view-in">View in {{notification.source}}</a>
-                  </div>
+                <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
+                  <a data-ng-href="{{notification.source_url}}" class="cc-widget-more-view-in">View in {{notification.source}}</a>
                 </div>
               </div>
             </li>
