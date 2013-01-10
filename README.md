@@ -37,6 +37,8 @@ create user calcentral_test with password 'secret';
 grant all privileges on database calcentral_test to calcentral_test;
 ```
 
+(If your PostgreSQL server is managed externally, you'll probably need to create a schema that matches the database username. See CLC-893 for details.)
+
 3. Fork this repository, then:
 ```bash
 git clone git@github.com:[your_github_acct]/calcentral.git
