@@ -81,23 +81,26 @@
     text-align: center;
     &:focus, &:hover {
       border: 2px solid $cc-action-button-color;
+      .cc-widget-add-icon-plus {
+        background-color: $cc-action-button-color;
+      }
+      .cc-widget-add-icon-text {
+        display: inline-block;
+      }
     }
   }
   .cc-widget-add-icon-plus {
+    color: #fff;
     background-color: #ccc;
     border-radius: 3px;
     display: inline-block;
     margin-bottom: 2px;
     padding: 2px 5px 2px 5px;
-    &:focus, &:hover {
-      background-color: $cc-action-button-color;
-      color: #fff;
-    }
   }
   .cc-widget-add-icon-text {
-    display: inline-block;
-    margin-top: 2px;
+    display: none;
     margin-bottom: 0;
+    margin-top: 2px;
   }
 }
 
