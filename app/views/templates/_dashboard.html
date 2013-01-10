@@ -63,10 +63,10 @@
 
             <div data-ng-switch-when="scheduled">
 
-            <div class="row">
-              <h3 class="nine columns end cc-widget-section-label cc-widget-tasks-section-top">Overdue</h3>
-              <div class="three columns cc-right cc-widget-section-label-due">Due</div>
-            </div>
+              <div class="row">
+                <h3 class="nine columns end cc-widget-section-label cc-widget-tasks-section-top">Overdue</h3>
+                <div class="three columns cc-right cc-widget-section-label-due">Due</div>
+              </div>
               <ul class="cc-widget-tasks-notifications-list">
                 <li
                   data-ng-repeat="task in filtered = (tasks | filter:filterOverdue)"
@@ -132,7 +132,6 @@
                 There are currently no {{tasks_mode}} tasks/assignments that are unscheduled.
               </p>
             </div>
-
 
             <div data-ng-switch-when="completed">
               <div class="row">
