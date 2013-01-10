@@ -24,9 +24,9 @@
       templateUrl: 'templates/dashboard.html',
       controller: 'DashboardController'
     }).
-    when('/profile', {
-      templateUrl: 'templates/profile.html',
-      controller: 'ProfileController'
+    when('/settings', {
+      templateUrl: 'templates/settings.html',
+      controller: 'SettingsController'
     }).
 
     // Redirect to a 404 page
