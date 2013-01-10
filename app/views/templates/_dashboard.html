@@ -276,14 +276,11 @@
           <li data-ng-repeat="class in myclasses" class="cc-widget-mygroups-myclasses-list-item">
             <div class="row">
 
-              <div class="three mobile-one columns cc-widget-mygroups-myclasses-icon-column">
+              <div class="ten mobile-three columns">
                 <div
-                  class="cc-widget-list-icon cc-widget-mygroups-myclasses-icon-column"
+                  class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
                   data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']">
                 </div>
-              </div>
-
-              <div class="seven mobile-two columns cc-widget-mygroups-myclasses-title-column">
                 <a data-ng-href="{{class.site_url}}"
                   class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
                 </a>
@@ -314,14 +311,11 @@
           <li data-ng-repeat="group in mygroups" class="cc-widget-mygroups-myclasses-list-item">
             <div class="row">
 
-              <div class="three mobile-one columns cc-widget-mygroups-myclasses-icon-column">
+              <div class="ten mobile-three columns">
                 <div
-                  class="cc-widget-list-icon cc-widget-mygroups-myclasses-icon-column"
+                  class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
                   data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']">
                 </div>
-              </div>
-
-              <div class="seven mobile-two columns cc-widget-mygroups-myclasses-title-column">
                 <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
                   data-ng-href="{{group.site_url}}">{{group.title}}
                 </a>

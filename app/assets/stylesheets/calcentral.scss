@@ -64,10 +64,9 @@ body {
   > footer {
     clear: both;
     font-size: 0.85em;
-    margin: 0 auto;
+    line-height: 1.5;
     overflow: hidden;
     padding: 10px 10px 15px;
-    width: 960px;
 
     a {
       float: right;
@@ -305,7 +304,7 @@ form label {
 /* Widgets */
 .cc-widget-list-icon {
   background-color: transparent;
-  background-position: 0 4px;
+  background-position: 0 2px;
   background-repeat: no-repeat;
 }
 
