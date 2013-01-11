@@ -16,19 +16,28 @@
       $scope.tasks = data.tasks;
     });
 
-    $scope.addTaskCompleted = function(data){
+    $scope.addTaskUpdateUI = function(data){
       $scope.tasks.push(data);
       $scope.add_task = {};
       $scope.show_add_task = false;
     };
 
     $scope.addTask = function() {
+      // Date entry regex allows slashes, dots, or hyphens, so split on any of them.
+      // We take two-digit years, assuming 21st century, so prepend '20' to year.
+      // Rearrange array and rejoin with hyphens to create legit date format.
+      var newdatearr = $scope.add_task.due_date.split(/[\/\.\-]/);
+      newdatearr[2] = 20 + newdatearr[2];
+      var newdate = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+
       var newtask = {
         "title": $scope.add_task.title,
+        "due_date": newdate,
+        "note": $scope.add_task.note,
         "emitter": "Google"
         };
       $http.post('/api/my/tasks/create', newtask).success(function(data) {
-        $scope.addTaskCompleted(data);
+        $scope.addTaskUpdateUI(data);
       });
     };
 
@@ -40,11 +49,12 @@
     // If completed, give task a completed date epoch *before* sending to
     // Google so model can reflect it immediately. Otherwise, remove completed_date prop.
     $scope.changeTaskState = function(task) {
-      if (task.status === 'completed') {
-        task['completed_date'] = {};
-        task['completed_date']['epoch'] = (new Date()).getTime() / 1000;
+     if (task.status === 'completed') {
+        task.completed_date = {
+          'epoch': (new Date()).getTime() / 1000
+        };
       } else {
-        delete task['completed_date'];
+        delete task.completed_date;
       }
       $http.post('/api/my/tasks', task);
     };
@@ -73,7 +83,6 @@
     $scope.filterUnScheduled = function(task) {
       return (!task.due_date && task.status !== 'completed');
     };
-
   }]);
 
 })();

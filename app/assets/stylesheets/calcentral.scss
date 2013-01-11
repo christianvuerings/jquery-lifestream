@@ -88,19 +88,25 @@ form {
   border: 1px solid #dedede;
   border-radius: 5px;
   padding: 5px;
-}
-form input {
-  font-family: Arial;
-}
-form input[type="text"] {
-  border: 1px solid #aeaeae;
-  border-radius: 3px;
-  width: 100%;
-}
-form label {
-  display: block;
-  margin-top: 5px;
-  text-align: right;
+
+  input {
+    font-family: Arial;
+    &[type="text"] {
+      border: 1px solid #aeaeae;
+      border-radius: 3px;
+      width: 100%;
+    }
+  }
+
+  label {
+    display: block;
+    margin-top: 5px;
+    text-align: right;
+    sup {
+      color: #ff0000;
+      font-weight: bold;
+    }
+  }
 }
 
 /* Buttons */
@@ -168,7 +174,7 @@ form label {
 }
 
 /* Useful classes */
-.cc-alert {
+.cc-alert, .cc-alert-nobang {
   color: $cc-alert-color !important;
 }
 .cc-alert:before {

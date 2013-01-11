@@ -129,7 +129,12 @@ class MyTasks < MyMergedModel
   end
 
   def format_google_insert_task_request(entry)
-    formatted_entry = {"title" => entry["title"]}
+    formatted_entry = {}
+    formatted_entry["title"] = entry["title"]
+    if entry["due_date"] && !entry["due_date"].blank?
+      formatted_entry["due"] = Date.strptime(entry["due_date"]).to_time_in_current_zone.to_datetime
+    end
+    formatted_entry["notes"] = entry["note"] if entry["note"]
     logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
     formatted_entry
   end
