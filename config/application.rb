@@ -75,16 +75,5 @@ module Calcentral
 
     # always be caching
     config.action_controller.perform_caching = true
-
-    # log in our own way
-    format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
-    Rails.logger = Log4r::Logger.new '[CalCentral]'
-    stdout = Outputter.stdout
-    stdout.formatter = format
-    file = FileOutputter.new('outputter', {
-            :filename => "#{Rails.root}/log/#{Rails.env}.log",
-        })
-    file.formatter = format
-    Rails.logger.outputters = [ stdout, file ]
   end
 end
