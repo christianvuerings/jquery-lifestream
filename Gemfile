@@ -39,6 +39,7 @@ gem "active_attr", "~> 0.7.0"
 
 # for production deployment
 gem "trinidad", "~> 1.4.4"
+gem "jruby-activemq", "~> 5.5.1"
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
