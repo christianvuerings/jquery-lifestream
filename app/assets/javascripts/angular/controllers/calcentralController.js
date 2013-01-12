@@ -5,7 +5,7 @@
   /**
    * CalCentral main controller
    */
-  calcentral.controller('CalcentralController', ['$http', '$route', '$scope', function($http ,$route, $scope) {
+  calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', function($http, $location, $route, $scope) {
 
     $scope.user = {};
 
@@ -19,16 +19,28 @@
     };
 
     /**
+     * Redirect to the dashboard page
+     */
+    $scope.user._redirectToDashboardPage = function() {
+      window.location = '/dashboard';
+    };
+
+    /**
      * Handle the access to the page that the user is watching
      * This will depend on
      *   - whether they are logged in or not
      *   - whether the page is public
      */
     $scope.user._handleAccessToPage = function() {
+      // Redirect to the login page when the page is private and you aren't authenticated
       if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
         $scope.user.signIn();
+      // Record that you've already visited the calcentral once and redirect to the settings page on the first login
       } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
         $http.post('/api/my/record_first_login').success($scope.user._redirectToSettingsPage);
+      // Redirect to the dashboard when you're accessing the root page and are authenticated
+      } else if ($scope.user.isAuthenticated() && $location.path() === '/') {
+        $scope.user._redirectToDashboardPage();
       }
     };
 

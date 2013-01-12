@@ -1,25 +1,70 @@
 <script type="text/ng-template" id="templates/splash.html">
-  <div class="five columns offset-by-one cc-page-index-welcome cc-page-index-welcome1">
-    <div class="panel">
-      <h3><strong>Unifying</strong> the online experience at <strong>UC Berkeley!</strong></h3>
-      <p><strong>CalCentral</strong> is a new resource for the <strong>UC Berkeley community</strong>.</p>
+  <div class="row">
+    <div class="six columns">
+      <img src="/assets/calcentral_logo_big.png" class="cc-page-splash-logo" alt="CalCentral logo" />
+      <h1>Welcome to CalCentral.</h1>
+      <div class="cc-page-splash-subtitle">Unify, Personalize, Discover</div>
+      <button class="radius button cc-page-splash-signin" data-ng-click="user.signIn()">Sign in with your CalNet ID</button>
+    </div>
+
+    <div class="six columns">
+      <div class="cc-splash-video-container">
+        <iframe class="cc-splash-video" type="text/html"
+    src="https://www.youtube.com/embed/mjGI2e4GG9E?autohide=0&color=white&theme=light&rel=0&showinfo=0"
+    frameborder="0" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 
-  <div class="five columns end cc-page-index-welcome cc-page-index-welcome2">
-    <div class="panel">
-      <h3>CalCentral: Pilot Release</h3>
-      <p>Welcome to the all-new pilot release of <strong>CalCentral</strong>. As we improve this site, you may notice changes to some existing features, or new capabilities being added. This is all part of the development process, so stay tuned.</p>
-      <p><strong>In this release, students, staff and faculty can:</strong></p>
-      <ul>
-        <li>Quickly access upcoming events in bCal</li>
-        <li>Find classes and groups in bSpace and Canvas</li>
-        <li>Keep tabs on classroom assignments</li>
-        <li>View your Google task list</li>
-        <li>Stay informed with campus announcements</li>
-        <li>Browse class listings in UC Berkeley departments</li>
-      </ul>
-      <p class="cc-page-index-welcome2-handshake"><span class="cc-page-index-welcome2-herefromyou">We want to hear from you!</span><br><a href="http://ets.berkeley.edu/calcentral-feedback">Tell us what you think</a>.</p>
+  <h1 class="cc-splash-features-title">
+    CalCentral keeps you informed
+  </h1>
+
+  <div class="cc-splash-features">
+    <div class="row">
+      <div class="seven columns">
+        <h2>Up Next</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla placerat nibh non massa tincidunt ultricies. Aenean non enim massa. In hac habitasse platea dictumst. Nam id nibh orci. Fusce vehicula</p>
+      </div>
+      <div class="five columns">
+        <img src="http://placehold.it/215x100&text=Up Next Graphic" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="seven columns">
+        <h2>Assignments and Tasks</h2>
+        <p>In hac habitasse platea dictumst. Donec placerat pharetra lacus facilisis pharetra. Mauris at dui ut tellus eleifend dapibus.</p>
+      </div>
+      <div class="five columns">
+        <img src="http://placehold.it/215x100&text=Assignments & Tasks Graphic" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="seven columns">
+        <h2>Notifications</h2>
+        <p>Sed massa lorem, commodo sit amet posuere tincidunt, tincidunt vitae quam. Ut non velit sapien, id dapibus tortor. Nunc condimentum adipiscing pharetra.</p>
+      </div>
+      <div class="five columns">
+        <img src="http://placehold.it/215x100&text=Notifications Graphic" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="seven columns">
+        <h2>My Classes</h2>
+        <p>Nullam fermentum euismod purus, vel hendrerit diam facilisis sodales. Sed interdum posuere sem, id auctor leo dapibus nec. Etiam lacinia justo et nunc facilisis malesuada</p>
+      </div>
+      <div class="five columns">
+        <img src="http://placehold.it/215x100&text=My Classes Graphic" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="seven columns">
+        <h2>My Groups</h2>
+        <p>Nullam fermentum euismod purus, vel hendrerit diam facilisis sodales. Sed interdum posuere sem, id auctor leo dapibus nec. Etiam lacinia justo et nunc facilisis malesuada</p>
+      </div>
+      <div class="five columns">
+        <img src="http://placehold.it/215x100&text=My Groups Graphic" />
+      </div>
     </div>
   </div>
 </script>
