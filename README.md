@@ -104,14 +104,12 @@ rails s
 12. Access your development server at [localhost:3000](http://localhost:3000/).
 Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 
-## LiveReload & Testing
+## Front-end Testing
 
-See code changes happening live in the browser and look at the testing
+Front-end [jasmine](http://pivotal.github.com/jasmine/) tests live in spec/javascripts/calcentral/*.
 
-Run `foreman start` in the terminal, it will:
-* Start the rails server
-* Expose the [jasmine](http://pivotal.github.com/jasmine/) tests at http://localhost:8888
-* Start [Guard](https://github.com/guard/guard) for livereload.
+To view results of front-end tests, run `rake jasmine` in a separate terminal,
+then visit [localhost:8888](http://localhost:8888).
 
 ## Debugging
 
