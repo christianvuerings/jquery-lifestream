@@ -34,13 +34,13 @@ class JmsConnection
     close
   end
 
-  def handle_texts(&proc)
+  def start_listening_with(&proc)
     @listener = JmsTextListener.new(&proc)
     @consumer.setMessageListener(@listener)
     @connection.start
   end
 
-  # For testing.
+  # For testing with local ActiveMQ deployments.
   def send_message(message_text)
     begin
       session = @connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
@@ -51,6 +51,7 @@ class JmsConnection
       session.close() if session
     end
   end
+  # For testing error handling of text message listener.
   def send_bytes_message()
     begin
       session = @connection.createSession(false, Session.AUTO_ACKNOWLEDGE)

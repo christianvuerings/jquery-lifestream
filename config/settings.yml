@@ -68,7 +68,7 @@ cache:
 
 # Bearfacts JMS event queue
 ist_jms:
-  url: tcp://SOMEWHERE:61616
-  username: USERNAME
-  password: PASSWORD
-  queue: QUEUENAME
+  url: tcp://localhost:61616
+  queue: testqueue
+#  username: USERNAME
+#  password: PASSWORD

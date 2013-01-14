@@ -22,19 +22,13 @@ module CalcentralConfig
     app_name = ENV["APP_NAME"] || "calcentral"
     format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
     Rails.logger = Log4r::Logger.new(app_name)
+    filename_suffix = (Rails.env == "production") ? '' : "-#{Rails.env}"
     stdout = Outputter.stdout
     stdout.formatter = format
-    file = case app_name
-             when 'calcentral'
-               FileOutputter.new('outputter', {
-                   filename: "#{Rails.root}/log/#{Rails.env}.log"
-               })
-             when 'backstage'
-               Log4r::DateFileOutputter.new('outputter', {
-                   dirname: "#{Rails.root}/log",
-                   filename: "backstage.log"
-               })
-           end
+    file = Log4r::DateFileOutputter.new('outputter', {
+        dirname: "#{Rails.root}/log",
+        filename: "#{app_name}#{filename_suffix}.log"
+    })
     file.formatter = format
     Rails.logger.outputters = [ stdout, file ]
   end

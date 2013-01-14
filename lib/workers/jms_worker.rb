@@ -13,7 +13,7 @@ class JmsWorker
   end
 
   def run
-    @jms.handle_texts() do |msg|
+    @jms.start_listening_with() do |msg|
       @handler.handle(msg)
     end
   end
@@ -22,7 +22,7 @@ class JmsWorker
     "#{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors; #{@jms.count} listened messages"
   end
 
-  # For testing support.
+  # Helper for testing against a local ActiveMQ server.
   def load_messages(count)
     (1..count).each {|i| @jms.send_message("msgtext #{i}")}
   end
