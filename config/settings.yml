@@ -65,3 +65,10 @@ cache:
   maximum_expires_in: <%= 1.day %>
   # Must be less than the shortest-lived source cache. 0 to pass-through.
   api_expires_in: <%= 15.minutes %>
+
+# Bearfacts JMS event queue
+ist_jms:
+  url: tcp://localhost:61616
+  queue: testqueue
+#  username: USERNAME
+#  password: PASSWORD
