@@ -23,7 +23,7 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body class="cc-page-index">
+<body data-ng-class="{'cc-page-splash':(controller_name=='SplashController')}">
 
     <%= render 'templates/launcher' %>
     <!-- Top Navbar -->
@@ -34,9 +34,9 @@
       </ul>
     </div>
 
-      <div class="row cc-container-main" role="main">
-        <%= yield %>
-      </div>
+    <div class="row cc-container-main" role="main">
+      <%= yield %>
+    </div>
 
     <footer class="row" data-ng-controller="FooterController">
       <div class="six columns mobile-three" data-ng-cloak>Copyright &copy; {{currentTime() | date:'yyyy'}} The Regents of the University of California</div>
