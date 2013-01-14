@@ -26,7 +26,7 @@
       // Date entry regex allows slashes, dots, or hyphens, so split on any of them.
       // We take two-digit years, assuming 21st century, so prepend '20' to year.
       // Rearrange array and rejoin with hyphens to create legit date format.
-      var newdatearr = $scope.add_task.due_date.split(/[\/\.\-]/);
+      var newdatearr = $scope.add_task.due_date.split(/[\/\.\- ]/);
       newdatearr[2] = 20 + newdatearr[2];
       var newdate = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
 
