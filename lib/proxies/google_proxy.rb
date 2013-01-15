@@ -2,6 +2,8 @@ require 'google/api_client'
 
 class GoogleProxy < BaseProxy
 
+  attr_accessor :authorization
+
   APP_ID = "Google"
 
   def initialize(options = {})
