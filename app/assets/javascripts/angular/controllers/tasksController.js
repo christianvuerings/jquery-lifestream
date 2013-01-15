@@ -10,39 +10,43 @@
     // Initial mode for Tasks view
     $scope.tasks_mode = 'scheduled';
     $scope.show_add_task = false;
+    $scope.is_task_processing = false;
     $scope.add_task = {};
 
     $http.get('/api/my/tasks').success(function(data) {
       $scope.tasks = data.tasks;
     });
 
-    $scope.addTaskUpdateUI = function(data){
-      $scope.tasks.push(data);
+    $scope.addTaskCompleted = function(data){
       $scope.add_task = {};
+      $scope.is_task_processing = false;
       $scope.show_add_task = false;
+      $scope.tasks.push(data);
     };
 
     $scope.addTask = function() {
-      // Date entry regex allows slashes, dots, or hyphens, so split on any of them.
+
+      // When the user submits the task, we show a processing message
+      // This message will disappear as soon the task has been added.
+      $scope.is_task_processing = true;
+
+      // Date entry regex allows slashes, dots, spaces and hyphens, so split on any of them.
       // We take two-digit years, assuming 21st century, so prepend '20' to year.
       // Rearrange array and rejoin with hyphens to create legit date format.
-
       var newtask = {
-        "title": $scope.add_task.title,
-        "note": $scope.add_task.note,
-        "emitter": "Google"
+        'emitter': 'Google',
+        'note': $scope.add_task.note,
+        'title': $scope.add_task.title
       };
 
       // Not all tasks have dates.
       if ($scope.add_task.due_date) {
         var newdatearr = $scope.add_task.due_date.split(/[\/\.\- ]/);
-        newdatearr[2] = 20 + newdatearr[2];
-        var newdate = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
-        newtask.due_date = newdate;
+        newtask.due_date = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
       $http.post('/api/my/tasks/create', newtask).success(function(data) {
-        $scope.addTaskUpdateUI(data);
+        $scope.addTaskCompleted(data);
       });
     };
 
@@ -50,11 +54,12 @@
       $scope.show_add_task = !$scope.show_add_task;
     };
 
-    // Post changed tasks back to Google through our proxy.
-    // If completed, give task a completed date epoch *before* sending to
-    // Google so model can reflect it immediately. Otherwise, remove completed_date prop.
+    /**
+     * If completed, give task a completed date epoch *before* sending to
+     * Google so model can reflect change immediately. Otherwise, remove completed_date prop.
+     */
     $scope.changeTaskState = function(task) {
-     if (task.status === 'completed') {
+      if (task.status === 'completed') {
         task.completed_date = {
           'epoch': (new Date()).getTime() / 1000
         };
