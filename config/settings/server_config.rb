@@ -1,4 +1,5 @@
 require 'lib/calcentral_config'
+require 'yaml'
 
 module ServerConfig
   extend self
