@@ -26,16 +26,21 @@
       // Date entry regex allows slashes, dots, or hyphens, so split on any of them.
       // We take two-digit years, assuming 21st century, so prepend '20' to year.
       // Rearrange array and rejoin with hyphens to create legit date format.
-      var newdatearr = $scope.add_task.due_date.split(/[\/\.\- ]/);
-      newdatearr[2] = 20 + newdatearr[2];
-      var newdate = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
 
       var newtask = {
         "title": $scope.add_task.title,
-        "due_date": newdate,
         "note": $scope.add_task.note,
         "emitter": "Google"
-        };
+      };
+
+      // Not all tasks have dates.
+      if ($scope.add_task.due_date) {
+        var newdatearr = $scope.add_task.due_date.split(/[\/\.\- ]/);
+        newdatearr[2] = 20 + newdatearr[2];
+        var newdate = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+        newtask.due_date = newdate;
+      }
+
       $http.post('/api/my/tasks/create', newtask).success(function(data) {
         $scope.addTaskUpdateUI(data);
       });
