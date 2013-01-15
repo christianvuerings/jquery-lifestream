@@ -2,14 +2,9 @@ require "rvm/capistrano"
 require "bundler/capistrano"
 require "config/settings/server_config"
 
-set :rvm_ruby_string, 'jruby-1.7.1@calcentral'
-
 settings = ServerConfig.get_settings(Dir.home + "/.calcentral_config/server_config.yml")
 
-set :application, "CalCentral"
-set :repository, settings.common.repository
-
-set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
+set :application, "Calcentral"
 
 role(:sandbox_dev_host) {
   settings.sandbox.servers << { :branch => settings.sandbox.branch, :project_root => settings.sandbox.root }
@@ -26,27 +21,23 @@ namespace :calcentral_dev do
   desc "Update and restart the calcentral_dev machine"
   task :update, :roles => :calcentral_dev_host do
     # Take everything offline first.
-    run "touch /var/www/html/calcentral/calcentral-in-maintenance"
     script_folder = project_root + ("/script")
     run "cd #{script_folder}; ./stop-trinidad.sh"
     # Run db migrate on the first app server
     servers = find_servers_for_task(current_task)
-    rake = fetch(:rake, 'bundle exec rake')
-    rails_env = fetch(:rails_env, 'production')
 
     transaction do
       servers.each_with_index do |server, index|
-        run "cd #{project_root}; git fetch origin; git checkout -qf #{branch}; git reset --hard HEAD; git pull --quiet --summary"
-        run "cd #{project_root}; RAILS_ENV=#{fetch(:rails_env, 'production')} bundle install"
+        run "cd #{script_folder}; ./update-build.sh", :hosts => server
         if (index == 0)
           logger.debug "---- Server: #{server.host} running migrate in transaction on offline app servers"
-          run "cd #{project_root}; #{rake} db:migrate RAILS_ENV=#{rails_env} "
+          run "cd #{script_folder}; ./migrate.sh", :hosts => server
         end
       end
     end
     servers.each do |server|
-      run "cd #{script_folder}; ./update-restart.sh"
-      run "rm /var/www/html/calcentral/calcentral-in-maintenance"
+      run "cd #{script_folder}; ./start-trinidad.sh", :hosts => server
+      run "rm /var/www/html/calcentral/calcentral-in-maintenance", :hosts => server
     end
   end
 end
@@ -59,10 +50,10 @@ namespace :sandbox_dev_host do
     rake = fetch(:rake, 'bundle exec rake')
     rails_env = fetch(:rails_env, 'production')
     find_servers_for_task(current_task).each do |server|
-      run "cd #{server.options[:project_root]}; git fetch ets; git checkout -qf #{server.options[:branch]}; git reset --hard HEAD; git clean -f; git pull --quiet --summary"
-      run "cd #{server.options[:project_root]}; RAILS_ENV=#{fetch(:rails_env, 'production')} bundle install"
-      run "cd #{server.options[:project_root]}; #{rake} db:migrate RAILS_ENV=#{rails_env} "
-      run "cd #{server.options[:project_root].concat('/script')}; ./update-restart.sh"
+      run "cd #{server.options[:project_root].concat('/script')}; ./stop-trinidad.sh", :hosts => server
+      run "cd #{server.options[:project_root].concat('/script')}; ./update-build.sh", :hosts => server
+      run "cd #{server.options[:project_root].concat('/script')}; ./migrate.sh", :hosts => server
+      run "cd #{server.options[:project_root].concat('/script')}; ./start-trinidad.sh", :hosts => server
     end
   end
 end

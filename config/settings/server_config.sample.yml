@@ -1,6 +1,5 @@
 # This should be moved to wherever deploy.rb references (~/.calcentral_config/)
 common:
-  repository: "some git repo"
   user: "some user"
   branch: "a branch"
   root: "remote root project directory"

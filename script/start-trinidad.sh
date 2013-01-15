@@ -3,7 +3,7 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=log/update-restart.log
+LOG=log/start-stop.log
 LOGIT="tee -a $LOG"
 
 # TODO Make sure memcached is running.

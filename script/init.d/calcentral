@@ -1,0 +1,72 @@
+#!/bin/bash
+# Startup script for calcentral
+# chkconfig: 2345 90 05
+# description: start script for calcentral
+# processname: calcentral
+
+# Customize the following four variables
+RUN_AS_USER=app_calcentral
+CC_BASE=/home/${RUN_AS_USER}/calcentral
+START_SCRIPT=$CC_BASE/script/start-trinidad.sh
+STOP_SCRIPT=$CC_BASE/script/stop-trinidad.sh
+
+if [ -x "/usr/bin/id" ]; then
+  CURR_USER=`/usr/bin/id -u -n`
+else
+  CURR_USER="$USER"
+fi
+
+if [ -x "/sbin/runuser" ]; then
+  SU="/sbin/runuser"
+else
+  SU="/bin/su"
+fi
+
+start() {
+  echo -n "Starting calcentral..."
+  if [ $CURR_USER != "$RUN_AS_USER" ]; then
+    $SU - $RUN_AS_USER -c "\"$START_SCRIPT\""
+  else
+    $START_SCRIPT
+  fi
+}
+
+stop() {
+  echo -n "Shutting down calcentral..."
+  if [ $CURR_USER != "$RUN_AS_USER" ]; then
+    $SU - $RUN_AS_USER -c "\"$STOP_SCRIPT\""
+  else
+    $STOP_SCRIPT
+  fi
+}
+
+status() {
+  # The return value of this function may be used by other scripts
+  JPS_RESULTS=`jps -mlv | grep bin/trinidad | cut -d ' ' -f 1`
+  if [ -n "$JPS_RESULTS" ]; then
+    echo "PID: $JPS_RESULTS"
+  else
+    echo "PID: no pid found"
+  fi
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        stop
+        sleep 10
+        start
+        ;;
+  status)
+        status
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart|status}"
+esac
+
+exit

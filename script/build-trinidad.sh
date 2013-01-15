@@ -3,7 +3,7 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=log/update-restart.log
+LOG=log/start-stop.log
 LOGIT="tee -a $LOG"
 
 # Enable rvm and use the correct Ruby version and gem set.
