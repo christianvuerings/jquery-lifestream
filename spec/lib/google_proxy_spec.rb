@@ -95,10 +95,10 @@ describe GoogleProxy do
                              Settings.google_proxy.test_user_access_token, Settings.google_proxy.test_user_refresh_token, 0)
     proxy = GoogleEventsListProxy.new(:user_id => @random_id)
     GoogleProxy.access_granted?(@random_id).should be_true
-    old_token = proxy.client.authorization.access_token
+    old_token = proxy.authorization.access_token
     response_array = proxy.events_list()
     response_array[0].data["kind"].should == "calendar#events"
-    proxy.client.authorization.access_token.should_not == old_token
+    proxy.authorization.access_token.should_not == old_token
   end
 
   it "should simulate revoking a token after a 401 response", :testext => true do
@@ -106,7 +106,7 @@ describe GoogleProxy do
                              "bogus_token", "bogus_refresh_token", 0)
     proxy = GoogleEventsListProxy.new(:user_id => @random_id)
     GoogleProxy.access_granted?(@random_id).should be_true
-    proxy.client.authorization.stub(:expired?).and_return(false)
+    proxy.authorization.stub(:expired?).and_return(false)
     response_array = proxy.events_list()
     GoogleProxy.access_granted?(@random_id).should be_false
   end

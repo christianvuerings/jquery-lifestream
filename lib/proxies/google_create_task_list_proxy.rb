@@ -1,4 +1,4 @@
-class GoogleCreateTaskListProxy < GoogleProxy
+class GoogleCreateTaskListProxy < GoogleTasksProxy
 
   def create_task_list(body)
     parsed_body = stringify_body(body)

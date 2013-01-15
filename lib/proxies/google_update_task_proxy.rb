@@ -1,4 +1,4 @@
-class GoogleUpdateTaskProxy < GoogleProxy
+class GoogleUpdateTaskProxy < GoogleTasksProxy
 
   def update_task(task_list_id, task_id, body)
     parsed_body = stringify_body(body)

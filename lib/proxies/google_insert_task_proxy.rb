@@ -1,4 +1,4 @@
-class GoogleInsertTaskProxy < GoogleProxy
+class GoogleInsertTaskProxy < GoogleTasksProxy
 
   def insert_task(task_list_id, body)
     parsed_body = stringify_body(body)
