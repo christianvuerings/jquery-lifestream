@@ -51,11 +51,16 @@
                 <textarea data-ng-model="add_task.note" id="cc-widget-tasks-addtask-note" rows="2" /></textarea>
               </div>
             </div>
-            <div class="row">
+            <div class="row" data-ng-show="is_task_processing">
+              <div class="ten columns offset-by-two mobile-three">
+                Task is being added...
+              </div>
+            </div>
+            <div class="row"  data-ng-show="!is_task_processing">
               <div class="ten columns offset-by-two mobile-three cc-widget-tasks-form-buttons">
                 <button type="submit"
-                  ng-disabled="cc_widget_tasks_form.$invalid"
-                  ng-class="{true:'cc-button-submit'}[cc_widget_tasks_form.$valid]">Add Task
+                  data-ng-disabled="cc_widget_tasks_form.$invalid || is_task_processing"
+                  data-ng-class="{true:'cc-button-submit'}[cc_widget_tasks_form.$valid]">Add Task
                 </button>
                 <input class="cc-button-reset" type="reset" value="Cancel" data-ng-click="toggleAddTask()" />
               </div>
