@@ -74,12 +74,7 @@ class MyTasks < MyMergedModel
 
         response_page.data["items"].each do |entry|
           next if entry["title"].blank?
-
           formatted_entry = format_google_task_response(entry)
-          due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
-          bucket = determine_bucket(due_date, formatted_entry)
-          formatted_entry["bucket"] = bucket
-          logger.info "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
           @response["tasks"].push(formatted_entry)
         end
       end
@@ -114,6 +109,8 @@ class MyTasks < MyMergedModel
     # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
     # accuracy so the application will apply the proper timezone when needed.
     due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
+    formatted_entry["bucket"] = determine_bucket(due_date, formatted_entry)
+    logger.info "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{formatted_entry["bucket"]} bucket: #{formatted_entry}"
     format_date_into_entry!(convert_due_date(due_date), formatted_entry, "due_date")
     logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
     formatted_entry
