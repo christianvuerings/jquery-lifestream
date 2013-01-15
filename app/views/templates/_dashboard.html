@@ -32,13 +32,13 @@
               </div>
               <div class="ten columns mobile-three">
                 <input type="text"
-                  ng-model="add_task.due_date"
+                  data-ng-model="add_task.due_date"
                   name="add_task_due_date"
                   id="cc-widget-tasks-addtask-date"
                   placeholder="mm/dd/yy"
                   mmddyyvalidator
                 />
-                <p class="cc-alert-nobang" ng-show="cc_widget_tasks_form.add_task_due_date.$error.mmddyyvalidator">
+                <p class="cc-alert-nobang" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.mmddyyvalidator">
                   Please use mm/dd/yy date format
                 </p>
               </div>
@@ -106,7 +106,7 @@
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
-              <p ng-show="!filtered.length" class="cc-widget-text">
+              <p data-ng-show="!filtered.length" class="cc-widget-text">
                 There are currently no {{tasks_mode}} tasks/assignments that are overdue.
               </p>
 
@@ -118,7 +118,7 @@
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
-              <p ng-show="!filtered.length" class="cc-widget-text">
+              <p data-ng-show="!filtered.length" class="cc-widget-text">
                 There are currently no {{tasks_mode}} tasks/assignments that are due today.
               </p>
 
@@ -130,7 +130,7 @@
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
-              <p ng-show="!filtered.length" class="cc-widget-text">
+              <p data-ng-show="!filtered.length" class="cc-widget-text">
                 There are currently no {{tasks_mode}} tasks/assignments that are due this week.
               </p>
 
@@ -142,7 +142,7 @@
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
-              <p ng-show="!filtered.length" class="cc-widget-text">
+              <p data-ng-show="!filtered.length" class="cc-widget-text">
                 There are currently no {{tasks_mode}} tasks/assignments that are due next week.
               </p>
 
@@ -160,7 +160,7 @@
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
-              <p ng-show="!filtered.length" class="cc-widget-text">
+              <p data-ng-show="!filtered.length" class="cc-widget-text">
                 There are currently no {{tasks_mode}} tasks/assignments that are unscheduled.
               </p>
             </div>
@@ -177,7 +177,7 @@
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
                 </li>
               </ul>
-              <p ng-show="!filtered.length" class="cc-widget-text">
+              <p data-ng-show="!filtered.length" class="cc-widget-text">
                 There are currently no completed tasks/assignments.
               </p>
             </div>
@@ -294,7 +294,7 @@
           </li>
         </ul>
       </div>
-      <div ng-show="!items.length" class="cc-widget-text">
+      <div data-ng-show="!items.length" class="cc-widget-text">
         Today there are no events on your calendar.
       </div>
     </div>
@@ -329,7 +329,7 @@
           </li>
         </ul>
       </div>
-      <div ng-show="!myclasses.length" class="cc-widget-text">
+      <div data-ng-show="!myclasses.length" class="cc-widget-text">
         There are currently no classes available.
       </div>
     </div>
