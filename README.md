@@ -154,6 +154,20 @@ If you use VPN, use group #1 (1-Campus_VPN)
 ### Styleguide
 
 * Use an editor that supports [.editorconfig](http://editorconfig.org/#overview). Feel free to have a look at the [editor plug-ins](http://editorconfig.org/#download)
+* Use 2 spaces for indentation
+* List items/properties alphabetically
+* Remove `console.log()` messages when committing your code.
+* Use single quotes when possible
+
+:-1:
+```javascript
+var name="Christian Vuerings";
+```
+:+1:
+```javascript
+var name='Christian Vuerings';
+```
+
 * Use `data-ng-` instead of `ng-` or `ng:`
 
 :-1:
