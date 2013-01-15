@@ -2,7 +2,7 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=log/start-stop.log
+LOG=`date +"log/start-stop_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
 
 echo "------------------------------------------" | $LOGIT

@@ -15,8 +15,8 @@ set :branch, settings.common.branch
 set :project_root, settings.common.root
 
 # Calcentral_dev is the IST configured server setup we have for calcentral-dev.berkeley.edu. It
-# currently consists of 3 app servers, a shared postgres instance, ? memcache servers and ? elasticsearch
-# servers.
+# currently consists of 3 app servers (which also run memcached), a shared postgres instance,
+# and 1 elasticsearch server.
 namespace :calcentral_dev do
   desc "Update and restart the calcentral_dev machine"
   task :update, :roles => :calcentral_dev_host do

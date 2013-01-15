@@ -3,7 +3,7 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=$HOME/calcentral/log/redeploy.log
+LOG=`date +"log/start-stop_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
 
 # Enable rvm and use the correct Ruby version and gem set.
