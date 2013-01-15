@@ -3,7 +3,7 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=log/start-stop.log
+LOG=`date +"log/start-stop_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
 
 # Enable rvm and use the correct Ruby version and gem set.
@@ -25,7 +25,3 @@ bundle install
 echo "`date`: Rebuilding static assets..." | $LOGIT
 bundle exec rake assets:clean
 bundle exec rake assets:precompile
-
-# TODO Update database schema after update.
-# echo "`date`: Updating database..." | $LOGIT
-# bundle exec rake db:migrate

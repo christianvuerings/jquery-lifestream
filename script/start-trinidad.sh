@@ -3,11 +3,8 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=log/start-stop.log
+LOG=`date +"log/start-stop_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
-
-# TODO Make sure memcached is running.
-# /usr/local/bin/memcached -d
 
 # Kill all instances of trinidad if there are any running.
 echo | $LOGIT
