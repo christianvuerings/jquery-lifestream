@@ -7,7 +7,7 @@ LOGIT="tee -a $LOG"
 
 echo "------------------------------------------" | $LOGIT
 echo "`date`: Putting CalCentral server in offline mode" | $LOGIT
-offline
+touch "/var/www/html/calcentral/calcentral-in-maintenance"
 
 JPS_RESULTS=`jps -mlv | grep bin/trinidad | cut -d ' ' -f 1`
 for i in $JPS_RESULTS
