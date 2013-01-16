@@ -1,5 +1,4 @@
-(function() {
-  /*global calcentral*/
+(function(calcentral) {
   'use strict';
 
   // Date regex for mm/dd/yy modified from http://www.regular-expressions.info/dates.html
@@ -24,4 +23,4 @@
     };
   });
 
-})();
+})(window.calcentral);
