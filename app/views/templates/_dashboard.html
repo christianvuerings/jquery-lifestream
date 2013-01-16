@@ -204,7 +204,7 @@
 
           <ul class="cc-widget-tasks-notifications-list">
             <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
-              <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification)">
+              <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification, 'Notifications')">
 
                 <div class="eight mobile-three columns cc-widget-notifications-text-column cc-widget-list-selected-title">
                   <div class="cc-emitter-square cc-left cc-emitter-{{notification.color_class}}" title="{{notification.emitter}} notification"></div>
@@ -224,7 +224,11 @@
                   <p>{{notification.summary}}</p>
                 </div>
                 <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
-                  <p><a data-ng-href="{{notification.source_url}}" class="cc-widget-more-view-in">View in {{notification.source}}</a></p>
+                  <p><a
+                    class="cc-widget-more-view-in"
+                    data-ng-click="api.util.trackExternalLink('Notifications', notification.source, notification.source_url)"
+                    data-ng-href="{{notification.source_url}}"
+                  >View in {{notification.source}}</a></p>
                 </div>
               </div>
             </li>
@@ -246,7 +250,7 @@
         <ul class="cc-widget-mycalendar-datelist" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
           <!-- First loop: timestamped items -->
           <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
-            <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(item)">
+            <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(item, 'Up Next')">
               <div class="cc-widget-mycalendar-datelist-time cc-left">
                 <div data-ng-switch on="item.is_all_day">
                   <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
@@ -263,7 +267,7 @@
                   {{item.summary}}
                 </div>
                 <div class="cc-ellipsis">
-                  <a class="cc-widget-mycalendar-datelist-small" data-ng-href="{{item.location_url}}" data-ng-click="api.util.preventBubble($event)">{{item.location}}</a>
+                  <a class="cc-widget-mycalendar-datelist-small" data-ng-href="{{item.location_url}}" data-ng-click="api.util.preventBubble($event);api.util.trackExternalLink('Up Next', 'Google maps', item.location_url)">{{item.location}}</a>
                 </div>
               </div>
             </div>
@@ -289,7 +293,9 @@
                   {{attendee.displayName}}
                 </li>
               </ul>
-              <p class="cc-widget-mycalendar-indent cc-widget-mycalendar-datelist-small"><a href="{{item.html_link}}">View in bCal</a></p>
+              <p class="cc-widget-mycalendar-indent cc-widget-mycalendar-datelist-small">
+                <a href="{{item.html_link}}" data-ng-click="api.util.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
+              </p>
             </div>
           </li>
         </ul>
@@ -313,11 +319,16 @@
                   class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
                   data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']">
                 </div>
-                <a data-ng-href="{{class.site_url}}"
-                  class="cc-ellipsis cc-myclasses-link-with-title">{{class.course_code}}
+                <a
+                  class="cc-ellipsis cc-myclasses-link-with-title"
+                  data-ng-click="api.util.trackExternalLink('My Classes', class.emitter, class.site_url)"
+                  data-ng-href="{{class.site_url}}"
+                  >{{class.course_code}}
                 </a>
                 <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
-                  data-ng-href="{{class.site_url}}">{{class.name}}
+                  data-ng-click="api.util.trackExternalLink('My Classes', class.emitter, class.site_url)"
+                  data-ng-href="{{class.site_url}}"
+                  >{{class.name}}
                 </a>
               </div>
 
@@ -350,6 +361,7 @@
                 </div>
                 <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
                   data-ng-href="{{group.site_url}}">{{group.title}}
+                  data-ng-click="api.util.trackExternalLink('My Groups', group.emitter, group.site_url)"
                 </a>
               </div>
 

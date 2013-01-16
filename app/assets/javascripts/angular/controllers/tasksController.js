@@ -5,7 +5,7 @@
   /**
    * Tasks controller
    */
-  calcentral.controller('TasksController', ['$http', '$scope', function($http, $scope) {
+  calcentral.controller('TasksController', ['$http', '$scope', 'analyticsService', function($http, $scope, analyticsService) {
 
     // Initial mode for Tasks view
     $scope.tasks_mode = 'scheduled';
@@ -25,6 +25,9 @@
     };
 
     $scope.addTask = function() {
+
+      var trackEvent = 'note: ' + !!$scope.add_task.note + ' date: ' + !!$scope.add_task.due_date;
+      analyticsService.trackEvent(['Tasks', 'Add', trackEvent]);
 
       // When the user submits the task, we show a processing message
       // This message will disappear as soon the task has been added.
@@ -52,6 +55,7 @@
 
     $scope.toggleAddTask = function() {
       $scope.show_add_task = !$scope.show_add_task;
+      analyticsService.trackEvent(['Tasks', 'Add panel - ' + $scope.show_add_task ? 'Show' : 'Hide']);
     };
 
     /**
@@ -66,11 +70,13 @@
       } else {
         delete task.completed_date;
       }
+      analyticsService.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!task.completed_date]);
       $http.post('/api/my/tasks', task);
     };
 
     // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasks_mode) {
+      analyticsService.trackEvent(['Tasks', 'Switch mode', tasks_mode]);
       $scope.tasks_mode = tasks_mode;
     };
 

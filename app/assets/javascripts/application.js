@@ -11,4 +11,5 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require angular.min
+//= require google/analytics
 //= require_tree .
