@@ -1,6 +1,5 @@
-(function(window) {
+(function(window, angular) {
 
-  /*global angular*/
   'use strict';
 
   /**
@@ -37,6 +36,7 @@
     });
 
     // Setting up CSRF tokens for POST, PUT and DELETE requests
+    var document = window.document;
     var tokenElement = document.querySelector('meta[name=csrf-token]');
     if (tokenElement && tokenElement.content) {
       $httpProvider.defaults.headers.post['X-CSRF-Token'] = tokenElement.content;
@@ -48,4 +48,4 @@
   // Bind calcentral to the window object so it's globally accessible
   window.calcentral = calcentral;
 
-})(window);
+})(window, window.angular);
