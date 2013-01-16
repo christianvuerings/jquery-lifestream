@@ -62,7 +62,7 @@
                   data-ng-disabled="cc_widget_tasks_form.$invalid || is_task_processing"
                   data-ng-class="{true:'cc-button-submit'}[cc_widget_tasks_form.$valid]">Add Task
                 </button>
-                <input class="cc-button-reset" type="reset" value="Cancel" data-ng-click="toggleAddTask()" />
+                <button class="cc-button-reset" type="reset" data-ng-click="toggleAddTask()" />Cancel</button>
               </div>
             </div>
           </form>
@@ -73,19 +73,19 @@
                 <li>
                   <a class="tiny button"
                     data-ng-click="switchTasksMode('scheduled')"
-                    data-ng-class="{false:'secondary'}[tasks_mode=='scheduled']">Scheduled
+                    data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
                   </a>
                 </li>
                 <li>
                   <a class="tiny button"
                     data-ng-click="switchTasksMode('unscheduled')"
-                    data-ng-class="{false:'secondary'}[tasks_mode=='unscheduled']">Unscheduled
+                    data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
                   </a>
                 </li>
                 <li>
                   <a class="tiny button"
                     data-ng-click="switchTasksMode('completed')"
-                    data-ng-class="{false:'secondary'}[tasks_mode=='completed']">Completed
+                    data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
                   </a>
                 </li>
               </ul>
@@ -208,7 +208,7 @@
 
                 <div class="eight mobile-three columns cc-widget-notifications-text-column cc-widget-list-selected-title">
                   <div class="cc-emitter-square cc-left cc-emitter-{{notification.color_class}}" title="{{notification.emitter}} notification"></div>
-                  <div class="cc-widget-notifications-text-margin">
+                  <div class="cc-widget-notifications-text-margin cc-widget-list-hover-title">
                     {{notification.title}}<br />
                     <span class="cc-widget-notification-source">{{notification.source}}</span>
                   </div>
@@ -221,10 +221,10 @@
 
               <div class="row cc-widget-tasks-notifications-more" data-ng-show="notification.show">
                 <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
-                  <span class="cc-widget-notification-note-text">{{notification.summary}}</span>
+                  <p>{{notification.summary}}</p>
                 </div>
                 <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
-                  <a data-ng-href="{{notification.source_url}}" class="cc-widget-more-view-in">View in {{notification.source}}</a>
+                  <p><a data-ng-href="{{notification.source_url}}" class="cc-widget-more-view-in">View in {{notification.source}}</a></p>
                 </div>
               </div>
             </li>

@@ -2,7 +2,8 @@
   /* IE9 */
   $experimental-support-for-svg: true;
   @include background(linear-gradient(top, $cc-nav-gradient1-color, $cc-nav-gradient2-color));
-  height: auto;
+  /* height: auto; Restore when the nav bar returns */
+  height: 6px;
   margin: 0;
   overflow: hidden;
   > li {
