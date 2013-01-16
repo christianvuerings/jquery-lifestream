@@ -5,7 +5,7 @@
   /**
    * CalCentral main controller
    */
-  calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', function($http, $location, $route, $scope) {
+  calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', 'analyticsService', function($http, $location, $route, $scope, analyticsService) {
 
     $scope.user = {};
 
@@ -34,12 +34,15 @@
     $scope.user._handleAccessToPage = function() {
       // Redirect to the login page when the page is private and you aren't authenticated
       if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
+        analyticsService.trackEvent(['Authentication', 'Sign in - redirect to login']);
         $scope.user.signIn();
       // Record that you've already visited the calcentral once and redirect to the settings page on the first login
       } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
+        analyticsService.trackEvent(['Authentication', 'First login']);
         $http.post('/api/my/record_first_login').success($scope.user._redirectToSettingsPage);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
       } else if ($scope.user.isAuthenticated() && $location.path() === '/') {
+        analyticsService.trackEvent(['Authentication', 'Redirect to dashboard']);
         $scope.user._redirectToDashboardPage();
       }
     };
@@ -77,12 +80,19 @@
       $http.post('/api/' + authorizationService + '/remove_authorization').success(function(){
         $scope.user.profile['has_' + authorizationService + '_access_token'] = false;
       });
+      analyticsService.trackEvent(['OAuth', 'Remove', 'service: ' + authorizationService]);
+    };
+
+    $scope.user.enableOAuth = function(authorizationService) {
+      analyticsService.trackEvent(['OAuth', 'Enable', 'service: ' + authorizationService]);
+      window.location = '/api/' + authorizationService + '/request_authorization';
     };
 
     /**
      * Sign the current user in.
      */
     $scope.user.signIn = function() {
+      analyticsService.trackEvent(['Authentication', 'Redirect to login']);
       window.location = '/login';
     };
 
@@ -90,6 +100,7 @@
      * Sign the current user out.
      */
     $scope.user.signOut = function() {
+      analyticsService.trackEvent(['Authentication', 'Redirect to logout']);
       window.location = '/logout';
     };
 
@@ -102,8 +113,9 @@
     /**
      * Toggle whether an item for a widget should be shown or not
      */
-    $scope.api.widget.toggleShow = function(item) {
+    $scope.api.widget.toggleShow = function(item, widget) {
       item.show = !item.show;
+      analyticsService.trackEvent(['Detailed view', item.show ? 'Open' : 'Close', widget]);
     };
 
     /**
@@ -134,6 +146,11 @@
     $scope.api.util.preventBubble = function($event) {
       $event.stopPropagation();
     };
+
+    /**
+     * Expose the externalLink function to the view
+     */
+    $scope.api.util.trackExternalLink = analyticsService.trackExternalLink;
 
     /**
      * Will be executed on every route change

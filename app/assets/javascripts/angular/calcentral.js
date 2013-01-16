@@ -6,7 +6,7 @@
   /**
    * CalCentral module
    */
-  var calcentral = angular.module('calcentral', []);
+  var calcentral = angular.module('calcentral', ['calcentral.services']);
 
   // Set the configuration
   calcentral.config(['$httpProvider', '$locationProvider', '$routeProvider', function($httpProvider, $locationProvider, $routeProvider) {

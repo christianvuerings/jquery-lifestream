@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
 
-  <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(task)">
+  <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(task, 'Tasks')">
 
     <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
       <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
@@ -41,7 +41,9 @@
     </div>
     <div class="row">
       <div class="eight columns offset-by-four cc-widget-tasks-notifications-text">
-        <p><a data-ng-href="{{task.link_url}}" class="cc-widget-more-view-in">View in {{task.emitter}}</a></p>
+        <p><a class="cc-widget-more-view-in"
+          data-ng-click="api.util.trackExternalLink('Tasks', task.emitter, task.link_url)"
+          data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a></p>
       </div>
     </div>
   </div>

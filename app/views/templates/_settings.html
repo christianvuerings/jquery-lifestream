@@ -33,7 +33,7 @@
           <img data-ng-src="/assets/icon_block_24x24.png" alt="Not Connected icon" class="cc-settings-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button success" href="/api/google/request_authorization" target="_self">Enable <span class="visuallyhidden">Google Access</span></a>
+          <a class="radius button success" data-ng-click="user.enableOAuth('google')">Enable <span class="visuallyhidden">Google Access</span></a>
         </div>
       </div>
 
@@ -58,7 +58,7 @@
           <img data-ng-src="/assets/icon_block_24x24.png" alt="Not Connected icon" class="cc-settings-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button success" href="/api/canvas/request_authorization" target="_self">Enable <span class="visuallyhidden">Canvas Access</span></a>
+          <a class="radius button success" data-ng-click="user.enableOAuth('canvas')">Enable <span class="visuallyhidden">Canvas Access</span></a>
         </div>
       </div>
 

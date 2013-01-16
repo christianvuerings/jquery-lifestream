@@ -58,6 +58,10 @@ sakai_proxy:
   fake: false
   current_terms: ["Fall 2012"]
 
+# Analytics settings ID
+# This will need to be different for every server (dev/qa/production)
+google_analytics_id: UA-XXXXX-X
+
 # Cache settings
 cache:
   # Array of server addresses in cluster (for memcached)
