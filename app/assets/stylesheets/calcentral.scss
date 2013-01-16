@@ -8,6 +8,7 @@ $cc-button-color: #80c7de;
 $cc-column-border-color: #dedede;
 $cc-launcher-border-color: #114d80;
 $cc-light-grey: #5c5c5c;
+$cc-medium-grey: #dddddd;
 $cc-list-border-color: #cacaca;
 $cc-main-background-color: #f2f2f2;
 $cc-main-header-border-color: #d3d8d8;
@@ -63,6 +64,25 @@ body {
     }
   }
 
+  h1 {
+    font-size: 32px;
+    margin-bottom: 25px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  .header_border {
+    border-top: 1px solid $cc-medium-grey;
+    margin-top: 20px;
+    padding-top: 5px;
+  }
+
 }
 
 /* Anchor tag */
@@ -108,6 +128,10 @@ button {
   }
   &.secondary {
     border-left: 1px solid $cc-border-color;
+  }
+  &.small {
+    font-size: 13px;
+    padding: 4px 6px;
   }
   &.tiny {
     font-size: 11px;
