@@ -72,3 +72,4 @@ ist_jms:
   queue: testqueue
 #  username: USERNAME
 #  password: PASSWORD
+  freshen_recording: false

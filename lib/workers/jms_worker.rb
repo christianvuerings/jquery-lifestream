@@ -14,6 +14,13 @@ class JmsWorker
 
   def run
     @jms.start_listening_with() do |msg|
+      if Settings.ist_jms.freshen_recording
+        File.open("#{Rails.root}/fixtures/jms_recordings/ist_jms.txt", 'a') do |f|
+          # Use double newline as a serialized object separator.
+          f.puts(YAML.dump(msg))
+          f.puts('')
+        end
+      end
       @handler.handle(msg)
     end
   end
