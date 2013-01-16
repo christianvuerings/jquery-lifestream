@@ -7,7 +7,6 @@ $cc-border-color: #999;
 $cc-button-color: #80c7de;
 $cc-column-border-color: #dedede;
 $cc-launcher-border-color: #114d80;
-$cc-launcher-link-color: #15315c;
 $cc-light-grey: #5c5c5c;
 $cc-list-border-color: #cacaca;
 $cc-main-background-color: #f2f2f2;
@@ -16,22 +15,11 @@ $cc-nav-gradient1-color: #012955;
 $cc-nav-gradient2-color: #3b5d86;
 $cc-nav-link-color: #fdd692;
 $cc-shadow-color: #ccc;
+$cc-standout-column-color: #eaeff3;
 $cc-widget-section-label-color: #515151;
 $cc-widget-highlight-background-color: #f2fef3;
-$cc-widget-more-background-color: #f5f5f5;
-
-
-/* Foundation button overrides */
-
-.button {
-  background-color: $cc-button-color;
-}
-
-.button.tiny {
-  font-size: 11px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
+$cc-widget-hover-background-color: #e3ffff;
+$cc-widget-more-background-color: #c8dee9;
 
 /* Inset list items */
 ul {
@@ -110,6 +98,23 @@ form {
 }
 
 /* Buttons */
+button {
+  font-family: Arial, sans-serif;
+}
+.button {
+  background-color: $cc-button-color;
+  &.selected {
+    @include background-image(linear-gradient(#7ec9Df, #35b5d4));
+  }
+  &.secondary {
+    border-left: 1px solid $cc-border-color;
+  }
+  &.tiny {
+    font-size: 11px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
 .cc-button-submit {
   background: $cc-action-button-color;
   border: none;
@@ -145,7 +150,6 @@ form {
   top: 0;
 
   a {
-    color: $cc-launcher-link-color;
     font-weight: bold;
   }
   .cc-launcher-bar {
@@ -378,7 +382,9 @@ form {
     overflow: hidden;
     &:hover {
       cursor: pointer;
-      background: #e5eded;
+      .cc-widget-list-hover-title {
+        text-decoration: underline;
+      }
     }
   }
   .cc-widget-list-selected {
@@ -404,11 +410,8 @@ form {
 .cc-widget-short-title {
   display: inline-block;
   font-size: 14px;
+  line-height: 1.25;
   width: 100%;
-}
-
-.cc-widget-tasks-short-title {
-  font-size: 14px;
 }
 
 .cc-widget-tasks-notifications-list {
@@ -422,12 +425,21 @@ form {
 
   .cc-widget-tasks-notifications-more {
     .cc-widget-tasks-notifications-text {
-      margin-bottom: 0;
+      line-height: 1.2;
+      margin-bottom: 5px;
       padding-left: 0;
+      p {
+        margin-bottom: 0;
+        padding-bottom: 5px;
+      }
     }
   }
   .cc-widget-more-view-in {
+    background-color: #e8eff2;
+    color: #16191b;
     font-size: 11px;
+    font-weight: bold;
+    padding: 5px 10px;
   }
 }
 
