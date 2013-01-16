@@ -19,7 +19,7 @@
     <div class="six mobile-one columns cc-task-title-column cc-mobile-task-title-column cc-widget-list-selected-title">
       <div
         class="cc-widget-short-title cc-widget-list-hover-title cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{true:'cc-ellipsis'}[!task.show]">
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue')}">
         {{task.title}}
       </div>
     </div>
