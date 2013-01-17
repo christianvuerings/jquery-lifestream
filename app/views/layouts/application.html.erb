@@ -40,14 +40,7 @@
       <%= yield %>
     </div>
 
-    <footer class="row" data-ng-controller="FooterController">
-      <div class="six columns mobile-three" data-ng-cloak>Copyright &copy; {{currentTime() | date:'yyyy'}} The Regents of the University of California</div>
-      <div class="six columns mobile-one">
-        <a href="#">Help</a>
-        <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
-      </div>
-    </footer>
-
+    <%= render 'templates/footer' %>
     <%= render 'templates/all' %>
 
   </body>

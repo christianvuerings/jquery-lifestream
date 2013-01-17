@@ -1,0 +1,17 @@
+<footer class="row" data-ng-controller="FooterController">
+  <div class="cc-footer-links">
+    <div data-ng-click="showInfo=true" class="six columns mobile-three copyright" data-ng-cloak>Copyright &copy; {{currentTime() | date:'yyyy'}} The Regents of the University of California</div>
+    <div class="six columns mobile-one">
+      <a href="#">Help</a>
+      <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
+    </div>
+  </div>
+
+  <div class="twelve columns" data-ng-show="showInfo">
+    <ul>
+      <li>Hostname: <%= @server_settings["hostname"] %></li>
+      <li><a href="https://github.com/ets-berkeley-edu/calcentral/commit/<%= @server_settings['git_commit'] %>">Git commit: <%= @server_settings["git_commit"][0,8] %></a></li>
+      <li>Up Since: <%= @server_settings["first_visited"] %></li>
+    </ul>
+  </div>
+</footer>

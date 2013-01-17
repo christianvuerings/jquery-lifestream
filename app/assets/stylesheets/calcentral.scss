@@ -57,10 +57,18 @@ body {
     overflow: hidden;
     padding: 10px 10px 15px;
 
-    a {
+    .cc-footer-links a {
       float: right;
       font-weight: bold;
       padding-left: 21px;
+    }
+    .copyright:hover {
+      cursor: pointer;
+    }
+
+    ul {
+      margin-top: 20px;
+      padding-left: 18px;
     }
   }
 
