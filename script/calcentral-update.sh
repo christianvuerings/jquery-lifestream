@@ -18,4 +18,4 @@ echo "------------------------------------------" | $LOGIT
 echo "`date`: Redeploying CalCentral on app nodes..." | $LOGIT
 
 echo "`date`: cap calcentral_dev:update..." | $LOGIT
-cap calcentral_dev:update 2&>1 | $LOGIT
+cap -l STDOUT calcentral_dev:update | $LOGIT

@@ -25,10 +25,9 @@ namespace :calcentral_dev do
     run "cd #{script_folder}; ./stop-trinidad.sh"
     # Run db migrate on the first app server
     servers = find_servers_for_task(current_task)
-
+    run "cd #{script_folder}; ./update-build.sh"
     transaction do
       servers.each_with_index do |server, index|
-        run "cd #{script_folder}; ./update-build.sh", :hosts => server
         if (index == 0)
           logger.debug "---- Server: #{server.host} running migrate in transaction on offline app servers"
           run "cd #{script_folder}; ./migrate.sh", :hosts => server
