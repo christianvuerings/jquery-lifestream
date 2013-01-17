@@ -1,16 +1,14 @@
 <script type="text/ng-template" id="templates/settings.html">
   <div class="twelve columns cc-settings" data-ng-controller="SettingsController">
-    <h3>CalCentral Settings for {{user.profile.preferred_name}}</h3>
+    <h1>Settings for {{user.profile.preferred_name}}</h1>
+
+    <h2 class="header_border">External Feeds</h2>
 
     <p>
       In order to display your latest tasks, assignments and alerts on the Dashboard,
-      CalCentral needs permission to access information stored in your bConnected and Canvas accounts.
+      CalCentral needs permission to access information stored in your bConnected (Google) and Canvas accounts.
     </p>
 
-    <p>
-      Please click the Authorize button next to each service you wish to enable.
-      You can revoke these permissions at any time.
-    </p>
 
     <div class="cc-settings-header row">
       <div class="two columns mobile-one">
@@ -30,20 +28,24 @@
       <div class="row" data-ng-switch-when="false">
         <div class="two columns mobile-one cc-settings-service">bConnected</div>
         <div class="one columns mobile-one">
-          <img data-ng-src="/assets/icon_block_24x24.png" alt="Not Connected icon" class="cc-settings-connection-status-icon" />
+          <img data-ng-src="/assets/icon_checkmark_open_24x24.png" alt="Not Connected icon" class="cc-settings-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button success" data-ng-click="user.enableOAuth('google')">Enable <span class="visuallyhidden">Google Access</span></a>
+          <a class="radius button small boldbutton" data-ng-click="user.enableOAuth('google')">
+            Connect <span class="visuallyhidden">Google Access</span>
+          </a>
         </div>
       </div>
 
       <div class="row" data-ng-switch-when="true">
         <div class="two columns mobile-one cc-settings-service">bConnected</div>
         <div class="one columns mobile-one">
-          <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-settings-connection-status-icon" />
+          <img data-ng-src="/assets/icon_checkmark_green_24x24.png" alt="Connected icon" class="cc-settings-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button" data-ng-click="user.removeOAuth('google')">Revoke <span class="visuallyhidden">Google Access</span></a>
+          <a class="radius button small boldbutton" data-ng-click="user.removeOAuth('google')">
+            Disconnect <span class="visuallyhidden">Google Access</span>
+          </a>
         </div>
       </div>
 
@@ -55,37 +57,44 @@
       <div class="row" data-ng-switch-when="false">
         <div class="two columns mobile-one cc-settings-service">Canvas</div>
         <div class="one columns mobile-one">
-          <img data-ng-src="/assets/icon_block_24x24.png" alt="Not Connected icon" class="cc-settings-connection-status-icon" />
+          <img data-ng-src="/assets/icon_checkmark_open_24x24.png" alt="Not Connected icon" class="cc-settings-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button success" data-ng-click="user.enableOAuth('canvas')">Enable <span class="visuallyhidden">Canvas Access</span></a>
+          <a class="radius button small boldbutton" data-ng-click="user.enableOAuth('canvas')">
+            Connect <span class="visuallyhidden">Canvas Access</span>
+          </a>
         </div>
       </div>
 
       <div class="row" data-ng-switch-when="true">
         <div class="two columns mobile-one cc-settings-service">Canvas</div>
         <div class="one columns mobile-one">
-          <img data-ng-src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-settings-connection-status-icon" />
+          <img data-ng-src="/assets/icon_checkmark_green_24x24.png" alt="Connected icon" class="cc-settings-connection-status-icon" />
         </div>
         <div class="nine columns mobile-two">
-          <a class="radius button" data-ng-click="user.removeOAuth('canvas')">Revoke <span class="visuallyhidden">Canvas Access</span></a>
+          <a class="radius button small boldbutton" data-ng-click="user.removeOAuth('canvas')">
+            Disconnect <span class="visuallyhidden">Canvas Access</span>
+          </a>
         </div>
       </div>
 
     </div>
 
+    <h3 class="header_border">Key</h3>
+    <p>
+      <img src="/assets/icon_checkmark_green_18x18.png" alt="Connected icon" class="cc-settings-connection-status-icon-small" />
+        Service is connected to your account
+    </p>
+    <p>
+      <img src="/assets/icon_checkmark_open_18x18.png" alt="Not connected icon" class="cc-settings-connection-status-icon-small" />
+        Please connect this service to your account
+    </p>
+
     <hr />
     <p>
-      <p>
-        <img src="/assets/icon_completed_24x24.png" alt="Connected icon" class="cc-settings-connection-status-icon" /> Service is connected to your account
-      </p>
-      <p>
-        <img src="/assets/icon_block_24x24.png" alt="Not connected icon" class="cc-settings-connection-status-icon" /> Please connect this service to your account
-      </p>
-
-      <p>
-        <a href="/dashboard">Return to Dashboard</a>
-      </p>
+      <a href="/dashboard">
+        <strong>&laquo; Return to Dashboard</strong>
+      </a>
     </p>
 
   </div>
