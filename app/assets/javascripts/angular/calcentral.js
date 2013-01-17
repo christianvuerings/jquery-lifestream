@@ -5,7 +5,10 @@
   /**
    * CalCentral module
    */
-  var calcentral = angular.module('calcentral', ['calcentral.services']);
+  var calcentral = angular.module('calcentral', [
+    'calcentral.services',
+    'ngSanitize'
+  ]);
 
   // Set the configuration
   calcentral.config(['$httpProvider', '$locationProvider', '$routeProvider', function($httpProvider, $locationProvider, $routeProvider) {
