@@ -103,6 +103,14 @@
       window.location = '/logout';
     };
 
+    /**
+     * Opt-out.
+     */
+    $scope.user.optOut = function() {
+      analyticsService.trackEvent(['Settings', 'User opt-out']);
+      window.location = "/api/my/opt_out";
+    };
+
     // API
     $scope.api = {};
 

@@ -22,6 +22,17 @@ class UserApi < MyMergedModel
     @override_name = val
   end
 
+  def self.delete(uid)
+    logger.debug "#{self.class.name} removing user #{uid} from UserData"
+    user = UserData.where(:uid => uid).first
+    if !user.blank?
+      user.delete
+      # The nice way to do this is to also revoke their tokens by sending revoke request to the remote services
+      Oauth2Data.destroy_all(:uid => uid)
+    end
+    Calcentral::USER_CACHE_EXPIRATION.notify uid
+  end
+
   def save
     if !@calcentral_user_data
       @calcentral_user_data = UserData.create(uid: @uid, preferred_name: @override_name)
