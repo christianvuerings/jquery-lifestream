@@ -22,7 +22,7 @@ gem "faraday", "~> 0.8.4"
 
 # OAuth2 support
 gem "signet", "~> 0.4.3"
-gem "google-api-client", "~> 0.6.0"
+gem "google-api-client", "~> 0.6.1"
 
 # for VCR http recording tool
 gem "vcr", "~> 2.4.0"
@@ -58,7 +58,7 @@ group :assets do
 
   # CSS Framework - also includes Compass and SASS
   # https://github.com/zurb/foundation
-  gem "sass-rails", "~> 3.2.3"
+  gem "sass-rails", "~> 3.2.6"
   gem "coffee-rails", "~> 3.2.1"
   gem "compass-rails", "~> 1.0.3"
   gem "zurb-foundation", "~> 3.2.0"
@@ -73,12 +73,12 @@ end
 group :development, :testext, :production do
   gem "activerecord-oracle_enhanced-adapter", "~> 1.4.1"
   gem "rvm-capistrano", "~> 1.2.7"
-  gem "capistrano", "~> 2.13.5"
+  gem "capistrano", "~> 2.14.1"
 end
 
 group :development, :test , :testext do
-  gem "rspec-rails", "~> 2.12.1"
-  gem "minitest-reporters"
+  gem "rspec-rails", "~> 2.12.2"
+  gem "minitest-reporters", "~> 0.14.3"
 
   # Test our JavaScript code.
   # https://github.com/pivotal/jasmine-gem
@@ -109,14 +109,14 @@ group :development do
 
   # Polling is evil:
   # https://github.com/guard/guard#readme
-  gem "rb-inotify", "~> 0.8.8", :require => false
+  gem "rb-inotify", "~> 0.9.0", :require => false
   gem "rb-fsevent", "~> 0.9.2", :require => false
   gem "rb-fchange", "~> 0.0.6", :require => false
 
   # Start/stop rails + guard all at once
   # http://stackoverflow.com/questions/8293747/need-a-less-repetitve-way-to-start-rails-on-mac-for-noob
   # https://github.com/ddollar/foreman
-  gem "foreman", "~> 0.60.2"
+  gem "foreman", "~> 0.61.0"
 
   # C-Extension dependency of foreman
   # https://github.com/rtomayko/posix-spawn
