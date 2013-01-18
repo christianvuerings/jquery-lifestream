@@ -12,7 +12,7 @@
       <li>Hostname: <%= @server_settings["hostname"] %></li>
       <li><a href="https://github.com/ets-berkeley-edu/calcentral/commit/<%= @server_settings['git_commit'] %>">Git commit: <%= @server_settings["git_commit"][0,8] %></a></li>
       <li>Up Since: <%= @server_settings["first_visited"] %></li>
-      <li><a data-ng-click="deleteSelf=true">Opt out of CalCentral?</a><span class="confirmation" data-ng-show="deleteSelf">Are you sure?<a class="first tiny button" data-ng-click="user.optOut()">Yes</a> <a class="tiny button" data-ng-click="deleteSelf=false">No</a></span></li>
+      <li><button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral?</button><span class="confirmation" data-ng-show="deleteSelf">Are you sure?<button class="first tiny button" data-ng-click="user.optOut()">Yes</button> <button class="tiny button" data-ng-click="deleteSelf=false">No</button></span></li>
     </ul>
   </div>
 

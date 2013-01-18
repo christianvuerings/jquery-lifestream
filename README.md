@@ -157,6 +157,7 @@ If you use VPN, use group #1 (1-Campus_VPN)
 * Use 2 spaces for indentation
 * List items/properties alphabetically
 * Remove `console.log()` messages when committing your code.
+* Only use anchor tags `<a>` for actual links, otherwise use `<button>` instead. _This is especially important for IE9_.
 * Use single quotes when possible
 
 :-1:
