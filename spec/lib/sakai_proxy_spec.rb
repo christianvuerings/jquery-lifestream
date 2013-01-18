@@ -4,7 +4,6 @@ describe SakaiProxy do
 
   before do
     @client_categorized = SakaiCategorizedProxy.new
-    @client_unread = SakaiUnreadProxy.new
   end
 
   it "should get the categorized sites from bspace" do
@@ -15,18 +14,10 @@ describe SakaiProxy do
     end
   end
 
-  it "should get the unread sites from bspace" do
-    data = @client_unread.get_unread_sites "300939"
-    data[:status_code].should_not be_nil
-    if data[:status_code] == 200
-      data[:body]["principal"].should_not be_nil
-    end
-  end
-
   it "should pass through errors while connecting to bspace" do
-    bad_client = SakaiUnreadProxy.new(fake: false)
-    stub_request(:any, "#{Settings.sakai_proxy.host}/sakai-hybrid/sites?unread=true").to_timeout
-    data = bad_client.get_unread_sites "300939"
+    bad_client = SakaiCategorizedProxy.new(fake: false)
+    stub_request(:any, "#{Settings.sakai_proxy.host}/sakai-hybrid/sites?categorized=true").to_timeout
+    data = bad_client.get_categorized_sites "300939"
     data[:status_code].should == 503
     data[:body].should == "Remote server unreachable"
     WebMock.reset!
