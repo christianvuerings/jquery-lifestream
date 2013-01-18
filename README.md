@@ -168,17 +168,19 @@ var name="Christian Vuerings";
 var name='Christian Vuerings';
 ```
 
-* Use `data-ng-` instead of `ng-` or `ng:`
+* Use `data-ng-` instead of `ng-` or `ng:` and add `data-` for directives
 
 :-1:
 ```html
 <ng:view>
 <span ng-bind="name"></span>
+<input mmddyyvalidator />
 ```
 :+1:
 ```html
 <div data-ng-view></div>
 <span data-ng-bind="name"></span>
+<input data-mmddyyvalidator />
 ```
 
 ## Recording fake data feeds and timeshifting them
