@@ -6,11 +6,15 @@
    */
   calcentral.controller('NotificationsController', ['$http', '$scope', function($http, $scope) {
 
-    $http.get('/dummy/json/notifications.json').success(function(data) {
+    /*TODO uncomment as soon as we are able to show the nofications
+      $http.get('/dummy/json/notifications.json').success(function(data) {
 
-      $scope.notifications = data.notifications;
+        $scope.notifications = data.notifications;
 
-    });
+      });
+     */
+
+    $scope.notifications = {};
 
   }]);
 
