@@ -30,8 +30,7 @@ module Calcentral
         GoogleUpdateTaskProxy => :expire,
 
         SakaiProxy => :expire,
-        SakaiCategorizedProxy => :expire,
-        SakaiUnreadProxy => :expire
+        SakaiCategorizedProxy => :expire
 
     }.each do |key, value|
       USER_CACHE_EXPIRATION.add_observer(key, value)
