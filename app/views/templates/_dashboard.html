@@ -202,37 +202,40 @@
 
       <div class="cc-notifications-list">
 
-          <ul class="cc-widget-tasks-notifications-list">
-            <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
-              <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification, 'Notifications')">
+        <ul class="cc-widget-tasks-notifications-list">
+          <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
+            <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification, 'Notifications')">
 
-                <div class="eight mobile-three columns cc-widget-notifications-text-column cc-widget-list-selected-title">
-                  <div class="cc-emitter-square cc-left cc-emitter-{{notification.color_class}}" title="{{notification.emitter}} notification"></div>
-                  <div class="cc-widget-notifications-text-margin cc-widget-list-hover-title">
-                    {{notification.title}}<br />
-                    <span class="cc-widget-notification-source">{{notification.source}}</span>
-                  </div>
-                </div>
-
-                <div class="three mobile-one columns end cc-right cc-widget-tasks-notifications-date-string">
-                  {{notification.date_string}}
+              <div class="eight mobile-three columns cc-widget-notifications-text-column cc-widget-list-selected-title">
+                <div class="cc-emitter-square cc-left cc-emitter-{{notification.color_class}}" title="{{notification.emitter}} notification"></div>
+                <div class="cc-widget-notifications-text-margin cc-widget-list-hover-title">
+                  {{notification.title}}<br />
+                  <span class="cc-widget-notification-source">{{notification.source}}</span>
                 </div>
               </div>
 
-              <div class="row cc-widget-tasks-notifications-more" data-ng-show="notification.show">
-                <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
-                  <p>{{notification.summary}}</p>
-                </div>
-                <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
-                  <p><a
-                    class="cc-widget-more-view-in"
-                    data-ng-click="api.util.trackExternalLink('Notifications', notification.source, notification.source_url)"
-                    data-ng-href="{{notification.source_url}}"
-                  >View in {{notification.source}}</a></p>
-                </div>
+              <div class="three mobile-one columns end cc-right cc-widget-tasks-notifications-date-string">
+                {{notification.date_string}}
               </div>
-            </li>
-          </ul>
+            </div>
+
+            <div class="row cc-widget-tasks-notifications-more" data-ng-show="notification.show">
+              <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
+                <p>{{notification.summary}}</p>
+              </div>
+              <div class="cc-widget-tasks-notifications-text cc-widget-notifications-text-margin">
+                <p><a
+                  class="cc-widget-more-view-in"
+                  data-ng-click="api.util.trackExternalLink('Notifications', notification.source, notification.source_url)"
+                  data-ng-href="{{notification.source_url}}"
+                >View in {{notification.source}}</a></p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="!notifications.length" class="cc-widget-text">
+        You don't have any notifications at this time.
       </div>
     </div>
 
