@@ -15,6 +15,8 @@ describe MyNotificationsController do
 
   it "should be an non-empty notifications feed on authenticated user" do
     session[:user_id] = @user_id
+    dummy = JSON.parse(File.read(Rails.root.join('public/dummy/json/notifications.json')))
+    MyNotifications.any_instance.stub(:get_feed).and_return(dummy)
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
