@@ -57,7 +57,6 @@ Calcentral::Application.routes.draw do
   root :to => 'bootstrap#index'
 
   # Rails API endpoints.
-
   match '/api/my/status' => 'user_api#mystatus', :as => :mystatus, :defaults => { :format => 'json' }
   match '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
   match '/api/my/record_first_login' => 'user_api#record_first_login', :as => :record_first_login, :defaults => { :format => 'json' }, :via => :post
@@ -66,6 +65,7 @@ Calcentral::Application.routes.draw do
   match '/api/my/tasks' => 'my_tasks#update_task', :via => :post, :as => :update_task, :defaults => { :format => 'json' }
   match '/api/my/tasks/create' => 'my_tasks#insert_task', :via => :post, :as => :insert_task, :defaults => { :format => 'json' }
   match '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
+  match '/api/my/notifications' => 'my_notifications#get_feed', :as => :my_notifications, :defaults => { :format => 'json' }
 
   match '/api/my/opt_out'=> 'user_api#delete'
 
