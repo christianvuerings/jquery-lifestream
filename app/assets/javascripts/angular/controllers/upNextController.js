@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Notifications controller
+   * My Up Next controller
    */
   calcentral.controller('UpNextController', ['$http', '$scope', function($http, $scope) {
 

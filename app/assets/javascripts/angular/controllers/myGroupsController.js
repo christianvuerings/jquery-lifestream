@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Notifications controller
+   * My Groups controller
    */
   calcentral.controller('MyGroupsController', ['$http', '$scope', function($http, $scope) {
 
