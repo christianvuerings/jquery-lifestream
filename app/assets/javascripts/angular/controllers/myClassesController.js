@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Notifications controller
+   * My Classes controller
    */
   calcentral.controller('MyClassesController', ['$http', '$scope', function($http, $scope) {
 
