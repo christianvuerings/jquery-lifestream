@@ -26,7 +26,7 @@ class Backstage
   end
 
   def run
-    @worker.run
+    @worker.run!
     until !!@stop
       sleep(30)
     end

@@ -25,7 +25,6 @@ class JmsConnection
     connection_factory = username ?
         ActiveMQConnectionFactory.new(username, password, url) :
         ActiveMQConnectionFactory.new(url)
-    connection_factory.setTransportListener(self)
     @connection = connection_factory.createConnection
     @queue_name = queue_name
     @session = @connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
@@ -33,8 +32,7 @@ class JmsConnection
   end
 
   def close
-    @consumer.close()
-    @session.close()
+    # ActiveMQ API specifies "no need to close the sessions, producers, and consumers of a closed connection."
     @connection.close()
   end
 
