@@ -56,7 +56,7 @@ sakai_proxy:
   shared_secret: secret set in production
   host: "https://sakai-dev.berkeley.edu"
   fake: false
-  current_terms: ["Fall 2012"]
+  current_terms: ["Spring 2013"]
 
 # Analytics settings ID
 # This will need to be different for every server (dev/qa/production)
