@@ -194,6 +194,9 @@ rake vcr:record
 rake vcr:prettify
 ```
 
+* vcr:record can also take a SPEC=".../my_favorite_spec.rb" to help limit the recordings.
+* vcr:prettify can also take a REGEX_FILTER="my_raw_recording.json" to target a specific raw file.
+
 You can now find the prettified files in fixtures/pretty_vcr_recordings. You can edit these files to put in tokens that
 will be substituted on server startup. See config/initializers/timeshift.rb for the dictionary of substitutions. Edit
  the debug_json property of each response, and timeshift.rb will automatically convert debug_json to the format actually
