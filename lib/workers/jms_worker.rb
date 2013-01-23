@@ -1,5 +1,6 @@
 class JmsWorker
   include Celluloid
+  JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
 
   def initialize
     @jms = nil
@@ -16,6 +17,14 @@ class JmsWorker
   end
 
   def run
+    if Settings.ist_jms.fake
+      read_fake {|msg| @handler.handle(msg)}
+    else
+      read_jms {|msg| @handler.handle(msg)}
+    end
+  end
+
+  def read_jms
     until @jms do
       begin
         @jms ||= JmsConnection.new
@@ -26,13 +35,20 @@ class JmsWorker
     end
     @jms.start_listening_with() do |msg|
       if Settings.ist_jms.freshen_recording
-        File.open("#{Rails.root}/fixtures/jms_recordings/ist_jms.txt", 'a') do |f|
+        File.open(JMS_RECORDING, 'a') do |f|
           # Use double newline as a serialized object separator.
           f.puts(YAML.dump(msg))
           f.puts('')
         end
       end
-      @handler.handle(msg)
+      yield(msg)
+    end
+  end
+
+  def read_fake
+    File.open(JMS_RECORDING, 'r').each("\n\n") do |msg_yaml|
+      msg = YAML::load(msg_yaml)
+      yield(msg)
     end
   end
 
