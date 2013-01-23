@@ -11,6 +11,17 @@ class JmsConnection
       queue_name = Settings.ist_jms.queue)
     java_import "javax.jms.Session"
     java_import "org.apache.activemq.ActiveMQConnectionFactory"
+
+    # JMS listeners do not generate any exceptions when a server goes away. Without failover,
+    # a dangling connection and session will stay open and useless forever (or until
+    # explicitly closed). With failover, at least there is a chance that a useful
+    # connection will be re-established sometime.
+    # The alternative is to periodically attempt to create a new test connection on
+    # another thread, and then close the dangling connection/session from there.
+    # The following URL means: wait at least 5 minutes before trying to reconnect; wait at most
+    # 4 hours; do not block failed "send" attempts forever.
+    url = "failover:(#{url})?initialReconnectDelay=300000&maxReconnectDelay=14400000&timeout=30000"
+
     connection_factory = username ?
         ActiveMQConnectionFactory.new(username, password, url) :
         ActiveMQConnectionFactory.new(url)
@@ -21,8 +32,7 @@ class JmsConnection
   end
 
   def close
-    @consumer.close()
-    @session.close()
+    # ActiveMQ API specifies "no need to close the sessions, producers, and consumers of a closed connection."
     @connection.close()
   end
 

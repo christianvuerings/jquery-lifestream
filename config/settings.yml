@@ -77,3 +77,4 @@ ist_jms:
 #  username: USERNAME
 #  password: PASSWORD
   freshen_recording: false
+  fake: true
