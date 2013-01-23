@@ -33,19 +33,23 @@ body {
 
   /* Masthead */
   > header {
-    background-image: image-url('calcentral_branding_strip.png');
+    background-image: image-url('calcentral_branding_strip_background.png');
     background-repeat: no-repeat;
-    border: 1px solid $cc-main-header-border-color;
-    border-top: none;
     margin: 0 auto;
     height: 42px;
     position: relative;
 
-    > h1 {
+    > div > h1 {
+      height: 0;
       margin: 0;
       text-indent: 100%;
       overflow: hidden;
       white-space: nowrap;
+    }
+
+    > div > a img {
+      margin-left: 10px;
+      margin-top: 10px;
     }
   }
 
