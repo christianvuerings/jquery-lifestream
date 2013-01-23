@@ -12,7 +12,7 @@
      * More info on https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
      */
     var trackEvent = function(eventtrack) {
-      $window._gaq.push(['_trackEvent'].push(eventtrack));
+      $window._gaq.push(['_trackEvent'].concat(eventtrack));
     };
 
     /**
