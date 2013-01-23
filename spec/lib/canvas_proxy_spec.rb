@@ -61,4 +61,24 @@ describe CanvasProxy do
     groups[0]['name'].should_not be_nil
   end
 
+  it "should get user activity feed using the Tammi account" do
+    # by the time the fake access token is used below, it probably has well expired
+    proxy = CanvasUserActivityProxy.new(:fake => true)
+    response = proxy.user_activity
+    user_activity = JSON.parse(response.body)
+    user_activity.kind_of?(Array).should be_true
+    user_activity.size.should == 20
+    required_fields = %w(created_at updated_at id type html_url)
+    user_activity.each do |entry|
+      (entry.keys & required_fields).size.should == required_fields.size
+      expect {
+        DateTime.parse(entry["created_at"]) unless entry["created_at"].blank?
+        DateTime.parse(entry["updated_at"]) unless entry["update_at"].blank?
+      }.to_not raise_error
+      entry["id"].is_a?(Integer).should == true
+      category_specific_id_exists = entry["course_id"] || entry["group_id"] || entry["conversation_id"]
+      category_specific_id_exists.blank?.should_not be_true
+    end
+  end
+
 end
