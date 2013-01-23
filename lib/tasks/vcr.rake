@@ -12,12 +12,25 @@ namespace :vcr do
     rescue RuntimeError => e
       #Don't let spec failures stop json prettifying.
     end
+
+    #Overwriting the single line json with human legible json.
+    Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |file|
+      json_string = File.read(file)
+      json = JSON.parse(json_string)
+      pretty_json =  JSON.pretty_generate(json)
+      File.open(file, 'w') { |f| f.write(pretty_json)}
+    end
   end
 
   desc "Pretties up the json result files"
   task :prettify do
+    filter = ENV["REGEX_FILTER"]
+
     processed_dir = Rails.root.join("fixtures", "pretty_vcr_recordings")
     Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |filename|
+      if (!filter.blank?) && (filename =~ (/#{filter}/i)).nil?
+        next
+      end
       Rails.logger.info "Prettifying #{filename}"
       begin
         input_file = File.open filename

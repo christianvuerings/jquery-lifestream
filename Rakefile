@@ -6,4 +6,7 @@ require File.expand_path('../config/application', __FILE__)
 
 Calcentral::Application.load_tasks
 
+# Rails.logger might not be initialized for certain rake tasks, see calcentral_config.rb
+Rails.logger ||= Logger.new(STDOUT)
+
 task :default => ['travis']
