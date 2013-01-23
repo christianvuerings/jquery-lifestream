@@ -37,6 +37,7 @@ class JmsWorker
       if Settings.ist_jms.freshen_recording
         File.open(JMS_RECORDING, 'a') do |f|
           # Use double newline as a serialized object separator.
+          # Hat tip to: http://www.skorks.com/2010/04/serializing-and-deserializing-objects-with-ruby/
           f.puts(YAML.dump(msg))
           f.puts('')
         end
