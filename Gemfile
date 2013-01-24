@@ -78,6 +78,7 @@ end
 
 group :development, :test , :testext do
   gem "rspec-rails", "~> 2.12.2"
+  gem "rspec-mocks", "~> 2.12.1"
   gem "minitest-reporters", "~> 0.14.3"
 
   # Test our JavaScript code.

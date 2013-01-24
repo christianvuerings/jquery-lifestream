@@ -11,12 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 2013012410480000) do
+
+  create_table "notifications", :force => true do |t|
+    t.string   "uid"
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "notifications", ["uid"], :name => "index_notifications_on_uid"
+
+  create_table "oauth2_data", :force => true do |t|
+    t.string  "uid"
+    t.string  "app_id"
+    t.text    "access_token"
+    t.text    "refresh_token"
+    t.integer "expiration_time", :limit => 8
+  end
+
+  add_index "oauth2_data", ["uid", "app_id"], :name => "index_oauth2_data_on_uid_app_id", :unique => true
 
   create_table "user_data", :force => true do |t|
     t.string   "uid"
     t.string   "preferred_name"
-    t.datetime "first_login_at", :null => true
+    t.datetime "first_login_at"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
@@ -27,19 +46,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "uid"
     t.string   "widget_id"
     t.text     "data"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "widget_data", ["uid", "widget_id"], :name => "index_widget_data_on_uid_widget_id", :unique => true
 
-  create_table "oauth2_data", :force => true do |t|
-    t.string   "uid"
-    t.string   "app_id"
-    t.text     "access_token"
-    t.text     "refresh_token"
-    t.integer  "expiration_time", :limit => 8
-  end
-
-  add_index "oauth2_data", ["uid", "app_id"], :name => "index_oauth2_data_on_uid_app_id", :unique => true
 end

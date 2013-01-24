@@ -33,8 +33,8 @@ describe MyNotificationsController do
     json_response["notifications"].each do | notification |
       notification["id"].blank?.should_not == true
       notification["user_id"].should == 177914
-      notification["epoch"].is_a?(Integer).should == true
-      %w(type source emitter date_string color_class).each do | req_field |
+      notification["date"]["epoch"].is_a?(Integer).should == true
+      %w(type source emitter date color_class).each do | req_field |
         notification[req_field].blank?.should_not == true
       end
     end
