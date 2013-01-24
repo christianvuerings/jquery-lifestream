@@ -10,28 +10,36 @@ class RegStatusEventProcessor
     uid = event["payload"]["uid"]
     reg_status = CampusData.get_reg_status uid
     Rails.logger.debug "#{self.class.name} Reg_status for #{uid} is #{reg_status}"
-    translation = translate_status reg_status["reg_status_cd"]
-    title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
-    data = {
-        :user_id => uid,
-        :title => title,
-        :summary => "summary TODO",
-        :source => event["system"],
-        :type => "alert",
-        :date => {
-            :epoch => timestamp.to_i,
-            :datetime => timestamp.rfc3339,
-            :date_string => timestamp.strftime("%-m/%d")
-        },
-        :url => "https://bearfacts.berkeley.edu/bearfacts/",
-        :source_url => "https://bearfacts.berkeley.edu/bearfacts/",
-        :emitter => "Campus",
-        :color_class => "campus-item"
-    }
+    if timestamp == nil
+      timestamp = Time.now.to_datetime
+    end
+    if reg_status != nil
+      translation = translate_status reg_status["reg_status_cd"]
+      title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
 
-    notification = Notification.new({:uid => uid, :data => data})
-    notification.save
-    true
+      data = {
+          :user_id => uid,
+          :title => title,
+          :summary => "summary TODO",
+          :source => event["system"],
+          :type => "alert",
+          :date => {
+              :epoch => timestamp.to_i,
+              :datetime => timestamp.rfc3339,
+              :date_string => timestamp.strftime("%-m/%d")
+          },
+          :url => "https://bearfacts.berkeley.edu/bearfacts/",
+          :source_url => "https://bearfacts.berkeley.edu/bearfacts/",
+          :emitter => "Campus",
+          :color_class => "campus-item"
+      }
+
+      notification = Notification.new({:uid => uid, :data => data})
+      notification.save
+      true
+    else
+      false
+    end
   end
 
   def translate_status(reg_status)
