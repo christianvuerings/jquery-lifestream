@@ -33,4 +33,11 @@ describe RegStatusEventProcessor do
 
   end
 
+  it "should skip an event and do nothing if the reg_status can't be found" do
+    event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status, "300846").and_return(nil)
+    @processor.process(event, timestamp).should == false
+  end
+
 end
