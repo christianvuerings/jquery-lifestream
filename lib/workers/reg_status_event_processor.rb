@@ -9,8 +9,8 @@ class RegStatusEventProcessor
     Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}"
     uid = event["payload"]["uid"]
     reg_status = CampusData.get_reg_status uid
+    Rails.logger.debug "#{self.class.name} Reg_status for #{uid} is #{reg_status}"
     translation = translate_status reg_status["reg_status_cd"]
-    Rails.logger.info "Translation = #{translation}"
     title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
     data = {
         :user_id => uid,
@@ -36,7 +36,7 @@ class RegStatusEventProcessor
 
   def translate_status(reg_status)
     # TODO resolve gaps and ??? marks - CLC-1069
-    case
+    case reg_status.upcase
       when ""
         '"admitted / not registered." To complete your registration you must pay all registration fees, have no outstanding "blocks" and be enrolled in at least one course.'
       when "A"
