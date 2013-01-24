@@ -1,14 +1,12 @@
 class CampusData < ActiveRecord::Base
   establish_connection "campusdb"
 
-  # TODO parameterize current year & term. CLC-951.
-
   def self.current_year
-    2012
+    Settings.sakai_proxy.current_terms_codes.first.term_yr
   end
 
   def self.current_term
-    'D'
+    Settings.sakai_proxy.current_terms_codes.first.term_cd
   end
 
   def self.get_person_attributes(person_id)
