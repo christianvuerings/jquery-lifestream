@@ -20,7 +20,7 @@ class JmsConnection
     # another thread, and then close the dangling connection/session from there.
     # The following URL means: wait at least 5 minutes before trying to reconnect; wait at most
     # 4 hours; do not block failed "send" attempts forever.
-    url = "failover:(#{url})?initialReconnectDelay=300000&maxReconnectDelay=14400000&timeout=30000"
+    url = "failover:(#{url})?initialReconnectDelay=300000&maxReconnectDelay=14400000&timeout=30000&randomize=false"
 
     connection_factory = username ?
         ActiveMQConnectionFactory.new(username, password, url) :
