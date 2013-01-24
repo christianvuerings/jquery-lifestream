@@ -54,6 +54,7 @@ $cc-page-splash-blue-light: #0073C3;
       font-size: 14px;
     }
     img {
+      @include box-shadow(0 4px 8px #888);
       float: right;
     }
     .row {
