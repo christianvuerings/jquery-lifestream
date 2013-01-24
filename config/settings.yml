@@ -57,6 +57,10 @@ sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
   current_terms: ["Spring 2013"]
+  current_terms_codes: [ {
+    term_yr: "2013",
+    term_cd: "B"
+  }]
 
 # Analytics settings ID
 # This will need to be different for every server (dev/qa/production)
