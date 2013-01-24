@@ -7,13 +7,15 @@
       "summary": "Evacuate Dwinelle Hall immediately, gas leak",
       "source": "Warn Me",
       "type": "alert",
-      "epoch": 1349049728,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+          "epoch": 1349049728,
+          "datetime":"2013-01-15T19:52:27.000+00:00",
+          "date_string":"Today"
+      },
       "url": "https://warnme.berkeley.edu/",
       "source_url": "https://warnme.berkeley.edu/",
       "emitter": "bSpace",
-      "color_class": "bspace-class",
-      "date_string": "Today"
+      "color_class": "bspace-class"
     },
     {
       "id": 2,
@@ -22,13 +24,15 @@
       "summary": "You have 90 days to complete Math 1B and submit a Petition to Remove an Incomplete",
       "source": "Bear Facts",
       "type": "alert",
-      "epoch": 1349049728,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+          "epoch": 1349049728,
+          "datetime":"2013-01-15T19:52:27.000+00:00",
+          "date_string":"Today"
+      },
       "url": "https://bearfacts.berkeley.edu/",
       "source_url": "https://bearfacts.berkeley.edu/",
       "emitter": "Campus",
-      "color_class": "campus-item",
-      "date_string": "Today"
+      "color_class": "campus-item"
     },
     {
       "id": 3,
@@ -37,13 +41,15 @@
       "summary": "You have an unpaid CARS balance of $673. Action Required.",
       "source": "Billing",
       "type": "block",
-      "epoch": 1348185901,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+          "epoch": 1348185901,
+          "datetime":"2012-12-30T19:52:27.000+00:00",
+          "date_string":"12/30"
+      },
       "url": "http://studentbilling.berkeley.edu",
       "source_url": "http://studentbilling.berkeley.edu",
       "emitter": "Canvas",
-      "color_class": "canvas-class",
-      "date_string": "12/30/12"
+      "color_class": "canvas-class"
     },
     {
       "id": 4,
@@ -52,13 +58,15 @@
       "summary": "87 out of 100 for ETH STD 21AC",
       "source": "Canvas",
       "type": "classes",
-      "epoch": 1348268251,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+         "epoch": 1348185901,
+         "datetime": "2013-12-29T19:52:27.000+00:00",
+         "date_string": "12/29"
+      },
       "url": "https://ucberkeley.instructure.com/courses/833384",
       "source_url": "https://ucberkeley.instructure.com/courses/833384",
       "emitter": "Canvas",
-      "color_class": "canvas-class",
-      "date_string": "12/29/12"
+      "color_class": "canvas-class"
     },
     {
       "id": 5,
@@ -67,13 +75,15 @@
       "summary": "Your November CARS bill of $987 is due by October 22",
       "source": "Student Billing",
       "type": "finances",
-      "epoch": 1349956800,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+            "epoch": 1348185901,
+            "datetime": "2013-12-28T19:52:27.000+00:00",
+            "date_string": "12/28"
+      },
       "url": "http://studentbilling.berkeley.edu/",
       "source_url": false,
       "emitter": "Campus",
-      "color_class": "campus-item",
-      "date_string": "12/28/12"
+      "color_class": "campus-item"
     },
     {
       "id": 6,
@@ -82,13 +92,15 @@
       "summary": "Student may sign up for office hours once per week",
       "source": "bSpace",
       "type": "classes",
-      "epoch": 1349546400,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+            "epoch": 1348185901,
+            "datetime": "2013-12-26T19:52:27.000+00:00",
+            "date_string": "12/26"
+      },
       "url": "https://ucberkeley.instructure.com/courses/833382",
       "source_url": false,
       "emitter": "bSpace",
-      "color_class": "bspace-group",
-      "date_string": "12/26/12"
+      "color_class": "bspace-group"
 
     },
     {
@@ -98,13 +110,15 @@
       "summary": "Your Phase I appointment is scheduled for Oct 26 at 11am",
       "source": "Telebears",
       "type": "academics",
-      "epoch": 1348682400,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+            "epoch": 1348185901,
+            "datetime": "2013-12-18T19:52:27.000+00:00",
+            "date_string": "12/18"
+      },
       "url": "https://telebears.berkeley.edu",
       "source_url": false,
       "emitter": "Campus",
-      "color_class": "campus-item",
-      "date_string": "12/18/12"
+      "color_class": "campus-item"
     },
     {
       "id": 8,
@@ -113,13 +127,15 @@
       "summary": "Your Loan Promissory Note has not been submitted with a signature",
       "source": "MyFinAid",
       "type": "finances",
-      "epoch": 1348164000,
-      "notification_date": "Sun Dec 30 2012 17:02:08 GMT-7",
+      "date": {
+            "epoch": 1348185901,
+            "datetime": "2013-12-02T19:52:27.000+00:00",
+            "date_string": "12/2"
+      },
       "url": "http://example.com",
       "source_url": false,
       "emitter": "bSpace",
-      "color_class": "bspace-group",
-      "date_string": "12/2/12"
+      "color_class": "bspace-group"
     }
   ]
 }
