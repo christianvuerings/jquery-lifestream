@@ -14,8 +14,8 @@
   .cc-page-dashboard-column-a, .cc-page-dashboard-column-c {
     background: #fafafa;
   }
-  .cc-page-dashboard-column-b {
-    background: $cc-standout-column-color;
+  .cc-page-dashboard-column-b, .cc-page-dashboard-column-c {
+    padding-right: 0;
   }
   .cc-emitter-col {
     padding-right: 0;
@@ -62,19 +62,21 @@
     font-size: 14px;
     font-weight: bold;
     margin-top: 5px;
-    padding-right: 15px;
-    text-align: right;
+    padding-right: 10px;
   }
   .cc-widget-tasks-notifications-date-string {
     color: #999999;
+    float: right;
+    font-size: 12px;
+    padding-right: 0;
     text-align: right;
     text-transform: uppercase;
   }
   .cc-widget-add-icon {
     @include user-select("none");
-    background: $cc-standout-column-color;
+    background: #fff;
     // Border color equals section bg color so button doesn't jump when hover border appears
-    border: 2px solid $cc-standout-column-color;
+    border: 2px solid #fff;
     border-radius: 4px;
     cursor: pointer;
     font-family: Arial, sans-serif;
