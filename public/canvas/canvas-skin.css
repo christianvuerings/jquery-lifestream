@@ -1,0 +1,87 @@
+/* CalCentral Header */
+#calcentral-custom-header {
+  background: #E9EFF3 url('/canvas/canvas-header-background.png') 0 0 no-repeat;
+  border-bottom: 1px solid #555;
+  height: 29px;
+}
+
+#calcentral-custom-header-logo {
+  background: transparent url('/canvas/canvas-calcentral-logo.png') no-repeat 17px 7px;
+  display: inline-block;
+  height: 29px;
+  width: 200px;
+}
+
+#calcentral-custom-header ul {
+  display: inline-block;
+  left: -55px;
+  position: relative;
+  top: -9px;
+}
+
+#calcentral-custom-header li {
+  display: inline-block;
+  line-height: 13px;
+  margin: 0;
+  padding: 0 10px;
+}
+
+#calcentral-custom-header li:first-child {
+  border-right: 2px ridge #21406F;
+}
+
+#calcentral-custom-header a {
+  color: #21406F;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Canvas Header */
+#menu {
+  padding-top: 0;
+}
+
+#header {
+  background: #21406F;
+}
+
+#header-inner, #header.no-user #header-inner {
+  padding-top: 19px;
+}
+
+#header.no-user #header-inner {
+  height: 32px;
+}
+
+#header-logo, #header.no-user #header-logo {
+  bottom: 8px;
+}
+
+#header.no-user #header-logo {
+  top: 16px;
+  left: 16px;
+  bottom: 0;
+}
+
+.menu-item .menu-item-title, .menu-item .menu-item-no-drop {
+  font-size: 14px;
+  height: 25px;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.menu-item .menu-item-title {
+  background-position: right 14px;
+}
+
+.menu-item.hover .menu-item-title {
+  background-position: right 13px;
+}
+
+.menu-item .menu-item-drop {
+  top: auto;
+}
+
+#identity {
+  box-shadow: none;
+}
