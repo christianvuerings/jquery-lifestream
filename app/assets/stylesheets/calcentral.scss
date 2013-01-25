@@ -7,7 +7,7 @@ $cc-border-color: #999;
 $cc-button-color: #80c7de;
 $cc-column-border-color: #dedede;
 $cc-launcher-border-color: #114d80;
-$cc-light-grey: #5c5c5c;
+$cc-light-grey: #4a4b4d;
 $cc-medium-grey: #dddddd;
 $cc-list-border-color: #cacaca;
 $cc-main-background-color: #f2f2f2;
@@ -16,7 +16,6 @@ $cc-nav-gradient1-color: #012955;
 $cc-nav-gradient2-color: #3b5d86;
 $cc-nav-link-color: #fdd692;
 $cc-shadow-color: #ccc;
-$cc-standout-column-color: #eaeff3;
 $cc-widget-section-label-color: #515151;
 $cc-widget-highlight-background-color: #f2fef3;
 $cc-widget-hover-background-color: #e3ffff;
@@ -220,11 +219,8 @@ button {
 }
 
 /* Useful classes */
-.cc-alert, .cc-alert-nobang {
+.cc-alert {
   color: $cc-alert-color !important;
-}
-.cc-alert:before {
-   content: "! ";
 }
 .cc-ellipsis {
   overflow: hidden;
@@ -362,6 +358,8 @@ button {
 
 .cc-widget-title {
   border-bottom: 1px solid $cc-border-color;
+  margin-bottom: 5px;
+  margin-right: 10px;
   overflow: hidden;
 
   h2 {
@@ -389,7 +387,7 @@ button {
   clear: both;
   color: $cc-widget-section-label-color;
   font-size: 14px;
-  margin-top: 5px;
+  margin: 5px 10px 0 0;
 }
 
 .cc-container-widget {
@@ -399,7 +397,7 @@ button {
   width: 100%;
 
   .cc-widget-text {
-    padding: 20px;
+    padding: 15px 20px 20px 20px;
   }
 
   .cc-widget-list {
@@ -431,9 +429,8 @@ button {
   }
   .cc-widget-list-selected {
     background: $cc-widget-more-background-color;
-    .cc-widget-list-selected-title {
-      font-weight: bold;
-    }
+    margin-bottom: 1px; /* Effectively creates white line above selected tasks */
+
     .row {
       background: $cc-widget-more-background-color;
     }
@@ -458,26 +455,25 @@ button {
 
 .cc-widget-tasks-notifications-list {
   list-style-type: none;
-  margin: 0;
+  margin: 12px 0 0 0;
   padding: 0 0 10px 0;
 
   li .row {
+    margin-right: 10px;
     padding: 5px 0;
   }
 
   .cc-widget-tasks-notifications-more {
-    .cc-widget-tasks-notifications-text {
+    p {
+      clear: left;
       line-height: 1.2;
+      padding-top: 10px;
       margin-bottom: 5px;
-      padding-left: 0;
-      p {
-        margin-bottom: 0;
-        padding-bottom: 5px;
-      }
     }
+
   }
   .cc-widget-more-view-in {
-    background-color: #e8eff2;
+    background-color: #e8eff3;
     color: #16191b;
     font-size: 11px;
     font-weight: bold;

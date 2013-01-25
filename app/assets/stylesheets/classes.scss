@@ -1,8 +1,11 @@
 /* Tasks and Assigments widget */
 #cc-widget-myclasses {
+  .cc-widget-mygroups-myclasses-row {
+    margin-top: 5px;
+  }
   .cc-widget-mygroups-myclasses-title-link {
     font-size: 0.85em;
-    color: $txtColor;
+    color: $cc-light-grey;
   }
   .cc-myclasses-link-with-title {
     padding-left: 5px;
