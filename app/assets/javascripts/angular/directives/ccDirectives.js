@@ -7,6 +7,7 @@
   calcentral.directive('mmddyyvalidator', function() {
     return {
       require: 'ngModel',
+      restrict: 'A',
       link: function(scope, elm, attrs, ctrl) {
         ctrl.$parsers.unshift(function(viewValue) {
           if (mmddyy_regex.test(viewValue) || viewValue === '') {
