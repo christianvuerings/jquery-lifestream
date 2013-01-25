@@ -53,8 +53,8 @@
   height: 32px;
 }
 
-#header-logo, #header.no-user #header-logo {
-  bottom: 8px;
+#header-logo.original, #header.no-user #header-logo {
+  bottom: 9px;
 }
 
 #header.no-user #header-logo {
