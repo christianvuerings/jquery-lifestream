@@ -19,6 +19,10 @@ class FinalGradesEventProcessor
 
     return false unless students && course && course["course_title"]
 
+    if timestamp == nil
+      timestamp = Time.now.to_datetime
+    end
+
     # TODO get real copy for title, summary, etc.
     students.each do |student|
       uid = student["ldap_uid"]
