@@ -46,4 +46,28 @@ describe "MyClasses" do
     end
   end
 
+  it "should return bSpace courses when Canvas service is unavailable" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    SakaiProxy.stub(:access_granted?).and_return(true)
+    SakaiCategorizedProxy.stub(:new).and_return(@fake_sakai_proxy)
+    CanvasProxy.any_instance.stub(:request).and_return(nil)
+    my_classes = MyClasses.new(@user_id).get_feed
+    my_classes[:classes].size.should be > 0
+    my_classes[:classes].each do |my_class|
+      my_class[:emitter].should == "bSpace"
+    end
+  end
+
+  it "should return Canvas courses when bSpace service is unavailable" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+    SakaiProxy.stub(:access_granted?).and_return(true)
+    SakaiProxy.any_instance.stub(:do_get).and_return({status_code: 503})
+    my_classes = MyClasses.new(@user_id).get_feed
+    my_classes[:classes].size.should be > 0
+    my_classes[:classes].each do |my_class|
+      my_class[:emitter].should == "Canvas"
+    end
+  end
+
 end
