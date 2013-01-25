@@ -13,13 +13,16 @@ class FinalGradesEventProcessor
     term_cd = lookup_term_code payload["term"]
 
     students = CampusData.get_enrolled_students(ccn, term_yr, term_cd)
-    Rails.logger.info "#{self.class.name} Found students enrolled in #{term_yr}-#{term_cd}-#{ccn}: #{students}"
+    course = CampusData.get_course(ccn, term_yr, term_cd)
+
+    Rails.logger.info "#{self.class.name} Found students enrolled in #{course} - #{term_yr}-#{term_cd}-#{ccn}: #{students}"
+
+    return false unless students && course && course["course_title"]
 
     # TODO get real copy for title, summary, etc.
-    # TODO look up course name in Oracle using CCN
     students.each do |student|
       uid = student["ldap_uid"]
-      title = "Final grades have been entered for #{term_yr}-#{term_cd}-#{ccn}"
+      title = "Final grades have been entered for #{course["course_title"]}"
       data = {
           :user_id => uid,
           :title => title,

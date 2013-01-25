@@ -24,4 +24,13 @@ describe CampusData do
     end
   end
 
+  it "should find a course" do
+    course = CampusData.get_course("7366", "2012", "D")
+    course.should_not be_nil
+    if Settings.campusdb.adapter == "h2"
+      # we will only have predictable enrollments in our fake Oracle db.
+      course["course_title"].should == "General Biology Lecture"
+    end
+  end
+
 end

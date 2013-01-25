@@ -15,7 +15,7 @@ class CampusData < ActiveRecord::Base
 		from bspace_person_info_vw pi
 		where pi.ldap_uid = #{connection.quote(person_id)}
     SQL
-    attrs = connection.select_one(sql)
+    connection.select_one(sql)
   end
 
   def self.get_reg_status(person_id)
@@ -29,7 +29,7 @@ class CampusData < ActiveRecord::Base
       )
 		where pi.ldap_uid = #{connection.quote(person_id)}
     SQL
-    attrs = connection.select_one(sql)
+    connection.select_one(sql)
   end
 
   def self.get_enrolled_students(ccn, term_yr, term_cd)
@@ -41,6 +41,17 @@ class CampusData < ActiveRecord::Base
       and roster.course_cntl_num = #{connection.quote(ccn)}
     SQL
     connection.select_all(sql)
+  end
+
+  def self.get_course(ccn, term_yr, term_cd)
+    sql = <<-SQL
+    select course_title
+		from bspace_course_info_vw
+		where term_yr = #{connection.quote(term_yr)}
+      and term_cd = #{connection.quote(term_cd)}
+      and course_cntl_num = #{connection.quote(ccn)}
+    SQL
+    connection.select_one(sql)
   end
 
 end
