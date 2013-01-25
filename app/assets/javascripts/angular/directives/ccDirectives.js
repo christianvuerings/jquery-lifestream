@@ -4,6 +4,7 @@
   angular.module('calcentral.directives').directive('ccMmddyyvalidator', function() {
     return {
       require: 'ngModel',
+      restrict: 'A',
       link: function(scope, elm, attrs, ctrl) {
         ctrl.$parsers.unshift(function(viewValue) {
           // Date regex for mm/dd/yy modified from http://www.regular-expressions.info/dates.html
