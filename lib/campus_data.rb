@@ -31,4 +31,16 @@ class CampusData < ActiveRecord::Base
     SQL
     attrs = connection.select_one(sql)
   end
+
+  def self.get_enrolled_students(ccn, term_yr, term_cd)
+    sql = <<-SQL
+    select roster.student_ldap_uid ldap_uid
+		from bspace_class_roster_vw roster
+		where roster.term_yr = #{connection.quote(term_yr)}
+      and roster.term_cd = #{connection.quote(term_cd)}
+      and roster.course_cntl_num = #{connection.quote(ccn)}
+    SQL
+    connection.select_all(sql)
+  end
+
 end

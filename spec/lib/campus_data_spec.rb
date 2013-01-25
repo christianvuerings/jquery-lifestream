@@ -14,4 +14,14 @@ describe CampusData do
       data['reg_status_cd'].should == "C"
     end
   end
+
+  it "should find some students in Spanish 1" do
+    students = CampusData.get_enrolled_students("86103", "2012", "D")
+    students.should_not be_nil
+    if Settings.campusdb.adapter == "h2"
+      # we will only have predictable enrollments in our fake Oracle db.
+      students[6]["ldap_uid"].should == "300846"
+    end
+  end
+
 end
