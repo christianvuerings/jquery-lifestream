@@ -164,6 +164,19 @@ describe "MyTasks" do
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
   end
 
+  it "should return Google tasks when Canvas service is unavailable" do
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
+    CanvasProxy.any_instance.stub(:request).and_return(nil)
+    my_tasks_model = MyTasks.new(@user_id)
+    tasks = my_tasks_model.get_feed["tasks"]
+    tasks.size.should be > 0
+    tasks.each do |task|
+      task["emitter"].should == GoogleProxy::APP_ID
+    end
+  end
+
 end
 
 def get_task_list_id_and_task_id

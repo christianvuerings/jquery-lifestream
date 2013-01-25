@@ -145,7 +145,7 @@ class MyTasks < MyMergedModel
 
   def fetch_canvas_coming_up(canvas_proxy)
     response = canvas_proxy.coming_up
-    if response.status == 200
+    if response && (response.status == 200)
       results = JSON.parse response.body
       logger.info "#{self.class.name} Sorting Canvas coming_up feed into buckets with starting_date #{@starting_date}"
       results.each do |result|
@@ -170,7 +170,7 @@ class MyTasks < MyMergedModel
 
   def fetch_canvas_todo(canvas_proxy)
     response = canvas_proxy.todo
-    if response.status == 200
+    if response && (response.status == 200)
       results = JSON.parse response.body
       logger.info "#{self.class.name} Sorting Canvas todo feed into buckets with starting_date #{@starting_date}; #{results}"
       results.each do |result|

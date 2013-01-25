@@ -30,7 +30,14 @@ class CanvasProxy < BaseProxy
           :uri => "#{@settings.url_root}/api/v1/#{api_path}"
       )
       Rails.logger.info "CanvasProxy - Making request with @fake = #{@fake}, options = #{fetch_options}"
-      FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) { @client.fetch_protected_resource(fetch_options) }
+      FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) do
+        begin
+          @client.fetch_protected_resource(fetch_options)
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
+          Rails.logger.warn "CanvasProxy connection failed: #{e.class} #{e.message}"
+          nil
+        end
+      end
     end
   end
 

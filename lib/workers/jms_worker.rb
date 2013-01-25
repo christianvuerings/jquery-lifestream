@@ -29,7 +29,7 @@ class JmsWorker
       begin
         @jms ||= JmsConnection.new
       rescue => e
-        Rails.logger.warn "Unable to start JMS listener: #{e}"
+        Rails.logger.warn "Unable to start JMS listener: #{e.class} #{e.message}"
         sleep(30.minutes)
       end
     end

@@ -72,7 +72,7 @@ describe "MyGroups" do
   it "should sort groups alphabetically" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:access_granted?).and_return(true)
-    sakai_project_site_feed = {body: {"categories" => [
+    sakai_project_site_feed = {status_code: 200, body: {"categories" => [
         "category" => "Projects",
         "sites" => [
             {"title" => "Zsite", "id" => "zsite-id", "url" => "http://sakai/zsite-id"},
@@ -87,6 +87,30 @@ describe "MyGroups" do
     my_groups[:groups][0][:title].should == "Agroup"
     my_groups[:groups][1][:title].should == "csite"
     my_groups[:groups][2][:title].should == "Zsite"
+  end
+
+  it "should return bSpace sites when Canvas service is unavailable" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    SakaiProxy.stub(:access_granted?).and_return(true)
+    SakaiCategorizedProxy.stub(:new).and_return(@fake_sakai_proxy)
+    CanvasProxy.any_instance.stub(:request).and_return(nil)
+    my_groups = MyGroups.new(@user_id).get_feed
+    my_groups[:groups].size.should be > 0
+    my_groups[:groups].each do |group|
+      group[:emitter].should == "bSpace"
+    end
+  end
+
+  it "should return Canvas groups when bSpace service is unavailable" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+    SakaiProxy.stub(:access_granted?).and_return(true)
+    SakaiProxy.any_instance.stub(:do_get).and_return({status_code: 503})
+    my_groups = MyGroups.new(@user_id).get_feed
+    my_groups[:groups].size.should be > 0
+    my_groups[:groups].each do |group|
+      group[:emitter].should == "Canvas"
+    end
   end
 
 end
