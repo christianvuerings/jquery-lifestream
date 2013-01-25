@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services', ['ng']).service('analyticsService', ['$rootScope', '$window', '$location', function($rootScope, $window, $location) {
+  angular.module('calcentral.services').service('analyticsService', ['$rootScope', '$window', '$location', function($rootScope, $window, $location) {
 
     /**
      * Track an event on the page

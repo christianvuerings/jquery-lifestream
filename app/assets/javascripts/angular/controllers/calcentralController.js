@@ -130,7 +130,6 @@
      * @return {Boolean} Will be true when there is one item in the list that is shown
      */
     $scope.api.widget.containsOpen = function(items) {
-
       if (!items) {
         return;
       }
@@ -141,7 +140,6 @@
         }
       }
       return false;
-
     };
 
     // Util

@@ -3,9 +3,16 @@
   'use strict';
 
   /**
+   * Initialize all of the submodules
+   */
+  angular.module('calcentral.directives', []);
+  angular.module('calcentral.services', ['ng']);
+
+  /**
    * CalCentral module
    */
   var calcentral = angular.module('calcentral', [
+    'calcentral.directives',
     'calcentral.services',
     'ngSanitize'
   ]);

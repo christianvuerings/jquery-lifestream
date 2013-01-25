@@ -4,9 +4,9 @@
   /**
    * Dashboard controller
    */
-  calcentral.controller('DashboardController', ['$rootScope', function($rootScope) {
+  calcentral.controller('DashboardController', ['titleService', function(titleService) {
 
-    $rootScope.title = 'Dashboard | CalCentral';
+    titleService.setTitle('Dashboard');
 
   }]);
 

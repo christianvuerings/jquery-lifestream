@@ -24,7 +24,6 @@
     };
 
     $scope.addTask = function() {
-
       var trackEvent = 'note: ' + !!$scope.add_task.note + ' date: ' + !!$scope.add_task.due_date;
       analyticsService.trackEvent(['Tasks', 'Add', trackEvent]);
 
