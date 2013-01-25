@@ -4,9 +4,9 @@
   /**
    * Error controller
    */
-  calcentral.controller('ErrorController', ['$rootScope', function($rootScope) {
+  calcentral.controller('ErrorController', ['titleService', function(titleService) {
 
-    $rootScope.title = 'Error | CalCentral';
+    titleService.setTitle('Error');
 
   }]);
 

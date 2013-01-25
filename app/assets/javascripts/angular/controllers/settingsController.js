@@ -4,9 +4,9 @@
   /**
    * Settings controller
    */
-  calcentral.controller('SettingsController', ['$rootScope', '$http', '$scope', function($rootScope, $http, $scope) {
+  calcentral.controller('SettingsController', ['titleService', function(titleService) {
 
-    $rootScope.title = 'Settings | CalCentral';
+    titleService.setTitle('Settings');
 
   }]);
 
