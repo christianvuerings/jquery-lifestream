@@ -32,11 +32,12 @@ $cc-page-splash-blue-light: #0073C3;
     @include background(linear-gradient(top, $cc-page-splash-blue-light, $cc-page-splash-blue-dark));
     box-shadow: none;
   }
+  /* Re-enable this when we have a good video
   .cc-splash-video-container {
     height: 0;
     margin-top: 60px;
     overflow: hidden;
-    padding-bottom: 56.25%; /* 16/9 ratio */
+    padding-bottom: 56.25%;
     position: relative;
   }
   .cc-splash-video {
@@ -46,6 +47,28 @@ $cc-page-splash-blue-light: #0073C3;
     position: absolute;
     top: 0;
     width: 100%;
+  }*/
+  .cc-splash-status {
+    background: image-url('splash_status.png') no-repeat 0 0;
+    background-position: center;
+    @include background-size(cover);
+    border: 1px solid #666;
+    margin-top: 60px;
+    padding-bottom: 48.56%;
+    position: relative;
+    a {
+      bottom: 10px;
+      position: absolute;
+      float: right;
+      right: 10px;
+    }
+    h2 {
+      color: #666;
+      font-size: 14px;
+      top: 5px;
+      left: 10px;
+      position: absolute;
+    }
   }
 
   .cc-splash-features {
