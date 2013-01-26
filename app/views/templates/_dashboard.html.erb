@@ -30,14 +30,14 @@
               <div class="two columns mobile-one">
                 <label for="cc-widget-tasks-addtask-date">Due:</label>
               </div>
-              <div class="ten columns mobile-three">
+              <div class="ten columns mobile-three cc-task-date-input">
                 <input type="text"
                   data-ng-model="add_task.due_date"
                   name="add_task_due_date"
                   id="cc-widget-tasks-addtask-date"
                   placeholder="mm/dd/yy"
                   data-cc-mmddyyvalidator />
-                <p class="cc-alert" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccMmddyyvalidator">
+                <p class="cc-alert cc-alert-text" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccMmddyyvalidator">
                   Please use mm/dd/yy date format
                 </p>
               </div>
