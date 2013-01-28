@@ -23,7 +23,7 @@ class RegStatusEventProcessor
         :reg_status => reg_status
     }
 
-    notification = Notification.new({:uid => uid, :data => data})
+    notification = Notification.new({:uid => uid, :data => data, :translator => "RegStatusTranslator"})
     notification.save
     true
 

@@ -1,5 +1,5 @@
 class Notification < ActiveRecord::Base
-  attr_accessible :uid, :data
+  attr_accessible :uid, :data, :translator
 
   def data
     JSON.parse(read_attribute(:data))

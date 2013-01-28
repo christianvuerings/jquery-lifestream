@@ -29,7 +29,7 @@ class FinalGradesEventProcessor
     }
 
     students.each do |student|
-      notification = Notification.new({:uid => student["ldap_uid"], :data => data})
+      notification = Notification.new({:uid => student["ldap_uid"], :data => data, :translator => "FinalGradesTranslator"})
       notification.save
     end
 

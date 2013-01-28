@@ -1,6 +1,6 @@
 ---
 :timestamp: 2013-01-15 16:00:18.000000000 -08:00
-:text: ! '{"event":{"id":"42341_1","system":"Bearfacts","code":"RegStatus","payload":{"uid":1000}}}'
+:text: ! '{"event":{"id":"42341_1","system":"Bearfacts","code":"RegStatus","payload":{"uid":300846}}}'
 
 ---
 :timestamp: 2013-01-15 16:00:18.000000000 -08:00
@@ -24,7 +24,7 @@
 
 ---
 :timestamp: 2013-01-15 16:00:18.000000000 -08:00
-:text: ! '{"event":{"id":"29592_2","system":"Bearfacts","code":"EndOFTermGrade","payload":{"ccn":222,"term":"fall","year":2012}}}'
+:text: ! '{"event":{"id":"29592_2","system":"Bearfacts","code":"EndOFTermGrade","payload":{"ccn":73980,"term":"fall","year":2012}}}'
 
 ---
 :timestamp: 2013-01-15 16:00:18.000000000 -08:00
