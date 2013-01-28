@@ -191,13 +191,17 @@ button {
 
 /* Launcher */
 .cc-launcher {
+  background: $white;
+  border: 1px solid $cc-launcher-border-color;
+  border-bottom-left-radius: 6px;
+  border-top: none;
   padding: 0;
   position: absolute;
   right: -1px;
   top: 0;
 
-  a {
-    font-weight: bold;
+  button {
+    width: auto;
   }
   .cc-launcher-bar {
     border-right: 1px solid $cc-launcher-border-color;
@@ -213,15 +217,6 @@ button {
     padding: 1px 10px;
     margin: 4px 0 5px;
   }
-  .cc-launcher-icon-dropdown {
-    font-size: 8px;
-  }
-}
-.cc-launcher, .cc-launcher .cc-launcher-dropdown {
-  background: $white;
-  border: 1px solid $cc-launcher-border-color;
-  border-bottom-left-radius: 6px;
-  border-top: none;
 }
 
 /* Useful classes */
