@@ -184,6 +184,18 @@ button {
   color: $mainColor;
 }
 
+/* Message for oldIE */
+.cc-old-ie {
+  margin-bottom: 20px!important;
+  a {
+    color: #fff;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
 /* Container */
 .cc-container-main {
   background-color: $white;
