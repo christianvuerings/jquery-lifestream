@@ -35,6 +35,9 @@ describe FinalGradesEventProcessor do
     saved_notification.data.should_not be_nil
     Rails.logger.info "Saved notification's json is #{saved_notification.data}"
 
+    Notification.where(:uid => "323487").first.data.should_not be_nil
+    Notification.where(:uid => "300846").first.data.should_not be_nil
+
   end
 
 end

@@ -5,13 +5,20 @@ class FinalGradesTranslator
   end
 
   def translate(notification)
-    event = notification["data"]["event"]
-    timestamp = notification["data"]["timestamp"]
-    uid = notification["data"]["uid"]
-    course = notification["data"]["course"]
+    data = notification.data
+    uid = notification.uid
+    event = data["event"]
+    begin
+      timestamp = Time.parse(data["timestamp"]).to_datetime
+    rescue
+      timestamp = notification.created_at
+    end
+
+    course = data["course"]
+
+    Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}; course = #{course}"
 
     return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && course && course["course_title"]
-    Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}; uid = #{uid}"
 
     # TODO get real copy for title, summary, etc.
     title = "Final grades have been entered for #{course["course_title"]}"

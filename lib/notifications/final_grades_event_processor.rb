@@ -16,7 +16,7 @@ class FinalGradesEventProcessor
     course = CampusData.get_course(ccn, term_yr, term_cd)
 
     return false unless students && course && course["course_title"]
-    Rails.logger.info "#{self.class.name} Found students enrolled in #{course} - #{term_yr}-#{term_cd}-#{ccn}: #{students}"
+    Rails.logger.debug "#{self.class.name} Found students enrolled in #{course} - #{term_yr}-#{term_cd}-#{ccn}: #{students}"
 
     if timestamp == nil
       timestamp = Time.now.to_datetime
