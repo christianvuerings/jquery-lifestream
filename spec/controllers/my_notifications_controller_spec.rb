@@ -32,7 +32,6 @@ describe MyNotificationsController do
     json_response["notifications"].instance_of?(Array).should == true
     json_response["notifications"].each do | notification |
       notification["id"].blank?.should_not == true
-      notification["user_id"].should == 177914
       notification["date"]["epoch"].is_a?(Integer).should == true
       %w(type source emitter date color_class).each do | req_field |
         notification[req_field].blank?.should_not == true

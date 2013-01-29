@@ -23,7 +23,7 @@ class RegStatusTranslator
     title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
 
     {
-        :user_id => uid,
+        :id => notification.id,
         :title => title,
         :summary => "summary TODO",
         :source => event["system"],

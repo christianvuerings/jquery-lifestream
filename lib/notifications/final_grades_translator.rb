@@ -23,7 +23,7 @@ class FinalGradesTranslator
     # TODO get real copy for title, summary, etc.
     title = "Final grades have been entered for #{course["course_title"]}"
     {
-        :user_id => uid,
+        :id => notification.id,
         :title => title,
         :summary => "summary TODO",
         :source => event["system"],
