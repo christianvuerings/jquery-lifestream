@@ -1,5 +1,5 @@
 <footer class="row" data-ng-controller="FooterController" data-ng-cloak>
-  <div data-ng-click="showInfo=!showInfo" class="nine columns mobile-three copyright">&copy; {{currentTime() | date:'yyyy'}} UC Regents | <a href="//security.berkeley.edu/policy">Usage Policy</a></div>
+  <div data-ng-click="showInfo=!showInfo" class="nine columns mobile-three cc-footer-copyright">&copy; {{currentTime() | date:'yyyy'}} UC Regents | <a href="//security.berkeley.edu/policy">Usage Policy</a></div>
   <div class="cc-footer-links">
     <div class="three columns mobile-one">
       <a href="https://ets.berkeley.edu/help/calcentral">Help</a>
@@ -12,7 +12,13 @@
       <li>Hostname: <%= @server_settings["hostname"] %></li>
       <li><a href="https://github.com/ets-berkeley-edu/calcentral/commit/<%= @server_settings['git_commit'] %>">Git commit: <%= @server_settings["git_commit"][0,8] %></a></li>
       <li>Up Since: <%= @server_settings["first_visited"] %></li>
-      <li><button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral?</button><span class="confirmation" data-ng-show="deleteSelf">Are you sure?<button class="first tiny button" data-ng-click="user.optOut()">Yes</button> <button class="tiny button" data-ng-click="deleteSelf=false">No</button></span></li>
+      <li>
+        <button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral?</button>
+        <div class="cc-footer-confirmation" data-ng-show="deleteSelf">Are you sure?
+          <button class="first tiny button" data-ng-click="user.optOut()">Yes</button>
+          <button class="tiny button" data-ng-click="deleteSelf=false">No</button>
+        </div>
+      </li>
     </ul>
   </div>
 

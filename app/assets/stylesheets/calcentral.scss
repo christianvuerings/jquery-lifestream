@@ -21,85 +21,25 @@ $cc-widget-highlight-background-color: #f2fef3;
 $cc-widget-hover-background-color: #e3ffff;
 $cc-widget-more-background-color: #c8dee9;
 
-/* Inset list items */
-ul {
-  padding: 0 0 0 40px;
-}
-
 /* Body */
 body {
   background-color: $cc-main-background-color;
+}
 
-  /* Masthead */
-  > header {
-    background-image: image-url('calcentral_branding_strip_background.png');
-    background-repeat: no-repeat;
-    margin: 0 auto;
-    height: 42px;
-    position: relative;
+/* Headings */
+h1 {
+  font-size: 32px;
+}
+h2 {
+  font-size: 24px;
+}
+h3 {
+  font-size: 16px;
+}
 
-    > div > h1 {
-      height: 0;
-      margin: 0;
-      text-indent: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    > div > a img {
-      padding: 10px 10px 0;
-    }
-  }
-
-  /* Footer */
-  > footer {
-    clear: both;
-    font-size: 0.85em;
-    line-height: 1.5;
-    overflow: hidden;
-    padding: 10px 10px 15px;
-
-    a {
-      font-weight: bold;
-    }
-
-    .cc-footer-links a {
-      float: right;
-      padding-left: 21px;
-    }
-    .copyright:hover {
-      cursor: pointer;
-    }
-
-    ul {
-      margin-top: 20px;
-      padding-left: 18px;
-    }
-
-    .confirmation, .button.first.tiny {
-      margin-left: 5px;
-    }
-  }
-
-  h1 {
-    font-size: 32px;
-    margin-bottom: 25px;
-  }
-
-  h2 {
-    font-size: 24px;
-  }
-
-  h3 {
-    font-size: 16px;
-  }
-
-  .header_border {
-    border-top: 1px solid $cc-medium-grey;
-    margin-top: 20px;
-    padding-top: 5px;
-  }
-
+/* Inset list items */
+ul {
+  padding: 0 0 0 40px;
 }
 
 /* Anchor tag */
@@ -126,10 +66,6 @@ form {
   label {
     display: block;
     margin-top: 5px;
-    sup {
-      color: #ff0000;
-      font-weight: bold;
-    }
     text-align: right;
   }
 }
@@ -141,7 +77,7 @@ button {
 .button {
   background-color: $cc-button-color;
   &.selected {
-    @include background-image(linear-gradient(#7ec9Df, #35b5d4));
+    @include background(linear-gradient(#7ec9df, #35b5d4));
   }
   &.secondary {
     border-left: 1px solid $cc-border-color;
@@ -172,13 +108,12 @@ button {
   font-size: 13px;
   padding: 3px 5px;
 }
-
 .cc-button-submit:hover, .cc-button-reset:hover {
   cursor: pointer;
   text-decoration: underline;
 }
 
-.cc-linkbutton, .cc-linkbutton:hover {
+.cc-button-link, .cc-button-link:hover {
   background-color: transparent;
   border: none;
   color: $mainColor;
@@ -199,36 +134,6 @@ button {
 /* Container */
 .cc-container-main {
   background-color: $white;
-}
-
-/* Launcher */
-.cc-launcher {
-  background: $white;
-  border: 1px solid $cc-launcher-border-color;
-  border-bottom-left-radius: 6px;
-  border-top: none;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-
-  button {
-    width: auto;
-  }
-  .cc-launcher-bar {
-    border-right: 1px solid $cc-launcher-border-color;
-  }
-  .cc-launcher-icons {
-    border-right: 1px solid $cc-launcher-border-color;
-    padding: 1px 10px 3px 5px;
-  }
-  .cc-icon {
-    margin: 2px 0 0 5px;
-  }
-  .cc-launcher-info {
-    padding: 1px 10px;
-    margin: 4px 0 5px;
-  }
 }
 
 /* Useful classes */
@@ -354,10 +259,6 @@ button {
   background-image: image-url('icon_campus_socialrecreation_150x150.png');
 }
 
-.cc-lowercase {
-  text-transform: lowercase;
-}
-
 .cc-left {
   float: left;
 }
@@ -374,8 +275,6 @@ button {
 
 .cc-widget-title {
   border-bottom: 1px solid $cc-border-color;
-  margin-bottom: 5px;
-  margin-right: 10px;
   overflow: hidden;
 
   h2 {
@@ -419,8 +318,8 @@ button {
   .cc-widget-list {
     margin: 0;
     max-height: 200px;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
     padding: 0;
 
     > li {
@@ -451,15 +350,6 @@ button {
       background: $cc-widget-more-background-color;
     }
   }
-}
-
-.cc-widget-main {
-  padding: 0 17px;
-}
-
-.cc-container-widgets {
-  margin: 0 15px;
-  overflow: hidden;
 }
 
 .cc-widget-short-title {
@@ -532,18 +422,22 @@ Read more about why we're using @import instead of require at
 http://stackoverflow.com/questions/6269420
 */
 
+/* Header */
+@import "header";
 /* Top navigation */
-@import "navigation.scss";
+@import "navigation";
+/* Footer */
+@import "footer";
 
 /* Dashboard */
-@import "dashboard.scss";
-@import "mycalendar.scss";
-@import "notifications.scss";
-@import "tasks.scss";
-@import "classes.scss";
+@import "dashboard";
+@import "mycalendar";
+@import "notifications";
+@import "tasks";
+@import "mygroups_myclasses";
 
 /* Settings */
-@import "settings.scss";
+@import "settings";
 
 /* Splash */
-@import "splash.scss";
+@import "splash";

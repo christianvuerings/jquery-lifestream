@@ -1,0 +1,30 @@
+/* Footer */
+body {
+  > footer {
+    clear: both;
+    font-size: 0.85em;
+    line-height: 1.5;
+    overflow: hidden;
+    padding: 10px 10px 15px;
+
+    a {
+      font-weight: bold;
+    }
+    .cc-footer-links a {
+      float: right;
+      padding-left: 21px;
+    }
+    .cc-footer-copyright:hover {
+      cursor: pointer;
+    }
+
+    ul {
+      margin-top: 20px;
+      padding-left: 18px;
+    }
+
+    .cc-footer-confirmation {
+      padding-top: 5px;
+    }
+  }
+}

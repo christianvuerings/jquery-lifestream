@@ -1,0 +1,25 @@
+/* Shared between mygroups and myclasses */
+.cc-widget-mygroups-myclasses-list {
+  a {
+    line-height: 0.9;
+  }
+  .cc-widget-mygroups-myclasses-emitter-column {
+    margin-top: 1px;
+    padding-left: 0;
+    .cc-emitter-square {
+      float: right;
+    }
+  }
+  .cc-widget-mygroups-myclasses-icon {
+    height: 20px;
+    width: 20px;
+  }
+  .cc-widget-mygroups-myclasses-list-item {
+    line-height: 0.5;
+    padding-bottom: 4px;
+  }
+  .cc-widget-mygroups-myclasses-title-link {
+    color: $cc-light-grey;
+    font-size: 0.85em;
+  }
+}
