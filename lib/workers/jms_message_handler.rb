@@ -1,7 +1,7 @@
 class JmsMessageHandler
   include Celluloid
 
-  def initialize(processors = [RegStatusEventProcessor.new])
+  def initialize(processors = [RegStatusEventProcessor.new, FinalGradesEventProcessor.new])
     @processors = processors
   end
 
