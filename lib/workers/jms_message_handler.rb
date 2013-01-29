@@ -12,7 +12,7 @@ class JmsMessageHandler
       Rails.logger.info "message_data = #{message_data}"
       if message_data["event"]
         @processors.each do |processor|
-          processor.process(message_data["event"], message_data["timestamp"])
+          processor.process(message_data["event"], message[:timestamp])
         end
       else
         Rails.logger.info "#{Thread.current} JMS message has text but no event, skipping"
