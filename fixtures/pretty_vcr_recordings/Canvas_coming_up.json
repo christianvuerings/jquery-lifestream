@@ -83,13 +83,13 @@
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588244",
               "title": "Online-Submission Future Assignment",
-              "start_at": ":::TODAY_MIDNIGHT_PST:::"
+              "start_at": ":::TODAY_LATE:::"
             },
             {
               "type": "Assignment",
               "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588303",
               "title": "Future Discussion",
-              "start_at": ":::TODAY_MIDNIGHT_PST:::"
+              "start_at": ":::TODAY_LATE:::"
             },
             {
               "type": "Assignment",
