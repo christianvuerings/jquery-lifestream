@@ -2,7 +2,6 @@
   "notifications": [
     {
       "id": 1,
-      "user_id": 177914,
       "title": "Evacuate Dwinelle Hall",
       "summary": "Evacuate Dwinelle Hall immediately, gas leak",
       "source": "Warn Me",
@@ -19,7 +18,6 @@
     },
     {
       "id": 2,
-      "user_id": 177914,
       "title": "Incomplete Grade Notice - Math 1B",
       "summary": "You have 90 days to complete Math 1B and submit a Petition to Remove an Incomplete",
       "source": "Bear Facts",
@@ -36,7 +34,6 @@
     },
     {
       "id": 3,
-      "user_id": 177914,
       "title": "Spring Registration Block - Unpaid CARS Bill",
       "summary": "You have an unpaid CARS balance of $673. Action Required.",
       "source": "Billing",
@@ -53,7 +50,6 @@
     },
     {
       "id": 4,
-      "user_id": 177914,
       "title": "Grade Posted - Midterm Exam",
       "summary": "87 out of 100 for ETH STD 21AC",
       "source": "Canvas",
@@ -70,7 +66,6 @@
     },
     {
       "id": 5,
-      "user_id": 177914,
       "title": "November CARS bill Posted",
       "summary": "Your November CARS bill of $987 is due by October 22",
       "source": "Student Billing",
@@ -87,7 +82,6 @@
     },
     {
       "id": 6,
-      "user_id": 177914,
       "title": "Appointment Signups Updated - Office Hours",
       "summary": "Student may sign up for office hours once per week",
       "source": "bSpace",
@@ -105,7 +99,6 @@
     },
     {
       "id": 7,
-      "user_id": 177914,
       "title": "Telebears Phase I Appointment - Oct 26 at 11am",
       "summary": "Your Phase I appointment is scheduled for Oct 26 at 11am",
       "source": "Telebears",
@@ -122,7 +115,6 @@
     },
     {
       "id": 8,
-      "user_id": 177914,
       "title": "Incomplete Emergency Loan Application Notice",
       "summary": "Your Loan Promissory Note has not been submitted with a signature",
       "source": "MyFinAid",
