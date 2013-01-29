@@ -1,0 +1,52 @@
+body {
+  /* Masthead */
+  > header {
+    background-image: image-url('calcentral_branding_strip_background.png');
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    height: 42px;
+    position: relative;
+
+    > div > h1 {
+      height: 0;
+      margin: 0;
+      text-indent: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    > div > a img {
+      padding: 10px 10px 0;
+    }
+  }
+}
+
+/* Launcher */
+.cc-launcher {
+  background: $white;
+  border: 1px solid $cc-launcher-border-color;
+  border-bottom-left-radius: 6px;
+  border-top: none;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  button {
+    width: auto;
+  }
+  .cc-launcher-bar {
+    border-right: 1px solid $cc-launcher-border-color;
+  }
+  .cc-launcher-icons {
+    border-right: 1px solid $cc-launcher-border-color;
+    padding: 1px 10px 3px 5px;
+  }
+  .cc-icon {
+    margin: 2px 0 0 5px;
+  }
+  .cc-launcher-info {
+    padding: 1px 10px;
+    margin: 4px 0 5px;
+  }
+}

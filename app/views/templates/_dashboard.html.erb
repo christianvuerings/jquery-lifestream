@@ -313,7 +313,7 @@
       </div>
     </div>
 
-    <div class="cc-container-widget" id="cc-widget-myclasses" data-ng-controller="MyClassesController">
+    <div class="cc-container-widget" data-ng-controller="MyClassesController">
       <div class="cc-widget-title">
         <h2>My Classes <span class="cc-right cc-widget-title-small"><%= Settings.sakai_proxy.current_terms.first %></span></h2>
       </div>
@@ -328,7 +328,7 @@
                   data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']">
                 </div>
                 <a
-                  class="cc-ellipsis cc-myclasses-link-with-title"
+                  class="cc-ellipsis"
                   data-ng-click="api.util.trackExternalLink('My Classes', class.emitter, class.site_url)"
                   data-ng-href="{{class.site_url}}"
                   ><span class="cc-widget-notification-source">{{class.course_code}}</span>
@@ -336,6 +336,7 @@
                 <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
                   data-ng-click="api.util.trackExternalLink('My Classes', class.emitter, class.site_url)"
                   data-ng-href="{{class.site_url}}"
+                  data-ng-show="!!class.name"
                   >{{class.name}}
                 </a>
               </div>
@@ -353,7 +354,7 @@
       </div>
     </div>
 
-    <div class="cc-container-widget" id="cc-widget-mygroups" data-ng-controller="MyGroupsController">
+    <div class="cc-container-widget" data-ng-controller="MyGroupsController">
       <div class="cc-widget-title">
         <h2>My Groups</h2>
       </div>
@@ -367,7 +368,7 @@
                   class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
                   data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']">
                 </div>
-                <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
+                <a class="cc-ellipsis"
                   data-ng-href="{{group.site_url}}"
                   data-ng-click="api.util.trackExternalLink('My Groups', group.emitter, group.site_url)">{{group.title}}
                 </a>

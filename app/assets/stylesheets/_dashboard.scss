@@ -117,29 +117,6 @@
   margin-top: 5px;
 }
 
-/* Shared between mygroups and myclasses */
-.cc-widget-mygroups-myclasses-list {
-  .cc-widget-mygroups-myclasses-emitter-column {
-    margin-top: 1px;
-    padding-left: 0;
-    .cc-emitter-square {
-      float: right;
-    }
-  }
-  .cc-widget-mygroups-myclasses-icon {
-    height: 20px;
-    width: 20px;
-  }
-  .cc-widget-mygroups-myclasses-list-item {
-    line-height: 0.5;
-    padding-bottom: 4px;
-  }
-  .cc-widget-mygroups-myclasses-title-link {
-    line-height: 1.1;
-  }
-}
-
-
 /* Mobile styles */
 @media only screen and (max-width: 767px) {
   .cc-container-main {

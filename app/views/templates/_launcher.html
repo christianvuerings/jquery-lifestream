@@ -13,15 +13,15 @@
           <a href="http://bcal.berkeley.edu" class="ir cc-left cc-icon cc-icon-calendar" title="bCal">bCal</a>
           <a href="https://drive.google.com/a/berkeley.edu/" class="ir cc-left cc-icon cc-icon-drive" title="bDrive">bDrive</a>
         </div>
-        <button class="button small cc-linkbutton cc-launcher-info cc-launcher-bar cc-left"
+        <button class="button small cc-button-link cc-launcher-info cc-launcher-bar cc-left"
           data-ng-click="user._redirectToSettingsPage()">Settings
         </button>
-        <button class="button small cc-linkbutton cc-launcher-info cc-left"
+        <button class="button small cc-button-link cc-launcher-info cc-left"
           data-ng-click="user.signOut()">Log out
         </button>
       </div>
         <button data-ng-hide="user.isAuthenticated()"
-          class="button small cc-linkbutton cc-launcher-info cc-left"
+          class="button small cc-button-link cc-launcher-info cc-left"
           data-ng-click="user.signIn()">Log in
         </button>
     </nav>

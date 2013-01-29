@@ -1,8 +1,8 @@
 <script type="text/ng-template" id="templates/settings.html">
   <div class="twelve columns cc-settings" data-ng-controller="SettingsController">
     <h1>Settings for {{user.profile.preferred_name}}</h1>
-
-    <h2 class="header_border">External Feeds</h2>
+    <hr />
+    <h2>External Feeds</h2>
 
     <p>
       In order to display your latest tasks, assignments and alerts on the Dashboard,
@@ -80,7 +80,8 @@
 
     </div>
 
-    <h3 class="header_border">Key</h3>
+    <hr />
+    <h3>Key</h3>
     <p>
       <img src="/assets/icon_checkmark_green_18x18.png" alt="Connected icon" class="cc-settings-connection-status-icon-small" />
         Service is connected to your account
@@ -92,7 +93,7 @@
 
     <hr />
     <p>
-      <button class="button small cc-linkbutton"
+      <button class="button small cc-button-link"
         data-ng-click="user._redirectToDashboardPage()">&laquo; Return to Dashboard
       </button>
     </p>
