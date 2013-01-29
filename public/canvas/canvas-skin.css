@@ -26,8 +26,8 @@
   padding: 0 10px;
 }
 
-#calcentral-custom-header li:first-child {
-  border-right: 2px ridge #21406F;
+#calcentral-custom-header li:not(:first-child) {
+  border-left: 2px ridge #21406f;
 }
 
 #calcentral-custom-header a {
