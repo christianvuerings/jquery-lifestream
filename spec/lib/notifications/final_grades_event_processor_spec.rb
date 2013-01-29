@@ -33,7 +33,15 @@ describe FinalGradesEventProcessor do
     saved_notification = Notification.where(:uid => "123456").first
     saved_notification.should_not be_nil
     saved_notification.data.should_not be_nil
+    saved_notification.translator.should == "FinalGradesTranslator"
     Rails.logger.info "Saved notification's json is #{saved_notification.data}"
+
+    Notification.where(:uid => "323487").first.data.should_not be_nil
+    Notification.where(:uid => "300846").first.data.should_not be_nil
+
+    translator_instance = saved_notification.translator.constantize.new
+    translator_instance.should_not be_nil
+    Rails.logger.info "Translated notification: #{translator_instance.translate saved_notification}"
 
   end
 

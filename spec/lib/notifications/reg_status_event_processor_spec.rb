@@ -25,11 +25,11 @@ describe RegStatusEventProcessor do
     saved_notification = Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil
     saved_notification.data.should_not be_nil
+    saved_notification.translator.should == "RegStatusTranslator"
     Rails.logger.info "Saved notification's json is #{saved_notification.data}"
-    saved_notification.data["date"]["epoch"].should == timestamp.to_i
-    saved_notification.data["date"]["datetime"].should_not be_nil
-    saved_notification.data["source"].should == "Bearfacts Testing System"
-    saved_notification.data["title"].should == "Your UC Berkeley student registration status has been updated to: \"registered, continuing.\" You are an active registered student in your second or subsequent semester. If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
+    translator_instance = saved_notification.translator.constantize.new
+    translator_instance.should_not be_nil
+    Rails.logger.info "Translated notification: #{translator_instance.translate saved_notification}"
 
   end
 

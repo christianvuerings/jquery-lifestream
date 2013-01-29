@@ -11,11 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013012410480000) do
+ActiveRecord::Schema.define(:version => 2013012813170000) do
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
     t.text     "data"
+    t.text     "translator"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

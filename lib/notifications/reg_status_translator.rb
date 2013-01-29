@@ -1,45 +1,43 @@
-class RegStatusEventProcessor
+class RegStatusTranslator
 
   def accept?(event)
     event["code"] == "RegStatus"
   end
 
-  def process(event, timestamp)
-    return false unless accept?(event)
-    Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}"
-    uid = event["payload"]["uid"]
-    reg_status = CampusData.get_reg_status uid
-    Rails.logger.debug "#{self.class.name} Reg_status for #{uid} is #{reg_status}"
-    if timestamp == nil
-      timestamp = Time.now.to_datetime
+  def translate(notification)
+    data = notification.data
+    uid = notification.uid
+    event = data["event"]
+    begin
+      timestamp = Time.parse(data["timestamp"]).to_datetime
+    rescue
+      timestamp = notification.created_at
     end
-    if reg_status != nil
-      translation = translate_status reg_status["reg_status_cd"]
-      title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
+    reg_status = data["reg_status"]
 
-      data = {
-          :user_id => uid,
-          :title => title,
-          :summary => "summary TODO",
-          :source => event["system"],
-          :type => "alert",
-          :date => {
-              :epoch => timestamp.to_i,
-              :datetime => timestamp.rfc3339,
-              :date_string => timestamp.strftime("%-m/%d")
-          },
-          :url => "https://bearfacts.berkeley.edu/bearfacts/",
-          :source_url => "https://bearfacts.berkeley.edu/bearfacts/",
-          :emitter => "Campus",
-          :color_class => "campus-item"
-      }
+    Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}; reg_status = #{reg_status}"
 
-      notification = Notification.new({:uid => uid, :data => data})
-      notification.save
-      true
-    else
-      false
-    end
+    return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && reg_status
+
+    translation = translate_status reg_status["reg_status_cd"]
+    title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
+
+    {
+        :user_id => uid,
+        :title => title,
+        :summary => "summary TODO",
+        :source => event["system"],
+        :type => "alert",
+        :date => {
+            :epoch => timestamp.to_i,
+            :datetime => timestamp.rfc3339,
+            :date_string => timestamp.strftime("%-m/%d")
+        },
+        :url => "https://bearfacts.berkeley.edu/bearfacts/",
+        :source_url => "https://bearfacts.berkeley.edu/bearfacts/",
+        :emitter => "Campus",
+        :color_class => "campus-item"
+    }
   end
 
   def translate_status(reg_status)
