@@ -4,17 +4,15 @@ class MyTasks < MyMergedModel
     super(uid)
     #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
     @starting_date = starting_date
-    @response = {
-      "tasks" => []
-    }
+    @now_time = DateTime.now
   end
 
   def get_feed_internal
-    fetch_google_tasks
-    fetch_canvas_tasks
-    # TODO sort the tasks by due_date.epoch
-    logger.debug "#{self.class.name} get_feed is #{@response.inspect}"
-    @response
+    tasks = []
+    fetch_google_tasks(tasks)
+    fetch_canvas_tasks(tasks)
+    logger.debug "#{self.class.name} get_feed is #{tasks.inspect}"
+    {"tasks" => tasks}
   end
 
   def update_task(params, task_list_id="@default")
@@ -63,19 +61,17 @@ class MyTasks < MyMergedModel
 
   private
 
-  def fetch_google_tasks
+  def fetch_google_tasks(tasks)
     if GoogleProxy.access_granted?(@uid)
       google_proxy = GoogleTasksListProxy.new(user_id: @uid)
-
       google_tasks_results = google_proxy.tasks_list
       logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
       google_tasks_results.each do |response_page|
         next unless response_page.response.status == 200
-
         response_page.data["items"].each do |entry|
           next if entry["title"].blank?
           formatted_entry = format_google_task_response(entry)
-          @response["tasks"].push(formatted_entry)
+          tasks.push(formatted_entry)
         end
       end
     end
@@ -105,13 +101,18 @@ class MyTasks < MyMergedModel
     status = "needs_action" if entry["status"] == "needsAction"
     status ||= "completed"
     formatted_entry["status"] = status
-    # Google task dates have misleading datetime accuracy. There is no way to record a specific due time
-    # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
-    # accuracy so the application will apply the proper timezone when needed.
-    due_date = Date.parse(entry["due"].to_s) unless entry["due"].blank?
+    due_date = entry["due"]
+    unless due_date.nil?
+      # Google task dates have misleading datetime accuracy. There is no way to record a specific due time
+      # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
+      # accuracy so the application will apply the proper timezone when needed.
+      due_date = Date.parse(due_date.to_s)
+      # Tasks are not overdue until the end of the day.
+      due_date = due_date.to_time_in_current_zone.to_datetime.advance(:hours => 23, :minutes => 59, :seconds => 59)
+    end
     formatted_entry["bucket"] = determine_bucket(due_date, formatted_entry)
     logger.info "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{formatted_entry["bucket"]} bucket: #{formatted_entry}"
-    format_date_into_entry!(convert_due_date(due_date), formatted_entry, "due_date")
+    format_date_into_entry!(due_date, formatted_entry, "due_date")
     logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
     formatted_entry
   end
@@ -136,65 +137,71 @@ class MyTasks < MyMergedModel
     formatted_entry
   end
 
-  def fetch_canvas_tasks
+  def fetch_canvas_tasks(tasks)
+    # Track assignment IDs to filter duplicates.
+    assignments = Set.new
     if CanvasProxy.access_granted?(@uid)
-      fetch_canvas_coming_up CanvasComingUpProxy.new(:user_id => @uid)
-      fetch_canvas_todo CanvasTodoProxy.new(:user_id => @uid)
+      fetch_canvas_coming_up(CanvasComingUpProxy.new(:user_id => @uid), tasks, assignments)
+      fetch_canvas_todo(CanvasTodoProxy.new(:user_id => @uid), tasks, assignments)
     end
   end
 
-  def fetch_canvas_coming_up(canvas_proxy)
+  def fetch_canvas_coming_up(canvas_proxy, tasks, assignments)
     response = canvas_proxy.coming_up
     if response && (response.status == 200)
       results = JSON.parse response.body
       logger.info "#{self.class.name} Sorting Canvas coming_up feed into buckets with starting_date #{@starting_date}"
       results.each do |result|
-        formatted_entry = {
-            "type" => result["type"].downcase,
-            "title" => result["title"],
-            "emitter" => CanvasProxy::APP_ID,
-            "link_url" => result["html_url"],
-            "source_url" => result["html_url"],
-            "color_class" => "canvas-class",
-            "status" => "inprogress"
-        }
-        due_date = result["start_at"]
-        format_date_into_entry!(convert_due_date(due_date), formatted_entry, "due_date")
-        bucket = determine_bucket(due_date, formatted_entry)
-        formatted_entry["bucket"] = bucket
-        logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-        @response["tasks"].push(formatted_entry)
+        if (result["type"] != "Assignment") || new_assignment?(result, assignments)
+          formatted_entry = {
+              "type" => result["type"].downcase,
+              "title" => result["title"],
+              "emitter" => CanvasProxy::APP_ID,
+              "link_url" => result["html_url"],
+              "source_url" => result["html_url"],
+              "color_class" => "canvas-class",
+              "status" => "inprogress"
+          }
+          due_date = result["start_at"]
+          due_date = convert_due_date(due_date)
+          format_date_into_entry!(due_date, formatted_entry, "due_date")
+          bucket = determine_bucket(due_date, formatted_entry)
+          formatted_entry["bucket"] = bucket
+          logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+          tasks.push(formatted_entry)
+        end
       end
     end
   end
 
-  def fetch_canvas_todo(canvas_proxy)
+  def new_assignment?(assignment, assignments)
+    id = assignment["html_url"]
+    assignments.add?(id)
+  end
+
+  def fetch_canvas_todo(canvas_proxy, tasks, assignments)
     response = canvas_proxy.todo
     if response && (response.status == 200)
       results = JSON.parse response.body
       logger.info "#{self.class.name} Sorting Canvas todo feed into buckets with starting_date #{@starting_date}; #{results}"
       results.each do |result|
-        if result["assignment"] != nil
+        if (result["assignment"] != nil) && new_assignment?(result["assignment"], assignments)
           due_date = result["assignment"]["due_at"]
           due_date = convert_due_date(due_date)
-          if due_date.to_i < @starting_date.to_i
-            formatted_entry = {
-                "type" => "assignment",
-                "title" => result["assignment"]["name"],
-                "emitter" => CanvasProxy::APP_ID,
-                "link_url" => result["assignment"]["html_url"],
-                "source_url" => result["assignment"]["html_url"],
-                "color_class" => "canvas-class",
-                "status" => "inprogress"
-            }
-            format_date_into_entry!(due_date, formatted_entry, "due_date")
-            bucket = determine_bucket(due_date, formatted_entry)
-            formatted_entry["bucket"] = bucket
-            logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-            @response["tasks"].push(formatted_entry)
-          else
-            logger.info "#{self.class.name} Skipping Canvas todo with due_date that's in the future: #{result}'"
-          end
+          formatted_entry = {
+              "type" => "assignment",
+              "title" => result["assignment"]["name"],
+              "emitter" => CanvasProxy::APP_ID,
+              "link_url" => result["assignment"]["html_url"],
+              "source_url" => result["assignment"]["html_url"],
+              "color_class" => "canvas-class",
+              "status" => "inprogress"
+          }
+          format_date_into_entry!(due_date, formatted_entry, "due_date")
+          bucket = determine_bucket(due_date, formatted_entry)
+          formatted_entry["bucket"] = bucket
+          logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+          tasks.push(formatted_entry)
         end
       end
     end
@@ -203,8 +210,6 @@ class MyTasks < MyMergedModel
   def convert_due_date(due_date)
     if due_date.blank?
       nil
-    elsif due_date.is_a?(Date)
-      due_date.to_time_in_current_zone.to_datetime
     else
       DateTime.parse(due_date.to_s)
     end
@@ -224,17 +229,14 @@ class MyTasks < MyMergedModel
   def determine_bucket(due_date, formatted_entry)
     bucket = "Unscheduled"
     if !due_date.blank?
-      due = due_date.to_time_in_current_zone if due_date.is_a?(Date)
-      due ||= DateTime.parse(due_date.to_s)
-      due = due.to_i
-      @starting_date = @starting_date.to_time.in_time_zone.to_i unless @starting_date.is_a?(Time)
-      today = @starting_date.to_i
+      due = due_date.to_i
+      now = @now_time.to_i
       tomorrow = @starting_date.advance(:days => 1).to_i
       end_of_this_week = @starting_date.sunday.to_i
 
-      if due < today
+      if due < now
         bucket = "Overdue"
-      elsif due >= today && due < tomorrow
+      elsif due >= now && due < tomorrow
         bucket = "Due Today"
       elsif due >= tomorrow && due <= end_of_this_week
         bucket = "Due This Week"
@@ -242,7 +244,7 @@ class MyTasks < MyMergedModel
         bucket = "Due Next Week"
       end
 
-      logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{@starting_date}, today = #{today}; formatted entry = #{formatted_entry}"
+      logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{@starting_date}, now = #{@now_time}; formatted entry = #{formatted_entry}"
     end
     bucket
   end
