@@ -91,9 +91,13 @@
       border: 2px solid $cc-action-button-color;
       .cc-widget-add-icon-plus {
         background-color: $cc-action-button-color;
+        float: left;
       }
       .cc-widget-add-icon-text {
         display: inline-block;
+        height: auto;
+        position: relative;
+        width: auto;
       }
     }
   }
@@ -104,12 +108,10 @@
     border-radius: 3px;
     display: inline-block;
     margin-bottom: 2px;
-    padding: 2px 5px 2px 5px;
+    padding: 2px 5px;
   }
   .cc-widget-add-icon-text {
-    display: none;
-    margin-bottom: 0;
-    margin-top: 2px;
+    margin: 2px 2px 0 5px;
   }
 }
 
