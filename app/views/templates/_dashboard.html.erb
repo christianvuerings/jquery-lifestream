@@ -255,7 +255,7 @@
         <h2>Up Next <a href="http://bcal.berkeley.edu" class="ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
       </div>
       <div class="cc-widget-mycalendar-container">
-        <ul class="cc-widget-mycalendar-datelist" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
+        <ul class="cc-widget-mycalendar-datelist cc-scroll" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
           <!-- First loop: timestamped items -->
           <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
             <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(item, 'Up Next')">
@@ -318,7 +318,7 @@
         <h2>My Classes <span class="cc-right cc-widget-title-small"><%= Settings.sakai_proxy.current_terms.first %></span></h2>
       </div>
       <div class="cc-widget-mygroups-myclasses-list">
-        <ul class="cc-widget-list">
+        <ul class="cc-widget-list cc-scroll">
           <li data-ng-repeat="class in myclasses" class="cc-widget-mygroups-myclasses-list-item">
             <div class="row cc-widget-mygroups-myclasses-row">
 
@@ -359,7 +359,7 @@
         <h2>My Groups</h2>
       </div>
       <div class="cc-widget-mygroups-myclasses-list">
-        <ul class="cc-widget-list">
+        <ul class="cc-widget-list cc-scroll">
           <li data-ng-repeat="group in mygroups" class="cc-widget-mygroups-myclasses-list-item">
             <div class="row">
 
