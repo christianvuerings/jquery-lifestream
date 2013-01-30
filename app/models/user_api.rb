@@ -30,7 +30,6 @@ class UserApi < MyMergedModel
       # The nice way to do this is to also revoke their tokens by sending revoke request to the remote services
       Oauth2Data.destroy_all(:uid => uid)
       Notification.destroy_all(:uid => uid)
-      WidgetData.destroy_all(:uid => uid)
     end
     Calcentral::USER_CACHE_EXPIRATION.notify uid
   end

@@ -65,9 +65,10 @@ describe "UserApi" do
 
     Oauth2Data.should_receive(:destroy_all)
     Notification.should_receive(:destroy_all)
-    WidgetData.should_receive(:destroy_all)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify)
 
     UserApi.delete @random_id
+
+    UserData.where(:uid => @random_id).should == []
   end
 end
