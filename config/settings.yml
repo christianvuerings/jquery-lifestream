@@ -7,7 +7,7 @@ application:
   # Set if running behind Apache/Nginx + https
   # protocol: "https://"
   fake_cas: false
-  fake_cas_id: 1
+  fake_cas_id: "1" # Change this to the UID you want to fake cas auth with.
 
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
