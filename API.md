@@ -16,7 +16,6 @@ Projected endpoints:
   has_google_access_token: <boolean>
   preferred_name: <string if exists else "">
   uid: <string uid if logged in>
-  widget_data: <object>
 ```
 
 ```

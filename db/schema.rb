@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013012813170000) do
+ActiveRecord::Schema.define(:version => 2013013014460000) do
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
@@ -42,15 +42,5 @@ ActiveRecord::Schema.define(:version => 2013012813170000) do
   end
 
   add_index "user_data", ["uid"], :name => "index_user_data_on_uid", :unique => true
-
-  create_table "widget_data", :force => true do |t|
-    t.string   "uid"
-    t.string   "widget_id"
-    t.text     "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "widget_data", ["uid", "widget_id"], :name => "index_widget_data_on_uid_widget_id", :unique => true
 
 end

@@ -62,7 +62,6 @@ class UserApi < MyMergedModel
     {
         :uid => @uid,
         :preferred_name => self.preferred_name,
-        :widget_data => {},
         :has_canvas_access_token => CanvasProxy.access_granted?(@uid),
         :has_google_access_token => GoogleProxy.access_granted?(@uid),
         :first_login_at => @first_login_at
