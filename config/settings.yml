@@ -6,6 +6,8 @@ application:
   serve_static_assets: false
   # Set if running behind Apache/Nginx + https
   # protocol: "https://"
+  fake_cas: false
+  fake_cas_id: 1
 
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
