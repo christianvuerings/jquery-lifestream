@@ -3,7 +3,7 @@ require 'celluloid'
 class UserCacheWarmer
 
   def initialize
-    @pool = WarmingWorker.pool(size: 5)
+    @pool = WarmingWorker.pool(size: 6)
   end
 
   def warm(uid)
@@ -23,7 +23,8 @@ class UserCacheWarmer
           MyClasses.new(uid),
           MyGroups.new(uid),
           MyTasks.new(uid),
-          MyUpNext.new(uid)
+          MyUpNext.new(uid),
+          CanvasUserActivityHandler.new({:user_id => uid})
       ].each do |model|
         model.get_feed
       end
