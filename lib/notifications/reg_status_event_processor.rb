@@ -15,7 +15,7 @@ class RegStatusEventProcessor
 
     if reg_status["reg_status_cd"].upcase == "Z"
       # code Z, student deceased, remove from our system
-      UserApi.delete uid
+      UserApi.delete "#{uid}"
       return false
     end
 
