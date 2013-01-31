@@ -31,6 +31,7 @@ class FinalGradesEventProcessor
     students.each do |student|
       notification = Notification.new({:uid => student["ldap_uid"], :data => data, :translator => "FinalGradesTranslator"})
       notification.save
+      Calcentral::USER_CACHE_EXPIRATION.notify student["ldap_uid"]
     end
 
     true

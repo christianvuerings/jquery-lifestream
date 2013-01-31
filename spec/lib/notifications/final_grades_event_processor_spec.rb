@@ -27,6 +27,7 @@ describe FinalGradesEventProcessor do
     CampusData.stub(:get_course, "73974").and_return(
         {"course_title" => "Research and Data Analysis in Psychology"}
     )
+    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).exactly(7).times
 
     @processor.process(event, timestamp).should == true
 
