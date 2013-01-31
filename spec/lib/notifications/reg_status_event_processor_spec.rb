@@ -22,6 +22,7 @@ describe RegStatusEventProcessor do
             "on_probation_flag" => "N"
         })
     UserApi.should_not_receive(:delete)
+    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
 
     @processor.process(event, timestamp).should == true
 

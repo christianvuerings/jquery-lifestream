@@ -31,6 +31,7 @@ class RegStatusEventProcessor
 
     notification = Notification.new({:uid => uid, :data => data, :translator => "RegStatusTranslator"})
     notification.save
+    Calcentral::USER_CACHE_EXPIRATION.notify uid
     true
 
   end
