@@ -8,6 +8,12 @@ describe CanvasUserActivityHandler do
     @fake_feed = JSON.parse(fake_feed.body)
   end
 
+  after do
+    # Making sure we return cassettes back to the store after we're done.
+    VCR.eject_cassette
+  end
+
+
   it "should be able to process a normal canvas feed" do
     options = {:fake => true, :user_id => @random_id}
     handler = CanvasUserActivityHandler.new(options)
