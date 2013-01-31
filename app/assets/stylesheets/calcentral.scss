@@ -68,6 +68,14 @@ form {
     margin-top: 5px;
     text-align: right;
   }
+
+  ::-moz-placeholder {
+    color:#aaa;
+  }
+  input:-moz-placeholder {
+    color:#aaa;
+  }
+
 }
 
 /* Buttons */
