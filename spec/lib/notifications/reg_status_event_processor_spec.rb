@@ -15,11 +15,14 @@ describe RegStatusEventProcessor do
   it "should handle an event given to it and save a notification with corresponding data" do
     event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status, "300846").and_return({
-        "ldap_uid" => "300846",
-        "reg_status_cd" => "C",
-        "on_probation_flag" => "N"
-    })
+    CampusData.stub(:get_reg_status, "300846").and_return(
+        {
+            "ldap_uid" => "300846",
+            "reg_status_cd" => "C",
+            "on_probation_flag" => "N"
+        })
+    UserApi.should_not_receive(:delete)
+
     @processor.process(event, timestamp).should == true
 
     saved_notification = Notification.where(:uid => "300846").first
@@ -38,6 +41,21 @@ describe RegStatusEventProcessor do
     timestamp = Time.now.to_datetime
     CampusData.stub(:get_reg_status, "300846").and_return(nil)
     @processor.process(event, timestamp).should == false
+  end
+
+  it "should remove a deceased student from the system" do
+    UserApi.should_receive(:delete)
+
+    event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status, "300846").and_return(
+        {
+            "ldap_uid" => "300846",
+            "reg_status_cd" => "Z",
+            "on_probation_flag" => "N"
+        })
+    @processor.process(event, timestamp).should == false
+
   end
 
 end

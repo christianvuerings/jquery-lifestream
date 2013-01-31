@@ -13,6 +13,12 @@ class RegStatusEventProcessor
 
     return false unless reg_status != nil
 
+    if reg_status["reg_status_cd"].upcase == "Z"
+      # code Z, student deceased, remove from our system
+      UserApi.delete uid
+      return false
+    end
+
     if timestamp == nil
       timestamp = Time.now.to_datetime
     end

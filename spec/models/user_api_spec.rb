@@ -58,4 +58,17 @@ describe "UserApi" do
     updated_data = user_api.get_feed
     updated_data[:first_login_at].should_not be_nil
   end
+  it "should delete a user and all his dependent parts" do
+    user_api = UserApi.new @random_id
+    user_api.record_first_login
+    user_api.get_feed
+
+    Oauth2Data.should_receive(:destroy_all)
+    Notification.should_receive(:destroy_all)
+    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify)
+
+    UserApi.delete @random_id
+
+    UserData.where(:uid => @random_id).should == []
+  end
 end
