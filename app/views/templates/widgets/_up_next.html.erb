@@ -1,0 +1,62 @@
+<div class="cc-widget-mycalendar" data-ng-controller="UpNextController">
+  <div class="cc-widget-title">
+    <h2>Up Next <a href="http://bcal.berkeley.edu" class="cc-ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
+  </div>
+  <div class="cc-widget-mycalendar-container">
+    <ul class="cc-widget-mycalendar-datelist cc-scroll" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
+      <!-- First loop: timestamped items -->
+      <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
+        <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(item, 'Up Next')">
+          <div class="cc-widget-mycalendar-datelist-time cc-left">
+            <div data-ng-switch on="item.is_all_day">
+              <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
+              <div data-ng-switch-when="false">
+                <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.epoch * 1000 | date:'h'}}</div>
+                <div class="cc-widget-mycalendar-datelist-time-minutes cc-left">{{item.start.epoch * 1000 | date:'mm'}}<br>
+                  <span class="cc-widget-mycalendar-datelist-time-ampm">{{item.start.epoch * 1000 | date:'a' | uppercase}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cc-widget-mycalendar-datelist-summary cc-ellipsis">
+            <div class="cc-ellipsis">
+              {{item.summary}}
+            </div>
+            <div class="cc-ellipsis">
+              <a class="cc-widget-mycalendar-datelist-small" data-ng-href="{{item.location_url}}" data-ng-click="api.util.preventBubble($event);api.util.trackExternalLink('Up Next', 'Google maps', item.location_url)">{{item.location}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="cc-widget-mycalendar-more" data-ng-show="item.show">
+          <div class="cc-widget-mycalendar-startend row">
+            <div data-ng-switch on="item.is_all_day">
+              <p data-ng-switch-when="true">
+                {{item.start.epoch * 1000 | date:'EEE, MMMM d'}}
+              </p>
+              <div data-ng-switch-when="false">
+                <div class="cc-widget-mycalendar-header three columns mobile-one">Start:</div>
+                <div class="nine columns mobile-three">{{item.start.epoch * 1000 | date:'short' | lowercase}}</div>
+
+                <div class="cc-widget-mycalendar-header three columns mobile-one">End:</div>
+                <div class="nine columns mobile-three">{{item.end.epoch * 1000 | date:'short' | lowercase}}</div>
+              </div>
+          </div>
+          <span class="cc-widget-mycalendar-header">Organizer:</span>
+          <p class="cc-widget-mycalendar-indent">{{item.organizer.displayName}}</p>
+          <span data-ng-show="item.attendees" class="cc-widget-mycalendar-header">Invitees:</span>
+          <ul class="cc-widget-mycalendar-list-attendees cc-widget-mycalendar-indent">
+            <li data-ng-repeat="attendee in item.attendees" class="cc-ellipsis">
+              {{attendee.displayName}}
+            </li>
+          </ul>
+          <p class="cc-widget-mycalendar-indent cc-widget-mycalendar-datelist-small">
+            <a href="{{item.html_link}}" data-ng-click="api.util.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div data-ng-show="!items.length" class="cc-widget-text">
+    You have no events scheduled for the rest of the day.
+  </div>
+</div>
