@@ -12,7 +12,7 @@
   /* List */
   .cc-widget-mycalendar-datelist {
     list-style-type: none;
-    margin: 10px 0 0 0;
+    margin: 0;
     max-height: 200px;
     overflow: auto;
     padding: 0;
@@ -26,6 +26,9 @@
       border-bottom: 1px dotted $cc-list-border-color;
       color: $cc-light-grey;
       overflow: hidden;
+      &:first-child {
+        margin-top: 10px;
+      }
       &:last-child {
         border-bottom: none;
       }
