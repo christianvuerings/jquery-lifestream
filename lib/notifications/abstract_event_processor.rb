@@ -19,8 +19,12 @@ class AbstractEventProcessor
     end
 
     notifications.each do |notification|
-      notification.save
-      Calcentral::USER_CACHE_EXPIRATION.notify notification.uid
+      if UserData.where(:uid => "#{notification.uid}").exists?
+        notification.save
+        Calcentral::USER_CACHE_EXPIRATION.notify notification.uid
+      else
+        Rails.logger.debug "#{self.class.name} Skipping user #{notification.uid} that does not exist in our user table"
+      end
     end
     true
 

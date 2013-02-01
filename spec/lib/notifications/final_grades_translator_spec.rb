@@ -3,6 +3,8 @@ require "spec_helper"
 describe FinalGradesTranslator do
 
   it "should translate a final-grades event properly" do
+    user = UserApi.new "123456"
+    user.record_first_login
     event = JSON.parse('{"id":"29592_5","system":"Bearfacts","code":"EndOFTermGrade","payload":{"ccn":73974,"term":"fall","year":2012}}')
     timestamp = Time.now.to_datetime
     CampusData.stub(:get_enrolled_students, "73974").and_return(

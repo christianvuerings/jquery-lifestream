@@ -27,6 +27,8 @@ describe FinalGradesEventProcessor do
     CampusData.stub(:get_course, "73974").and_return(
         {"course_title" => "Research and Data Analysis in Psychology"}
     )
+    UserData.stub(:where, "123456").and_return(MockUserData.new)
+
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).exactly(7).times
 
     @processor.process(event, timestamp).should == true
@@ -44,6 +46,12 @@ describe FinalGradesEventProcessor do
     translator_instance.should_not be_nil
     Rails.logger.info "Translated notification: #{translator_instance.translate saved_notification}"
 
+  end
+
+  class MockUserData
+    def exists?
+      true
+    end
   end
 
 end
