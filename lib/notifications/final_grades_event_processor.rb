@@ -1,13 +1,12 @@
-class FinalGradesEventProcessor
+class FinalGradesEventProcessor < AbstractEventProcessor
 
   def accept?(event)
+    return false unless super event
     event["code"] == "EndOFTermGrade"
   end
 
-  def process(event, timestamp)
-    return false unless accept?(event) && (payload = event["payload"])
-    Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}"
-
+  def process_internal(event, timestamp)
+    payload = event["payload"]
     ccn = payload["ccn"]
     term_yr = payload["year"]
     term_cd = lookup_term_code payload["term"]
@@ -17,10 +16,6 @@ class FinalGradesEventProcessor
 
     return false unless students && course && course["course_title"]
     Rails.logger.debug "#{self.class.name} Found students enrolled in #{course} - #{term_yr}-#{term_cd}-#{ccn}: #{students}"
-
-    if timestamp == nil
-      timestamp = Time.now.to_datetime
-    end
 
     data = {
         :event => event,

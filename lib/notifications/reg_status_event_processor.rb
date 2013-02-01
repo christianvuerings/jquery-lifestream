@@ -1,15 +1,13 @@
-class RegStatusEventProcessor
+class RegStatusEventProcessor < AbstractEventProcessor
 
   def accept?(event)
+    return false unless super event
     event["code"] == "RegStatus"
   end
 
-  def process(event, timestamp)
-    return false unless accept?(event)
-
+  def process_internal(event, timestamp)
     uid = event["payload"]["uid"]
     reg_status = CampusData.get_reg_status uid
-    Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}; reg_status = #{reg_status}"
 
     return false unless reg_status != nil
 
@@ -17,10 +15,6 @@ class RegStatusEventProcessor
       # code Z, student deceased, remove from our system
       UserApi.delete "#{uid}"
       return false
-    end
-
-    if timestamp == nil
-      timestamp = Time.now.to_datetime
     end
 
     data = {
