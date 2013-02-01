@@ -32,23 +32,7 @@ $cc-page-splash-blue-light: #0073C3;
     @include background(linear-gradient(top, $cc-page-splash-blue-light, $cc-page-splash-blue-dark), $cc-page-splash-blue-dark);
     box-shadow: none;
   }
-  /* Re-enable this when we have a good video
-  .cc-splash-video-container {
-    height: 0;
-    margin-top: 60px;
-    overflow: hidden;
-    padding-bottom: 56.25%;
-    position: relative;
-  }
-  .cc-splash-video {
-    float: right;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }*/
-  .cc-splash-status {
+  .cc-page-splash-status {
     background: image-url('splash_status.png') no-repeat 0 0;
     background-position: center;
     @include background-size(cover);
@@ -71,7 +55,7 @@ $cc-page-splash-blue-light: #0073C3;
     }
   }
 
-  .cc-splash-features {
+  .cc-page-splash-features {
     padding: 0 30px 110px;
     p {
       font-size: 14px;
@@ -85,7 +69,7 @@ $cc-page-splash-blue-light: #0073C3;
       margin-top: 40px;
     }
   }
-  .cc-splash-features-title {
+  .cc-page-splash-features-title {
     border-bottom: 1px solid $cc-list-border-color;
     color: $txtColor;
     line-height: 1.6;
@@ -102,13 +86,13 @@ $cc-page-splash-blue-light: #0073C3;
       background-position: center 225px;
       background-size: contain;
     }
-    .cc-splash-features {
+    .cc-page-splash-features {
       padding: 0 0 30px;
     }
-    .cc-splash-features-title {
+    .cc-page-splash-features-title {
       margin: 100px 0 0;
     }
-    .cc-splash-features img {
+    .cc-page-splash-features img {
       float: none;
     }
   }
