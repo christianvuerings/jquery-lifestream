@@ -6,7 +6,9 @@
    */
   calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', 'analyticsService', function($http, $location, $route, $scope, analyticsService) {
 
-    $scope.user = {};
+    $scope.user = {
+      'isLoaded': false
+    };
 
     // Private methods that are only exposed for testing but shouldn't be used within the views
 
@@ -14,14 +16,14 @@
      * Redirect to the settings page
      */
     $scope.user._redirectToSettingsPage = function() {
-      window.location = '/settings';
+      $location.path('/settings');
     };
 
     /**
      * Redirect to the dashboard page
      */
     $scope.user._redirectToDashboardPage = function() {
-      window.location = '/dashboard';
+      $location.path('/dashboard');
     };
 
     /**
@@ -52,6 +54,7 @@
     $scope.user._handleUserLoaded = function(data) {
       $scope.user.profile = data;
       $scope.user._handleAccessToPage();
+      $scope.user.isLoaded = true;
     };
 
     /**
