@@ -14,22 +14,23 @@ class FinalGradesEventProcessor < AbstractEventProcessor
     students = CampusData.get_enrolled_students(ccn, term_yr, term_cd)
     course = CampusData.get_course(ccn, term_yr, term_cd)
 
-    return false unless students && course && course["course_title"]
+    return [] unless students && course && course["course_title"]
     Rails.logger.debug "#{self.class.name} Found students enrolled in #{course} - #{term_yr}-#{term_cd}-#{ccn}: #{students}"
 
-    data = {
-        :event => event,
-        :timestamp => timestamp,
-        :course => course
-    }
-
+    notifications = []
     students.each do |student|
-      notification = Notification.new({:uid => student["ldap_uid"], :data => data, :translator => "FinalGradesTranslator"})
-      notification.save
-      Calcentral::USER_CACHE_EXPIRATION.notify student["ldap_uid"]
+      notifications.push Notification.new(
+                             {
+                                 :uid => student["ldap_uid"],
+                                 :data => {
+                                     :event => event,
+                                     :timestamp => timestamp,
+                                     :course => course
+                                 },
+                                 :translator => "FinalGradesTranslator"
+                             })
     end
-
-    true
+    notifications
   end
 
   def lookup_term_code(term)

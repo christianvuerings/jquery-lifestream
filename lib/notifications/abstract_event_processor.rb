@@ -12,7 +12,18 @@ class AbstractEventProcessor
     end
 
     Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}"
-    process_internal(event, timestamp)
+    notifications = process_internal(event, timestamp)
+
+    if notifications.empty?
+      return false
+    end
+
+    notifications.each do |notification|
+      notification.save
+      Calcentral::USER_CACHE_EXPIRATION.notify notification.uid
+    end
+    true
+
   end
 
 end
