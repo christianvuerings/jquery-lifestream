@@ -58,12 +58,17 @@
 }
 .cc-widget-tasks-notifications-list {
   list-style-type: none;
-  margin: 12px 0 0 0;
-  padding: 0 0 10px 0;
+  margin: 0;
+  padding: 0;
 
-  li .row {
-    padding-bottom: 5px;
-    padding-top: 5px;
+  li {
+    &:first-child {
+      margin-top: 12px;
+    }
+    .row {
+      padding-bottom: 5px;
+      padding-top: 5px;
+    }
   }
 
   .cc-widget-tasks-notifications-more {
