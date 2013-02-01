@@ -6,7 +6,7 @@
       <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
     </div>
 
-    <div class="one mobile-one columns cc-task-checkbox-column cc-mobile-task-checkbox-column">
+    <div class="one mobile-one columns cc-widget-tasks-checkbox-column cc-mobile-task-checkbox-column">
       <input type="checkbox"
         data-ng-change="changeTaskState(task)"
         data-ng-disabled="task.emitter=='Canvas'"
@@ -16,7 +16,7 @@
       >
     </div>
 
-    <div class="six mobile-one columns cc-task-title-column cc-mobile-task-title-column">
+    <div class="six mobile-one columns cc-widget-tasks-title-column cc-mobile-task-title-column">
       <p
         class="cc-widget-short-title cc-widget-list-hover-title cc-widget-tasks-status-{{task.status}}"
         data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue')}">

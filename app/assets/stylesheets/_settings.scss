@@ -1,30 +1,34 @@
-.cc-settings .row {
-  margin-top: 10px;
-}
+.cc-settings {
+  .row {
+    margin-top: 10px;
+  }
 
-.cc-settings-header div {
-  font-size: 16px;
-  font-weight: bold;
-}
+  .cc-settings-header div {
+    font-size: 16px;
+    font-weight: bold;
+  }
 
-.cc-settings-service {
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-.cc-settings-connection-status-icon {
-  height: 24px;
-  margin-left: 10px;
-  width: 24px;
-}
-
-.cc-settings-connection-status-icon-small {
-  height: 18px;
-  width: 18px;
-}
-
-@media only screen and (max-width: 767px) {
   .cc-settings-service {
-    font-size: 13px;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .cc-settings-connection-status-icon {
+    height: 24px;
+    margin-left: 10px;
+    width: 24px;
+  }
+
+  .cc-settings-connection-status-icon-small {
+    height: 18px;
+    width: 18px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .cc-settings-service {
+      font-size: 13px;
+    }
   }
 }
+
+

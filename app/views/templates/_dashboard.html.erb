@@ -3,7 +3,7 @@
   <div class="five columns push-three cc-page-dashboard-column-b">
     <!-- Begin Tasks / Assignments column -->
 
-    <div class="cc-container-widget" id="cc-widget-tasks" data-ng-controller="TasksController">
+    <div class="cc-widget-tasks" data-ng-controller="TasksController">
       <div class="cc-widget-title">
         <h2 class="cc-left">Assignments and Tasks</h2>
         <button
@@ -12,8 +12,8 @@
             data-ng-show="user.profile.has_google_access_token"
             data-ng-click="toggleAddTask()">
           <div class="cc-widget-add-icon-plus">+</div>
-          <div class="cc-widget-add-icon-text visuallyhidden" aria-labelledby="addTaskLabel">Task</div>
-          <div id="addTaskLabel" class="visuallyhidden">Add a task</div>
+          <div class="cc-widget-add-icon-text cc-visuallyhidden" aria-labelledby="addTaskLabel">Task</div>
+          <div id="addTaskLabel" class="cc-visuallyhidden">Add a task</div>
         </button>
       </div>
       <div class="cc-tasks-list">
@@ -31,7 +31,7 @@
               <div class="two columns mobile-one">
                 <label for="cc-widget-tasks-addtask-date">Due:</label>
               </div>
-              <div class="ten columns mobile-three cc-task-date-input">
+              <div class="ten columns mobile-three cc-widget-tasks-date-input">
                 <input type="text"
                   data-ng-model="add_task.due_date"
                   name="add_task_due_date"
@@ -200,7 +200,7 @@
   <div class="four columns push-three cc-page-dashboard-column-c">
     <!-- Begin Notifications column -->
 
-    <div class="cc-container-widget" id="cc-widget-notifications" data-ng-controller="NotificationsController">
+    <div class="cc-widget-notifications" data-ng-controller="NotificationsController">
 
       <div class="cc-widget-title">
         <h2>Notifications</h2>
@@ -253,9 +253,9 @@
   <div class="three columns pull-nine cc-page-dashboard-column-a">
     <!-- Begin Calendar / Classes / Groups column -->
 
-    <div class="cc-container-widget" id="cc-widget-mycalendar" data-ng-controller="UpNextController">
+    <div class="cc-widget-mycalendar" data-ng-controller="UpNextController">
       <div class="cc-widget-title">
-        <h2>Up Next <a href="http://bcal.berkeley.edu" class="ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
+        <h2>Up Next <a href="http://bcal.berkeley.edu" class="cc-ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
       </div>
       <div class="cc-widget-mycalendar-container">
         <ul class="cc-widget-mycalendar-datelist cc-scroll" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
@@ -316,7 +316,7 @@
       </div>
     </div>
 
-    <div class="cc-container-widget" data-ng-controller="MyClassesController">
+    <div data-ng-controller="MyClassesController">
       <div class="cc-widget-title">
         <h2>My Classes <span class="cc-right cc-widget-title-small"><%= Settings.sakai_proxy.current_terms.first %></span></h2>
       </div>
@@ -357,7 +357,7 @@
       </div>
     </div>
 
-    <div class="cc-container-widget" data-ng-controller="MyGroupsController">
+    <div data-ng-controller="MyGroupsController">
       <div class="cc-widget-title">
         <h2>My Groups</h2>
       </div>

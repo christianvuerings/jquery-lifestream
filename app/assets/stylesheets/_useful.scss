@@ -1,0 +1,76 @@
+/* Useful classes */
+.cc-alert {
+  color: $cc-alert-color !important;
+}
+.cc-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cc-required-field-indicator {
+  color: #ff0000;
+}
+.cc-left {
+  float: left;
+}
+.cc-right {
+  float: right;
+}
+
+/* Scrollbar in webkit */
+.cc-scroll {
+  &::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+  }
+  &::-webkit-scrollbar-button:start:decrement {
+    display: block;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-button:vertical:increment {
+    background-color: transparent
+  }
+  &::-webkit-scrollbar-track:enabled {
+    background-color: rgba(113,112,107,0.1);
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb:vertical {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 5px;
+    height: 50px;
+  }
+  &::-webkit-scrollbar-thumb:horizontal {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 5px;
+    width: 50px;
+  }
+}
+.cc-ir {
+  background-color: transparent;
+  border: 0;
+  overflow: hidden;
+  /* IE 6/7 fallback */
+  *text-indent: -9999px;
+
+  &:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+  }
+}
+/* Hide only visually, but have it available for screenreaders / accessibility: h5bp.com/v */
+.cc-visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}

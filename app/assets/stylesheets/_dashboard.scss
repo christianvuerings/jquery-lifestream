@@ -7,33 +7,31 @@
     margin-bottom: -99999px;
     padding-bottom: 99999px;
   }
-
   .cc-page-dashboard-column-b, .cc-page-dashboard-column-c {
     border-left: 5px solid $cc-column-border-color;
   }
   .cc-page-dashboard-column-a, .cc-page-dashboard-column-c {
     background: #fafafa;
   }
+
   .cc-emitter-col {
     padding-right: 0;
   }
   .cc-emitter {
     color: #fff;
     background: #1d6592;
+    border-radius: 4px;
     font-size: 11px;
     font-weight: bold;
     padding: 2px 5px;
     text-align: center;
     width: 100%;
-    border-radius: 4px;
   }
-
   .cc-emitter-square {
     border-radius: 4px;
     height: 18px;
     width: 18px;
   }
-
   // Emitter lozenge colors
   .cc-emitter-bspace-class {
     background: #3e7fbe;
@@ -54,6 +52,7 @@
   .cc-emitter-campus-item {
     background: image-url('icon_notifications_campus_16x16.png') no-repeat;
   }
+
   .cc-widget-section-label-due {
     color: $cc-widget-section-label-color;
     font-size: 14px;
@@ -74,7 +73,6 @@
     border: 2px solid #fff;
     border-radius: 4px;
     cursor: pointer;
-    font-family: Arial, sans-serif;
     font-size: 14px;
     margin: 3px 0 0 5px;
     padding: 1px 3px 0 2px;
@@ -106,15 +104,9 @@
   .cc-widget-add-icon-text {
     margin: 2px 2px 0 5px;
   }
-}
 
-.cc-widget-tasks-form {
-  margin-top: 5px;
-}
-
-/* Mobile styles */
-@media only screen and (max-width: 767px) {
-  .cc-container-main {
+  /* Mobile styles */
+  @media only screen and (max-width: 767px) {
     .cc-page-dashboard-column-b, .cc-page-dashboard-column-c {
       border: none;
     }

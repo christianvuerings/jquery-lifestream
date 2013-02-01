@@ -1,8 +1,8 @@
 /* Icon */
-#cc-widget-mycalendar {
+.cc-widget-mycalendar {
   @include user-select("none");
-  font-size: 12px;
-  p {
+
+  &, p {
     font-size: 12px;
   }
   .cc-widget-title .cc-icon {
