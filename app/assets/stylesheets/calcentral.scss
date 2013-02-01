@@ -15,6 +15,7 @@ $cc-medium-grey: #dddddd;
 $cc-nav-gradient1-color: #012955;
 $cc-nav-gradient2-color: #3b5d86;
 $cc-nav-link-color: #fdd692;
+$cc-placeholder-color: #aaa;
 $cc-shadow-color: #ccc;
 $cc-widget-section-label-color: #515151;
 $cc-widget-highlight-background-color: #f2fef3;
@@ -70,10 +71,10 @@ form {
   }
 
   ::-moz-placeholder {
-    color:#aaa;
+    color: $cc-placeholder-color;
   }
   input:-moz-placeholder {
-    color:#aaa;
+    color: $cc-placeholder-color;
   }
 
 }
