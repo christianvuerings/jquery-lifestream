@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to migrate database schema and perform other cluster-wide updates
+# Script to stop CalCentral's background job processor.
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
@@ -13,9 +13,8 @@ source .rvmrc
 export RAILS_ENV=production
 export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
 
+# Kill all instances of backstage if there are any running.
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
-echo "`date`: Database migration CalCentral on app node: `hostname -s`..." | $LOGIT
-
-echo "`date`: rake db:migrate RAILS_ENV=$RAILS_ENV ..." | $LOGIT
-bundle exec rake db:migrate RAILS_ENV=$RAILS_ENV | $LOGIT
+echo "`date`: Stopping running instances of backstage..." | $LOGIT
+bundle exec rake backstage:stop | $LOGIT

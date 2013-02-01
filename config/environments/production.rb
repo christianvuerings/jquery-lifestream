@@ -64,7 +64,7 @@ Calcentral::Application.configure do
   # Caching store
   config.cache_store = ActiveSupport::Cache.lookup_store(:dalli_store, *Settings.cache.servers,
     { expires_in: Settings.cache.maximum_expires_in })
-  config.cache_store.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.log")
+  config.cache_store.logger = Logger.new("#{Rails.root}/log/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
   config.cache_store.logger.level = Logger::INFO
 
 end
