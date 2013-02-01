@@ -1,0 +1,37 @@
+<div data-ng-controller="MyClassesController">
+  <div class="cc-widget-title">
+    <h2>My Classes <span class="cc-right cc-widget-title-small"><%= Settings.sakai_proxy.current_terms.first %></span></h2>
+  </div>
+  <div class="cc-widget-mygroups-myclasses-list">
+    <ul class="cc-widget-list cc-scroll">
+      <li data-ng-repeat="class in myclasses" class="cc-widget-mygroups-myclasses-list-item">
+        <div class="row cc-widget-mygroups-myclasses-row">
+          <div class="ten mobile-three columns">
+            <div
+              class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
+              data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']">
+            </div>
+            <a
+              class="cc-ellipsis"
+              data-ng-click="api.util.trackExternalLink('My Classes', class.emitter, class.site_url)"
+              data-ng-href="{{class.site_url}}"
+              ><span class="cc-widget-notification-source">{{class.course_code}}</span>
+            </a>
+            <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
+              data-ng-click="api.util.trackExternalLink('My Classes', class.emitter, class.site_url)"
+              data-ng-href="{{class.site_url}}"
+              data-ng-show="!!class.name"
+              >{{class.name}}
+            </a>
+          </div>
+          <div class="two mobile-one columns cc-widget-mygroups-myclasses-emitter-column">
+            <div class="cc-emitter-square cc-emitter-{{class.color_class}}" title="{{class.emitter}} class"></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div data-ng-show="!myclasses.length" class="cc-widget-text">
+    There are currently no classes available.
+  </div>
+</div>
