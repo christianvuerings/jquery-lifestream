@@ -11,8 +11,15 @@ class CampusData < ActiveRecord::Base
 
   def self.get_person_attributes(person_id)
     sql = <<-SQL
-		select pi.ldap_uid, pi.ug_grad_flag, pi.first_name, pi.last_name, pi.person_name, pi.email_address, pi.affiliations
+		select pi.ldap_uid, pi.ug_grad_flag, pi.first_name, pi.last_name,
+      pi.person_name, pi.email_address, pi.affiliations,
+      reg.reg_status_cd, reg.on_probation_flag
 		from bspace_person_info_vw pi
+    left outer join bspace_student_reghist_vw reg on
+      ( reg.ldap_uid = pi.ldap_uid
+        and reg.term_yr = #{connection.quote(current_year)}
+        and reg.term_cd = #{connection.quote(current_term)}
+      )
 		where pi.ldap_uid = #{connection.quote(person_id)}
     SQL
     connection.select_one(sql)
