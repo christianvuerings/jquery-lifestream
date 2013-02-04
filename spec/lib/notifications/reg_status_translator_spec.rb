@@ -3,7 +3,8 @@ require "spec_helper"
 describe RegStatusTranslator do
 
   it "should translate a reg-status event properly" do
-
+    user = UserApi.new "300846"
+    user.record_first_login
     processor = RegStatusEventProcessor.new
     event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
     timestamp = Time.now.to_datetime

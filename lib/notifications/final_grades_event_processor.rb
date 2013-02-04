@@ -1,13 +1,12 @@
-class FinalGradesEventProcessor
+class FinalGradesEventProcessor < AbstractEventProcessor
 
   def accept?(event)
+    return false unless super event
     event["code"] == "EndOFTermGrade"
   end
 
-  def process(event, timestamp)
-    return false unless accept?(event) && (payload = event["payload"])
-    Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}"
-
+  def process_internal(event, timestamp)
+    payload = event["payload"]
     ccn = payload["ccn"]
     term_yr = payload["year"]
     term_cd = lookup_term_code payload["term"]
@@ -15,26 +14,23 @@ class FinalGradesEventProcessor
     students = CampusData.get_enrolled_students(ccn, term_yr, term_cd)
     course = CampusData.get_course(ccn, term_yr, term_cd)
 
-    return false unless students && course && course["course_title"]
+    return [] unless students && course && course["course_title"]
     Rails.logger.debug "#{self.class.name} Found students enrolled in #{course} - #{term_yr}-#{term_cd}-#{ccn}: #{students}"
 
-    if timestamp == nil
-      timestamp = Time.now.to_datetime
-    end
-
-    data = {
-        :event => event,
-        :timestamp => timestamp,
-        :course => course
-    }
-
+    notifications = []
     students.each do |student|
-      notification = Notification.new({:uid => student["ldap_uid"], :data => data, :translator => "FinalGradesTranslator"})
-      notification.save
-      Calcentral::USER_CACHE_EXPIRATION.notify student["ldap_uid"]
+      notifications.push Notification.new(
+                             {
+                                 :uid => student["ldap_uid"],
+                                 :data => {
+                                     :event => event,
+                                     :timestamp => timestamp,
+                                     :course => course
+                                 },
+                                 :translator => "FinalGradesTranslator"
+                             })
     end
-
-    true
+    notifications
   end
 
   def lookup_term_code(term)

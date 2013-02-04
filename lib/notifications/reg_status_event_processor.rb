@@ -1,39 +1,30 @@
-class RegStatusEventProcessor
+class RegStatusEventProcessor < AbstractEventProcessor
 
   def accept?(event)
+    return false unless super event
     event["code"] == "RegStatus"
   end
 
-  def process(event, timestamp)
-    return false unless accept?(event)
-
+  def process_internal(event, timestamp)
     uid = event["payload"]["uid"]
     reg_status = CampusData.get_reg_status uid
-    Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}; reg_status = #{reg_status}"
 
-    return false unless reg_status != nil
+    return [] unless reg_status != nil
 
     if reg_status["reg_status_cd"].upcase == "Z"
       # code Z, student deceased, remove from our system
       UserApi.delete "#{uid}"
-      return false
+      return []
     end
 
-    if timestamp == nil
-      timestamp = Time.now.to_datetime
-    end
-
-    data = {
-        :event => event,
-        :timestamp => timestamp,
-        :reg_status => reg_status
-    }
-
-    notification = Notification.new({:uid => uid, :data => data, :translator => "RegStatusTranslator"})
-    notification.save
-    Calcentral::USER_CACHE_EXPIRATION.notify uid
-    true
-
+    [Notification.new({
+                          :uid => uid,
+                          :data => {
+                              :event => event,
+                              :timestamp => timestamp,
+                              :reg_status => reg_status
+                          },
+                          :translator => "RegStatusTranslator"})]
   end
 
 end

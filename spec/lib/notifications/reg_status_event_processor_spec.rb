@@ -23,6 +23,7 @@ describe RegStatusEventProcessor do
         })
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
+    UserData.stub(:where, "300846").and_return(MockUserData.new)
 
     @processor.process(event, timestamp).should == true
 
@@ -57,6 +58,12 @@ describe RegStatusEventProcessor do
         })
     @processor.process(event, timestamp).should == false
 
+  end
+
+  class MockUserData
+    def exists?
+      true
+    end
   end
 
 end
