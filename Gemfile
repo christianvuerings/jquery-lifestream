@@ -5,10 +5,10 @@ source "https://rubygems.org"
 gem "rails", "3.2.11"
 
 # Postgresql adapter
-gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.5"
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.6"
 
 # H2 adapter
-gem "activerecord-jdbch2-adapter", "~> 1.2.5"
+gem "activerecord-jdbch2-adapter", "~> 1.2.6"
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -18,18 +18,18 @@ gem "json", "~> 1.7.5"
 # https://rubygems.org/gems/omniauth-cas
 gem "omniauth-cas", "~> 1.0.1"
 
-gem "faraday", "~> 0.8.4"
+gem "faraday", "~> 0.8.5"
 
 # OAuth2 support
-gem "signet", "~> 0.4.3"
-gem "google-api-client", "~> 0.6.1"
+gem "signet", "~> 0.4.5"
+gem "google-api-client", "~> 0.6.2"
 
 # for VCR http recording tool
 gem "vcr", "~> 2.4.0"
 gem "jruby-openssl", "~> 0.8.2"
 
 # for memcached connection
-gem "dalli", "~> 2.6.0"
+gem "dalli", "~> 2.6.2"
 
 # smarter logging
 gem "log4r", "~> 1.1.10"
@@ -81,17 +81,17 @@ end
 
 group :development, :test , :testext do
   gem "rspec-rails", "~> 2.12.2"
-  gem "rspec-mocks", "~> 2.12.1"
-  gem "minitest-reporters", "~> 0.14.3"
+  gem "rspec-mocks", "~> 2.12.2"
+  gem "minitest-reporters", "~> 0.14.7"
 
   # Test our JavaScript code.
   # https://github.com/pivotal/jasmine-gem
   gem "jasmine", "~> 1.3.1"
-  gem "jquery-rails", "~> 2.1.4"
+  gem "jquery-rails", "~> 2.2.0"
   gem "jasmine-jquery-rails", "~> 1.4.2"
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem "selenium-webdriver", "~> 2.27.2"
+  gem "selenium-webdriver", "~> 2.29.0"
 
   gem "therubyrhino", "~> 2.0.1"
 
@@ -109,7 +109,7 @@ group :development do
   # Automatically reloads your browser when "view" files are modified.
   # https://github.com/guard/guard-livereload
   gem "guard-livereload", "~> 1.1.0"
-  gem "rack-livereload", "~> 0.3.8"
+  gem "rack-livereload", "~> 0.3.11"
 
   # Polling is evil:
   # https://github.com/guard/guard#readme
@@ -128,7 +128,7 @@ group :development do
 end
 
 group :test do
-  gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.5"
+  gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.6"
 end
 
 group :test, :testext do
