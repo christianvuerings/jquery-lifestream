@@ -33,7 +33,7 @@ describe('CalCentral controller', function() {
 
   it('should set the signed in userdata correctly', function() {
     $httpBackend.when('POST', '/api/my/record_first_login').respond({});
-    var status = getJSONFixture('status.json');
+    var status = getJSONFixture('status_first_login.json');
     $scope.user._handleUserLoaded(status);
 
     expect($scope.user.isAuthenticated()).toBeTruthy();
@@ -46,7 +46,7 @@ describe('CalCentral controller', function() {
 
     // Assume the user is logged in
     $httpBackend.when('POST', '/api/my/record_first_login').respond({});
-    var status = getJSONFixture('status.json');
+    var status = getJSONFixture('status_first_login.json');
 
     // We need to fake out the redirect so it doesn't actually happen
     $scope.user._redirectToSettingsPage = angular.noop;
