@@ -9,6 +9,10 @@ describe CanvasProxy do
     @client = CanvasProxy.new(:user_id => @user_id)
   end
 
+  after do
+    # Making sure we return cassettes back to the store after we're done.
+    VCR.eject_cassette
+  end
 
   it "should get real user activity feed using the Tammi account", :testext => true do
     proxy = CanvasUserActivityProxy.new(
