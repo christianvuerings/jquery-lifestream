@@ -82,3 +82,6 @@
 :timestamp: 2013-01-15 16:00:21.000000000 -08:00
 :text: ! '{"event":{"id":"36295_3","system":"Bearfacts","code":"RegStatus","payload":{"uid":300863}}}'
 
+---
+:timestamp: 2013-01-15 16:00:21.000000000 -08:00
+:text: ! '{"event":{"id":"36295_4","system":"Bearfacts","code":"RegStatus","payload":{"uid":999999}}}'
