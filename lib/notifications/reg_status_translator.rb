@@ -40,9 +40,9 @@ class RegStatusTranslator
     }
   end
 
-  def status_good_or_bad(reg_status)
-    good = 1
-    bad = 0
+  def status_summary(reg_status)
+    registered = "REGISTERED"
+    unregistered = "NOT REGISTERED"
 
     if reg_status == nil
       return nil
@@ -50,39 +50,39 @@ class RegStatusTranslator
 
     case reg_status.upcase
       when ""
-        bad
+        unregistered
       when "A"
-        bad
+        unregistered
       when "C"
-        good
+        registered
       when "L"
-        good
+        registered
       when "N"
-        good
+        registered
       when "R"
-        good
+        registered
       when "V"
-        good
+        registered
       when "D"
-        bad
+        unregistered
       when "F"
-        bad
+        unregistered
       when "U"
-        bad
+        unregistered
       when "I"
-        bad
+        unregistered
       when "X"
-        bad
+        unregistered
       when "Y"
-        good
+        registered
       when "Z"
-        bad
+        unregistered
       when "W"
-        bad
+        unregistered
       when "S"
-        good
+        registered
       else
-        bad
+        unregistered
     end
   end
 

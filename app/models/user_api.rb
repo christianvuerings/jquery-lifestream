@@ -2,14 +2,8 @@ class UserApi < MyMergedModel
 
   def initialize(uid)
     super(uid)
-    translator = RegStatusTranslator.new
     @calcentral_user_data = UserData.where(:uid => @uid).first
     @campus_attributes = CampusData.get_person_attributes(@uid) || {}
-    @reg_status = {
-        :status => translator.status_good_or_bad(@campus_attributes["reg_status_cd"]),
-        :code => @campus_attributes["reg_status_cd"],
-        :explanation => translator.status_explanation(@campus_attributes["reg_status_cd"])
-    }
     @default_name = @campus_attributes['person_name']
     @override_name = @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
     @first_login_at = @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
@@ -71,7 +65,7 @@ class UserApi < MyMergedModel
         :preferred_name => self.preferred_name,
         :has_canvas_access_token => CanvasProxy.access_granted?(@uid),
         :has_google_access_token => GoogleProxy.access_granted?(@uid),
-        :reg_status => @reg_status,
+        :reg_status => @campus_attributes[:reg_status],
         :first_login_at => @first_login_at
     }
   end
