@@ -19,7 +19,7 @@ class RegStatusTranslator
 
     return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && reg_status
 
-    translation = translate_status reg_status["reg_status_cd"]
+    translation = status_explanation reg_status["reg_status_cd"]
     title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
 
     {
@@ -40,7 +40,58 @@ class RegStatusTranslator
     }
   end
 
-  def translate_status(reg_status)
+  def status_summary(reg_status)
+    registered = "REGISTERED"
+    unregistered = "NOT REGISTERED"
+
+    if reg_status == nil
+      return nil
+    end
+
+    case reg_status.upcase
+      when ""
+        unregistered
+      when "A"
+        unregistered
+      when "C"
+        registered
+      when "L"
+        registered
+      when "N"
+        registered
+      when "R"
+        registered
+      when "V"
+        registered
+      when "D"
+        unregistered
+      when "F"
+        unregistered
+      when "U"
+        unregistered
+      when "I"
+        unregistered
+      when "X"
+        unregistered
+      when "Y"
+        registered
+      when "Z"
+        unregistered
+      when "W"
+        unregistered
+      when "S"
+        registered
+      else
+        unregistered
+    end
+  end
+
+  def status_explanation(reg_status)
+
+    if reg_status == nil
+      return nil
+    end
+
     # TODO resolve gaps and ??? marks - CLC-1069
     unregistered = "NOT REGISTERED. In order to be officially registered, you must pay at least 20% of your registration fees, have no outstanding blocks, and be enrolled in at least one class."
     registered = "REGISTERED. You are officially registered for this term and are entitled to access campus services."

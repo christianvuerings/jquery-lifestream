@@ -1,6 +1,10 @@
 class CampusData < ActiveRecord::Base
   establish_connection "campusdb"
 
+  def self.reg_status_translator
+    @reg_status_translator ||= RegStatusTranslator.new
+  end
+
   def self.current_year
     Settings.sakai_proxy.current_terms_codes.first.term_yr
   end
@@ -11,11 +15,26 @@ class CampusData < ActiveRecord::Base
 
   def self.get_person_attributes(person_id)
     sql = <<-SQL
-		select pi.ldap_uid, pi.ug_grad_flag, pi.first_name, pi.last_name, pi.person_name, pi.email_address, pi.affiliations
+		select pi.ldap_uid, pi.ug_grad_flag, pi.first_name, pi.last_name,
+      pi.person_name, pi.email_address, pi.affiliations,
+      reg.reg_status_cd, reg.on_probation_flag
 		from bspace_person_info_vw pi
+    left outer join bspace_student_reghist_vw reg on
+      ( reg.ldap_uid = pi.ldap_uid
+        and reg.term_yr = #{connection.quote(current_year)}
+        and reg.term_cd = #{connection.quote(current_term)}
+      )
 		where pi.ldap_uid = #{connection.quote(person_id)}
     SQL
-    connection.select_one(sql)
+    result = connection.select_one(sql)
+    if result
+      result[:reg_status] = {
+          :code => result["reg_status_cd"],
+          :summary => self.reg_status_translator.status_summary(result["reg_status_cd"]),
+          :explanation => self.reg_status_translator.status_explanation(result["reg_status_cd"])
+      }
+    end
+    result
   end
 
   def self.get_reg_status(person_id)
