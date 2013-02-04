@@ -29,6 +29,7 @@ describe CanvasUserActivityHandler do
       notification[:emitter].should == "Canvas"
       notification[:type].blank?.should_not == true
     end
+    handler.finalize
   end
 
   it "should be able to ignore malformed entries from the canvas feed" do
@@ -39,6 +40,7 @@ describe CanvasUserActivityHandler do
     notifications = handler.get_feed_results
     notifications.instance_of?(Array).should == true
     notifications.size.should == 20
+    handler.finalize
   end
 
   it "should be able to return nils on unexpected worker crashes" do
