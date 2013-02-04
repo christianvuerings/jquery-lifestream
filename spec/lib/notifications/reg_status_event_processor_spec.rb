@@ -60,10 +60,30 @@ describe RegStatusEventProcessor do
 
   end
 
+  it "should gracefully skip over a user that can't be found" do
+    event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status, "300846").and_return(
+        {
+            "ldap_uid" => "300846",
+            "reg_status_cd" => "C",
+            "on_probation_flag" => "N"
+        })
+    UserApi.should_not_receive(:delete)
+    Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
+    UserData.stub(:where, "300846").and_return(NonexistentUserData.new)
+    @processor.process(event, timestamp).should == true
+  end
+
   class MockUserData
     def exists?
       true
     end
   end
 
+  class NonexistentUserData
+    def exists?
+      false
+    end
+  end
 end
