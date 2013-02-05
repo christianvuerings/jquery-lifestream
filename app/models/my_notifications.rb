@@ -13,7 +13,9 @@ class MyNotifications < MyMergedModel
       notifications.push translator.translate notification
     end
     canvas_activity_feed = CanvasUserActivityHandler.new(:user_id => @uid)
-    notifications.concat canvas_activity_feed.get_feed_results
+    canvas_results = canvas_activity_feed.get_feed_results
+    canvas_results ||= []
+    notifications.concat canvas_results
     {:notifications => notifications}
   end
 
