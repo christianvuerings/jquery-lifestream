@@ -17,9 +17,9 @@ class CampusData < ActiveRecord::Base
     sql = <<-SQL
 		select pi.ldap_uid, pi.ug_grad_flag, pi.first_name, pi.last_name,
       pi.person_name, pi.email_address, pi.affiliations,
-      reg.reg_status_cd, reg.on_probation_flag
+      reg.reg_status_cd
 		from bspace_person_info_vw pi
-    left outer join bspace_student_reghist_vw reg on
+    left outer join bspace_student_term_vw reg on
       ( reg.ldap_uid = pi.ldap_uid
         and reg.term_yr = #{connection.quote(current_year)}
         and reg.term_cd = #{connection.quote(current_term)}
@@ -39,9 +39,9 @@ class CampusData < ActiveRecord::Base
 
   def self.get_reg_status(person_id)
     sql = <<-SQL
-		select pi.ldap_uid, reg.reg_status_cd, reg.on_probation_flag
+		select pi.ldap_uid, reg.reg_status_cd
 		from bspace_person_info_vw pi
-    left outer join bspace_student_reghist_vw reg on
+    left outer join bspace_student_term_vw reg on
       ( reg.ldap_uid = pi.ldap_uid
         and reg.term_yr = #{connection.quote(current_year)}
         and reg.term_cd = #{connection.quote(current_term)}

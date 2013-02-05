@@ -18,8 +18,7 @@ describe RegStatusEventProcessor do
     CampusData.stub(:get_reg_status, "300846").and_return(
         {
             "ldap_uid" => "300846",
-            "reg_status_cd" => "C",
-            "on_probation_flag" => "N"
+            "reg_status_cd" => "C"
         })
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
@@ -52,8 +51,7 @@ describe RegStatusEventProcessor do
     CampusData.stub(:get_reg_status, "300846").and_return(
         {
             "ldap_uid" => "300846",
-            "reg_status_cd" => "Z",
-            "on_probation_flag" => "N"
+            "reg_status_cd" => "Z"
         })
     @processor.process(event, timestamp).should == false
 
