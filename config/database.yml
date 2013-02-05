@@ -24,7 +24,7 @@ test:
   adapter: sqlite3
   encoding: utf8
   database: ':memory:'
-  pool: 1
+  pool: 5
 
 testext:
   adapter: postgresql
