@@ -14,12 +14,15 @@ module Calcentral
         MyTasks => :expire,
         MyUpNext => :expire,
         MyGroups => :expire,
+        MyNotifications => :expire,
 
         CanvasProxy => :expire,
         CanvasComingUpProxy => :expire,
         CanvasCoursesProxy => :expire,
         CanvasGroupsProxy => :expire,
         CanvasTodoProxy => :expire,
+        CanvasUserActivityProxy => :expire,
+        CanvasUserActivityProcessor => :expire,
 
         GoogleProxy => :expire,
         GoogleCreateTaskListProxy => :expire,
