@@ -17,18 +17,18 @@ describe "MyTasks" do
     GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
     CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
     CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
-    my_tasks_model = MyTasks.new(@user_id)
+    my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
 
     # Counts for task types in VCR recording
     overdue_counter = 5
     # On Sundays, no "Due This Week" tasks can escape the "Due Today" bucket.
     if Date.today.sunday?
-      today_counter = 8
+      today_counter = 7
       this_week_counter = 0
     else
       today_counter = 2
-      this_week_counter = 6
+      this_week_counter = 5
     end
     next_week_counter = 3
     unscheduled_counter = 1
@@ -87,7 +87,7 @@ describe "MyTasks" do
       GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
       CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
       CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
-      my_tasks_model = MyTasks.new(@user_id)
+      my_tasks_model = MyTasks::Merged.new(@user_id)
       valid_feed = my_tasks_model.get_feed
     ensure
       Time.zone = original_time_zone
@@ -95,9 +95,10 @@ describe "MyTasks" do
   end
 
   it "should fail general update_tasks param validation, missing required parameters" do
-    my_tasks = MyTasks.new @user_id
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    my_tasks = MyTasks::Merged.new @user_id
     expect {
-      my_tasks.update_task({"foo" => "badly formatted entry"})
+      my_tasks.update_task({"emitter" => CanvasProxy::APP_ID, "foo" => "badly formatted entry"})
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       (error.message =~ (/Missing parameter\(s\). Required: \[/)).nil?.should_not == true
@@ -105,7 +106,8 @@ describe "MyTasks" do
   end
 
   it "should fail general update_tasks param validation, invalid parameter(s)" do
-    my_tasks = MyTasks.new @user_id
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    my_tasks = MyTasks::Merged.new @user_id
     expect {
       my_tasks.update_task({"type" => "sometype", "emitter" => "Canvas", "status" => "half-baked" })
     }.to raise_error { |error|
@@ -115,8 +117,8 @@ describe "MyTasks" do
   end
 
   it "should fail google update_tasks param validation, invalid parameter(s)" do
-    my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
+    my_tasks = MyTasks::Merged.new @user_id
     expect {
       my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed" })
     }.to raise_error { |error|
@@ -126,25 +128,25 @@ describe "MyTasks" do
   end
 
   it "should fail google update_tasks with unauthorized access" do
-    my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(false)
+    my_tasks = MyTasks::Merged.new @user_id
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "foo"})
     response.should == {}
   end
 
   # Will fail in this case since the task_list_id won't match what's recorded in vcr, nor is a valid "remote" task id.
   it "should fail google update_tasks with a remote proxy error" do
-    my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
+    my_tasks = MyTasks::Merged.new @user_id
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "foo"})
     response.should == {}
   end
 
   it "should succeed google update_tasks with a properly formatted params" do
-    my_tasks = MyTasks.new @user_id
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
+    my_tasks = MyTasks::Merged.new @user_id
     task_list_id, task_id = get_task_list_id_and_task_id
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
     response["type"].should == "task"
@@ -154,13 +156,13 @@ describe "MyTasks" do
   end
 
   it "should invalidate cache on an update_task" do
-    my_tasks = MyTasks.new @user_id
-    Rails.cache.should_receive(:fetch).with(MyTasks.cache_key(@user_id), anything())
-    my_tasks.get_feed
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
-    Rails.cache.should_receive(:delete).with(MyTasks.cache_key(@user_id), anything())
+    my_tasks = MyTasks::Merged.new @user_id
+    Rails.cache.should_receive(:fetch).with(MyTasks::Merged.cache_key(@user_id), anything())
+    my_tasks.get_feed
     task_list_id, task_id = get_task_list_id_and_task_id
+    Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key(@user_id), anything())
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
   end
 
@@ -169,7 +171,7 @@ describe "MyTasks" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
     CanvasProxy.any_instance.stub(:request).and_return(nil)
-    my_tasks_model = MyTasks.new(@user_id)
+    my_tasks_model = MyTasks::Merged.new(@user_id)
     tasks = my_tasks_model.get_feed["tasks"]
     tasks.size.should be > 0
     tasks.each do |task|

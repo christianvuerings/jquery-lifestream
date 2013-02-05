@@ -27,7 +27,7 @@ describe MyTasksController do
   it "should return a valid json object on a successful task update" do
     session[:user_id] = @user_id
     hash = {"someKey" => "someValue"}
-    MyTasks.any_instance.stub(:update_task).and_return(hash)
+    MyTasks::Merged.any_instance.stub(:update_task).and_return(hash)
     post :update_task, {key: "value"}
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
@@ -37,7 +37,7 @@ describe MyTasksController do
   it "should return a 400 error on some ArgumentError with the task model object" do
     session[:user_id] = @user_id
     error_msg = "some fatal issue"
-    MyTasks.any_instance.stub(:update_task).and_raise(ArgumentError, error_msg)
+    MyTasks::Merged.any_instance.stub(:update_task).and_raise(ArgumentError, error_msg)
     post :update_task, {key: "value"}
     response.status.should == 400
     json_response = JSON.parse(response.body)

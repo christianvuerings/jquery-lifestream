@@ -1,5 +1,6 @@
 require 'observer.rb'
 
+
 module Calcentral
 
   Rails.application.config.after_initialize do
@@ -11,7 +12,7 @@ module Calcentral
     {
         UserApi => :expire,
         MyClasses => :expire,
-        MyTasks => :expire,
+        MyTasks::Merged => :expire,
         MyUpNext => :expire,
         MyGroups => :expire,
         MyNotifications => :expire,

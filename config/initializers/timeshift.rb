@@ -7,10 +7,12 @@ Rails.application.config.after_initialize do
   today = Date.today.to_time_in_current_zone.to_datetime
   end_of_week = today.sunday
   next_week = end_of_week.advance(days: 2)
+  far_future = next_week.advance(days: 7)
 
   # Google tasks store due dates as zero-hour Z-time
   end_of_week_utc = today.sunday.to_date.to_datetime
   next_week_utc = end_of_week_utc.advance(days: 2)
+  far_future_utc = next_week_utc.advance(days: 7)
 
   substitutions = {
       ":::TWENTY_SEVEN_DAYS_AGO:::" => today.advance(:days => -27).rfc3339,
@@ -29,8 +31,10 @@ Rails.application.config.after_initialize do
       ":::TODAY_FOUR_THIRTY:::" => today.advance(:hours => 16, :minutes => 30, :seconds => 00).rfc3339,
       ":::LATER_IN_WEEK:::" => end_of_week.rfc3339,
       ":::NEXT_WEEK:::" => next_week.rfc3339,
+      ":::FAR_FUTURE:::" => far_future.rfc3339,
       ":::UTC_LATER_IN_WEEK:::" => end_of_week_utc.strftime('%FT%T.000Z'),
       ":::UTC_NEXT_WEEK:::" => next_week_utc.strftime('%FT%T.000Z'),
+      ":::UTC_FAR_FUTURE:::" => far_future_utc.strftime('%FT%T.000Z'),
       ":::TODAY:::" => Date.today.rfc3339,
       ":::TOMORROW:::" => Date.today.advance(days: 1).rfc3339,
       ":::DAY_AFTER_TOMORROW:::" => Date.today.advance(days: 2).rfc3339,

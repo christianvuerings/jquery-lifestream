@@ -7,7 +7,7 @@ describe UserCacheWarmer do
   end
 
   it "should warm the cache when told" do
-    model_classes = [ UserApi, MyClasses, MyGroups, MyTasks, MyUpNext ]
+    model_classes = [ UserApi, MyClasses, MyGroups, MyTasks::Merged, MyUpNext ]
     model_classes.each do |klass|
       model = klass.new @user_id
       klass.stub(:new).and_return(model)
