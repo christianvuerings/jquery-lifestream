@@ -41,15 +41,16 @@ class CanvasUserActivityProcessor
       formatted_entry[:id] = "canvas_#{entry["id"]}"
       formatted_entry[:type] = entry["type"]
       formatted_entry[:user_id] = @uid
-      formatted_entry[:title] = entry["title"]
-      formatted_entry[:title] ||= "New/Updated Conversation" if entry["type"] == "Conversation"
+      title_and_summary = entry["title"].split(/( - |: )/, 3) unless entry["title"].blank?
+      title_and_summary ||= ["New/Updated Conversation"] if entry["type"] == "Conversation"
+      formatted_entry[:title] = title_and_summary[0]
       formatted_entry[:source] = "Canvas"
       formatted_entry[:emitter] = "Canvas"
       formatted_entry[:color_class] = "canvas-class"
       formatted_entry[:url] = entry["html_url"]
       formatted_entry[:source_url] = entry["html_url"]
-      partial = Nokogiri::HTML(entry["message"])
-      formatted_entry[:summary] = partial.xpath("//text()").to_s.gsub(/\s+/, " ").strip
+      formatted_entry[:summary] = title_and_summary[2] if title_and_summary.size > 2
+      formatted_entry[:summary] ||= ''
       formatted_entry[:date] = {
         :epoch => date.to_i,
         :datetime => date.rfc3339(3),
