@@ -4,8 +4,8 @@
     .cc-alert-text {
       margin-bottom: 5px;
     }
-    p {
-      margin: 0;
+    .cc-widget-text {
+      margin-bottom: 0;
     }
   }
   .cc-widget-tasks-form {
@@ -37,7 +37,7 @@
   }
   .cc-widget-tasks-more {
     padding-left: 10px;
-    p {
+    div {
       margin-bottom: 10px;
     }
   }
