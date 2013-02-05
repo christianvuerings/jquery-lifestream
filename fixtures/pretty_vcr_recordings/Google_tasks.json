@@ -106,7 +106,7 @@
                 "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
                 "position": "00000000000268435455",
                 "status": "needsAction",
-                "due": ":::UTC_LATER_IN_WEEK:::"
+                "due": ":::UTC_FAR_FUTURE:::"
               },
               {
                 "kind": "tasks#task",
@@ -256,7 +256,7 @@
                       "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
                       "position":"00000000000268435455",
                       "status":"needsAction",
-                      "due":":::UTC_LATER_IN_WEEK:::"
+                      "due":":::UTC_FAR_FUTURE:::"
                   },
                   {
                       "kind":"tasks#task",
@@ -403,7 +403,7 @@
                     "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
                     "position": "00000000000268435455",
                     "status": "needsAction",
-                    "due": ":::UTC_LATER_IN_WEEK:::"
+                    "due": ":::UTC_FAR_FUTURE:::"
                 },
                 {
                     "kind": "tasks#task",

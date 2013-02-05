@@ -22,7 +22,7 @@ class UserCacheWarmer
           UserApi.new(uid),
           MyClasses.new(uid),
           MyGroups.new(uid),
-          MyTasks.new(uid),
+          MyTasks::Merged.new(uid),
           MyUpNext.new(uid),
           CanvasUserActivityHandler.new({:user_id => uid})
       ].each do |model|
