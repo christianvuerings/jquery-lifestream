@@ -10,8 +10,7 @@ describe RegStatusTranslator do
     timestamp = Time.now.to_datetime
     CampusData.stub(:get_reg_status, "300846").and_return({
                                                               "ldap_uid" => "300846",
-                                                              "reg_status_cd" => "C",
-                                                              "on_probation_flag" => "N"
+                                                              "reg_status_cd" => "C"
                                                           })
     processor.process(event, timestamp).should == true
 
