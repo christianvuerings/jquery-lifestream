@@ -17,11 +17,11 @@
     </div>
 
     <div class="six mobile-one columns cc-widget-tasks-title-column cc-mobile-task-title-column">
-      <p
+      <div
         class="cc-widget-short-title cc-widget-list-hover-title cc-widget-tasks-status-{{task.status}}"
         data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue')}">
         {{task.title}}
-      </p>
+      </div>
     </div>
 
     <div
@@ -36,13 +36,13 @@
   </div>
 
   <div data-ng-show="task.show">
-    <div class="row">
+    <div class="row widget-tasks-notifications-more">
       <div class="nine columns offset-by-three end cc-widget-tasks-more">
-        <p data-ng-bind-html="task.note | linky">
-        </p>
+        <div data-ng-bind-html="task.note | linky">
+        </div>
       </div>
 
-      <div class="nine columns offset-by-three end cc-widget-tasks-notifications-text cc-widget-tasks-more">
+      <div class="nine columns offset-by-three end cc-widget-tasks-more cc-widget-tasks-notifications-more">
         <p>
           <a class="cc-widget-more-view-in"
           data-ng-click="api.util.trackExternalLink('Tasks', task.emitter, task.link_url)"
