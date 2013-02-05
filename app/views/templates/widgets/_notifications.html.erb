@@ -7,7 +7,7 @@
     <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
       <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification, 'Notifications')">
 
-        <div class="eight mobile-three columns cc-widget-notifications-text-column">
+        <div class="ten mobile-three columns cc-widget-notifications-text-column">
           <div
             class="cc-emitter-square cc-left cc-emitter-{{notification.color_class}}"
             title="{{notification.emitter}} notification">
@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <div class="four mobile-one columns cc-widget-tasks-notifications-date-string">
+        <div class="two mobile-one columns cc-widget-tasks-notifications-date-string">
           {{notification.date.date_string}}
         </div>
 
