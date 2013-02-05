@@ -24,7 +24,7 @@ class UserCacheWarmer
           MyGroups.new(uid),
           MyTasks.new(uid),
           MyUpNext.new(uid),
-          CanvasUserActivityHandler.new({:user_id => uid})
+          MyNotifications.new(uid)
       ].each do |model|
         model.get_feed
       end
