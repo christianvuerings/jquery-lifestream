@@ -27,6 +27,14 @@
     };
 
     /**
+     * Set the user first_login_at attribute and redirect to the settings page
+     */
+    $scope.user._setFirstLogin = function() {
+      $scope.user.profile.first_login_at = (new Date()).getTime();
+      $scope.user._redirectToSettingsPage();
+    };
+
+    /**
      * Handle the access to the page that the user is watching
      * This will depend on
      *   - whether they are logged in or not
@@ -40,7 +48,7 @@
       // Record that you've already visited the calcentral once and redirect to the settings page on the first login
       } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
         analyticsService.trackEvent(['Authentication', 'First login']);
-        $http.post('/api/my/record_first_login').success($scope.user._redirectToSettingsPage);
+        $http.post('/api/my/record_first_login').success($scope.user._setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
       } else if ($scope.user.isAuthenticated() && $location.path() === '/') {
         analyticsService.trackEvent(['Authentication', 'Redirect to dashboard']);
