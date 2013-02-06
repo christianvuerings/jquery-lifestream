@@ -44,8 +44,10 @@ ul {
 }
 
 /* Anchor tag */
-a:hover {
-  text-decoration: underline;
+a {
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
 }
 
 /* Form */
@@ -82,7 +84,7 @@ form {
 /* Buttons */
 button {
   font-family: Arial, sans-serif;
-  &:hover {
+  &:hover, &:focus {
     cursor: pointer;
     text-decoration: underline;
   }
@@ -126,6 +128,9 @@ button {
     background-color: transparent;
     border: none;
     color: $mainColor;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
   }
 }
 

@@ -71,6 +71,25 @@
   background-image: image-url('icon_mail_16x16.png');
 }
 
+/* Status icons */
+.cc-icon-status-level-check-small {
+  background-image: image-url('icon_status_level_check_small_16x16.png');
+}
+.cc-icon-status-level-check {
+  background-image: image-url('icon_status_level_check_16x16.png');
+}
+.cc-icon-status-level-exclamation {
+  background-image: image-url('icon_status_level_exclamation_16x16.png');
+}
+.cc-icon-status-person {
+  background-image: image-url('icon_status_level_person_22x22.png');
+  height: 22px;
+  width: 22px;
+  &:hover {
+    background-image: image-url('icon_status_level_person_hover_22x22.png');
+  }
+}
+
 /* 150x150 icons */
 .cc-icon-advising {
   background-image: image-url('icon_campus_advising_150x150.png');

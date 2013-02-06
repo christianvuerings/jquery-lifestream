@@ -49,6 +49,59 @@
     width: 50px;
   }
 }
+/* Popover */
+.cc-popover {
+  background: #fff;
+  border: 1px solid #cbcbcb;
+  border-radius: 4px;
+  @include box-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+  margin-left: -129px;
+  padding: 15px;
+  position: absolute;
+  top: 33px;
+  width: 300px;
+  z-index: 1;
+
+  h4 {
+    color: $txtColor;
+    font-size: 16px;
+    margin: 0 0 10px;
+  }
+
+  p {
+    line-height: 1;
+    margin: 10px 0 0;
+  }
+
+  &:after, &:before {
+    bottom: 100%;
+    content: "";
+    left: 50%;
+    position: absolute;
+  }
+
+  /*
+    This allows us to create an arrow for the popover
+    We also add a border by painting another arrow behind the first one
+   */
+  &:after {
+    border-bottom: 10px solid #fff;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    margin-left: -10px;
+  }
+  &:before {
+    border-bottom: 11px solid #cbcbcb;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    margin-left: -11px;
+  }
+}
+.cc-popover-container {
+  position: relative;
+}
+
+/* Image replacement */
 .cc-ir {
   background-color: transparent;
   border: 0;
