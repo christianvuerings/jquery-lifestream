@@ -3,7 +3,7 @@ require 'celluloid'
 class UserCacheWarmer
 
   def initialize
-    @pool = WarmingWorker.pool(size: 5)
+    @pool = WarmingWorker.pool(size: determine_pool_size)
   end
 
   def warm(uid)
@@ -23,13 +23,22 @@ class UserCacheWarmer
           MyClasses.new(uid),
           MyGroups.new(uid),
           MyTasks::Merged.new(uid),
-          MyUpNext.new(uid)
-          #MyNotifications.new(uid)
+          MyUpNext.new(uid),
+          MyNotifications.new(uid)
       ].each do |model|
         model.get_feed
       end
       Rails.logger.info "#{self.class.name} Finished warming the user cache for #{uid}"
     end
+  end
+
+  private
+
+  def determine_pool_size
+    size = [Rails.configuration.database_configuration['test']['pool'],
+            Rails.configuration.database_configuration['campusdb']['pool']].min
+    #Celluloid will needs a min of at least 2 workers in pool.
+    [size - Settings.cache_warmer.fudge_factor, 2].max
   end
 end
 

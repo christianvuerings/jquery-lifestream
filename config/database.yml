@@ -23,7 +23,8 @@ production:
 test:
   adapter: sqlite3
   encoding: utf8
-  database: ':memory:'
+  database: 'db/test.sqlite3'
+  pool: <%= Settings.test_sqlite.pool %>
 
 testext:
   adapter: postgresql
