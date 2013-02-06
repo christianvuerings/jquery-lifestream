@@ -99,7 +99,7 @@
           </div>
           <ul class="cc-widget-tasks-notifications-list">
             <li
-              data-ng-repeat="task in filtered = (tasks | filter:filterOverdue)"
+              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterOverdue)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
               <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
@@ -111,7 +111,7 @@
           <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Today</h3>
           <ul class="cc-widget-tasks-notifications-list">
             <li
-              data-ng-repeat="task in filtered = (tasks | filter:filterDueToday)"
+              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueToday)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
               <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
@@ -123,7 +123,7 @@
           <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due This Week</h3>
           <ul class="cc-widget-tasks-notifications-list">
             <li
-              data-ng-repeat="task in filtered = (tasks | filter:filterDueThisWeek)"
+              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueThisWeek)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
               <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
@@ -135,7 +135,7 @@
           <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Next Week</h3>
           <ul class="cc-widget-tasks-notifications-list">
             <li
-              data-ng-repeat="task in filtered = (tasks | filter:filterDueNextWeek)"
+              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueNextWeek)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
               <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
