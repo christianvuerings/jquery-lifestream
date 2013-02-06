@@ -18,7 +18,7 @@ describe GoogleProxy do
   end
 
   it "should return a fake event list response that matches what the UI sends for the up-next widget in fake mode" do
-    today = Date.today.to_time_in_current_zone.to_datetime
+    today = Time.zone.today.to_time_in_current_zone.to_datetime
     proxy = GoogleEventsListProxy.new(:fake => true)
     response_array = proxy.events_list(
         {

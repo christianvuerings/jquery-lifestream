@@ -4,7 +4,7 @@ Rails.application.config.after_initialize do
   # the processed files in fixtures/vcr_cassettes for use by FakeableProxy.
 
   # midnight on the current day
-  today = Date.today.to_time_in_current_zone.to_datetime
+  today = Time.zone.today.to_time_in_current_zone.to_datetime
   end_of_week = today.sunday
   next_week = end_of_week.advance(days: 2)
   far_future = next_week.advance(days: 7)
@@ -35,9 +35,9 @@ Rails.application.config.after_initialize do
       ":::UTC_LATER_IN_WEEK:::" => end_of_week_utc.strftime('%FT%T.000Z'),
       ":::UTC_NEXT_WEEK:::" => next_week_utc.strftime('%FT%T.000Z'),
       ":::UTC_FAR_FUTURE:::" => far_future_utc.strftime('%FT%T.000Z'),
-      ":::TODAY:::" => Date.today.rfc3339,
-      ":::TOMORROW:::" => Date.today.advance(days: 1).rfc3339,
-      ":::DAY_AFTER_TOMORROW:::" => Date.today.advance(days: 2).rfc3339,
+      ":::TODAY:::" => today.rfc3339,
+      ":::TOMORROW:::" => today.advance(days: 1).rfc3339,
+      ":::DAY_AFTER_TOMORROW:::" => today.advance(days: 2).rfc3339,
   }
 
   Rails.logger.info "Timeshifter: Today = #{today}; epoch = #{today.to_i}"

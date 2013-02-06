@@ -12,76 +12,9 @@ describe "MyTasks" do
   end
 
   it "should load nicely with the pre-recorded fake Google and Canvas proxy feeds using the server's timezone" do
-    GoogleProxy.stub(:access_granted?).and_return(true)
-    CanvasProxy.stub(:access_granted?).and_return(true)
-    GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
-    CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
-    CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
-    my_tasks_model = MyTasks::Merged.new(@user_id)
-    valid_feed = my_tasks_model.get_feed
-
-    # Counts for task types in VCR recording
-    overdue_counter = 5
-    # On Sundays, no "Due This Week" tasks can escape the "Due Today" bucket.
-    if Date.today.sunday?
-      today_counter = 7
-      this_week_counter = 0
-    else
-      today_counter = 2
-      this_week_counter = 5
-    end
-    next_week_counter = 3
-    unscheduled_counter = 1
-
-    valid_feed["tasks"].each do |task|
-      task["title"].blank?.should == false
-      task["source_url"].blank?.should == false
-
-      # Whitelist allowed property strings
-      whitelist = task["bucket"] =~ (/(Overdue|Due\ Today|Due\ This\ Week|Due\ Next\ Week|Unscheduled)$/i)
-      whitelist.should_not be_nil
-
-      case task["bucket"]
-        when "Overdue"
-          overdue_counter -= 1
-        when "Due Today"
-          today_counter -= 1
-        when "Due This Week"
-          this_week_counter -= 1
-        when "Due Next Week"
-          next_week_counter -= 1
-        when "Unscheduled"
-          unscheduled_counter -= 1
-      end
-
-      if task["emitter"] == GoogleProxy::APP_ID
-        task["link_url"].should == "https://mail.google.com/tasks/canvas?pli=1"
-        task["color_class"].should == "google-task"
-        if task["due_date"]
-          task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-          task["due_date"]["epoch"].should >= 1351641600
-        end
-      end
-      if task["emitter"] == CanvasProxy::APP_ID
-        task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
-        task["link_url"].should == task["source_url"]
-        task["color_class"].should == "canvas-class"
-        task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-        task["due_date"]["epoch"].should >= 1352447940
-      end
-    end
-
-    overdue_counter.should == 0
-    today_counter.should == 0
-    this_week_counter.should == 0
-    next_week_counter.should == 0
-    unscheduled_counter.should == 0
-  end
-
-  it "should shift tasks into different buckets with a different timezone " do
     original_time_zone = Time.zone
     begin
-      Time.zone = 'Pacific/Tongatapu'
+      Time.zone = 'America/Los_Angeles'
       GoogleProxy.stub(:access_granted?).and_return(true)
       CanvasProxy.stub(:access_granted?).and_return(true)
       GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
@@ -89,6 +22,63 @@ describe "MyTasks" do
       CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
       my_tasks_model = MyTasks::Merged.new(@user_id)
       valid_feed = my_tasks_model.get_feed
+
+      # Counts for task types in VCR recording
+      overdue_counter = 5
+      # On Sundays, no "Due This Week" tasks can escape the "Due Today" bucket.
+      if Time.zone.today.sunday?
+        today_counter = 7
+        this_week_counter = 0
+      else
+        today_counter = 2
+        this_week_counter = 5
+      end
+      next_week_counter = 3
+      unscheduled_counter = 1
+
+      valid_feed["tasks"].each do |task|
+        task["title"].blank?.should == false
+        task["source_url"].blank?.should == false
+
+        # Whitelist allowed property strings
+        whitelist = task["bucket"] =~ (/(Overdue|Due\ Today|Due\ This\ Week|Due\ Next\ Week|Unscheduled)$/i)
+        whitelist.should_not be_nil
+
+        case task["bucket"]
+          when "Overdue"
+            overdue_counter -= 1
+          when "Due Today"
+            today_counter -= 1
+          when "Due This Week"
+            this_week_counter -= 1
+          when "Due Next Week"
+            next_week_counter -= 1
+          when "Unscheduled"
+            unscheduled_counter -= 1
+        end
+
+        if task["emitter"] == GoogleProxy::APP_ID
+          task["link_url"].should == "https://mail.google.com/tasks/canvas?pli=1"
+          task["color_class"].should == "google-task"
+          if task["due_date"]
+            task["due_date"]["date_string"] =~ /\d\d\/\d\d/
+            task["due_date"]["epoch"].should >= 1351641600
+          end
+        end
+        if task["emitter"] == CanvasProxy::APP_ID
+          task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
+          task["link_url"].should == task["source_url"]
+          task["color_class"].should == "canvas-class"
+          task["due_date"]["date_string"] =~ /\d\d\/\d\d/
+          task["due_date"]["epoch"].should >= 1352447940
+        end
+      end
+
+      overdue_counter.should == 0
+      today_counter.should == 0
+      this_week_counter.should == 0
+      next_week_counter.should == 0
+      unscheduled_counter.should == 0
     ensure
       Time.zone = original_time_zone
     end
