@@ -25,7 +25,6 @@ campusdb:
   url: jdbc:h2:mem:h2CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
   username: sa
   password: sa
-  pool: 5
 
 # Proxy support
 freshen_vcr: <%= ENV['freshen_vcr'] %>
