@@ -23,3 +23,9 @@ echo "------------------------------------------" | $LOGIT
 echo "`date`: Starting CalCentral..." | $LOGIT
 export JRUBY_OPTS="-Xcext.enabled=true -J-server"
 nohup trinidad < /dev/null > /dev/null 2> $LOG  &
+
+# wait a bit to let server start up
+sleep 45
+
+# now tickle the app to warm up the caches and precompile assets
+curl -i -stderr /dev/null http://localhost:3000/ > /dev/null
