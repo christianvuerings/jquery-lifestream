@@ -23,11 +23,8 @@
   }
   .cc-widget-tasks-section-top {
     border-top: 1px solid $cc-list-border-color;
+    margin-top: 7px;
     padding-top: 7px;
-    &:first-child {
-      border-top: none;
-      padding-top: 0;
-    }
   }
   .cc-widget-tasks-taskslider {
     margin: 10px 0;
