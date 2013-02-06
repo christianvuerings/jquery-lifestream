@@ -15,7 +15,7 @@
         </div>
         <div class="cc-popover-container cc-left" data-ng-show="user.profile.reg_status.code!=null">
           <button class="cc-ir cc-icon cc-icon-status-person"
-            data-ng-click="showStatus=!showStatus">Status
+            data-ng-click="showStatus=!showStatus"><span class="cc-visuallyhidden">Show your academic profile</span>
           </button>
           <div class="cc-icon cc-icon-status-person-layover" data-ng-class="{true:'cc-icon-status-level-check-small',false:'cc-icon-status-level-exclamation'}[user.profile.reg_status.summary=='REGISTERED']"></div>
           <div id="cc-launcher-status" class="cc-popover" data-ng-show="showStatus">
