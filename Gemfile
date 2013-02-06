@@ -55,9 +55,8 @@ gem 'nokogiri', "~> 1.5.6"
 # in production environments by default.
 group :assets do
 
-  # This library adds angularjs support to Rails applications
-  # https://github.com/ludicast/angular-rails
-  gem "angular-rails", "~> 0.0.12"
+  # Our very own library for angular dependency!
+  gem "angular-gem", "~> 1.1.2"
 
   # CSS Framework - also includes Compass and SASS
   # https://github.com/zurb/foundation
