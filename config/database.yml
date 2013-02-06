@@ -23,8 +23,7 @@ production:
 test:
   adapter: sqlite3
   encoding: utf8
-  database: ':memory:?cache=shared'
-  pool: 5
+  database: ':memory:'
 
 testext:
   adapter: postgresql
