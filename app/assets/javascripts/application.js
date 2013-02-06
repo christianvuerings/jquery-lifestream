@@ -11,6 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require_tree ./lib
-//= require angular.min
-//= require angular-sanitize.min
+//= require angular
+//= require angular-sanitize
 //= require_tree .
