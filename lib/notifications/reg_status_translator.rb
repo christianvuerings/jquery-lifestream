@@ -19,8 +19,10 @@ class RegStatusTranslator
 
     return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && reg_status
 
-    translation = status_explanation reg_status["reg_status_cd"]
-    title = "Your UC Berkeley student registration status has been updated to: #{translation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
+    explanation = status_explanation reg_status["reg_status_cd"]
+    summary = status_summary reg_status["reg_status_cd"]
+
+    title = "Your UC Berkeley student registration status has been updated to: #{summary}. #{explanation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
 
     {
         :id => notification.id,
@@ -118,19 +120,19 @@ class RegStatusTranslator
       when "D"
         'You have been academically dismissed for this term.'
       when "F"
-        '"not registered, incomplete (withdrawal)." Your request to withdraw from the current semester has been processed.'
+        'Your request to withdraw from the current semester has been processed.'
       when "U"
         'You have been administratively cancelled for this term.'
       when "I"
-        '"registered, potential deletes." ?????'
+        registered
       when "X"
         'Your registration has been canceled for this term.'
       when "Y"
-        '"registered, roster number changed." ?????'
+        registered
       when "Z"
-        '"not registered, deceased." The Office of the Registrar has been notified of the death of this student ID.'
+        'The Office of the Registrar has been notified of the death of this student ID.'
       when "W"
-        'You are withdrawn for this term and may owe fees depending on your date of withdrawal'
+        'You are withdrawn for this term and may owe fees depending on your date of withdrawal.'
       when "S"
         registered
       else
