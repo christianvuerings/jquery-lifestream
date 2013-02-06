@@ -32,8 +32,18 @@ body {
   right: 0;
   top: 0;
 
-  button {
+  .cc-button-link {
     width: auto;
+  }
+  .cc-icon-status-person {
+    margin: 4px 10px -4px;
+    position: relative;
+  }
+  .cc-icon-status-person-layover {
+    left: 26px;
+    position: absolute;
+    top: 0px;
+    z-index: 1;
   }
   .cc-launcher-bar {
     border-right: 1px solid $cc-launcher-border-color;
@@ -42,11 +52,17 @@ body {
     border-right: 1px solid $cc-launcher-border-color;
     padding: 1px 10px 5px 5px;
   }
-  .cc-icon {
-    margin: 2px 0 0 5px;
+  .cc-launcher-icons {
+    .cc-icon {
+      margin: 4px 0 0 5px;
+    }
+  }
+  .cc-launcher-status-description {
+    margin-left: 20px;
+    margin-top: 12px;
   }
   .cc-launcher-info {
-    padding: 1px 10px;
+    padding: 2px 10px;
     margin: 4px 0 5px;
   }
 }

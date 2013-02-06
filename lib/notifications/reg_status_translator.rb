@@ -41,8 +41,12 @@ class RegStatusTranslator
   end
 
   def status_summary(reg_status)
+    admincancelled = "ADMIN CANCELLED"
+    cancelled = "CANCELLED"
+    dismissed = "DISMISSED"
     registered = "REGISTERED"
     unregistered = "NOT REGISTERED"
+    withdrawn = "WITHDRAWN"
 
     if reg_status == nil
       return nil
@@ -64,21 +68,21 @@ class RegStatusTranslator
       when "V"
         registered
       when "D"
-        unregistered
+        dismissed
       when "F"
         unregistered
       when "U"
-        unregistered
+        admincancelled
       when "I"
         unregistered
       when "X"
-        unregistered
+        cancelled
       when "Y"
         registered
       when "Z"
         unregistered
       when "W"
-        unregistered
+        withdrawn
       when "S"
         registered
       else
@@ -93,8 +97,8 @@ class RegStatusTranslator
     end
 
     # TODO resolve gaps and ??? marks - CLC-1069
-    unregistered = "NOT REGISTERED. In order to be officially registered, you must pay at least 20% of your registration fees, have no outstanding blocks, and be enrolled in at least one class."
-    registered = "REGISTERED. You are officially registered for this term and are entitled to access campus services."
+    unregistered = "In order to be officially registered, you must pay at least 20% of your registration fees, have no outstanding blocks, and be enrolled in at least one class."
+    registered = "You are officially registered for this term and are entitled to access campus services."
 
     case reg_status.upcase
       when ""
@@ -112,21 +116,21 @@ class RegStatusTranslator
       when "V"
         registered
       when "D"
-        'DISMISSED. You have been academically dismissed for this term.'
+        'You have been academically dismissed for this term.'
       when "F"
         '"not registered, incomplete (withdrawal)." Your request to withdraw from the current semester has been processed.'
       when "U"
-        'ADMIN CANCELLED. You have been administratively cancelled for this term.'
+        'You have been administratively cancelled for this term.'
       when "I"
         '"registered, potential deletes." ?????'
       when "X"
-        'CANCELLED. Your registration has been canceled for this term.'
+        'Your registration has been canceled for this term.'
       when "Y"
         '"registered, roster number changed." ?????'
       when "Z"
         '"not registered, deceased." The Office of the Registrar has been notified of the death of this student ID.'
       when "W"
-        'WITHDRAWN. You are withdrawn for this term and may owe fees depending on your date of withdrawal'
+        'You are withdrawn for this term and may owe fees depending on your date of withdrawal'
       when "S"
         registered
       else

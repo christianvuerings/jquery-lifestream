@@ -22,7 +22,7 @@ describe RegStatusTranslator do
     translated[:date][:epoch].should == timestamp.to_i
     translated[:date][:datetime].should_not be_nil
     translated[:source].should == "Bearfacts Testing System"
-    translated[:title].should == "Your UC Berkeley student registration status has been updated to: REGISTERED. You are officially registered for this term and are entitled to access campus services. If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
+    translated[:title].should == "Your UC Berkeley student registration status has been updated to: You are officially registered for this term and are entitled to access campus services. If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
 
   end
 end

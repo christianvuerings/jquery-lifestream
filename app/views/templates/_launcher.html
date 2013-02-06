@@ -13,17 +13,27 @@
           <a href="http://bcal.berkeley.edu" class="cc-ir cc-left cc-icon cc-icon-calendar" title="bCal">bCal</a>
           <a href="https://drive.google.com/a/berkeley.edu/" class="cc-ir cc-left cc-icon cc-icon-drive" title="bDrive">bDrive</a>
         </div>
-        <button class="button small cc-button-link cc-launcher-info cc-launcher-bar cc-left"
+        <div class="cc-popover-container cc-left" data-ng-show="user.profile.reg_status.code!=null">
+          <button class="cc-ir cc-icon cc-icon-status-person"
+            data-ng-click="showStatus=!showStatus">Status
+          </button>
+          <div class="cc-icon cc-icon-status-person-layover" data-ng-class="{true:'cc-icon-status-level-check-small',false:'cc-icon-status-level-exclamation'}[user.profile.reg_status.summary=='REGISTERED']"></div>
+          <div id="cc-launcher-status" class="cc-popover" data-ng-show="showStatus">
+            <h4>Academic Profile</h4>
+            <div class="cc-icon cc-left" data-ng-class="{true:'cc-icon-status-level-check',false:'cc-icon-status-level-exclamation'}[user.profile.reg_status.summary=='REGISTERED']"></div>
+            <div class="cc-launcher-status-description">
+              <strong>Registration Status: {{user.profile.reg_status.summary}}</strong>
+              <p>{{user.profile.reg_status.explanation}}</p>
+            </div>
+          </div>
+        </div>
+        <button class="cc-button-link cc-launcher-info cc-launcher-bar cc-left"
           data-ng-click="user._redirectToSettingsPage()">Settings
         </button>
-        <button class="button small cc-button-link cc-launcher-info cc-left"
+        <button class="cc-button-link cc-launcher-info cc-left"
           data-ng-click="user.signOut()">Log out
         </button>
       </div>
-        <button data-ng-hide="user.isAuthenticated()"
-          class="button small cc-button-link cc-launcher-info cc-left"
-          data-ng-click="user.signIn()">Log in
-        </button>
     </nav>
   </div>
 
