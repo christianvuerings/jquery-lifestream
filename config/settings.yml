@@ -25,6 +25,9 @@ campusdb:
   url: jdbc:h2:mem:h2CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
   username: sa
   password: sa
+  pool: 5
+test_sqlite:
+  pool: 3
 
 # Proxy support
 freshen_vcr: <%= ENV['freshen_vcr'] %>
@@ -75,6 +78,11 @@ cache:
   maximum_expires_in: <%= 1.day %>
   # Must be less than the shortest-lived source cache. 0 to pass-through.
   api_expires_in: <%= 15.minutes %>
+
+# Cache warmer settings
+cache_warmer:
+  # Number to decrement db pool to limit the number of warmer threads
+  fudge_factor: 1
 
 # Bearfacts JMS event queue
 ist_jms:
