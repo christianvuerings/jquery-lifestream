@@ -6,7 +6,7 @@ class MyTasks::CanvasTasks
   def initialize(uid, starting_date)
     @uid = uid
     @starting_date = starting_date
-    @now_time = DateTime.now
+    @now_time = Time.zone.now
   end
 
   def fetch_tasks!(tasks)

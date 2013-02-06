@@ -5,11 +5,11 @@ class MyTasks::Merged < MyMergedModel
 
   attr_reader :enabled_sources
 
-  def initialize(uid, starting_date=Date.today.to_time_in_current_zone)
+  def initialize(uid, starting_date=Time.zone.today.to_time_in_current_zone)
     super(uid)
     #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
     @starting_date = starting_date
-    @now_time = DateTime.now
+    @now_time = Time.zone.now
     @enabled_sources = {
       CanvasProxy::APP_ID => {access_granted: CanvasProxy.access_granted?(@uid),
                               source: MyTasks::CanvasTasks.new(@uid, @starting_date)},

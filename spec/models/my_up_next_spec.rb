@@ -35,7 +35,7 @@ describe "MyUpNext" do
   end
 
   it "should not include all-day events for tomorrow" do
-    too_late = Date.today.to_time_in_current_zone.to_datetime.end_of_day
+    too_late = Time.zone.today.to_time_in_current_zone.to_datetime.end_of_day
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     GoogleProxy.any_instance.stub(:events_list).and_return(@fake_google_events_array)
