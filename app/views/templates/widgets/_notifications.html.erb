@@ -1,11 +1,11 @@
 <div class="cc-widget-notifications" data-ng-controller="NotificationsController">
   <div class="cc-widget-title">
-    <h2>Notifications</h2>
+    <h2>Recent Activity</h2>
   </div>
 
   <ul class="cc-widget-tasks-notifications-list">
     <li data-ng-repeat="notification in notifications" data-ng-class="{'cc-widget-list-selected': notification.show}">
-      <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification, 'Notifications')">
+      <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(notification, 'Recent Activity')">
 
         <div class="ten mobile-three columns cc-widget-notifications-text-column">
           <div
@@ -39,6 +39,6 @@
   </ul>
 
   <div data-ng-show="!notifications.length" class="cc-widget-text">
-    You have no notifications at this time.
+    You have no recent activity at this time.
   </div>
 </div>
