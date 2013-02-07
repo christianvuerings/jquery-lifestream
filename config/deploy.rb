@@ -39,7 +39,7 @@ namespace :calcentral_dev do
       run "rm /var/www/html/calcentral/calcentral-in-maintenance", :hosts => server
       # removing the maint page causes the Rails app to restart, for reasons unknown.
       # So we'll wait a bit and then tickle the home page to warm up the app.
-      run "sleep 20"
+      run "sleep 20", :hosts => server
       run "curl -i -stderr /dev/null http://localhost:3000/ > /dev/null", :hosts => server
     end
   end
