@@ -48,6 +48,9 @@
   font-size: 14px;
   margin: 0;
 }
+.cc-widget-list-selected {
+  background: $cc-widget-more-background-color;
+}
 .cc-widget-tasks-notifications-list {
   list-style-type: none;
   margin: 0;
@@ -64,15 +67,11 @@
   }
 
   .cc-widget-list-selected {
-    background: $cc-widget-more-background-color;
     margin-bottom: 1px; /* Effectively creates white line above selected tasks */
 
     .row {
-      padding-bottom: 2px;
-    }
-
-    .row {
       background: $cc-widget-more-background-color;
+      padding-bottom: 2px;
     }
   }
 
