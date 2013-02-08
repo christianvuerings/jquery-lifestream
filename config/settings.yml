@@ -92,3 +92,8 @@ ist_jms:
 #  password: PASSWORD
   freshen_recording: false
   fake: true
+
+features:
+  wizbang_1: false
+  wizbang_2: false
+  neato_1: true
