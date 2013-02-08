@@ -81,25 +81,25 @@
           "debug_json": [
             {
               "type": "Assignment",
-              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588244",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25882441",
               "title": "Online-Submission Future Assignment",
               "start_at": ":::TODAY_LATE:::"
             },
             {
               "type": "Assignment",
-              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588303",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883032",
               "title": "Future Discussion",
               "start_at": ":::TODAY_LATE:::"
             },
             {
               "type": "Assignment",
-              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588307",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883071",
               "title": "Future External Tool Assignment",
               "start_at": ":::LATER_IN_WEEK:::"
             },
             {
               "type": "Assignment",
-              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588305",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883051",
               "title": "Future Quiz",
               "start_at": ":::LATER_IN_WEEK:::"
             },
