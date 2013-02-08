@@ -1,4 +1,4 @@
-(function(calcentral) {
+(function(calcentral, angular) {
   'use strict';
 
   /**
@@ -56,20 +56,45 @@
       analyticsService.trackEvent(['Tasks', 'Add panel - ' + $scope.show_add_task ? 'Show' : 'Hide']);
     };
 
+    var toggleStatus = function(task) {
+      if (task.status === 'completed') {
+        task.status = 'needs_action';
+      } else {
+        task.status = 'completed';
+      }
+    };
+
     /**
-     * If completed, give task a completed date epoch *before* sending to
-     * Google so model can reflect change immediately. Otherwise, remove completed_date prop.
+     * If completed, give task a completed date epoch *after* sending to
+     * backend (and successful response) so model can reflect correct changes.
+     * Otherwise, remove completed_date prop after backend response.
      */
     $scope.changeTaskState = function(task) {
-      if (task.status === 'completed') {
-        task.completed_date = {
+      var changedTask = angular.copy(task);
+      //reset task back to original state.
+      toggleStatus(task);
+
+      //disable checkbox while processing.
+      task.is_processing = true;
+
+      if (changedTask.status === 'completed') {
+        changedTask.completed_date = {
           'epoch': (new Date()).getTime() / 1000
         };
       } else {
-        delete task.completed_date;
+        delete changedTask.completed_date;
       }
-      analyticsService.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!task.completed_date]);
-      $http.post('/api/my/tasks', task);
+
+      analyticsService.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completed_date]);
+      $http.post('/api/my/tasks', changedTask).success(function(data) {
+        task.is_processing = false;
+        angular.extend(task, changedTask);
+        // Swap the call above with this one once CLC-1226 is fixed
+        // angular.extend(task, data);
+      }).error(function() {
+        analyticsService.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completed_date]);
+        //Some error notification would be helpful.
+      });
     };
 
     // Switch mode for scheduled/unscheduled/completed tasks
@@ -99,4 +124,4 @@
     };
   }]);
 
-})(window.calcentral);
+})(window.calcentral, window.angular);

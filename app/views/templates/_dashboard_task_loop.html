@@ -9,7 +9,7 @@
     <div class="one mobile-one columns cc-widget-tasks-checkbox-column cc-mobile-task-checkbox-column">
       <input type="checkbox"
         data-ng-change="changeTaskState(task)"
-        data-ng-disabled="task.emitter=='Canvas'"
+        data-ng-disabled="task.emitter=='Canvas' || !!task.is_processing"
         data-ng-false-value="needs_action"
         data-ng-model="task.status"
         data-ng-true-value="completed"
