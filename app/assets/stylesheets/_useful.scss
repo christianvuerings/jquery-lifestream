@@ -16,6 +16,10 @@
 .cc-right {
   float: right;
 }
+.cc-strikethrough {
+  color: $cc-list-border-color !important;
+  text-decoration: line-through !important;
+}
 
 /* Scrollbar in webkit */
 .cc-scroll {

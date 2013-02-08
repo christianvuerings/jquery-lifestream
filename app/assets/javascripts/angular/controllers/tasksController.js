@@ -71,10 +71,10 @@
      */
     $scope.changeTaskState = function(task) {
       var changedTask = angular.copy(task);
-      //reset task back to original state.
+      // Reset task back to original state.
       toggleStatus(task);
 
-      //disable checkbox while processing.
+      // Disable checkbox while processing.
       task.is_processing = true;
 
       if (changedTask.status === 'completed') {

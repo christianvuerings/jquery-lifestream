@@ -1,9 +1,13 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
 
-  <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(task, 'Tasks')">
+  <div class="row cc-widget-list-hover">
 
     <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
-      <div class="cc-emitter cc-emitter-{{task.color_class}}">{{task.source || task.emitter}}</div>
+      <div
+        class="cc-emitter cc-emitter-{{task.color_class}}"
+        data-ng-click="api.widget.toggleShow(task, 'Tasks')">
+          {{task.source || task.emitter}}
+        </div>
     </div>
 
     <div class="one mobile-one columns cc-widget-tasks-checkbox-column cc-mobile-task-checkbox-column">
@@ -19,14 +23,16 @@
     <div class="six mobile-one columns cc-widget-tasks-title-column cc-mobile-task-title-column">
       <div
         class="cc-widget-short-title cc-widget-list-hover-title cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue')}">
+        data-ng-click="api.widget.toggleShow(task, 'Tasks')"
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue'), 'cc-strikethrough':(task.is_processing)}">
         {{task.title}}
       </div>
     </div>
 
     <div
       class="two mobile-one columns cc-mobile-task-date-column cc-widget-tasks-activities-date-string"
-      data-ng-show="this.$parent.section.title != 'Unscheduled'">
+      data-ng-show="this.$parent.section.title != 'Unscheduled'"
+      data-ng-click="api.widget.toggleShow(task, 'Tasks')">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-show="task.due_date && task.bucket != 'Due Today' && tasks_mode != 'completed'">
         {{task.due_date.epoch * 1000 | date:'MM/dd'}}
