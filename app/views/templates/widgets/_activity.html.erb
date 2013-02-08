@@ -1,0 +1,44 @@
+<div class="cc-widget-activities" data-ng-controller="ActivityController">
+  <div class="cc-widget-title">
+    <h2>Recent Activity</h2>
+  </div>
+
+  <ul class="cc-widget-tasks-activities-list">
+    <li data-ng-repeat="activity in activities" data-ng-class="{'cc-widget-list-selected': activity.show}">
+      <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">
+
+        <div class="ten mobile-three columns cc-widget-activities-text-column">
+          <div
+            class="cc-emitter-square cc-left cc-emitter-{{activity.color_class}}"
+            title="{{activity.emitter}} activity">
+          </div>
+          <div class="cc-widget-activities-text-margin cc-widget-list-hover-title">
+            {{activity.title}}
+            <div class="cc-widget-activity-source">{{activity.source}}</div>
+          </div>
+        </div>
+
+        <div class="two mobile-one columns cc-widget-tasks-activities-date-string">
+          {{activity.date.date_string}}
+        </div>
+
+      <div class="row cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show">
+        <p>
+          {{activity.summary}}
+        </p>
+        <p>
+          <a
+            class="cc-widget-more-view-in"
+            data-ng-click="api.util.trackExternalLink('Activities', activity.source, activity.source_url)"
+            data-ng-href="{{activity.source_url}}">
+            View in {{activity.source}}
+          </a>
+        </p>
+      </div>
+    </li>
+  </ul>
+
+  <div data-ng-show="!activities.length" class="cc-widget-text">
+    You have no recent activity at this time.
+  </div>
+</div>
