@@ -33,7 +33,7 @@ describe "MyTasks" do
         today_counter = 2
         this_week_counter = 5
       end
-      next_week_counter = 3
+      next_week_counter = 7
       unscheduled_counter = 1
 
       valid_feed["tasks"].each do |task|
