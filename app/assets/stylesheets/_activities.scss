@@ -1,0 +1,26 @@
+/* Activities widget */
+.cc-widget-activities {
+  .cc-widget-activity-source {
+    color: #515151;
+    font-size: 11px;
+  }
+  .cc-widget-activities-summary {
+    padding-left: 30px;
+    width: 270px;
+  }
+  .row {
+    .cc-widget-activities-text-column {
+      line-height: 1.4;
+    }
+  }
+  .cc-widget-tasks-activities-more {
+    padding-left: 15px;
+  }
+  .cc-widget-activities-text-margin {
+    margin-left: 30px;
+  }
+  .cc-widget-activity-note-text {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+}

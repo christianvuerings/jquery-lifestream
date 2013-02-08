@@ -24,7 +24,7 @@ class UserCacheWarmer
           MyGroups.new(uid),
           MyTasks::Merged.new(uid),
           MyUpNext.new(uid),
-          MyNotifications.new(uid)
+          MyActivities.new(uid)
       ].each do |model|
         model.get_feed
       end

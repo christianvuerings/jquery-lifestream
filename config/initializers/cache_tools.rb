@@ -15,7 +15,7 @@ module Calcentral
         MyTasks::Merged => :expire,
         MyUpNext => :expire,
         MyGroups => :expire,
-        MyNotifications => :expire,
+        MyActivities => :expire,
 
         CanvasProxy => :expire,
         CanvasComingUpProxy => :expire,

@@ -25,7 +25,7 @@
     </div>
 
     <div
-      class="two mobile-one columns cc-mobile-task-date-column cc-widget-tasks-notifications-date-string"
+      class="two mobile-one columns cc-mobile-task-date-column cc-widget-tasks-activities-date-string"
       data-ng-show="this.$parent.section.title != 'Unscheduled'">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-show="task.due_date && task.bucket != 'Due Today' && tasks_mode != 'completed'">
@@ -36,13 +36,13 @@
   </div>
 
   <div data-ng-show="task.show">
-    <div class="row widget-tasks-notifications-more">
+    <div class="row widget-tasks-activities-more">
       <div class="nine columns offset-by-three end cc-widget-tasks-more">
         <div data-ng-bind-html="task.note | linky">
         </div>
       </div>
 
-      <div class="nine columns offset-by-three end cc-widget-tasks-more cc-widget-tasks-notifications-more">
+      <div class="nine columns offset-by-three end cc-widget-tasks-more cc-widget-tasks-activities-more">
         <p>
           <a class="cc-widget-more-view-in"
           data-ng-click="api.util.trackExternalLink('Tasks', task.emitter, task.link_url)"
