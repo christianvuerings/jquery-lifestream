@@ -92,3 +92,8 @@ ist_jms:
 #  password: PASSWORD
   freshen_recording: false
   fake: true
+
+# feature toggles. If a feature's key is false OR nil, it's disabled.
+features:
+  wizbang: false
+  neato: true

@@ -8,6 +8,7 @@ describe UserApiController do
     json_response = JSON.parse(response.body)
     json_response["is_logged_in"].should == false
     json_response["uid"].should be_nil
+    json_response["features"].should_not be_nil
   end
 
   it "should show status for a logged-in user" do
@@ -17,6 +18,7 @@ describe UserApiController do
     json_response["is_logged_in"].should == true
     json_response["uid"].should == "192517"
     json_response["preferred_name"].should == "Yu-Hung Lin"
+    json_response["features"].should_not be_nil
   end
 
   it "should record first login for a new user" do

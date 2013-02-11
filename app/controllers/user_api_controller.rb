@@ -5,11 +5,13 @@ class UserApiController < ApplicationController
     if session[:user_id]
       user_data = UserApi.new(session[:user_id]).get_feed
       render :json => {
-          :is_logged_in => true
+          :is_logged_in => true,
+          :features => Settings.features.marshal_dump
       }.merge!(user_data).to_json
     else
       render :json => {
-          :is_logged_in => false
+          :is_logged_in => false,
+          :features => Settings.features.marshal_dump
       }.to_json
     end
   end
