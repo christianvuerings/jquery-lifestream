@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.11"
+gem "rails", "3.2.12"
 
 # Postgresql adapter
 gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.6"
@@ -12,7 +12,7 @@ gem "activerecord-jdbch2-adapter", "~> 1.2.6"
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
-gem "json", "~> 1.7.5"
+gem "json", "~> 1.7.7"
 
 # CAS Strategy for OmniAuth
 # https://rubygems.org/gems/omniauth-cas
@@ -75,7 +75,7 @@ end
 group :development, :testext, :production do
   gem "activerecord-oracle_enhanced-adapter", "~> 1.4.1"
   gem "rvm-capistrano", "~> 1.2.7"
-  gem "capistrano", "~> 2.14.1"
+  gem "capistrano", "~> 2.14.2"
 end
 
 group :development, :test , :testext do
@@ -86,7 +86,7 @@ group :development, :test , :testext do
   # Test our JavaScript code.
   # https://github.com/pivotal/jasmine-gem
   gem "jasmine", "~> 1.3.1"
-  gem "jquery-rails", "~> 2.2.0"
+  gem "jquery-rails", "~> 2.2.1"
   gem "jasmine-jquery-rails", "~> 1.4.2"
 
   # We need to specify the latest webdriver here, to support the latest firefox
