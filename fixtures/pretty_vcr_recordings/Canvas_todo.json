@@ -218,7 +218,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": ":::SIX_DAYS_HENCE:::",
+                "due_at": ":::UTC_NEXT_WEEK:::",
                 "description": "",
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588244",
@@ -242,7 +242,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": ":::SIX_DAYS_HENCE:::",
+                "due_at": ":::UTC_NEXT_WEEK:::",
                 "description": "",
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588303",
@@ -302,7 +302,7 @@
                 "anonymous_submissions": false,
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": ":::SIX_DAYS_HENCE:::",
+                "due_at": ":::UTC_NEXT_WEEK:::",
                 "description": null,
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588305",
@@ -323,7 +323,7 @@
               "assignment": {
                 "course_id": 767330,
                 "points_possible": null,
-                "due_at": ":::SIX_DAYS_HENCE:::",
+                "due_at": ":::UTC_NEXT_WEEK:::",
                 "description": null,
                 "muted": false,
                 "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588307",
