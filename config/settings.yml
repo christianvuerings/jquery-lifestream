@@ -93,7 +93,7 @@ ist_jms:
   freshen_recording: false
   fake: true
 
+# feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
-  wizbang_1: false
-  wizbang_2: false
-  neato_1: true
+  wizbang: false
+  neato: true
