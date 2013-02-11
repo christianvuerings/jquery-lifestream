@@ -4,9 +4,9 @@
   /**
    * Error controller
    */
-  calcentral.controller('ErrorController', ['titleService', function(titleService) {
+  calcentral.controller('ErrorController', ['apiService', function(apiService) {
 
-    titleService.setTitle('Error');
+    apiService.util.setTitle('Error');
 
   }]);
 

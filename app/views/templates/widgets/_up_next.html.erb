@@ -23,7 +23,7 @@
               {{item.summary}}
             </div>
             <div class="cc-ellipsis">
-              <a class="cc-widget-mycalendar-datelist-small" data-ng-href="{{item.location_url}}" data-ng-click="api.util.preventBubble($event);api.util.trackExternalLink('Up Next', 'Google maps', item.location_url)">{{item.location}}</a>
+              <a class="cc-widget-mycalendar-datelist-small" data-ng-href="{{item.location_url}}" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Up Next', 'Google maps', item.location_url)">{{item.location}}</a>
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@
             </li>
           </ul>
           <p class="cc-widget-mycalendar-indent cc-widget-mycalendar-datelist-small">
-            <a href="{{item.html_link}}" data-ng-click="api.util.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
+            <a href="{{item.html_link}}" data-ng-click="api.analytics.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
           </p>
         </div>
       </li>

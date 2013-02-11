@@ -4,7 +4,7 @@
   /**
    * CalCentral main controller
    */
-  calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', 'analyticsService', function($http, $location, $route, $scope, analyticsService) {
+  calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', 'apiService', function($http, $location, $route, $scope, apiService) {
 
     $scope.user = {
       'isLoaded': false
@@ -43,15 +43,15 @@
     $scope.user._handleAccessToPage = function() {
       // Redirect to the login page when the page is private and you aren't authenticated
       if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
-        analyticsService.trackEvent(['Authentication', 'Sign in - redirect to login']);
+        apiService.analytics.trackEvent(['Authentication', 'Sign in - redirect to login']);
         $scope.user.signIn();
       // Record that you've already visited the calcentral once and redirect to the settings page on the first login
       } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
-        analyticsService.trackEvent(['Authentication', 'First login']);
+        apiService.analytics.trackEvent(['Authentication', 'First login']);
         $http.post('/api/my/record_first_login').success($scope.user._setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
       } else if ($scope.user.isAuthenticated() && $location.path() === '/') {
-        analyticsService.trackEvent(['Authentication', 'Redirect to dashboard']);
+        apiService.analytics.trackEvent(['Authentication', 'Redirect to dashboard']);
         $scope.user._redirectToDashboardPage();
       }
     };
@@ -90,11 +90,11 @@
       $http.post('/api/' + authorizationService + '/remove_authorization').success(function(){
         $scope.user.profile['has_' + authorizationService + '_access_token'] = false;
       });
-      analyticsService.trackEvent(['OAuth', 'Remove', 'service: ' + authorizationService]);
+      apiService.analytics.trackEvent(['OAuth', 'Remove', 'service: ' + authorizationService]);
     };
 
     $scope.user.enableOAuth = function(authorizationService) {
-      analyticsService.trackEvent(['OAuth', 'Enable', 'service: ' + authorizationService]);
+      apiService.analytics.trackEvent(['OAuth', 'Enable', 'service: ' + authorizationService]);
       window.location = '/api/' + authorizationService + '/request_authorization';
     };
 
@@ -102,7 +102,7 @@
      * Sign the current user in.
      */
     $scope.user.signIn = function() {
-      analyticsService.trackEvent(['Authentication', 'Redirect to login']);
+      apiService.analytics.trackEvent(['Authentication', 'Redirect to login']);
       window.location = '/login';
     };
 
@@ -110,7 +110,7 @@
      * Sign the current user out.
      */
     $scope.user.signOut = function() {
-      analyticsService.trackEvent(['Authentication', 'Redirect to logout']);
+      apiService.analytics.trackEvent(['Authentication', 'Redirect to logout']);
       window.location = '/logout';
     };
 
@@ -118,55 +118,9 @@
      * Opt-out.
      */
     $scope.user.optOut = function() {
-      analyticsService.trackEvent(['Settings', 'User opt-out']);
+      apiService.analytics.trackEvent(['Settings', 'User opt-out']);
       window.location = "/api/my/opt_out";
     };
-
-    // API
-    $scope.api = {};
-
-    // Widgets
-    $scope.api.widget = {};
-
-    /**
-     * Toggle whether an item for a widget should be shown or not
-     */
-    $scope.api.widget.toggleShow = function(item, widget) {
-      item.show = !item.show;
-      analyticsService.trackEvent(['Detailed view', item.show ? 'Open' : 'Close', widget]);
-    };
-
-    /**
-     * Check whether there is one item in the list that is shown
-     * @return {Boolean} Will be true when there is one item in the list that is shown
-     */
-    $scope.api.widget.containsOpen = function(items) {
-      if (!items) {
-        return;
-      }
-
-      for(var i = 0; i < items.length; i++){
-        if (items[i].show) {
-          return true;
-        }
-      }
-      return false;
-    };
-
-    // Util
-    $scope.api.util = {};
-
-    /**
-     * Prevent a click event from bubbling up to its parents
-     */
-    $scope.api.util.preventBubble = function($event) {
-      $event.stopPropagation();
-    };
-
-    /**
-     * Expose the externalLink function to the view
-     */
-    $scope.api.util.trackExternalLink = analyticsService.trackExternalLink;
 
     /**
      * Will be executed on every route change
@@ -183,6 +137,8 @@
       // Pass in controller name so we can set active location in menu
       $scope.controller_name = $route.current.controller;
     });
+
+    $scope.api = apiService;
 
   }]);
 

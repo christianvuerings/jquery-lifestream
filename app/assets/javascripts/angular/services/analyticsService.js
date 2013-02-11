@@ -5,6 +5,17 @@
   angular.module('calcentral.services').service('analyticsService', ['$rootScope', '$window', '$location', function($rootScope, $window, $location) {
 
     /**
+     * Adding a track property to the analytics object
+     * @param {Array} property Array of the property you want to add
+     */
+    var addTrackProperty = function(property) {
+      // We should check whether the Google Analytics script has been loaded
+      if ($window._gaq) {
+        $window._gaq.push(property);
+      }
+    };
+
+    /**
      * Track an event on the page
      * @param {Array} eventtrack An array of what you want to track.
      * In this order: category - action - label - value and non-interaction
@@ -12,7 +23,7 @@
      * More info on https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
      */
     var trackEvent = function(eventtrack) {
-      $window._gaq.push(['_trackEvent'].concat(eventtrack));
+      addTrackProperty(['_trackEvent'].concat(eventtrack));
     };
 
     /**
@@ -30,7 +41,7 @@
      * e.g. /, /dashboard, /settings
      */
     var trackPageview = function() {
-      $window._gaq.push(['_trackPageview', $location.path()]);
+      addTrackProperty(['_trackPageview', $location.path()]);
     };
 
     // Whenever we're changing the content loaded, we need to track which page we're viewing.

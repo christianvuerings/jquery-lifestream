@@ -4,9 +4,9 @@
   /**
    * Splash controller
    */
-  calcentral.controller('SplashController', ['titleService', function(titleService) {
+  calcentral.controller('SplashController', ['apiService', function(apiService) {
 
-    titleService.setTitle('Home');
+    apiService.util.setTitle('Home');
 
   }]);
 

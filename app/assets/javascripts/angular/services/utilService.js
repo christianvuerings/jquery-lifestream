@@ -2,7 +2,14 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('titleService', ['$rootScope', function($rootScope) {
+  angular.module('calcentral.services').service('utilService', ['$rootScope', function($rootScope) {
+
+    /**
+     * Prevent a click event from bubbling up to its parents
+     */
+    var preventBubble = function($event) {
+      $event.stopPropagation();
+    };
 
     /**
      * Set the title for the current web page
@@ -14,6 +21,7 @@
 
     // Expose methods
     return {
+      preventBubble: preventBubble,
       setTitle: setTitle
     };
 
