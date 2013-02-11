@@ -4,9 +4,9 @@
   /**
    * Dashboard controller
    */
-  calcentral.controller('DashboardController', ['titleService', function(titleService) {
+  calcentral.controller('DashboardController', ['apiService', function(apiService) {
 
-    titleService.setTitle('Dashboard');
+    apiService.util.setTitle('Dashboard');
 
   }]);
 

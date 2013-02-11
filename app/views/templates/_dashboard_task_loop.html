@@ -47,7 +47,7 @@
       <div class="nine columns offset-by-three end cc-widget-tasks-more cc-widget-tasks-activities-more">
         <p>
           <a class="cc-widget-more-view-in"
-          data-ng-click="api.util.trackExternalLink('Tasks', task.emitter, task.link_url)"
+          data-ng-click="api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"
           data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a>
         </p>
       </div>

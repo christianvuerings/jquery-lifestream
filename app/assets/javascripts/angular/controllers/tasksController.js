@@ -4,7 +4,7 @@
   /**
    * Tasks controller
    */
-  calcentral.controller('TasksController', ['$http', '$scope', 'analyticsService', function($http, $scope, analyticsService) {
+  calcentral.controller('TasksController', ['$http', '$scope', 'apiService', function($http, $scope, apiService) {
 
     // Initial mode for Tasks view
     $scope.tasks_mode = 'scheduled';
@@ -25,7 +25,7 @@
 
     $scope.addTask = function() {
       var trackEvent = 'note: ' + !!$scope.add_task.note + ' date: ' + !!$scope.add_task.due_date;
-      analyticsService.trackEvent(['Tasks', 'Add', trackEvent]);
+      apiService.analytics.trackEvent(['Tasks', 'Add', trackEvent]);
 
       // When the user submits the task, we show a processing message
       // This message will disappear as soon the task has been added.
@@ -53,7 +53,7 @@
 
     $scope.toggleAddTask = function() {
       $scope.show_add_task = !$scope.show_add_task;
-      analyticsService.trackEvent(['Tasks', 'Add panel - ' + $scope.show_add_task ? 'Show' : 'Hide']);
+      apiService.analytics.trackEvent(['Tasks', 'Add panel - ' + $scope.show_add_task ? 'Show' : 'Hide']);
     };
 
     var toggleStatus = function(task) {
@@ -85,21 +85,21 @@
         delete changedTask.completed_date;
       }
 
-      analyticsService.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completed_date]);
-      $http.post('/api/my/tasks', changedTask).success(function(data) {
+      apiService.analytics.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completed_date]);
+      $http.post('/api/my/tasks', changedTask).success(function() {
         task.is_processing = false;
         angular.extend(task, changedTask);
         // Swap the call above with this one once CLC-1226 is fixed
         // angular.extend(task, data);
       }).error(function() {
-        analyticsService.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completed_date]);
+        apiService.analytics.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completed_date]);
         //Some error notification would be helpful.
       });
     };
 
     // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasks_mode) {
-      analyticsService.trackEvent(['Tasks', 'Switch mode', tasks_mode]);
+      apiService.analytics.trackEvent(['Tasks', 'Switch mode', tasks_mode]);
       $scope.tasks_mode = tasks_mode;
     };
 

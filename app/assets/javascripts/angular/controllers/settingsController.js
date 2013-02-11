@@ -4,9 +4,9 @@
   /**
    * Settings controller
    */
-  calcentral.controller('SettingsController', ['titleService', function(titleService) {
+  calcentral.controller('SettingsController', ['apiService', function(apiService) {
 
-    titleService.setTitle('Settings');
+    apiService.util.setTitle('Settings');
 
   }]);
 
