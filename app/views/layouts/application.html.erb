@@ -21,7 +21,10 @@
   <%= javascript_include_tag "application" %>
 </head>
 
-<body data-ng-class="{'cc-page-splash':(controller_name=='SplashController')}" data-ng-show="user.isLoaded">
+<body
+  data-ng-class="{'cc-page-splash':(controller_name=='SplashController')}"
+  data-ng-click="api.popover.closeAll()"
+  data-ng-show="user.isLoaded">
 
   <%= render 'templates/ieold' %>
 

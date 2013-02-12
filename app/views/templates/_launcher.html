@@ -15,10 +15,10 @@
         </div>
         <div class="cc-popover-container cc-left" data-ng-show="user.profile.reg_status.code!=null">
           <button class="cc-ir cc-icon cc-icon-status-person"
-            data-ng-click="showStatus=!showStatus"><span class="cc-visuallyhidden">Show your academic profile</span>
+            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-academic-profile')"><span class="cc-visuallyhidden">Show your academic profile</span>
           </button>
           <div class="cc-icon cc-icon-status-person-layover" data-ng-class="{true:'cc-icon-status-level-check-small',false:'cc-icon-status-level-exclamation'}[user.profile.reg_status.summary=='REGISTERED']"></div>
-          <div id="cc-launcher-status" class="cc-popover" data-ng-show="showStatus">
+          <div id="cc-launcher-status" class="cc-popover" data-ng-show="api.popover.status('cc-popover-academic-profile')">
             <h4>Academic Profile</h4>
             <div class="cc-icon cc-left" data-ng-class="{true:'cc-icon-status-level-check',false:'cc-icon-status-level-exclamation'}[user.profile.reg_status.summary=='REGISTERED']"></div>
             <div class="cc-launcher-status-description">
