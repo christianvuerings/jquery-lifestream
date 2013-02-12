@@ -19,7 +19,18 @@ class ChangeNotificationSchema < ActiveRecord::Migration
   end
 
   def down
-    raise ActiveRecord::IrreversibleMigration
+
+    drop_table :notifications
+
+    create_table :notifications do |t|
+      t.string :uid
+      t.text :data
+      t.timestamps
+    end
+
+    change_table :notifications do |t|
+      t.index :uid
+    end
   end
 
 end
