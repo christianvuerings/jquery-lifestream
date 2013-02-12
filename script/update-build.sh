@@ -9,6 +9,7 @@ LOGIT="tee -a $LOG"
 
 echo "=========================================" | $LOGIT
 echo "`date`: Updating CalCentral source code from:" $TARGET_REMOTE ", branch:" $TARGET_BRANCH | $LOGIT
+git fetch $TARGET_REMOTE 2>&1 | $LOGIT
 git fetch -t $TARGET_REMOTE 2>&1 | $LOGIT
 git reset --hard HEAD 2>&1 | $LOGIT
 git checkout -qf $TARGET_BRANCH 2>&1 | $LOGIT
