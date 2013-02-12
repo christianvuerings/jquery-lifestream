@@ -3,7 +3,8 @@
 
 # on each release, update last_version to the latest db migration in db/migrate
 # Sprint 10 LAST_VERSION="2013012410480000"
-LAST_VERSION="2013012410480000"
+# Sprint 11 LAST_VERSION="2013013014460000"
+LAST_VERSION="2013013014460000"
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
