@@ -23,12 +23,7 @@ class MyTasks::GoogleTasks
     end
   end
 
-  def update_task(params, task_list_id="@default")
-    body = format_google_update_task_request params
-    google_proxy = GoogleUpdateTaskProxy.new(user_id: @uid)
-    Rails.logger.debug "#{self.class.name} update_task, sending to Google (task_list_id, task_id, body):
-        {#{task_list_id}, #{params["id"]}, #{body.inspect}}"
-    response = google_proxy.update_task(task_list_id, params["id"], body)
+  def return_response(response)
     formatted_response = {}
     if response.response.status == 200
       formatted_response = format_google_task_response response.data
@@ -38,19 +33,20 @@ class MyTasks::GoogleTasks
     formatted_response
   end
 
+  def update_task(params, task_list_id="@default")
+    body = format_google_update_task_request params
+    google_proxy = GoogleUpdateTaskProxy.new(user_id: @uid)
+    Rails.logger.debug "#{self.class.name} update_task, sending to Google (task_list_id, task_id, body):
+        {#{task_list_id}, #{params["id"]}, #{body.inspect}}"
+    return_response google_proxy.update_task(task_list_id, params["id"], body)
+  end
+
   def insert_task(params, task_list_id="@default")
     body = format_google_insert_task_request params
     google_proxy = GoogleInsertTaskProxy.new(user_id: @uid)
     Rails.logger.debug "#{self.class.name} insert_task, sending to Google (task_list_id, body):
           {#{task_list_id}, #{body.inspect}}"
-    response = google_proxy.insert_task(task_list_id, body)
-    formatted_response = {}
-    if response.response.status == 200
-      formatted_response = format_google_task_response response.data
-    else
-      Rails.logger.info "Errors in proxy response: #{response.inspect}"
-    end
-    formatted_response
+    return_response google_proxy.insert_task(task_list_id, body)
   end
 
   private

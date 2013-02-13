@@ -25,8 +25,6 @@ class MyTasks::CanvasTasks
       Rails.logger.info "#{self.class.name} Sorting Canvas todo feed into buckets with starting_date #{@starting_date}; #{results}"
       results.each do |result|
         if (result["assignment"] != nil) && new_assignment?(result["assignment"], assignments)
-          due_date = result["assignment"]["due_at"]
-          due_date = convert_due_date(due_date)
           formatted_entry = {
             "type" => "assignment",
             "title" => result["assignment"]["name"],
@@ -39,6 +37,7 @@ class MyTasks::CanvasTasks
           if result["assignment"]["description"] != ""
             formatted_entry["note"] = ActionView::Base.full_sanitizer.sanitize(result["assignment"]["description"])
           end
+          due_date = convert_due_date(result["assignment"]["due_at"])
           format_date_into_entry!(due_date, formatted_entry, "due_date")
           bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
           formatted_entry["bucket"] = bucket
@@ -55,9 +54,7 @@ class MyTasks::CanvasTasks
       results = JSON.parse response.body
       Rails.logger.info "#{self.class.name} Sorting Canvas coming_up feed into buckets with starting_date #{@starting_date}"
       results.each do |result|
-
         Rails.logger.debug "Coming up assignment = #{result["html_url"]}"
-
         if (result["type"] != "Assignment") || new_assignment?(result, assignments)
           formatted_entry = {
             "type" => result["type"].downcase,
@@ -68,8 +65,7 @@ class MyTasks::CanvasTasks
             "color_class" => "canvas-class",
             "status" => "inprogress"
           }
-          due_date = result["start_at"]
-          due_date = convert_due_date(due_date)
+          due_date = convert_due_date(result["start_at"])
           format_date_into_entry!(due_date, formatted_entry, "due_date")
           bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
           formatted_entry["bucket"] = bucket
