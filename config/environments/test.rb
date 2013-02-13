@@ -35,7 +35,7 @@ Calcentral::Application.configure do
   config.active_support.deprecation = :stderr
 
   # Caching store
-  config.cache_store = ActiveSupport::Cache.lookup_store(:null_store)
+  config.cache_store = ActiveSupport::Cache.lookup_store(:null_store, :namespace => ServerRuntime.get_settings["git_commit"])
   config.cache_store.logger = Logger.new("#{Rails.root}/log/cache-#{Rails.env}_#{Time.now.strftime('%Y-%m-%d')}.log")
   config.cache_store.logger.level = Logger::DEBUG
 
