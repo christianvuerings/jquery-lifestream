@@ -4,13 +4,23 @@ describe('Tasks controller', function() {
   var $httpBackend;
   var $scope;
 
+  var tasksController;
+
   beforeEach(inject(function($injector) {
     $controller = $injector.get('$controller');
     $httpBackend = $injector.get('$httpBackend');
     $scope = $injector.get('$rootScope').$new();
 
-    // For now, dealing only with dummy data
-    $scope.tasks = getJSONFixture('tasks.json').tasks;
+    var tasks = getJSONFixture('tasks.json').tasks;
+
+    $httpBackend.when('GET', '/api/my/tasks').respond(tasks);
+
+    tasksController = $controller('TasksController', {
+      $scope: $scope
+    });
+
+    $scope.tasks = tasks;
+
 
   }));
 
@@ -26,6 +36,27 @@ describe('Tasks controller', function() {
       }
     });
     expect(countBadTasks).toEqual(0);
+  });
+
+  it("No task without a due date should be in the Scheduled bucket", function() {
+    var countBadTasks = 0;
+    angular.forEach($scope.tasks, function(task) {
+      if (!task.due_date && task.bucket === "Scheduled") {
+        countBadTasks++;
+      }
+    });
+    expect(countBadTasks).toEqual(0);
+  });
+
+  it('AddTask should accept a task with a title only', function() {
+    $httpBackend.when('POST', '/api/my/tasks/create').respond();
+    $scope.add_task.title = "Tilting at windmills for a better tomorrow.";
+    $scope.addTask();
+  });
+
+  it('AddTask should NOT accept a task without a title', function() {
+    $scope.add_task.title = "";
+    $scope.addTask();
   });
 
 });

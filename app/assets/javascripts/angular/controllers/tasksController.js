@@ -46,9 +46,10 @@
         newtask.due_date = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
-      $http.post('/api/my/tasks/create', newtask).success(function(data) {
-        $scope.addTaskCompleted(data);
-      });
+      // Angular already blocks form submission if title is empty, but also check here for testing
+      if (newtask.title) {
+        $http.post('/api/my/tasks/create', newtask).success($scope.addTaskCompleted);
+      }
     };
 
     $scope.toggleAddTask = function() {
