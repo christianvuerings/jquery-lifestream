@@ -3,7 +3,7 @@
     {
       "type": "task",
       "title": "Lunch with study group",
-      "status": "overdue",
+      "status": "Overdue",
       "due_date": {
         "epoch": 1354320000,
         "datetime": "2012-12-01T00:00:00.000+00:00",
@@ -28,7 +28,7 @@
       "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMDQxODM3NTEx",
       "color_class": "google-task",
-      "status": "overdue",
+      "status": "Overdue",
       "due_date": {
         "epoch": 1354320000,
         "datetime": "2012-12-01T00:00:00.000+00:00",
