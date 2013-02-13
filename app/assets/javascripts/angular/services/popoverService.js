@@ -14,6 +14,16 @@
     };
 
     /**
+     * Close all the popovers apart from the one you're passing in
+     * @param {String} popover Popover name
+     */
+    var closeOthers = function(popover) {
+      var popoverStatus = popovers[popover];
+      closeAll();
+      popovers[popover] = popoverStatus;
+    };
+
+    /**
      * Get the current popover status
      * @param {String} popover Popover name
      */
@@ -26,6 +36,7 @@
      * @param {String} popover Popover name
      */
     var toggle = function(popover) {
+      closeOthers(popover);
       popovers[popover] = !popovers[popover];
     };
 

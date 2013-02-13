@@ -59,11 +59,8 @@
   border: 1px solid #cbcbcb;
   border-radius: 4px;
   @include box-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
-  margin-left: -129px;
   padding: 15px;
   position: absolute;
-  top: 33px;
-  width: 300px;
   z-index: 1;
 
   h4 {
@@ -105,6 +102,20 @@
   position: relative;
 }
 
+.cc-dropdown {
+  background: #fff;
+  border: 1px solid $cc-launcher-border-color;
+  border-top: none;
+  position: absolute;
+  right: -1px;
+  width: 100%;
+  z-index: 1;
+  button {
+    display: block;
+    padding: 5px;
+  }
+}
+
 /* Image replacement */
 .cc-ir {
   background-color: transparent;
@@ -130,4 +141,10 @@
   padding: 0;
   position: absolute;
   width: 1px;
+}
+
+@media only screen and (max-width: 767px) {
+  .cc-dropdown {
+    width: auto;
+  }
 }
