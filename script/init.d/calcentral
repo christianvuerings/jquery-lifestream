@@ -4,11 +4,23 @@
 # description: start script for calcentral
 # processname: calcentral
 
-# Customize the following four variables
-RUN_AS_USER=app_calcentral
-CC_BASE=/home/${RUN_AS_USER}/calcentral
-START_SCRIPT=$CC_BASE/script/start-trinidad.sh
-STOP_SCRIPT=$CC_BASE/script/stop-trinidad.sh
+# Customize the following variables
+RUN_AS_USER="app_calcentral"
+CC_BASE="$HOME/calcentral"
+START_SCRIPT="$CC_BASE/script/start-trinidad.sh"
+STOP_SCRIPT="$CC_BASE/script/stop-trinidad.sh"
+BG_START_SCRIPT="$CC_BASE/script/start-backstage.sh"
+BG_STOP_SCRIPT="$CC_BASE/script/stop-backstage.sh"
+DOCROOT="/var/www/html/calcentral"
+OFFLINE_FILE="$DOCROOT/calcentral-in-maintenance"
+NIGHTLY_HTML="$DOCROOT/index_nightly.html"
+MAINT_HTML="$DOCROOT/index_maintenance.html"
+EMERGENCY_HTML="$DOCROOT/index_emergency.html"
+INDEX_HTML="$DOCROOT/index.html"
+RM="/bin/rm"
+CP="/bin/cp -p"
+TOUCH="/bin/touch"
+HOSTNAME=`uname -n`
 
 if [ -x "/usr/bin/id" ]; then
   CURR_USER=`/usr/bin/id -u -n`
@@ -16,28 +28,74 @@ else
   CURR_USER="$USER"
 fi
 
-if [ -x "/sbin/runuser" ]; then
-  SU="/sbin/runuser"
-else
-  SU="/bin/su"
+if [ $CURR_USER != "$RUN_AS_USER" ]; then
+  echo "Only $RUN_AS_USER can execute this script"
+  exit 1
 fi
 
+if [[ "${HOSTNAME}" = ets-calcentral-*-01\.ist.berkeley.edu ]]; then
+  NODEONE="yes"
+fi
+
+online() {
+    sleep 5
+    if [ -f $OFFLINE_FILE ]; then
+      $RM $OFFLINE_FILE
+    fi
+}
+
+offline () {
+    $TOUCH $OFFLINE_FILE
+}
+
+nightly () {
+    $CP $NIGHTLY_HTML $INDEX_HTML
+    offline
+}
+
+maint () {
+    $CP $MAINT_HTML $INDEX_HTML
+    offline
+}
+
+emergency () {
+    $CP $EMERGENCY_HTML $INDEX_HTML
+    offline
+}
+
+
 start() {
-  echo -n "Starting calcentral..."
-  if [ $CURR_USER != "$RUN_AS_USER" ]; then
-    $SU - $RUN_AS_USER -c "\"$START_SCRIPT\""
-  else
-    $START_SCRIPT
+  if [ "X$NODEONE" != "X" ]; then
+    if [ ! -x "$BG_START_SCRIPT" ]; then
+      echo "$BG_START_SCRIPT doesn't exist or is not executable"
+      exit 1
+    fi
+    echo "Starting background processor..."
+    $BG_START_SCRIPT
   fi
+  if [ ! -x "$START_SCRIPT" ]; then
+    echo "$START_SCRIPT doesn't exist or is not executable"
+    exit 1
+  fi
+  echo "Starting calcentral..."
+  $START_SCRIPT
 }
 
 stop() {
-  echo -n "Shutting down calcentral..."
-  if [ $CURR_USER != "$RUN_AS_USER" ]; then
-    $SU - $RUN_AS_USER -c "\"$STOP_SCRIPT\""
-  else
-    $STOP_SCRIPT
+  if [ "X$NODEONE" != "X" ]; then
+    if [ ! -x "$BG_STOP_SCRIPT" ]; then
+      echo "$BG_STOP_SCRIPT doesn't exist or is not executable"
+      exit 1
+    fi
+    echo "Stopping background processor..."
+    $BG_STOP_SCRIPT
   fi
+  if [ ! -x "$STOP_SCRIPT" ]; then
+    echo "$STOP_SCRIPT doesn't exist or is not executable"
+    exit 1
+  fi
+  echo "Shutting down calcentral..."
+  $STOP_SCRIPT
 }
 
 status() {
@@ -52,9 +110,10 @@ status() {
 
 case "$1" in
   start)
-        start
+        start && online
         ;;
   stop)
+        maint
         stop
         ;;
   restart)
@@ -65,8 +124,23 @@ case "$1" in
   status)
         status
         ;;
+  online)
+        online
+        ;;
+  offline)
+        offline
+        ;;
+  nightly)
+        nightly
+        ;;
+  maint)
+        maint
+        ;;
+  emergency)
+        emergency
+        ;;
   *)
-        echo "Usage: $0 {start|stop|restart|status}"
+        echo "Usage: $0 {start|stop|restart|status|online|offline|nightly|maint|emergency}"
 esac
 
 exit
