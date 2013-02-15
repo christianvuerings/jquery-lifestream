@@ -2,6 +2,10 @@ require "spec_helper"
 
 describe UserApiController do
 
+  before do
+    @user_id = rand(999999).to_s
+  end
+
   it "should not have a logged-in status" do
     get :mystatus
     assert_response :success
@@ -22,7 +26,7 @@ describe UserApiController do
   end
 
   it "should record first login for a new user" do
-    session[:user_id] = "192517"
+    session[:user_id] = @user_id
     get :mystatus
     json_response = JSON.parse(response.body)
     json_response["first_login_at"].should == nil

@@ -1,10 +1,17 @@
 require "spec_helper"
 
 feature "authentication" do
-  scenario "Test failing authentication" do
-    break_cas
-    login_with_cas "192517"
-    page.status_code.should == 401
-    restore_cas "192517"
+  scenario "Failing authentication" do
+    original_logger = OmniAuth.config.logger
+
+    begin
+      OmniAuth.config.logger = Logger.new "/dev/null"
+      break_cas
+      login_with_cas "192517"
+      page.status_code.should == 401
+      restore_cas "192517"
+    ensure
+      OmniAuth.config.logger = original_logger
+    end
   end
 end
