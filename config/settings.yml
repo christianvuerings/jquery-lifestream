@@ -95,5 +95,4 @@ ist_jms:
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
-  wizbang: false
-  neato: true
+  notifications: true
