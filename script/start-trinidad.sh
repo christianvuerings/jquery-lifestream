@@ -25,9 +25,13 @@ export JRUBY_OPTS="-Xcext.enabled=true -J-server"
 nohup trinidad < /dev/null > /dev/null 2> $LOG  &
 
 # wait a bit to let server start up
-sleep 45
+sleep 30
 
 ./script/init.d/calcentral online
+
+# removing the maint page causes the Rails app to restart, for reasons unknown.
+# So we'll wait a bit and then tickle the home page to warm up the app.
+sleep 30
 
 # now tickle the app to warm it up
 curl -i -stderr /dev/null http://localhost:3000/ > /dev/null
