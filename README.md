@@ -209,3 +209,21 @@ To view other rake task for the project: ```rake -T```
 * ```rake spec:xml``` - Runs rake spec, but pipes the output to xml using the rspec_junit_formatter gem, for JUnit compatible test result reports
 * ```rake vcr:record``` - Refresh vcr recordings and reformats the fixtures with formatted JSON output. Will also parse the reponse body's string into json output for legibility.
 * ```rake vcr:list``` - List the available recordings captured in the fixtures.
+
+## Using the feature toggle:
+
+To selectively enable/disable a feature, add a property to the "features" section of settings.yml, e.g.:
+
+```
+features:
+  wizbang: false
+  neato: true
+```
+
+After server restart, these properties will appear in each users' status feed. You can now use ```ng:show``` in Angular to wrap the feature, e.g.:
+
+```html
+<div data-ng-show="user.profile.features.neato">
+  Some neato feature...
+</div>
+```
