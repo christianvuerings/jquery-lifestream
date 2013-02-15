@@ -2,7 +2,7 @@
   "notifications": [
     {
       "id": 1,
-      "title": "Evacuate Dwinelle Hall",
+      "title": "Successfully enrolled",
       "summary": "Evacuate Dwinelle Hall immediately, gas leak",
       "source": "Warn Me",
       "type": "alert",
