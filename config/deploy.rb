@@ -22,21 +22,7 @@ namespace :calcentral_dev do
   task :update, :roles => :calcentral_dev_host do
     # Take everything offline first.
     script_folder = project_root + ("/script")
-    run "cd #{script_folder}; ./stop-trinidad.sh"
-    # Run db migrate on the first app server
-    servers = find_servers_for_task(current_task)
-    run "cd #{script_folder}; ./update-build.sh"
-    transaction do
-      servers.each_with_index do |server, index|
-        if (index == 0)
-          logger.debug "---- Server: #{server.host} running migrate in transaction on offline app servers"
-          run "cd #{script_folder}; ./migrate.sh", :hosts => server
-        end
-      end
-    end
-    servers.each do |server|
-      run "cd #{script_folder}; ./start-trinidad.sh", :hosts => server
-    end
+    run "cd #{script_folder}; ./upgrade.sh"
   end
 end
 

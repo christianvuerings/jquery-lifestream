@@ -12,5 +12,6 @@ echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: Downgrading CalCentral to $LAST_VERSION on app node: `hostname -s`" | $LOGIT
 
-cd script
-./migrate.sh $LAST_VERSION
+./script/init.d/calcentral stop
+
+./script/migrate.sh $LAST_VERSION
