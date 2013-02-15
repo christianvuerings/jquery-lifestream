@@ -34,4 +34,5 @@ sleep 30
 sleep 30
 
 # now tickle the app to warm it up
-curl -i -stderr /dev/null http://localhost:3000/ > /dev/null
+wget --recursive --delete-after --quiet http://localhost:3000/
+rm -rf localhost\:3000
