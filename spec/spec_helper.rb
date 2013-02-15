@@ -1,4 +1,5 @@
 require 'simplecov'
+SimpleCov.add_filter 'app/views'
 SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -57,6 +58,16 @@ RSpec.configure do |config|
   # Clear out cache at the beginning of each test.
   config.before :each do
     Rails.cache.clear
+  end
+
+  #Eject casettes after each group of tests.
+  config.after :each do
+    VCR.eject_cassette
+  end
+
+  # Suppress celluloid terminated workers after entire test suite finishes
+  config.after :suite do
+    Celluloid.logger = nil
   end
 end
 

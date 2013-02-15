@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CanvasUserActivityHandler do
+describe "CanvasUserActivityHandler" do
 
   before do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
@@ -12,7 +12,6 @@ describe CanvasUserActivityHandler do
     # Making sure we return cassettes back to the store after we're done.
     VCR.eject_cassette
   end
-
 
   it "should be able to process a normal canvas feed" do
     options = {:fake => true, :user_id => @random_id}
@@ -43,20 +42,33 @@ describe CanvasUserActivityHandler do
     handler.finalize
   end
 
-  it "should be able to return nils on unexpected worker crashes" do
-    CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_raise(RuntimeError, "crash")
-    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
-    activities = handler.get_feed_results
-    activities.should be_nil
-    handler.finalize
-  end
+  describe "CanvasUserActivityFailures", :suppress_celluloid_logger => true do
 
-  it "should be able to return nils on unexpected processor crashes" do
-    CanvasUserActivityProcessor.any_instance.stub(:process).and_raise(RuntimeError, "crash")
-    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
-    activities = handler.get_feed_results
-    activities.should be_nil
-    handler.finalize
+    before :all do
+      @original_logger = Celluloid.logger
+      Celluloid.logger = nil
+    end
+
+    after :all do
+      Celluloid.logger = @original_logger
+    end
+
+    it "should be able to return nils on unexpected worker crashes" do
+      CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_raise(RuntimeError, "crash")
+      handler = CanvasUserActivityHandler.new({:user_id => @random_id})
+      activities = handler.get_feed_results
+      activities.should be_nil
+      handler.finalize
+    end
+
+    it("should be able to return nils on unexpected processor crashes", :suppress_celluloid_logger => true) do
+      CanvasUserActivityProcessor.any_instance.stub(:process).and_raise(RuntimeError, "crash")
+      handler = CanvasUserActivityHandler.new({:user_id => @random_id})
+      activities = handler.get_feed_results
+      activities.should be_nil
+      handler.finalize
+    end
+
   end
 
   it "get_feed should be a non-blocking call" do
