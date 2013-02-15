@@ -71,16 +71,10 @@ class RegStatusTranslator
         registered
       when "D"
         dismissed
-      when "F"
-        unregistered
       when "U"
         admincancelled
-      when "I"
-        unregistered
       when "X"
         cancelled
-      when "Y"
-        registered
       when "Z"
         unregistered
       when "W"
@@ -119,16 +113,10 @@ class RegStatusTranslator
         registered
       when "D"
         'You have been academically dismissed for this term.'
-      when "F"
-        'Your request to withdraw from the current semester has been processed.'
       when "U"
         'You have been administratively cancelled for this term.'
-      when "I"
-        registered
       when "X"
         'Your registration has been canceled for this term.'
-      when "Y"
-        registered
       when "Z"
         'The Office of the Registrar has been notified of the death of this student ID.'
       when "W"
