@@ -11,6 +11,8 @@ START_SCRIPT="$CC_BASE/script/start-trinidad.sh"
 STOP_SCRIPT="$CC_BASE/script/stop-trinidad.sh"
 BG_START_SCRIPT="$CC_BASE/script/start-backstage.sh"
 BG_STOP_SCRIPT="$CC_BASE/script/stop-backstage.sh"
+UPDATE_SCRIPT="$CC_BASE/script/update-build.sh"
+MIGRATE_SCRIPT="$CC_BASE/script/migrate.sh"
 DOCROOT="/var/www/html/calcentral"
 OFFLINE_FILE="$DOCROOT/calcentral-in-maintenance"
 NIGHTLY_HTML="$DOCROOT/index_nightly.html"
@@ -63,6 +65,23 @@ emergency () {
     offline
 }
 
+upgrade () {
+  if [ ! -x "$UPDATE_SCRIPT" ]; then
+      echo "$UPDATE_SCRIPT doesn't exist or is not executable"
+      exit 1
+  fi
+  echo "Updating CalCentral code to current version on $REMOTE:$BRANCH"
+  $UPDATE_SCRIPT
+  if [ "X$NODEONE" != "X" ]; then
+    if [ ! -x "$MIGRATE_SCRIPT" ]; then
+      echo "$MIGRATE_SCRIPT doesn't exist or is not executable"
+      exit 1
+    fi
+    echo "Migrating database..."
+    $MIGRATE_SCRIPT
+    start
+  fi
+}
 
 start() {
   if [ "X$NODEONE" != "X" ]; then
@@ -110,10 +129,9 @@ status() {
 
 case "$1" in
   start)
-        start && online
+        start
         ;;
   stop)
-        maint
         stop
         ;;
   restart)
@@ -138,6 +156,9 @@ case "$1" in
         ;;
   emergency)
         emergency
+        ;;
+  upgrade)
+        upgrade
         ;;
   *)
         echo "Usage: $0 {start|stop|restart|status|online|offline|nightly|maint|emergency}"
