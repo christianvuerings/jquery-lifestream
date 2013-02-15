@@ -227,3 +227,10 @@ After server restart, these properties will appear in each users' status feed. Y
   Some neato feature...
 </div>
 ```
+or, depending on the feature, it may make more sense to disable it in erb (so that Angular controllers are never invoked at all):
+
+```
+<% if Settings.features.notifications %>
+  <%= render 'templates/widgets/notifications' %>
+<% end %>
+```
