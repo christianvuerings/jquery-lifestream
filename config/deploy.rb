@@ -23,6 +23,7 @@ namespace :calcentral_dev do
     # Take everything offline first.
     script_folder = project_root + ("/script")
     run "cd #{script_folder}; ./upgrade.sh"
+    run "cd #{script_folder}; ./init.d/calcentral start"
   end
 end
 
