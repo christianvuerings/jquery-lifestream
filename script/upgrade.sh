@@ -13,5 +13,3 @@ fi
 if [ "X$NODEONE" != "X" ]; then
   ./script/migrate.sh
 fi
-
-./script/init.d/calcentral start
