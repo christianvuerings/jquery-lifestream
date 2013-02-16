@@ -74,21 +74,24 @@ body {
     border-right: 1px solid $cc-launcher-border-color;
     padding: 4px 9px 0px 0px;
     .cc-icon {
-      margin: 4px 14px 0 10px;
+      margin: 4px 4px 0 10px;
+      overflow: visible;
+      position: relative;
+      text-indent: -9999px;
     }
     .cc-bubble-count:after {
       background-color: #e24022;
       border-radius: 4px;
       color: #fff;
       content: attr(data-bubble);
+      font-size: 10px;
       font-weight: bold;
-      font-size: 0.8em;
-      margin-left: 15px;
-      min-width: 16px;
-      padding: 2px 2px 2px 2px;
+      padding: 2px;
       position: absolute;
-      text-align: center;
-      top: 1px;
+      right: -6px;
+      text-align: right;
+      text-indent: 0;
+      top: -7px;
     }
   }
   .cc-launcher-bar {
