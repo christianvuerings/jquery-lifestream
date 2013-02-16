@@ -46,7 +46,7 @@ Rails.application.config.after_initialize do
   processed_dir = Rails.root.join("fixtures", "vcr_cassettes")
 
   Dir.glob("#{Rails.root}/fixtures/pretty_vcr_recordings/*.json").each do |filename|
-    Rails.logger.info "Timeshifter: Processing #{filename}"
+    Rails.logger.debug "Timeshifter: Processing #{filename}"
     begin
       input_file = File.open filename
       content = input_file.read
@@ -61,10 +61,10 @@ Rails.application.config.after_initialize do
         interaction["response"]["body"]["string"] = MultiJson.dump(interaction["response"]["body"]["debug_json"])
       end
 
-      Rails.logger.info "Timeshifter: Output file = #{output_file.path}"
+      Rails.logger.debug "Timeshifter: Output file = #{output_file.path}"
       output_file.write(JSON.pretty_generate(json))
     rescue JSON::ParserError
-      Rails.logger.info "No valid JSON to parse in #{filename}"
+      Rails.logger.warn "No valid JSON to parse in #{filename}"
     ensure
       output_file.close
     end
