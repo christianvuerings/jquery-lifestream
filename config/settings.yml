@@ -96,3 +96,4 @@ ist_jms:
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
   notifications: false
+  act_as: false

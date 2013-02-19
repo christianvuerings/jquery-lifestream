@@ -4,7 +4,6 @@ describe "MyUpNext" do
   before(:each) do
     @user_id = rand(99999).to_s
     @fake_google_proxy = GoogleEventsListProxy.new({fake: true})
-
   end
 
   it "should load nicely with the pre-recorded fake Google proxy feed for event#list" do
@@ -31,6 +30,15 @@ describe "MyUpNext" do
   it "should return an empty feed for non-authorized users" do
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     empty_feed = MyUpNext.new(@user_id).get_feed
+    empty_feed["items"].empty?.should be_true
+  end
+
+  it "should return an empty feed for act-as users" do
+    another_user = @user_id
+    while (another_user == @user_id)
+      another_user = rand(99999).to_s
+    end
+    empty_feed = MyUpNext.new(@user_id, :original_user_id => another_user).get_feed
     empty_feed["items"].empty?.should be_true
   end
 

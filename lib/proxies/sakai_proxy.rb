@@ -1,4 +1,5 @@
 class SakaiProxy < BaseProxy
+  extend Proxies::EnableForActAs
 
   APP_ID = "bSpace"
 

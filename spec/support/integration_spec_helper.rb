@@ -16,6 +16,14 @@ module IntegrationSpecHelper
     Capybara.reset_sessions!
   end
 
+  def assume_user(uid)
+    visit "/assume?uid=#{uid}"
+  end
+
+  def unassume_user
+    visit "/unassume"
+  end
+
   def break_cas
     OmniAuth.config.mock_auth[:cas] = :invalid_credentials
   end

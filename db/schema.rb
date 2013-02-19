@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013013014460000) do
+ActiveRecord::Schema.define(:version => 2013021320072300) do
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
@@ -33,12 +33,24 @@ ActiveRecord::Schema.define(:version => 2013013014460000) do
 
   add_index "oauth2_data", ["uid", "app_id"], :name => "index_oauth2_data_on_uid_app_id", :unique => true
 
+  create_table "user_auths", :force => true do |t|
+    t.string   "uid",                              :null => false
+    t.string   "acting_as_uid", :default => "",    :null => false
+    t.boolean  "is_superuser",  :default => false, :null => false
+    t.boolean  "active",        :default => false, :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+  end
+
+  add_index "user_auths", ["uid", "acting_as_uid"], :name => "index_user_auths_on_uid_and_acting_as_uid", :unique => true
+
   create_table "user_data", :force => true do |t|
     t.string   "uid"
     t.string   "preferred_name"
     t.datetime "first_login_at"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.boolean  "is_test_user",   :default => false, :null => false
   end
 
   add_index "user_data", ["uid"], :name => "index_user_data_on_uid", :unique => true
