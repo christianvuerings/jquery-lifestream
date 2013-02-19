@@ -66,6 +66,11 @@ sakai_proxy:
     term_yr: "2013",
     term_cd: "B"
   }]
+cal_link_proxy:
+  fake: false
+  base_url: "https://callink.berkeley.edu"
+  public_key: secret set in production
+  private_key: secret set in production
 
 # Analytics settings ID
 # This will need to be different for every server (dev/qa/production)
