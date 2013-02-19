@@ -86,11 +86,17 @@ describe CanvasProxy do
   end
 
   it "should return nil if server is not available" do
-    client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
-    stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
-    response = client.courses
-    response.should be_nil
-    WebMock.reset!
+    original_logger = Rails.logger
+    Rails.logger = Logger.new "/dev/null"
+    begin
+      client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
+      stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
+      response = client.courses
+      response.should be_nil
+      WebMock.reset!
+    ensure
+      Rails.logger = original_logger
+    end
   end
 
 end
