@@ -5,10 +5,10 @@ source "https://rubygems.org"
 gem "rails", "3.2.12"
 
 # Postgresql adapter
-gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.6"
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.7"
 
 # H2 adapter
-gem "activerecord-jdbch2-adapter", "~> 1.2.6"
+gem "activerecord-jdbch2-adapter", "~> 1.2.7"
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -127,7 +127,7 @@ group :development do
 end
 
 group :test do
-  gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.6"
+  gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.7"
 end
 
 group :test, :testext do
@@ -135,5 +135,5 @@ group :test, :testext do
   # https://rubygems.org/gems/rspec_junit_formatter
   gem "rspec_junit_formatter", "~> 0.1.2"
 
-  gem "webmock", "~> 1.9.0"
+  gem "webmock", "~> 1.9.2"
 end
