@@ -6,7 +6,7 @@ describe SakaiProxy do
     @client_categorized = SakaiCategorizedProxy.new
   end
 
-  it "should get the categorized sites from bspace" do
+  it "should get the categorized sites from bSpace" do
     data = @client_categorized.get_categorized_sites "300939"
     data[:status_code].should_not be_nil
     if data[:status_code] == 200
@@ -14,12 +14,23 @@ describe SakaiProxy do
     end
   end
 
-  it "should pass through errors while connecting to bspace" do
+  it "should pass through timeout errors while connecting to bSpace" do
     bad_client = SakaiCategorizedProxy.new(fake: false)
     stub_request(:any, "#{Settings.sakai_proxy.host}/sakai-hybrid/sites?categorized=true").to_timeout
     data = bad_client.get_categorized_sites "300939"
     data[:status_code].should == 503
     data[:body].should == "Remote server unreachable"
+    WebMock.reset!
+  end
+
+  it "should pass through 503 errors while connecting to bSpace" do
+    bad_client = SakaiCategorizedProxy.new(fake: false)
+    stub_request(:any, "#{Settings.sakai_proxy.host}/sakai-hybrid/sites?categorized=true").to_return(
+        status: 503,
+        body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
+    )
+    data = bad_client.get_categorized_sites "300939"
+    data[:status_code].should == 503
     WebMock.reset!
   end
 

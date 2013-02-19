@@ -27,12 +27,20 @@ class SakaiProxy < BaseProxy
                   'x-sakai-token' => token
               }).get
         }
-        Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
+        if response.status < 400
+          Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
+          return_body = JSON.parse(response.body)
+        else
+          # Sakai proxy passes error responses back to the client.
+          Rails.logger.warn "SakaiProxy connection failed: #{response.status} #{response.body}"
+          return_body = response.body
+        end
         {
-            :body => JSON.parse(response.body),
+            :body => return_body,
             :status_code => response.status
         }
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
+        Rails.logger.warn "SakaiProxy connection failed: #{e.class} #{e.message}"
         {
             :body => "Remote server unreachable",
             :status_code => 503

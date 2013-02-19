@@ -99,4 +99,15 @@ describe CanvasProxy do
     end
   end
 
+  it "should return nil if server returns error status" do
+    client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
+    stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_return(
+        status: 503,
+        body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
+    )
+    response = client.courses
+    response.should be_nil
+    WebMock.reset!
+  end
+
 end
