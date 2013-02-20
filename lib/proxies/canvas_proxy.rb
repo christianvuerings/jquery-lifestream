@@ -18,7 +18,6 @@ class CanvasProxy < BaseProxy
                      options[:access_token]
                    end
     @client = Signet::OAuth2::Client.new(:access_token => access_token)
-    @uid = options[:user_id]
   end
 
   def request(api_path, vcr_id = "", fetch_options = {})

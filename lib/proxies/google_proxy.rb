@@ -15,8 +15,7 @@ class GoogleProxy < BaseProxy
       token_settings["refresh_token"] = "fake_refresh_token"
       token_settings["expiration_time"] = 3600
     elsif options[:user_id]
-      @user_id = options[:user_id]
-      token_settings = Oauth2Data.get(options[:user_id], APP_ID)
+      token_settings = Oauth2Data.get(@uid, APP_ID)
     else
       token_settings["access_token"] = options[:access_token]
       token_settings["refresh_token"] = options[:refresh_token]
@@ -104,13 +103,13 @@ class GoogleProxy < BaseProxy
     end while page_token
 
     #update access token if necessary
-    if @user_id && result_pages[0].response.status == 401 && result_pages[0].error_message == "Invalid Credentials"
+    if @uid && result_pages[0].response.status == 401 && result_pages[0].error_message == "Invalid Credentials"
       # since the client has all the information it needs to renew tokens, this is likely the result of revoking token access
-      Rails.logger.info "GoogleProxy - Will delete access token for #{@user_id} due to 401 Unauthorized from Google"
-      Oauth2Data.delete_all(:uid => @user_id, :app_id => APP_ID)
-    elsif @current_token && @user_id && @authorization.access_token != @current_token
-      Rails.logger.info "GoogleProxy - Will update token for #{@user_id} from #{@current_token} => #{@authorization.access_token}"
-      Oauth2Data.new_or_update(@user_id, APP_ID, @authorization.access_token,
+      Rails.logger.info "GoogleProxy - Will delete access token for #{@uid} due to 401 Unauthorized from Google"
+      Oauth2Data.delete_all(:uid => @uid, :app_id => APP_ID)
+    elsif @current_token && @uid && @authorization.access_token != @current_token
+      Rails.logger.info "GoogleProxy - Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
+      Oauth2Data.new_or_update(@uid, APP_ID, @authorization.access_token,
                                @authorization.refresh_token, @authorization.expires_at.to_i)
     end
 

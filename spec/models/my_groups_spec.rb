@@ -3,7 +3,7 @@ require "spec_helper"
 describe "MyGroups" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_sakai_proxy = SakaiCategorizedProxy.new({fake: true})
+    @fake_sakai_proxy = SakaiProxy.new({:user_id => @user_id, :fake => true})
     @fake_canvas_proxy = CanvasGroupsProxy.new({fake: true})
     @fake_cal_link_proxy = CalLinkProxy.new({fake: true})
   end
@@ -29,7 +29,7 @@ describe "MyGroups" do
   it "should reject malformed Sakai2 entries" do
     CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(true)
-    site_template = @fake_sakai_proxy.get_categorized_sites(@user_id)
+    site_template = @fake_sakai_proxy.get_categorized_sites
     site_template[:body]["categories"].each do |category|
       if category["category"] == "Projects" && category["sites"].size >= 1
         #One valid entry
@@ -100,7 +100,7 @@ describe "MyGroups" do
             {"title" => "csite", "id" => "csite-id", "url" => "http://sakai/csite-id"}
         ]
     ]}}
-    SakaiCategorizedProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
+    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
     canvas_groups_feed = '[{"name": "Agroup", "id": "agroup-id"}]'
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     @fake_canvas_proxy.stub_chain(:groups, :body).and_return(canvas_groups_feed)
@@ -114,7 +114,7 @@ describe "MyGroups" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.stub(:access_granted?).and_return(true)
-    SakaiCategorizedProxy.stub(:new).and_return(@fake_sakai_proxy)
+    SakaiProxy.stub(:new).and_return(@fake_sakai_proxy)
     CanvasProxy.any_instance.stub(:request).and_return(nil)
     CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
     CalLinkProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
@@ -129,7 +129,7 @@ describe "MyGroups" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     SakaiProxy.stub(:access_granted?).and_return(true)
-    SakaiProxy.any_instance.stub(:do_get).and_return({status_code: 503})
+    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return({status_code: 503})
     CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
     CalLinkProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})

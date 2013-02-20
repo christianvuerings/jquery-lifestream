@@ -8,6 +8,7 @@ class BaseProxy
   def initialize(settings, options = {})
     @settings = settings
     @fake = (options[:fake] != nil) ? options[:fake] : @settings.fake
+    @uid = options[:user_id]
   end
 
   # by default, all merged models will prevent act as users to read their
