@@ -1,0 +1,287 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://callink.berkeley.edu/api/memberships?username=300846&apikey=berkeley-01&time=1361317854404&random=5afdb717-770c-47fa-a615-b3d2a8fbef3a&hash=a4e33f2250fbac7ee02623cb54aaca48072851079ec8c7ccc1fa70a2b3258ae9",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "no-cache"
+          ],
+          "pragma": [
+            "no-cache"
+          ],
+          "content-length": [
+            "8059"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "expires": [
+            "-1"
+          ],
+          "server": [
+            "Microsoft-IIS/7.5"
+          ],
+          "access-control-allow-origin": [
+            "*"
+          ],
+          "x-aspnet-version": [
+            "4.0.30319"
+          ],
+          "x-powered-by": [
+            "ASP.NET, ARR/2.5, ASP.NET"
+          ],
+          "date": [
+            "Tue, 19 Feb 2013 23:50:56 GMT"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\r\n  \"pageNumber\": 1,\r\n  \"pageSize\": 100,\r\n  \"totalItems\": 9,\r\n  \"totalPages\": 1,\r\n  \"items\": [\r\n    {\r\n      \"membershipId\": 1115708,\r\n      \"organizationId\": 46059,\r\n      \"organizationName\": \"AAVPG - Academic Opportunity Fund\",\r\n      \"organizationShortName\": \"AOF\",\r\n      \"positionTemplateId\": 1887,\r\n      \"positionTemplateName\": \"Member\",\r\n      \"positionTypeId\": 1160,\r\n      \"positionTypeName\": \"Member / Participant\",\r\n      \"positionId\": 463904,\r\n      \"positionName\": \"Member\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1296104400000,\r\n      \"positionRecordedEndDate\": 1346644800000,\r\n      \"positionReportedStartDate\": 1296104400000,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"False\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1116412,\r\n      \"organizationId\": 46063,\r\n      \"organizationName\": \"AAVPG - Intellectual Community Fund\",\r\n      \"organizationShortName\": \"ICF\",\r\n      \"positionTemplateId\": 1889,\r\n      \"positionTemplateName\": \"Organization Created\",\r\n      \"positionTypeId\": 1160,\r\n      \"positionTypeName\": \"Member / Participant\",\r\n      \"positionId\": 470236,\r\n      \"positionName\": \"Financial Requestor - 1st Stage\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1298523600000,\r\n      \"positionRecordedEndDate\": 1346644800000,\r\n      \"positionReportedStartDate\": null,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"False\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1114907,\r\n      \"organizationId\": 46063,\r\n      \"organizationName\": \"AAVPG - Intellectual Community Fund\",\r\n      \"organizationShortName\": \"ICF\",\r\n      \"positionTemplateId\": 1887,\r\n      \"positionTemplateName\": \"Member\",\r\n      \"positionTypeId\": 1160,\r\n      \"positionTypeName\": \"Member / Participant\",\r\n      \"positionId\": 463908,\r\n      \"positionName\": \"Member\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1289710800000,\r\n      \"positionRecordedEndDate\": 1346644800000,\r\n      \"positionReportedStartDate\": 1289710800000,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"False\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1115178,\r\n      \"organizationId\": 46056,\r\n      \"organizationName\": \"AAVPG- Educational Enhancement Fund\",\r\n      \"organizationShortName\": \"EEF\",\r\n      \"positionTemplateId\": 1887,\r\n      \"positionTemplateName\": \"Member\",\r\n      \"positionTypeId\": 1160,\r\n      \"positionTypeName\": \"Member / Participant\",\r\n      \"positionId\": 463901,\r\n      \"positionName\": \"Member\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1291438800000,\r\n      \"positionRecordedEndDate\": 1346644800000,\r\n      \"positionReportedStartDate\": 1291438800000,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"False\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1116072,\r\n      \"organizationId\": 45986,\r\n      \"organizationName\": \"Active Minds at Berkeley\",\r\n      \"organizationShortName\": \"AMB\",\r\n      \"positionTemplateId\": 1890,\r\n      \"positionTemplateName\": \"ASUC Agent User, Stage 2 -\",\r\n      \"positionTypeId\": 1163,\r\n      \"positionTypeName\": \"Student Organization Officer\",\r\n      \"positionId\": 550270,\r\n      \"positionName\": \"ASUC Agent User, Stage 2 -\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1297141200000,\r\n      \"positionRecordedEndDate\": null,\r\n      \"positionReportedStartDate\": null,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"True\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1115189,\r\n      \"organizationId\": 45986,\r\n      \"organizationName\": \"Active Minds at Berkeley\",\r\n      \"organizationShortName\": \"AMB\",\r\n      \"positionTemplateId\": 1895,\r\n      \"positionTemplateName\": \"Financial Requestor - 1st Stage\",\r\n      \"positionTypeId\": 1160,\r\n      \"positionTypeName\": \"Member / Participant\",\r\n      \"positionId\": 470159,\r\n      \"positionName\": \"Financial Requestor - 1st Stage\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1291611600000,\r\n      \"positionRecordedEndDate\": null,\r\n      \"positionReportedStartDate\": null,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"True\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1115187,\r\n      \"organizationId\": 45986,\r\n      \"organizationName\": \"Active Minds at Berkeley\",\r\n      \"organizationShortName\": \"AMB\",\r\n      \"positionTemplateId\": 1887,\r\n      \"positionTemplateName\": \"Member\",\r\n      \"positionTypeId\": 1160,\r\n      \"positionTypeName\": \"Member / Participant\",\r\n      \"positionId\": 463831,\r\n      \"positionName\": \"Member\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1289710800000,\r\n      \"positionRecordedEndDate\": null,\r\n      \"positionReportedStartDate\": 1289710800000,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"True\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1115188,\r\n      \"organizationId\": 45986,\r\n      \"organizationName\": \"Active Minds at Berkeley\",\r\n      \"organizationShortName\": \"AMB\",\r\n      \"positionTemplateId\": 1888,\r\n      \"positionTemplateName\": \"Primary Contact\",\r\n      \"positionTypeId\": 1161,\r\n      \"positionTypeName\": \"Primary Contact\",\r\n      \"positionId\": 464735,\r\n      \"positionName\": \"Primary Contact\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1291611600000,\r\n      \"positionRecordedEndDate\": 1312516800000,\r\n      \"positionReportedStartDate\": null,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"True\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    },\r\n    {\r\n      \"membershipId\": 1116483,\r\n      \"organizationId\": 45895,\r\n      \"organizationName\": \"Berkeley Undergraduate Sociology Association\",\r\n      \"organizationShortName\": \"BUSA\",\r\n      \"positionTemplateId\": 1887,\r\n      \"positionTemplateName\": \"Member\",\r\n      \"positionTypeId\": 1160,\r\n      \"positionTypeName\": \"Member / Participant\",\r\n      \"positionId\": 463740,\r\n      \"positionName\": \"Member\",\r\n      \"userId\": 649850,\r\n      \"username\": \"300846\",\r\n      \"userFirstName\": \"Stu\",\r\n      \"userLastName\": \"TestB\",\r\n      \"userCampusEmail\": \"test-300846@berkeley.edu\",\r\n      \"positionRecordedStartDate\": 1298782800000,\r\n      \"positionRecordedEndDate\": 1351569600000,\r\n      \"positionReportedStartDate\": 1298782800000,\r\n      \"positionReportedEndDate\": null,\r\n      \"reflection\": \"\",\r\n      \"userShownOnCampusRoster\": \"True\",\r\n      \"userShownOnPublicRoster\": \"False\"\r\n    }\r\n  ]\r\n}",
+          "debug_json": {
+            "pageNumber": 1,
+            "pageSize": 100,
+            "totalItems": 9,
+            "totalPages": 1,
+            "items": [
+              {
+                "membershipId": 1115708,
+                "organizationId": 46059,
+                "organizationName": "AAVPG - Academic Opportunity Fund",
+                "organizationShortName": "AOF",
+                "positionTemplateId": 1887,
+                "positionTemplateName": "Member",
+                "positionTypeId": 1160,
+                "positionTypeName": "Member / Participant",
+                "positionId": 463904,
+                "positionName": "Member",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1296104400000,
+                "positionRecordedEndDate": 1346644800000,
+                "positionReportedStartDate": 1296104400000,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "False",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1116412,
+                "organizationId": 46063,
+                "organizationName": "AAVPG - Intellectual Community Fund",
+                "organizationShortName": "ICF",
+                "positionTemplateId": 1889,
+                "positionTemplateName": "Organization Created",
+                "positionTypeId": 1160,
+                "positionTypeName": "Member / Participant",
+                "positionId": 470236,
+                "positionName": "Financial Requestor - 1st Stage",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1298523600000,
+                "positionRecordedEndDate": 1346644800000,
+                "positionReportedStartDate": null,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "False",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1114907,
+                "organizationId": 46063,
+                "organizationName": "AAVPG - Intellectual Community Fund",
+                "organizationShortName": "ICF",
+                "positionTemplateId": 1887,
+                "positionTemplateName": "Member",
+                "positionTypeId": 1160,
+                "positionTypeName": "Member / Participant",
+                "positionId": 463908,
+                "positionName": "Member",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1289710800000,
+                "positionRecordedEndDate": 1346644800000,
+                "positionReportedStartDate": 1289710800000,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "False",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1115178,
+                "organizationId": 46056,
+                "organizationName": "AAVPG- Educational Enhancement Fund",
+                "organizationShortName": "EEF",
+                "positionTemplateId": 1887,
+                "positionTemplateName": "Member",
+                "positionTypeId": 1160,
+                "positionTypeName": "Member / Participant",
+                "positionId": 463901,
+                "positionName": "Member",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1291438800000,
+                "positionRecordedEndDate": 1346644800000,
+                "positionReportedStartDate": 1291438800000,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "False",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1116072,
+                "organizationId": 45986,
+                "organizationName": "Active Minds at Berkeley",
+                "organizationShortName": "AMB",
+                "positionTemplateId": 1890,
+                "positionTemplateName": "ASUC Agent User, Stage 2 -",
+                "positionTypeId": 1163,
+                "positionTypeName": "Student Organization Officer",
+                "positionId": 550270,
+                "positionName": "ASUC Agent User, Stage 2 -",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1297141200000,
+                "positionRecordedEndDate": null,
+                "positionReportedStartDate": null,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "True",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1115189,
+                "organizationId": 45986,
+                "organizationName": "Active Minds at Berkeley",
+                "organizationShortName": "AMB",
+                "positionTemplateId": 1895,
+                "positionTemplateName": "Financial Requestor - 1st Stage",
+                "positionTypeId": 1160,
+                "positionTypeName": "Member / Participant",
+                "positionId": 470159,
+                "positionName": "Financial Requestor - 1st Stage",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1291611600000,
+                "positionRecordedEndDate": null,
+                "positionReportedStartDate": null,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "True",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1115187,
+                "organizationId": 45986,
+                "organizationName": "Active Minds at Berkeley",
+                "organizationShortName": "AMB",
+                "positionTemplateId": 1887,
+                "positionTemplateName": "Member",
+                "positionTypeId": 1160,
+                "positionTypeName": "Member / Participant",
+                "positionId": 463831,
+                "positionName": "Member",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1289710800000,
+                "positionRecordedEndDate": null,
+                "positionReportedStartDate": 1289710800000,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "True",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1115188,
+                "organizationId": 45986,
+                "organizationName": "Active Minds at Berkeley",
+                "organizationShortName": "AMB",
+                "positionTemplateId": 1888,
+                "positionTemplateName": "Primary Contact",
+                "positionTypeId": 1161,
+                "positionTypeName": "Primary Contact",
+                "positionId": 464735,
+                "positionName": "Primary Contact",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1291611600000,
+                "positionRecordedEndDate": 1312516800000,
+                "positionReportedStartDate": null,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "True",
+                "userShownOnPublicRoster": "False"
+              },
+              {
+                "membershipId": 1116483,
+                "organizationId": 45895,
+                "organizationName": "Berkeley Undergraduate Sociology Association",
+                "organizationShortName": "BUSA",
+                "positionTemplateId": 1887,
+                "positionTemplateName": "Member",
+                "positionTypeId": 1160,
+                "positionTypeName": "Member / Participant",
+                "positionId": 463740,
+                "positionName": "Member",
+                "userId": 649850,
+                "username": "300846",
+                "userFirstName": "Stu",
+                "userLastName": "TestB",
+                "userCampusEmail": "test-300846@berkeley.edu",
+                "positionRecordedStartDate": 1298782800000,
+                "positionRecordedEndDate": 1351569600000,
+                "positionReportedStartDate": 1298782800000,
+                "positionReportedEndDate": null,
+                "reflection": "",
+                "userShownOnCampusRoster": "True",
+                "userShownOnPublicRoster": "False"
+              }
+            ]
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 19 Feb 2013 23:50:56 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.4.0"
+}

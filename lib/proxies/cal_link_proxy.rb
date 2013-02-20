@@ -9,12 +9,14 @@ class CalLinkProxy < BaseProxy
   end
 
   def do_get(uid)
-    url = build_url uid
-    Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{uid}"
+    url = "#{Settings.cal_link_proxy.base_url}/api/memberships"
+    params = build_params uid
+    Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{uid}; params = #{params}"
     begin
-      response = FakeableProxy.wrap_request(APP_ID, @fake) {
+      response = FakeableProxy.wrap_request(APP_ID, @fake, { :match_requests_on => [:method, :path, :body] }) {
         Faraday::Connection.new(
-            :url => url
+            :url => url,
+            :params => params
         ).get
       }
       if response.status >= 400
@@ -36,14 +38,21 @@ class CalLinkProxy < BaseProxy
 
   private
 
-  def build_url(uid)
-    time = ( Time.now.utc.to_f * 1000).to_i
+  def build_params(uid)
+    time = (Time.now.utc.to_f * 1000).to_i
     random = SecureRandom.uuid
     prehash = "#{Settings.cal_link_proxy.public_key}#{time}#{random}#{Settings.cal_link_proxy.private_key}"
 
     hash = Digest::SHA256.hexdigest(prehash)
     Rails.logger.debug "#{self.class.name} prehash is #{prehash}"
-    "#{Settings.cal_link_proxy.base_url}/api/memberships?username=#{uid}&apikey=#{Settings.cal_link_proxy.public_key}&time=#{time}&random=#{random}&hash=#{hash}"
+
+    {
+        :username => uid,
+        :apikey => Settings.cal_link_proxy.public_key,
+        :time => time,
+        :random => random,
+        :hash => hash
+    }
   end
 
 end
