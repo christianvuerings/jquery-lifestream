@@ -6,6 +6,8 @@ google_proxy:
   fake: true
 sakai_proxy:
   fake: true
+cal_link_proxy:
+  fake: true
 
 # To avoid "Illegal key size" errors on systems which we can't modify (e.g., Travis),
 # lower the security of the encryption algorithm.
