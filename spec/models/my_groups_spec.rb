@@ -75,7 +75,7 @@ describe "MyGroups" do
     CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].is_a?(Array).should == true
-    my_groups[:groups].size.should be > 0
+    my_groups[:groups].size.should == 5
     my_groups[:groups].each do |group_hash|
       group_hash.keys do |key|
         group_hash[key].should_not be_nil

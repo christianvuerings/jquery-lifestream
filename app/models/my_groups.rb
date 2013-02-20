@@ -47,14 +47,17 @@ class MyGroups < MyMergedModel
       if (cal_link_groups = cal_link_proxy.get_memberships @uid)
         Rails.logger.debug "body = #{cal_link_groups[:body]}"
         if cal_link_groups[:body] && cal_link_groups[:body]["items"]
+          seen_orgs = Set.new
           cal_link_groups[:body]["items"].each do |group|
-            response[:groups].push({
-                                       title: group["organizationName"],
-                                       id: group["organizationId"].to_s,
-                                       emitter: CalLinkProxy::APP_ID,
-                                       color_class: "callink-group",
-                                       site_url: "TODO"
-                                   })
+            if seen_orgs.add? group["organizationId"]
+              response[:groups].push({
+                                         title: group["organizationName"],
+                                         id: group["organizationId"].to_s,
+                                         emitter: CalLinkProxy::APP_ID,
+                                         color_class: "callink-group",
+                                         site_url: "TODO"
+                                     })
+            end
           end
         end
       end

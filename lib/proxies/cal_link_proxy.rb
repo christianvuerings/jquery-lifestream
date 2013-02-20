@@ -38,7 +38,8 @@ class CalLinkProxy < BaseProxy
             :body => JSON.parse(response.body),
             :status_code => response.status
         }
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError  => e
+        Rails.logger.warn "#{self.class.name}: Connection failed: #{e.class} #{e.message}"
         {
             :body => "Remote server unreachable",
             :status_code => 503
@@ -53,10 +54,7 @@ class CalLinkProxy < BaseProxy
     time = (Time.now.utc.to_f * 1000).to_i
     random = SecureRandom.uuid
     prehash = "#{Settings.cal_link_proxy.public_key}#{time}#{random}#{Settings.cal_link_proxy.private_key}"
-
     hash = Digest::SHA256.hexdigest(prehash)
-    Rails.logger.debug "#{self.class.name} prehash is #{prehash}"
-
     {
         :username => uid,
         :apikey => Settings.cal_link_proxy.public_key,
