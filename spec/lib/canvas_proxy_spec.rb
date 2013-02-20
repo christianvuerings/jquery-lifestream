@@ -110,4 +110,21 @@ describe CanvasProxy do
     WebMock.reset!
   end
 
+  it "should find a registered user's profile" do
+    client = CanvasUserProfileProxy.new(:user_id => @user_id)
+    response = client.user_profile
+    response.should_not be_nil
+  end
+
+  it "should not find an unregistered user's profile" do
+    client = CanvasUserProfileProxy.new(:user_id => 'MaynardGKrebs')
+    response = client.user_profile
+    response.should be_nil
+  end
+
+  it "should check whether user is registered in Canvas" do
+    CanvasProxy.has_account?(@user_id).should be_true
+    CanvasProxy.has_account?('MaynardGKrebs').should be_false
+  end
+
 end

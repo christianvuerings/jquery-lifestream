@@ -57,4 +57,9 @@ class CanvasProxy < BaseProxy
     @settings.url_root
   end
 
+  def self.has_account?(user_id)
+    response = CanvasUserProfileProxy.new(user_id: user_id).user_profile
+    (response != nil)
+  end
+
 end

@@ -47,6 +47,14 @@ describe "UserApi" do
     user_data = UserApi.new(@random_id).get_feed
     user_data[:has_canvas_access_token].should be_false
   end
+  it "should return whether the user is registered with Canvas" do
+    CanvasProxy.stub(:has_account?).and_return(true, false)
+    user_data = UserApi.new(@random_id).get_feed
+    user_data[:has_canvas_account].should be_true
+    Rails.cache.clear
+    user_data = UserApi.new(@random_id).get_feed
+    user_data[:has_canvas_account].should be_false
+  end
   it "should have a null first_login time for a new user" do
     user_data = UserApi.new(@random_id).get_feed
     user_data[:first_login_at].should be_nil
