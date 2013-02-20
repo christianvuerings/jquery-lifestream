@@ -55,7 +55,8 @@
           <div class="ten columns offset-by-two mobile-three cc-widget-tasks-form-buttons">
             <button type="submit"
               data-ng-disabled="cc_widget_tasks_form.$invalid || is_task_processing"
-              data-ng-class="{true:'cc-button-submit'}[cc_widget_tasks_form.$valid]">Add Task
+              data-ng-class="{'cc-button-submit-enabled':(cc_widget_tasks_form.$valid), 'cc-button-submit-disabled':(cc_widget_tasks_form.$invalid)}"
+              >Add Task
             </button>
             <button class="cc-button-reset" type="reset" data-ng-click="toggleAddTask()" />Cancel</button>
           </div>
