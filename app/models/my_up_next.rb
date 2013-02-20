@@ -2,7 +2,12 @@ class MyUpNext < MyMergedModel
 
   def get_feed_internal(opts={})
     up_next = {}
-    up_next["items"] = []
+    up_next[:items] = []
+
+    if (is_acting_as_nonfake_user?) && !GoogleProxy.allow_pseudo_user?
+      return up_next
+    end
+
     if GoogleProxy.access_granted?(@uid)
       google_proxy = GoogleEventsListProxy.new(user_id: @uid)
 

@@ -88,6 +88,11 @@ Calcentral::Application.routes.draw do
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/login' => 'sessions#new', :as => :login
 
+  if Settings.features.act_as
+    match '/act_as' => 'sessions#act_as'
+    match '/stop_act_as' => 'sessions#stop_act_as'
+  end
+
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
   #

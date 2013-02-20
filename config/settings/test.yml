@@ -11,3 +11,6 @@ sakai_proxy:
 # lower the security of the encryption algorithm.
 oauth2:
   encryption: "aes-128-cbc"
+
+features:
+  act_as: true

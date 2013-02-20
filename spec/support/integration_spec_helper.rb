@@ -16,6 +16,14 @@ module IntegrationSpecHelper
     Capybara.reset_sessions!
   end
 
+  def act_as_user(uid)
+    visit "/act_as?uid=#{uid}"
+  end
+
+  def stop_act_as_user
+    visit "/stop_act_as"
+  end
+
   def break_cas
     OmniAuth.config.mock_auth[:cas] = :invalid_credentials
   end

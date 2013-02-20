@@ -5,16 +5,18 @@ class MyTasks::Merged < MyMergedModel
 
   attr_reader :enabled_sources
 
-  def initialize(uid, starting_date=Time.zone.today.to_time_in_current_zone)
-    super(uid)
+  def initialize(uid, options={})
+    super(uid, options)
     #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
-    @starting_date = starting_date
+    @starting_date = Time.zone.today.to_time_in_current_zone
     @now_time = Time.zone.now
     @enabled_sources = {
       CanvasProxy::APP_ID => {access_granted: CanvasProxy.access_granted?(@uid),
-                              source: MyTasks::CanvasTasks.new(@uid, @starting_date)},
+                              source: MyTasks::CanvasTasks.new(@uid, @starting_date),
+                              pseudo_enabled: CanvasProxy.allow_pseudo_user?},
       GoogleProxy::APP_ID => {access_granted: GoogleProxy.access_granted?(@uid),
-                              source: MyTasks::GoogleTasks.new(@uid, @starting_date)}
+                              source: MyTasks::GoogleTasks.new(@uid, @starting_date),
+                              pseudo_enabled: GoogleProxy.allow_pseudo_user?}
     }
     @enabled_sources.select!{|k,v| v[:access_granted] == true}
   end
@@ -22,6 +24,9 @@ class MyTasks::Merged < MyMergedModel
   def get_feed_internal
     tasks = []
     @enabled_sources.each do |key, value_hash|
+      if (is_acting_as_nonfake_user?) && !value_hash[:pseudo_enabled]
+        next
+      end
       value_hash[:source].fetch_tasks!(tasks)
     end
     logger.debug "#{self.class.name} get_feed is #{tasks.inspect}"

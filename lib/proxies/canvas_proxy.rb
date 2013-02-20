@@ -1,6 +1,8 @@
 require 'signet/oauth_2/client'
 
 class CanvasProxy < BaseProxy
+  extend Proxies::EnableForActAs
+
   attr_accessor :client
   APP_ID = "Canvas"
 
