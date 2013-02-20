@@ -42,7 +42,22 @@ class MyGroups < MyMergedModel
         end
       end
     end
-    response[:groups].sort! {|x, y| x[:title].casecmp(y[:title])}
+    if CalLinkProxy.access_granted?
+      cal_link_proxy = CalLinkProxy.new
+      if (cal_link_groups = cal_link_proxy.get_memberships @uid)
+        Rails.logger.debug "body = #{cal_link_groups[:body]}"
+        cal_link_groups[:body]["items"].each do |group|
+          response[:groups].push({
+                                     title: group["organizationName"],
+                                     id: group["organizationId"].to_s,
+                                     emitter: CalLinkProxy::APP_ID,
+                                     color_class: "callink-group",
+                                     site_url: "TODO"
+                                 })
+        end
+      end
+    end
+    response[:groups].sort! { |x, y| x[:title].casecmp(y[:title]) }
     logger.debug "#{self.class.name} get_feed is #{response.inspect}"
     response
   end
