@@ -7,9 +7,9 @@ class SakaiProxy < BaseProxy
     super(Settings.sakai_proxy, options)
   end
 
-  def self.access_granted?
+  def self.access_granted?(uid)
     settings = Settings.sakai_proxy
-    settings.fake || (settings.host && settings.shared_secret)
+    uid && (settings.fake || (settings.host && settings.shared_secret))
   end
 
   def do_get(uid, url)

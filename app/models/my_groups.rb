@@ -4,7 +4,7 @@ class MyGroups < MyMergedModel
     response = {
         :groups => []
     }
-    if SakaiProxy.access_granted?
+    if SakaiProxy.access_granted?(@uid)
       sakai_proxy = SakaiCategorizedProxy.new
       sakai_response = sakai_proxy.get_categorized_sites(@uid)
       if sakai_response[:status_code] == 200
@@ -42,18 +42,20 @@ class MyGroups < MyMergedModel
         end
       end
     end
-    if CalLinkProxy.access_granted?
+    if CalLinkProxy.access_granted?(@uid)
       cal_link_proxy = CalLinkProxy.new
       if (cal_link_groups = cal_link_proxy.get_memberships @uid)
         Rails.logger.debug "body = #{cal_link_groups[:body]}"
-        cal_link_groups[:body]["items"].each do |group|
-          response[:groups].push({
-                                     title: group["organizationName"],
-                                     id: group["organizationId"].to_s,
-                                     emitter: CalLinkProxy::APP_ID,
-                                     color_class: "callink-group",
-                                     site_url: "TODO"
-                                 })
+        if cal_link_groups[:body] && cal_link_groups[:body]["items"]
+          cal_link_groups[:body]["items"].each do |group|
+            response[:groups].push({
+                                       title: group["organizationName"],
+                                       id: group["organizationId"].to_s,
+                                       emitter: CalLinkProxy::APP_ID,
+                                       color_class: "callink-group",
+                                       site_url: "TODO"
+                                   })
+          end
         end
       end
     end

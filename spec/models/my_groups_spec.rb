@@ -5,6 +5,7 @@ describe "MyGroups" do
     @user_id = rand(99999).to_s
     @fake_sakai_proxy = SakaiCategorizedProxy.new({fake: true})
     @fake_canvas_proxy = CanvasGroupsProxy.new({fake: true})
+    @fake_cal_link_proxy = CalLinkProxy.new({fake: true})
   end
 
   it "should return a valid feed for a user granted access" do
@@ -20,9 +21,7 @@ describe "MyGroups" do
   end
 
   it "should return a empty array for non-authenticated users" do
-    CanvasProxy.stub(:access_granted?).and_return(false)
-    SakaiProxy.stub(:access_granted?).and_return(false)
-    empty_groups = MyGroups.new(@user_id).get_feed
+    empty_groups = MyGroups.new(nil).get_feed
     empty_groups[:groups].is_a?(Array).should == true
     empty_groups[:groups].size.should == 0
   end
@@ -69,9 +68,31 @@ describe "MyGroups" do
     end
   end
 
+  it "should include CalLink groups" do
+    CanvasProxy.stub(:access_granted?).and_return(false)
+    SakaiProxy.stub(:access_granted?).and_return(false)
+    CalLinkProxy.stub(:access_granted?).and_return(true)
+    CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    my_groups = MyGroups.new(@user_id).get_feed
+    my_groups[:groups].is_a?(Array).should == true
+    my_groups[:groups].size.should be > 0
+    my_groups[:groups].each do |group_hash|
+      group_hash.keys do |key|
+        group_hash[key].should_not be_nil
+        group = group_hash[key]
+        group[:id].blank?.should be_false
+        group[:title].blank?.should be_false
+        group[:site_url].blank?.should be_false
+        group[:emitter].should == "CalLink"
+        group[:color_class].should == "callink-group"
+      end
+    end
+  end
+
   it "should sort groups alphabetically" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:access_granted?).and_return(true)
+    CalLinkProxy.stub(:access_granted?).and_return(false)
     sakai_project_site_feed = {status_code: 200, body: {"categories" => [
         "category" => "Projects",
         "sites" => [
@@ -92,8 +113,11 @@ describe "MyGroups" do
   it "should return bSpace sites when Canvas service is unavailable" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:access_granted?).and_return(true)
+    CalLinkProxy.stub(:access_granted?).and_return(true)
     SakaiCategorizedProxy.stub(:new).and_return(@fake_sakai_proxy)
     CanvasProxy.any_instance.stub(:request).and_return(nil)
+    CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    CalLinkProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].size.should be > 0
     my_groups[:groups].each do |group|
@@ -101,11 +125,14 @@ describe "MyGroups" do
     end
   end
 
-  it "should return Canvas groups when bSpace service is unavailable" do
+  it "should return Canvas groups when bSpace and CalLink services are unavailable" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     SakaiProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.any_instance.stub(:do_get).and_return({status_code: 503})
+    CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    CalLinkProxy.stub(:access_granted?).and_return(true)
+    CalLinkProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].size.should be > 0
     my_groups[:groups].each do |group|

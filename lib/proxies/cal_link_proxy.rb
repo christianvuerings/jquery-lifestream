@@ -8,9 +8,9 @@ class CalLinkProxy < BaseProxy
     super(Settings.cal_link_proxy, options)
   end
 
-  def self.access_granted?
+  def self.access_granted?(uid)
     settings = Settings.cal_link_proxy
-    settings.fake || (settings.public_key && settings.private_key)
+    uid && ( settings.fake || (settings.public_key && settings.private_key) )
   end
 
   def get_memberships(uid)

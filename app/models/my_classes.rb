@@ -19,7 +19,7 @@ class MyClasses < MyMergedModel
         end
       end
     end
-    if SakaiProxy.access_granted?
+    if SakaiProxy.access_granted?(@uid)
       sakai_proxy = SakaiCategorizedProxy.new
       current_terms = Settings.sakai_proxy.current_terms || []
       sakai_response = sakai_proxy.get_categorized_sites(@uid)
