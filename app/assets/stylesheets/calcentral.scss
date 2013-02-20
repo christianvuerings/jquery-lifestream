@@ -107,22 +107,36 @@ button {
     padding-right: 3px;
   }
 }
-.cc-button-submit {
+
+@mixin cc-button-common {
+  font-size: 13px;
+  padding: 6px 15px;
+}
+.cc-button-submit-enabled {
+  @include cc-button-common;
   background: $cc-action-button-color;
-  border: none;
-  border-radius: 4px;
+  border: 2px solid transparent;
+  border-radius: 6px;
   color: #fff;
   cursor: pointer;
-  font-size: 13px;
-  padding: 3px 15px;
+}
+.cc-button-submit-disabled {
+  @include cc-button-common;
+  @include background(linear-gradient(#fff, #e5e5e5));
+  border: 2px solid #d2d2d2;
+  border-radius: 6px;
+  color: #d2d2d2;
+  cursor: default !important;
+  text-decoration: none !important;
 }
 .cc-button-reset {
-  background: transparent;
-  border: none;
+  @include cc-button-common;
+  @include background(linear-gradient(#fff, #e5e5e5));
+  border: 2px solid #d2d2d2;
+  border-radius: 6px;
   color: $cc-light-grey;
-  font-size: 13px;
-  padding: 3px 5px;
 }
+
 .cc-button-link {
   &, &:hover, &:focus {
     background-color: transparent;
