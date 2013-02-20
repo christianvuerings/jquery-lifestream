@@ -24,7 +24,7 @@ class MyTasks::Merged < MyMergedModel
   def get_feed_internal
     tasks = []
     @enabled_sources.each do |key, value_hash|
-      if (is_pseudo_nonfake_user?) && !value_hash[:pseudo_enabled]
+      if (is_acting_as_nonfake_user?) && !value_hash[:pseudo_enabled]
         next
       end
       value_hash[:source].fetch_tasks!(tasks)

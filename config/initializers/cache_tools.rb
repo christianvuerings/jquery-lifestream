@@ -40,6 +40,9 @@ module Calcentral
       USER_CACHE_EXPIRATION.add_observer(key, value)
     end
 
+    #Pseudo-prefix constant
+    PSEUDO_USER_PREFIX = "pseudo_"
+
   end
 end
 

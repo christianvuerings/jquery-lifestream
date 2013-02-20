@@ -13,14 +13,6 @@ if (ActiveRecord::Migrator.current_version >= 2013021122250300)
     Rails.logger.info "Flagging #{uid} as a superuser"
     UserAuth.new_or_update_superuser! uid
   end
-
-  act_as_users = [
-    {:uid => '11002820', :acting_as_uid => '61889'} # Let Tammi act as oski.
-  ]
-  act_as_users.each do |entry|
-    Rails.logger.info "Granting #{entry[:uid]} to act as #{entry[:acting_as_uid]}"
-    UserAuth.new_or_update_act_as!(entry[:uid], entry[:acting_as_uid])
-  end
 end
 
 # Flagging test users.

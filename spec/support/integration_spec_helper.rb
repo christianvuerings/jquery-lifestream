@@ -16,12 +16,12 @@ module IntegrationSpecHelper
     Capybara.reset_sessions!
   end
 
-  def assume_user(uid)
-    visit "/assume?uid=#{uid}"
+  def act_as_user(uid)
+    visit "/act_as?uid=#{uid}"
   end
 
-  def unassume_user
-    visit "/unassume"
+  def stop_act_as_user
+    visit "/stop_act_as"
   end
 
   def break_cas

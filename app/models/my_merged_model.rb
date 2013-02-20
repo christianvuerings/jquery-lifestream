@@ -13,7 +13,7 @@ class MyMergedModel
 
   def get_feed(*opts)
     uid = @uid
-    uid = "pseudo_" + @uid if is_pseudo_nonfake_user?
+    uid = Calcentral::PSEUDO_USER_PREFIX.concat(@uid) if is_acting_as_nonfake_user?
 
     Rails.cache.fetch(
         self.class.cache_key(uid),
@@ -28,7 +28,7 @@ class MyMergedModel
     self.class.expire(@uid)
   end
 
-  def is_pseudo_nonfake_user?
+  def is_acting_as_nonfake_user?
     @original_uid && @uid != @original_uid && !UserData.is_test_user?(@uid)
   end
 

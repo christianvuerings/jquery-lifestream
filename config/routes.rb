@@ -87,9 +87,9 @@ Calcentral::Application.routes.draw do
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/login' => 'sessions#new', :as => :login
 
-  if (Settings.features.act_as || Rails.env != "production")
-    match '/assume' => 'sessions#assume'
-    match '/unassume' => 'sessions#unassume'
+  if Settings.features.act_as
+    match '/act_as' => 'sessions#act_as'
+    match '/stop_act_as' => 'sessions#stop_act_as'
   end
 
   # All the other paths should use the bootstrap page

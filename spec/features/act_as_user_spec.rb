@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "assume_user" do
+feature "act_as_user" do
   before do
     #The switching back and forth before users makes the cache warmer go crazy
     @default_logger = Celluloid.logger
@@ -18,13 +18,13 @@ feature "assume_user" do
     UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
     login_with_cas "192517"
     UserAuth.stub(:is_superuser?, '192517').and_return(true)
-    assume_user "2040"
+    act_as_user "2040"
     UserData.unstub(:where)
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
     response["uid"].should == "2040"
-    unassume_user
+    stop_act_as_user
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
@@ -35,7 +35,7 @@ feature "assume_user" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     login_with_cas "192517"
     UserAuth.stub(:is_superuser?, '192517').and_return(true)
-    assume_user "gobbly-gook"
+    act_as_user "gobbly-gook"
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
