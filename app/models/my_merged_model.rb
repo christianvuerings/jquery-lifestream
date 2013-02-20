@@ -29,7 +29,7 @@ class MyMergedModel
   end
 
   def is_acting_as_nonfake_user?
-    @original_uid && @uid != @original_uid && !UserData.is_test_user?(@uid)
+    @original_uid && @uid != @original_uid && !UserAuth.is_test_user?(@uid)
   end
 
 end
