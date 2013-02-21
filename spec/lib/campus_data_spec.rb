@@ -8,8 +8,8 @@ describe CampusData do
 
   it "should find Stu TestB's registration status" do
     data = CampusData.get_reg_status(300846)
-    data['ldap_uid'].should == "300846"
     if Settings.campusdb.adapter == "h2"
+      data['ldap_uid'].should == "300846"
       # we will only have predictable reg_status_cd values in our fake Oracle db.
       data['reg_status_cd'].should == "C"
     end
