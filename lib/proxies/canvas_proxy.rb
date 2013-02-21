@@ -57,4 +57,11 @@ class CanvasProxy < BaseProxy
     @settings.url_root
   end
 
+  def self.has_account?(user_id)
+    # Most Canvas calls use "self" as a user ID, and therefore the same fake URI applies for all users.
+    # The profile check, however, embeds the real user ID in the URI, and so we cannot safely pass
+    # it through to VCR.
+    Settings.canvas_proxy.fake || (CanvasUserProfileProxy.new(user_id: user_id).user_profile != nil)
+  end
+
 end

@@ -1,4 +1,6 @@
 module FakeableProxy
+  extend self
+
   VCR.configure do |c|
     c.cassette_library_dir = 'fixtures/vcr_cassettes'
     c.hook_into :webmock, :faraday
@@ -20,7 +22,7 @@ module FakeableProxy
     end
   end
 
-  def self.wrap_request(proxy_id, force_fake = nil, extra_cassette_options = {}, &proc_block)
+  def wrap_request(proxy_id, force_fake = nil, extra_cassette_options = {}, &proc_block)
     #Bypass on normal requests
     return yield unless force_fake || Settings.freshen_vcr
 
@@ -32,7 +34,7 @@ module FakeableProxy
 
   private
 
-  def self.record_new_responses(proxy_id, extra_cassette_options, proc_block)
+  def record_new_responses(proxy_id, extra_cassette_options, proc_block)
     Rails.logger.warn "FakeableProxy Recording new response for #{proxy_id}"
     VCR.configure do |c|
       c.cassette_library_dir = 'fixtures/raw_vcr_recordings'
@@ -40,7 +42,7 @@ module FakeableProxy
     VCR.use_cassette(proxy_id, options=default_cassette_options({:record => :new_episodes}.merge(extra_cassette_options)), &block=proc_block)
   end
 
-  def self.replay_fake_responses(proxy_id, extra_cassette_options, proc_block)
+  def replay_fake_responses(proxy_id, extra_cassette_options, proc_block)
     begin
       VCR.use_cassette(proxy_id, options=default_cassette_options({:record => :none}.merge(extra_cassette_options)), &block=proc_block)
     rescue VCR::Errors::UnhandledHTTPRequestError => e
@@ -53,7 +55,7 @@ module FakeableProxy
     end
   end
 
-  def self.query_string_matcher
+  def query_string_matcher
     Proc.new do |a, b|
       a_uri = URI(a.uri).query
       b_uri = URI(b.uri).query
@@ -67,11 +69,11 @@ module FakeableProxy
     end
   end
 
-  def self.default_cassette_options(options = {})
+  def default_cassette_options(options = {})
     options.reverse_merge(
       {
         :allow_playback_repeats => true,
-        :match_requests_on => [:method, :path, self.query_string_matcher, :body],
+        :match_requests_on => [:method, :path, query_string_matcher, :body],
         :serialize_with => :json,
         :preserve_exact_body_bytes => false
       })
