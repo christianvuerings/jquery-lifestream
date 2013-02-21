@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/splash.html">
-  <div class="row">
+  <div class="row" data-ng-controller="SplashController">
     <div class="six columns">
       <img src="/assets/calcentral_logo_big.png" class="cc-page-splash-logo" alt="CalCentral logo" />
       <h1>Welcome to CalCentral.</h1>
@@ -15,9 +15,27 @@
     </div>
   </div>
 
-  <h1 class="cc-page-splash-features-title">
-    CalCentral keeps you informed
-  </h1>
+  <div class="row">
+    <div class="twelve columns mobile-four">
+      <div class="row panel radius cc-page-splash-blog-panel" data-ng-repeat="entry in blog_entries">
+        <div class="one columns mobile-one cc-page-splash-blog-date">
+          <p>{{entry.publishedDate | convertDrupalDate}}</p>
+        </div>
+        <div class="eleven columns mobile-three">
+          <p class="cc-splash-blog-title">
+            <a data-ng-href="{{entry.link}}">{{entry.title}}</a>
+          </p>
+          <p class="cc-splash-blog-summary" data-ng-bind-html="entry.contentSnippet | removeDrupalAppendage"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h1 class="cc-page-splash-features-title twelve columns mobile-four">
+      CalCentral keeps you informed
+    </h1>
+  </div>
 
   <div class="cc-page-splash-features">
     <div class="row">
