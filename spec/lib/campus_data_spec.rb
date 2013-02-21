@@ -15,6 +15,11 @@ describe CampusData do
     end
   end
 
+  it "should return nil from get_reg_status if an existing user has no reg status" do
+    data = CampusData.get_reg_status("2040")
+    data.should be_nil
+  end
+
   it "should find some students in Spanish 1" do
     students = CampusData.get_enrolled_students("86103", "2012", "D")
     students.should_not be_nil

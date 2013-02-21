@@ -48,7 +48,12 @@ class CampusData < ActiveRecord::Base
       )
 		where pi.ldap_uid = #{connection.quote(person_id)}
     SQL
-    connection.select_one(sql)
+    result = connection.select_one(sql)
+    if result["reg_status_cd"] == nil
+      nil
+    else
+      result
+    end
   end
 
   def self.get_enrolled_students(ccn, term_yr, term_cd)
