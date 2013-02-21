@@ -23,6 +23,7 @@ class UserCacheWarmer
           MyClasses.new(uid),
           MyGroups.new(uid),
           MyTasks::Merged.new(uid),
+          MyBadges::Merged.new(uid),
           MyUpNext.new(uid),
           MyActivities.new(uid)
       ].each do |model|

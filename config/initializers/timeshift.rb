@@ -15,12 +15,16 @@ Rails.application.config.after_initialize do
   far_future_utc = next_week_utc.advance(days: 7)
 
   substitutions = {
+      ":::SEVEN_MONTHS_AGO:::" => today.advance(:months => -7).rfc3339,
+      ":::FIVE_MONTHS_AGO:::" => today.advance(:months => -5).rfc3339,
       ":::TWENTY_SEVEN_DAYS_AGO:::" => today.advance(:days => -27).rfc3339,
       ":::TWO_DAYS_AGO_MIDNIGHT_PST:::" => today.advance(:days => -1, :minutes => -1).rfc3339,
       ":::TODAY_MIDNIGHT_PST:::" => today.rfc3339,
       ":::TOMORROW_MIDNIGHT_PST:::" => today.advance(:days => 1).rfc3339,
       ":::TODAY_AT_TEA_TIME:::" => today.advance(:hours => 15, :minutes => 47, :seconds => 13).rfc3339,
       ":::SIX_DAYS_HENCE:::" => today.advance(:days => 6).rfc3339,
+      ":::FIVE_MONTHS_HENCE:::" => today.advance(:months => 5).rfc3339,
+      ":::SEVEN_MONTHS_HENCE:::" => today.advance(:months => 7).rfc3339,
       ":::TODAY_EARLY:::" => today.advance(:hours => 0, :minutes => 05, :seconds => 00).rfc3339,
       ":::TODAY_LATE:::" => today.advance(:hours => 23, :minutes => 59, :seconds => 59).rfc3339,
       ":::TODAY_NINE:::" => today.advance(:hours => 9, :minutes => 00, :seconds => 00).rfc3339,

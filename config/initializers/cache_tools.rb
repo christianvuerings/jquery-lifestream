@@ -13,6 +13,7 @@ module Calcentral
         UserApi => :expire,
         MyClasses => :expire,
         MyTasks::Merged => :expire,
+        MyBadges::Merged => :expire,
         MyUpNext => :expire,
         MyGroups => :expire,
         MyActivities => :expire,
