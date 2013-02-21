@@ -73,11 +73,30 @@ $cc-page-splash-blue-light: #0073C3;
     border-bottom: 1px solid $cc-list-border-color;
     color: $txtColor;
     line-height: 1.6;
-    margin: 140px 7% 0;
     font-size: 30px;
     font-weight: normal;
     padding-bottom: 5px;
     text-align: center;
+  }
+
+  .cc-page-splash-blog-panel {
+    margin: 150px 0 0 0;
+    padding: 10px;
+    .cc-page-splash-blog-date {
+      padding: 0;
+      p {
+        color: $cc-launcher-border-color;
+        font-size: 15px;
+        font-weight: bold;
+      }
+    }
+    .cc-splash-blog-title {
+      font-size: 18px;
+      margin-bottom: 0;
+    }
+    .cc-splash-blog-summary {
+      margin-bottom: 0;
+    }
   }
 
   /* Mobile only */
