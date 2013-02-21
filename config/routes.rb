@@ -66,6 +66,7 @@ Calcentral::Application.routes.draw do
   match '/api/my/tasks/create' => 'my_tasks#insert_task', :via => :post, :as => :insert_task, :defaults => { :format => 'json' }
   match '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
   match '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
+  match '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
   match '/api/my/notifications' => 'my_notifications#get_feed', :as => :my_notifications, :defaults => { :format => 'json' }
 
   match '/api/my/opt_out'=> 'user_api#delete'
