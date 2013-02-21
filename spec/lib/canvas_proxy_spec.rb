@@ -122,9 +122,4 @@ describe CanvasProxy do
     response.should be_nil
   end
 
-  it "should check whether user is registered in Canvas" do
-    CanvasProxy.has_account?(@user_id).should be_true
-    CanvasProxy.has_account?('MaynardGKrebs').should be_false
-  end
-
 end
