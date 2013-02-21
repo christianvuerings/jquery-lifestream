@@ -7,19 +7,20 @@ class SakaiProxy < BaseProxy
     super(Settings.sakai_proxy, options)
   end
 
-  def self.access_granted?
+  def self.access_granted?(uid)
     settings = Settings.sakai_proxy
-    settings.fake || (settings.host && settings.shared_secret)
+    uid && (settings.fake || (settings.host && settings.shared_secret))
   end
 
-  def do_get(uid, url)
+  def get_categorized_sites
+    url = "#{@settings.host}/sakai-hybrid/sites?categorized=true"
     Rails.cache.fetch(
-        self.class.cache_key(uid),
+        self.class.cache_key(@uid),
         :expires_in => Settings.cache.api_expires_in,
         :race_condition_ttl => 2.seconds
     ) do
-      token = build_token uid
-      Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #{uid} with x-sakai-token = #{token}"
+      token = build_token @uid
+      Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #@uid with x-sakai-token = #{token}"
       begin
         response = FakeableProxy.wrap_request(APP_ID, @fake) {
           Faraday::Connection.new(
@@ -49,6 +50,8 @@ class SakaiProxy < BaseProxy
       end
     end
   end
+
+  private
 
   def build_token(uid)
     # the x-sakai-token format is defined here:

@@ -20,29 +20,29 @@ module FakeableProxy
     end
   end
 
-  def self.wrap_request(proxy_id, force_fake = nil, &proc_block)
+  def self.wrap_request(proxy_id, force_fake = nil, extra_cassette_options = {}, &proc_block)
     #Bypass on normal requests
     return yield unless force_fake || Settings.freshen_vcr
 
     if Settings.freshen_vcr
-      return record_new_responses(proxy_id, proc_block)
+      return record_new_responses(proxy_id, extra_cassette_options, proc_block)
     end
-    replay_fake_responses(proxy_id, proc_block)
+    replay_fake_responses(proxy_id, extra_cassette_options, proc_block)
   end
 
   private
 
-  def self.record_new_responses(proxy_id, proc_block)
+  def self.record_new_responses(proxy_id, extra_cassette_options, proc_block)
     Rails.logger.warn "FakeableProxy Recording new response for #{proxy_id}"
     VCR.configure do |c|
       c.cassette_library_dir = 'fixtures/raw_vcr_recordings'
     end
-    VCR.use_cassette(proxy_id, options=default_cassette_options({:record => :new_episodes}), &block=proc_block)
+    VCR.use_cassette(proxy_id, options=default_cassette_options({:record => :new_episodes}.merge(extra_cassette_options)), &block=proc_block)
   end
 
-  def self.replay_fake_responses(proxy_id, proc_block)
+  def self.replay_fake_responses(proxy_id, extra_cassette_options, proc_block)
     begin
-      VCR.use_cassette(proxy_id, options=default_cassette_options({:record => :none}), &block=proc_block)
+      VCR.use_cassette(proxy_id, options=default_cassette_options({:record => :none}.merge(extra_cassette_options)), &block=proc_block)
     rescue VCR::Errors::UnhandledHTTPRequestError => e
       logger_hash = {:method => e.request.method,
                      :uri => e.request.uri,

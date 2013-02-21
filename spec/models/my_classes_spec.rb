@@ -5,7 +5,7 @@ describe "MyClasses" do
     @user_id = rand(99999).to_s
     @fake_canvas_proxy = CanvasCoursesProxy.new({fake: true})
     @fake_canvas_courses = JSON.parse(@fake_canvas_proxy.courses.body)
-    @fake_sakai_proxy = SakaiCategorizedProxy.new({fake: true})
+    @fake_sakai_proxy = SakaiProxy.new({:user_id => "1234", :fake => true})
   end
 
   it "should contain all my Canvas courses" do
@@ -35,7 +35,7 @@ describe "MyClasses" do
   it "should return bSpace course sites for the current term" do
     CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(true)
-    SakaiCategorizedProxy.stub(:new).and_return(@fake_sakai_proxy)
+    SakaiProxy.stub(:new).and_return(@fake_sakai_proxy)
     my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should be > 0
     my_classes[:classes].each do |my_class|
@@ -49,7 +49,7 @@ describe "MyClasses" do
   it "should return bSpace courses when Canvas service is unavailable" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:access_granted?).and_return(true)
-    SakaiCategorizedProxy.stub(:new).and_return(@fake_sakai_proxy)
+    SakaiProxy.stub(:new).and_return(@fake_sakai_proxy)
     CanvasProxy.any_instance.stub(:request).and_return(nil)
     my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should be > 0
@@ -62,7 +62,7 @@ describe "MyClasses" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     SakaiProxy.stub(:access_granted?).and_return(true)
-    SakaiProxy.any_instance.stub(:do_get).and_return({status_code: 503})
+    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return({status_code: 503})
     my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should be > 0
     my_classes[:classes].each do |my_class|

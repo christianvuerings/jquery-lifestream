@@ -18,7 +18,6 @@ class CanvasProxy < BaseProxy
                      options[:access_token]
                    end
     @client = Signet::OAuth2::Client.new(:access_token => access_token)
-    @uid = options[:user_id]
   end
 
   def request(api_path, vcr_id = "", fetch_options = {})
@@ -51,7 +50,7 @@ class CanvasProxy < BaseProxy
   end
 
   def self.access_granted?(user_id)
-    Settings.canvas_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"] != nil)
+    user_id && (Settings.canvas_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"] != nil))
   end
 
   def url_root

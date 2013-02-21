@@ -4,9 +4,9 @@ class MyGroups < MyMergedModel
     response = {
         :groups => []
     }
-    if SakaiProxy.access_granted?
-      sakai_proxy = SakaiCategorizedProxy.new
-      sakai_response = sakai_proxy.get_categorized_sites(@uid)
+    if SakaiProxy.access_granted?(@uid)
+      sakai_proxy = SakaiProxy.new({:user_id => @uid})
+      sakai_response = sakai_proxy.get_categorized_sites
       if sakai_response[:status_code] == 200
         sakai_categories = sakai_response[:body]["categories"] || []
         filter_categories = ["Projects"]
@@ -42,7 +42,27 @@ class MyGroups < MyMergedModel
         end
       end
     end
-    response[:groups].sort! {|x, y| x[:title].casecmp(y[:title])}
+    if CalLinkProxy.access_granted?(@uid)
+      cal_link_proxy = CalLinkProxy.new({:user_id => @uid})
+      if (cal_link_groups = cal_link_proxy.get_memberships)
+        Rails.logger.debug "body = #{cal_link_groups[:body]}"
+        if cal_link_groups[:body] && cal_link_groups[:body]["items"]
+          seen_orgs = Set.new
+          cal_link_groups[:body]["items"].each do |group|
+            if seen_orgs.add? group["organizationId"]
+              response[:groups].push({
+                                         title: group["organizationName"],
+                                         id: group["organizationId"].to_s,
+                                         emitter: CalLinkProxy::APP_ID,
+                                         color_class: "callink-group",
+                                         site_url: "TODO"
+                                     })
+            end
+          end
+        end
+      end
+    end
+    response[:groups].sort! { |x, y| x[:title].casecmp(y[:title]) }
     logger.debug "#{self.class.name} get_feed is #{response.inspect}"
     response
   end

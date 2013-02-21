@@ -19,10 +19,10 @@ class MyClasses < MyMergedModel
         end
       end
     end
-    if SakaiProxy.access_granted?
-      sakai_proxy = SakaiCategorizedProxy.new
+    if SakaiProxy.access_granted?(@uid)
+      sakai_proxy = SakaiProxy.new({:user_id => @uid})
       current_terms = Settings.sakai_proxy.current_terms || []
-      sakai_response = sakai_proxy.get_categorized_sites(@uid)
+      sakai_response = sakai_proxy.get_categorized_sites
       if (sakai_response[:status_code] == 200)
         sakai_categories = sakai_response[:body]["categories"] || []
         sakai_categories.each do |section|
