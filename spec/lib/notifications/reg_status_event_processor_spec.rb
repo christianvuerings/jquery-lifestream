@@ -44,6 +44,12 @@ describe RegStatusEventProcessor do
     @processor.process(event, timestamp).should == false
   end
 
+  it "should skip an event if the user exists but doesn't have a reg status" do
+    event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":2040}}')
+    timestamp = Time.now.to_datetime
+    @processor.process(event, timestamp).should == false
+  end
+
   it "should remove a deceased student from the system" do
     UserApi.should_receive(:delete)
 
