@@ -9,7 +9,7 @@
           <div class="ten mobile-three columns">
             <div
               class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
-              data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[group.emitter=='Canvas']">
+              data-ng-class="'cc-icon-{{group.emitter|lowercase}}'">
             </div>
             <a class="cc-ellipsis"
               data-ng-href="{{group.site_url}}"
