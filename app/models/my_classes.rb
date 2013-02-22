@@ -32,7 +32,7 @@ class MyClasses < MyMergedModel
                                           name: site["shortDescription"],
                                           course_code: site["title"],
                                           id: site["id"],
-                                          emitter: "bSpace",
+                                          emitter: SakaiProxy::APP_ID,
                                           color_class: "bspace-class",
                                           site_url: site["url"]
                                       })
