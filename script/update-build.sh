@@ -19,6 +19,11 @@ echo | $LOGIT
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
+echo "`date`: Checking system JAR dependencies..." | $LOGIT
+./script/install-jars.rb 2>&1 | $LOGIT
+
+echo | $LOGIT
+echo "------------------------------------------" | $LOGIT
 echo "`date`: Stopping CalCentral..." | $LOGIT
 ./script/stop-trinidad.sh
 
