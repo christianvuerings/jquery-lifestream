@@ -6,6 +6,7 @@ $cc-alert-color: #fb0007;
 $cc-border-color: #999;
 $cc-button-color: #80c7de;
 $cc-column-border-color: #dedede;
+$cc-dark-grey: #2c2d2e;
 $cc-launcher-border-color: #114d80;
 $cc-light-grey: #4a4b4d;
 $cc-list-border-color: #cacaca;
@@ -91,6 +92,10 @@ button {
 }
 .button {
   background-color: $cc-button-color;
+  &.medium {
+    font-weight: normal;
+    padding: 7px 12px;
+  }
   &.selected {
     @include background(linear-gradient(#7ec9df, #35b5d4));
   }

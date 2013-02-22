@@ -1,27 +1,35 @@
 .cc-settings {
-  .row {
-    margin-top: 10px;
+  button {
+    &.secondary {
+      text-decoration: none;
+    }
   }
-
-  .cc-settings-header div {
-    font-size: 16px;
-    font-weight: bold;
+  h1 {
+    color: $cc-dark-grey;
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 20px;
   }
-
-  .cc-settings-service {
-    font-size: 16px;
-    margin-top: 10px;
+  h2 {
+    color: $cc-light-grey;
+    font-size: 18px;
   }
-
-  .cc-settings-connection-status-icon {
-    height: 24px;
-    margin-left: 10px;
-    width: 24px;
+  .cc-settings-dashboard-button {
+    margin: 40px 0 30px 0;
   }
-
-  .cc-settings-connection-status-icon-small {
-    height: 18px;
-    width: 18px;
+  .cc-settings-section {
+    margin-top: 30px;
+  }
+  .cc-settings-service-description {
+    color: #797979;
+  }
+  .cc-settings-service-description-block {
+    padding-left: 0;
+  }
+  .cc-settings-service-row {
+    border-top: 1px solid $cc-medium-grey;
+    margin-bottom: 20px;
+    padding-top: 10px;
   }
 
   @media only screen and (max-width: 767px) {
