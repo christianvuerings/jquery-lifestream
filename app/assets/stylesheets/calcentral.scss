@@ -110,7 +110,7 @@ button {
 
 @mixin cc-button-common {
   font-size: 13px;
-  padding: 6px 15px;
+  padding: 3px 15px;
 }
 .cc-button-submit-enabled {
   @include cc-button-common;
