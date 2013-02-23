@@ -10,6 +10,7 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/rails'
 require 'webmock/rspec'
+require 'spec_helper_module'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -69,6 +70,9 @@ RSpec.configure do |config|
   config.after :suite do
     Celluloid.logger = nil
   end
+
+  # Include some helper functions for the specs.
+  config.include SpecHelperModule
 end
 
 Capybara.default_host = 'http://localhost:3000'

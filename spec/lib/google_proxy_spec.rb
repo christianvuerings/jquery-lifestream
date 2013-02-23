@@ -85,8 +85,10 @@ describe GoogleProxy do
     needsAction_response.data["completed"].blank?.should == true
 
     delete_proxy = GoogleDeleteTaskListProxy.new proxy_opts
-    delete_response = delete_proxy.delete_task_list(test_task_list_id)
-    delete_response.should == true
+    suppress_rails_logging {
+      delete_response = delete_proxy.delete_task_list(test_task_list_id)
+      delete_response.should == true
+    }
   end
 
   it "should simulate a token update before a real request using the Tammi account", :testext => true do

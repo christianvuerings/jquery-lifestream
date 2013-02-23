@@ -18,13 +18,17 @@ feature "act_as_user" do
     UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
     login_with_cas "192517"
     UserAuth.stub(:is_superuser?, '192517').and_return(true)
-    act_as_user "2040"
+    suppress_rails_logging {
+      act_as_user "2040"
+    }
     UserData.unstub(:where)
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
     response["uid"].should == "2040"
-    stop_act_as_user
+    suppress_rails_logging {
+     stop_act_as_user
+    }
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
@@ -35,7 +39,9 @@ feature "act_as_user" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     login_with_cas "192517"
     UserAuth.stub(:is_superuser?, '192517').and_return(true)
-    act_as_user "gobbly-gook"
+    suppress_rails_logging {
+      act_as_user "gobbly-gook"
+    }
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true

@@ -1,4 +1,5 @@
 module IntegrationSpecHelper
+
   def login_with_cas(user)
     currentAuth = OmniAuth.config.mock_auth[:cas]
     unless currentAuth.is_a?(Symbol)

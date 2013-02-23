@@ -17,7 +17,10 @@ describe SakaiProxy do
   it "should pass through timeout errors while connecting to bSpace" do
     bad_client = SakaiProxy.new({:user_id => @uid, :fake => false})
     stub_request(:any, "#{Settings.sakai_proxy.host}/sakai-hybrid/sites?categorized=true").to_timeout
-    data = bad_client.get_categorized_sites
+    data = {}
+    suppress_rails_logging do
+      data = bad_client.get_categorized_sites
+    end
     data[:status_code].should == 503
     data[:body].should == "Remote server unreachable"
     WebMock.reset!
@@ -29,7 +32,10 @@ describe SakaiProxy do
         status: 503,
         body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
     )
-    data = bad_client.get_categorized_sites
+    data = {}
+    suppress_rails_logging do
+      data = bad_client.get_categorized_sites
+    end
     data[:status_code].should == 503
     WebMock.reset!
   end
