@@ -6,6 +6,20 @@ describe CampusData do
     data['first_name'].should == "Oliver"
   end
 
+  it "should find a user who has a bunch of blocks" do
+    data = CampusData.get_person_attributes(300847)
+    if Settings.campusdb.adapter == "h2"
+      # we will only have predictable reg_status_cd values in our fake Oracle db.
+      data['educ_level'].should == "Masters"
+      data['admin_blk_flag'].should == "Y"
+      data['acad_blk_flag'].should == "Y"
+      data['fin_blk_flag'].should == "Y"
+      data['reg_blk_flag'].should == "Y"
+      data['tot_enroll_unit'].should == "1"
+      data['cal_residency_flag'].should == "N"
+    end
+  end
+
   it "should find Stu TestB's registration status" do
     data = CampusData.get_reg_status(300846)
     if Settings.campusdb.adapter == "h2"

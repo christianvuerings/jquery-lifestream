@@ -17,7 +17,8 @@ class CampusData < ActiveRecord::Base
     sql = <<-SQL
 		select pi.ldap_uid, pi.ug_grad_flag, pi.first_name, pi.last_name,
       pi.person_name, pi.email_address, pi.affiliations,
-      reg.reg_status_cd
+      reg.reg_status_cd, reg.educ_level, reg.admin_cancel_flag, reg.acad_blk_flag, reg.admin_blk_flag,
+      reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.cal_residency_flag
 		from bspace_person_info_vw pi
     left outer join bspace_student_term_vw reg on
       ( reg.ldap_uid = pi.ldap_uid
