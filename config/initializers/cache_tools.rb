@@ -33,6 +33,7 @@ module Calcentral
         GoogleInsertTaskProxy => :expire,
         GoogleTasksListProxy => :expire,
         GoogleUpdateTaskProxy => :expire,
+        GoogleUserinfoProxy => :expire,
 
         SakaiProxy => :expire
 

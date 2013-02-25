@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013022123181900) do
+ActiveRecord::Schema.define(:version => 2013022221382900) do
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 2013022123181900) do
     t.text    "access_token"
     t.text    "refresh_token"
     t.integer "expiration_time", :limit => 8
+    t.text    "app_data"
   end
 
   add_index "oauth2_data", ["uid", "app_id"], :name => "index_oauth2_data_on_uid_app_id", :unique => true

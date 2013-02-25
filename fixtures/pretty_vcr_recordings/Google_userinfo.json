@@ -1,0 +1,84 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/oauth2/v2/userinfo",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "CalCentral/v1 google-api-ruby-client/0.6.2 Mac OS X/10.7.5"
+          ],
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "no-cache, no-store, max-age=0, must-revalidate"
+          ],
+          "pragma": [
+            "no-cache"
+          ],
+          "expires": [
+            "Fri, 01 Jan 1990 00:00:00 GMT"
+          ],
+          "date": [
+            "Mon, 25 Feb 2013 21:52:26 GMT"
+          ],
+          "content-type": [
+            "application/json; charset=UTF-8"
+          ],
+          "x-content-type-options": [
+            "nosniff"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-xss-protection": [
+            "1; mode=block"
+          ],
+          "server": [
+            "GSE"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"id\": \"114856790171836979104\",\n \"email\": \"tammi.chang.clc@gmail.com\",\n \"verified_email\": true,\n \"name\": \"Tammi Chang\",\n \"given_name\": \"Tammi\",\n \"family_name\": \"Chang\",\n \"link\": \"https://plus.google.com/114856790171836979104\",\n \"gender\": \"female\",\n \"birthday\": \"0000-01-01\",\n \"locale\": \"en\"\n}\n",
+          "debug_json": {
+            "id": "114856790171836979104",
+            "email": "tammi.chang.clc@gmail.com",
+            "verified_email": true,
+            "name": "Tammi Chang",
+            "given_name": "Tammi",
+            "family_name": "Chang",
+            "link": "https://plus.google.com/114856790171836979104",
+            "gender": "female",
+            "birthday": "0000-01-01",
+            "locale": "en"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Mon, 25 Feb 2013 21:52:26 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.4.0"
+}
