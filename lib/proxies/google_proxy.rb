@@ -80,7 +80,8 @@ class GoogleProxy < BaseProxy
       page_token = get_next_page_token(result_page)
 
       result_pages << result_page
-      if result_page.response.status != 200
+      # Tasks uses 204 for deletes.
+      if ![200, 204].include?(result_page.response.status)
         Rails.logger.warn "GoogleProxy request stopped on error: #{result_page.response.inspect}"
         break
       end

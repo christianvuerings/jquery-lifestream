@@ -22,20 +22,16 @@ describe "MyBadges" do
   end
 
   it "should be able to ignore entries with malformed fields" do
-    default_logger = Rails.logger
-    Rails.logger = Logger.new("/dev/null")
-    begin
-      GoogleProxy.stub(:access_granted?).and_return(true)
-      GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
-      MyBadges::GoogleDrive.any_instance.stub(:is_unread_message?).and_raise(ArgumentError, "foo")
-      badges = MyBadges::Merged.new @user_id
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
+    MyBadges::GoogleDrive.any_instance.stub(:is_unread_message?).and_raise(ArgumentError, "foo")
+    badges = MyBadges::Merged.new @user_id
+    suppress_rails_logging {
       filtered_feed =  badges.get_feed
       filtered_feed["unread_badge_counts"].empty?.should_not be_true
       filtered_feed["unread_badge_counts"].each do |key, value|
         value.should == 0
       end
-    ensure
-      Rails.logger = default_logger
-    end
+    }
   end
 end

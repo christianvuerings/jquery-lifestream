@@ -129,8 +129,10 @@ describe "MyTasks" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
     my_tasks = MyTasks::Merged.new @user_id
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "foo"})
-    response.should == {}
+    suppress_rails_logging {
+      response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "foo"})
+      response.should == {}
+    }
   end
 
   it "should succeed google update_tasks with a properly formatted params" do

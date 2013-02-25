@@ -86,17 +86,13 @@ describe CanvasProxy do
   end
 
   it "should return nil if server is not available" do
-    original_logger = Rails.logger
-    Rails.logger = Logger.new "/dev/null"
-    begin
-      client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
-      stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
+    client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
+    stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
+    suppress_rails_logging {
       response = client.courses
       response.should be_nil
-      WebMock.reset!
-    ensure
-      Rails.logger = original_logger
-    end
+    }
+    WebMock.reset!
   end
 
   it "should return nil if server returns error status" do
@@ -105,8 +101,10 @@ describe CanvasProxy do
         status: 503,
         body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
     )
-    response = client.courses
-    response.should be_nil
+    suppress_rails_logging {
+      response = client.courses
+      response.should be_nil
+    }
     WebMock.reset!
   end
 
@@ -118,8 +116,10 @@ describe CanvasProxy do
 
   it "should not find an unregistered user's profile" do
     client = CanvasUserProfileProxy.new(:user_id => 'MaynardGKrebs')
-    response = client.user_profile
-    response.should be_nil
+    suppress_rails_logging {
+      response = client.user_profile
+      response.should be_nil
+    }
   end
 
 end
