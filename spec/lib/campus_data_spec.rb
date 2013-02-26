@@ -52,4 +52,9 @@ describe CampusData do
     end
   end
 
+  it "should check whether the db is alive" do
+    alive = CampusData.check_alive
+    alive.should_not be_nil
+  end
+
 end

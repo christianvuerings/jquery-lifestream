@@ -79,4 +79,8 @@ class CampusData < ActiveRecord::Base
     connection.select_one(sql)
   end
 
+  def self.check_alive
+    connection.select_one("select 1 from DUAL")
+  end
+
 end
