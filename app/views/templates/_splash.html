@@ -15,17 +15,17 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" data-ng-show="latest_release_note.title">
     <div class="twelve columns mobile-four">
       <div class="row panel radius cc-page-splash-blog-panel">
         <div class="one columns mobile-one cc-page-splash-blog-date">
-          <p><%= @release_notes["date"] %></p>
+          <p>{{latest_release_note.date}}</p>
         </div>
         <div class="eleven columns mobile-three">
           <p class="cc-splash-blog-title">
-            <a href="<%= @release_notes["link"] %>"><%= @release_notes["title"] %></a>
+            <a data-ng-href="{{latest_release_note.link}}">{{latest_release_note.title}}</a>
           </p>
-          <p class="cc-splash-blog-summary"><%= @release_notes["snippet"] %></p>
+          <p class="cc-splash-blog-summary" data-ng-bind-html="latest_release_note.snippet"></p>
         </div>
       </div>
     </div>

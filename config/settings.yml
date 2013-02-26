@@ -72,7 +72,7 @@ cal_link_proxy:
   public_key: secret set in production
   private_key: secret set in production
 
-blog_feed_proxy:
+blog_release_notes_feed_proxy:
   fake: false
   feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
 

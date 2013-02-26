@@ -1,7 +1,7 @@
 class BlogFeed < BaseProxy
 
   def initialize(options = {})
-    super(Settings.blog_feed_proxy, options)
+    super(Settings.blog_release_notes_feed_proxy, options)
   end
 
   def get_release_notes
@@ -16,26 +16,33 @@ class BlogFeed < BaseProxy
 
       require 'open-uri'
 
-      release_notes = {}
-      doc = Nokogiri::XML(open(Settings.blog_feed_proxy.feed_url))
-      @entry = doc.xpath('//item').first
+      response = {
+        :entries => []
+      }
 
-      # Process pub date string
-      ds = @entry.xpath('pubDate').text
-      d = Date.parse(ds)
+      doc = Nokogiri::XML(open(Settings.blog_release_notes_feed_proxy.feed_url))
 
-      # Process and strip description
-      @snippet = @entry.xpath('description').text
-      @snippet = Nokogiri::HTML(@snippet).text # To strip all HTML tags, first convert to Nokogiri HTML node
-      @snippet = @snippet.gsub!( /read more$/, "" ) # Trim off text appended to description by Drupal
+      @entries = doc.xpath('//item')
+      @entries.each do |entry|
 
-      # release_notes array used directly in Splash template; not in API
-      release_notes["title"] = @entry.xpath('title').text
-      release_notes["link"] = @entry.xpath('link').text
-      release_notes["date"] = d.strftime("%b %d")
-      release_notes["snippet"] = @snippet
+        # Process pub date string
+        ds = entry.xpath('pubDate').text
+        d = Date.parse(ds)
 
-      release_notes
+        # Process and strip description
+        @snippet = entry.xpath('description').text
+        @snippet = Nokogiri::HTML(@snippet).text # To strip all HTML tags, first convert to Nokogiri HTML node
+        @snippet = @snippet.gsub!( /read more$/, "" ) # Trim off text appended to description by Drupal
+        @snippet = @snippet.gsub!( /\n/, "" )
+        response[:entries].push({
+                                  title: entry.xpath('title').text,
+                                  link: entry.xpath('link').text,
+                                  date: d.strftime("%b %d"),
+                                  snippet: @snippet
+                                })
+      end
+
+      response
     end
   end
 end
