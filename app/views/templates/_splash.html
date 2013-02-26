@@ -17,15 +17,15 @@
 
   <div class="row">
     <div class="twelve columns mobile-four">
-      <div class="row panel radius cc-page-splash-blog-panel" data-ng-repeat="entry in blog_entries">
+      <div class="row panel radius cc-page-splash-blog-panel">
         <div class="one columns mobile-one cc-page-splash-blog-date">
-          <p>{{entry.publishedDate | convertDrupalDate}}</p>
+          <p><%= @release_notes["date"] %></p>
         </div>
         <div class="eleven columns mobile-three">
           <p class="cc-splash-blog-title">
-            <a data-ng-href="{{entry.link}}">{{entry.title}}</a>
+            <a href="<%= @release_notes["link"] %>"><%= @release_notes["title"] %></a>
           </p>
-          <p class="cc-splash-blog-summary" data-ng-bind-html="entry.contentSnippet | removeDrupalAppendage"></p>
+          <p class="cc-splash-blog-summary"><%= @release_notes["snippet"] %></p>
         </div>
       </div>
     </div>
