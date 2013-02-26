@@ -72,6 +72,10 @@ cal_link_proxy:
   public_key: secret set in production
   private_key: secret set in production
 
+blog_feed_proxy:
+  fake: false
+  feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
+
 # Analytics settings ID
 # This will need to be different for every server (dev/qa/production)
 google_analytics_id: UA-XXXXX-X

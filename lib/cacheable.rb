@@ -8,6 +8,11 @@ module Calcentral
       key
     end
 
+    def global_cache_key()
+      key = "global/#{self.name}"
+      Rails.logger.debug "#{self.name} cache_key will be #{key}"
+    end
+
     def expire(uid)
       key = self.cache_key uid
       Rails.cache.delete(key, :force => true)
