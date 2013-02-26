@@ -12,7 +12,9 @@ class BlogFeed < BaseProxy
         ) do
 
       # Feed is fetched on server start, then updated in cache at standard interval
-      Rails.logger.info "Fetching release notes from blog"
+      Rails.logger.info "#{self.class.name} Fetching release notes from blog"
+
+      require 'open-uri'
 
       release_notes = {}
       doc = Nokogiri::XML(open(Settings.blog_feed_proxy.feed_url))
