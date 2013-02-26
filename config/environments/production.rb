@@ -66,6 +66,6 @@ Calcentral::Application.configure do
                                                          {:expires_in => Settings.cache.maximum_expires_in,
                                                           :namespace => ServerRuntime.get_settings["git_commit"]})
   config.cache_store.logger = Logger.new("#{Rails.root}/log/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
-  config.cache_store.logger.level = Logger::INFO
+  config.cache_store.logger.level = Logger::DEBUG
 
 end
