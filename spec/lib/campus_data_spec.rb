@@ -4,6 +4,11 @@ describe CampusData do
   it "should find Oliver" do
     data = CampusData.get_person_attributes(2040)
     data['first_name'].should == "Oliver"
+    if Settings.campusdb.adapter == "h2"
+      data[:roles][:student].should == false
+      data[:roles][:faculty].should == false
+      data[:roles][:staff].should == true
+    end
   end
 
   it "should find a user who has a bunch of blocks" do
@@ -17,6 +22,9 @@ describe CampusData do
       data['reg_blk_flag'].should == "Y"
       data['tot_enroll_unit'].should == "1"
       data['cal_residency_flag'].should == "N"
+      data[:roles][:student].should == true
+      data[:roles][:faculty].should == false
+      data[:roles][:staff].should == false
     end
   end
 
