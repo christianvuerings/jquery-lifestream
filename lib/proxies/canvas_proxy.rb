@@ -23,8 +23,7 @@ class CanvasProxy < BaseProxy
   def request(api_path, vcr_id = "", fetch_options = {})
     Rails.cache.fetch(
         self.class.cache_key(@uid),
-        :expires_in => Settings.cache.api_expires_in,
-        :race_condition_ttl => 2.seconds
+        :expires_in => Settings.cache.api_expires_in
     ) do
       fetch_options.reverse_merge!(
           :method => :get,

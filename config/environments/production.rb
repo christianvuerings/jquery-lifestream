@@ -5,7 +5,7 @@ Calcentral::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = Settings.application.serve_static_assets
@@ -62,9 +62,15 @@ Calcentral::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Caching store
-  config.cache_store = ActiveSupport::Cache.lookup_store(:dalli_store, *Settings.cache.servers,
-                                                         {:expires_in => Settings.cache.maximum_expires_in,
-                                                          :namespace => ServerRuntime.get_settings["git_commit"]})
+  config.cache_store = ActiveSupport::Cache.lookup_store(
+      :dalli_store,
+      *Settings.cache.servers,
+      {
+          :expires_in => Settings.cache.maximum_expires_in,
+          :namespace => ServerRuntime.get_settings["git_commit"],
+          :race_condition_ttl => Settings.cache.race_condition_ttl
+      }
+  )
   config.cache_store.logger = Logger.new("#{Rails.root}/log/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
   config.cache_store.logger.level = Logger::DEBUG
 

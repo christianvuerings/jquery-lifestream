@@ -7,8 +7,7 @@ class BlogFeed < BaseProxy
   def get_latest_release_notes
     Rails.cache.fetch(
       self.class.global_cache_key,
-        :expires_in => Settings.cache.api_expires_in,
-        :race_condition_ttl => 2.seconds
+        :expires_in => Settings.cache.api_expires_in
         ) do
 
       # Feed is fetched on server start, then updated in cache at standard interval

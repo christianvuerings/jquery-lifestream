@@ -87,6 +87,7 @@ cache:
   maximum_expires_in: <%= 1.day %>
   # Must be less than the shortest-lived source cache. 0 to pass-through.
   api_expires_in: <%= 15.minutes %>
+  race_condition_ttl: <%= 10.seconds %>
 
 # Cache warmer settings
 cache_warmer:
