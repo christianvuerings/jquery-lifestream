@@ -15,7 +15,7 @@ class CanvasUserActivityProcessor
     # Translate the feed
     Rails.cache.fetch(
       self.class.cache_key(@uid),
-      :expires_in => Settings.cache.api_expires_in
+      :expires_in => self.class.expires_in
     ) do
       @processed_feed = internal_process_feed(raw_feed)
       remove_dismissed_notifications!

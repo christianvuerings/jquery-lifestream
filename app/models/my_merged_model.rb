@@ -17,7 +17,7 @@ class MyMergedModel
 
     Rails.cache.fetch(
         self.class.cache_key(uid),
-        :expires_in => Settings.cache.api_expires_in
+        :expires_in => self.class.expires_in
     ) do
       get_feed_internal(*opts)
     end
