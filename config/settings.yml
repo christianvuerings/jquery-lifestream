@@ -88,6 +88,7 @@ cache:
   race_condition_ttl: <%= 10.seconds %>
   expiration:
     default: <%= 5.minutes %>
+    BlogFeed: <%= 1.hour %>
     CalLinkProxy: <%= 24.hours %>
     CanvasComingUpProxy: <%= 1.hour %>
     CanvasCoursesProxy: <%= 8.hours %>
