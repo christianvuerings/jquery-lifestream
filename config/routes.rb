@@ -69,6 +69,8 @@ Calcentral::Application.routes.draw do
   match '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
   match '/api/my/notifications' => 'my_notifications#get_feed', :as => :my_notifications, :defaults => { :format => 'json' }
 
+  match '/api/blog/release_notes/latest' => 'blog_feed#get_latest_release_notes', :as => :blog_latest_release_notes, :defaults => { :format => 'json' }
+
   match '/api/my/opt_out'=> 'user_api#delete'
 
   if Rails.env.development?
