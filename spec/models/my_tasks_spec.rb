@@ -6,9 +6,11 @@ describe "MyTasks" do
     @fake_google_tasks_list_proxy = GoogleTasksListProxy.new({fake: true})
     @fake_google_update_task_proxy = GoogleUpdateTaskProxy.new({fake: true})
     @fake_google_tasks_array = @fake_google_tasks_list_proxy.tasks_list()
+    @fake_google_clear_completed_tasks_proxy = GoogleClearTaskListProxy.new({fake: true})
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
     @fake_canvas_coming_up_proxy = CanvasComingUpProxy.new({fake: true})
     @fake_canvas_todo_proxy = CanvasTodoProxy.new({fake: true})
+
   end
 
   it "should load nicely with the pre-recorded fake Google and Canvas proxy feeds using the server's timezone" do
@@ -171,6 +173,20 @@ describe "MyTasks" do
     end
   end
 
+  it "should clear completed Google tasks" do
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    GoogleClearTaskListProxy.stub(:new).and_return(@fake_google_clear_completed_tasks_proxy)
+    my_tasks_model = MyTasks::Merged.new(@user_id)
+    response = my_tasks_model.clear_completed_tasks params={"emitter" => "Google"}
+    response.should == {:tasks_cleared => true}
+  end
+
+  it "should do nothing to Canvas Tasks" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    my_tasks_model = MyTasks::Merged.new(@user_id)
+    response = my_tasks_model.clear_completed_tasks params={"emitter" => "Canvas"}
+    response.should == {:tasks_cleared => false}
+  end
 end
 
 def get_task_list_id_and_task_id

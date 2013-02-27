@@ -49,6 +49,14 @@ class MyTasks::GoogleTasks
     return_response google_proxy.insert_task(task_list_id, body)
   end
 
+  def clear_completed_tasks(task_list_id="@default")
+    google_proxy = GoogleClearTaskListProxy.new(user_id: @uid)
+    Rails.logger.debug "#{self.class.name} clearing task list, sending to Google (task_list_id):
+          {#{task_list_id}}"
+    result = google_proxy.clear_task_list(task_list_id)
+    {tasks_cleared: result}
+  end
+
   private
 
   def format_google_insert_task_request(entry)

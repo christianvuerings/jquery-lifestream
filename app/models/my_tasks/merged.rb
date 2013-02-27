@@ -45,9 +45,20 @@ class MyTasks::Merged < MyMergedModel
   end
 
   def insert_task(params, task_list_id="@default")
+    return {} if @enabled_sources[params["emitter"]].blank?
     source = @enabled_sources[params["emitter"]][:source]
     response = source.insert_task(params, task_list_id)
     if response != {}
+      expire_cache
+    end
+    response
+  end
+
+  def clear_completed_tasks(params, task_list_id="@default")
+    return {tasks_cleared: false} if @enabled_sources[params["emitter"]].blank?
+    source = @enabled_sources[params["emitter"]][:source]
+    response = source.clear_completed_tasks(task_list_id)
+    if response[:tasks_cleared] != false
       expire_cache
     end
     response
