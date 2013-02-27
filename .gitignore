@@ -36,6 +36,3 @@ app/assets/stylesheets/application.css
 
 # Ignore processed VCR files
 /fixtures/vcr_cassettes/*.json
-
-# Ignore raw VCR files
-/fixtures/raw_vcr_recordings/*.json
