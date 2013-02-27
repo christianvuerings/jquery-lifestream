@@ -4,6 +4,5 @@ class BootstrapController < ApplicationController
     UserData.find_by_sql("select 1").first # so that an error gets thrown if postgres is dead.
     CampusData.check_alive # so an error gets thrown if Oracle is dead.
     @server_settings = ServerRuntime.get_settings
-    @latest_release_notes = BlogFeed.new.get_latest_release_notes
   end
 end
