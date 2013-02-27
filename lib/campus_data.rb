@@ -34,6 +34,11 @@ class CampusData < ActiveRecord::Base
           :summary => self.reg_status_translator.status_summary(result["reg_status_cd"]),
           :explanation => self.reg_status_translator.status_explanation(result["reg_status_cd"])
       }
+      result[:roles] = {
+          :student => result['affiliations'].include?("STUDENT-TYPE-"),
+          :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
+          :staff => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF")
+      }
     end
     result
   end

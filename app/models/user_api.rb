@@ -67,6 +67,7 @@ class UserApi < MyMergedModel
         :has_google_access_token => GoogleProxy.access_granted?(@uid),
         :has_canvas_account => CanvasProxy.has_account?(@uid),
         :reg_status => @campus_attributes[:reg_status],
+        :roles => @campus_attributes[:roles],
         :first_login_at => @first_login_at
     }
   end
