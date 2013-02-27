@@ -8,20 +8,20 @@ $cc-button-color: #80c7de;
 $cc-column-border-color: #dedede;
 $cc-dark-grey: #2c2d2e;
 $cc-launcher-border-color: #114d80;
-$cc-light-grey: #4a4b4d;
+$cc-light-grey: #dddddd;
 $cc-list-border-color: #cacaca;
 $cc-main-background-color: #f2f2f2;
 $cc-main-header-border-color: #d3d8d8;
-$cc-medium-grey: #dddddd;
+$cc-medium-grey: #4a4b4d;
 $cc-nav-gradient1-color: #012955;
 $cc-nav-gradient2-color: #3b5d86;
 $cc-nav-link-color: #fdd692;
 $cc-placeholder-color: #aaa;
 $cc-shadow-color: #ccc;
-$cc-widget-section-label-color: #515151;
 $cc-widget-highlight-background-color: #f2fef3;
 $cc-widget-hover-background-color: #e3ffff;
 $cc-widget-more-background-color: #c8dee9;
+$cc-widget-section-label-color: #515151;
 
 /* Body */
 body {
@@ -139,7 +139,7 @@ button {
   @include background(linear-gradient(#fff, #e5e5e5));
   border: 2px solid #d2d2d2;
   border-radius: 6px;
-  color: $cc-light-grey;
+  color: $cc-medium-grey;
 }
 
 .cc-button-link {
