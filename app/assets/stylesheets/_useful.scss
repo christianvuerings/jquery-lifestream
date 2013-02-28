@@ -1,3 +1,9 @@
+/* Useful mixins */
+@mixin cc-column-sameheight {
+  margin-bottom: -99969px;
+  padding-bottom: 99999px;
+}
+
 /* Useful classes */
 .cc-alert {
   color: $cc-alert-color !important;

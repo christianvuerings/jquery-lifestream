@@ -1,0 +1,9 @@
+.cc-page-campus {
+  .cc-page-campus-navigation, .cc-page-campus-content {
+    @include cc-column-sameheight;
+  }
+  .cc-page-campus-navigation {
+    background: #fafafa;
+    border-right: 5px solid #dedede;
+  }
+}

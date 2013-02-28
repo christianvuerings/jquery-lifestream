@@ -29,6 +29,16 @@
       controller: 'SplashController',
       isPublic: true
     }).
+    // We actually need to duplicate the campus items, more info on
+    // http://stackoverflow.com/questions/12524533
+    when('/campus', {
+      templateUrl: 'templates/campus.html',
+      controller: 'CampusController'
+    }).
+    when('/campus/:category', {
+      templateUrl: 'templates/campus.html',
+      controller: 'CampusController'
+    }).
     when('/dashboard', {
       templateUrl: 'templates/dashboard.html',
       controller: 'DashboardController'
