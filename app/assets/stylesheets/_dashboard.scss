@@ -4,8 +4,7 @@
   .cc-page-dashboard-column-a,
   .cc-page-dashboard-column-b,
   .cc-page-dashboard-column-c {
-    margin-bottom: -99969px;
-    padding-bottom: 99999px;
+    @include cc-column-sameheight;
   }
   .cc-page-dashboard-column-b, .cc-page-dashboard-column-c {
     border-left: 5px solid $cc-column-border-color;

@@ -27,17 +27,8 @@
   data-ng-show="user.isLoaded">
 
   <%= render 'templates/ieold' %>
-
   <%= render 'templates/launcher' %>
-  <!-- Top Navbar -->
-  <div class="row">
-    <ul class="nav-bar">
-      <%# Restore when we have a nav bar again
-      <li data-ng-class="{true:'active'}[controller_name=='DashboardController']"><a href="/dashboard">My Dashboard</a></li>
-      <li data-ng-class="{true:'active'}[controller_name=='SettingsController']"><a href="/settings">Settings</a></li>
-      %>
-    </ul>
-  </div>
+  <%= render 'templates/navigation' %>
 
   <div class="row cc-container-main" role="main">
     <%= yield %>

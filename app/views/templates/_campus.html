@@ -1,0 +1,48 @@
+<script type="text/ng-template" id="templates/campus.html">
+
+  <div class="cc-page-campus">
+    <div class="three columns cc-page-campus-navigation">
+      <h3>Academics</h3>
+      <ul>
+        <li><a href="/campus/academicplanning">Academic Planning</a></li>
+        <li><a href="/campus/campusdepartments">Campus Departments</a></li>
+        <li><a href="/campus/classes">Classes</a></li>
+        <li><a href="/campus/learningandresearch">Learning &amp; Research</a></li>
+      </ul>
+      <h3>Administrative</h3>
+      <ul>
+        <li><a href="/campus/computing">Computing</a></li>
+        <li><a href="/campus/foodandhousing">Food &amp; Housing</a></li>
+        <li><a href="/campus/gettingaround">Getting Around</a></li>
+        <li><a href="/campus/newtocampus">New to Campus?</a></li>
+      </ul>
+      <h3>Personal</h3>
+      <ul>
+        <li><a href="/campus/career">Career</a></li>
+        <li><a href="/campus/finances">Finances</a></li>
+        <li><a href="/campus/healthandsafety">Health &amp; Safety</a></li>
+      </ul>
+      <h3>Campus Life</h3>
+      <ul>
+        <li><a href="/campus/community">Community</a></li>
+        <li><a href="/campus/socialandrecreation">Social &amp; Recreation</a></li>
+        <li><a href="/campus/studentgroups">Student Groups</a></li>
+      </ul>
+    </div>
+
+    <div class="nine columns cc-page-campus-content">
+      <h1>{{currentTopCategory}}</h1>
+
+      <div data-ng-repeat="subcategory in subcategories">
+
+        <h2>{{subcategory}}</h2>
+
+        <ul>
+          <li data-ng-repeat="link in links | orderBy:'name' | linksubcategory:subcategory "><a href="{{link.url}}" title="{{link.description}}">{{link.name}}</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+</script>

@@ -1,0 +1,2260 @@
+{
+  "links": [
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Planning"
+        }
+      ],
+      "name": "Academic Calendar Future Campus Calendars",
+      "description": "Academic Calendars",
+      "url": "http://registrar.berkeley.edu/CalendarDisp.aspx?terms=current",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        }
+      ],
+      "name": "Course Catalog",
+      "description": "Detailed course descriptions",
+      "url": "http://general-catalog.berkeley.edu/catalog/gcc_search_menu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Planning"
+        }
+      ],
+      "name": "DARS",
+      "description": "Degre requirements and track progress",
+      "url": "https://marin.berkeley.edu/darsweb/servlet/ListAuditsServlet ",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        }
+      ],
+      "name": "DeCal Courses",
+      "description": "Catalog of student-led courses",
+      "url": "http://www.decal.org/ ",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        }
+      ],
+      "name": "Schedule of Classes",
+      "description": "Classes offerings by semester",
+      "url": "http://schedule.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Planning"
+        }
+      ],
+      "name": "Schedule Planning",
+      "description": "Plan your classes",
+      "url": "https://schedulebuilder.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Planning"
+        }
+      ],
+      "name": "TeleBears",
+      "description": "Register for classes",
+      "url": "https://telebears.berkeley.edu",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        }
+      ],
+      "name": "Summer Sessions",
+      "description": "",
+      "url": "http://summer.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        }
+      ],
+      "name": "UC Extension Classes",
+      "description": "Professional development",
+      "url": "http://extension.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning, Campus Departments",
+          "subcategory": "Administrative Help"
+        },
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Office of the Registrar",
+      "description": "",
+      "url": "http://registrar.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Planning"
+        },
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "BearFacts",
+      "description": "Academic record, grades & transcript, bill, degree audit, loans, SLR & personal info",
+      "url": "https://bearfacts.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Advising"
+        }
+      ],
+      "name": "Student Life Advising Services",
+      "description": "",
+      "url": "http://slas.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Advising"
+        }
+      ],
+      "name": "Office of Undergraduate Advising",
+      "description": "",
+      "url": "http://ls-advise.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Advising"
+        }
+      ],
+      "name": "Finding Your Way (L&S)",
+      "description": "",
+      "url": "http://ls-yourway.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Academic"
+        }
+      ],
+      "name": "Colleges & Schools",
+      "description": "",
+      "url": "CalCentral version or http://www.berkeley.edu/academics/school.shtml",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Academic"
+        }
+      ],
+      "name": "Academic Departments & Programs",
+      "description": "",
+      "url": "CalCentral version or http://www.berkeley.edu/academics/dept/a.shtml",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Campus IT Offices",
+      "description": "",
+      "url": "http://www.berkeley.edu/admin/compute.shtml#offices",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Student Affairs",
+      "description": "",
+      "url": "http://sa.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Graduate"
+        }
+      ],
+      "name": "Graduate Division",
+      "description": "",
+      "url": "http://www.grad.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Office of the Chancellor",
+      "description": "",
+      "url": "http://chancellor.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Academic"
+        }
+      ],
+      "name": "Executive Vice Chancellor & Provost",
+      "description": "",
+      "url": "http://evcp.chance.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Administration & Finance",
+      "description": "",
+      "url": "http://vcaf.berkeley.edu/divisions",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Diversity, Equity & Inclusion",
+      "description": "",
+      "url": "http://diversity.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Facilities Services",
+      "description": "",
+      "url": "http://www.cp.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "University Relations",
+      "description": "",
+      "url": "http://www.urel.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Berkeley International Office",
+      "description": "",
+      "url": "http://internationaloffice.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Administrative and Other"
+        }
+      ],
+      "name": "Berkeley Sites (A-Z)",
+      "description": "Navigating UC Berkeley",
+      "url": "http://www.berkeley.edu/a-z/a.shtml",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Career",
+          "subcategory": "Career Center"
+        }
+      ],
+      "name": "Career Center",
+      "description": "Cal jobs, internships & career counseling",
+      "url": "http://career.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Career",
+          "subcategory": "Career Center"
+        }
+      ],
+      "name": "Callisto (includes CalJobs)",
+      "description": "",
+      "url": "https://career.berkeley.edu/CareerApps/Callisto/CallistoLogin.aspx",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Career",
+          "subcategory": "Career Center"
+        }
+      ],
+      "name": "Career Center: Job Search Tools",
+      "description": "",
+      "url": "https://career.berkeley.edu/Tools/Tools.stm",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Career",
+          "subcategory": "Career Center"
+        }
+      ],
+      "name": "Career Center: Internships",
+      "description": "",
+      "url": "https://career.berkeley.edu/Internships/Internships.stm",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Career",
+          "subcategory": "Career Center"
+        }
+      ],
+      "name": "Career Center: Part-time Employment",
+      "description": "",
+      "url": "https://career.berkeley.edu/Parttime/Parttime.stm",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Career",
+          "subcategory": "Work-Study"
+        },
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Work-Study Programs",
+      "description": "",
+      "url": "http://students.berkeley.edu/finaid/home/work.htm",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Directory",
+      "description": "Campus directory of faculty, staff and students",
+      "url": "http://directory.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Broadcast and Newspaper"
+        }
+      ],
+      "name": "Events Berkeley",
+      "description": "Campus events calendar",
+      "url": "http://events.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Policies & procedures",
+      "description": "A-Z of campuswide policies and procedures",
+      "url": "http://campuspol.chance.berkeley.edu/ ",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Student Ombuds",
+      "description": "Confidential help with campus issues, conflict situations, and more",
+      "url": "http://campuslife.berkeley.edu/ombuds",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Family"
+        }
+      ],
+      "name": "Child Care",
+      "description": "Campus child care services",
+      "url": "http://www.housing.berkeley.edu/child/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Conduct Office",
+      "description": "Student conduct office",
+      "url": "http://studentconduct.berkeley.edu",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Giving to Berkeley"
+        }
+      ],
+      "name": "Public Service",
+      "description": "On and off campus community service engagement",
+      "url": "http://publicservice.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Social Media"
+        }
+      ],
+      "name": "Twitter",
+      "description": "",
+      "url": "https://twitter.com/UCBerkeley",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Social Media"
+        }
+      ],
+      "name": "Foursquare - UC Berkeley",
+      "description": "",
+      "url": "https://foursquare.com/v/university-of-california-berkeley/455827ccf964a5203e3d1fe3",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Social Media"
+        }
+      ],
+      "name": "Foursquare - Cal",
+      "description": "",
+      "url": "https://foursquare.com/cal",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Social Media"
+        }
+      ],
+      "name": "YouTube",
+      "description": "",
+      "url": "http://www.youtube.com/user/UCBerkeley",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Social Media"
+        }
+      ],
+      "name": "iTunes",
+      "description": "",
+      "url": "http://itunes.berkeley.edu",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Social Media"
+        }
+      ],
+      "name": "blogs",
+      "description": "",
+      "url": "http://blogs.berkeley.edu",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Broadcast and Newspaper"
+        }
+      ],
+      "name": "e-news",
+      "description": "",
+      "url": "http://e-news.berkeley.edu",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Social Media"
+        }
+      ],
+      "name": "UC Berkeley Facebook page",
+      "description": "",
+      "url": "http://www.facebook.com/UCBerkeley",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Broadcast and Newspaper"
+        }
+      ],
+      "name": "Daily Cal (independent student newspaper)",
+      "description": "",
+      "url": " http://www.dailycal.org/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "UC Berkeley webcams",
+      "description": "",
+      "url": "http://www.berkeley.edu/webcams/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "UC Berkeley museums",
+      "description": "",
+      "url": " bnhm.berkeley.edu/ www.bampfa.berkeley.edu/ mvz.berkeley.edu www.ucmp.berkeley.edu",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Giving to Berkeley"
+        }
+      ],
+      "name": "Campaign for Berkeley",
+      "description": "",
+      "url": "http://campaign.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Giving to Berkeley"
+        }
+      ],
+      "name": "Give to Berkeley",
+      "description": "",
+      "url": "http://givetocal.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Family"
+        }
+      ],
+      "name": "Cal Parents",
+      "description": "",
+      "url": "http://calparents.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Giving to Berkeley"
+        }
+      ],
+      "name": "Alumni & Friends",
+      "description": "",
+      "url": "http://alumni-friends.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Community",
+          "subcategory": "Broadcast and Newspaper"
+        }
+      ],
+      "name": "KALX",
+      "description": "",
+      "url": "http://kalx.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Software Central",
+      "description": "",
+      "url": "http://ist.berkeley.edu/software-central/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "General"
+        }
+      ],
+      "name": "CalShare",
+      "description": "",
+      "url": "https://calshare.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": false,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Collaboration and Communication"
+        },
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "Communications"
+        }
+      ],
+      "name": "bConnected",
+      "description": "",
+      "url": "http://ist.berkeley.edu/bconnected",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Collaboration and Communication"
+        },
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "Communications"
+        }
+      ],
+      "name": "bDrive",
+      "description": "",
+      "url": "https://bdrive.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Network and Identity"
+        }
+      ],
+      "name": "CalNet",
+      "description": "",
+      "url": "https://calnet.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Facilities"
+        }
+      ],
+      "name": "Open Computing Facility",
+      "description": "",
+      "url": "http://www.ocf.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Facilities"
+        }
+      ],
+      "name": "General Access Computing Facilities",
+      "description": "",
+      "url": "http://ets.berkeley.edu/computer-facilities/general-access",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Reference and Support"
+        }
+      ],
+      "name": "IST Knowledge Base",
+      "description": "",
+      "url": "http://ist.berkeley.edu/support/kb",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Reference and Support"
+        }
+      ],
+      "name": "IST Support",
+      "description": "",
+      "url": "http://ist.berkeley.edu/support/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Network and Identity"
+        }
+      ],
+      "name": "AirBears",
+      "description": "",
+      "url": "http://ist.berkeley.edu/airbears/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Collaboration and Communication"
+        }
+      ],
+      "name": "Box.net",
+      "description": "",
+      "url": "https://berkeley.box.com/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Computing",
+          "subcategory": "Collaboration and Communication"
+        }
+      ],
+      "name": "Research Hub",
+      "description": "",
+      "url": "https://hub.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Financial Aid",
+      "description": "Student financial aid options and select scholarships",
+      "url": "http://students.berkeley.edu/finaid/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Registration Fees",
+      "description": "",
+      "url": "http://registrar.berkeley.edu/Registration/feesched.html",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Student Budgets",
+      "description": "",
+      "url": "http://www.berkeley.edu/about/fact.shtml#fees",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Undergraduate"
+        }
+      ],
+      "name": "Undergrad Financial Facts",
+      "description": "",
+      "url": "http://students.berkeley.edu/finaid/undergraduates/FinancialAidFacts2011-12.pdf",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Financial Aid Estimator",
+      "description": "",
+      "url": "http://calculator.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "MyFinAid",
+      "description": "",
+      "url": "https://myfinaid.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Graduate"
+        }
+      ],
+      "name": "Graduate Student Financial Support",
+      "description": "",
+      "url": "http://www.grad.berkeley.edu/financial/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Scholarship database",
+      "description": "",
+      "url": " http://scholarships.berkeley.edu",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Undergraduate"
+        }
+      ],
+      "name": "Undergrad Loans",
+      "description": "",
+      "url": "http://students.berkeley.edu/finaid/undergraduates/types_loans.htm (from bearfacts)",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Graduate"
+        }
+      ],
+      "name": "Grad Loans",
+      "description": "",
+      "url": "http://students.berkeley.edu/finaid/graduates/types_loans.htm",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Education loan counseling",
+      "description": "",
+      "url": " http://studentbilling.berkeley.edu/exitDirect.htm",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "FAFSA",
+      "description": "",
+      "url": "http://www.fafsa.ed.gov",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Student Billing Services",
+      "description": "",
+      "url": "http://studentbilling.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        },
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Administrative Help"
+        },
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Cal Student Central",
+      "description": "",
+      "url": "http://studentcentral.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "General"
+        },
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "Dining"
+        },
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Cal-1-card",
+      "description": "Identification card for students, staff and faculty",
+      "url": "http://services.housing.berkeley.edu/c1c/static/index.htm",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "Dining"
+        }
+      ],
+      "name": "CalDining",
+      "description": "Campus dining facilities",
+      "url": "http://caldining.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Residential & Student Service Programs",
+      "description": "",
+      "url": "http://www.housing.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Living At Cal",
+      "description": "",
+      "url": "http://www.housing.berkeley.edu/livingatcal/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Student Groups",
+          "subcategory": "General"
+        },
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "General"
+        }
+      ],
+      "name": "CalGreeks",
+      "description": "",
+      "url": "http://www.calgreeks.com/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "Housing"
+        }
+      ],
+      "name": "Berkeley Student Cooperative",
+      "description": "",
+      "url": "http://www.bsc.coop/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "Housing"
+        }
+      ],
+      "name": "International House",
+      "description": "",
+      "url": "http://ihouse.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "Housing"
+        }
+      ],
+      "name": "Cal Rentals",
+      "description": "",
+      "url": "http://calrentals.housing.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        },
+        {
+          "topcategory": "Food & Housing",
+          "subcategory": "General"
+        },
+        {
+          "topcategory": "Computing",
+          "subcategory": "Facilities"
+        }
+      ],
+      "name": "Residential Computing",
+      "description": "Computer and network services for resident students",
+      "url": "http://www.rescomp.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "On and Near Campus"
+        }
+      ],
+      "name": "Campus Map",
+      "description": "Locate campus buildings",
+      "url": "http://www.berkeley.edu/map/3dmap/3dmap.shtml",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "On and Near Campus"
+        }
+      ],
+      "name": "Parking & Transportation",
+      "description": "Parking lots, transportation, car sharing, etc.",
+      "url": "http://pt.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "On and Near Campus"
+        }
+      ],
+      "name": "Campus Shuttles",
+      "description": "",
+      "url": "http://pt.berkeley.edu/around/transit/routes/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "Off Campus"
+        }
+      ],
+      "name": "511.org (Bay Area Transportation Planner)",
+      "description": "",
+      "url": "http://www.511.org/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "On and Near Campus"
+        }
+      ],
+      "name": "Class pass",
+      "description": "",
+      "url": "http://pt.berkeley.edu/pay/transit/classpass/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "On and Near Campus"
+        }
+      ],
+      "name": "Walk-time widget",
+      "description": "",
+      "url": "CalCentral widget",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Academic"
+        }
+      ],
+      "name": "Lab Safety",
+      "description": "Lab Safety & Hazardous Materials Management",
+      "url": "http://rac.berkeley.edu/compliancebook/labsafety.html",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Emergency information",
+      "description": "Go-to site for emergency response information",
+      "url": " https://emergency.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Police & Safety",
+      "description": "Campus police and safety",
+      "url": "http://police.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Safety",
+      "description": "Safety information and programs",
+      "url": "http://publicsafety.berkeley.edu/index.htm",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Personal"
+        }
+      ],
+      "name": "UHS - Tang Center",
+      "description": "Campus healthcare",
+      "url": "http://uhs.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Personal"
+        }
+      ],
+      "name": "UC Berkeley Wellness Letter",
+      "description": "",
+      "url": "http://www.wellnessletter.com/ucberkeley/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Campus"
+        },
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "On and Near Campus"
+        }
+      ],
+      "name": "BearWALK Night safety services",
+      "description": "",
+      "url": "http://police.berkeley.edu/programsandservices/campus_safety/index.html",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Academic"
+        }
+      ],
+      "name": "Environmental Health & Safety",
+      "description": "",
+      "url": "http://www.ehs.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Personal"
+        }
+      ],
+      "name": "UC SHIP (UC Student Health Insurance Plan)",
+      "description": "",
+      "url": "http://www.uhs.berkeley.edu/students/insurance/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Health & Safety",
+          "subcategory": "Campus"
+        }
+      ],
+      "name": "Emergency Preparedness",
+      "description": "",
+      "url": "http://oep.berkeley.edu/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Individual"
+        }
+      ],
+      "name": "Campus Bookstore",
+      "description": "Text books and more",
+      "url": "http://www.bkstr.com/webapp/wcs/stores/servlet/StoreCatalogDisplay?storeId=10433",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Individual"
+        }
+      ],
+      "name": "Library",
+      "description": "Search the UC Library system",
+      "url": "library.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Individual"
+        }
+      ],
+      "name": "Research",
+      "description": "Directory of UC Berkeley research programs",
+      "url": "http://berkeley.edu/research/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Individual"
+        }
+      ],
+      "name": "Cal Student Store",
+      "description": "",
+      "url": "http://www.bkstr.com/webapp/wcs/stores/servlet/StoreCatalogDisplay?catalogId=10001&langId=-1&demoKey=d&storeId=10433",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Online"
+        }
+      ],
+      "name": "ASUC Lecture Notes Online",
+      "description": "",
+      "url": "https://notes.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Online"
+        }
+      ],
+      "name": "Berkeley Edx Classes",
+      "description": "",
+      "url": "https://www.edx.org/university_profile/BerkeleyX",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Individual"
+        }
+      ],
+      "name": "Student Learning Center",
+      "description": "",
+      "url": " http://slc.berkeley.edu/general/index.htm",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Learning & Research",
+          "subcategory": "Online"
+        },
+        {
+          "topcategory": "Computing",
+          "subcategory": "Collaboration and Communication"
+        }
+      ],
+      "name": "bSpace",
+      "description": "Homework assignments, lecture slides, syllabi and class resources",
+      "url": "bspace.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Resource Guide for Students",
+      "description": "Comprehensive campus guide for students",
+      "url": "http://resource.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "New Student Services (includes CalSO)",
+      "description": "",
+      "url": "http://nss.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "My Years at Cal",
+      "description": "",
+      "url": " http://myyears.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Student Policies and Procedures",
+      "description": "",
+      "url": "http://sa.berkeley.edu/sa/student-policies-and-procedures",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Berkeley Online Tour",
+      "description": "",
+      "url": "http://www.berkeley.edu/tour/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Disabled Students Program",
+      "description": "",
+      "url": "http://dsp.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Transfer, Re-entry and Student Parent Center",
+      "description": "",
+      "url": "http://trsp.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": false,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "Communications"
+        },
+        {
+          "topcategory": "Computing",
+          "subcategory": "Collaboration and Communication"
+        }
+      ],
+      "name": "bCal",
+      "description": "personal calandar",
+      "url": "bcal.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "New to Campus?",
+          "subcategory": "Communications"
+        },
+        {
+          "topcategory": "Computing",
+          "subcategory": "Collaboration and Communication"
+        }
+      ],
+      "name": "bMail",
+      "description": "email ",
+      "url": "calmail.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Activities"
+        }
+      ],
+      "name": "Recreational Sports Facility",
+      "description": "Sports and fitness programs",
+      "url": "http://recsports.berkeley.edu/ ",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Activities"
+        }
+      ],
+      "name": "Cal Rec Sports",
+      "description": "",
+      "url": "http://recsports.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Activities"
+        }
+      ],
+      "name": "Physical Education Program",
+      "description": "",
+      "url": "http://pe.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Events"
+        }
+      ],
+      "name": "CalBears Intercollegiate Athletics",
+      "description": "",
+      "url": "http://www.calbears.com/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Activities"
+        }
+      ],
+      "name": "Cal Band",
+      "description": "",
+      "url": "http://calband.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Activities"
+        }
+      ],
+      "name": "Cal Spirit Groups",
+      "description": "",
+      "url": "http://calspirit.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Activities"
+        }
+      ],
+      "name": "Cal Marketplace (everything at Cal you may want to buy, discover or visit)",
+      "description": "",
+      "url": "http://calmarketplace.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Social & Recreation",
+          "subcategory": "Events"
+        }
+      ],
+      "name": "Cal Performances",
+      "description": "",
+      "url": "http://www.calperformances.org/",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Student Groups",
+          "subcategory": "Governance"
+        }
+      ],
+      "name": "ASUC",
+      "description": "Student government",
+      "url": "http://asuc.org/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Student Groups",
+          "subcategory": "Governance"
+        }
+      ],
+      "name": "Graduate Assembly",
+      "description": "Graduate student government",
+      "url": "https://ga.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Student Groups",
+          "subcategory": "General"
+        }
+      ],
+      "name": "CalLink (Campus Activities Link)",
+      "description": "",
+      "url": " http://callink.berkeley.edu/",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Student Groups",
+          "subcategory": "General"
+        }
+      ],
+      "name": "Student Organizations Search",
+      "description": "",
+      "url": "http://students.berkeley.edu/osl/studentgroups/public/index.asp",
+      "roles": {
+        "staff": false,
+        "student": true,
+        "faculty": false
+      }
+    }
+  ],
+  "urlmapping": {
+    "academicplanning": "Academic Planning",
+    "campusdepartments": "Campus Departments",
+    "classes": "Classes",
+    "learningandresearch": "Learning & Research",
+    "computing": "Computing",
+    "foodandhousing": "Food & Housing",
+    "gettingaround": "Getting Around",
+    "newtocampus": "New to Campus?",
+    "career": "Career",
+    "finances": "Finances",
+    "healthandsafety": "Health & Safety",
+    "community": "Community",
+    "socialandrecreation": "Social & Recreation",
+    "studentgroups": "Student Groups"
+  }
+}
