@@ -45,8 +45,10 @@ describe Oauth2Data do
   end
 
   it "should be able to handle a malformed app_data entry" do
-    Oauth2Data.new_or_update("test-user", "test-app", "new-token",
-                             "some-token", 1, :app_data => "foo")
+    suppress_rails_logging do
+      Oauth2Data.new_or_update("test-user", "test-app", "new-token",
+                               "some-token", 1, :app_data => "foo")
+    end
     token_hash = Oauth2Data.get("test-user", "test-app")
     token_hash["app_data"].should be_empty
   end
