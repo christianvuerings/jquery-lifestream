@@ -1,7 +1,9 @@
 class UpdateEliUid < ActiveRecord::Migration
   def up
     eli = UserAuth.find(:first, :conditions => {:uid => "3222279"})
-    eli.update_attributes!(:uid => 322279)
+    if eli
+      eli.update_attributes!(:uid => 322279)
+    end
   end
 
   def down
