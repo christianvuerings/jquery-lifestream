@@ -20,6 +20,8 @@ class JmsMessageHandler
     else
       Rails.logger.info "#{Thread.current} JMS message has no text, skipping"
     end
+  rescue JSON::ParserError => e
+    Rails.logger.warn "#{Thread.current} Skipping JMS message that has invalid JSON: #{e}"
   end
 
   def finalize

@@ -20,14 +20,15 @@ class RegStatusTranslator
     return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && reg_status
 
     explanation = status_explanation reg_status["reg_status_cd"]
-    summary = status_summary reg_status["reg_status_cd"]
+    status = status reg_status["reg_status_cd"]
 
-    title = "Your UC Berkeley student registration status has been updated to: #{summary}. #{explanation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
+    title = "Registration status updated to: #{status}"
+    summary = "#{explanation} If you have a question about your registration status change, please contact the Office of the Registrar. orweb@berkeley.edu"
 
     {
         :id => notification.id,
         :title => title,
-        :summary => "summary TODO",
+        :summary => summary,
         :source => event["system"],
         :type => "alert",
         :date => {
@@ -42,7 +43,7 @@ class RegStatusTranslator
     }
   end
 
-  def status_summary(reg_status)
+  def status(reg_status)
     admincancelled = "ADMIN CANCELLED"
     cancelled = "CANCELLED"
     dismissed = "DISMISSED"

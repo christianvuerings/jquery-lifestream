@@ -14,18 +14,21 @@ class FinalGradesTranslator
       timestamp = notification.created_at
     end
 
-    course = data["course"]
+    Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}"
 
-    Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}; course = #{course}"
+    return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid
 
-    return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && course && course["course_title"]
+    Rails.logger.debug "#{self.class.name} payload = #{payload}"
+    term_cd = FinalGradesEventProcessor.lookup_term_code payload["term"]
+    course = CampusData.get_course(payload["ccn"], payload["year"], term_cd)
 
-    # TODO get real copy for title, summary, etc.
-    title = "Final grades have been entered for #{course["course_title"]}"
+    return false unless course && course["dept_name"] && course["catalog_id"]
+
+    title = "Final grades posted for #{course["dept_name"]} #{course["catalog_id"]}"
     {
         :id => notification.id,
         :title => title,
-        :summary => "summary TODO",
+        :summary => "Your final grade is available in Bearfacts.",
         :source => event["system"],
         :type => "alert",
         :date => {

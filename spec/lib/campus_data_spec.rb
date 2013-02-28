@@ -42,6 +42,11 @@ describe CampusData do
     data.should be_nil
   end
 
+  it "should return nil from get_reg_status if the user does not exist" do
+    data = CampusData.get_reg_status("0")
+    data.should be_nil
+  end
+
   it "should find some students in Spanish 1" do
     students = CampusData.get_enrolled_students("86103", "2012", "D")
     students.should_not be_nil
@@ -57,6 +62,8 @@ describe CampusData do
     if Settings.campusdb.adapter == "h2"
       # we will only have predictable enrollments in our fake Oracle db.
       course["course_title"].should == "General Biology Lecture"
+      course["dept_name"].should == "BIOLOGY"
+      course["catalog_id"].should == "1A"
     end
   end
 
