@@ -18,7 +18,7 @@ gem "json", "~> 1.7.7"
 # https://rubygems.org/gems/omniauth-cas
 gem "omniauth-cas", "~> 1.0.1"
 
-gem "faraday", "~> 0.8.5"
+gem "faraday", "~> 0.8.6"
 
 # OAuth2 support
 gem "signet", "~> 0.4.5"
@@ -43,7 +43,7 @@ gem "jruby-activemq", "~> 5.5.1"
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
 # https://github.com/sporkmonger/addressable
-gem "addressable", "~> 2.3.2"
+gem "addressable", "~> 2.3.3"
 
 # for concurrency management
 gem "celluloid", "~> 0.12.4"
