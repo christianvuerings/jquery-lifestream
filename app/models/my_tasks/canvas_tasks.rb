@@ -41,6 +41,14 @@ class MyTasks::CanvasTasks
           format_date_into_entry!(due_date, formatted_entry, "due_date")
           bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
           formatted_entry["bucket"] = bucket
+
+          # All assignments come back from Canvas with a timestamp, even if none selected. Ferret out untimed assignments.
+          if due_date.hour == 0 && due_date.minute == 0 && due_date.second == 0
+            formatted_entry["due_date"]["has_time"] = false
+          else
+            formatted_entry["due_date"]["has_time"] = true
+          end
+
           Rails.logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
           tasks.push(formatted_entry)
         end
