@@ -4,6 +4,7 @@ describe MyTasksController do
 
   before(:each) do
     @user_id = rand(99999).to_s
+    @fake_google_clear_tasks_proxy = GoogleClearTaskListProxy.new(fake: true)
   end
 
   it "should be an empty task feed on non-authenticated user" do
@@ -32,6 +33,17 @@ describe MyTasksController do
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
     json_response.should == hash
+  end
+
+  it "should return a valid truthy json object when successfully clearing completed google tasks" do
+    session[:user_id] = @user_id
+    user_payload = {"emitter" => "Google"}
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    GoogleClearTaskListProxy.stub(:new).and_return(@fake_google_clear_tasks_proxy)
+    post :clear_completed_tasks, user_payload
+    json_response = JSON.parse(response.body)
+    json_response.should_not == {}
+    json_response.should == {"tasks_cleared" => true}
   end
 
   it "should return a 400 error on some ArgumentError with the task model object" do
