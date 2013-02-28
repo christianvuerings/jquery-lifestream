@@ -142,6 +142,26 @@ rm public/index.html
 Make sure you are on the Berkeley network or connected through [preconfigured VPN](https://kb.berkeley.edu/jivekb/entry.jspa?externalID=2665) for the Oracle connection.
 If you use VPN, use group #1 (1-Campus_VPN)
 
+
+### "Act As" another user
+
+To help another user debug an issue, you can "become" them on CalCentral. To assume the identity of another user, you must:
+
+- Currently be logged in as a designated superuser
+- Be accessing a machine/server which the other user has previously logged into (e.g. from localhost, you can't act as a random student, since that student has probably never logged in at your terminal)
+- Have enabled act_as in settings.yml (features:)
+
+Access the URL:
+
+```
+https://[hostname]/act_as?uid=123456
+```
+
+where 123456 is the UID of the user to emulate.
+
+n.b.: The Act As feature will only reveal data from data sources we control, e.g. Canvas. Google data will be completely suppressed.
+
+
 ### Tips
 
 1. On Mac OS X, to get RubyMine to pick up the necessary environment variables, open a new shell, set the environment variables, and:
@@ -230,7 +250,7 @@ After server restart, these properties will appear in each users' status feed. Y
 or, depending on the feature, it may make more sense to disable it in erb (so that Angular controllers are never invoked at all):
 
 ```
-<% if Settings.features.notifications %>
+<% if Settings.features.neato %>
   <%= render 'templates/widgets/notifications' %>
 <% end %>
 ```
