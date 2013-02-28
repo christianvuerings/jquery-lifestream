@@ -161,6 +161,11 @@ where 123456 is the UID of the user to emulate.
 
 n.b.: The Act As feature will only reveal data from data sources we control, e.g. Canvas. Google data will be completely suppressed.
 
+To become yourself again, access
+
+```
+https://[hostname]/stop_act_as
+```
 
 ### Tips
 
