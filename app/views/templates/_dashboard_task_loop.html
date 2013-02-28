@@ -34,8 +34,10 @@
       <span data-ng-show="task.due_date && task.bucket != 'Due Today' && tasks_mode != 'completed'">
         {{task.due_date.epoch * 1000 | date:'MM/dd'}}
       </span>
-      <div data-ng-show="task.emitter=='Canvas'" class="cc-widget-tasks-timestamp">
-        {{task.due_date.epoch * 1000 | date:'h a'}}
+      <div
+        data-ng-show="task.emitter=='Canvas' && task.due_date.has_time"
+        class="cc-widget-tasks-timestamp">
+          {{task.due_date.epoch * 1000 | date:'h a'}}
       </div>
       <span data-ng-show="tasks_mode=='completed'">{{task.completed_date.epoch * 1000 | date:'MM/dd'}}</span>
     </div>
