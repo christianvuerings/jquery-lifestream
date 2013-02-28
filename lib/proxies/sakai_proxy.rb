@@ -16,11 +16,10 @@ class SakaiProxy < BaseProxy
     url = "#{@settings.host}/sakai-hybrid/sites?categorized=true"
     Rails.cache.fetch(
         self.class.cache_key(@uid),
-        :expires_in => Settings.cache.api_expires_in,
-        :race_condition_ttl => 2.seconds
+        :expires_in => self.class.expires_in
     ) do
       token = build_token @uid
-      Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #@uid with x-sakai-token = #{token}"
+      Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #@uid with x-sakai-token = #{token}, cache expiration #{self.class.expires_in}"
       begin
         response = FakeableProxy.wrap_request(APP_ID, @fake) {
           Faraday::Connection.new(

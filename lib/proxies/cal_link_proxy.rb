@@ -16,12 +16,11 @@ class CalLinkProxy < BaseProxy
   def get_memberships
     Rails.cache.fetch(
         self.class.cache_key(@uid),
-        :expires_in => Settings.cache.api_expires_in,
-        :race_condition_ttl => 2.seconds
+        :expires_in => self.class.expires_in
     ) do
       url = "#{Settings.cal_link_proxy.base_url}/api/memberships"
       params = build_params
-      Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; params = #{params}"
+      Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"
       begin
         response = FakeableProxy.wrap_request(APP_ID, @fake, {:match_requests_on => [:method, :path, :body]}) {
           Faraday::Connection.new(

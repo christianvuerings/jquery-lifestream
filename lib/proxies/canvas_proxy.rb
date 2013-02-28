@@ -23,14 +23,13 @@ class CanvasProxy < BaseProxy
   def request(api_path, vcr_id = "", fetch_options = {})
     Rails.cache.fetch(
         self.class.cache_key(@uid),
-        :expires_in => Settings.cache.api_expires_in,
-        :race_condition_ttl => 2.seconds
+        :expires_in => self.class.expires_in
     ) do
       fetch_options.reverse_merge!(
           :method => :get,
           :uri => "#{@settings.url_root}/api/v1/#{api_path}"
       )
-      Rails.logger.info "CanvasProxy - Making request with @fake = #{@fake}, options = #{fetch_options}"
+      Rails.logger.info "CanvasProxy - Making request with @fake = #{@fake}, options = #{fetch_options}, cache expiration #{self.class.expires_in}"
       FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) do
         begin
           response = @client.fetch_protected_resource(fetch_options)

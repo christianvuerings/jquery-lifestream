@@ -2,6 +2,11 @@ module Calcentral
 
   module Cacheable
 
+    def expires_in
+      expirations = Settings.cache.expiration.marshal_dump
+      expirations[self.name.to_sym] || Settings.cache.expiration.default
+    end
+
     def cache_key(uid)
       key = "user/#{uid}/#{self.name}"
       Rails.logger.debug "#{self.name} cache_key will be #{key}"
