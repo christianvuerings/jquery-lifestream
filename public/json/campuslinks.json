@@ -241,7 +241,7 @@
       ],
       "name": "Colleges & Schools",
       "description": "",
-      "url": "CalCentral version or http://www.berkeley.edu/academics/school.shtml",
+      "url": "http://www.berkeley.edu/academics/school.shtml",
       "roles": {
         "staff": true,
         "student": true,
@@ -257,7 +257,7 @@
       ],
       "name": "Academic Departments & Programs",
       "description": "",
-      "url": "CalCentral version or http://www.berkeley.edu/academics/dept/a.shtml",
+      "url": "http://www.berkeley.edu/academics/dept/a.shtml",
       "roles": {
         "staff": true,
         "student": true,
@@ -789,7 +789,7 @@
       ],
       "name": "Daily Cal (independent student newspaper)",
       "description": "",
-      "url": " http://www.dailycal.org/",
+      "url": "http://www.dailycal.org/",
       "roles": {
         "staff": false,
         "student": true,
@@ -821,7 +821,7 @@
       ],
       "name": "UC Berkeley museums",
       "description": "",
-      "url": " bnhm.berkeley.edu/ www.bampfa.berkeley.edu/ mvz.berkeley.edu www.ucmp.berkeley.edu",
+      "url": "http://bnhm.berkeley.edu/",
       "roles": {
         "staff": false,
         "student": true,
@@ -1229,7 +1229,7 @@
       ],
       "name": "Scholarship database",
       "description": "",
-      "url": " http://scholarships.berkeley.edu",
+      "url": "http://scholarships.berkeley.edu",
       "roles": {
         "staff": false,
         "student": true,
@@ -1277,7 +1277,7 @@
       ],
       "name": "Education loan counseling",
       "description": "",
-      "url": " http://studentbilling.berkeley.edu/exitDirect.htm",
+      "url": "http://studentbilling.berkeley.edu/exitDirect.htm",
       "roles": {
         "staff": false,
         "student": true,
@@ -1593,7 +1593,7 @@
       ],
       "name": "Walk-time widget",
       "description": "",
-      "url": "CalCentral widget",
+      "url": "http://www.berkeley.edu/academics/school.shtml",
       "roles": {
         "staff": true,
         "student": true,
@@ -1625,7 +1625,7 @@
       ],
       "name": "Emergency information",
       "description": "Go-to site for emergency response information",
-      "url": " https://emergency.berkeley.edu/",
+      "url": "https://emergency.berkeley.edu/",
       "roles": {
         "staff": true,
         "student": true,
@@ -1789,7 +1789,7 @@
       ],
       "name": "Library",
       "description": "Search the UC Library system",
-      "url": "library.berkeley.edu",
+      "url": "http://library.berkeley.edu",
       "roles": {
         "staff": true,
         "student": true,
@@ -1869,7 +1869,7 @@
       ],
       "name": "Student Learning Center",
       "description": "",
-      "url": " http://slc.berkeley.edu/general/index.htm",
+      "url": "http://slc.berkeley.edu/general/index.htm",
       "roles": {
         "staff": false,
         "student": true,
@@ -1889,7 +1889,7 @@
       ],
       "name": "bSpace",
       "description": "Homework assignments, lecture slides, syllabi and class resources",
-      "url": "bspace.berkeley.edu",
+      "url": "http://bspace.berkeley.edu",
       "roles": {
         "staff": true,
         "student": true,
@@ -1937,7 +1937,7 @@
       ],
       "name": "My Years at Cal",
       "description": "",
-      "url": " http://myyears.berkeley.edu/",
+      "url": "http://myyears.berkeley.edu/",
       "roles": {
         "staff": false,
         "student": true,
@@ -2021,7 +2021,7 @@
       ],
       "name": "bCal",
       "description": "personal calandar",
-      "url": "bcal.berkeley.edu",
+      "url": "http://bcal.berkeley.edu",
       "roles": {
         "staff": true,
         "student": true,
@@ -2041,7 +2041,7 @@
       ],
       "name": "bMail",
       "description": "email ",
-      "url": "calmail.berkeley.edu",
+      "url": "http://calmail.berkeley.edu",
       "roles": {
         "staff": true,
         "student": true,
@@ -2217,7 +2217,7 @@
       ],
       "name": "CalLink (Campus Activities Link)",
       "description": "",
-      "url": " http://callink.berkeley.edu/",
+      "url": "http://callink.berkeley.edu/",
       "roles": {
         "staff": false,
         "student": true,
