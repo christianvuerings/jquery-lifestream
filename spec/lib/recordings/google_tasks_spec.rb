@@ -75,6 +75,11 @@ describe "GoogleTaskList" do
       entry["id"].should_not == test_task_list_id
     end
 
+    #Delete task
+    delete_proxy = GoogleDeleteTaskProxy.new proxy_opts
+    response = delete_proxy.delete_task(test_task_list_id, new_task_id)
+    response.should be_true
+
     # Delete task list
     delete_proxy = GoogleDeleteTaskListProxy.new proxy_opts
     suppress_rails_logging {

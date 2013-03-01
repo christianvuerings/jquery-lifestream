@@ -64,6 +64,16 @@ class MyTasks::Merged < MyMergedModel
     response
   end
 
+  def delete_task(params, task_list_id="@default")
+    return {task_deleted: false} if @enabled_sources[params["emitter"]].blank?
+    source = @enabled_sources[params["emitter"]][:source]
+    response = source.delete_task(params, task_list_id)
+    if response != {}
+      expire_cache
+    end
+    response
+  end
+
   private
 
   def includes_whitelist_values?(whitelist_array=[])
