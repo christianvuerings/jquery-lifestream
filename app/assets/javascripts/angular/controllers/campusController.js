@@ -6,7 +6,28 @@
    */
 
   calcentral.controller('CampusController', [
-    '$http', '$routeParams', '$scope', function($http, $routeParams, $scope) {
+    '$http', '$routeParams', '$scope', 'apiService', function($http, $routeParams, $scope, apiService) {
+
+
+    /**
+     * Add to the subcategories list if it doesn't exist yet
+     * @param {String} subcategory The subcategory you want to add
+     */
+    var addToSubcategories = function(subcategory) {
+      if ($scope.subcategories.indexOf(subcategory) === -1) {
+        $scope.subcategories.push(subcategory);
+      }
+    };
+
+    /**
+     * Add to the top categories
+     * @param {Object} link Link object
+     */
+    var addToTopCategories = function(link) {
+      for (var i = 0; i < link.categories.length; i++) {
+        $scope.topcategories[link.categories[i].topcategory] = true;
+      }
+    };
 
     /**
      * Depending on the roles, determine whether the current user should be able to view the link
@@ -18,6 +39,7 @@
         if (link.roles.hasOwnProperty(i) &&
             link.roles[i] === true &&
             link.roles[i] ===  $scope.user.profile.roles[i]) {
+          addToTopCategories(link);
           return true;
         }
       }
@@ -40,24 +62,15 @@
     };
 
     /**
-     * Add to the subcategories list if it doesn't exist yet
-     * @param {String} subcategory The subcategory you want to add
-     */
-    var addToSubcategories = function(subcategory) {
-      if ($scope.subcategories.indexOf(subcategory) === -1) {
-        $scope.subcategories.push(subcategory);
-      }
-    };
-
-    /**
      * Set the links for the current page
      * @param {Array} links The list of links that need to be parsed
      */
     var setLinks = function(links) {
       $scope.links = [];
       $scope.subcategories = [];
+      $scope.topcategories = {};
       angular.forEach(links, function(link) {
-        if (isLinkInCategory(link) && canViewLink(link)) {
+        if (canViewLink(link) && isLinkInCategory(link)) {
           $scope.links.push(link);
           addToSubcategories(link.currentSubCategory);
         }
@@ -74,6 +87,7 @@
         $scope.data = data;
 
         $scope.currentTopCategory = $scope.data.urlmapping[$routeParams.category];
+        apiService.util.setTitle('Campus - ' + $scope.currentTopCategory);
 
         setLinks($scope.data.links);
       });
