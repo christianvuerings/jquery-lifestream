@@ -73,11 +73,7 @@ Calcentral::Application.routes.draw do
   match '/api/blog/release_notes/latest' => 'blog_feed#get_latest_release_notes', :as => :blog_latest_release_notes, :defaults => { :format => 'json' }
 
   match '/api/my/opt_out'=> 'user_api#delete'
-
-  if Rails.env.development?
-    # this clears the entire cache, so it's not safe for production use.
-    match '/api/clear_cache' => 'application#clear_cache'
-  end
+  match '/api/clear_cache' => 'application#clear_cache'
 
   match '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
   match '/canvas/oAuthResponse' => 'canvas_auth#handle_callback'

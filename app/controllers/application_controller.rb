@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   def clear_cache
+    # Only super-users are allowed to clear caches in production.
+    if Rails.env.production? && !UserAuth.is_superuser?(session[:user_id])
+      return render :nothing => true, :status => 401
+    end
     Rails.logger.info "Clearing all cache entries"
     Rails.cache.clear
     render :nothing => true, :status => 204
