@@ -20,7 +20,8 @@ class GoogleAuthController < AuthController
       'https://www.googleapis.com/auth/userinfo.email',
       'https://www.googleapis.com/auth/calendar',
       'https://www.googleapis.com/auth/tasks',
-      'https://www.googleapis.com/auth/drive.readonly.metadata']
+      'https://www.googleapis.com/auth/drive.readonly.metadata',
+      'https://mail.google.com/mail/feed/atom/']
     client
   end
 
