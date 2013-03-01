@@ -14,10 +14,7 @@ class CalLinkProxy < BaseProxy
   end
 
   def get_memberships
-    Rails.cache.fetch(
-        self.class.cache_key(@uid),
-        :expires_in => self.class.expires_in
-    ) do
+    self.class.fetch_from_cache @uid do
       url = "#{Settings.cal_link_proxy.base_url}/api/memberships"
       params = build_params
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"

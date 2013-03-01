@@ -14,10 +14,7 @@ class SakaiProxy < BaseProxy
 
   def get_categorized_sites
     url = "#{@settings.host}/sakai-hybrid/sites?categorized=true"
-    Rails.cache.fetch(
-        self.class.cache_key(@uid),
-        :expires_in => self.class.expires_in
-    ) do
+    self.class.fetch_from_cache @uid do
       token = build_token @uid
       Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #@uid with x-sakai-token = #{token}, cache expiration #{self.class.expires_in}"
       begin

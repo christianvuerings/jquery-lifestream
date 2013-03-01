@@ -21,10 +21,7 @@ class CanvasProxy < BaseProxy
   end
 
   def request(api_path, vcr_id = "", fetch_options = {})
-    Rails.cache.fetch(
-        self.class.cache_key(@uid),
-        :expires_in => self.class.expires_in
-    ) do
+    self.class.fetch_from_cache @uid do
       fetch_options.reverse_merge!(
           :method => :get,
           :uri => "#{@settings.url_root}/api/v1/#{api_path}"
