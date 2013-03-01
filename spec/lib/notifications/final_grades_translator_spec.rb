@@ -10,7 +10,10 @@ describe FinalGradesTranslator do
     CampusData.stub(:get_enrolled_students, "73974").and_return(
         [{"ldap_uid" => "123456"}])
     CampusData.stub(:get_course, "73974").and_return(
-        {"course_title" => "Research and Data Analysis in Psychology"}
+        {"course_title" => "Research and Data Analysis in Psychology",
+         "dept_name" => "PSYCH",
+         "catalog_id" => "101"
+        }
     )
 
     processor = FinalGradesEventProcessor.new
@@ -20,7 +23,7 @@ describe FinalGradesTranslator do
     translator = FinalGradesTranslator.new
     translated = translator.translate notification
     Rails.logger.info "Translated notification = #{translated}"
-    translated[:title].should == "Final grades have been entered for Research and Data Analysis in Psychology"
+    translated[:title].should == "Final grades posted for PSYCH 101"
     translated[:date][:datetime].should == timestamp.rfc3339
     translated[:date][:epoch].should == timestamp.to_i
   end

@@ -25,8 +25,10 @@ describe FinalGradesEventProcessor do
             {"ldap_uid" => "978966"},
             {"ldap_uid" => "300846"}])
     CampusData.stub(:get_course, "73974").and_return(
-        {"course_title" => "Research and Data Analysis in Psychology"}
-    )
+        {"course_title" => "Research and Data Analysis in Psychology",
+         "dept_name" => "PSYCH",
+         "catalog_id" => "101"})
+
     UserData.stub(:where, "123456").and_return(MockUserData.new)
 
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).exactly(7).times

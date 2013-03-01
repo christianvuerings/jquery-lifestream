@@ -26,4 +26,8 @@ describe JmsMessageHandler do
     @handler.handle @messages[0]
   end
 
+  it "should handle malformed JSON gracefully" do
+    @handler.handle({:text => "pure lunacy"})
+  end
+
 end

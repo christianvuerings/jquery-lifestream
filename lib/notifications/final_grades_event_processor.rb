@@ -9,13 +9,12 @@ class FinalGradesEventProcessor < AbstractEventProcessor
     payload = event["payload"]
     ccn = payload["ccn"]
     term_yr = payload["year"]
-    term_cd = lookup_term_code payload["term"]
+    term_cd = FinalGradesEventProcessor.lookup_term_code payload["term"]
 
     students = CampusData.get_enrolled_students(ccn, term_yr, term_cd)
-    course = CampusData.get_course(ccn, term_yr, term_cd)
 
-    return [] unless students && course && course["course_title"]
-    Rails.logger.debug "#{self.class.name} Found students enrolled in #{course} - #{term_yr}-#{term_cd}-#{ccn}: #{students}"
+    return [] unless students
+    Rails.logger.debug "#{self.class.name} Found students enrolled in #{term_yr}-#{term_cd}-#{ccn}: #{students}"
 
     notifications = []
     students.each do |student|
@@ -24,8 +23,7 @@ class FinalGradesEventProcessor < AbstractEventProcessor
                                  :uid => student["ldap_uid"],
                                  :data => {
                                      :event => event,
-                                     :timestamp => timestamp,
-                                     :course => course
+                                     :timestamp => timestamp
                                  },
                                  :translator => "FinalGradesTranslator"
                              })
@@ -33,7 +31,7 @@ class FinalGradesEventProcessor < AbstractEventProcessor
     notifications
   end
 
-  def lookup_term_code(term)
+  def self.lookup_term_code(term)
     case term.downcase
       when "spring"
         "B"

@@ -31,7 +31,7 @@ class CampusData < ActiveRecord::Base
     if result
       result[:reg_status] = {
           :code => result["reg_status_cd"],
-          :summary => self.reg_status_translator.status_summary(result["reg_status_cd"]),
+          :summary => self.reg_status_translator.status(result["reg_status_cd"]),
           :explanation => self.reg_status_translator.status_explanation(result["reg_status_cd"])
       }
       result[:roles] = {
@@ -55,7 +55,7 @@ class CampusData < ActiveRecord::Base
 		where pi.ldap_uid = #{connection.quote(person_id)}
     SQL
     result = connection.select_one(sql)
-    if result["reg_status_cd"] == nil
+    if result == nil || result["reg_status_cd"] == nil
       nil
     else
       result
@@ -75,7 +75,7 @@ class CampusData < ActiveRecord::Base
 
   def self.get_course(ccn, term_yr, term_cd)
     sql = <<-SQL
-    select course_title
+    select course_title, dept_name, catalog_id
 		from bspace_course_info_vw
 		where term_yr = #{connection.quote(term_yr)}
       and term_cd = #{connection.quote(term_cd)}
