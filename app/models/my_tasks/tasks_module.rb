@@ -19,6 +19,10 @@ module MyTasks::TasksModule
     {tasks_cleared: false}
   end
 
+  def delete_task(task_list_id, task_id)
+    {task_deleted: false}
+  end
+
   # Helps determine what section category for a task
   def determine_bucket(due_date, formatted_entry, now_time, starting_date)
     bucket = "Unscheduled"

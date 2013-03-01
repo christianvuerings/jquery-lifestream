@@ -42,8 +42,6 @@ describe GoogleProxy do
     response_array[0].data["items"].size.should == 6
   end
 
-
-
   it "should simulate a token update before a real request using the Tammi account", :testext => true do
     # by the time the fake access token is used below, it probably has well expired
     Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID,
@@ -59,11 +57,13 @@ describe GoogleProxy do
   it "should simulate revoking a token after a 401 response", :testext => true do
     Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID,
                              "bogus_token", "bogus_refresh_token", 0)
-    proxy = GoogleEventsListProxy.new(:user_id => @random_id)
-    GoogleProxy.access_granted?(@random_id).should be_true
-    proxy.authorization.stub(:expired?).and_return(false)
-    response_array = proxy.events_list()
-    GoogleProxy.access_granted?(@random_id).should be_false
+    suppress_rails_logging do
+      proxy = GoogleEventsListProxy.new(:user_id => @random_id)
+      GoogleProxy.access_granted?(@random_id).should be_true
+      proxy.authorization.stub(:expired?).and_return(false)
+      response_array = proxy.events_list()
+      GoogleProxy.access_granted?(@random_id).should be_false
+    end
   end
 
   it "should simulate a dynamically set token params request", :testext => true do

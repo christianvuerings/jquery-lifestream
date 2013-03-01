@@ -57,6 +57,14 @@ class MyTasks::GoogleTasks
     {tasks_cleared: result}
   end
 
+  def delete_task(params, task_list_id="@default")
+    google_proxy = GoogleDeleteTaskProxy.new(user_id: @uid)
+    Rails.logger.debug "#{self.class.name} delete_task, sending to Google (task_list_id, params):
+          {#{task_list_id}, #{params.inspect}}"
+    response  = google_proxy.delete_task(task_list_id, params[:task_id])
+    {task_deleted: response}
+  end
+
   private
 
   def format_google_insert_task_request(entry)
@@ -67,6 +75,13 @@ class MyTasks::GoogleTasks
     end
     formatted_entry["notes"] = entry["note"] if entry["note"]
     Rails.logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
+    formatted_entry
+  end
+
+  def format_google_delete_task_request(entry)
+    formatted_entry = {}
+    formatted_entry["id"] = entry["id"]
+    Rails.logger.debug "Formatted body entry for google proxy delete_task: #{formatted_entry.inspect}"
     formatted_entry
   end
 
