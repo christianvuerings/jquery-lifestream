@@ -104,6 +104,29 @@
       $scope.tasks_mode = tasks_mode;
     };
 
+    // Delete Google tasks
+    $scope.deleteTask = function(task) {
+      task.is_processing = true;
+      var deltask = { "task_id": task.id, "emitter": "Google" }; // Payload for proxy
+
+      $http.post('/api/my/tasks/delete/' + task.id, deltask).success(function(data) {
+
+        // task.$index is duplicated between buckets, so need to iterate through ALL tasks
+        for( var i = 0; i < $scope.tasks.length; i++ ) {
+          if( $scope.tasks[i].id === task.id ) {
+            $scope.tasks.splice(i, 1);
+            return;
+          }
+        }
+
+        apiService.analytics.trackEvent(['Tasks', 'Delete', task]);
+      }).error(function() {
+        apiService.analytics.trackEvent(['Error', 'Delete task failure']);
+        //Some error notification would be helpful.
+      });
+
+    };
+
     $scope.filterOverdue = function(task) {
       return (task.status !== 'completed' && task.bucket === 'Overdue');
     };
