@@ -179,6 +179,9 @@
           <p data-ng-show="!filtered.length" class="cc-widget-text">
             There are currently no completed tasks/assignments.
           </p>
+          <div class="row cc-widget-clear-completed" data-ng-show="filtered.length">
+            <div class="twelve columns"><span class="cc-right"><button class="small button radius" data-ng-click="clearCompletedTasks()">Clear completed tasks</button></span></div>
+          </div>
         </div>
       </div>
     </div>
