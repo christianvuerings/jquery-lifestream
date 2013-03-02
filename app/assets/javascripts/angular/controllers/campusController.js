@@ -86,8 +86,15 @@
       $http.get('/json/campuslinks.json').success(function(data) {
         $scope.data = data;
 
-        $scope.currentTopCategory = $scope.data.urlmapping[$routeParams.category];
-        apiService.util.setTitle('Campus - ' + $scope.currentTopCategory);
+        var title = 'Campus';
+        if ($routeParams.category) {
+          $scope.currentTopCategory = $scope.data.urlmapping[$routeParams.category];
+          title += ' - ' + $scope.currentTopCategory;
+        } else {
+          $scope.currentTopCategory = '';
+        }
+
+        apiService.util.setTitle(title);
 
         setLinks($scope.data.links);
       });

@@ -3,6 +3,12 @@
   <div class="cc-page-campus">
 
     <div class="nine columns cc-page-campus-content push-three">
+
+      <div data-ng-show="currentTopCategory==''">
+        <h1>Campus Pages</h1>
+        <p class="cc-page-campus-content-explanation">CalCentral Campus Pages offer a jumping off point into the broader campus. They encourage the discovery of campus resources, with content personalized to each person.</p>
+      </div>
+
       <h1>{{currentTopCategory}}</h1>
 
       <div class="cc-page-campus-content-subcontainer" data-ng-repeat="subcategory in subcategories">
@@ -17,11 +23,13 @@
     </div>
 
     <div class="three columns cc-page-campus-navigation pull-nine">
+      <ul>
+        <li><a href="/campus">Campus Pages</a></li>
+      </ul>
       <h3>Academics</h3>
       <ul>
         <li data-ng-show="topcategories['Academic Planning']"><a href="/campus/academicplanning">Academic Planning</a></li>
         <li data-ng-show="topcategories['Campus Departments']"><a href="/campus/campusdepartments">Campus Departments</a></li>
-        <li data-ng-show="topcategories['Classes']"><a href="/campus/classes">Classes</a></li>
         <li data-ng-show="topcategories['Learning & Research']"><a href="/campus/learningandresearch">Learning &amp; Research</a></li>
       </ul>
       <h3>Administrative</h3>

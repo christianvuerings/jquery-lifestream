@@ -1,7 +1,5 @@
 .nav-bar {
-  /* IE9 */
-  $experimental-support-for-svg: true;
-  @include background(linear-gradient(top, $cc-nav-gradient1-color, $cc-nav-gradient2-color));
+  background-color: $cc-nav-color;
   height: auto;
   margin: 0;
   overflow: hidden;
@@ -31,9 +29,6 @@
         border-right: 7px solid transparent;
         margin-left: -6px;
       }
-      a {
-        color: $cc-nav-link-color;
-      }
     }
     &:last-child {
       border: none;
@@ -42,8 +37,8 @@
     > a {
       font-weight: bold;
       &:hover {
-        color: $cc-nav-link-color;
         background: transparent;
+        text-decoration: underline;
       }
     }
   }

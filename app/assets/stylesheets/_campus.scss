@@ -1,31 +1,73 @@
 .cc-page-campus {
   h1 {
-    color: #004677;
+    color: #2fb4d4;
     font-size: 24px;
+    font-weight: normal;
+    margin-top: 0;
+    text-transform: uppercase;
   }
   h2 {
-    border-bottom: 1px solid $cc-border-color;
+    border-bottom: 1px solid #2fb4d4;
     font-size: 16px;
     padding-bottom: 5px;
   }
+  h3 {
+    border-top: 1px solid #88a2c1;
+    color: #cbcbcb;
+    font-size: 12px;
+    margin: 0;
+    padding: 10px 15px 0;
+    text-transform: uppercase;
+  }
   ul {
-    list-style-type: none;
-    padding-left: 15px;
+    margin: 10px 0;
+    padding-left: 0;
     a {
       display: block;
     }
   }
+  .cc-page-campus-content {
+    padding: 25px;
+    a {
+      color: #2f6f92;
+    }
+    ul {
+      list-style-type: none;
+    }
+    li:before {
+      content: '\25A0';
+      color: #38b3d5;
+      float: left;
+      margin-top: -2px;
+      padding-right: 8px;
+    }
+  }
+  .cc-page-campus-content-explanation {
+    max-width: 400px;
+  }
   .cc-page-campus-content-subcontainer {
     float: left;
-    padding-right: 15px;
+    padding-right: 50px;
     width: 50%;
   }
   .cc-page-campus-navigation, .cc-page-campus-content {
     @include cc-column-sameheight;
   }
   .cc-page-campus-navigation {
-    background: #fafafa;
-    border-right: 5px solid #dedede;
+    background: #477cba;
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 1px;
+    ul {
+      list-style-type: none;
+    }
+    a {
+      color: #fff;
+      padding: 0 15px;
+      &:hover, &:focus {
+        background-color: #7da3ce;
+      }
+    }
   }
   @media only screen and (max-width: 767px) {
     .cc-page-campus-content-subcontainer {
@@ -33,8 +75,12 @@
       width: 100%;
     }
     .cc-page-campus-navigation {
-      background: transparent;
       border-right: none;
+    }
+    .cc-page-campus-content {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 20px;
     }
   }
 }
