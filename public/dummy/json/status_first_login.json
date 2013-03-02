@@ -1,6 +1,8 @@
 {
   "is_logged_in": true,
   "uid": "191779",
+  "first_name": "Tom",
+  "last_name": "Jones",
   "preferred_name": "Mr. Tom Jones",
   "has_canvas_access_token": true,
   "has_google_access_token": false,

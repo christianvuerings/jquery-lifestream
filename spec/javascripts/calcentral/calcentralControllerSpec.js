@@ -38,6 +38,9 @@ describe('CalCentral controller', function() {
 
     expect($scope.user.isAuthenticated()).toBeTruthy();
     expect($scope.user.profile.uid).toBeDefined();
+    expect($scope.user.profile.first_name).toBeDefined();
+    expect($scope.user.profile.last_name).toBeDefined();
+    expect($scope.user.profile.full_name).toBeDefined();
     expect($scope.user.profile.preferred_name).toBeDefined();
   });
 
