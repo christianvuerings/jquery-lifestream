@@ -5,8 +5,10 @@ class UserApi < MyMergedModel
     @calcentral_user_data = UserData.where(:uid => @uid).first
     @campus_attributes = CampusData.get_person_attributes(@uid) || {}
     @default_name = @campus_attributes['person_name']
-    @override_name = @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
     @first_login_at = @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
+    @first_name = @campus_attributes['first_name'] || ""
+    @last_name = @campus_attributes['last_name'] || ""
+    @override_name = @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
   end
 
   def preferred_name
@@ -61,14 +63,17 @@ class UserApi < MyMergedModel
 
   def get_feed_internal
     {
-        :uid => @uid,
-        :preferred_name => self.preferred_name,
+        :first_login_at => @first_login_at,
+        :first_name => @first_name,
+        :full_name => @first_name + ' ' + @last_name,
         :has_canvas_access_token => CanvasProxy.access_granted?(@uid),
-        :has_google_access_token => GoogleProxy.access_granted?(@uid),
         :has_canvas_account => CanvasProxy.has_account?(@uid),
+        :has_google_access_token => GoogleProxy.access_granted?(@uid),
+        :last_name => @last_name,
+        :preferred_name => self.preferred_name,
         :reg_status => @campus_attributes[:reg_status],
         :roles => @campus_attributes[:roles],
-        :first_login_at => @first_login_at
+        :uid => @uid
     }
   end
 

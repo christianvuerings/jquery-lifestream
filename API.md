@@ -10,11 +10,23 @@ Projected endpoints:
 
 ```
 /api/my/status :
-  is_logged_in: <boolean>
+  features: {
+    notifications: <boolean>,
+    act_as: <boolean>
+  },
   first_login_at: <datetime or nil when you have not logged in yet>
+  first_name: <string if exists else "">
   has_canvas_access_token: <boolean>
+  has_canvas_account: <boolean>
   has_google_access_token: <boolean>
+  is_logged_in: <boolean>
+  last_name: <string if exists else "">
   preferred_name: <string if exists else "">
+  roles: {
+    student: <boolean>,
+    faculty: <boolean>,
+    staff: <boolean>
+  },
   uid: <string uid if logged in>
 ```
 
