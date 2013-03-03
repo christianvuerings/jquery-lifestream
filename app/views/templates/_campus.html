@@ -23,37 +23,17 @@
     </div>
 
     <div class="three columns cc-page-campus-navigation pull-nine">
-      <ul>
-        <li><a href="/campus">Campus Pages</a></li>
-      </ul>
-      <h3>Academics</h3>
-      <ul>
-        <li data-ng-show="topcategories['Academic Planning']"><a href="/campus/academicplanning">Academic Planning</a></li>
-        <li data-ng-show="topcategories['Campus Departments']"><a href="/campus/campusdepartments">Campus Departments</a></li>
-        <li data-ng-show="topcategories['Learning & Research']"><a href="/campus/learningandresearch">Learning &amp; Research</a></li>
-      </ul>
-      <h3>Administrative</h3>
-      <ul>
-        <li data-ng-show="topcategories['Computing']"><a href="/campus/computing">Computing</a></li>
-        <li data-ng-show="topcategories['Food & Housing']"><a href="/campus/foodandhousing">Food &amp; Housing</a></li>
-        <li data-ng-show="topcategories['Getting Around']"><a href="/campus/gettingaround">Getting Around</a></li>
-        <li data-ng-show="topcategories['New to Campus?']"><a href="/campus/newtocampus">New to Campus?</a></li>
-      </ul>
-      <h3>Personal</h3>
-      <ul>
-        <li data-ng-show="topcategories['Career']"><a href="/campus/career">Career</a></li>
-        <li data-ng-show="topcategories['Health & Safety']"><a href="/campus/finances">Finances</a></li>
-        <li><a href="/campus/healthandsafety">Health &amp; Safety</a></li>
-      </ul>
-      <h3>Campus Life</h3>
-      <ul>
-        <li data-ng-show="topcategories['Community']"><a href="/campus/community">Community</a></li>
-        <li data-ng-show="topcategories['Social & Recreation']"><a href="/campus/socialandrecreation">Social &amp; Recreation</a></li>
-        <li data-ng-show="topcategories['Student Groups']"><a href="/campus/studentgroups">Student Groups</a></li>
-      </ul>
+
+      <div data-ng-repeat="navitem in campusdata.navigation">
+        <h3 data-ng-show="navitem.label">{{navitem.label}}</h3>
+        <ul>
+          <li data-ng-repeat="category in navitem.categories" data-ng-show="topcategories[category.name]">
+            <a data-ng-class="{'cc-page-campus-navigation-active':(currentTopCategory==category.name)}" href="/campus/{{category.id}}">{{category.name}}</a>
+          </li>
+        </ul>
+      </div>
+
     </div>
-
-
   </div>
 
 </script>

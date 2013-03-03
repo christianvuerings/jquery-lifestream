@@ -68,7 +68,10 @@
     var setLinks = function(links) {
       $scope.links = [];
       $scope.subcategories = [];
-      $scope.topcategories = {};
+      $scope.topcategories = {
+        // Should always be visible, this is the landing page
+        'Campus Pages': true
+      };
       angular.forEach(links, function(link) {
         if (canViewLink(link) && isLinkInCategory(link)) {
           $scope.links.push(link);
@@ -79,16 +82,32 @@
     };
 
     /**
+     * Get the category name, when you feed in an id
+     * @param {String} categoryId A category id
+     * @return {String} The category name
+     */
+    var getCategoryName = function(categoryId) {
+      var navigation = $scope.campusdata.navigation;
+      for (var i = 0; i < navigation.length; i++) {
+        for (var j = 0; j < navigation[i].categories.length; j++) {
+          if (navigation[i].categories[j].id === categoryId) {
+            return navigation[i].categories[j].name;
+          }
+        }
+      }
+    };
+
+    /**
      * Get the links
      */
     var getLinks = function() {
-      // Data contains "links" and "urlmapping"
-      $http.get('/json/campuslinks.json').success(function(data) {
-        $scope.data = data;
+      // Data contains "links" and "navigation"
+      $http.get('/json/campuslinks.json').success(function(campusdata) {
+        $scope.campusdata = campusdata;
 
         var title = 'Campus';
         if ($routeParams.category) {
-          $scope.currentTopCategory = $scope.data.urlmapping[$routeParams.category];
+          $scope.currentTopCategory = getCategoryName($routeParams.category);
           title += ' - ' + $scope.currentTopCategory;
         } else {
           $scope.currentTopCategory = '';
@@ -96,7 +115,7 @@
 
         apiService.util.setTitle(title);
 
-        setLinks($scope.data.links);
+        setLinks($scope.campusdata.links);
       });
     };
 
