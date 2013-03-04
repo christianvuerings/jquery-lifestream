@@ -7,8 +7,8 @@ class MyTasks::Merged < MyMergedModel
 
   def initialize(uid, options={})
     super(uid, options)
-    #To avoid issues with tz, use time or DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
-    @starting_date = Time.zone.today.to_time_in_current_zone
+    #To avoid issues with tz, use DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
+    @starting_date = Time.zone.today.to_time_in_current_zone.to_datetime
     @now_time = Time.zone.now
     @enabled_sources = {
       CanvasProxy::APP_ID => {access_granted: CanvasProxy.access_granted?(@uid),
