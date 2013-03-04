@@ -1,6 +1,8 @@
 #CalCentral
 
-Home of CalCentral. [![Build status for calcentral](https://secure.travis-ci.org/ets-berkeley-edu/calcentral.png)](http://travis-ci.org/ets-berkeley-edu/calcentral) [![Dependency Status](https://gemnasium.com/ets-berkeley-edu/calcentral.png)](https://gemnasium.com/ets-berkeley-edu/calcentral) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/ets-berkeley-edu/calcentral)
+Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu/calcentral.png)](https://gemnasium.com/ets-berkeley-edu/calcentral) [![Code Climate](https://codeclimate.com/github/ets-berkeley-edu/calcentral.png)](https://codeclimate.com/github/ets-berkeley-edu/calcentral)
+* Master: [![Build Status](https://travis-ci.org/ets-berkeley-edu/calcentral.png?branch=master)](https://travis-ci.org/ets-berkeley-edu/calcentral)
+* QA: [![Build Status](https://travis-ci.org/ets-berkeley-edu/calcentral.png?branch=qa)](https://travis-ci.org/ets-berkeley-edu/calcentral)
 
 ## Dependencies
 
@@ -159,7 +161,10 @@ https://[hostname]/act_as?uid=123456
 
 where 123456 is the UID of the user to emulate.
 
-n.b.: The Act As feature will only reveal data from data sources we control, e.g. Canvas. Google data will be completely suppressed.
+n.b.: The Act As feature will only reveal data from data sources we control, e.g. Canvas. Google data will be completely suppressed, __EXCEPT__ for test users. The following user uids have been configured as test users.
+* 11002820 - "Tammi Chang"
+* 61889 - "Oski Bear"
+* All IDs listed on the ["Universal Calnet Test IDs"](https://wikihub.berkeley.edu/display/calnet/Universal+Test+IDs) page
 
 To become yourself again, access
 
