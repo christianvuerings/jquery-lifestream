@@ -12,11 +12,14 @@
     $scope.is_task_processing = false;
     $scope.add_task = {};
 
-    $http.get('/api/my/tasks').success(function(data) {
-      $scope.tasks = data.tasks;
-    });
+    $scope.getTasks = function() {
+      return $http.get('/api/my/tasks').success(function(data) {
+        $scope.tasks = data.tasks;
+      });
+    };
+    $scope.getTasks();
 
-    $scope.addTaskCompleted = function(data){
+    $scope.addTaskCompleted = function(data) {
       $scope.add_task = {};
       $scope.is_task_processing = false;
       $scope.show_add_task = false;
@@ -97,6 +100,21 @@
         //Some error notification would be helpful.
       });
     };
+
+    $scope.clearCompletedTasks = function() {
+      apiService.analytics.trackEvent(['Tasks', 'Clear completed tasks', 'Clear completed tasks']);
+      $http.post('/api/my/tasks/clear_completed', {"emitter": "Google"}).success(function(data) {
+        if(data.tasks_cleared) {
+          $scope.getTasks();
+        } else {
+          // Again, some error handling?
+        }
+      }).error(function() {
+        apiService.analytics.trackEvent(['Error', 'Clear completed tasks failure', 'Clear completed tasks failure']);
+        //Some error notification would be helpful.
+      });
+    };
+
 
     // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasks_mode) {
