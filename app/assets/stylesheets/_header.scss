@@ -82,6 +82,7 @@ body {
     .cc-bubble-count:after {
       background-color: #e24022;
       border-radius: 4px;
+      @include box-shadow(1px 0 1px rgba(0, 0, 0, 0.7));
       color: #fff;
       content: attr(data-bubble);
       font-size: 10px;
