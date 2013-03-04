@@ -43,8 +43,8 @@ class MyGroups < MyMergedModel
       end
     end
     if CalLinkProxy.access_granted?(@uid)
-      cal_link_proxy = CalLinkProxy.new({:user_id => @uid})
-      if (cal_link_groups = cal_link_proxy.get_memberships)
+      membership_proxy = CalLinkMembershipsProxy.new({:user_id => @uid})
+      if (cal_link_groups = membership_proxy.get_memberships)
         Rails.logger.debug "body = #{cal_link_groups[:body]}"
         if cal_link_groups[:body] && cal_link_groups[:body]["items"]
           seen_orgs = Set.new

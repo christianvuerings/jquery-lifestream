@@ -5,7 +5,7 @@ describe "MyGroups" do
     @user_id = rand(99999).to_s
     @fake_sakai_proxy = SakaiProxy.new({:user_id => @user_id, :fake => true})
     @fake_canvas_proxy = CanvasGroupsProxy.new({fake: true})
-    @fake_cal_link_proxy = CalLinkProxy.new({fake: true})
+    @fake_cal_link_proxy = CalLinkMembershipsProxy.new({fake: true})
   end
 
   it "should return a valid feed for a user granted access" do
@@ -72,7 +72,7 @@ describe "MyGroups" do
     CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiProxy.stub(:access_granted?).and_return(false)
     CalLinkProxy.stub(:access_granted?).and_return(true)
-    CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].is_a?(Array).should == true
     my_groups[:groups].size.should == 5
@@ -116,8 +116,8 @@ describe "MyGroups" do
     CalLinkProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:new).and_return(@fake_sakai_proxy)
     CanvasProxy.any_instance.stub(:request).and_return(nil)
-    CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
-    CalLinkProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
+    CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    CalLinkMembershipsProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].size.should be > 0
     my_groups[:groups].each do |group|
@@ -130,9 +130,9 @@ describe "MyGroups" do
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     SakaiProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.any_instance.stub(:get_categorized_sites).and_return({status_code: 503})
-    CalLinkProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
     CalLinkProxy.stub(:access_granted?).and_return(true)
-    CalLinkProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
+    CalLinkMembershipsProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].size.should be > 0
     my_groups[:groups].each do |group|
