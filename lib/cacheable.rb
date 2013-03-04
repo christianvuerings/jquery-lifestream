@@ -2,20 +2,28 @@ module Calcentral
 
   module Cacheable
 
+    def fetch_from_cache(uid = nil)
+      key = uid ? self.cache_key(uid) : self.global_cache_key
+      Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
+      Rails.cache.fetch(
+          key,
+          :expires_in => self.expires_in
+      ) do
+        yield
+      end
+    end
+
     def expires_in
       expirations = Settings.cache.expiration.marshal_dump
-      expirations[self.name.to_sym] || Settings.cache.expiration.default
+      expirations[self.name.to_sym] || expirations.default
     end
 
     def cache_key(uid)
-      key = "user/#{uid}/#{self.name}"
-      Rails.logger.debug "#{self.name} cache_key will be #{key}"
-      key
+      "user/#{uid}/#{self.name}"
     end
 
     def global_cache_key()
-      key = "global/#{self.name}"
-      Rails.logger.debug "#{self.name} cache_key will be #{key}"
+      "global/#{self.name}"
     end
 
     def expire(uid)

@@ -15,10 +15,7 @@ class MyMergedModel
     uid = @uid
     uid = Calcentral::PSEUDO_USER_PREFIX.concat(@uid) if is_acting_as_nonfake_user?
 
-    Rails.cache.fetch(
-        self.class.cache_key(uid),
-        :expires_in => self.class.expires_in
-    ) do
+    self.class.fetch_from_cache @uid do
       get_feed_internal(*opts)
     end
   end
