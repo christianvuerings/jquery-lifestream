@@ -5,12 +5,12 @@ class CalLinkOrganizationProxy < CalLinkProxy
     @org_id = options[:org_id]
   end
 
-  def self.global_cache_key()
-    "global/#{self.name}/#@org_id"
+  def self.cache_key(org_id)
+    "global/#{self.name}/#{org_id}"
   end
 
   def get_organization
-    self.class.fetch_from_cache do
+    self.class.fetch_from_cache @org_id do
       url = "#{Settings.cal_link_proxy.base_url}/api/organizations"
       params = build_params
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url}; params = #{params}, cache expiration #{self.class.expires_in}"
