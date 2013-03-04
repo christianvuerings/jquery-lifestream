@@ -2241,20 +2241,87 @@
       }
     }
   ],
-  "urlmapping": {
-    "academicplanning": "Academic Planning",
-    "campusdepartments": "Campus Departments",
-    "classes": "Classes",
-    "learningandresearch": "Learning & Research",
-    "computing": "Computing",
-    "foodandhousing": "Food & Housing",
-    "gettingaround": "Getting Around",
-    "newtocampus": "New to Campus?",
-    "career": "Career",
-    "finances": "Finances",
-    "healthandsafety": "Health & Safety",
-    "community": "Community",
-    "socialandrecreation": "Social & Recreation",
-    "studentgroups": "Student Groups"
-  }
+  "navigation": [
+    {
+      "label": "",
+      "categories": [
+        {
+          "id": "",
+          "name": "Campus Pages"
+        }
+      ]
+    },
+    {
+      "label": "Academics",
+      "categories": [
+        {
+          "id": "academicplanning",
+          "name": "Academic Planning"
+        },
+        {
+          "id": "campusdepartments",
+          "name": "Campus Departments"
+        },
+        {
+          "id": "learningandresearch",
+          "name": "Learning & Research"
+        }
+      ]
+    },
+    {
+      "label": "Administrative",
+      "categories": [
+        {
+          "id": "computing",
+          "name": "Computing"
+        },
+        {
+          "id": "foodandhousing",
+          "name": "Food & Housing"
+        },
+        {
+          "id": "gettingaround",
+          "name": "Getting Around"
+        },
+        {
+          "id": "newtocampus",
+          "name": "New to Campus?"
+        }
+      ]
+    },
+    {
+      "label": "Personal",
+      "categories": [
+        {
+          "id": "career",
+          "name": "Career"
+        },
+        {
+          "id": "finances",
+          "name": "Finances"
+        },
+        {
+          "id": "healthandsafety",
+          "name": "Health & Safety"
+        }
+      ]
+    },
+    {
+      "label": "Campus Life",
+      "categories": [
+        {
+          "id": "community",
+          "name": "Community"
+        },
+        {
+          "id": "socialandrecreation",
+          "name": "Social & Recreation"
+        },
+        {
+          "id": "studentgroups",
+          "name": "Student Groups"
+        }
+      ]
+    }
+  ]
 }

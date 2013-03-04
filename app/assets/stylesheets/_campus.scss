@@ -69,6 +69,22 @@
       }
     }
   }
+  .cc-page-campus-navigation-active {
+    position: relative;
+    &::before, &::after {
+      content: "";
+      height: 0;
+      position: absolute;
+      right: 0;
+      top: 3px;
+      width: 0;
+    }
+    &::before {
+      border-bottom: 7px solid transparent;
+      border-right: 8px solid #fff;
+      border-top: 7px solid transparent;
+    }
+  }
   @media only screen and (max-width: 767px) {
     .cc-page-campus-content-subcontainer {
       float: none;
