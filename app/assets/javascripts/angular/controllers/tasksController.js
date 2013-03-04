@@ -13,7 +13,7 @@
     $scope.add_task = {};
 
     $scope.getTasks = function() {
-      $http.get('/api/my/tasks').success(function(data) {
+      return $http.get('/api/my/tasks').success(function(data) {
         $scope.tasks = data.tasks;
       });
     };
@@ -73,7 +73,7 @@
      * backend (and successful response) so model can reflect correct changes.
      * Otherwise, remove completed_date prop after backend response.
      */
-     $scope.changeTaskState = function(task) {
+    $scope.changeTaskState = function(task) {
       var changedTask = angular.copy(task);
       // Reset task back to original state.
       toggleStatus(task);
@@ -104,14 +104,13 @@
     $scope.clearCompletedTasks = function() {
       apiService.analytics.trackEvent(['Tasks', 'Clear completed tasks', 'Clear completed tasks']);
       $http.post('/api/my/tasks/clear_completed', {"emitter": "Google"}).success(function(data) {
-        if(data["tasks_cleared"]) {
+        if(data.tasks_cleared) {
           $scope.getTasks();
-          $scope.switchTasksMode('scheduled');
         } else {
           // Again, some error handling?
         }
       }).error(function() {
-        apiService.analytics.trackEvent(['Error', 'Clear completed tasks failure failure', 'Clear completed tasks failure']);
+        apiService.analytics.trackEvent(['Error', 'Clear completed tasks failure', 'Clear completed tasks failure']);
         //Some error notification would be helpful.
       });
     };
