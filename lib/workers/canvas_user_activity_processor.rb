@@ -33,39 +33,73 @@ class CanvasUserActivityProcessor
       rescue
         next
       end
+
       formatted_entry = {}
       formatted_entry[:id] = "canvas_#{entry["id"]}"
       formatted_entry[:type] = entry["type"]
       formatted_entry[:user_id] = @uid
-      if entry["type"] == "Message"
-        title_and_summary = entry["title"].split(/( - |: )/, 3) unless entry["title"].blank?
-        title_and_summary ||= ["New/Updated Conversation"] if entry["type"] == "Conversation"
-        formatted_entry[:title] = title_and_summary[0]
-      else
-        formatted_entry[:title] = entry["title"]
-      end
-      formatted_entry[:source] = "Canvas"
+      formatted_entry[:title] = process_title entry
+      formatted_entry[:source] = process_source entry
       formatted_entry[:emitter] = "Canvas"
       formatted_entry[:color_class] = "canvas-class"
       formatted_entry[:url] = entry["html_url"]
       formatted_entry[:source_url] = entry["html_url"]
-      message_partial = Nokogiri::HTML(entry["message"])
-      message_partial = message_partial.xpath("//text()").to_s.gsub(/\s+/, " ").strip
-      if entry["type"] == "Message"
-        formatted_entry[:summary] = title_and_summary[2] if title_and_summary.size > 2
-        formatted_entry[:summary] ||= ''
-        formatted_entry[:summary] += " - #{message_partial}"
-      else
-        formatted_entry[:summary] = message_partial
-      end
-      formatted_entry[:date] = {
-        :epoch => date.to_i,
-        :datetime => date.rfc3339(3),
-        :date_string => date.strftime("%-m/%d")
-      }
+      formatted_entry[:summary] = process_message entry
+      formatted_entry[:date] = process_date date
+
       feed << formatted_entry
     end
     feed
+  end
+
+  def process_title(entry)
+    if entry["type"] == "Message"
+      title_and_summary = split_title_and_summary entry["title"]
+      title_and_summary ||= ["New/Updated Conversation"] if entry["type"] == "Conversation"
+      title_and_summary[0]
+    else
+      entry["title"]
+    end
+  end
+
+  def split_title_and_summary(title)
+    title.split(/( - |: )/, 3) unless title.blank?
+  end
+
+  def process_message(entry)
+    message_partial = Nokogiri::HTML(entry["message"])
+    message_partial = message_partial.xpath("//text()").to_s.gsub(/\s+/, " ").strip
+    if entry["type"] == "Message"
+      title_and_summary = split_title_and_summary entry["title"]
+      message = title_and_summary[2] if title_and_summary.size > 2
+      message ||= ''
+      message += " - #{message_partial}"
+      message
+    else
+      message_partial
+    end
+  end
+
+  def process_date(date)
+    {
+      :epoch => date.to_i,
+      :datetime => date.rfc3339(3),
+      :date_string => date.strftime("%-m/%d")
+    }
+  end
+
+  def process_source(entry)
+    key = "user/#{@uid}/#{MyClasses.name}"
+    if !entry["course_id"].blank? && (Rails.cache.exist? key)
+      classes = Rails.cache.read(key)[:classes]
+      classes.select! { |entry| entry[:emitter] == "Canvas"}
+      classes_hash = Hash[*classes.map { |entry| [Integer(entry[:id], 10), entry]}.flatten]
+      if classes_hash[entry["course_id"]]
+        source = classes_hash[entry["course_id"]][:course_code]
+      end
+    end
+    source ||= "Canvas"
+    source
   end
 
   def remove_dismissed_notifications!
