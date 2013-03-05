@@ -6,6 +6,7 @@ describe "CanvasUserActivityHandler" do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     fake_feed = CanvasUserActivityProxy.new({:fake => true}).user_activity
     @fake_feed = JSON.parse(fake_feed.body)
+    @fake_canvas_proxy = CanvasCoursesProxy.new({fake: true})
   end
 
   after do
@@ -24,10 +25,24 @@ describe "CanvasUserActivityHandler" do
       activity[:user_id].should == @random_id
       activity[:date][:epoch].is_a?(Integer).should == true
       activity[:color_class].should == "canvas-class"
-      activity[:source].should == "Canvas"
+      activity[:source].blank?.should_not be_true
       activity[:emitter].should == "Canvas"
       activity[:type].blank?.should_not == true
     end
+    handler.finalize
+  end
+
+  # Cache stores are only enabled on testext
+  it "should be able to work with warmed MyClassses entries", :testext => true do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    CanvasCoursesProxy.stub(:new).and_return(@fake_canvas_proxy)
+    options = {:fake => true, :user_id => @random_id}
+    handler = CanvasUserActivityHandler.new(options)
+    activities = handler.get_feed_results
+    activities.instance_of?(Array).should == true
+    activities.size.should == 20
+    interesting_result = activities.select { |entry| entry[:source] == "EE 20N"}
+    interesting_result.size.should_not == 0
     handler.finalize
   end
 
