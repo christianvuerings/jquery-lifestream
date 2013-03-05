@@ -71,8 +71,14 @@ class UserApi < MyMergedModel
         :has_google_access_token => GoogleProxy.access_granted?(@uid),
         :last_name => @last_name,
         :preferred_name => self.preferred_name,
-        :reg_status => @campus_attributes[:reg_status],
         :roles => @campus_attributes[:roles],
+        :student_info => {
+            :california_residency => @campus_attributes[:california_residency],
+            :education_level => @campus_attributes[:education_level],
+            :reg_status => @campus_attributes[:reg_status],
+            :reg_block => @campus_attributes[:reg_block],
+            :units_enrolled => @campus_attributes[:units_enrolled]
+        },
         :uid => @uid
     }
   end

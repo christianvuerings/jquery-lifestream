@@ -19,7 +19,7 @@ class RegStatusTranslator
 
     return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && reg_status
 
-    explanation = status_explanation reg_status["reg_status_cd"]
+    explanation = notification_status_explanation reg_status["reg_status_cd"]
     status = status reg_status["reg_status_cd"]
 
     title = "Registration status updated to: #{status}"
@@ -44,12 +44,12 @@ class RegStatusTranslator
   end
 
   def status(reg_status)
-    admincancelled = "ADMIN CANCELLED"
-    cancelled = "CANCELLED"
-    dismissed = "DISMISSED"
-    registered = "REGISTERED"
-    unregistered = "NOT REGISTERED"
-    withdrawn = "WITHDRAWN"
+    admincancelled = "Administratively Cancelled"
+    cancelled = "Cancelled"
+    dismissed = "Dismissed"
+    registered = "Registered"
+    unregistered = "Not Registered"
+    withdrawn = "Withdrawn"
 
     if reg_status == nil
       return nil
@@ -87,13 +87,20 @@ class RegStatusTranslator
     end
   end
 
-  def status_explanation(reg_status)
+  def is_registered(reg_status)
+    if reg_status == nil
+      return false
+    end
+
+    ["C", "L", "N", "R", "S", "V"].include?(reg_status.upcase)
+  end
+
+  def notification_status_explanation(reg_status)
 
     if reg_status == nil
       return nil
     end
 
-    # TODO resolve gaps and ??? marks - CLC-1069
     unregistered = "In order to be officially registered, you must pay at least 20% of your registration fees, have no outstanding blocks, and be enrolled in at least one class."
     registered = "You are officially registered for this term and are entitled to access campus services."
 
@@ -126,6 +133,19 @@ class RegStatusTranslator
         registered
       else
         'Unknown Status.'
+    end
+
+  end
+
+  def status_explanation(reg_status)
+    if reg_status == nil
+      return nil
+    end
+
+    if is_registered(reg_status)
+      ''
+    else
+      '<a href="http://registrar.berkeley.edu/FAQS.html">About registration status</a>'
     end
   end
 end

@@ -9,7 +9,7 @@
     <nav class="cc-launcher">
       <div data-ng-show="user.isAuthenticated()">
         <div data-ng-controller="BadgesController"
-          data-ng-class="{true:'cc-launcher-bar'}[user.profile.reg_status.code==null]"
+          data-ng-class="{true:'cc-launcher-bar'}[user.profile.student_info.reg_status.code==null]"
           class="cc-left cc-launcher-icons">
 
           <a href="http://bmail.berkeley.edu"
@@ -31,18 +31,52 @@
           >bDrive</a>
 
         </div>
-        <div class="cc-popover-container cc-popover-status cc-left" data-ng-show="user.profile.reg_status.code!=null">
+        <div
+          data-ng-controller="StatusController"
+          class="cc-popover-container cc-popover-status cc-left"
+          data-ng-show="user.profile.student_info.reg_status.code!=null">
           <button class="cc-ir cc-icon cc-icon-status-person"
             data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')"><span class="cc-visuallyhidden">Show your academic profile</span>
           </button>
-          <div class="cc-icon cc-icon-status-person-layover" data-ng-class="{true:'cc-icon-status-level-check-small',false:'cc-icon-status-level-exclamation'}[user.profile.reg_status.summary=='REGISTERED']"></div>
+          <div class="cc-icon cc-icon-status-person-layover" data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check-small'}[showStatusError]"></div>
           <div class="cc-popover" data-ng-show="api.popover.status('cc-popover-status')">
             <h4>Academic Profile</h4>
-            <div class="cc-icon cc-left" data-ng-class="{true:'cc-icon-status-level-check',false:'cc-icon-status-level-exclamation'}[user.profile.reg_status.summary=='REGISTERED']"></div>
-            <div class="cc-launcher-status-description">
-              <strong>Registration Status: {{user.profile.reg_status.summary}}</strong>
-              <p>{{user.profile.reg_status.explanation}}</p>
-            </div>
+            <p>
+              <div class="cc-icon cc-left" data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check'}[user.profile.student_info.reg_status.needsAction]"></div>
+              <div class="cc-launcher-status-description">
+                <strong>Registration Status:</strong> {{user.profile.student_info.reg_status.summary}}<br />
+                <span data-ng-bind-html="user.profile.student_info.reg_status.explanation"></span>
+              </div>
+            </p>
+            <p>
+              <div class="cc-icon cc-left" data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check'}[user.profile.student_info.reg_block.needsAction]"></div>
+              <div class="cc-launcher-status-description">
+                <strong>Registration Blocks<span data-ng-show="user.profile.student_info.reg_block.summary">:</span></strong> <span>{{user.profile.student_info.reg_block.summary}}</span><br />
+                <span data-ng-bind-html="user.profile.student_info.reg_block.explanation"></span>
+                <p data-ng-repeat="block in user.profile.student_info.reg_block.blocks">
+                  <strong>{{block.name}}:</strong> {{block.summary}}
+                </p>
+              </div>
+            </p>
+            <p>
+              <div class="cc-left" data-ng-class="{true:'cc-icon cc-icon-status-level-exclamation',false:'cc-popover-status-block-icon'}[user.profile.student_info.california_residency.needsAction]"></div>
+              <div class="cc-launcher-status-description">
+                <strong>California Residency:</strong> {{user.profile.student_info.california_residency.summary}}<br />
+                <span data-ng-bind-html="user.profile.student_info.california_residency.explanation"></span>
+              </div>
+            </p>
+            <p>
+              <div class="cc-left cc-popover-status-block-icon"></div>
+              <div class="cc-launcher-status-description">
+                <strong>Education Level:</strong> {{user.profile.student_info.education_level}}
+              </div>
+            </p>
+            <p>
+              <div class="cc-left cc-popover-status-block-icon"></div>
+              <div class="cc-launcher-status-description">
+                <strong>Units Enrolled:</strong> {{user.profile.student_info.units_enrolled}}
+              </div>
+            </p>
           </div>
         </div>
 

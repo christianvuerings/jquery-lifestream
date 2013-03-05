@@ -5,6 +5,18 @@ class CampusData < ActiveRecord::Base
     @reg_status_translator ||= RegStatusTranslator.new
   end
 
+  def self.educ_level_translator
+    @educ_level_translator ||= EducLevelTranslator.new
+  end
+
+  def self.cal_residency_translator
+    @cal_residency_translator ||= CalResidencyTranslator.new
+  end
+
+  def self.reg_block_translator
+    @reg_block_translator ||= RegBlockTranslator.new
+  end
+
   def self.current_year
     Settings.sakai_proxy.current_terms_codes.first.term_yr
   end
@@ -32,8 +44,13 @@ class CampusData < ActiveRecord::Base
       result[:reg_status] = {
           :code => result["reg_status_cd"],
           :summary => self.reg_status_translator.status(result["reg_status_cd"]),
-          :explanation => self.reg_status_translator.status_explanation(result["reg_status_cd"])
+          :explanation => self.reg_status_translator.status_explanation(result["reg_status_cd"]),
+          :needsAction => !self.reg_status_translator.is_registered(result["reg_status_cd"])
       }
+      result[:reg_block] = self.reg_block_translator.translate(result["acad_blk_flag"], result["admin_blk_flag"], result["fin_blk_flag"], result["reg_blk_flag"])
+      result[:units_enrolled] = result["tot_enroll_unit"]
+      result[:education_level] = self.educ_level_translator.translate(result["educ_level"])
+      result[:california_residency] = self.cal_residency_translator.translate(result["cal_residency_flag"])
       result[:roles] = {
           :student => result['affiliations'].include?("STUDENT-TYPE-"),
           :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
