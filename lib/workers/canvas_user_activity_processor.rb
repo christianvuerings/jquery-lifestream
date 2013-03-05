@@ -14,6 +14,11 @@ class CanvasUserActivityProcessor
     return if raw_feed.nil?
     # Translate the feed
     self.class.fetch_from_cache @uid do
+      begin
+        @canvas_classes = filter_classes(MyClasses.new(@uid).get_feed[:classes])
+      rescue
+        @canvas_classes = []
+      end
       @processed_feed = internal_process_feed(raw_feed)
       remove_dismissed_notifications!
     end
@@ -88,15 +93,15 @@ class CanvasUserActivityProcessor
     }
   end
 
+  def filter_classes(classes = [])
+    classes.select! { |entry| entry[:emitter] == "Canvas"}
+    classes_hash = Hash[*classes.map { |entry| [Integer(entry[:id], 10), entry]}.flatten]
+  end
+
   def process_source(entry)
-    key = "user/#{@uid}/#{MyClasses.name}"
-    if !entry["course_id"].blank? && (Rails.cache.exist? key)
-      classes = Rails.cache.read(key)[:classes]
-      classes.select! { |entry| entry[:emitter] == "Canvas"}
-      classes_hash = Hash[*classes.map { |entry| [Integer(entry[:id], 10), entry]}.flatten]
-      if classes_hash[entry["course_id"]]
-        source = classes_hash[entry["course_id"]][:course_code]
-      end
+    if (!entry["course_id"].blank? && !@canvas_classes.blank? &&
+        @canvas_classes[entry["course_id"]])
+      source = @canvas_classes[entry["course_id"]][:course_code]
     end
     source ||= "Canvas"
     source

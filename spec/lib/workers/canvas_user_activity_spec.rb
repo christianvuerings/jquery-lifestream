@@ -36,7 +36,6 @@ describe "CanvasUserActivityHandler" do
   it "should be able to work with warmed MyClassses entries", :testext => true do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasCoursesProxy.stub(:new).and_return(@fake_canvas_proxy)
-    MyClasses.new(@random_id).get_feed
     options = {:fake => true, :user_id => @random_id}
     handler = CanvasUserActivityHandler.new(options)
     activities = handler.get_feed_results
