@@ -2,8 +2,8 @@ module Calcentral
 
   module Cacheable
 
-    def fetch_from_cache(uid = nil)
-      key = uid ? self.cache_key(uid) : self.global_cache_key
+    def fetch_from_cache(id = nil)
+      key = id ? self.cache_key(id) : self.global_cache_key
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
       Rails.cache.fetch(
           key,
