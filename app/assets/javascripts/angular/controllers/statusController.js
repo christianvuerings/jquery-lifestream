@@ -8,9 +8,10 @@
 
     var showStatusError = function() {
       $scope.showStatusError =
-        $scope.user.profile.student_info.reg_status.needsAction ||
+        $scope.user.profile.student_info &&
+        ($scope.user.profile.student_info.reg_status.needsAction ||
         $scope.user.profile.student_info.california_residency.needsAction ||
-        $scope.user.profile.student_info.reg_block.needsAction;
+        $scope.user.profile.student_info.reg_block.needsAction);
     };
 
     $scope.$watch('user.isLoaded', function(isLoaded) {
