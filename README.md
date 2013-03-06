@@ -9,9 +9,9 @@ Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu
 * [Bundler](http://gembundler.com/rails3.html)
 * [Git](https://help.github.com/articles/set-up-git)
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
-* [JRuby 1.7.2](http://jruby.org/)
+* [JRuby 1.7.x](http://jruby.org/)
 * [PostgreSQL](http://www.postgresql.org/)
-* [Rails 3.2.8](http://rubyonrails.org/download)
+* [Rails 3.2.x](http://rubyonrails.org/download)
 * [Rubygems](http://rubyforge.org/frs/?group_id=126)
 * [Rvm](https://rvm.io/rvm/install/) - Ruby version managers
 
@@ -23,6 +23,8 @@ brew update
 brew install postgresql
 initdb /usr/local/var/postgres
 ```
+__For Mountain Lion users ONLY:__ There's a few [extra steps](https://coderwall.com/p/1mni7w).
+
 
 2. Start postgres, add the user and create the necessary databases
 ```bash
@@ -109,6 +111,8 @@ Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 ## Front-end Testing
 
 Front-end [jasmine](http://pivotal.github.com/jasmine/) tests live in spec/javascripts/calcentral/*.
+
+To run the tests headless on firefox run `rake jasmine:ci`.
 
 To view results of front-end tests, run `rake jasmine` in a separate terminal,
 then visit [localhost:8888](http://localhost:8888).
