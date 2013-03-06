@@ -30,16 +30,18 @@
     padding: 25px;
     a {
       color: #2f6f92;
+      margin-left: 16px;
+      &:before {
+        content: '\25A0';
+        color: #38b3d5;
+        float: left;
+        margin-left: -16px;
+        margin-top: -2px;
+        padding-right: 8px;
+      }
     }
     ul {
       list-style-type: none;
-    }
-    li:before {
-      content: '\25A0';
-      color: #38b3d5;
-      float: left;
-      margin-top: -2px;
-      padding-right: 8px;
     }
   }
   .cc-page-campus-content-explanation {
