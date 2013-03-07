@@ -46,11 +46,9 @@
       }
 
       apiService.analytics.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completed_date]);
-      $http.post('/api/my/tasks', changedTask).success(function() {
+      $http.post('/api/my/tasks', changedTask).success(function(data) {
         task.is_processing = false;
-        angular.extend(task, changedTask);
-        // Swap the call above with this one once CLC-1226 is fixed
-        // angular.extend(task, data);
+        angular.extend(task, data);
       }).error(function() {
         apiService.analytics.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completed_date]);
         //Some error notification would be helpful.
