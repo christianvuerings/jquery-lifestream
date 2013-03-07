@@ -8,9 +8,6 @@
 
     // Initial mode for Tasks view
     $scope.tasks_mode = 'scheduled';
-    $scope.show_add_task = false;
-    $scope.is_task_processing = false;
-    $scope.add_task = {};
 
     $scope.getTasks = function() {
       return $http.get('/api/my/tasks').success(function(data) {
@@ -18,47 +15,6 @@
       });
     };
     $scope.getTasks();
-
-    $scope.addTaskCompleted = function(data) {
-      $scope.add_task = {};
-      $scope.is_task_processing = false;
-      $scope.show_add_task = false;
-      $scope.tasks.push(data);
-    };
-
-    $scope.addTask = function() {
-      var trackEvent = 'note: ' + !!$scope.add_task.note + ' date: ' + !!$scope.add_task.due_date;
-      apiService.analytics.trackEvent(['Tasks', 'Add', trackEvent]);
-
-      // When the user submits the task, we show a processing message
-      // This message will disappear as soon the task has been added.
-      $scope.is_task_processing = true;
-
-      // Date entry regex allows slashes, dots, spaces and hyphens, so split on any of them.
-      // We take two-digit years, assuming 21st century, so prepend '20' to year.
-      // Rearrange array and rejoin with hyphens to create legit date format.
-      var newtask = {
-        'emitter': 'Google',
-        'note': $scope.add_task.note,
-        'title': $scope.add_task.title
-      };
-
-      // Not all tasks have dates.
-      if ($scope.add_task.due_date) {
-        var newdatearr = $scope.add_task.due_date.split(/[\/\.\- ]/);
-        newtask.due_date = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
-      }
-
-      // Angular already blocks form submission if title is empty, but also check here for testing
-      if (newtask.title) {
-        $http.post('/api/my/tasks/create', newtask).success($scope.addTaskCompleted);
-      }
-    };
-
-    $scope.toggleAddTask = function() {
-      $scope.show_add_task = !$scope.show_add_task;
-      apiService.analytics.trackEvent(['Tasks', 'Add panel - ' + $scope.show_add_task ? 'Show' : 'Hide']);
-    };
 
     var toggleStatus = function(task) {
       if (task.status === 'completed') {
@@ -132,7 +88,7 @@
         'emitter': 'Google'
       };
 
-      $http.post('/api/my/tasks/delete/' + task.id, deltask).success(function(data) {
+      $http.post('/api/my/tasks/delete/' + task.id, deltask).success(function() {
 
         // task.$index is duplicated between buckets, so need to iterate through ALL tasks
         for(var i = 0; i < $scope.tasks.length; i++) {

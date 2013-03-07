@@ -50,12 +50,12 @@ describe('Tasks controller', function() {
 
   it('AddTask should accept a task with a title only', function() {
     $httpBackend.when('POST', '/api/my/tasks/create').respond();
-    $scope.add_task.title = "Tilting at windmills for a better tomorrow.";
+    $scope.add_edit_task.title = "Tilting at windmills for a better tomorrow.";
     $scope.addTask();
   });
 
   it('AddTask should NOT accept a task without a title', function() {
-    $scope.add_task.title = "";
+    $scope.add_edit_task.title = "";
     $scope.addTask();
   });
 

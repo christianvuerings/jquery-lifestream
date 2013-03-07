@@ -1,94 +1,48 @@
 <div class="cc-widget-tasks" data-ng-controller="TasksController">
-  <div class="cc-widget-title">
-    <h2 class="cc-left">Assignments and Tasks</h2>
-    <button
-        class="cc-widget-add-icon cc-left"
-        title="Add a task"
-        data-ng-show="user.profile.has_google_access_token"
-        data-ng-click="toggleAddTask()">
-      <div class="cc-widget-add-icon-plus">+</div>
-      <div class="cc-widget-add-icon-text cc-visuallyhidden" aria-labelledby="addTaskLabel">Task</div>
-      <div id="addTaskLabel" class="cc-visuallyhidden">Add a task</div>
-    </button>
-  </div>
-  <div class="cc-tasks-list">
-    <div class="cc-widget-body">
-      <form class="cc-widget-tasks-form" name="cc_widget_tasks_form" data-ng-show="show_add_task" data-ng-submit="addTask()" novalidate>
-        <div class="row">
-          <div class="two columns mobile-one">
-            <label for="cc-widget-tasks-addtask-title"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
-          </div>
-          <div class="ten columns mobile-three">
-            <input data-ng-model="add_task.title" id="cc-widget-tasks-addtask-title" type="text" required aria-required="true" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="two columns mobile-one">
-            <label for="cc-widget-tasks-addtask-date">Due:</label>
-          </div>
-          <div class="ten columns mobile-three cc-widget-tasks-date-input">
-            <input type="text"
-              data-ng-model="add_task.due_date"
-              name="add_task_due_date"
-              id="cc-widget-tasks-addtask-date"
-              placeholder="mm/dd/yy"
-              data-cc-mmddyyvalidator />
-            <p class="cc-alert cc-alert-text" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccMmddyyvalidator">
-              Please use mm/dd/yy date format
-            </p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="two columns mobile-one">
-            <label for="cc-widget-tasks-addtask-note">Note:</label>
-          </div>
-          <div class="ten columns mobile-three">
-            <textarea data-ng-model="add_task.note" id="cc-widget-tasks-addtask-note" rows="2" /></textarea>
-          </div>
-        </div>
-        <div class="row" data-ng-show="is_task_processing">
-          <div class="ten columns offset-by-two mobile-three">
-            Task is being added...
-          </div>
-        </div>
-        <div class="row"  data-ng-show="!is_task_processing">
-          <div class="ten columns offset-by-two mobile-three cc-widget-tasks-form-buttons">
-            <button type="submit"
-              data-ng-disabled="cc_widget_tasks_form.$invalid || is_task_processing"
-              data-ng-class="{'cc-button-submit-enabled':(cc_widget_tasks_form.$valid), 'cc-button-submit-disabled':(cc_widget_tasks_form.$invalid)}"
-              >Add Task
-            </button>
-            <button class="cc-button-reset" type="reset" data-ng-click="toggleAddTask()" />Cancel</button>
-          </div>
-        </div>
-      </form>
-
-      <div class="row cc-widget-tasks-button-top-margin">
-        <div class="ten columns centered">
-          <ul class="button-group radius even three-up">
-            <li>
-              <button class="tiny button"
-                data-ng-click="switchTasksMode('scheduled')"
-                data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
-              </button>
-            </li>
-            <li>
-              <button class="tiny button"
-                data-ng-click="switchTasksMode('unscheduled')"
-                data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
-              </button>
-            </li>
-            <li>
-              <button class="tiny button"
-                data-ng-click="switchTasksMode('completed')"
-                data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
-              </button>
-            </li>
-          </ul>
-        </div>
+  <div data-ng-controller="TaskAdderController">
+    <div class="cc-widget-title">
+      <h2 class="cc-left">Assignments and Tasks</h2>
+      <button
+          class="cc-widget-add-icon cc-left"
+          title="Add a task"
+          data-ng-show="user.profile.has_google_access_token"
+          data-ng-click="toggleAddTask()">
+        <div class="cc-widget-add-icon-plus">+</div>
+        <div class="cc-widget-add-icon-text cc-visuallyhidden" aria-labelledby="addTaskLabel">Task</div>
+        <div id="addTaskLabel" class="cc-visuallyhidden">Add a task</div>
+      </button>
+    </div>
+    <div class="cc-tasks-list">
+      <div class="cc-widget-body">
+        <div data-ng-include src="'templates/dashboard_task_editor.html'"></div>
       </div>
+      <div data-ng-switch on="tasks_mode"  >
 
-      <div data-ng-switch on="tasks_mode">
+        <div class="row cc-widget-tasks-button-top-margin">
+          <div class="ten columns centered">
+            <ul class="button-group radius even three-up">
+              <li>
+                <button class="tiny button"
+                  data-ng-click="switchTasksMode('scheduled')"
+                  data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
+                </button>
+              </li>
+              <li>
+                <button class="tiny button"
+                  data-ng-click="switchTasksMode('unscheduled')"
+                  data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
+                </button>
+              </li>
+              <li>
+                <button class="tiny button"
+                  data-ng-click="switchTasksMode('completed')"
+                  data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <div data-ng-switch-when="scheduled">
           <div class="row">
             <div class="eight columns mobile-two">
@@ -114,7 +68,7 @@
             <li
               data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueToday)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
           </ul>
           <p data-ng-show="!filtered.length" class="cc-widget-text">

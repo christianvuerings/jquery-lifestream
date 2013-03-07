@@ -1,11 +1,15 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
+<div data-ng-controller="TaskEditorController">
 
-  <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(task, 'Tasks')">
+  <div
+    class="row cc-widget-list-hover"
+    data-ng-click="api.widget.toggleShow(task, 'Tasks')"
+    data-ng-hide="editorEnabled">
 
     <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
       <div class="cc-emitter cc-emitter-{{task.color_class}}">
-          {{task.source || task.emitter}}
-        </div>
+        {{task.source || task.emitter}}
+      </div>
     </div>
 
     <div class="one mobile-one columns cc-widget-tasks-checkbox-column cc-mobile-task-checkbox-column">
@@ -44,9 +48,9 @@
   </div>
 
   <div data-ng-show="task.show">
-    <div class="row widget-tasks-activities-more">
+    <div class="row widget-tasks-activities-more" data-ng-hide="editorEnabled">
       <div class="nine columns offset-by-three end cc-widget-tasks-more">
-        <div data-ng-bind-html="task.note | linky">
+        <div data-ng-bind-html="task.notes | linky">
         </div>
       </div>
 
@@ -55,6 +59,10 @@
           <a class="cc-widget-more-view-in"
           data-ng-click="api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"
           data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a>
+
+          <a class="cc-widget-more-view-in"
+          data-ng-show="task.emitter=='Google'"
+          data-ng-click="enableEditor()">Edit</a>
 
           <a class="cc-widget-more-view-in"
           data-ng-show="task.emitter=='Google'"
@@ -67,4 +75,10 @@
     </div>
   </div>
 
+  <div class="row" data-ng-show="editorEnabled">
+    <div class="twelve columns">
+      <div data-ng-include src="'templates/dashboard_task_editor.html'"></div>
+    </div>
+  </div>
+</div>
 </script>
