@@ -15,7 +15,7 @@
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "emitter": "Canvas",
       "bucket": "Overdue",
-      "note": "Everyone needs to bring something to read aloud, and a snack to share.",
+      "notes": "Everyone needs to bring something to read aloud, and a snack to share.",
       "color_class": "canvas-class"
     },
     {
@@ -23,7 +23,7 @@
       "title": "test2",
       "emitter": "Google",
       "bucket": "Overdue",
-      "note": "Null and void",
+      "notes": "Null and void",
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
       "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMDQxODM3NTEx",
@@ -47,7 +47,7 @@
       "source_url": "https://ucberkeley.instructure.com/courses/832071",
       "emitter": "Canvas",
       "bucket": "Due Today",
-      "note": "This is a test of the emergency broadcast system",
+      "notes": "This is a test of the emergency broadcast system",
       "source": "Biology",
       "status": "needs_action",
       "color_class": "canvas-assignment"
@@ -80,7 +80,7 @@
       "source_url": "https://ucberkeley.instructure.com/courses/832071",
       "emitter": "Google",
       "bucket": "Due This Week",
-      "note": "Adieu, adieu, adieu",
+      "notes": "Adieu, adieu, adieu",
       "source": "Biology",
       "status": "completed",
       "color_class": "canvas-class"
@@ -122,7 +122,7 @@
       "title": "Break bread",
       "emitter": "Google",
       "bucket": "Unscheduled",
-      "note": "Bring enough butter for everyone.",
+      "notes": "Bring enough butter for everyone.",
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
       "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoxNjYzMjE0NDg0",

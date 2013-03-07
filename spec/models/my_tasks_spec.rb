@@ -142,11 +142,13 @@ describe "MyTasks" do
     GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
     my_tasks = MyTasks::Merged.new @user_id
     task_list_id, task_id = get_task_list_id_and_task_id
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
+    response = my_tasks.update_task({"title" => "some bogus title", "notes" => "some bogus notes", "type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
     response["type"].should == "task"
     response["id"].should == task_id
     response["emitter"].should == GoogleProxy::APP_ID
     response["status"].should == "completed"
+    response["title"].should == "some bogus title"
+    response["notes"].should == "some bogus notes"
   end
 
   it "should invalidate cache on an update_task" do

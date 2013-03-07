@@ -35,7 +35,7 @@ class MyTasks::CanvasTasks
             "status" => "inprogress"
           }
           if result["assignment"]["description"] != ""
-            formatted_entry["note"] = ActionView::Base.full_sanitizer.sanitize(result["assignment"]["description"])
+            formatted_entry["notes"] = ActionView::Base.full_sanitizer.sanitize(result["assignment"]["description"])
           end
           due_date = convert_due_date(result["assignment"]["due_at"])
           format_date_into_entry!(due_date, formatted_entry, "due_date")

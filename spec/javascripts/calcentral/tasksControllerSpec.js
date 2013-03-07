@@ -20,9 +20,8 @@ describe('Tasks controller', function() {
     });
 
     $scope.tasks = tasks;
-
-
   }));
+
 
   it("should have access to a valid JSON feed", function() {
     expect($scope.tasks).toBeDefined();
@@ -46,17 +45,6 @@ describe('Tasks controller', function() {
       }
     });
     expect(countBadTasks).toEqual(0);
-  });
-
-  it('AddTask should accept a task with a title only', function() {
-    $httpBackend.when('POST', '/api/my/tasks/create').respond();
-    $scope.add_task.title = "Tilting at windmills for a better tomorrow.";
-    $scope.addTask();
-  });
-
-  it('AddTask should NOT accept a task without a title', function() {
-    $scope.add_task.title = "";
-    $scope.addTask();
   });
 
 });

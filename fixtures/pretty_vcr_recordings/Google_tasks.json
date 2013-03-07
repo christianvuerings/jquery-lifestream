@@ -872,6 +872,92 @@
     {
       "request": {
         "method": "put",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA&task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\"id\":\"MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\"status\":\"completed\",\"title\":\"some bogus title\",\"notes\":\"some bogus notes\"}"
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "no-cache, no-store, max-age=0, must-revalidate"
+          ],
+          "pragma": [
+            "no-cache"
+          ],
+          "expires": [
+            "Fri, 01 Jan 1990 00:00:00 GMT"
+          ],
+          "date": [
+            "Thu, 06 Dec 2012 22:24:37 GMT"
+          ],
+          "etag": [
+            "\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE5MjM5MDA1MjU\""
+          ],
+          "content-type": [
+            "application/json; charset=UTF-8"
+          ],
+          "x-content-type-options": [
+            "nosniff"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-xss-protection": [
+            "1; mode=block"
+          ],
+          "server": [
+            "GSE"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"kind\": \"tasks#task\",\n \"id\": \"MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\n \"etag\": \"\\\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE5MjM5MDA1MjU\\\"\",\n \"title\": \"New Task\",\n \"updated\": \"2012-12-06T22:24:36.000Z\",\n \"selfLink\": \"https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\n \"position\": \"00000000002147483647\",\n \"notes\": \"Please Complete me\",\n \"status\": \"completed\",\n \"completed\": \"2012-12-06T22:24:37.000Z\"\n}\n",
+          "debug_json": {
+            "kind": "tasks#task",
+            "id": "MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+            "etag": "\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE5MjM5MDA1MjU\"",
+            "title": "some bogus title",
+            "updated": "2012-12-06T22:24:36.000Z",
+            "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+            "position": "00000000002147483647",
+            "notes": "some bogus notes",
+            "status": "completed",
+            "completed": "2012-12-06T22:24:37.000Z"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 06 Dec 2012 22:24:37 GMT"
+    },
+    {
+      "request": {
+        "method": "put",
         "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg&tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
         "body": {
           "encoding": "US-ASCII",
