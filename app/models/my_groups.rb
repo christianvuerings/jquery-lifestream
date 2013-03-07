@@ -52,9 +52,9 @@ class MyGroups < MyMergedModel
             if seen_orgs.add? group["organizationId"]
               org_proxy = CalLinkOrganizationProxy.new({:org_id => group["organizationId"]})
               organization = org_proxy.get_organization[:body]
-              site_url = "https://"
+              site_url = "https://callink.berkeley.edu/"
               if organization["items"] && organization["items"][0] && organization["items"][0]["profileUrl"]
-                site_url += organization["items"][0]["profileUrl"]
+                site_url = "https://" + organization["items"][0]["profileUrl"]
               end
               response[:groups].push({
                                          title: group["organizationName"],
