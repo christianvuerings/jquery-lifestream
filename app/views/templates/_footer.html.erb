@@ -1,14 +1,12 @@
 <footer class="row" data-ng-controller="FooterController" data-ng-cloak>
-  <div data-ng-click="showInfo=!showInfo" class="nine columns mobile-three cc-footer-copyright">&copy; {{currentTime() | date:'yyyy'}} UC Regents | <a href="//security.berkeley.edu/policy">Usage Policy</a></div>
-  <div class="cc-footer-links">
-    <div class="three columns mobile-one">
-      <a href="https://ets.berkeley.edu/help/calcentral">Help</a>
-      <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
-      <a href="https://ets.berkeley.edu/category/category-tags/calcentral">News</a>
-    </div>
+  <div data-ng-click="showInfo=!showInfo" class="large-9 columns small-9 cc-footer-copyright">&copy; {{currentTime() | date:'yyyy'}} UC Regents | <a href="//security.berkeley.edu/policy">Usage Policy</a></div>
+  <div class="cc-footer-links large-3 columns small-3">
+    <a href="https://ets.berkeley.edu/help/calcentral">Help</a>
+    <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
+    <a href="https://ets.berkeley.edu/category/category-tags/calcentral">News</a>
   </div>
 
-  <div class="twelve columns" data-ng-show="showInfo">
+  <div class="large-12 columns" data-ng-show="showInfo">
     <ul>
       <li>Hostname: <%= @server_settings["hostname"] %></li>
       <li><a href="https://github.com/ets-berkeley-edu/calcentral/commit/<%= @server_settings['git_commit'] %>">Git commit: <%= @server_settings["git_commit"][0,8] %></a></li>

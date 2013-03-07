@@ -2,14 +2,14 @@
 
   <div class="cc-page-campus">
 
-    <div class="nine columns cc-page-campus-content push-three">
+    <div class="large-9 push-3 columns cc-page-campus-content">
 
       <div data-ng-show="currentTopCategory==''">
-        <div class="six columns hide-for-small">
+        <div class="large-6 columns hide-for-small">
           <img src="/assets/ucb_campanile.png" alt="UC Berkeley Campanile" />
         </div>
 
-        <div class="six columns">
+        <div class="large-6 columns">
           <h1>Campus Pages</h1>
           <p class="cc-page-campus-content-explanation">CalCentral Campus Pages offer a jumping off point into the broader campus. They encourage the discovery of campus resources, with content personalized to each person.</p>
         </div>
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="three columns cc-page-campus-navigation pull-nine">
+    <div class="large-3 pull-9 columns cc-page-campus-navigation">
 
       <div data-ng-repeat="navitem in campusdata.navigation">
         <h3 data-ng-show="navitem.label">{{navitem.label}}</h3>

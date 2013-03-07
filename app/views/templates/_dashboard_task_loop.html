@@ -6,13 +6,13 @@
     data-ng-click="api.widget.toggleShow(task, 'Tasks')"
     data-ng-hide="editorEnabled">
 
-    <div class="three mobile-one columns cc-emitter-col cc-mobile-task-emitter-column">
+    <div class="large-3 small-3 columns cc-emitter-col cc-mobile-task-emitter-column">
       <div class="cc-emitter cc-emitter-{{task.color_class}}">
         {{task.source || task.emitter}}
       </div>
     </div>
 
-    <div class="one mobile-one columns cc-widget-tasks-checkbox-column cc-mobile-task-checkbox-column">
+    <div class="large-1 small-3 columns cc-widget-tasks-checkbox-column cc-mobile-task-checkbox-column">
       <input type="checkbox"
         data-ng-click="api.util.preventBubble($event)"
         data-ng-change="changeTaskState(task)"
@@ -23,7 +23,7 @@
       >
     </div>
 
-    <div class="six mobile-one columns cc-widget-tasks-title-column cc-mobile-task-title-column">
+    <div class="large-6 small-3 columns cc-widget-tasks-title-column cc-mobile-task-title-column">
       <div
         class="cc-widget-short-title cc-widget-list-hover-title cc-widget-tasks-status-{{task.status}}"
         data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.is_processing)}">
@@ -32,7 +32,7 @@
     </div>
 
     <div
-      class="two mobile-one columns cc-mobile-task-date-column cc-widget-tasks-activities-date-string"
+      class="large-2 small-3 columns cc-mobile-task-date-column cc-widget-tasks-activities-date-string"
       data-ng-show="this.$parent.section.title != 'Unscheduled'">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-show="task.due_date && task.bucket != 'Due Today' && tasks_mode != 'completed'">
@@ -49,12 +49,12 @@
 
   <div data-ng-show="task.show">
     <div class="row widget-tasks-activities-more" data-ng-hide="editorEnabled">
-      <div class="nine columns offset-by-three end cc-widget-tasks-more">
+      <div class="large-9 columns large-offset-3 end cc-widget-tasks-more">
         <div data-ng-bind-html="task.notes | linky">
         </div>
       </div>
 
-      <div class="nine columns offset-by-three end cc-widget-tasks-more cc-widget-tasks-activities-more">
+      <div class="large-9 columns large-offset-3 end cc-widget-tasks-more cc-widget-tasks-activities-more">
         <p>
           <a class="cc-widget-more-view-in"
           data-ng-click="api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"

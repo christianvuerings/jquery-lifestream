@@ -39,7 +39,7 @@ h3 {
 
 /* Inset list items */
 ul {
-  padding: 0 0 0 40px;
+  padding: 0;
 }
 
 /* Anchor tag */
@@ -91,6 +91,7 @@ button {
 .button {
   background-color: $cc-button-color;
   &.medium {
+    font-size: 13px;
     font-weight: normal;
     padding: 7px 12px;
   }
@@ -100,7 +101,7 @@ button {
   &.secondary {
     border-left: 1px solid $cc-border-color;
   }
-  &.small {
+  &.button.small {
     font-size: 13px;
     padding: 4px 6px;
   }
@@ -144,7 +145,7 @@ button {
   &, &:hover, &:focus {
     background-color: transparent;
     border: none;
-    color: $mainColor;
+    color: $primary-color;
     font-size: 13px;
     font-weight: bold;
     line-height: 1;
@@ -165,7 +166,7 @@ button {
 
 /* Container */
 .cc-container-main {
-  background-color: $white;
+  background-color: #fff;
 }
 
 /*

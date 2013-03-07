@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/settings_service_loop.html">
   <!-- Dont show the icon column on small screens -->
-  <div class="one columns hide-for-small">
+  <div class="large-1 columns hide-for-small">
     <img data-ng-show="service=='google'"
       data-ng-src="/assets/icon_bconnected_32x32.png" alt="bConnected icon" />
 
@@ -8,7 +8,7 @@
       data-ng-src="/assets/icon_canvas_32x32.png" alt="Canvas icon" />
   </div>
 
-  <div class="nine columns mobile-two cc-settings-service-description-block">
+  <div class="large-9 small-8 columns cc-settings-service-description-block">
     <div data-ng-show="service=='google'">
       <strong>bConnected</strong><br />
       <span class="cc-settings-service-description">
@@ -24,7 +24,7 @@
   </div>
 
   <div data-ng-show="loopname=='connected'">
-    <div class="two columns mobile-two">
+    <div class="large-2 small-4 columns">
       <button data-ng-show="service=='google'"
         class="radius button medium" data-ng-click="[user.removeOAuth('google'), refreshServices()]">
         Disconnect <span class="cc-visuallyhidden">Google Access</span>
@@ -37,7 +37,7 @@
   </div>
 
   <div data-ng-show="loopname=='unconnected'">
-    <div class="two columns mobile-two">
+    <div class="large-2 small-4 columns">
       <button data-ng-show="service=='google'"
         class="radius button medium success" data-ng-click="user.enableOAuth('google')">
         Connect <span class="cc-visuallyhidden">Google Access</span>

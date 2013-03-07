@@ -1,19 +1,18 @@
-.nav-bar {
+.cc-navigation-bar {
   background-color: $cc-nav-color;
-  height: auto;
   margin: 0;
   overflow: hidden;
+  padding: 0;
   > li {
-    @include box-shadow(none);
-    border: none;
+    float: left;
+    display: block;
+    position: relative;
+    padding: 0;
     line-height: 32px;
-    &:hover {
-      background: transparent;
-    }
+    margin: 0;
     &.active {
-      background: transparent;
-      &:hover {
-        background: transparent;
+      a {
+        color: #fff;
       }
       &::before, &::after {
         bottom: 0;
@@ -35,9 +34,12 @@
       @include box-shadow(none);
     }
     > a {
+      display: block;
+      padding: 0 20px;
+      position: relative;
+      color: #e6e6e6;
       font-weight: bold;
       &:hover {
-        background: transparent;
         text-decoration: underline;
       }
     }

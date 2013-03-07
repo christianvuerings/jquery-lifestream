@@ -7,7 +7,7 @@ $cc-page-splash-blue-light: #0073C3;
     background: #fff image-url('calcentral_bubble_background.png') no-repeat right 5px;
   }
 
-  > header, .nav-bar {
+  > header, .cc-navigation-bar {
     display: none;
   }
 
@@ -32,7 +32,9 @@ $cc-page-splash-blue-light: #0073C3;
     background: $cc-page-splash-blue-dark;
     @include background(linear-gradient(top, $cc-page-splash-blue-light, $cc-page-splash-blue-dark));
     box-shadow: none;
+    font-size: 13px;
     padding-bottom: 10px;
+    padding-top: 10px;
   }
   .cc-page-splash-status {
     background: image-url('splash_status.png') no-repeat 0 0;
@@ -73,7 +75,7 @@ $cc-page-splash-blue-light: #0073C3;
   }
   .cc-page-splash-features-title {
     border-bottom: 1px solid $cc-list-border-color;
-    color: $txtColor;
+    color: $body-font-color;
     line-height: 1.6;
     font-size: 30px;
     font-weight: normal;
