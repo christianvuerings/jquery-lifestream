@@ -78,7 +78,7 @@
 
     // Delete Google tasks
     $scope.deleteTask = function(task) {
-      task.is_processing = true;
+      task.is_deleting = true;
 
       // Payload for proxy
       var deltask = {
