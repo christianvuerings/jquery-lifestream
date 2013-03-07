@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SakaiProxy < BaseProxy
   extend Proxies::EnableForActAs
 
@@ -8,56 +9,76 @@ class SakaiProxy < BaseProxy
   end
 
   def self.access_granted?(uid)
-    settings = Settings.sakai_proxy
-    uid && (settings.fake || (settings.host && settings.shared_secret))
+    !uid.blank?
   end
 
-  def get_categorized_sites
-    url = "#{@settings.host}/sakai-hybrid/sites?categorized=true"
-    self.class.fetch_from_cache @uid do
-      token = build_token @uid
-      Rails.logger.info "SakaiProxy: Fake = #@fake; Making request to #{url} on behalf of user #@uid with x-sakai-token = #{token}, cache expiration #{self.class.expires_in}"
-      begin
-        response = FakeableProxy.wrap_request(APP_ID, @fake) {
-          Faraday::Connection.new(
-              :url => url,
-              :headers => {
-                  'x-sakai-token' => token
-              }).get
-        }
-        if response.status < 400
-          Rails.logger.debug "SakaiProxy - Remote server status #{response.status}, Body = #{response.body}"
-          return_body = JSON.parse(response.body)
-        else
-          # Sakai proxy passes error responses back to the client.
-          Rails.logger.warn "SakaiProxy connection failed: #{response.status} #{response.body}"
-          return_body = response.body
-        end
-        {
-            :body => return_body,
-            :status_code => response.status
-        }
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
-        Rails.logger.warn "SakaiProxy connection failed: #{e.class} #{e.message}"
-        {
-            :body => "Remote server unreachable",
-            :status_code => 503
-        }
+  def current_terms
+    Settings.sakai_proxy.current_terms
+  end
+
+  def site_url_prefix
+    "#{Settings.sakai_proxy.host}/portal/site/"
+  end
+
+  def get_filtered_users_sites
+    if (sakai_user_id = SakaiData.get_sakai_user_id(@uid))
+      all_sites = SakaiData.get_users_sites(sakai_user_id)
+      hidden_site_ids = SakaiData.get_hidden_site_ids(sakai_user_id)
+      sites = all_sites.select do |site|
+        !hidden_site_ids.include?(site['site_id']) &&
+            ((site['type'] != 'course') || current_terms.include?(site['term']))
       end
+      sites
+    else
+      []
     end
   end
 
-  private
-
-  def build_token(uid)
-    # the x-sakai-token format is defined here:
-    # http://www.sakaiproject.org/blogs/lancespeelmon/x-sakai-token-authentication
-    data = "#{uid};#{(Time.now.to_f * 1000).to_i.to_s}"
-    encoded_data = Base64.encode64("#{OpenSSL::HMAC.digest(
-        'sha1',
-        @settings.shared_secret,
-        data)}").rstrip
-    token = "#{encoded_data};#{data}"
+  def get_categorized_sites
+    if @fake
+      return {"Spring 2013"=>
+                  [{"id"=>"29fc31ae-ff14-419f-a132-5576cae2474e",
+                    "title"=>"RUSSWIKI 2B Sp13",
+                    "short_description"=>"Добро пожаловать в Русский 1!",
+                    "description"=>
+                        "<p>\n\t<strong>Знаете ли вы?</strong></p>\n<ul>\n\t<li>\n\t\tКузен Петра I был произведён в генералы только после смерти императора.</li>\n</ul>\n<p>\n\t&nbsp;</p>",
+                    "url"=>
+                        "https://sakai-dev.berkeley.edu/portal/site/29fc31ae-ff14-419f-a132-5576cae2474e"},
+                   {"id"=>"45042d5d-9b88-43cf-a83a-464e1f0444fc",
+                    "title"=>"MATH 1853 Sp13",
+                    "short_description"=>"",
+                    "description"=>
+                        "<p>\n\tThe following work is not a republication of a former treatise by the Author, entitled, &ldquo;The Mathematical Analysis of Logic.&rdquo; Its earlier portion is indeed devoted to the same object, and it begins by establishing the same system of fundamental laws, but its methods are more general, and its range of applications far wider.</p>\n<p>\n\t&nbsp;</p>",
+                    "url"=>
+                        "https://sakai-dev.berkeley.edu/portal/site/45042d5d-9b88-43cf-a83a-464e1f0444fc"}],
+              "Projects"=>
+                  [{"id"=>"29d475ae-a1c1-493f-b721-fcfeebdb038d",
+                    "title"=>"Digital Library Project",
+                    "short_description"=>"",
+                    "description"=>"",
+                    "url"=>
+                        "https://sakai-dev.berkeley.edu/portal/site/29d475ae-a1c1-493f-b721-fcfeebdb038d"}]}
+    end
+    self.class.fetch_from_cache @uid do
+      categories = {}
+      get_filtered_users_sites.each do |row|
+        site = {}
+        site_id = row['site_id']
+        site['id'] = site_id
+        site['title'] = row['title']
+        site['short_description'] = row['short_desc']
+        site['description'] = row['description']
+        site['url'] = "#{site_url_prefix}#{site_id}"
+        case row['type']
+          when 'project'
+            (categories['Projects'] ||= []) << site
+          when 'course'
+            term = row['term']
+            (categories[term] ||= []) << site
+        end
+      end
+      categories
+    end
   end
 
 end

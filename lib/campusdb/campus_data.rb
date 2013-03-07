@@ -1,5 +1,4 @@
-class CampusData < ActiveRecord::Base
-  establish_connection "campusdb"
+class CampusData < OracleDatabase
 
   def self.reg_status_translator
     @reg_status_translator ||= RegStatusTranslator.new

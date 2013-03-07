@@ -26,6 +26,8 @@ campusdb:
   username: sa
   password: sa
   pool: 5
+  # Needed when the bSpace application tables are in a different namespace.
+  bspace_prefix:
 test_sqlite:
   pool: 3
 
@@ -58,7 +60,6 @@ google_proxy:
   test_user_access_token: "someMumboJumbo"
   test_user_refresh_token: "someMumboJumbo"
 sakai_proxy:
-  shared_secret: secret set in production
   host: "https://sakai-dev.berkeley.edu"
   fake: false
   current_terms: ["Spring 2013"]

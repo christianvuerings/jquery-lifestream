@@ -22,21 +22,19 @@ class MyClasses < MyMergedModel
     if SakaiProxy.access_granted?(@uid)
       sakai_proxy = SakaiProxy.new({:user_id => @uid})
       current_terms = Settings.sakai_proxy.current_terms || []
-      sakai_response = sakai_proxy.get_categorized_sites
-      if (sakai_response[:status_code] == 200)
-        sakai_categories = sakai_response[:body]["categories"] || []
-        sakai_categories.each do |section|
-          if current_terms.include?(section["category"])
-            section["sites"].each do |site|
-              response[:classes].push({
-                                          name: site["shortDescription"],
-                                          course_code: site["title"],
-                                          id: site["id"],
-                                          emitter: SakaiProxy::APP_ID,
-                                          color_class: "bspace-class",
-                                          site_url: site["url"]
-                                      })
-            end
+      sakai_categories = sakai_proxy.get_categorized_sites
+      sakai_categories.each do |category, sites|
+        if current_terms.include?(category)
+          sites.each do |site|
+            response[:classes].push({
+                                        name: site["short_description"],
+                                        course_code: site["title"],
+                                        id: site["id"],
+                                        emitter: SakaiProxy::APP_ID,
+                                        color_class: "bspace-class",
+                                        site_url: site["url"]
+                                    })
+
           end
         end
       end
