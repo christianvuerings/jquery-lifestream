@@ -11,7 +11,7 @@
 
     $scope.addTaskCompleted = function(data) {
       $scope.add_edit_task = {};
-      $scope.is_task_processing = false;
+      $scope.task_adder_is_processing = false;
       $scope.show_add_task = false;
       $scope.tasks.push(data);
     };
@@ -22,7 +22,7 @@
       apiService.analytics.trackEvent(['Tasks', 'Add', trackEvent]);
       // When the user submits the task, we show a processing message
       // This message will disappear as soon the task has been added.
-      $scope.is_task_processing = true;
+      $scope.task_adder_is_processing = true;
 
       var newtask = {
         'emitter': 'Google',

@@ -16,7 +16,7 @@
       <input type="checkbox"
         data-ng-click="api.util.preventBubble($event)"
         data-ng-change="changeTaskState(task)"
-        data-ng-disabled="task.emitter=='Canvas' || !!task.is_processing"
+        data-ng-disabled="task.emitter=='Canvas' || !!task.editor_is_processing"
         data-ng-false-value="needs_action"
         data-ng-model="task.status"
         data-ng-true-value="completed"
@@ -26,7 +26,7 @@
     <div class="large-6 small-3 columns cc-widget-tasks-title-column cc-mobile-task-title-column">
       <div
         class="cc-widget-short-title cc-widget-list-hover-title cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.is_processing)}">
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.editor_is_processing)}">
         {{task.title}}
       </div>
     </div>

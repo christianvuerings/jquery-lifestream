@@ -35,7 +35,7 @@
       toggleStatus(task);
 
       // Disable checkbox while processing.
-      task.is_processing = true;
+      task.editor_is_processing = true;
 
       if (changedTask.status === 'completed') {
         changedTask.completed_date = {
@@ -47,7 +47,7 @@
 
       apiService.analytics.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completed_date]);
       $http.post('/api/my/tasks', changedTask).success(function(data) {
-        task.is_processing = false;
+        task.editor_is_processing = false;
         angular.extend(task, data);
       }).error(function() {
         apiService.analytics.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completed_date]);
@@ -79,6 +79,7 @@
     // Delete Google tasks
     $scope.deleteTask = function(task) {
       task.is_deleting = true;
+      task.editor_is_processing = true;
 
       // Payload for proxy
       var deltask = {
