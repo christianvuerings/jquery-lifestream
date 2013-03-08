@@ -91,7 +91,7 @@ class MyTasks::GoogleTasks
     formatted_entry["status"] = "needsAction" if entry["status"] == "needs_action"
     formatted_entry["status"] ||= "completed"
     formatted_entry["title"] = entry["title"] unless entry["title"].blank?
-    formatted_entry["notes"] = entry["notes"] unless entry["notes"].blank?
+    formatted_entry["notes"] = entry["notes"] unless entry["notes"].nil?
     if entry["due_date"] && entry["due_date"]["datetime"]
       formatted_entry["due"] = Date.strptime(entry["due_date"]["datetime"]).to_time_in_current_zone.to_datetime
     end
