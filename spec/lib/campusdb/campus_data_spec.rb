@@ -4,7 +4,7 @@ describe CampusData do
   it "should find Oliver" do
     data = CampusData.get_person_attributes(2040)
     data['first_name'].should == "Oliver"
-    if Settings.campusdb.adapter == "h2"
+    if CampusData.test_data?
       data[:roles][:student].should == false
       data[:roles][:faculty].should == false
       data[:roles][:staff].should == true
@@ -13,7 +13,7 @@ describe CampusData do
 
   it "should find a user who has a bunch of blocks" do
     data = CampusData.get_person_attributes(300847)
-    if Settings.campusdb.adapter == "h2"
+    if CampusData.test_data?
       # we will only have predictable reg_status_cd values in our fake Oracle db.
       data['educ_level'].should == "Masters"
       data['admin_blk_flag'].should == "Y"
@@ -30,7 +30,7 @@ describe CampusData do
 
   it "should find Stu TestB's registration status" do
     data = CampusData.get_reg_status(300846)
-    if Settings.campusdb.adapter == "h2"
+    if CampusData.test_data?
       data['ldap_uid'].should == "300846"
       # we will only have predictable reg_status_cd values in our fake Oracle db.
       data['reg_status_cd'].should == "C"
@@ -50,7 +50,7 @@ describe CampusData do
   it "should find some students in Spanish 1" do
     students = CampusData.get_enrolled_students("86103", "2012", "D")
     students.should_not be_nil
-    if Settings.campusdb.adapter == "h2"
+    if CampusData.test_data?
       # we will only have predictable enrollments in our fake Oracle db.
       students[6]["ldap_uid"].should == "300846"
     end
@@ -59,7 +59,7 @@ describe CampusData do
   it "should find a course" do
     course = CampusData.get_course("7366", "2012", "D")
     course.should_not be_nil
-    if Settings.campusdb.adapter == "h2"
+    if CampusData.test_data?
       # we will only have predictable enrollments in our fake Oracle db.
       course["course_title"].should == "General Biology Lecture"
       course["dept_name"].should == "BIOLOGY"

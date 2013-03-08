@@ -5,26 +5,19 @@ class MyGroups < MyMergedModel
         :groups => []
     }
     if SakaiProxy.access_granted?(@uid)
-      sakai_proxy = SakaiProxy.new({:user_id => @uid})
-      sakai_response = sakai_proxy.get_categorized_sites
-      if sakai_response[:status_code] == 200
-        sakai_categories = sakai_response[:body]["categories"] || []
-        filter_categories = ["Projects"]
-        sakai_categories.each do |section|
-          if filter_categories.include?(section["category"])
-            section["sites"].each do |site|
-              next if site["url"].blank? || site["id"].blank?
-              site_hash = {
-                  title: site["title"] || "",
-                  id: site["id"],
-                  site_url: site["url"],
-                  emitter: SakaiProxy::APP_ID,
-                  color_class: "bspace-group"
-              }
-              site_hash["short_description"] = site["shortDescription"] unless site["shortDescription"].blank?
-              response[:groups].push(site_hash)
-            end
-          end
+      sakai_proxy = SakaiProxy.new(user_id: @uid)
+      sakai_categories = sakai_proxy.get_categorized_sites
+      if (sites = sakai_categories['Projects'])
+        sites.each do |site|
+          site_hash = {
+              title: site["title"] || "",
+              id: site["id"],
+              site_url: site["url"],
+              emitter: SakaiProxy::APP_ID,
+              color_class: "bspace-group"
+          }
+          site_hash["short_description"] = site["short_description"] unless site["short_description"].blank?
+          response[:groups].push(site_hash)
         end
       end
     end

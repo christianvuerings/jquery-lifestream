@@ -26,28 +26,6 @@ describe "MyGroups" do
     empty_groups[:groups].size.should == 0
   end
 
-  it "should reject malformed Sakai2 entries" do
-    CanvasProxy.stub(:access_granted?).and_return(false)
-    SakaiProxy.stub(:access_granted?).and_return(true)
-    site_template = @fake_sakai_proxy.get_categorized_sites
-    site_template[:body]["categories"].each do |category|
-      if category["category"] == "Projects" && category["sites"].size >= 1
-        #One valid entry
-        test_sites = category["sites"].slice(0,1)
-        test_sites[0]["title"] = ""
-        test_sites << {"title"=>"My Bad Id",
-                       "id"=>nil, "url"=>"https://www.google.com",
-                       "description"=>"<p>My Bad Id Site</p>"}
-        test_sites << {"title"=>"My Bad Url",
-                       "id"=>"1", "url"=>"",
-                       "description"=>"<p>My Bad Url Site</p>"}
-      end
-    end
-    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(site_template)
-    my_groups = MyGroups.new(@user_id).get_feed
-    my_groups.size.should == 1
-  end
-
   it "should include Canvas groups" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
@@ -93,13 +71,10 @@ describe "MyGroups" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.stub(:access_granted?).and_return(false)
-    sakai_project_site_feed = {status_code: 200, body: {"categories" => [
-        "category" => "Projects",
-        "sites" => [
-            {"title" => "Zsite", "id" => "zsite-id", "url" => "http://sakai/zsite-id"},
-            {"title" => "csite", "id" => "csite-id", "url" => "http://sakai/csite-id"}
-        ]
-    ]}}
+    sakai_project_site_feed = {"Projects" => [
+        {"title" => "Zsite", "id" => "zsite-id", "url" => "http://sakai/zsite-id"},
+        {"title" => "csite", "id" => "csite-id", "url" => "http://sakai/csite-id"}
+    ]}
     SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
     canvas_groups_feed = '[{"name": "Agroup", "id": "agroup-id"}]'
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
