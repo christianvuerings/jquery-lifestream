@@ -37,15 +37,20 @@
         <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note" rows="2" /></textarea>
       </div>
     </div>
-    <div class="row" data-ng-show="is_task_processing">
+    <div class="row" data-ng-show="!editorEnabled && task_adder_is_processing">
       <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
         Task is being added...
       </div>
     </div>
-    <div class="row" data-ng-show="!is_task_processing">
+    <div class="row" data-ng-show="editorEnabled && task.editor_is_processing">
+      <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
+        Task is being updated...
+      </div>
+    </div>
+    <div class="row" data-ng-show="!task_adder_is_processing || !task.editor_is_processing">
       <div class="large-9 large-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
         <button type="submit"
-          data-ng-disabled="cc_widget_tasks_form.$invalid || is_task_processing"
+          data-ng-disabled="cc_widget_tasks_form.$invalid || task_adder_is_processing"
           data-ng-class="{'cc-button-submit-enabled':(cc_widget_tasks_form.$valid), 'cc-button-submit-disabled':(cc_widget_tasks_form.$invalid)}"
           >
             <span data-ng-show="!editorEnabled">Add Task</span>
