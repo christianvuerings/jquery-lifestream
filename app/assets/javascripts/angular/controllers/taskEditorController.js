@@ -40,9 +40,12 @@
       angular.extend($scope.task, data);
 
       // Extend won't remove already existing sub-objects. If we've returned from Google
-      // AND there is no due_date on the returned object, then ALSO remove that sub-obj from $scope.task
+      // AND there is no due_date or notes on the returned object, remove those props from $scope.task
       if (!data.due_date) {
         delete $scope.task.due_date;
+      }
+      if (!data.notes) {
+        delete $scope.task.notes;
       }
     };
 
