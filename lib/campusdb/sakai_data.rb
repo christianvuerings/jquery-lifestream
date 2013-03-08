@@ -1,5 +1,3 @@
-require 'rexml/document'
-
 class SakaiData < OracleDatabase
 
   def self.table_prefix
@@ -13,9 +11,9 @@ class SakaiData < OracleDatabase
       where preferences_id = #{connection.quote(sakai_user_id)}
     SQL
     if (xml = connection.select_one(sql))
-      xml = REXML::Document.new(xml['xml'])
-      xml.elements.each('preferences/prefs/properties/property[@name="exclude"]') do |el|
-        sites.push(Base64.decode64(el.attributes['value']))
+      xml = Nokogiri::XML::Document.parse(xml['xml'])
+      xml.xpath('preferences/prefs/properties/property[@name="exclude"]').each do |el|
+        sites.push(Base64.decode64(el['value']))
       end
     end
     sites
@@ -31,13 +29,6 @@ class SakaiData < OracleDatabase
       user_id = user_id['user_id']
     end
     user_id
-  end
-
-  def self.get_site(site_id)
-    sql = <<-SQL
-    select site_id, title, type, published from #{table_prefix}sakai_site where site_id = #{connection.quote(site_id)}
-    SQL
-    connection.select_one(sql)
   end
 
   # Only returns published Course and Project sites, not special sites like the user's dashboard or the administrative workspace.
