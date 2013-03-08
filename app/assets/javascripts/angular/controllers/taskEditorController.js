@@ -35,6 +35,12 @@
 
     $scope.editTaskCompleted = function(data) {
       angular.extend($scope.task, data);
+
+      // Extend won't remove already existing sub-objects. If we've returned from Google
+      // AND there is no due_date on the returned object, then ALSO remove that sub-obj from $scope.task
+      if (!data.due_date) {
+        delete $scope.task.due_date;
+      }
     };
 
     $scope.editTask = function(task) {
@@ -47,6 +53,11 @@
         changedTask.due_date = {};
         var newdatearr = $scope.add_edit_task.due_date.split(/[\/\.\- ]/);
         changedTask.due_date.datetime = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+      }
+
+      // If no date or date has been removed, also delete due_date sub-object
+      if (!$scope.add_edit_task.due_date) {
+        delete changedTask.due_date;
       }
 
       apiService.analytics.trackEvent(['Tasks', 'Task edited', 'edited: ' + !!changedTask.title]);
