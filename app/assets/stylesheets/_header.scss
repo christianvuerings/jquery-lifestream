@@ -1,7 +1,7 @@
 body {
   /* Masthead */
   > header {
-    background-image: image-url('calcentral_branding_strip_background.png');
+    background-image: asset-data-url('calcentral_branding_strip_background.png');
     background-repeat: no-repeat;
     margin: 0 auto;
     height: 42px;
