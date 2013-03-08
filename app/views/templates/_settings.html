@@ -1,9 +1,9 @@
 <script type="text/ng-template" id="templates/settings.html">
-  <div class="twelve columns cc-settings" data-ng-controller="SettingsController">
+  <div class="large-12 columns cc-settings" data-ng-controller="SettingsController">
     <h1>Settings for {{user.profile.full_name}}</h1>
 
     <section data-ng-show='connected_services.length' class="cc-settings-section">
-      <div class="ten columns centered">
+      <div class="large-10 large-centered columns">
 
         <h2>Connected Services</h2>
         <div class="row cc-settings-service-row" data-ng-repeat="service in connected_services">
@@ -14,7 +14,7 @@
     </section>
 
     <section data-ng-show='non_connected_services.length' class="cc-settings-section">
-      <div class="ten columns centered">
+      <div class="large-10 large-centered columns">
 
         <h2>Services to Connect</h2>
 

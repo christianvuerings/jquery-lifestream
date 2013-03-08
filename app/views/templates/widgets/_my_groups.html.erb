@@ -6,7 +6,7 @@
     <ul class="cc-widget-list cc-scroll">
       <li data-ng-repeat="group in mygroups" class="cc-widget-mygroups-myclasses-list-item">
         <div class="row">
-          <div class="ten mobile-three columns">
+          <div class="large-10 small-8 columns">
             <div
               class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
               data-ng-class="'cc-icon-{{group.emitter|lowercase}}'">
@@ -16,7 +16,7 @@
               data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)">{{group.title}}
             </a>
           </div>
-          <div class="two mobile-one columns cc-widget-mygroups-myclasses-emitter-column">
+          <div class="large-2 small-4 columns cc-widget-mygroups-myclasses-emitter-column">
             <div class="cc-emitter-square cc-emitter-{{group.color_class}}" title="{{group.emitter}} group"></div>
           </div>
         </div>

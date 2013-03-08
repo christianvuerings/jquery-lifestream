@@ -1,13 +1,13 @@
 <script type="text/ng-template" id="templates/splash.html">
   <div class="row" data-ng-controller="SplashController">
-    <div class="six columns">
+    <div class="large-6 columns">
       <img src="/assets/calcentral_logo_big.png" class="cc-page-splash-logo" alt="CalCentral logo" />
       <h1>Welcome to CalCentral.</h1>
       <div class="cc-page-splash-subtitle">Unify, Personalize, Discover</div>
       <button class="radius button cc-page-splash-signin" data-ng-click="user.signIn()">Sign in with your CalNet ID</button>
     </div>
 
-    <div class="six columns">
+    <div class="large-6 columns">
       <div class="cc-page-splash-status">
         <h2>CalCentral Releases</h2>
         <a href="https://ets.berkeley.edu/news/ets-launches-calcentral-platform-release">Tell me more</a>
@@ -16,12 +16,12 @@
   </div>
 
   <div class="row" data-ng-show="latest_release_note.title">
-    <div class="twelve columns mobile-four">
+    <div class="large-12 columns small-12">
       <div class="row panel radius cc-page-splash-blog-panel">
-        <div class="one columns mobile-one cc-page-splash-blog-date">
+        <div class="large-1 columns small-4 cc-page-splash-blog-date">
           <p>{{latest_release_note.date}}</p>
         </div>
-        <div class="eleven columns mobile-three">
+        <div class="large-11 columns small-8">
           <p class="cc-splash-blog-title">
             <a data-ng-href="{{latest_release_note.link}}">{{latest_release_note.title}}</a>
           </p>
@@ -32,54 +32,54 @@
   </div>
 
   <div class="row">
-    <h1 class="cc-page-splash-features-title twelve columns mobile-four">
+    <h1 class="cc-page-splash-features-title twelve columns small-12">
       CalCentral keeps you informed
     </h1>
   </div>
 
   <div class="cc-page-splash-features">
     <div class="row">
-      <div class="seven columns">
+      <div class="large-7 columns">
         <h2>Up Next</h2>
         <p>CalCentral is integrated with Berkeley&#39;s bConnected implementation of Google Apps so you will see what is <strong>Up Next</strong> on your schedule coming from bCal.</p>
       </div>
-      <div class="five columns">
+      <div class="large-5 columns">
         <img src="/assets/splash_up_next_215x100.png" height="100" width="215" />
       </div>
     </div>
     <div class="row">
-      <div class="seven columns">
+      <div class="large-7 columns">
         <h2>Assignments and Tasks</h2>
         <p>With <strong>Assignments and Tasks</strong>, CalCentral allows you to add and manage tasks from your Google account and access assignments for courses participating in the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas LMS pilot</a>.</p>
       </div>
-      <div class="five columns">
+      <div class="large-5 columns">
         <img src="/assets/splash_assignments_tasks_215x100.png" height="100" width="215" />
       </div>
     </div>
     <div class="row">
-      <div class="seven columns">
+      <div class="large-7 columns">
         <h2>Notifications</h2>
         <p><strong>Notifications</strong> display current notifications from campus systems.  Notifications currently come from the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas LMS pilot</a> and BearFacts.</p>
       </div>
-      <div class="five columns">
+      <div class="large-5 columns">
         <img src="/assets/splash_notifications_215x100.png" height="100" width="215" />
       </div>
     </div>
     <div class="row">
-      <div class="seven columns">
+      <div class="large-7 columns">
         <h2>My Classes</h2>
         <p>Under <strong>My Classes</strong>, you will have access to your current bSpace course sites and sites from courses participating in the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas LMS pilot</a>.</p>
       </div>
-      <div class="five columns">
+      <div class="large-5 columns">
         <img src="/assets/splash_my_classes_215x100.png" height="100" width="215" />
       </div>
     </div>
     <div class="row">
-      <div class="seven columns">
+      <div class="large-7 columns">
         <h2>My Groups</h2>
         <p><strong>My Groups</strong> gives you access to your online group collaborations.  Currently, CalCentral supports bSpace project sites and groups participating in the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas LMS pilot</a>.</p>
       </div>
-      <div class="five columns">
+      <div class="large-5 columns">
         <img src="/assets/splash_my_groups_215x100.png" height="100" width="215" />
       </div>
     </div>

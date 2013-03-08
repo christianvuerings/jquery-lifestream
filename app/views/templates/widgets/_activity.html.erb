@@ -7,7 +7,7 @@
     <li data-ng-repeat="activity in activities" data-ng-class="{'cc-widget-list-selected': activity.show}">
       <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">
 
-        <div class="ten mobile-three columns cc-widget-activities-text-column">
+        <div class="large-10 small-8 columns cc-widget-activities-text-column">
           <div
             class="cc-emitter-square cc-left cc-emitter-{{activity.color_class}}"
             title="{{activity.emitter}} activity">
@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <div class="two mobile-one columns cc-widget-tasks-activities-date-string">
+        <div class="large-2 small-4 columns cc-widget-tasks-activities-date-string">
           {{activity.date.date_string}}
         </div>
 

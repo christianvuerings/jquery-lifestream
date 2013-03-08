@@ -6,7 +6,7 @@
     <ul class="cc-widget-list cc-scroll">
       <li data-ng-repeat="class in myclasses" class="cc-widget-mygroups-myclasses-list-item">
         <div class="row cc-widget-mygroups-myclasses-row">
-          <div class="ten mobile-three columns">
+          <div class="large-10 small-8 columns">
             <div
               class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
               data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']">
@@ -24,7 +24,7 @@
               >{{class.name}}
             </a>
           </div>
-          <div class="two mobile-one columns cc-widget-mygroups-myclasses-emitter-column">
+          <div class="large-2 small-4 columns cc-widget-mygroups-myclasses-emitter-column">
             <div class="cc-emitter-square cc-emitter-{{class.color_class}}" title="{{class.emitter}} class"></div>
           </div>
         </div>

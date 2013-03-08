@@ -19,8 +19,8 @@
       <div data-ng-switch on="tasks_mode"  >
 
         <div class="row cc-widget-tasks-button-top-margin">
-          <div class="ten columns centered">
-            <ul class="button-group radius even three-up">
+          <div class="large-10 large-centered columns">
+            <ul class="button-group even-3">
               <li>
                 <button class="tiny button"
                   data-ng-click="switchTasksMode('scheduled')"
@@ -45,10 +45,10 @@
 
         <div data-ng-switch-when="scheduled">
           <div class="row">
-            <div class="eight columns mobile-two">
+            <div class="large-8 columns small-6">
               <span class="cc-left cc-widget-section-label cc-widget-section-label-due">Overdue</span>
             </div>
-            <div class="four columns mobile-two">
+            <div class="large-4 columns small-6">
               <span class="cc-right cc-widget-section-label cc-widget-section-label-due">Due</span>
             </div>
           </div>
@@ -102,7 +102,7 @@
 
         <div data-ng-switch-when="unscheduled">
           <div class="row">
-            <div class="twelve columns">
+            <div class="large-12 columns">
               <span class="cc-left cc-widget-section-label cc-widget-section-label-due">Unscheduled</span>
             </div>
           </div>
@@ -120,7 +120,7 @@
 
         <div data-ng-switch-when="completed">
           <div class="row">
-            <div class="twelve columns cc-widget-section-label-due cc-widget-section-label-completed"><span class="cc-right">Completed</span></div>
+            <div class="large-12 columns cc-widget-section-label-due cc-widget-section-label-completed"><span class="cc-right">Completed</span></div>
           </div>
 
           <ul class="cc-widget-tasks-activities-list">
@@ -134,7 +134,7 @@
             There are currently no completed tasks/assignments.
           </p>
           <div class="row cc-widget-clear-completed" data-ng-show="filtered.length">
-            <div class="twelve columns"><button class="button cc-right radius small" data-ng-click="clearCompletedTasks()">Clear completed tasks</button></div>
+            <div class="large-12 columns"><button class="button cc-right radius small" data-ng-click="clearCompletedTasks()">Clear completed tasks</button></div>
           </div>
         </div>
       </div>
