@@ -70,6 +70,9 @@
           data-ng-click="deleteTask(task)">Delete</a>
         </p>
         <p data-ng-show="task.is_processing">
+          <em>Updating task...</em>
+        </p>
+        <p data-ng-show="task.is_deleting">
           <em>Deleting task...</em>
         </p>
       </div>
