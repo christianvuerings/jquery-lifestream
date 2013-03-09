@@ -62,6 +62,13 @@ class UserApi < MyMergedModel
   end
 
   def get_feed_internal
+    google_mail = Oauth2Data.get_google_email(@uid)
+    # Attempt to update just once.
+    if google_mail.blank?
+      Oauth2Data.update_google_email!(@uid)
+      google_mail = Oauth2Data.get_google_email(@uid)
+    end
+
     {
         :first_login_at => @first_login_at,
         :first_name => @first_name,
@@ -69,6 +76,7 @@ class UserApi < MyMergedModel
         :has_canvas_access_token => CanvasProxy.access_granted?(@uid),
         :has_canvas_account => CanvasProxy.has_account?(@uid),
         :has_google_access_token => GoogleProxy.access_granted?(@uid),
+        :google_email => google_mail,
         :last_name => @last_name,
         :preferred_name => self.preferred_name,
         :roles => @campus_attributes[:roles],
