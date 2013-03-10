@@ -56,7 +56,7 @@ gem 'nokogiri', "~> 1.5.6"
 group :assets do
 
   # Our very own library for angular dependency!
-  gem "angular-gem", "~> 1.1.2"
+  gem "angular-gem", "~> 1.1.3"
 
   # CSS Framework - also includes Compass and SASS
   # https://github.com/zurb/foundation
@@ -96,7 +96,7 @@ group :development, :test , :testext do
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
-  gem "simplecov", "~> 0.7.1", :require => false
+  gem "simplecov", "~> 0.7.1", require: false
 
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
@@ -112,9 +112,9 @@ group :development do
 
   # Polling is evil:
   # https://github.com/guard/guard#readme
-  gem "rb-inotify", "~> 0.9.0", :require => false
-  gem "rb-fsevent", "~> 0.9.2", :require => false
-  gem "rb-fchange", "~> 0.0.6", :require => false
+  gem "rb-inotify", "~> 0.9.0", require: false
+  gem "rb-fsevent", "~> 0.9.2", require: false
+  gem "rb-fchange", "~> 0.0.6", require: false
 
   # Start/stop rails + guard all at once
   # http://stackoverflow.com/questions/8293747/need-a-less-repetitve-way-to-start-rails-on-mac-for-noob
