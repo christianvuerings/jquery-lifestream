@@ -115,15 +115,6 @@ group :development do
   gem "rb-inotify", "~> 0.9.0", require: false
   gem "rb-fsevent", "~> 0.9.2", require: false
   gem "rb-fchange", "~> 0.0.6", require: false
-
-  # Start/stop rails + guard all at once
-  # http://stackoverflow.com/questions/8293747/need-a-less-repetitve-way-to-start-rails-on-mac-for-noob
-  # https://github.com/ddollar/foreman
-  gem "foreman", "~> 0.61.0"
-
-  # C-Extension dependency of foreman
-  # https://github.com/rtomayko/posix-spawn
-  gem "posix-spawn", "~> 0.3.6"
 end
 
 group :test do
