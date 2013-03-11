@@ -61,13 +61,13 @@
           data-ng-click="api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"
           data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a>
 
-          <a class="cc-widget-more-view-in"
+          <button class="cc-widget-more-view-in"
           data-ng-show="task.emitter=='Google'"
-          data-ng-click="enableEditor()">Edit</a>
+          data-ng-click="enableEditor()">Edit</button>
 
-          <a class="cc-widget-more-view-in"
+          <button class="cc-widget-more-view-in"
           data-ng-show="task.emitter=='Google'"
-          data-ng-click="deleteTask(task)">Delete</a>
+          data-ng-click="deleteTask(task)">Delete</button>
         </p>
         <p data-ng-show="task.is_processing">
           <em>Updating task...</em>
