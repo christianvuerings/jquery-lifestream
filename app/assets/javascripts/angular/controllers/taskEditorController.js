@@ -31,9 +31,6 @@
 
     $scope.disableEditor = function() {
       $scope.editorEnabled = false;
-      // Whether cancel was clicked on the Adder in root scope or an Editor in child scoop, turn off processing status
-      $scope.task_adder_is_processing = false;
-      $scope.task.editor_is_processing = false;
     };
 
     $scope.editTaskCompleted = function(data) {
