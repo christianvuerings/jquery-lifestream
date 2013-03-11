@@ -11,6 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require_tree ./lib
-//= require angular
-//= require angular-sanitize
+//= require angular-unstable
+//= require angular-sanitize-unstable
 //= require_tree .
