@@ -12,7 +12,12 @@
     }
   }
   .cc-widget-tasks-form {
+    line-height: 1;
     margin-top: 5px;
+    .row {
+      padding-bottom: 0;
+      padding-top: 0;
+    }
   }
   .cc-widget-tasks-button-top-margin {
     margin-top: 15px;
