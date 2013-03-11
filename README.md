@@ -57,7 +57,7 @@ cd calcentral
 5. Install jruby
 ```bash
 rvm get head
-rvm install jruby-1.7.2
+rvm install jruby-1.7.3
 cd ..
 cd calcentral
 # Answer "yes" again if it asks you to trust a new .rvmrc file.
@@ -91,9 +91,9 @@ You can also create Ruby configuration files like "settings.local.rb" and "devel
 
 9. Install JDBC driver (for Oracle connection)
 You may already have an Oracle driver from MyBerkeley-OAE development, in which case you just need to copy it to your local JRuby installation:
-```cp ~/.m2/repository/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar ~/.rvm/rubies/jruby-1.7.2/lib/```
+```cp ~/.m2/repository/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar ~/.rvm/rubies/jruby-1.7.3/lib/```
   * Otherwise, download [ojdbc6.jar](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
-  * Copy ojdbc6.jar to your local JRuby installation; e.g. ```~/.rvm/rubies/jruby-1.7.2/lib/```
+  * Copy ojdbc6.jar to your local JRuby installation; e.g. ```~/.rvm/rubies/jruby-1.7.3/lib/```
 
 10. Initialize PostgreSQL database tables
 ```bash
