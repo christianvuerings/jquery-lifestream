@@ -26,7 +26,7 @@ gem "google-api-client", "~> 0.6.2"
 
 # for VCR http recording tool
 gem "vcr", "~> 2.4.0"
-gem "jruby-openssl", "~> 0.8.2"
+gem "jruby-openssl", "~> 0.8.4"
 
 # for memcached connection
 gem "dalli", "~> 2.6.2"
@@ -79,8 +79,8 @@ group :development, :testext, :production do
 end
 
 group :development, :test , :testext do
-  gem "rspec-rails", "~> 2.12.2"
-  gem "rspec-mocks", "~> 2.12.2"
+  gem "rspec-rails", "~> 2.13.0"
+  gem "rspec-mocks", "~> 2.13.0"
   gem "minitest-reporters", "~> 0.14.7"
 
   # Test our JavaScript code.
@@ -126,5 +126,5 @@ group :test, :testext do
   # https://rubygems.org/gems/rspec_junit_formatter
   gem "rspec_junit_formatter", "~> 0.1.2"
 
-  gem "webmock", "~> 1.9.2"
+  gem "webmock", "~> 1.11.0"
 end
