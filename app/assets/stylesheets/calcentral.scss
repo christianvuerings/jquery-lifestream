@@ -71,7 +71,7 @@ form {
     text-align: right;
   }
 
-  ::-moz-placeholder {
+  ::-moz-placeholder, ::-ms-input-placeholder {
     color: $cc-placeholder-color;
   }
   input:-moz-placeholder {
