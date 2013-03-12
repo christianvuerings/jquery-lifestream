@@ -90,7 +90,7 @@ group :development, :test , :testext do
   gem "jasmine-jquery-rails", "~> 1.4.2"
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem "selenium-webdriver", "~> 2.29.0"
+  gem "selenium-webdriver", "~> 2.31.0"
 
   gem "therubyrhino", "~> 2.0.1"
 
