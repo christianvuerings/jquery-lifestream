@@ -88,7 +88,7 @@ Calcentral::Application.routes.draw do
   match '/auth/failure' => 'sessions#failure'
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/login' => 'sessions#new', :as => :login
-  match '/tsung_login' => 'sessions#basic_lookup' if Settings.developer_auth.enabled
+  match '/basic_auth_login' => 'sessions#basic_lookup' if Settings.developer_auth.enabled
 
   if Settings.features.act_as
     match '/act_as' => 'sessions#act_as'
