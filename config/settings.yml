@@ -121,6 +121,11 @@ ist_jms:
   freshen_recording: false
   fake: true
 
+# This will enable http basic auth for the app and should NEVER be enabled in production
+developer_auth:
+  enabled: false
+  password: topsecret!
+
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
   notifications: false
