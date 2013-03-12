@@ -2,9 +2,19 @@ class SessionsController < ApplicationController
 
   def lookup
     auth = request.env["omniauth.auth"]
-    session[:user_id] = auth['uid']
-    Calcentral::USER_CACHE_WARMER.warm session[:user_id]
-    redirect_to '/dashboard', :notice => "Signed in!"
+    continue_login_success auth['uid']
+  end
+
+  def basic_lookup
+    uid = authenticate_with_http_basic do |uid, password|
+      uid if password == Settings.developer_auth.password
+    end
+
+    if uid
+      continue_login_success uid
+    else
+      failure
+    end
   end
 
   def act_as
@@ -40,10 +50,18 @@ class SessionsController < ApplicationController
   end
 
   def failure
+    params ||= {}
+    params[:message] ||= ''
     redirect_to root_url, :status => 401, :alert => "Authentication error: #{params[:message].humanize}"
   end
 
   private
+
+  def continue_login_success(uid)
+    session[:user_id] = uid
+    Calcentral::USER_CACHE_WARMER.warm session[:user_id]
+    redirect_to '/dashboard', :notice => "Signed in!"
+  end
 
   def valid_params?(user_uid, act_as_uid)
     if user_uid.blank? || act_as_uid.blank?

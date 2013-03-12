@@ -121,6 +121,10 @@ ist_jms:
   freshen_recording: false
   fake: true
 
+developer_auth:
+  enabled: false
+  password: topsecret!
+
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
   notifications: false
