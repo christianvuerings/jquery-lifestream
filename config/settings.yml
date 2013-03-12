@@ -121,6 +121,7 @@ ist_jms:
   freshen_recording: false
   fake: true
 
+# This will enable http basic auth for the app and should NEVER be enabled in production
 developer_auth:
   enabled: false
   password: topsecret!
