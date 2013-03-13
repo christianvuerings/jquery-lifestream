@@ -1,10 +1,11 @@
 require "spec_helper"
 
-describe SakaiProxy do
+describe SakaiUserSitesProxy do
 
   before do
     @uid = '300939'
-    @client = SakaiProxy.new({user_id: @uid})
+    @client = SakaiUserSitesProxy.new({user_id: @uid})
+    @unpublished_site_id = 'cc56df9a-3ae1-4362-a4a0-6c5133ec8750'
   end
 
   it "should get categorized sites from bSpace" do
@@ -26,6 +27,15 @@ describe SakaiProxy do
     excluded_term = all_sites[excluded_term_idx]['term']
     category_map = @client.get_categorized_sites
     category_map[excluded_term].should be_nil
+  end
+
+  it "should not see unpublished sites", :if => SakaiData.test_data? do
+    category_map = @client.get_categorized_sites
+    category_map.each_value do |sites|
+      sites.each do |site|
+        site['id'].should_not == @unpublished_site_id
+      end
+    end
   end
 
   it "should not see hidden sites" do

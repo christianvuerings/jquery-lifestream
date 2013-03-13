@@ -19,8 +19,8 @@ class MyClasses < MyMergedModel
         end
       end
     end
-    if SakaiProxy.access_granted?(@uid)
-      sakai_proxy = SakaiProxy.new({:user_id => @uid})
+    if SakaiUserSitesProxy.access_granted?(@uid)
+      sakai_proxy = SakaiUserSitesProxy.new({:user_id => @uid})
       current_terms = Settings.sakai_proxy.current_terms || []
       sakai_categories = sakai_proxy.get_categorized_sites
       sakai_categories.each do |category, sites|

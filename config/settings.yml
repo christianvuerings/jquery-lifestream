@@ -67,6 +67,8 @@ sakai_proxy:
     term_yr: "2013",
     term_cd: "B"
   }]
+  # Timestamp in UTC, needed when testing against older DB snapshot
+  fake_now:
 cal_link_proxy:
   fake: false
   base_url: "https://callink.berkeley.edu"
@@ -106,6 +108,8 @@ cache:
     GoogleTasksProxy: <%= 1.hour %>
     MyNotificationsController: <%= 8.hours %>
     SakaiProxy: <%= 24.hours %>
+    SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
+    SakaiUserSitesProxy: <%= 1.hour %>
 
 # Cache warmer settings
 cache_warmer:

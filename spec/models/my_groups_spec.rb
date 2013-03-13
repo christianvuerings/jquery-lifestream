@@ -3,14 +3,14 @@ require "spec_helper"
 describe "MyGroups" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_sakai_proxy = SakaiProxy.new({:user_id => @user_id, :fake => true})
+    @fake_sakai_proxy = SakaiUserSitesProxy.new({:user_id => @user_id, :fake => true})
     @fake_canvas_proxy = CanvasGroupsProxy.new({fake: true})
     @fake_cal_link_proxy = CalLinkMembershipsProxy.new({fake: true})
   end
 
   it "should return a valid feed for a user granted access" do
     CanvasProxy.stub(:access_granted?).and_return(false)
-    SakaiProxy.stub(:access_granted?).and_return(true)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].is_a?(Array).should == true
     my_groups[:groups].each do |group_hash|
@@ -29,7 +29,7 @@ describe "MyGroups" do
   it "should include Canvas groups" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-    SakaiProxy.stub(:access_granted?).and_return(false)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].is_a?(Array).should == true
     my_groups[:groups].size.should be > 0
@@ -48,7 +48,7 @@ describe "MyGroups" do
 
   it "should include CalLink groups" do
     CanvasProxy.stub(:access_granted?).and_return(false)
-    SakaiProxy.stub(:access_granted?).and_return(false)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
     CalLinkProxy.stub(:access_granted?).and_return(true)
     CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
     my_groups = MyGroups.new(@user_id).get_feed
@@ -69,13 +69,13 @@ describe "MyGroups" do
 
   it "should sort groups alphabetically" do
     CanvasProxy.stub(:access_granted?).and_return(true)
-    SakaiProxy.stub(:access_granted?).and_return(true)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.stub(:access_granted?).and_return(false)
     sakai_project_site_feed = {"Projects" => [
         {"title" => "Zsite", "id" => "zsite-id", "url" => "http://sakai/zsite-id"},
         {"title" => "csite", "id" => "csite-id", "url" => "http://sakai/csite-id"}
     ]}
-    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
+    SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
     canvas_groups_feed = '[{"name": "Agroup", "id": "agroup-id"}]'
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
     @fake_canvas_proxy.stub_chain(:groups, :body).and_return(canvas_groups_feed)
@@ -87,9 +87,9 @@ describe "MyGroups" do
 
   it "should return bSpace sites when Canvas service is unavailable" do
     CanvasProxy.stub(:access_granted?).and_return(true)
-    SakaiProxy.stub(:access_granted?).and_return(true)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.stub(:access_granted?).and_return(true)
-    SakaiProxy.stub(:new).and_return(@fake_sakai_proxy)
+    SakaiUserSitesProxy.stub(:new).and_return(@fake_sakai_proxy)
     CanvasProxy.any_instance.stub(:request).and_return(nil)
     CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
     CalLinkMembershipsProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
@@ -103,8 +103,8 @@ describe "MyGroups" do
   it "should return Canvas groups when bSpace and CalLink services are unavailable" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-    SakaiProxy.stub(:access_granted?).and_return(true)
-    SakaiProxy.any_instance.stub(:get_categorized_sites).and_return({status_code: 503})
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
+    SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return({status_code: 503})
     CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
     CalLinkProxy.stub(:access_granted?).and_return(true)
     CalLinkMembershipsProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})
