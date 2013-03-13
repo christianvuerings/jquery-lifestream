@@ -7,15 +7,16 @@ class BearfactsProxy < BaseProxy
   end
 
   def get_profile
-    request "#{Settings.bearfacts_proxy.base_url}/bearfacts-apis/student/#{@uid}"
+    request "/bearfacts-apis/student/#{@uid}"
   end
 
   def get_regstatus
-    request "#{Settings.bearfacts_proxy.base_url}/regstatus/#{@uid}"
+    request "/regstatus/#{@uid}"
   end
 
-  def request(url)
-    self.class.fetch_from_cache(@uid + "/" + url) do
+  def request(path)
+    self.class.fetch_from_cache(@uid + path) do
+      url = "#{Settings.bearfacts_proxy.base_url}#{path}"
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
       begin
         response = FakeableProxy.wrap_request(APP_ID + "_profile", @fake) {
