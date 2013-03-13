@@ -12,7 +12,7 @@ describe SakaiData do
   end
 
   it "should find a known user" do
-    live_sakai_user_id.blank?.should_not be_true
+    live_sakai_user_id.blank?.should be_false
   end
 
   it "should not find an unknown user" do
@@ -30,7 +30,22 @@ describe SakaiData do
     sites.should_not be_nil
     sites.size.should be > 0 if SakaiData.test_data?
     sites.each do |site|
-      site['site_id'].blank?.should_not be_true
+      site['site_id'].blank?.should be_false
+    end
+  end
+
+  it "should find announcements" do
+    end_range = Time.zone.now.to_datetime
+    start_range = end_range.advance(months: -1)
+    site_ids = SakaiData.get_users_sites(live_sakai_user_id)
+    site_ids.each do |site_id|
+      if SakaiData.get_announcement_tool_id(site_id)
+        announcements = SakaiData.get_announcements(site_id, start_range, end_range)
+        announcements.should_not be_nil
+        announcements.each do |announcement|
+          announcement['message_id'].blank?.should be_false
+        end
+      end
     end
   end
 

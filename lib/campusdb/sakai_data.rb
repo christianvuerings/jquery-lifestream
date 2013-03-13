@@ -4,6 +4,58 @@ class SakaiData < OracleDatabase
     Settings.campusdb.bspace_prefix || ''
   end
 
+  def self.get_connection
+    connection
+  end
+
+  # Oracle and H2 have no timestamp formatting function in common.
+  def self.timestamp_format(timestamp_column)
+    if test_data?
+      "formatdatetime(#{timestamp_column}, 'yyyy-MM-dd HH:mm:ss')"
+    else
+      "to_char(#{timestamp_column}, 'yyyy-mm-dd hh24:mi:ss')"
+    end
+  end
+  def self.timestamp_parse(datetime)
+    if test_data?
+      "parsedatetime('#{datetime.utc.to_s(:db)}', 'yyyy-MM-dd HH:mm:ss')"
+    else
+      "to_date('#{datetime.utc.to_s(:db)}', 'yyyy-mm-dd hh24:mi:ss')"
+    end
+  end
+
+  # TODO This is another fairly stable query.
+  def self.get_announcement_tool_id(site_id)
+    sql = <<-SQL
+    select tool_id from #{table_prefix}sakai_site_tool
+      where site_id = #{connection.quote(site_id)} and registration = 'sakai.announcements'
+    SQL
+    if (row = connection.select_one(sql))
+      row['tool_id']
+    end
+  end
+
+  # Get a site's published announcements within a time range.
+  #
+  # Announcements which are due to be released at a given time are fairly common. If longer-lived
+  # caching is enabled, the "up to this time" DB query parameter should be set after "now", and the
+  # release date-time should be checked by the proxy service.
+  #
+  # TODO This only finds site-wide announcements. Sakai can also broadcast announcements to a
+  # subset of site members. But since that does not seem to be used very often locally, it's
+  # not yet handled here.
+  def self.get_announcements(site_id, from_datetime, to_datetime)
+    channel_id = "/announcement/channel/#{site_id}/main"
+    announcements = []
+    sql = <<-SQL.squish
+    select message_id, channel_id, #{timestamp_format('message_date')} as message_date, owner, xml from #{table_prefix}announcement_message
+      where draft = 0 and channel_id = #{connection.quote(channel_id)}
+        and message_date >= #{timestamp_parse(from_datetime)} and message_date <= #{timestamp_parse(to_datetime)}
+      order by message_date desc
+    SQL
+    connection.select_all(sql)
+  end
+
   def self.get_hidden_site_ids(sakai_user_id)
     sites = []
     sql = <<-SQL

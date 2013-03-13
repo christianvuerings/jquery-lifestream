@@ -5,7 +5,9 @@ canvas_proxy:
 google_proxy:
   fake: true
 sakai_proxy:
-  fake: true
+  fake: false
+  # Keyed to H2 test data
+  fake_now: 2013-03-11 04:20:00
 cal_link_proxy:
   fake: true
 

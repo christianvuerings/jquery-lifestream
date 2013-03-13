@@ -4,8 +4,8 @@ class MyGroups < MyMergedModel
     response = {
         :groups => []
     }
-    if SakaiProxy.access_granted?(@uid)
-      sakai_proxy = SakaiProxy.new(user_id: @uid)
+    if SakaiUserSitesProxy.access_granted?(@uid)
+      sakai_proxy = SakaiUserSitesProxy.new(user_id: @uid)
       sakai_categories = sakai_proxy.get_categorized_sites
       if (sites = sakai_categories['Projects'])
         sites.each do |site|
