@@ -1,7 +1,6 @@
-
 {
   "name": "lifestream",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "title": "jQuery Lifestream",
   "description": "Show a stream of your online activity with jQuery",
   "keywords": [
@@ -29,6 +28,6 @@
   "dependencies": {
     "jquery": ">=1.4.2"
   },
-  "docs": "https://github.com/christianv/jquery-lifestream#readme",
+  "docs": "https://github.com/christianv/jquery-lifestream/blob/master/README.md",
   "demo": "http://christianv.github.com/jquery-lifestream/me/"
 }
