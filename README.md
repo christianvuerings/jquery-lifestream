@@ -121,26 +121,42 @@ then visit [localhost:8888](http://localhost:8888).
 
 ### Emulating production mode locally
 
-1. Precompile the assets: [(more info)](http://stackoverflow.com/questions/7275636/rails-3-1-0-actionviewtemplateerrror-application-css-isnt-precompiled)
+1. Make sure you have a separate production database. In psql:
+```
+create database calcentral_production;
+grant all privileges on database calcentral_production to calcentral_development;
+```
+
+2. In calcentral_config/production.local.yml, you'll need the following entries:
+```
+secret_token: "Some random 30-char string"
+postgres: [credentials for your separate production db (copy/modify from development.local.yml)]
+campusdb: [copy from main config/settings.yml, modify if needed]
+google_proxy: and canvas_proxy: [copy from development.local.yml]
+  application:
+    serve_static_assets: true
+```
+
+3. Populate the production db by invoking your production settings:
+```
+rake db:schema:load RAILS_ENV="production"
+```
+
+4. Precompile the assets: [(more info)](http://stackoverflow.com/questions/7275636/rails-3-1-0-actionviewtemplateerrror-application-css-isnt-precompiled)
 ```bash
 bundle exec rake assets:precompile
 ```
 
-2. Serve static assets through rails
-```
-config.serve_static_assets = true
-```
-
-3. Start the server in production mode
+5. Start the server in production mode
 ```bash
 rails s -e production
 ```
 
-4. After testing, remove the static assets and generated pages
+6. If you're not able to connect to Google or Canvas, export the data in the oauth2 from your development db and import them into the same table in your production db.
+
+7. After testing, remove the static assets and generated pages
 ```bash
 bundle exec rake assets:clean
-rm public/index.html
-# remove other pages ...
 ```
 
 ### Test connection
