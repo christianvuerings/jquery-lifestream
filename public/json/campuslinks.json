@@ -127,7 +127,7 @@
       "description": "Degre requirements and track progress",
       "url": "https://marin.berkeley.edu/darsweb/servlet/ListAuditsServlet ",
       "roles": {
-        "staff": true,
+        "staff": false,
         "student": true,
         "faculty": false
       }
