@@ -1,6 +1,6 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.3.2
+ * @version 0.3.5
  * Show a stream of your online activity
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
