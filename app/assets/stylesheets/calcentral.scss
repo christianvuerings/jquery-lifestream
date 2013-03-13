@@ -71,6 +71,10 @@ form {
     text-align: right;
   }
 
+  textarea {
+    resize: vertical;
+  }
+
   ::-moz-placeholder, ::-ms-input-placeholder {
     color: $cc-placeholder-color;
   }
