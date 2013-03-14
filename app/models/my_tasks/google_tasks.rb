@@ -92,8 +92,8 @@ class MyTasks::GoogleTasks
     formatted_entry["status"] ||= "completed"
     formatted_entry["title"] = entry["title"] unless entry["title"].blank?
     formatted_entry["notes"] = entry["notes"] unless entry["notes"].nil?
-    if entry["due_date"] && entry["due_date"]["datetime"]
-      formatted_entry["due"] = Date.strptime(entry["due_date"]["datetime"]).to_time_in_current_zone.to_datetime
+    if entry["due_date"] && entry["due_date"]["date_time"]
+      formatted_entry["due"] = Date.strptime(entry["due_date"]["date_time"]).to_time_in_current_zone.to_datetime
     end
     Rails.logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
     formatted_entry

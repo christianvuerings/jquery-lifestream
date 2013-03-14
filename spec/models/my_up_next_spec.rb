@@ -55,7 +55,7 @@ describe "MyUpNext" do
     valid_feed[:items].size.should be > 0
     all_day_event_count = 0
     valid_feed[:items].each do |entry|
-      DateTime.parse(entry["start"]["datetime"]).should be < too_late
+      DateTime.parse(entry["start"]["date_time"]).should be < too_late
       all_day_event_count += 1 if entry["is_all_day"] === true
     end
     all_day_event_count.should be > 0

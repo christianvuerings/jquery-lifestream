@@ -1,4 +1,5 @@
 class MyUpNext < MyMergedModel
+  include DatedFeed
 
   def get_feed_internal(opts={})
     up_next = {}
@@ -44,8 +45,8 @@ class MyUpNext < MyMergedModel
           next unless start_datetime < next_day
 
           # date mangling to harmonize the different date formats.
-          formatted_entry["start"] = date_entry(start_datetime)
-          formatted_entry["end"] = date_entry(parse_date(entry["end"]))
+          formatted_entry["start"] = format_date(start_datetime).stringify_keys
+          formatted_entry["end"] = format_date(parse_date(entry["end"])).stringify_keys
 
           if entry["start"]["date"] && entry["end"]["date"]
             formatted_entry["is_all_day"] = true
@@ -74,13 +75,6 @@ class MyUpNext < MyMergedModel
     else
       date = DateTime.parse(hash["dateTime"].to_s)
     end
-  end
-
-  def date_entry(date)
-    {
-        "epoch" => date.strftime("%s").to_i,
-        "datetime" => date.rfc3339(3)
-    }
   end
 
 end

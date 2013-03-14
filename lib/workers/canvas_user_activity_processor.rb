@@ -1,5 +1,6 @@
 class CanvasUserActivityProcessor
   extend Calcentral::Cacheable
+  include DatedFeed
   include Celluloid
 
   def initialize(options)
@@ -54,7 +55,7 @@ class CanvasUserActivityProcessor
       formatted_entry[:url] = entry["html_url"]
       formatted_entry[:source_url] = entry["html_url"]
       formatted_entry[:summary] = process_message entry
-      formatted_entry[:date] = process_date date
+      formatted_entry[:date] = format_date date
 
       feed << formatted_entry
     end
@@ -87,14 +88,6 @@ class CanvasUserActivityProcessor
     else
       message_partial
     end
-  end
-
-  def process_date(date)
-    {
-      :epoch => date.to_i,
-      :datetime => date.rfc3339(3),
-      :date_string => date.strftime("%-m/%d")
-    }
   end
 
   def filter_classes(classes = [])

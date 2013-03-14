@@ -1,6 +1,7 @@
 require 'my_tasks/param_validator'
 
 module MyTasks::TasksModule
+  include DatedFeed
   include MyTasks::ParamValidator
 
   def fetch_tasks!(tasks)
@@ -53,11 +54,7 @@ module MyTasks::TasksModule
 
   def format_date_into_entry!(due, formatted_entry, field_name)
     if !due.blank?
-      formatted_entry[field_name] = {
-        "epoch" => due.to_i,
-        "datetime" => due.rfc3339(3),
-        "date_string" => due.strftime("%-m/%d")
-      }
+      formatted_entry[field_name] = format_date(due).stringify_keys
     end
   end
 
