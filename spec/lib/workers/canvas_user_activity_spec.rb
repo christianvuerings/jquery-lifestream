@@ -19,7 +19,8 @@ describe "CanvasUserActivityHandler" do
     handler = CanvasUserActivityHandler.new(options)
     activities = handler.get_feed_results
     activities.instance_of?(Array).should == true
-    activities.size.should == 20
+    # Activities contains 20 items but 1 needs to be filtered out
+    activities.size.should == 19
     activities.each do | activity |
       activity[:id].blank?.should_not == true
       activity[:user_id].should == @random_id
@@ -40,7 +41,7 @@ describe "CanvasUserActivityHandler" do
     handler = CanvasUserActivityHandler.new(options)
     activities = handler.get_feed_results
     activities.instance_of?(Array).should == true
-    activities.size.should == 20
+    activities.size.should == 19
     interesting_result = activities.select { |entry| entry[:source] == "EE 20N"}
     interesting_result.size.should_not == 0
     handler.finalize
@@ -53,7 +54,7 @@ describe "CanvasUserActivityHandler" do
     handler = CanvasUserActivityHandler.new({:user_id => @random_id})
     activities = handler.get_feed_results
     activities.instance_of?(Array).should == true
-    activities.size.should == 20
+    activities.size.should == 19
     handler.finalize
   end
 
