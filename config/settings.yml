@@ -97,6 +97,7 @@ cache:
   race_condition_ttl: <%= 10.seconds %>
   expiration:
     default: <%= 5.minutes %>
+    BearfactsRegblocksProxy: <%= 24.hours %>
     BlogFeed: <%= 1.hour %>
     CalLinkMembershipsProxy: <%= 24.hours %>
     CalLinkOrganizationProxy: <%= 48.hours %>
