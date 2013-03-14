@@ -79,7 +79,7 @@ cal_link_proxy:
 bearfacts_proxy:
   fake: false
   token: secret set in production
-  base_url: "https://bearfacts-dev.berkeley.edu"
+  base_url: "https://bearfacts-dev.berkeley.edu/bearfacts-apis"
 
 blog_latest_release_notes_feed_proxy:
   fake: false

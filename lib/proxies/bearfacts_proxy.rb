@@ -6,25 +6,15 @@ class BearfactsProxy < BaseProxy
     super(Settings.bearfacts_proxy, options)
   end
 
-  def get_profile
-    request "/bearfacts-apis/student/#{@uid}"
-  end
-
-  def get_regstatus
-    request "/regstatus/#{@uid}"
-  end
-
-  def request(path)
-    self.class.fetch_from_cache(@uid + path) do
+  def request(path, vcr_cassette, params = {})
+    self.class.fetch_from_cache(@uid) do
       url = "#{Settings.bearfacts_proxy.base_url}#{path}"
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
       begin
-        response = FakeableProxy.wrap_request(APP_ID + "_profile", @fake) {
+        response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
           Faraday::Connection.new(
               :url => url,
-              :params => {
-                  :token => Settings.bearfacts_proxy.token
-              },
+              :params => params.merge({:token => Settings.bearfacts_proxy.token}),
               :ssl => {:verify => false}
           ).get
         }
@@ -35,7 +25,7 @@ class BearfactsProxy < BaseProxy
 
         doc = Nokogiri::XML response.body
 
-        Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{doc.to_xml(:indent=>2)}"
+        Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{doc.to_xml(:indent => 2)}"
         {
             :body => doc,
             :status_code => response.status
