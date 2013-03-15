@@ -17,6 +17,38 @@
       "color_class": "bspace-class"
     },
     {
+      "id": "1a",
+      "title": "Evacuate Sproul Hall",
+      "summary": "Evacuate Sproul Hall immediately, student registration week",
+      "source": "Warn Me",
+      "type": "alert",
+      "date": {
+        "epoch": 1349049728,
+        "date_time": "2013-01-15T19:52:27+00:00",
+        "date_string": "Today"
+      },
+      "url": "https://warnme.berkeley.edu/",
+      "source_url": "https:// warnme.berkeley.edu/",
+      "emitter": "bSpace",
+      "color_class": "bspace-class"
+    },
+    {
+      "id": "1b",
+      "title": "Evacuate Morrison",
+      "summary": "Evacuate Morrison immediately, middle schooler's piano recital week",
+      "source": "Warn Me",
+      "type": "alert",
+      "date": {
+        "epoch": 1349049729,
+        "date_time": "2013-01-15T19:52:27+00:00",
+        "date_string": "Today"
+      },
+      "url": "https://warnme.berkeley.edu/",
+      "source_url": "https://warnme.berkeley.edu/",
+      "emitter": "bSpace",
+      "color_class": "bspace-class"
+    },
+    {
       "id": 2,
       "title": "Incomplete Grade Notice - Math 1B",
       "summary": "You have 90 days to complete Math 1B and submit a Petition to Remove an Incomplete",

@@ -1,5 +1,47 @@
 /* Activities widget */
 .cc-widget-activities {
+  .cc-widget-activities-activity {
+    border-bottom: 1px solid $cc-light-grey;
+  }
+
+  .cc-widget-activities-sub-activity {
+    border-top: 1px solid $cc-medium-grey;
+    padding-left: 0;
+    padding-top: 6px;
+  }
+
+  .cc-widget-activities-sub-text-margin {
+    margin-left: 12px;
+  }
+
+  .cc-widget-activities-sub-activity-list {
+    @extend .cc-widget-tasks-activities-list;
+
+    li {
+      i.icon-caret-right, i.icon-caret-down {
+        float:left;
+        padding-top: 10px;
+      }
+      .cc-widget-activities-sub-activity-date-string {
+        @extend .cc-widget-tasks-activities-date;
+        font-size: 10px;
+      }
+      .cc-widget-activities-sub-activity-summary {
+        margin-left:3px;
+        padding-top: 0px;
+        margin-bottom: 0px;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+      .row {
+        margin-bottom: 3px;
+        margin-top: 3px;
+      }
+    }
+  }
+
   .cc-widget-activity-source {
     color: #515151;
     font-size: 11px;
