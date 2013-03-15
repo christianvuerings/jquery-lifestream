@@ -8,7 +8,7 @@
       "type": "alert",
       "date": {
         "epoch": 1349049728,
-        "datetime": "2013-01-15T19:52:27.000+00:00",
+        "date_time": "2013-01-15T19:52:27+00:00",
         "date_string": "Today"
       },
       "url": "https://warnme.berkeley.edu/",
@@ -24,7 +24,7 @@
       "type": "alert",
       "date": {
         "epoch": 1349049728,
-        "datetime": "2013-01-15T19:52:27.000+00:00",
+        "date_time": "2013-01-15T19:52:27+00:00",
         "date_string": "Today"
       },
       "url": "https://bearfacts.berkeley.edu/",
@@ -40,7 +40,7 @@
       "type": "block",
       "date": {
         "epoch": 1348185901,
-        "datetime": "2012-12-30T19:52:27.000+00:00",
+        "date_time": "2012-12-30T19:52:27+00:00",
         "date_string": "12/30"
       },
       "url": "http://studentbilling.berkeley.edu",
@@ -56,7 +56,7 @@
       "type": "classes",
       "date": {
         "epoch": 1348185901,
-        "datetime": "2013-12-29T19:52:27.000+00:00",
+        "date_time": "2013-12-29T19:52:27+00:00",
         "date_string": "12/29"
       },
       "url": "https://ucberkeley.instructure.com/courses/833384",
@@ -72,7 +72,7 @@
       "type": "finances",
       "date": {
         "epoch": 1348185901,
-        "datetime": "2013-12-28T19:52:27.000+00:00",
+        "date_time": "2013-12-28T19:52:27+00:00",
         "date_string": "12/28"
       },
       "url": "http://studentbilling.berkeley.edu/",
@@ -88,7 +88,7 @@
       "type": "classes",
       "date": {
         "epoch": 1348185901,
-        "datetime": "2013-12-26T19:52:27.000+00:00",
+        "date_time": "2013-12-26T19:52:27+00:00",
         "date_string": "12/26"
       },
       "url": "https://ucberkeley.instructure.com/courses/833382",
@@ -105,7 +105,7 @@
       "type": "academics",
       "date": {
         "epoch": 1348185901,
-        "datetime": "2013-12-18T19:52:27.000+00:00",
+        "date_time": "2013-12-18T19:52:27+00:00",
         "date_string": "12/18"
       },
       "url": "https://telebears.berkeley.edu",
@@ -121,7 +121,7 @@
       "type": "finances",
       "date": {
         "epoch": 1348185901,
-        "datetime": "2013-12-02T19:52:27.000+00:00",
+        "date_time": "2013-12-02T19:52:27+00:00",
         "date_string": "12/2"
       },
       "url": "http://example.com",

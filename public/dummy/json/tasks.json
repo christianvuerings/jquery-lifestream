@@ -6,7 +6,7 @@
       "status": "Overdue",
       "due_date": {
         "epoch": 1354320000,
-        "datetime": "2012-12-01T00:00:00.000+00:00",
+        "date_time": "2012-12-01T00:00:00+00:00",
         "date_string": "12/01"
       },
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
@@ -31,7 +31,7 @@
       "status": "Overdue",
       "due_date": {
         "epoch": 1354320000,
-        "datetime": "2012-12-01T00:00:00.000+00:00",
+        "date_time": "2012-12-01T00:00:00+00:00",
         "date_string": "12/01"
       }
     },
@@ -39,7 +39,7 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_time": "2012-12-05T00:00:00+00:00",
         "date_string": "12/05"
       },
       "title": "Run fourier transforms on buzz saw",
@@ -56,7 +56,7 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_time": "2012-12-05T00:00:00+00:00",
         "date_string": "12/05"
       },
       "title": "Report on frog dissection",
@@ -72,7 +72,7 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_time": "2012-12-05T00:00:00+00:00",
         "date_string": "12/05"
       },
       "title": "Finish Shakespeare",
@@ -89,7 +89,7 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_time": "2012-12-05T00:00:00+00:00",
         "date_string": "12/05"
       },
       "title": "Chapter Seven",
@@ -105,7 +105,7 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "datetime": "2012-12-05T00:00:00.000+00:00",
+        "date_time": "2012-12-05T00:00:00+00:00",
         "date_string": "12/05"
       },
       "title": "Bring tweezers",

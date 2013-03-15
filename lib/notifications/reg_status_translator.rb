@@ -1,4 +1,5 @@
 class RegStatusTranslator
+  include DatedFeed
 
   def accept?(event)
     event["code"] == "RegStatus"
@@ -31,11 +32,7 @@ class RegStatusTranslator
         :summary => summary,
         :source => event["system"],
         :type => "alert",
-        :date => {
-            :epoch => timestamp.to_i,
-            :datetime => timestamp.rfc3339,
-            :date_string => timestamp.strftime("%-m/%d")
-        },
+        :date => format_date(timestamp),
         :url => "https://bearfacts.berkeley.edu/bearfacts/",
         :source_url => "https://bearfacts.berkeley.edu/bearfacts/",
         :emitter => "Campus",

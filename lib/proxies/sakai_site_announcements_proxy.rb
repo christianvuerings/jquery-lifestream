@@ -27,7 +27,13 @@ class SakaiSiteAnnouncementsProxy < SakaiProxy
         ann_rows = SakaiData.get_announcements(@site_id, start_time, end_time)
         ann_rows.each do |row|
           announcement = parse_announcement(row)
-          announcements << announcement if announcement
+          if announcement
+            if (retract_date = announcement['retractDate']) && retract_date < end_time
+              Rails.logger.debug("Filtering retracted announcement #{announcement['message_id']} for site #{announcement['site_id']}")
+            else
+              announcements << announcement
+            end
+          end
         end
       end
       announcements
@@ -74,13 +80,17 @@ class SakaiSiteAnnouncementsProxy < SakaiProxy
       end
       doc.xpath('properties/property').each do |prop|
         name = prop['name']
-        # Notification levels: 'r' for required; 'n' for none; 'o' for optional
-        #
-        # "assignmentReference"=> "/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5"}
-        # shows as:
-        # <a href="https://HOST/portal/directtool/37c2f61c-66f9-4abb-bb07-a9e6670d4bcd?assignmentId=/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5&panel=Main&sakai_action=doView_assignment">Do this then do that</a>
-        if %w'releaseDate retractDate assignmentReference notificationLevel'.include?(name)
-          ann[name] = Base64.decode64(prop['value'])
+        case name
+          # Notification levels: 'r' for required; 'n' for none; 'o' for optional
+          #
+          # "assignmentReference"=> "/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5"}
+          # shows as:
+          # <a href="https://HOST/portal/directtool/37c2f61c-66f9-4abb-bb07-a9e6670d4bcd?assignmentId=/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5&panel=Main&sakai_action=doView_assignment">Do this then do that</a>
+          when 'notificationLevel', 'assignmentReference'
+            ann[name] = Base64.decode64(prop['value'])
+          # Release and retract times are in the bizarre UTC format: '20130118060000000'
+          when 'releaseDate', 'retractDate'
+            ann[name] = DateTime.strptime(Base64.decode64(prop['value']), '%Y%m%d%H%M%S%L')
         end
       end
       ann

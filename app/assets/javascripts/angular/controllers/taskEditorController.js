@@ -55,7 +55,7 @@
       if ($scope.add_edit_task.due_date) {
         changedTask.due_date = {};
         var newdatearr = $scope.add_edit_task.due_date.split(/[\/\.\- ]/);
-        changedTask.due_date.datetime = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+        changedTask.due_date.date_time = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
       // If no date or date has been removed, also delete due_date sub-object
