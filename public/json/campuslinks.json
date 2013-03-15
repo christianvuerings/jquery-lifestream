@@ -909,7 +909,7 @@
       ],
       "name": "bDrive",
       "description": "",
-      "url": "https://bdrive.berkeley.edu",
+      "url": "http://bdrive.berkeley.edu",
       "roles": {
         "staff": true,
         "student": true,
