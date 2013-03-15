@@ -27,7 +27,9 @@ describe JmsMessageHandler do
   end
 
   it "should handle malformed JSON gracefully" do
-    @handler.handle({:text => "pure lunacy"})
+    suppress_rails_logging {
+      @handler.handle({:text => "pure lunacy"})
+    }
   end
 
 end
