@@ -56,7 +56,7 @@
         }
       ],
       "name": "Undergraduate Student Calendar & Deadlines",
-      "description": "*",
+      "description": "",
       "url": "http://registrar.berkeley.edu/current_students/registration_enrollment/stucal.html",
       "roles": {
         "staff": true,
@@ -239,9 +239,9 @@
           "subcategory": "Student Advising"
         }
       ],
-      "name": "Student Life Advising Services",
-      "description": "*",
-      "url": "http://slas.berkeley.edu/",
+      "name": "Educational Opportunity Program",
+      "description": "Guidance and resources for first generation and low-income college students.",
+      "url": "http://eop.berkeley.edu",
       "roles": {
         "staff": false,
         "student": true,
@@ -256,7 +256,7 @@
         }
       ],
       "name": "Academic Departments & Programs",
-      "description": "*",
+      "description": "",
       "url": "http://www.berkeley.edu/academics/dept/a.shtml",
       "roles": {
         "staff": true,
@@ -340,7 +340,7 @@
         }
       ],
       "name": "Berkeley Research",
-      "description": "*",
+      "description": "",
       "url": "http://vcresearch.berkeley.edu/",
       "roles": {
         "staff": true,
@@ -476,7 +476,7 @@
         }
       ],
       "name": "ASUC Lecture Notes Online",
-      "description": "*",
+      "description": "",
       "url": "https://notes.berkeley.edu/",
       "roles": {
         "staff": false,
@@ -700,7 +700,7 @@
         }
       ],
       "name": "Learning Resources",
-      "description": "*",
+      "description": "",
       "url": "http://hrweb.berkeley.edu/learning",
       "roles": {
         "staff": true,
@@ -716,7 +716,7 @@
         }
       ],
       "name": "UC Learning Center",
-      "description": "*",
+      "description": "",
       "url": "https://uc.sumtotalsystems.com/sumtotal/app/management/LMS_LearnerHome.aspx?FromLogin=1 ",
       "roles": {
         "staff": true,
@@ -780,7 +780,7 @@
         }
       ],
       "name": "Equity, Inclusion & Diversity",
-      "description": "*",
+      "description": "",
       "url": "http://diversity.berkeley.edu/",
       "roles": {
         "staff": true,
@@ -1004,7 +1004,7 @@
         }
       ],
       "name": "Academic Policies",
-      "description": "*",
+      "description": "",
       "url": "http://catalog.berkeley.edu/policies/",
       "roles": {
         "staff": true,
@@ -1020,7 +1020,7 @@
         }
       ],
       "name": "Student Policies & Procedures",
-      "description": "*",
+      "description": "",
       "url": "http://sa.berkeley.edu/sa/student-policies-and-procedures",
       "roles": {
         "staff": true,
@@ -1069,7 +1069,7 @@
       ],
       "name": "Risk Management",
       "description": "",
-      "url": "http://ethicscompliance.berkeley.edu/index.shtml",
+      "url": "http://riskservices.berkeley.edu",
       "roles": {
         "staff": true,
         "student": false,
@@ -1100,7 +1100,7 @@
         }
       ],
       "name": "Personnel Policies",
-      "description": "*",
+      "description": "",
       "url": "http://hrweb.berkeley.edu/",
       "roles": {
         "staff": true,
@@ -1148,8 +1148,8 @@
         }
       ],
       "name": "Cal Answers",
-      "description": "*",
-      "url": "http://www.bai.berkeley.edu/",
+      "description": "",
+      "url": "http://calanswers.berkeley.edu/",
       "roles": {
         "staff": true,
         "student": false,
@@ -1164,7 +1164,7 @@
         }
       ],
       "name": "BETS - equipment tracking",
-      "description": "*",
+      "description": "",
       "url": "http://bets.berkeley.edu/BETS/home/BetsHome.cfm",
       "roles": {
         "staff": true,
@@ -1180,7 +1180,7 @@
         }
       ],
       "name": "Mail Services",
-      "description": "*",
+      "description": "",
       "url": "http://mailservices.berkeley.edu/",
       "roles": {
         "staff": true,
@@ -1340,7 +1340,7 @@
         }
       ],
       "name": "HR Web",
-      "description": "*",
+      "description": "",
       "url": "http://hrweb.berkeley.edu/",
       "roles": {
         "staff": true,
@@ -1356,7 +1356,7 @@
         }
       ],
       "name": "HR System",
-      "description": "*",
+      "description": "",
       "url": "http://hrweb.berkeley.edu/hcm",
       "roles": {
         "staff": true,
@@ -1372,7 +1372,7 @@
         }
       ],
       "name": "CalTime",
-      "description": "*",
+      "description": "",
       "url": "http://caltime.berkeley.edu",
       "roles": {
         "staff": true,
@@ -1388,7 +1388,7 @@
         }
       ],
       "name": "Payroll",
-      "description": "*",
+      "description": "",
       "url": "http://controller.berkeley.edu/payroll/",
       "roles": {
         "staff": true,
@@ -1404,7 +1404,7 @@
         }
       ],
       "name": "BearBuy",
-      "description": "*",
+      "description": "",
       "url": "http://www.bai.berkeley.edu/",
       "roles": {
         "staff": true,
@@ -1420,7 +1420,7 @@
         }
       ],
       "name": "Blu Card",
-      "description": "*",
+      "description": "",
       "url": "http://businessservices.berkeley.edu/cards/blucard",
       "roles": {
         "staff": true,
@@ -1436,7 +1436,7 @@
         }
       ],
       "name": "Purchasing",
-      "description": "*",
+      "description": "",
       "url": "http://businessservices.berkeley.edu/procurement/services",
       "roles": {
         "staff": true,
@@ -2137,7 +2137,7 @@
       ],
       "name": "Student Ombuds",
       "description": "Confidential help with campus issues, conflict situations, and more",
-      "url": "http://campuslife.berkeley.edu/ombuds",
+      "url": "http://sa.berkeley.edu/ombuds",
       "roles": {
         "staff": false,
         "student": true,
