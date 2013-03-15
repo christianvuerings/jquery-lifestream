@@ -35,7 +35,11 @@ class CanvasUserActivityProcessor
     feed = []
     raw_feed.each do |entry|
       begin
-        date = [DateTime.parse(entry["created_at"]), DateTime.parse(entry["updated_at"])].max
+        date = ([entry["created_at"], entry["updated_at"]].map! {|e| Time.zone.parse(e)}).max
+        if date <= Time.zone.today.advance(days: -10)
+          next
+        end
+        date = date.to_datetime
       rescue
         next
       end
