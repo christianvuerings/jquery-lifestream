@@ -39,11 +39,15 @@ class CanvasUserActivityProcessor
         next
       end
 
+      title = process_title entry
+      # Filter out the entries that have an empty title attribute
+      next if title.nil?
+
       formatted_entry = {}
       formatted_entry[:id] = "canvas_#{entry["id"]}"
       formatted_entry[:type] = entry["type"]
       formatted_entry[:user_id] = @uid
-      formatted_entry[:title] = process_title entry
+      formatted_entry[:title] = title
       formatted_entry[:source] = process_source entry
       formatted_entry[:emitter] = "Canvas"
       formatted_entry[:color_class] = "canvas-class"
