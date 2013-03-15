@@ -45,10 +45,4 @@ describe SakaiSiteAnnouncementsProxy do
     announcements.size.should == 1
   end
 
-  # TODO
-  it "should read-ahead announcements which will be released before the cache expires"
-
-  # TODO
-  it "should skip announcements which were retracted before the cache expires"
-
 end

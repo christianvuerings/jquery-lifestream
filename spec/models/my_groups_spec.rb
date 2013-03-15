@@ -3,7 +3,7 @@ require "spec_helper"
 describe "MyGroups" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_sakai_proxy = SakaiUserSitesProxy.new({:user_id => @user_id, :fake => true})
+    @fake_sakai_proxy = SakaiUserSitesProxy.new({fake: true})
     @fake_canvas_proxy = CanvasGroupsProxy.new({fake: true})
     @fake_cal_link_proxy = CalLinkMembershipsProxy.new({fake: true})
   end
@@ -71,9 +71,9 @@ describe "MyGroups" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.stub(:access_granted?).and_return(false)
-    sakai_project_site_feed = {"Projects" => [
-        {"title" => "Zsite", "id" => "zsite-id", "url" => "http://sakai/zsite-id"},
-        {"title" => "csite", "id" => "csite-id", "url" => "http://sakai/csite-id"}
+    sakai_project_site_feed = {groups: [
+        {title: "Zsite", id: "zsite-id", site_url: "http://sakai/zsite-id"},
+        {title: "csite", id: "csite-id", site_url: "http://sakai/csite-id"}
     ]}
     SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
     canvas_groups_feed = '[{"name": "Agroup", "id": "agroup-id"}]'
@@ -89,7 +89,16 @@ describe "MyGroups" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.stub(:access_granted?).and_return(true)
-    SakaiUserSitesProxy.stub(:new).and_return(@fake_sakai_proxy)
+    SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return({
+        groups: [
+            {
+                title: "Sakai Reunion Planning",
+                id: "xxx-yyy",
+                site_url: "http://www.example.com/site/xxx-yyy",
+                emitter: SakaiProxy::APP_ID
+            }
+        ]
+                                                                             })
     CanvasProxy.any_instance.stub(:request).and_return(nil)
     CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
     CalLinkMembershipsProxy.any_instance.stub(:get_memberships).and_return({status_code: 503})

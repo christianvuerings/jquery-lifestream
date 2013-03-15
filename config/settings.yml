@@ -62,6 +62,7 @@ google_proxy:
 sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
+  fake_user_id: "300939"
   current_terms: ["Spring 2013"]
   current_terms_codes: [ {
     term_yr: "2013",
@@ -109,7 +110,7 @@ cache:
     MyNotificationsController: <%= 8.hours %>
     SakaiProxy: <%= 24.hours %>
     SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
-    SakaiUserSitesProxy: <%= 1.hour %>
+    SakaiUserSitesProxy: <%= 4.hours %>
 
 # Cache warmer settings
 cache_warmer:

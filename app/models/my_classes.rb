@@ -21,22 +21,8 @@ class MyClasses < MyMergedModel
     end
     if SakaiUserSitesProxy.access_granted?(@uid)
       sakai_proxy = SakaiUserSitesProxy.new({:user_id => @uid})
-      current_terms = Settings.sakai_proxy.current_terms || []
-      sakai_categories = sakai_proxy.get_categorized_sites
-      sakai_categories.each do |category, sites|
-        if current_terms.include?(category)
-          sites.each do |site|
-            response[:classes].push({
-                                        name: site["short_description"],
-                                        course_code: site["title"],
-                                        id: site["id"],
-                                        emitter: SakaiProxy::APP_ID,
-                                        color_class: "bspace-class",
-                                        site_url: site["url"]
-                                    })
-
-          end
-        end
+      if (sakai_classes = sakai_proxy.get_categorized_sites[:classes])
+        response[:classes].concat(sakai_classes)
       end
     end
     logger.debug "MyClasses get_feed is #{response.inspect}"
