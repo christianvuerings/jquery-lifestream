@@ -62,7 +62,11 @@ Rails.application.config.after_initialize do
       # convert debug_json back to string representation
       json = JSON.parse(content)
       json["http_interactions"].each do |interaction|
-        interaction["response"]["body"]["string"] = MultiJson.dump(interaction["response"]["body"]["debug_json"])
+        if interaction["response"]["body"]["debug_xml"]
+          interaction["response"]["body"]["string"] = interaction["response"]["body"]["debug_xml"]
+        else
+          interaction["response"]["body"]["string"] = MultiJson.dump(interaction["response"]["body"]["debug_json"])
+        end
       end
 
       Rails.logger.debug "Timeshifter: Output file = #{output_file.path}"

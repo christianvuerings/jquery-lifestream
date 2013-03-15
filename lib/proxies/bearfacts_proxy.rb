@@ -40,11 +40,9 @@ class BearfactsProxy < BaseProxy
             return nil
           end
 
-          doc = Nokogiri::XML response.body
-
-          Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{doc.to_xml(:indent => 2)}"
+          Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
           {
-              :body => doc,
+              :body => response.body,
               :status_code => response.status
           }
         rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
