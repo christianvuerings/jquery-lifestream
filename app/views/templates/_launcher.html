@@ -36,9 +36,13 @@
           class="cc-popover-container cc-popover-status cc-left"
           data-ng-show="user.profile.student_info.reg_status.code!=null">
           <button class="cc-ir cc-icon cc-icon-status-person"
-            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')"><span class="cc-visuallyhidden">Show your academic profile</span>
+            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')">
+            <span class="cc-visuallyhidden">Show your academic profile</span>
           </button>
-          <div class="cc-icon cc-icon-status-person-layover" data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check-small'}[showStatusError]"></div>
+          <div class="cc-icon cc-icon-status-person-layover"
+            data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check-small'}[showStatusError]"
+            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')">
+          </div>
           <div class="cc-popover" data-ng-show="api.popover.status('cc-popover-status')">
             <h4>Academic Profile</h4>
             <p>
