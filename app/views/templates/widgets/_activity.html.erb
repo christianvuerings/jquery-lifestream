@@ -4,41 +4,62 @@
   </div>
 
   <ul class="cc-widget-tasks-activities-list">
-    <li data-ng-repeat="activity in activities" data-ng-class="{'cc-widget-list-selected': activity.show}">
-      <div class="row cc-widget-list-hover" data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">
+    <li data-ng-repeat="activity in activities.get()" data-ng-class="{'cc-widget-list-selected': activity.show}">
+      <div class="row">
+        <div class="row cc-widget-activities-activity column large-centered small-centered large-11 small-11">
+          <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">
+            <div class="row large-10 small-8 columns cc-widget-activities-text-column">
+              <div class="cc-emitter-square cc-left cc-emitter-{{activity.color_class}}" title="{{activity.emitter}} activity">
+              </div>
+              <div class="cc-widget-activities-text-margin cc-widget-list-hover-title">
+                {{activity.title}}
+                <div class="cc-widget-activity-source">{{activity.source}}</div>
+              </div>
+            </div>
 
-        <div class="large-10 small-8 columns cc-widget-activities-text-column">
-          <div
-            class="cc-emitter-square cc-left cc-emitter-{{activity.color_class}}"
-            title="{{activity.emitter}} activity">
+            <div class="large-2 small-4 columns cc-widget-tasks-activities-date-string">
+              {{activity.date.date_string}}
+            </div>
+
+            <div class="row cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show && !activity.elements">
+              <p>
+                {{activity.summary}}
+              </p>
+              <p><a class="cc-widget-more-view-in" data-ng-click="api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)" data-ng-href="{{activity.source_url}}">View in {{activity.source}}</a>
+              </p>
+            </div>
           </div>
-          <div class="cc-widget-activities-text-margin cc-widget-list-hover-title">
-            {{activity.title}}
-            <div class="cc-widget-activity-source">{{activity.source}}</div>
+          <div class="row cc-widget-activities-sub-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show && activity.elements">
+            <ul class="cc-widget-activities-sub-activity-list">
+              <li data-ng-repeat="sub_activity in activity.elements">
+                <div class="row">
+                  <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(sub_activity, 'Recent Threaded Activity')">
+                    <i data-ng-class="{'icon-caret-right': !sub_activity.show, 'icon-caret-down': sub_activity.show}"></i>
+                    <div class="columns large-11 small-11 cc-widget-list-hover-title cc-widget-activities-sub-activity">
+                      {{sub_activity.title}}
+                    </div>
+                    <div class="columns" data-ng-show="sub_activity.show">
+                      <div class="cc-widget-activities-sub-activity-date-string">
+                        {{sub_activity.date.date_string}}
+                      </div>
+                      <div class="row columns ">
+                         <p class="cc-widget-activities-sub-activity-summary">
+                          {{sub_activity.summary}}
+                        </p>
+                        <p><a class="cc-widget-more-view-in" data-ng-click="api.analytics.trackExternalLink('Activities', sub_activity.source, sub_activity.source_url)" data-ng-href="{{sub_activity.source_url}}">View in {{sub_activity.source}}</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
+      </li>
+    </ul>
 
-        <div class="large-2 small-4 columns cc-widget-tasks-activities-date-string">
-          {{activity.date.date_string}}
-        </div>
-
-      <div class="row cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show">
-        <p>
-          {{activity.summary}}
-        </p>
-        <p>
-          <a
-            class="cc-widget-more-view-in"
-            data-ng-click="api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)"
-            data-ng-href="{{activity.source_url}}">
-            View in {{activity.source}}
-          </a>
-        </p>
-      </div>
-    </li>
-  </ul>
-
-  <div data-ng-show="!activities.length" class="cc-widget-text">
-    You have no recent activity at this time.
+    <div data-ng-show="!activities.length" class="cc-widget-text">
+      You have no recent activity at this time.
+    </div>
   </div>
-</div>

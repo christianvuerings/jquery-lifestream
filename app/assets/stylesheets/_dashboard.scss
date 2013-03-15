@@ -61,12 +61,16 @@
     font-weight: bold;
     margin-top: 5px;
   }
-  .cc-widget-tasks-activities-date-string {
+
+  .cc-widget-tasks-activities-date {
     color: #999999;
     float: right;
-    font-size: 12px;
     text-align: right;
     text-transform: uppercase;
+  }
+  .cc-widget-tasks-activities-date-string {
+    @extend .cc-widget-tasks-activities-date;
+    font-size: 12px;
   }
   .cc-widget-add-icon {
     @include user-select("none");
