@@ -42,16 +42,13 @@ describe SakaiSiteAnnouncementsProxy do
   it "should not receive draft, lapsed, or unreleased announcements", :if => SakaiData.test_data? do
     client = SakaiSiteAnnouncementsProxy.new({site_id: @site_with_one_current})
     announcements = client.get_announcements
-    pp announcements
     announcements.size.should == 1
   end
 
   # TODO
-  it "should read-ahead announcements which will be released before the cache expires" do
-  end
+  it "should read-ahead announcements which will be released before the cache expires"
 
   # TODO
-  it "should skip announcements which were retracted before the cache expires" do
-  end
+  it "should skip announcements which were retracted before the cache expires"
 
 end
