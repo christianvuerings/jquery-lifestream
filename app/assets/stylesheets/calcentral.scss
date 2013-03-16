@@ -75,10 +75,14 @@ form {
     resize: vertical;
   }
 
-  ::-moz-placeholder, ::-ms-input-placeholder {
+  // Placeholder selector duplication intentional, re: http://bit.ly/ZnuZFo
+  input:-moz-placeholder {
     color: $cc-placeholder-color;
   }
-  input:-moz-placeholder {
+  input:-ms-input-placeholder {
+    color: $cc-placeholder-color;
+  }
+  ::-moz-placeholder {
     color: $cc-placeholder-color;
   }
 
