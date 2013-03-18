@@ -7,8 +7,11 @@
   calcentral.controller('ActivityController', ['$http', '$scope', function($http, $scope) {
 
     /** Constructing a complex model with logic to hide away some of the data munging. */
-    var activitiesModelInit = function(plain_objects) {
+    var activitiesModel = function(plain_objects) {
       var originalArray = [];
+      var filters = {};
+      var displayArray = [];
+
       if (plain_objects && plain_objects.activities) {
         originalArray = plain_objects.activities;
       }
@@ -20,7 +23,7 @@
 
       /**
        * Return the threaded actitivies array, without filters.
-       * @return {Object} JSON object.
+       * @return {Array} Array of JSON objects.
        */
       var get = function() {
         return displayArray;
@@ -33,7 +36,7 @@
        * @return {int} see String.compareTo responses
        */
       var sortFunction = function(a, b) {
-        /** Date decending. */
+        // Date decending.
         return b.date.epoch - a.date.epoch;
       };
 
@@ -46,8 +49,59 @@
         if (typeDict[type]) {
           return typeDict[type];
         } else {
-          return " " + type + " posted.";
+          return ' ' + type + ' posted.';
         }
+      };
+
+      /**
+       * Walks through the initial feed, stashing away unique values for sources and emitters.
+       * @param  {Array} original activities array from the api
+       * @return {Object} object containing source and emitter objects, with unique keys.
+       */
+      var populateFilterKeys = function(original) {
+        var filterKeys = {
+          source: {},
+          emitter: {}
+        };
+        original.forEach(function(value) {
+          filterKeys.source[value.source] = true;
+          filterKeys.emitter[value.emitter] = true;
+        });
+        return filterKeys;
+      };
+
+      /**
+       * Walks throught the filter keys setup by populateFilterKeys, and turn the multi-level hash of
+       * truthy values into a multi-level hash of filter functions, to be used when walking over the
+       * api response for activities.
+       *
+       *
+       * @param  {Object} filterKeys multi-level hash of truthy values
+       * @return {Object} multi-level hash of filter functions. Sample output:
+       * {
+       *   emitter: {
+       *     Canvas: function(object){},
+       *     bSpace: function(object){},
+       *     Campus: function(object){}
+       *   },
+       *   source: {
+       *     Canvas: function(object){},
+       *     Warn Me: function(object){},
+       *     Bear Facts: function(object){}
+       *   }
+       * }
+       */
+      var setupFilters = function(filterKeys) {
+        var tmpFilters = {};
+        angular.forEach(filterKeys, function(type_hash, type) {
+          tmpFilters[type] = {};
+          angular.forEach(type_hash, function(truthy, value) {
+            tmpFilters[type][value] = function(obj) {
+              return obj[type] === value;
+            };
+          });
+        });
+        return tmpFilters;
       };
 
       /**
@@ -116,19 +170,29 @@
         return result;
       };
 
-      /** Model Intialization **/
-      var displayArray = threadOnSource(originalArray);
+      var applyFilter = function(filterType, filterKey) {
+        var tmpOriginalArray = originalArray || [];
+        if (filters[filterType] && filters[filterType][filterKey] && angular.isFunction(filters[filterType][filterKey])) {
+          tmpOriginalArray = tmpOriginalArray.filter(filters[filterType][filterKey]);
+        }
+        displayArray = threadOnSource(tmpOriginalArray);
+      };
+
+      // Model Intialization
+      filters = setupFilters(populateFilterKeys(originalArray));
+      displayArray = threadOnSource(originalArray);
 
       return {
+        filters: filters,
         get: get,
-        length: originalArray.length
+        length: originalArray.length,
+        applyFilter: applyFilter
       };
     };
 
     $http.get('/api/my/activities').success(function(data) {
-    // keeping this around for the filter work.
-    // $http.get('/dummy/json/activities.json').success(function(data) {
-      $scope.activities = activitiesModelInit(data);
+      // $http.get('/dummy/json/activities.json').success(function(data) {
+      $scope.activities = activitiesModel(data);
     });
 
   }]);

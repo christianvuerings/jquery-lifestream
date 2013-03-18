@@ -1,5 +1,10 @@
 /* Activities widget */
 .cc-widget-activities {
+
+  .cc-select-hbar {
+    border-bottom: 1px solid #000;
+  }
+
   .cc-widget-activities-activity {
     border-bottom: 1px solid $cc-light-grey;
   }
