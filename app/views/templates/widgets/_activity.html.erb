@@ -1,6 +1,16 @@
 <div class="cc-widget-activities" data-ng-controller="ActivityController">
   <div class="cc-widget-title">
-    <h2>Recent Activity</h2>
+    <div class="row">
+      <div class="columns large-6 small-6"><h2>Recent Activity</h2></div>
+      <div class="columns large-6 small-6 cc-right">
+        <select class="nullable filter-dropdown" data-ng-model="trigger" data-ng-change="activities.applyFilter(trigger.split('::', 2)[0], trigger.split('::', 2)[1])">
+          <option value="" class="cc-select-hbar">All Activity</option>
+          <option data-ng-class="{'cc-select-hbar': $last}" value="emitter::{{filterName}}" data-ng-repeat="(filterName, filterFn) in activities.filters['emitter']">
+            {{filterName}}</option>
+          <option data-ng-class="{'cc-select-hbar': $last}" value="source::{{filterName}}" data-ng-repeat="(filterName, filterFn) in activities.filters['source']" value="">{{filterName}}</option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <ul class="cc-widget-tasks-activities-list">
