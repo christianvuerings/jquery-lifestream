@@ -23,8 +23,8 @@ describe SakaiSiteAnnouncementsProxy do
     announcements.each do |announcement|
       announcement['message_id'].blank?.should be_false
       announcement['message_date'].should_not be_nil
-      announcement['url'].blank?.should be_false
-      announcement['message'].length.should be <= client.message_max_length
+      announcement['source_url'].blank?.should be_false
+      announcement['summary'].length.should be <= client.message_max_length
     end
   end
 
