@@ -18,7 +18,8 @@
 
       /** Dictionary for the type translator. **/
       var typeDict = {
-        alert: ' Alerts Posted'
+        alert: ' Alerts Posted',
+        announcement: ' Announcements Posted'
       };
 
       /**
@@ -36,7 +37,7 @@
        * @return {int} see String.compareTo responses
        */
       var sortFunction = function(a, b) {
-        // Date decending.
+        // Time descending.
         return b.date.epoch - a.date.epoch;
       };
 
@@ -127,13 +128,14 @@
               return ((sub_index !== index) &&
                 (sub_value.source === value.source) &&
                 (sub_value.type === value.type) &&
-                (sub_value.date.epoch === value.date.epoch));
+                (sub_value.date.date_string === value.date.date_string));
             });
             if (multiElementSource.length > 0) {
               multiElementSource.forEach(function(multi_value, multi_index) {
                 arr.splice(arr.indexOf(multi_value), 1);
               });
-              multiElementSource.push(value);
+              // The first matching value needs to stay at the front of the list.
+              multiElementSource.unshift(value);
               multiElementArray.push(multiElementSource);
             }
             return multiElementSource.length === 0;
