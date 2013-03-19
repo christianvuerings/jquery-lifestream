@@ -9,8 +9,7 @@
       <div class="large-9 small-9 columns">
         <input
           data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title"
-          type="text" placeholder="Enter your task title here" required aria-required="true"
-        />
+          type="text" placeholder="Enter your task title here" required aria-required="true" />
       </div>
     </div>
     <div class="row">
@@ -23,8 +22,9 @@
           name="add_task_due_date"
           id="cc-widget-tasks-addtask-date"
           placeholder="mm/dd/yy"
-          data-cc-mmddyyvalidator />
-        <p class="cc-alert cc-alert-text" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccMmddyyvalidator">
+          data-cc-date-validator-directive
+          data-cc-datepicker-directive />
+        <p class="cc-alert cc-alert-text" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccDateValidator">
           Please use mm/dd/yy date format
         </p>
       </div>

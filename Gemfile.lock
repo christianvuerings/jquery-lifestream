@@ -157,7 +157,7 @@ GEM
       spoon (~> 0.0.1)
     listen (0.7.3)
     log4r (1.1.10)
-    lumberjack (1.0.2)
+    lumberjack (1.0.3)
     mail (2.5.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -170,6 +170,8 @@ GEM
       builder
       minitest (>= 2.12, < 5.0)
       powerbar
+    momentjs-rails (2.0.0.1)
+      railties (>= 3.1)
     multi_json (1.7.1)
     multipart-post (1.2.0)
     net-scp (1.1.0)
@@ -335,6 +337,7 @@ DEPENDENCIES
   json (~> 1.7.7)
   log4r (~> 1.1.10)
   minitest-reporters (~> 0.14.7)
+  momentjs-rails (~> 2.0.0.1)
   nokogiri (~> 1.5.6)
   omniauth-cas (~> 1.0.1)
   rack-livereload (~> 0.3.11)
