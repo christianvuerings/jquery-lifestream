@@ -72,6 +72,10 @@ group :assets do
   # Font awesome - an icon font
   # https://github.com/littlebtc/font-awesome-sass-rails
   gem "font-awesome-sass-rails", "~> 3.0.2.2"
+
+  # Moment.js
+  # https://github.com/derekprior/momentjs-rails
+  gem "momentjs-rails", "~> 2.0.0.1"
 end
 
 # Oracle adapter
