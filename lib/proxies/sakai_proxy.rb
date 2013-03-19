@@ -5,6 +5,7 @@ class SakaiProxy < BaseProxy
 
   def initialize(options = {})
     super(Settings.sakai_proxy, options)
+    @uid = @settings.fake_user_id if @fake
   end
 
   def self.access_granted?(uid)
@@ -16,9 +17,6 @@ class SakaiProxy < BaseProxy
   end
 
   def get_sakai_user_id
-    if @fake
-      return '575bc12b-929f-4485-b2a2-50c69d8c06c7'
-    end
     SakaiProxy.fetch_from_cache @uid do
       SakaiData.get_sakai_user_id(@uid)
     end

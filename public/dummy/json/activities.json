@@ -11,7 +11,6 @@
         "date_time": "2013-01-15T19:52:27+00:00",
         "date_string": "Today"
       },
-      "url": "https://warnme.berkeley.edu/",
       "source_url": "https://warnme.berkeley.edu/",
       "emitter": "bSpace",
       "color_class": "bspace-class"
@@ -27,7 +26,6 @@
         "date_time": "2013-01-15T19:52:27+00:00",
         "date_string": "Today"
       },
-      "url": "https://warnme.berkeley.edu/",
       "source_url": "https:// warnme.berkeley.edu/",
       "emitter": "bSpace",
       "color_class": "bspace-class"
@@ -43,10 +41,9 @@
         "date_time": "2013-01-15T19:52:27+00:00",
         "date_string": "Today"
       },
-      "url": "https://warnme.berkeley.edu/",
       "source_url": "https://warnme.berkeley.edu/",
       "emitter": "bSpace",
-      "color_class": "bspace-class"
+      "color_class": "bspace-group"
     },
     {
       "id": 2,
@@ -59,7 +56,6 @@
         "date_time": "2013-01-15T19:52:27+00:00",
         "date_string": "Today"
       },
-      "url": "https://bearfacts.berkeley.edu/",
       "source_url": "https://bearfacts.berkeley.edu/",
       "emitter": "Campus",
       "color_class": "campus-item"
@@ -75,7 +71,6 @@
         "date_time": "2012-12-30T19:52:27+00:00",
         "date_string": "12/30"
       },
-      "url": "http://studentbilling.berkeley.edu",
       "source_url": "http://studentbilling.berkeley.edu",
       "emitter": "Campus",
       "color_class": "canvas-class"
@@ -85,13 +80,12 @@
       "title": "Grade Posted - Midterm Exam",
       "summary": "87 out of 100 for ETH STD 21AC",
       "source": "Canvas",
-      "type": "classes",
+      "type": "grade",
       "date": {
         "epoch": 1348185901,
         "date_time": "2013-12-29T19:52:27+00:00",
         "date_string": "12/29"
       },
-      "url": "https://ucberkeley.instructure.com/courses/833384",
       "source_url": "https://ucberkeley.instructure.com/courses/833384",
       "emitter": "Canvas",
       "color_class": "canvas-class"
@@ -107,8 +101,7 @@
         "date_time": "2013-12-28T19:52:27+00:00",
         "date_string": "12/28"
       },
-      "url": "http://studentbilling.berkeley.edu/",
-      "source_url": false,
+      "source_url": "http://studentbilling.berkeley.edu/",
       "emitter": "Campus",
       "color_class": "campus-item"
     },
@@ -116,17 +109,16 @@
       "id": 6,
       "title": "Appointment Signups Updated - Office Hours",
       "summary": "Student may sign up for office hours once per week",
-      "source": "bSpace",
-      "type": "classes",
+      "source": "CHEM 1A",
+      "type": "announcement",
       "date": {
         "epoch": 1348185901,
         "date_time": "2013-12-26T19:52:27+00:00",
         "date_string": "12/26"
       },
-      "url": "https://ucberkeley.instructure.com/courses/833382",
-      "source_url": false,
+      "source_url": "https://sakai.example.com/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
       "emitter": "bSpace",
-      "color_class": "bspace-group"
+      "color_class": "bspace-class"
 
     },
     {
@@ -140,8 +132,7 @@
         "date_time": "2013-12-18T19:52:27+00:00",
         "date_string": "12/18"
       },
-      "url": "https://telebears.berkeley.edu",
-      "source_url": false,
+      "source_url": "https://telebears.berkeley.edu",
       "emitter": "Campus",
       "color_class": "campus-item"
     },
@@ -156,8 +147,7 @@
         "date_time": "2013-12-02T19:52:27+00:00",
         "date_string": "12/2"
       },
-      "url": "http://example.com",
-      "source_url": false,
+      "source_url": "http://example.com",
       "emitter": "bSpace",
       "color_class": "bspace-group"
     }

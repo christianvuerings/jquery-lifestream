@@ -58,7 +58,8 @@ class SakaiSiteAnnouncementsProxy < SakaiProxy
       %w'message_id message_date owner'.each do |col|
         ann[col] = ann_row[col]
       end
-      ann['url'] = announcement_url(ann['message_id'])
+      ann['message_date'] = DateTime.parse(ann_row['message_date'])
+      ann['source_url'] = announcement_url(ann['message_id'])
       doc = Nokogiri::XML::Document.parse(ann_row['xml']).at_xpath('message')
       # The 'body-html' attribute contains the rich-text version of the announcement body, and this is what
       # is displayed by Sakai. CalCentral restricts itself to the HTML-stripped "body" attribute, which
@@ -66,7 +67,7 @@ class SakaiSiteAnnouncementsProxy < SakaiProxy
       message_text = doc['body'].split('&#xa;').collect {|enc|
         Base64.decode64(enc).force_encoding('UTF-8')
       }.join
-      ann['message'] = message_text.squish.truncate(@message_max_length)
+      ann['summary'] = message_text.squish.truncate(@message_max_length)
       ann['title'] = doc.at_xpath('header')['subject']
       # Relative-url '/content/attachment/XXX/Announcements/YYY/FILE NAME.EXT' becomes link
       # 'https://HOST/access/content/attachment/XXX/Announcements/YYY/FILE%20NAME.EXT'.

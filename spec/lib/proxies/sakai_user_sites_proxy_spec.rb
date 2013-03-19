@@ -14,8 +14,8 @@ describe SakaiUserSitesProxy do
     category_map.each do |category, sites|
       category.empty?.should_not be true
       sites.each do |site|
-        site['id'].blank?.should_not be_true
-        site['url'].blank?.should_not be_true
+        site[:id].blank?.should_not be_true
+        site[:site_url].blank?.should_not be_true
       end
     end
   end
@@ -24,16 +24,17 @@ describe SakaiUserSitesProxy do
     all_sites = SakaiData.get_users_sites(SakaiData.get_sakai_user_id(@uid))
     excluded_term_idx = all_sites.index{|s| s['term'] && !@client.current_terms.include?(s['term'])}
     excluded_term_idx.should_not be_nil
-    excluded_term = all_sites[excluded_term_idx]['term']
-    category_map = @client.get_categorized_sites
-    category_map[excluded_term].should be_nil
+    excluded_site_id = all_sites[excluded_term_idx]['site_id']
+    course_feed = @client.get_categorized_sites[:classes]
+    bad_idx = course_feed.index{|s| s[:id] == excluded_site_id}
+    bad_idx.should be_nil
   end
 
   it "should not see unpublished sites", :if => SakaiData.test_data? do
     category_map = @client.get_categorized_sites
     category_map.each_value do |sites|
       sites.each do |site|
-        site['id'].should_not == @unpublished_site_id
+        site[:id].should_not == @unpublished_site_id
       end
     end
   end
@@ -43,7 +44,7 @@ describe SakaiUserSitesProxy do
     category_map = @client.get_categorized_sites
     category_map.each_value do |sites|
       sites.each do |site|
-        hidden_sites.include?(site['id']).should_not be_true
+        hidden_sites.include?(site[:id]).should_not be_true
       end
     end
   end

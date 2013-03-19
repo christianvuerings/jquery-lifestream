@@ -5,20 +5,9 @@ class MyGroups < MyMergedModel
         :groups => []
     }
     if SakaiUserSitesProxy.access_granted?(@uid)
-      sakai_proxy = SakaiUserSitesProxy.new(user_id: @uid)
-      sakai_categories = sakai_proxy.get_categorized_sites
-      if (sites = sakai_categories['Projects'])
-        sites.each do |site|
-          site_hash = {
-              title: site["title"] || "",
-              id: site["id"],
-              site_url: site["url"],
-              emitter: SakaiProxy::APP_ID,
-              color_class: "bspace-group"
-          }
-          site_hash["short_description"] = site["short_description"] unless site["short_description"].blank?
-          response[:groups].push(site_hash)
-        end
+      sakai_proxy = SakaiUserSitesProxy.new({:user_id => @uid})
+      if (sakai_groups = sakai_proxy.get_categorized_sites[:groups])
+        response[:groups].concat(sakai_groups)
       end
     end
     if CanvasProxy.access_granted?(@uid)

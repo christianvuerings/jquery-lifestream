@@ -5,7 +5,7 @@ describe "MyClasses" do
     @user_id = rand(99999).to_s
     @fake_canvas_proxy = CanvasCoursesProxy.new({fake: true})
     @fake_canvas_courses = JSON.parse(@fake_canvas_proxy.courses.body)
-    @fake_sakai_proxy = SakaiUserSitesProxy.new({:user_id => "1234", :fake => true})
+    @fake_sakai_proxy = SakaiUserSitesProxy.new({fake: true})
   end
 
   it "should contain all my Canvas courses" do
