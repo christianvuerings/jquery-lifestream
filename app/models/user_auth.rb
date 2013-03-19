@@ -1,4 +1,7 @@
 class UserAuth < ActiveRecord::Base
+  include ActiveRecordHelper
+
+  after_initialize :log_access
   attr_accessible :uid, :is_superuser, :is_test_user, :active
 
   def self.is_superuser?(uid)
