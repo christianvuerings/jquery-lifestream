@@ -18,6 +18,8 @@ Rails.application.config.after_initialize do
       ":::SEVEN_MONTHS_AGO:::" => today.advance(:months => -7).rfc3339,
       ":::FIVE_MONTHS_AGO:::" => today.advance(:months => -5).rfc3339,
       ":::TWENTY_SEVEN_DAYS_AGO:::" => today.advance(:days => -27).rfc3339,
+      ":::YESTERDAY:::" => today.advance(:days => -1).rfc3339,
+      ":::DAY_BEFORE_YESTERDAY:::" => today.advance(:days => -2).rfc3339,
       ":::TWO_DAYS_AGO_MIDNIGHT_PST:::" => today.advance(:days => -1, :minutes => -1).rfc3339,
       ":::TODAY_MIDNIGHT_PST:::" => today.rfc3339,
       ":::TOMORROW_MIDNIGHT_PST:::" => today.advance(:days => 1).rfc3339,

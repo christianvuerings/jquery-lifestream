@@ -8,7 +8,7 @@ class MyActivities < MyMergedModel
   end
 
   def self.cutoff_date
-    @cutoff_date ||= Time.zone.today.to_time_in_current_zone.to_datetime.advance(:days => -30).to_i
+    @cutoff_date ||= Time.zone.today.to_time_in_current_zone.to_datetime.advance(:days => -10).to_i
   end
 
   def get_feed_internal
