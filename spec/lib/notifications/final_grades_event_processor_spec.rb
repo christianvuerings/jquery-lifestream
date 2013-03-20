@@ -53,12 +53,15 @@ describe FinalGradesEventProcessor do
   it "should gracefully skip over a user that can't be found" do
     event = JSON.parse('{"id":"29592_5","system":"Bearfacts","code":"EndOFTermGrade","payload":{"ccn":73974,"term":"fall","year":2012}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status, "300846").and_return(
-        {
-            "ldap_uid" => "300846",
-            "reg_status_cd" => "C",
-            "on_probation_flag" => "N"
-        })
+    CampusData.stub(:get_enrolled_students, "73974").and_return(
+        [
+            {"ldap_uid" => "123456"},
+            {"ldap_uid" => "323487"},
+            {"ldap_uid" => "675750"},
+            {"ldap_uid" => "730057"},
+            {"ldap_uid" => "904715"},
+            {"ldap_uid" => "300846"},
+            {"ldap_uid" => "978966"}])
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
     UserData.stub(:where, "300846").and_return(NonexistentUserData.new)
