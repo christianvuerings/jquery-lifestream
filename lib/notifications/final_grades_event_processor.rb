@@ -18,15 +18,18 @@ class FinalGradesEventProcessor < AbstractEventProcessor
 
     notifications = []
     students.each do |student|
-      notifications.push Notification.new(
-                             {
-                                 :uid => student["ldap_uid"],
-                                 :data => {
-                                     :event => event,
-                                     :timestamp => timestamp
-                                 },
-                                 :translator => "FinalGradesTranslator"
-                             })
+      unless is_dupe?(student["ldap_uid"], event, timestamp, "FinalGradesTranslator")
+        notifications.push Notification.new({
+                                   :uid => student["ldap_uid"],
+                                   :data => {
+                                       :event => event,
+                                       :timestamp => timestamp
+                                   },
+                                   :translator => "FinalGradesTranslator",
+                                   :occurred_at => timestamp
+                               })
+
+      end
     end
     notifications
   end

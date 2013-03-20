@@ -39,6 +39,7 @@ describe FinalGradesEventProcessor do
     saved_notification.should_not be_nil
     saved_notification.data.should_not be_nil
     saved_notification.translator.should == "FinalGradesTranslator"
+    saved_notification.occurred_at.to_i.should == timestamp.to_i
     Rails.logger.info "Saved notification's json is #{saved_notification.data}"
 
     Notification.where(:uid => "323487").first.data.should_not be_nil
@@ -63,6 +64,52 @@ describe FinalGradesEventProcessor do
     Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
     UserData.stub(:where, "300846").and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true
+  end
+
+  it "should not save a duplicate event on the same day" do
+    event = JSON.parse('{"id":"29592_5","system":"Bearfacts","code":"EndOFTermGrade","payload":{"ccn":73974,"term":"fall","year":2012}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_enrolled_students, "73974").and_return(
+        [
+            {"ldap_uid" => "123456"}])
+    CampusData.stub(:get_course, "73974").and_return(
+        {"course_title" => "Research and Data Analysis in Psychology",
+         "dept_name" => "PSYCH",
+         "catalog_id" => "101"})
+
+    UserData.stub(:where, "123456").and_return(MockUserData.new)
+    @processor.process(event, timestamp).should == true
+
+    saved_notification = Notification.where(:uid => "123456").first
+    saved_notification.should_not be_nil
+
+    @processor.process(event, timestamp).should == false
+  end
+
+  it "should save multiple events on different days" do
+    event = JSON.parse('{"id":"29592_5","system":"Bearfacts","code":"EndOFTermGrade","payload":{"ccn":73974,"term":"fall","year":2012}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_enrolled_students, "73974").and_return(
+        [
+            {"ldap_uid" => "123456"}])
+    CampusData.stub(:get_course, "73974").and_return(
+        {"course_title" => "Research and Data Analysis in Psychology",
+         "dept_name" => "PSYCH",
+         "catalog_id" => "101"})
+
+    UserData.stub(:where, "123456").and_return(MockUserData.new)
+    @processor.process(event, timestamp).should == true
+
+    saved_notification = Notification.where(:uid => "123456").first
+    saved_notification.should_not be_nil
+
+    second_event = JSON.parse('{"id":"29592_5","system":"Bearfacts","code":"EndOFTermGrade","payload":{"ccn":73974,"term":"fall","year":2012}}')
+    tomorrow = timestamp.advance(:days => 1)
+    @processor.process(second_event, tomorrow).should == true
+
+    saved_notifications = Notification.where(:uid => "123456")
+    saved_notifications.length.should == 2
+
   end
 
   class MockUserData

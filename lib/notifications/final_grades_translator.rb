@@ -9,11 +9,7 @@ class FinalGradesTranslator
     data = notification.data
     uid = notification.uid
     event = data["event"]
-    begin
-      timestamp = Time.parse(data["timestamp"]).to_datetime
-    rescue
-      timestamp = notification.created_at
-    end
+    timestamp = notification.occurred_at.to_datetime
 
     Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}"
 
