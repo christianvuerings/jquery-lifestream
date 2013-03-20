@@ -88,6 +88,7 @@
   height: 22px;
   width: 22px;
   &:hover {
+    background-color: transparent;
     background-image: asset-data-url('icon_status_level_person_hover_22x22.png');
   }
 }
