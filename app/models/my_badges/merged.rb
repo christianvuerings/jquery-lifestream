@@ -1,10 +1,13 @@
 class MyBadges::Merged < MyMergedModel
 
   def initialize(uid, options={})
+
     super(uid, options)
     @now_time = Time.zone.now
     @enabled_sources = {
-      "bcal" => {access_granted: false},
+      "bcal" => {access_granted: GoogleProxy.access_granted?(@uid),
+                   source: MyBadges::GoogleCalendar.new(@uid),
+                   pseudo_enabled: GoogleProxy.allow_pseudo_user?},
       "bdrive" => {access_granted: GoogleProxy.access_granted?(@uid),
                    source: MyBadges::GoogleDrive.new(@uid),
                    pseudo_enabled: GoogleProxy.allow_pseudo_user?},

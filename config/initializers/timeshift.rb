@@ -25,6 +25,7 @@ Rails.application.config.after_initialize do
       ":::TOMORROW_MIDNIGHT_PST:::" => today.advance(:days => 1).rfc3339,
       ":::TODAY_AT_TEA_TIME:::" => today.advance(:hours => 15, :minutes => 47, :seconds => 13).rfc3339,
       ":::SIX_DAYS_HENCE:::" => today.advance(:days => 6).rfc3339,
+      ":::ONE_MONTH_HENCE:::" => today.advance(:months => 1).rfc3339,
       ":::FIVE_MONTHS_HENCE:::" => today.advance(:months => 5).rfc3339,
       ":::SEVEN_MONTHS_HENCE:::" => today.advance(:months => 7).rfc3339,
       ":::TODAY_EARLY:::" => today.advance(:hours => 0, :minutes => 05, :seconds => 00).rfc3339,

@@ -32,6 +32,24 @@ describe GoogleProxy do
     response_array[0].data["items"].size.should == 5
   end
 
+  it "should return a fake calendar list response that matches a minimal cal feed for counting in fake mode" do
+    today = Time.zone.today.to_time_in_current_zone.to_datetime
+    one_month = today.advance(:months => 1).rfc3339
+    tomorrow = today.advance(:days => 1).rfc3339
+    proxy = GoogleEventsListProxy.new(:fake => true)
+    response_array = proxy.calendar_needs_action_list(
+        {
+            :maxResults => 999,
+            :timeMin => today,
+            :timeMax => one_month,
+            :calendarId => 'primary',
+            :fields => 'items(attendees(email,responseStatus),created,description,end,id,kind,location,start,summary),summary'
+
+        })
+    response_array.size.should == 1
+    response_array[0].data["items"].size.should == 9
+  end
+
   it "should simulate a fake, valid task list response (assuming a valid recorded fixture)" do
     #Pre-recorded response has 13 entries, split into batches of 10.
     proxy = GoogleTasksListProxy.new(:fake => true)
@@ -52,6 +70,15 @@ describe GoogleProxy do
     response_array = proxy.events_list()
     response_array[0].data["kind"].should == "calendar#events"
     proxy.authorization.access_token.should_not == old_token
+  end
+
+  it "should perform a request with custom params against Google calendar feed", :testext => true do
+    # by the time the fake access token is used below, it probably has well expired
+    Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID,
+                             Settings.google_proxy.test_user_access_token, Settings.google_proxy.test_user_refresh_token, 0)
+    proxy = GoogleEventsListProxy.new(:user_id => @random_id)
+    response = proxy.calendar_needs_action_list
+    response[0].data["kind"].should == "calendar#events"
   end
 
   it "should simulate revoking a token after a 401 response", :testext => true do
