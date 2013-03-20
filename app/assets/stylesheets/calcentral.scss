@@ -121,23 +121,23 @@ button {
 }
 
 @mixin cc-button-common {
+  border-radius: 6px;
   font-size: 13px;
+  font-weight: 500;
   padding: 3px 15px;
 }
 .cc-button-submit-enabled {
   @include cc-button-common;
   background: $cc-action-button-color;
   border: 2px solid transparent;
-  border-radius: 6px;
   color: #fff;
   cursor: pointer;
 }
 .cc-button-submit-disabled {
   @include cc-button-common;
   @include background(linear-gradient(#fff, #e5e5e5));
-  border: 2px solid #d2d2d2;
-  border-radius: 6px;
-  color: #d2d2d2;
+  border: 2px solid #d2d2d2 !important;
+  color: #d2d2d2 !important;
   cursor: default !important;
   text-decoration: none !important;
 }
@@ -145,7 +145,6 @@ button {
   @include cc-button-common;
   @include background(linear-gradient(#fff, #e5e5e5));
   border: 2px solid #d2d2d2;
-  border-radius: 6px;
   color: $cc-medium-grey;
 }
 
