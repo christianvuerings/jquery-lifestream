@@ -1,4 +1,5 @@
 class CampusData < OracleDatabase
+  include ActiveRecordHelper
 
   def self.reg_status_translator
     @reg_status_translator ||= RegStatusTranslator.new
@@ -25,6 +26,7 @@ class CampusData < OracleDatabase
   end
 
   def self.get_person_attributes(person_id)
+    log_access(connection, connection_handler, name)
     sql = <<-SQL
 		select pi.ldap_uid, pi.ug_grad_flag, pi.first_name, pi.last_name,
       pi.person_name, pi.email_address, pi.affiliations,
@@ -101,6 +103,7 @@ class CampusData < OracleDatabase
   end
 
   def self.check_alive
+    log_access(connection, connection_handler, name)
     connection.select_one("select 1 from DUAL")
   end
 

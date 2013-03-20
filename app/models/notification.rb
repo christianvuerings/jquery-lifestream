@@ -1,4 +1,7 @@
 class Notification < ActiveRecord::Base
+  include ActiveRecordHelper
+
+  after_initialize :log_access
   attr_accessible :uid, :data, :translator
 
   def data
