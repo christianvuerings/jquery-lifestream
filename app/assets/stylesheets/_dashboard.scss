@@ -91,7 +91,9 @@
         float: left;
       }
       .cc-widget-add-icon-text {
+        color: $body-font-color;
         display: inline-block;
+        font-weight: normal;
         height: auto;
         position: relative;
         width: auto;
