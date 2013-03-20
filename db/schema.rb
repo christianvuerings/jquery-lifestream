@@ -11,16 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013022221382900) do
+ActiveRecord::Schema.define(:version => 2013032010103300) do
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
     t.text     "data"
     t.text     "translator"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.datetime "occurred_at"
   end
 
+  add_index "notifications", ["occurred_at"], :name => "index_notifications_on_occurred_at"
   add_index "notifications", ["uid"], :name => "index_notifications_on_uid"
 
   create_table "oauth2_data", :force => true do |t|
