@@ -1,6 +1,6 @@
 class Oauth2Data < ActiveRecord::Base
   include ActiveRecordHelper
-  after_initialize :log_access
+  after_initialize :log_access, :log_threads
 
   attr_accessible :uid, :app_id, :access_token, :expiration_time, :refresh_token, :app_data
   serialize :access_token
