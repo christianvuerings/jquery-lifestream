@@ -14,7 +14,7 @@
   </div>
 
   <ul class="cc-widget-tasks-activities-list">
-    <li data-ng-repeat="activity in activities.get()" data-ng-class="{'cc-widget-list-selected': activity.show}">
+    <li data-ng-repeat="activity in activities" data-ng-class="{'cc-widget-list-selected': activity.show}">
       <div class="row">
         <div class="row cc-widget-activities-activity column large-centered small-centered large-11 small-11">
           <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">

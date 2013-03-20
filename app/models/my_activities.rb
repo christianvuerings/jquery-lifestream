@@ -91,11 +91,11 @@ class MyActivities < MyMergedModel
       if include_in_feed?(blocked_date, cleared_date)
         if cleared_date
           title = "Registration block cleared"
-          notification_type = "Message"
+          notification_type = "message"
           notification_date = cleared_date
         else
           title = "Registration block created"
-          notification_type = "Alert"
+          notification_type = "alert"
           notification_date = blocked_date
         end
         type = block.css("blockType").text
@@ -106,13 +106,14 @@ class MyActivities < MyMergedModel
         Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{type}, blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
 
         notification = {
-            id: "TODO",
+            id: "",
             title: title,
             summary: summary,
             type: notification_type,
             date: format_date(notification_date),
             source: "Bearfacts",
             source_url: "https://bearfacts.berkeley.edu/bearfacts/",
+            url: "https://bearfacts.berkeley.edu/bearfacts/",
             emitter: "Campus",
             color_class: "campus-item"
         }
