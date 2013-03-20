@@ -58,6 +58,9 @@ group :assets do
   # Our very own library for angular dependency!
   gem "angular-gem", "~> 1.1.3"
 
+  # Datepicker
+  gem "pikaday-gem", "~> 1.0.0.2"
+
   # CSS Framework - also includes Compass and SASS
   # https://github.com/zurb/foundation
   gem "sass-rails", "~> 3.2.6"
