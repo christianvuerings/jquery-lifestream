@@ -4,14 +4,19 @@
 class CanvasUserActivityHandler
 
   def initialize(options)
-    @worker = CanvasUserActivityWorker.new(options)
-    @processor = CanvasUserActivityProcessor.new(options)
+    # More caution regarding Celluloid actors, only spawn when access is granted.
+    @access_granted = CanvasProxy.access_granted?(options[:user_id])
+    if (@access_granted)
+      @worker = CanvasUserActivityWorker.new(options)
+      @processor = CanvasUserActivityProcessor.new(options)
+    end
     @processor_future = nil
   end
 
   # Will kick off the worker and processor to get feed data but return the processor
   # response as a future object to not block the thread calling this.
   def get_feed
+    return unless @access_granted
     begin
       activity_feed_future = @worker.future.fetch_user_activity
       @processor_future = @processor.future.process(activity_feed_future)
@@ -21,9 +26,12 @@ class CanvasUserActivityHandler
   end
 
   def get_feed_results
+    return nil unless @access_granted
     get_feed if @processor_future == nil
     begin
-      @processor_future.value
+      response = @processor_future.value
+      actor_cleanup
+      response
     rescue Exception => e
       Rails.logger.info "#{self.class.name} with exception: #{e.message}"
       nil
@@ -31,6 +39,12 @@ class CanvasUserActivityHandler
   end
 
   def finalize
+    actor_cleanup
+  end
+
+  private
+
+  def actor_cleanup
     # One of the things that will eventually be handled by the supervisor
     [@worker, @processor].each do |some_actor|
       begin
