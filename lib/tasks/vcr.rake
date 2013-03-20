@@ -17,8 +17,8 @@ namespace :vcr do
     Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |file|
       json_string = File.read(file)
       json = JSON.parse(json_string)
-      pretty_json =  JSON.pretty_generate(json)
-      File.open(file, 'w') { |f| f.write(pretty_json)}
+      pretty_json = JSON.pretty_generate(json)
+      File.open(file, 'w') { |f| f.write(pretty_json) }
     end
   end
 
@@ -42,7 +42,11 @@ namespace :vcr do
         json["http_interactions"].each do |interaction|
           original_string = interaction["response"]["body"]["string"]
           if original_string.length >= 2
-            interaction["response"]["body"]["debug_json"] = JSON.parse(original_string)
+            begin
+              interaction["response"]["body"]["debug_json"] = JSON.parse(original_string)
+            rescue JSON::ParserError
+              interaction["response"]["body"]["debug_xml"] = Nokogiri::XML(original_string).to_xml(:indent=>2)
+            end
           end
         end
 

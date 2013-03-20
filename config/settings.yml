@@ -76,6 +76,11 @@ cal_link_proxy:
   public_key: secret set in production
   private_key: secret set in production
 
+bearfacts_proxy:
+  fake: false
+  token: secret set in production
+  base_url: "https://bearfacts-dev.berkeley.edu/bearfacts-apis"
+
 blog_latest_release_notes_feed_proxy:
   fake: false
   feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
@@ -92,6 +97,7 @@ cache:
   race_condition_ttl: <%= 10.seconds %>
   expiration:
     default: <%= 5.minutes %>
+    BearfactsRegblocksProxy: <%= 24.hours %>
     BlogFeed: <%= 1.hour %>
     CalLinkMembershipsProxy: <%= 24.hours %>
     CalLinkOrganizationProxy: <%= 48.hours %>
