@@ -113,7 +113,6 @@ cache:
     GoogleEventsProxy: <%= 1.hour %>
     GoogleTasksListProxy: <%= 1.hour %>
     GoogleTasksProxy: <%= 1.hour %>
-    MyNotificationsController: <%= 8.hours %>
     SakaiProxy: <%= 24.hours %>
     SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
     SakaiUserSitesProxy: <%= 4.hours %>
@@ -139,5 +138,4 @@ developer_auth:
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
-  notifications: false
   act_as: false

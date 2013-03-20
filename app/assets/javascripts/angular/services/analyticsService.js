@@ -28,7 +28,7 @@
 
     /**
      * Track when there is an external link being clicked
-     * @param {String} section The section you're currently in (e.g. Up Next / My Classes / Notifications)
+     * @param {String} section The section you're currently in (e.g. Up Next / My Classes / Activity)
      * @param {String} website The website you're trying to access (Google Maps)
      * @param {String} url The URL you're accessing
      */
