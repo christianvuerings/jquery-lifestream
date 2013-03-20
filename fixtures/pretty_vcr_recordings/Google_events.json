@@ -1561,8 +1561,229 @@
         "http_version": null
       },
       "recorded_at": "Fri, 30 Nov 2012 09:27:29 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&fields=items(attendees(email,responseStatus),created,description,end,id,kind,location,start,summary),summary&maxResults=999&timeMax=:::ONE_MONTH_HENCE:::&timeMin=:::TODAY:::",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "CalCentral/v1 google-api-ruby-client/0.6.2 Mac OS X/10.8.2"
+          ],
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "Accept": [
+            "*/*"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Expires": [
+            "Mon, 18 Mar 2013 21:49:47 GMT"
+          ],
+          "Date": [
+            "Mon, 18 Mar 2013 21:49:47 GMT"
+          ],
+          "Cache-Control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "Etag": [
+            "\"vnNL_X_6XYVF-jSag8p74cFkQA8/UoWS0jlRp6WpfSjWdBs1qdYjADs\""
+          ],
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Xss-Protection": [
+            "1; mode=block"
+          ],
+          "Server": [
+            "GSE"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "{\n \"summary\": \"oski.bear.clc@gmail.com\",\n \"items\": [\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"4e0kv3qghd5fradb9kmaa3m64c\",\n   \"created\": \"2013-02-06T23:01:45.000Z\",\n   \"summary\": \"CHEM 1A LEC\",\n   \"location\": \"Wheeler Auditorium\",\n   \"start\": {\n    \"dateTime\": \"2013-02-04T10:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-02-04T11:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"3k1kkkia7l6f3tf157olf130b0\",\n   \"created\": \"2013-02-06T23:02:25.000Z\",\n   \"summary\": \"GWS R1B\",\n   \"location\": \"Dwinelle 4\",\n   \"start\": {\n    \"dateTime\": \"2013-02-04T13:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-02-04T14:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"64e13cu6osgas3icdm8gmhb1uk\",\n   \"created\": \"2013-02-19T18:29:42.000Z\",\n   \"summary\": \"BIO 1A LAB\",\n   \"start\": {\n    \"dateTime\": \"2013-02-19T12:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-02-19T13:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"49irk0bfjkov7a38tgr31dltbc\",\n   \"created\": \"2013-02-19T18:29:31.000Z\",\n   \"summary\": \"BIO 1A LEC\",\n   \"start\": {\n    \"dateTime\": \"2013-02-19T08:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-02-19T09:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"ehmd9bfer01tq8e5p0ufdojt2k\",\n   \"created\": \"2013-02-19T18:33:50.000Z\",\n   \"summary\": \"Band Practice\",\n   \"location\": \"Cesar Chavez\",\n   \"start\": {\n    \"dateTime\": \"2013-02-28T17:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-02-28T20:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"na8dthr9f9mpv0e274fut7r6ro\",\n   \"created\": \"2013-02-19T18:35:26.000Z\",\n   \"summary\": \"ENG 130 LEC\",\n   \"location\": \"Wheeler 231\",\n   \"start\": {\n    \"dateTime\": \"2013-02-28T14:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-02-28T15:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"jen0ggtbu964ibpe7t08u61nf4\",\n   \"created\": \"2013-02-19T18:30:30.000Z\",\n   \"summary\": \"Study group - Spanish\",\n   \"location\": \"Unit 1 APR\",\n   \"start\": {\n    \"dateTime\": \"2013-02-19T15:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-02-19T17:00:00-08:00\",\n    \"timeZone\": \"America/Los_Angeles\"\n   }\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"e3ncrbid3c4bqjoa8tm9ibkhu4\",\n   \"created\": \"2013-03-18T21:45:15.000Z\",\n   \"summary\": \"Team meeting\",\n   \"start\": {\n    \"dateTime\": \"2013-03-18T18:00:00-07:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-03-18T19:00:00-07:00\"\n   },\n   \"attendees\": [\n    {\n     \"email\": \"oski.bear.clc@gmail.com\",\n     \"responseStatus\": \"needsAction\"\n    },\n    {\n     \"email\": \"shacker@berkeley.edu\",\n     \"responseStatus\": \"accepted\"\n    }\n   ]\n  },\n  {\n   \"kind\": \"calendar#event\",\n   \"id\": \"l2fq6qlpmk3faal3b38714mbbc\",\n   \"created\": \"2013-03-18T21:45:41.000Z\",\n   \"summary\": \"Finish lab report\",\n   \"start\": {\n    \"dateTime\": \"2013-03-18T20:00:00-07:00\"\n   },\n   \"end\": {\n    \"dateTime\": \"2013-03-18T21:00:00-07:00\"\n   },\n   \"attendees\": [\n    {\n     \"email\": \"oski.bear.clc@gmail.com\",\n     \"responseStatus\": \"needsAction\"\n    },\n    {\n     \"email\": \"shacker@berkeley.edu\",\n     \"responseStatus\": \"accepted\"\n    }\n   ]\n  }\n ]\n}\n",
+          "debug_json": {
+            "summary": "oski.bear.clc@gmail.com",
+            "items": [
+              {
+                "kind": "calendar#event",
+                "id": "4e0kv3qghd5fradb9kmaa3m64c",
+                "created": "2013-02-06T23:01:45.000Z",
+                "summary": "CHEM 1A LEC",
+                "location": "Wheeler Auditorium",
+                "start": {
+                  "dateTime": "2013-02-04T10:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                  "dateTime": "2013-02-04T11:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                }
+              },
+              {
+                "kind": "calendar#event",
+                "id": "3k1kkkia7l6f3tf157olf130b0",
+                "created": "2013-02-06T23:02:25.000Z",
+                "summary": "GWS R1B",
+                "location": "Dwinelle 4",
+                "start": {
+                  "dateTime": "2013-02-04T13:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                  "dateTime": "2013-02-04T14:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                }
+              },
+              {
+                "kind": "calendar#event",
+                "id": "64e13cu6osgas3icdm8gmhb1uk",
+                "created": "2013-02-19T18:29:42.000Z",
+                "summary": "BIO 1A LAB",
+                "start": {
+                  "dateTime": "2013-02-19T12:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                  "dateTime": "2013-02-19T13:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                }
+              },
+              {
+                "kind": "calendar#event",
+                "id": "49irk0bfjkov7a38tgr31dltbc",
+                "created": "2013-02-19T18:29:31.000Z",
+                "summary": "BIO 1A LEC",
+                "start": {
+                  "dateTime": "2013-02-19T08:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                  "dateTime": "2013-02-19T09:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                }
+              },
+              {
+                "kind": "calendar#event",
+                "id": "ehmd9bfer01tq8e5p0ufdojt2k",
+                "created": "2013-02-19T18:33:50.000Z",
+                "summary": "Band Practice",
+                "location": "Cesar Chavez",
+                "start": {
+                  "dateTime": "2013-02-28T17:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                  "dateTime": "2013-02-28T20:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                }
+              },
+              {
+                "kind": "calendar#event",
+                "id": "na8dthr9f9mpv0e274fut7r6ro",
+                "created": "2013-02-19T18:35:26.000Z",
+                "summary": "ENG 130 LEC",
+                "location": "Wheeler 231",
+                "start": {
+                  "dateTime": "2013-02-28T14:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                  "dateTime": "2013-02-28T15:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                }
+              },
+              {
+                "kind": "calendar#event",
+                "id": "jen0ggtbu964ibpe7t08u61nf4",
+                "created": "2013-02-19T18:30:30.000Z",
+                "summary": "Study group - Spanish",
+                "location": "Unit 1 APR",
+                "start": {
+                  "dateTime": "2013-02-19T15:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                },
+                "end": {
+                  "dateTime": "2013-02-19T17:00:00-08:00",
+                  "timeZone": "America/Los_Angeles"
+                }
+              },
+              {
+                "kind": "calendar#event",
+                "id": "e3ncrbid3c4bqjoa8tm9ibkhu4",
+                "created": "2013-03-18T21:45:15.000Z",
+                "summary": "Team meeting",
+                "start": {
+                  "dateTime": ":::TOMORROW:::"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                },
+                "attendees": [
+                  {
+                    "email": "oski.bear.clc@gmail.com",
+                    "responseStatus": "needsAction"
+                  },
+                  {
+                    "email": "shacker@berkeley.edu",
+                    "responseStatus": "accepted"
+                  }
+                ]
+              },
+              {
+                "kind": "calendar#event",
+                "id": "l2fq6qlpmk3faal3b38714mbbc",
+                "created": "2013-03-18T21:45:41.000Z",
+                "summary": "Finish lab report",
+                "start": {
+                  "dateTime": ":::TOMORROW:::"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                },
+                "attendees": [
+                  {
+                    "email": "oski.bear.clc@gmail.com",
+                    "responseStatus": "needsAction"
+                  },
+                  {
+                    "email": "shacker@berkeley.edu",
+                    "responseStatus": "accepted"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Mon, 18 Mar 2013 21:49:48 GMT"
     }
-
   ],
   "recorded_with": "VCR 2.3.0"
 }
