@@ -68,7 +68,7 @@
         },
         "body": {
           "encoding": "US-ASCII",
-          "string": "{\"status\":\"not_found\",\"error_report_id\":33962530,\"message\":\"The specified resource does not exist.\"}",
+          "string": "",
           "debug_json": {
             "status": "not_found",
             "error_report_id": 33962530,
@@ -155,7 +155,7 @@
         },
         "body": {
           "encoding": "US-ASCII",
-          "string": "{\"id\":3323890,\"name\":\"Stu Testb\",\"short_name\":\"Stu Testb\",\"sortable_name\":\"Testb, Stu\",\"sis_user_id\":\"300846\",\"sis_login_id\":\"300846\",\"login_id\":\"300846\",\"avatar_url\":\"https://secure.gravatar.com/avatar/595e055e30397015914b97402393a291?s=50\\u0026d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png\",\"title\":null,\"bio\":null,\"primary_email\":\"test-300846@berkeley.edu\"}",
+          "string": "",
           "debug_json": {
             "id": 3323890,
             "name": "Stu Testb",
