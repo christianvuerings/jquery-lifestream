@@ -26,16 +26,23 @@ class RegStatusEventProcessor < AbstractEventProcessor
       return []
     end
 
-    [Notification.new({
-                          :uid => uid,
-                          :data => {
-                              :event => event,
-                              :timestamp => timestamp,
-                              :reg_status => reg_status
-                          },
-                          :translator => "RegStatusTranslator",
-                          :occurred_at => timestamp
-                      })]
+    entry = nil
+    use_pooled_connection {
+      entry = Notification.new(
+        {
+          :uid => uid,
+          :data => {
+            :event => event,
+            :timestamp => timestamp,
+            :reg_status => reg_status
+          },
+          :translator => "RegStatusTranslator",
+          :occurred_at => timestamp
+        })
+    }
+
+    response = [entry] if entry
+    response ||= []
   end
 
 end

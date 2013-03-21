@@ -17,19 +17,24 @@ class UserCacheWarmer
     # this will warm up the cache for those pages.
 
     def warm(uid)
-      Rails.logger.info "#{self.class.name} Warming the user cache for #{uid}"
-      [
-          UserApi.new(uid),
-          MyClasses.new(uid),
-          MyGroups.new(uid),
-          MyTasks::Merged.new(uid),
-          MyBadges::Merged.new(uid),
-          MyUpNext.new(uid),
-          MyActivities.new(uid)
-      ].each do |model|
-        model.get_feed
+      begin
+        Rails.logger.info "#{self.class.name} Warming the user cache for #{uid}"
+        [
+            UserApi.new(uid),
+            MyClasses.new(uid),
+            MyGroups.new(uid),
+            MyTasks::Merged.new(uid),
+            MyBadges::Merged.new(uid),
+            MyUpNext.new(uid),
+            MyActivities.new(uid)
+        ].each do |model|
+          model.get_feed
+        end
+        Rails.logger.info "#{self.class.name} Finished warming the user cache for #{uid}"
+      ensure
+        Rails.logger.debug "Clearing connections for thread and other dead threads after cache warming: #{self.object_id}"
+        ActiveRecord::Base.clear_active_connections!
       end
-      Rails.logger.info "#{self.class.name} Finished warming the user cache for #{uid}"
     end
   end
 

@@ -1,7 +1,7 @@
 require 'json'
 
 class MyActivities < MyMergedModel
-  include DatedFeed
+  include DatedFeed, ActiveRecordHelper
 
   def self.translators
     @translators ||= {}
@@ -33,7 +33,10 @@ class MyActivities < MyMergedModel
 
   def append_notifications(activities)
     result = []
-    Notification.where(:uid => @uid).each do |notification|
+    use_pooled_connection {
+      result = Notification.where(:uid => @uid) || []
+    }
+    result.each do |notification|
       translator = (MyActivities.translators[notification.translator] ||= notification.translator.constantize.new)
       activities << translator.translate(notification)
     end

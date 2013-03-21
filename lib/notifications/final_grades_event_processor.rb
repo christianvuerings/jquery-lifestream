@@ -1,4 +1,5 @@
 class FinalGradesEventProcessor < AbstractEventProcessor
+  include ActiveRecordHelper
 
   def accept?(event)
     return false unless super event
@@ -19,16 +20,20 @@ class FinalGradesEventProcessor < AbstractEventProcessor
     notifications = []
     students.each do |student|
       unless is_dupe?(student["ldap_uid"], event, timestamp, "FinalGradesTranslator")
-        notifications.push Notification.new({
-                                   :uid => student["ldap_uid"],
-                                   :data => {
-                                       :event => event,
-                                       :timestamp => timestamp
-                                   },
-                                   :translator => "FinalGradesTranslator",
-                                   :occurred_at => timestamp
-                               })
-
+        entry = nil
+        use_pooled_connection {
+          entry = Notification.new(
+            {
+              :uid => student["ldap_uid"],
+              :data => {
+                :event => event,
+                :timestamp => timestamp
+              },
+              :translator => "FinalGradesTranslator",
+              :occurred_at => timestamp
+            })
+        }
+        notifications.push entry unless entry.blank?
       end
     end
     notifications
