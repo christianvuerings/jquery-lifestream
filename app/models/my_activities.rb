@@ -90,18 +90,26 @@ class MyActivities < MyMergedModel
 
       if include_in_feed?(blocked_date, cleared_date)
         if cleared_date
-          title = "Registration block cleared"
           notification_type = "message"
           notification_date = cleared_date
         else
-          title = "Registration block created"
           notification_type = "alert"
           notification_date = blocked_date
         end
-        type = block.css("blockType").text
-        reason = block.css("reason").text
-        office = block.css("office").text
-        summary = "Type = #{type}; Reason = #{reason}; Office = #{office}"
+        type = block.css("blockType").text.strip
+        status = block.css("status").text.strip
+        reason = block.css("reason")
+        office = block.css("office")
+
+        title = "#{type} Block #{status}"
+        summary = "The #{type} Block on your account"
+        unless office.empty?
+          summary += " from #{office.text.strip}"
+        end
+        unless reason.empty?
+          summary += " due to a #{reason.text.strip}"
+        end
+        summary += " is #{status}."
 
         Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{type}, blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
 
