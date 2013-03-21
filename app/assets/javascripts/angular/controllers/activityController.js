@@ -18,8 +18,13 @@
 
       // Dictionary for the type translator.
       var typeDict = {
-        alert: ' Alerts Posted',
-        announcement: ' Announcements Posted'
+        alert: ' Status Alerts',
+        assignment: ' Assignments',
+        announcement: ' Announcements',
+        discussion: ' Discussions',
+        grade_posting: ' Grades Posted',
+        message: ' Status Changes',
+        webconference: ' Webconferences'
       };
 
       var typeToIcon = {
@@ -28,7 +33,8 @@
         assignment: 'book',
         discussion: 'comments',
         grade_posting: 'trophy',
-        message: 'ok-sign'
+        message: 'ok-sign',
+        webconference: 'facetime-video'
       };
 
       /**
