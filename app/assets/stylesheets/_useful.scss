@@ -8,6 +8,9 @@
 .cc-alert {
   color: $cc-alert-color !important;
 }
+.cc-break-word {
+  word-wrap: break-word;
+}
 .cc-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;

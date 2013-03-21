@@ -52,6 +52,49 @@
       margin-bottom: 10px;
     }
   }
+  .cc-widget-tasks-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      &:first-child {
+        margin-top: 12px;
+      }
+      .row {
+        padding-bottom: 10px;
+        padding-top: 5px;
+      }
+    }
+
+    .cc-widget-list-selected {
+      margin-bottom: 1px; /* Effectively creates white line above selected tasks */
+
+      .row {
+        background: $cc-widget-more-background-color;
+        padding-bottom: 2px;
+      }
+    }
+
+    .cc-widget-tasks-activities-more {
+      p {
+        clear: left;
+        line-height: 1.2;
+        padding-right: 20px;
+        padding-top: 10px;
+        margin-bottom: 10px;
+      }
+
+    }
+    .cc-widget-more-view-in {
+      background-color: #e8eff3;
+      border: none;
+      color: #16191b;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 5px 10px;
+    }
+  }
 
   /* Mobile only */
   @media only screen and (max-width: 767px) {

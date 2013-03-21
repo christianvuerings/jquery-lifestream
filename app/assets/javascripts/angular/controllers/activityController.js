@@ -16,10 +16,19 @@
         originalArray = plain_objects.activities;
       }
 
-      /** Dictionary for the type translator. **/
+      // Dictionary for the type translator.
       var typeDict = {
         alert: ' Alerts Posted',
         announcement: ' Announcements Posted'
+      };
+
+      var typeToIcon = {
+        alert: 'exclamation-sign',
+        announcement: 'bullhorn',
+        assignment: 'book',
+        discussion: 'comments',
+        grade_posting: 'trophy',
+        message: 'ok-sign'
       };
 
       /**
@@ -50,7 +59,7 @@
         if (typeDict[type]) {
           return typeDict[type];
         } else {
-          return ' ' + type + ' posted.';
+          return ' ' + type + 's posted.';
         }
       };
 
@@ -158,7 +167,7 @@
               'title': value.length + translator(value[0].type),
               'source': value[0].source,
               'emitter': value[0].emitter,
-              'color_class': value[0].color_class,
+              'type': value[0].type,
               'date': angular.copy(value[0].date),
               'elements': value
             };
@@ -188,7 +197,8 @@
         filters: filters,
         get: get,
         length: originalArray.length,
-        applyFilter: applyFilter
+        applyFilter: applyFilter,
+        typeToIcon: typeToIcon
       };
     };
 

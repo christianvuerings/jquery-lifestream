@@ -50,7 +50,7 @@ class CanvasUserActivityProcessor
 
       formatted_entry = {}
       formatted_entry[:id] = "canvas_#{entry["id"]}"
-      formatted_entry[:type] = entry["type"]
+      formatted_entry[:type] = entry["type"].downcase
       formatted_entry[:user_id] = @uid
       formatted_entry[:title] = title
       formatted_entry[:source] = process_source entry
