@@ -30,6 +30,7 @@ describe RegStatusEventProcessor do
     saved_notification.should_not be_nil
     saved_notification.data.should_not be_nil
     saved_notification.translator.should == "RegStatusTranslator"
+    saved_notification.occurred_at.to_i.should == timestamp.to_i
     Rails.logger.info "Saved notification's json is #{saved_notification.data}"
     translator_instance = saved_notification.translator.constantize.new
     translator_instance.should_not be_nil
@@ -78,6 +79,45 @@ describe RegStatusEventProcessor do
     UserData.stub(:where, "300846").and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true
   end
+
+  it "should not record multiple events on the same day" do
+    event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status, "300846").and_return(
+        {
+            "ldap_uid" => "300846",
+            "reg_status_cd" => "C"
+        })
+    UserData.stub(:where, "300846").and_return(MockUserData.new)
+    @processor.process(event, timestamp).should == true
+    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification.should_not be_nil
+
+    second_event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
+    @processor.process(second_event, timestamp).should == false
+  end
+
+  it "should record multiple events on different days" do
+    event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status, "300846").and_return(
+        {
+            "ldap_uid" => "300846",
+            "reg_status_cd" => "C"
+        })
+    UserData.stub(:where, "300846").and_return(MockUserData.new)
+    @processor.process(event, timestamp).should == true
+    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification.should_not be_nil
+
+    second_event = JSON.parse('{"id":"42341_1","system":"Bearfacts Testing System","code":"RegStatus","payload":{"uid":300846}}')
+    tomorrow = Time.now.to_datetime.advance(:days=>1)
+    @processor.process(second_event, tomorrow).should == true
+    saved_notifications = Notification.where(:uid => "300846")
+    saved_notifications.length.should == 2
+
+  end
+
 
   class MockUserData
     def exists?

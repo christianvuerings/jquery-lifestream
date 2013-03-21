@@ -22,6 +22,10 @@ class RegStatusEventProcessor < AbstractEventProcessor
       return []
     end
 
+    if is_dupe?(uid, event, timestamp, "RegStatusTranslator")
+      return []
+    end
+
     [Notification.new({
                           :uid => uid,
                           :data => {
@@ -29,7 +33,9 @@ class RegStatusEventProcessor < AbstractEventProcessor
                               :timestamp => timestamp,
                               :reg_status => reg_status
                           },
-                          :translator => "RegStatusTranslator"})]
+                          :translator => "RegStatusTranslator",
+                          :occurred_at => timestamp
+                      })]
   end
 
 end

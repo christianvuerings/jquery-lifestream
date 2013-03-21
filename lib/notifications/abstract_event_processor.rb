@@ -30,4 +30,18 @@ class AbstractEventProcessor
 
   end
 
+  def is_dupe?(uid, event, timestamp, type)
+    # check that we're not inserting a duplicate Notification on the same day
+    start_date = timestamp.midnight
+    end_date = start_date.advance(:days => 1)
+
+    dupe = Notification.where(:uid => uid.to_s, :translator => type, :occurred_at => start_date...end_date)
+    if dupe.empty?
+      false
+    else
+      Rails.logger.info "#{self.class.name} We got a duplicate notification, skipping. Event: #{event}"
+      true
+    end
+  end
+
 end
