@@ -1,8 +1,58 @@
 /* Activities widget */
 .cc-widget-activities {
 
-  .cc-select-hbar {
-    border-bottom: 1px solid #000;
+  .cc-widget-activities-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    .cc-widget-list-selected {
+      margin-bottom: 1px; /* Effectively creates white line above selected tasks */
+
+      .row {
+        background: $cc-widget-more-background-color;
+        padding-bottom: 2px;
+      }
+    }
+
+    .cc-widget-tasks-activities-more {
+      p {
+        clear: left;
+        line-height: 1.2;
+        padding-top: 10px;
+        margin-bottom: 10px;
+      }
+
+    }
+    .cc-widget-more-view-in {
+      text-align: right;
+      a {
+        background-color: #e8e8e8;
+        border: 1px solid #c3c3c3;
+        color: $body-font-color;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 5px 10px;
+        text-align: right;
+      }
+    }
+  }
+
+  .cc-widget-activities-list-hover {
+    overflow: hidden;
+    padding: 10px 0;
+    &:hover {
+      background: #e6ebef;
+      cursor: pointer;
+      margin: 0 -15px;
+      padding: 10px 15px;
+      i {
+        color: #0a3361;
+      }
+      .cc-widget-list-hover-title {
+        text-decoration: underline;
+      }
+    }
   }
 
   .cc-widget-activities-activity {
@@ -10,58 +60,75 @@
   }
 
   .cc-widget-activities-sub-activity {
-    border-top: 1px solid $cc-medium-grey;
-    padding-left: 0;
-    padding-top: 6px;
+    border-top: 1px solid $cc-light-grey;
+    margin-left: 15px;
+    padding: 6px 0;
   }
 
-  .cc-widget-activities-sub-text-margin {
-    margin-left: 12px;
+  .cc-widget-activities-sub-activity-open {
+    &:before {
+      border-top: 4px solid $body-font-color;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      content: "";
+      height: 0;
+      position: absolute;
+      left: -15px;
+      top: 50%;
+      width: 0;
+    }
   }
-
-  .cc-widget-activities-sub-activity-list {
-    @extend .cc-widget-tasks-activities-list;
-
-    li {
-      i.icon-caret-right, i.icon-caret-down {
-        float:left;
-        padding-top: 10px;
-      }
-      .cc-widget-activities-sub-activity-date-string {
-        @extend .cc-widget-tasks-activities-date;
-        font-size: 10px;
-      }
-      .cc-widget-activities-sub-activity-summary {
-        margin-left:3px;
-        padding-top: 0px;
-        margin-bottom: 0px;
-      }
-
-      &:first-child {
-        margin-top: 0;
-      }
-      .row {
-        margin-bottom: 3px;
-        margin-top: 3px;
-      }
+  .cc-widget-activities-sub-activity-closed {
+    &:before {
+      border-left: 4px solid $body-font-color;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      content: "";
+      height: 0;
+      position: absolute;
+      left: -12px;
+      top: 45%;
+      width: 0;
     }
   }
 
-  .cc-widget-activity-source {
-    color: #515151;
-    font-size: 11px;
+  .cc-widget-activities-sub-text-margin {
+    margin-left: 10px;
+  }
+
+  .cc-widget-activities-sub-activity-list {
+
+    li {
+      list-style-type: none;
+      .cc-widget-activities-sub-activity-date-string {
+        color: #999;
+        float: right;
+        font-size: 10px;
+        text-align: right;
+        text-transform: none;
+      }
+      .cc-widget-activities-sub-activity-summary {
+        clear: both;
+      }
+    }
   }
   .cc-widget-activities-summary {
     padding-left: 30px;
     width: 270px;
   }
-  .row {
-    .cc-widget-activities-text-column {
-      line-height: 1.4;
+  .cc-widget-activities-text-column {
+    line-height: 1.4;
+    i {
+      font-size: 20px;
+      margin-top: 6px;
+      color: #afc5d2;
     }
-  }
-  .cc-widget-tasks-activities-more {
-    padding-left: 15px;
+    .icon-exclamation-sign {
+      color: #ac120e !important;
+    }
+    .icon-ok-sign {
+      color: #007748 !important;
+    }
   }
   .cc-widget-activities-text-margin {
     margin-left: 30px;

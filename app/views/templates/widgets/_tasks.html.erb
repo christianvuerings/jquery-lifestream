@@ -52,7 +52,7 @@
               <span class="cc-right cc-widget-section-label cc-widget-section-label-due">Due</span>
             </div>
           </div>
-          <ul class="cc-widget-tasks-activities-list">
+          <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterOverdue)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -64,7 +64,7 @@
           </p>
 
           <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Today</h3>
-          <ul class="cc-widget-tasks-activities-list">
+          <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueToday)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -76,7 +76,7 @@
           </p>
 
           <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due This Week</h3>
-          <ul class="cc-widget-tasks-activities-list">
+          <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueThisWeek)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -88,7 +88,7 @@
           </p>
 
           <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Next Week</h3>
-          <ul class="cc-widget-tasks-activities-list">
+          <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueNextWeek)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -106,7 +106,7 @@
               <span class="cc-left cc-widget-section-label cc-widget-section-label-due">Unscheduled</span>
             </div>
           </div>
-          <ul class="cc-widget-tasks-activities-list">
+          <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in filtered = (tasks | orderBy:'updated' | filter:filterUnScheduled)"
               data-ng-class="{'cc-widget-list-selected': task.show}">
@@ -123,7 +123,7 @@
             <div class="large-12 columns cc-widget-section-label-due cc-widget-section-label-completed"><span class="cc-right">Completed</span></div>
           </div>
 
-          <ul class="cc-widget-tasks-activities-list">
+          <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in filtered = (tasks | orderBy:'completed_date.epoch':true | filter:{status:'completed'})"
               data-ng-class="{'cc-widget-list-selected': task.show}">
