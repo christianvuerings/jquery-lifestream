@@ -267,8 +267,8 @@
                   "restricted": false,
                   "viewed": false
                 },
-                "createdDate": ":::SEVEN_MONTHS_AGO:::",
-                "modifiedDate": ":::SEVEN_MONTHS_AGO:::",
+                "createdDate": ":::DAY_BEFORE_YESTERDAY:::",
+                "modifiedDate": ":::DAY_BEFORE_YESTERDAY:::",
                 "modifiedByMeDate": "2013-01-16T23:17:06.367Z",
                 "lastViewedByMeDate": "2013-01-16T23:17:06.367Z",
                 "sharedWithMeDate": "2013-01-16T22:24:46.304Z",

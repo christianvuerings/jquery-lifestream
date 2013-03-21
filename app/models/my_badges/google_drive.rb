@@ -4,7 +4,7 @@ class MyBadges::GoogleDrive
   def initialize(uid)
     @uid = uid
     @now_time = Time.zone.now
-    @six_months_ago = @now_time.advance(:months => -6).to_i
+    @one_month_ago = @now_time.advance(:months => -1).to_i
   end
 
   def fetch_counts
@@ -42,7 +42,7 @@ class MyBadges::GoogleDrive
     return false unless entry["createdDate"] && entry["modifiedDate"]
     date_fields = [entry["createdDate"].to_s, entry["modifiedDate"].to_s]
     date_fields.map! {|x| Time.zone.parse(x).to_i }
-    @six_months_ago <= date_fields.max
+    @one_month_ago <= date_fields.max
   end
 
 end
