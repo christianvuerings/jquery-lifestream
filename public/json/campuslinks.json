@@ -2505,7 +2505,7 @@
       ],
       "name": "Undergrad Loans",
       "description": "",
-      "url": "http://students.berkeley.edu/finaid/undergraduates/types_loans.htm (from bearfacts)",
+      "url": "http://students.berkeley.edu/finaid/undergraduates/",
       "roles": {
         "staff": false,
         "student": true,
