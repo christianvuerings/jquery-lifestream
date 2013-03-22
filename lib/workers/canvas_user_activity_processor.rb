@@ -50,7 +50,7 @@ class CanvasUserActivityProcessor
 
       formatted_entry = {}
       formatted_entry[:id] = "canvas_#{entry["id"]}"
-      formatted_entry[:type] = entry["type"].downcase
+      formatted_entry[:type] = process_type entry["type"]
       formatted_entry[:user_id] = @uid
       formatted_entry[:title] = title
       formatted_entry[:source] = process_source entry
@@ -64,6 +64,32 @@ class CanvasUserActivityProcessor
       feed << formatted_entry
     end
     feed
+  end
+
+  def process_type(type)
+    type.downcase!
+
+    # The translator hash
+    type_translator = {
+      announcement: "announcement",
+      collaboration: "discussion",
+      collectionitem: "assignment",
+      message: "assignment",
+      discussiontopic: "discussion",
+      submission: "grade_posting",
+      webconference: "webconference"
+    }
+    # Find the type we need to return in the hash
+    return_type = type_translator[type.to_sym]
+
+    # Return type will be nil if it wasn't found
+    # we should set a default and log a warning message
+    if return_type.nil?
+      return_type = 'assignment'
+      Rails.logger.warn "#{self.class.name} processor tried to process the type: '#{type}' with the #{__method__} method but didn't find anyting."
+    end
+
+    return_type
   end
 
   def process_title(entry)
