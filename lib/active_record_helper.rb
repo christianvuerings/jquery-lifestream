@@ -1,4 +1,19 @@
 module ActiveRecordHelper
+
+  # The justification for doing atomic wrapping around each database call with use_pooled_connection
+  # is due to our preference of holding on to connections for the shortest time possible. Due to the way
+  # our app is structured, following the standard rails scheme of wrapping the with_connection at a much higher
+  # level would cause certain connections to be held for much longer than we would like (while waiting for proxy
+  # call responses, doing transform on data), while having nothing to do with the database. By doing wrapping at
+  # a more atomic level, we can help avoid the overconsumption of connections and sitting idle when some other
+  # request can't obtain db connections.
+  #
+  # One idea to pursue is to have a method that helps act as a proxy call to built in ActiveRecord database calls
+  # that will automatically wrap it up with the "with_connection" proc. That should help reduce some of the
+  # noise floating around in all the different levels of the app with the with_pooled_connection blocks. Another
+  # idea is to possibly follow the example of the activerecord-wrap-with-connection gem, and have it "autowrap"
+  # at a much higher level.
+
   def self.included(klass)
     klass.extend ClassMethods
   end
@@ -12,6 +27,10 @@ module ActiveRecordHelper
     ActiveRecordHelper.shared_log_threads
   end
 
+  def use_pooled_connection(&block)
+    ActiveRecordHelper.shared_use_pooled_connection(&block)
+  end
+
   module ClassMethods
     # No clue where this class method could be called from, so making the params more explicit.
     def log_access(conn, conn_handler, name)
@@ -20,6 +39,10 @@ module ActiveRecordHelper
 
     def log_threads
       ActiveRecordHelper.shared_log_threads
+    end
+
+    def use_pooled_connection(&block)
+      ActiveRecordHelper.shared_use_pooled_connection(&block)
     end
   end
 
@@ -56,4 +79,13 @@ module ActiveRecordHelper
     end
   end
 
+  def self.shared_use_pooled_connection(&block)
+    amended_block = Proc.new {
+      if Rails.logger.debug?
+          Rails.logger.debug "#{self.name} using connection_pool.with_connection:"
+      end
+      yield block if block_given?
+    }
+    ActiveRecord::Base.connection_pool.with_connection(&amended_block)
+  end
 end

@@ -1,8 +1,11 @@
 class UserApi < MyMergedModel
+  include ActiveRecordHelper
 
   def initialize(uid)
     super(uid)
-    @calcentral_user_data = UserData.where(:uid => @uid).first
+    use_pooled_connection{
+      @calcentral_user_data = UserData.where(:uid => @uid).first
+    }
     @campus_attributes = CampusData.get_person_attributes(@uid) || {}
     @default_name = @campus_attributes['person_name']
     @first_login_at = @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
@@ -26,26 +29,36 @@ class UserApi < MyMergedModel
 
   def self.delete(uid)
     logger.debug "#{self.class.name} removing user #{uid} from UserData"
-    user = UserData.where(:uid => uid).first
+    user = nil
+    use_pooled_connection {
+      user = UserData.where(:uid => uid).first
+      if !user.blank?
+        user.delete
+      end
+    }
     if !user.blank?
-      user.delete
       # The nice way to do this is to also revoke their tokens by sending revoke request to the remote services
-      Oauth2Data.destroy_all(:uid => uid)
-      Notification.destroy_all(:uid => uid)
+      use_pooled_connection {
+        Oauth2Data.destroy_all(:uid => uid)
+        Notification.destroy_all(:uid => uid)
+      }
     end
+
     Calcentral::USER_CACHE_EXPIRATION.notify uid
   end
 
   def save
-    if !@calcentral_user_data
-      @calcentral_user_data = UserData.create(uid: @uid, preferred_name: @override_name)
-    else
-      stored_override = @calcentral_user_data.preferred_name
-      if stored_override != @override_name
-        @calcentral_user_data.update_attributes(preferred_name: @override_name)
+    use_pooled_connection {
+      if !@calcentral_user_data
+        @calcentral_user_data = UserData.create(uid: @uid, preferred_name: @override_name)
+      else
+        stored_override = @calcentral_user_data.preferred_name
+        if stored_override != @override_name
+          @calcentral_user_data.update_attributes(preferred_name: @override_name)
+        end
       end
-    end
-    @calcentral_user_data.update_attribute(:first_login_at, @first_login_at)
+      @calcentral_user_data.update_attribute(:first_login_at, @first_login_at)
+    }
     Calcentral::USER_CACHE_EXPIRATION.notify @uid
   end
 
@@ -70,24 +83,24 @@ class UserApi < MyMergedModel
     end
 
     {
-        :first_login_at => @first_login_at,
-        :first_name => @first_name,
-        :full_name => @first_name + ' ' + @last_name,
-        :has_canvas_access_token => CanvasProxy.access_granted?(@uid),
-        :has_canvas_account => CanvasProxy.has_account?(@uid),
-        :has_google_access_token => GoogleProxy.access_granted?(@uid),
-        :google_email => google_mail,
-        :last_name => @last_name,
-        :preferred_name => self.preferred_name,
-        :roles => @campus_attributes[:roles],
-        :student_info => {
-            :california_residency => @campus_attributes[:california_residency],
-            :education_level => @campus_attributes[:education_level],
-            :reg_status => @campus_attributes[:reg_status],
-            :reg_block => @campus_attributes[:reg_block],
-            :units_enrolled => @campus_attributes[:units_enrolled]
-        },
-        :uid => @uid
+      :first_login_at => @first_login_at,
+      :first_name => @first_name,
+      :full_name => @first_name + ' ' + @last_name,
+      :has_canvas_access_token => CanvasProxy.access_granted?(@uid),
+      :has_canvas_account => CanvasProxy.has_account?(@uid),
+      :has_google_access_token => GoogleProxy.access_granted?(@uid),
+      :google_email => google_mail,
+      :last_name => @last_name,
+      :preferred_name => self.preferred_name,
+      :roles => @campus_attributes[:roles],
+      :student_info => {
+          :california_residency => @campus_attributes[:california_residency],
+          :education_level => @campus_attributes[:education_level],
+          :reg_status => @campus_attributes[:reg_status],
+          :reg_block => @campus_attributes[:reg_block],
+          :units_enrolled => @campus_attributes[:units_enrolled]
+      },
+      :uid => @uid
     }
   end
 

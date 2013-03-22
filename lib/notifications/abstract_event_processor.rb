@@ -1,4 +1,5 @@
 class AbstractEventProcessor
+  include ActiveRecordHelper
 
   def accept?(event)
     event["payload"] != nil
@@ -18,14 +19,17 @@ class AbstractEventProcessor
       return false
     end
 
-    notifications.each do |notification|
-      if UserData.where(:uid => "#{notification.uid}").exists?
-        notification.save
-        Calcentral::USER_CACHE_EXPIRATION.notify notification.uid
-      else
-        Rails.logger.debug "#{self.class.name} Skipping user #{notification.uid} that does not exist in our user table"
+    # Using one connection for all the notification saves.
+    use_pooled_connection {
+      notifications.each do |notification|
+        if UserData.where(:uid => "#{notification.uid}").exists?
+          notification.save
+          Calcentral::USER_CACHE_EXPIRATION.notify notification.uid
+        else
+          Rails.logger.debug "#{self.class.name} Skipping user #{notification.uid} that does not exist in our user table"
+        end
       end
-    end
+    }
     true
 
   end
@@ -34,8 +38,10 @@ class AbstractEventProcessor
     # check that we're not inserting a duplicate Notification on the same day
     start_date = timestamp.midnight
     end_date = start_date.advance(:days => 1)
-
-    dupe = Notification.where(:uid => uid.to_s, :translator => type, :occurred_at => start_date...end_date)
+    dupe = []
+    use_pooled_connection {
+      dupe = Notification.where(:uid => uid.to_s, :translator => type, :occurred_at => start_date...end_date)
+    }
     if dupe.empty?
       false
     else

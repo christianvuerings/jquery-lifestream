@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  include ActiveRecordHelper
 
   def lookup
     auth = request.env["omniauth.auth"]
@@ -40,8 +41,13 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    Calcentral::USER_CACHE_EXPIRATION.notify session[:user_id]
-    reset_session
+    begin
+      Calcentral::USER_CACHE_EXPIRATION.notify session[:user_id]
+      reset_session
+    ensure
+      Rails.logger.debug "Clearing connections for thread and other dead threads due to user logout: #{self.object_id}"
+      ActiveRecord::Base.clear_active_connections!
+    end
     redirect_to "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
   end
 
@@ -81,7 +87,11 @@ class SessionsController < ApplicationController
 
     # Make sure someone has logged in already before assuming their identify
     # Also useful to enforce in the testing scenario due to the redirect to the settings page.
-    if UserData.where(:uid => act_as_uid).first.blank?
+    never_logged_in_before = true
+    use_pooled_connection {
+      never_logged_in_before = UserData.where(:uid => act_as_uid).first.blank?
+    }
+    if never_logged_in_before
       Rails.logger.warn "ACT-AS: User #{user_uid} FAILS to login to #{act_as_uid}, #{act_as_uid} hasn't logged in before."
       return false
     end

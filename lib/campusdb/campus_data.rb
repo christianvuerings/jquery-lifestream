@@ -26,21 +26,24 @@ class CampusData < OracleDatabase
   end
 
   def self.get_person_attributes(person_id)
-    log_access(connection, connection_handler, name)
-    sql = <<-SQL
-		select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, pi.first_name, pi.last_name,
-      pi.person_name, pi.email_address, pi.affiliations,
-      reg.reg_status_cd, reg.educ_level, reg.admin_cancel_flag, reg.acad_blk_flag, reg.admin_blk_flag,
-      reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.cal_residency_flag
-		from bspace_person_info_vw pi
-    left outer join bspace_student_term_vw reg on
-      ( reg.ldap_uid = pi.ldap_uid
-        and reg.term_yr = #{connection.quote(current_year)}
-        and reg.term_cd = #{connection.quote(current_term)}
-      )
-		where pi.ldap_uid = #{connection.quote(person_id)}
-    SQL
-    result = connection.select_one(sql)
+    result = {}
+    use_pooled_connection {
+      log_access(connection, connection_handler, name)
+      sql = <<-SQL
+      select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, pi.first_name, pi.last_name,
+        pi.person_name, pi.email_address, pi.affiliations,
+        reg.reg_status_cd, reg.educ_level, reg.admin_cancel_flag, reg.acad_blk_flag, reg.admin_blk_flag,
+        reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.cal_residency_flag
+      from bspace_person_info_vw pi
+      left outer join bspace_student_term_vw reg on
+        ( reg.ldap_uid = pi.ldap_uid
+          and reg.term_yr = #{connection.quote(current_year)}
+          and reg.term_cd = #{connection.quote(current_term)}
+        )
+      where pi.ldap_uid = #{connection.quote(person_id)}
+      SQL
+      result = connection.select_one(sql)
+    }
     if result
       result[:reg_status] = {
           :code => result["reg_status_cd"],
@@ -62,17 +65,20 @@ class CampusData < OracleDatabase
   end
 
   def self.get_reg_status(person_id)
-    sql = <<-SQL
-		select pi.ldap_uid, pi.student_id, reg.reg_status_cd
-		from bspace_person_info_vw pi
-    left outer join bspace_student_term_vw reg on
-      ( reg.ldap_uid = pi.ldap_uid
-        and reg.term_yr = #{connection.quote(current_year)}
-        and reg.term_cd = #{connection.quote(current_term)}
-      )
-		where pi.ldap_uid = #{connection.quote(person_id)}
-    SQL
-    result = connection.select_one(sql)
+    result = nil
+      use_pooled_connection {
+      sql = <<-SQL
+      select pi.ldap_uid, pi.student_id, reg.reg_status_cd
+      from bspace_person_info_vw pi
+      left outer join bspace_student_term_vw reg on
+        ( reg.ldap_uid = pi.ldap_uid
+          and reg.term_yr = #{connection.quote(current_year)}
+          and reg.term_cd = #{connection.quote(current_term)}
+        )
+      where pi.ldap_uid = #{connection.quote(person_id)}
+      SQL
+      result = connection.select_one(sql)
+    }
     if result == nil || result["reg_status_cd"] == nil
       nil
     else
@@ -81,30 +87,40 @@ class CampusData < OracleDatabase
   end
 
   def self.get_enrolled_students(ccn, term_yr, term_cd)
-    sql = <<-SQL
-    select roster.student_ldap_uid ldap_uid
-		from bspace_class_roster_vw roster
-		where roster.term_yr = #{connection.quote(term_yr)}
-      and roster.term_cd = #{connection.quote(term_cd)}
-      and roster.course_cntl_num = #{connection.quote(ccn)}
-    SQL
-    connection.select_all(sql)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select roster.student_ldap_uid ldap_uid
+      from bspace_class_roster_vw roster
+      where roster.term_yr = #{connection.quote(term_yr)}
+        and roster.term_cd = #{connection.quote(term_cd)}
+        and roster.course_cntl_num = #{connection.quote(ccn)}
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
   end
 
   def self.get_course(ccn, term_yr, term_cd)
-    sql = <<-SQL
-    select course_title, dept_name, catalog_id
-		from bspace_course_info_vw
-		where term_yr = #{connection.quote(term_yr)}
-      and term_cd = #{connection.quote(term_cd)}
-      and course_cntl_num = #{connection.quote(ccn)}
-    SQL
-    connection.select_one(sql)
+    result = {}
+    use_pooled_connection {
+      sql = <<-SQL
+      select course_title, dept_name, catalog_id
+      from bspace_course_info_vw
+      where term_yr = #{connection.quote(term_yr)}
+        and term_cd = #{connection.quote(term_cd)}
+        and course_cntl_num = #{connection.quote(ccn)}
+      SQL
+      result = connection.select_one(sql)
+    }
+    result
   end
 
   def self.check_alive
     log_access(connection, connection_handler, name)
-    connection.select_one("select 1 from DUAL")
+    use_pooled_connection {
+      connection.select_one("select 1 from DUAL")
+    }
   end
 
 end

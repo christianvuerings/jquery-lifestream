@@ -13,16 +13,22 @@ class Oauth2Data < ActiveRecord::Base
   @@encryption_key = Settings.oauth2.key
 
   def self.get(user_id, app_id)
-    oauth2_data = self.where(uid: user_id, app_id: app_id).first
     hash = {}
-    if oauth2_data
-      oauth2_data.attributes.each { |key, value| hash[key] = value }
-    end
+    use_pooled_connection {
+      oauth2_data = self.where(uid: user_id, app_id: app_id).first
+
+      if oauth2_data
+        oauth2_data.attributes.each { |key, value| hash[key] = value }
+      end
+    }
     hash
   end
 
   def self.get_google_email(user_id)
-    oauth2_data = self.where(uid: user_id, app_id: GoogleProxy::APP_ID).first
+    oauth2_data = false
+    use_pooled_connection {
+      oauth2_data = self.where(uid: user_id, app_id: GoogleProxy::APP_ID).first
+    }
     if oauth2_data && oauth2_data.app_data && oauth2_data.app_data["email"]
       oauth2_data.app_data["email"]
     else
@@ -32,27 +38,31 @@ class Oauth2Data < ActiveRecord::Base
 
   def self.update_google_email!(user_id)
     #will be a noop if user hasn't granted google access
-    authenticated_entry = self.where(uid: user_id, app_id: GoogleProxy::APP_ID).first
-    return unless authenticated_entry
-    userinfo = GoogleUserinfoProxy.new(user_id: user_id).user_info
-    return unless userinfo.response.status == 200
-    authenticated_entry.app_data["email"] = userinfo.data["email"]
-    authenticated_entry.save
+    use_pooled_connection {
+      authenticated_entry = self.where(uid: user_id, app_id: GoogleProxy::APP_ID).first
+      return unless authenticated_entry
+      userinfo = GoogleUserinfoProxy.new(user_id: user_id).user_info
+      return unless userinfo.response.status == 200
+      authenticated_entry.app_data["email"] = userinfo.data["email"]
+      authenticated_entry.save
+    }
   end
 
   def self.new_or_update(user_id, app_id, access_token, refresh_token=nil, expiration_time=nil, options={})
-    entry = self.where(:uid => user_id, :app_id => app_id).first_or_initialize
-    entry.access_token = access_token
-    entry.refresh_token = refresh_token
-    entry.expiration_time = expiration_time
-    if !options.blank?
-      if !options[:app_data].blank? && options[:app_data].is_a?(Hash)
-        entry.app_data = options[:app_data]
-      else
-        Rails.logger.warn "#{self.class.name}: Oauth2Data:app_data not saved (either blank? or not a hash): #{options[:app_data]}"
+    use_pooled_connection {
+      entry = self.where(:uid => user_id, :app_id => app_id).first_or_initialize
+      entry.access_token = access_token
+      entry.refresh_token = refresh_token
+      entry.expiration_time = expiration_time
+      if !options.blank?
+        if !options[:app_data].blank? && options[:app_data].is_a?(Hash)
+          entry.app_data = options[:app_data]
+        else
+          Rails.logger.warn "#{self.class.name}: Oauth2Data:app_data not saved (either blank? or not a hash): #{options[:app_data]}"
+        end
       end
-    end
-    entry.save
+      entry.save
+    }
   end
 
   def encrypt_tokens
