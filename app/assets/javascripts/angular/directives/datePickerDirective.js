@@ -8,7 +8,7 @@
       link: function(scope, elm, attrs, ctrl) {
         new Pikaday({
           field: elm[0],
-          format: 'MM/DD/YY',
+          format: 'MM/DD/YYYY',
           onSelect: function() {
             // We need to set both the view value and do a click
             // to make sure the validation happens correctly every time

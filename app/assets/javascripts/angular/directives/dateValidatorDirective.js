@@ -1,4 +1,4 @@
-(function(angular, moment) {
+(function(angular) {
   'use strict';
 
   angular.module('calcentral.directives').directive('ccDateValidatorDirective', function() {
@@ -7,7 +7,10 @@
       restrict: 'A',
       link: function(scope, elm, attrs, ctrl) {
         ctrl.$parsers.unshift(function(viewValue) {
-          if (viewValue === '' || moment(viewValue, 'MM/DD/YY').isValid()) {
+          // Date regex for mm/dd/yyyy modified from http://www.regular-expressions.info/dates.html
+          // Allows spaces, slashes, dots and spaces as delimiters
+          var mmddyy_regex = /^(0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])[\/](19|20)\d\d$/;
+          if (mmddyy_regex.test(viewValue) || viewValue === '') {
             // Regex is valid
             ctrl.$setValidity('ccDateValidator', true);
             return viewValue;
@@ -21,4 +24,4 @@
     };
   });
 
-})(window.angular, window.moment);
+})(window.angular);
