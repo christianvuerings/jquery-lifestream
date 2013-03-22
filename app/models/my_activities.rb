@@ -79,6 +79,10 @@ class MyActivities < MyMergedModel
   def append_regblocks(activities)
     proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
     blocks_feed = proxy.get_blocks
+
+    #Bearfacts proxy will return nil on >= 400 errors.
+    return activities if blocks_feed.nil?
+
     doc = Nokogiri::XML blocks_feed[:body]
     doc.css("studentRegistrationBlock").each do |block|
       blocked_date = cleared_date = nil
