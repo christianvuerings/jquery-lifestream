@@ -24,8 +24,8 @@
         var d = new Date($scope.task.due_date.epoch * 1000);
         var mm = ('0' + (d.getMonth() + 1)).slice(-2);
         var dd = ('0' + d.getDate()).slice(-2);
-        var yy = String(d.getFullYear()).slice(-2);
-        $scope.add_edit_task.due_date = mm + '/' + dd + '/' + yy;
+        var yyyy = d.getFullYear();
+        $scope.add_edit_task.due_date = mm + '/' + dd + '/' + yyyy;
       }
     };
 
@@ -54,8 +54,8 @@
       // Not all tasks have dates.
       if ($scope.add_edit_task.due_date) {
         changedTask.due_date = {};
-        var newdatearr = $scope.add_edit_task.due_date.split(/[\/\.\- ]/);
-        changedTask.due_date.date_time = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+        var newdatearr = $scope.add_edit_task.due_date.split(/[\/]/);
+        changedTask.due_date.date_time = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
       // If no date or date has been removed, also delete due_date sub-object

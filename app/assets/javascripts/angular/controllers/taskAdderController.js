@@ -32,8 +32,8 @@
 
       // Not all tasks have dates.
       if ($scope.add_edit_task.due_date) {
-        var newdatearr = $scope.add_edit_task.due_date.split(/[\/\.\- ]/);
-        newtask.due_date = 20 + newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+        var newdatearr = $scope.add_edit_task.due_date.split(/[\/]/);
+        newtask.due_date = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
       // Angular already blocks form submission if title is empty, but also check here for testing
