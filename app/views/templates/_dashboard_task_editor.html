@@ -4,23 +4,23 @@
     data-ng-show="show_add_task || editorEnabled" novalidate >
     <div class="row">
       <div class="large-3 small-3 columns">
-        <label for="cc-widget-tasks-addtask-title"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
+        <label for="cc-widget-tasks-addtask-title-{{$index}}"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
       </div>
       <div class="large-9 small-9 columns">
         <input
-          data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title"
+          data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title-{{$index}}"
           type="text" placeholder="Enter your task title here" required aria-required="true" />
       </div>
     </div>
     <div class="row">
       <div class="large-3 small-3 columns">
-        <label for="cc-widget-tasks-addtask-date">Due:</label>
+        <label for="cc-widget-tasks-addtask-date-{{$index}}">Due:</label>
       </div>
       <div class="large-9 small-9 columns cc-widget-tasks-date-input">
         <input type="text"
           data-ng-model="add_edit_task.due_date"
           name="add_task_due_date"
-          id="cc-widget-tasks-addtask-date"
+          id="cc-widget-tasks-addtask-date-{{$index}}"
           placeholder="mm/dd/yy"
           data-cc-date-validator-directive
           data-cc-datepicker-directive />
@@ -31,10 +31,10 @@
     </div>
     <div class="row">
       <div class="large-3 small-3 columns">
-        <label for="cc-widget-tasks-addtask-note">Notes:</label>
+        <label for="cc-widget-tasks-addtask-note-{{$index}}">Notes:</label>
       </div>
       <div class="large-9 small-9 columns">
-        <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note" rows="2" /></textarea>
+        <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$index}}" rows="2" /></textarea>
       </div>
     </div>
     <div class="row" data-ng-show="!editorEnabled && task_adder_is_processing">
