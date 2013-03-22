@@ -61,7 +61,7 @@
         },
         "body": {
           "encoding": "US-ASCII",
-          "string": "{\n \"id\": \"114856790171836979104\",\n \"email\": \"tammi.chang.clc@gmail.com\",\n \"verified_email\": true,\n \"name\": \"Tammi Chang\",\n \"given_name\": \"Tammi\",\n \"family_name\": \"Chang\",\n \"link\": \"https://plus.google.com/114856790171836979104\",\n \"gender\": \"female\",\n \"birthday\": \"0000-01-01\",\n \"locale\": \"en\"\n}\n",
+          "string": "",
           "debug_json": {
             "id": "114856790171836979104",
             "email": "tammi.chang.clc@gmail.com",

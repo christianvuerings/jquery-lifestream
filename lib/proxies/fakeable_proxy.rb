@@ -35,9 +35,9 @@ module FakeableProxy
   private
 
   def record_new_responses(proxy_id, extra_cassette_options, proc_block)
-    Rails.logger.warn "FakeableProxy Recording new response for #{proxy_id}"
+    Rails.logger.warn "#{self.class.name}  Recording new response for #{proxy_id}"
     VCR.configure do |c|
-      c.cassette_library_dir = 'fixtures/raw_vcr_recordings'
+      c.cassette_library_dir = 'fixtures/pretty_vcr_recordings'
     end
     VCR.use_cassette(proxy_id, options=default_cassette_options({:record => :new_episodes}.merge(extra_cassette_options)), &block=proc_block)
   end
@@ -50,7 +50,7 @@ module FakeableProxy
                      :uri => e.request.uri,
                      :body => e.request.body
       }
-      Rails.logger.info "Unrecorded VCR response for: #{logger_hash}"
+      Rails.logger.warn "#{self.class.name} Unrecorded VCR response for: #{logger_hash}"
       proc_block.call
     end
   end

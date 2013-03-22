@@ -14,7 +14,7 @@ namespace :vcr do
     end
 
     #Overwriting the single line json with human legible json.
-    Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |file|
+    Dir.glob("#{Rails.root}/fixtures/pretty_vcr_recordings/*.json").each do |file|
       json_string = File.read(file)
       json = JSON.parse(json_string)
       pretty_json = JSON.pretty_generate(json)
@@ -27,7 +27,7 @@ namespace :vcr do
     filter = ENV["REGEX_FILTER"]
 
     processed_dir = Rails.root.join("fixtures", "pretty_vcr_recordings")
-    Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |filename|
+    Dir.glob("#{Rails.root}/fixtures/pretty_vcr_recordings/*.json").each do |filename|
       if (!filter.blank?) && (filename =~ (/#{filter}/i)).nil?
         next
       end
@@ -47,6 +47,7 @@ namespace :vcr do
             rescue JSON::ParserError
               interaction["response"]["body"]["debug_xml"] = Nokogiri::XML(original_string).to_xml(:indent=>2)
             end
+            interaction["response"]["body"]["string"] = ""
           end
         end
 
@@ -60,10 +61,10 @@ namespace :vcr do
     end
   end
 
-  desc "Dumps out the requests that have been recorded in /fixtures/raw_vcr_recordings/"
+  desc "Dumps out the requests that have been recorded in /fixtures/pretty_vcr_recordings/"
   task :list do
     recordings_hash = {}
-    Dir.glob("#{Rails.root}/fixtures/raw_vcr_recordings/*.json").each do |file|
+    Dir.glob("#{Rails.root}/fixtures/pretty_vcr_recordings/*.json").each do |file|
       json_string = File.read(file)
       json = JSON.parse(json_string)
       json["http_interactions"].each do |interaction|
