@@ -1,50 +1,12 @@
 .cc-icon {
+  background: no-repeat;
   height: 16px;
   width: 16px;
 }
-.cc-icon, .cc-icon-big {
+.cc-icon {
   background: no-repeat;
 }
-.cc-icon-alert {
-  background-image: asset-data-url('icon_alert_16x16.png');
-}
-.cc-icon-arrow-right-brown {
-  background-image: asset-data-url('icon_arrow_right_brown_16x16.png');
-}
-.cc-icon-arrow-right {
-  background-image: asset-data-url('icon_arrow_right_16x16.png');
-}
-.cc-icon-big {
-  height: 24px;
-  width: 24px;
-}
-.cc-icon-big-academics {
-  background-image: asset-data-url('icon_academics_24x24.png');
-}
-.cc-icon-big-alert {
-  background-image: asset-data-url('icon_alert_24x24.png');
-}
-.cc-icon-big-block {
-  background-image: asset-data-url('icon_block_24x24.png');
-}
-.cc-icon-big-classes {
-  background-image: asset-data-url('icon_classes_24x24.png');
-}
-.cc-icon-big-completed {
-  background-image: asset-data-url('icon_completed_24x24.png');
-}
-.cc-icon-big-enrollment {
-  background-image: asset-data-url('icon_enrollment_24x24.png');
-}
-.cc-icon-big-finances {
-  background-image: asset-data-url('icon_finances_24x24.png');
-}
-.cc-icon-big-inprogress {
-  background-image: asset-data-url('icon_inprogress_24x24.png');
-}
-.cc-icon-big-overdue {
-  background-image: asset-data-url('icon_overdue_24x24.png');
-}
+
 .cc-icon-bspace {
   background-image: asset-data-url('icon_bspace_16x16.png');
 }
@@ -57,17 +19,8 @@
 .cc-icon-canvas {
   background-image: asset-data-url('icon_canvas_16x16.png');
 }
-.cc-icon-close {
-  background-image: asset-data-url('icon_close_16x16.png');
-}
 .cc-icon-drive {
   background-image: asset-data-url('icon_drive_16x16.png');
-}
-.cc-icon-email {
-  background-image: asset-data-url('icon_message_16x16.png');
-}
-.cc-icon-info {
-  background-image: asset-data-url('icon_info_16x16.png');
 }
 .cc-icon-mail {
   background-image: asset-data-url('icon_mail_16x16.png');
@@ -91,42 +44,4 @@
     background-color: transparent;
     background-image: asset-data-url('icon_status_level_person_hover_22x22.png');
   }
-}
-
-/* 150x150 icons */
-.cc-icon-advising {
-  background-image: asset-data-url('icon_campus_advising_150x150.png');
-}
-.cc-icon-academicplan {
-  background-image: asset-data-url('icon_campus_academicplan_150x150.png');
-}
-.cc-icon-campusdepartments {
-  background-image: asset-data-url('icon_campus_campusdepartments_150x150.png');
-}
-.cc-icon-career {
-  background-image: asset-data-url('icon_campus_career_150x150.png');
-}
-.cc-icon-finances {
-  background-image: asset-data-url('icon_campus_finances_150x150.png');
-}
-.cc-icon-gettingaround {
-  background-image: asset-data-url('icon_campus_gettingaround_150x150.png');
-}
-.cc-icon-foodhousing {
-  background-image: asset-data-url('icon_campus_foodhousing_150x150.png');
-}
-.cc-icon-healthsafety {
-  background-image: asset-data-url('icon_campus_healthsafety_150x150.png');
-}
-.cc-icon-newtocampus {
-  background-image: asset-data-url('icon_campus_newtocampus_150x150.png');
-}
-.cc-icon-researchstudying {
-  background-image: asset-data-url('icon_campus_researchstudying_150x150.png');
-}
-.cc-icon-studentgroups {
-  background-image: asset-data-url('icon_campus_studentgroups_150x150.png');
-}
-.cc-icon-socialrecreation {
-  background-image: asset-data-url('icon_campus_socialrecreation_150x150.png');
 }
