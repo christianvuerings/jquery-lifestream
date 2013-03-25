@@ -15,3 +15,5 @@ campusdb:
 
 features:
   act_as: true
+  bearfacts: true
+
