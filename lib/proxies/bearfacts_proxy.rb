@@ -16,13 +16,20 @@ class BearfactsProxy < BaseProxy
   end
 
   def request(path, vcr_cassette, params = {})
+    unless Settings.features.bearfacts
+      return {
+        :body => "",
+        :status_code => 200
+      }
+    end
+
     self.class.fetch_from_cache(@uid) do
       student_id = lookup_student_id
       if student_id.nil?
         Rails.logger.warn "#{self.class.name}: Lookup of student_id for uid #@uid failed, cannot call Bearfacts API path #{path}"
         {
-            :body => "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API",
-            :status_code => 400
+          :body => "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API",
+          :status_code => 400
         }
       else
         url = "#{Settings.bearfacts_proxy.base_url}#{path}"
@@ -30,9 +37,9 @@ class BearfactsProxy < BaseProxy
         begin
           response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
             Faraday::Connection.new(
-                :url => url,
-                :params => params.merge({:token => Settings.bearfacts_proxy.token}),
-                :ssl => {:verify => false}
+              :url => url,
+              :params => params.merge({:token => Settings.bearfacts_proxy.token}),
+              :ssl => {:verify => false}
             ).get
           }
           if response.status >= 400
@@ -42,14 +49,14 @@ class BearfactsProxy < BaseProxy
 
           Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
           {
-              :body => response.body,
-              :status_code => response.status
+            :body => response.body,
+            :status_code => response.status
           }
         rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
           Rails.logger.warn "#{self.class.name}: Connection failed: #{e.class} #{e.message}"
           {
-              :body => "Remote server unreachable",
-              :status_code => 503
+            :body => "Remote server unreachable",
+            :status_code => 503
           }
         end
       end
