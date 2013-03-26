@@ -3,16 +3,16 @@
     <div class="row">
       <div class="columns large-6 small-6"><h2>Recent Activity</h2></div>
       <div class="columns large-6 small-6">
-        <select class="cc-right" data-ng-model="trigger" data-ng-change="activities.applyFilter(trigger.split('::', 2)[0], trigger.split('::', 2)[1])">
+        <select class="cc-right" data-ng-model="search.source">
           <option value="">All Activity</option>
-          <option value="source::{{filterName}}" data-ng-repeat="(filterName, filterFn) in activities.filters['source']" value="">{{filterName}}</option>
+          <option value="{{source}}" data-ng-repeat="source in activities.sources">{{source}}</option>
         </select>
       </div>
     </div>
   </div>
 
   <ul class="cc-widget-activities-list">
-    <li data-ng-repeat="activity in activities.get()">
+    <li data-ng-repeat="activity in activities.list | filter:search">
       <div class="row">
         <div class="cc-widget-activities-activity large-centered small-centered large-12 small-12 columns">
           <div class="cc-widget-activities-list-hover" data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">

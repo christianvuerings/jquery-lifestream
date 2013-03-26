@@ -6,15 +6,8 @@
    */
   calcentral.controller('ActivityController', ['$http', '$scope', function($http, $scope) {
 
-    /** Constructing a complex model with logic to hide away some of the data munging. */
-    var activitiesModel = function(plain_objects) {
-      var originalArray = [];
-      var filters = {};
-      var displayArray = [];
-
-      if (plain_objects && plain_objects.activities) {
-        originalArray = plain_objects.activities;
-      }
+    var activitiesModel = function(activityResponse) {
+      var activities = activityResponse.activities;
 
       // Dictionary for the type translator.
       var typeDict = {
@@ -35,14 +28,6 @@
         grade_posting: 'trophy',
         message: 'ok-sign',
         webconference: 'facetime-video'
-      };
-
-      /**
-       * Return the threaded actitivies array, without filters.
-       * @return {Array} Array of JSON objects.
-       */
-      var get = function() {
-        return displayArray;
       };
 
       /**
@@ -70,54 +55,18 @@
       };
 
       /**
-       * Walks through the initial feed, stashing away unique values for sources and emitters.
-       * @param  {Array} original activities array from the api
-       * @return {Object} object containing source and emitter objects, with unique keys.
+       * Create the list of sources
+       * @param {Array} original The original array
+       * @return {Array} A sorted list of all the sources
        */
-      var populateFilterKeys = function(original) {
-        var filterKeys = {
-          source: {},
-          emitter: {}
-        };
-        original.forEach(function(value) {
-          filterKeys.source[value.source] = true;
-          filterKeys.emitter[value.emitter] = true;
+      var createSources = function(original) {
+        var sources = [];
+        original.map(function(item) {
+          if (sources.indexOf(item.source) === -1) {
+            sources.push(item.source);
+          }
         });
-        return filterKeys;
-      };
-
-      /**
-       * Walks throught the filter keys setup by populateFilterKeys, and turn the multi-level hash of
-       * truthy values into a multi-level hash of filter functions, to be used when walking over the
-       * api response for activities.
-       *
-       *
-       * @param  {Object} filterKeys multi-level hash of truthy values
-       * @return {Object} multi-level hash of filter functions. Sample output:
-       * {
-       *   emitter: {
-       *     Canvas: function(object){},
-       *     bSpace: function(object){},
-       *     Campus: function(object){}
-       *   },
-       *   source: {
-       *     Canvas: function(object){},
-       *     Warn Me: function(object){},
-       *     Bear Facts: function(object){}
-       *   }
-       * }
-       */
-      var setupFilters = function(filterKeys) {
-        var tmpFilters = {};
-        angular.forEach(filterKeys, function(type_hash, type) {
-          tmpFilters[type] = {};
-          angular.forEach(type_hash, function(truthy, value) {
-            tmpFilters[type][value] = function(obj) {
-              return obj[type] === value;
-            };
-          });
-        });
-        return tmpFilters;
+        return sources.sort();
       };
 
       /**
@@ -146,7 +95,7 @@
                 (sub_value.date.date_string === value.date.date_string));
             });
             if (multiElementSource.length > 0) {
-              multiElementSource.forEach(function(multi_value, multi_index) {
+              multiElementSource.forEach(function(multi_value) {
                 arr.splice(arr.indexOf(multi_value), 1);
               });
               // The first matching value needs to stay at the front of the list.
@@ -161,55 +110,37 @@
          * Construct a pseudo "grouping" activities object for the similar activities.
          * @param {Array} tmpMultiElementArray an array of similar activity objects.
          * @return {Object} a wrapping "grouping" object (ie. 2 Activities posted), that contains
-         *                    the similar objects array underneath.
+         * the similar objects array underneath.
          */
         var processMultiElementArray = function(tmpMultiElementArray) {
           return tmpMultiElementArray.map(function(value) {
-            // if object is malformed, return an empty object
-            if (value.length < 1) {
-              return {};
-            }
             return {
-              'title': value.length + translator(value[0].type),
-              'source': value[0].source,
-              'emitter': value[0].emitter,
-              'type': value[0].type,
               'date': angular.copy(value[0].date),
-              'elements': value
+              'elements': value,
+              'emitter': value[0].emitter,
+              'source': value[0].source,
+              'title': value.length + translator(value[0].type),
+              'type': value[0].type
             };
           });
         };
 
         var result = spliceMultiSourceElements(source);
         multiElementArray = processMultiElementArray(multiElementArray);
-        result = result.concat(multiElementArray).sort(sortFunction);
 
-        return result;
+        return result.concat(multiElementArray).sort(sortFunction);
       };
-
-      var applyFilter = function(filterType, filterKey) {
-        var tmpOriginalArray = originalArray || [];
-        if (filters[filterType] && filters[filterType][filterKey] && angular.isFunction(filters[filterType][filterKey])) {
-          tmpOriginalArray = tmpOriginalArray.filter(filters[filterType][filterKey]);
-        }
-        displayArray = threadOnSource(tmpOriginalArray);
-      };
-
-      // Model Intialization
-      filters = setupFilters(populateFilterKeys(originalArray));
-      displayArray = threadOnSource(originalArray);
 
       return {
-        filters: filters,
-        get: get,
-        length: originalArray.length,
-        applyFilter: applyFilter,
+        length: activities.length,
+        list: threadOnSource(activities),
+        sources: createSources(activities),
         typeToIcon: typeToIcon
       };
     };
 
     $http.get('/api/my/activities').success(function(data) {
-      // $http.get('/dummy/json/activities.json').success(function(data) {
+    //$http.get('/dummy/json/activities.json').success(function(data) {
       $scope.activities = activitiesModel(data);
     });
 
