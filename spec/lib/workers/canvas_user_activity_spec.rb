@@ -30,7 +30,6 @@ describe "CanvasUserActivityHandler" do
       activity[:emitter].should == "Canvas"
       activity[:type].blank?.should_not == true
     end
-    handler.finalize
   end
 
   # Cache stores are only enabled on testext
@@ -44,7 +43,6 @@ describe "CanvasUserActivityHandler" do
     activities.size.should == 18
     interesting_result = activities.select { |entry| entry[:source] == "EE 20N"}
     interesting_result.size.should_not == 0
-    handler.finalize
   end
 
   it "should be able to ignore malformed entries from the canvas feed" do
@@ -55,7 +53,6 @@ describe "CanvasUserActivityHandler" do
     activities = handler.get_feed_results
     activities.instance_of?(Array).should == true
     activities.size.should == 18
-    handler.finalize
   end
 
   describe "CanvasUserActivityFailures", :suppress_celluloid_logger => true do
@@ -74,29 +71,14 @@ describe "CanvasUserActivityHandler" do
       handler = CanvasUserActivityHandler.new({:user_id => @random_id})
       activities = handler.get_feed_results
       activities.should be_nil
-      handler.finalize
     end
 
     it("should be able to return nils on unexpected processor crashes", :suppress_celluloid_logger => true) do
-      CanvasUserActivityProcessor.any_instance.stub(:process).and_raise(RuntimeError, "crash")
+      CanvasUserActivityProcessor.any_instance.stub(:process_feed).and_raise(RuntimeError, "crash")
       handler = CanvasUserActivityHandler.new({:user_id => @random_id})
       activities = handler.get_feed_results
       activities.should be_nil
-      handler.finalize
     end
 
-  end
-
-  it "get_feed should be a non-blocking call" do
-    CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return {
-      sleep(3)
-      @fake_feed
-    }
-    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
-    start_time = Time.now.to_i
-    activities = handler.get_feed
-    end_time = Time.now.to_i
-    (end_time - start_time).should < 3
-    handler.finalize
   end
 end
