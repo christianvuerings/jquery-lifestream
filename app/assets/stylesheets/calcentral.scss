@@ -94,6 +94,7 @@ button {
   &:hover, &:focus {
     cursor: pointer;
     text-decoration: underline;
+    color: $cc-medium-grey;
   }
 }
 .button {
