@@ -6,7 +6,10 @@
     <ul class="cc-widget-mycalendar-datelist cc-scroll" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
       <!-- First loop: timestamped items -->
       <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
-        <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(item, 'Up Next')">
+        <div
+          class="cc-widget-list-hover"
+          data-cc-accessible-focus-directive
+          data-ng-click="api.widget.toggleShow(item, 'Up Next')">
           <div class="cc-widget-mycalendar-datelist-time cc-left">
             <div data-ng-switch data-on="item.is_all_day">
               <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>

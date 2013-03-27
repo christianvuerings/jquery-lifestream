@@ -15,7 +15,10 @@
     <li data-ng-repeat="activity in activities.list | filter:search">
       <div class="row">
         <div class="cc-widget-activities-activity large-centered small-centered large-12 small-12 columns">
-          <div class="cc-widget-activities-list-hover" data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">
+          <div
+            class="cc-widget-activities-list-hover"
+            data-cc-accessible-focus-directive
+            data-ng-click="api.widget.toggleShow(activity, 'Recent Activity')">
             <div class="cc-widget-activities-text-column">
               <i class="icon-{{activities.typeToIcon[activity.type]}} cc-left"></i>
               <div class="cc-widget-activities-text-margin cc-widget-list-hover-title">
@@ -36,7 +39,10 @@
             <ul class="cc-widget-activities-sub-activity-list">
               <li data-ng-repeat="sub_activity in activity.elements">
                 <div class="row">
-                  <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(sub_activity, 'Recent Threaded Activity')">
+                  <div
+                    class="cc-widget-list-hover"
+                    data-cc-accessible-focus-directive
+                    data-ng-click="api.widget.toggleShow(sub_activity, 'Recent Threaded Activity')">
                     <div class="columns large-11 small-11 large-offset-1 small-offset-1 cc-widget-list-hover-title cc-widget-activities-sub-activity" data-ng-class="{'cc-widget-activities-sub-activity-closed': !sub_activity.show, 'cc-widget-activities-sub-activity-open': sub_activity.show}">
                       {{sub_activity.title}}
                     </div>
