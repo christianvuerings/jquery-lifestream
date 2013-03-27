@@ -59,7 +59,10 @@ module ActiveRecordHelper
         Rails.logger.debug "#{name} current connection pool (#{conn_pool_hash}-#{conn_pool_hash.adapter_method}) count: #{live_connections.size}, current connection pool: #{live_connections.map{|conn_sub| conn_sub.object_id}}"
       end
     elsif Rails.logger.info?
-      Rails.logger.info "#{conn_pool.connections.size} current connections."
+      conn_handler.connection_pools.each do |conn_pool_hash, conn_pool|
+        live_connections = conn_pool.connections
+        Rails.logger.info "#{name} current connection pool (#{conn_pool_hash}-#{conn_pool_hash.adapter_method}) count: #{live_connections.size}"
+      end
     end
   end
 
