@@ -1809,7 +1809,7 @@
       ],
       "name": "Emergency information",
       "description": "Go-to site for emergency response information",
-      "url": "https://emergency.berkeley.edu/",
+      "url": "http://emergency.berkeley.edu/",
       "roles": {
         "staff": true,
         "student": true,
