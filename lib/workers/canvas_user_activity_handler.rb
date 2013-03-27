@@ -10,7 +10,7 @@ class CanvasUserActivityHandler
       @worker = CanvasUserActivityWorker.new(options)
       @processor = CanvasUserActivityProcessor.new(options)
     end
-    @processor_future = nil
+    @processed_feed = nil
   end
 
   # Will kick off the worker and processor to get feed data but return the processor
@@ -18,8 +18,8 @@ class CanvasUserActivityHandler
   def get_feed
     return unless @access_granted
     begin
-      activity_feed_future = @worker.future.fetch_user_activity
-      @processor_future = @processor.future.process(activity_feed_future)
+      raw_activity_feed = @worker.fetch_user_activity
+      @processed_feed = @processor.process_feed(raw_activity_feed)
     rescue Exception => e
       Rails.logger.info "#{self.class.name} with exception: #{e.message}"
     end
@@ -27,30 +27,13 @@ class CanvasUserActivityHandler
 
   def get_feed_results
     return nil unless @access_granted
-    get_feed if @processor_future == nil
+    get_feed if @processed_feed == nil
     begin
-      response = @processor_future.value
-      actor_cleanup
-      response
+      @processed_feed
     rescue Exception => e
       Rails.logger.info "#{self.class.name} with exception: #{e.message}"
       nil
     end
   end
 
-  def finalize
-    actor_cleanup
-  end
-
-  private
-
-  def actor_cleanup
-    # One of the things that will eventually be handled by the supervisor
-    [@worker, @processor].each do |some_actor|
-      begin
-        some_actor.terminate
-      rescue Celluloid::DeadActorError
-      end
-    end
-  end
 end

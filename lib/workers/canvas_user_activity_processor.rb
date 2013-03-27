@@ -1,7 +1,6 @@
 class CanvasUserActivityProcessor
   extend Calcentral::Cacheable
   include DatedFeed
-  include Celluloid
 
   def initialize(options)
     Rails.logger.info "New #{self.class.name} processor with #{options}"
@@ -9,9 +8,8 @@ class CanvasUserActivityProcessor
     @processed_feed = []
   end
 
-  def process(worker_future)
+  def process_feed(raw_feed)
     # Potential crash somewhere up the pipe if the feed was nil
-    raw_feed = worker_future.value
     return if raw_feed.nil?
     # Translate the feed
     self.class.fetch_from_cache @uid do
@@ -24,10 +22,6 @@ class CanvasUserActivityProcessor
       remove_dismissed_notifications!
     end
     @processed_feed
-  end
-
-  def finalize
-    Rails.logger.info "#{self.class.name} is going away"
   end
 
   private
