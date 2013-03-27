@@ -58,7 +58,8 @@ class GoogleProxy < BaseProxy
       vcr_id: request_params[:vcr_id] || "",
       resource_method: self.class.discover_resource_method(request_params[:api],
                                                            request_params[:resource],
-                                                           request_params[:method])
+                                                           request_params[:method]),
+      page_limiter: request_params[:page_limiter]
     }
 
     Rails.logger.debug "#{self.class.name} GoogleProxy timer finished looking up resource_method at #{Time.now.to_f - @start}; method = #{page_params[:resource_method].inspect}"
@@ -69,6 +70,9 @@ class GoogleProxy < BaseProxy
 
     Rails.logger.info "GoogleProxy - Making request with @fake = #{@fake}, params = #{request_params}"
     Rails.logger.debug "GoogleProxy timer external API call begins at #{Time.now.to_f - @start}s after init"
+
+    under_page_limit_ceiling = true
+
     begin
       page_params[:params]["pageToken"] = page_token unless page_token.blank?
 
@@ -78,6 +82,7 @@ class GoogleProxy < BaseProxy
       }
 
       page_token = get_next_page_token(result_page)
+      under_page_limit_ceiling = under_page_limit?(result_pages.size+1, page_params[:page_limiter])
 
       result_pages << result_page
       # Tasks uses 204 for deletes.
@@ -85,7 +90,7 @@ class GoogleProxy < BaseProxy
         Rails.logger.warn "GoogleProxy request stopped on error: #{result_page.response.inspect}"
         break
       end
-    end while page_token
+    end while (page_token and under_page_limit_ceiling)
     Rails.logger.debug "GoogleProxy timer external API call ended at #{Time.now.to_f - @start}s after init"
 
     #update access token if necessary
@@ -108,6 +113,14 @@ class GoogleProxy < BaseProxy
       Rails.logger.info "GoogleProxy - Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
       Oauth2Data.new_or_update(@uid, APP_ID, @authorization.access_token,
                                @authorization.refresh_token, @authorization.expires_at.to_i)
+    end
+  end
+
+  def under_page_limit?(current_pages, page_limit)
+    if page_limit && page_limit.is_a?(Integer)
+      current_pages < page_limit
+    else
+      true
     end
   end
 

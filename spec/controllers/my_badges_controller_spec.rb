@@ -22,7 +22,6 @@ describe MyBadgesController do
     existing_badges = %w(bcal bdrive bmail)
     existing_badges.each do |badge|
       json_response["unread_badge_counts"][badge].should_not be_nil
-      json_response["unread_badge_counts"][badge].is_a?(Integer).should be_true
     end
 
   end
