@@ -6,6 +6,7 @@
    * Initialize all of the submodules
    */
   angular.module('calcentral.directives', []);
+  angular.module('calcentral.filters', []);
   angular.module('calcentral.services', ['ng']);
 
   /**
@@ -13,6 +14,7 @@
    */
   var calcentral = angular.module('calcentral', [
     'calcentral.directives',
+    'calcentral.filters',
     'calcentral.services',
     'ngSanitize'
   ]);

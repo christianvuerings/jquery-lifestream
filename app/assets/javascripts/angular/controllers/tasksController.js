@@ -24,6 +24,10 @@
       }
     };
 
+    $scope.toggleFullTextNote = function(task) {
+      task.show_full_text = !task.show_full_text;
+    };
+
     /**
      * If completed, give task a completed date epoch *after* sending to
      * backend (and successful response) so model can reflect correct changes.

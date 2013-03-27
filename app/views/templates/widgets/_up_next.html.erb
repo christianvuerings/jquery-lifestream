@@ -8,7 +8,7 @@
       <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
         <div class="cc-widget-list-hover" data-ng-click="api.widget.toggleShow(item, 'Up Next')">
           <div class="cc-widget-mycalendar-datelist-time cc-left">
-            <div data-ng-switch on="item.is_all_day">
+            <div data-ng-switch data-on="item.is_all_day">
               <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-left">all-day</div>
               <div data-ng-switch-when="false">
                 <div class="cc-widget-mycalendar-datelist-time-hour cc-left">{{item.start.epoch * 1000 | date:'h'}}</div>
@@ -29,7 +29,7 @@
         </div>
         <div class="cc-widget-mycalendar-more" data-ng-show="item.show">
           <div class="cc-widget-mycalendar-startend row">
-            <div data-ng-switch on="item.is_all_day">
+            <div data-ng-switch data-on="item.is_all_day">
               <p data-ng-switch-when="true">
                 {{item.start.epoch * 1000 | date:'EEE, MMMM d'}}
               </p>
