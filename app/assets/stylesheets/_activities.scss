@@ -41,7 +41,7 @@
   .cc-widget-activities-list-hover {
     overflow: hidden;
     padding: 10px 0;
-    &:hover {
+    &:hover, &:focus {
       background: #e6ebef;
       cursor: pointer;
       margin: 0 -15px;
