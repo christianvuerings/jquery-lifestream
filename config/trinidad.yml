@@ -1,0 +1,3 @@
+environment: production
+jruby_min_runtimes: 10
+jruby_max_runtimes: 10
