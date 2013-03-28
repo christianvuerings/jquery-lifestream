@@ -39,21 +39,21 @@
             data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')">
             <span class="cc-visuallyhidden">Show your academic profile</span>
           </button>
-          <div class="cc-icon cc-icon-status-person-layover"
-            data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check-small'}[showStatusError]"
+          <i class="cc-icon cc-icon-status-person-layover"
+            data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[showStatusError]"
             data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')">
-          </div>
+          </i>
           <div class="cc-popover" data-ng-show="api.popover.status('cc-popover-status')">
             <h4>Academic Profile</h4>
             <p>
-              <div class="cc-icon cc-left" data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check'}[user.profile.student_info.reg_status.needsAction]"></div>
+              <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[user.profile.student_info.reg_status.needsAction]"></i>
               <div class="cc-launcher-status-description">
                 <strong>Registration Status:</strong> {{user.profile.student_info.reg_status.summary}}<br />
                 <span data-ng-bind-html="user.profile.student_info.reg_status.explanation"></span>
               </div>
             </p>
             <p>
-              <div class="cc-icon cc-left" data-ng-class="{true:'cc-icon-status-level-exclamation',false:'cc-icon-status-level-check'}[user.profile.student_info.reg_block.needsAction]"></div>
+              <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[user.profile.student_info.reg_block.needsAction]"></i>
               <div class="cc-launcher-status-description">
                 <strong>Registration Blocks<span data-ng-show="user.profile.student_info.reg_block.summary">:</span></strong> <span>{{user.profile.student_info.reg_block.summary}}</span><br />
                 <span data-ng-bind-html="user.profile.student_info.reg_block.explanation"></span>
@@ -63,20 +63,20 @@
               </div>
             </p>
             <p>
-              <div class="cc-left" data-ng-class="{true:'cc-icon cc-icon-status-level-exclamation',false:'cc-popover-status-block-icon'}[user.profile.student_info.california_residency.needsAction]"></div>
+              <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-stop'}[user.profile.student_info.california_residency.needsAction]"></i>
               <div class="cc-launcher-status-description">
                 <strong>California Residency:</strong> {{user.profile.student_info.california_residency.summary}}<br />
                 <span data-ng-bind-html="user.profile.student_info.california_residency.explanation"></span>
               </div>
             </p>
             <p>
-              <div class="cc-left cc-popover-status-block-icon"></div>
+              <i class="cc-left icon-stop"></i>
               <div class="cc-launcher-status-description">
                 <strong>Education Level:</strong> {{user.profile.student_info.education_level}}
               </div>
             </p>
             <p>
-              <div class="cc-left cc-popover-status-block-icon"></div>
+              <i class="cc-left icon-stop"></i>
               <div class="cc-launcher-status-description">
                 <strong>Units Enrolled:</strong> {{user.profile.student_info.units_enrolled}}
               </div>

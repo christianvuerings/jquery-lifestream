@@ -3,9 +3,6 @@
   height: 16px;
   width: 16px;
 }
-.cc-icon {
-  background: no-repeat;
-}
 
 .cc-icon-bspace {
   background-image: asset-data-url('icon_bspace_16x16.png');
@@ -27,15 +24,6 @@
 }
 
 /* Status icons */
-.cc-icon-status-level-check-small {
-  background-image: asset-data-url('icon_status_level_check_small_16x16.png');
-}
-.cc-icon-status-level-check {
-  background-image: asset-data-url('icon_status_level_check_16x16.png');
-}
-.cc-icon-status-level-exclamation {
-  background-image: asset-data-url('icon_status_level_exclamation_16x16.png');
-}
 .cc-icon-status-person {
   background-image: asset-data-url('icon_status_level_person_22x22.png');
   height: 22px;
@@ -44,4 +32,12 @@
     background-color: transparent;
     background-image: asset-data-url('icon_status_level_person_hover_22x22.png');
   }
+}
+
+/* Fontawesome icons */
+.icon-exclamation-sign {
+  color: #ac120e !important;
+}
+.icon-ok, .icon-ok-sign {
+  color: #007748 !important;
 }
