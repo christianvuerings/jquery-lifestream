@@ -21,8 +21,9 @@ export RAILS_ENV=production
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: Starting CalCentral..." | $LOGIT
-export JRUBY_OPTS="-Xcext.enabled=true -J-server"
-nohup trinidad < /dev/null > /dev/null 2> $LOG  &
+OPTS=${CALCENTRAL_JRUBY_OPTS:="-Xcext.enabled=true -J-server -J-verbose:gc -J-XX:+PrintGCTimeStamps -J-XX:+PrintGCDetails -J-XX:+UseParallelOldGC -J-Xms1400m -J-Xmx1400m -J-Xmn500m -J-XX:PermSize=256m -J-XX:MaxPermSize=256m"}
+export JRUBY_OPTS=$OPTS
+nohup trinidad --config ./config/trinidad.yml < /dev/null > log/trinidad.log 2> $LOG  &
 
 # wait a bit to let server start up
 sleep 30
