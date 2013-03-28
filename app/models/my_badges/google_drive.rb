@@ -11,7 +11,7 @@ class MyBadges::GoogleDrive
 
   def fetch_counts
     # Limit results with some file.list query params.
-    query = "modifiedDate >= '#{@now_time.iso8601}' and trashed = false"
+    query = "modifiedDate >= '#{@one_month_ago.iso8601}' and trashed = false"
 
     google_proxy = GoogleDriveListProxy.new(user_id: @uid)
     google_drive_results = google_proxy.drive_list(optional_params={q: query}, page_limiter=@page_limiter)
