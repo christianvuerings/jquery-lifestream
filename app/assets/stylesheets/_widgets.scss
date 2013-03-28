@@ -29,7 +29,7 @@
 }
 .cc-widget-list-hover {
   overflow: hidden;
-  &:hover {
+  &:hover, &:focus {
     cursor: pointer;
     .cc-widget-list-hover-title {
       text-decoration: underline;

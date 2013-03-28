@@ -166,7 +166,7 @@ button {
   a {
     color: #fff;
     text-decoration: underline;
-    &:hover {
+    &:hover, &:focus {
       text-decoration: none;
     }
   }
