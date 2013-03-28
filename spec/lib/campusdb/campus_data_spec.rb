@@ -72,4 +72,13 @@ describe CampusData do
     alive.should_not be_nil
   end
 
+  it "should handle a person with no affiliations" do
+    # Temp Agency Staff has no affiliations
+    data = CampusData.get_person_attributes(321765)
+    data[:roles].each do |role_name, role_value|
+      role_value.should be_false
+    end
+  end
+
+
 end

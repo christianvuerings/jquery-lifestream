@@ -55,11 +55,13 @@ class CampusData < OracleDatabase
       result[:units_enrolled] = result["tot_enroll_unit"]
       result[:education_level] = self.educ_level_translator.translate(result["educ_level"])
       result[:california_residency] = self.cal_residency_translator.translate(result["cal_residency_flag"])
+      result['affiliations'] ||= ""
       result[:roles] = {
           :student => result['affiliations'].include?("STUDENT-TYPE-"),
           :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
           :staff => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF")
       }
+
     end
     result
   end
