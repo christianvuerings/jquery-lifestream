@@ -42,9 +42,10 @@ body {
   }
   .cc-icon-status-person-layover {
     cursor: pointer;
-    left: 26px;
+    font-size: 14px;
+    left: 28px;
     position: absolute;
-    top: 0;
+    top: 2px;
     z-index: 1;
   }
   .cc-launcher-dropdown-menu button {
@@ -113,14 +114,14 @@ body {
       margin-left: -129px;
       top: 33px;
       width: 300px;
+      .icon-stop {
+        font-size: 8px;
+        margin: 3px;
+      }
+      .icon-ok-sign, .icon-exclamation-sign {
+        font-size: 14px;
+      }
     }
-  }
-  .cc-popover-status-block-icon {
-    background: #595959;
-    height: 8px;
-    margin-left: 3px;
-    margin-top: 5px;
-    width: 8px;
   }
 }
 
