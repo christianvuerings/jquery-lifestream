@@ -126,6 +126,10 @@ group :development do
   gem "rb-inotify", "~> 0.9.0", require: false
   gem "rb-fsevent", "~> 0.9.2", require: false
   gem "rb-fchange", "~> 0.0.6", require: false
+
+  # Adds extra information to the requests
+  # Enables the RailsPanel chrome extension
+  gem "meta_request", "~> 0.2.3"
 end
 
 group :test do
