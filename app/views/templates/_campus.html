@@ -22,7 +22,11 @@
         <h2>{{subcategory}}</h2>
 
         <ul>
-          <li data-ng-repeat="link in links | orderBy:'name' | linksubcategory:subcategory "><a href="{{link.url}}" title="{{link.description}}">{{link.name}}</a></li>
+          <li data-ng-repeat="link in links | orderBy:'name' | linksubcategory:subcategory">
+            <a data-ng-href="{{link.url}}"
+              data-ng-click="api.analytics.trackExternalLink('Campus links', subcategory, link.url)"
+              title="{{link.description}}">{{link.name}}</a>
+          </li>
         </ul>
 
       </div>

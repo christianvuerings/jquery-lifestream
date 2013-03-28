@@ -87,7 +87,7 @@ blog_latest_release_notes_feed_proxy:
 
 # Analytics settings ID
 # This will need to be different for every server (dev/qa/production)
-google_analytics_id: UA-XXXXX-X
+google_analytics_id: UA-XXXXXX-X
 
 # Cache settings
 cache:
