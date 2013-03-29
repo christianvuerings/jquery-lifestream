@@ -32,8 +32,8 @@
      * @param {String} website The website you're trying to access (Google Maps)
      * @param {String} url The URL you're accessing
      */
-    var trackExternalLink = function(section, website, url) {
-      trackEvent(['External link', 'Clicked', 'section: ' + section + ' - website: ' + website, url]);
+    var trackExternalLink = function(section, website, url, evt) {
+      trackEvent(['External link', url , 'section: ' + section + ' - website: ' + website]);
     };
 
     /**
