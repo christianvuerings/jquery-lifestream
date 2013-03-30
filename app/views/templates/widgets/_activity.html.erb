@@ -28,8 +28,7 @@
             </div>
           </div>
           <div class="cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show && !activity.elements">
-            <p>
-              {{activity.summary}}
+            <p data-ng-bind-html="activity.summary" data-cc-truncate-directive="filter:'linky', length:180">
             </p>
             <p class="cc-widget-more-view-in">
               <a data-ng-click="api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)" data-ng-href="{{activity.source_url}}">View in {{activity.emitter}}</a>
@@ -51,8 +50,7 @@
                     <div class="cc-widget-activities-sub-activity-date-string">
                       at {{api.date.moment(sub_activity.date.epoch * 1000).format('h:mma')}}
                     </div>
-                    <p class="cc-widget-activities-sub-activity-summary cc-break-word">
-                      {{sub_activity.summary}}
+                    <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="sub_activity.summary" data-cc-truncate-directive="filter:'linky', length:180">
                     </p>
                     <p class="cc-widget-more-view-in">
                       <a data-ng-click="api.analytics.trackExternalLink('Activities', sub_activity.source, sub_activity.source_url)" data-ng-href="{{sub_activity.source_url}}">View in {{sub_activity.emitter}}</a>

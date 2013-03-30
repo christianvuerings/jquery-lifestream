@@ -51,20 +51,7 @@
   <div data-ng-show="task.show">
     <div class="row widget-tasks-activities-more" data-ng-hide="editorEnabled">
       <div class="large-9 columns large-offset-3 end cc-widget-tasks-more">
-        <div data-ng-switch data-on="task.notes.length > 180 && !task.show_full_text">
-          <div data-ng-switch-when="true">
-            <div ng-bind-html="task.notes | linky | truncate:180"></div>
-            <div>
-              <button class="cc-button-link" data-ng-click="toggleFullTextNote(task)">Show more</button>
-            </div>
-          </div>
-          <div data-ng-switch-when="false">
-            <div ng-bind-html="task.notes | linky"></div>
-            <div data-ng-show="task.notes.length > 180">
-              <button class="cc-button-link" data-ng-click="toggleFullTextNote(task)">Show less</button>
-            </div>
-          </div>
-        </div>
+        <div data-ng-bind-html="task.notes" data-cc-truncate-directive="filter:'linky', length:180"></div>
       </div>
 
       <div class="large-9 columns large-offset-3 end cc-widget-tasks-more cc-widget-tasks-activities-more">
