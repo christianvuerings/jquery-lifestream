@@ -150,6 +150,7 @@ button {
 }
 
 .cc-button-link {
+  padding: 0;
   &, &:hover, &:focus {
     background-color: transparent;
     border: none;
