@@ -15,12 +15,14 @@ describe "UserApi" do
 
   it "should find user with default name" do
     u = UserApi.new(@random_id)
+    u.init
     u.preferred_name.should == @default_name
   end
   it "should override the default name" do
     u = UserApi.new(@random_id)
     u.update_attributes(preferred_name: "Herr Heyer")
     u = UserApi.new(@random_id)
+    u.init
     u.preferred_name.should == "Herr Heyer"
   end
   it "should revert to the default name" do
@@ -29,6 +31,7 @@ describe "UserApi" do
     u = UserApi.new(@random_id)
     u.update_attributes(preferred_name: "")
     u = UserApi.new(@random_id)
+    u.init
     u.preferred_name.should == @default_name
   end
   it "should return a user data structure" do

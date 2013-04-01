@@ -17,6 +17,7 @@ describe Oauth2Data do
 
   it "should return decrypted access tokens" do
     oauth2 = Oauth2Data.new(uid: "test-user", app_id: "test-app", access_token: "test-token")
+    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
     oauth2.save.should be_true
     access_token = Oauth2Data.get("test-user", "test-app")["access_token"]
     access_token.should == "test-token"
@@ -29,6 +30,7 @@ describe Oauth2Data do
     token_hash["access_token"].should == "new-token"
     token_hash["refresh_token"].should == "some-token"
     token_hash["expiration_time"].should == 1
+    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
     Oauth2Data.new_or_update("test-user", "test-app", "updated-token")
     updated_token_hash = Oauth2Data.get("test-user", "test-app")
     updated_token_hash["access_token"].should == "updated-token"
@@ -62,5 +64,13 @@ describe Oauth2Data do
     Oauth2Data.get_google_email(@random_id).should == "tammi.chang.clc@gmail.com"
   end
 
+  it "should invalidate cache when tokens are deleted" do
+    oauth2 = Oauth2Data.new(uid: "test-user", app_id: "test-app", access_token: "test-token")
+    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).exactly(2).times
+    oauth2.save.should be_true
+    Oauth2Data.destroy_all(:uid => "test-user", :app_id => "test-app")
+    access_token = Oauth2Data.get("test-user", "test-app")["access_token"]
+    access_token.should be_nil
+  end
 
 end

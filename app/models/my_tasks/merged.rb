@@ -10,7 +10,10 @@ class MyTasks::Merged < MyMergedModel
     #To avoid issues with tz, use DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
     @starting_date = Time.zone.today.to_time_in_current_zone.to_datetime
     @now_time = Time.zone.now
-    @enabled_sources = {
+  end
+
+  def init
+    @enabled_sources ||= {
       CanvasProxy::APP_ID => {access_granted: CanvasProxy.access_granted?(@uid),
                               source: MyTasks::CanvasTasks.new(@uid, @starting_date),
                               pseudo_enabled: CanvasProxy.allow_pseudo_user?},
@@ -34,6 +37,7 @@ class MyTasks::Merged < MyMergedModel
   end
 
   def update_task(params, task_list_id="@default")
+    init
     return {} if @enabled_sources[params["emitter"]].blank?
     validate_update_params params
     source = @enabled_sources[params["emitter"]][:source]
@@ -45,6 +49,7 @@ class MyTasks::Merged < MyMergedModel
   end
 
   def insert_task(params, task_list_id="@default")
+    init
     return {} if @enabled_sources[params["emitter"]].blank?
     source = @enabled_sources[params["emitter"]][:source]
     response = source.insert_task(params, task_list_id)
@@ -55,6 +60,7 @@ class MyTasks::Merged < MyMergedModel
   end
 
   def clear_completed_tasks(params, task_list_id="@default")
+    init
     return {tasks_cleared: false} if @enabled_sources[params["emitter"]].blank?
     source = @enabled_sources[params["emitter"]][:source]
     response = source.clear_completed_tasks(task_list_id)
@@ -65,6 +71,7 @@ class MyTasks::Merged < MyMergedModel
   end
 
   def delete_task(params, task_list_id="@default")
+    init
     return {task_deleted: false} if @enabled_sources[params["emitter"]].blank?
     source = @enabled_sources[params["emitter"]][:source]
     response = source.delete_task(params, task_list_id)
