@@ -3,15 +3,18 @@ class UserApi < MyMergedModel
 
   def initialize(uid)
     super(uid)
+  end
+
+  def init
     use_pooled_connection{
-      @calcentral_user_data = UserData.where(:uid => @uid).first
+      @calcentral_user_data ||= UserData.where(:uid => @uid).first
     }
-    @campus_attributes = CampusData.get_person_attributes(@uid) || {}
-    @default_name = @campus_attributes['person_name']
-    @first_login_at = @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
-    @first_name = @campus_attributes['first_name'] || ""
-    @last_name = @campus_attributes['last_name'] || ""
-    @override_name = @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
+    @campus_attributes ||= CampusData.get_person_attributes(@uid) || {}
+    @default_name ||= @campus_attributes['person_name']
+    @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
+    @first_name ||= @campus_attributes['first_name'] || ""
+    @last_name ||= @campus_attributes['last_name'] || ""
+    @override_name ||= @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
   end
 
   def preferred_name
@@ -63,6 +66,7 @@ class UserApi < MyMergedModel
   end
 
   def update_attributes(attributes)
+    init
     if attributes.has_key?(:preferred_name)
       self.preferred_name = attributes[:preferred_name]
     end
@@ -70,6 +74,7 @@ class UserApi < MyMergedModel
   end
 
   def record_first_login
+    init
     @first_login_at = DateTime.now
     save
   end

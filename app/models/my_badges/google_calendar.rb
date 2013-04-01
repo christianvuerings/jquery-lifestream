@@ -3,10 +3,10 @@ class MyBadges::GoogleCalendar
 
   def initialize(uid)
     @uid = uid
-    @google_mail = Oauth2Data.get_google_email(@uid)
   end
 
   def fetch_counts(params = {})
+    @google_mail ||= Oauth2Data.get_google_email(@uid)
     google_proxy = GoogleEventsListProxy.new(user_id: @uid)
     google_calendar_results = google_proxy.calendar_needs_action_list(params)
     Rails.logger.info "Processing #{google_calendar_results.size} pages of calendar_list results"

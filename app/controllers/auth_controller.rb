@@ -42,7 +42,7 @@ class AuthController < ApplicationController
     else
       Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
       use_pooled_connection {
-        Oauth2Data.delete_all(:uid => session[:user_id], :app_id => app_id)
+        Oauth2Data.destroy_all(:uid => session[:user_id], :app_id => app_id)
       }
     end
 
@@ -56,7 +56,7 @@ class AuthController < ApplicationController
   def remove_authorization
     Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
     use_pooled_connection {
-      Oauth2Data.delete_all(:uid => session[:user_id], :app_id => app_id)
+      Oauth2Data.destroy_all(:uid => session[:user_id], :app_id => app_id)
     }
     expire
     render :nothing => true, :status => 204

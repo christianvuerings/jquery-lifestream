@@ -7,7 +7,8 @@ class Oauth2Data < ActiveRecord::Base
   serialize :refresh_token
   serialize :app_data, Hash
   before_save :encrypt_tokens
-  after_save :decrypt_tokens
+  after_save :decrypt_tokens, :expire_user
+  after_destroy :expire_user
   after_find :decrypt_tokens
   @@encryption_algorithm = Settings.oauth2.encryption
   @@encryption_key = Settings.oauth2.key
@@ -73,6 +74,10 @@ class Oauth2Data < ActiveRecord::Base
   def decrypt_tokens
     self.access_token = self.class.decrypt_with_iv(self.access_token)
     self.refresh_token = self.class.decrypt_with_iv(self.refresh_token) if self.refresh_token
+  end
+
+  def expire_user
+    Calcentral::USER_CACHE_EXPIRATION.notify @uid
   end
 
   def self.encrypt_with_iv(value)
