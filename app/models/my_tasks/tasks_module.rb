@@ -8,8 +8,8 @@ module MyTasks::TasksModule
     klass.extend Calcentral::Cacheable
   end
 
-  def fetch_tasks!(tasks)
-    tasks
+  def fetch_tasks
+    []
   end
 
   def update_task(task, task_list_id="@default")

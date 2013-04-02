@@ -9,8 +9,9 @@ class MyTasks::GoogleTasks
     @now_time = Time.zone.now
   end
 
-  def fetch_tasks!(tasks)
+  def fetch_tasks
     self.class.fetch_from_cache(@uid) {
+      tasks = []
       google_proxy = GoogleTasksListProxy.new(user_id: @uid)
 
       Rails.logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
@@ -22,6 +23,7 @@ class MyTasks::GoogleTasks
           tasks.push(formatted_entry) unless formatted_entry["bucket"] == "far future"
         end
       end
+      tasks
     }
   end
 

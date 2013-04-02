@@ -30,7 +30,7 @@ class MyTasks::Merged < MyMergedModel
       if (is_acting_as_nonfake_user?) && !value_hash[:pseudo_enabled]
         next
       end
-      value_hash[:source].fetch_tasks!(tasks)
+      tasks += value_hash[:source].fetch_tasks
     end
     logger.debug "#{self.class.name} get_feed is #{tasks.inspect}"
     {"tasks" => tasks}

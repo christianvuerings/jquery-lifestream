@@ -9,11 +9,13 @@ class MyTasks::CanvasTasks
     @now_time = Time.zone.now
   end
 
-  def fetch_tasks!(tasks)
+  def fetch_tasks
     # Track assignment IDs to filter duplicates.
+    tasks = []
     assignments = Set.new
     fetch_canvas_todo!(CanvasTodoProxy.new(:user_id => @uid), tasks, assignments)
     fetch_canvas_coming_up!(CanvasComingUpProxy.new(:user_id => @uid), tasks, assignments)
+    tasks
   end
 
   private
