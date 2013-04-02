@@ -10,6 +10,14 @@ class MyBadges::GoogleDrive
   end
 
   def fetch_counts
+    self.class.fetch_from_cache(@uid) do
+      internal_fetch_counts
+    end
+  end
+
+  private
+
+  def internal_fetch_counts
     # Limit results with some file.list query params.
     query = "modifiedDate >= '#{@one_month_ago.iso8601}' and trashed = false"
 
@@ -36,8 +44,6 @@ class MyBadges::GoogleDrive
     end
     unread_files
   end
-
-  private
 
   def is_unread_message?(entry)
     # The entries turn out to be classes... not hashes.
