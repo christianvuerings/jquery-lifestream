@@ -9,18 +9,22 @@ class MyTasks::GoogleTasks
     @now_time = Time.zone.now
   end
 
-  def fetch_tasks!(tasks)
-    google_proxy = GoogleTasksListProxy.new(user_id: @uid)
-    google_tasks_results = google_proxy.tasks_list
-    Rails.logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
-    google_tasks_results.each do |response_page|
-      next unless response_page.response.status == 200
-      response_page.data["items"].each do |entry|
-        next if entry["title"].blank?
-        formatted_entry = format_google_task_response(entry)
-        tasks.push(formatted_entry) unless formatted_entry["bucket"] == "far future"
+  def fetch_tasks
+    self.class.fetch_from_cache(@uid) {
+      tasks = []
+      google_proxy = GoogleTasksListProxy.new(user_id: @uid)
+
+      Rails.logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
+      google_proxy.tasks_list.each do |response_page|
+        next unless response_page.response.status == 200
+        response_page.data["items"].each do |entry|
+          next if entry["title"].blank?
+          formatted_entry = format_google_task_response(entry)
+          tasks.push(formatted_entry) unless formatted_entry["bucket"] == "far future"
+        end
       end
-    end
+      tasks
+    }
   end
 
   def return_response(response)

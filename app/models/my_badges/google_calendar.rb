@@ -7,6 +7,14 @@ class MyBadges::GoogleCalendar
 
   def fetch_counts(params = {})
     @google_mail ||= Oauth2Data.get_google_email(@uid)
+    self.class.fetch_from_cache(@uid) do
+      internal_fetch_counts params
+    end
+  end
+
+  private
+
+  def internal_fetch_counts(params = {})
     google_proxy = GoogleEventsListProxy.new(user_id: @uid)
     google_calendar_results = google_proxy.calendar_needs_action_list(params)
     Rails.logger.info "Processing #{google_calendar_results.size} pages of calendar_list results"
@@ -25,5 +33,6 @@ class MyBadges::GoogleCalendar
 
     needs_action_count
   end
+
 
 end

@@ -20,6 +20,8 @@ class MyUpNext < MyMergedModel
 
       day_events = []
       timed_events = []
+      # Although unlikely, it's possible that this could return a partial response. Due to the
+      # nature of how the data is presented, shouldn't be an issue.
       events_array = google_proxy.events_list(opts)
       events_array.each do |response_page|
         next unless response_page.response.status == 200

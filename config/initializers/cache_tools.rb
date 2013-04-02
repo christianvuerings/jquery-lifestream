@@ -26,14 +26,9 @@ module Calcentral
         CanvasUserActivityProxy => :expire,
         CanvasUserActivityProcessor => :expire,
 
-        GoogleProxy => :expire,
-        GoogleCreateTaskListProxy => :expire,
-        GoogleDeleteTaskListProxy => :expire,
-        GoogleEventsListProxy => :expire,
-        GoogleInsertTaskProxy => :expire,
-        GoogleTasksListProxy => :expire,
-        GoogleUpdateTaskProxy => :expire,
-        GoogleUserinfoProxy => :expire,
+        MyBadges::GoogleCalendar => :expire,
+        MyBadges::GoogleDrive => :expire,
+        MyTasks::GoogleTasks => :expire,
 
         SakaiProxy => :expire
 

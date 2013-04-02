@@ -4,8 +4,12 @@ module MyTasks::TasksModule
   include DatedFeed
   include MyTasks::ParamValidator
 
-  def fetch_tasks!(tasks)
-    tasks
+  def self.included(klass)
+    klass.extend Calcentral::Cacheable
+  end
+
+  def fetch_tasks
+    []
   end
 
   def update_task(task, task_list_id="@default")
@@ -64,5 +68,9 @@ module MyTasks::TasksModule
     else
       DateTime.parse(due_date.to_s)
     end
+  end
+
+  def expire_cache(uid)
+    self.class.expire uid
   end
 end

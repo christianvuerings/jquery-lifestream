@@ -20,6 +20,7 @@ describe "MyBadges" do
     filtered_feed["unread_badge_counts"]["bdrive"].should == 1
     MyBadges::GoogleDrive.any_instance.stub(:is_recent_message?).and_return(true)
     badges.expire_cache
+    MyBadges::GoogleDrive.expire @user_id
     badges = MyBadges::Merged.new @user_id
     mangled_feed = badges.get_feed
     mangled_feed["unread_badge_counts"].empty?.should_not be_true

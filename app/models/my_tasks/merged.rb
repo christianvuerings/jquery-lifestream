@@ -30,7 +30,7 @@ class MyTasks::Merged < MyMergedModel
       if (is_acting_as_nonfake_user?) && !value_hash[:pseudo_enabled]
         next
       end
-      value_hash[:source].fetch_tasks!(tasks)
+      tasks += value_hash[:source].fetch_tasks
     end
     logger.debug "#{self.class.name} get_feed is #{tasks.inspect}"
     {"tasks" => tasks}
@@ -44,6 +44,7 @@ class MyTasks::Merged < MyMergedModel
     response = source.update_task(params, task_list_id)
     if response != {}
       expire_cache
+      source.expire_cache @uid
     end
     response
   end
@@ -55,6 +56,7 @@ class MyTasks::Merged < MyMergedModel
     response = source.insert_task(params, task_list_id)
     if response != {}
       expire_cache
+      source.expire_cache @uid
     end
     response
   end
@@ -66,6 +68,7 @@ class MyTasks::Merged < MyMergedModel
     response = source.clear_completed_tasks(task_list_id)
     if response[:tasks_cleared] != false
       expire_cache
+      source.expire_cache @uid
     end
     response
   end
@@ -77,6 +80,7 @@ class MyTasks::Merged < MyMergedModel
     response = source.delete_task(params, task_list_id)
     if response != {}
       expire_cache
+      source.expire_cache @uid
     end
     response
   end
