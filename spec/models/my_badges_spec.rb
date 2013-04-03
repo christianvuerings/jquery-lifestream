@@ -3,16 +3,13 @@ require "spec_helper"
 describe "MyBadges" do
   before(:each) do
     @user_id = rand(999999).to_s
-    @fake_drive_list = GoogleDriveListProxy.new(:fake => true)
-    @fake_drive_list_response = @fake_drive_list.drive_list
+    @fake_drive_list = GoogleDriveListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
     @fake_events_list = GoogleEventsListProxy.new(:fake => true)
   end
 
   it "should be able to filter out entries older than one month" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
-    #Had to throw some fudging here since there's some date dependent pieces in the query.
-    GoogleDriveListProxy.any_instance.stub(:drive_list).and_return(@fake_drive_list_response)
     GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
     badges = MyBadges::Merged.new @user_id
     filtered_feed = badges.get_feed

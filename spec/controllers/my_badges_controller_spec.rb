@@ -4,7 +4,7 @@ describe MyBadgesController do
 
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_drive_list_response = GoogleDriveListProxy.new(:fake => true).drive_list
+    @fake_drive_list = GoogleDriveListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
   end
 
   it "should be an empty badges feed on non-authenticated user" do
@@ -15,7 +15,7 @@ describe MyBadgesController do
   end
 
   it "should be an non-empty badges feed on authenticated user" do
-    GoogleDriveListProxy.any_instance.stub(:drive_list).and_return(@fake_drive_list_response)
+    GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
