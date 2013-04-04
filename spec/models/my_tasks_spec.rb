@@ -5,8 +5,17 @@ describe "MyTasks" do
     @user_id = rand(99999).to_s
     @fake_google_tasks_list_proxy = GoogleTasksListProxy.new({fake: true})
     @fake_google_update_task_proxy = GoogleUpdateTaskProxy.new({fake: true})
-    @fake_google_tasks_array = @fake_google_tasks_list_proxy.tasks_list()
     @fake_google_clear_completed_tasks_proxy = GoogleClearTaskListProxy.new({fake: true})
+    @fake_google_tasks_array = @fake_google_tasks_list_proxy.tasks_list
+    @real_google_tasks_list_proxy = GoogleTasksListProxy.new(:access_token => Settings.google_proxy.test_user_access_token,
+                                                             :refresh_token => Settings.google_proxy.test_user_refresh_token,
+                                                             :expiration_time => 0)
+    @real_google_update_task_proxy = GoogleUpdateTaskProxy.new(:access_token => Settings.google_proxy.test_user_access_token,
+                                                               :refresh_token => Settings.google_proxy.test_user_refresh_token,
+                                                               :expiration_time => 0)
+    @real_google_clear_completed_tasks_proxy = GoogleClearTaskListProxy.new(:access_token => Settings.google_proxy.test_user_access_token,
+                                                                            :refresh_token => Settings.google_proxy.test_user_refresh_token,
+                                                                            :expiration_time => 0)
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
     @fake_canvas_coming_up_proxy = CanvasComingUpProxy.new({fake: true})
     @fake_canvas_todo_proxy = CanvasTodoProxy.new({fake: true})
@@ -189,6 +198,22 @@ describe "MyTasks" do
     my_tasks_model = MyTasks::Merged.new(@user_id)
     response = my_tasks_model.clear_completed_tasks params={"emitter" => "Canvas"}
     response.should == {:tasks_cleared => false}
+  end
+
+  it "should simulate a non-responsive google", :testext => true do
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
+    Google::APIClient.stub(:execute).and_raise(StandardError)
+    GoogleTasksListProxy.stub(:new).and_return(@real_google_tasks_list_proxy)
+    GoogleUpdateTaskProxy.stub(:new).and_return(@real_google_update_task_proxy)
+    GoogleClearTaskListProxy.stub(:new).and_return(@real_google_clear_completed_tasks_proxy)
+    my_tasks_model = MyTasks::Merged.new(@user_id)
+    response = my_tasks_model.clear_completed_tasks params={"emitter" => "Google"}
+    response.should == {:tasks_cleared => false}
+    response = my_tasks_model.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "1"}, "1")
+    response.should == {}
+    valid_feed = my_tasks_model.get_feed
+    valid_feed["tasks"].select {|entry| entry["emitter"] == "Google"}.empty?.should be_true
   end
 end
 

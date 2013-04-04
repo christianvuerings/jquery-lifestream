@@ -23,10 +23,12 @@ class MyBadges::GoogleDrive
 
     google_proxy = GoogleDriveListProxy.new(user_id: @uid)
     google_drive_results = google_proxy.drive_list(optional_params={q: query}, page_limiter=@page_limiter)
-    Rails.logger.info "Processing #{google_drive_results.size} pages of drive_list results"
+
     unread_files = 0
-    google_drive_results.each do |response_page|
-      next unless response_page.response.status == 200
+    processed_pages = 0
+    google_drive_results.each_with_index do |response_page, index|
+      Rails.logger.info "Processing page ##{index} of drive_list results"
+      next unless response_page && response_page.response.status == 200
       response_page.data["items"].each do |entry|
         begin
           if (is_recent_message?(entry) && is_unread_message?(entry))
@@ -36,10 +38,11 @@ class MyBadges::GoogleDrive
           Rails.logger.warn "#{e}: #{e.message}: #{entry["createdDate"]}, #{entry["modifiedDate"]}, #{entry["labels"].to_hash}"
         end
       end
+      processed_pages += 1
     end
 
     # Since we're likely looking at partial google drive file list response, add some approximation indication.
-    if google_drive_results.size == @page_limiter
+    if processed_pages == @page_limiter
       unread_files = unread_files.to_s + "+"
     end
     unread_files

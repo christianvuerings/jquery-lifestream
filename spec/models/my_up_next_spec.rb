@@ -4,6 +4,11 @@ describe "MyUpNext" do
   before(:each) do
     @user_id = rand(99999).to_s
     @fake_google_proxy = GoogleEventsListProxy.new({fake: true})
+    @real_events_list = GoogleEventsListProxy.new(
+      :access_token => Settings.google_proxy.test_user_access_token,
+      :refresh_token => Settings.google_proxy.test_user_refresh_token,
+      :expiration_time => 0
+    )
   end
 
   it "should load nicely with the pre-recorded fake Google proxy feed for event#list" do
@@ -59,6 +64,15 @@ describe "MyUpNext" do
       all_day_event_count += 1 if entry["is_all_day"] === true
     end
     all_day_event_count.should be > 0
+  end
+
+  it "should simulate a non-responsive google", :testext => true do
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
+    Google::APIClient.stub(:execute).and_raise(StandardError)
+    GoogleEventsListProxy.stub(:new).and_return(@real_events_list)
+    dead_feed = MyUpNext.new @user_id
+    dead_feed.get_feed.should == {:items => []}
   end
 
 end

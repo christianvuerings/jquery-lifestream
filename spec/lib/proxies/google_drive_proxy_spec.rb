@@ -10,7 +10,7 @@ describe "GoogleDriveListProxy" do
     drive_list_proxy = GoogleDriveListProxy.new :fake => true
     drive_list_proxy.class.api.should == "drive"
     response = drive_list_proxy.drive_list
-    response.kind_of?(Array).should be_true
+    response.kind_of?(Enumerable).should be_true
     response.each do |response_page|
       response_page.status.should == 200
       response_page.data["kind"].should == "drive#fileList"

@@ -43,7 +43,7 @@ class Oauth2Data < ActiveRecord::Base
       authenticated_entry = self.where(uid: user_id, app_id: GoogleProxy::APP_ID).first
       return unless authenticated_entry
       userinfo = GoogleUserinfoProxy.new(user_id: user_id).user_info
-      return unless userinfo.response.status == 200
+      return unless userinfo && userinfo.response.status == 200
       authenticated_entry.app_data["email"] = userinfo.data["email"]
       authenticated_entry.save
     }
