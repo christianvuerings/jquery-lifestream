@@ -49,13 +49,12 @@ class GoogleProxy < BaseProxy
         yielder << result_page
         num_requests += 1
 
-        if result_page.error?
-          Rails.logger.warn "GoogleProxy request stopped on error: #{result_page.response.inspect}"
+        if result_page.nil? || result_page.error?
+          Rails.logger.warn "GoogleProxy request stopped on error: #{result_page ? result_page.response.inspect : "nil"}"
           break
         end
       end while (page_token and under_page_limit_ceiling)
     end
-
     result_pages
   end
 
@@ -74,12 +73,17 @@ class GoogleProxy < BaseProxy
 
   def request_transaction(page_params, num_requests)
     result_page = FakeableProxy.wrap_request("#{APP_ID}#{page_params[:vcr_id]}", @fake, @fake_options) {
-      GoogleProxyClient.request_page(@authorization, page_params)
+      begin
+        GoogleProxyClient.request_page(@authorization, page_params)
+      rescue Exception => e
+        Rails.logger.fatal "#{self.class.name}: #{e.to_s} - Unable to send request transaction"
+        nil
+      end
     }
-    page_token = get_next_page_token result_page
+    page_token = get_next_page_token result_page if result_page
     under_page_limit_ceiling = under_page_limit?(num_requests+1, page_params[:page_limiter])
 
-    if result_page.error?
+    if result_page && result_page.error?
       revoke_invalid_token! result_page
     else
       update_access_tokens!

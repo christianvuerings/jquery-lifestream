@@ -24,7 +24,7 @@ class MyUpNext < MyMergedModel
       # nature of how the data is presented, shouldn't be an issue.
       events_array = google_proxy.events_list(opts)
       events_array.each do |response_page|
-        next unless response_page.response.status == 200
+        next unless response_page && response_page.response.status == 200
 
         response_page.data["items"].each do |entry|
           formatted_entry = {

@@ -4,7 +4,7 @@ class GoogleDeleteTaskListProxy < GoogleTasksProxy
     response = request(:api => "tasks", :resource => "tasklists", :method => "delete",
                        :params => {tasklist: task_list_id}, :vcr_id => "_tasks").first
     #According to the API, empty response body == successful
-    response.data.blank?
+    !response.nil? && response.data.blank?
   end
 
 end

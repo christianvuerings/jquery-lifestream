@@ -5,6 +5,11 @@ describe "MyBadges" do
     @user_id = rand(999999).to_s
     @fake_drive_list = GoogleDriveListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
     @fake_events_list = GoogleEventsListProxy.new(:fake => true)
+    @real_drive_list = GoogleDriveListProxy.new(
+      :access_token => Settings.google_proxy.test_user_access_token,
+      :refresh_token => Settings.google_proxy.test_user_refresh_token,
+      :expiration_time => 0
+    )
   end
 
   it "should be able to filter out entries older than one month" do
@@ -37,6 +42,17 @@ describe "MyBadges" do
         value.should == 0
       end
     }
+  end
+
+  it "should simulate a non-responsive google", :testext => true do
+    GoogleProxy.stub(:access_granted?).and_return(true)
+    Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
+    Google::APIClient.stub(:execute).and_raise(StandardError)
+    GoogleDriveListProxy.stub(:new).and_return(@real_drive_list)
+    badges = MyBadges::Merged.new @user_id
+    badges.get_feed["unread_badge_counts"].each do |key, value|
+      value.should == 0
+    end
   end
 
 end

@@ -16,7 +16,7 @@ class MyTasks::GoogleTasks
 
       Rails.logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
       google_proxy.tasks_list.each do |response_page|
-        next unless response_page.response.status == 200
+        next unless response_page && response_page.response.status == 200
         response_page.data["items"].each do |entry|
           next if entry["title"].blank?
           formatted_entry = format_google_task_response(entry)
@@ -29,7 +29,7 @@ class MyTasks::GoogleTasks
 
   def return_response(response)
     formatted_response = {}
-    if response.response.status == 200
+    if response && response.response.status == 200
       formatted_response = format_google_task_response response.data
     else
       Rails.logger.info "Errors in proxy response: #{response.inspect}"

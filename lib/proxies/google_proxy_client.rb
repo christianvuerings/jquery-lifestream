@@ -5,7 +5,12 @@ class GoogleProxyClient
     end
 
     def discover_resource_method(api, resource, method)
-      discover_api(api).send(resource.to_sym).send(method.to_sym)
+      begin
+        discover_api(api).send(resource.to_sym).send(method.to_sym)
+      rescue Exception => e
+        Rails.logger.fatal "#{name}: #{e.to_s} - Unable to resolve resource method"
+        nil
+      end
     end
 
     def new_fake_auth
@@ -30,7 +35,7 @@ class GoogleProxyClient
       client.authorization = authorization
 
       Rails.logger.debug "Google request is #{request.inspect}"
-      client.execute(request)
+      client.execute!(request)
     end
 
     private

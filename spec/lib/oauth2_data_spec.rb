@@ -5,6 +5,11 @@ describe Oauth2Data do
   before do
     @random_id = rand(999999).to_s
     @fake_google_userinfo = GoogleUserinfoProxy.new(:fake => true).user_info
+    @real_google_userinfo = GoogleUserinfoProxy.new(
+      :access_token => Settings.google_proxy.test_user_access_token,
+      :refresh_token => Settings.google_proxy.test_user_refresh_token,
+      :expiration_time => 0
+    )
   end
 
   it "should not store plaintext access tokens" do
@@ -62,6 +67,16 @@ describe Oauth2Data do
     GoogleUserinfoProxy.any_instance.stub(:user_info).and_return(@fake_google_userinfo)
     Oauth2Data.update_google_email!(@random_id)
     Oauth2Data.get_google_email(@random_id).should == "tammi.chang.clc@gmail.com"
+  end
+
+  it "should simulate a non-responsive google", :testext => true do
+    Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
+    Google::APIClient.stub(:execute).and_raise(StandardError)
+    GoogleUserinfoProxy.stub(:new).and_return(@real_google_userinfo)
+    Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID, "new-token",
+                             "some-token", 1)
+    Oauth2Data.any_instance.should_not_receive(:save)
+    Oauth2Data.update_google_email!(@random_id)
   end
 
   it "should invalidate cache when tokens are deleted" do

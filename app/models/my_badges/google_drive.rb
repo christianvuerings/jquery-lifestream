@@ -28,7 +28,7 @@ class MyBadges::GoogleDrive
     processed_pages = 0
     google_drive_results.each_with_index do |response_page, index|
       Rails.logger.info "Processing page ##{index} of drive_list results"
-      next unless response_page.response.status == 200
+      next unless response_page && response_page.response.status == 200
       response_page.data["items"].each do |entry|
         begin
           if (is_recent_message?(entry) && is_unread_message?(entry))
