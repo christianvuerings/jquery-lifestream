@@ -35,7 +35,7 @@ class GoogleProxyClient
       client.authorization = authorization
 
       Rails.logger.debug "Google request is #{request.inspect}"
-      client.execute!(request)
+      client.execute(request)
     end
 
     private
