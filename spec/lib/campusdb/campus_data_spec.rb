@@ -24,7 +24,7 @@ describe CampusData do
       data['cal_residency_flag'].should == "N"
       data[:roles][:student].should == true
       data[:roles][:faculty].should == false
-      data[:roles][:staff].should == false
+      data[:roles][:staff].should == true
     end
   end
 
