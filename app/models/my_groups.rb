@@ -24,6 +24,8 @@ class MyGroups < MyMergedModel
         end
       end
     end
+    rescue JSON::ParserError
+      Rails.logger.warn "Failed to parse canvas_groups.body: #{canvas_groups.body} in #{self.class.name}."
     if CalLinkProxy.access_granted?(@uid)
       membership_proxy = CalLinkMembershipsProxy.new({:user_id => @uid})
       if (cal_link_groups = membership_proxy.get_memberships)
