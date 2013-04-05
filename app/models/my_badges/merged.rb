@@ -13,7 +13,8 @@ class MyBadges::Merged < MyMergedModel
       "bdrive" => {access_granted: GoogleProxy.access_granted?(@uid),
                    source: MyBadges::GoogleDrive.new(@uid),
                    pseudo_enabled: GoogleProxy.allow_pseudo_user?},
-      "bmail" => {access_granted: false}
+      "bmail" => {access_granted: GoogleProxy.access_granted?(@uid),
+                   source: MyBadges::GoogleMail.new(@uid)}
     }
     @service_list ||= @enabled_sources.keys.to_a
     @enabled_sources.select!{|k,v| v[:access_granted] == true}

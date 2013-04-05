@@ -1,0 +1,72 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://mail.google.com/mail/feed/atom/",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "CalCentral/v1 google-api-ruby-client/0.6.2 Mac OS X/10.7.5"
+          ],
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "content-type": [
+            "text/xml; charset=UTF-8"
+          ],
+          "set-cookie": [
+          ],
+          "date": [
+            "Fri, 05 Apr 2013 00:48:45 GMT"
+          ],
+          "expires": [
+            "Fri, 05 Apr 2013 00:48:45 GMT"
+          ],
+          "cache-control": [
+            "private, max-age=0"
+          ],
+          "x-content-type-options": [
+            "nosniff"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-xss-protection": [
+            "1; mode=block"
+          ],
+          "server": [
+            "GSE"
+          ],
+          "connection": [
+            "close"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<feed version=\"0.3\" xmlns=\"http://purl.org/atom/ns#\">\n<title>Gmail - Inbox for someone@berkeley.edu</title>\n\n<tagline>New messages in your Gmail Inbox</tagline>\n\n<fullcount>3</fullcount>\n\n<link href=\"http://mail.google.com/mail\" rel=\"alternate\" type=\"text/html\"/>\n\n\n<modified>2013-04-04T23:17:40Z</modified>\n\n<entry>\n<title>Customize Gmail with colors and themes</title>\n\n<summary>To spice up your inbox with colors and themes, check out the Themes tab under Settings. Customize</summary>\n\n<link href=\"http://mail.google.com/mail?account_id=someone@berkeley.edu&amp;message_id=1387c850861e7a48&amp;view=conv&amp;extsrc=atom\" rel=\"alternate\" type=\"text/html\"/>\n\n\n<modified>2012-07-12T18:48:09Z</modified>\n\n<issued>2012-07-12T18:48:09Z</issued>\n\n<id>tag:gmail.google.com,2004:1407313656749652552</id>\n\n<author>\n<name>Gmail Team</name>\n\n<email>mail-noreply@google.com</email>\n\n</author>\n\n</entry>\n\n<entry>\n<title>Get Gmail on your mobile phone</title>\n\n<summary>Access Gmail on your mobile phone The days of needing your computer to get to your inbox are long</summary>\n\n<link href=\"http://mail.google.com/mail?account_id=someone@berkeley.edu&amp;message_id=1387c85060883cf9&amp;view=conv&amp;extsrc=atom\" rel=\"alternate\" type=\"text/html\"/>\n\n\n<modified>2012-07-12T18:48:09Z</modified>\n\n<issued>2012-07-12T18:48:09Z</issued>\n\n<id>tag:gmail.google.com,2004:1407313656119049465</id>\n\n<author>\n<name>Gmail Team</name>\n\n<email>mail-noreply@google.com</email>\n\n</author>\n\n</entry>\n\n<entry>\n<title>Get started with Gmail</title>\n\n<summary>4 things you need to know Gmail is a little bit different. Learn these 4 basics and you'll never</summary>\n\n<link href=\"http://mail.google.com/mail?account_id=someone@berkeley.edu&amp;message_id=1387c8505a277bb4&amp;view=conv&amp;extsrc=atom\" rel=\"alternate\" type=\"text/html\"/>\n\n\n<modified>2012-07-12T18:48:08Z</modified>\n\n<issued>2012-07-12T18:48:08Z</issued>\n\n<id>tag:gmail.google.com,2004:1407313656012045236</id>\n\n<author>\n<name>Gmail Team</name>\n\n<email>mail-noreply@google.com</email>\n\n</author>\n\n</entry>\n\n</feed>\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 05 Apr 2013 00:48:45 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.4.0"
+}

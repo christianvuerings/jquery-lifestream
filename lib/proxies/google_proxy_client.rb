@@ -1,3 +1,5 @@
+require 'google/api_client'
+
 class GoogleProxyClient
   class << self
     def client
