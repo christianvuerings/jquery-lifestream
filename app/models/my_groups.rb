@@ -13,14 +13,18 @@ class MyGroups < MyMergedModel
     if CanvasProxy.access_granted?(@uid)
       canvas_proxy = CanvasGroupsProxy.new(user_id: @uid)
       if (canvas_groups = canvas_proxy.groups)
-        JSON.parse(canvas_groups.body).each do |group|
-          response[:groups].push({
-                                     title: group["name"],
-                                     id: group["id"].to_s,
-                                     emitter: CanvasProxy::APP_ID,
-                                     color_class: "canvas-group",
-                                     site_url: "#{canvas_proxy.url_root}/groups/#{group['id']}"
-                                 })
+        begin
+          JSON.parse(canvas_groups.body).each do |group|
+            response[:groups].push({
+                                       title: group["name"],
+                                       id: group["id"].to_s,
+                                       emitter: CanvasProxy::APP_ID,
+                                       color_class: "canvas-group",
+                                       site_url: "#{canvas_proxy.url_root}/groups/#{group['id']}"
+                                   })
+          end
+        rescue JSON::ParserError
+          Rails.logger.warn "Failed to parse canvas_groups.body: #{canvas_groups.body} in #{self.class.name}."
         end
       end
     end
