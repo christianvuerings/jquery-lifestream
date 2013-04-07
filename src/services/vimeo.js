@@ -9,7 +9,7 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
   config.template),
 
   parseVimeo = function( input, item_type ) {
-    var output = [], i = 0, j, item, type = item_type || 'liked', date;
+    var output = [], i = 0, j, item, type = item_type || 'liked', date, description;
 
     if (input) {
       j = input.length;
@@ -21,44 +21,49 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
           date = new Date( item.liked_on.replace(' ', 'T') );
         }
 
+        if (item.description) {
+          description = item.description.replace(/"/g, "'").replace( /<.+?>/gi, "");
+        } else {
+          description = '';
+        }
+
         output.push({
           date: date,
           config: config,
           html: $.tmpl( template[type], {
             url: item.url,
-            description: item.description.replace(/"/g, "'")
-              .replace( /<.+?>/gi, ""),
+            description: description,
             title: item.title
           })
         });
       }
     }
-    
+
     return output;
   };
-  
+
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('SELECT * FROM xml WHERE '
-      + 'url="http://vimeo.com/api/v2/' + config.user + '/likes.xml" OR '
-      + 'url="http://vimeo.com/api/v2/' + config.user + '/videos.xml"'),
+    url: $.fn.lifestream.createYqlUrl('SELECT * FROM xml WHERE ' +
+      'url="http://vimeo.com/api/v2/' + config.user + '/likes.xml" OR ' +
+      'url="http://vimeo.com/api/v2/' + config.user + '/videos.xml"'),
     dataType: "jsonp",
     success: function( response ) {
       var output = [];
-      
+
       // check for likes & parse
       if ( response.query.results.videos[0].video.length > 0 ) {
         output = output.concat(parseVimeo(
           response.query.results.videos[0].video
         ));
       }
-  
+
       // check for uploads & parse
       if ( response.query.results.videos[1].video.length > 0 ) {
         output = output.concat(
           parseVimeo(response.query.results.videos[1].video, 'posted')
         );
       }
-  
+
       callback(output);
     }
   });
