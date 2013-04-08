@@ -56,7 +56,7 @@ gem 'nokogiri', "~> 1.5.6"
 group :assets do
 
   # Our very own library for angular dependency!
-  gem "angular-gem", "~> 1.1.3"
+  gem "angular-gem", "1.1.3"
 
   # Datepicker
   gem "pikaday-gem", "~> 1.0.0.2"
@@ -79,6 +79,9 @@ group :assets do
   # Moment.js
   # https://github.com/derekprior/momentjs-rails
   gem "momentjs-rails", "~> 2.0.0.1"
+
+  # Raven.js - library for JS error logging
+  gem "ravenjs-gem", "~> 1.0.7.0"
 end
 
 # Oracle adapter

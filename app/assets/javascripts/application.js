@@ -12,6 +12,7 @@
 //
 //= require moment
 //= require_tree ./lib
+//= require raven
 //= require pikaday
 //= require angular-unstable
 //= require angular-sanitize-unstable
