@@ -89,10 +89,8 @@ Calcentral::Application.routes.draw do
   match '/login' => 'sessions#new', :as => :login
   match '/basic_auth_login' => 'sessions#basic_lookup' if Settings.developer_auth.enabled
 
-  if Settings.features.act_as
-    match '/act_as' => 'sessions#act_as'
-    match '/stop_act_as' => 'sessions#stop_act_as'
-  end
+  match '/act_as' => 'sessions#act_as'
+  match '/stop_act_as' => 'sessions#stop_act_as'
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
