@@ -5,19 +5,27 @@
   angular.module('calcentral.services').service('apiService', [
     'analyticsService',
     'dateService',
+    'errorService',
     'popoverService',
     'utilService',
     'widgetService',
-    function(analyticsService, dateService, popoverService, utilService, widgetService) {
+    function(
+      analyticsService,
+      dateService,
+      errorService,
+      popoverService,
+      utilService,
+      widgetService) {
 
     // API
-    var api = {};
-
-    api.analytics = analyticsService;
-    api.date = dateService;
-    api.popover = popoverService;
-    api.util = utilService;
-    api.widget = widgetService;
+    var api = {
+      analytics: analyticsService,
+      date: dateService,
+      error: errorService,
+      popover: popoverService,
+      util: utilService,
+      widget: widgetService
+    };
 
     return api;
 

@@ -89,6 +89,10 @@ blog_latest_release_notes_feed_proxy:
 # This will need to be different for every server (dev/qa/production)
 google_analytics_id: UA-XXXXXX-X
 
+# Sentry URL
+# We use https://getsentry.com for our JavaScript Error logging
+sentry_url: "https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185"
+
 # Cache settings
 cache:
   # Array of server addresses in cluster (for memcached)

@@ -1,0 +1,25 @@
+(function(angular, Raven) {
+
+  'use strict';
+
+  angular.module('calcentral.services').service('errorService', [function() {
+
+    Raven.config('<%= Settings.sentry_url %>').install();
+
+    /**
+     * Send an error exception
+     * @param {String} exception The exception you want to send
+     */
+    var send = function(exception) {
+      exception = exception.message || exception;
+      Raven.captureException(exception);
+    };
+
+    // Expose methods
+    return {
+      send: send
+    };
+
+  }]);
+
+}(window.angular, window.Raven));
