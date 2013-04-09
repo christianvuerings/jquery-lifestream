@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  after_filter :access_log
 
   def authenticate
     redirect_to login_url unless session[:user_id]
@@ -25,6 +26,19 @@ class ApplicationController < ActionController::Base
     Rails.logger.info "Clearing all cache entries"
     Rails.cache.clear
     render :nothing => true, :status => 204
+  end
+
+  private
+
+  def access_log
+    line = "ACCESS_LOG #{request.request_method} #{request.fullpath} #{status}"
+    if session[:original_user_id]
+      line += " uid=#{session[:original_user_id]}_acting_as_uid=#{session[:user_id]}"
+    else
+      line += " uid=#{session[:user_id]}"
+    end
+    line += " class=#{self.class.name} action=#{params["action"]} view=#{view_runtime}ms db=#{db_runtime}ms"
+    logger.warn line
   end
 
 end
