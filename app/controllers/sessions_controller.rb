@@ -37,6 +37,7 @@ class SessionsController < ApplicationController
     end
     Rails.logger.warn "ACT-AS: User #{session[:original_user_id]} acting as #{session[:user_id]} ends"
     session[:user_id] = session[:original_user_id]
+    session[:original_user_id] = nil
     redirect_to '/dashboard', :notice => "Restoring session as user: #{session[:user_id]}"
   end
 
