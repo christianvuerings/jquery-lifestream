@@ -41,7 +41,6 @@ class MyRegBlocks < MyMergedModel
       end
 
       reg_block = {
-        is_active: is_active,
         status: status,
         type: type,
         blocked_date: format_date(blocked_date, "%-m/%d/%Y"),
