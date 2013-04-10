@@ -28,6 +28,7 @@ module Calcentral
 
         MyBadges::GoogleCalendar => :expire,
         MyBadges::GoogleDrive => :expire,
+        MyBadges::GoogleMail => :expire,
         MyTasks::GoogleTasks => :expire,
 
         SakaiProxy => :expire

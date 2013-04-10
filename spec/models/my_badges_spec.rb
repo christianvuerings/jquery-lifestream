@@ -5,6 +5,7 @@ describe "MyBadges" do
     @user_id = rand(999999).to_s
     @fake_drive_list = GoogleDriveListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
     @fake_events_list = GoogleEventsListProxy.new(:fake => true)
+    @fake_mail_list = GoogleMailListProxy.new(:fake => true)
     @real_drive_list = GoogleDriveListProxy.new(
       :access_token => Settings.google_proxy.test_user_access_token,
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
@@ -33,13 +34,18 @@ describe "MyBadges" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
     GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
+    GoogleMailListProxy.stub(:new).and_return(@fake_mail_list)
     MyBadges::GoogleDrive.any_instance.stub(:is_unread_message?).and_raise(ArgumentError, "foo")
     badges = MyBadges::Merged.new @user_id
     suppress_rails_logging {
       filtered_feed =  badges.get_feed
       filtered_feed["unread_badge_counts"].empty?.should_not be_true
       filtered_feed["unread_badge_counts"].each do |key, value|
-        value.should == 0
+        if key == "bmail"
+          value.should_not == 0
+        else
+          value.should == 0
+        end
       end
     }
   end
