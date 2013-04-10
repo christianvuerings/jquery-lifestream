@@ -7,7 +7,6 @@ class MyBadges::GoogleMail < BaseProxy
 
   def fetch_counts(params = {})
     self.class.fetch_from_cache(@uid) do
-      Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{@atom_feed} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
       internal_fetch_counts params
     end
   end

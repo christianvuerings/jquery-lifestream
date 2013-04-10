@@ -1,12 +1,5 @@
 class GoogleMailListProxy < BaseProxy
 
-  class << self
-    def atom_feed
-      @atom_feed ||= 'https://mail.google.com/mail/feed/atom/'
-    end
-  end
-
-
   def initialize(options = {})
     super(Settings.google_proxy, options)
 
@@ -27,11 +20,12 @@ class GoogleMailListProxy < BaseProxy
   def mail_unread
     FakeableProxy.wrap_request("#{GoogleProxy::APP_ID}_mail", @fake, @fake_options) {
       begin
+        Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{Settings.google_proxy.atom_mail_feed_url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
         client = GoogleProxyClient.client.dup
         client.authorization = @authorization
         client.execute(
           :http_method => :get,
-          :uri => self.class.atom_feed,
+          :uri => Settings.google_proxy.atom_mail_feed_url,
           :authenticated => true
         )
       rescue Exception => e
