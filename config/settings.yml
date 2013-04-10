@@ -59,7 +59,6 @@ google_proxy:
   #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
   test_user_access_token: "someMumboJumbo"
   test_user_refresh_token: "someMumboJumbo"
-  # Not technically part of the Google Proxies:
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
 sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"

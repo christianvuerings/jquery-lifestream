@@ -1,4 +1,4 @@
-class MyBadges::GoogleMail < BaseProxy
+class MyBadges::GoogleMail
   include MyBadges::BadgesModule
 
   def initialize(uid)
