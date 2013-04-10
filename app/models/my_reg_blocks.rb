@@ -22,14 +22,27 @@ class MyRegBlocks < MyMergedModel
       rescue ArgumentError # no date
       end
 
+      is_active = cleared_date.nil?
       type = block.css("blockType").text.strip
       status = block.css("status").text.strip
+
       reason = block.css("reason")
+      if reason.empty?
+        reason = ""
+      else
+        reason = reason.text.strip
+      end
+
       office = block.css("office")
-      is_active = cleared_date.nil?
+      if office.empty?
+        office = ""
+      else
+        office = office.text.strip
+      end
 
       reg_block = {
         is_active: is_active,
+        status: status,
         type: type,
         blocked_date: format_date(blocked_date, "%-m/%d/%Y"),
         cleared_date: format_date(cleared_date, "%-m/%d/%Y"),
