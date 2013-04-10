@@ -56,6 +56,12 @@ class CanvasUserActivityProcessor
       formatted_entry[:date] = format_date date
 
       feed << formatted_entry
+
+      # Some assignments have been graded - append score and comments to summary
+      if entry["score"] && entry["assignment"]["points_possible"]
+        formatted_entry[:summary] += process_score(entry)
+      end
+
     end
     feed
   end
@@ -112,6 +118,23 @@ class CanvasUserActivityProcessor
     else
       message_partial
     end
+  end
+
+  def process_score(entry)
+    # Assignments may have a grade and one or more comments
+    score_message = entry["score"].to_s + " out of " + entry["assignment"]["points_possible"].to_s
+
+    if entry["submission_comments"].length > 0
+      if (entry["submission_comments"].length == 1)
+        msg = entry["submission_comments"][0]["body"]
+      end
+
+      if (entry["submission_comments"].length > 1)
+        msg = entry["submission_comments"].length.to_s + " comments"
+      end
+      score_message += " - " + msg
+    end
+    score_message
   end
 
   def filter_classes(classes = [])
