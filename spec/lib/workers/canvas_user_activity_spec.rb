@@ -55,6 +55,18 @@ describe "CanvasUserActivityHandler" do
     activities.size.should == 18
   end
 
+  it "should sometimes have score and instructor message appended to the summary field" do
+    # Search for a particular entry in the cassette and make sure it's appended to properly
+    CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return(@fake_feed)
+    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
+    activities = handler.get_feed_results
+    activities.each do | activity |
+      if activity[:id] == "canvas_40544495" && activity[:title] == "Midterm"
+        activity[:summary].should eq("Please write more neatly next time. 87 out of 100 - Good work!")
+      end
+    end
+  end
+
   describe "CanvasUserActivityFailures", :suppress_celluloid_logger => true do
 
     before :all do

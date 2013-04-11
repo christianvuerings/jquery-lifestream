@@ -476,6 +476,7 @@
               "type": "Submission",
               "attempt": 1,
               "body": null,
+              "message": "Please write more neatly next time.",
               "score": 87,
               "submission_comments": [
                 {
@@ -483,7 +484,7 @@
                   "created_at": "2012-12-28T12:46:43-08:00",
                   "author_id": 3075912,
                   "comment": "her",
-                  "body": "her"
+                  "body": "Good work!"
                 }
               ],
               "course_id": 833384,
