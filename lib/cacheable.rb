@@ -15,7 +15,7 @@ module Calcentral
 
     def expires_in
       expirations = Settings.cache.expiration.marshal_dump
-      expirations[self.name.to_sym] || expirations.default
+      expirations[self.name.to_sym] || expirations[:default]
     end
 
     def cache_key(uid)
