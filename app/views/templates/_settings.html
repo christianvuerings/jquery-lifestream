@@ -29,5 +29,28 @@
       data-ng-click="user._redirectToDashboardPage()">&laquo; Take me to my Dashboard
     </button>
 
+    <div data-ng-show="user.profile.is_admin || user.profile.is_acting_as" data-ng-controller="AdminController">
+      <h2>Admin</h2>
+      <h3>Act as</h3>
+      <form data-ng-submit="admin.actAs()">
+        <div class="row">
+          <div class="small-3 columns">
+            <label for="cc-settings-act-as-uid">Uid</label>
+          </div>
+          <div class="small-9 columns">
+            <input id="cc-settings-act-as-uid" data-ng-model="admin.act_as.uid" type="text" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-9 small-offset-3 columns">
+            <button class="radius button medium" id="cc-settings-act-as-submit" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+      <form data-ng-show="user.profile.is_acting_as" data-ng-submit="admin.stopActAs()">
+        <button class="radius button medium" id="cc-settings-act-as-stop-submit" type="submit">Stop acting as</button>
+      </form>
+    </div>
+
   </div>
 </script>

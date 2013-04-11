@@ -49,7 +49,9 @@ class SessionsController < ApplicationController
       Rails.logger.debug "Clearing connections for thread and other dead threads due to user logout: #{self.object_id}"
       ActiveRecord::Base.clear_active_connections!
     end
-    redirect_to "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
+    render :json => {
+      :redirect_url => "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
+    }.to_json
   end
 
   def new

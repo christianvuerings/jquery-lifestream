@@ -72,7 +72,7 @@ Calcentral::Application.routes.draw do
 
   match '/api/blog/release_notes/latest' => 'blog_feed#get_latest_release_notes', :as => :blog_latest_release_notes, :defaults => { :format => 'json' }
 
-  match '/api/my/opt_out'=> 'user_api#delete'
+  match '/api/my/opt_out'=> 'user_api#delete', :via => :post
   match '/api/clear_cache' => 'application#clear_cache'
 
   match '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
@@ -85,12 +85,12 @@ Calcentral::Application.routes.draw do
 
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
-  match '/logout' => 'sessions#destroy', :as => :logout
+  match '/logout' => 'sessions#destroy', :as => :logout, :via => :post
   match '/login' => 'sessions#new', :as => :login
   match '/basic_auth_login' => 'sessions#basic_lookup' if Settings.developer_auth.enabled
 
-  match '/act_as' => 'sessions#act_as'
-  match '/stop_act_as' => 'sessions#stop_act_as'
+  match '/act_as' => 'sessions#act_as', :via => :post
+  match '/stop_act_as' => 'sessions#stop_act_as', :via => :post
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true

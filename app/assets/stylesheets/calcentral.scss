@@ -94,7 +94,11 @@ button {
   &:hover, &:focus {
     cursor: pointer;
     text-decoration: underline;
-    color: $cc-medium-grey;
+  }
+  &[type="reset"] {
+    &:focus, &:hover {
+      color: $cc-medium-grey;
+    }
   }
 }
 .button {
