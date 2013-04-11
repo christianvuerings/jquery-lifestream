@@ -120,17 +120,17 @@ class CanvasUserActivityProcessor
     # Some assignments have been graded - append score and comments to summary
     if entry["score"] && entry["assignment"] && entry["assignment"]["points_possible"]
 
-      score_message = " " + entry["score"].to_s + " out of " + entry["assignment"]["points_possible"].to_s
+      score_message = " #{entry["score"].to_s} out of #{entry["assignment"]["points_possible"].to_s}"
 
       if entry["submission_comments"].length > 0
         if (entry["submission_comments"].length == 1)
-          msg = entry["submission_comments"][0]["body"]
+          msg = entry["submission_comments"].first["body"]
         end
 
         if (entry["submission_comments"] && entry["submission_comments"].length > 1)
           msg = entry["submission_comments"].length.to_s + " comments"
         end
-        score_message += " - " + msg
+        score_message += " - #{msg}"
       end
     end
     score_message || ""

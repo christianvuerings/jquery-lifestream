@@ -60,11 +60,8 @@ describe "CanvasUserActivityHandler" do
     CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return(@fake_feed)
     handler = CanvasUserActivityHandler.new({:user_id => @random_id})
     activities = handler.get_feed_results
-    activities.each do | activity |
-      if activity[:id] == "canvas_40544495" && activity[:title] == "Midterm"
-        activity[:summary].should eq("Please write more neatly next time. 87 out of 100 - Good work!")
-      end
-    end
+    activity = activities.select {|entry| entry[:id] == "canvas_40544495"}.first
+    activity[:summary].should eq("Please write more neatly next time. 87 out of 100 - Good work!")
   end
 
   describe "CanvasUserActivityFailures", :suppress_celluloid_logger => true do
