@@ -98,7 +98,7 @@ sentry_url: "https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185"
 cache:
   # Array of server addresses in cluster (for memcached)
   servers: ["localhost"]
-  maximum_expires_in: <%= 1.day %>
+  maximum_expires_in: <%= 48.hours %>
   race_condition_ttl: <%= 10.seconds %>
   expiration:
     default: <%= 5.minutes %>
