@@ -18,11 +18,11 @@ module IntegrationSpecHelper
   end
 
   def act_as_user(uid)
-    visit "/act_as?uid=#{uid}"
+    page.driver.post "/act_as", :uid => uid
   end
 
   def stop_act_as_user
-    visit "/stop_act_as"
+    page.driver.post "/stop_act_as"
   end
 
   def break_cas

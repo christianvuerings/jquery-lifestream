@@ -6,7 +6,8 @@ class UserApiController < ApplicationController
       user_data = UserApi.new(session[:user_id]).get_feed
       render :json => {
           :is_logged_in => true,
-          :features => Settings.features.marshal_dump
+          :features => Settings.features.marshal_dump,
+          :is_acting_as => is_acting_as_someone_else?
       }.merge!(user_data).to_json
     else
       render :json => {
@@ -28,6 +29,16 @@ class UserApiController < ApplicationController
       UserApi.delete(session[:user_id])
     end
     redirect_to "/logout"
+  end
+
+  private
+
+  def is_acting_as_someone_else?
+    if session[:original_user_id] && session[:user_id]
+      return session[:original_user_id] != session[:user_id]
+    else
+      return false
+    end
   end
 
 end

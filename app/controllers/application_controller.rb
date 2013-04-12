@@ -6,6 +6,13 @@ class ApplicationController < ActionController::Base
     redirect_to login_url unless session[:user_id]
   end
 
+  # override of Rails default behavior:
+  # reset session AND return 401 when CSRF token validation fails
+  def handle_unverified_request
+    reset_session
+    render :nothing => true, :status => 401
+  end
+
   # Rails url_for defaults the protocol to "request.protocol". But if SSL is being
   # provided by Apache or Nginx, the reported protocol will be "http://". To fix
   # callback URLs, we need to override.

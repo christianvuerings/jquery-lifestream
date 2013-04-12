@@ -88,6 +88,7 @@ class UserApi < MyMergedModel
     end
 
     {
+      :is_admin => UserAuth.is_superuser?(@uid),
       :first_login_at => @first_login_at,
       :first_name => @first_name,
       :full_name => @first_name + ' ' + @last_name,
