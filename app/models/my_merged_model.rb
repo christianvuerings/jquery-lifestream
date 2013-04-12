@@ -21,7 +21,7 @@ class MyMergedModel
     uid = @uid
     uid = Calcentral::PSEUDO_USER_PREFIX.concat(@uid) if is_acting_as_nonfake_user?
 
-    self.class.fetch_from_cache @uid do
+    self.class.fetch_from_cache uid do
       init
       get_feed_internal(*opts)
     end
