@@ -69,37 +69,41 @@ class SakaiSiteAnnouncementsProxy < SakaiProxy
       }.join
       ann['summary'] = message_text.squish.truncate(@message_max_length)
       ann['title'] = doc.at_xpath('header')['subject']
-      # Relative-url '/content/attachment/XXX/Announcements/YYY/FILE NAME.EXT' becomes link
-      # 'https://HOST/access/content/attachment/XXX/Announcements/YYY/FILE%20NAME.EXT'.
-      doc.xpath('header/attachment').each do |el|
-        ann['attachments'] ||= []
-        if (url = el['relative-url'])
-          ann['attachments'].push(attachment_url(url))
-        else
-          Rails.logger.warn("Unexpected attachment element: #{el}")
+      # Only include site-wide announcements in this feed.
+      access_type = doc.at_xpath('header')['access']
+      if (access_type == 'channel')
+        # Relative-url '/content/attachment/XXX/Announcements/YYY/FILE NAME.EXT' becomes link
+        # 'https://HOST/access/content/attachment/XXX/Announcements/YYY/FILE%20NAME.EXT'.
+        doc.xpath('header/attachment').each do |el|
+          ann['attachments'] ||= []
+          if (url = el['relative-url'])
+            ann['attachments'].push(attachment_url(url))
+          else
+            Rails.logger.warn("Unexpected attachment element: #{el}")
+          end
         end
-      end
-      doc.xpath('properties/property').each do |prop|
-        name = prop['name']
-        case name
-          # Notification levels: 'r' for required; 'n' for none; 'o' for optional
-          #
-          # "assignmentReference"=> "/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5"}
-          # shows as:
-          # <a href="https://HOST/portal/directtool/37c2f61c-66f9-4abb-bb07-a9e6670d4bcd?assignmentId=/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5&panel=Main&sakai_action=doView_assignment">Do this then do that</a>
-          when 'notificationLevel', 'assignmentReference'
-            ann[name] = Base64.decode64(prop['value'])
-          # Release and retract times are in the bizarre UTC format: '20130118060000000'
-          when 'releaseDate', 'retractDate'
-            ann[name] = DateTime.strptime(Base64.decode64(prop['value']), '%Y%m%d%H%M%S%L')
+        doc.xpath('properties/property').each do |prop|
+          name = prop['name']
+          case name
+            # Notification levels: 'r' for required; 'n' for none; 'o' for optional
+            #
+            # "assignmentReference"=> "/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5"}
+            # shows as:
+            # <a href="https://HOST/portal/directtool/37c2f61c-66f9-4abb-bb07-a9e6670d4bcd?assignmentId=/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5&panel=Main&sakai_action=doView_assignment">Do this then do that</a>
+            when 'notificationLevel', 'assignmentReference'
+              ann[name] = Base64.decode64(prop['value'])
+            # Release and retract times are in the bizarre UTC format: '20130118060000000'
+            when 'releaseDate', 'retractDate'
+              ann[name] = DateTime.strptime(Base64.decode64(prop['value']), '%Y%m%d%H%M%S%L')
+          end
         end
+        ann
+      else
+        nil
       end
-      ann
     else
       # The only other sort of CHANNEL_ID I've seen supports the bSpace-wide "Message of the Day"
       # feature, at '/announcement/channel/!site/motd'.
-      # Sakai CLE also supposedly allows announcements targeting specific groups within
-      # a site, but I haven't seen that in the wild yet.
       if channel_id != '/announcement/channel/!site/motd'
         Rails.logger.warn("Skipping siteless announcement for #{channel_id}")
       end
