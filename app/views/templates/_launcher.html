@@ -14,20 +14,20 @@
 
           <a href="http://bmail.berkeley.edu"
             class="cc-left cc-icon cc-icon-mail" title="Unread bMail messages from the past 30 days"
-            data-bubble="{{unread_badge_counts.bmail}}"
-            data-ng-class="{'cc-bubble-count':(unread_badge_counts.bmail)}"
+            data-bubble="{{unread_badge_counts.bmail.count}}"
+            data-ng-class="{'cc-bubble-count':(unread_badge_counts.bmail.count)}"
           >bMail</a>
 
           <a href="http://bcal.berkeley.edu"
             class="cc-left cc-icon cc-icon-calendar" title="Outstanding bCal activity for the next 30 days"
-            data-bubble="{{unread_badge_counts.bcal}}"
-            data-ng-class="{'cc-bubble-count':(unread_badge_counts.bcal)}"
+            data-bubble="{{unread_badge_counts.bcal.count}}"
+            data-ng-class="{'cc-bubble-count':(unread_badge_counts.bcal.count)}"
           >bCal</a>
 
           <a href="http://bdrive.berkeley.edu"
             class="cc-left cc-icon cc-icon-drive" title="Changes to bDrive documents made in the past 30 days"
-            data-bubble="{{unread_badge_counts.bdrive}}"
-            data-ng-class="{'cc-bubble-count':(unread_badge_counts.bdrive)}"
+            data-bubble="{{unread_badge_counts.bdrive.count}}"
+            data-ng-class="{'cc-bubble-count':(unread_badge_counts.bdrive.count)}"
           >bDrive</a>
 
         </div>

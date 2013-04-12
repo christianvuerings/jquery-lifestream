@@ -1,0 +1,197 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&fields=items(htmlLink,created,updated,creator,summary,start,end)&maxResults=20&orderBy=startTime&singleEvents=true&timeMin=:::TODAY:::&updatedMin=:::TWO_WEEKS_AGO:::",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "CalCentral/v1 google-api-ruby-client/0.6.2 Mac OS X/10.7.5"
+          ],
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "Accept": [
+            "*/*"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Expires": [
+            "Wed, 10 Apr 2013 22:12:37 GMT"
+          ],
+          "Date": [
+            "Wed, 10 Apr 2013 22:12:37 GMT"
+          ],
+          "Cache-Control": [
+            "private, max-age=0, must-revalidate, no-transform"
+          ],
+          "Etag": [
+            "\"u8HjymhgSOhDTYSSLBaYUIuJH94/TUTYsh-YkpbPT0AOHhm6XLiLbt4\""
+          ],
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ],
+          "X-Content-Type-Options": [
+            "nosniff"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Xss-Protection": [
+            "1; mode=block"
+          ],
+          "Server": [
+            "GSE"
+          ],
+          "Transfer-Encoding": [
+            "chunked"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "items": [
+              {
+                "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDEwVDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+                "created": "1900-01-01T12:00:00.000Z",
+                "updated": "2013-04-10T22:11:18.623Z",
+                "summary": "EE 20N Discussion",
+                "creator": {
+                  "email": "tammi.chang.clc@gmail.com",
+                  "displayName": "Tammi Chang",
+                  "self": true
+                },
+                "start": {
+                  "dateTime": "2013-04-10T09:00:00-07:00"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                }
+              },
+              {
+                "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTBUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+                "created": "1900-01-01T12:00:00.000Z",
+                "updated": "2013-04-10T22:11:01.524Z",
+                "creator": {
+                  "email": "tammi.chang.clc@gmail.com",
+                  "displayName": "Tammi Chang",
+                  "self": true
+                },
+                "start": {
+                  "dateTime": "2013-04-10T10:00:00-07:00"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                }
+              },
+              {
+                "htmlLink": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTBUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+                "created": "1900-01-01T12:00:00.000Z",
+                "updated": "2013-04-10T22:07:45.144Z",
+                "summary": "PHYSICS 7B Lecture",
+                "creator": {
+                  "email": "tammi.chang.clc@gmail.com",
+                  "displayName": "Tammi Chang",
+                  "self": true
+                },
+                "start": {
+                  "date": "2013-04-10"
+                },
+                "end": {
+                  "date": ":::TOMORROW_NO_TIME:::"
+                }
+              },
+              {
+                "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDEwVDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+                "created": "2013-04-10T22:08:58.577Z",
+                "updated": "2013-04-10T22:08:58.577Z",
+                "summary": "MATH 53 Discussion",
+                "creator": {
+                  "email": "tammi.chang.clc@gmail.com",
+                  "displayName": "Tammi Chang",
+                  "self": true
+                },
+                "start": {
+                  "dateTime": "2013-04-10T13:00:00-07:00"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                }
+              },
+              {
+                "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDExVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+                "created": "1900-01-01T12:00:00.000Z",
+                "updated": "2013-04-10T22:07:14.248Z",
+                "summary": "EE 20N Lecture",
+                "creator": {
+                  "email": "tammi.chang.clc@gmail.com",
+                  "displayName": "Tammi Chang",
+                  "self": true
+                },
+                "start": {
+                  "dateTime": "2013-04-11T12:30:00-07:00"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                }
+              },
+              {
+                "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTFUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+                "created": "1900-01-01T12:00:00.000Z",
+                "updated": "2013-04-10T22:08:35.902Z",
+                "summary": "ETH STD 21AC",
+                "creator": {
+                  "email": "tammi.chang.clc@gmail.com",
+                  "displayName": "Tammi Chang",
+                  "self": true
+                },
+                "start": {
+                  "dateTime": "2013-04-11T14:00:00-07:00"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                }
+              },
+              {
+                "htmlLink": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTJUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+                "created": "1900-01-01T12:00:00.000Z",
+                "updated": "2013-04-10T22:07:45.144Z",
+                "summary": "PHYSICS 7B Lecture",
+                "creator": {
+                  "email": "tammi.chang.clc@gmail.com",
+                  "displayName": "Tammi Chang",
+                  "self": true
+                },
+                "start": {
+                  "dateTime": "2013-04-12T11:00:00-07:00"
+                },
+                "end": {
+                  "dateTime": ":::TOMORROW:::"
+                }
+              }
+            ]
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Wed, 10 Apr 2013 22:12:37 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.4.0"
+}

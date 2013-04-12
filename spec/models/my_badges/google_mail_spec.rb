@@ -11,7 +11,7 @@ describe "MyBadges" do
     GoogleMailListProxy.stub(:new).and_return(@fake_mail_list)
 
     unread = MyBadges::GoogleMail.new @user_id
-    unread.fetch_counts.should == 3
+    unread.fetch_counts[:count].should == 3
   end
 
   it "Unauthenticated users should have zero unread bMail messages" do
