@@ -22,6 +22,7 @@ class MyBadges::GoogleCalendar
     google_calendar_results.each do |response_page|
       next unless response_page && response_page.response.status == 200
       response_page.data["items"].each do |entry|
+        next unless entry["attendees"]
         entry["attendees"].each do |attendee|
           if attendee["email"] == @google_mail && attendee["responseStatus"] == "needsAction"
             needs_action_count += 1
