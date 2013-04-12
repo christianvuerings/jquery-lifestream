@@ -1,7 +1,14 @@
 bundler_args: --without development testext production
+
 rvm:
   - "jruby-19mode"
   - "jruby-head"
+
 env:
   - JRUBY_OPTS="--client -Xcext.enabled=false" DISPLAY=:99.0 logger.level=WARN
+
+matrix:
+  allow_failures:
+    - rvm: jruby-head # Waiting on fibers fix for celluloid on jruby-1.7.3+
+
 before_install: sh -e /etc/init.d/xvfb start
