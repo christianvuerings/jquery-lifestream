@@ -1,3 +1,10 @@
 environment: production
 jruby_min_runtimes: 10
 jruby_max_runtimes: 10
+
+public:
+  root: public
+  cached: true
+  cache_ttl: 86400000 # cache TTL in millis ( 86400000 = 24 hrs )
+  cache_max_size: 10240 # the maximum cache size in kB
+  cache_object_max_size: 1024 # max size for a cached object (asset) in kB
