@@ -68,7 +68,6 @@ feature "act_as_user" do
     UserAuth.stub(:is_test_user?, '2040').and_return(false)
     UserData.unstub(:where)
     visit "/api/my/up_next"
-    Rails.cache.exist?("user/pseudo_2040/MyUpNext").should be_true
     response = JSON.parse(page.body)
     response["items"].empty?.should be_true
     UserData.stub(:where, :uid => '11002820').and_return("tricking the first login check")
