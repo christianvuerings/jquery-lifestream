@@ -55,6 +55,7 @@ describe "CanvasUserActivityHandler" do
     activities.size.should == 18
   end
 
+
   it "should sometimes have score and instructor message appended to the summary field" do
     # Search for a particular entry in the cassette and make sure it's appended to properly
     CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return(@fake_feed)
@@ -62,6 +63,19 @@ describe "CanvasUserActivityHandler" do
     activities = handler.get_feed_results
     activity = activities.select {|entry| entry[:id] == "canvas_40544495"}.first
     activity[:summary].should eq("Please write more neatly next time. 87 out of 100 - Good work!")
+  end
+
+  it "should strip system generated 'click here' URLs from the summary field" do
+    # But should not over-strip by removing instructor-added 'click here' URLs
+    CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return(@fake_feed)
+    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
+    activities = handler.get_feed_results
+
+    activity = activities.select {|entry| entry[:id] == "canvas_43225861"}.first
+    activity[:summary].should eq("First, some instructor-written text. Click here to view the assignment: https://ucberkeley.instructure.com/courses/832071/assignments/3043635 A new assignment has been created for your course, Biology for Poets Report to STC due: Apr 1 at 11:59pm")
+
+    activity = activities.select {|entry| entry[:id] == "canvas_43395837"}.first
+    activity[:summary].should eq("First, some instructor-added text. You can view the submission here: http://example.com?p=123 Oski Bear has just turned in a late submission for Tibullus paper in the course Biology for Poets")
   end
 
   describe "CanvasUserActivityFailures", :suppress_celluloid_logger => true do
