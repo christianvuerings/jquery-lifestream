@@ -28,7 +28,7 @@ class UserApiController < ApplicationController
       logger.debug "#{self.class.name} removing user #{session[:user_id]}"
       UserApi.delete(session[:user_id])
     end
-    redirect_to "/logout"
+    render :nothing => true, :status => 204
   end
 
   private
