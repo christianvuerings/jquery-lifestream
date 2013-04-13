@@ -19,16 +19,15 @@ describe "MyUpNext" do
     valid_feed = MyUpNext.new(@user_id).get_feed
     valid_feed[:items].size.should == 13
     valid_feed[:items].each do |entry|
-      entry["status"].should_not == "cancelled"
-      if !entry["start"].blank?
-        entry["start"]["epoch"].is_a?(Integer).should be true
-        entry["start"]["epoch"].should > Time.new(1970, 1, 1).to_i
+      entry[:status].should_not == "cancelled"
+      if !entry[:start].blank?
+        entry[:start][:epoch].is_a?(Integer).should be true
+        entry[:start][:epoch].should > Time.new(1970, 1, 1).to_i
       end
-      if !entry["end"].blank?
-        entry["end"]["epoch"].is_a?(Integer).should be true
-        entry["end"]["epoch"].should > Time.new(1970, 1, 1).to_i
+      if !entry[:end].blank?
+        entry[:end][:epoch].is_a?(Integer).should be true
+        entry[:end][:epoch].should > Time.new(1970, 1, 1).to_i
       end
-      entry["id"].should_not be blank?
     end
   end
 
@@ -58,12 +57,10 @@ describe "MyUpNext" do
     GoogleProxy.any_instance.stub(:events_list).and_return(@fake_google_events_array)
     valid_feed = MyUpNext.new(@user_id).get_feed
     valid_feed[:items].size.should be > 0
-    all_day_event_count = 0
-    valid_feed[:items].each do |entry|
-      DateTime.parse(entry["start"]["date_time"]).should be < too_late
-      all_day_event_count += 1 if entry["is_all_day"] === true
-    end
-    all_day_event_count.should be > 0
+    out_of_scope_items = valid_feed[:items].select { |entry|
+      entry[:is_all_day] && DateTime.parse(entry[:start][:date_time]) >= too_late
+    }
+    out_of_scope_items.size.should == 0
   end
 
   it "should simulate a non-responsive google", :testext => true do
