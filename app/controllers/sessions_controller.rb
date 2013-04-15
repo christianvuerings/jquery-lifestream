@@ -24,21 +24,22 @@ class SessionsController < ApplicationController
     session[:original_user_id] = session[:user_id] unless session[:original_user_id]
     session[:user_id] = params[:uid]
 
-    redirect_to '/dashboard', :notice => "Assuming user: #{session[:user_id]}"
+    render :nothing => true, :status => 204
   end
 
   def stop_act_as
     return redirect_to '/' unless session[:user_id] && session[:original_user_id]
 
     #To avoid any potential stale data issues, we might have to be aggressive with cache invalidation.
-    pseudo_user = Calcentral::PSEUDO_USER_PREFIX.concat session[:user_id]
+    pseudo_user = Calcentral::PSEUDO_USER_PREFIX + session[:user_id]
     [pseudo_user, session[:user_id]].each do |cache_key|
       Calcentral::USER_CACHE_EXPIRATION.notify cache_key
     end
     Rails.logger.warn "ACT-AS: User #{session[:original_user_id]} acting as #{session[:user_id]} ends"
     session[:user_id] = session[:original_user_id]
     session[:original_user_id] = nil
-    redirect_to '/dashboard', :notice => "Restoring session as user: #{session[:user_id]}"
+
+    render :nothing => true, :status => 204
   end
 
   def destroy
@@ -49,7 +50,9 @@ class SessionsController < ApplicationController
       Rails.logger.debug "Clearing connections for thread and other dead threads due to user logout: #{self.object_id}"
       ActiveRecord::Base.clear_active_connections!
     end
-    redirect_to "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
+    render :json => {
+      :redirect_url => "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
+    }.to_json
   end
 
   def new

@@ -110,16 +110,22 @@
      * Sign the current user out.
      */
     $scope.user.signOut = function() {
-      apiService.analytics.trackEvent(['Authentication', 'Redirect to logout']);
-      window.location = '/logout';
+      $http.post('/logout').success(function(data) {
+        if (data && data.redirect_url) {
+          apiService.analytics.trackEvent(['Authentication', 'Redirect to logout']);
+          window.location = data.redirect_url;
+        }
+      });
     };
 
     /**
      * Opt-out.
      */
     $scope.user.optOut = function() {
-      apiService.analytics.trackEvent(['Settings', 'User opt-out']);
-      window.location = "/api/my/opt_out";
+      $http.post('/api/my/opt_out').success(function() {
+        apiService.analytics.trackEvent(['Settings', 'User opt-out']);
+        $scope.user.signOut();
+      });
     };
 
     /**

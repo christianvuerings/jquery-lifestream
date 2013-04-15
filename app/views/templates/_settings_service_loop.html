@@ -1,11 +1,9 @@
 <script type="text/ng-template" id="templates/settings_service_loop.html">
   <!-- Dont show the icon column on small screens -->
   <div class="large-1 columns hide-for-small">
-    <img data-ng-show="service=='google'"
-      data-ng-src="/assets/icon_bconnected_32x32.png" alt="bConnected icon" />
+    <%= image_tag "icon_bconnected_32x32.png", :size => "32x32", :alt => "bConnected icon", :data => { :ng_show => "service=='google'" } %>
 
-    <img data-ng-show="service=='canvas'"
-      data-ng-src="/assets/icon_canvas_32x32.png" alt="Canvas icon" />
+    <%= image_tag "icon_canvas_32x32.png", :size => "32x32", :alt => "Canvas icon", :data => { :ng_show => "service=='canvas'" } %>
   </div>
 
   <div class="large-9 small-8 columns cc-settings-service-description-block">
