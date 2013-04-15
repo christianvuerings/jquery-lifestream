@@ -45,7 +45,7 @@ class MyBadges::GoogleDrive
     if processed_pages == @page_limiter
       unread_files = unread_files.to_s + "+"
     end
-    unread_files
+    {:count => unread_files}
   end
 
   def is_unread_message?(entry)

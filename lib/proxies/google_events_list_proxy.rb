@@ -7,19 +7,20 @@ class GoogleEventsListProxy < GoogleEventsProxy
             :page_limiter => 2
   end
 
-  # Simplified (filtered) list of upcoming calendar items (six months)
-  def calendar_needs_action_list(optional_params={})
-    now_time = Time.zone.today.to_time_in_current_zone.to_datetime
-    future_time = now_time + 1.months
+  def recently_updated_items(optional_params={})
+    # To prevent users from picking up their entire calendar on the first visit, setting default updateMin to 2 weeks ago from now
+    updateMin ||= Time.zone.today.to_datetime.advance(:weeks => -2)
     optional_params.reverse_merge!(
-        :calendarId => 'primary',
-        :maxResults => 999, # Status badge is limited to 3 digits
-        :timeMin => now_time.iso8601,
-        :timeMax => future_time.iso8601,
-        :fields => 'items(attendees(email,responseStatus),created,description,end,id,kind,location,start,summary),summary'
-      )
-    request :api => "calendar", :resource => "events", :method => "list", :params => optional_params, :vcr_id => "_events",
-            :page_limiter => 2
+      :calendarId => 'primary',
+      :maxResults => 20, # The google response is fairly inconsistent, should probably be treated as an upper bound instead.
+      :orderBy => 'startTime',
+      :singleEvents => true,
+      :timeMin => Time.zone.today.to_datetime.iso8601,
+      :updatedMin => updateMin.iso8601,
+      :fields => 'items(htmlLink,created,updated,creator,summary,start,end)'
+    )
+    request :api => "calendar", :resource => "events", :method => "list", :params => optional_params, :vcr_id => "_events_feed",
+            :page_limiter => 1
   end
 
 end

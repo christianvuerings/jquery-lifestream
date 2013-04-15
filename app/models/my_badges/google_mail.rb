@@ -27,6 +27,7 @@ class MyBadges::GoogleMail
       Rails.logger.fatal "Error parsing XML output from GoogleMailListProxy: #{e}"
     end
     unread_count ||= 0
+    {:count => unread_count}
   end
 
 end
