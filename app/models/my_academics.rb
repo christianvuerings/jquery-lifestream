@@ -4,10 +4,32 @@ class MyAcademics < MyMergedModel
   def get_feed_internal
     feed = {}
     feed[:regblocks] = get_regblocks
+    feed[:college_and_level] = get_college_and_level
     feed
   end
 
   private
+
+  def get_college_and_level
+    proxy = BearfactsProfileProxy.new({:user_id => @uid})
+    feed = proxy.get_profile
+
+    return {} if feed.nil?
+
+    doc = Nokogiri::XML feed[:body]
+    general_profile = doc.css("studentGeneralProfile")
+    ug_grad_flag = to_text doc.css("ugGradFlag")
+    standing = ug_grad_flag.upcase == "U" ? "Undergraduate" : "Graduate"
+    level = to_text general_profile.css("nonAPLevel")
+    college = to_text general_profile.css("collegePrimary")
+    major = to_text general_profile.css("majorPrimary")
+    {
+      standing: standing,
+      level: level,
+      college: college,
+      major: major
+    }
+  end
 
   def get_regblocks
     proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
@@ -31,22 +53,10 @@ class MyAcademics < MyMergedModel
       end
 
       is_active = cleared_date.nil?
-      type = block.css("blockType").text.strip
-      status = block.css("status").text.strip
-
-      reason = block.css("reason")
-      if reason.empty?
-        reason = ""
-      else
-        reason = reason.text.strip
-      end
-
-      office = block.css("office")
-      if office.empty?
-        office = ""
-      else
-        office = office.text.strip
-      end
+      type = to_text block.css("blockType")
+      status = to_text block.css("status")
+      reason = to_text block.css("reason")
+      office = to_text block.css("office")
 
       reg_block = {
         status: status,
@@ -72,6 +82,14 @@ class MyAcademics < MyMergedModel
       :inactive_blocks => inactive_blocks
     }
 
+  end
+
+  def to_text(element)
+    if element.nil? || element.empty?
+      return ""
+    else
+      return element.text.strip
+    end
   end
 
 end
