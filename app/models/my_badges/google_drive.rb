@@ -41,7 +41,7 @@ class MyBadges::GoogleDrive
         break if response[:count] > @count_limiter
         begin
           if (is_recent_message?(entry) && is_unread_message?(entry))
-            next unless entry["title"] && !entry["title"].blank?
+            next unless !entry["title"].blank?
             item = {
               title: entry["title"],
               link: entry["selfLink"],
