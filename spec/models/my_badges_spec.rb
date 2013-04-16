@@ -28,6 +28,8 @@ describe "MyBadges" do
     mangled_feed = badges.get_feed
     mangled_feed["unread_badge_counts"].empty?.should_not be_true
     mangled_feed["unread_badge_counts"]["bdrive"][:count].should == 2
+    descending_modified_first = mangled_feed["unread_badge_counts"]["bcal"][:items].map {|x| x[:updated_time][:epoch]}
+    descending_modified_first.should == descending_modified_first.sort.reverse
     mangled_feed["unread_badge_counts"]["bcal"][:count].should == 6
     mangled_feed["unread_badge_counts"]["bcal"][:items].select { |entry|
       entry[:start_time][:all_day_event]
