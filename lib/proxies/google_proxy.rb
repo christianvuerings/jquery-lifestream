@@ -58,6 +58,26 @@ class GoogleProxy < BaseProxy
     result_pages
   end
 
+  def simple_request(request_params, vcr_id)
+    FakeableProxy.wrap_request("#{GoogleProxy::APP_ID}#{vcr_id}", @fake, @fake_options) {
+      begin
+        Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+        client = GoogleProxyClient.client.dup
+        if request_params[:authenticated]
+          client.authorization = @authorization
+        end
+        client.execute(
+          :http_method => request_params[:http_method],
+          :uri => request_params[:uri],
+          :authenticated => request_params[:authenticated]
+        )
+      rescue Exception => e
+        Rails.logger.fatal "#{self.class.name}: #{e.to_s} - Unable to send request transaction"
+        nil
+      end
+    }
+  end
+
   protected
 
   def stringify_body(bodyParam)
