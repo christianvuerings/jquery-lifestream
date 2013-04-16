@@ -56,20 +56,21 @@ class MyBadges::GoogleMail
         entry = {}
 
         begin
-          %w(title summary modified).each do |key|
+          %w(title summary).each do |key|
             entry[key.to_sym] = get_node_value(key, raw_entry)
           end
+          entry[:modified_time] = get_node_value("modified", raw_entry)
           entry[:link] = get_nodeset('link', raw_entry.search('link')).first['href'] || ''
 
           author_set = get_nodeset('author', raw_entry.search('author'))
-          entry[:author] = get_node_value('name', author_set)
+          entry[:composer] = get_node_value('name', author_set)
 
           #change modified into a proper date.
-          if entry[:modified]
+          if entry[:modified_time]
             begin
-              entry[:modified] = format_date DateTime.iso8601(entry[:modified])
+              entry[:modified_time] = format_date DateTime.iso8601(entry[:modified_time])
             rescue Exception => e
-              Rails.logger.warn "#{self.class.name} Could not parse modified: #{entry[:modified]}"
+              Rails.logger.warn "#{self.class.name} Could not parse modified: #{entry[:modified_time]}"
               next
             end
           end

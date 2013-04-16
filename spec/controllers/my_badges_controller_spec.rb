@@ -23,10 +23,10 @@ describe MyBadgesController do
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response.size.should == 1
-    json_response["unread_badge_counts"].empty?.should_not be_true
+    json_response["badges"].empty?.should_not be_true
     existing_badges = %w(bcal bdrive bmail)
     existing_badges.each do |badge|
-      json_response["unread_badge_counts"][badge]["count"].should_not be_nil
+      json_response["badges"][badge]["count"].should_not be_nil
     end
 
   end

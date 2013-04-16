@@ -35,7 +35,7 @@ class MyBadges::Merged < MyMergedModel
     end
 
     logger.debug "#{self.class.name} get_feed is #{badges.inspect}"
-    {"unread_badge_counts" => badges}
+    {:badges => badges}
   end
 
 end

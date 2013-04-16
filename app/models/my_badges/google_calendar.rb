@@ -27,12 +27,13 @@ class MyBadges::GoogleCalendar
         next if entry["summary"].blank?
         begin
           event = {
-            :summary => entry["summary"],
+            :link => entry["htmlLink"],
+            :title => entry["summary"],
             :start_time => verify_and_format_date(entry["start"]),
             :end_time => verify_and_format_date(entry["end"]),
-            :updated_time => format_date(entry["updated"].to_datetime)
+            :modified_time => format_date(entry["updated"].to_datetime)
           }
-          event.merge! new_event_fields(entry)
+          event.merge! event_state_fields(entry)
           modified_entries[:items] << event
         rescue Exception
           Rails.logger.warn "#{self.class.name} could not process entry: #{entry}"
@@ -43,7 +44,7 @@ class MyBadges::GoogleCalendar
     end
 
     # Resort the top 5 items by modified date, descending
-    modified_entries[:items].sort!{|a,b| b[:updated_time][:epoch] <=> a[:updated_time][:epoch]}
+    modified_entries[:items].sort!{|a,b| b[:modified_time][:epoch] <=> a[:modified_time][:epoch]}
     modified_entries
   end
 
@@ -58,14 +59,14 @@ class MyBadges::GoogleCalendar
     end
   end
 
-  def new_event_fields(entry)
+  def event_state_fields(entry)
     if entry["created"] == entry["updated"]
       new_entry_hash = {}
-      new_entry_hash[:new_event] = true
-      new_entry_hash[:creator] = entry["creator"]["displayName"] if entry["creator"]["displayName"]
+      new_entry_hash[:change_state] = "new"
+      new_entry_hash[:composer] = entry["creator"]["displayName"] if entry["creator"]["displayName"]
       new_entry_hash
     else
-      { :new_event => false }
+      { :change_state => "updated" }
     end
   end
 
