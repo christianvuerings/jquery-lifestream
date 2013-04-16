@@ -5,7 +5,10 @@ describe "MyRegBlocks" do
   it "should get properly formatted registration blocks from fake Bearfacts" do
     oski_bearfacts_proxy = BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true})
     BearfactsRegblocksProxy.stub(:new).and_return(oski_bearfacts_proxy)
-    oski_blocks = MyRegBlocks.new("61889").get_feed
+    oski_academics = MyAcademics.new("61889").get_feed
+    oski_academics.empty?.should be_false
+
+    oski_blocks = oski_academics[:regblocks]
     oski_blocks[:active_blocks].empty?.should be_false
     oski_blocks[:active_blocks].each do |block|
       block[:status].should == "Active"

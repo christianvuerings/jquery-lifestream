@@ -1,7 +1,15 @@
-class MyRegBlocks < MyMergedModel
+class MyAcademics < MyMergedModel
   include DatedFeed
 
   def get_feed_internal
+    feed = {}
+    feed[:regblocks] = get_regblocks
+    feed
+  end
+
+  private
+
+  def get_regblocks
     proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
     blocks_feed = proxy.get_blocks
 
