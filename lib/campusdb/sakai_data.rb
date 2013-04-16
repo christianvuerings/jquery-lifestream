@@ -107,4 +107,17 @@ class SakaiData < OracleDatabase
     results
   end
 
+  def self.get_users_site_groups(sakai_user_id)
+    results = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select r.realm_id from #{table_prefix}sakai_realm r, #{table_prefix}sakai_realm_rl_gr rm where
+        r.realm_key = rm.realm_key and rm.active = 1 and r.realm_id like '/site/%/group/%' and rm.user_id = #{connection.quote(sakai_user_id)}
+        order by r.realm_id desc
+      SQL
+      results = connection.select_all(sql)
+    }
+    results
+  end
+
 end
