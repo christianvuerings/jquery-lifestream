@@ -68,6 +68,29 @@ module Calcentral
         "EID" VARCHAR2(255)
         );
 
+        DROP TABLE IF EXISTS SAKAI_REALM;
+        CREATE TABLE SAKAI_REALM
+          (
+            REALM_KEY     NUMBER(38, 0),
+            REALM_ID      VARCHAR2(300),
+            PROVIDER_ID   VARCHAR2(1024),
+            MAINTAIN_ROLE NUMBER(38, 0),
+            CREATEDBY     VARCHAR2(99),
+            MODIFIEDBY    VARCHAR2(99),
+            CREATEDON TIMESTAMP,
+            MODIFIEDON TIMESTAMP
+          );
+
+        DROP TABLE IF EXISTS SAKAI_REALM_RL_GR;
+        CREATE TABLE SAKAI_REALM_RL_GR
+          (
+            REALM_KEY NUMBER(38, 0),
+            USER_ID   VARCHAR2(99),
+            ROLE_KEY  NUMBER(38, 0),
+            ACTIVE    CHAR(1),
+            PROVIDED  CHAR(1)
+          );
+
         -- Test UTF-8 handling.
         Insert into SAKAI_SITE (SITE_ID,TITLE,TYPE,SHORT_DESC,PUBLISHED,DESCRIPTION) values ('29fc31ae-ff14-419f-a132-5576cae2474e','RUSSWIKI 2B Sp13','course','Добро пожаловать в Русский 1!',1,'<p>' || char(10) || '	<strong>Знаете ли вы?</strong></p>' || char(10) || '<ul>' || char(10) || '	<li>' || char(10) || '		Кузен Петра I был произведён в генералы только после смерти императора.</li>' || char(10) || '</ul>' || char(10) || '<p>' || char(10) || '	&nbsp;</p>');
         Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('29fc31ae-ff14-419f-a132-5576cae2474e','term','Spring 2013');
@@ -117,6 +140,12 @@ module Calcentral
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('~211159','211159',-1);
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('~575bc12b-929f-4485-b2a2-50c69d8c06c7','575bc12b-929f-4485-b2a2-50c69d8c06c7',-1);
 
+        -- Test site group memberships.
+        Insert into SAKAI_REALM (REALM_KEY,REALM_ID,PROVIDER_ID,MAINTAIN_ROLE,CREATEDBY,MODIFIEDBY,CREATEDON,MODIFIEDON) values (657387,'/site/29fc31ae-ff14-419f-a132-5576cae2474e','2013-B-11328',7,'admin','admin',parsedatetime('2013-01-06 08:35:01','yyyy-MM-dd HH:mm:ss'),parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'));
+        Insert into SAKAI_REALM (REALM_KEY,REALM_ID,PROVIDER_ID,MAINTAIN_ROLE,CREATEDBY,MODIFIEDBY,CREATEDON,MODIFIEDON) values (657388,'/site/29fc31ae-ff14-419f-a132-5576cae2474e/group/282e0a88-d923-46fe-85f9-1db0e4048e19','2013-B-11331',7,'admin','admin',parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'),parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'));
+        Insert into SAKAI_REALM_RL_GR (REALM_KEY,USER_ID,ROLE_KEY,ACTIVE,PROVIDED) values (657387,'575bc12b-929f-4485-b2a2-50c69d8c06c7',9,'1','0');
+        Insert into SAKAI_REALM_RL_GR (REALM_KEY,USER_ID,ROLE_KEY,ACTIVE,PROVIDED) values (657388,'575bc12b-929f-4485-b2a2-50c69d8c06c7',9,'1','0');
+
         -- Original Oracle export uses 'to_date' rather than 'parsedatetime', and 'hh24:mi:ss' rather than 'HH:mm:ss'.
 
         -- Eight matching notifications from one site.
@@ -131,7 +160,9 @@ module Calcentral
         Insert into ANNOUNCEMENT_MESSAGE (CHANNEL_ID,MESSAGE_ID,DRAFT,PUBVIEW,OWNER,MESSAGE_DATE,XML) values ('/announcement/channel/29fc31ae-ff14-419f-a132-5576cae2474e/main','0b974771-8952-4c77-b8a8-917207c6ce7f','0','0','211159',parsedatetime('2013-03-05 17:56:30','yyyy-MM-dd HH:mm:ss'),'<?xml version="1.0" encoding="UTF-8"?>' || char(10) || '<message body="DQlEb3dubG9hZCENDQlTaGFyZSENDQlTaG93IQ0NCUNvbGxlY3QgdGhlbSBhbGwhDQ0JU2VuZCB0aGVtIGJhY2shDQ0JRm9yZ2V0IHRoZXkgZXZlciBleGlzdGVkIQ0NCVRoZW4gYnV5IHRoZW0gYWdhaW4gb24gRUJheSENDQnCoA0=" body-html="PHA+DQoJRG93bmxvYWQhPC9wPg0KPHA+DQoJU2hhcmUhPC9wPg0KPHA+DQoJU2hvdyE8L3A+DQo8cD4NCglDb2xsZWN0IHRoZW0gYWxsITwvcD4NCjxwPg0KCVNlbmQgdGhlbSBiYWNrITwvcD4NCjxwPg0KCUZvcmdldCB0aGV5IGV2ZXIgZXhpc3RlZCE8L3A+DQo8cD4NCglUaGVuIGJ1eSB0aGVtIGFnYWluIG9uIEVCYXkhPC9wPg0KPHA+DQoJJm5ic3A7PC9wPg0K"><header access="channel" date="20130305175630996" draft="false" from="211159" id="0b974771-8952-4c77-b8a8-917207c6ce7f" subject="Look at these fabulous pix!"><attachment relative-url="/content/attachment/29fc31ae-ff14-419f-a132-5576cae2474e/Announcements/faa7ac02-11f0-4e14-bcc8-171f98ede253/YourOccupationCouldSaveYou.jpg"/><attachment relative-url="/content/attachment/29fc31ae-ff14-419f-a132-5576cae2474e/Announcements/7e89e4e9-b39d-4b56-b7ef-78be55b13640/OperationalExcellenceSandwich.jpg"/></header><properties/></message>');
         -- ... and an assignment.
         Insert into ANNOUNCEMENT_MESSAGE (CHANNEL_ID,MESSAGE_ID,DRAFT,PUBVIEW,OWNER,MESSAGE_DATE,XML) values ('/announcement/channel/29fc31ae-ff14-419f-a132-5576cae2474e/main','2c974725-9e5c-4c62-abae-ec9c5df8f31b','0','0','211159',parsedatetime('2013-03-05 18:15:01','yyyy-MM-dd HH:mm:ss'),'<?xml version="1.0" encoding="UTF-8"?>' || char(10) || '<message body="VXBkYXRlZCBvcGVuIGRhdGUgZm9yIGFzc2lnbm1lbnQgRG8gdGhpcyB0aGVuIGRvIHRoYXQgaXMgIE1hciA1LCAyMDEzIDEwOjAwIGFtLiA=" body-html="VXBkYXRlZCBvcGVuIGRhdGUgZm9yIGFzc2lnbm1lbnQgRG8gdGhpcyB0aGVuIGRvIHRoYXQgaXMgIE1hciA1LCAyMDEzIDEwOjAwIGFtLiA="><header access="channel" date="20130305181501187" draft="false" from="211159" id="2c974725-9e5c-4c62-abae-ec9c5df8f31b" subject="Edited Assignment: Open Date for Do this then do that"/><properties><property enc="BASE64" name="assignmentReference" value="L2Fzc2lnbm1lbnQvYS8yOWZjMzFhZS1mZjE0LTQxOWYtYTEzMi01NTc2Y2FlMjQ3NGUvN2RjMGM4ZTQtZWMzNy00NDU3LWFiMTUtOTczNzhlOTJmYWI1"/></properties></message>');
-        -- And a section-specific announcement.
+        -- And two section-specific announcements, one which will match...
+        Insert into ANNOUNCEMENT_MESSAGE (CHANNEL_ID,MESSAGE_ID,DRAFT,PUBVIEW,OWNER,MESSAGE_DATE,XML) values ('/announcement/channel/29fc31ae-ff14-419f-a132-5576cae2474e/main','f0e6e6ab-e520-4147-91cc-c5343f8b3ca6','0','0','211159',parsedatetime('2013-03-06 16:00:00','yyyy-MM-dd HH:mm:ss'),'<?xml version="1.0" encoding="UTF-8"?>' || char(10) || '<message body="DQlGcm9tIFJheS4N" body-html="PHA+DQoJRnJvbSBSYXkuPC9wPg0K"><header access="grouped" date="20130415224504913" draft="false" from="211159" id="f0e6e6ab-e520-4147-91cc-c5343f8b3ca6" subject="Test to multiple groups"><group authzGroup="/site/29fc31ae-ff14-419f-a132-5576cae2474e/group/89a896f9-9a56-4527-ac0a-f888fa85a776"/><group authzGroup="/site/29fc31ae-ff14-419f-a132-5576cae2474e/group/282e0a88-d923-46fe-85f9-1db0e4048e19"/></header><properties/></message>');
+        -- ... and one which will not.
         Insert into ANNOUNCEMENT_MESSAGE (CHANNEL_ID,MESSAGE_ID,DRAFT,PUBVIEW,OWNER,MESSAGE_DATE,XML) values ('/announcement/channel/29fc31ae-ff14-419f-a132-5576cae2474e/main','fc00ba6d-2ceb-4c5e-adad-886aab58462d','0','0','211159',parsedatetime('2013-03-06 15:00:00','yyyy-MM-dd HH:mm:ss'),'<?xml version="1.0" encoding="UTF-8"?>' || char(10) || '<message body="DQlOb3QgZm9yIHNlY3Rpb24gMS4N" body-html="PHA+DQoJTm90IGZvciBzZWN0aW9uIDEuPC9wPg0K"><header access="grouped" date="20130306230000000" draft="false" from="211159" id="fc00ba6d-2ceb-4c5e-adad-886aab58462d" subject="Just for section 2"><group authzGroup="/site/29fc31ae-ff14-419f-a132-5576cae2474e/group/bfb1aeb3-9b1e-4522-95c3-701c2804dafa"/></header><properties><property enc="BASE64" name="releaseDate" value="MjAxMzAzMDYyMzAwMDAwMDA="/></properties></message>');
 
         -- One matching notification from another site...

@@ -49,4 +49,17 @@ describe SakaiUserSitesProxy do
     end
   end
 
+  it "should see site group memberships" do
+    nbr_memberships = 0
+    category_map = @client.get_categorized_sites
+    category_map.each_value do |sites|
+      sites.each do |site|
+        if site[:groups]
+          nbr_memberships += site[:groups].length
+        end
+        nbr_memberships.should == 1 if SakaiData.test_data?
+      end
+    end
+  end
+
 end
