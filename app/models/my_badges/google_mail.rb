@@ -68,7 +68,7 @@ class MyBadges::GoogleMail
               entry[:modified] = format_date DateTime.iso8601(entry[:modified])
             rescue Exception => e
               Rails.logger.warn "#{self.class.name} Could not parse modified: #{entry[:modified]}"
-              entry[:modified] = {}
+              next
             end
           end
           items << entry

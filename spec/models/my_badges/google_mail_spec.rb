@@ -56,7 +56,7 @@ describe "MyBadges::bMail" do
     DateTime.stub(:iso8601).and_raise(StandardError)
     suppress_rails_logging {
       results = MyBadges::GoogleMail.new(@user_id).fetch_counts
-      results[:items].size.should == 3
+      results[:items].size.should == 0
     }
 
   end
