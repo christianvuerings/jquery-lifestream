@@ -56,9 +56,11 @@ class MyBadges::GoogleMail
         entry = {}
 
         begin
-          %w(title summary link modified).each do |key|
+          %w(title summary modified).each do |key|
             entry[key.to_sym] = get_node_value(key, raw_entry)
           end
+          entry[:link] = get_nodeset('link', raw_entry.search('link')).first['href'] || ''
+
           author_set = get_nodeset('author', raw_entry.search('author'))
           entry[:author] = get_node_value('name', author_set)
 
