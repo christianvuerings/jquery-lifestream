@@ -27,8 +27,8 @@ module Calcentral
       "global/#{self.name}"
     end
 
-    def expire(uid)
-      key = self.cache_key uid
+    def expire(id = nil)
+      key = id ? self.cache_key(id) : self.global_cache_key
       Rails.cache.delete(key, :force => true)
       Rails.logger.debug "Expired cache_key #{key}"
     end
