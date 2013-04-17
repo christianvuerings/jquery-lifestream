@@ -7,6 +7,8 @@ describe "MyAcademics" do
     BearfactsRegblocksProxy.stub(:new).and_return(oski_blocks_proxy)
     oski_profile_proxy = BearfactsProfileProxy.new({:user_id => "61889", :fake => true})
     BearfactsProfileProxy.stub(:new).and_return(oski_profile_proxy)
+    oski_schedule_proxy = BearfactsScheduleProxy.new({:user_id => "61889", :fake => true})
+    BearfactsScheduleProxy.stub(:new).and_return(oski_schedule_proxy)
 
     oski_academics = MyAcademics.new("61889").get_feed
     oski_academics.empty?.should be_false
