@@ -20,12 +20,16 @@ class MyAcademics::Semesters
 
     doc.css("classSchedule").each do |class_schedule|
       next unless to_text(class_schedule.css("instructnFormatDet")) == "LEC"
-      class_name = "#{to_text(class_schedule.css("deptName"))} #{to_text(class_schedule.css("courseNumber"))}"
-      next unless class_name.strip.length
+      course_number = "#{to_text(class_schedule.css("deptName"))} #{to_text(class_schedule.css("courseNumber"))}"
+      next unless course_number.strip.length
       units = to_text(class_schedule.css("numberOfUnits"))
+      title = to_text(class_schedule.css("courseTitle"))
+      grade_option = to_text(class_schedule.css("pnpFlag")).upcase == "Y" ? "P/NP" : "Letter"
       schedule << {
-        :class_name => class_name,
-        :units => units
+        :course_number => course_number,
+        :title => title,
+        :units => units,
+        :grade_option => grade_option
       }
     end
 
