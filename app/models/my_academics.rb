@@ -14,6 +14,7 @@ class MyAcademics < MyMergedModel
 
     feed[:regblocks] = get_regblocks
     feed[:semesters] = get_semesters
+    feed[:current_semester_index] = 0
     feed
   end
 
