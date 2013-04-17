@@ -2,6 +2,11 @@
 <div class="row">
   <ul class="cc-navigation-bar">
     <li data-ng-class="{true:'active'}[controller_name=='DashboardController']"><a href="/dashboard">My Dashboard</a></li>
+    <% if Settings.features.bearfacts %>
+    <li data-ng-class="{true:'active'}[controller_name=='AcademicsController']" data-ng-show="user.profile.roles.student">
+      <a href="/academics">My Academics</a>
+    </li>
+    <% end %>
     <li data-ng-class="{true:'active'}[controller_name=='CampusController']"><a href="/campus">My Campus</a></li>
   </ul>
 </div>

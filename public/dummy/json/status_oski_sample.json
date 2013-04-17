@@ -1,0 +1,43 @@
+{
+  "is_logged_in": true,
+  "features": {
+    "bearfacts": true
+  },
+  "is_acting_as": false,
+  "is_admin": false,
+  "first_login_at": "2013-04-05T13:08:23-07:00",
+  "first_name": "Oski",
+  "full_name": "Oski Bear",
+  "has_canvas_access_token": true,
+  "has_canvas_account": true,
+  "has_google_access_token": false,
+  "google_email": "",
+  "last_name": "Bear",
+  "preferred_name": "Oski Bear",
+  "roles": {
+    "student": true,
+    "faculty": false,
+    "staff": false
+  },
+  "student_info": {
+    "california_residency": {
+      "summary": "Resident",
+      "explanation": "",
+      "needsAction": false
+    },
+    "education_level": "Freshman",
+    "reg_status": {
+      "code": "C",
+      "summary": "Registered",
+      "explanation": "",
+      "needsAction": false
+    },
+    "reg_block": {
+      "needsAction": false,
+      "summary": "None",
+      "blocks": []
+    },
+    "units_enrolled": "0"
+  },
+  "uid": "61889"
+}
