@@ -63,7 +63,7 @@ class MyBadges::GoogleMail
           entry[:link] = get_nodeset('link', raw_entry.search('link')).first['href'] || ''
 
           author_set = get_nodeset('author', raw_entry.search('author'))
-          entry[:composer] = get_node_value('name', author_set)
+          entry[:editor] = get_node_value('name', author_set)
 
           #change modified into a proper date.
           if entry[:modified_time]

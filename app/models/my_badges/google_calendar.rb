@@ -63,7 +63,7 @@ class MyBadges::GoogleCalendar
     if entry["created"] == entry["updated"]
       new_entry_hash = {}
       new_entry_hash[:change_state] = "new"
-      new_entry_hash[:composer] = entry["creator"]["displayName"] if entry["creator"]["displayName"]
+      new_entry_hash[:editor] = entry["creator"]["displayName"] if entry["creator"]["displayName"]
       new_entry_hash
     else
       { :change_state => "updated" }

@@ -3,430 +3,492 @@
     "bcal": {
       "items": [
         {
-          "link": "https://www.google.com/calendar/event?eid=YWg4dGR0dDVhcWlkNzFoYTN2YnAzYnY5dGMgeXVodW5nQGJlcmtlbGV5LmVkdQ",
-          "title": "ETS UnMeeting",
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE3VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "EE 20N Discussion",
           "start_time": {
-            "epoch": 1366225200,
-            "date_time": "2013-04-17T12:00:00-07:00",
+            "epoch": 1366214400,
+            "date_time": "2013-04-17T09:00:00-07:00",
             "date_string": "4/17"
           },
           "end_time": {
-            "epoch": 1366228800,
-            "date_time": "2013-04-17T13:00:00-07:00",
+            "epoch": 1366218000,
+            "date_time": "2013-04-17T10:00:00-07:00",
             "date_string": "4/17"
           },
           "modified_time": {
-            "epoch": 1366153454,
-            "date_time": "2013-04-16T23:04:14+00:00",
-            "date_string": "4/16"
+            "epoch": 1365631878,
+            "date_time": "2013-04-10T22:11:18+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=MGgzb3FtMDczb2pqZDRsYjQ3ZmpuNWF2cDQgeXVodW5nQGJlcmtlbGV5LmVkdQ",
-          "title": "LMS Replacement Project Kickoff",
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI0VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "EE 20N Discussion",
           "start_time": {
-            "epoch": 1366824600,
-            "date_time": "2013-04-24T10:30:00-07:00",
+            "epoch": 1366819200,
+            "date_time": "2013-04-24T09:00:00-07:00",
             "date_string": "4/24"
           },
           "end_time": {
-            "epoch": 1366831800,
-            "date_time": "2013-04-24T12:30:00-07:00",
+            "epoch": 1366822800,
+            "date_time": "2013-04-24T10:00:00-07:00",
             "date_string": "4/24"
           },
           "modified_time": {
-            "epoch": 1366137312,
-            "date_time": "2013-04-16T18:35:12+00:00",
-            "date_string": "4/16"
+            "epoch": 1365631878,
+            "date_time": "2013-04-10T22:11:18+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=dDZmNzE0MzY4MjA4amk0aDdudHRvaW91OGdfMjAxMzA0MTZUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Show & Tell",
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTdUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "ETH STD 21AC DIS 101",
           "start_time": {
-            "epoch": 1366135200,
-            "date_time": "2013-04-16T11:00:00-07:00",
-            "date_string": "4/16"
+            "epoch": 1366218000,
+            "date_time": "2013-04-17T10:00:00-07:00",
+            "date_string": "4/17"
           },
           "end_time": {
-            "epoch": 1366138800,
-            "date_time": "2013-04-16T12:00:00-07:00",
-            "date_string": "4/16"
+            "epoch": 1366221600,
+            "date_time": "2013-04-17T11:00:00-07:00",
+            "date_string": "4/17"
           },
           "modified_time": {
-            "epoch": 1366126066,
-            "date_time": "2013-04-16T15:27:46+00:00",
-            "date_string": "4/16"
+            "epoch": 1365631861,
+            "date_time": "2013-04-10T22:11:01+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=bjJ1Z2NubzQzNzlldmNqM25zamtxb2lycm8geXVodW5nQGJlcmtlbGV5LmVkdQ",
-          "title": "Sprint 16 Retrospective",
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjRUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "ETH STD 21AC DIS 101",
           "start_time": {
-            "epoch": 1366408800,
-            "date_time": "2013-04-19T15:00:00-07:00",
-            "date_string": "4/19"
+            "epoch": 1366822800,
+            "date_time": "2013-04-24T10:00:00-07:00",
+            "date_string": "4/24"
           },
           "end_time": {
-            "epoch": 1366414200,
-            "date_time": "2013-04-19T16:30:00-07:00",
-            "date_string": "4/19"
-          },
-          "modified_time": {
-            "epoch": 1366034056,
-            "date_time": "2013-04-15T13:54:16+00:00",
-            "date_string": "4/15"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MjNUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
-            "epoch": 1366740000,
-            "date_time": "2013-04-23T11:00:00-07:00",
-            "date_string": "4/23"
-          },
-          "end_time": {
-            "epoch": 1366740900,
-            "date_time": "2013-04-23T11:15:00-07:00",
-            "date_string": "4/23"
-          },
-          "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA1MDNUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
-            "epoch": 1367604000,
-            "date_time": "2013-05-03T11:00:00-07:00",
-            "date_string": "5/03"
-          },
-          "end_time": {
-            "epoch": 1367604900,
-            "date_time": "2013-05-03T11:15:00-07:00",
-            "date_string": "5/03"
-          },
-          "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MjRUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
             "epoch": 1366826400,
             "date_time": "2013-04-24T11:00:00-07:00",
             "date_string": "4/24"
           },
+          "modified_time": {
+            "epoch": 1365631861,
+            "date_time": "2013-04-10T22:11:01+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE5VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "MATH 53 Discussion",
+          "start_time": {
+            "epoch": 1366401600,
+            "date_time": "2013-04-19T13:00:00-07:00",
+            "date_string": "4/19"
+          },
           "end_time": {
-            "epoch": 1366827300,
-            "date_time": "2013-04-24T11:15:00-07:00",
+            "epoch": 1366405200,
+            "date_time": "2013-04-19T14:00:00-07:00",
+            "date_string": "4/19"
+          },
+          "modified_time": {
+            "epoch": 1365631738,
+            "date_time": "2013-04-10T22:08:58+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDIyVDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "MATH 53 Discussion",
+          "start_time": {
+            "epoch": 1366660800,
+            "date_time": "2013-04-22T13:00:00-07:00",
+            "date_string": "4/22"
+          },
+          "end_time": {
+            "epoch": 1366664400,
+            "date_time": "2013-04-22T14:00:00-07:00",
+            "date_string": "4/22"
+          },
+          "modified_time": {
+            "epoch": 1365631738,
+            "date_time": "2013-04-10T22:08:58+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE3VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "MATH 53 Discussion",
+          "start_time": {
+            "epoch": 1366228800,
+            "date_time": "2013-04-17T13:00:00-07:00",
+            "date_string": "4/17"
+          },
+          "end_time": {
+            "epoch": 1366232400,
+            "date_time": "2013-04-17T14:00:00-07:00",
+            "date_string": "4/17"
+          },
+          "modified_time": {
+            "epoch": 1365631738,
+            "date_time": "2013-04-10T22:08:58+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI0VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "MATH 53 Discussion",
+          "start_time": {
+            "epoch": 1366833600,
+            "date_time": "2013-04-24T13:00:00-07:00",
+            "date_string": "4/24"
+          },
+          "end_time": {
+            "epoch": 1366837200,
+            "date_time": "2013-04-24T14:00:00-07:00",
             "date_string": "4/24"
           },
           "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
+            "epoch": 1365631738,
+            "date_time": "2013-04-10T22:08:58+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MjVUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MThUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "ETH STD 21AC",
           "start_time": {
-            "epoch": 1366912800,
-            "date_time": "2013-04-25T11:00:00-07:00",
+            "epoch": 1366318800,
+            "date_time": "2013-04-18T14:00:00-07:00",
+            "date_string": "4/18"
+          },
+          "end_time": {
+            "epoch": 1366324200,
+            "date_time": "2013-04-18T15:30:00-07:00",
+            "date_string": "4/18"
+          },
+          "modified_time": {
+            "epoch": 1365631715,
+            "date_time": "2013-04-10T22:08:35+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjNUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "ETH STD 21AC",
+          "start_time": {
+            "epoch": 1366750800,
+            "date_time": "2013-04-23T14:00:00-07:00",
+            "date_string": "4/23"
+          },
+          "end_time": {
+            "epoch": 1366756200,
+            "date_time": "2013-04-23T15:30:00-07:00",
+            "date_string": "4/23"
+          },
+          "modified_time": {
+            "epoch": 1365631715,
+            "date_time": "2013-04-10T22:08:35+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTZUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "ETH STD 21AC",
+          "start_time": {
+            "epoch": 1366146000,
+            "date_time": "2013-04-16T14:00:00-07:00",
+            "date_string": "4/16"
+          },
+          "end_time": {
+            "epoch": 1366151400,
+            "date_time": "2013-04-16T15:30:00-07:00",
+            "date_string": "4/16"
+          },
+          "modified_time": {
+            "epoch": 1365631715,
+            "date_time": "2013-04-10T22:08:35+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjVUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "ETH STD 21AC",
+          "start_time": {
+            "epoch": 1366923600,
+            "date_time": "2013-04-25T14:00:00-07:00",
             "date_string": "4/25"
           },
           "end_time": {
-            "epoch": 1366913700,
-            "date_time": "2013-04-25T11:15:00-07:00",
+            "epoch": 1366929000,
+            "date_time": "2013-04-25T15:30:00-07:00",
             "date_string": "4/25"
           },
           "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
+            "epoch": 1365631715,
+            "date_time": "2013-04-10T22:08:35+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MjZUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
-            "epoch": 1366999200,
-            "date_time": "2013-04-26T11:00:00-07:00",
-            "date_string": "4/26"
-          },
-          "end_time": {
-            "epoch": 1367000100,
-            "date_time": "2013-04-26T11:15:00-07:00",
-            "date_string": "4/26"
-          },
-          "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MjlUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
-            "epoch": 1367258400,
-            "date_time": "2013-04-29T11:00:00-07:00",
-            "date_string": "4/29"
-          },
-          "end_time": {
-            "epoch": 1367259300,
-            "date_time": "2013-04-29T11:15:00-07:00",
-            "date_string": "4/29"
-          },
-          "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA1MDJUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
-            "epoch": 1367517600,
-            "date_time": "2013-05-02T11:00:00-07:00",
-            "date_string": "5/02"
-          },
-          "end_time": {
-            "epoch": 1367518500,
-            "date_time": "2013-05-02T11:15:00-07:00",
-            "date_string": "5/02"
-          },
-          "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA1MDFUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
-            "epoch": 1367431200,
-            "date_time": "2013-05-01T11:00:00-07:00",
-            "date_string": "5/01"
-          },
-          "end_time": {
-            "epoch": 1367432100,
-            "date_time": "2013-05-01T11:15:00-07:00",
-            "date_string": "5/01"
-          },
-          "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MjJUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
-          "start_time": {
-            "epoch": 1366653600,
-            "date_time": "2013-04-22T11:00:00-07:00",
-            "date_string": "4/22"
-          },
-          "end_time": {
-            "epoch": 1366654500,
-            "date_time": "2013-04-22T11:15:00-07:00",
-            "date_string": "4/22"
-          },
-          "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MTlUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
+          "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTlUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "PHYSICS 7B Lecture",
           "start_time": {
             "epoch": 1366394400,
             "date_time": "2013-04-19T11:00:00-07:00",
             "date_string": "4/19"
           },
           "end_time": {
-            "epoch": 1366395300,
-            "date_time": "2013-04-19T11:15:00-07:00",
+            "epoch": 1366398000,
+            "date_time": "2013-04-19T12:00:00-07:00",
             "date_string": "4/19"
           },
           "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
+            "epoch": 1365631665,
+            "date_time": "2013-04-10T22:07:45+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MThUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
+          "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MjJUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "PHYSICS 7B Lecture",
           "start_time": {
-            "epoch": 1366308000,
-            "date_time": "2013-04-18T11:00:00-07:00",
-            "date_string": "4/18"
+            "epoch": 1366653600,
+            "date_time": "2013-04-22T11:00:00-07:00",
+            "date_string": "4/22"
           },
           "end_time": {
-            "epoch": 1366308900,
-            "date_time": "2013-04-18T11:15:00-07:00",
-            "date_string": "4/18"
+            "epoch": 1366657200,
+            "date_time": "2013-04-22T12:00:00-07:00",
+            "date_string": "4/22"
           },
           "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
+            "epoch": 1365631665,
+            "date_time": "2013-04-10T22:07:45+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=bGU5NWRiODVxa2ZzbjZsYWZsaHFzMjQ4bW9fMjAxMzA0MTdUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Team Standup [Official]",
+          "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTdUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "PHYSICS 7B Lecture",
           "start_time": {
             "epoch": 1366221600,
             "date_time": "2013-04-17T11:00:00-07:00",
             "date_string": "4/17"
           },
           "end_time": {
-            "epoch": 1366222500,
-            "date_time": "2013-04-17T11:15:00-07:00",
+            "epoch": 1366225200,
+            "date_time": "2013-04-17T12:00:00-07:00",
             "date_string": "4/17"
           },
           "modified_time": {
-            "epoch": 1365792516,
-            "date_time": "2013-04-12T18:48:36+00:00",
-            "date_string": "4/12"
-          },
-          "change_state": "updated"
-        },
-        {
-          "link": "https://www.google.com/calendar/event?eid=dDZmNzE0MzY4MjA4amk0aDdudHRvaW91OGdfMjAxMzA0MzBUMTgwMDAwWiB5dWh1bmdAYmVya2VsZXkuZWR1",
-          "title": "CalCentral Show & Tell",
-          "start_time": {
-            "epoch": 1367344800,
-            "date_time": "2013-04-30T11:00:00-07:00",
-            "date_string": "4/30"
-          },
-          "end_time": {
-            "epoch": 1367348400,
-            "date_time": "2013-04-30T12:00:00-07:00",
-            "date_string": "4/30"
-          },
-          "modified_time": {
-            "epoch": 1365614849,
-            "date_time": "2013-04-10T17:27:29+00:00",
+            "epoch": 1365631665,
+            "date_time": "2013-04-10T22:07:45+00:00",
             "date_string": "4/10"
           },
           "change_state": "updated"
         },
         {
-          "link": "https://www.google.com/calendar/event?eid=ZnUzZm9uMDlwczBiamFvZWtlazhsazVjODQgeXVodW5nQGJlcmtlbGV5LmVkdQ",
-          "title": "Individual Staff Meeting - Yu-Hung Lin",
+          "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MjRUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
+          "title": "PHYSICS 7B Lecture",
           "start_time": {
-            "epoch": 1366752600,
-            "date_time": "2013-04-23T14:30:00-07:00",
+            "epoch": 1366826400,
+            "date_time": "2013-04-24T11:00:00-07:00",
+            "date_string": "4/24"
+          },
+          "end_time": {
+            "epoch": 1366830000,
+            "date_time": "2013-04-24T12:00:00-07:00",
+            "date_string": "4/24"
+          },
+          "modified_time": {
+            "epoch": 1365631665,
+            "date_time": "2013-04-10T22:07:45+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE4VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "EE 20N Lecture",
+          "start_time": {
+            "epoch": 1366313400,
+            "date_time": "2013-04-18T12:30:00-07:00",
+            "date_string": "4/18"
+          },
+          "end_time": {
+            "epoch": 1366318800,
+            "date_time": "2013-04-18T14:00:00-07:00",
+            "date_string": "4/18"
+          },
+          "modified_time": {
+            "epoch": 1365631634,
+            "date_time": "2013-04-10T22:07:14+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDIzVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "EE 20N Lecture",
+          "start_time": {
+            "epoch": 1366745400,
+            "date_time": "2013-04-23T12:30:00-07:00",
             "date_string": "4/23"
           },
           "end_time": {
-            "epoch": 1366754400,
-            "date_time": "2013-04-23T15:00:00-07:00",
+            "epoch": 1366750800,
+            "date_time": "2013-04-23T14:00:00-07:00",
             "date_string": "4/23"
           },
           "modified_time": {
-            "epoch": 1365200830,
-            "date_time": "2013-04-05T22:27:10+00:00",
-            "date_string": "4/05"
+            "epoch": 1365631634,
+            "date_time": "2013-04-10T22:07:14+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE2VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "EE 20N Lecture",
+          "start_time": {
+            "epoch": 1366140600,
+            "date_time": "2013-04-16T12:30:00-07:00",
+            "date_string": "4/16"
+          },
+          "end_time": {
+            "epoch": 1366146000,
+            "date_time": "2013-04-16T14:00:00-07:00",
+            "date_string": "4/16"
+          },
+          "modified_time": {
+            "epoch": 1365631634,
+            "date_time": "2013-04-10T22:07:14+00:00",
+            "date_string": "4/10"
+          },
+          "change_state": "updated"
+        },
+        {
+          "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI1VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+          "title": "EE 20N Lecture",
+          "start_time": {
+            "epoch": 1366918200,
+            "date_time": "2013-04-25T12:30:00-07:00",
+            "date_string": "4/25"
+          },
+          "end_time": {
+            "epoch": 1366923600,
+            "date_time": "2013-04-25T14:00:00-07:00",
+            "date_string": "4/25"
+          },
+          "modified_time": {
+            "epoch": 1365631634,
+            "date_time": "2013-04-10T22:07:14+00:00",
+            "date_string": "4/10"
           },
           "change_state": "updated"
         }
       ],
-      "count": 18
+      "count": 20
     },
     "bdrive": {
       "count": 2,
       "items": [
         {
-          "title": "CalCentral ITFR milestone planning",
-          "link": "https://www.googleapis.com/drive/v2/files/0AswfU2SIvXYqdEtnYUtIbTB4MjhBLURndlhXVk5uMnc",
+          "title": "Assignment #1",
+          "link": "https://www.googleapis.com/drive/v2/files/1CRO3fkWnQrqm_-8M1pO5cB6opxXB7HWxUN4IPDqdzrI",
           "modified_time": {
-            "epoch": 1365627314,
-            "date_time": "2013-04-10T20:55:14+00:00",
-            "date_string": "4/10"
+            "epoch": 1363798261,
+            "date_time": "2013-03-20T16:51:01+00:00",
+            "date_string": "3/20"
           },
-          "composer": "Bernadette Geuy",
+          "editor": "Sage Adams",
           "change_state": "modified"
         },
         {
-          "title": "My Campus Links by category & user",
-          "link": "https://www.googleapis.com/drive/v2/files/0AghvaelyFK-ldG9lbjRGLXlMNmxiQUhwOWhBd0dUNFE",
+          "title": "Group Work #1",
+          "link": "https://www.googleapis.com/drive/v2/files/1PJExieJtoo5xf945FvmWbxJZaltkmtcqPzEcFs2o2P8",
           "modified_time": {
-            "epoch": 1363900144,
-            "date_time": "2013-03-21T21:09:04+00:00",
-            "date_string": "3/21"
+            "epoch": 1363715337,
+            "date_time": "2013-03-19T17:48:57+00:00",
+            "date_string": "3/19"
           },
-          "composer": "Eli Cochran",
+          "editor": "Sage Adams",
           "change_state": "modified"
         }
       ]
     },
     "bmail": {
-      "count": 3,
+      "count": 928,
       "items": [
         {
-          "title": "Customize Gmail with colors and themes",
-          "summary": "To spice up your inbox with colors and themes, check out the Themes tab under Settings. Customize",
+          "title": "Hospitals Profit From Surgical Errors, Study Finds: Course Name Example",
+          "summary": "Original articleSince insurers pay more for patients with surgical complications, some hospitals",
           "modified_time": {
-            "epoch": 1342118889,
-            "date_time": "2012-07-12T18:48:09+00:00",
-            "date_string": "7/12"
+            "epoch": 1366151767,
+            "date_time": "2013-04-16T22:36:07+00:00",
+            "date_string": "4/16"
           },
-          "link": "http://mail.google.com/mail?account_id=yuhung@berkeley.edu&message_id=1387c850861e7a48&view=conv&extsrc=atom",
-          "composer": "Gmail Team"
+          "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fda5e01d126&view=conv&extsrc=atom",
+          "editor": "Instructure Canvas"
         },
         {
-          "title": "Get Gmail on your mobile phone",
-          "summary": "Access Gmail on your mobile phone The days of needing your computer to get to your inbox are long",
+          "title": "F.D.A. Was Lax on Compounding, Its Leader Says: Course Name Example",
+          "summary": "Original articleAsking Congress for more authority, Dr. Margaret A. Hamburg said her agency should",
           "modified_time": {
-            "epoch": 1342118889,
-            "date_time": "2012-07-12T18:48:09+00:00",
-            "date_string": "7/12"
+            "epoch": 1366151766,
+            "date_time": "2013-04-16T22:36:06+00:00",
+            "date_string": "4/16"
           },
-          "link": "http://mail.google.com/mail?account_id=yuhung@berkeley.edu&message_id=1387c85060883cf9&view=conv&extsrc=atom",
-          "composer": "Gmail Team"
+          "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fda2c441a9a&view=conv&extsrc=atom",
+          "editor": "Instructure Canvas"
         },
         {
-          "title": "Get started with Gmail",
-          "summary": "4 things you need to know Gmail is a little bit different. Learn these 4 basics and you'll never",
+          "title": "The Lede: Neighbors Mourn Loss of 8-Year-Old: Course Name Example",
+          "summary": "Original articleBill Richard, the father of the 8-year-old boy who was killed Monday, offered thanks",
           "modified_time": {
-            "epoch": 1342118888,
-            "date_time": "2012-07-12T18:48:08+00:00",
-            "date_string": "7/12"
+            "epoch": 1366151766,
+            "date_time": "2013-04-16T22:36:06+00:00",
+            "date_string": "4/16"
           },
-          "link": "http://mail.google.com/mail?account_id=yuhung@berkeley.edu&message_id=1387c8505a277bb4&view=conv&extsrc=atom",
-          "composer": "Gmail Team"
+          "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fda191e34df&view=conv&extsrc=atom",
+          "editor": "Instructure Canvas"
+        },
+        {
+          "title": "Investigation Under Way in Boston: Course Name Example",
+          "summary": "Original articleAuthorities were trying to identify suspects and a motive behind an attack that",
+          "modified_time": {
+            "epoch": 1366151765,
+            "date_time": "2013-04-16T22:36:05+00:00",
+            "date_string": "4/16"
+          },
+          "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fd9e5ff01bc&view=conv&extsrc=atom",
+          "editor": "Instructure Canvas"
+        },
+        {
+          "title": "Justices Hear Case of Adopted Indian Child: Course Name Example",
+          "summary": "Original articleThe Supreme Court considered whether a 3-year-old should remain with her biological",
+          "modified_time": {
+            "epoch": 1366151765,
+            "date_time": "2013-04-16T22:36:05+00:00",
+            "date_string": "4/16"
+          },
+          "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fd9e21bc151&view=conv&extsrc=atom",
+          "editor": "Instructure Canvas"
         }
       ]
     }
