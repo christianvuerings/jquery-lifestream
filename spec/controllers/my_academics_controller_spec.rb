@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe MyRegBlocksController do
+describe MyAcademicsController do
 
-  it "should be an empty regblocks feed on non-authenticated user" do
+  it "should be an empty feed on non-authenticated user" do
     get :get_feed
     assert_response :success
     json_response = JSON.parse(response.body)
@@ -13,8 +13,8 @@ describe MyRegBlocksController do
     session[:user_id] = "0"
     get :get_feed
     json_response = JSON.parse(response.body)
-    json_response["active_blocks"].should == []
-    json_response["inactive_blocks"].should == []
+    json_response["regblocks"]["active_blocks"].should == []
+    json_response["regblocks"]["inactive_blocks"].should == []
   end
 
 end

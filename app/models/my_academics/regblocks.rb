@@ -1,7 +1,9 @@
-class MyRegBlocks < MyMergedModel
+class MyAcademics::Regblocks
+
+  include MyAcademics::AcademicsModule
   include DatedFeed
 
-  def get_feed_internal
+  def merge(data)
     proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
     blocks_feed = proxy.get_blocks
 
@@ -23,22 +25,10 @@ class MyRegBlocks < MyMergedModel
       end
 
       is_active = cleared_date.nil?
-      type = block.css("blockType").text.strip
-      status = block.css("status").text.strip
-
-      reason = block.css("reason")
-      if reason.empty?
-        reason = ""
-      else
-        reason = reason.text.strip
-      end
-
-      office = block.css("office")
-      if office.empty?
-        office = ""
-      else
-        office = office.text.strip
-      end
+      type = to_text block.css("blockType")
+      status = to_text block.css("status")
+      reason = to_text block.css("reason")
+      office = to_text block.css("office")
 
       reg_block = {
         status: status,
@@ -59,11 +49,10 @@ class MyRegBlocks < MyMergedModel
     active_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
     inactive_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
 
-    {
+    data[:regblocks] = {
       :active_blocks => active_blocks,
       :inactive_blocks => inactive_blocks
     }
 
   end
-
 end

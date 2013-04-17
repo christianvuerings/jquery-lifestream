@@ -1,0 +1,36 @@
+{"http_interactions": [
+  {
+    "request": {
+      "method": "get",
+      "uri": "https://localhost:3001/bearfacts-apis/student/11667051/reg/classschedule",
+      "body": {
+        "encoding": "US-ASCII",
+        "string": ""
+      },
+      "headers": {
+        "User-Agent": ["Faraday v0.8.6"],
+        "Authorization": "",
+        "x-sakai-token": null
+      }
+    },
+    "response": {
+      "status": {
+        "code": 200,
+        "message": null
+      },
+      "headers": {
+        "date": ["Wed, 17 Apr 2013 17:04:58 GMT"],
+        "content-type": ["application/xml"],
+        "content-length": ["5168"],
+        "connection": ["close"]
+      },
+      "body": {
+        "encoding": "US-ASCII",
+        "string" : "",
+        "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<studentClassSchedules xmlns=\"urn:berkeley.edu/babl\" termName=\"Spring\" termYear=\"2013\" termCode=\"B\" asOfDate=\"April 17, 2013 12:00 AM\"><isRegistered>true</isRegistered><isEnrolled>true</isEnrolled><studentType>STUDENT</studentType><ugGradStatus>U</ugGradStatus><classSchedule><courseControlNumber>23731</courseControlNumber><deptName>EDUC</deptName><courseNumber>140AC</courseNumber><instructnFormatDet>LEC</instructnFormatDet><sectNum>001</sectNum><primSecFlag>P</primSecFlag><pnpFlag></pnpFlag><numberOfUnits>3.0</numberOfUnits><buildingCode>VALLEY LSB</buildingCode><roomNum>2060</roomNum><weekGroup>TuTh</weekGroup><startTime>1230</startTime><startTimeAmPmFlag>P</startTimeAmPmFlag><endTime>0200</endTime><endTimeAmPmFlag>P</endTimeAmPmFlag><isEdd>false</isEdd><instrShortName>HULL, G A</instrShortName><courseTitle>LITER:IND &amp; SOC DEV</courseTitle></classSchedule><classSchedule><courseControlNumber>23848</courseControlNumber><deptName>EDUC</deptName><courseNumber>197</courseNumber><instructnFormatDet>FLD</instructnFormatDet><sectNum>048</sectNum><primSecFlag>P</primSecFlag><pnpFlag>Y</pnpFlag><numberOfUnits>1.0</numberOfUnits><buildingCode>NO FACILITY</buildingCode><weekGroup>UNSCHED</weekGroup><isEdd>false</isEdd><instrShortName>HULL, G A</instrShortName><courseTitle>FIELD STUDY</courseTitle></classSchedule><classSchedule/><classSchedule><courseControlNumber>73980</courseControlNumber><deptName>PSYCH</deptName><courseNumber>101</courseNumber><instructnFormatDet>LEC</instructnFormatDet><sectNum>001</sectNum><primSecFlag>P</primSecFlag><pnpFlag></pnpFlag><numberOfUnits>4.0</numberOfUnits><buildingCode>STANLEY</buildingCode><roomNum>105</roomNum><weekGroup>TuTh</weekGroup><startTime>0800</startTime><startTimeAmPmFlag>A</startTimeAmPmFlag><endTime>0930</endTime><endTimeAmPmFlag>A</endTimeAmPmFlag><isEdd>false</isEdd><instrShortName>GADE, C J</instrShortName><courseTitle>RES &amp; DATA ANALYSIS</courseTitle></classSchedule><classSchedule><courseControlNumber>74007</courseControlNumber><deptName>PSYCH</deptName><courseNumber>101</courseNumber><instructnFormatDet>DIS</instructnFormatDet><sectNum>109</sectNum><primSecFlag>S</primSecFlag><pnpFlag></pnpFlag><buildingCode>TOLMAN</buildingCode><roomNum>1535</roomNum><weekGroup>W</weekGroup><startTime>0300</startTime><startTimeAmPmFlag>P</startTimeAmPmFlag><endTime>0500</endTime><endTimeAmPmFlag>P</endTimeAmPmFlag><isEdd>false</isEdd><instrShortName>TANSOMBOON, C</instrShortName><courseTitle>RES &amp; DATA ANALYSIS</courseTitle></classSchedule><classSchedule><courseControlNumber>74058</courseControlNumber><deptName>PSYCH</deptName><courseNumber>C120</courseNumber><instructnFormatDet>LEC</instructnFormatDet><sectNum>001</sectNum><primSecFlag>P</primSecFlag><pnpFlag>Y</pnpFlag><numberOfUnits>3.0</numberOfUnits><buildingCode>HEARST MIN</buildingCode><roomNum>390</roomNum><weekGroup>MW</weekGroup><startTime>0100</startTime><startTimeAmPmFlag>P</startTimeAmPmFlag><endTime>0200</endTime><endTimeAmPmFlag>P</endTimeAmPmFlag><isEdd>false</isEdd><instrShortName>LOMBROZO, T</instrShortName><courseTitle>ISSUES IN COGNITION</courseTitle></classSchedule><classSchedule><courseControlNumber>74073</courseControlNumber><deptName>PSYCH</deptName><courseNumber>C120</courseNumber><instructnFormatDet>DIS</instructnFormatDet><sectNum>105</sectNum><primSecFlag>S</primSecFlag><pnpFlag></pnpFlag><buildingCode>TOLMAN</buildingCode><roomNum>2301</roomNum><weekGroup>Th</weekGroup><startTime>1000</startTime><startTimeAmPmFlag>A</startTimeAmPmFlag><endTime>1100</endTime><endTimeAmPmFlag>A</endTimeAmPmFlag><isEdd>false</isEdd><instrShortName>PECKHAM, A D</instrShortName><courseTitle>ISSUES IN COGNITION</courseTitle></classSchedule><classSchedule><courseControlNumber>74220</courseControlNumber><deptName>PSYCH</deptName><courseNumber>133</courseNumber><instructnFormatDet>LEC</instructnFormatDet><sectNum>001</sectNum><primSecFlag>P</primSecFlag><pnpFlag>Y</pnpFlag><numberOfUnits>3.0</numberOfUnits><buildingCode>GPB</buildingCode><roomNum>100</roomNum><weekGroup>MW</weekGroup><startTime>1200</startTime><startTimeAmPmFlag>P</startTimeAmPmFlag><endTime>0100</endTime><endTimeAmPmFlag>P</endTimeAmPmFlag><isEdd>false</isEdd><instrShortName>HARVEY, A G</instrShortName><courseTitle>PSYCHOLOGY OF SLEEP</courseTitle></classSchedule><classSchedule><courseControlNumber>74238</courseControlNumber><deptName>PSYCH</deptName><courseNumber>133</courseNumber><instructnFormatDet>DIS</instructnFormatDet><sectNum>106</sectNum><primSecFlag>S</primSecFlag><pnpFlag></pnpFlag><buildingCode>TOLMAN</buildingCode><roomNum>2301</roomNum><weekGroup>Th</weekGroup><startTime>0300</startTime><startTimeAmPmFlag>P</startTimeAmPmFlag><endTime>0400</endTime><endTimeAmPmFlag>P</endTimeAmPmFlag><isEdd>false</isEdd><instrShortName>RUSSO, K A</instrShortName><courseTitle>PSYCHOLOGY OF SLEEP</courseTitle></classSchedule><studentTermUnitTotal><enrollUnitTotal>14.0</enrollUnitTotal><waitListUnitTotal>0.0</waitListUnitTotal><workloadUnitTotal>14.0</workloadUnitTotal><enrollIncludingWaitListTotal>14.0</enrollIncludingWaitListTotal></studentTermUnitTotal></studentClassSchedules>"
+      },
+      "http_version": null
+    },
+    "recorded_at": "Wed, 17 Apr 2013 17:04:59 GMT"
+  }
+], "recorded_with": "VCR 2.4.0"}

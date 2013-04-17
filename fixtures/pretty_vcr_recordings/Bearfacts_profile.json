@@ -1,0 +1,36 @@
+{"http_interactions": [
+  {
+    "request": {
+      "method": "get",
+      "uri": "https://localhost:3001/bearfacts-apis/student/11667051",
+      "body": {
+        "encoding": "US-ASCII",
+        "string": ""
+      },
+      "headers": {
+        "User-Agent": ["Faraday v0.8.6"],
+        "Authorization": "",
+        "x-sakai-token": null
+      }
+    },
+    "response": {
+      "status": {
+        "code": 200,
+        "message": null
+      },
+      "headers": {
+        "date": ["Tue, 16 Apr 2013 17:48:49 GMT"],
+        "content-type": ["application/xml"],
+        "content-length": ["3147"],
+        "connection": ["close"]
+      },
+      "body": {
+        "encoding": "US-ASCII",
+        "string":"",
+        "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<studentProfile xmlns=\"urn:berkeley.edu/babl\" termName=\"Spring\" termYear=\"2013\" asOfDate=\"April 16, 2013 12:00 AM\"><showRegistrationAlertMsg>false</showRegistrationAlertMsg><regBlockStatusCode>3</regBlockStatusCode><studentType>STUDENT</studentType><ugGradFlag>U</ugGradFlag><noProfileDataFlag>false</noProfileDataFlag><studentGeneralProfile><corpEducLevel>SENIOR   </corpEducLevel><nonAPLevel>SENIOR   </nonAPLevel><futureTBLevel>SENIOR   </futureTBLevel><studentName><firstName>IWQROE</firstName><middleName></middleName><middleInitial></middleInitial><lastName>BABTREW</lastName></studentName><birthDate>04/22/1975</birthDate><sex>M</sex><collegePrimary>ENGR    </collegePrimary><majorPrimary>CIVIL ENGINEERING                       </majorPrimary><isActiveAthlete>false</isActiveAthlete><isInternational>false</isInternational><isConfidential>false</isConfidential></studentGeneralProfile><studentTermProfile><adminCancel>true</adminCancel><unitsEnrolled>0.0</unitsEnrolled><confirmedSchedule>LOCAL ADDRESS</confirmedSchedule><academicStatus>GOOD STANDING</academicStatus><californiaResidencyStatus>CALIFORNIA RESIDENT                 </californiaResidencyStatus><regSpecialProgram>NONE                     </regSpecialProgram><degreeStatus>Dropped</degreeStatus><newStudent>false</newStudent></studentTermProfile><underGradReqProfile><subjectA>REQT SATISFIED</subjectA><americanHistory>REQT SATISFIED</americanHistory><americanInstitutions>REQT SATISFIED</americanInstitutions><americanCultures>REQT SATISFIED</americanCultures></underGradReqProfile><studentContacts><studentContact addressType=\"LOCAL\" badAddressFlag=\"false\"><address disclosure=\"false\"><streetOne>555 ORT                       </streetOne><city>BERKELEY                 </city><state>CA</state><postalCode>94720</postalCode><postalCodeTwo></postalCodeTwo></address><phone disclosure=\"false\"><telAreaCode>800</telAreaCode><telExchange>555</telExchange><telNumber>0505</telNumber></phone><lastUpdateDate>2013-04-02 00:00:00.0</lastUpdateDate><lastUpdateUserId>STUDENT </lastUpdateUserId></studentContact><studentContact addressType=\"BILLING\" badAddressFlag=\"false\"><address disclosure=\"false\"/><phone disclosure=\"false\"/></studentContact><studentContact addressType=\"PERMANENT\" badAddressFlag=\"false\"><address disclosure=\"false\"><streetOne>5555 IQRP YQU  #555I          </streetOne><city>BERKELEY                 </city><state>CA</state><postalCode>94720</postalCode><postalCodeTwo></postalCodeTwo></address><phone disclosure=\"false\"><telAreaCode>800</telAreaCode><telExchange>555</telExchange><telNumber>6812</telNumber></phone><lastUpdateDate>2012-08-23 00:00:00.0</lastUpdateDate><lastUpdateUserId>STUDENT </lastUpdateUserId></studentContact><emailAddress>not_a_real_name@domain.edu                                              </emailAddress><emailDisclosure>false</emailDisclosure><emailLastUpdateDate>2013-03-15 00:00:00.0</emailLastUpdateDate><emailLastUpdateUserId>BKORPDTA</emailLastUpdateUserId><badEmailAddressFlag>false</badEmailAddressFlag><addressAvailableFlag>true</addressAvailableFlag></studentContacts></studentProfile>"
+      },
+      "http_version": null
+    },
+    "recorded_at": "Tue, 16 Apr 2013 17:48:49 GMT"
+  }
+], "recorded_with": "VCR 2.4.0"}
