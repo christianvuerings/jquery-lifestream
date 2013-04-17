@@ -126,7 +126,6 @@ class MyAcademics < MyMergedModel
     doc = Nokogiri::XML feed[:body]
 
     top_node = doc.css("studentClassSchedules")
-    Rails.logger.warn "top_node = #{top_node.inspect}"
     if top_node.nil? || top_node.empty?
       return {}
     end
@@ -145,6 +144,7 @@ class MyAcademics < MyMergedModel
     semester_name = "#{top_node.attribute("termName").text} #{top_node.attribute("termYear").text}"
     semesters << {
       :name => semester_name,
+      :is_current => true,
       :schedule => schedule
     }
     semesters
