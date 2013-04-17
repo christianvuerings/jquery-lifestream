@@ -5,7 +5,7 @@ module MyAcademics::AcademicsModule
   end
 
   def to_text(element)
-    if element.nil? || element.empty?
+    if element.blank?
       return ""
     else
       return element.text.strip
