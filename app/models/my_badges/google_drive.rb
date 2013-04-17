@@ -40,13 +40,13 @@ class MyBadges::GoogleDrive
       response_page.data["items"].each do |entry|
         break if response[:count] > @count_limiter
         begin
-          if (is_recent_message?(entry) && is_unread_message?(entry))
+          if is_recent_message?(entry)
             next unless !entry["title"].blank?
             item = {
               title: entry["title"],
               link: entry["selfLink"],
               modified_time: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
-              composer: entry["lastModifyingUserName"],
+              editor: entry["lastModifyingUserName"],
               change_state: handle_change_state(entry)
             }
             response[:items] << item
@@ -73,15 +73,6 @@ class MyBadges::GoogleDrive
     else
       return "modified"
     end
-  end
-
-  def is_unread_message?(entry)
-    # The entries turn out to be classes... not hashes.
-    labels = entry["labels"].to_hash
-    result = !labels.blank? && labels.has_key?("viewed") && labels.has_key?("trashed")
-    result &&= !labels["viewed"]
-    #If something is trashed, we shouldn't care if it was unread
-    result &&= !labels["trashed"]
   end
 
   def is_recent_message?(entry)

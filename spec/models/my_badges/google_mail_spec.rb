@@ -19,7 +19,7 @@ describe "MyBadges::bMail" do
     GoogleProxy.stub(:access_granted?).and_return(false)
     merged = MyBadges::Merged.new @user_id
     unread = merged.get_feed
-    unread["unread_badge_counts"].each do |k,v|
+    unread[:badges].each do |k,v|
       v.should == 0
     end
   end
