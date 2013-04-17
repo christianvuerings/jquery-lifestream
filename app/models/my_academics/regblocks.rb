@@ -3,10 +3,6 @@ class MyAcademics::Regblocks
   include MyAcademics::AcademicsModule
   include DatedFeed
 
-  def initialize(uid)
-    @uid = uid
-  end
-
   def merge(data)
     proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
     blocks_feed = proxy.get_blocks

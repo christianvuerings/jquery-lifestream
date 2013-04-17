@@ -2,10 +2,6 @@ class MyAcademics::CollegeAndLevel
 
   include MyAcademics::AcademicsModule
 
-  def initialize(uid)
-    @uid = uid
-  end
-
   def merge(data)
     profile_proxy = BearfactsProfileProxy.new({:user_id => @uid})
     profile_feed = profile_proxy.get_profile

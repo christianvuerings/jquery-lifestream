@@ -2,10 +2,6 @@ class MyAcademics::Semesters
 
   include MyAcademics::AcademicsModule
 
-  def initialize(uid)
-    @uid = uid
-  end
-
   def merge(data)
     proxy = BearfactsScheduleProxy.new({:user_id => @uid})
     feed = proxy.get_schedule
