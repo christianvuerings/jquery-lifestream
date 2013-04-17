@@ -31,6 +31,12 @@ describe "MyAcademics" do
 
     oski_requirements = oski_academics[:requirements]
     oski_requirements.length.should == 4
+
+    oski_semesters = oski_academics[:semesters]
+    oski_semesters.length.should == 1
+    oski_semesters[0][:name].should == "Spring 2013"
+    oski_semesters[0][:schedule].length.should == 4
+
   end
 
 end
