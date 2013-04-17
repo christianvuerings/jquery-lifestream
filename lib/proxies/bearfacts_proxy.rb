@@ -7,7 +7,7 @@ class BearfactsProxy < BaseProxy
   end
 
   def lookup_student_id
-    student = CampusData.get_reg_status @uid
+    student = CampusData.get_person_attributes @uid
     if student.nil?
       nil
     else
