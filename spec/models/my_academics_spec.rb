@@ -10,7 +10,7 @@ describe "MyAcademics" do
     oski_schedule_proxy = BearfactsScheduleProxy.new({:user_id => "61889", :fake => true})
     BearfactsScheduleProxy.stub(:new).and_return(oski_schedule_proxy)
 
-    oski_academics = MyAcademics.new("61889").get_feed
+    oski_academics = MyAcademics::Merged.new("61889").get_feed
     oski_academics.empty?.should be_false
 
     oski_blocks = oski_academics[:regblocks]

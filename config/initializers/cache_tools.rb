@@ -17,7 +17,7 @@ module Calcentral
         MyUpNext => :expire,
         MyGroups => :expire,
         MyActivities => :expire,
-        MyAcademics => :expire,
+        MyAcademics::Merged => :expire,
 
         CanvasProxy => :expire,
         CanvasComingUpProxy => :expire,
