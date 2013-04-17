@@ -3,20 +3,22 @@ class MyAcademics < MyMergedModel
 
   def get_feed_internal
     feed = {}
+
+    profile_proxy = BearfactsProfileProxy.new({:user_id => @uid})
+    profile_feed = profile_proxy.get_profile
+    unless profile_feed.nil?
+      doc = Nokogiri::XML profile_feed[:body]
+      feed[:college_and_level] = get_college_and_level doc
+      feed[:requirements] = get_requirements doc
+    end
+
     feed[:regblocks] = get_regblocks
-    feed[:college_and_level] = get_college_and_level
     feed
   end
 
   private
 
-  def get_college_and_level
-    proxy = BearfactsProfileProxy.new({:user_id => @uid})
-    feed = proxy.get_profile
-
-    return {} if feed.nil?
-
-    doc = Nokogiri::XML feed[:body]
+  def get_college_and_level(doc)
     general_profile = doc.css("studentGeneralProfile")
     ug_grad_flag = to_text doc.css("ugGradFlag")
     standing = ug_grad_flag.upcase == "U" ? "Undergraduate" : "Graduate"
@@ -29,6 +31,33 @@ class MyAcademics < MyMergedModel
       college: college,
       major: major
     }
+  end
+
+  def get_requirements(doc)
+    requirements = []
+    req_nodes = doc.css("underGradReqProfile")
+    req_nodes.children().each do |node|
+      name = node.name
+      status = node.text.upcase == "REQT SATISFIED" ? "met" : ""
+      # translate requirement names to English
+      case node.name.upcase
+        when "SUBJECTA"
+          name = "UC Entry Level Writing"
+        when "AMERICANHISTORY"
+          name = "American History"
+        when "AMERICANINSTITUTIONS"
+          name = "American Institutions"
+        when "AMERICANCULTURES"
+          name = "American Cultures"
+      end
+
+      requirements << {
+        name: name,
+        status: status
+      }
+    end
+
+    requirements
   end
 
   def get_regblocks

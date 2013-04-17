@@ -28,6 +28,9 @@ describe "MyAcademics" do
     oski_college.should_not be_nil
     oski_college[:college].should == "ENGR"
     oski_college[:standing].should == "Undergraduate"
+
+    oski_requirements = oski_academics[:requirements]
+    oski_requirements.length.should == 4
   end
 
 end
