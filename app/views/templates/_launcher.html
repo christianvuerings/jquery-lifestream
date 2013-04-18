@@ -38,8 +38,7 @@
           class="cc-popover-container cc-popover-status cc-left"
           data-ng-show="user.profile.student_info.reg_status.code!=null">
           <button class="cc-ir cc-icon cc-icon-status-person"
-            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')">
-            <span class="cc-visuallyhidden">Show your academic profile</span>
+            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-status')" title="Show your academic profile">
           </button>
           <i class="cc-icon cc-icon-status-person-layover"
             data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[showStatusError]"
