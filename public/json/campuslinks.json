@@ -155,7 +155,7 @@
           "subcategory": "Planning"
         }
       ],
-      "name": "Schedule Planning",
+      "name": "Schedule Builder",
       "description": "Plan your classes",
       "url": "https://schedulebuilder.berkeley.edu/",
       "roles": {
