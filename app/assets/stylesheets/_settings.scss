@@ -14,7 +14,9 @@
     color: $cc-medium-grey;
     font-size: 18px;
   }
-  .cc-settings-dashboard-button {
+  .cc-settings-dashboard-link {
+    display: block;
+    font-weight: bold;
     margin: 40px 0 30px 0;
   }
   .cc-settings-section {
