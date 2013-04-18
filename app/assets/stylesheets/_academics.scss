@@ -25,7 +25,7 @@
   }
   .panel {
     padding: 10px 20px 10px 10px;
-    &.cc-academics-current-sem {
+    &.cc-academics-current-semester {
       background-color: #fafafa;
       @include box-shadow(2px 2px 10px 1px #b8b8b8);
     }
@@ -64,13 +64,13 @@
     border-right: 1px solid $cc-light-grey;
     color: $cc-medium-grey;
     padding-bottom: 50px;
-    h3 {
-      &:first-of-type {
-      margin-top: 10px;
-    }
-    &:not(:first-of-type) {
-      margin-top: 30px;
-    }
+      h3 {
+        &:first-of-type {
+        margin-top: 10px;
+      }
+      &:not(:first-of-type) {
+        margin-top: 30px;
+      }
   }
     .row {
       margin-bottom: 5px;

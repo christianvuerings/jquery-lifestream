@@ -14,12 +14,12 @@
       controller: 'SplashController',
       isPublic: true
     }).
-    // We actually need to duplicate the campus items, more info on
-    // http://stackoverflow.com/questions/12524533
     when('/academics', {
       templateUrl: 'templates/academics.html',
       controller: 'AcademicsController'
     }).
+    // We actually need to duplicate the campus items, more info on
+    // http://stackoverflow.com/questions/12524533
     when('/campus', {
       templateUrl: 'templates/campus.html',
       controller: 'CampusController'

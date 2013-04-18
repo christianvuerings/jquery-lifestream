@@ -7,7 +7,6 @@
     data-ng-cloak
   >
 
-
   <div class="column">
     <h1>My Academics</h1>
   </div>
@@ -15,111 +14,110 @@
   <div class="large-6 columns cc-academics-records">
     <h2>Records</h2>
 
-      <h3>College and Level</h3>
-      <div class="row">
-        <div class="large-2 small-4 columns">College</div>
-        <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.college}}</div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-4 columns">Major</div>
-        <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.major}}</div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-4 columns">Standing</div>
-        <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.standing}}</div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-4 columns">Level</div>
-        <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.level}}</div>
-      </div>
+    <h3>College and Level</h3>
+    <div class="row">
+      <div class="large-2 small-4 columns">College</div>
+      <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.college}}</div>
+    </div>
+    <div class="row">
+      <div class="large-2 small-4 columns">Major</div>
+      <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.major}}</div>
+    </div>
+    <div class="row">
+      <div class="large-2 small-4 columns">Standing</div>
+      <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.standing}}</div>
+    </div>
+    <div class="row">
+      <div class="large-2 small-4 columns">Level</div>
+      <div class="large-10 small-8 columns cc-academics-empasize">{{academics.college_and_level.level}}</div>
+    </div>
 
-      <h3>Status and Blocks</h3>
+    <h3>Status and Blocks</h3>
 
-      <h4>Status Type</h4>
+    <h4>Status Type</h4>
+    <div class="row cc-academics-column-labels">
+      <div class="large-4 small-4 columns">Type</div>
+      <div class="large-4 small-4 columns">Status</div>
+      <div class="large-4 small-4 columns">Do Next</div>
+    </div>
+    <div class="row">
+      <div class="large-4 small-4 columns">Registration</div>
+      <div class="large-4 small-4 columns" data-ng-show="user_status.student_info.reg_status.summary=='Registered'">
+        <i class="cc-icon icon-ok-sign"></i> {{user_status.student_info.reg_status.summary}}
+      </div>
+      <div class="large-4 small-4 columns" data-ng-show="user_status.student_info.reg_status.summary!='Registered'">
+        <i class="cc-icon icon-exclamation-sign"></i> {{user_status.student_info.reg_status.summary}}
+      </div>
+      <div class="large-4 small-4 columns">NEED DATA</div>
+    </div>
+    <div class="row">
+      <div class="large-4 small-4 columns">California Residency</div>
+      <div class="large-4 small-4 columns">
+        <i class="cc-icon icon-home"></i> Non-Resident
+      </div>
+      <div class="large-4 small-4 columns"><a data-ng-href="">NEED DATA</a></div>
+    </div>
+    <h4>Active Blocks</h4>
+    <div class="row cc-academics-column-labels">
+      <div class="large-4 small-4 columns">Type</div>
+      <div class="large-4 small-4 columns">Reason</div>
+      <div class="large-4 small-4 columns">Blocked</div>
+    </div>
+
+    <div data-ng-show="academics.regblocks.active_blocks.length">
+      <div class="row" data-ng-repeat="block in academics.regblocks.active_blocks">
+        <div class="large-4 small-4 columns">{{block.type}}</div>
+        <div class="large-4 small-4 columns">{{block.reason}}</div>
+        <div class="large-4 small-4 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd'}}</div>
+      </div>
+    </div>
+    <div data-ng-show="!academics.regblocks.active_blocks.length">
+      <div class="row">
+        <div class="large-6 columns end">You have no active blocks at this time.</div>
+      </div>
+    </div>
+
+    <div class="cc-academics-showhide-block-history">
+      <p class="cc-academics-nolink cc-academics-empasize"
+        data-ng-show="!academics.regblocks.inactive_blocks.length">No block history
+      </p>
+
+      <div data-ng-show="academics.regblocks.inactive_blocks.length">
+        <button
+          class="cc-button-link cc-academics-showhide-text"
+          data-ng-click="toggleBlockHistory()">
+            <span data-ng-show="!show_block_history">&raquo; Show block history</span>
+            <span data-ng-show="show_block_history">&laquo; Hide block history</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cc-academics-block-history" data-ng-show="show_block_history">
       <div class="row cc-academics-column-labels">
-        <div class="large-4 small-4 columns">Type</div>
-        <div class="large-4 small-4 columns">Status</div>
-        <div class="large-4 small-4 columns">Do Next</div>
+        <div class="large-3 small-2 columns">Type</div>
+        <div class="large-3 small-4 columns">Reason</div>
+        <div class="large-2 small-2 columns">Blocked</div>
+        <div class="large-2 small-2 columns end">Cleared</div>
       </div>
-      <div class="row">
-        <div class="large-4 small-4 columns">Registration</div>
-        <div class="large-4 small-4 columns" data-ng-show="user_status.student_info.reg_status.summary=='Registered'">
-          <i class="cc-icon icon-ok-sign"></i> {{user_status.student_info.reg_status.summary}}
-        </div>
-        <div class="large-4 small-4 columns" data-ng-show="user_status.student_info.reg_status.summary!='Registered'">
-          <i class="cc-icon icon-exclamation-sign"></i> {{user_status.student_info.reg_status.summary}}
-        </div>
-        <div class="large-4 small-4 columns">NEED DATA</div>
+      <div class="row" data-ng-repeat="block in academics.regblocks.inactive_blocks">
+        <div class="large-3 small-2 columns">{{block.type || '&nbsp;'}}</div>
+        <div class="large-3 small-4 columns">{{block.reason || '&nbsp;'}}</div>
+        <div class="large-2 small-2 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd' || '&nbsp;'}}</div>
+        <div class="large-2 small-2 columns end">{{block.cleared_date.epoch * 1000 | date:'MM/dd' || '&nbsp;'}}</div>
       </div>
-      <div class="row">
-        <div class="large-4 small-4 columns">California Residency</div>
-        <div class="large-4 small-4 columns">
-          <i class="cc-icon icon-home"></i> Non-Resident
-        </div>
-        <div class="large-4 small-4 columns"><a data-ng-href="">NEED DATA</a></div>
-      </div>
-      <h4>Active Blocks</h4>
-      <div class="row cc-academics-column-labels">
-        <div class="large-4 small-4 columns">Type</div>
-        <div class="large-4 small-4 columns">Reason</div>
-        <div class="large-4 small-4 columns">Blocked</div>
-      </div>
+    </div>
 
-      <div data-ng-show="academics.regblocks.active_blocks.length">
-        <div class="row" data-ng-repeat="block in academics.regblocks.active_blocks">
-          <div class="large-4 small-4 columns">{{block.type}}</div>
-          <div class="large-4 small-4 columns">{{block.reason}}</div>
-          <div class="large-4 small-4 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd'}}</div>
-        </div>
+    <h3>University Requirements</h3>
+    <div class="row cc-academics-column-labels">
+      <div class="large-4 small-8 columns">Requirement</div>
+      <div class="large-2 small-2 end columns">Met?</div>
+    </div>
+    <div class="row" data-ng-repeat="req in academics.requirements">
+      <div class="large-4 small-8 columns">{{req.name}}</div>
+      <div class="large-2 small-2 end columns">
+        <i data-ng-class="{'cc-icon icon-ok-sign':(req.status=='met'), 'cc-icon icon-exclamation-sign':(req.status!='met')}"></i>
       </div>
-      <div data-ng-show="!academics.regblocks.active_blocks.length">
-        <div class="row">
-          <div class="large-6 columns end">You have no active blocks at this time.</div>
-        </div>
-      </div>
-
-      <div class="cc-academics-showhide-block-history">
-        <p class="cc-academics-nolink cc-academics-empasize"
-          data-ng-show="!academics.regblocks.inactive_blocks.length">No block history
-        </p>
-
-        <div data-ng-show="academics.regblocks.inactive_blocks.length">
-          <button
-            class="cc-button-link cc-academics-showhide-text"
-            data-ng-click="toggleBlockHistory()">
-              <span data-ng-show="!show_block_history">&raquo;  Show block history</span>
-              <span data-ng-show="show_block_history">&laquo; Hide block history</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="cc-academics-block-history" data-ng-show="show_block_history">
-        <div class="row cc-academics-column-labels">
-          <div class="large-3 small-2 columns">Type</div>
-          <div class="large-3 small-4 columns">Reason</div>
-          <div class="large-2 small-2 columns">Blocked</div>
-          <div class="large-2 small-2 columns end">Cleared</div>
-        </div>
-        <div class="row" data-ng-repeat="block in academics.regblocks.inactive_blocks">
-          <div class="large-3 small-2 columns">{{block.type || '&nbsp;'}}</div>
-          <div class="large-3 small-4 columns">{{block.reason || '&nbsp;'}}</div>
-          <div class="large-2 small-2 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd' || '&nbsp;'}}</div>
-          <div class="large-2 small-2 columns end">{{block.cleared_date.epoch * 1000 | date:'MM/dd' || '&nbsp;'}}</div>
-        </div>
-      </div>
-
-
-      <h3>University Requirements</h3>
-      <div class="row cc-academics-column-labels">
-        <div class="large-4 small-8 columns">Requirement</div>
-        <div class="large-2 small-2 end columns">Met?</div>
-      </div>
-      <div class="row" data-ng-repeat="req in academics.requirements">
-        <div class="large-4 small-8 columns">{{req.name}}</div>
-        <div class="large-2 small-2 end columns">
-          <i data-ng-class="{'cc-icon icon-ok-sign':(req.status=='met'), 'cc-icon icon-exclamation-sign':(req.status!='met')}"></i>
-        </div>
-      </div>
+    </div>
 
   </div>
 
@@ -130,20 +128,20 @@
         <h2 class="cc-left">Current Semester</h2>
       </div>
       <div class="large-6 small-6 columns">
-        <h2 class="cc-right cc-academics-orderlink"><a data-ng-href="https://bearfacts.berkeley.edu/bearfacts/student/academicRecord/grades.do?bfaction=studentTranscriptVerify"><strong>Order transcripts</strong></a></h2>
+        <h2 class="cc-right cc-academics-orderlink"><a href="https://bearfacts.berkeley.edu/bearfacts/student/academicRecord/grades.do?bfaction=studentTranscriptVerify"><strong>Order transcripts</strong></a></h2>
       </div>
     </div>
 
     <div class="row">
       <div class="large-4 small-12 columns end">
-        <div class="panel cc-academics-calendar cc-academics-current-sem">
+        <div class="panel cc-academics-calendar cc-academics-current-semester">
           <div class="cc-academics-calendar-link"><a href="">{{semesters.name}}</a></div>
           <div class="row cc-academics-empasize">
             <div class="large-6 small-6 columns cc-academics-label-col">Class</div>
             <div class="large-3 small-3 columns">Units</div>
           </div>
           <div class="row" data-ng-repeat="sem in semesters.schedule">
-            <div class="large-6 small-6 columns cc-academics-label-col">{{sem.class_name}}</div>
+            <div class="large-6 small-6 columns cc-academics-label-col">{{sem.course_number}}</div>
             <div class="large-3 small-3 columns">{{sem.units}}</div>
           </div>
         </div>
