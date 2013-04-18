@@ -1,4 +1,7 @@
 <%= render 'templates/campus' %>
+<% if Settings.features.bearfacts %>
+  <%= render 'templates/academics' %>
+<% end %>
 <%= render 'templates/dashboard' %>
 <%= render 'templates/dashboard_task_loop' %>
 <%= render 'templates/dashboard_task_editor' %>

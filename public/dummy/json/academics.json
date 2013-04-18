@@ -1,0 +1,481 @@
+{
+  "college_and_level": {
+    "standing": "Undergraduate",
+    "level": "SENIOR",
+    "college": "ENGR",
+    "major": "CIVIL ENGINEERING"
+  },
+  "requirements": [
+    {
+      "name": "UC Entry Level Writing",
+      "status": "met"
+    },
+    {
+      "name": "American History",
+      "status": "met"
+    },
+    {
+      "name": "American Institutions",
+      "status": "met"
+    },
+    {
+      "name": "American Cultures",
+      "status": "met"
+    }
+  ],
+  "regblocks": {
+    "active_blocks": [
+      {
+        "status": "Active",
+        "type": "FINAN",
+        "blocked_date": {
+          "epoch": 1366095600,
+          "date_time": "2013-04-16T00:00:00-07:00",
+          "date_string": "4/16/2013"
+        },
+        "cleared_date": {
+          "epoch": null,
+          "date_time": null,
+          "date_string": null
+        },
+        "reason": "CARS",
+        "office": "BPS"
+      }
+    ],
+    "inactive_blocks": [
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1366009200,
+          "date_time": "2013-04-15T00:00:00-07:00",
+          "date_string": "4/15/2013"
+        },
+        "cleared_date": {
+          "epoch": 1366095600,
+          "date_time": "2013-04-16T00:00:00-07:00",
+          "date_string": "4/16/2013"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 1332201600,
+          "date_time": "2012-03-20T00:00:00+00:00",
+          "date_string": "3/20/2012"
+        },
+        "cleared_date": {
+          "epoch": 1332201600,
+          "date_time": "2012-03-20T00:00:00+00:00",
+          "date_string": "3/20/2012"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 1296691200,
+          "date_time": "2011-02-03T00:00:00+00:00",
+          "date_string": "2/03/2011"
+        },
+        "cleared_date": {
+          "epoch": 1296691200,
+          "date_time": "2011-02-03T00:00:00+00:00",
+          "date_string": "2/03/2011"
+        },
+        "reason": "MISC",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "FINAN",
+        "blocked_date": {
+          "epoch": 1296000000,
+          "date_time": "2011-01-26T00:00:00+00:00",
+          "date_string": "1/26/2011"
+        },
+        "cleared_date": {
+          "epoch": 1296000000,
+          "date_time": "2011-01-26T00:00:00+00:00",
+          "date_string": "1/26/2011"
+        },
+        "reason": "LIBRARY",
+        "office": ""
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1245110400,
+          "date_time": "2009-06-16T00:00:00+00:00",
+          "date_string": "6/16/2009"
+        },
+        "cleared_date": {
+          "epoch": 1245110400,
+          "date_time": "2009-06-16T00:00:00+00:00",
+          "date_string": "6/16/2009"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1231891200,
+          "date_time": "2009-01-14T00:00:00+00:00",
+          "date_string": "1/14/2009"
+        },
+        "cleared_date": {
+          "epoch": 1231891200,
+          "date_time": "2009-01-14T00:00:00+00:00",
+          "date_string": "1/14/2009"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1173139200,
+          "date_time": "2007-03-06T00:00:00+00:00",
+          "date_string": "3/06/2007"
+        },
+        "cleared_date": {
+          "epoch": 1173139200,
+          "date_time": "2007-03-06T00:00:00+00:00",
+          "date_string": "3/06/2007"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1134345600,
+          "date_time": "2005-12-12T00:00:00+00:00",
+          "date_string": "12/12/2005"
+        },
+        "cleared_date": {
+          "epoch": 1134345600,
+          "date_time": "2005-12-12T00:00:00+00:00",
+          "date_string": "12/12/2005"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1133827200,
+          "date_time": "2005-12-06T00:00:00+00:00",
+          "date_string": "12/06/2005"
+        },
+        "cleared_date": {
+          "epoch": 1133827200,
+          "date_time": "2005-12-06T00:00:00+00:00",
+          "date_string": "12/06/2005"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1133222400,
+          "date_time": "2005-11-29T00:00:00+00:00",
+          "date_string": "11/29/2005"
+        },
+        "cleared_date": {
+          "epoch": 1133222400,
+          "date_time": "2005-11-29T00:00:00+00:00",
+          "date_string": "11/29/2005"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1133222400,
+          "date_time": "2005-11-29T00:00:00+00:00",
+          "date_string": "11/29/2005"
+        },
+        "cleared_date": {
+          "epoch": 1133222400,
+          "date_time": "2005-11-29T00:00:00+00:00",
+          "date_string": "11/29/2005"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "FINAN",
+        "blocked_date": {
+          "epoch": 1083801600,
+          "date_time": "2004-05-06T00:00:00+00:00",
+          "date_string": "5/06/2004"
+        },
+        "cleared_date": {
+          "epoch": 1083801600,
+          "date_time": "2004-05-06T00:00:00+00:00",
+          "date_string": "5/06/2004"
+        },
+        "reason": "CARS",
+        "office": "BPS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 1074038400,
+          "date_time": "2004-01-14T00:00:00+00:00",
+          "date_string": "1/14/2004"
+        },
+        "cleared_date": {
+          "epoch": 1074038400,
+          "date_time": "2004-01-14T00:00:00+00:00",
+          "date_string": "1/14/2004"
+        },
+        "reason": "MISCONDUCT",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1073606400,
+          "date_time": "2004-01-09T00:00:00+00:00",
+          "date_string": "1/09/2004"
+        },
+        "cleared_date": {
+          "epoch": 1073606400,
+          "date_time": "2004-01-09T00:00:00+00:00",
+          "date_string": "1/09/2004"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 1073606400,
+          "date_time": "2004-01-09T00:00:00+00:00",
+          "date_string": "1/09/2004"
+        },
+        "cleared_date": {
+          "epoch": 1073606400,
+          "date_time": "2004-01-09T00:00:00+00:00",
+          "date_string": "1/09/2004"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 1021852800,
+          "date_time": "2002-05-20T00:00:00+00:00",
+          "date_string": "5/20/2002"
+        },
+        "cleared_date": {
+          "epoch": 1022112000,
+          "date_time": "2002-05-23T00:00:00+00:00",
+          "date_string": "5/23/2002"
+        },
+        "reason": "MISC",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 1021852800,
+          "date_time": "2002-05-20T00:00:00+00:00",
+          "date_string": "5/20/2002"
+        },
+        "cleared_date": {
+          "epoch": 1021852800,
+          "date_time": "2002-05-20T00:00:00+00:00",
+          "date_string": "5/20/2002"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 955497600,
+          "date_time": "2000-04-12T00:00:00+00:00",
+          "date_string": "4/12/2000"
+        },
+        "cleared_date": {
+          "epoch": 955584000,
+          "date_time": "2000-04-13T00:00:00+00:00",
+          "date_string": "4/13/2000"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 922233600,
+          "date_time": "1999-03-24T00:00:00+00:00",
+          "date_string": "3/24/1999"
+        },
+        "cleared_date": {
+          "epoch": 945648000,
+          "date_time": "1999-12-20T00:00:00+00:00",
+          "date_string": "12/20/1999"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 922233600,
+          "date_time": "1999-03-24T00:00:00+00:00",
+          "date_string": "3/24/1999"
+        },
+        "cleared_date": {
+          "epoch": 922233600,
+          "date_time": "1999-03-24T00:00:00+00:00",
+          "date_string": "3/24/1999"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blocked_date": {
+          "epoch": 921801600,
+          "date_time": "1999-03-19T00:00:00+00:00",
+          "date_string": "3/19/1999"
+        },
+        "cleared_date": {
+          "epoch": 955324800,
+          "date_time": "2000-04-10T00:00:00+00:00",
+          "date_string": "4/10/2000"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "FINAN",
+        "blocked_date": {
+          "epoch": 918086400,
+          "date_time": "1999-02-04T00:00:00+00:00",
+          "date_string": "2/04/1999"
+        },
+        "cleared_date": {
+          "epoch": 919123200,
+          "date_time": "1999-02-16T00:00:00+00:00",
+          "date_string": "2/16/1999"
+        },
+        "reason": "CUBS",
+        "office": "BPS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 916963200,
+          "date_time": "1999-01-22T00:00:00+00:00",
+          "date_string": "1/22/1999"
+        },
+        "cleared_date": {
+          "epoch": 916963200,
+          "date_time": "1999-01-22T00:00:00+00:00",
+          "date_string": "1/22/1999"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 881020800,
+          "date_time": "1997-12-02T00:00:00+00:00",
+          "date_string": "12/02/1997"
+        },
+        "cleared_date": {
+          "epoch": 884044800,
+          "date_time": "1998-01-06T00:00:00+00:00",
+          "date_string": "1/06/1998"
+        },
+        "reason": "MISC",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blocked_date": {
+          "epoch": 853891200,
+          "date_time": "1997-01-22T00:00:00+00:00",
+          "date_string": "1/22/1997"
+        },
+        "cleared_date": {
+          "epoch": 856396800,
+          "date_time": "1997-02-20T00:00:00+00:00",
+          "date_string": "2/20/1997"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      }
+    ]
+  },
+  "semesters": [
+    {
+      "name": "Spring 2013",
+      "is_current": true,
+      "schedule": [
+        {
+          "course_number": "EDUC 140AC",
+          "title": "LITER:IND & SOC DEV",
+          "units": "3.0",
+          "grade_option": "Letter"
+        },
+        {
+          "course_number": "PSYCH 101",
+          "title": "RES & DATA ANALYSIS",
+          "units": "4.0",
+          "grade_option": "Letter"
+        },
+        {
+          "course_number": "PSYCH C120",
+          "title": "ISSUES IN COGNITION",
+          "units": "3.0",
+          "grade_option": "P/NP"
+        },
+        {
+          "course_number": "PSYCH 133",
+          "title": "PSYCHOLOGY OF SLEEP",
+          "units": "3.0",
+          "grade_option": "P/NP"
+        }
+      ]
+    }
+  ],
+  "current_semester_index": 0
+}

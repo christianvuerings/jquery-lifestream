@@ -9,6 +9,7 @@ $cc-column-border-color: #dedede;
 $cc-dark-grey: #2c2d2e;
 $cc-launcher-border-color: #114d80;
 $cc-light-grey: #dddddd;
+$cc-light-medium-grey: #6e6e6e;
 $cc-list-border-color: #cacaca;
 $cc-main-background-color: #f2f2f2;
 $cc-main-header-border-color: #d3d8d8;
@@ -16,6 +17,7 @@ $cc-medium-grey: #4a4b4d;
 $cc-nav-color: #2a6bb9;
 $cc-placeholder-color: #aaa;
 $cc-shadow-color: #ccc;
+$cc-super-light-grey: #fbfbfb;
 $cc-widget-highlight-background-color: #f2fef3;
 $cc-widget-hover-background-color: #e3ffff;
 $cc-widget-more-background-color: #c8dee9;
@@ -207,6 +209,9 @@ http://stackoverflow.com/questions/6269420
 @import "activities";
 @import "tasks";
 @import "mygroups_myclasses";
+
+/* Academics */
+@import "academics";
 
 /* Campus */
 @import "campus";

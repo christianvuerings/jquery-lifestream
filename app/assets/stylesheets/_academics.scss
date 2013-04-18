@@ -1,0 +1,93 @@
+.cc-page-academics {
+  h1, h2, h3, h4 {
+    color: $cc-medium-grey;
+  }
+  h1 {
+    border-bottom: 1px solid $cc-light-grey;
+    font-size: 22px;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-top: 10px;
+    padding-bottom: 5px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  h4 {
+    font-size: 14px;
+    &:not(:first-of-type) {
+      margin-top: 20px;
+    }
+  }
+  .panel {
+    padding: 10px 20px 10px 10px;
+    &.cc-academics-current-semester {
+      background-color: #fafafa;
+      @include box-shadow(2px 2px 10px 1px #b8b8b8);
+    }
+  }
+  .cc-academics-block-history {
+    margin-top: 15px;
+  }
+  .cc-academics-calendar {
+    font-size: 11px;
+    line-height: 1.5em;
+    .cc-academics-label-col {
+      padding-right: 0;
+    }
+  }
+  .cc-academics-calendar-link {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+  .cc-academics-column-labels {
+    color: $cc-light-medium-grey;
+    font-weight: bold;
+  }
+  .cc-academics-empasize {
+    font-weight: bold;
+  }
+  .cc-academics-nolink {
+    color: $cc-light-medium-grey;
+    font-size: 14px;
+  }
+  .cc-academics-orderlink {
+    font-size: 12px;
+  }
+  .cc-academics-records {
+    border-right: 1px solid $cc-light-grey;
+    color: $cc-medium-grey;
+    padding-bottom: 50px;
+      h3 {
+        &:first-of-type {
+        margin-top: 10px;
+      }
+      &:not(:first-of-type) {
+        margin-top: 30px;
+      }
+  }
+    .row {
+      margin-bottom: 5px;
+    }
+  }
+  .cc-academics-semesters {
+    background-color: $cc-super-light-grey;
+    margin-bottom: -99969px;
+    padding-bottom: 99999px;
+  }
+  .cc-academics-showhide-block-history {
+    margin-top: 10px;
+    a {
+      font-weight: bold;
+    }
+  }
+  .cc-academics-showhide-text {
+    font-size: 14px;
+  }
+}
