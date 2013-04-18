@@ -4,7 +4,7 @@ class MyAcademics::Semesters
 
   def merge(data)
     proxy = BearfactsScheduleProxy.new({:user_id => @uid})
-    feed = proxy.get_schedule
+    feed = proxy.get
 
     #Bearfacts proxy will return nil on >= 400 errors.
     return {} if feed.nil?

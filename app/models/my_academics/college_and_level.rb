@@ -4,7 +4,7 @@ class MyAcademics::CollegeAndLevel
 
   def merge(data)
     profile_proxy = BearfactsProfileProxy.new({:user_id => @uid})
-    profile_feed = profile_proxy.get_profile
+    profile_feed = profile_proxy.get
     doc = Nokogiri::XML profile_feed[:body]
 
     general_profile = doc.css("studentGeneralProfile")
