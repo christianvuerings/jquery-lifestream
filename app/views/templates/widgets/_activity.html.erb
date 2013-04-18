@@ -23,7 +23,7 @@
               <i class="icon-{{activities.typeToIcon[activity.type]}} cc-left"></i>
               <div class="cc-widget-activities-text-margin cc-widget-list-hover-title">
                 {{activity.title}}
-                <div class="cc-widget-subtitle">{{activity.source}}, {{api.date.moment(activity.date.epoch * 1000).format('MMM D')}}</div>
+                <div class="cc-widget-subtitle">{{activity.source}}, {{activity.date.epoch * 1000 | date:'MMM d'}}</div>
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@
                   </div>
                   <div class="columns" data-ng-show="sub_activity.show">
                     <div class="cc-widget-activities-sub-activity-date-string">
-                      at {{api.date.moment(sub_activity.date.epoch * 1000).format('h:mma')}}
+                      at {{sub_activity.date.epoch * 1000 | date:'h:mma'}}
                     </div>
                     <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="sub_activity.summary" data-cc-truncate-directive="filter:'linky', length:180">
                     </p>
