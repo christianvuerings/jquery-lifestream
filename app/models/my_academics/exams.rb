@@ -1,7 +1,6 @@
 class MyAcademics::Exams
 
   include MyAcademics::AcademicsModule
-  include DatedFeed
 
   def merge(data)
     proxy = BearfactsExamsProxy.new({:user_id => @uid})
@@ -21,7 +20,6 @@ class MyAcademics::Exams
       course_number = "#{to_text(exam_data.css("deptName"))} #{to_text(exam_data.css("coursePrefixNum"))}#{to_text(exam_data.css("courseRootNum"))}"
       dates[exam_friendly_date] ||= []
       dates[exam_friendly_date] << {
-        :date => format_date(exam_datetime, "%a %B %-d"),
         :time => time,
         :location => location,
         :course_number => course_number
