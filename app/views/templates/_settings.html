@@ -25,9 +25,8 @@
       </div>
     </section>
 
-    <button class="cc-button-link cc-settings-dashboard-button"
-      data-ng-click="user._redirectToDashboardPage()">&laquo; Take me to my Dashboard
-    </button>
+    <a class="cc-settings-dashboard-link" href="/dashboard">&laquo; Take me to my Dashboard
+    </a>
 
     <div data-ng-show="user.profile.is_admin || user.profile.is_acting_as" data-ng-controller="AdminController">
       <h2>Admin</h2>
