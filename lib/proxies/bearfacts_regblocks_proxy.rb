@@ -1,6 +1,6 @@
 class BearfactsRegblocksProxy < BearfactsProxy
 
-  def get_blocks
+  def get
     request("/student/#{lookup_student_id}/reg/regblocks", "regblocks")
   end
 

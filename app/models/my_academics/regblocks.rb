@@ -5,7 +5,7 @@ class MyAcademics::Regblocks
 
   def merge(data)
     proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
-    blocks_feed = proxy.get_blocks
+    blocks_feed = proxy.get
 
     #Bearfacts proxy will return nil on >= 400 errors.
     return {} if blocks_feed.nil?
