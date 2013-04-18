@@ -12,4 +12,12 @@ module MyAcademics::AcademicsModule
     end
   end
 
+  def make_slug(text)
+    if text.blank?
+      ""
+    else
+      text.downcase.gsub(/[^a-z0-9]+/, '-').chomp('-')
+    end
+  end
+
 end

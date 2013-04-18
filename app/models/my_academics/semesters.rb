@@ -46,6 +46,7 @@ class MyAcademics::Semesters
     semester_name = "#{top_node.attribute("termName").text} #{top_node.attribute("termYear").text}"
     semesters << {
       :name => semester_name,
+      :slug => make_slug(semester_name),
       :is_current => true,
       :schedule => schedule
     }
