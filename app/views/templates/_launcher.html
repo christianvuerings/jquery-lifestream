@@ -49,14 +49,14 @@
             <p>
               <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[user.profile.student_info.reg_status.needsAction]"></i>
               <div class="cc-launcher-status-description">
-                <strong>Registration Status:</strong> {{user.profile.student_info.reg_status.summary}}<br />
+                <strong>Registration Status:</strong> <span data-ng-bind="user.profile.student_info.reg_status.summary"><br />
                 <span data-ng-bind-html="user.profile.student_info.reg_status.explanation"></span>
               </div>
             </p>
             <p>
               <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[user.profile.student_info.reg_block.needsAction]"></i>
               <div class="cc-launcher-status-description">
-                <strong>Registration Blocks<span data-ng-show="user.profile.student_info.reg_block.summary">:</span></strong> <span>{{user.profile.student_info.reg_block.summary}}</span><br />
+                <strong>Registration Blocks<span data-ng-show="user.profile.student_info.reg_block.summary">:</span></strong> <span data-ng-bind="user.profile.student_info.reg_block.summary"></span><br />
                 <span data-ng-bind-html="user.profile.student_info.reg_block.explanation"></span>
                 <p data-ng-repeat="block in user.profile.student_info.reg_block.blocks">
                   <strong>{{block.name}}:</strong> {{block.summary}}
@@ -66,20 +66,20 @@
             <p>
               <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-stop'}[user.profile.student_info.california_residency.needsAction]"></i>
               <div class="cc-launcher-status-description">
-                <strong>California Residency:</strong> {{user.profile.student_info.california_residency.summary}}<br />
+                <strong>California Residency:</strong> <span data-ng-bind="user.profile.student_info.california_residency.summary"><br />
                 <span data-ng-bind-html="user.profile.student_info.california_residency.explanation"></span>
               </div>
             </p>
             <p>
               <i class="cc-left icon-stop"></i>
               <div class="cc-launcher-status-description">
-                <strong>Education Level:</strong> {{user.profile.student_info.education_level}}
+                <strong>Education Level:</strong> <span data-ng-bind="user.profile.student_info.education_level">
               </div>
             </p>
             <p>
               <i class="cc-left icon-stop"></i>
               <div class="cc-launcher-status-description">
-                <strong>Units Enrolled:</strong> {{user.profile.student_info.units_enrolled}}
+                <strong>Units Enrolled:</strong> <span data-ng-bind="user.profile.student_info.units_enrolled">
               </div>
             </p>
           </div>
@@ -88,7 +88,8 @@
         <div class="cc-popover-container cc-left">
           <button
             class="cc-button-link cc-launcher-dropdown-button"
-            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-menu')">{{user.profile.full_name}}
+            data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-menu')"
+            data-ng-bind="user.profile.full_name">
           </button>
           <div class="cc-dropdown cc-launcher-dropdown-menu" data-ng-show="api.popover.status('cc-popover-menu')">
             <button class="cc-button-link"
