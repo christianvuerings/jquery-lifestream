@@ -29,9 +29,9 @@
         "status": "Active",
         "type": "FINAN",
         "blocked_date": {
-          "epoch": 1366095600,
-          "date_time": "2013-04-16T00:00:00-07:00",
-          "date_string": "4/16/2013"
+          "epoch": 1366182000,
+          "date_time": "2013-04-17T00:00:00-07:00",
+          "date_string": "4/17/2013"
         },
         "cleared_date": {
           "epoch": null,
@@ -47,14 +47,14 @@
         "status": "Released",
         "type": "ACAD",
         "blocked_date": {
-          "epoch": 1366009200,
-          "date_time": "2013-04-15T00:00:00-07:00",
-          "date_string": "4/15/2013"
-        },
-        "cleared_date": {
           "epoch": 1366095600,
           "date_time": "2013-04-16T00:00:00-07:00",
           "date_string": "4/16/2013"
+        },
+        "cleared_date": {
+          "epoch": 1366182000,
+          "date_time": "2013-04-17T00:00:00-07:00",
+          "date_string": "4/17/2013"
         },
         "reason": "",
         "office": "LNS"
@@ -452,30 +452,73 @@
       "schedule": [
         {
           "course_number": "EDUC 140AC",
+          "ccn": "23731",
           "title": "LITER:IND & SOC DEV",
           "units": "3.0",
-          "grade_option": "Letter"
+          "grade_option": "Letter",
+          "section": "LEC 001",
+          "format": "LEC",
+          "schedule": "TuTh 1230P-0200P",
+          "instructor": "HULL, G A"
         },
         {
           "course_number": "PSYCH 101",
+          "ccn": "73980",
           "title": "RES & DATA ANALYSIS",
           "units": "4.0",
-          "grade_option": "Letter"
+          "grade_option": "Letter",
+          "section": "LEC 001",
+          "format": "LEC",
+          "schedule": "TuTh 0800A-0930A",
+          "instructor": "GADE, C J"
         },
         {
           "course_number": "PSYCH C120",
+          "ccn": "74058",
           "title": "ISSUES IN COGNITION",
           "units": "3.0",
-          "grade_option": "P/NP"
+          "grade_option": "P/NP",
+          "section": "LEC 001",
+          "format": "LEC",
+          "schedule": "MW 0100P-0200P",
+          "instructor": "LOMBROZO, T"
         },
         {
           "course_number": "PSYCH 133",
+          "ccn": "74220",
           "title": "PSYCHOLOGY OF SLEEP",
           "units": "3.0",
-          "grade_option": "P/NP"
+          "grade_option": "P/NP",
+          "section": "LEC 001",
+          "format": "LEC",
+          "schedule": "MW 1200P-0100P",
+          "instructor": "HARVEY, A G"
         }
       ]
     }
   ],
-  "current_semester_index": 0
+  "current_semester_index": 0,
+  "exam_schedule": {
+    "Tue May 14": [
+      {
+        "time": "0800A",
+        "location": "390 HEARST MIN",
+        "course_number": "Psychology C120"
+      }
+    ],
+    "Wed May 15": [
+      {
+        "time": "0300P",
+        "location": "100 GPB",
+        "course_number": "Psychology 133"
+      }
+    ],
+    "Thu May 16": [
+      {
+        "time": "0300P",
+        "location": "2060 VALLEY LSB",
+        "course_number": "Education 140"
+      }
+    ]
+  }
 }

@@ -68,7 +68,7 @@
       <div class="row" data-ng-repeat="block in academics.regblocks.active_blocks">
         <div class="large-4 small-4 columns">{{block.type}}</div>
         <div class="large-4 small-4 columns">{{block.reason}}</div>
-        <div class="large-4 small-4 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd'}}</div>
+        <div class="large-4 small-4 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd/yy'}}</div>
       </div>
     </div>
     <div data-ng-show="!academics.regblocks.active_blocks.length">
@@ -102,8 +102,8 @@
       <div class="row" data-ng-repeat="block in academics.regblocks.inactive_blocks">
         <div class="large-3 small-2 columns">{{block.type || '&nbsp;'}}</div>
         <div class="large-3 small-4 columns">{{block.reason || '&nbsp;'}}</div>
-        <div class="large-2 small-2 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd' || '&nbsp;'}}</div>
-        <div class="large-2 small-2 columns end">{{block.cleared_date.epoch * 1000 | date:'MM/dd' || '&nbsp;'}}</div>
+        <div class="large-2 small-2 columns">{{block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'}}</div>
+        <div class="large-2 small-2 columns end">{{block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'}}</div>
       </div>
     </div>
 
@@ -115,7 +115,7 @@
     <div class="row" data-ng-repeat="req in academics.requirements">
       <div class="large-4 small-8 columns">{{req.name}}</div>
       <div class="large-2 small-2 end columns">
-        <i data-ng-class="{'cc-icon icon-ok-sign':(req.status=='met'), 'cc-icon icon-exclamation-sign':(req.status!='met')}"></i>
+        <i data-ng-class="{'cc-icon icon-ok-sign':(req.status=='met'), 'cc-icon icon-edit':(req.status!='met')}"></i>
       </div>
     </div>
 
@@ -133,20 +133,21 @@
     </div>
 
     <div class="row">
-      <div class="large-4 small-8 columns end">
-        <div class="panel cc-academics-calendar cc-academics-current-semester">
-          <div class="cc-academics-calendar-link"><a href="">{{semesters.name}}</a></div>
+      <div class="large-4 small-8 columns end" data-ng-repeat="semester in semesters">
+        <div
+          class="panel cc-academics-calendar"
+          data-ng-class="{'cc-academics-current-semester':(semester.is_current==true)}">
+          <div class="cc-academics-calendar-link"><a href="/academics/semester/{{semester.slug}}">{{semester.name}}</a></div>
           <div class="row cc-academics-empasize">
             <div class="large-6 small-6 columns cc-academics-label-col">Class</div>
             <div class="large-3 small-3 columns">Units</div>
           </div>
-          <div class="row" data-ng-repeat="sem in semesters.schedule">
+          <div class="row" data-ng-repeat="sem in semester.schedule">
             <div class="large-6 small-6 columns cc-academics-label-col">{{sem.course_number}}</div>
             <div class="large-3 small-3 columns">{{sem.units}}</div>
           </div>
         </div>
       </div>
-
 
     </div>
   </div>
