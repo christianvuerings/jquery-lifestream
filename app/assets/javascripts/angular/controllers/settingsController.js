@@ -4,33 +4,27 @@
   /**
    * Settings controller
    */
-  calcentral.controller('SettingsController', ['$http', '$scope', 'apiService', function($http, $scope, apiService) {
+  calcentral.controller('SettingsController', ['$scope', 'apiService', function($scope, apiService) {
 
     apiService.util.setTitle('Settings');
 
-    $scope.refreshServices = function() {
+    var services = ['canvas', 'google'];
 
-      $scope.connected_services = [];
-      $scope.non_connected_services = [];
-
-      $http.get('/api/my/status').success(function(data) {
-        // Put connected/non-connected services into buckets we can iterate through and count.
-
-        if (data.has_canvas_access_token) {
-          $scope.connected_services.push('canvas');
-        } else {
-          $scope.non_connected_services.push('canvas');
-        }
-
-        if (data.has_google_access_token) {
-          $scope.connected_services.push('google');
-        } else {
-          $scope.non_connected_services.push('google');
-        }
-
+    var refreshServices = function(profile) {
+      $scope.connected_services = services.filter(function(element) {
+        return profile['has_' + element + '_access_token'];
+      });
+      $scope.non_connected_services = services.filter(function(element) {
+        return !profile['has_' + element + '_access_token'];
       });
     };
-    $scope.refreshServices();
+
+    $scope.$watch('user.profile', function(profile) {
+      if (profile) {
+        refreshServices(profile);
+      }
+    }, true);
+
   }]);
 
 })(window.calcentral);
