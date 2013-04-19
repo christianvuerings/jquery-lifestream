@@ -33,7 +33,7 @@ body {
   top: 0;
 
   .cc-badge {
-    padding: 0px;
+    padding: 0;
     border-radius: 5px;
 
     .cc-badge-title {
@@ -61,9 +61,7 @@ body {
         padding: 0 10px;
 
         &:last-child {
-          border-bottom-style: solid;
-          border-bottom-color: #e8e8e8;
-          border-bottom-width: 20px;
+          border-bottom: 20px solid #e8e8e8;
           border-bottom-left-radius: 5px;
           border-bottom-left-radius: 5px;
         }
