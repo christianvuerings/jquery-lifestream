@@ -3,6 +3,7 @@ class MyBadges::GoogleCalendar
 
   def initialize(uid)
     @uid = uid
+    @count_limiter = 5
   end
 
   def fetch_counts(params = {})
@@ -25,19 +26,21 @@ class MyBadges::GoogleCalendar
       next unless response_page && response_page.response.status == 200
       response_page.data["items"].each do |entry|
         next if entry["summary"].blank?
-        begin
-          event = {
-            :link => entry["htmlLink"],
-            :title => entry["summary"],
-            :start_time => verify_and_format_date(entry["start"]),
-            :end_time => verify_and_format_date(entry["end"]),
-            :modified_time => format_date(entry["updated"].to_datetime)
-          }
-          event.merge! event_state_fields(entry)
-          modified_entries[:items] << event
-        rescue Exception
-          Rails.logger.warn "#{self.class.name} could not process entry: #{entry}"
-          next
+        if modified_entries[:count] < @count_limiter
+          begin
+            event = {
+              :link => entry["htmlLink"],
+              :title => entry["summary"],
+              :start_time => verify_and_format_date(entry["start"]),
+              :end_time => verify_and_format_date(entry["end"]),
+              :modified_time => format_date(entry["updated"].to_datetime)
+            }
+            event.merge! event_state_fields(entry)
+            modified_entries[:items] << event
+          rescue Exception
+            Rails.logger.warn "#{self.class.name} could not process entry: #{entry}"
+            next
+          end
         end
         modified_entries[:count] += 1
       end

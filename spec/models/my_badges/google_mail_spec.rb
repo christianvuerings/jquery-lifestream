@@ -20,7 +20,8 @@ describe "MyBadges::bMail" do
     merged = MyBadges::Merged.new @user_id
     unread = merged.get_feed
     unread[:badges].each do |k,v|
-      v.should == 0
+      unread[:badges][k][:count].should == 0
+      unread[:badges][k][:items].empty?.should be_true
     end
   end
 

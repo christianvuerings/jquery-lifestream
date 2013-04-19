@@ -1,0 +1,73 @@
+<div data-ng-controller="BadgesController"
+  data-ng-class="{true:'cc-launcher-bar'}[user.profile.student_info.reg_status.code==null]"
+  class="cc-left cc-launcher-icons">
+  <div data-ng-repeat="badge in badges"
+    class="cc-popover-container cc-popover-status cc-left radius">
+    <button class="cc-ir cc-icon {{badge.display.additionalClasses}} cc-icon-status"
+      data-bubble="{{badge.count}}"
+      data-ng-class="{'cc-bubble-count':(badge.count)}"
+      data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-{{badge.display.name}}-popover-status')">
+      <span class="cc-visuallyhidden" data-ng-bind-template="Show your {{badge.display.name}} info"></span>
+    </button>
+    <div class="cc-popover cc-badge" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
+      <!-- Title -->
+      <div class="cc-badge-title" data-ng-switch on="badge.display.name">
+        <h4 data-ng-switch-when="bMail"><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="Recent {{badge.display.name}} Messages"></a></h4>
+        <h4 data-ng-switch-when="bCal"><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} Updates - {{api.date.moment().format('dddd - M/D/YY')}}"></a></h4>
+        <h4 data-ng-switch-default><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} Updates"></a></h4>
+      </div>
+      <!-- Item container -->
+      <ul class="cc-widget-list cc-badge-items">
+        <li class="cc-badge-item" data-ng-repeat="item in badge.items">
+          <div data-ng-switch on="badge.display.name">
+            <div data-ng-switch-when="bMail">
+              <ul class="cc-badge-item-details">
+                <li class="cc-ellipsis cc-badge-item-details-title" data-ng-bind="item.editor"></li>
+                <li class="cc-ellipsis">
+                  <a data-ng-href="{{item.link}}" data-ng-bind="item.title"></a>
+                </li>
+                <li class="cc-ellipsis cc-badge-item-details-summary">
+                  <i class="icon-envelope-alt"></i><span data-ng-bind="item.summary"></span>
+                </li>
+              </ul>
+            </div>
+            <div data-ng-switch-when="bCal">
+              <div class="cc-badge-item-calendar-container">
+                <div class="cc-left cc-badge-item-calendar">
+                  <div class="cc-badge-item-calendar-day-of-week" data-ng-bind="item.start_time.display.day_of_week"></div>
+                  <div class="cc-badge-item-calendar-day" data-ng-bind="item.start_time.display.day"></div>
+                  <div data-ng-bind="item.start_time.display.month"></div>
+                </div>
+                <div class="cc-left cc-badge-item-details">
+                  <ul class="cc-badge-item-details">
+                    <li class="cc-badge-item-details-title cc-ellipsis" data-ng-bind="item.title"></li>
+                    <li class="cc-ellipsis">
+                      <span class="cc-badge-item-details-all-day" data-ng-show="item.start_time.all_day_event">[all-day]</span>
+                      <a data-ng-href="{{item.link}}" data-ng-bind-template="{{item.start_time.display.range_start}} - {{item.end_time.display.range_end}}"></a>
+                    </li>
+                    <li class="cc-ellipsis cc-badge-item-details-summary ">
+                      <span data-ng-switch on="item.change_state">
+                        <span data-ng-switch-when="new" data-ng-bind-template="created by {{item.editor}}"></span>
+                        <span data-ng-switch-default data-ng-bind-template="last {{item.change_state}}"></span>
+                      </span>
+                      <span data-ng-bind-template=" &bull; {{api.date.moment(item.modified_time.epoch * 1000).fromNow()}}"></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div data-ng-switch-when="bDrive">
+              <i class="icon-hdd cc-left icon-muted icon-2x"></i>
+              <ul class="cc-badge-item-details">
+                <li class="cc-badge-item-details-title">
+                  <a class="cc-ellipsis" data-ng-href="{{item.link}}" data-ng-bind="item.title"></a>
+                </li>
+                <li class="cc-badge-item-details-summary cc-ellipsis" data-ng-bind-template="{{item.change_state}} by {{item.editor}} &bull; {{api.date.moment(item.modified_time.epoch * 1000).fromNow()}}"></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

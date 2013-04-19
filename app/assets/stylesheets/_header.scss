@@ -3,8 +3,8 @@ body {
   > header {
     background-image: asset-data-url('calcentral_branding_strip_background.png');
     background-repeat: no-repeat;
-    margin: 0 auto;
     height: 42px;
+    margin: 0 auto;
     position: relative;
 
     > div > h1 {
@@ -32,14 +32,113 @@ body {
   right: 0;
   top: 0;
 
+  .cc-badge {
+    border-radius: 5px;
+    padding: 0;
+
+    .cc-badge-title {
+      background: #e8e8e8;
+      @include background(linear-gradient(top, #fff, #e8e8e8));
+      border-bottom: #d6d6d6;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      margin-bottom: 5px;
+      padding: 10px 10px 3px 10px;
+
+      h4 {
+        margin-bottom: 0;
+      }
+    }
+
+    .cc-badge-items {
+      background-color: #fff;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      list-style-type: none;
+      max-height: none;
+
+      .cc-badge-item {
+        padding: 0 10px;
+
+        &:last-child {
+          border-bottom: 20px solid #e8e8e8;
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+
+        .cc-badge-item-calendar-container {
+          clear: both;
+          display: inline-block;
+          padding-top: 5px;
+
+          .cc-badge-item-calendar {
+            border: 1px solid #d6d6d6;
+            background-color: #f6f6f6;
+            margin-right: 5px;
+            text-align: center;
+            width: 45px;
+
+            .cc-badge-item-calendar-day-of-week {
+              background-color: #2d637f;
+              color: #fff;
+              font-size: 11px;
+            }
+
+            .cc-badge-item-calendar-day {
+              font-size: 16px;
+              font-weight: bold;
+            }
+
+            .cc-badge-item-calendar-month {
+              font-size: 11px;
+            }
+          }
+
+          .cc-badge-item-details {
+            width: 228px;
+          }
+        }
+      }
+
+    }
+
+    .cc-badge-item-details {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      a {
+        display: inline;
+        padding: 0;
+      }
+
+      .cc-badge-item-details-title {
+        font-weight: bold;
+      }
+      .cc-badge-item-details-summary {
+        color: #797979;
+        font-size: 11px;
+      }
+      .cc-badge-item-details-all-day {
+        display: inline-block;
+        font-size: 10px;
+        margin-top: 1px;
+        padding-right: 2px;
+        vertical-align: top;
+      }
+    }
+  }
+
   .cc-button-link {
     width: auto;
   }
-  .cc-icon-status-person {
+
+  .cc-icon-status {
     margin: 4px 10px -4px;
     padding: 0;
     position: relative;
   }
+
   .cc-icon-status-person-layover {
     cursor: pointer;
     font-size: 14px;

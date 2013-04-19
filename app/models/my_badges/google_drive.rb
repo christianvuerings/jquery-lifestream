@@ -36,20 +36,20 @@ class MyBadges::GoogleDrive
     google_drive_results.each_with_index do |response_page, index|
       Rails.logger.info "Processing page ##{index} of drive_list results"
       next unless response_page && response_page.response.status == 200
-      break if response[:count] > @count_limiter
       response_page.data["items"].each do |entry|
-        break if response[:count] > @count_limiter
         begin
           if is_recent_message?(entry)
-            next unless !entry["title"].blank?
-            item = {
-              title: entry["title"],
-              link: entry["selfLink"],
-              modified_time: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
-              editor: entry["lastModifyingUserName"],
-              change_state: handle_change_state(entry)
-            }
-            response[:items] << item
+            if response[:count] < @count_limiter
+              next unless !entry["title"].blank?
+              item = {
+                title: entry["title"],
+                link: entry["selfLink"],
+                modified_time: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
+                editor: entry["lastModifyingUserName"],
+                change_state: handle_change_state(entry)
+              }
+              response[:items] << item
+            end
             response[:count] += 1
           end
         rescue Exception => e

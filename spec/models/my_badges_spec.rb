@@ -27,10 +27,12 @@ describe "MyBadges" do
     badges = MyBadges::Merged.new @user_id
     mangled_feed = badges.get_feed
     mangled_feed[:badges].empty?.should_not be_true
-    mangled_feed[:badges]["bdrive"][:count].should == 6
+    mangled_feed[:badges]["bdrive"][:count].should == 10
+    mangled_feed[:badges]["bdrive"][:items].size.should == 5
     descending_modified_first = mangled_feed[:badges]["bcal"][:items].map {|x| x[:modified_time][:epoch]}
     descending_modified_first.should == descending_modified_first.sort.reverse
     mangled_feed[:badges]["bcal"][:count].should == 6
+    mangled_feed[:badges]["bcal"][:items].size.should == 5
     mangled_feed[:badges]["bcal"][:items].select { |entry|
       entry[:start_time][:all_day_event]
     }.size.should == 1

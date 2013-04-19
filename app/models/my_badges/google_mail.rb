@@ -3,6 +3,7 @@ class MyBadges::GoogleMail
 
   def initialize(uid)
     @uid = uid
+    @count_limiter = 5
   end
 
   def fetch_counts(params = {})
@@ -52,7 +53,7 @@ class MyBadges::GoogleMail
       iter_count = 0
       raw_items = get_nodeset('entry', nokogiri_xml)
       raw_items.each do |raw_entry|
-        break if iter_count == 5
+        break if iter_count >= @count_limiter
         entry = {}
 
         begin

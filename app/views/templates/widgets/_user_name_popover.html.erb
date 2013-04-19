@@ -1,0 +1,15 @@
+<div class="cc-popover-container cc-left">
+  <button
+    class="cc-button-link cc-launcher-dropdown-button"
+    data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-menu')"
+    data-ng-bind="user.profile.full_name">
+  </button>
+  <div class="cc-dropdown cc-launcher-dropdown-menu" data-ng-show="api.popover.status('cc-popover-menu')">
+    <button class="cc-button-link"
+      data-ng-click="user._redirectToSettingsPage()">Settings
+    </button>
+    <button class="cc-button-link"
+      data-ng-click="user.signOut()">Log out
+    </button>
+  </div>
+</div>
