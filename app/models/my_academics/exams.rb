@@ -22,7 +22,10 @@ class MyAcademics::Exams
       end
       exam_friendly_date = exam_datetime.strftime("%a %B %-d")
       time = "#{to_time(exam_data.css("startTime"))}#{to_text(exam_data.css("startTimeAmPmFlag"))}"
-      location = to_text exam.css("location")
+      raw_location = to_text exam.css("location")
+      location = {
+        :raw_location => raw_location
+      }.merge(Buildings.get(raw_location))
       course_number = "#{to_text(exam_data.css("deptName"))} #{to_text(exam_data.css("coursePrefixNum"))}#{to_text(exam_data.css("courseRootNum"))}"
       dates[exam_friendly_date] ||= []
       dates[exam_friendly_date] << {
