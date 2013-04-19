@@ -24,13 +24,9 @@
 
   <div data-ng-show="loopname=='connected'">
     <div class="large-2 small-4 columns">
-      <button data-ng-show="service=='google'"
-        class="radius button medium" data-ng-click="[user.removeOAuth('google'), refreshServices()]">
-        Disconnect <span class="cc-visuallyhidden">Google Access</span>
-      </button>
-      <button data-ng-show="service=='canvas'"
-        class="radius button medium" data-ng-click="[user.removeOAuth('canvas'), refreshServices()]">
-        Disconnect <span class="cc-visuallyhidden">Canvas Access</span>
+      <button data-ng-show="user.profile['has_' + service + '_access_token']"
+        class="radius button medium" data-ng-click="user.removeOAuth('{{service}}')">
+        Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
       </button>
     </div>
   </div>
