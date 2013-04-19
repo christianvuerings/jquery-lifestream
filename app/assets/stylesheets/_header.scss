@@ -32,14 +32,115 @@ body {
   right: 0;
   top: 0;
 
+  .cc-badge {
+    padding: 0px;
+    border-radius: 5px;
+
+    .cc-badge-title {
+      padding: 10px 10px 3px 10px;
+      margin-bottom: 5px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      background: #e8e8e8;
+      @include background(linear-gradient(top, #fff, #e8e8e8));
+      border-bottom: #d6d6d6;
+
+      h4 {
+        margin-bottom: 0;
+      }
+    }
+
+    .cc-badge-items {
+      background-color: #fff;
+      list-style-type: none;
+      max-height: none;
+      border-bottom-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+
+      .cc-badge-item {
+        padding: 0 10px;
+
+        &:last-child {
+          border-bottom-style: solid;
+          border-bottom-color: #e8e8e8;
+          border-bottom-width: 20px;
+          border-bottom-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+
+        .cc-badge-item-calendar-container {
+          clear: both;
+          display: inline-block;
+          padding-top: 5px;
+
+          .cc-badge-item-calendar {
+            width: 45px;
+            border: 1px solid #d6d6d6;
+            margin-right: 5px;
+            text-align: center;
+            background-color: #f6f6f6;
+
+            .cc-badge-item-calendar-day-of-week {
+              background-color: #2d637f;
+              color: #fff;
+              font-size: 11px;
+            }
+
+            .cc-badge-item-calendar-day {
+              font-size: 16px;
+              font-weight: bold;
+            }
+
+            .cc-badge-item-calendar-month {
+              font-size: 11px;
+            }
+          }
+
+          .cc-badge-item-details {
+            width: 228px;
+          }
+        }
+      }
+
+    }
+
+    .cc-badge-item-details {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      a {
+        display: inline;
+        padding: 0;
+      }
+
+      .cc-badge-item-details-title {
+        font-weight: bold;
+      }
+      .cc-badge-item-details-summary {
+        font-size: 11px;
+        color: #797979;
+      }
+      .cc-badge-item-details-all-day {
+        display: inline-block;
+        font-size: 10px;
+        margin-top: 1px;
+        padding-right: 2px;
+        vertical-align: top;
+      }
+    }
+  }
+
   .cc-button-link {
     width: auto;
   }
-  .cc-icon-status-person {
+
+  .cc-icon-status {
     margin: 4px 10px -4px;
     padding: 0;
     position: relative;
   }
+
   .cc-icon-status-person-layover {
     cursor: pointer;
     font-size: 14px;

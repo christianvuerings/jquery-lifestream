@@ -8,12 +8,14 @@
           "start_time": {
             "epoch": 1366214400,
             "date_time": "2013-04-17T09:00:00-07:00",
-            "date_string": "4/17"
+            "date_string": "4/17",
+            "all_day_event": true
           },
           "end_time": {
             "epoch": 1366218000,
             "date_time": "2013-04-17T10:00:00-07:00",
-            "date_string": "4/17"
+            "date_string": "4/17",
+            "all_day_event": true
           },
           "modified_time": {
             "epoch": 1365631878,
@@ -28,12 +30,14 @@
           "start_time": {
             "epoch": 1366819200,
             "date_time": "2013-04-24T09:00:00-07:00",
-            "date_string": "4/24"
+            "date_string": "4/24",
+            "all_day_event": true
           },
           "end_time": {
-            "epoch": 1366822800,
-            "date_time": "2013-04-24T10:00:00-07:00",
-            "date_string": "4/24"
+            "epoch": 1367168400,
+            "date_time": "2013-04-28T10:00:00-07:00",
+            "date_string": "4/28",
+            "all_day_event": true
           },
           "modified_time": {
             "epoch": 1365631878,
@@ -60,7 +64,8 @@
             "date_time": "2013-04-10T22:11:01+00:00",
             "date_string": "4/10"
           },
-          "change_state": "updated"
+          "change_state": "new",
+          "editor": "Spongebob overly-squre Squarepants"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjRUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -429,6 +434,28 @@
           },
           "editor": "Sage Adams",
           "change_state": "modified"
+        },
+        {
+          "title": "Assignment #1",
+          "link": "https://www.googleapis.com/drive/v2/files/1CRO3fkWnQrqm_-8M1pO5cB6opxXB7HWxUN4IPDqdzrI",
+          "modified_time": {
+            "epoch": 1363798261,
+            "date_time": "2013-03-20T16:51:01+00:00",
+            "date_string": "3/20"
+          },
+          "editor": "Sage Adams",
+          "change_state": "modified"
+        },
+        {
+          "title": "Group Work #1",
+          "link": "https://www.googleapis.com/drive/v2/files/1PJExieJtoo5xf945FvmWbxJZaltkmtcqPzEcFs2o2P8",
+          "modified_time": {
+            "epoch": 1363715337,
+            "date_time": "2013-03-19T17:48:57+00:00",
+            "date_string": "3/19"
+          },
+          "editor": "Sage Adams",
+          "change_state": "modified"
         }
       ]
     },
@@ -437,7 +464,7 @@
       "items": [
         {
           "title": "Hospitals Profit From Surgical Errors, Study Finds: Course Name Example",
-          "summary": "Original articleSince insurers pay more for patients with surgical complications, some hospitals",
+          "summary": "Since insurers pay more for patients with surgical complications, some hospitals",
           "modified_time": {
             "epoch": 1366151767,
             "date_time": "2013-04-16T22:36:07+00:00",
@@ -448,7 +475,7 @@
         },
         {
           "title": "F.D.A. Was Lax on Compounding, Its Leader Says: Course Name Example",
-          "summary": "Original articleAsking Congress for more authority, Dr. Margaret A. Hamburg said her agency should",
+          "summary": "Asking Congress for more authority, Dr. Margaret A. Hamburg said her agency should",
           "modified_time": {
             "epoch": 1366151766,
             "date_time": "2013-04-16T22:36:06+00:00",
@@ -459,7 +486,7 @@
         },
         {
           "title": "The Lede: Neighbors Mourn Loss of 8-Year-Old: Course Name Example",
-          "summary": "Original articleBill Richard, the father of the 8-year-old boy who was killed Monday, offered thanks",
+          "summary": "Bill Richard, the father of the 8-year-old boy who was killed Monday, offered thanks",
           "modified_time": {
             "epoch": 1366151766,
             "date_time": "2013-04-16T22:36:06+00:00",
@@ -470,7 +497,7 @@
         },
         {
           "title": "Investigation Under Way in Boston: Course Name Example",
-          "summary": "Original articleAuthorities were trying to identify suspects and a motive behind an attack that",
+          "summary": "Authorities were trying to identify suspects and a motive behind an attack that",
           "modified_time": {
             "epoch": 1366151765,
             "date_time": "2013-04-16T22:36:05+00:00",
@@ -481,7 +508,7 @@
         },
         {
           "title": "Justices Hear Case of Adopted Indian Child: Course Name Example",
-          "summary": "Original articleThe Supreme Court considered whether a 3-year-old should remain with her biological",
+          "summary": "The Supreme Court considered whether a 3-year-old should remain with her biological",
           "modified_time": {
             "epoch": 1366151765,
             "date_time": "2013-04-16T22:36:05+00:00",
