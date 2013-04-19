@@ -59,8 +59,8 @@
             <div data-ng-switch-when="bDrive">
               <i class="icon-hdd cc-left icon-muted icon-2x"></i>
               <ul class="cc-badge-item-details">
-                <li class="cc-badge-item-details-title">
-                  <a class="cc-ellipsis" data-ng-href="{{item.link}}" data-ng-bind="item.title"></a>
+                <li class="cc-badge-item-details-title cc-ellipsis">
+                  <a data-ng-href="{{item.link}}" data-ng-bind="item.title"></a>
                 </li>
                 <li class="cc-badge-item-details-summary cc-ellipsis" data-ng-bind-template="{{item.change_state}} by {{item.editor}} &bull; {{api.date.moment(item.modified_time.epoch * 1000).fromNow()}}"></li>
               </ul>
