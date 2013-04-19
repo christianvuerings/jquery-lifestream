@@ -13,7 +13,7 @@ class MyAcademics::CollegeAndLevel
       ug_grad_flag = to_text doc.css("ugGradFlag")
       standing = ug_grad_flag.upcase == "U" ? "Undergraduate" : "Graduate"
       level = to_text(general_profile.css("nonAPLevel")).titleize
-      college = to_text(general_profile.css("collegePrimary")).titleize
+      college = to_text(general_profile.css("collegePrimary"))
       major = to_text(general_profile.css("majorPrimary")).titleize
 
       data[:college_and_level] = {
