@@ -7,6 +7,10 @@ class Buildings
       # try again stripping off what might be a room number from the front of the string
       name = name.gsub(/^\d*/, "").strip
       bldg = self.buildings[name]
+      unless bldg.nil?
+        room_number = building_name.match(/^\d*/)[0]
+        bldg = bldg.merge({"room_number" => room_number})
+      end
     end
     bldg
   end
