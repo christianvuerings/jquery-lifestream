@@ -55,7 +55,7 @@ body {
       list-style-type: none;
       max-height: none;
       border-bottom-left-radius: 5px;
-      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
 
       .cc-badge-item {
         padding: 0 10px;
@@ -63,7 +63,7 @@ body {
         &:last-child {
           border-bottom: 20px solid #e8e8e8;
           border-bottom-left-radius: 5px;
-          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
         }
 
         .cc-badge-item-calendar-container {
