@@ -12,7 +12,7 @@ describe "MyAcademics::Exams" do
     Rails.logger.info "feed[:exam_schedule] = #{feed[:exam_schedule].inspect}"
     feed[:exam_schedule].should_not be_nil
     feed[:exam_schedule]["Tue May 14"][0][:course_number].should == "Psychology C120"
-
+    feed[:exam_schedule]["Tue May 14"][0][:time].should == "8:00A"
   end
 
 end
