@@ -79,11 +79,8 @@
       return raw_data;
     };
 
-    $http.get('/dummy/json/badges.json').success(function(data) {
-    // $http.get('/api/my/badges').success(function(data) {
-      var processedBadges = processCalendarEvents(data.badges || {});
-      processedBadges = decorateBadges(processedBadges);
-      $scope.badges = processedBadges;
+    $http.get('/api/my/badges').success(function(data) {
+      $scope.badges = decorateBadges(processCalendarEvents(data.badges || {}));
     });
 
   }]);

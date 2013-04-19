@@ -3,8 +3,8 @@ body {
   > header {
     background-image: asset-data-url('calcentral_branding_strip_background.png');
     background-repeat: no-repeat;
-    margin: 0 auto;
     height: 42px;
+    margin: 0 auto;
     position: relative;
 
     > div > h1 {
@@ -33,17 +33,17 @@ body {
   top: 0;
 
   .cc-badge {
-    padding: 0;
     border-radius: 5px;
+    padding: 0;
 
     .cc-badge-title {
-      padding: 10px 10px 3px 10px;
-      margin-bottom: 5px;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
       background: #e8e8e8;
       @include background(linear-gradient(top, #fff, #e8e8e8));
       border-bottom: #d6d6d6;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      margin-bottom: 5px;
+      padding: 10px 10px 3px 10px;
 
       h4 {
         margin-bottom: 0;
@@ -52,10 +52,10 @@ body {
 
     .cc-badge-items {
       background-color: #fff;
-      list-style-type: none;
-      max-height: none;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
+      list-style-type: none;
+      max-height: none;
 
       .cc-badge-item {
         padding: 0 10px;
@@ -72,11 +72,11 @@ body {
           padding-top: 5px;
 
           .cc-badge-item-calendar {
-            width: 45px;
             border: 1px solid #d6d6d6;
+            background-color: #f6f6f6;
             margin-right: 5px;
             text-align: center;
-            background-color: #f6f6f6;
+            width: 45px;
 
             .cc-badge-item-calendar-day-of-week {
               background-color: #2d637f;
@@ -116,8 +116,8 @@ body {
         font-weight: bold;
       }
       .cc-badge-item-details-summary {
-        font-size: 11px;
         color: #797979;
+        font-size: 11px;
       }
       .cc-badge-item-details-all-day {
         display: inline-block;
