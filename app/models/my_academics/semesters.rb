@@ -28,7 +28,7 @@ class MyAcademics::Semesters
       ccn = to_text(class_schedule.css("courseControlNumber"))
       format = to_text(class_schedule.css("instructnFormatDet"))
       section = "#{format} #{to_text(class_schedule.css("sectNum"))}"
-      schedule_string = "#{to_text(class_schedule.css("weekGroup"))} #{to_text(class_schedule.css("startTime"))}#{to_text(class_schedule.css("startTimeAmPmFlag"))}-#{to_text(class_schedule.css("endTime"))}#{to_text(class_schedule.css("endTimeAmPmFlag"))}"
+      schedule_string = "#{to_text(class_schedule.css("weekGroup"))} #{to_time(class_schedule.css("startTime"))}#{to_text(class_schedule.css("startTimeAmPmFlag"))}-#{to_time(class_schedule.css("endTime"))}#{to_text(class_schedule.css("endTimeAmPmFlag"))}"
       instructor = to_text(class_schedule.css("instrShortName"))
       schedule << {
         :course_number => course_number,

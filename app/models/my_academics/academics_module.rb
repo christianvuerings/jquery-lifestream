@@ -12,6 +12,13 @@ module MyAcademics::AcademicsModule
     end
   end
 
+  def to_time(element)
+    str = to_text(element)
+    num = str.gsub(/^0/, "")
+    formatted = num.insert(num.length - 2, ":")
+    formatted
+  end
+
   def make_slug(text)
     if text.blank?
       ""
