@@ -13,7 +13,13 @@ class MyAcademics::Exams
     doc = Nokogiri::XML feed[:body]
     doc.css("studentFinalExamSchedule").each do |exam|
       exam_data = exam.css("studentFinalExamScheduleKey")
+      begin
       exam_datetime = DateTime.parse(to_text(exam_data.css("examDate")))
+      rescue ArgumentError => e
+        # skip this exam if it has no parseable date
+        Rails.logger.warn "#{self.class.name} Error parsing date in final exams feed for user #{@uid}: #{e.message}. Exam data is #{exam_data.to_s}"
+        next
+      end
       exam_friendly_date = exam_datetime.strftime("%a %B %-d")
       time = "#{to_text(exam_data.css("startTime"))}#{to_text(exam_data.css("startTimeAmPmFlag"))}"
       location = to_text exam.css("location")
