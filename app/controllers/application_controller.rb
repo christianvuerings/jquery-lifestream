@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
   private
 
   def access_log
-    line = "ACCESS_LOG #{request.request_method} #{request.fullpath} #{status}"
+    line = "ACCESS_LOG #{request.env["REMOTE_ADDR"]} #{request.request_method} #{request.fullpath} #{status}"
     if session[:original_user_id]
       line += " uid=#{session[:original_user_id]}_acting_as_uid=#{session[:user_id]}"
     else
