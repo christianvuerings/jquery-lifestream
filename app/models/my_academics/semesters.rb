@@ -23,7 +23,7 @@ class MyAcademics::Semesters
       course_number = "#{to_text(class_schedule.css("deptName"))} #{to_text(class_schedule.css("courseNumber"))}"
       next unless course_number.strip.length
       units = to_text(class_schedule.css("numberOfUnits"))
-      title = to_text(class_schedule.css("courseTitle"))
+      title = to_text(class_schedule.css("courseTitle")).titleize
       grade_option = to_text(class_schedule.css("pnpFlag")).upcase == "Y" ? "P/NP" : "Letter"
       ccn = to_text(class_schedule.css("courseControlNumber"))
       format = to_text(class_schedule.css("instructnFormatDet"))
