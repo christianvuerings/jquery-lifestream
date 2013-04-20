@@ -8,7 +8,7 @@
   >
 
   <div class="column">
-    <h1><a href="/academics">My Academics</a> &raquo; {{semester.name}}</h1>
+    <h1><a href="/academics">My Academics</a> &raquo; {{selected_semester.name}}</h1>
   </div>
 
   <div class="large-6 columns cc-academics-records">
@@ -21,14 +21,14 @@
       <div class="large-3 small-2 columns end">Grade Option</div>
     </div>
 
-    <div data-ng-show="semester.schedule.length">
-      <div class="row" data-ng-repeat="course in semester.schedule">
+    <div data-ng-show="selected_semester.schedule.length">
+      <div class="row" data-ng-repeat="course in selected_semester.schedule">
         <div class="large-3 small-4 columns">{{course.course_number}}</div>
         <div class="large-4 small-6 columns">{{course.title}}</div>
         <div class="large-3 small-2 columns end">{{course.grade_option}}</div>
       </div>
     </div>
-    <div data-ng-show="!semester.schedule.length">
+    <div data-ng-show="!selected_semester.schedule.length">
       <div class="row">
         <div class="large-6 columns end">You are not currently enrolled in any courses.</div>
       </div>

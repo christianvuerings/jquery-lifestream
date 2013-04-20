@@ -137,7 +137,7 @@
         <div
           class="panel cc-academics-calendar"
           data-ng-class="{'cc-academics-current-semester':(semester.is_current==true)}">
-          <div class="cc-academics-calendar-link"><a href="/academics/semester/{{semester.slug}}">{{semester.name}}</a></div>
+          <div class="cc-academics-calendar-link"><a data-ng-href="/academics/semester/{{semester.slug}}">{{semester.name}}</a></div>
           <div class="row cc-academics-empasize">
             <div class="large-6 small-6 columns cc-academics-label-col">Class</div>
             <div class="large-3 small-3 columns">Units</div>
