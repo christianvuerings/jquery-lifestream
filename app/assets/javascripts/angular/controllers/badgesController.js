@@ -34,18 +34,28 @@
       }
     };
 
-    var decorateBadges = function(raw_data) {
-      var decoratedBadges = {};
-      angular.extend(decoratedBadges, raw_data);
-      angular.extend(decoratedBadges.bmail, defaults.bmail);
-      angular.extend(decoratedBadges.bcal, defaults.bcal);
-      angular.extend(decoratedBadges.bdrive, defaults.bdrive);
+    var default_order = ['bmail', 'bcal', 'bdrive'];
 
-      // set your order here.
-      var orderedBadges = [
-        decoratedBadges.bmail, decoratedBadges.bcal, decoratedBadges.bdrive
-      ];
-      return orderedBadges;
+    var decorateBadges = function(raw_data) {
+      default_order.forEach(function(value, index) {
+        if ($scope.badges.length > index &&
+          $scope.badges[index].display.name.toLowerCase() === value) {
+          angular.extend($scope.badges[index], raw_data[value]);
+        }
+      });
+    };
+
+    /**
+     * Convert a normal badges hash into an custom ordered array of badges.
+     * @param {Object} badges_hash badges hash keyed by badge name
+     * @return {Array} array of badges
+     */
+    var orderBadges = function(badges_hash) {
+      var returnArray = [];
+      default_order.forEach(function(value) {
+        returnArray.push(badges_hash[value] || {});
+      });
+      return returnArray;
     };
 
     var processCalendarEvents = function(raw_data) {
@@ -79,8 +89,9 @@
       return raw_data;
     };
 
+    $scope.badges = orderBadges(defaults);
     $http.get('/api/my/badges').success(function(data) {
-      $scope.badges = decorateBadges(processCalendarEvents(data.badges || {}));
+      decorateBadges(processCalendarEvents(data.badges || {}));
     });
 
   }]);
