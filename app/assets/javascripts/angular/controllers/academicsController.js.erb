@@ -27,7 +27,7 @@
 
         // Get selected semester from URL params and extract from semesters array
         angular.forEach(data.semesters, function(semester) {
-          if (semester.slug == $routeParams.semester_slug) {
+          if (semester.slug === $routeParams.semester_slug) {
             $scope.selected_semester = semester;
           }
         });
