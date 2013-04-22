@@ -5,9 +5,10 @@
   /**
    * Academics controller
    */
-  calcentral.controller('AcademicsController', ['apiService', '$http', '$scope', function(apiService, $http, $scope) {
+  calcentral.controller('AcademicsController', ['apiService', '$http', '$routeParams', '$scope', function(apiService, $http, $routeParams, $scope) {
 
     apiService.util.setTitle('My Academics');
+
 
     $scope.getUserStatus = function() {
       // return $http.get('/dummy/json/status_oski_sample.json').success(function(data) {
@@ -21,7 +22,16 @@
       // return $http.get('/dummy/json/academics.json').success(function(data) {
       return $http.get('/api/my/academics').success(function(data) {
         $scope.academics = data;
-        $scope.semesters = data.semesters[0]; // Assuming just one semester for now
+        $scope.exam_schedule = data.exam_schedule;
+        $scope.semesters = data.semesters;
+
+        // Get selected semester from URL params and extract from semesters array
+        angular.forEach(data.semesters, function(semester) {
+          if (semester.slug === $routeParams.semester_slug) {
+            $scope.selected_semester = semester;
+          }
+        });
+
       });
     };
     $scope.getAcademics();
