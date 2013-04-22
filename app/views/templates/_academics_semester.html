@@ -3,27 +3,26 @@
     class="cc-page-academics"
     data-ng-controller="AcademicsController"
     data-ng-show="user.profile.roles.student"
-    data-ng-cloak
   >
     <div class="column">
-      <h1><a href="/academics">My Academics</a> &raquo; {{selected_semester.name}}</h1>
+      <h1><a href="/academics">My Academics</a> &raquo; <span data-ng-bind="selected_semester.name"></span></h1>
     </div>
 
     <div class="large-6 columns cc-academics-records">
       <h2>Enrollment</h2>
 
       <h3>Current</h3>
+
       <div class="row cc-academics-column-labels">
         <div class="large-3 small-4 columns">Course Number</div>
         <div class="large-4 small-6 columns">Title</div>
         <div class="large-3 small-2 columns end">Grade Option</div>
       </div>
-
       <div data-ng-show="selected_semester.schedule.length">
         <div class="row" data-ng-repeat="course in selected_semester.schedule">
-          <div class="large-3 small-4 columns">{{course.course_number}}</div>
-          <div class="large-4 small-6 columns">{{course.title}}</div>
-          <div class="large-3 small-2 columns end">{{course.grade_option}}</div>
+          <div class="large-3 small-4 columns" data-ng-bind="course.course_number"></div>
+          <div class="large-4 small-6 columns" data-ng-bind="course.title"></div>
+          <div class="large-3 small-2 columns end" data-ng-bind="course.grade_option"></div>
         </div>
       </div>
       <div data-ng-show="!selected_semester.schedule.length">
@@ -32,21 +31,19 @@
         </div>
       </div>
 
-
       <h2>Final Exam Schedule</h2>
 
       <div data-ng-repeat="(day, day_data) in exam_schedule" class="cc-academics-exam-block">
         <div class="row">
-          <div class="large-12 small-12 columns cc-academics-column-labels">{{day}}</div>
+          <div class="large-12 small-12 columns cc-academics-column-labels" data-ng-bind="day"></div>
         </div>
         <div class="row" data-ng-repeat="exam in day_data">
-          <div class="large-1 small-2 columns">{{exam.time}}</div>
-          <div class="large-3 small-6 columns cc-academics-empasize">{{exam.course_number}}</div>
-          <div class="large-3 small-4 columns end"><a href="">{{exam.location}}</a></div>
+          <div class="large-1 small-2 columns" data-ng-bind="exam.time"></div>
+          <div class="large-3 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_number"></div>
+          <div class="large-3 small-4 columns end"><a href="" data-ng-bind="exam.location.display"></a></div>
         </div>
       </div>
       <p><em>Click building name for map.</em></p>
-
     </div>
 
     <div class="large-6 columns cc-academics-semesters">
