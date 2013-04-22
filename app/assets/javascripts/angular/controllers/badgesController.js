@@ -116,10 +116,19 @@
       return raw_data;
     };
 
-    $scope.badges = orderBadges(defaults);
-    $http.get('/api/my/badges').success(function(data) {
-      decorateBadges(processCalendarEvents(data.badges || {}));
+    var fetch = function() {
+      $http.get('/api/my/badges').success(function(data) {
+        decorateBadges(processCalendarEvents(data.badges || {}));
+      });
+    };
+
+    $scope.$watch('user.profile.is_logged_in', function(isLoggedIn) {
+      if (isLoggedIn) {
+        fetch();
+      }
     });
+
+    $scope.badges = orderBadges(defaults);
 
   }]);
 
