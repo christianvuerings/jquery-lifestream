@@ -137,6 +137,9 @@ body {
     margin: 4px 10px -4px;
     padding: 0;
     position: relative;
+    &:hover {
+      background-color: transparent;
+    }
   }
 
   .cc-icon-status-person-layover {
@@ -210,7 +213,7 @@ body {
       margin-top: 12px;
     }
     .cc-popover {
-      margin-left: -129px;
+      margin-left: -132px;
       top: 33px;
       width: 300px;
       .icon-stop {
