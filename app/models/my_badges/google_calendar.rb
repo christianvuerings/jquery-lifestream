@@ -33,8 +33,10 @@ class MyBadges::GoogleCalendar
               :title => entry["summary"],
               :start_time => verify_and_format_date(entry["start"]),
               :end_time => verify_and_format_date(entry["end"]),
-              :modified_time => format_date(entry["updated"].to_datetime)
+              :modified_time => format_date(entry["updated"].to_datetime),
+              :all_day_event => false
             }
+            consolidate_all_day_event_key!(event)
             event.merge! event_state_fields(entry)
             modified_entries[:items] << event
           rescue Exception
@@ -48,6 +50,18 @@ class MyBadges::GoogleCalendar
 
     # Resort the top 5 items by modified date, descending
     modified_entries
+  end
+
+  def consolidate_all_day_event_key!(event)
+    if (event[:start_time][:all_day_event] &&
+      event[:end_time][:all_day_event] &&
+      event[:start_time][:all_day_event] == event[:end_time][:all_day_event])
+      all_day_event_flag = event[:start_time][:all_day_event]
+      %w(start_time end_time).each do |key|
+        event[key.to_sym].reject! {|all_day_key| all_day_key == :all_day_event}
+      end
+      event[:all_day_event] = all_day_event_flag
+    end
   end
 
   def verify_and_format_date(date_field)

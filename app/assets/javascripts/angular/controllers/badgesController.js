@@ -5,7 +5,7 @@
    * Badges controller
    */
 
-  calcentral.controller('BadgesController', ['$http', '$scope', 'dateService', function($http, $scope, dateService) {
+  calcentral.controller('BadgesController', ['$http', '$scope', 'dateService', 'errorService', function($http, $scope, dateService, errorService) {
 
     var defaults = {
       'bcal': {
@@ -36,6 +36,41 @@
 
     var default_order = ['bmail', 'bcal', 'bdrive'];
 
+    var date_formats = {
+      today: 'h:mm a',
+      today_all_day: '', //no need for formatting due to the left calendar widget.
+      not_today: '(MM/DD) h:mm a',
+      not_today_all_day: 'MM/DD(ddd)'
+    };
+
+    var processDisplayRange = function(epoch, is_all_day, is_start_range) {
+      var now_date = moment().format('YYYYMMDD');
+      var item_moment = moment(epoch * 1000);
+      var item_date = item_moment.format('YYYYMMDD');
+
+      // not all day event, happening today.
+      if ((now_date === item_date) && !is_all_day) {
+        return item_moment.format(date_formats.today);
+      } else if ((now_date !== item_date) && !is_all_day) {
+        // not all day event, not happening today.
+        if (is_start_range) {
+          // start-range display doesn't need a date display since it's on the left graphic
+          return item_moment.format(date_formats.today);
+        } else {
+          return item_moment.format(date_formats.not_today);
+        }
+      } else if ((now_date !== item_date) && is_all_day) {
+        // all day event, not happening today.
+        return item_moment.format(date_formats.not_today_all_day);
+      } else if ((now_date === item_date) && is_all_day) {
+        // all day event, happening today. No need for the range since the date's on the left.
+        return '';
+      } else {
+        errorService.send('badgesController - unidentifiable date display range');
+        return '';
+      }
+    };
+
     var decorateBadges = function(raw_data) {
       default_order.forEach(function(value, index) {
         if ($scope.badges.length > index &&
@@ -63,25 +98,17 @@
         raw_data.bcal.items.forEach(function(value) {
           if (value.start_time && value.start_time.epoch) {
             var momentized_start_time = dateService.moment(value.start_time.epoch * 1000);
-            var momentized_start_date = momentized_start_time.format('YYYYMMDD');
-            var now_date = moment().format('YYYYMMDD');
             value.start_time.display = {
               'month': momentized_start_time.format('MMMM'),
               'day': momentized_start_time.format('DD'),
               'day_of_week': momentized_start_time.format('ddd'),
-              'range_start': (now_date === momentized_start_date ? momentized_start_time.format('h:mm a') : momentized_start_time.format('MM/DD @ h a'))
+              'range_start': processDisplayRange(value.start_time.epoch, value.all_day_event, true)
             };
 
             if (value.end_time && value.end_time.epoch) {
-              var momentized_end_time = dateService.moment(value.end_time.epoch * 1000);
-              var momentized_end_date = momentized_end_time.format('YYYYMMDD');
-              value.end_time.display = {};
-              if (momentized_start_date === momentized_end_date) {
-                value.start_time.display.range_start = momentized_start_time.format('h:mm a');
-                value.end_time.display.range_end = momentized_end_time.format('h:mm a');
-              } else {
-                value.end_time.display.range_end = momentized_end_time.format('MM/DD @ h a');
-              }
+              value.end_time.display = {
+                'range_end': processDisplayRange(value.end_time.epoch, value.all_day_event, false)
+              };
             }
           }
         });
