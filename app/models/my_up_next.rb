@@ -67,7 +67,7 @@ class MyUpNext < MyMergedModel
 
   def handle_organizer(entry_organizer)
     begin
-      organizer = entry_organizer.to_hash if entry_organizer
+      organizer = entry_organizer["displayName"] if entry_organizer
       organizer ||= ""
     rescue Exception => e
       logger.warn "#{self.class.name}: #{e} - Error handling organizer values #{entry_organizer}"
@@ -105,11 +105,11 @@ class MyUpNext < MyMergedModel
         next unless entry["summary"] && entry["summary"].kind_of?(String)
 
         formatted_entry = {
-          :attendees => entry["attendees"] || "",
+          :attendees => handle_attendees(entry["attendees"]),
           :organizer => handle_organizer(entry["organizer"]),
           :html_link => entry["htmlLink"] || "",
           :status => entry["status"] || "",
-          :summary => entry["summary"]
+          :summary => entry["summary"] || ""
         }
 
         formatted_entry.merge! handle_location(entry["location"])
@@ -128,4 +128,16 @@ class MyUpNext < MyMergedModel
     timed_events.concat(day_events)
   end
 
+  # Split apart to keep process_events simple, and allow further munging on attendees in the future.
+  def handle_attendees(attendees)
+    result = []
+    if attendees.is_a?(Array)
+      result = attendees.map{|attendee|
+        if (attendee["displayName"] && !attendee["displayName"].blank?)
+          attendee["displayName"]
+        end
+      }
+    end
+    result
+  end
 end
