@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
     end
     line += " class=#{self.class.name} action=#{params["action"]} view=#{view_runtime}ms db=#{db_runtime}ms"
     logger.warn line
+    logger.debug "request.env=#{request.env.inspect}"
   end
 
 end
