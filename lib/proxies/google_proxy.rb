@@ -13,7 +13,7 @@ class GoogleProxy < BaseProxy
       @authorization = GoogleProxyClient.new_fake_auth
     elsif options[:user_id]
       token_settings = Oauth2Data.get(@uid, APP_ID)
-      @authorization = GoogleProxyClient.new_client_auth token_settings
+      @authorization = GoogleProxyClient.new_client_auth token_settings || {"access_token" => ''}
     else
       auth_related_entries = [:access_token, :refresh_token, :expiration_time]
       token_settings = options.select{ |k,v| auth_related_entries.include? k}.stringify_keys!
@@ -115,7 +115,7 @@ class GoogleProxy < BaseProxy
   def revoke_invalid_token!(request_response)
     if @uid && request_response.response.status == 401 && request_response.error_message == "Invalid Credentials"
       Rails.logger.info "GoogleProxy - Will delete access token for #{@uid} due to 401 Unauthorized from Google"
-      Oauth2Data.destroy_all(:uid => @uid, :app_id => APP_ID)
+      Oauth2Data.remove(@uid, APP_ID)
     end
   end
 
