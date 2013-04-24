@@ -43,7 +43,7 @@ class MyBadges::GoogleDrive
               next unless !entry["title"].blank?
               item = {
                 title: entry["title"],
-                link: entry["selfLink"],
+                link: entry["alternateLink"],
                 modified_time: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
                 editor: entry["lastModifyingUserName"],
                 change_state: handle_change_state(entry)
