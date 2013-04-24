@@ -77,7 +77,7 @@ start() {
     exit 1
   fi
   echo "Starting calcentral..."
-  $START_SCRIPT
+  $START_SCRIPT || exit 1
 }
 
 stop() {

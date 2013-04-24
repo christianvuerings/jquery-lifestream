@@ -34,6 +34,5 @@ sleep 30
 # So we'll wait a bit and then tickle the home page to warm up the app.
 sleep 30
 
-# now tickle the app to warm it up
-wget --recursive --delete-after --quiet http://localhost:3000/
-rm -rf localhost\:3000
+# now check if the app is alive (which will also warm up caches)
+./script/check-alive.sh || exit 1
