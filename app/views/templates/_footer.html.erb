@@ -1,10 +1,11 @@
 <footer class="row" data-ng-controller="FooterController" data-ng-cloak>
-  <div data-ng-click="showInfo=!showInfo" data-cc-accessible-focus-directive class="large-9 columns small-9 cc-footer-copyright">&copy; <span data-ng-bind="currentTime() | date:'yyyy'"></span> UC Regents | <a href="//security.berkeley.edu/policy" data-ng-click="api.util.preventBubble($event)">Usage Policy</a></div>
-  <div class="cc-footer-links large-3 columns small-3">
-    <a href="https://ets.berkeley.edu/help/calcentral">Help</a>
-    <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
+  <div class="cc-footer-links columns small-5">
     <a href="https://ets.berkeley.edu/category/category-tags/calcentral">News</a>
+    <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
+    <a href="https://ets.berkeley.edu/help/calcentral">Help</a>
   </div>
+  <div data-ng-click="showInfo=!showInfo" data-cc-accessible-focus-directive class="columns small-7 cc-footer-copyright end">&copy; <span data-ng-bind="currentTime() | date:'yyyy'"></span> UC Regents | <a href="//security.berkeley.edu/policy" data-ng-click="api.util.preventBubble($event)">Usage Policy</a></div>
+
 
   <div class="large-12 columns" data-ng-show="showInfo">
     <ul>
