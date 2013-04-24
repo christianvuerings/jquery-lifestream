@@ -25,6 +25,8 @@
       }
     }, true);
 
+    $scope.user._fetch();
+
   }]);
 
 })(window.calcentral);

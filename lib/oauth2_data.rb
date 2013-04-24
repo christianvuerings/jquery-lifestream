@@ -25,6 +25,13 @@ class Oauth2Data < ActiveRecord::Base
     hash
   end
 
+  def self.remove(uid, app_id)
+    use_pooled_connection {
+      self.destroy_all(uid: uid, app_id: app_id)
+    }
+    UserApi.expire(uid)
+  end
+
   def self.get_google_email(user_id)
     oauth2_data = false
     use_pooled_connection {

@@ -13,7 +13,7 @@ class CanvasProxy < BaseProxy
                    elsif options[:admin]
                      @settings.admin_access_token
                    elsif options[:user_id]
-                     Oauth2Data.get(options[:user_id], APP_ID)["access_token"]
+                     Oauth2Data.get(options[:user_id], APP_ID)["access_token"] || ''
                    else
                      options[:access_token]
                    end
@@ -39,7 +39,7 @@ class CanvasProxy < BaseProxy
           end
         rescue Signet::AuthorizationError => e
           #fetch_protected_resource throws exceptions on 401s,
-          #TODO: change this to handle the auth error.
+          revoke_invalid_token! e.response
           e.response
         rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
           Rails.logger.warn "CanvasProxy connection failed: #{e.class} #{e.message}"
@@ -62,6 +62,22 @@ class CanvasProxy < BaseProxy
     # The profile check, however, embeds the real user ID in the URI, and so we cannot safely pass
     # it through to VCR.
     Settings.canvas_proxy.fake || (CanvasUserProfileProxy.new(user_id: user_id).user_profile != nil)
+  end
+
+  private
+
+  def revoke_invalid_token!(request_response)
+    if (@uid && request_response.status == 401)
+      begin
+        message = JSON.parse request_response.body
+        if message["message"] == 'Invalid access token.'
+          Rails.logger.info "#{self.class.name} - Will delete access token for #{@uid} due to 401 Unauthorized from #{APP_ID}"
+          Oauth2Data.remove(@uid, APP_ID)
+        end
+      rescue JSON::ParserError => e
+        Rails.logger.error "#{self.class.name} unable to parse #{request_response.body}"
+      end
+    end
   end
 
 end
