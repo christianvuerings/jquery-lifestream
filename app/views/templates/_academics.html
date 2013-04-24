@@ -57,10 +57,7 @@
         <div class="large-4 small-4 columns">
           <i
             class="cc-icon"
-            data-ng-class="{
-              'icon-ok-sign':(user_status.student_info.reg_status.summary=='Registered'),
-              'exclamation-sign':(user_status.student_info.reg_status.summary!='Registered')
-            }">
+            data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
           </i>
         </div>
         <div class="large-4 small-4 columns">NEED DATA</div>
