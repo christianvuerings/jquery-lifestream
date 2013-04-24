@@ -1,4 +1,5 @@
 class CalLinkProxy < BaseProxy
+  extend Proxies::EnableForActAs
 
   require 'securerandom'
 

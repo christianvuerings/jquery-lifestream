@@ -46,6 +46,19 @@ describe "MyClasses" do
     end
   end
 
+  it "should return bSpace courses when Canvas returns bad responses" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
+    SakaiUserSitesProxy.stub(:new).and_return(@fake_sakai_proxy)
+    response = OpenStruct.new({body: 'derp derp', status: 200})
+    CanvasCoursesProxy.any_instance.stub(:courses).and_return(response)
+    my_classes = MyClasses.new(@user_id).get_feed
+    my_classes[:classes].size.should be > 0
+    my_classes[:classes].each do |my_class|
+      my_class[:emitter].should == "bSpace"
+    end
+  end
+
   it "should return bSpace courses when Canvas service is unavailable" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiUserSitesProxy.stub(:access_granted?).and_return(true)

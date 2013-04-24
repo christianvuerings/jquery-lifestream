@@ -67,6 +67,22 @@ describe "MyGroups" do
     end
   end
 
+  it "should handle bad responses from Canvas" do
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
+    sakai_project_site_feed = {groups: [
+      {title: "Zsite", id: "zsite-id", site_url: "http://sakai/zsite-id"},
+      {title: "csite", id: "csite-id", site_url: "http://sakai/csite-id"}
+    ]}
+    SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
+    canvas_groups_feed = OpenStruct.new({body: 'derp derp', status: 200})
+    CanvasGroupsProxy.any_instance.stub(:groups).and_return(canvas_groups_feed)
+    my_groups = MyGroups.new(@user_id).get_feed
+    my_groups[:groups].size.should >= 2
+    my_groups[:groups].select{ |group| group[:emitter] == CanvasProxy::APP_ID }.size.should == 0
+  end
+
   it "should sort groups alphabetically" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
@@ -76,9 +92,9 @@ describe "MyGroups" do
         {title: "csite", id: "csite-id", site_url: "http://sakai/csite-id"}
     ]}
     SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
-    canvas_groups_feed = '[{"name": "Agroup", "id": "agroup-id"}]'
+    canvas_groups_feed = OpenStruct.new({body: '[{"name": "Agroup", "id": "agroup-id"}]', status: 200})
     CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-    @fake_canvas_proxy.stub_chain(:groups, :body).and_return(canvas_groups_feed)
+    CanvasGroupsProxy.any_instance.stub(:groups).and_return(canvas_groups_feed)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups][0][:title].should == "Agroup"
     my_groups[:groups][1][:title].should == "csite"
