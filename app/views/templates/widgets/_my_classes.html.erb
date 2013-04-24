@@ -14,15 +14,14 @@
             <a
               class="cc-ellipsis"
               data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
-              data-ng-href="{{class.site_url}}"
-              ><span class="cc-widget-subtitle">{{class.course_code}}</span>
+              data-ng-href="{{class.site_url}}">
+              <span class="cc-widget-subtitle" data-ng-bind="class.course_code"></span>
             </a>
             <a class="cc-ellipsis cc-widget-mygroups-myclasses-title-link"
               data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
               data-ng-href="{{class.site_url}}"
               data-ng-show="!!class.name"
-              >{{class.name}}
-            </a>
+              data-ng-bind="class.name"></a>
           </div>
           <div class="large-2 small-4 columns cc-widget-mygroups-myclasses-emitter-column">
             <div class="cc-emitter-square cc-emitter-{{class.color_class}}" title="{{class.emitter}} class"></div>

@@ -13,8 +13,7 @@
             </div>
             <a class="cc-ellipsis"
               data-ng-href="{{group.site_url}}"
-              data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)">{{group.title}}
-            </a>
+              data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)" data-ng-bind="group.title"></a>
           </div>
           <div class="large-2 small-4 columns cc-widget-mygroups-myclasses-emitter-column">
             <div class="cc-emitter-square cc-emitter-{{group.color_class}}" title="{{group.emitter}} group"></div>

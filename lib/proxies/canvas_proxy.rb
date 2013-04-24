@@ -37,6 +37,10 @@ class CanvasProxy < BaseProxy
           else
             response
           end
+        rescue Signet::AuthorizationError => e
+          #fetch_protected_resource throws exceptions on 401s,
+          #TODO: change this to handle the auth error.
+          e.response
         rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
           Rails.logger.warn "CanvasProxy connection failed: #{e.class} #{e.message}"
           nil
