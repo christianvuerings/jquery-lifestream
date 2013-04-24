@@ -35,7 +35,8 @@ class MyClasses < MyMergedModel
             site_url: "#{canvas_proxy.url_root}/courses/#{course['id']}"
           })
       end
-    rescue JSON::ParserError
+    rescue JSON::ParserError => e
+      Rails.logger.warn "#{self.class.name}: Problems parsing JSON feed: #{canvas_courses.body} - #{e}"
       return []
     end
     response
