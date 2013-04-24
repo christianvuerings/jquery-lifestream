@@ -10,11 +10,13 @@ body {
       font-weight: bold;
     }
     .cc-footer-links a {
-      float: right;
-      padding-left: 21px;
+      padding-right: 21px;
     }
-    .cc-footer-copyright:hover {
-      cursor: pointer;
+    .cc-footer-copyright {
+      text-align: right;
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     ul {
