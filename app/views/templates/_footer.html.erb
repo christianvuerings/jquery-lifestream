@@ -16,7 +16,7 @@
       <li>Previous Release's DB Schema: <%= @server_settings["versions"]["previous_release_db_schema"] %></li>
       <li>Up Since: <%= @server_settings["first_visited"] %></li>
       <li>
-        <button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral?</button>
+        <button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>
         <div class="cc-footer-confirmation" data-ng-show="deleteSelf">Are you sure?
           <button class="first tiny button" data-ng-click="user.optOut()">Yes</button>
           <button class="tiny button" data-ng-click="deleteSelf=false">No</button>
