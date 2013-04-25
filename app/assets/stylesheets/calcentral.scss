@@ -97,11 +97,6 @@ button {
     cursor: pointer;
     text-decoration: underline;
   }
-  &[type="reset"] {
-    &:focus, &:hover {
-      color: $cc-medium-grey;
-    }
-  }
 }
 .button {
   background-color: $cc-button-color;
@@ -142,6 +137,7 @@ button {
 }
 .cc-button-submit-disabled {
   @include cc-button-common;
+  background: #e5e5e5 !important;
   @include background(linear-gradient(#fff, #e5e5e5));
   border: 2px solid #d2d2d2 !important;
   color: #d2d2d2 !important;
@@ -150,9 +146,15 @@ button {
 }
 .cc-button-reset {
   @include cc-button-common;
+  background: #fff;
   @include background(linear-gradient(#fff, #e5e5e5));
   border: 2px solid #d2d2d2;
   color: $cc-medium-grey;
+  &:focus, &:hover {
+    background: #fff;
+    @include background(linear-gradient(#fff, #e5e5e5));
+    color: $cc-medium-grey;
+  }
 }
 
 .cc-button-link {
