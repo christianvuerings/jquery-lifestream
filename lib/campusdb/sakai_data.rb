@@ -41,10 +41,6 @@ class SakaiData < OracleDatabase
   # Announcements which are due to be released at a given time are fairly common. If longer-lived
   # caching is enabled, the "up to this time" DB query parameter should be set after "now", and the
   # release date-time should be checked by the proxy service.
-  #
-  # TODO This only finds site-wide announcements. Sakai can also broadcast announcements to a
-  # subset of site members. But since that does not seem to be used very often locally, it's
-  # not yet handled here.
   def self.get_announcements(site_id, from_datetime, to_datetime)
     channel_id = "/announcement/channel/#{site_id}/main"
     announcements = []

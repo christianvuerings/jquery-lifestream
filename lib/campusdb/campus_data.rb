@@ -118,11 +118,17 @@ class CampusData < OracleDatabase
     result
   end
 
-  def self.check_alive
-    log_access(connection, connection_handler, name)
-    use_pooled_connection {
-      connection.select_one("select 1 from DUAL")
-    }
+  def self.database_alive?
+    is_alive = false
+    begin
+      use_pooled_connection {
+        connection.select_one("select 1 from DUAL")
+        is_alive = true
+      }
+    rescue ActiveRecord::StatementInvalid => exception
+      Rails.logger.warn("Oracle server is down: #{exception}")
+    end
+    is_alive
   end
 
 end

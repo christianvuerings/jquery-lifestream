@@ -68,8 +68,18 @@ describe CampusData do
   end
 
   it "should check whether the db is alive" do
-    alive = CampusData.check_alive
-    alive.should_not be_nil
+    alive = CampusData.database_alive?
+    alive.should be_true
+  end
+
+  it "should report DB outage" do
+    # connection.select_one("select 1 from DUAL")
+    CampusData.connection.stub(:select_one).and_raise(
+        ActiveRecord::StatementInvalid,
+        "Java::JavaSql::SQLRecoverableException: IO Error: The Network Adapter could not establish the connection: select 1 from DUAL"
+    )
+    is_ok = CampusData.database_alive?
+    is_ok.should be_false
   end
 
   it "should handle a person with no affiliations" do

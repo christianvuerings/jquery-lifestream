@@ -6,7 +6,10 @@ class BootstrapController < ApplicationController
     if !UserData.database_alive?
       raise "CalCentral database is currently unavailable"
     end
-    CampusData.check_alive # so an error gets thrown if Oracle is dead.
+    # so an error gets thrown if Oracle is dead.
+    if !CampusData.database_alive?
+      raise "Campus database is currently unavailable"
+    end
     @server_settings = ServerRuntime.get_settings
   end
 
