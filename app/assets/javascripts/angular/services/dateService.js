@@ -6,6 +6,7 @@
 
     // Expose methods
     return {
+      now: Date.now(),
       moment: moment
     };
 
