@@ -25,4 +25,8 @@ class GoogleAuthController < AuthController
     client
   end
 
+  def connected_token_callback(uid)
+    Oauth2Data.update_google_email! uid
+  end
+
 end

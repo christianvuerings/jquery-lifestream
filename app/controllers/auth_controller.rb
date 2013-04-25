@@ -11,6 +11,10 @@ class AuthController < ApplicationController
     nil
   end
 
+  def connected_token_callback(uid)
+    nil
+  end
+
   def request_authorization
     expire
     final_redirect = params[:final_redirect] || "/settings"
@@ -38,6 +42,7 @@ class AuthController < ApplicationController
             client.issued_at.to_i + client.expires_in
           end
       )
+      connected_token_callback session[:user_id]
     else
       Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
       Oauth2Data.remove(session[:user_id], app_id)

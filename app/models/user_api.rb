@@ -80,12 +80,7 @@ class UserApi < MyMergedModel
   end
 
   def get_feed_internal
-    google_mail = Oauth2Data.get_google_email(@uid)
-    # Attempt to update just once.
-    if google_mail.blank?
-      Oauth2Data.update_google_email!(@uid)
-      google_mail = Oauth2Data.get_google_email(@uid)
-    end
+    google_mail = Oauth2Data.get_google_email(@uid) || ""
 
     {
       :is_admin => UserAuth.is_superuser?(@uid),
