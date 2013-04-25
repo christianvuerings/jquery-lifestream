@@ -128,6 +128,8 @@
       }
     });
 
+    $scope.$watch('user.profile.has_google_access_token', fetch);
+
     $scope.badges = orderBadges(defaults);
 
   }]);
