@@ -20,7 +20,11 @@
       </div>
       <div data-ng-show="selected_semester.schedule.length">
         <div class="row" data-ng-repeat="course in selected_courses">
-          <div class="large-3 small-5 columns" data-ng-bind="course.course_number"></div>
+          <div class="large-3 small-5 columns">
+            <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}">
+              <span data-ng-bind="course.course_number"></span>
+            </a>
+          </div>
           <div class="large-4 small-5 columns" data-ng-bind="course.title"></div>
           <div class="large-5 small-2 columns" data-ng-bind="course.grade_option"></div>
         </div>

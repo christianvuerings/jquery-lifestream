@@ -1,0 +1,85 @@
+<script type="text/ng-template" id="templates/academics_classinfo.html">
+  <div
+    class="cc-page-academics"
+    data-ng-controller="AcademicsController"
+    data-ng-show="user.profile.roles.student"
+  >
+    <div class="column">
+      <h1>
+        <a href="/academics">My Academics</a> &raquo;
+        <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
+        <span data-ng-bind="selected_course.course_number"></span>
+      </h1>
+    </div>
+
+    <div class="large-6 small-12 columns cc-academics-records">
+      <h2>Class Information</h2>
+
+      <h3>My Enrollment</h3>
+
+      <div class="row cc-academics-column-labels">
+        <div class="large-3 small-5 columns">Section</div>
+        <div class="large-4 small-5 columns">CCN</div>
+        <div class="large-5 small-2 columns">Status</div>
+      </div>
+
+      <div class="row">
+        <div class="large-3 small-5 columns" data-ng-bind="selected_course.section"></div>
+        <div class="large-4 small-5 columns" data-ng-bind="selected_course.ccn"></div>
+        <div class="large-5 small-2 columns">Enrolled <b>?</b></div>
+      </div>
+
+      <h3>Class Info</h3>
+
+      <div class="row">
+        <div class="large-2 small-4 columns cc-academics-empasize">Title</div>
+        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.title"></div>
+      </div>
+
+      <div class="row">
+        <div class="large-2 small-4 columns cc-academics-empasize">Format</div>
+        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.format"></div>
+      </div>
+
+      <div class="row">
+        <div class="large-2 small-4 columns cc-academics-empasize">Schedule</div>
+        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.schedule"></div>
+      </div>
+
+      <div class="row">
+        <div class="large-2 small-4 columns cc-academics-empasize">Units</div>
+        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.units"></div>
+      </div>
+
+      <div class="row">
+        <div class="large-2 small-4 columns cc-academics-empasize">Grading</div>
+        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.grade_option"></div>
+      </div>
+
+      <div class="row">
+        <div class="large-2 small-4 columns cc-academics-empasize">Instructor</div>
+        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.instructor"><a href=""></a></div>
+      </div>
+
+    </div>
+
+    <div class="large-6 columns cc-academics-semesters">
+      <h2>Resources</h2>
+
+    </div>
+
+    <div class="cc-page-academics" data-ng-hide="user.profile.roles.student">
+      <div class="large-12 small-12 columns">
+        <h2>Data not available</h2>
+        <p>
+          This page displays academic status information for UC Berkeley students,
+          and is not available to faculty or staff.
+        </p>
+        <p>
+          If you believe you are seeing this message
+          in error, please contact <a href="https://ets.berkeley.edu/help/calcentral">CalCentral Help</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</script>

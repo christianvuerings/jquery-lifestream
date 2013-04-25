@@ -16,14 +16,25 @@
         $scope.exam_schedule = data.exam_schedule;
         $scope.semesters = data.semesters;
 
-        // Get selected semester from URL params and extract from semesters array
-        angular.forEach(data.semesters, function(semester) {
-          if (semester.slug === $routeParams.semester_slug) {
-            $scope.selected_semester = semester;
-          }
-        });
+        // Get selected semester from URL params and extract data from semesters array
+        if ($routeParams.semester_slug) {
+          angular.forEach(data.semesters, function(semester) {
+            if (semester.slug === $routeParams.semester_slug) {
+              $scope.selected_semester = semester;
+            }
+          });
+          $scope.selected_courses = $scope.selected_semester.schedule;
+        }
 
-        $scope.selected_courses = $scope.selected_semester.schedule;
+        // Get selected course from URL params and extract data from selected semester schedule
+        if ($routeParams.ccn) {
+          angular.forEach($scope.selected_semester.schedule, function(course) {
+            if (course.ccn === $routeParams.ccn) {
+              $scope.selected_course = course;
+            }
+          });
+        }
+
         $scope.gpaInit(); // Initialize GPA calculator with selected courses
       });
     };

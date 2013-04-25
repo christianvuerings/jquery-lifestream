@@ -1,9 +1,9 @@
 {
   "college_and_level": {
     "standing": "Undergraduate",
-    "level": "SENIOR",
+    "level": "Senior",
     "college": "ENGR",
-    "major": "CIVIL ENGINEERING"
+    "major": "Civil Engineering"
   },
   "requirements": [
     {
@@ -29,9 +29,9 @@
         "status": "Active",
         "type": "FINAN",
         "blocked_date": {
-          "epoch": 1366182000,
-          "date_time": "2013-04-17T00:00:00-07:00",
-          "date_string": "4/17/2013"
+          "epoch": 1366614000,
+          "date_time": "2013-04-22T00:00:00-07:00",
+          "date_string": "4/22/2013"
         },
         "cleared_date": {
           "epoch": null,
@@ -47,14 +47,14 @@
         "status": "Released",
         "type": "ACAD",
         "blocked_date": {
-          "epoch": 1366095600,
-          "date_time": "2013-04-16T00:00:00-07:00",
-          "date_string": "4/16/2013"
+          "epoch": 1366527600,
+          "date_time": "2013-04-21T00:00:00-07:00",
+          "date_string": "4/21/2013"
         },
         "cleared_date": {
-          "epoch": 1366182000,
-          "date_time": "2013-04-17T00:00:00-07:00",
-          "date_string": "4/17/2013"
+          "epoch": 1366614000,
+          "date_time": "2013-04-22T00:00:00-07:00",
+          "date_string": "4/22/2013"
         },
         "reason": "",
         "office": "LNS"
@@ -448,50 +448,51 @@
   "semesters": [
     {
       "name": "Spring 2013",
+      "slug": "spring-2013",
       "is_current": true,
       "schedule": [
         {
           "course_number": "EDUC 140AC",
           "ccn": "23731",
-          "title": "LITER:IND & SOC DEV",
+          "title": "Liter:Ind & Soc Dev",
           "units": "3.0",
           "grade_option": "Letter",
           "section": "LEC 001",
           "format": "LEC",
-          "schedule": "TuTh 1230P-0200P",
+          "schedule": "TuTh 12:30P-2:00P",
           "instructor": "HULL, G A"
         },
         {
           "course_number": "PSYCH 101",
           "ccn": "73980",
-          "title": "RES & DATA ANALYSIS",
+          "title": "Res & Data Analysis",
           "units": "4.0",
           "grade_option": "Letter",
           "section": "LEC 001",
           "format": "LEC",
-          "schedule": "TuTh 0800A-0930A",
+          "schedule": "TuTh 8:00A-9:30A",
           "instructor": "GADE, C J"
         },
         {
           "course_number": "PSYCH C120",
           "ccn": "74058",
-          "title": "ISSUES IN COGNITION",
+          "title": "Issues In Cognition",
           "units": "3.0",
           "grade_option": "P/NP",
           "section": "LEC 001",
           "format": "LEC",
-          "schedule": "MW 0100P-0200P",
+          "schedule": "MW 1:00P-2:00P",
           "instructor": "LOMBROZO, T"
         },
         {
           "course_number": "PSYCH 133",
           "ccn": "74220",
-          "title": "PSYCHOLOGY OF SLEEP",
+          "title": "Psychology Of Sleep",
           "units": "3.0",
           "grade_option": "P/NP",
           "section": "LEC 001",
           "format": "LEC",
-          "schedule": "MW 1200P-0100P",
+          "schedule": "MW 12:00P-1:00P",
           "instructor": "HARVEY, A G"
         }
       ]
@@ -501,22 +502,40 @@
   "exam_schedule": {
     "Tue May 14": [
       {
-        "time": "0800A",
-        "location": "390 HEARST MIN",
+        "time": "8:00A",
+        "location": {
+          "raw_location": "390 HEARST MIN",
+          "display": "Hearst Memorial Mining Building",
+          "lat": "37.874459999999999",
+          "lon": "-122.25727000000001",
+          "room_number": "390"
+        },
         "course_number": "Psychology C120"
       }
     ],
     "Wed May 15": [
       {
-        "time": "0300P",
-        "location": "100 GPB",
+        "time": "3:00P",
+        "location": {
+          "raw_location": "100 GPB",
+          "display": "Genetics & Plant Biology Building",
+          "lat": "37.873429999999999",
+          "lon": "-122.26473",
+          "room_number": "100"
+        },
         "course_number": "Psychology 133"
       }
     ],
     "Thu May 16": [
       {
-        "time": "0300P",
-        "location": "2060 VALLEY LSB",
+        "time": "3:00P",
+        "location": {
+          "raw_location": "2060 VALLEY LSB",
+          "display": "Valley Life Sciences Building",
+          "lat": "37.871479999999998",
+          "lon": "-122.26211000000001",
+          "room_number": "2060"
+        },
         "course_number": "Education 140"
       }
     ]
