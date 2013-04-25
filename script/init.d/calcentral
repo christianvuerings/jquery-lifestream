@@ -38,7 +38,6 @@ if [[ "${HOSTNAME}" = ets-calcentral-*-01\.ist.berkeley.edu ]]; then
 fi
 
 online() {
-    sleep 5
     if [ -f $OFFLINE_FILE ]; then
       $RM $OFFLINE_FILE
     fi
