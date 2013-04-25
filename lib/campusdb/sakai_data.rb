@@ -93,9 +93,10 @@ class SakaiData < OracleDatabase
     results = []
     use_pooled_connection {
       sql = <<-SQL
-      select s.site_id, s.type, s.title, s.short_desc, s.description, sp.value as term
+      select s.site_id, s.type, s.title, s.short_desc, s.description, sp.value as term, r.provider_id
       from #{table_prefix}sakai_site s join #{table_prefix}sakai_site_user su on
         su.user_id = #{connection.quote(sakai_user_id)} and su.site_id = s.site_id and s.published = 1 and s.type in ('course', 'project')
+        left outer join #{table_prefix}sakai_realm r on r.realm_id = ('/site/' || s.site_id)
         left outer join #{table_prefix}sakai_site_property sp on s.site_id = sp.site_id and sp.name = 'term'
       SQL
       results = connection.select_all(sql)

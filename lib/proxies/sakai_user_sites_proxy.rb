@@ -49,12 +49,41 @@ class SakaiUserSitesProxy < SakaiProxy
               site[:course_code] = row['title']
               site[:name] = row['short_desc']
               site[:color_class] = 'bspace-class'
+              site[:courses] = get_courses_from_provider(row['provider_id'])
               (categories[:classes] ||= []) << site
           end
         end
       end
       categories
     end
+  end
+
+  def get_courses_from_provider(provider_string)
+    if !provider_string.blank?
+      # Looks like "2013-B-7405+2013-B-7414+2013-B-7417+2013-B-7420+2013-B-7423+2013-B-7426"
+      section_ids = provider_string.split('+')
+      # If sections from multiple terms could be included in a single course site, then
+      # we would use a terms-to-courses map. However, the Sakai site management UX restricts
+      # course sites to a single academic term.
+      term_yr = term_cd = nil
+      ccns = []
+      section_ids.each do |section_id|
+        (term_yr, term_cd, ccn) = section_id.split('-')
+        ccns << ccn
+      end
+      courses_data = CampusData.get_courses_from_sections(term_yr, term_cd, ccns)
+      courses = courses_data.collect do |cd|
+        {
+            term_yr: cd['term_yr'],
+            term_cd: cd['term_cd'],
+            dept: cd['dept_name'],
+            catid: cd['catalog_id']
+        }
+      end
+    else
+      courses = []
+    end
+    courses
   end
 
 end

@@ -48,7 +48,7 @@ describe CampusData do
   end
 
   it "should find some students in Biology 1a" do
-    students = CampusData.get_enrolled_students("7366", "2013", "B")
+    students = CampusData.get_enrolled_students("7309", "2013", "B")
     students.should_not be_nil
     if CampusData.test_data?
       # we will only have predictable enrollments in our fake Oracle db.
@@ -57,7 +57,7 @@ describe CampusData do
   end
 
   it "should find a course" do
-    course = CampusData.get_course("7366", "2013", "B")
+    course = CampusData.get_course_from_section("7366", "2013", "B")
     course.should_not be_nil
     if CampusData.test_data?
       # we will only have predictable data in our fake Oracle db.
@@ -67,13 +67,37 @@ describe CampusData do
     end
   end
 
+  it "should find courses from sections" do
+    courses = CampusData.get_courses_from_sections("2013", "B", ["7309", "7366", "7372", "16171"])
+    pp courses
+    courses.should_not be_nil
+    if CampusData.test_data?
+      courses.length.should == 2
+      courses.index{|c|
+        c['dept_name'] == "BIOLOGY" &&
+        c['catalog_id'] == "1A" &&
+        c['course_title'] == "General Biology Lecture"
+      }.should_not be_nil
+    end
+  end
+
+  it "should find sections" do
+    sections = CampusData.get_sections_from_course('BIOLOGY', '1A', 2013, 'B')
+    sections.empty?.should be_false
+    if CampusData.test_data?
+      # Should not include canceled section
+      sections.length.should == 3
+      # Should include at least one lecture section
+      sections.index{|s| s['instruction_format'] == 'LEC'}.should_not be_nil
+    end
+  end
+
   it "should check whether the db is alive" do
     alive = CampusData.database_alive?
     alive.should be_true
   end
 
   it "should report DB outage" do
-    # connection.select_one("select 1 from DUAL")
     CampusData.connection.stub(:select_one).and_raise(
         ActiveRecord::StatementInvalid,
         "Java::JavaSql::SQLRecoverableException: IO Error: The Network Adapter could not establish the connection: select 1 from DUAL"
@@ -89,6 +113,5 @@ describe CampusData do
       role_value.should be_false
     end
   end
-
 
 end

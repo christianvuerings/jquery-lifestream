@@ -141,8 +141,8 @@ module Calcentral
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('~575bc12b-929f-4485-b2a2-50c69d8c06c7','575bc12b-929f-4485-b2a2-50c69d8c06c7',-1);
 
         -- Test site group memberships.
-        Insert into SAKAI_REALM (REALM_KEY,REALM_ID,PROVIDER_ID,MAINTAIN_ROLE,CREATEDBY,MODIFIEDBY,CREATEDON,MODIFIEDON) values (657387,'/site/29fc31ae-ff14-419f-a132-5576cae2474e','2013-B-11328',7,'admin','admin',parsedatetime('2013-01-06 08:35:01','yyyy-MM-dd HH:mm:ss'),parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'));
-        Insert into SAKAI_REALM (REALM_KEY,REALM_ID,PROVIDER_ID,MAINTAIN_ROLE,CREATEDBY,MODIFIEDBY,CREATEDON,MODIFIEDON) values (657388,'/site/29fc31ae-ff14-419f-a132-5576cae2474e/group/282e0a88-d923-46fe-85f9-1db0e4048e19','2013-B-11331',7,'admin','admin',parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'),parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'));
+        Insert into SAKAI_REALM (REALM_KEY,REALM_ID,PROVIDER_ID,MAINTAIN_ROLE,CREATEDBY,MODIFIEDBY,CREATEDON,MODIFIEDON) values (657387,'/site/29fc31ae-ff14-419f-a132-5576cae2474e','2013-B-7366+2013-B-7372',7,'admin','admin',parsedatetime('2013-01-06 08:35:01','yyyy-MM-dd HH:mm:ss'),parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'));
+        Insert into SAKAI_REALM (REALM_KEY,REALM_ID,PROVIDER_ID,MAINTAIN_ROLE,CREATEDBY,MODIFIEDBY,CREATEDON,MODIFIEDON) values (657388,'/site/29fc31ae-ff14-419f-a132-5576cae2474e/group/282e0a88-d923-46fe-85f9-1db0e4048e19','2013-B-7372',7,'admin','admin',parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'),parsedatetime('2013-01-06  08:35:01','yyyy-MM-dd HH:mm:ss'));
         Insert into SAKAI_REALM_RL_GR (REALM_KEY,USER_ID,ROLE_KEY,ACTIVE,PROVIDED) values (657387,'575bc12b-929f-4485-b2a2-50c69d8c06c7',9,'1','0');
         Insert into SAKAI_REALM_RL_GR (REALM_KEY,USER_ID,ROLE_KEY,ACTIVE,PROVIDED) values (657388,'575bc12b-929f-4485-b2a2-50c69d8c06c7',9,'1','0');
 
