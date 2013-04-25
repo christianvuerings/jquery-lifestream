@@ -13,7 +13,7 @@
       <!-- Title -->
       <div class="cc-badge-title" data-ng-switch on="badge.display.name">
         <h4 data-ng-switch-when="bMail"><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="Recent {{badge.display.name}} Messages"></a></h4>
-        <h4 data-ng-switch-when="bCal"><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} Updates ({{api.date.moment().format('M/D/YY')}})"></a></h4>
+        <h4 data-ng-switch-when="bCal"><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} Updates ({{api.date.now | date:'M/d/yy'}})"></a></h4>
         <h4 data-ng-switch-default><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} Updates"></a></h4>
       </div>
       <div class="cc-badge-noitems" data-ng-show="!badge.items.length">
