@@ -57,37 +57,41 @@
               <h4>Estimate your grades for <span data-ng-bind="selected_semester.name"></span></h4>
             </div>
           </div>
-
-          <div class="row cc-academics-calculator-grid-section">
-            <div class="large-5 small-5 columns cc-academics-column-labels">Class</div>
-            <div class="large-3 small-3 columns cc-academics-column-labels">Units</div>
-            <div class="large-3 small-3 columns end cc-academics-column-labels">Grade</div>
-          </div>
-
-          <div
-            class="row cc-academics-calculator-row "
-            data-ng-repeat="course in selected_courses"
-          >
-            <div class="large-5 small-5 columns" data-ng-bind="course.course_number"></div>
-            <div class="large-3 small-3 columns" data-ng-bind="course.units"></div>
-            <div class="large-3 small-3 columns end">
-              <select
-                data-ng-show="course.grade_option=='Letter'"
-                data-ng-model="course.estimated_grade"
-                data-ng-change="gpaUpdateCourse(course, course.estimated_grade)"
-                data-ng-options="g.weight as g.grade for g in gradeopts"
-              >
-              </select>
+          <div data-ng-show="selected_courses.length">
+            <div class="row cc-academics-calculator-grid-section">
+              <div class="large-5 small-5 columns cc-academics-column-labels">Class</div>
+              <div class="large-3 small-3 columns cc-academics-column-labels">Units</div>
+              <div class="large-3 small-3 columns end cc-academics-column-labels">Grade</div>
             </div>
+
             <div
-              data-ng-show="course.grade_option!='Letter'"
-              class="large-3 small-3 columns end"
-              data-ng-bind="course.grade_option">
+              class="row cc-academics-calculator-row "
+              data-ng-repeat="course in selected_courses"
+            >
+              <div class="large-5 small-5 columns" data-ng-bind="course.course_number"></div>
+              <div class="large-3 small-3 columns" data-ng-bind="course.units"></div>
+              <div class="large-3 small-3 columns end">
+                <select
+                  data-ng-show="course.grade_option=='Letter'"
+                  data-ng-model="course.estimated_grade"
+                  data-ng-change="gpaUpdateCourse(course, course.estimated_grade)"
+                  data-ng-options="g.weight as g.grade for g in gradeopts"
+                >
+                </select>
+              </div>
+              <div
+                data-ng-show="course.grade_option!='Letter'"
+                class="large-3 small-3 columns end"
+                data-ng-bind="course.grade_option">
+              </div>
+            </div>
+            <div class="row cc-academics-calculator-row cc-academics-empasize">
+              <div class="large-8 small-8 columns">Estimated semester GPA:</div>
+              <div class="large-4 small-4 columns" data-ng-bind="(estimated_gpa | number:2) || 'N/A'"></div>
             </div>
           </div>
-          <div class="row cc-academics-calculator-row cc-academics-empasize">
-            <div class="large-8 small-8 columns">Estimated semester GPA:</div>
-            <div class="large-4 small-4 columns" data-ng-bind="estimated_gpa | number:2"></div>
+          <div data-ng-show="!selected_courses.length">
+            <p>To calculate your GPA, you must be enrolled in one or more classes for the selected semester.</p>
           </div>
         </div>
     </div>
