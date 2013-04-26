@@ -16,9 +16,10 @@
     </div>
     <div data-ng-show="service=='canvas'">
       <strong>Canvas</strong><br />
-      <span class="cc-settings-service-description">
+      <span class="cc-settings-service-description" data-ng-show="!user.profile.canvas_email || !user.profile.has_canvas_access_token">
         Connect your Canvas account to be able to see Canvas-hosted class sites, assignments and activity. <a href="https://ets.berkeley.edu/article/what-canvas">Learn more about Canvas</a>.
       </span>
+      <span class="cc-settings-service-description" data-ng-show="user.profile.canvas_email && user.profile.has_canvas_access_token" data-ng-bind-template="Connected as: {{user.profile.canvas_email}}"></span>
     </div>
   </div>
 
