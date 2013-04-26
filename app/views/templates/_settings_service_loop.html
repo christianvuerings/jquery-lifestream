@@ -9,10 +9,10 @@
   <div class="large-9 small-8 columns cc-settings-service-description-block">
     <div data-ng-show="service=='google'">
       <strong>bConnected</strong><br />
-      <span class="cc-settings-service-description" data-ng-show="!user.profile.google_email">
+      <span class="cc-settings-service-description" data-ng-show="!user.profile.google_email || !user.profile.has_google_access_token">
         Connect your Google Apps for Education account in order to access your drive, mail and calendar.
       </span>
-      <span class="cc-settings-service-description" data-ng-show="user.profile.google_email">Connected as: {{user.profile.google_email}}</span>
+      <span class="cc-settings-service-description" data-ng-show="user.profile.google_email && user.profile.has_google_access_token" data-ng-bind-template="Connected as: {{user.profile.google_email}}"></span>
     </div>
     <div data-ng-show="service=='canvas'">
       <strong>Canvas</strong><br />
