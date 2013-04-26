@@ -53,7 +53,7 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.update_canvas_email!(user_id)
-    #will be a noop if user hasn't granted google access
+    #will be a noop if user hasn't granted canvas access
     use_pooled_connection {
       authenticated_entry = self.where(uid: user_id, app_id: CanvasProxy::APP_ID).first
       return unless authenticated_entry
