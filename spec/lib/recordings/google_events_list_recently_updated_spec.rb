@@ -19,6 +19,6 @@ describe 'GoogleEventsList' do
     )
     response_enum = proxy.recently_updated_items
     response_enum.first.data["kind"].should == "calendar#events"
-    response_enum.first.data["items"].blank?.should_not be_true #empty recordings would not be very useful...
+    response_enum.first.status.should == 200
   end
 end
