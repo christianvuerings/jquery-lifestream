@@ -33,15 +33,11 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.get_google_email(user_id)
-    oauth2_data = false
-    use_pooled_connection {
-      oauth2_data = self.where(uid: user_id, app_id: GoogleProxy::APP_ID).first
-    }
-    if oauth2_data && oauth2_data.app_data && oauth2_data.app_data["email"]
-      oauth2_data.app_data["email"]
-    else
-      ""
-    end
+    get_email(GoogleProxy::APP_ID, user_id)
+  end
+
+  def self.get_canvas_email(user_id)
+    get_email(CanvasProxy::APP_ID, user_id)
   end
 
   def self.update_google_email!(user_id)
@@ -53,6 +49,26 @@ class Oauth2Data < ActiveRecord::Base
       return unless userinfo && userinfo.response.status == 200
       authenticated_entry.app_data["email"] = userinfo.data["email"]
       authenticated_entry.save
+    }
+  end
+
+  def self.update_canvas_email!(user_id)
+    #will be a noop if user hasn't granted canvas access
+    use_pooled_connection {
+      authenticated_entry = self.where(uid: user_id, app_id: CanvasProxy::APP_ID).first
+      return unless authenticated_entry
+      userinfo = CanvasUserProfileProxy.new(user_id: user_id).user_profile
+      return unless userinfo && userinfo.status == 200
+      login_info = {}
+      begin
+        login_info = JSON.parse userinfo.body
+      rescue JSON::ParserError
+        Rails.logger.warn "#{self.class.name} Unable to parse #{userinfo.body}"
+      end
+      if login_info["primary_email"]
+        authenticated_entry.app_data["email"] = login_info["primary_email"]
+        authenticated_entry.save
+      end
     }
   end
 
@@ -104,6 +120,20 @@ class Oauth2Data < ActiveRecord::Base
     cipher.iv = Base64.decode64(value_with_iv[1])
     decrypted = cipher.update(Base64.decode64(value_with_iv[0])) + cipher.final
     decrypted.to_s
+  end
+
+  private
+
+  def self.get_email(app_id, uid)
+    oauth2_data = false
+    use_pooled_connection {
+      oauth2_data = self.where(uid: uid, app_id: app_id).first
+    }
+    if oauth2_data && oauth2_data.app_data && oauth2_data.app_data["email"]
+      oauth2_data.app_data["email"]
+    else
+      ""
+    end
   end
 
 end

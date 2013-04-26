@@ -20,4 +20,8 @@ class CanvasAuthController < AuthController
     )
   end
 
+  def connected_token_callback(uid)
+    Oauth2Data.update_canvas_email! uid
+  end
+
 end

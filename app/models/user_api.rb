@@ -81,7 +81,7 @@ class UserApi < MyMergedModel
 
   def get_feed_internal
     google_mail = Oauth2Data.get_google_email(@uid)
-
+    canvas_mail = Oauth2Data.get_canvas_email(@uid)
     {
       :is_admin => UserAuth.is_superuser?(@uid),
       :first_login_at => @first_login_at,
@@ -91,6 +91,7 @@ class UserApi < MyMergedModel
       :has_canvas_account => CanvasProxy.has_account?(@uid),
       :has_google_access_token => GoogleProxy.access_granted?(@uid),
       :google_email => google_mail,
+      :canvas_email => canvas_mail,
       :last_name => @last_name,
       :preferred_name => self.preferred_name,
       :roles => @campus_attributes[:roles],
