@@ -150,18 +150,22 @@ class CampusData < OracleDatabase
     result
   end
 
+  # Catalog ID sorting is: "99", "101L", "C103", "C107L", "110", "110L", "C112", "C112L"
   def self.get_enrolled_sections(person_id, term_yr, term_cd)
     result = []
     use_pooled_connection {
       sql = <<-SQL
       select r.term_yr, r.term_cd, r.course_cntl_num, r.enroll_status, r.wait_list_seq_num,
-        c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format
+        c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
       from bspace_class_roster_vw r
       join bspace_course_info_vw c on c.term_yr = r.term_yr and c.term_cd = r.term_cd and c.course_cntl_num = r.course_cntl_num
       where r.student_ldap_uid = #{connection.quote(person_id)}
         and r.term_yr = #{connection.quote(term_yr)}
         and r.term_cd = #{connection.quote(term_cd)}
-      order by r.term_yr, r.term_cd, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.instruction_format, c.section_num
+      order by r.term_yr, r.term_cd, c.dept_name,
+        c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
+        c.primary_secondary_cd, c.instruction_format, c.section_num
       SQL
       result = connection.select_all(sql)
     }
@@ -173,13 +177,16 @@ class CampusData < OracleDatabase
     use_pooled_connection {
       sql = <<-SQL
       select c.term_yr, c.term_cd, c.course_cntl_num,
-        c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format
+        c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
       from bspace_course_instructor_vw i
       join bspace_course_info_vw c on c.term_yr = i.term_yr and c.term_cd = i.term_cd and c.course_cntl_num = i.course_cntl_num
       where i.instructor_ldap_uid = #{connection.quote(person_id)}
         and i.term_yr = #{connection.quote(term_yr)}
         and i.term_cd = #{connection.quote(term_cd)}
-      order by c.term_yr, c.term_cd, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.instruction_format, c.section_num
+      order by c.term_yr, c.term_cd, c.dept_name,
+        c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
+        c.primary_secondary_cd, c.instruction_format, c.section_num
       SQL
       result = connection.select_all(sql)
     }
