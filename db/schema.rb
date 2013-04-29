@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013032010103300) do
+ActiveRecord::Schema.define(:version => 2013042909416600) do
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
@@ -56,5 +56,13 @@ ActiveRecord::Schema.define(:version => 2013032010103300) do
   end
 
   add_index "user_data", ["uid"], :name => "index_user_data_on_uid", :unique => true
+
+  create_table "user_visits", :id => false, :force => true do |t|
+    t.string   "uid",           :null => false
+    t.datetime "last_visit_at", :null => false
+  end
+
+  add_index "user_visits", ["last_visit_at"], :name => "index_user_visits_on_last_visit_at"
+  add_index "user_visits", ["uid"], :name => "index_user_visits_on_uid", :unique => true
 
 end

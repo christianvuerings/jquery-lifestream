@@ -23,6 +23,8 @@ describe UserApiController do
     json_response["uid"].should == "192517"
     json_response["preferred_name"].should == "Yu-Hung Lin"
     json_response["features"].should_not be_nil
+    visit = UserVisit.where(:uid=>session[:user_id])[0]
+    visit.last_visit_at.should_not be_nil
   end
 
   it "should record first login for a new user" do
