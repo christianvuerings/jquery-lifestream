@@ -269,6 +269,17 @@ To view other rake task for the project: ```rake -T```
 * ```rake vcr:record``` - Refresh vcr recordings and reformats the fixtures with formatted JSON output. Will also parse the reponse body's string into json output for legibility.
 * ```rake vcr:list``` - List the available recordings captured in the fixtures.
 
+## Memcached tasks:
+
+A few rake tasks to help monitor statistics and more:
+
+* ```rake memcached:clear_stats``` - Reset memcached stats from all cluster nodes
+* ```rake memcached:empty``` - Invalidate all memcached keys from all cluster nodes
+* ```rake memcached:get_stats``` - Fetch memcached stats from all cluster nodes
+
+* Generally, if you `rake memcached:empty` ( __WARNING:__ do not run on the production cluster unless you know what you're doing), you should follow with an `rake memcached:clear_stats`.
+* All three task take the optional param of "hosts." So, if say you weren't running these tasks on the cluster layers themselves, or only wanted to tinker with a certain subset of clusters: `rake memcached:get_stats hosts="localhost:11212,localhost:11213,localhost:11214"`
+
 ## Using the feature toggle:
 
 To selectively enable/disable a feature, add a property to the "features" section of settings.yml, e.g.:
