@@ -62,8 +62,7 @@
         return;
       }
 
-      // Sanitize the output
-      var value = $sanitize(scope.completeText);
+      var value = scope.completeText;
 
       // Overwrite the default options
       options = angular.extend(options, default_options);
@@ -82,6 +81,9 @@
 
       // Wrap everything in a div
       value = '<div>' + value + '</div>';
+
+      // Sanitize the output
+      value = $sanitize(value);
 
       if (shouldTruncate) {
         value += buttonTemplate(scope.opened, options);
