@@ -81,7 +81,7 @@ describe CampusData do
     end
   end
 
-  it "should find sections" do
+  it "should find sections from course" do
     sections = CampusData.get_sections_from_course('BIOLOGY', '1A', 2013, 'B')
     sections.empty?.should be_false
     if CampusData.test_data?
@@ -90,6 +90,18 @@ describe CampusData do
       # Should include at least one lecture section
       sections.index{|s| s['instruction_format'] == 'LEC'}.should_not be_nil
     end
+  end
+
+  it "should find where a person is enrolled" do
+    sections = CampusData.get_enrolled_sections('300939', 2013, 'B')
+    sections.should_not be_nil
+    sections.length.should == 2 if CampusData.test_data?
+  end
+
+  it "should find where a person is teaching" do
+    sections = CampusData.get_instructing_sections('192517', 2013, 'B')
+    sections.should_not be_nil
+    sections.length.should == 1 if CampusData.test_data?
   end
 
   it "should check whether the db is alive" do
