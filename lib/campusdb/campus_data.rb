@@ -103,17 +103,49 @@ class CampusData < OracleDatabase
     result
   end
 
-  def self.get_course(ccn, term_yr, term_cd)
+  def self.get_course_from_section(ccn, term_yr, term_cd)
     result = {}
     use_pooled_connection {
       sql = <<-SQL
-      select course_title, dept_name, catalog_id
+      select course_title, dept_name, catalog_id, term_yr, term_cd
       from bspace_course_info_vw
       where term_yr = #{connection.quote(term_yr)}
         and term_cd = #{connection.quote(term_cd)}
         and course_cntl_num = #{connection.quote(ccn)}
       SQL
       result = connection.select_one(sql)
+    }
+    result
+  end
+
+  def self.get_courses_from_sections(term_yr, term_cd, ccns)
+    result = {}
+    use_pooled_connection {
+      sql = <<-SQL
+      select distinct course_title, dept_name, catalog_id, term_yr, term_cd
+      from bspace_course_info_vw
+      where term_yr = #{connection.quote(term_yr)}
+        and term_cd = #{connection.quote(term_cd)}
+        and course_cntl_num in (#{ccns.collect{|id| connection.quote(id)}.join(', ')})
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.get_sections_from_course(dept_name, catalog_id, term_yr, term_cd)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select term_yr, term_cd, course_cntl_num, dept_name, catalog_id, primary_secondary_cd, section_num, instruction_format
+      from bspace_course_info_vw
+      where term_yr = #{connection.quote(term_yr)}
+        and term_cd = #{connection.quote(term_cd)}
+        and dept_name = #{connection.quote(dept_name)}
+        and catalog_id = #{connection.quote(catalog_id)}
+        and section_cancel_flag is null
+      SQL
+      result = connection.select_all(sql)
     }
     result
   end

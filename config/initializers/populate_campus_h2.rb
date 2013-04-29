@@ -75,6 +75,16 @@ module Calcentral
         "SUB_TERM_CD" VARCHAR2(1),
         "INSTRUCTOR_FUNC" VARCHAR2(1));
 
+        DROP TABLE IF EXISTS BSPACE_DEPT_VW;
+        CREATE TABLE BSPACE_DEPT_VW(
+        "DEPT_NAME" VARCHAR2(7),
+        "DEPT_DESCRIPTION" VARCHAR2(35),
+        "CHNG_DATE" TIMESTAMP,
+        "DEPT_END_TERM_YR" NUMBER(4),
+        "DEPT_END_TERM_CD" CHAR(1),
+        "DEPT_START_TERM_YR" NUMBER(4),
+        "DEPT_START_TERM_CD" CHAR(1));
+
         DROP TABLE IF EXISTS BSPACE_INSTRUCTOR_INFO_VW;
         CREATE TABLE BSPACE_INSTRUCTOR_INFO_VW(
         "INSTRUCTOR_LDAP_UID" NUMBER(10),
@@ -287,13 +297,23 @@ module Calcentral
         Insert into BSPACE_PERSON_INFO_VW (LDAP_UID,STUDENT_ID,INSTRUCTOR_FLAG,UG_GRAD_FLAG,PERSON_TYPE,EMAIL_DISCLOS_CD,FIRST_NAME,LAST_NAME,PERSON_NAME,EMAIL_ADDRESS,TELEPHONE,AFFILIATIONS) values (61889,11667051,null,null,'S','Y','Oski','Bear','Oski Bear','test-61889@berkeley.edu',null,'STUDENT-TYPE-REGISTERED');
 
         -- Class Info records
+        Insert into BSPACE_COURSE_INFO_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,DEPT_NAME,CATALOG_ID,CATALOG_PREFIX,CATALOG_ROOT,CATALOG_SUFFIX_1,CATALOG_SUFFIX_2,PRIMARY_SECONDARY_CD,SECTION_NUM,COURSE_TITLE,LOWER_RANGE_UNIT,UPPER_RANGE_UNIT,VARIABLE_UNIT_CD,FIXED_UNIT,INSTRUCTION_FORMAT,CRED_CD,ENROLL_LIMIT,CROSS_LISTED_FLAG,INSTR_FUNC,SCHEDULE_PRINT_CD,SECTION_CANCEL_FLAG,COURSE_TITLE_SHORT,CATALOG_DESCRIPTION,COURSE_OPTION,DEPT_DESCRIPTION) values (2013,'B',7309,'BIOLOGY','1A',null,1,'A',null,'P','003','General Biology Lecture',3,3,'F',0,'LEC',null,0,null,'3','C',null,'GENERAL BIOLOGY LEC','General introduction to cell structure and function, molecular and organismal genetics, animal development, form and function. Intended for biological sciences majors, but open to all qualified students.','A1','Biology');
         Insert into BSPACE_COURSE_INFO_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,DEPT_NAME,CATALOG_ID,CATALOG_PREFIX,CATALOG_ROOT,CATALOG_SUFFIX_1,CATALOG_SUFFIX_2,PRIMARY_SECONDARY_CD,SECTION_NUM,COURSE_TITLE,LOWER_RANGE_UNIT,UPPER_RANGE_UNIT,VARIABLE_UNIT_CD,FIXED_UNIT,INSTRUCTION_FORMAT,CRED_CD,ENROLL_LIMIT,CROSS_LISTED_FLAG,INSTR_FUNC,SCHEDULE_PRINT_CD,SECTION_CANCEL_FLAG,COURSE_TITLE_SHORT,CATALOG_DESCRIPTION,COURSE_OPTION,DEPT_DESCRIPTION) values (2013,'B',7366,'BIOLOGY','1A',null,1,'A',null,'S','201','General Biology Lecture',0,0,null,0,'DIS',null,28,null,'0','H',null,'GENERAL BIOLOGY LEC','General introduction to cell structure and function, molecular and organismal genetics, animal development, form and function. Intended for biological sciences majors, but open to all qualified students.','A1','Biology');
+        Insert into BSPACE_COURSE_INFO_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,DEPT_NAME,CATALOG_ID,CATALOG_PREFIX,CATALOG_ROOT,CATALOG_SUFFIX_1,CATALOG_SUFFIX_2,PRIMARY_SECONDARY_CD,SECTION_NUM,COURSE_TITLE,LOWER_RANGE_UNIT,UPPER_RANGE_UNIT,VARIABLE_UNIT_CD,FIXED_UNIT,INSTRUCTION_FORMAT,CRED_CD,ENROLL_LIMIT,CROSS_LISTED_FLAG,INSTR_FUNC,SCHEDULE_PRINT_CD,SECTION_CANCEL_FLAG,COURSE_TITLE_SHORT,CATALOG_DESCRIPTION,COURSE_OPTION,DEPT_DESCRIPTION) values (2013,'B',7372,'BIOLOGY','1A',null,1,'A',null,'S','202','General Biology Lecture',0,0,null,0,'DIS',null,28,null,'2','H',null,'GENERAL BIOLOGY LEC','General introduction to cell structure and function, molecular and organismal genetics, animal development, form and function. Intended for biological sciences majors, but open to all qualified students.','A1','Biology');
+        -- Include one canceled section
+        Insert into BSPACE_COURSE_INFO_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,DEPT_NAME,CATALOG_ID,CATALOG_PREFIX,CATALOG_ROOT,CATALOG_SUFFIX_1,CATALOG_SUFFIX_2,PRIMARY_SECONDARY_CD,SECTION_NUM,COURSE_TITLE,LOWER_RANGE_UNIT,UPPER_RANGE_UNIT,VARIABLE_UNIT_CD,FIXED_UNIT,INSTRUCTION_FORMAT,CRED_CD,ENROLL_LIMIT,CROSS_LISTED_FLAG,INSTR_FUNC,SCHEDULE_PRINT_CD,SECTION_CANCEL_FLAG,COURSE_TITLE_SHORT,CATALOG_DESCRIPTION,COURSE_OPTION,DEPT_DESCRIPTION) values (2013,'B',7312,'BIOLOGY','1A',null,1,'A',null,'S','100','General Biology Lecture',0,0,null,0,'DIS',null,0,null,'1','C','Y','GENERAL BIOLOGY LEC','General introduction to cell structure and function, molecular and organismal genetics, animal development, form and function. Intended for biological sciences majors, but open to all qualified students.','A1','Biology');
+        Insert into BSPACE_COURSE_INFO_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,DEPT_NAME,CATALOG_ID,CATALOG_PREFIX,CATALOG_ROOT,CATALOG_SUFFIX_1,CATALOG_SUFFIX_2,PRIMARY_SECONDARY_CD,SECTION_NUM,COURSE_TITLE,LOWER_RANGE_UNIT,UPPER_RANGE_UNIT,VARIABLE_UNIT_CD,FIXED_UNIT,INSTRUCTION_FORMAT,CRED_CD,ENROLL_LIMIT,CROSS_LISTED_FLAG,INSTR_FUNC,SCHEDULE_PRINT_CD,SECTION_CANCEL_FLAG,COURSE_TITLE_SHORT,CATALOG_DESCRIPTION,COURSE_OPTION,DEPT_DESCRIPTION) values (2013,'B',16171,'COG SCI','C147','C',147,null,null,'P','001','Language Disorders',3,3,'F',0,'LEC',null,7,'Y','1',null,null,'LANGUAGE DISORDERS','An introduction to experimental and theoretical research on language disorders, particularly acquired aphasia in adults. Major course themes include the relationship between normal and pathological language, and the usefulness of linguistic analysis for empirical research. Topics include phonetic, phonological, morphological, semantic, syntactic, and pragmatic aspects of language disorders in mono- and multilingual speakers of typologically diverse languages. Also listed as Linguistics C147.','A1','Cognitive Science');
 
         -- Course Instructor records
         INSERT INTO bspace_course_instructor_vw (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'B', 7366, 192517, ' ', '2', '1');
 
         -- Course Student records
-        Insert into BSPACE_CLASS_ROSTER_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,STUDENT_LDAP_UID,UG_GRAD_FLAG,ROLE_CD,UNIT,ENROLL_STATUS,PNP_FLAG,WAIT_LIST_SEQ_NUM,CREDIT_CD) values (2013, 'B', 7366, 300939,'G','1',5,'E','N ',0,'  ');
+        Insert into BSPACE_CLASS_ROSTER_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,STUDENT_LDAP_UID,UG_GRAD_FLAG,ROLE_CD,UNIT,ENROLL_STATUS,PNP_FLAG,WAIT_LIST_SEQ_NUM,CREDIT_CD) values (2013, 'B', 7309, 300939,'G','1',5,'E','N ',0,'  ');
+        Insert into BSPACE_CLASS_ROSTER_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,STUDENT_LDAP_UID,UG_GRAD_FLAG,ROLE_CD,UNIT,ENROLL_STATUS,PNP_FLAG,WAIT_LIST_SEQ_NUM,CREDIT_CD) values (2013,'B',16171,300939,'U','1',3,'E','N ',0,'  ');
+
+        -- Department records
+        Insert into BSPACE_DEPT_VW (DEPT_NAME,DEPT_DESCRIPTION,CHNG_DATE,DEPT_END_TERM_YR,DEPT_END_TERM_CD,DEPT_START_TERM_YR,DEPT_START_TERM_CD) values ('BIOLOGY','Biology',parsedatetime('23-OCT-07','dd-MMM-yy'),0,null,83,'D');
+        Insert into BSPACE_DEPT_VW (DEPT_NAME,DEPT_DESCRIPTION,CHNG_DATE,DEPT_END_TERM_YR,DEPT_END_TERM_CD,DEPT_START_TERM_YR,DEPT_START_TERM_CD) values ('PSYCH','Psychology',parsedatetime('05-JAN-12','dd-MMM-yy'),0,null,94,'D');
 
         -- Registration info
 

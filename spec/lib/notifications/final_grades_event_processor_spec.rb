@@ -24,7 +24,7 @@ describe FinalGradesEventProcessor do
             {"ldap_uid" => "904715"},
             {"ldap_uid" => "978966"},
             {"ldap_uid" => "300846"}])
-    CampusData.stub(:get_course, "73974").and_return(
+    CampusData.stub(:get_course_from_section, "73974").and_return(
         {"course_title" => "Research and Data Analysis in Psychology",
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})
@@ -75,7 +75,7 @@ describe FinalGradesEventProcessor do
     CampusData.stub(:get_enrolled_students, "73974").and_return(
         [
             {"ldap_uid" => "123456"}])
-    CampusData.stub(:get_course, "73974").and_return(
+    CampusData.stub(:get_course_from_section, "73974").and_return(
         {"course_title" => "Research and Data Analysis in Psychology",
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})
@@ -95,7 +95,7 @@ describe FinalGradesEventProcessor do
     CampusData.stub(:get_enrolled_students, "73974").and_return(
         [
             {"ldap_uid" => "123456"}])
-    CampusData.stub(:get_course, "73974").and_return(
+    CampusData.stub(:get_course_from_section, "73974").and_return(
         {"course_title" => "Research and Data Analysis in Psychology",
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})

@@ -17,7 +17,7 @@ class FinalGradesTranslator
 
     Rails.logger.debug "#{self.class.name} payload = #{payload}"
     term_cd = FinalGradesEventProcessor.lookup_term_code payload["term"]
-    course = CampusData.get_course(payload["ccn"], payload["year"], term_cd)
+    course = CampusData.get_course_from_section(payload["ccn"], payload["year"], term_cd)
 
     return false unless course && course["dept_name"] && course["catalog_id"]
 
