@@ -5,6 +5,8 @@ class MyAcademics::Requirements
   def merge(data)
     profile_proxy = BearfactsProfileProxy.new({:user_id => @uid})
     profile_feed = profile_proxy.get
+    return data if profile_feed.nil?
+
     doc = Nokogiri::XML profile_feed[:body]
 
     requirements = []
