@@ -19,6 +19,7 @@ class CampusUserCoursesProxy < BaseProxy
   # Example:
   # {
   #    "id": "COG SCI:C102:2013-B",
+  #    "course_code": "COG SCI C102",
   #    "site_url": "http://osoc.berkeley.edu/OSOC/osoc?p_term=SP&x=0&p_classif=--+Choose+a+Course+Classification+--&p_deptname=--+Choose+a+Department+Name+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&y=3&p_course=C102&p_dept=COG+SCI",
   #    "emitter": "Campus",
   #    "name": "Scientific Approaches to Consciousness",
@@ -72,6 +73,7 @@ class CampusUserCoursesProxy < BaseProxy
     else
       {
           id: course_id,
+          course_code: "#{row['dept_name']} #{row['catalog_id']}",
           site_url: course_to_url(row['term_cd'], row['dept_name'], row['catalog_id']),
           emitter: 'Campus',
           name: row['course_title'],
