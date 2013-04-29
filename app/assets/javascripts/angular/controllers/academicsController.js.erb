@@ -16,6 +16,9 @@
         $scope.exam_schedule = data.exam_schedule;
         $scope.semesters = data.semesters;
 
+        // Some users (e.g. test-xxx users) may be missing the "student" role but still need ability to view My Academics pages
+        $scope.can_view_academics = $scope.user.profile.roles.student || $scope.academics.college_and_level.standing == 'Undergraduate';
+
         // Get selected semester from URL params and extract data from semesters array
         if ($routeParams.semester_slug) {
           angular.forEach(data.semesters, function(semester) {
