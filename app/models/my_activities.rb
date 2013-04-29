@@ -129,7 +129,7 @@ class MyActivities < MyMergedModel
             source: "Bearfacts",
             source_url: "https://bearfacts.berkeley.edu/bearfacts/",
             url: "https://bearfacts.berkeley.edu/bearfacts/",
-            emitter: "Campus",
+            emitter: "Bearfacts",
             color_class: "campus-item"
         }
         activities << notification
