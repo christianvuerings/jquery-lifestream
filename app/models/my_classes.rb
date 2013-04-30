@@ -6,7 +6,9 @@ class MyClasses < MyMergedModel
     }
     response[:classes].concat(process_canvas_courses) if CanvasProxy.access_granted?(@uid)
     response[:classes].concat(process_sakai_sites) if SakaiUserSitesProxy.access_granted?(@uid)
-
+    if CampusUserCoursesProxy.access_granted?(@uid)
+      response[:classes].concat(CampusUserCoursesProxy.new({:user_id => @uid}).get_campus_courses)
+    end
     logger.debug "MyClasses get_feed is #{response.inspect}"
     response
   end
