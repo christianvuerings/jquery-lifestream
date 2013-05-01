@@ -23,21 +23,17 @@ module CalcentralLogging
   private
 
   def init_file_loggers(app_name, format)
-    logger_levels = (Log4r::LNAMES.dup - ["ALL", "OFF"]).reverse
-    loggers = []
-    while !logger_levels.blank?
-      level = logger_levels.pop
+    logger_levels = Log4r::LNAMES.dup - ["ALL", "OFF"]
+    logger_levels.map do |level|
       filename_suffix = (Rails.env == "production") ? '' : "-#{Rails.env}"
       filename_suffix += "-#{level}"
 
-      file = Log4r::DateFileOutputter.new('outputter', {
+      Log4r::DateFileOutputter.new('outputter', {
         dirname: "#{Rails.root}/log",
         filename: "#{app_name}#{filename_suffix}.log",
         formatter: format,
         level: Object.const_get("#{level}")
       })
-      loggers << file
     end
-    loggers
   end
 end
