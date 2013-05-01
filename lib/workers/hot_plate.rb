@@ -2,6 +2,10 @@ class HotPlate
 
   include Celluloid
 
+  def initialize
+    @total_warmups = 0
+  end
+
   def run
     sleep Settings.hot_plate.startup_delay
     while true do
@@ -13,7 +17,8 @@ class HotPlate
   end
 
   def ping
-    "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors"
+    UserCacheWarmer.report
+    "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors; #{@total_warmups} total warmups requested"
   end
 
   def warm
@@ -26,6 +31,7 @@ class HotPlate
       batch.each do |visit|
         Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
         Calcentral::USER_CACHE_WARMER.warm visit.uid
+        @total_warmups += 1
       end
     end
     Rails.logger.info "#{self.class.name} Warmed #{visits.size} users who have visited since cutoff interval; date #{cutoff}"
