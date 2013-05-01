@@ -2,7 +2,7 @@
   <div class="cc-widget-title">
     <h2>Up Next <a href="http://bcal.berkeley.edu" class="cc-ir cc-right cc-icon cc-icon-calendar" title="View calendar in bCal">bCal</a></h2>
   </div>
-  <div class="cc-widget-mycalendar-container">
+  <div class="cc-widget-mycalendar-container" data-cc-spinner-directive>
     <ul class="cc-widget-mycalendar-datelist cc-scroll" data-ng-class="{'cc-widget-mycalendar-containsopen': api.widget.containsOpen(items)}">
       <!-- First loop: timestamped items -->
       <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
@@ -53,8 +53,8 @@
         </div>
       </li>
     </ul>
-  </div>
-  <div data-ng-show="!items.length" class="cc-widget-text">
-    You have no events scheduled for the rest of the day.
+    <div data-ng-show="!items.length" class="cc-widget-text">
+      You have no events scheduled for the rest of the day.
+    </div>
   </div>
 </div>

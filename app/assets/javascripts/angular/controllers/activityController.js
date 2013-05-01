@@ -131,7 +131,7 @@
         return result.concat(multiElementArray).sort(sortFunction);
       };
 
-      return {
+      $scope.activities = {
         length: activities.length,
         list: threadOnSource(activities),
         sources: createSources(activities),
@@ -141,7 +141,8 @@
 
     $http.get('/api/my/activities').success(function(data) {
     //$http.get('/dummy/json/activities.json').success(function(data) {
-      $scope.activities = activitiesModel(data);
+      angular.extend($scope, data);
+      activitiesModel(data);
     });
 
   }]);
