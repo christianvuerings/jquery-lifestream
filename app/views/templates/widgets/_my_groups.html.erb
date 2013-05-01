@@ -2,27 +2,29 @@
   <div class="cc-widget-title">
     <h2>My Groups</h2>
   </div>
-  <div class="cc-widget-mygroups-myclasses-list">
-    <ul class="cc-widget-list cc-scroll">
-      <li data-ng-repeat="group in mygroups" class="cc-widget-mygroups-myclasses-list-item">
-        <div class="row">
-          <div class="large-10 small-8 columns">
-            <div
-              class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
-              data-ng-class="'cc-icon-{{group.emitter|lowercase}}'">
+  <div class="cc-widget-mygroups-container" data-cc-spinner-directive>
+    <div class="cc-widget-mygroups-myclasses-list">
+      <ul class="cc-widget-list cc-scroll">
+        <li data-ng-repeat="group in groups" class="cc-widget-mygroups-myclasses-list-item">
+          <div class="row">
+            <div class="large-10 small-8 columns">
+              <div
+                class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
+                data-ng-class="'cc-icon-{{group.emitter|lowercase}}'">
+              </div>
+              <a class="cc-ellipsis"
+                data-ng-href="{{group.site_url}}"
+                data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)" data-ng-bind="group.title"></a>
             </div>
-            <a class="cc-ellipsis"
-              data-ng-href="{{group.site_url}}"
-              data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)" data-ng-bind="group.title"></a>
+            <div class="large-2 small-4 columns cc-widget-mygroups-myclasses-emitter-column">
+              <div class="cc-emitter-square cc-emitter-{{group.color_class}}" title="{{group.emitter}} group"></div>
+            </div>
           </div>
-          <div class="large-2 small-4 columns cc-widget-mygroups-myclasses-emitter-column">
-            <div class="cc-emitter-square cc-emitter-{{group.color_class}}" title="{{group.emitter}} group"></div>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div data-ng-show="!mygroups.length" class="cc-widget-text">
-    There are currently no groups available.
+        </li>
+      </ul>
+    </div>
+    <div data-ng-show="!groups.length" class="cc-widget-text">
+      There are currently no groups available.
+    </div>
   </div>
 </div>

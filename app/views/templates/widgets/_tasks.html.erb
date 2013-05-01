@@ -12,130 +12,130 @@
         <div id="addTaskLabel" class="cc-visuallyhidden">Add a task</div>
       </button>
     </div>
-    <div class="cc-tasks-list">
-      <div class="cc-widget-body">
-        <div data-ng-include src="'templates/dashboard_task_editor.html'"></div>
+    <div class="cc-widget-body">
+      <div data-ng-include src="'templates/dashboard_task_editor.html'"></div>
+    </div>
+  </div>
+  <div class="cc-tasks-list" data-cc-spinner-directive>
+    <div data-ng-switch data-on="tasks_mode">
+
+      <div class="row cc-widget-tasks-button-top-margin">
+        <div class="large-10 large-centered columns">
+          <ul class="button-group radius even-3">
+            <li>
+              <button class="tiny button"
+                data-ng-click="switchTasksMode('scheduled')"
+                data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
+              </button>
+            </li>
+            <li>
+              <button class="tiny button"
+                data-ng-click="switchTasksMode('unscheduled')"
+                data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
+              </button>
+            </li>
+            <li>
+              <button class="tiny button"
+                data-ng-click="switchTasksMode('completed')"
+                data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div data-ng-switch data-on="tasks_mode">
 
-        <div class="row cc-widget-tasks-button-top-margin">
-          <div class="large-10 large-centered columns">
-            <ul class="button-group radius even-3">
-              <li>
-                <button class="tiny button"
-                  data-ng-click="switchTasksMode('scheduled')"
-                  data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
-                </button>
-              </li>
-              <li>
-                <button class="tiny button"
-                  data-ng-click="switchTasksMode('unscheduled')"
-                  data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
-                </button>
-              </li>
-              <li>
-                <button class="tiny button"
-                  data-ng-click="switchTasksMode('completed')"
-                  data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
-                </button>
-              </li>
-            </ul>
+      <div data-ng-switch-when="scheduled">
+        <div class="row">
+          <div class="large-8 columns small-6">
+            <span class="cc-left cc-widget-section-label cc-widget-section-label-due">Overdue</span>
+          </div>
+          <div class="large-4 columns small-6">
+            <span class="cc-right cc-widget-section-label cc-widget-section-label-due">Due</span>
           </div>
         </div>
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterOverdue)"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!filtered.length" class="cc-widget-text">
+          There are currently no {{tasks_mode}} tasks/assignments that are overdue.
+        </p>
 
-        <div data-ng-switch-when="scheduled">
-          <div class="row">
-            <div class="large-8 columns small-6">
-              <span class="cc-left cc-widget-section-label cc-widget-section-label-due">Overdue</span>
-            </div>
-            <div class="large-4 columns small-6">
-              <span class="cc-right cc-widget-section-label cc-widget-section-label-due">Due</span>
-            </div>
+        <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Today</h3>
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueToday)"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!filtered.length" class="cc-widget-text">
+          There are currently no {{tasks_mode}} tasks/assignments that are due today.
+        </p>
+
+        <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due This Week</h3>
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueThisWeek)"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!filtered.length" class="cc-widget-text">
+          There are currently no {{tasks_mode}} tasks/assignments that are due this week.
+        </p>
+
+        <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Next Week</h3>
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueNextWeek)"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!filtered.length" class="cc-widget-text">
+          There are currently no {{tasks_mode}} tasks/assignments that are due next week.
+        </p>
+      </div>
+
+      <div data-ng-switch-when="unscheduled">
+        <div class="row">
+          <div class="large-12 columns">
+            <span class="cc-left cc-widget-section-label cc-widget-section-label-due">Unscheduled</span>
           </div>
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterOverdue)"
-              data-ng-class="{'cc-widget-list-selected': task.show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!filtered.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are overdue.
-          </p>
+        </div>
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in filtered = (tasks | orderBy:'updated' | filter:filterUnScheduled)"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!filtered.length" class="cc-widget-text">
+          There are currently no {{tasks_mode}} tasks/assignments that are unscheduled.
+        </p>
+      </div>
 
-          <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Today</h3>
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueToday)"
-              data-ng-class="{'cc-widget-list-selected': task.show}">
-                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!filtered.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are due today.
-          </p>
-
-          <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due This Week</h3>
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueThisWeek)"
-              data-ng-class="{'cc-widget-list-selected': task.show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!filtered.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are due this week.
-          </p>
-
-          <h3 class="cc-widget-section-label cc-widget-tasks-section-top">Due Next Week</h3>
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in filtered = (tasks | orderBy:'due_date.epoch' | filter:filterDueNextWeek)"
-              data-ng-class="{'cc-widget-list-selected': task.show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!filtered.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are due next week.
-          </p>
+      <div data-ng-switch-when="completed">
+        <div class="row">
+          <div class="large-12 columns cc-widget-section-label-due cc-widget-section-label-completed"><span class="cc-right">Completed</span></div>
         </div>
 
-        <div data-ng-switch-when="unscheduled">
-          <div class="row">
-            <div class="large-12 columns">
-              <span class="cc-left cc-widget-section-label cc-widget-section-label-due">Unscheduled</span>
-            </div>
-          </div>
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in filtered = (tasks | orderBy:'updated' | filter:filterUnScheduled)"
-              data-ng-class="{'cc-widget-list-selected': task.show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!filtered.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are unscheduled.
-          </p>
-        </div>
-
-        <div data-ng-switch-when="completed">
-          <div class="row">
-            <div class="large-12 columns cc-widget-section-label-due cc-widget-section-label-completed"><span class="cc-right">Completed</span></div>
-          </div>
-
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in filtered = (tasks | orderBy:'completed_date.epoch':true | filter:{status:'completed'})"
-              data-ng-class="{'cc-widget-list-selected': task.show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!filtered.length" class="cc-widget-text">
-            There are currently no completed tasks/assignments.
-          </p>
-          <div class="row cc-widget-clear-completed" data-ng-show="filtered.length">
-            <div class="large-12 columns"><button class="button cc-right radius small" data-ng-click="clearCompletedTasks()">Delete completed tasks</button></div>
-          </div>
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in filtered = (tasks | orderBy:'completed_date.epoch':true | filter:{status:'completed'})"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!filtered.length" class="cc-widget-text">
+          There are currently no completed tasks/assignments.
+        </p>
+        <div class="row cc-widget-clear-completed" data-ng-show="filtered.length">
+          <div class="large-12 columns"><button class="button cc-right radius small" data-ng-click="clearCompletedTasks()">Delete completed tasks</button></div>
         </div>
       </div>
     </div>

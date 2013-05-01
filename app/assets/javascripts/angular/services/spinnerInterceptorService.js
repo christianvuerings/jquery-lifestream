@@ -2,15 +2,14 @@
 
   'use strict';
 
-  angular.module('calcentral.services').factory('httpInterceptorService', ['$q' , 'errorService', function($q, errorService) {
-
-    // Basic idea from http://stackoverflow.com/questions/11971213
+  angular.module('calcentral.services').factory('spinnerInterceptorService', ['$q' , function($q) {
 
     /**
      * Success function, will happen when the request was successful
      * @param {Object} response JSON object containing response params
      */
     var success = function(response) {
+      response.data._is_loading = false;
       return response;
     };
 
@@ -19,13 +18,10 @@
      * @param {Object} response JSON object containing response params
      */
     var error = function(response) {
-      var status = response.status;
-
-      if (status >= 400) {
-        errorService.send('httpInterceptorService - ' + response.status + ' - ' + response.config.url);
-        return;
-      }
-      // otherwise
+      // TODO we'll need to change this so we can show a valuable
+      // message to the user when an error occurs
+      // We can do this as soon as we get good error responses back from the server.
+      response.data._is_loading = false;
       return $q.reject(response);
 
     };

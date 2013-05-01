@@ -11,7 +11,7 @@
 
     $scope.getTasks = function() {
       return $http.get('/api/my/tasks').success(function(data) {
-        $scope.tasks = data.tasks;
+        angular.extend($scope, data);
       });
     };
     $scope.getTasks();
