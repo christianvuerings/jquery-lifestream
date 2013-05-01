@@ -24,6 +24,7 @@ end
 module Calcentral
   class Application < Rails::Application
     initializer :amend_yaml_config, :before => :load_environment_config do
+      CalcentralLogging.init_logging
       amended_config = CalcentralConfig.load_settings
       Kernel.const_set(:Settings, amended_config)
     end
