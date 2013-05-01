@@ -10,27 +10,7 @@ module CalcentralConfig
   end
 
   def load_settings
-    init_logging
     deep_open_struct(load_yaml_settings)
-  end
-
-  # We want to configure logging early, but not before Rake tasks start.
-  def init_logging
-    require 'log4r'
-    require 'log4r/outputter/datefileoutputter'
-    include Log4r
-    app_name = ENV["APP_NAME"] || "calcentral"
-    format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
-    Rails.logger = Log4r::Logger.new(app_name)
-    filename_suffix = (Rails.env == "production") ? '' : "-#{Rails.env}"
-    stdout = Outputter.stdout
-    stdout.formatter = format
-    file = Log4r::DateFileOutputter.new('outputter', {
-        dirname: "#{Rails.root}/log",
-        filename: "#{app_name}#{filename_suffix}.log"
-    })
-    file.formatter = format
-    Rails.logger.outputters = [ stdout, file ]
   end
 
   def deep_open_struct(hash_recursive)
