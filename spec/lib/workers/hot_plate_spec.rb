@@ -9,9 +9,6 @@ describe "HotPlate" do
     warmer = UserCacheWarmer.new
     warmer.stub(:warm).and_return(nil)
     Calcentral::USER_CACHE_WARMER = warmer
-    unless in_memory_database?
-      warmer.should_receive(:warm).exactly(2).times
-    end
 
     plate = HotPlate.new
     plate.warm
