@@ -9,7 +9,7 @@
       <h1>My Academics</h1>
     </div>
 
-    <div class="large-6 columns cc-academics-records">
+    <div class="large-6 columns cc-academics-page-left">
       <h2>Records</h2>
 
       <h3>College and Level</h3>
@@ -46,29 +46,26 @@
       <h3>Status and Blocks</h3>
 
       <h4>Status Type</h4>
-
       <div class="row cc-academics-column-labels">
         <div class="large-4 small-4 columns">Type</div>
-        <div class="large-4 small-4 columns">Status</div>
-        <div class="large-4 small-4 columns">Do Next</div>
+        <div class="large-4 small-4 columns end">Status</div>
       </div>
       <div class="row">
         <div class="large-4 small-4 columns">Registration</div>
-        <div class="large-4 small-4 columns">
-          <i
-            class="cc-icon"
+        <div class="large-4 small-4 columns end">
+          <i class="cc-icon"
             data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
           </i>
         </div>
-        <div class="large-4 small-4 columns">NEED DATA</div>
       </div>
       <div class="row">
         <div class="large-4 small-4 columns">California Residency</div>
-        <div class="large-4 small-4 columns">
-          <i class="cc-icon icon-stop"></i> Non-Resident
+        <div class="large-4 small-4 columns end">
+          <i class="cc-icon" data-ng-class="{'icon-ok-sign':(user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(user.profile.student_info.california_residency=='needsAction')}"></i>
+          <span data-ng-bind="user.profile.student_info.california_residency.summary"></span>
         </div>
-        <div class="large-4 small-4 columns"><a href="https://auth.berkeley.edu/cas/login?method=POST&service=https://bearfacts.berkeley.edu/bearfacts/student/slr.do?bfaction=displayIntro">Update SLR</a></div>
       </div>
+
       <h4>Active Blocks</h4>
       <div class="row cc-academics-column-labels">
         <div class="large-4 small-4 columns">Type</div>
@@ -143,7 +140,7 @@
         </div>
       </div>
     </div>
-    <div class="large-6 columns cc-academics-semesters">
+    <div class="large-6 columns cc-academics-page-right">
       <div class="row">
         <div class="large-6 small-6 columns">
           <h2 class="cc-left">Current Semester</h2>
@@ -156,7 +153,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="large-4 small-8 columns end" data-ng-repeat="semester in semesters">
+        <div class="large-6 small-6 columns end" data-ng-repeat="semester in semesters">
           <div
             class="panel cc-academics-calendar"
             data-ng-class="{'cc-academics-current-semester':(semester.is_current==true)}">
