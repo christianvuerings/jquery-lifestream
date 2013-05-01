@@ -2,12 +2,27 @@ require 'celluloid'
 
 class UserCacheWarmer
 
+  @@pending = 0
+
   def initialize
     @pool = WarmingWorker.pool(size: determine_pool_size)
   end
 
   def warm(uid)
     @pool.warm!(uid) # bang suffix means call the warm method asynchronously
+    self.class.increment
+  end
+
+  def self.report
+    Rails.logger.info "UserCacheWarmer #{@@pending} warmups pending"
+  end
+
+  def self.increment
+    @@pending += 1
+  end
+
+  def self.decrement
+    @@pending -= 1
   end
 
   class WarmingWorker
@@ -35,6 +50,7 @@ class UserCacheWarmer
       ensure
         Rails.logger.debug "Clearing connections for thread and other dead threads after cache warming: #{self.object_id}"
         ActiveRecord::Base.clear_active_connections!
+        UserCacheWarmer.decrement
       end
     end
   end

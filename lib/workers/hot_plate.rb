@@ -6,6 +6,7 @@ class HotPlate
     sleep Settings.hot_plate.startup_delay
     while true do
       Rails.logger.debug "#{self.class.name} waking up to warm user caches"
+      UserCacheWarmer.report
       warm
       sleep Settings.hot_plate.warmup_interval
     end
