@@ -1,8 +1,6 @@
 class HotPlate
 
-  unless in_memory_database?
-    include Celluloid
-  end
+  include Celluloid
 
   def run
     sleep Settings.hot_plate.startup_delay
