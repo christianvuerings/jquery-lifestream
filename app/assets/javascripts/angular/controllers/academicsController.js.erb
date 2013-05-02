@@ -10,7 +10,6 @@
     apiService.util.setTitle('My Academics');
 
     $scope.getAcademics = function() {
-      // return $http.get('/dummy/json/academics.json').success(function(data) {
       return $http.get('/api/my/academics').success(function(data) {
         $scope.academics = data;
         $scope.exam_schedule = data.exam_schedule;
