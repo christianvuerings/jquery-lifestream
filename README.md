@@ -117,6 +117,13 @@ To run the tests headless on firefox run `rake jasmine:ci`.
 To view results of front-end tests, run `rake jasmine` in a separate terminal,
 then visit [localhost:8888](http://localhost:8888).
 
+## Role-Aware Testing
+
+Some features of CalCentral are accessible only to users with particular roles, such as "student."
+These features may be invisible when logged in as yourself. In particular:
+
+- My Academics will only appear in the navigation if logged in as a student. However, the "Oski Bear" test student does not fake data loaded on dev and QA. To test My Academics, log in as user  test-212385 or test-212381 (ask a developer for the passwords to these if you need them). Once logged in as a test student, append "/academics" to the URL to access My Academics (this will change when CLC-1755 is resolved).
+
 ## Debugging
 
 ### Emulating production mode locally
