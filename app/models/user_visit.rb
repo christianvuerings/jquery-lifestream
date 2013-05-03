@@ -12,9 +12,11 @@ class UserVisit < ActiveRecord::Base
   self.primary_key = :uid
 
   def self.record(uid)
-    visit = self.where(uid: uid).first_or_initialize
-    visit.last_visit_at = DateTime.now
-    visit.save
+    use_pooled_connection {
+      visit = self.where(uid: uid).first_or_initialize
+      visit.last_visit_at = DateTime.now
+      visit.save
+    }
   end
 
 end

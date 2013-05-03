@@ -2,8 +2,6 @@ require 'celluloid'
 
 class UserCacheWarmer
 
-  @@pending = 0
-
   def initialize
     @pool = WarmingWorker.pool(size: determine_pool_size)
   end
@@ -14,15 +12,21 @@ class UserCacheWarmer
   end
 
   def self.report
-    Rails.logger.info "UserCacheWarmer #{@@pending} warmups pending"
+    Rails.logger.info "UserCacheWarmer #{self.pending} warmups pending"
+  end
+
+  def self.pending
+    @pending ||= 0
   end
 
   def self.increment
-    @@pending += 1
+    @pending ||= 0
+    @pending += 1
   end
 
   def self.decrement
-    @@pending -= 1
+    @pending ||= 0
+    @pending -= 1
   end
 
   class WarmingWorker
