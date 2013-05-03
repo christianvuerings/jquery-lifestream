@@ -16,8 +16,8 @@
     height: 100px;
     width: 275px;
     p {
-      font-weight: bold;
       font-size: 13px;
+      font-weight: bold;
     }
   }
   .cc-styles-infopanel {
@@ -37,10 +37,10 @@
     margin-top: 40px;
   }
   .cc-styles-sub-section {
-    color: gray;
+    color: $cc-medium-grey;
     font-size: 20px;
-    margin-top: 20px;
     margin-left: 15px;
+    margin-top: 20px;
   }
   .cc-styles-toplink {
     font-weight: bold;

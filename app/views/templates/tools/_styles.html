@@ -15,52 +15,51 @@
       </p>
 
       <ul class="menu">
-        <li><a href="#colors">Colors</a></li>
-        <li><a href="#text">Text</a></li>
-        <li><a href="#tables">Tables</a></li>
-        <li><a href="#buttons">Buttons</a></li>
-        <li><a href="#forms">Forms</a></li>
-        <li><a href="#panels">Panels</a></li>
+        <li><a data-ng-href="#colors">Colors</a></li>
+        <li><a data-ng-href="#text">Text</a></li>
+        <li><a data-ng-href="#tables">Tables</a></li>
+        <li><a data-ng-href="#buttons">Buttons</a></li>
+        <li><a data-ng-href="#forms">Forms</a></li>
+        <li><a data-ng-href="#panels">Panels</a></li>
       </ul>
 
-      <a name="colors"></a>
-      <h2 class="cc-styles-section">Colors</h2>
+      <h2 class="cc-styles-section" id="colors">Colors</h2>
       <p>Colors defined as variables in calcentral.scss. This grid does not necessarily represent all colors in use on the site (feel free to suggest that some colors be added to this list).</p>
 
       <div class="row">
         <div class="large-12 columns">
-            <div
-              data-ng-repeat="color in colors"
-              class="panel cc-styles-color-panel"
-              data-ng-class="color"
-              data-cc-get-hex-value="{{color}}">
-            </div>
+          <div
+            data-ng-repeat="color in colors"
+            class="panel cc-styles-color-panel"
+            data-ng-class="color"
+            data-cc-get-hex-value="{{color}}">
+          </div>
         </div>
       </div>
 
       <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
-      <a name="text"></a>
-      <h2 class="cc-styles-section">Text</h2>
+      <h2 class="cc-styles-section" id="text">Text</h2>
       <p>See <a href="http://foundation.zurb.com/docs/components/type.html">Foundation typography</a> for more.</p>
 
       <div class="row">
         <h3 class="cc-styles-sub-section">Paragraphs</h3>
         <div class="large-12 columns">
           <p data-cc-get-text-properties>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
         </div>
       </div>
 
       <div class="row">
         <h3 class="cc-styles-sub-section">Blockquotes</h3>
         <div class="large-12 columns">
-            <blockquote data-cc-get-text-properties>
+          <blockquote data-cc-get-text-properties>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -107,8 +106,7 @@
 
       <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
-      <a name="tables"></a>
-      <h2 class="cc-styles-section">Tables</h2>
+      <h2 class="cc-styles-section" id="tables">Tables</h2>
       <p>Row striping is automatic.</p>
 
       <div class="row">
@@ -132,8 +130,7 @@
 
       <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
-      <a name="buttons"></a>
-      <h2 class="cc-styles-section">Buttons</h2>
+      <h2 class="cc-styles-section" id="buttons">Buttons</h2>
       <p>All button classes can be mixed as needed</p>
       <div class="row cc-styles-button-demo">
         <div class="small-6 large-6 columns">
@@ -181,26 +178,25 @@
         <div class="small-6 large-6 columns">
           <p>CalCentral Button Group</p>
           <ul class="button-group radius even-3">
-              <li>
-                <button class="tiny button selected" data-ng-click="switchTasksMode('scheduled')" data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
-                </button>
-              </li>
-              <li>
-                <button class="tiny button secondary" data-ng-click="switchTasksMode('unscheduled')" data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
-                </button>
-              </li>
-              <li>
-                <button class="tiny button secondary" data-ng-click="switchTasksMode('completed')" data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
-                </button>
-              </li>
-            </ul>
+            <li>
+              <button class="tiny button selected" data-ng-click="switchTasksMode('scheduled')" data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
+              </button>
+            </li>
+            <li>
+              <button class="tiny button secondary" data-ng-click="switchTasksMode('unscheduled')" data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
+              </button>
+            </li>
+            <li>
+              <button class="tiny button secondary" data-ng-click="switchTasksMode('completed')" data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
+              </button>
+            </li>
+          </ul>
         </div>
       </div>
 
       <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
-      <a name="forms"></a>
-      <h2 class="cc-styles-section">Forms</h2>
+      <h2 class="cc-styles-section" id="forms">Forms</h2>
 
       <form>
         <fieldset>
@@ -265,65 +261,12 @@
         </fieldset>
       </form>
 
-      <form class="cc-widget-tasks-form ng-scope ng-dirty ng-valid ng-valid-required" name="cc_widget_tasks_form">
-        <fieldset>
-          <legend>With CalCentral overrides</legend>
-          <div class="row">
-            <div class="large-3 small-3 columns">
-              <label for="cc-widget-tasks-addtask-title-"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
-            </div>
-            <div class="large-9 small-9 columns">
-              <input data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title-" type="text" placeholder="Enter your task title here" required="" aria-required="true" class="ng-dirty ng-valid ng-valid-required">
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-3 small-3 columns">
-              <label for="cc-widget-tasks-addtask-date-">Due:</label>
-            </div>
-            <div class="large-9 small-9 columns cc-widget-tasks-date-input">
-              <input type="text" data-ng-model="add_edit_task.due_date" name="add_task_due_date" id="cc-widget-tasks-addtask-date-" placeholder="mm/dd/yyyy" data-cc-date-validator-directive="" data-cc-datepicker-directive="" class="ng-pristine ng-valid">
-              <p class="cc-alert cc-alert-text" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccDateValidator" style="display: none;">
-                Please use mm/dd/yyyy date format
-              </p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-3 small-3 columns">
-              <label for="cc-widget-tasks-addtask-note-">Notes:</label>
-            </div>
-            <div class="large-9 small-9 columns">
-              <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-" rows="2" class="ng-pristine ng-valid"></textarea>
-            </div>
-          </div>
-          <div class="row" data-ng-show="!editorEnabled &amp;&amp; task_adder_is_processing" style="display: none;">
-            <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
-              Task is being added...
-            </div>
-          </div>
-          <div class="row" data-ng-show="editorEnabled &amp;&amp; task.editor_is_processing" style="display: none;">
-            <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
-              Task is being updated...
-            </div>
-          </div>
-          <div class="row" data-ng-show="!task_adder_is_processing || !task.editor_is_processing" style="">
-            <div class="large-9 large-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
-              <button type="submit" data-ng-disabled="cc_widget_tasks_form.$invalid || task_adder_is_processing" data-ng-class="{'cc-button-submit-enabled':(cc_widget_tasks_form.$valid), 'cc-button-submit-disabled':(cc_widget_tasks_form.$invalid)}" class="cc-button-submit-enabled">
-                  <span data-ng-show="!editorEnabled" style="">Add Task</span>
-                  <span data-ng-show="editorEnabled" style="display: none;">Save</span>
-              </button>
-              <button class="cc-button-reset" type="reset" data-ng-show="!editorEnabled" data-ng-click="toggleAddTask()" style="">Cancel
-              </button>
-              <button class="cc-button-reset" type="button" data-ng-show="editorEnabled" data-ng-click="disableEditor()" style="display: none;">Cancel
-              </button>
-            </div>
-          </div>
-        </fieldset>
-      </form>
+      <!-- Re-use existing task editor form by initializing with show_add_task -->
+      <div data-ng-init="show_add_task=true" data-ng-include src="'templates/dashboard_task_editor.html'"></div>
 
       <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
-      <a name="panels"></a>
-      <h2 class="cc-styles-section">Panels</h2>
+      <h2 class="cc-styles-section" id="panels">Panels</h2>
       <p>Panels are simple colored rectangles in Foundation.</p>
 
         <div class="row">
