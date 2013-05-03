@@ -9,7 +9,11 @@
      * @param {Object} response JSON object containing response params
      */
     var success = function(response) {
-      response.data._is_loading = false;
+
+      // The data will be a string when it's a template that has been requested.
+      if (angular.isObject(response.data)) {
+        response.data._is_loading = false;
+      }
       return response;
     };
 
@@ -18,10 +22,13 @@
      * @param {Object} response JSON object containing response params
      */
     var error = function(response) {
+
       // TODO we'll need to change this so we can show a valuable
       // message to the user when an error occurs
       // We can do this as soon as we get good error responses back from the server.
-      response.data._is_loading = false;
+      if (angular.isObject(response.data)) {
+        response.data._is_loading = false;
+      }
       return $q.reject(response);
 
     };
