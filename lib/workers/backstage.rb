@@ -20,13 +20,13 @@ class Backstage
 
   def initialize
     Celluloid.logger = Rails.logger
-    # Once we have more workers, we'll probably use something like a supervision group to manage them
-    # in a consistent fashion. With only one worker, there's not enough to generalize from.
-    @worker = JmsWorker.new
+    @jms_worker = JmsWorker.new
+    @hot_plate_worker = HotPlate.new
   end
 
   def run
-    @worker.run!
+    @jms_worker.run!
+    @hot_plate_worker.run!
     until !!@stop
       sleep(30)
     end
@@ -38,13 +38,17 @@ class Backstage
   end
 
   def stats
-    @worker.ping
+    stats = []
+    stats << @jms_worker.ping
+    stats << @hot_plate_worker.ping
+    stats
   end
 
   def stop
     unless !!@stop
       @stop = true
-      @worker.terminate
+      @jms_worker.terminate
+      @hot_plate_worker.terminate
     end
   end
 

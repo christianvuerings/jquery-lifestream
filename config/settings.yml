@@ -101,7 +101,7 @@ cache:
   maximum_expires_in: <%= 48.hours %>
   race_condition_ttl: <%= 10.seconds %>
   expiration:
-    default: <%= 5.minutes %>
+    default: <%= 20.minutes %>
     BearfactsRegblocksProxy: <%= 24.hours %>
     BlogFeed: <%= 1.hour %>
     CalLinkMembershipsProxy: <%= 24.hours %>
@@ -111,8 +111,6 @@ cache:
     CanvasCoursesProxy: <%= 8.hours %>
     CanvasGroupsProxy: <%= 8.hours %>
     CanvasTodoProxy: <%= 1.hour %>
-    CanvasUserActivityProxy: <%= 10.minutes %>
-    CanvasUserActivityProcessor: <%= 10.minutes %>
     CanvasUserProfileProxy: <%= 1.hour %>
     GoogleDriveListProxy: <%= 1.hour %>
     GoogleEventsListProxy: <%= 1.hour %>
@@ -142,6 +140,11 @@ ist_jms:
 developer_auth:
   enabled: false
   password: topsecret!
+
+hot_plate:
+  startup_delay: <%= 15.seconds %>
+  warmup_interval: <%= 10.minutes %>
+  last_visit_cutoff: <%= 30.days %>
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:

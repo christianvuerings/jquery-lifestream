@@ -54,7 +54,7 @@ class JmsWorker
   end
 
   def ping
-    msg = "#{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors"
+    msg = "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors"
     msg << "; #{@jms.count} listened messages" if @jms
     msg
   end

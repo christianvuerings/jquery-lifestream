@@ -3,6 +3,7 @@ class UserApiController < ApplicationController
   def mystatus
     logger.debug "mystatus for uid '#{session[:user_id]}'"
     if session[:user_id]
+      UserVisit.record session[:user_id]
       user_data = UserApi.new(session[:user_id]).get_feed
       render :json => {
           :is_logged_in => true,
