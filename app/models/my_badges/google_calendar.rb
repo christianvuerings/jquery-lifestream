@@ -49,6 +49,7 @@ class MyBadges::GoogleCalendar
     end
 
     # Resort the top 5 items by modified date, descending
+    modified_entries[:items].sort!{|a,b| b[:modified_time][:epoch] <=> a[:modified_time][:epoch]}
     modified_entries
   end
 
