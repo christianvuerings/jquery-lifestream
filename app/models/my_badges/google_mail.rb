@@ -105,13 +105,13 @@ class MyBadges::GoogleMail
 
   def get_node_value(key, nodeset, optional = false)
     # TODO: should tidy this up...
-    result = nodeset.search(key)
+    result = nodeset.at_css(key)
     if result.nil? && !optional
       raise ArgumentError "unmatched key: #{key} on nodeset: #{nodeset}"
     end
 
-    if result.size == 1
-      result.first.content
+    if !result.nil? && !result.content.nil?
+      result.content
     elsif !optional
       raise ArgumentError "non-leaf node on key: #{key} value: #{result}"
     end
