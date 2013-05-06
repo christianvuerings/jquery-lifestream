@@ -1,0 +1,19 @@
+<script type="text/ng-template" id="templates/tools/index.html">
+
+  <div data-ng-controller="ToolsController" data-ng-show="user.profile.roles.staff">
+    <div class="large-12 columns cc-styles-reference">
+      <h1>CalCentral Admin Tools</h1>
+
+      <p>
+        CalCentral Admin Tools are visible only on servers running in development mode (localhost and dev),
+        and are accessible to staff only.
+      </p>
+
+      <ul>
+        <li><a href="/tools/styles">Live Style Guide</a></li>
+      </ul>
+
+    </div>
+  </div>
+</script>
+

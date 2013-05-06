@@ -1,0 +1,44 @@
+<% if Rails.env == 'development' %>
+(function(calcentral) {
+  'use strict';
+
+  /**
+   * Styles controller
+   */
+  calcentral.controller('StylesController', ['$scope', '$location', '$anchorScroll', function($scope, $location, $anchorScroll) {
+
+    // Until someone can think of a better way, we must copy all SASS color vars here manually
+    $scope.colors = [
+      'cc-action-button-color',
+      'cc-alert-color',
+      'cc-border-color',
+      'cc-button-color',
+      'cc-column-border-color',
+      'cc-dark-grey',
+      'cc-launcher-border-color',
+      'cc-light-grey',
+      'cc-light-medium-grey',
+      'cc-list-border-color',
+      'cc-main-background-color',
+      'cc-main-header-border-color',
+      'cc-medium-grey',
+      'cc-nav-color',
+      'cc-placeholder-color',
+      'cc-shadow-color',
+      'cc-super-light-grey',
+      'cc-widget-highlight-background-color',
+      'cc-widget-hover-background-color',
+      'cc-widget-more-background-color',
+      'cc-widget-section-label-color'
+    ];
+
+    // Handle in-page links, via http://stackoverflow.com/a/14717011/8438
+    $scope.scrollTo = function(id) {
+      $location.hash(id);
+      $anchorScroll();
+    }
+
+  }]);
+
+})(window.calcentral);
+<% end %>

@@ -1,0 +1,289 @@
+<script type="text/ng-template" id="templates/tools/styles.html">
+
+  <div data-ng-controller="StylesController" data-ng-show="user.profile.roles.staff">
+    <div class="large-12 columns cc-styles-reference">
+      <h1 id="top">CalCentral Styles Live Reference</h1>
+
+      <p>
+        This page demonstrates all UI widgets and elements currently in use on CalCentral (plus some that are currently unused). Foundation styles are inherited from the currently installed version of Foundation, and overriden in places by CalCentral customizations. Foundation <a href="http://foundation.zurb.com/docs/">includes</a> more UI elements than are represented here.
+      </p>
+      <p>
+        The purpose of this style guide is both prescriptive and descriptive, i.e. it shows what comes with Foundation
+        (whether we&apos;re currently using it or not), and it demonstrates our significant overrides.
+        In other words, it documents both what we <em>are</em> using and what we <strong>can</strong> use.
+      </p>
+
+      <ul class="menu">
+        <li><a data-ng-click="scrollTo('colors')">Colors</a></li>
+        <li><a data-ng-click="scrollTo('text')">Text</a></li>
+        <li><a data-ng-click="scrollTo('tables')">Tables</a></li>
+        <li><a data-ng-click="scrollTo('buttons')">Buttons</a></li>
+        <li><a data-ng-click="scrollTo('forms')">Forms</a></li>
+        <li><a data-ng-click="scrollTo('panels')">Panels</a></li>
+      </ul>
+
+      <h2 class="cc-styles-section" id="colors">Colors</h2>
+      <p>Colors defined as variables in calcentral.scss. This grid does not necessarily represent all colors in use on the site (feel free to suggest that some colors be added to this list).</p>
+
+      <div class="row">
+        <div class="large-12 columns">
+          <div
+            data-ng-repeat="color in colors"
+            class="panel cc-styles-color-panel cc-left"
+            data-ng-class="color"
+            data-cc-get-hex-value="{{color}}">
+          </div>
+        </div>
+      </div>
+
+      <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
+
+      <h2 class="cc-styles-section" id="text">Text</h2>
+      <p>See <a href="http://foundation.zurb.com/docs/components/type.html">Foundation typography</a> for more.</p>
+
+      <div class="row">
+        <h3 class="cc-styles-sub-section">Paragraphs</h3>
+        <div class="large-12 columns">
+          <p data-cc-get-text-properties>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <h3 class="cc-styles-sub-section">Blockquotes</h3>
+        <div class="large-12 columns">
+          <blockquote data-cc-get-text-properties>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="row">
+        <h3 class="cc-styles-sub-section">Headings</h3>
+        <div class="large-12 columns">
+          <h1 data-cc-get-text-properties>h1: Grumpy wizards make toxic brew for the evil Queen and Jack.</h1>
+          <h2 data-cc-get-text-properties>h2: Grumpy wizards make toxic brew for the evil Queen and Jack.</h2>
+          <h3 data-cc-get-text-properties>h3: Grumpy wizards make toxic brew for the evil Queen and Jack.</h3>
+          <h4 data-cc-get-text-properties>h4: Grumpy wizards make toxic brew for the evil Queen and Jack.</h4>
+          <h5 data-cc-get-text-properties>h5: Grumpy wizards make toxic brew for the evil Queen and Jack.</h5>
+          <h6 data-cc-get-text-properties>h6: Grumpy wizards make toxic brew for the evil Queen and Jack.</h6>
+        </div>
+      </div>
+
+      <div class="row">
+        <h3 class="cc-styles-sub-section">Lists</h3>
+
+        <div class="large-6 columns">
+          <ul data-cc-get-text-properties>
+            <li>This is a test of the emergency broadcast system</li>
+            <li>If this had been a real emergency</li>
+            <li>you would have been instructed where</li>
+            <li>to turn in your area</li>
+          </ul>
+        </div>
+
+        <div class="large-6 columns">
+          <ol data-cc-get-text-properties>
+            <li>This is a test of the emergency broadcast system</li>
+            <li>If this had been a real emergency</li>
+            <li>you would have been instructed where</li>
+            <li>to turn in your area</li>
+          </ol>
+        </div>
+      </div>
+
+      <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
+
+      <h2 class="cc-styles-section" id="tables">Tables</h2>
+      <p>Row striping is automatic.</p>
+
+      <div class="row">
+        <div class="large-12 columns">
+          <table>
+            <tr>
+              <th>One</th><th>Two</th><th>Three</th><th>Four</th>
+            </tr>
+            <tr>
+              <td>Red</td><td>Yellow</td><td>Green</td><td>Blue</td>
+            </tr>
+            <tr>
+              <td>Beige</td><td>Turq</td><td>Orange</td><td>Indigo</td>
+            </tr>
+            <tr>
+              <td>Black</td><td>White</td><td>Mauve</td><td>Puce</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
+
+      <h2 class="cc-styles-section" id="buttons">Buttons</h2>
+      <p>All button classes can be mixed as needed</p>
+      <div class="row cc-styles-button-demo">
+        <div class="small-6 large-6 columns">
+          <p>Size Classes</p>
+          <a href="#" class="large button">Large Button</a>
+          <a href="#" class="button">Default Button</a>
+          <a href="#" class="small button">Small Button</a>
+          <a href="#" class="tiny button">Tiny Button</a>
+        </div>
+        <div class="small-6 large-6 columns">
+          <p>Color Classes</p>
+          <a href="#" class="button secondary">Secondary Button</a>
+          <a href="#" class="button success">Success Button</a>
+          <a href="#" class="button alert">Alert Button</a>
+        </div>
+      </div>
+
+      <div class="row cc-styles-button-demo">
+        <div class="small-6 large-6 columns">
+          <p>Radius Classes</p>
+          <a href="#" class="button radius">Radius Button</a>
+          <a href="#" class="button round">Round Button</a>
+        </div>
+        <div class="small-6 large-6 columns">
+          <p>Disabled Classes</p>
+          <a href="#" class="button disabled">Disabled Button</a>
+          <a href="#" class="button round disabled">Round Disabled Button</a>
+        </div>
+      </div>
+
+      <div class="row cc-styles-button-demo">
+        <div class="small-6 large-6 columns">
+          <p>CalCentral Overrides</p>
+          <a href="#" class="button radius medium success">Radius Button Medium Success</a>
+          <a href="#" class="button radius medium">Radius Button Medium</a>
+        </div>
+        <div class="small-6 large-6 columns">
+          <p>CalCentral Overrides</p>
+          <button type="submit" class="cc-button-submit-disabled">cc-button-submit-disabled</button>
+          <button type="submit" class="cc-button-submit-enabled">cc-button-submit-enabled</button>
+        </div>
+      </div>
+
+      <div class="row cc-styles-button-demo">
+        <div class="small-6 large-6 columns">
+          <p>CalCentral Button Group</p>
+          <ul class="button-group radius even-3">
+            <li>
+              <button class="tiny button selected" data-ng-click="switchTasksMode('scheduled')" data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
+              </button>
+            </li>
+            <li>
+              <button class="tiny button secondary" data-ng-click="switchTasksMode('unscheduled')" data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
+              </button>
+            </li>
+            <li>
+              <button class="tiny button secondary" data-ng-click="switchTasksMode('completed')" data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
+
+      <h2 class="cc-styles-section" id="forms">Forms</h2>
+
+      <form>
+        <fieldset>
+          <legend>Text inputs in a grid</legend>
+
+          <div class="row">
+            <div class="large-12 columns">
+              <label>Input Label</label>
+              <input type="text" placeholder="large-12.columns">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="large-4 columns">
+              <label>Input Label</label>
+              <input type="text" placeholder="large-4.columns">
+            </div>
+            <div class="large-4 columns">
+              <label>Input Label</label>
+              <input type="text" placeholder="large-4.columns">
+            </div>
+            <div class="large-4 columns">
+              <div class="row collapse">
+                <label>Input Label</label>
+                <div class="small-9 columns">
+                  <input type="text" placeholder="small-9.columns">
+                </div>
+                <div class="small-3 columns">
+                  <span class="postfix">.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="large-12 columns">
+              <label>Textarea Label</label>
+              <textarea placeholder="small-12.columns"></textarea>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+
+      <form>
+        <fieldset>
+          <legend>Foundation default error states</legend>
+          <div class="row">
+            <div class="large-6 columns">
+              <label class="error">Error</label>
+              <input type="text" class="error" />
+              <small class="error">Invalid entry</small>
+            </div>
+            <div class="large-6 columns error">
+              <label>Another Error</label>
+              <input type="text" />
+              <small>Invalid entry</small>
+            </div>
+          </div>
+          <textarea class="error" placeholder="Message..."></textarea>
+          <small class="error">Invalid entry</small>
+        </fieldset>
+      </form>
+
+      <!-- Re-use existing task editor form by initializing with show_add_task -->
+      <div data-ng-init="show_add_task=true" data-ng-include src="'templates/dashboard_task_editor.html'"></div>
+
+      <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
+
+      <h2 class="cc-styles-section" id="panels">Panels</h2>
+      <p>Panels are simple colored rectangles in Foundation.</p>
+
+        <div class="row">
+          <div class="large-6 columns">
+            <div class="panel">
+              <h5>This is a regular panel.</h5>
+              <p>It has an easy to override visual style, and is appropriately subdued.</p>
+            </div>
+          </div>
+          <div class="large-6 columns">
+            <div class="panel callout radius">
+              <h5>This is a callout panel.</h5>
+              <p>A little ostentatious, but useful for important content.</p>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</script>
+
