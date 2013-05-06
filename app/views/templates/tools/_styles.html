@@ -1,9 +1,8 @@
 <script type="text/ng-template" id="templates/tools/styles.html">
 
   <div data-ng-controller="StylesController" data-ng-show="user.profile.roles.staff">
-    <a name="top"></a>
     <div class="large-12 columns cc-styles-reference">
-      <h1>CalCentral Styles Live Reference</h1>
+      <h1 id="top">CalCentral Styles Live Reference</h1>
 
       <p>
         This page demonstrates all UI widgets and elements currently in use on CalCentral (plus some that are currently unused). Foundation styles are inherited from the currently installed version of Foundation, and overriden in places by CalCentral customizations. Foundation <a href="http://foundation.zurb.com/docs/">includes</a> more UI elements than are represented here.
@@ -15,12 +14,12 @@
       </p>
 
       <ul class="menu">
-        <li><a data-ng-href="#colors">Colors</a></li>
-        <li><a data-ng-href="#text">Text</a></li>
-        <li><a data-ng-href="#tables">Tables</a></li>
-        <li><a data-ng-href="#buttons">Buttons</a></li>
-        <li><a data-ng-href="#forms">Forms</a></li>
-        <li><a data-ng-href="#panels">Panels</a></li>
+        <li><a data-ng-click="scrollTo('colors')">Colors</a></li>
+        <li><a data-ng-click="scrollTo('text')">Text</a></li>
+        <li><a data-ng-click="scrollTo('tables')">Tables</a></li>
+        <li><a data-ng-click="scrollTo('buttons')">Buttons</a></li>
+        <li><a data-ng-click="scrollTo('forms')">Forms</a></li>
+        <li><a data-ng-click="scrollTo('panels')">Panels</a></li>
       </ul>
 
       <h2 class="cc-styles-section" id="colors">Colors</h2>
@@ -30,7 +29,7 @@
         <div class="large-12 columns">
           <div
             data-ng-repeat="color in colors"
-            class="panel cc-styles-color-panel"
+            class="panel cc-styles-color-panel cc-left"
             data-ng-class="color"
             data-cc-get-hex-value="{{color}}">
           </div>
