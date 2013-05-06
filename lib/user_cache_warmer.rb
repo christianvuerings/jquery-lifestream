@@ -7,8 +7,8 @@ class UserCacheWarmer
   end
 
   def warm(uid)
-    @pool.warm!(uid) # bang suffix means call the warm method asynchronously
     self.class.increment
+    @pool.warm!(uid) # bang suffix means call the warm method asynchronously
   end
 
   def self.report
@@ -20,13 +20,11 @@ class UserCacheWarmer
   end
 
   def self.increment
-    @pending ||= 0
-    @pending += 1
+    @pending = self.pending + 1
   end
 
   def self.decrement
-    @pending ||= 0
-    @pending -= 1
+    @pending = self.pending - 1
   end
 
   class WarmingWorker
@@ -52,9 +50,9 @@ class UserCacheWarmer
         end
         Rails.logger.info "#{self.class.name} Finished warming the user cache for #{uid}"
       ensure
+        UserCacheWarmer.decrement
         Rails.logger.debug "Clearing connections for thread and other dead threads after cache warming: #{self.object_id}"
         ActiveRecord::Base.clear_active_connections!
-        UserCacheWarmer.decrement
       end
     end
   end
