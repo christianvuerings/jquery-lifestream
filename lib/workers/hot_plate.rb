@@ -11,14 +11,12 @@ class HotPlate
     sleep Settings.hot_plate.startup_delay
     while true do
       Rails.logger.debug "#{self.class.name} waking up to warm user caches"
-      UserCacheWarmer.report
       warm
       sleep Settings.hot_plate.warmup_interval
     end
   end
 
   def ping
-    UserCacheWarmer.report
     "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors; #{@total_warmups} total warmups requested"
   end
 
@@ -36,7 +34,7 @@ class HotPlate
           @total_warmups += 1
         end
       end
-      Rails.logger.info "#{self.class.name} Warmed #{visits.size} users who have visited since cutoff interval; date #{cutoff}"
+      Rails.logger.info "#{self.class.name} Requested warmups for #{visits.size} users who have visited since cutoff interval; date #{cutoff}"
 
       visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
       deleted_count = 0
