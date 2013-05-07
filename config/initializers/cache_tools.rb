@@ -7,7 +7,7 @@ module Calcentral
 
     USER_CACHE_WARMER = UserCacheWarmer.new
 
-    USER_CACHE_EXPIRATION = Calcentral::UserCacheInvalidator.new
+    USER_CACHE_EXPIRATION = UserCacheInvalidator.new
 
     {
         UserApi => :expire,
