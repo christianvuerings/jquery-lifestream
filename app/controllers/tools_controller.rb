@@ -1,35 +1,26 @@
 class ToolsController < ApplicationController
 
-  def get_file_as_string(filename)
-    data = ''
-    f = File.open(filename, "r")
-    f.each_line do |line|
-      data += line
-    end
-    return data
-  end
-
   def get_styles
+    # Extract global color vars into an API endpoint for
+    # consumption by the live style guide.
+
     colorvars = []
-    data = get_file_as_string(Rails.root.join('app', 'assets', 'stylesheets', 'calcentral.scss'))
+    style_dir = Dir.glob(Rails.root.join('app', 'assets', 'stylesheets', '*'))
 
-    # Convert string data into a single row; remove everything before and after markers
-    data = data.gsub(/\n/,'')
-    data = data.sub(/^.*START SASS COLOR VARS/, '')
-    data = data.sub(/END SASS COLOR VARS.*$/, '')
-
-    # Remove last line and Split on semicolons
-    temparr = data.split(';')
-    temparr = temparr[0..-2]
-
-    # Push each k/v par onto an array
-    temparr.each do |color|
-      kv = color.delete(' ').delete('$').split(":")
-      color = {"name" => kv[0], "hex" => kv[1]}
-      colorvars.push(color)
+    style_dir.each do |filename|
+      f = File.open(filename, "r")
+      f.each_line do |line|
+        if line.start_with?("$cc-color-")
+          # Trim cruft and split on semicolons
+          temparr = line.rstrip().delete(' ').delete('$').delete(';').split(':')
+          color = {"name" => temparr[0], "hex" => temparr[1]}
+          colorvars.push(color)
+        end
+      end
     end
-    styles = {"colors" => colorvars}
 
+    styles = {"colors" => colorvars}
     render :json => styles.to_json
+
   end
 end

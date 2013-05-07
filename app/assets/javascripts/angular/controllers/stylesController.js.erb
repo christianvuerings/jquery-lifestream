@@ -12,7 +12,7 @@
 
       // Set lightdark class for each color
       angular.forEach($scope.colorvars, function(obj){
-        obj.lightdark = $scope.darkOrLight($scope.hexToRgb(obj.hex));
+        obj.lightdark = darkOrLight(hexToRgb(obj.hex));
       });
     });
 
@@ -22,7 +22,7 @@
       $anchorScroll();
     }
 
-    $scope.hexToRgb = function(hex) {
+    function hexToRgb(hex) {
       // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
       var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
       hex = hex.replace(shorthandRegex, function(m, r, g, b) {
@@ -37,7 +37,7 @@
       } : null;
     }
 
-    $scope.darkOrLight = function(rgbVals) {
+    function darkOrLight(rgbVals) {
       var brightness = (rgbVals['r'] * 299) + (rgbVals['g'] * 587) + (rgbVals['b'] * 114);
       brightness = brightness / 255000;
 

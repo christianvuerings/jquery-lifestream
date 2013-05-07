@@ -1,34 +1,29 @@
 @import "compass/css3";
 @import "compass/css3/user-interface";
 
-// Do not delete the following comment
-// START SASS COLOR VARS
-$cc-action-button-color: #72cb12;
-$cc-alert-color: #fb0007;
-$cc-border-color: #999;
-$cc-button-color: #80c7de;
-$cc-column-border-color: #dedede;
-$cc-dark-grey: #2c2d2e;
-$cc-launcher-border-color: #114d80;
-$cc-light-grey: #dddddd;
-$cc-light-medium-grey: #6e6e6e;
-$cc-list-border-color: #cacaca;
-$cc-main-background-color: #f2f2f2;
-$cc-main-header-border-color: #d3d8d8;
-$cc-medium-grey: #4a4b4d;
-$cc-nav-color: #2a6bb9;
-$cc-placeholder-color: #aaa;
-$cc-shadow-color: #ccc;
-$cc-super-light-grey: #fbfbfb;
-$cc-widget-highlight-background-color: #f2fef3;
-$cc-widget-hover-background-color: #e3ffff;
-$cc-widget-more-background-color: #c8dee9;
-$cc-widget-section-label-color: #515151;
-// END SASS COLOR VARS
+$cc-color-action-button: #72cb12;
+$cc-color-alert: #fb0007;
+$cc-color-border: #999;
+$cc-color-button: #80c7de;
+$cc-color-column-border: #dedede;
+$cc-color-dark-grey: #2c2d2e;
+$cc-color-launcher-border: #114d80;
+$cc-color-light-grey: #dddddd;
+$cc-color-light-medium-grey: #6e6e6e;
+$cc-color-list-border: #cacaca;
+$cc-color-main-background: #f2f2f2;
+$cc-color-medium-grey: #4a4b4d;
+$cc-color-nav: #2a6bb9;
+$cc-color-placeholder: #aaa;
+$cc-color-shadow-color: #ccc;
+$cc-color-super-light-grey: #fbfbfb;
+$cc-color-widget-highlight-background: #f2fef3;
+$cc-color-widget-more-background: #c8dee9;
+$cc-color-widget-section-label: #515151;
 
 /* Body */
 body {
-  background-color: $cc-main-background-color;
+  background-color: $cc-color-main-background;
 }
 
 /* Headings */
@@ -82,13 +77,13 @@ form {
 
   // Placeholder selector duplication intentional, re: http://bit.ly/ZnuZFo
   input:-moz-placeholder {
-    color: $cc-placeholder-color;
+    color: $cc-color-placeholder;
   }
   input:-ms-input-placeholder {
-    color: $cc-placeholder-color;
+    color: $cc-color-placeholder;
   }
   ::-moz-placeholder {
-    color: $cc-placeholder-color;
+    color: $cc-color-placeholder;
   }
 
 }
@@ -102,7 +97,7 @@ button {
   }
 }
 .button {
-  background-color: $cc-button-color;
+  background-color: $cc-color-button;
   &.medium {
     font-size: 13px;
     font-weight: normal;
@@ -112,7 +107,7 @@ button {
     @include background(linear-gradient(#7ec9df, #35b5d4));
   }
   &.secondary {
-    border-left: 1px solid $cc-border-color;
+    border-left: 1px solid $cc-color-border;
   }
   &.button.small {
     font-size: 13px;
@@ -133,7 +128,7 @@ button {
 }
 .cc-button-submit-enabled {
   @include cc-button-common;
-  background: $cc-action-button-color;
+  background: $cc-color-action-button;
   border: 2px solid transparent;
   color: #fff;
   cursor: pointer;
@@ -152,11 +147,11 @@ button {
   background: #fff;
   @include background(linear-gradient(#fff, #e5e5e5));
   border: 2px solid #d2d2d2;
-  color: $cc-medium-grey;
+  color: $cc-color-medium-grey;
   &:focus, &:hover {
     background: #fff;
     @include background(linear-gradient(#fff, #e5e5e5));
-    color: $cc-medium-grey;
+    color: $cc-color-medium-grey;
   }
 }
 

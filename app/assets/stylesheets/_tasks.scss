@@ -27,7 +27,7 @@
     margin-bottom: 2px;
   }
   .cc-widget-tasks-section-top {
-    border-top: 1px solid $cc-list-border-color;
+    border-top: 1px solid $cc-color-list-border;
     margin-top: 7px;
     padding-top: 7px;
   }
@@ -73,7 +73,7 @@
       margin-bottom: 1px; /* Effectively creates white line above selected tasks */
 
       .row {
-        background: $cc-widget-more-background-color;
+        background: $cc-color-widget-more-background;
         padding-bottom: 2px;
       }
     }

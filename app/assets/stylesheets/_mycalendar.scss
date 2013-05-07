@@ -23,8 +23,8 @@
 
     /* List items */
     > li {
-      border-bottom: 1px dotted $cc-list-border-color;
-      color: $cc-medium-grey;
+      border-bottom: 1px dotted $cc-color-list-border;
+      color: $cc-color-medium-grey;
       overflow: hidden;
       &:first-child {
         margin-top: 10px;
@@ -39,7 +39,7 @@
       }
     }
     .cc-widget-mycalendar-isupcoming {
-      background: $cc-widget-highlight-background-color;
+      background: $cc-color-widget-highlight-background;
       color: #000;
     }
     .cc-widget-mycalendar-startend {

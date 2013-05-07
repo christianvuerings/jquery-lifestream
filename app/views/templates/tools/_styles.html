@@ -30,8 +30,7 @@
           <div
             data-ng-repeat="color in colorvars"
             class="panel cc-styles-color-panel cc-left"
-            data-ng-class="color.name"
-            >
+            style="background-color:{{color.hex}}">
             <p data-ng-class="{'cc-styles-contrast-text':(color.lightdark)}">${{color.name}}<br />{{color.hex}}</p>
           </div>
         </div>

@@ -14,7 +14,7 @@
       margin-bottom: 1px; /* Effectively creates white line above selected tasks */
 
       .row {
-        background: $cc-widget-more-background-color;
+        background: $cc-color-widget-more-background;
         padding-bottom: 2px;
       }
     }
@@ -60,11 +60,11 @@
   }
 
   .cc-widget-activities-activity {
-    border-bottom: 1px solid $cc-light-grey;
+    border-bottom: 1px solid $cc-color-light-grey;
   }
 
   .cc-widget-activities-sub-activity {
-    border-top: 1px solid $cc-light-grey;
+    border-top: 1px solid $cc-color-light-grey;
     margin-left: 15px;
     padding: 6px 0;
   }
