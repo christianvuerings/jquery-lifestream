@@ -85,6 +85,7 @@ class MyBadges::GoogleMail
       items
     rescue Exception => e
       Rails.logger.fatal "Error parsing XML output for mail items from GoogleMailListProxy: #{e}"
+      Rails.logger.debug "Full dump of xml: #{nokogiri_xml}"
     end
     items
   end
