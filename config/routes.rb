@@ -32,6 +32,8 @@ Calcentral::Application.routes.draw do
   match '/api/google/handle_callback' => 'google_auth#handle_callback'
   match '/api/google/remove_authorization' => 'google_auth#remove_authorization', :via => :post
 
+  match '/api/tools/styles' => 'tools#get_styles', :via => :get
+
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
   if Settings.developer_auth.enabled

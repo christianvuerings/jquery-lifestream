@@ -1,6 +1,8 @@
 @import "compass/css3";
 @import "compass/css3/user-interface";
 
+// Do not delete the following comment
+// START SASS COLOR VARS
 $cc-action-button-color: #72cb12;
 $cc-alert-color: #fb0007;
 $cc-border-color: #999;
@@ -22,6 +24,7 @@ $cc-widget-highlight-background-color: #f2fef3;
 $cc-widget-hover-background-color: #e3ffff;
 $cc-widget-more-background-color: #c8dee9;
 $cc-widget-section-label-color: #515151;
+// END SASS COLOR VARS
 
 /* Body */
 body {

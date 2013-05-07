@@ -25,39 +25,6 @@
     return '#' + ((1 << 24) + (rgbArr[0] << 16) + (rgbArr[1] << 8) + rgbArr[2]).toString(16).slice(1);
   };
 
-  /**
-   * Automatically select contrasting foreground text color
-   */
-  var darkOrLight = function(rgbArr) {
-    var brightness = (rgbArr[0] * 299) + (rgbArr[1] * 587) + (rgbArr[2] * 114);
-    brightness = brightness / 255000;
-
-    // Values range from 0 to 1. Less than 0.6 should be dark enough for light text.
-    return (brightness <= 0.6);
-  };
-
-
-  /**
-   * Use window.getComputedStyle to obtain final displayed color info from browser.
-   */
-  angular.module('calcentral.directives').directive('ccGetHexValue', ['$timeout', '$window', function($timeout, $window) {
-
-    return {
-      restrict: 'A',
-      scope: true,
-      link: function(scope, element, attrs) {
-        $timeout(function(){ // Without timeout, value will always be page background color!
-          var rgbString = $window.getComputedStyle(element[0], null).getPropertyValue('background-color');
-          var rgbArray = rgbToArr(rgbString);
-          scope.hexVal = rgbToHex(rgbArray);
-          scope.lightText = darkOrLight(rgbArray);
-          scope.className = attrs.ccGetHexValue;
-        }, 0);
-      },
-      template: '<p data-ng-class="{true:\'cc-styles-contrast-text\'}[lightText]">{{className}}<br />{{hexVal}}</p>'
-    };
-  }]);
-
 
   /**
    * Use window.getComputedStyle to obtain final displayed text style info from browser.
