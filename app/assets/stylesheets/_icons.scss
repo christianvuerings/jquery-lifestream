@@ -3,12 +3,16 @@
   height: 16px;
   width: 16px;
 }
+.cc-icon-24 {
+  height: 24px;
+  width: 24px;
+}
 
 .cc-icon-bspace {
   background-image: asset-data-url('icon_bspace_16x16.png');
 }
 .cc-icon-calendar {
-  background-image: asset-data-url('icon_calendar_16x16.png');
+  background-image: asset-data-url('icon_calendar_24x24.png');
 }
 .cc-icon-callink {
   background-image: asset-data-url('icon_callink_16x16.png');
@@ -17,21 +21,10 @@
   background-image: asset-data-url('icon_canvas_16x16.png');
 }
 .cc-icon-drive {
-  background-image: asset-data-url('icon_drive_16x16.png');
+  background-image: asset-data-url('icon_drive_24x24.png');
 }
 .cc-icon-mail {
-  background-image: asset-data-url('icon_mail_16x16.png');
-}
-
-/* Status icons */
-.cc-icon-status-person {
-  background-image: asset-data-url('icon_status_level_person_22x22.png');
-  height: 22px;
-  width: 22px;
-  &:hover {
-    background-color: transparent;
-    background-image: asset-data-url('icon_status_level_person_hover_22x22.png');
-  }
+  background-image: asset-data-url('icon_mail_24x24.png');
 }
 
 /* Fontawesome icons */
