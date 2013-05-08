@@ -137,11 +137,11 @@
               {
                 "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDExVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
                 "created": "1900-01-01T12:00:00.000Z",
-                "updated": "2013-04-10T22:07:14.248Z",
+                "updated": "1900-01-01T12:00:00.000Z",
                 "summary": "EE 20N Lecture",
                 "creator": {
-                  "email": "tammi.chang.clc@gmail.com",
-                  "displayName": "Tammi Chang",
+                  "email": "tammi.chang.oae@gmail.com",
+                  "displayName": "Not Tammi Chang",
                   "self": true
                 },
                 "start": {
