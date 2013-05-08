@@ -11,9 +11,12 @@
     <div class="cc-popover cc-popover-arrow cc-badgepopover" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
       <!-- Title -->
       <div class="cc-popover-title" data-ng-switch on="badge.display.name">
-        <h4 data-ng-switch-when="bMail"><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="Recent {{badge.display.name}} Messages"></a></h4>
-        <h4 data-ng-switch-when="bCal"><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} Updates ({{api.date.now | date:'M/d/yy'}})"></a></h4>
-        <h4 data-ng-switch-default><a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} Updates"></a></h4>
+        <h4 data-ng-switch-when="bMail" data-ng-bind-template="Recent {{badge.display.name}} Messages"></h4>
+        <h4 data-ng-switch-when="bCal" data-ng-bind-template="{{badge.display.name}} Updates ({{api.date.now | date:'M/d/yy'}})"></h4>
+        <h4 data-ng-switch-default data-ng-bind-template="{{badge.display.name}} Updates"></h4>
+        <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}">  <i class="icon-external-link"></i>
+          <span class="cc-visuallyhidden" data-ng-bind-template="Go to {{badge.display.name}}"></span>
+        </a>
       </div>
       <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length">
         No items available for your <a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} account"></a>
