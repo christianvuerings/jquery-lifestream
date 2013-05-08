@@ -4,10 +4,11 @@ class UserCacheWarmer
 
   def initialize
     @pool = WarmingWorker.pool(size: determine_pool_size)
+    Rails.logger.info "#{self.class.name} Started up with pool of #{determine_pool_size} WarmingWorkers"
   end
 
   def warm(uid)
-    @pool.warm!(uid) # bang suffix means call the warm method asynchronously
+    @pool.async.warm uid
   end
 
   class WarmingWorker
