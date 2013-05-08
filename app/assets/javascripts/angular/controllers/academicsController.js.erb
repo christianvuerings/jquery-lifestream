@@ -40,7 +40,13 @@
         $scope.gpaInit(); // Initialize GPA calculator with selected courses
       });
     };
-    $scope.getAcademics();
+
+    // Wait until user profile is fully loaded before hitting academics data
+    $scope.$watch('user.isLoaded', function(isLoaded) {
+      if (isLoaded) {
+        $scope.getAcademics();
+      }
+    });
 
     $scope.toggleBlockHistory = function() {
       $scope.show_block_history = !$scope.show_block_history;
