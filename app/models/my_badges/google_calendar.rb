@@ -78,10 +78,17 @@ module MyBadges
     end
 
     def event_state_fields(entry)
-      if entry["created"] == entry["updated"]
+      # Ignore fractional second precision
+      if entry["created"].to_i == entry["updated"].to_i
         new_entry_hash = {}
-        new_entry_hash[:change_state] = "new"
-        new_entry_hash[:editor] = entry["creator"]["displayName"] if entry["creator"]["displayName"]
+        #only use new if the author != self
+        if (entry['creator'] && entry['creator']['email'] &&
+          entry['creator']['displayName'] && entry['creator']['email'] != @google_mail)
+          new_entry_hash[:change_state] = 'new'
+          new_entry_hash[:editor] = entry['creator']['displayName'] if entry['creator']['displayName']
+        else
+          new_entry_hash[:change_state] = 'created'
+        end
         new_entry_hash
       else
         { :change_state => "updated" }

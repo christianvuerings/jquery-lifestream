@@ -17,6 +17,7 @@ describe "MyBadges" do
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
     GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
+    Oauth2Data.stub(:get_google_email).and_return("tammi.chang.clc@gmail.com")
     badges = MyBadges::Merged.new @user_id
     filtered_feed = badges.get_feed
     filtered_feed[:badges].empty?.should_not be_true
@@ -38,6 +39,9 @@ describe "MyBadges" do
     }.size.should == 1
     mangled_feed[:badges]["bcal"][:items].select { |entry|
       entry[:change_state] if entry[:change_state] == "new"
+    }.size.should == 1
+    mangled_feed[:badges]["bcal"][:items].select { |entry|
+      entry[:change_state] if entry[:change_state] == "created"
     }.size.should == 1
   end
 
