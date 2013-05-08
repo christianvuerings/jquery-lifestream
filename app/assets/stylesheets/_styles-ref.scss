@@ -13,7 +13,7 @@
   }
   .cc-styles-color-panel {
     height: 100px;
-    width: 275px;
+    width: 300px;
     p {
       font-size: 13px;
       font-weight: bold;
@@ -29,14 +29,14 @@
     color: #e3e3e3;
   }
   .cc-styles-section {
-    border-bottom: 1px solid $cc-medium-grey;
-    border-top: 1px solid $cc-medium-grey;
-    color: $cc-medium-grey;
+    border-bottom: 1px solid $cc-color-medium-grey;
+    border-top: 1px solid $cc-color-medium-grey;
+    color: $cc-color-medium-grey;
     font-size: 36px;
     margin-top: 40px;
   }
   .cc-styles-sub-section {
-    color: $cc-medium-grey;
+    color: $cc-color-medium-grey;
     font-size: 20px;
     margin-left: 15px;
     margin-top: 20px;
@@ -44,70 +44,5 @@
   .cc-styles-toplink {
     font-weight: bold;
     margin-top: 20px;
-  }
-
-  // Colors demo - unfortunately need to manually list all in use here
-  .cc-action-button-color {
-    background-color: $cc-action-button-color
-  }
-  .cc-alert-color {
-    background-color: $cc-alert-color
-  }
-  .cc-border-color {
-    background-color: $cc-border-color
-  }
-  .cc-button-color {
-    background-color: $cc-button-color
-  }
-  .cc-column-border-color {
-    background-color: $cc-column-border-color
-  }
-  .cc-dark-grey {
-    background-color: $cc-dark-grey
-  }
-  .cc-launcher-border-color {
-    background-color: $cc-launcher-border-color
-  }
-  .cc-light-grey {
-    background-color: $cc-light-grey
-  }
-  .cc-light-medium-grey {
-    background-color: $cc-light-medium-grey
-  }
-  .cc-list-border-color {
-    background-color: $cc-list-border-color
-  }
-  .cc-main-background-color {
-    background-color: $cc-main-background-color
-  }
-  .cc-main-header-border-color {
-    background-color: $cc-main-header-border-color
-  }
-  .cc-medium-grey {
-    background-color: $cc-medium-grey
-  }
-  .cc-nav-color {
-    background-color: $cc-nav-color
-  }
-  .cc-placeholder-color {
-    background-color: $cc-placeholder-color
-  }
-  .cc-shadow-color {
-    background-color: $cc-shadow-color
-  }
-  .cc-super-light-grey {
-    background-color: $cc-super-light-grey
-  }
-  .cc-widget-highlight-background-color {
-    background-color: $cc-widget-highlight-background-color
-  }
-  .cc-widget-hover-background-color {
-    background-color: $cc-widget-hover-background-color
-  }
-  .cc-widget-more-background-color {
-    background-color: $cc-widget-more-background-color
-  }
-  .cc-widget-section-label-color {
-    background-color: $cc-widget-section-label-color
   }
 }

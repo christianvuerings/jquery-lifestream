@@ -28,10 +28,10 @@
       <div class="row">
         <div class="large-12 columns">
           <div
-            data-ng-repeat="color in colors"
+            data-ng-repeat="color in colorvars"
             class="panel cc-styles-color-panel cc-left"
-            data-ng-class="color"
-            data-cc-get-hex-value="{{color}}">
+            style="background-color:{{color.hex}}">
+            <p data-ng-class="{'cc-styles-contrast-text':(color.lightdark)}">${{color.name}}<br />{{color.hex}}</p>
           </div>
         </div>
       </div>

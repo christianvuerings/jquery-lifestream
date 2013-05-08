@@ -7,7 +7,7 @@
     @include cc-column-sameheight;
   }
   .cc-page-dashboard-column-b, .cc-page-dashboard-column-c {
-    border-left: 5px solid $cc-column-border-color;
+    border-left: 5px solid $cc-color-column-border;
   }
   .cc-page-dashboard-column-a, .cc-page-dashboard-column-c {
     background: #fafafa;
@@ -53,7 +53,7 @@
   }
 
   .cc-widget-section-label-due {
-    color: $cc-widget-section-label-color;
+    color: $cc-color-widget-section-label;
     font-size: 14px;
     font-weight: bold;
     margin-top: 5px;
@@ -81,9 +81,9 @@
     text-align: center;
     &:focus, &:hover {
       background-color: #fff;
-      border: 2px solid $cc-action-button-color;
+      border: 2px solid $cc-color-action-button;
       .cc-widget-add-icon-plus {
-        background-color: $cc-action-button-color;
+        background-color: $cc-color-action-button;
         float: left;
       }
       .cc-widget-add-icon-text {

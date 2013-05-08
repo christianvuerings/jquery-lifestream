@@ -24,7 +24,7 @@ body {
 /* Launcher */
 .cc-launcher {
   background: #fff;
-  border: 1px solid $cc-launcher-border-color;
+  border: 1px solid $cc-color-launcher-border;
   border-bottom-left-radius: 6px;
   border-top: none;
   padding: 0;
@@ -162,7 +162,7 @@ body {
     width: 100%;
   }
   .cc-launcher-dropdown-button {
-    border-left: 1px solid $cc-launcher-border-color;
+    border-left: 1px solid $cc-color-launcher-border;
     color: $body-font-color;
     margin: 0 0 0 1px;
     padding: 8px 25px 7px 10px;
@@ -180,7 +180,7 @@ body {
     }
   }
   .cc-launcher-icons {
-    border-right: 1px solid $cc-launcher-border-color;
+    border-right: 1px solid $cc-color-launcher-border;
     padding: 4px 9px 2px 0;
     .cc-icon {
       margin: 4px 4px 0 10px;

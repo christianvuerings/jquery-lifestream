@@ -17,7 +17,7 @@
   padding: 0;
 
   > li {
-    border-bottom: 1px dotted $cc-list-border-color;
+    border-bottom: 1px dotted $cc-color-list-border;
     &:last-child {
       border-bottom: none;
     }
@@ -44,7 +44,7 @@
 }
 .cc-widget-section-label {
   clear: both;
-  color: $cc-widget-section-label-color;
+  color: $cc-color-widget-section-label;
   font-size: 14px;
   margin: 0;
 }
@@ -53,17 +53,17 @@
   font-size: 11px;
 }
 .cc-widget-list-selected {
-  background: $cc-widget-more-background-color;
+  background: $cc-color-widget-more-background;
 }
 .cc-widget-text {
   padding: 15px 20px 20px 20px;
 }
 .cc-widget-title {
-  border-bottom: 1px solid $cc-border-color;
+  border-bottom: 1px solid $cc-color-border;
   overflow: hidden;
 
   h2 {
-    color: $cc-medium-grey;
+    color: $cc-color-medium-grey;
     margin: 4px 0 0;
     padding: 1px 0;
     font-size: 16px;

@@ -1,5 +1,5 @@
-$cc-page-splash-blue-dark: #004677;
-$cc-page-splash-blue-light: #0073C3;
+$cc-color-splash-blue-dark: #004677;
+$cc-color-splash-blue-light: #0073C3;
 
 .cc-page-splash {
   .cc-container-main {
@@ -15,12 +15,12 @@ $cc-page-splash-blue-light: #0073C3;
     margin-top: 60px;
   }
   h1 {
-    color: $cc-page-splash-blue-dark;
+    color: $cc-color-splash-blue-dark;
     font-size: 24px;
     margin: 15px 0 5px;
   }
   h2 {
-    color: $cc-page-splash-blue-dark;
+    color: $cc-color-splash-blue-dark;
     font-size: 18px;
     margin: 0 0 10px;
   }
@@ -29,8 +29,8 @@ $cc-page-splash-blue-light: #0073C3;
     margin-bottom: 30px;
   }
   .cc-page-splash-signin {
-    background: $cc-page-splash-blue-dark;
-    @include background(linear-gradient(top, $cc-page-splash-blue-light, $cc-page-splash-blue-dark));
+    background: $cc-color-splash-blue-dark;
+    @include background(linear-gradient(top, $cc-color-splash-blue-light, $cc-color-splash-blue-dark));
     box-shadow: none;
     font-size: 13px;
     padding-bottom: 10px;
@@ -74,7 +74,7 @@ $cc-page-splash-blue-light: #0073C3;
     }
   }
   .cc-page-splash-features-title {
-    border-bottom: 1px solid $cc-list-border-color;
+    border-bottom: 1px solid $cc-color-list-border;
     color: $body-font-color;
     line-height: 1.6;
     font-size: 30px;
@@ -89,7 +89,7 @@ $cc-page-splash-blue-light: #0073C3;
     .cc-page-splash-blog-date {
       padding: 0;
       p {
-        color: $cc-launcher-border-color;
+        color: $cc-color-launcher-border;
         font-size: 15px;
         font-weight: bold;
       }
