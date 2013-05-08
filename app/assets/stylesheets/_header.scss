@@ -52,6 +52,12 @@ body {
         display: block;
       }
     }
+    .cc-popover-title-link {
+      padding: 5px;
+      &:hover, &:focus {
+        text-decoration: none;
+      }
+    }
   }
 
   .cc-popover-items {
