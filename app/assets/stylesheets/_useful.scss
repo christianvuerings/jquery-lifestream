@@ -81,11 +81,10 @@
 }
 /* Popover */
 .cc-popover {
-  background: #fff;
-  border: 1px solid #cbcbcb;
+  background: #ececec;
   border-radius: 5px;
   @include box-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
-  padding: 15px;
+  padding: 0;
   position: absolute;
   z-index: 1;
 
@@ -99,11 +98,12 @@
     line-height: 1;
     margin: 10px 0 0;
   }
-
+}
+.cc-popover-arrow {
   &:after, &:before {
     bottom: 100%;
     content: "";
-    left: 50%;
+    right: 10%;
     position: absolute;
   }
 
@@ -129,16 +129,13 @@
 }
 
 .cc-dropdown {
-  background: #fff;
-  border: 1px solid $cc-color-launcher-border;
-  border-top: none;
+  min-width: 80px;
   position: absolute;
-  right: -1px;
-  width: 100%;
+  right: 0;
+  width: auto;
   z-index: 1;
   button {
     display: block;
-    padding: 5px;
   }
 }
 
@@ -167,11 +164,4 @@
   padding: 0;
   position: absolute;
   width: 1px;
-}
-
-@media only screen and (max-width: 767px) {
-  .cc-dropdown {
-    min-width: 80px;
-    width: auto;
-  }
 }

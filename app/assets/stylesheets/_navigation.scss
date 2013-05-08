@@ -1,46 +1,32 @@
 .cc-navigation-bar {
-  background-color: $cc-color-nav;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  > li {
-    float: left;
-    display: block;
-    position: relative;
-    padding: 0;
-    line-height: 32px;
+  clear: both;
+  ul {
+    background-color: $cc-color-navigation;
+    list-style-type: none;
     margin: 0;
-    &.active {
-      a {
+    overflow: hidden;
+    padding: 0;
+    > li {
+      margin: 0;
+      padding: 0;
+      &.active a, a:hover, a:focus {
+        background: #5c7d92;
+        border-radius: 5px;
         color: #fff;
       }
-      &::before, &::after {
-        bottom: 0;
-        content: "";
-        height: 0;
-        left: 50%;
-        position: absolute;
-        width: 0;
+      &.active a {
+        font-weight: bold;
       }
-      &::before {
-        border-bottom: 6px solid white;
-        border-left: 7px solid transparent;
-        border-right: 7px solid transparent;
-        margin-left: -6px;
-      }
-    }
-    &:last-child {
-      border: none;
-      @include box-shadow(none);
-    }
-    > a {
-      display: block;
-      padding: 0 20px;
-      position: relative;
-      color: #e6e6e6;
-      font-weight: 500;
-      &:hover {
-        text-decoration: underline;
+      > a {
+        color: #e6e6e6;
+        display: block;
+        float: left;
+        margin: 5px 0 5px 10px;
+        padding: 2px 5px;
+        position: relative;
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }

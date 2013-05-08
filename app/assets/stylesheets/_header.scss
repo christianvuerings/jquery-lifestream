@@ -1,19 +1,23 @@
+$cc-color-header: #002e5b;
+$cc-color-header-icon-background: #4a6a8a;
+$cc-color-header-white: #fff;
+$cc-color-popover-border: #d6d6d6;
+$cc-color-popover-calendar: #f6f6f6;
+$cc-color-popover-calendar-week: #2d637f;
+$cc-color-popover-hover: #e6ebef;
+$cc-color-popover-icon: #afc5d2;
+$cc-color-popover-icon-hover: #0a3361;
+$cc-color-popover-text: #797979;
+$cc-color-popover-title-gradient: #e8e8e8;
+
 body {
   /* Masthead */
   > header {
-    background-image: asset-data-url('calcentral_branding_strip_background.png');
-    background-repeat: no-repeat;
-    height: 42px;
+    background: $cc-color-header;
+    height: 40px;
     margin: 0 auto;
+    max-width: 1200px;
     position: relative;
-
-    > div > h1 {
-      height: 0;
-      margin: 0;
-      overflow: hidden;
-      text-indent: 100%;
-      white-space: nowrap;
-    }
 
     > div > a img {
       padding: 10px 10px 0;
@@ -21,113 +25,117 @@ body {
   }
 }
 
-/* Launcher */
-.cc-launcher {
-  background: #fff;
-  border: 1px solid $cc-color-launcher-border;
-  border-bottom-left-radius: 6px;
-  border-top: none;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+/* Header logo */
+.cc-header-logo {
+  float: left;
+  svg {
+    padding: 9px 10px 0;
+  }
+}
 
-  .cc-badge {
-    background: #ececec;
-    padding: 0;
+/* Header icons */
+.cc-header-icons {
+  float: right;
 
-    .cc-badge-title {
-      background: #fff;
-      @include background(linear-gradient(top, #fff, #e8e8e8));
-      border-bottom: 1px solid #d6d6d6;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      padding: 5px 10px;
+  .cc-popover-title {
+    background: $cc-color-header-white;
+    @include background(linear-gradient(top, $cc-color-header-white, $cc-color-popover-title-gradient));
+    border-bottom: 1px solid $cc-color-popover-border;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 5px 10px;
 
-      h4 {
-        font-size: 14px;
-        margin-bottom: 0;
-        a {
-          display: block;
+    h4 {
+      font-size: 14px;
+      margin-bottom: 0;
+      a {
+        display: block;
+      }
+    }
+  }
+
+  .cc-popover-items {
+    background-color: $cc-color-header-white;
+    list-style-type: none;
+    margin-bottom: 10px;
+
+    .cc-popover-item {
+      i {
+        color: $cc-color-popover-icon;
+        margin-right: 3px;
+      }
+      a, .cc-button-link {
+        border-bottom: 1px solid $cc-color-popover-border;
+        color: $body-font-color;
+        display: block;
+        line-height: 1.3;
+        margin: 0;
+        overflow: hidden;
+        padding: 5px 10px;
+        &:hover, &:focus {
+          background: $cc-color-popover-hover;
+          text-decoration: none;
+          i {
+            color: $cc-color-popover-icon-hover;
+          }
         }
       }
     }
-    .cc-badge-link {
-      color: $primary-color;
+    .cc-popover-link {
+      color: $primary-color !important;
     }
-    .cc-badge-noitems {
-      background: #fff;
-      border-bottom: 1px solid #d6d6d6;
+  }
+
+  .cc-badge-count {
+    font-size: 13px;
+    padding: 6px;
+  }
+
+  .cc-badgepopover {
+
+    .cc-badgepopover-noitems {
+      background: $cc-color-header-white;
+      border-bottom: 1px solid $cc-color-popover-border;
       padding: 10px;
     }
 
-    .cc-badge-items {
-      background-color: #fff;
-      list-style-type: none;
-
-      .cc-badge-item {
-        i {
-          color: #afc5d2;
-          margin-right: 3px;
+    .cc-badgepopover-item-calendar-container {
+      .cc-badgepopover-item-calendar {
+        border: 1px solid $cc-color-popover-border;
+        background-color: $cc-color-popover-calendar;
+        margin-right: 5px;
+        text-align: center;
+        width: 45px;
+        .cc-badgepopover-item-calendar-day-of-week {
+          background-color: $cc-color-popover-calendar-week;
+          color: $cc-color-header-white;
+          font-size: 11px;
         }
-        a {
-          border-bottom: 1px solid #d6d6d6;
-          color: $body-font-color;
-          display: block;
-          line-height: 1.3;
-          overflow: hidden;
-          padding: 5px 10px;
-          &:hover, &:focus {
-            background: #e6ebef;
-            text-decoration: none;
-            .cc-badge-link {
-              text-decoration: underline;
-            }
-            i {
-              color: #0a3361;
-            }
-          }
+        .cc-badgepopover-item-calendar-day {
+          font-size: 16px;
+          font-weight: bold;
         }
-
-        .cc-badge-item-calendar-container {
-          .cc-badge-item-calendar {
-            border: 1px solid #d6d6d6;
-            background-color: #f6f6f6;
-            margin-right: 5px;
-            text-align: center;
-            width: 45px;
-            .cc-badge-item-calendar-day-of-week {
-              background-color: #2d637f;
-              color: #fff;
-              font-size: 11px;
-            }
-            .cc-badge-item-calendar-day {
-              font-size: 16px;
-              font-weight: bold;
-            }
-            .cc-badge-item-calendar-month {
-              font-size: 11px;
-            }
-          }
-          .cc-badge-item-calendar-details {
-            margin-top: 1px;
-          }
+        .cc-badgepopover-item-calendar-month {
+          font-size: 11px;
         }
-        .cc-badge-item-drive i {
-          margin-right: 8px;
-        }
+      }
+      .cc-badgepopover-item-calendar-details {
+        margin-top: 1px;
       }
     }
+    .cc-badgepopover-item-drive i {
+      margin-right: 8px;
+    }
 
-    .cc-badge-item-details {
-      .cc-badge-item-details-title {
+    .cc-badgepopover-item-details {
+      .cc-badgepopover-item-details-title {
         font-weight: bold;
       }
-      .cc-badge-item-details-summary {
-        color: #797979;
+      .cc-badgepopover-item-details-summary {
+        color: $cc-color-popover-text;
         font-size: 11px;
       }
-      .cc-badge-item-details-all-day {
+      .cc-badgepopover-item-details-all-day {
         font-size: 10px;
       }
     }
@@ -137,75 +145,72 @@ body {
     width: auto;
   }
 
-  .cc-icon-status {
-    margin: 4px 10px -4px;
-    padding: 0;
+  .cc-header-icon {
+    background: transparent;
+    border: none;
+    margin: 5px 5px 0 0;
+    padding: 2px 3px;
     position: relative;
-    &:hover, &:focus {
-      background-color: transparent;
+    i:first-child {
+      font-size: 20px;
+    }
+    &.cc-header-icon-selected, &:hover, &:focus {
+      background: $cc-color-header-icon-background;
+      border-radius: 5px;
+      i {
+        text-decoration: none;
+      }
     }
   }
-
+  .cc-header-icon-font {
+    padding: 5px 5px 4px;
+  }
+  .cc-icon-status-person-haslayover {
+    padding-right: 15px;
+  }
   .cc-icon-status-person-layover {
     cursor: pointer;
     font-size: 14px;
-    left: 28px;
+    left: 23px;
     position: absolute;
-    top: 2px;
+    top: 3px;
     z-index: 1;
-  }
-  .cc-launcher-dropdown-menu button {
-    color: $body-font-color;
-    font-weight: normal;
-    padding-left: 10px;
-    text-align: left;
-    width: 100%;
-  }
-  .cc-launcher-dropdown-button {
-    border-left: 1px solid $cc-color-launcher-border;
-    color: $body-font-color;
-    margin: 0 0 0 1px;
-    padding: 8px 25px 7px 10px;
+    &:before {
+      position: absolute;
+    }
     &:after {
-      border-top: 6px solid $body-font-color;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      content: "";
-      height: 0;
-      margin-top: -2px;
-      position: absolute;
-      right: 7px;
-      top: 50%;
-      width: 0;
+      content: "\f111";
+      color: $cc-color-header-white;
+      font-size: 12px;
+      margin-left: 1px;
     }
   }
-  .cc-launcher-icons {
-    border-right: 1px solid $cc-color-launcher-border;
-    padding: 4px 9px 2px 0;
-    .cc-icon {
-      margin: 4px 4px 0 10px;
-      overflow: visible;
-      position: relative;
-      text-indent: -9999px;
-    }
-    .cc-bubble-count:after {
-      background-color: #e24022;
-      border-radius: 4px;
-      @include box-shadow(0 0 1px rgba(0,0,0,0.7));
-      color: #fff;
-      content: attr(data-bubble);
-      font-size: 10px;
-      font-weight: bold;
-      padding: 2px;
-      position: absolute;
-      right: -6px;
-      text-align: right;
-      text-indent: 0;
-      top: -7px;
+  .cc-popover-gear {
+    .cc-header-icon {
+      &.cc-header-icon-selected {
+        background: $cc-color-header-white;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        color: $cc-color-popover-text;
+      }
     }
   }
-  .cc-launcher-bar {
-    border-right: 1px solid #fff;
+  .cc-launcher-dropdown-menu {
+    border-top-right-radius: 0;
+    right: 5px;
+    &:before {
+      border: none;
+    }
+    h4 {
+      white-space: nowrap;
+    }
+    button {
+      color: $body-font-color;
+      font-weight: normal;
+      padding-left: 10px;
+      text-align: left;
+      width: 100%;
+    }
   }
   .cc-launcher-status-description {
     margin-left: 20px;
@@ -217,8 +222,8 @@ body {
       margin-top: 12px;
     }
     .cc-popover {
-      margin-left: -132px;
-      top: 33px;
+      margin-left: -243px;
+      top: 40px;
       width: 300px;
       .icon-stop {
         font-size: 8px;
@@ -229,33 +234,12 @@ body {
       }
     }
   }
+  .cc-popover-academic-status {
+    background: $cc-color-header-white;
+    padding: 15px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
-  .cc-launcher .cc-launcher-icons {
-    padding: 1px 4px 5px 2px;
-  }
-  .cc-launcher-dropdown-menu {
-    top: 27px;
-  }
-  .cc-popover-container .cc-launcher-dropdown-button {
-    padding: 6px 0 7px;
-    position: relative;
-    text-indent: -9999px;
-    width: 40px;
-    &:after {
-      border: none;
-    }
-    &:before {
-      background: $body-font-color;
-      box-shadow: 0 0.25em 0 0 $body-font-color, 0 0.5em 0 0 $body-font-color;
-      content: "";
-      font-size: 20px;
-      height: 0.15em;
-      left: 10px;
-      position: absolute;
-      top: 0.25em;
-      width: 1em;
-    }
-  }
+
 }

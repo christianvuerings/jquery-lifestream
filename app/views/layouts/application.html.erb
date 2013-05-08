@@ -27,10 +27,7 @@
   data-ng-show="user.isLoaded">
 
   <%= render 'templates/ieold' %>
-  <header class="row">
-    <!-- TODO: figure out a way to set a default for no matched yield blocks -->
-    <%= yield(:header) %>
-  </header>
+  <%= render 'templates/launcher' %>
   <%= render 'templates/navigation' %>
 
   <div class="row cc-container-main" role="main">
