@@ -116,6 +116,10 @@ group :development, :test , :testext do
   # It simulates how a user would interact with a website
   # https://rubygems.org/gems/capybara
   gem "capybara", "~> 2.0.2"
+
+  #Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
+  #from Ruby code, hiding some low-level action.
+  gem "headless", "~> 1.0.1"
 end
 
 group :development do

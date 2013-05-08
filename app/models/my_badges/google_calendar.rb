@@ -1,6 +1,10 @@
+require 'mail'
+
 module MyBadges
   class GoogleCalendar
     include MyBadges::BadgesModule, DatedFeed
+
+    attr_reader :rewrite_url
 
     def initialize(uid)
       @uid = uid
@@ -9,12 +13,24 @@ module MyBadges
 
     def fetch_counts(params = {})
       @google_mail ||= Oauth2Data.get_google_email(@uid)
+      @rewrite_url ||= !(Mail::Address.new(@google_mail).domain =~ /berkeley.edu/).nil?
       self.class.fetch_from_cache(@uid) do
         internal_fetch_counts params
       end
     end
 
     private
+
+    def handle_url(url_link)
+      return url_link unless rewrite_url
+      query_params = Rack::Utils.parse_query(URI.parse(url_link).query)
+      if (eid = query_params["eid"]).blank?
+        Rails.logger.warn "#{self.class.name} unable to parse eid from htmlLink #{url_link}"
+        url_link
+      else
+        "https://calendar.google.com/a/berkeley.edu?eid=#{eid}"
+      end
+    end
 
     def internal_fetch_counts(params = {})
       google_proxy = GoogleEventsListProxy.new(user_id: @uid)
@@ -30,7 +46,7 @@ module MyBadges
           if modified_entries[:count] < @count_limiter
             begin
               event = {
-                :link => entry["htmlLink"],
+                :link => handle_url(entry["htmlLink"]),
                 :title => entry["summary"],
                 :start_time => verify_and_format_date(entry["start"]),
                 :end_time => verify_and_format_date(entry["end"]),
