@@ -11,6 +11,8 @@ class ToolsController < ApplicationController
       f = File.open(filename, "r")
       f.each_line do |line|
         if line.start_with?("$cc-color-")
+          # Strip from right of semicolon in case someone adds a comment after a color
+          line = line.gsub(/;.*$/,'')
           # Trim cruft and split on semicolons
           temparr = line.rstrip().delete(' ').delete('$').delete(';').split(':')
           color = {"name" => temparr[0], "hex" => temparr[1]}
