@@ -51,6 +51,7 @@
 #header-logo, #header.no-user #header-logo {
     background: url(/canvas/berkeley-canvas-logo.png) no-repeat;
     width: 136px;
+    bottom: 12px;
 }
 
 #main {
