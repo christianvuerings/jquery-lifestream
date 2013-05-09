@@ -1,7 +1,13 @@
 namespace :backstage do
   desc "Starts background jobs for CalCentral"
   task :start do
+    # hack in some dependency loading that the Rails framework would do for us, if this were full Rails.
     require "lib/workers/backstage"
+    require "lib/oauth2_data"
+    require_all "lib/proxies"
+    require "app/models/user_auth"
+    require "app/models/user_data"
+
     Backstage.start
   end
 

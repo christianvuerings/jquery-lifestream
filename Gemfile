@@ -51,6 +51,9 @@ gem "celluloid", "~> 0.12.4"
 # for parsing formatted html
 gem 'nokogiri', "~> 1.5.6"
 
+# lets you require all files in a tree (used in Backstage)
+gem "require_all", "~> 1.2.1"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

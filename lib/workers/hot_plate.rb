@@ -1,13 +1,12 @@
 class HotPlate
 
-  include Celluloid
   include ActiveRecordHelper
 
   def initialize
     @total_warmups = 0
   end
 
-  def run
+  def run!
     sleep Settings.hot_plate.startup_delay
     while true do
       Rails.logger.debug "#{self.class.name} waking up to warm user caches"
