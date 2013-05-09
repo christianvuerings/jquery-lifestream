@@ -1,87 +1,92 @@
-/* CalCentral Header */
+/* UC Berkeley Canvas customization CSS
+ * copyright 2013, the Regents of Unversity of California
+ * all rights reserved.
+ */
+
+/* Note: Canvas files need to referenced with a full URL because the origin for this file is the CalCentral server */
+
+/* CalCentral Navigation */
+
 #calcentral-custom-header {
-  background: #E9EFF3 url('/canvas/canvas-header-background.png') 0 0 no-repeat;
-  border-bottom: 1px solid #555;
-  height: 29px;
-}
-
-#calcentral-custom-header-logo {
-  background: transparent url('/canvas/canvas-calcentral-logo.png') no-repeat 17px 7px;
-  display: inline-block;
-  height: 29px;
-  width: 200px;
-}
-
-#calcentral-custom-header ul {
-  display: inline-block;
-  left: -55px;
-  position: relative;
-  top: -9px;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float: right;
+    font-size: 12px;
+    margin-left: 13px;
+    margin-bottom: 4px;
+    padding: 0 10px;
+    background: transparent url('https://ucberkeley.instructure.com/images/canvas/top_bar_bg.png?1358195888') repeat-x;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.3);
+    border-top: 0;
 }
 
 #calcentral-custom-header li {
-  display: inline-block;
-  line-height: 13px;
-  margin: 0;
-  padding: 0 10px;
-}
-
-#calcentral-custom-header li:not(:first-child) {
-  border-left: 2px ridge #21406f;
+    position: relative;
+    color: white;
+    float: left;
+    line-height: 1em;
+    margin: 5px 5px 5px 0;
 }
 
 #calcentral-custom-header a {
-  color: #21406F;
-  font-size: 13px;
-  font-weight: 500;
+    color: white;
+    padding-left: 20px;
+    background: url(/canvas/calcentral-return-arrow.png) 0 no-repeat;
 }
 
 /* Canvas Header */
-#menu {
-  padding-top: 0;
-}
 
 #header {
-  background: #21406F;
-}
-
-#header-inner, #header.no-user #header-inner {
-  padding-top: 19px;
-}
-
-#header.no-user #header-inner {
-  height: 32px;
-}
-
-#header-logo.original, #header.no-user #header-logo {
-  bottom: 9px;
-}
-
-#header.no-user #header-logo {
-  top: 16px;
-  left: 16px;
-  bottom: 0;
-}
-
-.menu-item .menu-item-title, .menu-item .menu-item-no-drop {
-  font-size: 14px;
-  height: 25px;
-  padding-bottom: 0;
-  padding-top: 0;
-}
-
-.menu-item .menu-item-title {
-  background-position: right 14px;
-}
-
-.menu-item.hover .menu-item-title {
-  background-position: right 13px;
-}
-
-.menu-item .menu-item-drop {
-  top: auto;
+  background: #45758B;
 }
 
 #identity {
   box-shadow: none;
+}
+
+#header-logo, #header.no-user #header-logo {
+    background: url(/canvas/berkeley-canvas-logo.png) no-repeat;
+    width: 136px;
+}
+
+#main {
+    margin-bottom: 20px;
+}
+
+/* Canvas Footer */
+
+#footer {
+    padding: 0 0 0 120px;
+    background: url(/canvas/ucberkeley-logo.png) center left no-repeat;
+    height: 50px;
+}
+
+#footer div {
+    padding-left: 10px;
+    border-left: 1px solid #AAA;
+    height: 100%;
+}
+
+#footer img {
+    display: none;
+}
+
+#footer-links a:first-child {
+    padding-left: 0;
+}
+
+#footer p {
+    font-size: 12px;
+    line-height: 12px;
+    padding: 10px 0 2px;
+    margin: 0;
+}
+
+#footer p span {
+    font-size: 14px;
+    font-weight: bold;
 }
