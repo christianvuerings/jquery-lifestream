@@ -10,16 +10,27 @@
     </button>
     <div class="cc-popover cc-popover-arrow cc-badgepopover" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
       <!-- Title -->
-      <div class="cc-popover-title" data-ng-switch on="badge.display.name">
-        <h4 data-ng-switch-when="bMail" data-ng-bind-template="Recent {{badge.display.name}} Messages"></h4>
-        <h4 data-ng-switch-when="bCal" data-ng-bind-template="{{badge.display.name}} Updates ({{api.date.now | date:'M/d/yy'}})"></h4>
-        <h4 data-ng-switch-default data-ng-bind-template="{{badge.display.name}} Updates"></h4>
-        <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}">  <i class="icon-external-link"></i>
+      <div class="cc-popover-title" data-ng-switch on="user.profile.has_google_access_token && badge.display.name">
+        <h4 data-ng-switch-when="bMail"
+        data-ng-bind-template="Recent {{badge.display.name}} Messages"></h4>
+        <h4 data-ng-switch-when="bCal"
+        data-ng-bind-template="{{badge.display.name}} Updates ({{api.date.now | date:'M/d/yy'}})"></h4>
+        <div data-ng-switch-default>
+          <h4 data-ng-bind-template="{{badge.display.name}} (Not connected)"
+          data-ng-show="!user.profile.has_google_access_token"></h4>
+          <h4 data-ng-bind-template="{{badge.display.name}} Updates"
+          data-ng-show="user.profile.has_google_access_token"></h4>
+        </div>
+        <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}"><i class="icon-external-link"></i>
           <span class="cc-visuallyhidden" data-ng-bind-template="Go to {{badge.display.name}}"></span>
         </a>
       </div>
-      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length">
+      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && user.profile.has_google_access_token">
         No items available for your <a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} account"></a>
+      </div>
+      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && !user.profile.has_google_access_token">
+        To display your bConnected activity, visit the
+         <button class="cc-button-link cc-popover-link" data-ng-click="user._redirectToSettingsPage()">settings page</button>
       </div>
       <!-- Item container -->
       <ul class="cc-popover-items">
