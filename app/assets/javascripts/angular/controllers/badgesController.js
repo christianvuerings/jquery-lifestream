@@ -9,6 +9,7 @@
 
     var defaults = {
       'bcal': {
+        'count': '...',
         'display': {
           'additionalClasses': 'cc-icon-calendar',
           'href': 'http://bcal.berkeley.edu',
@@ -17,6 +18,7 @@
         }
       },
       'bmail': {
+        'count': '...',
         'display': {
           'additionalClasses': 'cc-icon-mail',
           'href': 'http://bmail.berkeley.edu',
@@ -25,6 +27,7 @@
         }
       },
       'bdrive': {
+        'count': '...',
         'display': {
           'additionalClasses': 'cc-icon-drive',
           'href': 'http://bdrive.berkeley.edu',
@@ -122,16 +125,13 @@
       });
     };
 
-    $scope.$watch('user.profile.is_logged_in', function(isLoggedIn) {
-      if (isLoggedIn) {
+    $scope.$watch('user.profile.is_logged_in + "," + user.profile.has_google_access_token', function(newVal) {
+      if (newVal.split(",")[0] === "true") {
         fetch();
       }
     });
 
-    $scope.$watch('user.profile.has_google_access_token', fetch);
-
     $scope.badges = orderBadges(defaults);
-
   }]);
 
 })(window.calcentral);
