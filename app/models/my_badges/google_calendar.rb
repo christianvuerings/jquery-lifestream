@@ -4,8 +4,6 @@ module MyBadges
   class GoogleCalendar
     include MyBadges::BadgesModule, DatedFeed
 
-    attr_reader :rewrite_url
-
     def initialize(uid)
       @uid = uid
       @count_limiter = 5
@@ -21,8 +19,14 @@ module MyBadges
 
     private
 
+    # Because normal google accounts are in a separate domain from berkeley.edu google accounts,
+    # there are issues with multiple logged in google sessions which triggers some rather unrecoverable
+    # errors on when clicking off to the remote link. This should help with the problem by enforcing
+    # a specific domain restriction, based on the stored oauth token. See CLC-1765
+    # (https://jira.media.berkeley.edu/jira/browse/CLC-1765) and
+    # CLC-1762 (https://jira.media.berkeley.edu/jira/browse/CLC-1762)
     def handle_url(url_link)
-      return url_link unless rewrite_url
+      return url_link unless @rewrite_url
       query_params = Rack::Utils.parse_query(URI.parse(url_link).query)
       if (eid = query_params["eid"]).blank?
         Rails.logger.warn "#{self.class.name} unable to parse eid from htmlLink #{url_link}"
@@ -56,8 +60,8 @@ module MyBadges
               consolidate_all_day_event_key!(event)
               event.merge! event_state_fields(entry)
               modified_entries[:items] << event
-            rescue Exception
-              Rails.logger.warn "#{self.class.name} could not process entry: #{entry}"
+            rescue Exception => e
+              Rails.logger.warn "#{self.class.name} could not process entry: #{entry} - #{e}"
               next
             end
           end
