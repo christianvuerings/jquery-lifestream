@@ -16,6 +16,7 @@
       <li>Current DB Schema: <%= @server_settings["versions"]["current_db_schema"] %></li>
       <li>Previous Release's DB Schema: <%= @server_settings["versions"]["previous_release_db_schema"] %></li>
       <li>Up Since: <%= @server_settings["first_visited"] %></li>
+      <li>UID: <span data-ng-bind="user.profile.uid" id="user_id"></span></li>
       <li>
         <button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>
         <div class="cc-footer-confirmation" data-ng-show="deleteSelf">Are you sure?
