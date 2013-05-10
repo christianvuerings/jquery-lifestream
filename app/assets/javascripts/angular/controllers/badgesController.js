@@ -125,8 +125,14 @@
       });
     };
 
-    $scope.$watch('user.profile.is_logged_in + "," + user.profile.has_google_access_token', function(newVal) {
-      if (newVal.split(",")[0] === "true") {
+    /**
+     * To avoid watching two the values below separately, and running into a situation
+     * where it could trigger multiple fetch calls, the watch call has been merged. This might
+     * have also cleared up a rendering delay issue, since $digest might have been working unnecessarily
+     * hard on $scope.badges
+     */
+    $scope.$watch('user.profile.is_logged_in + \',\' + user.profile.has_google_access_token', function(newTokenTuple) {
+      if (newTokenTuple.split(",")[0] === "true") {
         fetch();
       }
     });
