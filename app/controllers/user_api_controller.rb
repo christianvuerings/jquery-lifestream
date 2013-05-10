@@ -1,9 +1,19 @@
 class UserApiController < ApplicationController
 
+  extend Calcentral::Cacheable
+
+  def self.expire(id = nil)
+    # no-op; this class uses the cache only to reduce the number of writes to UserVisit. We want to just expire
+    # with time, not when the cache is forcibly cleared.
+  end
+
   def mystatus
     logger.debug "mystatus for uid '#{session[:user_id]}'"
     if session[:user_id]
-      UserVisit.record session[:user_id]
+      # wrap UserVisit.record_session inside a cache lookup so that we have to write UserVisit records less often.
+      self.class.fetch_from_cache session[:user_id] do
+        UserVisit.record session[:user_id]
+      end
       user_data = UserApi.new(session[:user_id]).get_feed
       render :json => {
           :is_logged_in => true,

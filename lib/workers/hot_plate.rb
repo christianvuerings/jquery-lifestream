@@ -5,6 +5,7 @@ class HotPlate
 
   def initialize
     @total_warmups = 0
+    @total_time = 0
   end
 
   def run
@@ -17,36 +18,49 @@ class HotPlate
   end
 
   def ping
-    "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors; #{@total_warmups} total warmups requested"
+    "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors; #{@total_warmups} total warmups requested; #{@total_time}s total spent warming"
   end
 
   def warm
-    use_pooled_connection {
-      today = Time.zone.today.to_time_in_current_zone.to_datetime
-      cutoff = today.advance(:seconds => -1 * Settings.hot_plate.last_visit_cutoff)
-      purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
+    begin
+      start_time = Time.now.to_f
+      use_pooled_connection {
+        today = Time.zone.today.to_time_in_current_zone.to_datetime
+        cutoff = today.advance(:seconds => -1 * Settings.hot_plate.last_visit_cutoff)
+        purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
 
-      visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
-      visits.find_in_batches do |batch|
-        batch.each do |visit|
-          Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
-          Calcentral::USER_CACHE_WARMER.warm visit.uid
-          @total_warmups += 1
+        visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
+        visits.find_in_batches do |batch|
+          batch.each do |visit|
+            Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
+            UserCacheWarmer.do_warm visit.uid
+            @total_warmups += 1
+          end
         end
-      end
-      Rails.logger.info "#{self.class.name} Requested warmups for #{visits.size} users who have visited since cutoff interval; date #{cutoff}"
 
-      visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
-      deleted_count = 0
-      visits.find_in_batches do |batch|
-        batch.each do |visit|
-          Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
-          visit.delete
-          deleted_count += 1
+        end_time = Time.now.to_f
+        time = end_time - start_time
+        @total_time += time
+        Rails.logger.info "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
+
+        visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
+        deleted_count = 0
+        visits.find_in_batches do |batch|
+          batch.each do |visit|
+            Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
+            visit.delete
+            deleted_count += 1
+          end
         end
-      end
-      Rails.logger.info "#{self.class.name} Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
-    }
+        Rails.logger.info "#{self.class.name} Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
+      }
+
+    ensure
+      Rails.logger.debug "Clearing connections for thread and other dead threads after cache warming: #{self.object_id}"
+      ActiveRecord::Base.clear_active_connections!
+    end
+
   end
 
 end
+
