@@ -101,7 +101,7 @@ cache:
   maximum_expires_in: <%= 48.hours %>
   race_condition_ttl: <%= 10.seconds %>
   expiration:
-    default: <%= 20.minutes %>
+    default: <%= 35.minutes %>
     BearfactsRegblocksProxy: <%= 24.hours %>
     BlogFeed: <%= 1.hour %>
     CalLinkMembershipsProxy: <%= 24.hours %>
@@ -144,8 +144,8 @@ developer_auth:
 
 hot_plate:
   startup_delay: <%= 15.seconds %>
-  warmup_interval: <%= 10.minutes %>
-  last_visit_cutoff: <%= 30.days %>
+  warmup_interval: <%= 20.minutes %>
+  last_visit_cutoff: <%= 10.days %>
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
