@@ -9,6 +9,7 @@
 
     var defaults = {
       'bcal': {
+        'count': '...',
         'display': {
           'additionalClasses': 'cc-icon-calendar',
           'href': 'http://bcal.berkeley.edu',
@@ -17,6 +18,7 @@
         }
       },
       'bmail': {
+        'count': '...',
         'display': {
           'additionalClasses': 'cc-icon-mail',
           'href': 'http://bmail.berkeley.edu',
@@ -25,6 +27,7 @@
         }
       },
       'bdrive': {
+        'count': '...',
         'display': {
           'additionalClasses': 'cc-icon-drive',
           'href': 'http://bdrive.berkeley.edu',
@@ -122,16 +125,19 @@
       });
     };
 
-    $scope.$watch('user.profile.is_logged_in', function(isLoggedIn) {
-      if (isLoggedIn) {
+    /**
+     * To avoid watching two the values below separately, and running into a situation
+     * where it could trigger multiple fetch calls, the watch call has been merged. This might
+     * have also cleared up a rendering delay issue, since $digest might have been working unnecessarily
+     * hard on $scope.badges
+     */
+    $scope.$watch('user.profile.is_logged_in + \',\' + user.profile.has_google_access_token', function(newTokenTuple) {
+      if (newTokenTuple.split(",")[0] === "true") {
         fetch();
       }
     });
 
-    $scope.$watch('user.profile.has_google_access_token', fetch);
-
     $scope.badges = orderBadges(defaults);
-
   }]);
 
 })(window.calcentral);
