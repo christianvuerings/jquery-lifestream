@@ -11,6 +11,23 @@ class UserCacheWarmer
     @pool.async.warm uid
   end
 
+  def self.do_warm(uid)
+    Rails.logger.info "#{self.name} Warming the user cache for #{uid}"
+    [
+      UserApi.new(uid),
+      MyClasses.new(uid),
+      MyGroups.new(uid),
+      MyTasks::Merged.new(uid),
+      MyBadges::Merged.new(uid),
+      MyUpNext.new(uid),
+      MyActivities.new(uid),
+      MyAcademics::Merged.new(uid)
+    ].each do |model|
+      model.get_feed
+    end
+    Rails.logger.info "#{self.name} Finished warming the user cache for #{uid}"
+  end
+
   class WarmingWorker
     include Celluloid
 
@@ -19,20 +36,7 @@ class UserCacheWarmer
 
     def warm(uid)
       begin
-        Rails.logger.info "#{self.class.name} Warming the user cache for #{uid}"
-        [
-            UserApi.new(uid),
-            MyClasses.new(uid),
-            MyGroups.new(uid),
-            MyTasks::Merged.new(uid),
-            MyBadges::Merged.new(uid),
-            MyUpNext.new(uid),
-            MyActivities.new(uid),
-            MyAcademics::Merged.new(uid)
-        ].each do |model|
-          model.get_feed
-        end
-        Rails.logger.info "#{self.class.name} Finished warming the user cache for #{uid}"
+        UserCacheWarmer.do_warm uid
       ensure
         Rails.logger.debug "Clearing connections for thread and other dead threads after cache warming: #{self.object_id}"
         ActiveRecord::Base.clear_active_connections!

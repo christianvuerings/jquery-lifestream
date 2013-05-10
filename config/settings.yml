@@ -121,6 +121,7 @@ cache:
     SakaiProxy: <%= 24.hours %>
     SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
     SakaiUserSitesProxy: <%= 4.hours %>
+    UserApiController: <%= 4.hours %>
 
 # Cache warmer settings
 cache_warmer:

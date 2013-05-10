@@ -48,6 +48,7 @@ class Backstage
     unless !!@stop
       @stop = true
       @jms_worker.terminate
+      @hot_plate_worker.terminate
     end
   end
 
