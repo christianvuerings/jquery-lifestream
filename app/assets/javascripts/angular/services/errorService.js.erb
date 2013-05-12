@@ -8,11 +8,21 @@
 
     /**
      * Send an error exception
-     * @param {String} exception The exception you want to send
+     * @param {String} exception, tags The exception label to send,
+     * followed by a hash of tags we want to capture in Sentry.
      */
+
     var send = function(exception) {
-      exception = exception.message || exception;
-      Raven.captureException(exception);
+      var exception = exception.message || exception;
+      var app_version = <%= ServerRuntime.get_settings["versions"]["application"] %>;
+      var client_host_name = '<%= ServerRuntime.get_settings["hostname"] %>';
+      var uid = document.getElementById('user_id').innerHTML;
+
+      Raven.captureMessage(exception, {tags: {
+        app_version: app_version,
+        host: client_host_name,
+        uid: uid
+      }});
     };
 
     // Expose methods
