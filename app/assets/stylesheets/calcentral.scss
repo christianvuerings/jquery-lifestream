@@ -1,24 +1,35 @@
 @import "compass/css3";
 @import "compass/css3/user-interface";
 
-$cc-color-action-button: #72cb12;
-$cc-color-alert: #fb0007;
-$cc-color-border: #999;
+$cc-color-action-button: #2787b6;
+$cc-color-action-button-hover: #1f7099;
+
 $cc-color-button: #80c7de;
-$cc-color-column-border: #dedede;
+$cc-color-button-border: #d2d2d2;
+$cc-color-button-grey: #bebebe;
+$cc-color-button-hover: #d5d5d5;
+$cc-color-button-regular: #e5e5e5;
+$cc-color-button-selected: #949494;
+$cc-color-blue-hover: #f2f9fE;
 $cc-color-dark-grey: #2c2d2e;
+$cc-color-green-label: #b3c8b4;
+$cc-color-green-plus: #51a351;
 $cc-color-launcher-border: #114d80;
 $cc-color-light-grey: #dddddd;
+$cc-color-lighter-medium-grey: #999;
 $cc-color-light-medium-grey: #6e6e6e;
 $cc-color-list-border: #cacaca;
 $cc-color-main-background: #f2f2f2;
-$cc-color-medium-grey: #4a4b4d;
+$cc-color-medium-grey: #424242;
 $cc-color-navigation: #366079;
 $cc-color-placeholder: #aaa;
+$cc-color-red: #cf1715;
 $cc-color-shadow-color: #ccc;
 $cc-color-super-light-grey: #fbfbfb;
+$cc-color-white: #fff;
+$cc-color-widget-background: #ebebeb;
 $cc-color-widget-highlight-background: #f2fef3;
-$cc-color-widget-more-background: #c8dee9;
+$cc-color-widget-more-background: #f7f7f7;
 $cc-color-widget-section-label: #515151;
 
 /* Body */
@@ -51,27 +62,34 @@ a {
 
 /* Form */
 form {
-  background: #eaeaea;
+  background: $cc-color-widget-more-background;
   border: 1px solid #dedede;
-  border-radius: 5px;
-  padding: 5px;
+  padding: 10px 5px;
 
   input {
+    background: $cc-color-white;
     font-family: Arial;
     &[type="text"] {
       border: 1px solid #aeaeae;
-      border-radius: 3px;
+      font-size: 12px;
       width: 100%;
     }
+  }
+  .cc-input-noborder {
+    border: none !important;
   }
 
   label {
     display: block;
+    font-size: 12px;
+    margin-right: 10px;
     margin-top: 5px;
     text-align: right;
   }
 
   textarea {
+    background: $cc-color-white;
+    font-size: 12px;
     resize: vertical;
   }
 
@@ -90,7 +108,7 @@ form {
 
 /* Buttons */
 button {
-  font-family: Arial, sans-serif;
+  font-family: $body-font-family;
   &:hover, &:focus {
     cursor: pointer;
     text-decoration: underline;
@@ -107,7 +125,7 @@ button {
     @include background(linear-gradient(#7ec9df, #35b5d4));
   }
   &.secondary {
-    border-left: 1px solid $cc-color-border;
+    border-left: 1px solid $cc-color-lighter-medium-grey;
   }
   &.button.small {
     font-size: 13px;
@@ -120,50 +138,97 @@ button {
   }
 }
 
-@mixin cc-button-common {
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 3px 15px;
-}
-.cc-button-submit-enabled {
-  @include cc-button-common;
-  background: $cc-color-action-button;
-  border: 2px solid transparent;
-  color: #fff;
-  cursor: pointer;
-}
-.cc-button-submit-disabled {
-  @include cc-button-common;
-  background: #e5e5e5 !important;
-  @include background(linear-gradient(#fff, #e5e5e5));
-  border: 2px solid #d2d2d2 !important;
-  color: #d2d2d2 !important;
-  cursor: default !important;
-  text-decoration: none !important;
-}
-.cc-button-reset {
-  @include cc-button-common;
-  background: #fff;
-  @include background(linear-gradient(#fff, #e5e5e5));
-  border: 2px solid #d2d2d2;
+.cc-button {
+  background: $cc-color-white;
+  @include background(linear-gradient($cc-color-white, $cc-color-button-regular));
+  border: 1px solid $cc-color-button-border;
+  border-radius: 5px;
   color: $cc-color-medium-grey;
+  cursor: pointer;
+  display: inline;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 7px 10px;
   &:focus, &:hover {
-    background: #fff;
-    @include background(linear-gradient(#fff, #e5e5e5));
+    background: $cc-color-white;
+    @include background(linear-gradient($cc-color-white, $cc-color-button-hover));
     color: $cc-color-medium-grey;
+    text-decoration: none;
   }
 }
-
+.cc-button-blue {
+  background: $cc-color-action-button;
+  border: 1px solid transparent;
+  color: $cc-color-white;
+  &:focus, &:hover {
+    background: $cc-color-action-button-hover;
+    color: $cc-color-white;
+  }
+}
+.cc-button-disabled {
+  background: $cc-color-action-button;
+  border: 1px solid transparent;
+  color: $cc-color-white;
+  &:focus, &:hover {
+    background: $cc-color-action-button-hover;
+    color: $cc-color-white;
+    cursor: default;
+  }
+}
+.cc-button-selected {
+  background: $cc-color-white;
+  @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
+  color: $cc-color-white;
+  &:focus, &:hover {
+    @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
+    color: $cc-color-white;
+  }
+  i {
+    color: $cc-color-white;
+  }
+}
+.cc-button-plus-icon {
+  color: $cc-color-green-plus;
+}
 .cc-button-link {
   padding: 0;
   &, &:hover, &:focus {
     background-color: transparent;
     border: none;
     color: $primary-color;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 12px;
+    font-weight: normal;
     line-height: 1;
+  }
+}
+
+.cc-button-group {
+  list-style-type: none;
+  li {
+    float: left;
+    margin: 0 0 0 -1px;
+    &:first-child {
+      margin: 0;
+      .cc-button {
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+    }
+    &:last-child {
+      .cc-button {
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+    }
+  }
+  .cc-button {
+    border-radius: 0;
+    width: 100%;
+  }
+}
+.cc-even-3 {
+  li {
+    width: 33.33333%;
   }
 }
 
@@ -171,7 +236,7 @@ button {
 .cc-old-ie {
   margin-bottom: 20px !important;
   a {
-    color: #fff;
+    color: $cc-color-white;
     text-decoration: underline;
     &:hover, &:focus {
       text-decoration: none;
@@ -181,7 +246,7 @@ button {
 
 /* Container */
 .cc-container-main {
-  background-color: #fff;
+  background-color: $cc-color-white;
 }
 
 /*
@@ -208,7 +273,6 @@ http://stackoverflow.com/questions/6269420
 @import "mycalendar";
 @import "activities";
 @import "tasks";
-@import "mygroups_myclasses";
 
 /* Academics */
 @import "academics";

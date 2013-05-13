@@ -6,12 +6,12 @@
    */
   calcentral.controller('TasksController', ['$http', '$scope', 'apiService', function($http, $scope, apiService) {
 
-    // Initial mode for Tasks view
-    $scope.tasks_mode = 'scheduled';
-
     $scope.getTasks = function() {
       return $http.get('/api/my/tasks').success(function(data) {
         angular.extend($scope, data);
+
+        // Initial mode for Tasks view
+        $scope.tasks_mode = 'scheduled';
       });
     };
     $scope.getTasks();

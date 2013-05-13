@@ -96,7 +96,8 @@
       if (shouldTruncate) {
         var children = element.children();
         var button = angular.element(children[children.length - 1].children[0]);
-        button.bind('click', function() {
+        button.bind('click', function(event) {
+          event.stopPropagation();
           scope.opened = !scope.opened;
           update(scope, element, options);
         });

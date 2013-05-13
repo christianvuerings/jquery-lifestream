@@ -1,15 +1,20 @@
 /* Tasks and Assigments widget */
 .cc-widget-tasks {
-  .cc-widget-body {
-    .cc-alert-text {
-      margin-bottom: 5px;
-    }
-    .cc-widget-clear-completed {
-      margin-top: 10px;
-    }
-    .cc-widget-text {
-      margin-bottom: 0;
-    }
+  padding: 0 10px;
+  .cc-widget-list-hover {
+    padding: 10px;
+  }
+  .cc-widget-title .cc-button {
+    margin-top: 4px;
+  }
+  .cc-alert-text {
+    margin-bottom: 5px;
+  }
+  .cc-widget-tasks-clear-completed {
+    margin-top: 10px;
+  }
+  .cc-widget-text {
+    margin-bottom: 0;
   }
   .cc-widget-tasks-form {
     line-height: 1;
@@ -19,17 +24,8 @@
     margin-top: 15px;
     margin-bottom: 15px;
   }
-  .cc-widget-tasks-checkbox-column {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
   .cc-widget-tasks-date-input .ng-invalid {
     margin-bottom: 2px;
-  }
-  .cc-widget-tasks-section-top {
-    border-top: 1px solid $cc-color-list-border;
-    margin-top: 7px;
-    padding-top: 7px;
   }
   .cc-widget-tasks-taskslider {
     margin: 10px 0;
@@ -39,27 +35,66 @@
     font-weight: bold;
     margin-top: -2px;
   }
-  .cc-widget-tasks-title-column {
-    padding-left: 0;
+  /* d.alistapart.com/holygrail/example_3.html */
+  .cc-widget-tasks-col {
+    float: left;
+    position: relative;
+  }
+  .cc-widget-tasks-col-left {
+    margin-left: -100%;
+    width: 30px;
+  }
+  .cc-widget-tasks-col-title {
+    padding: 0 30px;
+    width: 100%;
+  }
+  .cc-widget-tasks-col-date {
+    margin-right: -100%;
+    right: 50px;
+    text-align: right;
+    width: 60px;
   }
   .cc-widget-tasks-more {
-    padding-left: 10px;
+    padding-left: 30px;
     div {
       margin-bottom: 10px;
     }
   }
+  .cc-widget-tasks-section-label {
+    clear: both;
+    color: $cc-color-widget-section-label;
+    font-size: 14px;
+    margin: 10px 0 0 0;
+    overflow: hidden;
+  }
+  .cc-widget-tasks-section-label-red {
+    color: $cc-color-red;
+  }
+  .cc-widget-tasks-section-label-count {
+    background: $cc-color-button-grey;
+    color: $cc-color-white;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+  }
+  .cc-widget-tasks-section-label-count-green {
+    background: $cc-color-green-label;
+  }
+  .cc-widget-tasks-section-label-count-red {
+    background: $cc-color-red;
+  }
   .cc-widget-tasks-list {
+    border-left: 4px solid $cc-color-button-grey;
+    clear: both;
     list-style-type: none;
     margin: 0;
     padding: 0;
 
     li {
+      border-bottom: 1px solid $cc-color-widget-background;
       &:first-child {
+        border-top: 1px solid $cc-color-widget-background;
         margin-top: 12px;
-      }
-      .row {
-        padding-bottom: 10px;
-        padding-top: 5px;
       }
       .cc-widget-tasks-form {
         .row {
@@ -70,50 +105,15 @@
     }
 
     .cc-widget-list-selected {
-      margin-bottom: 1px; /* Effectively creates white line above selected tasks */
-
-      .row {
-        background: $cc-color-widget-more-background;
-        padding-bottom: 2px;
-      }
-    }
-
-    .cc-widget-tasks-activities-more {
-      p {
-        clear: left;
-        line-height: 1.2;
-        padding-right: 20px;
-        padding-top: 10px;
+      .cc-widget-tasks-col-title {
         margin-bottom: 10px;
       }
-
-    }
-    .cc-widget-more-view-in {
-      background-color: #e8eff3;
-      border: none;
-      color: #16191b;
-      font-size: 11px;
-      font-weight: bold;
-      padding: 5px 10px;
     }
   }
-
-  /* Mobile only */
-  @media only screen and (max-width: 767px) {
-    .row .cc-mobile-task-checkbox-column {
-      width: 10% !important;
-    }
-    .row .cc-mobile-task-title-column {
-      padding-left: 5px;
-      padding-right: 5px;
-      width: 40% !important;
-    }
-    .row .cc-mobile-task-emitter-column {
-      width: 30% !important;
-    }
-    .row .cc-mobile-task-date-column {
-      width: 20% !important;
-    }
+  .cc-widget-tasks-list-green {
+    border-left-color: $cc-color-green-label;
   }
-
+  .cc-widget-tasks-list-red {
+    border-left-color: $cc-color-red;
+  }
 }

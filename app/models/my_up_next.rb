@@ -55,7 +55,7 @@ class MyUpNext < MyMergedModel
       if entry_location
         location_subset[:location] = entry_location
         uri = Addressable::URI.new
-        uri.query_values = {:q => entry["location"]}
+        uri.query_values = {:q => entry_location}
         location_subset[:location_url] = "https://maps.google.com/maps?" + uri.query
       end
     rescue Exception => e

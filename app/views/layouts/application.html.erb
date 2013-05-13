@@ -30,7 +30,10 @@
   <%= render 'templates/launcher' %>
   <%= render 'templates/navigation' %>
 
-  <div class="row cc-container-main" role="main">
+  <div
+    class="row cc-container-main"
+    data-ng-class="{'collapse':(controller_name=='DashboardController')}"
+    role="main">
     <%= yield %>
   </div>
 

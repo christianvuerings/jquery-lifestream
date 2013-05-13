@@ -11,7 +11,7 @@
 
     $scope.enableEditor = function() {
       $scope.editorEnabled = true;
-      $scope.task.show = false; // Otherwise the form is on blue "show" background.
+      $scope.task._show = false; // Otherwise the form is on blue "show" background.
       // Shift the scope to match scope of the add_task form
       $scope.add_edit_task = {
         'title': $scope.task.title,

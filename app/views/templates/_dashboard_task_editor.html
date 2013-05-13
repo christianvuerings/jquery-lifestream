@@ -2,7 +2,7 @@
   <form class="cc-widget-tasks-form" name="cc_widget_tasks_form"
     data-ng-submit="!editorEnabled && addTask() || editorEnabled && editTask(task)"
     data-ng-show="show_add_task || editorEnabled" novalidate >
-    <div class="row">
+    <div class="row collapse">
       <div class="large-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-title-{{$index}}"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
       </div>
@@ -12,12 +12,13 @@
           type="text" placeholder="Enter your task title here" required aria-required="true" />
       </div>
     </div>
-    <div class="row">
+    <div class="row collapse">
       <div class="large-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-date-{{$index}}">Due:</label>
       </div>
       <div class="large-9 small-9 columns cc-widget-tasks-date-input">
         <input type="text"
+          class="cc-input-noborder"
           data-ng-model="add_edit_task.due_date"
           name="add_task_due_date"
           id="cc-widget-tasks-addtask-date-{{$index}}"
@@ -29,38 +30,39 @@
         </p>
       </div>
     </div>
-    <div class="row">
+    <div class="row collapse">
       <div class="large-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-note-{{$index}}">Notes:</label>
       </div>
       <div class="large-9 small-9 columns">
-        <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$index}}" rows="2" /></textarea>
+        <textarea class="cc-input-noborder" data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$index}}" rows="2" /></textarea>
       </div>
     </div>
-    <div class="row" data-ng-show="!editorEnabled && task_adder_is_processing">
+    <div class="row collapse" data-ng-show="!editorEnabled && task_adder_is_processing">
       <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
         Task is being added...
       </div>
     </div>
-    <div class="row" data-ng-show="editorEnabled && task.editor_is_processing">
+    <div class="row collapse" data-ng-show="editorEnabled && task.editor_is_processing">
       <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
         Task is being updated...
       </div>
     </div>
-    <div class="row" data-ng-show="!task_adder_is_processing || !task.editor_is_processing">
+    <div class="row collapse" data-ng-show="!task_adder_is_processing || !task.editor_is_processing">
       <div class="large-9 large-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
         <button type="submit"
           data-ng-disabled="cc_widget_tasks_form.$invalid || task_adder_is_processing"
-          data-ng-class="{'cc-button-submit-enabled':(cc_widget_tasks_form.$valid), 'cc-button-submit-disabled':(cc_widget_tasks_form.$invalid)}"
+          class="cc-button"
+          data-ng-class="{'cc-button-blue':(cc_widget_tasks_form.$valid), 'cc-button-disabled':(cc_widget_tasks_form.$invalid)}"
           >
             <span data-ng-show="!editorEnabled">Add Task</span>
             <span data-ng-show="editorEnabled">Save</span>
         </button>
-        <button class="cc-button-reset" type="reset"
+        <button class="cc-button" type="reset"
           data-ng-show="!editorEnabled"
           data-ng-click="toggleAddTask()" />Cancel
         </button>
-        <button class="cc-button-reset" type="button"
+        <button class="cc-button" type="button"
           data-ng-show="editorEnabled"
           data-ng-click="disableEditor()" />Cancel
         </button>

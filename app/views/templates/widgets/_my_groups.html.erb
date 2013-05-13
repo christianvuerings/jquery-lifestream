@@ -4,22 +4,18 @@
   </div>
   <div class="cc-widget-mygroups-container" data-cc-spinner-directive>
     <div class="cc-widget-mygroups-myclasses-list">
-      <ul class="cc-widget-list cc-scroll">
-        <li data-ng-repeat="group in groups" class="cc-widget-mygroups-myclasses-list-item">
-          <div class="row">
-            <div class="large-10 small-8 columns">
+      <ul class="cc-widget-list">
+        <li data-ng-repeat="group in groups">
+          <a data-ng-href="{{group.site_url}}"
+            data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)">
+            <div class="cc-widget-list-column-left">
               <div
-                class="cc-widget-list-icon cc-left cc-widget-mygroups-myclasses-icon"
+                class="cc-icon"
                 data-ng-class="'cc-icon-{{group.emitter|lowercase}}'">
               </div>
-              <a class="cc-ellipsis"
-                data-ng-href="{{group.site_url}}"
-                data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)" data-ng-bind="group.title"></a>
             </div>
-            <div class="large-2 small-4 columns cc-widget-mygroups-myclasses-emitter-column">
-              <div class="cc-emitter-square cc-emitter-{{group.color_class}}" title="{{group.emitter}} group"></div>
-            </div>
-          </div>
+            <strong class="cc-ellipsis" data-ng-bind="group.title"></strong>
+          </a>
         </li>
       </ul>
     </div>
