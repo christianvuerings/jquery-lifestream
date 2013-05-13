@@ -109,4 +109,10 @@ describe "MyBadges" do
     end
   end
 
+  it "should ignore non png icons for bdrive" do
+    proxy = MyBadges::GoogleDrive.new(@user_id)
+    icon_class_result = proxy.send(:process_icon, "http://www.google.com/lol_cat.gif")
+    icon_class_result.present?.should_not be_true
+  end
+
 end

@@ -66,6 +66,40 @@ body {
     margin-bottom: 10px;
 
     .cc-popover-item {
+      .icon_10_generic_list {
+        background-image: asset-data-url('drive_icons/icon_10_generic_list.png');
+      }
+      .icon_10_script_list {
+        background-image: asset-data-url('drive_icons/icon_10_script_list.png');
+      }
+      .icon_11_drawing_list {
+        background-image: asset-data-url('drive_icons/icon_11_drawing_list.png');
+      }
+      .icon_11_presentation_list {
+        background-image: asset-data-url('drive_icons/icon_11_presentation_list.png');
+      }
+      .icon_10_pdf_list {
+        background-image: asset-data-url('drive_icons/icon_10_pdf_list.png');
+      }
+      .icon_11_document_list {
+        background-image: asset-data-url('drive_icons/icon_11_document_list.png');
+      }
+      .icon_11_form_list {
+        background-image: asset-data-url('drive_icons/icon_11_form_list.png');
+      }
+      .icon_11_spreadsheet_list {
+        background-image: asset-data-url('drive_icons/icon_11_spreadsheet_list.png');
+      }
+      .icon_11_script_list {
+        background-image: asset-data-url('drive_icons/icon_11_script_list.png');
+      }
+
+      .bdrive-icon {
+        padding: 10px;
+        margin-top: 5px;
+        margin-right: 3px;
+        float: left;
+      }
       i {
         color: $cc-color-popover-icon;
         margin-right: 3px;

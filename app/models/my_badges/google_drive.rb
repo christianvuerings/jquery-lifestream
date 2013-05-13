@@ -45,6 +45,7 @@ module MyBadges
                 item = {
                   title: entry["title"],
                   link: entry["alternateLink"],
+                  icon_class: process_icon(entry['iconLink']),
                   modified_time: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
                   editor: entry["lastModifyingUserName"],
                   change_state: handle_change_state(entry)
@@ -66,6 +67,24 @@ module MyBadges
         response[:count] = response[:count].to_s + "+"
       end
       response
+    end
+
+    def process_icon(icon_link)
+      return '' unless icon_link.present?
+      begin
+        file_baseclass = File.basename(URI.parse(icon_link).path, '.png')
+        raise TypeError, 'Not a png file' if file_baseclass.index('.').present?
+        drive_icons_list = Rails.cache.fetch('drive_icons', expires_in: Settings.cache.maximum_expires_in) {
+          raw_list = Dir.glob(File.join(Rails.root, 'app/assets/images/drive_icons/', '*.png'))
+          raw_list.select! {|filename| File.basename(filename).rindex('.png').present? }
+          raw_list.map {|filename| File.basename(filename, ".png")}
+        }
+        raise ArgumentError, 'icon does not exist in drive_icons' unless drive_icons_list.include?(file_baseclass)
+        file_baseclass
+      rescue Exception => e
+        Rails.logger.warn "#{self.class.name} could not parse icon basename from link #{icon_link}: #{e}"
+        ''
+      end
     end
 
     def handle_change_state(entry)
