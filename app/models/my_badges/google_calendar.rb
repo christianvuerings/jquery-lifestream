@@ -1,3 +1,5 @@
+require 'mail'
+
 module MyBadges
   class GoogleCalendar
     include MyBadges::BadgesModule, DatedFeed
@@ -9,12 +11,30 @@ module MyBadges
 
     def fetch_counts(params = {})
       @google_mail ||= Oauth2Data.get_google_email(@uid)
+      @rewrite_url ||= !(Mail::Address.new(@google_mail).domain =~ /berkeley.edu/).nil?
       self.class.fetch_from_cache(@uid) do
         internal_fetch_counts params
       end
     end
 
     private
+
+    # Because normal google accounts are in a separate domain from berkeley.edu google accounts,
+    # there are issues with multiple logged in google sessions which triggers some rather unrecoverable
+    # errors on when clicking off to the remote link. This should help with the problem by enforcing
+    # a specific domain restriction, based on the stored oauth token. See CLC-1765
+    # (https://jira.media.berkeley.edu/jira/browse/CLC-1765) and
+    # CLC-1762 (https://jira.media.berkeley.edu/jira/browse/CLC-1762)
+    def handle_url(url_link)
+      return url_link unless @rewrite_url
+      query_params = Rack::Utils.parse_query(URI.parse(url_link).query)
+      if (eid = query_params["eid"]).blank?
+        Rails.logger.warn "#{self.class.name} unable to parse eid from htmlLink #{url_link}"
+        url_link
+      else
+        "https://calendar.google.com/a/berkeley.edu?eid=#{eid}"
+      end
+    end
 
     def internal_fetch_counts(params = {})
       google_proxy = GoogleEventsListProxy.new(user_id: @uid)
@@ -30,7 +50,7 @@ module MyBadges
           if modified_entries[:count] < @count_limiter
             begin
               event = {
-                :link => entry["htmlLink"],
+                :link => handle_url(entry["htmlLink"]),
                 :title => entry["summary"],
                 :start_time => verify_and_format_date(entry["start"]),
                 :end_time => verify_and_format_date(entry["end"]),
@@ -40,8 +60,8 @@ module MyBadges
               consolidate_all_day_event_key!(event)
               event.merge! event_state_fields(entry)
               modified_entries[:items] << event
-            rescue Exception
-              Rails.logger.warn "#{self.class.name} could not process entry: #{entry}"
+            rescue Exception => e
+              Rails.logger.warn "#{self.class.name} could not process entry: #{entry} - #{e}"
               next
             end
           end

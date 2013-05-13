@@ -19,6 +19,7 @@ class GoogleEventsListProxy < GoogleEventsProxy
       :updatedMin => updateMin.iso8601,
       :fields => 'items(htmlLink,created,updated,creator,summary,start,end)'
     )
+    optional_params.select! {|k,v| !v.nil? }
     request :api => "calendar", :resource => "events", :method => "list", :params => optional_params, :vcr_id => "_events_feed",
             :page_limiter => 1
   end
