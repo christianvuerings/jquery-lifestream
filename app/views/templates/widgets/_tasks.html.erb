@@ -44,7 +44,7 @@
       </div>
 
       <div data-ng-switch-when="scheduled">
-        <div data-ng-init="overdueTasks = (tasks | orderBy:'due_date.epoch' | filter:filterOverdue)">
+        <div>
           <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
           <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
             <li
@@ -58,7 +58,7 @@
           </p>
         </div>
 
-        <div data-ng-init="dueTodayTasks = (tasks | orderBy:'due_date.epoch' | filter:filterDueToday)">
+        <div>
           <h3 class="cc-widget-tasks-section-label">Due Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
           <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
             <li
@@ -72,7 +72,7 @@
           </p>
         </div>
 
-        <div data-ng-init="dueThisWeekTasks = (tasks | orderBy:'due_date.epoch' | filter:filterDueThisWeek)">
+        <div>
           <h3 class="cc-widget-tasks-section-label">Due This Week <span class="cc-widget-tasks-section-label-count" data-ng-bind="dueThisWeekTasks.length"></span></h3>
           <ul class="cc-widget-tasks-list">
             <li
@@ -86,7 +86,7 @@
           </p>
         </div>
 
-        <div data-ng-init="dueNextWeekTasks = (tasks | orderBy:'due_date.epoch' | filter:filterDueNextWeek)">
+        <div>
           <h3 class="cc-widget-tasks-section-label">Due Next Week <span class="cc-widget-tasks-section-label-count" data-ng-bind="dueNextWeekTasks.length"></span></h3>
           <ul class="cc-widget-tasks-list">
             <li
@@ -101,7 +101,7 @@
         </div>
       </div>
 
-      <div data-ng-switch-when="unscheduled" data-ng-init="unscheduledTasks = (tasks | orderBy:'updated' | filter:filterUnScheduled)">
+      <div data-ng-switch-when="unscheduled">
         <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> </h3>
         <ul class="cc-widget-tasks-list">
           <li
@@ -115,7 +115,7 @@
         </p>
       </div>
 
-      <div data-ng-switch-when="completed" data-ng-init="completedTasks = (tasks | orderBy:'completed_date.epoch':true | filter:{status:'completed'})">
+      <div data-ng-switch-when="completed">
         <h3 class="cc-widget-tasks-section-label">Total <span class="cc-widget-tasks-section-label-count" data-ng-bind="completedTasks.length"></span> <span class="cc-right">Completed</span></h3>
 
         <ul class="cc-widget-tasks-list">

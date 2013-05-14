@@ -14,6 +14,7 @@
       $scope.task_adder_is_processing = false;
       $scope.show_add_task = false;
       $scope.tasks.push(data);
+      $scope.updateTaskLists();
     };
 
     $scope.addTask = function() {

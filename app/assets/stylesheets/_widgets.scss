@@ -6,6 +6,7 @@
 
   > li {
     border-bottom: 1px solid $cc-color-widget-background;
+    list-style-type: none;
     &:last-child {
       border-bottom: none;
     }

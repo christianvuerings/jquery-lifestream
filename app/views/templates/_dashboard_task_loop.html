@@ -19,11 +19,16 @@
       <input type="checkbox"
         data-ng-click="api.util.preventBubble($event)"
         data-ng-change="changeTaskState(task)"
-        data-ng-disabled="task.emitter=='Canvas' || !!task.editor_is_processing"
+        data-ng-disabled="!!task.editor_is_processing"
         data-ng-false-value="needs_action"
         data-ng-model="task.status"
+        data-ng-show="task.emitter=='Google'"
         data-ng-true-value="completed"
       >
+      <div
+        class="cc-icon cc-icon-canvas"
+        data-ng-show="task.emitter=='Canvas'">
+      </div>
     </div>
 
     <div
