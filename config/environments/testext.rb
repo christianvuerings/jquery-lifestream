@@ -44,4 +44,8 @@ Calcentral::Application.configure do
                                                          :namespace => ServerRuntime.get_settings["git_commit"])
   config.cache_store.logger = Logger.new("#{Rails.root}/log/cache-#{Rails.env}_#{Time.now.strftime('%Y-%m-%d')}.log")
   config.cache_store.logger.level = Logger::DEBUG
+
+  # Enable threaded mode
+  config.threadsafe!
+
 end
