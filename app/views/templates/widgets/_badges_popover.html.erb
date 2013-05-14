@@ -74,7 +74,8 @@
             </div>
             <div data-ng-switch-when="bDrive">
               <a class="cc-badgepopover-item-details cc-badgepopover-item-drive" data-ng-href="{{item.link}}">
-                <i class="icon-hdd cc-left icon-muted icon-2x"></i>
+                <i data-ng-hide="item.icon_class" class="icon-hdd cc-left icon-muted icon-2x"></i>
+                <div class="cc-icon bdrive-icon {{item.icon_class}}" data-ng-show="item.icon_class"></div>
                 <div class="cc-badgepopover-item-details-title cc-ellipsis">
                   <span class="cc-popover-link" data-ng-bind="item.title"></span>
                 </div>
