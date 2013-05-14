@@ -4,12 +4,6 @@
   /**
    * Footer controller
    */
-  calcentral.controller('FooterController', ['$scope', function($scope) {
-
-    $scope.currentTime = function() {
-      return new Date();
-    };
-
-  }]);
+  calcentral.controller('FooterController', angular.noop);
 
 })(window.calcentral);

@@ -4,8 +4,7 @@
     <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
     <a href="https://ets.berkeley.edu/help/calcentral">Help</a>
   </div>
-  <div data-ng-click="showInfo=!showInfo" data-cc-accessible-focus-directive class="columns small-7 cc-footer-copyright end">&copy; <span data-ng-bind="currentTime() | date:'yyyy'"></span> UC Regents | <a href="//security.berkeley.edu/policy" data-ng-click="api.util.preventBubble($event)">Usage Policy</a></div>
-
+  <div data-ng-click="showInfo=!showInfo" data-cc-accessible-focus-directive class="columns small-7 cc-footer-copyright end">&copy; <span data-ng-bind="api.date.now | date:'yyyy'"></span> UC Regents | <a href="//security.berkeley.edu/policy" data-ng-click="api.util.preventBubble($event)">Usage Policy</a></div>
 
   <div class="large-12 columns" data-ng-show="showInfo">
     <ul>

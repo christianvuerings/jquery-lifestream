@@ -1,7 +1,21 @@
-.cc-widget-list-icon {
-  background-color: transparent;
-  background-position: 0 2px;
-  background-repeat: no-repeat;
+.cc-widget-list {
+  font-size: 12px;
+  margin: 0;
+  overflow-x: hidden;
+  padding: 0 10px;
+
+  > li {
+    border-bottom: 1px solid $cc-color-widget-background;
+    &:last-child {
+      border-bottom: none;
+    }
+    > a {
+      display: block;
+    }
+  }
+  .cc-icon {
+    margin-left: 10px;
+  }
 }
 .cc-widget-list-subtitle {
   font-size: 11px;
@@ -9,68 +23,60 @@
   margin-left: 21px;
   padding-bottom: 7px;
 }
-.cc-widget-list {
-  margin: 0;
-  max-height: 200px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 0;
-
-  > li {
-    border-bottom: 1px dotted $cc-color-list-border;
-    &:last-child {
-      border-bottom: none;
-    }
-    a {
-      display: block;
-      padding: 4px 0 3px 5px;
-    }
-  }
+.cc-widget-list-light {
+  color: $cc-color-lighter-medium-grey;
 }
-.cc-widget-list-hover {
-  overflow: hidden;
-  &:hover, &:focus {
-    cursor: pointer;
-    .cc-widget-list-hover-title {
-      text-decoration: underline;
-    }
-  }
-}
-.cc-widget-short-title {
-  display: inline-block;
-  font-size: 14px;
-  line-height: 1.25;
-  width: 100%;
-}
-.cc-widget-section-label {
-  clear: both;
-  color: $cc-color-widget-section-label;
-  font-size: 14px;
-  margin: 0;
-}
-.cc-widget-subtitle {
-  color: #515151;
-  font-size: 11px;
+.cc-widget-list-column-left {
+  float: left;
+  margin-right: 5px;
+  min-height: 20px;
+  width: 30px;
 }
 .cc-widget-list-selected {
   background: $cc-color-widget-more-background;
+}
+.cc-widget-list li > a, .cc-widget-list-hover {
+  overflow: hidden;
+  padding: 10px 15px;
+  &:hover, &:focus {
+    background: $cc-color-blue-hover;
+    cursor: pointer;
+    outline: 0;
+    text-decoration: none;
+    i {
+      color: $cc-color-popover-icon-hover;
+    }
+  }
 }
 .cc-widget-text {
   padding: 15px 20px 20px 20px;
 }
 .cc-widget-title {
-  border-bottom: 1px solid $cc-color-border;
+  background: $cc-color-widget-background;
   overflow: hidden;
 
   h2 {
     color: $cc-color-medium-grey;
-    margin: 4px 0 0;
-    padding: 1px 0;
-    font-size: 16px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 5px 10px;
   }
 }
-.cc-widget-title-small {
-  margin-top: 3px;
+.cc-widget-title-transparent {
+  background: transparent;
+  border-bottom: 1px solid $cc-color-widget-background;
+}
+.cc-widget-title-sub {
+  color: $cc-color-lighter-medium-grey;
   font-size: 13px;
-  font-weight: normal;
+  /* Margin will only kick in when there is a float on the span */
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+@media only screen and (max-width: 767px) {
+  .cc-widget-title-sub {
+    margin-top: 0;
+  }
 }

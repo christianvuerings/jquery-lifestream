@@ -1,5 +1,7 @@
 describe('Footer controller', function() {
 
+  'use strict';
+
   var $controller;
   var $scope;
 
@@ -16,10 +18,6 @@ describe('Footer controller', function() {
 
   it('should have a defined footer controller', function() {
     expect(footerController).toBeDefined();
-  });
-
-  it('should have a correct currentTime function', function() {
-    expect($scope.currentTime().getFullYear()).toEqual(new Date().getFullYear());
   });
 
 });

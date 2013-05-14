@@ -7,32 +7,23 @@
     /**
      * Toggle whether an item for a widget should be shown or not
      */
-    var toggleShow = function(item, widget) {
-      item.show = !item.show;
-      analyticsService.trackEvent(['Detailed view', item.show ? 'Open' : 'Close', widget]);
-    };
+    var toggleShow = function(items, item, widget) {
 
-    /**
-     * Check whether there is one item in the list that is shown
-     * @return {Boolean} Will be true when there is one item in the list that is shown
-     */
-    var containsOpen = function(items) {
-      if (!items) {
-        return;
-      }
+      // Toggle the current item
+      item._show = !item._show;
 
-      for(var i = 0; i < items.length; i++){
-        if (items[i].show) {
-          return true;
+      // Hide all the other items
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].$$hashKey !== item.$$hashKey) {
+          items[i]._show = false;
         }
       }
-      return false;
+      analyticsService.trackEvent(['Detailed view', item._show ? 'Open' : 'Close', widget]);
     };
 
     // Expose the methods
     return {
-      toggleShow: toggleShow,
-      containsOpen: containsOpen
+      toggleShow: toggleShow
     };
 
   }]);

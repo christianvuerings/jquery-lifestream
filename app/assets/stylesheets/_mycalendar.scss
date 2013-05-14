@@ -2,61 +2,17 @@
 .cc-widget-mycalendar {
   @include user-select("none");
 
-  &, p {
-    font-size: 12px;
-  }
-  .cc-widget-title .cc-icon {
-    margin-top: 3px;
-  }
-
   /* List */
   .cc-widget-mycalendar-datelist {
-    list-style-type: none;
-    margin: 0;
-    max-height: 200px;
-    overflow: auto;
-    padding: 0;
-
-    p {
-      margin-bottom: 5px;
+    .cc-widget-mycalendar-datelist-time-allday {
+      text-transform: uppercase;
     }
-
-    /* List items */
-    > li {
-      border-bottom: 1px dotted $cc-color-list-border;
-      color: $cc-color-medium-grey;
-      overflow: hidden;
-      &:first-child {
-        margin-top: 10px;
-      }
-      &:last-child {
-        border-bottom: none;
-      }
+    .cc-widget-mycalendar-datelist-time {
+      text-align: right;
     }
-    .cc-widget-list-selected {
-      .cc-widget-mycalendar-datelist-time {
-        color: #232323;
-      }
-    }
-    .cc-widget-mycalendar-isupcoming {
-      background: $cc-color-widget-highlight-background;
-      color: #000;
-    }
-    .cc-widget-mycalendar-startend {
-      line-height: 1.4;
-      margin: 0 0 5px 0;
-      .columns {
-        padding: 0;
-      }
-    }
-  }
-  .cc-widget-mycalendar-containsopen {
-    max-height: 350px;
   }
   .cc-widget-mycalendar-list-attendees {
-    list-style-type: none;
-    margin-bottom: 5px;
-    padding: 0;
+    margin-bottom: 10px;
   }
   .cc-widget-mycalendar-indent {
     margin-left: 5px;
@@ -66,42 +22,18 @@
     color: #232323;
   }
   /* Summary & location */
-  .cc-widget-mycalendar-datelist-summary {
-    line-height: 14px;
-    padding-top: 4px;
-  }
-  .cc-widget-mycalendar-datelist-small {
+  .cc-widget-mycalendar-datelist-location {
     font-size: 10px;
+    margin-top: 2px;
+    text-transform: uppercase;
   }
   .cc-widget-mycalendar-more {
     clear: both;
+    font-size: 0.9em;
     margin-top: 5px;
-    padding-left: 50px;
-  }
-}
-
-/* Time */
-.cc-widget-mycalendar-datelist-time {
-  font-family: 'Arial Narrow', sans-serif;
-  margin-right: 5px;
-
-  .cc-widget-mycalendar-datelist-time-hour {
-    font-size: 29px;
-    line-height: 1.2;
-    text-align: right;
-    width: 30px;
-  }
-  .cc-widget-mycalendar-datelist-time-minutes {
-    font-size: 14px;
-    line-height: 12px;
-    padding-top: 5px;
-  }
-  .cc-widget-mycalendar-datelist-time-ampm {
-    font-size: 11px;
-  }
-  .cc-widget-mycalendar-datelist-time-allday {
-    line-height: 1.7;
-    text-align: right;
-    width: 44px;
+    padding-left: 35px;
+    p {
+      margin-bottom: 10px;
+    }
   }
 }
