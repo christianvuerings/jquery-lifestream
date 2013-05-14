@@ -44,6 +44,7 @@
       if (!data.notes) {
         delete $scope.task.notes;
       }
+      $scope.updateTaskLists();
     };
 
     $scope.editTask = function(task) {

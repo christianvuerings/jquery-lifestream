@@ -5,7 +5,7 @@
   <div class="cc-widget-myclasses-container" data-cc-spinner-directive>
     <div class="cc-widget-mygroups-myclasses-list">
       <ul class="cc-widget-list">
-        <li data-ng-repeat="class in classes" data-ng-show="class.emitter!='Campus'">
+        <li data-ng-repeat="class in classes">
           <a data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
             data-ng-href="{{class.site_url}}">
             <div class="cc-widget-list-column-left">

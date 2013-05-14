@@ -1,15 +1,3 @@
-$cc-color-header: #002e5b;
-$cc-color-header-icon-background: #4a6a8a;
-$cc-color-header-white: #fff;
-$cc-color-popover-border: #d6d6d6;
-$cc-color-popover-calendar: #f6f6f6;
-$cc-color-popover-calendar-week: #2d637f;
-$cc-color-popover-hover: #e6ebef;
-$cc-color-popover-icon: #afc5d2;
-$cc-color-popover-icon-hover: #0a3361;
-$cc-color-popover-text: #797979;
-$cc-color-popover-title-gradient: #e8e8e8;
-
 body {
   /* Masthead */
   > header {
@@ -28,8 +16,10 @@ body {
 /* Header logo */
 .cc-header-logo {
   float: left;
+  height: 40px;
+  padding-top: 8px;
   svg {
-    padding: 9px 10px 0;
+    margin: 0 10px;
   }
 }
 
@@ -39,8 +29,8 @@ body {
   float: right;
 
   .cc-popover-title {
-    background: $cc-color-header-white;
-    @include background(linear-gradient(top, $cc-color-header-white, $cc-color-popover-title-gradient));
+    background: $cc-color-white;
+    @include background(linear-gradient(top, $cc-color-white, $cc-color-popover-title-gradient));
     border-bottom: 1px solid $cc-color-popover-border;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -62,7 +52,7 @@ body {
   }
 
   .cc-popover-items {
-    background-color: $cc-color-header-white;
+    background-color: $cc-color-white;
     list-style-type: none;
     margin-bottom: 10px;
 
@@ -101,7 +91,7 @@ body {
   .cc-badgepopover {
 
     .cc-badgepopover-noitems {
-      background: $cc-color-header-white;
+      background: $cc-color-white;
       border-bottom: 1px solid $cc-color-popover-border;
       padding: 10px;
     }
@@ -115,7 +105,7 @@ body {
         width: 45px;
         .cc-badgepopover-item-calendar-day-of-week {
           background-color: $cc-color-popover-calendar-week;
-          color: $cc-color-header-white;
+          color: $cc-color-white;
           font-size: 11px;
         }
         .cc-badgepopover-item-calendar-day {
@@ -187,7 +177,7 @@ body {
     }
     &:after {
       content: "\f111";
-      color: $cc-color-header-white;
+      color: $cc-color-white;
       font-size: 12px;
       margin-left: 1px;
     }
@@ -195,7 +185,7 @@ body {
   .cc-popover-gear {
     .cc-header-icon {
       &.cc-header-icon-selected {
-        background: $cc-color-header-white;
+        background: $cc-color-white;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         color: $cc-color-popover-text;
@@ -242,11 +232,7 @@ body {
     }
   }
   .cc-popover-academic-status {
-    background: $cc-color-header-white;
+    background: $cc-color-white;
     padding: 15px;
   }
-}
-
-@media only screen and (max-width: 767px) {
-
 }
