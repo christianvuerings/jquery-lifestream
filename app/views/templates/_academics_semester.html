@@ -72,10 +72,11 @@
               data-ng-repeat="course in selected_courses"
             >
               <div class="large-5 small-5 columns" data-ng-bind="course.course_number"></div>
-              <div class="large-3 small-3 columns" data-ng-bind="course.units"></div>
+              <div class="large-3 small-3 columns" data-ng-bind="course.units" data-ng-show="course.units"></div>
+              <div class="large-3 small-3 columns" data-ng-show="!course.units">--</div>
               <div class="large-3 small-3 columns end">
                 <select
-                  data-ng-show="course.grade_option=='Letter'"
+                  data-ng-show="course.grade_option=='Letter' && course.units"
                   data-ng-model="course.estimated_grade"
                   data-ng-change="gpaUpdateCourse(course, course.estimated_grade)"
                   data-ng-options="g.weight as g.grade for g in gradeopts"

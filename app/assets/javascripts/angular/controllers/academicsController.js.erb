@@ -81,7 +81,7 @@
 
       angular.forEach($scope.selected_courses, function(course) {
         // Don't calculate for pass/no-pass courses!
-        if (course.grade_option === 'Letter') {
+        if (course.grade_option === 'Letter' && course.units) {
           course.score = parseFloat(course.estimated_grade, 10) * course.units;
           total_units += parseFloat(course.units, 10);
           total_score += course.score;
