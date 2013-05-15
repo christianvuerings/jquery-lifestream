@@ -455,7 +455,7 @@
           "course_number": "EDUC 140AC",
           "ccn": "23731",
           "title": "Liter:Ind & Soc Dev",
-          "units": "3.0",
+          "units": "",
           "grade_option": "Letter",
           "section": "LEC 001",
           "format": "LEC",
@@ -474,11 +474,22 @@
           "instructor": "GADE, C J"
         },
         {
+          "course_number": "BIO 1A",
+          "ccn": "12345",
+          "title": "Biology for Poets",
+          "units": "4.0",
+          "grade_option": "Letter",
+          "section": "LEC 001",
+          "format": "LEC",
+          "schedule": "MW 3:00P-4:00P",
+          "instructor": "SMITH, J"
+        },
+        {
           "course_number": "PSYCH C120",
           "ccn": "74058",
           "title": "Issues In Cognition",
           "units": "3.0",
-          "grade_option": "P/NP",
+          "grade_option": "Letter",
           "section": "LEC 001",
           "format": "LEC",
           "schedule": "MW 1:00P-2:00P",
