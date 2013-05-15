@@ -100,6 +100,7 @@ cache:
   servers: ["localhost"]
   maximum_expires_in: <%= 48.hours %>
   race_condition_ttl: <%= 10.seconds %>
+  stale_connection_flush_interval: <%= 5.minutes %>
   expiration:
     default: <%= 35.minutes %>
     BearfactsRegblocksProxy: <%= 24.hours %>
