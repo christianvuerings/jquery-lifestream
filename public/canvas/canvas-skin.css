@@ -44,6 +44,10 @@
   background: #45758B;
 }
 
+#header-inner {
+    height: 45px;
+}
+
 #identity {
   box-shadow: none;
 }
@@ -52,6 +56,8 @@
     background: url(/canvas/berkeley-canvas-logo.png) no-repeat;
     width: 136px;
     bottom: 12px;
+    top: auto;
+    left: 16px;
 }
 
 #main {
