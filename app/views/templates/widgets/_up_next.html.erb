@@ -47,7 +47,7 @@
               <li data-ng-repeat="attendee in item.attendees" class="cc-ellipsis" data-ng-bind="attendee"></li>
             </ul>
             <p class="cc-widget-mycalendar-indent">
-              <a class="cc-button" href="{{item.html_link}}" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
+              <a class="cc-button" data-ng-href="{{item.html_link}}" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
             </p>
           </div>
         </div>

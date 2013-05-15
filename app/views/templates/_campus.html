@@ -38,7 +38,7 @@
         <h3 data-ng-show="navitem.label">{{navitem.label}}</h3>
         <ul>
           <li data-ng-repeat="category in navitem.categories" data-ng-show="topcategories[category.name]">
-            <a data-ng-class="{'cc-page-campus-navigation-active':(currentTopCategory==category.name)}" href="/campus/{{category.id}}">{{category.name}}</a>
+            <a data-ng-class="{'cc-page-campus-navigation-active':(currentTopCategory==category.name)}" data-ng-href="/campus/{{category.id}}">{{category.name}}</a>
           </li>
         </ul>
       </div>
