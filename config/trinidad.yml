@@ -1,6 +1,11 @@
 environment: production
-jruby_min_runtimes: 1
-jruby_max_runtimes: 1
+jruby_min_runtimes: 10
+jruby_max_runtimes: 10
+
+http:
+  maxKeepAliveRequests: 100
+  keepAliveTimeout: 2000
+  connectionTimeout: 2000
 
 public:
   root: public
