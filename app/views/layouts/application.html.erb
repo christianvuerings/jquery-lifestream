@@ -11,8 +11,8 @@
 
   <noscript><meta http-equiv="Refresh" content="0; URL=/enable-javascript.html"></noscript>
 
-  <link rel="icon" href="/assets/favicon.png" type="image/png" />
-  <link rel="shortcut icon" href="/assets/favicon.ico" />
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= favicon_link_tag 'favicon.png', :rel => 'icon', :type => 'image/png' %>
 
   <!-- Included CSS Files -->
   <%= stylesheet_link_tag "application" %>

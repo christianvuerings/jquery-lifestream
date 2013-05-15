@@ -52,5 +52,5 @@ Calcentral::Application.routes.draw do
   # We need this because we use html5mode=true
   #
   # This should ALWAYS be the last rule on the routes list!
-  match '/*url' => 'bootstrap#index'
+  match '/*url' => 'bootstrap#index', :defaults => { :format => 'html' }
 end
