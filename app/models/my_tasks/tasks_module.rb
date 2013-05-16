@@ -34,20 +34,14 @@ module MyTasks
         due = due_date.to_i
         now = now_time.to_i
         tomorrow = starting_date.advance(:days => 1).to_i
-        end_of_this_week = starting_date.sunday.to_i
         end_of_next_week = starting_date.sunday.advance(:weeks => 1).to_i
 
         if due < now
           bucket = "Overdue"
         elsif due >= now && due < tomorrow
-          bucket = "Due Today"
-        elsif due >= tomorrow && due <= end_of_this_week
-          bucket = "Due This Week"
-        elsif due > end_of_this_week && due <= end_of_next_week
-          bucket = "Due Next Week"
-        else
-          # Too far in the future, drop the event
-          bucket = "far future"
+          bucket = "Today"
+        elsif due >= tomorrow
+          bucket = "Future"
         end
 
         Rails.logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{starting_date}, now = #{now_time}; formatted entry = #{formatted_entry}"
@@ -71,6 +65,19 @@ module MyTasks
 
     def expire_cache(uid)
       self.class.expire uid
+    end
+
+    def push_if_feed_has_room!(formatted_entry, tasks_feed, future_count)
+      # Future bucket has a limit of 10 tasks
+      if formatted_entry["bucket"] == "Future"
+        if future_count < 10
+          tasks_feed.push(formatted_entry)
+          return 1
+        end
+      else
+        tasks_feed.push(formatted_entry)
+      end
+      0
     end
   end
 end

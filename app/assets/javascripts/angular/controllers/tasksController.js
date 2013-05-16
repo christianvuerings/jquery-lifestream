@@ -12,8 +12,7 @@
     $scope.updateTaskLists = function() {
       $scope.overdueTasks = $filter('orderBy')($scope.tasks.filter(filterOverdue), 'due_date.epoch');
       $scope.dueTodayTasks = $filter('orderBy')($scope.tasks.filter(filterDueToday), 'due_date.epoch');
-      $scope.dueThisWeekTasks = $filter('orderBy')($scope.tasks.filter(filterDueThisWeek), 'due_date.epoch');
-      $scope.dueNextWeekTasks = $filter('orderBy')($scope.tasks.filter(filterDueNextWeek), 'due_date.epoch');
+      $scope.futureTasks = $filter('orderBy')($scope.tasks.filter(filterFuture), 'due_date.epoch');
       $scope.unscheduledTasks = $filter('orderBy')($scope.tasks.filter(filterUnScheduled), 'updated');
       $scope.completedTasks = $filter('orderBy')($scope.tasks.filter(filterCompleted), 'completed_date.epoch', true);
     };
@@ -125,15 +124,11 @@
     };
 
     var filterDueToday = function(task) {
-      return (task.status !== 'completed' && task.bucket === 'Due Today');
+      return (task.status !== 'completed' && task.bucket === 'Today');
     };
 
-    var filterDueThisWeek = function(task) {
-      return (task.status !== 'completed' && task.bucket === 'Due This Week');
-    };
-
-    var filterDueNextWeek = function(task) {
-      return (task.status !== 'completed' && task.bucket === 'Due Next Week');
+    var filterFuture = function(task) {
+      return (task.status !== 'completed' && task.bucket === 'Future');
     };
 
     var filterUnScheduled = function(task) {

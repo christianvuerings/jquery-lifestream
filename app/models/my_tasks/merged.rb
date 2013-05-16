@@ -11,6 +11,7 @@ module MyTasks
       #To avoid issues with tz, use DateTime instead of Date (http://www.elabs.se/blog/36-working-with-time-zones-in-ruby-on-rails)
       @starting_date = Time.zone.today.to_time_in_current_zone.to_datetime
       @now_time = Time.zone.now
+      @future_count = 0
     end
 
     def init
@@ -31,7 +32,9 @@ module MyTasks
         if (is_acting_as_nonfake_user?) && !value_hash[:pseudo_enabled]
           next
         end
+        value_hash[:source].future_count = @future_count
         tasks += value_hash[:source].fetch_tasks
+        @future_count += value_hash[:source].future_count
       end
       logger.debug "#{self.class.name} get_feed is #{tasks.inspect}"
       {"tasks" => tasks}

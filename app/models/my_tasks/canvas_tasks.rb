@@ -1,11 +1,13 @@
 module MyTasks
   class CanvasTasks
     include MyTasks::TasksModule
+    attr_accessor :future_count
 
     def initialize(uid, starting_date)
       @uid = uid
       @starting_date = starting_date
       @now_time = Time.zone.now
+      @future_count = 0
     end
 
     def fetch_tasks
@@ -51,7 +53,7 @@ module MyTasks
             end
 
             Rails.logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-            tasks.push(formatted_entry)
+            @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
           end
         end
       end
@@ -79,7 +81,7 @@ module MyTasks
             bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
             formatted_entry["bucket"] = bucket
             Rails.logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-            tasks.push(formatted_entry)
+            @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
           end
         end
       end
