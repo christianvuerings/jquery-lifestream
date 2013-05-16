@@ -1,3 +1,5 @@
+require 'csv'
+
 module SIS
   class PopulateLectureInstanceEnrollment
 
@@ -71,7 +73,7 @@ module SIS
       return if student_uid.empty?
       person_details = CampusData.get_person_attributes student_uid
       new_entry = {
-        "user_id" => "USER:#{student_uid}",
+        "user_id" => "#{student_uid}",
         "login_id" => student_uid,
         "first_name" => person_details["first_name"],
         "last_name" => person_details["last_name"],
