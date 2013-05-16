@@ -46,7 +46,15 @@
 
       <div class="row">
         <div class="large-2 small-4 columns cc-academics-empasize">Units</div>
-        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.units"></div>
+        <div
+          data-ng-show="selected_course.units"
+          class="large-4 small-8 columns end"
+          data-ng-bind="selected_course.units">
+        </div>
+        <div
+          data-ng-show="!selected_course.units"
+          class="large-4 small-8 columns end">--
+        </div>
       </div>
 
       <div class="row">
