@@ -59,7 +59,7 @@
         </div>
 
         <div>
-          <h3 class="cc-widget-tasks-section-label">Due Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
+          <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
           <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
             <li
               data-ng-repeat="task in dueTodayTasks"
@@ -73,32 +73,19 @@
         </div>
 
         <div>
-          <h3 class="cc-widget-tasks-section-label">Due This Week <span class="cc-widget-tasks-section-label-count" data-ng-bind="dueThisWeekTasks.length"></span></h3>
+          <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
           <ul class="cc-widget-tasks-list">
             <li
-              data-ng-repeat="task in dueThisWeekTasks"
+              data-ng-repeat="task in futureTasks"
               data-ng-class="{'cc-widget-list-selected': task._show}">
               <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
           </ul>
-          <p data-ng-show="!dueThisWeekTasks.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are due this week.
+          <p data-ng-show="!futureTasks.length" class="cc-widget-text">
+            There are currently no {{tasks_mode}} tasks/assignments that are due in the future.
           </p>
         </div>
 
-        <div>
-          <h3 class="cc-widget-tasks-section-label">Due Next Week <span class="cc-widget-tasks-section-label-count" data-ng-bind="dueNextWeekTasks.length"></span></h3>
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in dueNextWeekTasks"
-              data-ng-class="{'cc-widget-list-selected': task._show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!dueNextWeekTasks.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are due next week.
-          </p>
-        </div>
       </div>
 
       <div data-ng-switch-when="unscheduled">

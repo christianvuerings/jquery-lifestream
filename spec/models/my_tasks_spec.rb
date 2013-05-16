@@ -36,15 +36,14 @@ describe "MyTasks" do
 
       # Counts for task types in VCR recording
       overdue_counter = 5
-      # On Sundays, no "Due This Week" tasks can escape the "Due Today" bucket.
+      # On Sundays, no "Future" tasks can escape the "Today" bucket.
       if Time.zone.today.sunday?
         today_counter = 7
-        this_week_counter = 0
+        future_counter = 7
       else
         today_counter = 2
-        this_week_counter = 5
+        future_counter = 10
       end
-      next_week_counter = 7
       unscheduled_counter = 1
 
       valid_feed["tasks"].each do |task|
@@ -52,18 +51,16 @@ describe "MyTasks" do
         task["source_url"].blank?.should == false
 
         # Whitelist allowed property strings
-        whitelist = task["bucket"] =~ (/(Overdue|Due\ Today|Due\ This\ Week|Due\ Next\ Week|Unscheduled)$/i)
+        whitelist = task["bucket"] =~ (/(Overdue|Today|Future|Unscheduled)$/i)
         whitelist.should_not be_nil
 
         case task["bucket"]
           when "Overdue"
             overdue_counter -= 1
-          when "Due Today"
+          when "Today"
             today_counter -= 1
-          when "Due This Week"
-            this_week_counter -= 1
-          when "Due Next Week"
-            next_week_counter -= 1
+          when "Future"
+            future_counter -= 1
           when "Unscheduled"
             unscheduled_counter -= 1
         end
@@ -87,8 +84,7 @@ describe "MyTasks" do
 
       overdue_counter.should == 0
       today_counter.should == 0
-      this_week_counter.should == 0
-      next_week_counter.should == 0
+      future_counter.should == 0
       unscheduled_counter.should == 0
     ensure
       Time.zone = original_time_zone

@@ -2,11 +2,13 @@
 module MyTasks
   class GoogleTasks
     include MyTasks::TasksModule
+    attr_accessor :future_count
 
     def initialize(uid, starting_date)
       @uid = uid
       @starting_date = starting_date
       @now_time = Time.zone.now
+      @future_count = 0
     end
 
     def fetch_tasks
@@ -20,7 +22,7 @@ module MyTasks
           response_page.data["items"].each do |entry|
             next if entry["title"].blank?
             formatted_entry = format_google_task_response(entry)
-            tasks.push(formatted_entry) unless formatted_entry["bucket"] == "far future"
+            @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
           end
         end
         tasks
