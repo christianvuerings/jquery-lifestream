@@ -25,7 +25,7 @@
       "name": "Physics for Scientists and Engineers",
       "course_code": "PHYSICS 7B",
       "id": "cddb1acd-3e57-4f6a-9e66-a27a9a59b55f",
-      "emitter": "bSpace",
+      "emitter": "Campus",
       "color_class": "bspace-class"
     },
     {
@@ -39,7 +39,7 @@
       "name": "Biology for Poets",
       "course_code": "Biology",
       "id": "832071",
-      "emitter": "Canvas",
+      "emitter": "Campus",
       "color_class": "canvas-class"
     },
     {

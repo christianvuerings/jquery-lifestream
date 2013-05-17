@@ -11,7 +11,12 @@
             <div class="cc-widget-list-column-left">
               <div
                 class="cc-icon"
-                data-ng-class="{true:'cc-icon-canvas',false:'cc-icon-bspace'}[class.emitter=='Canvas']">
+                data-ng-class="{
+                  'bSpace':'cc-icon-bspace',
+                  'Campus':'icon-book',
+                  'Canvas':'cc-icon-canvas'
+                }
+                [class.emitter]">
               </div>
             </div>
             <strong class="cc-ellipsis" data-ng-bind="class.course_code"></strong>
