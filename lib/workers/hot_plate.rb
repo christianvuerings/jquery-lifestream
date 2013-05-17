@@ -1,6 +1,6 @@
 class HotPlate
 
-  unless Rails.env.test?
+  unless Rails.env.test? || Rails.env.testext?
     include Celluloid
   end
   include ActiveRecordHelper
