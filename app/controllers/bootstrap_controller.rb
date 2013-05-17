@@ -3,14 +3,9 @@ class BootstrapController < ApplicationController
   before_filter :check_databases_alive
   layout 'application'
   caches_action :index, :layout => false
-  respond_to :html
 
   def index
-    respond_to do |t|
-      t.html do
-        @server_settings = ServerRuntime.get_settings
-      end
-    end
+    respond_to :html
   end
 
   private

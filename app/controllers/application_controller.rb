@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :get_settings
   after_filter :access_log
 
   def authenticate
@@ -36,6 +37,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def get_settings
+    @server_settings = ServerRuntime.get_settings
+  end
 
   def access_log
     # HTTP_X_FORWARDED_FOR is the client's IP when we're behind Apache; REMOTE_ADDR otherwise
