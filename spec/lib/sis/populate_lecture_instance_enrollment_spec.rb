@@ -32,7 +32,7 @@ describe 'PopulateLectureInstanceEnrollment' do
     result =  processor.populate_section_enrollments
     result.is_a?(Hash).should be_true
     if ENV['RAILS_ENV'] == 'test'
-      result[:added_students].should = 1
+      result[:added_students].should == 1
       result[:added_enrollments]["SEC:2013-B-7309"].should == 1
     elsif ENV['RAILS_ENV'] == 'testext'
       result[:added_students].should >= 1
