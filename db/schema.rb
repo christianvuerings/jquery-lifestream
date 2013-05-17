@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013042909416600) do
+ActiveRecord::Schema.define(:version => 2013051723151200) do
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
