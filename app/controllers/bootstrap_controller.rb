@@ -1,7 +1,8 @@
 class BootstrapController < ApplicationController
   include ActiveRecordHelper
   before_filter :check_databases_alive
-  caches_action :index, :cache_path => :cache_path_with_hostname.to_proc
+  layout 'application'
+  caches_action :index, :layout => false
   respond_to :html
 
   def index
@@ -25,7 +26,4 @@ class BootstrapController < ApplicationController
     end
   end
 
-  def cache_path_with_hostname
-    "#{ServerRuntime.get_settings['hostname']}/bootstrap/index"
-  end
 end

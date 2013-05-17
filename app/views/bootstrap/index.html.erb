@@ -1,1 +1,16 @@
-<div data-ng-view></div>
+<%= render 'templates/ieold' %>
+<%= render 'templates/launcher' %>
+<%= render 'templates/navigation' %>
+
+<div
+class="row cc-container-main"
+data-ng-class="{'collapse':(controller_name=='DashboardController')}"
+role="main">
+  <div data-ng-view></div>
+</div>
+
+<%= render 'templates/footer' %>
+<%= render 'templates/all' %>
+
+
+

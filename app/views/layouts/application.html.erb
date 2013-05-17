@@ -26,19 +26,7 @@
   data-ng-click="api.popover.closeAll()"
   data-ng-show="user.isLoaded">
 
-  <%= render 'templates/ieold' %>
-  <%= render 'templates/launcher' %>
-  <%= render 'templates/navigation' %>
-
-  <div
-    class="row cc-container-main"
-    data-ng-class="{'collapse':(controller_name=='DashboardController')}"
-    role="main">
-    <%= yield %>
-  </div>
-
-  <%= render 'templates/footer' %>
-  <%= render 'templates/all' %>
+  <%= yield %>
 
 </body>
 </html>
