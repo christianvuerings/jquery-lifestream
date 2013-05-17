@@ -1,7 +1,10 @@
 class HotPlate
 
-  include Celluloid
+  unless Rails.env.test?
+    include Celluloid
+  end
   include ActiveRecordHelper
+  attr_reader :total_warmups
 
   def initialize
     @total_warmups = 0
@@ -30,11 +33,17 @@ class HotPlate
         purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
 
         visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
+        Rails.logger.info "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
+
         visits.find_in_batches do |batch|
           batch.each do |visit|
             Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
-            UserCacheWarmer.do_warm visit.uid
-            @total_warmups += 1
+            begin
+              UserCacheWarmer.do_warm visit.uid
+              @total_warmups += 1
+            rescue Exception => e
+              Rails.logger.error "#{self.class.name} Got exception while warming cache for user #{visit.uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
+            end
           end
         end
 
