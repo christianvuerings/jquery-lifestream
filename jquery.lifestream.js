@@ -5,7 +5,7 @@
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
  */
-/*globals jQuery, $ */
+/*global jQuery */
 ;(function( $ ){
 
   "use strict";
@@ -87,10 +87,10 @@
           if ( item.html ) {
             $('<li class="'+ settings.classname + '-' +
                item.config.service + '">').data( "name", item.config.service )
-                                           .data( "url", item.url || "#" )
-                                           .data( "time", item.date )
-                                           .append( item.html )
-                                           .appendTo( ul );
+                                          .data( "url", item.url || "#" )
+                                          .data( "time", item.date )
+                                          .append( item.html )
+                                          .appendTo( ul );
           }
         }
 
@@ -144,7 +144,8 @@
       // At then end we call the load method.
       if( !jQuery.tmpl ) {
         jQuery.getScript(
-          "http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js",
+          '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/' +
+          'jquery.tmpl.min.js',
           load);
       } else {
         load();
@@ -160,8 +161,8 @@
    * @return {String} A valid YQL URL
    */
   $.fn.lifestream.createYqlUrl = function( query ) {
-      return ( "http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=" +
-      "store://datatables.org/alltableswithkeys&format=json")
+      return ( 'http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=' +
+      'store://datatables.org/alltableswithkeys&format=json')
         .replace( "__QUERY__" , encodeURIComponent( query ) );
   };
 
@@ -176,7 +177,7 @@
    */
   if(!Object.keys) {
     Object.keys = function(o){
-      if (o !== Object(o)){
+      if (o !== Object(o)) {
         throw new TypeError('Object.keys called on non-object');
       }
       var ret=[],p;
@@ -2273,7 +2274,7 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
         }
 
         if (item.description) {
-          description = item.description.replace(/"/g, "'").replace( /<.+?>/gi, "");
+          description = item.description.replace(/"/g, "'").replace( /<.+?>/gi, '');
         } else {
           description = '';
         }
@@ -2283,7 +2284,9 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
           config: config,
           html: $.tmpl( template[type], {
             url: item.url,
-            description: description,
+            description: item.description ? item.description
+              .replace(/"/g, "'")
+              .replace( /<.+?>/gi, '') : '',
             title: item.title
           })
         });
@@ -2297,7 +2300,7 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
     url: $.fn.lifestream.createYqlUrl('SELECT * FROM xml WHERE ' +
       'url="http://vimeo.com/api/v2/' + config.user + '/likes.xml" OR ' +
       'url="http://vimeo.com/api/v2/' + config.user + '/videos.xml"'),
-    dataType: "jsonp",
+    dataType: 'jsonp',
     success: function( response ) {
       var output = [];
 
@@ -2322,7 +2325,7 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
   // Expose the template.
   // We use this to check which templates are available
   return {
-    "template" : template
+    'template' : template
   };
 
 };
@@ -2435,22 +2438,43 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
 
   var template = $.extend({},
     {
+      uploaded: 'uploaded <a href="${video.player.default}" '
+        + 'title="${video.description}">${video.title}</a>',
       favorited: 'favorited <a href="${video.player.default}" '
         + 'title="${video.description}">${video.title}</a>'
     },
     config.template),
 
-  parseYoutube = function( input ) {
-    var output = [], i = 0, j, item;
+  parseYoutube = function( input, activity ) {
+    var output = [], i = 0, j, item, video, date, templateData;
 
     if(input.data && input.data.items) {
       j = input.data.items.length;
       for( ; i<j; i++) {
         item = input.data.items[i];
+
+        switch (activity) {
+          case 'favorited':
+            video = item.video;
+            date = item.created;
+            templateData = item;
+            break;
+          case 'uploaded':
+            video = item;
+            date = video.uploaded;
+            templateData = {video: video};
+            break;
+        }
+
+        // Don't add unavailable items (private, rejected, failed)
+        if (!video.player && !video.player.default) {
+          continue;
+        }
+
         output.push({
-          date: new Date(item.created),
+          date: new Date(date),
           config: config,
-          html: $.tmpl( template.favorited, item )
+          html: $.tmpl( template[activity], templateData )
         });
       }
     }
@@ -2463,7 +2487,16 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
       + "/favorites?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {
-      callback(parseYoutube(data));
+      callback(parseYoutube(data, 'favorited'));
+    }
+  });
+
+  $.ajax({
+    url: "http://gdata.youtube.com/feeds/api/users/" + config.user
+      + "/uploads?v=2&alt=jsonc",
+    dataType: 'jsonp',
+    success: function( data ) {
+      callback(parseYoutube(data, 'uploaded'));
     }
   });
 
@@ -2474,7 +2507,8 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.zotero = function( config, callback ) {
 
   var template = $.extend({},
