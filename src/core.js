@@ -5,7 +5,7 @@
  *
  * Copyright 2011, Christian Vuerings - http://denbuzze.com
  */
-/*globals jQuery, $ */
+/*global jQuery */
 ;(function( $ ){
 
   "use strict";
@@ -87,10 +87,10 @@
           if ( item.html ) {
             $('<li class="'+ settings.classname + '-' +
                item.config.service + '">').data( "name", item.config.service )
-                                           .data( "url", item.url || "#" )
-                                           .data( "time", item.date )
-                                           .append( item.html )
-                                           .appendTo( ul );
+                                          .data( "url", item.url || "#" )
+                                          .data( "time", item.date )
+                                          .append( item.html )
+                                          .appendTo( ul );
           }
         }
 
@@ -144,7 +144,8 @@
       // At then end we call the load method.
       if( !jQuery.tmpl ) {
         jQuery.getScript(
-          "http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js",
+          '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/' +
+          'jquery.tmpl.min.js',
           load);
       } else {
         load();
@@ -160,8 +161,8 @@
    * @return {String} A valid YQL URL
    */
   $.fn.lifestream.createYqlUrl = function( query ) {
-      return ( "http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=" +
-      "store://datatables.org/alltableswithkeys&format=json")
+      return ( 'http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=' +
+      'store://datatables.org/alltableswithkeys&format=json')
         .replace( "__QUERY__" , encodeURIComponent( query ) );
   };
 
@@ -176,7 +177,7 @@
    */
   if(!Object.keys) {
     Object.keys = function(o){
-      if (o !== Object(o)){
+      if (o !== Object(o)) {
         throw new TypeError('Object.keys called on non-object');
       }
       var ret=[],p;
