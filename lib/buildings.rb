@@ -18,6 +18,11 @@ class Buildings
   private
 
   def self.buildings
+
+    # Building data sourced from BearFacts and
+    # http://registrar.berkeley.edu/Default.aspx?PageID=bldgabb.html
+    # TEMPxx buildings at end of hash are known campus locations with good coords
+    # but no official db entries, to be integrated in future if useful.
     @buildings ||= {
       "2224 PIEDMNT" => {
         "display" => "2224 Piedmont",
@@ -109,6 +114,16 @@ class Buildings
         "lat" => "37.872979999999998",
         "lon" => "-122.25705000000001"
       },
+      "CAMPBELL ANX" => {
+        "display" => "Campbell Annex",
+        "lat" => "",
+        "lon" => ""
+      },
+      "CHANNING CTS" => {
+        "display" => "Channing Courts (Ellsworth Street)",
+        "lat" => "37.866367",
+        "lon" => "-122.262447"
+      },
       "CHAVEZ" => {
         "display" => "Caesar E. Chavez Student Center",
         "lat" => "37.86974",
@@ -149,11 +164,6 @@ class Buildings
         "lat" => "37.870579999999997",
         "lon" => "-122.26040999999999"
       },
-      "DWINELL" => {
-        "display" => "Dwinelle Hall",
-        "lat" => "37.870579999999997",
-        "lon" => "-122.26040999999999"
-      },
       "DWINELLE" => {
         "display" => "Dwinelle Hall",
         "lat" => "37.870579999999997",
@@ -179,15 +189,40 @@ class Buildings
         "lat" => "37.873629999999999",
         "lon" => "-122.25783"
       },
+      "FACULTY CLUB" => {
+        "display" => "The Faculty Club",
+        "lat" => "37.872194",
+        "lon" => "-122.255838"
+      },
       "FOOTHILL" => {
         "display" => "Foothill Student Housing",
         "lat" => "37.875429",
         "lon" => "-122.255763"
       },
+      "FOOTHILL 1" => {
+        "display" => "Foothill Residential Complex Building 1",
+        "lat" => "",
+        "lon" => ""
+      },
+      "FOOTHILL 4" => {
+        "display" => "Foothill Residential Complex Building 4",
+        "lat" => "",
+        "lon" => ""
+      },
+      "GARDNERSTACK" => {
+        "display" => "David Gardner Stacks (Doe Library)",
+        "lat" => "37.872439999999997",
+        "lon" => "-122.25955999999999"
+      },
       "GIANNINI" => {
         "display" => "Giannini Hall",
         "lat" => "37.873570000000001",
         "lon" => "-122.26233999999999"
+      },
+      "GIAUQUE" => {
+        "display" => "William F. Giauque Hall",
+        "lat" => "",
+        "lon" => ""
       },
       "GILMAN" => {
         "display" => "Gilman Hall",
@@ -209,6 +244,16 @@ class Buildings
         "lat" => "37.871690000000001",
         "lon" => "-122.25384"
       },
+      "HAAS PAVIL" => {
+        "display" => "Haas Pavilion",
+        "lat" => "37.870246",
+        "lon" => "-122.262039"
+      },
+      "HANDBALL CTS" => {
+        "display" => "Handball Courts (RSF)",
+        "lat" => "",
+        "lon" => ""
+      },
       "HARGROVE LIB" => {
         "display" => "Hargrove Music Library",
         "lat" => "37.870440000000002",
@@ -224,10 +269,20 @@ class Buildings
         "lat" => "37.86947",
         "lon" => "-122.25817000000001"
       },
+      "HEARST EPOOL" => {
+        "display" => "Hearst East Pool",
+        "lat" => "37.86947",
+        "lon" => "-122.25817000000001"
+      },
       "HEARST GYM" => {
         "display" => "Hearst Gym",
         "lat" => "37.86956",
         "lon" => "-122.25687000000001"
+      },
+      "HEARSTGYMCTS" => {
+        "display" => "Hearst Gym Tennis Courts",
+        "lat" => "",
+        "lon" => ""
       },
       "HEARST MIN" => {
         "display" => "Hearst Memorial Mining Building",
@@ -268,6 +323,11 @@ class Buildings
         "display" => "International House",
         "lat" => "37.869750000000003",
         "lon" => "-122.25145000000001"
+      },
+      "KERR CAMPUS" => {
+        "display" => "Clark Kerr Campus Building 1",
+        "lat" => "37.864326",
+        "lon" => "-122.248851"
       },
       "KOSHLAND" => {
         "display" => "Koshland Hall",
@@ -394,6 +454,16 @@ class Buildings
         "lat" => "37.869036",
         "lon" => "-122.257529"
       },
+      "PAULEY" => {
+        "display" => "Pauley Ballroom (ASUC)",
+        "lat" => "37.869315",
+        "lon" => "-122.256868"
+      },
+      "PB GREENHOUS" => {
+        "display" => "Plant and Microbial Biology Greenhouse",
+        "lat" => "",
+        "lon" => ""
+      },
       "PIMENTEL" => {
         "display" => "Pimental Hall",
         "lat" => "37.87341",
@@ -404,10 +474,20 @@ class Buildings
         "lat" => "37.869427",
         "lon" => "-122.261322"
       },
+      "RAQBALL CTS" => {
+        "display" => "Racquetball Courts (RSF)",
+        "lat" => "",
+        "lon" => ""
+      },
       "REC SPRT FAC" => {
         "display" => "Recreational Sports Facility",
         "lat" => "37.868549999999999",
         "lon" => "-122.26276"
+      },
+      "RFS 112" => {
+        "display" => "Richmond Field Station 112",
+        "lat" => "37.91854",
+        "lon" => "-122.329845"
       },
       "RSF FLDHOUSE" => {
         "display" => "RSF Field House",
@@ -418,6 +498,11 @@ class Buildings
         "display" => "Soda Hall",
         "lat" => "37.87567",
         "lon" => "-122.25870999999999"
+      },
+      "SOUTH ANNEX" => {
+        "display" => "South Annex",
+        "lat" => "",
+        "lon" => ""
       },
       "SOUTH HALL" => {
         "display" => "South Hall",
@@ -433,6 +518,11 @@ class Buildings
         "display" => "Sproul Hall",
         "lat" => "37.869599999999998",
         "lon" => "-122.25878"
+      },
+      "SQUASH CTS" => {
+        "display" => "Squash Courts (RSF)",
+        "lat" => "",
+        "lon" => ""
       },
       "STANLEY" => {
         "display" => "Stanley Hall",
@@ -463,6 +553,96 @@ class Buildings
         "display" => "Tang Center, University Health Services",
         "lat" => "37.867835000000002",
         "lon" => "-122.263843"
+      },
+      "TOLMAN" => {
+        "display" => "Tolman Hall",
+        "lat" => "37.874110000000002",
+        "lon" => "-122.26392"
+      },
+      "UCB ART MUSE" => {
+        "display" => "Berkeley Art Museum",
+        "lat" => "37.86871000000001",
+        "lon" => "-122.255667"
+      },
+      "UNIT I CHNY" => {
+        "display" => "Unit 1 Residence Hall - Cheney",
+        "lat" => "37.868086",
+        "lon" => "-122.255602"
+      },
+      "UNIT I CHRST" => {
+        "display" => "Unit 1 Residence Hall - Christian",
+        "lat" => "37.868171",
+        "lon" => "-122.255044"
+      },
+      "UNIT I CNTRL" => {
+        "display" => "Residence Hall Unit I Central",
+        "lat" => "37.867638",
+        "lon" => "-122.254347"
+      },
+      "UNIT II CNTRL" => {
+        "display" => "Residence Hall Unit II Central",
+        "lat" => "",
+        "lon" => ""
+      },
+      "UNIT I SLOTT" => {
+        "display" => "Unit 1 Residence Hall - Slottman",
+        "lat" => "37.867544",
+        "lon" => "-122.255237"
+      },
+      "UNIT II TOWL" => {
+        "display" => "Unit 2 Residence Hall - Towle",
+        "lat" => "37.866452",
+        "lon" => "-122.254679"
+      },
+      "UNIT II WADA" => {
+        "display" => "Unit 2 Residence Hall - Wada",
+        "lat" => "37.865783",
+        "lon" => "-122.254862"
+      },
+      "UNIT III DIN" => {
+        "display" => "Residence Hall Unit III Dining",
+        "lat" => "37.867807",
+        "lon" => "-122.260365"
+      },
+      "UNIV HALL" => {
+        "display" => "University Hall",
+        "lat" => "37.87189",
+        "lon" => "-122.26635"
+      },
+      "VALLEY LSB" => {
+        "display" => "Valley Life Sciences Building",
+        "lat" => "37.871479999999998",
+        "lon" => "-122.26211000000001"
+      },
+      "WARREN" => {
+        "display" => "Warren Hall",
+        "lat" => "37.874562",
+        "lon" => "-122.266911"
+      },
+      "WELLMAN" => {
+        "display" => "Wellman Hall",
+        "lat" => "37.873096",
+        "lon" => "-122.262779"
+      },
+      "WHEELER" => {
+        "display" => "Wheeler Hall",
+        "lat" => "37.871290000000002",
+        "lon" => "-122.25914"
+      },
+      "WHEELER AUD" => {
+        "display" => "Wheeler Auditorium",
+        "lat" => "37.871290000000002",
+        "lon" => "-122.25914"
+      },
+      "WURSTER" => {
+        "display" => "Wurster Hall",
+        "lat" => "37.8705",
+        "lon" => "-122.25488"
+      },
+      "ZELLERBACH" => {
+        "display" => "Zellerbach Hall",
+        "lat" => "37.869109999999999",
+        "lon" => "-122.26078"
       },
       "TEMP0" => {
         "display" => "Afro House",
@@ -793,81 +973,6 @@ class Buildings
         "display" => "Naval Architecture Building",
         "lat" => "37.875088",
         "lon" => "-122.258741"
-      },
-      "TOLMAN" => {
-        "display" => "Tolman Hall",
-        "lat" => "37.874110000000002",
-        "lon" => "-122.26392"
-      },
-      "UCB ART MUSE" => {
-        "display" => "Berkeley Art Museum",
-        "lat" => "37.86871000000001",
-        "lon" => "-122.255667"
-      },
-      "UNIT I CHNY" => {
-        "display" => "Unit 1 Residence Hall - Cheney",
-        "lat" => "37.868086",
-        "lon" => "-122.255602"
-      },
-      "UNIT I CHRST" => {
-        "display" => "Unit 1 Residence Hall - Christian",
-        "lat" => "37.868171",
-        "lon" => "-122.255044"
-      },
-      "UNIT I SLOTT" => {
-        "display" => "Unit 1 Residence Hall - Slottman",
-        "lat" => "37.867544",
-        "lon" => "-122.255237"
-      },
-      "UNIT II TOWL" => {
-        "display" => "Unit 2 Residence Hall - Towle",
-        "lat" => "37.866452",
-        "lon" => "-122.254679"
-      },
-      "UNIT II WADA" => {
-        "display" => "Unit 2 Residence Hall - Wada",
-        "lat" => "37.865783",
-        "lon" => "-122.254862"
-      },
-      "UNIV HALL" => {
-        "display" => "University Hall",
-        "lat" => "37.87189",
-        "lon" => "-122.26635"
-      },
-      "VALLEY LSB" => {
-        "display" => "Valley Life Sciences Building",
-        "lat" => "37.871479999999998",
-        "lon" => "-122.26211000000001"
-      },
-      "WARREN" => {
-        "display" => "Warren Hall",
-        "lat" => "37.874562",
-        "lon" => "-122.266911"
-      },
-      "WELLMAN" => {
-        "display" => "Wellman Hall",
-        "lat" => "37.873096",
-        "lon" => "-122.262779"
-      },
-      "WHEELER" => {
-        "display" => "Wheeler Hall",
-        "lat" => "37.871290000000002",
-        "lon" => "-122.25914"
-      },
-      "WHEELER AUD" => {
-        "display" => "Wheeler Auditorium",
-        "lat" => "37.871290000000002",
-        "lon" => "-122.25914"
-      },
-      "WURSTER" => {
-        "display" => "Wurster Hall",
-        "lat" => "37.8705",
-        "lon" => "-122.25488"
-      },
-      "ZELLERBACH" => {
-        "display" => "Zellerbach Hall",
-        "lat" => "37.869109999999999",
-        "lon" => "-122.26078"
       }
     }
   end
