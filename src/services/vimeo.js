@@ -22,7 +22,7 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
         }
 
         if (item.description) {
-          description = item.description.replace(/"/g, "'").replace( /<.+?>/gi, "");
+          description = item.description.replace(/"/g, "'").replace( /<.+?>/gi, '');
         } else {
           description = '';
         }
@@ -32,7 +32,9 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
           config: config,
           html: $.tmpl( template[type], {
             url: item.url,
-            description: description,
+            description: item.description ? item.description
+              .replace(/"/g, "'")
+              .replace( /<.+?>/gi, '') : '',
             title: item.title
           })
         });
@@ -46,7 +48,7 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
     url: $.fn.lifestream.createYqlUrl('SELECT * FROM xml WHERE ' +
       'url="http://vimeo.com/api/v2/' + config.user + '/likes.xml" OR ' +
       'url="http://vimeo.com/api/v2/' + config.user + '/videos.xml"'),
-    dataType: "jsonp",
+    dataType: 'jsonp',
     success: function( response ) {
       var output = [];
 
@@ -71,7 +73,7 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
   // Expose the template.
   // We use this to check which templates are available
   return {
-    "template" : template
+    'template' : template
   };
 
 };
