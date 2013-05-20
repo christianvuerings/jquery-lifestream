@@ -43,91 +43,94 @@
         </div>
       </div>
 
-      <h3>Status and Blocks</h3>
+      <div class="cc-academics-status-and-blocks">
+        <h3>Status and Blocks</h3>
 
-      <h4>Status Type</h4>
-      <div class="row cc-academics-column-labels">
-        <div class="large-4 small-4 columns">Type</div>
-        <div class="large-4 small-4 columns end">Status</div>
-      </div>
-      <div class="row">
-        <div class="large-4 small-4 columns">Registration</div>
-        <div class="large-4 small-4 columns end">
-          <i class="cc-icon"
-            data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
-          </i>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-4 small-4 columns">California Residency</div>
-        <div class="large-4 small-4 columns end">
-          <i class="cc-icon" data-ng-class="{'icon-ok-sign':(user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(user.profile.student_info.california_residency=='needsAction')}"></i>
-          <span data-ng-bind="user.profile.student_info.california_residency.summary"></span>
-        </div>
-      </div>
-
-      <h4>Active Blocks</h4>
-      <div class="row cc-academics-column-labels">
-        <div class="large-4 small-4 columns">Type</div>
-        <div class="large-4 small-4 columns">Reason</div>
-        <div class="large-4 small-4 columns">Blocked</div>
-      </div>
-      <div data-ng-show="academics.regblocks.active_blocks.length">
-        <div
-          class="row"
-          data-ng-repeat="block in academics.regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
-        >
-          <div class="large-4 small-4 columns" data-ng-bind="block.type"></div>
-          <div class="large-4 small-4 columns" data-ng-bind="block.reason"></div>
-          <div class="large-4 small-4 columns" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
-        </div>
-      </div>
-      <div data-ng-show="!academics.regblocks.active_blocks.length">
-        <div class="row">
-          <div class="large-6 columns end">You have no active blocks at this time.</div>
-        </div>
-      </div>
-      <div class="cc-academics-showhide-block-history">
-        <p class="cc-academics-nolink cc-academics-empasize"
-          data-ng-show="!academics.regblocks.inactive_blocks.length">No block history
-        </p>
-        <div data-ng-show="academics.regblocks.inactive_blocks.length">
-          <button
-            class="cc-academics-showhide-text button radius small"
-            data-ng-click="toggleBlockHistory()">
-              <span data-ng-show="!show_block_history">Show block history</span>
-              <span data-ng-show="show_block_history">Hide block history</span>
-          </button>
-        </div>
-      </div>
-      <div class="cc-academics-block-history" data-ng-show="show_block_history">
+        <h4>Status Type</h4>
         <div class="row cc-academics-column-labels">
-          <div class="large-3 small-2 columns">Type</div>
-          <div class="large-3 small-4 columns">Reason</div>
-          <div class="large-2 small-2 columns">Blocked</div>
-          <div class="large-2 small-2 columns end">Cleared</div>
+          <div class="large-4 small-4 columns">Type</div>
+          <div class="large-4 small-4 columns end">Status</div>
         </div>
-        <div
-          class="row"
-          data-ng-repeat="block in academics.regblocks.inactive_blocks | orderBy:'blocked_date.epoch':true">
+        <div class="row">
+          <div class="large-4 small-4 columns">Registration</div>
+          <div class="large-4 small-4 columns end">
+            <i class="cc-icon"
+              data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
+            </i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-4 small-4 columns">California Residency</div>
+          <div class="large-4 small-4 columns end">
+            <i class="cc-icon" data-ng-class="{'icon-ok-sign':(user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(user.profile.student_info.california_residency=='needsAction')}"></i>
+            <span data-ng-bind="user.profile.student_info.california_residency.summary"></span>
+          </div>
+        </div>
+
+        <h4>Active Blocks</h4>
+        <div class="row cc-academics-column-labels">
+          <div class="large-4 small-4 columns">Type</div>
+          <div class="large-4 small-4 columns">Reason</div>
+          <div class="large-4 small-4 columns">Blocked</div>
+        </div>
+        <div data-ng-show="academics.regblocks.active_blocks.length">
           <div
-            class="large-3 small-2 columns"
-            data-ng-bind="block.type || '&nbsp;'">
+            class="row"
+            data-ng-repeat="block in academics.regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
+          >
+            <div class="large-4 small-4 columns" data-ng-bind="block.type"></div>
+            <div class="large-4 small-4 columns" data-ng-bind="block.reason"></div>
+            <div class="large-4 small-4 columns" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
+          </div>
+        </div>
+        <div data-ng-show="!academics.regblocks.active_blocks.length">
+          <div class="row">
+            <div class="large-6 columns end">You have no active blocks at this time.</div>
+          </div>
+        </div>
+        <div class="cc-academics-showhide-block-history">
+          <p class="cc-academics-nolink cc-academics-empasize"
+            data-ng-show="!academics.regblocks.inactive_blocks.length">No block history
+          </p>
+          <div data-ng-show="academics.regblocks.inactive_blocks.length">
+            <button
+              class="cc-academics-showhide-text button radius small"
+              data-ng-click="toggleBlockHistory()">
+                <span data-ng-show="!show_block_history">Show block history</span>
+                <span data-ng-show="show_block_history">Hide block history</span>
+            </button>
+          </div>
+        </div>
+        <div class="cc-academics-block-history" data-ng-show="show_block_history">
+          <div class="row cc-academics-column-labels">
+            <div class="large-3 small-2 columns">Type</div>
+            <div class="large-3 small-4 columns">Reason</div>
+            <div class="large-2 small-2 columns">Blocked</div>
+            <div class="large-2 small-2 columns end">Cleared</div>
           </div>
           <div
-            class="large-3 small-4 columns"
-            data-ng-bind="block.reason || '&nbsp;'">
-          </div>
-          <div
-            class="large-2 small-2 columns"
-            data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
-          </div>
-          <div
-            class="large-2 small-2 columns end"
-            data-ng-bind="block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
+            class="row"
+            data-ng-repeat="block in academics.regblocks.inactive_blocks | orderBy:'blocked_date.epoch':true">
+            <div
+              class="large-3 small-2 columns"
+              data-ng-bind="block.type || '&nbsp;'">
+            </div>
+            <div
+              class="large-3 small-4 columns"
+              data-ng-bind="block.reason || '&nbsp;'">
+            </div>
+            <div
+              class="large-2 small-2 columns"
+              data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
+            </div>
+            <div
+              class="large-2 small-2 columns end"
+              data-ng-bind="block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
+            </div>
           </div>
         </div>
       </div>
+
       <h3>University Requirements</h3>
       <div class="row cc-academics-column-labels">
         <div class="large-4 small-8 columns">Requirement</div>
