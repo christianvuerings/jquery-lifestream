@@ -47,6 +47,8 @@ class CampusUserCoursesProxy < BaseProxy
         enrollments.each do |row|
           if (item = row_to_feed_item(row, previous_id))
             item[:role] = 'Student'
+            item[:unit] = row['unit']
+            item[:pnp_flag] = row['pnp_flag']
             if row['enroll_status'] == 'W'
               item[:waitlist_pos] = row['wait_list_seq_num']
             end
@@ -68,6 +70,7 @@ class CampusUserCoursesProxy < BaseProxy
   end
 
   def row_to_feed_item(row, previous_id)
+    Rails.logger.info "Row = #{row}"
     course_id = "#{row['dept_name']}:#{row['catalog_id']}:#{row['term_yr']}-#{row['term_cd']}"
     if course_id == previous_id
       nil
@@ -80,6 +83,8 @@ class CampusUserCoursesProxy < BaseProxy
           emitter: 'Campus',
           name: row['course_title'],
           color_class: "campus-class",
+          instruction_format:  row['instruction_format'],
+          section_num:  row['section_num'],
           courses: [{
               term_yr: row['term_yr'],
               term_cd: row['term_cd'],
