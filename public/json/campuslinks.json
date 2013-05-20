@@ -925,6 +925,22 @@
       ],
       "name": "bMail",
       "description": "email",
+      "url": "http://bmail.berkeley.edu",
+      "roles": {
+        "staff": true,
+        "student": true,
+        "faculty": true
+      }
+    },
+    {
+      "categories": [
+        {
+          "topcategory": "Communication & Collaboration",
+          "subcategory": "bConnected Tools"
+        }
+      ],
+      "name": "CalMail",
+      "description": "email",
       "url": "http://calmail.berkeley.edu",
       "roles": {
         "staff": true,
