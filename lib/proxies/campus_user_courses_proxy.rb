@@ -20,7 +20,8 @@ class CampusUserCoursesProxy < BaseProxy
   # {
   #    "id": "COG SCI:C102:2013-B",
   #    "course_code": "COG SCI C102",
-  #    "site_url": "http://osoc.berkeley.edu/OSOC/osoc?p_term=SP&x=0&p_classif=--+Choose+a+Course+Classification+--&p_deptname=--+Choose+a+Department+Name+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&y=3&p_course=C102&p_dept=COG+SCI",
+  #    "ccn": "23731"
+  #    "site_url": "/academics/semester/spring-2013/class/12345",
   #    "emitter": "Campus",
   #    "name": "Scientific Approaches to Consciousness",
   #    "color_class": "campus-class",
@@ -33,7 +34,7 @@ class CampusUserCoursesProxy < BaseProxy
   #    "role": "Student", (or "Instructor")
   #    "waitlist_pos": 2
   # },
-  def get_campus_courses()
+  def get_campus_courses
     self.class.fetch_from_cache @uid do
       campus_classes = []
       previous_id = nil
@@ -74,7 +75,8 @@ class CampusUserCoursesProxy < BaseProxy
       {
           id: course_id,
           course_code: "#{row['dept_name']} #{row['catalog_id']}",
-          site_url: course_to_url(row['term_cd'], row['dept_name'], row['catalog_id']),
+          ccn: row['course_cntl_num'],
+          site_url: course_to_url(row['term_cd'], row['term_yr'], row['dept_name'], row['course_cntl_num']),
           emitter: 'Campus',
           name: row['course_title'],
           color_class: "campus-class",
@@ -88,21 +90,18 @@ class CampusUserCoursesProxy < BaseProxy
     end
   end
 
-  # To start with, just point to this year's Online Schedule of Classes, since that is semi-predictable and
-  # has some useful links.
-  def course_to_url(term_cd, department, catalog_id)
+  # Link campus courses to internal class pages for the current semester.
+  # TODO: Update to use full class IDs, not just CCNs
+  def course_to_url(term_cd, term_year, department, ccn)
     term = case term_cd
-             when 'B' then 'SP'
-             when 'C' then 'SU'
-             when 'D' then "FL"
+             when 'B' then 'spring'
+             when 'C' then 'summer'
+             when 'D' then "fall"
              else
-               Rails.logger.warn("Unknown term code #{term_cd} for #{department} #{catalog_id}")
+               Rails.logger.warn("Unknown term code #{term_cd} for #{department} #{ccn}")
                return ''
            end
-    "http://osoc.berkeley.edu/OSOC/osoc?p_term=" + term +
-        "&x=0&p_classif=--+Choose+a+Course+Classification+--&p_deptname=--+Choose+a+Department+Name+--" +
-        "&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&y=0&p_course=" +
-        CGI::escape(catalog_id) + "&p_dept=" + CGI::escape(department)
+    "/academics/semester/#{term}-#{term_year}/class/#{ccn}"
   end
 
 end
