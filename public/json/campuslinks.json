@@ -717,7 +717,7 @@
       ],
       "name": "UC Learning Center",
       "description": "",
-      "url": "https://uc.sumtotalsystems.com/sumtotal/app/management/LMS_LearnerHome.aspx?FromLogin=1 ",
+      "url": "https://shib.berkeley.edu/idp/profile/Shibboleth/SSO?shire=https://uc.sumtotalsystems.com/Shibboleth.sso/SAML/POST&target=https://uc.sumtotalsystems.com/secure/auth.aspx&providerId=https://uc.sumtotalsystems.com/shibboleth",
       "roles": {
         "staff": true,
         "student": false,
