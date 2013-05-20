@@ -95,7 +95,7 @@ class SessionsController < ApplicationController
     use_pooled_connection {
       never_logged_in_before = UserData.where(:uid => act_as_uid).first.blank?
     }
-    if never_logged_in_before
+    if never_logged_in_before && Settings.application.layer == "production"
       Rails.logger.warn "ACT-AS: User #{user_uid} FAILS to login to #{act_as_uid}, #{act_as_uid} hasn't logged in before."
       return false
     end
