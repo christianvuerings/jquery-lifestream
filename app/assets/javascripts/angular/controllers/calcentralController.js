@@ -6,9 +6,7 @@
    */
   calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', 'apiService', function($http, $location, $route, $scope, apiService) {
 
-    $scope.user = {
-      'isLoaded': false
-    };
+    $scope.user = {};
 
     // Private methods that are only exposed for testing but shouldn't be used within the views
 
@@ -42,15 +40,15 @@
      */
     $scope.user._handleAccessToPage = function() {
       // Redirect to the login page when the page is private and you aren't authenticated
-      if (!$route.current.isPublic && !$scope.user.isAuthenticated()) {
+      if (!$route.current.isPublic && !$scope.user.isAuthenticated) {
         apiService.analytics.trackEvent(['Authentication', 'Sign in - redirect to login']);
         $scope.user.signIn();
       // Record that you've already visited the calcentral once and redirect to the settings page on the first login
-      } else if ($scope.user.isAuthenticated() && !$scope.user.profile.first_login_at) {
+      } else if ($scope.user.isAuthenticated && !$scope.user.profile.first_login_at) {
         apiService.analytics.trackEvent(['Authentication', 'First login']);
         $http.post('/api/my/record_first_login').success($scope.user._setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
-      } else if ($scope.user.isAuthenticated() && $location.path() === '/') {
+      } else if ($scope.user.isAuthenticated && $location.path() === '/') {
         apiService.analytics.trackEvent(['Authentication', 'Redirect to dashboard']);
         $scope.user._redirectToDashboardPage();
       }
@@ -61,8 +59,10 @@
      */
     $scope.user._handleUserLoaded = function(data) {
       $scope.user.profile = data;
-      $scope.user._handleAccessToPage();
       $scope.user.isLoaded = true;
+      // Check whether the current user is authenticated or not
+      $scope.user.isAuthenticated = $scope.user.profile && $scope.user.profile.is_logged_in;
+      $scope.user._handleAccessToPage();
     };
 
     /**
@@ -70,14 +70,6 @@
      */
     $scope.user._fetch = function(){
       $http.get('/api/my/status').success($scope.user._handleUserLoaded);
-    };
-
-    /**
-     * Check whether the current user is authenticated or not
-     * @return {Boolean} True when the user is authenticated
-     */
-    $scope.user.isAuthenticated = function() {
-      return ($scope.user.profile && $scope.user.profile.is_logged_in);
     };
 
     /**

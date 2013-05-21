@@ -28,7 +28,7 @@ describe('CalCentral controller', function() {
 
   it('should set the anonymous userdata correctly', function() {
     $scope.user._handleUserLoaded(getJSONFixture('status_loggedout.json'));
-    expect($scope.user.isAuthenticated()).toBeFalsy();
+    expect($scope.user.isAuthenticated.toBeFalsy();
   });
 
   it('should set the signed in userdata correctly', function() {
@@ -36,7 +36,7 @@ describe('CalCentral controller', function() {
     var status = getJSONFixture('status_first_login.json');
     $scope.user._handleUserLoaded(status);
 
-    expect($scope.user.isAuthenticated()).toBeTruthy();
+    expect($scope.user.isAuthenticated.toBeTruthy();
     expect($scope.user.profile.uid).toBeDefined();
     expect($scope.user.profile.first_name).toBeDefined();
     expect($scope.user.profile.last_name).toBeDefined();

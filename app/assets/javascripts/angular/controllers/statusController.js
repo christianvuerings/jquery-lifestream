@@ -14,8 +14,8 @@
         $scope.user.profile.student_info.reg_block.needsAction);
     };
 
-    $scope.$watch('user.isLoaded', function(isLoaded) {
-      if (isLoaded) {
+    $scope.$watch('user.isAuthenticated', function(isAuthenticated) {
+      if (isAuthenticated) {
         showStatusError();
       }
     });

@@ -42,8 +42,8 @@
     };
 
     // Wait until user profile is fully loaded before hitting academics data
-    $scope.$watch('user.isLoaded', function(isLoaded) {
-      if (isLoaded) {
+    $scope.$watch('user.isAuthenticated', function(isAuthenticated) {
+      if (isAuthenticated) {
         $scope.getAcademics();
       }
     });
