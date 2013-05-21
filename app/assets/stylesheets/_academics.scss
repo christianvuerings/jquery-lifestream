@@ -38,9 +38,13 @@
   }
   .cc-academics-calculator-panel {
     border: 1px solid $cc-color-medium-grey;
+    min-width: 290px;
   }
   .cc-academics-calculator-row {
     line-height: 2;
+    select {
+      min-width: 50px;
+    }
   }
   .cc-academics-calendar {
     font-size: 11px;
@@ -63,7 +67,8 @@
     font-weight: bold;
   }
   .cc-academics-exam-block {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    max-width: 400px;
     .icon-map-marker {
       margin-left: 5px;
     }
