@@ -38,6 +38,9 @@ Calcentral::Application.configure do
   # Fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = true
 
+  # Turn off all page, action, fragment caching
+  config.action_controller.perform_caching = false
+
   # Caching store
   config.cache_store = ActiveSupport::Cache.lookup_store(:memory_store,
                                                          :size => 16.megabytes,
