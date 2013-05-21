@@ -27,7 +27,6 @@
         }
       },
       'bdrive': {
-        'count': '...',
         'display': {
           'additionalClasses': 'cc-icon-drive',
           'href': 'http://bdrive.berkeley.edu',
