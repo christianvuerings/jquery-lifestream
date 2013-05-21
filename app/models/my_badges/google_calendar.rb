@@ -38,23 +38,25 @@ module MyBadges
 
     def internal_fetch_counts(params = {})
       google_proxy = GoogleEventsListProxy.new(user_id: @uid)
-      google_calendar_results = google_proxy.recently_updated_items(params)
+      google_calendar_results = google_proxy.recent_items(params)
       modified_entries = {}
       modified_entries[:items] = []
       modified_entries[:count] = 0
 
       google_calendar_results.each do |response_page|
         next unless response_page && response_page.response.status == 200
-        response_page.data["items"].each do |entry|
-          next if entry["summary"].blank?
+        response_page.data['items'].each do |entry|
+          next if entry['summary'].blank?
+          next unless is_unconfirmed_event? entry
+
           if modified_entries[:count] < @count_limiter
             begin
               event = {
-                :link => handle_url(entry["htmlLink"]),
-                :title => entry["summary"],
-                :start_time => verify_and_format_date(entry["start"]),
-                :end_time => verify_and_format_date(entry["end"]),
-                :modified_time => format_date(entry["updated"].to_datetime),
+                :link => handle_url(entry['htmlLink']),
+                :title => entry['summary'],
+                :start_time => verify_and_format_date(entry['start']),
+                :end_time => verify_and_format_date(entry['end']),
+                :modified_time => format_date(entry['updated'].to_datetime),
                 :all_day_event => false
               }
               consolidate_all_day_event_key!(event)
@@ -69,8 +71,6 @@ module MyBadges
         end
       end
 
-      # Resort the top 5 items by modified date, descending
-      modified_entries[:items].sort!{|a,b| b[:modified_time][:epoch] <=> a[:modified_time][:epoch]}
       modified_entries
     end
 
@@ -113,6 +113,13 @@ module MyBadges
       else
         { :change_state => "updated" }
       end
+    end
+
+    def is_unconfirmed_event?(entry)
+      entry && entry['attendees'] &&
+        (entry['attendees'].select {|attendee|
+          attendee['self'] == true && attendee['responseStatus'] == 'needsAction'
+        }).present?
     end
   end
 end
