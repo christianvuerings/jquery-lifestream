@@ -44,6 +44,9 @@ Calcentral::Application.configure do
   # source maps don't get output if this is true
   config.sass.line_comments = false
 
+  # Turn off all page, action, fragment caching
+  config.action_controller.perform_caching = false
+
   # Caching store
   config.cache_store = ActiveSupport::Cache.lookup_store(:memory_store,
                                                          :size => 16.megabytes,

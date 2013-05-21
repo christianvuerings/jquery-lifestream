@@ -34,6 +34,9 @@ Calcentral::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  # Turn off all page, action, fragment caching
+  config.action_controller.perform_caching = false
+
   # Caching store
   config.cache_store = ActiveSupport::Cache.lookup_store(:null_store, :namespace => ServerRuntime.get_settings["git_commit"])
   config.cache_store.logger = Logger.new("#{Rails.root}/log/cache-#{Rails.env}_#{Time.now.strftime('%Y-%m-%d')}.log")
