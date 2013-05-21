@@ -6,7 +6,7 @@
       data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-{{badge.display.name}}-popover-status')">
       <div class="cc-ir cc-icon cc-icon-24 cc-left {{badge.display.additionalClasses}}"></div>
       <span class="cc-visuallyhidden" data-ng-bind-template="Show your {{badge.display.name}} info"></span>
-      <div class="cc-left cc-badge-count" data-ng-bind="badge.count"></div>
+      <div class="cc-left cc-badge-count" data-ng-hide="badge.display.name==='bDrive'" data-ng-bind="badge.count"></div>
     </button>
     <div class="cc-popover cc-popover-arrow cc-badgepopover" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
       <!-- Title -->
