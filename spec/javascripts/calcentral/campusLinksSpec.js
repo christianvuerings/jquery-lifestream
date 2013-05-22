@@ -1,5 +1,7 @@
 describe('Campus links', function() {
 
+  'use strict';
+
   var json;
 
   var isObject = function(obj) {
@@ -13,11 +15,11 @@ describe('Campus links', function() {
 
   }));
 
-  it('JSON should be loaded', function() {
+  it('should load the JSON', function() {
     expect(json).toBeDefined();
   });
 
-  it('JSON should have the right properties', function() {
+  it('should have the right JSON properties', function() {
     expect(json.links).toBeDefined();
     expect(json.navigation).toBeDefined();
 
@@ -42,7 +44,7 @@ describe('Campus links', function() {
 
   });
 
-  it('URLs should be valid', function() {
+  it('should check whether the URLs are valid', function() {
     var urlRegEx = /^(http|https):\/\/[\w\-]+(\.[\w\-]+)+([\w.,@?\^=%&amp;\:\/~+#\-]*[\w@?\^=%&amp;\/~+#\-])?/;
 
     for (var i = 0; i < json.links.length; i++) {
@@ -50,7 +52,7 @@ describe('Campus links', function() {
     }
   });
 
-  it('Top categories from each link should be in the defined in the navigation', function() {
+  it('should verify that the Top categories from each link are defined in the navigation', function() {
 
     var topcategories = [];
     for (var i = 0; i < json.navigation.length; i++) {

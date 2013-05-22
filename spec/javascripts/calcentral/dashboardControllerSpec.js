@@ -1,5 +1,7 @@
 describe('Dashboard controller', function() {
 
+  'use strict';
+
   var $controller;
   var $rootScope;
 
