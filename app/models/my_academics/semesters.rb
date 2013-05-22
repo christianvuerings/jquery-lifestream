@@ -50,7 +50,7 @@ class MyAcademics::Semesters
 
     # TODO handle multiple current semesters as defined in Settings.current_terms_codes
     # TODO Translate semester codes into English.
-    semester_name = "#{Settings.sakai_proxy.current_terms_codes[0].term_cd} #{Settings.sakai_proxy.current_terms_codes[0].term_yr}"
+    semester_name = TermCodes.to_english Settings.sakai_proxy.current_terms_codes[0].term_yr, Settings.sakai_proxy.current_terms_codes[0].term_cd
     semesters << {
       :name => semester_name,
       :slug => make_slug(semester_name),

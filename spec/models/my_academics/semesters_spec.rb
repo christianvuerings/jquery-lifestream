@@ -13,7 +13,7 @@ describe "MyAcademics::Semesters" do
 
     oski_semesters = feed[:semesters]
     oski_semesters.length.should == 1
-    #oski_semesters[0][:name].should == "Spring 2013"
+    oski_semesters[0][:name].should == "Spring 2013"
     oski_semesters[0][:schedule].length.should == 2
     #oski_semesters[0][:schedule][0][:schedule].should == "TuTh 12:30P-2:00P"
     oski_semesters[0][:schedule][0][:course_number].should == "BIOLOGY 1A"
