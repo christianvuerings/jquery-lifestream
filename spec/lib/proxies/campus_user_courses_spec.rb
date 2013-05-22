@@ -20,6 +20,12 @@ describe CampusUserCoursesProxy do
       course[:name].blank?.should be_false
       course[:color_class].should == 'campus-class'
       ['Student', 'Instructor'].include?(course[:role]).should be_true
+      course[:instruction_format].blank?.should be_false
+      course[:section_num].blank?.should be_false
+      if course[:ccn] == "16171"
+        course[:building_name].should == "WHEELER"
+        course[:instructor].should == "Yu-Hung Lin"
+      end
     end
   end
 

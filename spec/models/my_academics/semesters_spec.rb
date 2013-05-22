@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "MyAcademics::Semesters" do
 
-  it "should get properly formatted data from fake Oracle MV" do
+  it "should get properly formatted data from fake Oracle MV", :if => SakaiData.test_data? do
     oski_schedule_proxy = CampusUserCoursesProxy.new({:user_id => "61889", :fake => true})
     CampusUserCoursesProxy.stub(:new).and_return(oski_schedule_proxy)
 
@@ -23,6 +23,7 @@ describe "MyAcademics::Semesters" do
     oski_semesters[0][:schedule][0][:grade_option].should == "Letter"
     oski_semesters[0][:schedule][0][:format].should == "LEC"
     oski_semesters[0][:schedule][0][:section].should == "003"
+    oski_semesters[0][:schedule][0][:instructor].should == "Yu-Hung Lin"
   end
 
 end

@@ -65,6 +65,10 @@ class CampusUserCoursesProxy < BaseProxy
           end
         end
       end
+      campus_classes.each do |course|
+        add_schedule_to_feed!(course)
+        add_instructor_to_feed!(course)
+      end
       campus_classes
     end
   end
@@ -89,9 +93,39 @@ class CampusUserCoursesProxy < BaseProxy
               term_yr: row['term_yr'],
               term_cd: row['term_cd'],
               dept: row['dept_name'],
-              catid: row['catalog_id']
+              catid: row['catalog_id'],
+              ccn: row['course_cntl_num']
           }]
       }
+    end
+  end
+
+  def add_schedule_to_feed!(course)
+    schedule = CampusData.get_class_schedule(
+      course[:courses][0][:term_yr],
+      course[:courses][0][:term_cd],
+      course[:courses][0][:ccn])
+    if schedule
+      # TODO add English translation of meeting times
+      # TODO add building map data if available
+      course.merge!({:building_name => schedule['building_name'],
+                     :room_number => schedule['room_number'],
+                     :meeting_days => schedule['meeting_days'],
+                     :meeting_start_time => schedule['meeting_start_time'],
+                     :meeting_start_time_ampm_flag => schedule['meeting_start_time_ampm_flag'],
+                     :meeting_end_time => schedule['meeting_end_time'],
+                     :meeting_end_time_ampm_flag => schedule['meeting_end_time_ampm_flag']
+                    })
+    end
+  end
+
+  def add_instructor_to_feed!(course)
+    instructor = CampusData.get_instructor(
+      course[:courses][0][:term_yr],
+      course[:courses][0][:term_cd],
+      course[:courses][0][:ccn])
+    if instructor
+      course.merge!({:instructor => instructor['person_name']})
     end
   end
 

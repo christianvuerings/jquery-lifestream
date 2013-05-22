@@ -32,9 +32,9 @@ class MyAcademics::Semesters
       ccn = course[:ccn]
       format = course[:instruction_format]
       section = course[:section_num]
-      # TODO fill in schedule, instructor
-      schedule_string = "" # from bspace_class_schedule_vw table, not yet in fake Oracle data #"#{to_text(class_schedule.css("weekGroup"))} #{to_time(class_schedule.css("startTime"))}#{to_text(class_schedule.css("startTimeAmPmFlag"))}-#{to_time(class_schedule.css("endTime"))}#{to_text(class_schedule.css("endTimeAmPmFlag"))}"
-      instructor = "" # instructor of record from bspace_course_instructor_vw # to_text(class_schedule.css("instrShortName"))
+      # TODO add class location
+      schedule_string = "#{course[:meeting_days]} #{course[:meeting_start_time]}#{course[:meeting_start_time_ampm_flag]}-#{course[:meeting_end_time]}#{course[:meeting_end_time_ampm_flag]}"
+      instructor = course[:instructor]
       schedule << {
         :course_number => course_number,
         :ccn => ccn,

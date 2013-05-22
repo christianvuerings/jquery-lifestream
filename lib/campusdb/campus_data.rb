@@ -193,6 +193,42 @@ class CampusData < OracleDatabase
     result
   end
 
+  def self.get_class_schedule(term_yr, term_cd, ccn)
+    result = {}
+    use_pooled_connection {
+      sql = <<-SQL
+        select sched.BUILDING_NAME, sched.ROOM_NUMBER, sched.MEETING_DAYS, sched.MEETING_START_TIME,
+        sched.MEETING_START_TIME_AMPM_FLAG, sched.MEETING_END_TIME, sched.MEETING_END_TIME_AMPM_FLAG
+        from BSPACE_CLASS_SCHEDULE_VW sched
+        where sched.TERM_YR = #{connection.quote(term_yr)}
+          and sched.TERM_CD = #{connection.quote(term_cd)}
+          and sched.COURSE_CNTL_NUM = #{connection.quote(ccn)}
+          and (sched.PRINT_CD is null or sched.PRINT_CD <> 'C')
+          and (sched.MULTI_ENTRY_CD is null or sched.MULTI_ENTRY_CD <> 'C')
+      SQL
+      result = connection.select_one(sql)
+    }
+    result
+  end
+
+  def self.get_instructor(term_yr, term_cd, ccn)
+    result = {}
+    use_pooled_connection {
+      sql = <<-SQL
+        select p.person_name, p.ldap_uid
+        from bspace_course_instructor_vw bci
+        join bspace_course_info_vw c on c.term_yr = bci.term_yr and c.term_cd = bci.term_cd and c.course_cntl_num = bci.course_cntl_num
+        join bspace_person_info_vw p on p.ldap_uid = bci.instructor_ldap_uid
+        where bci.instructor_ldap_uid = p.ldap_uid
+          and bci.term_yr = #{connection.quote(term_yr)}
+          and bci.term_cd = #{connection.quote(term_cd)}
+          and bci.course_cntl_num = #{connection.quote(ccn)}
+      SQL
+      result = connection.select_one(sql)
+    }
+    result
+  end
+
   def self.database_alive?
     is_alive = false
     begin
