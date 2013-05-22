@@ -33,7 +33,7 @@ class MyAcademics::Semesters
       format = course[:instruction_format]
       section = course[:section_num]
       # TODO add class location
-      schedule_string = "#{course[:meeting_days]} #{course[:meeting_start_time]}#{course[:meeting_start_time_ampm_flag]}-#{course[:meeting_end_time]}#{course[:meeting_end_time_ampm_flag]}"
+      schedule_string = course[:schedule]
       instructor = course[:instructor]
       schedule << {
         :course_number => course_number,
@@ -49,7 +49,6 @@ class MyAcademics::Semesters
     end
 
     # TODO handle multiple current semesters as defined in Settings.current_terms_codes
-    # TODO Translate semester codes into English.
     semester_name = TermCodes.to_english Settings.sakai_proxy.current_terms_codes[0].term_yr, Settings.sakai_proxy.current_terms_codes[0].term_cd
     semesters << {
       :name => semester_name,

@@ -25,8 +25,30 @@ describe CampusUserCoursesProxy do
       if course[:ccn] == "16171"
         course[:building_name].should == "WHEELER"
         course[:instructor].should == "Yu-Hung Lin"
+        course[:schedule].should == "TuTh 2:00P-3:30P"
       end
     end
+  end
+
+  it "should correctly translate schedule codes" do
+    client = CampusUserCoursesProxy.new({user_id: '300939'})
+    client.translate_meeting(
+      {
+        "meeting_days" => "S"
+      }).should == "Su"
+    client.translate_meeting(
+      {
+        "meeting_days" => "SMTWTFS",
+        "meeting_start_time" => "0900",
+        "meeting_start_time_ampm_flag" => "A",
+        "meeting_end_time" => "1100",
+        "meeting_end_time_ampm_flag" => "P"
+      }).should == "SuMTuWThFSa 9:00A-11:00P"
+    client.translate_meeting(
+      {
+        "meeting_days" => "  T T  "
+      }).should == "TuTh"
+    client.translate_meeting(nil).should == ""
   end
 
 end
