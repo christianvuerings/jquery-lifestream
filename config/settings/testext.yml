@@ -1,3 +1,5 @@
+application:
+  layer: "testext"
 postgres:
   database: calcentral_test
   username: calcentral_test
