@@ -56,7 +56,7 @@ gem 'nokogiri', "~> 1.5.6"
 group :assets do
 
   # Our very own library for angular dependency!
-  gem "angular-gem", "1.1.3"
+  gem "angular-gem", "1.1.4"
 
   # Datepicker
   gem "pikaday-gem", "~> 1.0.0.2"
