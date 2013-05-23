@@ -2,19 +2,6 @@ class MyAcademics::Semesters
 
   include MyAcademics::AcademicsModule
 
-  # Example:
-  # {
-  #  :course_number => course_number,
-  #  :ccn => ccn,
-  #  :title => title,
-  #  :units => units,
-  #  :grade_option => grade_option,
-  #  :section => section,
-  #  :format => format,
-  #  :schedule => schedule_string,
-  #  :instructor => instructor
-  #}
-  #
   def merge(data)
     proxy = CampusUserCoursesProxy.new({:user_id => @uid})
     feed = proxy.get_campus_courses
@@ -32,9 +19,8 @@ class MyAcademics::Semesters
       ccn = course[:ccn]
       format = course[:instruction_format]
       section = course[:section_num]
-      # TODO add class location
-      schedule_string = course[:schedule]
-      instructor = course[:instructor]
+      schedules = course[:schedules]
+      instructors = course[:instructors]
       schedule << {
         :course_number => course_number,
         :ccn => ccn,
@@ -43,8 +29,8 @@ class MyAcademics::Semesters
         :grade_option => grade_option,
         :section => section,
         :format => format,
-        :schedule => schedule_string,
-        :instructor => instructor
+        :schedules => schedules,
+        :instructors => instructors
       }
     end
 

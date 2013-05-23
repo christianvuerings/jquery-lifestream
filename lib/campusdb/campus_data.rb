@@ -193,8 +193,10 @@ class CampusData < OracleDatabase
     result
   end
 
-  def self.get_class_schedule(term_yr, term_cd, ccn)
-    result = {}
+  def self.get_section_schedules(term_yr, term_cd, ccn)
+    # TODO handle sections with > 1 schedule row
+    # eg http://osoc.berkeley.edu/OSOC/osoc?p_term=SP&x=20&p_classif=--+Choose+a+Course+Classification+--&p_deptname=Public+Policy&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&y=0&p_course=190
+    result = []
     use_pooled_connection {
       sql = <<-SQL
         select sched.BUILDING_NAME, sched.ROOM_NUMBER, sched.MEETING_DAYS, sched.MEETING_START_TIME,
@@ -206,13 +208,13 @@ class CampusData < OracleDatabase
           and (sched.PRINT_CD is null or sched.PRINT_CD <> 'C')
           and (sched.MULTI_ENTRY_CD is null or sched.MULTI_ENTRY_CD <> 'C')
       SQL
-      result = connection.select_one(sql)
+      result = connection.select_all(sql)
     }
     result
   end
 
-  def self.get_instructor(term_yr, term_cd, ccn)
-    result = {}
+  def self.get_section_instructors(term_yr, term_cd, ccn)
+    result = []
     use_pooled_connection {
       sql = <<-SQL
         select p.person_name, p.ldap_uid
@@ -223,8 +225,10 @@ class CampusData < OracleDatabase
           and bci.term_yr = #{connection.quote(term_yr)}
           and bci.term_cd = #{connection.quote(term_cd)}
           and bci.course_cntl_num = #{connection.quote(ccn)}
+          and ( bci.instructor_func = 1 or bci.instructor_func = 3 )
+        order by bci.instructor_func
       SQL
-      result = connection.select_one(sql)
+      result = connection.select_all(sql)
     }
     result
   end

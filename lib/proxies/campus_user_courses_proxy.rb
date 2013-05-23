@@ -66,15 +66,16 @@ class CampusUserCoursesProxy < BaseProxy
         end
       end
       campus_classes.each do |course|
-        add_schedule_to_feed!(course)
-        add_instructor_to_feed!(course)
+        proxy = CampusCourseSectionsProxy.new({term_yr: course[:courses][0][:term_yr],
+                                               term_cd: course[:courses][0][:term_cd],
+                                               ccn: course[:courses][0][:ccn]})
+        course.merge!(proxy.get_section_data)
       end
       campus_classes
     end
   end
 
   def row_to_feed_item(row, previous_id)
-    Rails.logger.info "Row = #{row}"
     course_id = "#{row['dept_name']}:#{row['catalog_id']}:#{row['term_yr']}-#{row['term_cd']}"
     if course_id == previous_id
       nil
@@ -100,30 +101,6 @@ class CampusUserCoursesProxy < BaseProxy
     end
   end
 
-  def add_schedule_to_feed!(course)
-    schedule = CampusData.get_class_schedule(
-      course[:courses][0][:term_yr],
-      course[:courses][0][:term_cd],
-      course[:courses][0][:ccn])
-    if schedule
-      # TODO add building map data if available
-      course.merge!({:building_name => schedule['building_name'],
-                     :room_number => schedule['room_number'],
-                     :schedule => translate_meeting(schedule)
-                    })
-    end
-  end
-
-  def add_instructor_to_feed!(course)
-    instructor = CampusData.get_instructor(
-      course[:courses][0][:term_yr],
-      course[:courses][0][:term_cd],
-      course[:courses][0][:ccn])
-    if instructor
-      course.merge!({:instructor => instructor['person_name']})
-    end
-  end
-
   # Link campus courses to internal class pages for the current semester.
   # TODO: Update to use full class IDs, not just CCNs
   def course_to_url(term_cd, term_year, department, ccn)
@@ -136,54 +113,6 @@ class CampusUserCoursesProxy < BaseProxy
                return ''
            end
     "/academics/semester/#{term}-#{term_year}/class/#{ccn}"
-  end
-
-  def translate_meeting(schedule)
-    if schedule.nil?
-      return ""
-    end
-    days = schedule['meeting_days'] || nil
-    if days.nil?
-      return ""
-    end
-    schedule_string = ""
-    if days.length > 0 && !days[0].blank?
-      schedule_string += "Su"
-    end
-    if days.length > 1 && !days[1].blank?
-      schedule_string += "M"
-    end
-    if days.length > 2 && !days[2].blank?
-      schedule_string += "Tu"
-    end
-    if days.length > 3 && !days[3].blank?
-      schedule_string += "W"
-    end
-    if days.length > 4 && !days[4].blank?
-      schedule_string += "Th"
-    end
-    if days.length > 5 && !days[5].blank?
-      schedule_string += "F"
-    end
-    if days.length > 6 && !days[6].blank?
-      schedule_string += "Sa"
-    end
-
-    unless schedule['meeting_start_time'].nil?
-      schedule_string += " #{to_time(schedule['meeting_start_time'])}#{schedule['meeting_start_time_ampm_flag']}"
-    end
-
-    unless schedule['meeting_end_time'].nil?
-      schedule_string += "-#{to_time(schedule['meeting_end_time'])}#{schedule['meeting_end_time_ampm_flag']}"
-    end
-
-    schedule_string
-  end
-
-  def to_time(str)
-    num = str.gsub(/^0/, "")
-    formatted = num.insert(num.length - 2, ":")
-    formatted
   end
 
 end

@@ -14,7 +14,7 @@ describe "MyAcademics::Semesters" do
     oski_semesters.length.should == 1
     oski_semesters[0][:name].should == "Spring 2013"
     oski_semesters[0][:schedule].length.should == 2
-    oski_semesters[0][:schedule][0][:schedule].should == "M 4:00P-5:00P"
+    oski_semesters[0][:schedule][0][:schedules][0][:schedule].should == "M 4:00P-5:00P"
     oski_semesters[0][:schedule][0][:course_number].should == "BIOLOGY 1A"
     oski_semesters[0][:schedule][0][:ccn].should == "7309"
     oski_semesters[0][:schedule][0][:title].should == "General Biology Lecture"
@@ -22,7 +22,7 @@ describe "MyAcademics::Semesters" do
     oski_semesters[0][:schedule][0][:grade_option].should == "Letter"
     oski_semesters[0][:schedule][0][:format].should == "LEC"
     oski_semesters[0][:schedule][0][:section].should == "003"
-    oski_semesters[0][:schedule][0][:instructor].should == "Yu-Hung Lin"
+    oski_semesters[0][:schedule][0][:instructors][0][:name].should == "Yu-Hung Lin"
   end
 
 end

@@ -127,18 +127,21 @@ describe CampusData do
   end
 
   it "should return class schedule data" do
-    data = CampusData.get_class_schedule("2013", "B", "16171")
+    data = CampusData.get_section_schedules("2013", "B", "16171")
     data.should_not be_nil
     if CampusData.test_data?
-      data["building_name"].should == "WHEELER"
+      data[0]["building_name"].should == "WHEELER"
+      data[1]["building_name"].should == "DWINELLE"
     end
   end
 
   it "should return instructor data given a course control number" do
-    data = CampusData.get_instructor("2013", "B", "7366")
+    data = CampusData.get_section_instructors("2013", "B", "7309")
     data.should_not be_nil
     if CampusData.test_data?
-      data["person_name"].should == "Yu-Hung Lin"
+      data.length.should == 2
+      data[0]["person_name"].should == "Yu-Hung Lin"
+      data[1]["person_name"].should == "Chris Tweney"
     end
   end
 
