@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/tools/styles.html">
 
-  <div data-ng-controller="StylesController" data-ng-show="user.profile.roles.staff">
+  <div data-ng-controller="StylesController" data-ng-show="user.profile.is_admin">
     <div class="large-12 columns cc-styles-reference">
       <h1 id="top">CalCentral Styles Live Reference</h1>
 
@@ -130,68 +130,72 @@
       <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
       <h2 class="cc-styles-section" id="buttons">Buttons</h2>
-      <p>All button classes can be mixed as needed</p>
-      <div class="row cc-styles-button-demo">
-        <div class="small-6 large-6 columns">
-          <p>Size Classes</p>
-          <a href="#" class="large button">Large Button</a>
-          <a href="#" class="button">Default Button</a>
-          <a href="#" class="small button">Small Button</a>
-          <a href="#" class="tiny button">Tiny Button</a>
-        </div>
-        <div class="small-6 large-6 columns">
-          <p>Color Classes</p>
-          <a href="#" class="button secondary">Secondary Button</a>
-          <a href="#" class="button success">Success Button</a>
-          <a href="#" class="button alert">Alert Button</a>
-        </div>
+      <p>All button classes can be mixed as needed. See <a href="http://foundation.zurb.com/docs/components/buttons.html">Foundation buttons</a> for more.</p>
+
+      <h3>Button overrides</h3>
+
+      <div>
+        <a href="#" class="button radius medium success">Radius Button Medium Success</a>
+        <a href="#" class="button radius medium">Radius Button Medium</a>
       </div>
+
+      <hr />
+
+      <h3>Button Group</h3>
 
       <div class="row cc-styles-button-demo">
         <div class="small-6 large-6 columns">
-          <p>Radius Classes</p>
-          <a href="#" class="button radius">Radius Button</a>
-          <a href="#" class="button round">Round Button</a>
-        </div>
-        <div class="small-6 large-6 columns">
-          <p>Disabled Classes</p>
-          <a href="#" class="button disabled">Disabled Button</a>
-          <a href="#" class="button round disabled">Round Disabled Button</a>
-        </div>
-      </div>
-
-      <div class="row cc-styles-button-demo">
-        <div class="small-6 large-6 columns">
-          <p>CalCentral Overrides</p>
-          <a href="#" class="button radius medium success">Radius Button Medium Success</a>
-          <a href="#" class="button radius medium">Radius Button Medium</a>
-        </div>
-        <div class="small-6 large-6 columns">
-          <p>CalCentral Overrides</p>
-          <button type="submit" class="cc-button-submit-disabled">cc-button-submit-disabled</button>
-          <button type="submit" class="cc-button-submit-enabled">cc-button-submit-enabled</button>
-        </div>
-      </div>
-
-      <div class="row cc-styles-button-demo">
-        <div class="small-6 large-6 columns">
-          <p>CalCentral Button Group</p>
-          <ul class="button-group radius even-3">
+          <ul class="cc-button-group cc-even-3">
             <li>
-              <button class="tiny button selected" data-ng-click="switchTasksMode('scheduled')" data-ng-class="{'secondary':(tasks_mode!='scheduled'),'selected':(tasks_mode=='scheduled')}">Scheduled
+              <button class="cc-button"
+                data-ng-click="switchTasksMode('scheduled')"
+                data-ng-init="tasks_mode='scheduled'"
+                data-ng-class="{'cc-button-selected':(tasks_mode=='scheduled')}">Scheduled
               </button>
             </li>
             <li>
-              <button class="tiny button secondary" data-ng-click="switchTasksMode('unscheduled')" data-ng-class="{'secondary':(tasks_mode!='unscheduled'),'selected':(tasks_mode=='unscheduled')}">Unscheduled
+              <button class="cc-button"
+                data-ng-click="switchTasksMode('unscheduled')"
+                data-ng-class="{'cc-button-selected':(tasks_mode=='unscheduled')}">Unscheduled
               </button>
             </li>
             <li>
-              <button class="tiny button secondary" data-ng-click="switchTasksMode('completed')" data-ng-class="{'secondary':(tasks_mode!='completed'),'selected':(tasks_mode=='completed')}">Completed
+              <button class="cc-button"
+                data-ng-click="switchTasksMode('completed')"
+                data-ng-class="{'cc-button-selected':(tasks_mode=='completed')}">Completed
               </button>
             </li>
           </ul>
         </div>
       </div>
+
+      <hr />
+
+      <h3>Task editing buttons</h3>
+      <div class="cc-widget-tasks-more"  style="">
+        <div data-ng-bind-html="task.notes" data-cc-truncate-directive="filter:'linky', length:300" class="ng-binding"></div>
+
+        <div class="cc-clearfix">
+          <button class="cc-button cc-button-blue"  data-ng-click="enableEditor()" style="">Edit</button>
+          <button class="cc-button"  data-ng-click="deleteTask(task)" style="">Delete</button>
+        </div>
+      </div>
+
+      <hr />
+
+
+      <h3>New task buttons</h3>
+      <div class="large-9 large-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
+        <button type="submit" data-ng-disabled="cc_widget_tasks_form.$invalid || task_adder_is_processing" class="cc-button cc-button-disabled" data-ng-class="{'cc-button-blue':(cc_widget_tasks_form.$valid), 'cc-button-disabled':(cc_widget_tasks_form.$invalid)}" disabled="disabled">
+            <span data-ng-show="!editorEnabled" style="">Add Task</span>
+            <span data-ng-show="editorEnabled" style="display: none;">Save</span>
+        </button>
+        <button class="cc-button" type="reset" data-ng-show="!editorEnabled" data-ng-click="toggleAddTask()" style="">Cancel
+        </button>
+        <button class="cc-button" type="button" data-ng-show="editorEnabled" data-ng-click="disableEditor()" style="display: none;">Cancel
+        </button>
+      </div>
+
 
       <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
@@ -282,6 +286,47 @@
             </div>
           </div>
         </div>
+
+
+      <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
+
+      <h2 class="cc-styles-section" id="widgets">Misc widgets</h2>
+
+      <h3>H2 inside of cc-widget-title</h3>
+      <div class="cc-widget-title">
+        <h2>
+          <span data-ng-bind="api.date.now | date:'EEEE'" class="ng-binding">Wednesday</span>
+          <span data-ng-bind="api.date.now | date:'MMM d'" class="cc-widget-title-sub ng-binding">May 22</span>
+        </h2>
+      </div>
+
+      <hr />
+
+      <h3>H3 cc-widget-tasks-section-label cc-widget-tasks cc-widget-tasks-section-label-red</h3>
+
+      <h3 class="cc-widget-tasks-section-label cc-widget-tasks">
+        <span class="cc-widget-tasks-section-label-red">Overdue</span>
+        <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red">12</span>
+        <span class="cc-right">Due</span>
+      </h3>
+
+      <hr />
+
+
+      <h3>ul.cc-widget-list li (many others involved here)</h3>
+      <ul class="cc-widget-list">
+        <li class="ng-scope">
+          <a data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)" data-ng-href="https://ucberkeley.instructure.com/courses/750027" href="https://ucberkeley.instructure.com/courses/750027" class="cc-outbound-link" target="_blank">
+            <div class="cc-widget-list-column-left">
+              <div class="cc-icon cc-icon-canvas cc-icon-bspace"></div>
+            </div>
+            <strong class="cc-ellipsis ng-binding">PLEO 22</strong>
+            <div class="cc-ellipsis cc-widget-list-light" >Lessons from the Cambrian Explosion</div>
+          <span class="cc-outbound-link cc-visuallyhidden"> - opens in new window</span></a>
+        </li>
+      </ul>
+
+      <p class="cc-styles-toplink"><a href="#top">Back to top &uarr;</a></p>
 
     </div>
   </div>
