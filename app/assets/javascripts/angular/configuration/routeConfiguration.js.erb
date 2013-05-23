@@ -46,7 +46,6 @@
       templateUrl: 'templates/settings.html',
       controller: 'SettingsController'
     }).
-    <% if Rails.env == 'development' %>
     when('/tools', {
       templateUrl: 'templates/tools/index.html',
       controller: 'ToolsController'
@@ -55,7 +54,6 @@
       templateUrl: 'templates/tools/styles.html',
       controller: 'StylesController'
     }).
-    <% end %>
     // Redirect to a 404 page
     otherwise({
       templateUrl: 'templates/404.html',
