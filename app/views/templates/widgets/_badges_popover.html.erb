@@ -1,4 +1,4 @@
-<div data-ng-controller="BadgesController" class="cc-launcher-icons cc-left">
+<div data-ng-controller="BadgesController" class="cc-launcher-icons cc-left" data-ng-class="{true:'cc-badge-hasacademic'}[user.profile.student_info.reg_status.code!=null]">
   <div data-ng-repeat="badge in badges"
     class="cc-popover-container cc-popover-status cc-left">
     <button class="cc-header-icon"
@@ -8,7 +8,7 @@
       <span class="cc-visuallyhidden" data-ng-bind-template="Show your {{badge.display.name}} info"></span>
       <div class="cc-left cc-badge-count" data-ng-hide="badge.display.name==='bDrive'" data-ng-bind="badge.count"></div>
     </button>
-    <div class="cc-popover cc-popover-arrow cc-badgepopover" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
+    <div class="cc-popover cc-popover-arrow cc-badgepopover cc-badgepopover-{{badge.display.name|lowercase}}" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
       <!-- Title -->
       <div class="cc-popover-title" data-ng-switch on="user.profile.has_google_access_token && badge.display.name">
         <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}"><i class="icon-external-link"></i>
