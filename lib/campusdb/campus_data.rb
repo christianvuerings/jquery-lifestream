@@ -194,8 +194,6 @@ class CampusData < OracleDatabase
   end
 
   def self.get_section_schedules(term_yr, term_cd, ccn)
-    # TODO handle sections with > 1 schedule row
-    # eg http://osoc.berkeley.edu/OSOC/osoc?p_term=SP&x=20&p_classif=--+Choose+a+Course+Classification+--&p_deptname=Public+Policy&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&y=0&p_course=190
     result = []
     use_pooled_connection {
       sql = <<-SQL
