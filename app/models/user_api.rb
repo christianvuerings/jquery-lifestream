@@ -52,13 +52,12 @@ class UserApi < MyMergedModel
 
   def save
     use_pooled_connection {
-      if !@calcentral_user_data
-        @calcentral_user_data = UserData.create(uid: @uid, preferred_name: @override_name)
-      else
-        stored_override = @calcentral_user_data.preferred_name
-        if stored_override != @override_name
-          @calcentral_user_data.update_attributes(preferred_name: @override_name)
-        end
+      # Avoid race condition problems, UserData could have been modified or already instantiated
+      # by another thread.
+      @calcentral_user_data = UserData.first_or_create(uid: @uid, preferred_name: @override_name)
+      stored_override = @calcentral_user_data.preferred_name
+      if stored_override != @override_name
+        @calcentral_user_data.update_attributes(preferred_name: @override_name)
       end
       @calcentral_user_data.update_attribute(:first_login_at, @first_login_at)
     }
