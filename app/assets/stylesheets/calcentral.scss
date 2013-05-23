@@ -1,6 +1,7 @@
 @import "compass/css3";
 @import "compass/css3/user-interface";
 
+/* CalCentral Specific */
 $cc-color-action-button: #2787b6;
 $cc-color-action-button-hover: #1f7099;
 $cc-color-button: #80c7de;
@@ -119,6 +120,7 @@ form {
 
 /* Buttons */
 button {
+  @include box-shadow(none);
   font-family: $body-font-family;
   &:hover, &:focus {
     cursor: pointer;
