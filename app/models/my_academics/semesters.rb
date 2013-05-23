@@ -3,33 +3,24 @@ class MyAcademics::Semesters
   include MyAcademics::AcademicsModule
 
   def merge(data)
-    proxy = BearfactsScheduleProxy.new({:user_id => @uid})
-    feed = proxy.get
-
-    #Bearfacts proxy will return nil on >= 400 errors.
-    return {} if feed.nil?
+    proxy = CampusUserCoursesProxy.new({:user_id => @uid})
+    feed = proxy.get_campus_courses
 
     semesters = []
     schedule = []
-    doc = Nokogiri::XML feed[:body]
 
-    top_node = doc.css("studentClassSchedules")
-    if top_node.nil? || top_node.empty?
-      return {}
-    end
-
-    doc.css("classSchedule").each do |class_schedule|
-      next unless to_text(class_schedule.css("instructnFormatDet")) == "LEC"
-      course_number = "#{to_text(class_schedule.css("deptName"))} #{to_text(class_schedule.css("courseNumber"))}"
+    feed.each do |course|
+      course_number = course[:course_code]
       next unless course_number.strip.length
-      units = to_text(class_schedule.css("numberOfUnits"))
-      title = to_text(class_schedule.css("courseTitle")).titleize
-      grade_option = to_text(class_schedule.css("pnpFlag")).upcase == "Y" ? "P/NP" : "Letter"
-      ccn = to_text(class_schedule.css("courseControlNumber"))
-      format = to_text(class_schedule.css("instructnFormatDet"))
-      section = "#{format} #{to_text(class_schedule.css("sectNum"))}"
-      schedule_string = "#{to_text(class_schedule.css("weekGroup"))} #{to_time(class_schedule.css("startTime"))}#{to_text(class_schedule.css("startTimeAmPmFlag"))}-#{to_time(class_schedule.css("endTime"))}#{to_text(class_schedule.css("endTimeAmPmFlag"))}"
-      instructor = to_text(class_schedule.css("instrShortName"))
+
+      units = course[:unit]
+      title = course[:name].titleize
+      grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
+      ccn = course[:ccn]
+      format = course[:instruction_format]
+      section = course[:section_num]
+      schedules = course[:schedules]
+      instructors = course[:instructors]
       schedule << {
         :course_number => course_number,
         :ccn => ccn,
@@ -38,12 +29,13 @@ class MyAcademics::Semesters
         :grade_option => grade_option,
         :section => section,
         :format => format,
-        :schedule => schedule_string,
-        :instructor => instructor
+        :schedules => schedules,
+        :instructors => instructors
       }
     end
 
-    semester_name = "#{top_node.attribute("termName").text} #{top_node.attribute("termYear").text}"
+    # TODO handle multiple current semesters as defined in Settings.current_terms_codes
+    semester_name = TermCodes.to_english Settings.sakai_proxy.current_terms_codes[0].term_yr, Settings.sakai_proxy.current_terms_codes[0].term_cd
     semesters << {
       :name => semester_name,
       :slug => make_slug(semester_name),

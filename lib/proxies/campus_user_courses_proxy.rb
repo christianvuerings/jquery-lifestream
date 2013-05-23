@@ -47,6 +47,8 @@ class CampusUserCoursesProxy < BaseProxy
         enrollments.each do |row|
           if (item = row_to_feed_item(row, previous_id))
             item[:role] = 'Student'
+            item[:unit] = row['unit']
+            item[:pnp_flag] = row['pnp_flag']
             if row['enroll_status'] == 'W'
               item[:waitlist_pos] = row['wait_list_seq_num']
             end
@@ -62,6 +64,12 @@ class CampusUserCoursesProxy < BaseProxy
             previous_id = item[:id]
           end
         end
+      end
+      campus_classes.each do |course|
+        proxy = CampusCourseSectionsProxy.new({term_yr: course[:courses][0][:term_yr],
+                                               term_cd: course[:courses][0][:term_cd],
+                                               ccn: course[:courses][0][:ccn]})
+        course.merge!(proxy.get_section_data)
       end
       campus_classes
     end
@@ -80,11 +88,14 @@ class CampusUserCoursesProxy < BaseProxy
           emitter: 'Campus',
           name: row['course_title'],
           color_class: "campus-class",
+          instruction_format:  row['instruction_format'],
+          section_num:  row['section_num'],
           courses: [{
               term_yr: row['term_yr'],
               term_cd: row['term_cd'],
               dept: row['dept_name'],
-              catid: row['catalog_id']
+              catid: row['catalog_id'],
+              ccn: row['course_cntl_num']
           }]
       }
     end
