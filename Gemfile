@@ -18,6 +18,9 @@ gem "json", "~> 1.7.7"
 # https://rubygems.org/gems/omniauth-cas
 gem "omniauth-cas", "~> 1.0.1"
 
+# secure_headers provides x-frame, csp and other http headers
+gem "secure_headers", "~> 0.5.0"
+
 gem "faraday", "~> 0.8.6"
 
 # OAuth2 support
