@@ -66,7 +66,7 @@ group :assets do
   gem "sass-rails", "~> 3.2.6"
   gem "coffee-rails", "~> 3.2.1"
   gem "compass-rails", "~> 1.0.3"
-  gem "zurb-foundation", "4.0.8"
+  gem "zurb-foundation", "4.1.6"
 
   # Ruby wrapper for UglifyJS JavaScript compressor
   # https://github.com/lautis/uglifier

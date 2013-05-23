@@ -1,6 +1,9 @@
 /* Tasks and Assigments widget */
 .cc-widget-tasks {
   padding: 0 10px;
+  .cc-button-group {
+    margin-top: 10px;
+  }
   .cc-widget-list-hover {
     padding: 10px;
   }
