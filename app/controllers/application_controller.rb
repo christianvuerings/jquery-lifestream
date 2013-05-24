@@ -3,6 +3,12 @@ class ApplicationController < ActionController::Base
   before_filter :get_settings
   after_filter :access_log
 
+  # Disable most of the default headers provided by secure_headers gem, leaving just x-frame for now
+  # http://rubydoc.info/gems/secure_headers/0.5.0/frames
+  # Rails 4 will DENY X-Frame by default
+  ensure_security_headers
+  skip_before_filter :set_csp_header, :set_hsts_header, :set_x_content_type_options_header, :set_x_xss_protection_header
+
   def authenticate
     redirect_to login_url unless session[:user_id]
   end
