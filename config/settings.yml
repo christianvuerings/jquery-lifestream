@@ -109,6 +109,7 @@ cache:
     BlogFeed: <%= 1.hour %>
     CalLinkMembershipsProxy: <%= 24.hours %>
     CalLinkOrganizationProxy: <%= 48.hours %>
+    CampusCourseSectionsProxy: <%= 24.hours %>
     CampusUserClassesProxy: <%= 4.hours %>
     CanvasComingUpProxy: <%= 1.hour %>
     CanvasCoursesProxy: <%= 8.hours %>

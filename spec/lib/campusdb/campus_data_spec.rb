@@ -101,7 +101,7 @@ describe CampusData do
   it "should find where a person is teaching" do
     sections = CampusData.get_instructing_sections('192517', 2013, 'B')
     sections.should_not be_nil
-    sections.length.should == 1 if CampusData.test_data?
+    sections.length.should == 3 if CampusData.test_data?
   end
 
   it "should check whether the db is alive" do
@@ -123,6 +123,25 @@ describe CampusData do
     data = CampusData.get_person_attributes(321765)
     data[:roles].each do |role_name, role_value|
       role_value.should be_false
+    end
+  end
+
+  it "should return class schedule data" do
+    data = CampusData.get_section_schedules("2013", "B", "16171")
+    data.should_not be_nil
+    if CampusData.test_data?
+      data[0]["building_name"].should == "WHEELER"
+      data[1]["building_name"].should == "DWINELLE"
+    end
+  end
+
+  it "should return instructor data given a course control number" do
+    data = CampusData.get_section_instructors("2013", "B", "7309")
+    data.should_not be_nil
+    if CampusData.test_data?
+      data.length.should == 2
+      data[0]["person_name"].should == "Yu-Hung Lin"
+      data[1]["person_name"].should == "Chris Tweney"
     end
   end
 

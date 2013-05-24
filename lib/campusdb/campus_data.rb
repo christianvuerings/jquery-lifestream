@@ -155,7 +155,7 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select r.term_yr, r.term_cd, r.course_cntl_num, r.enroll_status, r.wait_list_seq_num,
+      select r.term_yr, r.term_cd, r.course_cntl_num, r.enroll_status, r.wait_list_seq_num, r.unit, r.pnp_flag,
         c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
         c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
       from bspace_class_roster_vw r
@@ -187,6 +187,44 @@ class CampusData < OracleDatabase
       order by c.term_yr, c.term_cd, c.dept_name,
         c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
         c.primary_secondary_cd, c.instruction_format, c.section_num
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.get_section_schedules(term_yr, term_cd, ccn)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+        select sched.BUILDING_NAME, sched.ROOM_NUMBER, sched.MEETING_DAYS, sched.MEETING_START_TIME,
+        sched.MEETING_START_TIME_AMPM_FLAG, sched.MEETING_END_TIME, sched.MEETING_END_TIME_AMPM_FLAG
+        from BSPACE_CLASS_SCHEDULE_VW sched
+        where sched.TERM_YR = #{connection.quote(term_yr)}
+          and sched.TERM_CD = #{connection.quote(term_cd)}
+          and sched.COURSE_CNTL_NUM = #{connection.quote(ccn)}
+          and (sched.PRINT_CD is null or sched.PRINT_CD <> 'C')
+          and (sched.MULTI_ENTRY_CD is null or sched.MULTI_ENTRY_CD <> 'C')
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.get_section_instructors(term_yr, term_cd, ccn)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+        select p.person_name, p.ldap_uid
+        from bspace_course_instructor_vw bci
+        join bspace_course_info_vw c on c.term_yr = bci.term_yr and c.term_cd = bci.term_cd and c.course_cntl_num = bci.course_cntl_num
+        join bspace_person_info_vw p on p.ldap_uid = bci.instructor_ldap_uid
+        where bci.instructor_ldap_uid = p.ldap_uid
+          and bci.term_yr = #{connection.quote(term_yr)}
+          and bci.term_cd = #{connection.quote(term_cd)}
+          and bci.course_cntl_num = #{connection.quote(ccn)}
+          and ( bci.instructor_func = 1 or bci.instructor_func = 3 )
+        order by bci.instructor_func
       SQL
       result = connection.select_all(sql)
     }

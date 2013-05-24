@@ -40,7 +40,12 @@
 
       <div class="row">
         <div class="large-2 small-4 columns cc-academics-empasize">Schedule</div>
-        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.schedule"></div>
+        <div class="large-4 small-8 columns end">
+          <div data-ng-repeat="sked in selected_course.schedules" class="cc-academics-schedule-room">
+            <span data-ng-bind="sked.schedule"></span><br />
+            <span data-ng-bind="sked.room_number"></span> <span data-ng-bind="sked.building_name"></span>
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -62,8 +67,14 @@
       </div>
 
       <div class="row">
-        <div class="large-2 small-4 columns cc-academics-empasize">Instructor</div>
-        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.instructor"><a href=""></a></div>
+        <div class="large-2 small-4 columns cc-academics-empasize">
+          <data-ng-pluralize count="selected_course.instructors.length"
+            when="{'0': 'Instructor', '1': 'Instructor', 'other': 'Instructors'}">
+          </data-ng-pluralize>
+        </div>
+        <div class="large-4 small-8 columns end">
+        <span data-ng-repeat="instructor in selected_course.instructors"><span data-ng-hide='$index==0'>, </span><span data-ng-bind="instructor.name"></span></span>
+        </div>
       </div>
 
     </div>
