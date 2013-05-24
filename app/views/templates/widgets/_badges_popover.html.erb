@@ -15,9 +15,9 @@
           <span class="cc-visuallyhidden" data-ng-bind-template="Go to {{badge.display.name}}"></span>
         </a>
         <h4 data-ng-switch-when="bMail"
-        data-ng-bind-template="Recent {{badge.display.name}} Messages"></h4>
+        data-ng-bind-template="Unread {{badge.display.name}} Messages"></h4>
         <h4 data-ng-switch-when="bCal"
-        data-ng-bind-template="{{badge.display.name}} Updates ({{api.date.now | date:'M/d/yy'}})"></h4>
+        data-ng-bind-template="Unaccepted {{badge.display.name}} Invitations"></h4>
         <div data-ng-switch-default>
           <h4 data-ng-bind-template="{{badge.display.name}} (Not connected)"
           data-ng-show="!user.profile.has_google_access_token"></h4>
