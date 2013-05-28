@@ -5,7 +5,9 @@ module SIS
 
     def initialize(file, dir)
       @sections = CSV.open(file, :headers => true)
-      @sections.readline # read in the header
+      # Read to pick up the header. We need to rewind afterward, so as not to
+      # lose the first line of data in the each() loop.
+      @sections.readline
       sections_provisioning_header = 'canvas_section_id,section_id,canvas_course_id,course_id,name,status,start_date,end_date,canvas_account_id,account_id'
       validate_section_header(@sections.headers, sections_provisioning_header)
       target_csv_files = {
@@ -32,7 +34,8 @@ module SIS
     def populate_section_enrollments
       students_hash = {}
       enrollments_count = {}
-
+      # Rewind before looping
+      @sections.rewind
       @sections.each do |row|
         next if row.blank?
         section_entry = row.to_hash
