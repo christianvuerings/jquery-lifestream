@@ -57,7 +57,7 @@ describe CampusData do
   end
 
   it "should find a course" do
-    course = CampusData.get_course_from_section("7366", "2013", "C")
+    course = CampusData.get_course_from_section("7366", "2013", "B")
     course.should_not be_nil
     if CampusData.test_data?
       # we will only have predictable data in our fake Oracle db.

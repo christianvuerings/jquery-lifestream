@@ -64,13 +64,15 @@ describe SakaiUserSitesProxy do
 
   it "should see any course offerings associated with a course site" do
     course_feed = @client.get_categorized_sites[:classes]
-    course_feed.each do |site|
-      site[:courses].should_not be_nil
-      site[:courses].each do |course_info|
-        course_info[:dept].should_not be_nil
-        course_info[:catid].should_not be_nil
-        course_info[:term_cd].should_not be_nil
-        course_info[:term_yr].should_not be_nil
+    if SakaiData.test_data?
+      course_feed.each do |site|
+        site[:courses].should_not be_nil
+        site[:courses].each do |course_info|
+          course_info[:dept].should_not be_nil
+          course_info[:catid].should_not be_nil
+          course_info[:term_cd].should_not be_nil
+          course_info[:term_yr].should_not be_nil
+        end
       end
     end
   end
