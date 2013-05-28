@@ -93,22 +93,22 @@ module Calcentral
 
         -- Test UTF-8 handling.
         Insert into SAKAI_SITE (SITE_ID,TITLE,TYPE,SHORT_DESC,PUBLISHED,DESCRIPTION) values ('29fc31ae-ff14-419f-a132-5576cae2474e','RUSSWIKI 2B Sp13','course','Добро пожаловать в Русский 1!',1,'<p>' || char(10) || '	<strong>Знаете ли вы?</strong></p>' || char(10) || '<ul>' || char(10) || '	<li>' || char(10) || '		Кузен Петра I был произведён в генералы только после смерти императора.</li>' || char(10) || '</ul>' || char(10) || '<p>' || char(10) || '	&nbsp;</p>');
-        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('29fc31ae-ff14-419f-a132-5576cae2474e','term','Spring 2013');
-        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('29fc31ae-ff14-419f-a132-5576cae2474e','term_eid','2013-B');
+        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('29fc31ae-ff14-419f-a132-5576cae2474e','term','Summer 2013');
+        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('29fc31ae-ff14-419f-a132-5576cae2474e','term_eid','2013-C');
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('29fc31ae-ff14-419f-a132-5576cae2474e','211159',-1);
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('29fc31ae-ff14-419f-a132-5576cae2474e','575bc12b-929f-4485-b2a2-50c69d8c06c7',1);
 
         -- Test null short description.
         Insert into SAKAI_SITE (SITE_ID,TITLE,TYPE,SHORT_DESC,PUBLISHED,DESCRIPTION) values ('45042d5d-9b88-43cf-a83a-464e1f0444fc','MATH 1853 Sp13','course','',1,'<p>' || char(10) || '	The following work is not a republication of a former treatise by the Author, entitled, &ldquo;The Mathematical Analysis of Logic.&rdquo; Its earlier portion is indeed devoted to the same object, and it begins by establishing the same system of fundamental laws, but its methods are more general, and its range of applica- tions far wider. It exhibits the results, matured by some years of study and reflection, of a principle of investigation relating to the intellectual operations, the previous exposition of which was written within a few weeks after its idea had been conceived.</p>' || char(10) || '<p>' || char(10) || '	That portion of this work which relates to Logic presupposes in its reader a knowledge of the most important terms of the science, as usually treated, and of its general object. Some acquaintance with the principles of Algebra is also requisite, but it is not necessary that this application should have been carried beyond the solution of simple equations. For the study of those chapters which relate to the theory of probabilities, a somewhat larger knowledge of Algebra is required, and especially of the doctrine of Elimination, and of the solution of Equations containing more than one unknown quantity.</p>' || char(10) || '<p>' || char(10) || '	&nbsp;</p>');
-        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('45042d5d-9b88-43cf-a83a-464e1f0444fc','term','Spring 2013');
-        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('45042d5d-9b88-43cf-a83a-464e1f0444fc','term_eid','2013-B');
+        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('45042d5d-9b88-43cf-a83a-464e1f0444fc','term','Summer 2013');
+        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('45042d5d-9b88-43cf-a83a-464e1f0444fc','term_eid','2013-C');
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('45042d5d-9b88-43cf-a83a-464e1f0444fc','211159',-1);
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('45042d5d-9b88-43cf-a83a-464e1f0444fc','575bc12b-929f-4485-b2a2-50c69d8c06c7',1);
 
         -- Test unpublished site.
         Insert into SAKAI_SITE (SITE_ID,TITLE,TYPE,SHORT_DESC,PUBLISHED,DESCRIPTION) values ('cc56df9a-3ae1-4362-a4a0-6c5133ec8750','Copyright Trolling 101','course', '',0, '');
-        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('cc56df9a-3ae1-4362-a4a0-6c5133ec8750','term','Spring 2013');
-        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('cc56df9a-3ae1-4362-a4a0-6c5133ec8750','term_eid','2013-B');
+        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('cc56df9a-3ae1-4362-a4a0-6c5133ec8750','term','Summer 2013');
+        Insert into SAKAI_SITE_PROPERTY (SITE_ID,NAME,VALUE) values ('cc56df9a-3ae1-4362-a4a0-6c5133ec8750','term_eid','2013-C');
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('cc56df9a-3ae1-4362-a4a0-6c5133ec8750','211159',-1);
         Insert into SAKAI_SITE_USER (SITE_ID,USER_ID,PERMISSION) values ('cc56df9a-3ae1-4362-a4a0-6c5133ec8750','575bc12b-929f-4485-b2a2-50c69d8c06c7',1);
 

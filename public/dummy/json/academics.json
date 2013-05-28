@@ -447,8 +447,8 @@
   },
   "semesters": [
     {
-      "name": "Spring 2013",
-      "slug": "spring-2013",
+      "name": "Summer 2013",
+      "slug": "summer-2013",
       "is_current": true,
       "schedule": [
         {
