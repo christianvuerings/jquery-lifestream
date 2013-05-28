@@ -46,13 +46,6 @@ describe('CalCentral controller', function() {
     expect($scope.user.profile.preferred_name).toBeDefined();
   });
 
-  /*
-   * Disabling this test until https://github.com/angular/angular.js/issues/2431 is fixed
-   * Right now we need to add
-   *   if (!$rootScope.$$phase) { $rootScope.$apply(); }
-   * after every $http call in order to make this work
-   * TODO - enable this test again
-   *
   it('should remove the OAuth authorization for a user', function() {
     var service = 'canvas';
 
@@ -63,17 +56,18 @@ describe('CalCentral controller', function() {
     // We need to fake out the redirect so it doesn't actually happen
     $scope.user._redirectToSettingsPage = angular.noop;
     $scope.user._handleUserLoaded(status);
+    $scope.$digest();
     $httpBackend.flush();
 
     expect($scope.user.profile.has_canvas_access_token).toBeTruthy();
 
     $httpBackend.when('POST', '/api/' + service + '/remove_authorization').respond({});
     $scope.user.removeOAuth(service);
+    $scope.$digest();
     $httpBackend.flush();
 
     expect($scope.user.profile.has_canvas_access_token).toBeFalsy();
 
   });
-  */
 
 });
