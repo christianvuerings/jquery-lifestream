@@ -66,10 +66,10 @@ sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
   fake_user_id: "300939"
-  current_terms: ["Spring 2013"]
+  current_terms: ["Summer 2013"]
   current_terms_codes: [ {
     term_yr: "2013",
-    term_cd: "B"
+    term_cd: "C"
   }]
   # Timestamp in UTC, needed when testing against older DB snapshot
   fake_now:
