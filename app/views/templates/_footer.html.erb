@@ -4,17 +4,17 @@
     <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a>
     <a href="https://ets.berkeley.edu/calcentral">Help</a>
   </div>
-  <div data-ng-click="showInfo=!showInfo" data-cc-accessible-focus-directive class="columns small-7 cc-footer-copyright end">&copy; <span data-ng-bind="api.date.now | date:'yyyy'"></span> UC Regents | <a href="//security.berkeley.edu/policy" data-ng-click="api.util.preventBubble($event)">Usage Policy</a></div>
+  <div data-ng-click="footer.showInfo=!footer.showInfo" data-cc-accessible-focus-directive class="columns small-7 cc-footer-copyright end">&copy; <span data-ng-bind="api.date.now | date:'yyyy'"></span> UC Regents | <a href="//security.berkeley.edu/policy" data-ng-click="api.util.preventBubble($event)">Usage Policy</a></div>
 
-  <div class="large-12 columns" data-ng-show="showInfo">
+  <div class="large-12 columns" data-ng-show="footer.showInfo">
     <ul>
-      <li>Hostname: <%= @server_settings["hostname"] %></li>
-      <li><a href="https://github.com/ets-berkeley-edu/calcentral/commit/<%= @server_settings['git_commit'] %>">Git commit: <%= @server_settings["git_commit"][0,8] %></a></li>
-      <li>Application Version: <%= @server_settings["versions"]["application"] %></li>
-      <li>API Version: <%= @server_settings["versions"]["api"] %></li>
-      <li>Current DB Schema: <%= @server_settings["versions"]["current_db_schema"] %></li>
-      <li>Previous Release's DB Schema: <%= @server_settings["versions"]["previous_release_db_schema"] %></li>
-      <li>Up Since: <%= @server_settings["first_visited"] %></li>
+      <li>Hostname: <span data-ng-bind="hostname" /></li>
+      <li><a data-ng-href="https://github.com/ets-berkeley-edu/calcentral/commit/{{git_commit}}">Git commit: <span data-ng-bind="git_commit" /></a></li>
+      <li>Application Version: <span data-ng-bind="versions.application" /></li>
+      <li>API Version: <span data-ng-bind="versions.api" /></li>
+      <li>Current DB Schema: <span data-ng-bind="versions.current_db_schema" /></li>
+      <li>Previous Release's DB Schema: <span data-ng-bind="versions.previous_release_db_schema" /></li>
+      <li>Up Since: <span data-ng-bind="first_visited" /></li>
       <li>UID: <span data-ng-bind="user.profile.uid" id="user_id"></span></li>
       <li>
         <button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>

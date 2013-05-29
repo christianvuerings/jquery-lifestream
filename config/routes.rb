@@ -34,6 +34,8 @@ Calcentral::Application.routes.draw do
 
   match '/api/tools/styles' => 'tools#get_styles', :via => :get
 
+  match '/api/server_info' => 'server_runtime#get_info', :via => :get
+
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
   if Settings.developer_auth.enabled
