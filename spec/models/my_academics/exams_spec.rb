@@ -9,13 +9,16 @@ describe "MyAcademics::Exams" do
     feed = {}
     MyAcademics::Exams.new("61889").merge(feed)
 
-    Rails.logger.info "feed[:exam_schedule] = #{feed[:exam_schedule].inspect}"
     feed[:exam_schedule].should_not be_nil
-    feed[:exam_schedule]["Tue May 14"][0][:course_number].should == "Psychology C120"
-    feed[:exam_schedule]["Tue May 14"][0][:time].should == "8:00A"
-    feed[:exam_schedule]["Tue May 14"][0][:location][:raw_location].should == "390 HEARST MIN"
-    feed[:exam_schedule]["Tue May 14"][0][:location]["room_number"].should == "390"
-    feed[:exam_schedule]["Tue May 14"][0][:location]["display"].should == "Hearst Memorial Mining Building"
+    feed[:exam_schedule][0][:course_number].should == "Psychology C120"
+    feed[:exam_schedule][0][:time].should == "8:00A"
+    feed[:exam_schedule][0][:location][:raw_location].should == "390 HEARST MIN"
+    feed[:exam_schedule][0][:location]["room_number"].should == "390"
+    feed[:exam_schedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
+    # making sure sorting works in right order
+    feed[:exam_schedule][0][:date][:epoch].should == 1368489600
+    feed[:exam_schedule][1][:date][:epoch].should == 1368576000
+    feed[:exam_schedule][2][:date][:epoch].should == 1368662400
   end
 
   it "should properly handle a student with an exam in an unparseable room" do
@@ -25,9 +28,8 @@ describe "MyAcademics::Exams" do
     feed = {}
     MyAcademics::Exams.new("865826").merge(feed)
 
-    Rails.logger.info "feed[:exam_schedule] = #{feed[:exam_schedule].inspect}"
     feed[:exam_schedule].should_not be_nil
-    feed[:exam_schedule]["Wed May 15"][0][:location][:raw_location].should == "F295 HAAS"
+    feed[:exam_schedule][0][:location][:raw_location].should == "F295 HAAS"
   end
 
 end
