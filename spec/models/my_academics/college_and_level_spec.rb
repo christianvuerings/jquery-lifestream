@@ -14,7 +14,7 @@ describe "MyAcademics::CollegeAndLevel" do
     oski_college.should_not be_nil
     oski_college[:college].should == "ENGR"
     oski_college[:standing].should == "Undergraduate"
-
+    oski_college[:major].should == "Economics, Rhetoric, Business Admin"
   end
 
 end
