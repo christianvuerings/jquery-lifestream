@@ -23,11 +23,10 @@
 </head>
 
 <body
-  data-ng-class="{'cc-page-splash':(controller_name=='SplashController')}"
+  data-ng-class="{'cc-page-splash':(controller_name=='SplashController'),'cc-offcanvas-show':(menu._show)}"
   data-ng-click="api.popover.closeAll()"
   data-ng-show="user.isLoaded">
 
   <%= yield %>
-  <%= render 'templates/footer' %>
 </body>
 </html>

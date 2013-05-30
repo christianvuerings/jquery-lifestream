@@ -16,7 +16,9 @@ $cc-color-blue-hover: #f2f9fe;
 $cc-color-dark-grey: #2c2d2e;
 $cc-color-header: #002e5b;
 $cc-color-header-icon-background: #4a6a8a;
+$cc-color-green-dark: #2a627b;
 $cc-color-green-label: #b3c8b4;
+$cc-color-green-light: #42768e;
 $cc-color-green-plus: #51a351;
 $cc-color-launcher-border: #114d80;
 $cc-color-light-grey: #dddddd;
@@ -125,6 +127,9 @@ button {
   &:hover, &:focus {
     cursor: pointer;
     text-decoration: underline;
+  }
+  &:active {
+    @include box-shadow(none);
   }
 }
 .button {
@@ -263,13 +268,6 @@ button {
   background-color: $cc-color-white;
 }
 
-@media only screen and (max-width: 767px) {
-  /* Fixes a background color bug on small screens in the header */
-  body {
-    background-color: $cc-color-header;
-  }
-}
-
 /*
 Read more about why we're using @import instead of require at
 http://stackoverflow.com/questions/6269420
@@ -309,6 +307,9 @@ http://stackoverflow.com/questions/6269420
 
 /* Date Picker */
 @import "datepicker";
+
+/* Off Canvas */
+@import "offcanvas";
 
 /* Demo Styles */
 @import "styles-ref";
