@@ -1,0 +1,55 @@
+@media only screen and (max-width: 767px) {
+  /* Fixes a background color bug on small screens in the header */
+  body {
+    background-color: $cc-color-header;
+  }
+  .cc-header-logo {
+    display: none;
+  }
+  .cc-off-canvas-container {
+    background: $cc-color-navigation;
+    overflow: hidden;
+    width: 100%;
+    .cc-navigation-bar ul > li > a {
+      float: none;
+      margin: 5px;
+    }
+  }
+  .cc-offcanvas-left {
+    -webkit-transform: translatez(0);
+    @include single-transition(margin, 0.2s, ease);
+    float: left;
+    margin-left: -100%;
+  }
+  .cc-offcanvas-right {
+    -webkit-transform: translatez(0);
+    @include single-transition(margin, 0.2s, ease);
+    margin-left: 0;
+  }
+  .cc-offcanvas-show {
+    .cc-offcanvas-left {
+      margin-left: 0;
+      width: 200px;
+    }
+    .cc-offcanvas-right {
+      margin-left: 200px;
+      margin-right: -50%;
+    }
+  }
+  .cc-offcanvas-icon {
+    button {
+      background: $cc-color-green-dark;
+      margin: 0;
+      padding: 10px 10px 11px;
+      &:hover, &:focus {
+        background: $cc-color-green-light;
+        text-decoration: none;
+      }
+    }
+  }
+}
+@media only screen and (min-width: 768px) {
+  .cc-offcanvas-icon {
+    display: none;
+  }
+}

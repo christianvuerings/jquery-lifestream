@@ -1,12 +1,20 @@
 <%= render 'templates/ieold' %>
 <%= render 'templates/launcher' %>
-<%= render 'templates/navigation' %>
 
-<div
-class="row cc-container-main"
-data-ng-class="{'collapse':(controller_name=='DashboardController')}"
-role="main">
-  <div data-ng-view></div>
+<div class="cc-off-canvas-container">
+  <div class="cc-offcanvas-left">
+    <%= render 'templates/navigation' %>
+  </div>
+
+  <div class="cc-offcanvas-right">
+    <div
+    class="row cc-container-main"
+    data-ng-class="{'collapse':(controller_name=='DashboardController')}"
+    role="main">
+      <div data-ng-view></div>
+    </div>
+    <%= render 'templates/footer' %>
+  </div>
 </div>
 
 <%= render 'templates/all' %>
