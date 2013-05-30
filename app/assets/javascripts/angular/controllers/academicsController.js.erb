@@ -9,6 +9,20 @@
 
     apiService.util.setTitle('My Academics');
 
+    /**
+     * We're putting the exams in buckets per date
+     */
+    var parseExamSchedule = function() {
+      var exam_schedule = {};
+      angular.forEach($scope.exam_schedule, function(element) {
+        if (!exam_schedule[element.date.epoch]) {
+          exam_schedule[element.date.epoch] = [];
+        }
+        exam_schedule[element.date.epoch].push(element);
+      });
+      $scope.exam_schedule = exam_schedule;
+    };
+
     $scope.getAcademics = function() {
       return $http.get('/api/my/academics').success(function(data) {
         $scope.academics = data;
@@ -36,6 +50,8 @@
             }
           });
         }
+
+        parseExamSchedule();
 
         $scope.gpaInit(); // Initialize GPA calculator with selected courses
       });

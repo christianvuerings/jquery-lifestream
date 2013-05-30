@@ -38,7 +38,7 @@
 
       <div data-ng-repeat="(day, day_data) in exam_schedule" class="cc-academics-exam-block">
         <div class="row">
-          <div class="large-12 small-12 columns cc-academics-column-labels" data-ng-bind="day"></div>
+          <div class="large-12 small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
         </div>
         <div class="row" data-ng-repeat="exam in day_data">
           <div class="large-2 small-2 columns" data-ng-bind="exam.time"></div>
