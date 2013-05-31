@@ -7,17 +7,12 @@ class AbstractEventProcessor
 
   def process(event, timestamp)
     return false unless accept?(event)
-
-    if timestamp == nil
-      timestamp = Time.now.to_datetime
-    end
+    timestamp ||= Time.now.to_datetime
 
     Rails.logger.info "#{self.class.name} processing event: #{event}; timestamp = #{timestamp}"
     notifications = process_internal(event, timestamp)
 
-    if notifications.empty?
-      return false
-    end
+    return false if notifications.empty?
 
     # Using one connection for all the notification saves.
     use_pooled_connection {

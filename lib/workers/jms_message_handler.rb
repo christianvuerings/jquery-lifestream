@@ -10,12 +10,12 @@ class JmsMessageHandler
     if message[:text]
       message_data = JSON.parse message[:text]
       Rails.logger.info "message_data = #{message_data}"
-      if message_data["event"]
+      if message_data['eventNotification'] && message_data['eventNotification']['event']
         @processors.each do |processor|
-          processor.process(message_data["event"], message[:timestamp])
+          processor.process(message_data['eventNotification']["event"], message[:timestamp])
         end
       else
-        Rails.logger.info "#{Thread.current} JMS message has text but no event, skipping"
+        Rails.logger.info "#{Thread.current} JMS message has text but no eventNotification => event, skipping"
       end
     else
       Rails.logger.info "#{Thread.current} JMS message has no text, skipping"

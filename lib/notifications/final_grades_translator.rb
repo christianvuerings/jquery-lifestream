@@ -2,7 +2,7 @@ class FinalGradesTranslator
   include DatedFeed
 
   def accept?(event)
-    event["code"] == "EndOFTermGrade"
+    event["topic"] == "Bearfacts:EndOfTermGrades"
   end
 
   def translate(notification)
@@ -13,11 +13,10 @@ class FinalGradesTranslator
 
     Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}"
 
-    return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid
+    return false unless accept?(event) && timestamp && uid
 
-    Rails.logger.debug "#{self.class.name} payload = #{payload}"
-    term_cd = FinalGradesEventProcessor.lookup_term_code payload["term"]
-    course = CampusData.get_course_from_section(payload["ccn"], payload["year"], term_cd)
+    Rails.logger.debug "#{self.class.name} event = #{event}"
+    course = CampusData.get_course_from_section(event["ccn"], event["year"], event["term"])
 
     return false unless course && course["dept_name"] && course["catalog_id"]
 

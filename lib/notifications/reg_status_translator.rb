@@ -2,7 +2,7 @@ class RegStatusTranslator
   include DatedFeed
 
   def accept?(event)
-    event["code"] == "RegStatus"
+    event && event['topic'] == "Bearfacts:RegStatus"
   end
 
   def translate(notification)
@@ -14,7 +14,7 @@ class RegStatusTranslator
 
     Rails.logger.info "#{self.class.name} translating: #{notification}; accept? #{accept?(event)}; timestamp = #{timestamp}; uid = #{uid}; reg_status = #{reg_status}"
 
-    return false unless accept?(event) && (payload = event["payload"]) && timestamp && uid && reg_status
+    return false unless accept?(event) && timestamp && uid && reg_status
 
     explanation = notification_status_explanation reg_status["reg_status_cd"]
     status = status reg_status["reg_status_cd"]
@@ -26,7 +26,7 @@ class RegStatusTranslator
         :id => notification.id,
         :title => title,
         :summary => summary,
-        :source => event["system"],
+        :source => event["topic"],
         :type => "alert",
         :date => format_date(timestamp),
         :url => "https://bearfacts.berkeley.edu/bearfacts/",
