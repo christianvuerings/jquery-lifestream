@@ -19,7 +19,7 @@ postgres:
   password: secret
   host: localhost
   port: 5432
-  pool: 3
+  pool: 30
 
 campusdb:
   adapter: h2
@@ -27,7 +27,7 @@ campusdb:
   url: jdbc:h2:mem:h2CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
   username: sa
   password: sa
-  pool: 3
+  pool: 30
   # Needed when the bSpace application tables are in a different namespace.
   bspace_prefix:
 test_sqlite:
