@@ -3,12 +3,12 @@ require 'celluloid'
 class UserCacheWarmer
 
   def initialize
-    @pool = WarmingWorker.pool(size: determine_pool_size)
-    Rails.logger.info "#{self.class.name} Started up with pool of #{determine_pool_size} WarmingWorkers"
+    #@pool = WarmingWorker.pool(size: determine_pool_size)
+    #Rails.logger.info "#{self.class.name} Started up with pool of #{determine_pool_size} WarmingWorkers"
   end
 
   def warm(uid)
-    @pool.async.warm uid
+    #@pool.async.warm uid
   end
 
   def self.do_warm(uid)
