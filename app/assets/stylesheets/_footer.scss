@@ -10,14 +10,25 @@ body {
     a {
       font-weight: bold;
     }
-    .cc-footer-links a {
-      padding-right: 21px;
-    }
-    .cc-footer-copyright {
+    .cc-footer-links {
+      margin-top: 10px;
       text-align: right;
+      a {
+        padding-left: 21px;
+      }
+    }
+    .cc-footer-berkeley {
       &:hover {
         cursor: pointer;
       }
+    }
+    .cc-footer-copyright {
+      margin-top: 10px;
+    }
+
+    svg {
+      float: left;
+      margin-right: 20px;
     }
 
     ul {
