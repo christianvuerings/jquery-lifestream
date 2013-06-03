@@ -1,0 +1,13 @@
+<script type="text/ng-template" id="templates/dashboard_task_noitems.html">
+  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0">
+    <h3 class="cc-widget-tasks-section-label"><span data-ng-bind="tasks_mode" class="cc-capitalize"></span></h3>
+    <div data-ng-show="counts.opposite !== 0">
+      <p class="cc-widget-tasks-no-items-first">You currently have <strong>0</strong> <span data-ng-bind="tasks_mode"></span> tasks or assignments and <strong data-ng-bind="counts.opposite"></strong> <span data-ng-bind="tasks_mode_opposite"></span> tasks and assignments.</p>
+      <p>To <strong>see your <span data-ng-bind="tasks_mode_opposite"></span> tasks and assignments</strong>, click the <em class="cc-capitalize" data-ng-bind="tasks_mode_opposite"></em> tab.</p>
+    </div>
+    <div data-ng-show="counts.opposite === 0">
+      <p class="cc-widget-tasks-no-items-first">You have no <span data-ng-bind="tasks_mode"></span> tasks and assignments.</p>
+    </div>
+    <p>To <strong>create a task</strong>, click the <em>New Task</em> button.</p>
+  </div>
+</script>

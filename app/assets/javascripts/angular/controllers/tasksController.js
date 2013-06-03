@@ -9,12 +9,27 @@
     // Initial mode for Tasks view
     $scope.tasks_mode = 'scheduled';
 
+    var calculateCounts = function() {
+      $scope.counts = {
+        scheduled: $scope.overdueTasks.length + $scope.dueTodayTasks.length + $scope.futureTasks.length,
+        unscheduled: $scope.unscheduledTasks.length
+      };
+      setCounts();
+    };
+
+    var setCounts = function() {
+      var isScheduled = ($scope.tasks_mode === 'scheduled');
+      $scope.counts.current = isScheduled ? $scope.counts.scheduled : $scope.counts.unscheduled;
+      $scope.counts.opposite = isScheduled ? $scope.counts.unscheduled : $scope.counts.scheduled;
+    };
+
     $scope.updateTaskLists = function() {
       $scope.overdueTasks = $filter('orderBy')($scope.tasks.filter(filterOverdue), 'due_date.epoch');
       $scope.dueTodayTasks = $filter('orderBy')($scope.tasks.filter(filterDueToday), 'due_date.epoch');
       $scope.futureTasks = $filter('orderBy')($scope.tasks.filter(filterFuture), 'due_date.epoch');
       $scope.unscheduledTasks = $filter('orderBy')($scope.tasks.filter(filterUnScheduled), 'updated');
       $scope.completedTasks = $filter('orderBy')($scope.tasks.filter(filterCompleted), 'completed_date.epoch', true);
+      calculateCounts();
     };
 
     $scope.getTasks = function() {
@@ -88,6 +103,7 @@
     $scope.switchTasksMode = function(tasks_mode) {
       apiService.analytics.trackEvent(['Tasks', 'Switch mode', tasks_mode]);
       $scope.tasks_mode = tasks_mode;
+      setCounts();
     };
 
     // Delete Google tasks
