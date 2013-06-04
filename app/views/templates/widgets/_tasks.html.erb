@@ -44,62 +44,64 @@
       </div>
 
       <div data-ng-switch-when="scheduled">
-        <div>
-          <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
-          <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
-            <li
-              data-ng-repeat="task in overdueTasks"
-              data-ng-class="{'cc-widget-list-selected': task._show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!overdueTasks.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are overdue.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
-          <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
-            <li
-              data-ng-repeat="task in dueTodayTasks"
-              data-ng-class="{'cc-widget-list-selected': task._show}">
+        <div data-ng-include src="'templates/dashboard_task_noitems.html'" data-onload="tasks_mode_opposite='unscheduled'"></div>
+        <div data-ng-hide="counts.scheduled === 0">
+          <div>
+            <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
+            <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
+              <li
+                data-ng-repeat="task in overdueTasks"
+                data-ng-class="{'cc-widget-list-selected': task._show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are due today.
-          </p>
-        </div>
+              </li>
+            </ul>
+            <p data-ng-show="!overdueTasks.length" class="cc-widget-text">
+              There are currently no {{tasks_mode}} tasks/assignments that are overdue.
+            </p>
+          </div>
 
-        <div>
-          <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
-          <ul class="cc-widget-tasks-list">
-            <li
-              data-ng-repeat="task in futureTasks"
-              data-ng-class="{'cc-widget-list-selected': task._show}">
-              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-            </li>
-          </ul>
-          <p data-ng-show="!futureTasks.length" class="cc-widget-text">
-            There are currently no {{tasks_mode}} tasks/assignments that are due in the future.
-          </p>
-        </div>
+          <div>
+            <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
+            <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
+              <li
+                data-ng-repeat="task in dueTodayTasks"
+                data-ng-class="{'cc-widget-list-selected': task._show}">
+                  <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </li>
+            </ul>
+            <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text">
+              There are currently no {{tasks_mode}} tasks/assignments that are due today.
+            </p>
+          </div>
 
+          <div>
+            <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
+            <ul class="cc-widget-tasks-list">
+              <li
+                data-ng-repeat="task in futureTasks"
+                data-ng-class="{'cc-widget-list-selected': task._show}">
+                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </li>
+            </ul>
+            <p data-ng-show="!futureTasks.length" class="cc-widget-text">
+              There are currently no {{tasks_mode}} tasks/assignments that are due in the future.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div data-ng-switch-when="unscheduled">
-        <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> </h3>
-        <ul class="cc-widget-tasks-list">
-          <li
-            data-ng-repeat="task in unscheduledTasks"
-            data-ng-class="{'cc-widget-list-selected': task._show}">
-            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
-          </li>
-        </ul>
-        <p data-ng-show="!unscheduledTasks.length" class="cc-widget-text">
-          There are currently no {{tasks_mode}} tasks/assignments that are unscheduled.
-        </p>
+        <div data-ng-include src="'templates/dashboard_task_noitems.html'" data-onload="tasks_mode_opposite='scheduled'"></div>
+        <div data-ng-hide="counts.unscheduled === 0">
+          <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> </h3>
+          <ul class="cc-widget-tasks-list">
+            <li
+              data-ng-repeat="task in unscheduledTasks"
+              data-ng-class="{'cc-widget-list-selected': task._show}">
+              <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div data-ng-switch-when="completed">
