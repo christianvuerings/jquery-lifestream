@@ -16,7 +16,7 @@
       <div class="large-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-date-{{$index}}">Due:</label>
       </div>
-      <div class="large-9 small-9 columns cc-widget-tasks-date-input">
+      <div class="large-7 small-7 columns cc-widget-tasks-date-input">
         <input type="text"
           class="cc-input-noborder"
           data-ng-model="add_edit_task.due_date"
@@ -28,6 +28,11 @@
         <p class="cc-alert cc-alert-text" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccDateValidator">
           Please use mm/dd/yyyy date format
         </p>
+      </div>
+      <div class="large-2 small-2 columns">
+        <button class="cc-button-transparent cc-widget-tasks-addtask-calendar-icon" data-ng-click="api.util.preventBubble($event);_show_picker=!_show_picker">
+          <i class="icon-calendar"></i>
+        </button>
       </div>
     </div>
     <div class="row collapse">

@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
-<div class="cc-widget-list-hover"
+<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled)}"
   data-cc-accessible-focus-directive
   data-ng-click="api.widget.toggleShow(tasks, task, 'Tasks')"
   data-ng-controller="TaskEditorController">

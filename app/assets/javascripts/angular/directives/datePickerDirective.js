@@ -8,12 +8,18 @@
       link: function(scope, elm, attrs, ctrl) {
 
         var picker = new Pikaday({
+          bound: false,
           field: elm[0],
           format: 'MM/DD/YYYY',
           onSelect: function() {
             // We need to set the view value
             // so validation happens correctly every time
             ctrl.$setViewValue(elm[0].value);
+            scope._show_picker = false;
+            // We need to call an extra digest call, otherwise the $watch isn't executed
+            if(!$scope.$$phase) {
+              scope.$digest();
+            }
           }
         });
 
@@ -29,6 +35,14 @@
             picker.setDate(elm[0].value);
           }
         }, true);
+
+        scope.$watch('_show_picker', function(showPicker) {
+          if (showPicker) {
+            picker.show();
+          } else {
+            picker.hide();
+          }
+        });
 
       }
     };
