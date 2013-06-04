@@ -37,9 +37,9 @@ describe CanvasProxy do
     courses[0]['course_code'].should_not be_nil
   end
 
-  it "should get the coming_up feed for a known user", :testext => true do
-    client = CanvasComingUpProxy.new(:user_id => @user_id)
-    response = client.coming_up
+  it "should get the upcoming_events feed for a known user", :testext => true do
+    client = CanvasUpcomingEventsProxy.new(:user_id => @user_id)
+    response = client.upcoming_events
     tasks = JSON.parse(response.body)
     tasks[0]["type"].should_not be_nil
     tasks[0]["title"].should_not be_nil

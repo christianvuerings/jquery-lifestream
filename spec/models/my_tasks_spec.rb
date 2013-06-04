@@ -17,7 +17,7 @@ describe "MyTasks" do
                                                                             :refresh_token => Settings.google_proxy.test_user_refresh_token,
                                                                             :expiration_time => 0)
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
-    @fake_canvas_coming_up_proxy = CanvasComingUpProxy.new({fake: true})
+    @fake_canvas_upcoming_events_proxy = CanvasUpcomingEventsProxy.new({fake: true, user_id: Settings.canvas_proxy.test_user_id})
     @fake_canvas_todo_proxy = CanvasTodoProxy.new({fake: true})
 
   end
@@ -29,7 +29,7 @@ describe "MyTasks" do
       GoogleProxy.stub(:access_granted?).and_return(true)
       CanvasProxy.stub(:access_granted?).and_return(true)
       GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
-      CanvasComingUpProxy.stub(:new).and_return(@fake_canvas_coming_up_proxy)
+      CanvasUpcomingEventsProxy.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
       CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
       my_tasks_model = MyTasks::Merged.new(@user_id)
       valid_feed = my_tasks_model.get_feed
