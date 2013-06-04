@@ -40,9 +40,12 @@ describe CanvasProxy do
   it "should get the upcoming_events feed for a known user", :testext => true do
     client = CanvasUpcomingEventsProxy.new(:user_id => @user_id)
     response = client.upcoming_events
-    tasks = JSON.parse(response.body)
-    tasks[0]["type"].should_not be_nil
-    tasks[0]["title"].should_not be_nil
+    events = JSON.parse(response.body)
+    events.should_not be_nil
+    if events.length > 0
+      events[0]["title"].should_not be_nil
+      events[0]["html_url"].should_not be_nil
+    end
   end
 
   it "should get the todo feed for a known user", :testext => true do
