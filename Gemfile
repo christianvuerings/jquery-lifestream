@@ -22,6 +22,7 @@ gem "omniauth-cas", "~> 1.0.1"
 gem "secure_headers", "~> 0.5.0"
 
 gem "faraday", "~> 0.8.7"
+gem "faraday_middleware", "~> 0.9.0"
 
 # OAuth2 support
 gem "signet", "~> 0.4.5"

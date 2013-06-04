@@ -1,0 +1,98 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "post",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/accounts/90242/reports/provisioning_csv?parameters%5Benrollment_term%5D=sis_term_id%3ATERM%3A2013-C&parameters%5Bsections%5D=1",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Thu, 06 Jun 2013 23:10:15 GMT"
+          ],
+          "etag": [
+            "\"e68e6fc094dc675f251a5f70006c33d4\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=m4KQE8W6frC2C5lItI4pmQ.4oNSv2_9Urx1rQiig-jlqgpUWveAAUiCIN0KepmkHOIK5uYw52E6nKobX_tn9BNxqgcCFcbfKUdCqSxwZnS2PQ.zv-nfapNbSU08zA5n0Wj_UQN8qU.UbEW2A; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003075918"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "2c00e630-b12c-0130-e424-02f885779982"
+          ],
+          "x-runtime": [
+            "387"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "162"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "id": 11938,
+            "parameters": {
+              "enrollment_term": "sis_term_id:TERM:2013-C",
+              "sections": "1"
+            },
+            "progress": 0,
+            "status": "running",
+            "report": "provisioning_csv",
+            "file_url": null
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 06 Jun 2013 23:10:16 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

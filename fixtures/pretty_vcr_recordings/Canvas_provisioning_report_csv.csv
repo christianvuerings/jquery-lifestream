@@ -1,0 +1,6 @@
+canvas_section_id,section_id,canvas_course_id,course_id,name,status,start_date,end_date,canvas_account_id,account_id
+1237009,SEC:2013-C-7309,1093164,C: 1093164,2013-C-7309,active,,,90242,
+1237012,,1093164,C: 1093164,Canvas-only Section,active,,,90242,
+1237013,SEC:2013-C-7372,1093165,,2013-C-7372,active,,,90242,
+1237014,SEC:2013-C-16171,1093167,C: 1093167,2013-C-16171,active,,,90242,
+1237015,BAD-SIS-ID,1093164,C: 1093164,Odd Section,active,,,90242,

@@ -66,6 +66,19 @@ class CampusData < OracleDatabase
     result
   end
 
+  def self.get_basic_people_attributes(up_to_1000_ldap_uids)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address
+      from bspace_person_info_vw pi
+      where pi.ldap_uid in (#{up_to_1000_ldap_uids.join(', ')})
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
   def self.get_reg_status(person_id)
     result = nil
       use_pooled_connection {

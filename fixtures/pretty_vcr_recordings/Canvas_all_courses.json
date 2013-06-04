@@ -1,0 +1,359 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?per_page=50",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Wed, 05 Jun 2013 22:58:56 GMT"
+          ],
+          "etag": [
+            "\"8bfeed05c2424e8ac4f07509d1cd79aa\""
+          ],
+          "link": [
+            "<https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?page=2&per_page=50>; rel=\"next\",<https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?page=1&per_page=50>; rel=\"first\",<https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?page=2&per_page=50>; rel=\"last\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=XszU-YchCcCTG00i2GawFw.r-jiFAoo_W3t_wTeFhDm_gdsBXJYc0-Fy-Ks7XW-pOm3XHICh2pdeqqZghitM4HuKHp4P7At8mgZMfGq6Wu4uw.b0jCz-2kkG2YNH2uTFV5kXljHOw.Ua_Ctg; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003075918"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "6cd99270-b061-0130-9366-02f885779982"
+          ],
+          "x-runtime": [
+            "5684"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "20018"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+           {
+              "account_id": 90243,
+              "course_code": "INFO430e",
+              "default_view": "feed",
+              "id": 760850,
+              "name": "INFO 430: Accessible Web Design ",
+              "start_at": "2012-08-23T00:00:00-07:00",
+              "end_at": "2013-06-21T23:55:00-07:00",
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_2By9p54fZzTnuWhg8oYKa4aZVRNliy7znuJConyZ.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": true,
+              "workflow_state": "available"
+            },
+            {
+              "account_id": 90243,
+              "course_code": "ENGL RAY",
+              "default_view": "modules",
+              "id": 765706,
+              "name": "Restoration Literature",
+              "start_at": "2012-10-08T16:27:14-07:00",
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_CzNAKxFhJLAotympDjK7kdoE7wnRPpyAyj1YtJ4w.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": false,
+              "workflow_state": "available"
+            },
+            {
+              "account_id": 90243,
+              "course_code": "API101",
+              "default_view": "feed",
+              "id": 767330,
+              "name": "API Testing and Design 101",
+              "start_at": "2012-09-04T00:00:00-07:00",
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_zEaJooSacLbZBLIdPKqIdFKwRpSGm7c2PpdG4ulA.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": false,
+              "workflow_state": "available"
+            },
+            {
+              "account_id": 90243,
+              "course_code": "All",
+              "default_view": "feed",
+              "id": 775764,
+              "name": "All About Horses",
+              "start_at": null,
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_di3n8BQofTVZ2nVmINcPnEi0wS2O61P6kJBWmHQR.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": false,
+              "workflow_state": "unpublished"
+            },
+            {
+              "account_id": 90243,
+              "course_code": "Tudor",
+              "default_view": "feed",
+              "id": 790393,
+              "name": "Tudor Prose",
+              "start_at": "2012-09-14T15:05:07-07:00",
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_xkXwNzCUUzAntoHNtQkmxdVlCPMEvqYDMTzhbEyw.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": false,
+              "workflow_state": "available"
+            },
+            {
+              "account_id": 90243,
+              "course_code": "Javascript-101",
+              "default_view": "feed",
+              "id": 830013,
+              "name": "Intermediate JavaScript",
+              "start_at": "2012-09-26T11:43:50-07:00",
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_s8oBSUa2Qh4pW7A7mA2IFrK48je9vaRnssxgtTdz.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": false,
+              "workflow_state": "available"
+            },
+            {
+              "account_id": 90243,
+              "course_code": "Responsive-Design",
+              "default_view": "feed",
+              "id": 830065,
+              "name": "Responsive Design Workshop",
+              "start_at": "2012-09-26T13:34:55-07:00",
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_FlHP3lpQR7KESl4ha4nVoUDRxpK2Npwq0gXoJMMN.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": false,
+              "workflow_state": "available"
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Wed, 05 Jun 2013 22:59:01 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?page=2&per_page=50",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Wed, 05 Jun 2013 23:23:09 GMT"
+          ],
+          "etag": [
+            "\"9c89da5a0f7cec2451ebca9d3e775407\""
+          ],
+          "link": [
+            "<https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?page=1&per_page=50>; rel=\"prev\",<https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?page=1&per_page=50>; rel=\"first\",<https://ucberkeley.test.instructure.com/api/v1/accounts/90242/courses?page=2&per_page=50>; rel=\"last\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=SEAqTa_ABGRusMmNWPC4Kw.FKFge3mYpHQWeCUMLnTJ01nkFRl3j8lld9vlDn2yJOMtllo4rYI3-tDOYrHx5VN94hyuzTT_pqHUjfK4yLOJkQ.9m-InHWYahWmHTAyKZButZe3S6U.Ua_IXw; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003075918"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "cf0d6130-b064-0130-c2f5-02f885576c21"
+          ],
+          "x-runtime": [
+            "1544"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "5479"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "account_id": 90242,
+              "course_code": "RAYTC Spr",
+              "default_view": "feed",
+              "id": 1093163,
+              "name": "Ray-Test-SpringCourse",
+              "start_at": null,
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_Jd5BB8So9ESJmam522ptHGn4J0ORZd8oJaBeDygj.ics"
+              },
+              "sis_course_id": "C:1093163",
+              "hide_final_grades": false,
+              "workflow_state": "unpublished"
+            },
+            {
+              "account_id": 90242,
+              "course_code": "RAYTC Bio Lec 3",
+              "default_view": "feed",
+              "id": 1093164,
+              "name": "Ray-Test Bio Lec",
+              "start_at": null,
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_FKDc1NypmYtYhC7wViNtI3UcRby8NIgQwGoTOZKS.ics"
+              },
+              "sis_course_id": "C: 1093164",
+              "hide_final_grades": false,
+              "workflow_state": "unpublished"
+            },
+            {
+              "account_id": 90242,
+              "course_code": "RAYTC Bio Disc 2",
+              "default_view": "feed",
+              "id": 1093165,
+              "name": "Ray-Test No SIS_ID",
+              "start_at": null,
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_D6pGKi37wFx34xg0Fr8iPjmegNJ8J5OB97CltJ5x.ics"
+              },
+              "sis_course_id": null,
+              "hide_final_grades": false,
+              "workflow_state": "unpublished"
+            },
+            {
+              "account_id": 90242,
+              "course_code": "RAYTC Cog Sci",
+              "default_view": "feed",
+              "id": 1093167,
+              "name": "Ray-Test Small Course",
+              "start_at": null,
+              "end_at": null,
+              "public_syllabus": false,
+              "calendar": {
+                "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_dvwSB8SnWV9VuoL7ON4mqOq54xQRQTYlyf40fhfY.ics"
+              },
+              "sis_course_id": "C: 1093167",
+              "hide_final_grades": false,
+              "workflow_state": "unpublished"
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Wed, 05 Jun 2013 23:23:10 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.4.0"
+}

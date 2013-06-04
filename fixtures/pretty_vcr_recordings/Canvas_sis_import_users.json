@@ -1,0 +1,107 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "post",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/accounts/90242/sis_imports.json?import_type=instructure_csv",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"attachment\"; filename=\"fake-users.csv\"\r\nContent-Length: 104\r\nContent-Type: text/comma-separated-values\r\nContent-Transfer-Encoding: binary\r\n\r\nuser_id,login_id,first_name,last_name,email,status\n211159,211159,Ray,Davis,raydavis@example.edu,active\n\r\n-------------RubyMultipartPost--\r\n\r\n"
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "multipart/form-data;boundary=-----------RubyMultipartPost"
+          ],
+          "Content-Length": [
+            "353"
+          ],
+          "Accept": [
+            "*/*"
+          ],
+          "User-Agent": [
+            "Ruby"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "headers": {
+          "Cache-Control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "Content-Type": [
+            "application/json; charset=utf-8"
+          ],
+          "Date": [
+            "Tue, 11 Jun 2013 16:55:06 GMT"
+          ],
+          "Etag": [
+            "\"b14bcdba1d6fa381be8fecbc38fca24c\""
+          ],
+          "P3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "Server": [
+            "Apache"
+          ],
+          "Set-Cookie": [
+            "canvas_session=mFQE5ETR4tkpcqQHcGhYPQ.2HxPKqYo-zCrOR3mghCKhJUoRt4MzIOFgsMbQ1d9oVT0jkNf57USSeQ2Y0t1JG6LNah16R0ut8XhOJZ7_QMEXQ.hjXUkEMcvijJY_c1YwaEvkhya_w.UbdWbQ; path=/; secure; HttpOnly"
+          ],
+          "Status": [
+            "200 OK"
+          ],
+          "Vary": [
+            "Accept-Encoding"
+          ],
+          "X-Canvas-User-Id": [
+            "10000003075918"
+          ],
+          "X-Frame-Options": [
+            "SAMEORIGIN"
+          ],
+          "X-Request-Context-Id": [
+            "97ce36f0-b4e5-0130-7167-02f885576c21"
+          ],
+          "X-Runtime": [
+            "2332"
+          ],
+          "X-Ua-Compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "Content-Length": [
+            "193"
+          ],
+          "Connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "created_at": "2013-06-11T09:55:07-07:00",
+            "ended_at": null,
+            "updated_at": "2013-06-11T09:55:08-07:00",
+            "progress": 0,
+            "id": 5842657,
+            "workflow_state": "created",
+            "data": {
+              "import_type": "instructure_csv"
+            }
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 11 Jun 2013 16:55:09 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

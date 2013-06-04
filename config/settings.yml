@@ -51,6 +51,8 @@ canvas_proxy:
   client_secret: "someMumboJumbo"
   token_credential_uri: "http://localhost:12345/login/oauth2/token"
   authorization_uri: "http://localhost:12345/login/oauth2/auth"
+  account_id: '90242'
+  export_directory: 'tmp/canvas'
   # Only used for testing + recording responses
   test_user_id: "300846"
   test_user_access_token: "someMumboJumbo"
