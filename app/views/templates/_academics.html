@@ -2,189 +2,191 @@
 
   <div
     class="cc-page-academics"
-    data-ng-show="can_view_academics"
+    data-cc-spinner-directive
   >
-    <div class="column">
-      <h1>My Academics</h1>
-    </div>
-
-    <div class="large-6 columns cc-academics-page-left">
-      <h2>Records</h2>
-
-      <h3>College and Level</h3>
-
-      <div class="row">
-        <div class="large-2 small-4 columns">College</div>
-        <div
-          class="large-10 small-8 columns cc-academics-empasize"
-          data-ng-bind="academics.college_and_level.college">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-4 columns">Major</div>
-        <div
-          class="large-10 small-8 columns cc-academics-empasize"
-          data-ng-bind="academics.college_and_level.major">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-4 columns">Standing</div>
-        <div
-          class="large-10 small-8 columns cc-academics-empasize"
-          data-ng-bind="academics.college_and_level.standing">
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-2 small-4 columns">Level</div>
-        <div
-          class="large-10 small-8 columns cc-academics-empasize"
-          data-ng-bind="academics.college_and_level.level">
-        </div>
+    <div data-ng-show="can_view_academics">
+      <div class="column">
+        <h1>My Academics</h1>
       </div>
 
-      <div class="cc-academics-status-and-blocks">
-        <h3>Status and Blocks</h3>
+      <div class="large-6 columns cc-academics-page-left">
+        <h2>Records</h2>
 
-        <h4>Status Type</h4>
-        <div class="row cc-academics-column-labels">
-          <div class="large-4 small-4 columns">Type</div>
-          <div class="large-4 small-4 columns end">Status</div>
-        </div>
+        <h3>College and Level</h3>
+
         <div class="row">
-          <div class="large-4 small-4 columns">Registration</div>
-          <div class="large-4 small-4 columns end">
-            <i class="cc-icon"
-              data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
-            </i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="large-4 small-4 columns">California Residency</div>
-          <div class="large-4 small-4 columns end">
-            <i class="cc-icon" data-ng-class="{'icon-ok-sign':(user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(user.profile.student_info.california_residency=='needsAction')}"></i>
-            <span data-ng-bind="user.profile.student_info.california_residency.summary"></span>
-          </div>
-        </div>
-
-        <h4>Active Blocks</h4>
-        <div class="row cc-academics-column-labels">
-          <div class="large-4 small-4 columns">Type</div>
-          <div class="large-4 small-4 columns">Reason</div>
-          <div class="large-4 small-4 columns">Blocked</div>
-        </div>
-        <div data-ng-show="academics.regblocks.active_blocks.length">
+          <div class="large-2 small-4 columns">College</div>
           <div
-            class="row"
-            data-ng-repeat="block in academics.regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
-          >
-            <div class="large-4 small-4 columns" data-ng-bind="block.type"></div>
-            <div class="large-4 small-4 columns" data-ng-bind="block.reason"></div>
-            <div class="large-4 small-4 columns" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
+            class="large-10 small-8 columns cc-academics-empasize"
+            data-ng-bind="college_and_level.college">
           </div>
         </div>
-        <div data-ng-show="!academics.regblocks.active_blocks.length">
-          <div class="row">
-            <div class="large-6 columns end">You have no active blocks at this time.</div>
+        <div class="row">
+          <div class="large-2 small-4 columns">Major</div>
+          <div
+            class="large-10 small-8 columns cc-academics-empasize"
+            data-ng-bind="college_and_level.major">
           </div>
         </div>
-        <div class="cc-academics-showhide-block-history">
-          <p class="cc-academics-nolink cc-academics-empasize"
-            data-ng-show="!academics.regblocks.inactive_blocks.length">No block history
-          </p>
-          <div data-ng-show="academics.regblocks.inactive_blocks.length">
-            <button
-              class="cc-academics-showhide-text button radius small"
-              data-ng-click="toggleBlockHistory()">
-                <span data-ng-show="!show_block_history">Show block history</span>
-                <span data-ng-show="show_block_history">Hide block history</span>
-            </button>
+        <div class="row">
+          <div class="large-2 small-4 columns">Standing</div>
+          <div
+            class="large-10 small-8 columns cc-academics-empasize"
+            data-ng-bind="college_and_level.standing">
           </div>
         </div>
-        <div class="cc-academics-block-history" data-ng-show="show_block_history">
+        <div class="row">
+          <div class="large-2 small-4 columns">Level</div>
+          <div
+            class="large-10 small-8 columns cc-academics-empasize"
+            data-ng-bind="college_and_level.level">
+          </div>
+        </div>
+
+        <div class="cc-academics-status-and-blocks">
+          <h3>Status and Blocks</h3>
+
+          <h4>Status Type</h4>
           <div class="row cc-academics-column-labels">
-            <div class="large-3 small-2 columns">Type</div>
-            <div class="large-3 small-4 columns">Reason</div>
-            <div class="large-2 small-2 columns">Blocked</div>
-            <div class="large-2 small-2 columns end">Cleared</div>
+            <div class="large-4 small-4 columns">Type</div>
+            <div class="large-4 small-4 columns end">Status</div>
           </div>
-          <div
-            class="row"
-            data-ng-repeat="block in academics.regblocks.inactive_blocks | orderBy:'blocked_date.epoch':true">
-            <div
-              class="large-3 small-2 columns"
-              data-ng-bind="block.type || '&nbsp;'">
-            </div>
-            <div
-              class="large-3 small-4 columns"
-              data-ng-bind="block.reason || '&nbsp;'">
-            </div>
-            <div
-              class="large-2 small-2 columns"
-              data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
-            </div>
-            <div
-              class="large-2 small-2 columns end"
-              data-ng-bind="block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
+          <div class="row">
+            <div class="large-4 small-4 columns">Registration</div>
+            <div class="large-4 small-4 columns end">
+              <i class="cc-icon"
+                data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
+              </i>
             </div>
           </div>
-        </div>
-      </div>
+          <div class="row">
+            <div class="large-4 small-4 columns">California Residency</div>
+            <div class="large-4 small-4 columns end">
+              <i class="cc-icon" data-ng-class="{'icon-ok-sign':(user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(user.profile.student_info.california_residency=='needsAction')}"></i>
+              <span data-ng-bind="user.profile.student_info.california_residency.summary"></span>
+            </div>
+          </div>
 
-      <h3>University Requirements</h3>
-      <div class="row cc-academics-column-labels">
-        <div class="large-4 small-8 columns">Requirement</div>
-        <div class="large-2 small-2 end columns">Met?</div>
-      </div>
-      <div class="row" data-ng-repeat="req in academics.requirements">
-        <div class="large-4 small-8 columns" data-ng-bind="req.name"></div>
-        <div class="large-2 small-2 end columns">
-          <i data-ng-class="{'cc-icon icon-ok-sign':(req.status=='met'), 'cc-icon icon-edit':(req.status!='met')}"></i>
-        </div>
-      </div>
-    </div>
-    <div class="large-6 columns cc-academics-page-right">
-      <div class="row">
-        <div class="large-6 small-6 columns">
-          <h2 class="cc-left">Current Semester</h2>
-        </div>
-        <div class="large-6 small-6 columns">
-          <h2 class="cc-right cc-academics-orderlink">
-            <a href="https://telebears.berkeley.edu/tranreq/"><strong>Order transcripts</strong>
-            </a>
-          </h2>
-        </div>
-      </div>
-      <div class="row">
-        <div class="large-6 small-6 columns end" data-ng-repeat="semester in semesters">
-          <div
-            class="panel cc-academics-calendar"
-            data-ng-class="{'cc-academics-current-semester':(semester.is_current==true)}">
-            <div class="cc-academics-calendar-link">
-                <a data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a>
+          <h4>Active Blocks</h4>
+          <div class="row cc-academics-column-labels">
+            <div class="large-4 small-4 columns">Type</div>
+            <div class="large-4 small-4 columns">Reason</div>
+            <div class="large-4 small-4 columns">Blocked</div>
+          </div>
+          <div data-ng-show="regblocks.active_blocks.length">
+            <div
+              class="row"
+              data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
+            >
+              <div class="large-4 small-4 columns" data-ng-bind="block.type"></div>
+              <div class="large-4 small-4 columns" data-ng-bind="block.reason"></div>
+              <div class="large-4 small-4 columns" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
             </div>
-            <div class="row cc-academics-empasize">
-              <div class="large-6 small-6 columns cc-academics-label-col">Class</div>
-              <div class="large-3 small-3 columns">Units</div>
+          </div>
+          <div data-ng-show="!regblocks.active_blocks.length">
+            <div class="row">
+              <div class="large-6 columns end">You have no active blocks at this time.</div>
             </div>
-            <div class="row" data-ng-repeat="sem in semester.schedule">
-              <div class="large-6 small-6 columns cc-academics-label-col" data-ng-bind="sem.course_number"></div>
-              <div class="large-3 small-3 columns" data-ng-bind="sem.units"></div>
+          </div>
+          <div class="cc-academics-showhide-block-history">
+            <p class="cc-academics-nolink cc-academics-empasize"
+              data-ng-show="!regblocks.inactive_blocks.length">No block history
+            </p>
+            <div data-ng-show="regblocks.inactive_blocks.length">
+              <button
+                class="cc-academics-showhide-text button radius small"
+                data-ng-click="toggleBlockHistory()">
+                  <span data-ng-show="!show_block_history">Show block history</span>
+                  <span data-ng-show="show_block_history">Hide block history</span>
+              </button>
+            </div>
+          </div>
+          <div class="cc-academics-block-history" data-ng-show="show_block_history">
+            <div class="row cc-academics-column-labels">
+              <div class="large-3 small-2 columns">Type</div>
+              <div class="large-3 small-4 columns">Reason</div>
+              <div class="large-2 small-2 columns">Blocked</div>
+              <div class="large-2 small-2 columns end">Cleared</div>
+            </div>
+            <div
+              class="row"
+              data-ng-repeat="block in regblocks.inactive_blocks | orderBy:'blocked_date.epoch':true">
+              <div
+                class="large-3 small-2 columns"
+                data-ng-bind="block.type || '&nbsp;'">
+              </div>
+              <div
+                class="large-3 small-4 columns"
+                data-ng-bind="block.reason || '&nbsp;'">
+              </div>
+              <div
+                class="large-2 small-2 columns"
+                data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
+              </div>
+              <div
+                class="large-2 small-2 columns end"
+                data-ng-bind="block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3>University Requirements</h3>
+        <div class="row cc-academics-column-labels">
+          <div class="large-4 small-8 columns">Requirement</div>
+          <div class="large-2 small-2 end columns">Met?</div>
+        </div>
+        <div class="row" data-ng-repeat="req in requirements">
+          <div class="large-4 small-8 columns" data-ng-bind="req.name"></div>
+          <div class="large-2 small-2 end columns">
+            <i data-ng-class="{'cc-icon icon-ok-sign':(req.status=='met'), 'cc-icon icon-edit':(req.status!='met')}"></i>
+          </div>
+        </div>
+      </div>
+      <div class="large-6 columns cc-academics-page-right">
+        <div class="row">
+          <div class="large-6 small-6 columns">
+            <h2 class="cc-left">Current Semester</h2>
+          </div>
+          <div class="large-6 small-6 columns">
+            <h2 class="cc-right cc-academics-orderlink">
+              <a href="https://telebears.berkeley.edu/tranreq/"><strong>Order transcripts</strong>
+              </a>
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-6 small-6 columns end" data-ng-repeat="semester in semesters">
+            <div
+              class="panel cc-academics-calendar"
+              data-ng-class="{'cc-academics-current-semester':(semester.is_current==true)}">
+              <div class="cc-academics-calendar-link">
+                  <a data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a>
+              </div>
+              <div class="row cc-academics-empasize">
+                <div class="large-6 small-6 columns cc-academics-label-col">Class</div>
+                <div class="large-3 small-3 columns">Units</div>
+              </div>
+              <div class="row" data-ng-repeat="sem in semester.schedule">
+                <div class="large-6 small-6 columns cc-academics-label-col" data-ng-bind="sem.course_number"></div>
+                <div class="large-3 small-3 columns" data-ng-bind="sem.units"></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="cc-page-academics" data-ng-hide="user.profile.roles.student" data-ng-cloak>
-      <div class="large-12 small-12 columns">
-        <h2>Data not available</h2>
-        <p>
-          This page displays academic status information for UC Berkeley students,
-          and is not available to faculty or staff.
-        </p>
-        <p>
-          If you believe you are seeing this message
-          in error, please contact <a href="https://ets.berkeley.edu/help/calcentral">CalCentral Help</a>.
-        </p>
+      <div class="cc-page-academics" data-ng-hide="user.profile.roles.student" data-ng-cloak>
+        <div class="large-12 small-12 columns">
+          <h2>Data not available</h2>
+          <p>
+            This page displays academic status information for UC Berkeley students,
+            and is not available to faculty or staff.
+          </p>
+          <p>
+            If you believe you are seeing this message
+            in error, please contact <a href="https://ets.berkeley.edu/help/calcentral">CalCentral Help</a>.
+          </p>
+        </div>
       </div>
     </div>
   </div>
