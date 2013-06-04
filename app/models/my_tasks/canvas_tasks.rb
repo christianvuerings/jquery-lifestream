@@ -15,7 +15,7 @@ module MyTasks
       tasks = []
       assignments = Set.new
       fetch_canvas_todo!(CanvasTodoProxy.new(:user_id => @uid), tasks, assignments)
-      fetch_canvas_coming_up!(CanvasComingUpProxy.new(:user_id => @uid), tasks, assignments)
+      fetch_canvas_upcoming_events!(CanvasUpcomingEventsProxy.new(:user_id => @uid), tasks, assignments)
       tasks
     end
 
@@ -59,16 +59,18 @@ module MyTasks
       end
     end
 
-    def fetch_canvas_coming_up!(canvas_proxy, tasks, assignments)
-      response = canvas_proxy.coming_up
+    def fetch_canvas_upcoming_events!(canvas_proxy, tasks, assignments)
+      response = canvas_proxy.upcoming_events
       if response && (response.status == 200)
         results = JSON.parse response.body
-        Rails.logger.info "#{self.class.name} Sorting Canvas coming_up feed into buckets with starting_date #{@starting_date}"
+        Rails.logger.info "#{self.class.name} Sorting Canvas upcoming_events feed into buckets with starting_date #{@starting_date}"
         results.each do |result|
-          Rails.logger.debug "Coming up assignment = #{result["html_url"]}"
-          if (result["type"] != "Assignment") || new_assignment?(result, assignments)
+          type = result['assignment'] ? 'assignment' : 'event'
+          Rails.logger.debug "Upcoming event = #{result["html_url"]}, type = #{type}"
+          # Skip calendar events which are not associated with assignments.
+          if (type == "assignment") && new_assignment?(result, assignments)
             formatted_entry = {
-              "type" => result["type"].downcase,
+              "type" => type,
               "title" => result["title"],
               "emitter" => CanvasProxy::APP_ID,
               "link_url" => result["html_url"],
@@ -80,7 +82,7 @@ module MyTasks
             format_date_into_entry!(due_date, formatted_entry, "due_date")
             bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
             formatted_entry["bucket"] = bucket
-            Rails.logger.info "#{self.class.name} Putting Canvas coming_up event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+            Rails.logger.info "#{self.class.name} Putting Canvas upcoming_events event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
             @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
           end
         end

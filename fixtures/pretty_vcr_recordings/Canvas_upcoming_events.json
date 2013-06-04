@@ -1,0 +1,425 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.instructure.com/api/v1/users/self/upcoming_events?as_user_id=sis_user_id%3A300846",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Tue, 04 Jun 2013 18:55:23 GMT"
+          ],
+          "etag": [
+            "\"cf5e26c9b03fa869b13304b7ecc9142c\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=P2GMH5Hd2g4syHT25QY8cQ.C7841Up8yBCTgmMipaxDXxcXBdomtyIWqlIAMZPbkKHeqRnz4qEIE5EmE9bxRC7Ixgd0CUw3LCtaa6OeXNOixw.UDalA8i_zCBv3Ypw8hxlAvwYb3k.Ua44HA; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-real-user-id": [
+            "10000003075918"
+          ],
+          "x-canvas-user-id": [
+            "10000003323890"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "3c8b3420-af76-0130-1e80-02f88540aa71"
+          ],
+          "x-runtime": [
+            "346"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "9396"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-05",
+              "created_at": "2013-06-04T09:36:26-07:00",
+              "end_at": "2013-06-05T00:00:00-07:00",
+              "id": 975667,
+              "location_address": null,
+              "location_name": null,
+              "start_at": "2013-06-05T00:00:00-07:00",
+              "title": "Class Seven",
+              "updated_at": "2013-06-04T09:36:26-07:00",
+              "workflow_state": "active",
+              "description": "<h4>This time for sure</h4>\n<p>Please sit down.</p>",
+              "context_code": "course_767330",
+              "child_events_count": 0,
+              "parent_event_id": null,
+              "hidden": false,
+              "child_events": [
+
+              ],
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/975667",
+              "html_url": "https://ucberkeley.instructure.com/calendar?event_id=975667&include_contexts=course_767330#7b2273686f77223a2267726f75705f636f757273655f373637333330227d"
+            },
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-05",
+              "created_at": "2012-12-13T15:50:31-08:00",
+              "title": "Future Quiz",
+              "updated_at": "2013-06-04T09:12:12-07:00",
+              "workflow_state": "published",
+              "description": null,
+              "id": "assignment_25883051",
+              "assignment": {
+                "assignment_group_id": 502044,
+                "automatic_peer_reviews": false,
+                "description": null,
+                "due_at": ":::LATER_IN_WEEK:::",
+                "grade_group_students_individually": null,
+                "grading_standard_id": null,
+                "grading_type": "points",
+                "group_category_id": null,
+                "id": 2588305,
+                "lock_at": null,
+                "peer_reviews": false,
+                "points_possible": null,
+                "position": 14,
+                "unlock_at": null,
+                "course_id": 767330,
+                "name": "Future Quiz",
+                "submission_types": [
+                  "online_quiz"
+                ],
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883051",
+                "quiz_id": 871151,
+                "anonymous_submissions": false
+              },
+              "context_code": "course_767330",
+              "end_at": ":::LATER_IN_WEEK:::",
+              "start_at": ":::LATER_IN_WEEK:::",
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/assignment_25883051",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883051"
+            },
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-05",
+              "created_at": "2012-12-13T15:35:06-08:00",
+              "title": "Online-Submission Future Assignment",
+              "updated_at": "2013-06-04T09:13:19-07:00",
+              "workflow_state": "published",
+              "description": "",
+              "id": "assignment_25882441",
+              "assignment": {
+                "assignment_group_id": 502044,
+                "automatic_peer_reviews": false,
+                "description": "",
+                "due_at": ":::TODAY_LATE:::",
+                "grade_group_students_individually": false,
+                "grading_standard_id": null,
+                "grading_type": "points",
+                "group_category_id": null,
+                "id": 2588244,
+                "lock_at": null,
+                "peer_reviews": false,
+                "points_possible": null,
+                "position": 8,
+                "unlock_at": null,
+                "course_id": 767330,
+                "name": "Online-Submission Future Assignment",
+                "submission_types": [
+                  "online_upload",
+                  "online_text_entry",
+                  "online_url",
+                  "media_recording"
+                ],
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25882441"
+              },
+              "context_code": "course_767330",
+              "end_at": ":::TODAY_LATE:::",
+              "start_at": ":::TODAY_LATE:::",
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/assignment_25882441",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25882441"
+            },
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-06",
+              "created_at": "2012-12-13T15:51:24-08:00",
+              "title": "Future External Tool Assignment",
+              "updated_at": "2013-06-04T09:11:46-07:00",
+              "workflow_state": "published",
+              "description": null,
+              "id": "assignment_25883071",
+              "assignment": {
+                "assignment_group_id": 502044,
+                "automatic_peer_reviews": false,
+                "description": null,
+                "due_at": ":::LATER_IN_WEEK:::",
+                "grade_group_students_individually": null,
+                "grading_standard_id": null,
+                "grading_type": "points",
+                "group_category_id": null,
+                "id": 2588307,
+                "lock_at": null,
+                "peer_reviews": false,
+                "points_possible": null,
+                "position": 16,
+                "unlock_at": null,
+                "course_id": 767330,
+                "name": "Future External Tool Assignment",
+                "submission_types": [
+                  "external_tool"
+                ],
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883071"
+              },
+              "context_code": "course_767330",
+              "end_at": ":::LATER_IN_WEEK:::",
+              "start_at": ":::LATER_IN_WEEK:::",
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/assignment_25883071",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883071"
+            },
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-06",
+              "created_at": "2012-12-13T15:51:58-08:00",
+              "title": "Future Ungraded Assignment",
+              "updated_at": "2013-06-04T09:11:29-07:00",
+              "workflow_state": "published",
+              "description": null,
+              "id": "assignment_2588310",
+              "assignment": {
+                "assignment_group_id": 502044,
+                "automatic_peer_reviews": false,
+                "description": null,
+                "due_at": ":::LATER_IN_WEEK:::",
+                "grade_group_students_individually": null,
+                "grading_standard_id": null,
+                "grading_type": "points",
+                "group_category_id": null,
+                "id": 2588310,
+                "lock_at": null,
+                "peer_reviews": false,
+                "points_possible": null,
+                "position": 18,
+                "unlock_at": null,
+                "course_id": 767330,
+                "name": "Future Ungraded Assignment",
+                "submission_types": [
+                  "not_graded"
+                ],
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588310"
+              },
+              "context_code": "course_767330",
+              "end_at": ":::LATER_IN_WEEK:::",
+              "start_at": ":::LATER_IN_WEEK:::",
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/assignment_2588310",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588310"
+            },
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-06",
+              "created_at": "2012-12-13T15:37:29-08:00",
+              "title": "Paper Submission Future Assignment",
+              "updated_at": "2013-06-04T09:12:57-07:00",
+              "workflow_state": "published",
+              "description": "",
+              "id": "assignment_2588250",
+              "assignment": {
+                "assignment_group_id": 502044,
+                "automatic_peer_reviews": false,
+                "description": "",
+                "due_at": ":::NEXT_WEEK:::",
+                "grade_group_students_individually": false,
+                "grading_standard_id": null,
+                "grading_type": "points",
+                "group_category_id": null,
+                "id": 2588250,
+                "lock_at": null,
+                "peer_reviews": false,
+                "points_possible": null,
+                "position": 9,
+                "unlock_at": null,
+                "course_id": 767330,
+                "name": "Paper Submission Future Assignment",
+                "submission_types": [
+                  "on_paper"
+                ],
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588250"
+              },
+              "context_code": "course_767330",
+              "end_at": ":::NEXT_WEEK:::",
+              "start_at": ":::NEXT_WEEK:::",
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/assignment_2588250",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588250"
+            },
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-07",
+              "created_at": "2012-12-13T15:49:48-08:00",
+              "title": "Future Discussion",
+              "updated_at": "2013-06-04T09:12:33-07:00",
+              "workflow_state": "published",
+              "description": "",
+              "id": "assignment_25883032",
+              "assignment": {
+                "assignment_group_id": 502044,
+                "automatic_peer_reviews": false,
+                "description": "",
+                "due_at": ":::TODAY_LATE:::",
+                "grade_group_students_individually": false,
+                "grading_standard_id": null,
+                "grading_type": "points",
+                "group_category_id": null,
+                "id": 25883032,
+                "lock_at": null,
+                "peer_reviews": false,
+                "points_possible": null,
+                "position": 12,
+                "unlock_at": null,
+                "course_id": 767330,
+                "name": "Future Discussion",
+                "submission_types": [
+                  "discussion_topic"
+                ],
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883032",
+                "discussion_topic": {
+                  "assignment_id": 25883032,
+                  "delayed_post_at": null,
+                  "id": 1646261,
+                  "last_reply_at": "2012-12-13T15:49:48-08:00",
+                  "lock_at": null,
+                  "podcast_has_student_posts": null,
+                  "posted_at": "2012-12-13T15:49:48-08:00",
+                  "root_topic_id": null,
+                  "title": "Future Discussion",
+                  "user_name": "Chris Tweney",
+                  "discussion_subentry_count": 0,
+                  "permissions": {
+                    "attach": false,
+                    "update": false,
+                    "delete": false
+                  },
+                  "message": "",
+                  "discussion_type": "side_comment",
+                  "require_initial_post": null,
+                  "podcast_url": null,
+                  "read_state": "unread",
+                  "unread_count": 0,
+                  "topic_children": [
+
+                  ],
+                  "attachments": [
+
+                  ],
+                  "locked": false,
+                  "author": {
+                    "id": 3075914,
+                    "display_name": "Chris Tweney",
+                    "avatar_image_url": "https://secure.gravatar.com/avatar/963423426d6da2a4d30657d90310098e?s=50&d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
+                    "html_url": "https://ucberkeley.instructure.com/courses/767330/users/3075914"
+                  },
+                  "html_url": "https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646261",
+                  "url": "https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646261"
+                }
+              },
+              "context_code": "course_767330",
+              "end_at": ":::TODAY_LATE:::",
+              "start_at": ":::TODAY_LATE:::",
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/assignment_25883032",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/25883032"
+            },
+            {
+              "all_day": true,
+              "all_day_date": "2013-06-07",
+              "created_at": "2012-12-13T15:31:53-08:00",
+              "title": "No-Submission Future Assignment",
+              "updated_at": "2013-06-04T09:13:46-07:00",
+              "workflow_state": "published",
+              "description": "",
+              "id": "assignment_2588234",
+              "assignment": {
+                "assignment_group_id": 502044,
+                "automatic_peer_reviews": false,
+                "description": "",
+                "due_at": ":::NEXT_WEEK:::",
+                "grade_group_students_individually": false,
+                "grading_standard_id": null,
+                "grading_type": "points",
+                "group_category_id": null,
+                "id": 2588234,
+                "lock_at": null,
+                "peer_reviews": false,
+                "points_possible": null,
+                "position": 6,
+                "unlock_at": null,
+                "course_id": 767330,
+                "name": "No-Submission Future Assignment",
+                "submission_types": [
+                  "none"
+                ],
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588234"
+              },
+              "context_code": "course_767330",
+              "end_at": ":::NEXT_WEEK:::",
+              "start_at": ":::NEXT_WEEK:::",
+              "url": "https://ucberkeley.instructure.com/api/v1/calendar_events/assignment_2588234",
+              "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588234"
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 04 Jun 2013 18:55:24 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.4.0"
+}
