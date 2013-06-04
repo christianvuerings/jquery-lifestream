@@ -9,6 +9,7 @@
      */
     var preventBubble = function($event) {
       $event.stopPropagation();
+      $event.preventDefault();
     };
 
     /**
