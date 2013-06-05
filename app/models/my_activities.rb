@@ -34,7 +34,7 @@ class MyActivities < MyMergedModel
   def append_notifications(activities)
     result = []
     use_pooled_connection {
-      result = Notification.where(:uid => @uid) || []
+      result = Notification.where(:uid => @uid, :occurred_at => Time.at(MyActivities.cutoff_date)..Time.now) || []
     }
     result.each do |notification|
       translator = (MyActivities.translators[notification.translator] ||= notification.translator.constantize.new)
