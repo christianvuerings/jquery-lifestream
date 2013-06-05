@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&fields=items(htmlLink,created,updated,creator,summary,start,end)&maxResults=20&orderBy=startTime&singleEvents=true&timeMin=:::TODAY:::&updatedMin=:::TWO_WEEKS_AGO:::",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?fields=items(htmlLink,created,updated,creator,summary,start,end)&maxResults=20&orderBy=startTime&singleEvents=true&timeMin=:::TODAY:::&updatedMin=:::TWO_WEEKS_AGO:::",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

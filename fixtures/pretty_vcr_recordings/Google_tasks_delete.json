@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "delete",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg&tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

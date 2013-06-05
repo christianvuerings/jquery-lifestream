@@ -25,7 +25,7 @@ gem "faraday", "~> 0.8.7"
 
 # OAuth2 support
 gem "signet", "~> 0.4.5"
-gem "google-api-client", "~> 0.6.2"
+gem "google-api-client", "~> 0.6.4"
 
 # for VCR http recording tool
 gem "vcr", "~> 2.5.0"

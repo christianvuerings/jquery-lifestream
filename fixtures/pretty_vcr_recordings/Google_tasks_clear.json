@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "post",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/clear?tasklist=%40default",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/clear",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -61,7 +61,7 @@
     {
       "request": {
         "method": "post",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/clear?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/clear",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=10",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=10",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -451,7 +451,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=10&pageToken=CksKPV9lZGhtZ3BiNGVsbTZhYjluNnNzamNkaGRjcGttc29iYzgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWcYASCAgICsyJCf0hM=",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=10&pageToken=CksKPV9lZGhtZ3BiNGVsbTZhYjluNnNzamNkaGRjcGttc29iYzgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWcYASCAgICsyJCf0hM=",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -653,7 +653,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?calendarId=primary&maxResults=1000&orderBy=startTime&singleEvents=true&timeMax=:::TOMORROW_MIDNIGHT_PST:::&timeMin=:::TODAY_MIDNIGHT_PST:::",
+        "uri": "https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1000&orderBy=startTime&singleEvents=true&timeMax=:::TOMORROW_MIDNIGHT_PST:::&timeMin=:::TODAY_MIDNIGHT_PST:::",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
