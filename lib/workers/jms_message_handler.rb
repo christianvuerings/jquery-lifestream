@@ -1,6 +1,8 @@
 class JmsMessageHandler
   include Celluloid
 
+  finalizer :log_terminate
+
   def initialize(processors = [RegStatusEventProcessor.new, FinalGradesEventProcessor.new])
     @processors = processors
   end
@@ -24,7 +26,7 @@ class JmsMessageHandler
     Rails.logger.warn "#{Thread.current} Skipping JMS message that has invalid JSON: #{e}"
   end
 
-  def finalize
+  def log_terminate
     Rails.logger.debug "JmsMessageHandler on thread #{Thread.current} is going away"
   end
 

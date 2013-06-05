@@ -49,10 +49,10 @@ gem "jruby-activemq", "~> 5.5.1"
 gem "addressable", "~> 2.3.4"
 
 # for concurrency management
-gem "celluloid", "~> 0.12.4"
+gem "celluloid", "~> 0.14.1"
 
 # for parsing formatted html
-gem 'nokogiri', "~> 1.5.7"
+gem 'nokogiri', "~> 1.5.9"
 
 # Gems used only for assets and not required
 # in production environments by default.

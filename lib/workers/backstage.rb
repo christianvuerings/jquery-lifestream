@@ -1,5 +1,4 @@
 ENV["APP_NAME"] = "backstage"
-require File.expand_path("../../../config/environment", __FILE__)
 
 class Backstage
 
@@ -25,8 +24,8 @@ class Backstage
   end
 
   def run
-    @jms_worker.run!
-    @hot_plate_worker.run!
+    @jms_worker.async.run
+    @hot_plate_worker.async.run if @hot_plate_worker.respond_to?(:async)
     until !!@stop
       sleep(30)
     end
@@ -40,7 +39,7 @@ class Backstage
   def stats
     stats = []
     stats << @jms_worker.ping
-    stats << @hot_plate_worker.ping
+    stats << @hot_plate_worker.ping if @hot_plate_worker.respond_to?(:async)
     stats
   end
 
@@ -48,7 +47,7 @@ class Backstage
     unless !!@stop
       @stop = true
       @jms_worker.terminate
-      @hot_plate_worker.terminate
+      @hot_plate_worker.terminate if @hot_plate_worker.respond_to?(:async)
     end
   end
 
