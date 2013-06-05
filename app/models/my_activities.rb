@@ -38,7 +38,11 @@ class MyActivities < MyMergedModel
     }
     result.each do |notification|
       translator = (MyActivities.translators[notification.translator] ||= notification.translator.constantize.new)
-      activities << translator.translate(notification)
+      event = translator.translate(notification)
+      #basic validation before inserting into notifications array.
+      if event.present? && event.kind_of?(Hash)
+        activities << event
+      end
     end
     activities
   end
