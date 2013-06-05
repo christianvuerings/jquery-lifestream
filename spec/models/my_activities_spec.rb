@@ -38,6 +38,47 @@ describe "MyActivities" do
     end
   end
 
+  it "should successfuly handle well translated responses from notifications" do
+    user = UserApi.new "300846"
+    user.record_first_login
+    processor = RegStatusEventProcessor.new
+    event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status).and_return(
+      {
+        "ldap_uid" => "300846",
+        "reg_status_cd" => "C"
+      })
+    processor.process(event, timestamp).should == true
+
+    CanvasProxy.stub(:access_granted?).and_return(false)
+    saved_notification = Notification.where(:uid => "300846").first
+    activities = MyActivities.new("300846").get_feed[:activities]
+    notification_activities = activities.select {|notification| notification[:source] == 'Bearfacts:RegStatus'}
+    notification_activities.empty?.should_not be_true
+  end
+
+  it "should successfuly handle badly translated responses from notifications" do
+    user = UserApi.new "300846"
+    user.record_first_login
+    processor = RegStatusEventProcessor.new
+    event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status).and_return(
+      {
+        "ldap_uid" => "300846",
+        "reg_status_cd" => "C"
+      })
+    processor.process(event, timestamp).should == true
+
+    CanvasProxy.stub(:access_granted?).and_return(false)
+    saved_notification = Notification.where(:uid => "300846").first
+    RegStatusTranslator.any_instance.stub(:translate).and_return false
+    activities = MyActivities.new("300846").get_feed[:activities]
+    notification_activities = activities.select {|notification| notification[:source] == 'Bearfacts:RegStatus'}
+    notification_activities.empty?.should be_true
+  end
+
   it "should get properly formatted Canvas activities when bSpace is not available" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     CanvasUserActivityProxy.stub(:new).and_return(@fake_canvas_proxy)
