@@ -4,7 +4,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?tasklist=%40default&maxResults=100",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?maxResults=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -148,160 +148,10 @@
       },
       "recorded_at": "Fri, 30 Nov 2012 09:27:28 GMT"
     },
-
-
-
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?maxResults=100&tasklist=@default",
-        "body": {
-          "encoding": "US-ASCII",
-          "string": ""
-        },
-        "headers": {
-          "User-Agent": [
-            "google-api-ruby-client/0.5.0 Mac OS X/10.7.5"
-          ],
-          "Authorization": [
-            ""
-          ],
-          "Cache-Control": [
-            "no-store"
-          ],
-          "Content-Type": [
-            "application/x-www-form-urlencoded"
-          ],
-          "Accept": [
-            "*/*"
-          ],
-          "x-sakai-token": [
-
-          ]
-        }
-      },
-      "response": {
-        "status": {
-          "code": 200,
-          "message": "OK"
-        },
-        "headers": {
-          "Expires": [
-            "Fri, 30 Nov 2012 09:27:28 GMT"
-          ],
-          "Date": [
-            "Fri, 30 Nov 2012 09:27:28 GMT"
-          ],
-          "Cache-Control": [
-            "private, max-age=0, must-revalidate, no-transform"
-          ],
-          "Etag": [
-            "\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\""
-          ],
-          "Content-Type": [
-            "application/json; charset=UTF-8"
-          ],
-          "X-Content-Type-Options": [
-            "nosniff"
-          ],
-          "X-Frame-Options": [
-            "SAMEORIGIN"
-          ],
-          "X-Xss-Protection": [
-            "1; mode=block"
-          ],
-          "Server": [
-            "GSE"
-          ],
-          "Transfer-Encoding": [
-            "chunked"
-          ]
-        },
-        "body": {
-          "encoding": "US-ASCII",
-          "string": "",
-          "debug_json": {
-            "kind": "tasks#tasks",
-            "etag": "\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTM1MTI4NzU2Mg\"",
-              "items":[
-                  {
-                      "kind":"tasks#task",
-                      "id":"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1",
-                      "etag":"\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE3NzU2NDcwNTQ\"",
-                      "title":"Math 53 Midterm Teaching Evaluation ",
-                      "updated":"2012-11-28T20:20:56.000Z",
-                      "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxMDU1MTkyNDc1",
-                      "position":"00000000000033554431",
-                      "notes":"Turn in your teaching evaluation for Math 53",
-                      "status":"needsAction",
-                      "due":":::UTC_LATER_IN_WEEK:::"
-                  },
-                  {
-                      "kind":"tasks#task",
-                      "id":"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz",
-                      "etag":"\"xpAkFLPl6-bJ80GtpdmouLYETwo/Mzg2MDQzMTg2\"",
-                      "title":"Telebears Phase II Appointment",
-                      "updated":"2012-11-28T20:23:38.000Z",
-                      "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNTQ3MjA3ODkz",
-                      "position":"00000000000134217727",
-                      "status":"needsAction",
-                      "due":":::UTC_LATER_IN_WEEK:::"
-                  },
-                  {
-                      "kind":"tasks#task",
-                      "id":"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
-                      "etag":"\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTA1MjgyOTA0MA\"",
-                      "title":"Pay December CARS Bill",
-                      "updated":"2012-11-28T20:21:45.000Z",
-                      "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo2OTQ1MjI2Nzk",
-                      "position":"00000000000268435455",
-                      "status":"needsAction",
-                      "due":":::UTC_FAR_FUTURE:::"
-                  },
-                  {
-                      "kind":"tasks#task",
-                      "id":"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU",
-                      "etag":"\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTExMjc2NjM0MzU\"",
-                      "title":"Pay November CARS Bill",
-                      "updated":"2012-11-28T20:22:08.000Z",
-                      "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDo0Mjk3MDA1MjU",
-                      "position":"00000000000402653183",
-                      "status":"needsAction",
-                      "due":":::TWENTY_SEVEN_DAYS_AGO:::"
-                  },
-                  {
-                      "kind":"tasks#task",
-                      "id":"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1",
-                      "etag":"\"xpAkFLPl6-bJ80GtpdmouLYETwo/MTk2NDA5NDQ0Mg\"",
-                      "title":"Buy goggles for lab experiment",
-                      "updated":"2012-11-30T08:59:46.000Z",
-                      "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1",
-                      "position":"00000000001073741823",
-                      "status":"needsAction"
-                  },
-                  {
-                      "kind":"tasks#task",
-                      "id":"MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5",
-                      "etag":"\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTIxMTgxMzQyMDQ\"",
-                      "title":"Emergency Loan Application",
-                      "updated":"2012-11-28T20:22:52.000Z",
-                      "selfLink":"https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5",
-                      "position":"00000000002147483647",
-                      "notes":"Submit a signed Emergency Loan promissory note",
-                      "status":"needsAction",
-                      "due":":::UTC_NEXT_WEEK:::"
-                  }
-              ]
-          }
-        },
-        "http_version": null
-      },
-      "recorded_at": "Fri, 30 Nov 2012 09:27:28 GMT"
-    },
-    {
-      "request": {
-        "method": "get",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?tasklist=@default&maxResults=100",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/@default/tasks?maxResults=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -531,7 +381,7 @@
     {
       "request": {
         "method": "post",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"title\": \"New Task\", \"notes\": \"Please Complete me\"}"
@@ -616,7 +466,7 @@
     {
       "request": {
         "method": "put",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA&task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"id\":\"MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\"status\":\"needsAction\"}"
@@ -701,7 +551,7 @@
     {
       "request": {
         "method": "put",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg&tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"id\":\"MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\"status\":\"needsAction\"}"
@@ -786,7 +636,7 @@
     {
       "request": {
         "method": "put",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA&task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"id\":\"MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\"status\":\"completed\"}"
@@ -872,7 +722,7 @@
     {
       "request": {
         "method": "put",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA&task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"id\":\"MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\"status\":\"completed\",\"title\":\"some bogus title\",\"notes\":\"some bogus notes\"}"
@@ -958,7 +808,7 @@
     {
       "request": {
         "method": "put",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg?task=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg&tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"id\":\"MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg\",\"status\":\"completed\"}"
@@ -1044,7 +894,7 @@
     {
       "request": {
         "method": "post",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"title\": \"Already completed\", \"notes\": \"Already completed\"}"
@@ -1132,7 +982,7 @@
     {
       "request": {
         "method": "put",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6NDUxMDEyMTc2OjE0Mjg1Mjk5MDI?task=MDM3NDMyMTM2NzUwNzM1MDg0MTc6NDUxMDEyMTc2OjE0Mjg1Mjk5MDI&tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6NDUxMDEyMTc2OjE0Mjg1Mjk5MDI",
         "body": {
           "encoding": "US-ASCII",
           "string": "{\"id\":\"MDM3NDMyMTM2NzUwNzM1MDg0MTc6NDUxMDEyMTc2OjE0Mjg1Mjk5MDI\",\"status\":\"completed\"}"
@@ -1221,7 +1071,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks?maxResults=100&tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks?maxResults=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -1312,7 +1162,7 @@
     {
       "request": {
         "method": "delete",
-        "uri": "https://www.googleapis.com/tasks/v1/users/@me/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA?tasklist=MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+        "uri": "https://www.googleapis.com/tasks/v1/users/@me/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
