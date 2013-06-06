@@ -84,13 +84,13 @@ form {
     background: $cc-color-white;
     font-family: Arial;
     &[type="text"] {
-      border: 1px solid #aeaeae;
+      border: none;
       font-size: 12px;
       width: 100%;
+      &:focus {
+        border: 1px solid #aeaeae;
+      }
     }
-  }
-  .cc-input-noborder {
-    border: none !important;
   }
 
   label {
