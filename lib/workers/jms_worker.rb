@@ -2,12 +2,14 @@ class JmsWorker
   include Celluloid
   JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
 
+  finalizer :jms_worker_finalizer
+
   def initialize
     @jms = nil
     @handler = JmsMessageHandler.new
   end
 
-  def finalize
+  def jms_worker_finalizer
     Rails.logger.info "#{Thread.current} is closing"
     if (@jms)
       @jms.close
