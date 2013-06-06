@@ -32,7 +32,7 @@ class CanvasProxy < BaseProxy
           response = @client.fetch_protected_resource(fetch_options)
           # Canvas proxy returns nil for error response.
           if response.status >= 400
-            Rails.logger.warn "CanvasProxy connection failed: #{response.status} #{response.body}"
+            Rails.logger.warn "CanvasProxy connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}"
             nil
           else
             response
@@ -42,7 +42,7 @@ class CanvasProxy < BaseProxy
           revoke_invalid_token! e.response
           e.response
         rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
-          Rails.logger.warn "CanvasProxy connection failed: #{e.class} #{e.message}"
+          Rails.logger.warn "CanvasProxy connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{e.class} #{e.message}"
           nil
         end
       end
