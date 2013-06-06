@@ -263,6 +263,30 @@ button {
   }
 }
 
+/* Select */
+/* We need to wrap a select in a <div> to have consistent styling */
+.cc-select {
+  background: $cc-color-white;
+  @include background(asset-data-url('select_arrow_20x28.png') no-repeat right center, linear-gradient($cc-color-white, $cc-color-button-regular));
+  border: 1px solid $cc-color-button-border;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  select {
+    background: transparent;
+    border: 0;
+    color: $cc-color-medium-grey;
+    cursor: pointer;
+    margin: 0;
+    padding: 5px 10px 7px;
+    width: 130%;
+    -webkit-appearance: none;
+    option {
+      width: 100%;
+    }
+  }
+}
+
 /* Message for oldIE */
 .cc-old-ie {
   margin-bottom: 20px !important;
