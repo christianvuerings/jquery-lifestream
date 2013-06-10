@@ -27,6 +27,7 @@
         var yyyy = d.getFullYear();
         $scope.add_edit_task.due_date = mm + '/' + dd + '/' + yyyy;
       }
+      $scope.add_edit_task._focusInput = true;
     };
 
     $scope.disableEditor = function() {

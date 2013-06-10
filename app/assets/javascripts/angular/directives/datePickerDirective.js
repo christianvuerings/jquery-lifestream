@@ -17,7 +17,7 @@
             ctrl.$setViewValue(elm[0].value);
             scope._show_picker = false;
             // We need to call an extra digest call, otherwise the $watch isn't executed
-            if(!$scope.$$phase) {
+            if(!scope.$$phase) {
               scope.$digest();
             }
           }
