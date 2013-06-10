@@ -38,7 +38,7 @@ gem "dalli", "~> 2.6.4"
 gem "log4r", "~> 1.1.10"
 
 # for easier non-DB-backed models
-gem "active_attr", "~> 0.8.0"
+gem "active_attr", "~> 0.8.1"
 
 # for production deployment
 gem "trinidad", "~> 1.4.4"
@@ -69,7 +69,7 @@ group :assets do
   gem "sass-rails", "~> 3.2.6"
   gem "coffee-rails", "~> 3.2.2"
   gem "compass-rails", "~> 1.0.3"
-  gem "zurb-foundation", "4.1.6"
+  gem "zurb-foundation", "4.2.1"
 
   # Ruby wrapper for UglifyJS JavaScript compressor
   # https://github.com/lautis/uglifier
@@ -81,7 +81,7 @@ group :assets do
 
   # Moment.js
   # https://github.com/derekprior/momentjs-rails
-  gem "momentjs-rails", "~> 2.0.0.1"
+  gem "momentjs-rails", "~> 2.0.0.2"
 
   # Raven.js - library for JS error logging
   gem "ravenjs-gem", "~> 1.0.7.0"
@@ -91,7 +91,7 @@ end
 # Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :testext, :production do
   gem "activerecord-oracle_enhanced-adapter", "~> 1.4.1"
-  gem "rvm-capistrano", "~> 1.3.0"
+  gem "rvm-capistrano", "~> 1.3.1"
   gem "capistrano", "~> 2.15.4"
 end
 
