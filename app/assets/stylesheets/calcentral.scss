@@ -84,7 +84,7 @@ form {
     background: $cc-color-white;
     font-family: Arial;
     &[type="text"] {
-      border: none;
+      border: transparent;
       font-size: 12px;
       width: 100%;
       &:focus {
@@ -103,6 +103,7 @@ form {
 
   textarea {
     background: $cc-color-white;
+    border: transparent;
     font-size: 12px;
     resize: vertical;
   }
