@@ -12,6 +12,8 @@ class MyAcademics::Exams
 
     exams = []
     doc = Nokogiri::XML feed[:body]
+    return data unless (matches_current_year_term? doc.css("studentFinalExamSchedules"))
+
     doc.css("studentFinalExamSchedule").each do |exam|
       exam_data = exam.css("studentFinalExamScheduleKey")
       begin
@@ -40,6 +42,19 @@ class MyAcademics::Exams
     end
     exams.sort! { |a, b| a[:date][:epoch] <=> b[:date][:epoch] }
     data[:exam_schedule] = exams
+  end
+
+  private
+
+  def matches_current_year_term?(nodeset)
+    begin
+      term_year = nodeset.attribute("termYear").value
+      term_code = nodeset.attribute("termCode").value
+      return (CampusData.current_term == term_code && CampusData.current_year == term_year)
+    rescue NoMethodError, ArgumentError => e
+      Rails.logger.warn "#{self.class.name}: Error parsing studentFinalExamSchedules #{nodeset} for termYear and termCode - #{e.message}"
+      return false
+    end
   end
 
 end
