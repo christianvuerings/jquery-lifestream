@@ -11,7 +11,47 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013051723151200) do
+ActiveRecord::Schema.define(:version => 2013061109530000) do
+
+  create_table "link_categories", :force => true do |t|
+    t.string   "name",                          :null => false
+    t.string   "slug",                          :null => false
+    t.boolean  "root_level", :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "link_categories_link_sections", :id => false, :force => true do |t|
+    t.integer "link_category_id"
+    t.integer "link_section_id"
+  end
+
+  create_table "link_sections", :force => true do |t|
+    t.integer  "link_root_cat_id"
+    t.integer  "link_top_cat_id"
+    t.integer  "link_sub_cat_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  create_table "link_sections_links", :id => false, :force => true do |t|
+    t.integer "link_section_id"
+    t.integer "link_id"
+  end
+
+  create_table "links", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.string   "description"
+    t.boolean  "published",   :default => true
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "links_user_roles", :id => false, :force => true do |t|
+    t.integer "link_id"
+    t.integer "user_role_id"
+  end
 
   create_table "notifications", :force => true do |t|
     t.string   "uid"
@@ -56,6 +96,11 @@ ActiveRecord::Schema.define(:version => 2013051723151200) do
   end
 
   add_index "user_data", ["uid"], :name => "index_user_data_on_uid", :unique => true
+
+  create_table "user_roles", :force => true do |t|
+    t.string "name"
+    t.string "slug"
+  end
 
   create_table "user_visits", :id => false, :force => true do |t|
     t.string   "uid",           :null => false
