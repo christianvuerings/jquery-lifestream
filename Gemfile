@@ -54,6 +54,10 @@ gem "celluloid", "~> 0.14.1"
 # for parsing formatted html
 gem 'nokogiri', "~> 1.5.9"
 
+# for simplified relational data management. rails_admin requires devise.
+gem 'rails_admin', "~> 0.4.8"
+gem "devise", "~> 2.2.4"
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
