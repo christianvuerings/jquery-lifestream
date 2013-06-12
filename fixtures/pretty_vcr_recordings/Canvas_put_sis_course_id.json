@@ -1,0 +1,106 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "put",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/1093165?course%5Bsis_course_id%5D=C%3A1093165",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Tue, 11 Jun 2013 21:05:54 GMT"
+          ],
+          "etag": [
+            "\"32aa1a2a65ea0b333c0308db768fe9d3\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=m0sQHn6FcQR6AfsCobp3iQ+pV7LZsfYjz-B-GJQnYBMYafJQnDr_ShraQEdOE33u5Dir5EydmjQvPmyhNhEWgPJo0_5y9TMApm2NZakU3p4XQP2YhCGkfDvke9VzcwmlpTGwq7hMIMtSw9_wiGI1-AeDGwRNdtxMgvdBkG0y3BVy4dyq-q6ltG5YU-JEfdyDXmFH1uVTorcfRFdGdinJp-sqS24xxFLpa6x3dI3dD-HkA.5C4LLBSGKRCQQ6n4k7y1-gmu3_0.UbeRMw; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003075918"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "a1126e30-b508-0130-3cd2-02f885576c21"
+          ],
+          "x-runtime": [
+            "513"
+          ],
+          "x-session-id": [
+            "f22d3216e1b2e4649249fd9cda746369"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "384"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "account_id": 90242,
+            "course_code": "RAYTC Bio Disc 2",
+            "default_view": "feed",
+            "id": 1093165,
+            "name": "Ray-Test No SIS_ID",
+            "start_at": null,
+            "end_at": null,
+            "public_syllabus": false,
+            "hide_final_grades": false,
+            "calendar": {
+              "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_D6pGKi37wFx34xg0Fr8iPjmegNJ8J5OB97CltJ5x.ics"
+            },
+            "sis_course_id": "C:1093165",
+            "workflow_state": "unpublished"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 11 Jun 2013 21:05:55 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

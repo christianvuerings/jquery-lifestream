@@ -86,7 +86,10 @@ class CampusCourseSectionsProxy < BaseProxy
     found_instructors = CampusData.get_section_instructors(@term_yr, @term_cd, @ccn)
     if found_instructors
       found_instructors.each do |instructor|
-        instructors << {:name => instructor['person_name']}
+        instructors << {
+            :name => instructor['person_name'],
+            :uid => instructor['ldap_uid']
+        }
       end
     end
     feed.merge!({:instructors => instructors})

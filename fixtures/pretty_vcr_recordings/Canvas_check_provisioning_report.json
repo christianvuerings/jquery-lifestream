@@ -1,0 +1,99 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/accounts/90242/reports/provisioning_csv/11938",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Thu, 06 Jun 2013 23:10:21 GMT"
+          ],
+          "etag": [
+            "\"b1fac19657c06e8ad655bbde65790070\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=NEWPIFdtVMJ1p9DJ24eENA.Z9JpN65oWkkQvX9l6phpMaHHg5_LC_pVHZLz8RObdnm6yUxnt71-8F46b8PoMTnxB4tEmyEmCare7dncsB6pcg.qZPPf-dGfzo9D1TXhx7DHO5XlYs.UbEW3g; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003075918"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "2facd190-b12c-0130-e424-02f885779982"
+          ],
+          "x-runtime": [
+            "128"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "289"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "id": 11938,
+            "parameters": {
+              "enrollment_term": "sis_term_id:TERM:2013-C",
+              "sections": "1",
+              "extra_text": "Term: Summer 2013; Reports: sections "
+            },
+            "progress": 100,
+            "status": "complete",
+            "report": "provisioning_csv",
+            "file_url": "https://ucberkeley.instructure.com/accounts/90242/files/35810460/download"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 06 Jun 2013 23:10:22 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

@@ -9,6 +9,7 @@ describe "CampusCourseSectionsProxy" do
 
     data[:instructors].length.should == 1
     data[:instructors][0][:name].should == "Yu-Hung Lin"
+    data[:instructors][0][:uid].should == "192517"
     data[:schedules].length.should == 2
     data[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
     data[:schedules][0][:building_name].should == "WHEELER"
