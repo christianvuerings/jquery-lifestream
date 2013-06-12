@@ -3,6 +3,7 @@ Calcentral::Application.configure do
 
   # enable threadsafe
   config.threadsafe!
+  config.dependency_loading = true if $rails_rake_task
 
   # Code is not reloaded between requests
   config.cache_classes = true
