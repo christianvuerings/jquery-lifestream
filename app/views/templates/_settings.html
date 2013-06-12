@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/settings.html">
-  <div class="large-12 columns cc-settings" data-ng-controller="SettingsController">
-    <h1>Settings for {{user.profile.full_name}}</h1>
+  <div class="large-12 columns cc-settings">
+    <h1>Settings for {{api.user.profile.full_name}}</h1>
 
     <section data-ng-show='connected_services.length' class="cc-settings-section">
       <div class="large-10 large-centered columns">
@@ -28,7 +28,7 @@
     <a class="cc-settings-dashboard-link" href="/dashboard">&laquo; Take me to my Dashboard
     </a>
 
-    <div data-ng-show="user.profile.is_admin || user.profile.is_acting_as" data-ng-controller="AdminController">
+    <div data-ng-show="api.user.profile.is_admin || api.user.profile.is_acting_as" data-ng-controller="AdminController">
       <h2>Admin</h2>
       <h3>Act as</h3>
       <form data-ng-submit="admin.actAs()">
@@ -46,7 +46,7 @@
           </div>
         </div>
       </form>
-      <form data-ng-show="user.profile.is_acting_as" data-ng-submit="admin.stopActAs()">
+      <form data-ng-show="api.user.profile.is_acting_as" data-ng-submit="admin.stopActAs()">
         <button class="radius button medium" id="cc-settings-act-as-stop-submit" type="submit">Stop acting as</button>
       </form>
     </div>

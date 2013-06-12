@@ -1,12 +1,12 @@
 <!-- Top Navbar -->
 <div class="row cc-navigation-bar">
   <ul>
-    <li data-ng-class="{true:'active'}[controller_name=='DashboardController']"><a href="/dashboard" data-ng-click="off_canvas_menu._show=false"><i class="icon-home"></i> My Dashboard</a></li>
+    <li data-ng-class="{true:'active'}[_controller_name=='DashboardController']"><a href="/dashboard" data-ng-click="off_canvas_menu._show=false"><i class="icon-home"></i> My Dashboard</a></li>
     <% if Settings.features.bearfacts %>
-    <li data-ng-class="{true:'active'}[controller_name=='AcademicsController']" data-ng-show="user.profile.roles.student">
+    <li data-ng-class="{true:'active'}[_controller_name=='AcademicsController']" data-ng-show="api.user.profile.roles.student">
       <a href="/academics" data-ng-click="off_canvas_menu._show=false"><i class="icon-book"></i> My Academics</a>
     </li>
     <% end %>
-    <li data-ng-class="{true:'active'}[controller_name=='CampusController']"><a href="/campus" data-ng-click="off_canvas_menu._show=false"><i class="icon-th-large"></i> My Campus</a></li>
+    <li data-ng-class="{true:'active'}[_controller_name=='CampusController']"><a href="/campus" data-ng-click="off_canvas_menu._show=false"><i class="icon-th-large"></i> My Campus</a></li>
   </ul>
 </div>

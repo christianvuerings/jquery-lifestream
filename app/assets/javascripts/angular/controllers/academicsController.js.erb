@@ -30,7 +30,7 @@
         $scope.semesters = data.semesters;
 
         // Some users (e.g. test-xxx users) may be missing the "student" role but still need ability to view My Academics pages
-        $scope.can_view_academics = $scope.user.profile.roles.student || $scope.college_and_level.standing == 'Undergraduate';
+        $scope.can_view_academics = $scope.api.user.profile.roles.student || $scope.college_and_level.standing == 'Undergraduate';
 
         // Get selected semester from URL params and extract data from semesters array
         if ($routeParams.semester_slug) {
@@ -58,7 +58,7 @@
     };
 
     // Wait until user profile is fully loaded before hitting academics data
-    $scope.$watch('user.isAuthenticated', function(isAuthenticated) {
+    $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
         $scope.getAcademics();
       }

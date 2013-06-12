@@ -2,7 +2,22 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('utilService', ['$rootScope', function($rootScope) {
+  angular.module('calcentral.services').service('utilService', ['$location', '$rootScope', function($location, $rootScope) {
+
+    /**
+     * Pass in controller name so we can set active location in menu
+     * @param {String} name The name of the controller
+     */
+    var changeControllerName = function(name) {
+      $rootScope._controller_name = name;
+    }
+
+    /**
+     * Redirect to a page
+     */
+    var redirect = function(page) {
+      $location.path('/' + page);
+    };
 
     /**
      * Prevent a click event from bubbling up to its parents
@@ -22,7 +37,9 @@
 
     // Expose methods
     return {
+      changeControllerName: changeControllerName,
       preventBubble: preventBubble,
+      redirect: redirect,
       setTitle: setTitle
     };
 

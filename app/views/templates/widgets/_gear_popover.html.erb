@@ -6,17 +6,17 @@
   </button>
   <div class="cc-popover cc-dropdown cc-launcher-dropdown-menu" data-ng-show="api.popover.status('cc-popover-menu')">
     <div class="cc-popover-title">
-      <h4 data-ng-bind="user.profile.full_name"></h4>
+      <h4 data-ng-bind="api.user.profile.full_name"></h4>
     </div>
     <ul class="cc-popover-items">
       <li class="cc-popover-item">
         <button class="cc-button-link cc-popover-link"
-          data-ng-click="user._redirectToSettingsPage()">Settings
+          data-ng-click="api.util.redirect('settings')">Settings
         </button>
       </li>
       <li class="cc-popover-item">
         <button class="cc-button-link cc-popover-link"
-          data-ng-click="user.signOut()">Log out
+          data-ng-click="api.user.signOut()">Log out
         </button>
       </li>
     </ul>
