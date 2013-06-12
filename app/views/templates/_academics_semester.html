@@ -35,7 +35,7 @@
       </div>
 
       <h2>Final Exam Schedule</h2>
-
+      <div data-ng-hide="exam_schedule.size">No exam schedules listed.</div>
       <div data-ng-repeat="(day, day_data) in exam_schedule" class="cc-academics-exam-block">
         <div class="row">
           <div class="large-12 small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
