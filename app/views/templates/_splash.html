@@ -1,10 +1,10 @@
 <script type="text/ng-template" id="templates/splash.html">
-  <div class="row" data-ng-controller="SplashController">
+  <div class="row">
     <div class="large-6 columns">
       <%= image_tag "calcentral_logo_big.png", :size => "372x40", :alt => "CalCentral logo", :class => "cc-page-splash-logo" %>
       <h1>Welcome to CalCentral.</h1>
       <div class="cc-page-splash-subtitle">Unify, Personalize, Discover</div>
-      <button class="radius button cc-page-splash-signin" data-ng-click="user.signIn()">Sign in with your CalNet ID</button>
+      <button class="radius button cc-page-splash-signin" data-ng-click="api.user.signIn()">Sign in with your CalNet ID</button>
     </div>
 
     <div class="large-6 columns">

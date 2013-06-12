@@ -1,7 +1,7 @@
 <div
   data-ng-controller="StatusController"
   class="cc-popover-container cc-popover-status cc-left"
-  data-ng-show="user.profile.student_info.reg_status.code!=null">
+  data-ng-show="api.user.profile.student_info.reg_status.code!=null">
   <button class="cc-header-icon cc-header-icon-font cc-icon-status-person"
     data-ng-class="{true:'cc-icon-status-person-haslayover'}[showStatusError]"
     data-ng-class="{true:'cc-header-icon-selected'}[api.popover.status('cc-popover-academic-status')]"
@@ -13,39 +13,39 @@
   <div class="cc-popover cc-popover-arrow cc-popover-academic-status" data-ng-show="api.popover.status('cc-popover-academic-status')">
     <h4>Academic Profile</h4>
     <p>
-      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[user.profile.student_info.reg_status.needsAction]"></i>
+      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_status.needsAction]"></i>
       <div class="cc-launcher-status-description">
-        <strong>Registration Status:</strong> <span data-ng-bind="user.profile.student_info.reg_status.summary"><br />
-        <span data-ng-bind-html="user.profile.student_info.reg_status.explanation"></span>
+        <strong>Registration Status:</strong> <span data-ng-bind="api.user.profile.student_info.reg_status.summary"><br />
+        <span data-ng-bind-html="api.user.profile.student_info.reg_status.explanation"></span>
       </div>
     </p>
     <p>
-      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[user.profile.student_info.reg_block.needsAction]"></i>
+      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_block.needsAction]"></i>
       <div class="cc-launcher-status-description">
-        <strong>Registration Blocks<span data-ng-show="user.profile.student_info.reg_block.summary">:</span></strong> <span data-ng-bind="user.profile.student_info.reg_block.summary"></span><br />
-        <span data-ng-bind-html="user.profile.student_info.reg_block.explanation"></span>
-        <p data-ng-repeat="block in user.profile.student_info.reg_block.blocks">
+        <strong>Registration Blocks<span data-ng-show="api.user.profile.student_info.reg_block.summary">:</span></strong> <span data-ng-bind="api.user.profile.student_info.reg_block.summary"></span><br />
+        <span data-ng-bind-html="api.user.profile.student_info.reg_block.explanation"></span>
+        <p data-ng-repeat="block in api.user.profile.student_info.reg_block.blocks">
           <strong><span data-ng-bind="block.name"></span>:</strong> <span data-ng-bind="block.summary"></span>
         </p>
       </div>
     </p>
     <p>
-      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-stop'}[user.profile.student_info.california_residency.needsAction]"></i>
+      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-stop'}[api.user.profile.student_info.california_residency.needsAction]"></i>
       <div class="cc-launcher-status-description">
-        <strong>California Residency:</strong> <span data-ng-bind="user.profile.student_info.california_residency.summary"><br />
-        <span data-ng-bind-html="user.profile.student_info.california_residency.explanation"></span>
+        <strong>California Residency:</strong> <span data-ng-bind="api.user.profile.student_info.california_residency.summary"><br />
+        <span data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></span>
       </div>
     </p>
     <p>
       <i class="cc-left icon-stop"></i>
       <div class="cc-launcher-status-description">
-        <strong>Education Level:</strong> <span data-ng-bind="user.profile.student_info.education_level">
+        <strong>Education Level:</strong> <span data-ng-bind="api.user.profile.student_info.education_level">
       </div>
     </p>
     <p>
       <i class="cc-left icon-stop"></i>
       <div class="cc-launcher-status-description">
-        <strong>Units Enrolled:</strong> <span data-ng-bind="user.profile.student_info.units_enrolled">
+        <strong>Units Enrolled:</strong> <span data-ng-bind="api.user.profile.student_info.units_enrolled">
       </div>
     </p>
   </div>

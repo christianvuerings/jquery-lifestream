@@ -28,46 +28,4 @@ describe('CalCentral controller', function() {
     expect(calcentralController).toBeDefined();
   });
 
-  it('should set the anonymous userdata correctly', function() {
-    $scope.user._handleUserLoaded(getJSONFixture('status_loggedout.json'));
-    expect($scope.user.isAuthenticated).toBeFalsy();
-  });
-
-  it('should set the signed in userdata correctly', function() {
-    $httpBackend.when('POST', '/api/my/record_first_login').respond({});
-    var status = getJSONFixture('status_first_login.json');
-    $scope.user._handleUserLoaded(status);
-
-    expect($scope.user.isAuthenticated).toBeTruthy();
-    expect($scope.user.profile.uid).toBeDefined();
-    expect($scope.user.profile.first_name).toBeDefined();
-    expect($scope.user.profile.last_name).toBeDefined();
-    expect($scope.user.profile.full_name).toBeDefined();
-    expect($scope.user.profile.preferred_name).toBeDefined();
-  });
-
-  it('should remove the OAuth authorization for a user', function() {
-    var service = 'canvas';
-
-    // Assume the user is logged in
-    $httpBackend.when('POST', '/api/my/record_first_login').respond({});
-    var status = getJSONFixture('status_first_login.json');
-
-    // We need to fake out the redirect so it doesn't actually happen
-    $scope.user._redirectToSettingsPage = angular.noop;
-    $scope.user._handleUserLoaded(status);
-    $scope.$digest();
-    $httpBackend.flush();
-
-    expect($scope.user.profile.has_canvas_access_token).toBeTruthy();
-
-    $httpBackend.when('POST', '/api/' + service + '/remove_authorization').respond({});
-    $scope.user.removeOAuth(service);
-    $scope.$digest();
-    $httpBackend.flush();
-
-    expect($scope.user.profile.has_canvas_access_token).toBeFalsy();
-
-  });
-
 });

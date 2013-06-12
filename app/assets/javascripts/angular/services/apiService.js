@@ -7,6 +7,7 @@
     'dateService',
     'errorService',
     'popoverService',
+    'userService',
     'utilService',
     'widgetService',
     function(
@@ -14,6 +15,7 @@
       dateService,
       errorService,
       popoverService,
+      userService,
       utilService,
       widgetService) {
 
@@ -23,6 +25,7 @@
       date: dateService,
       error: errorService,
       popover: popoverService,
+      user: userService,
       util: utilService,
       widget: widgetService
     };

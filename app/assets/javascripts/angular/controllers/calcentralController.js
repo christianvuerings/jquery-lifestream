@@ -4,120 +4,47 @@
   /**
    * CalCentral main controller
    */
-  calcentral.controller('CalcentralController', ['$http', '$location', '$route', '$scope', 'apiService', function($http, $location, $route, $scope, apiService) {
+  calcentral.controller('CalcentralController', ['$scope', 'apiService', function($scope, apiService) {
 
-    $scope.user = {};
-
-    // Private methods that are only exposed for testing but shouldn't be used within the views
+    // Expose the API service
+    $scope.api = apiService;
 
     /**
-     * Redirect to the settings page
+     * Broadcast an API event
+     * in order for an API to broadcast events, it need to have an 'events' property
+     * @param {String} apiName The name of the event
+     * @param {String} eventName The name of the event
+     * @param {Object} data Data that you want to send with the event
      */
-    $scope.user._redirectToSettingsPage = function() {
-      $location.path('/settings');
+    var broadcastApiEvent = function(apiName, eventName, data) {
+      $scope.$broadcast('calcentral.api.' + apiName + '.' + eventName, data);
     };
 
     /**
-     * Redirect to the dashboard page
+     * Watch the event for a certain part of the API
+     * @param {String} apiName The name of the API you want to watch (e.g. user)
+     * @param {String} eventName The name of the event (isUserLoaded)
      */
-    $scope.user._redirectToDashboardPage = function() {
-      $location.path('/dashboard');
+    var watchEvent = function(apiName, eventName) {
+      $scope.$watch('api.' + apiName + '.events.' + eventName, function(data) {
+        broadcastApiEvent(apiName, eventName, data);
+      }, true);
     };
 
     /**
-     * Set the user first_login_at attribute and redirect to the settings page
+     * Fire the events for the API
+     * @return {[type]} [description]
      */
-    $scope.user._setFirstLogin = function() {
-      $scope.user.profile.first_login_at = (new Date()).getTime();
-      $scope.user._redirectToSettingsPage();
-    };
-
-    /**
-     * Handle the access to the page that the user is watching
-     * This will depend on
-     *   - whether they are logged in or not
-     *   - whether the page is public
-     */
-    $scope.user._handleAccessToPage = function() {
-      // Redirect to the login page when the page is private and you aren't authenticated
-      if (!$route.current.isPublic && !$scope.user.isAuthenticated) {
-        apiService.analytics.trackEvent(['Authentication', 'Sign in - redirect to login']);
-        $scope.user.signIn();
-      // Record that you've already visited the calcentral once and redirect to the settings page on the first login
-      } else if ($scope.user.isAuthenticated && !$scope.user.profile.first_login_at) {
-        apiService.analytics.trackEvent(['Authentication', 'First login']);
-        $http.post('/api/my/record_first_login').success($scope.user._setFirstLogin);
-      // Redirect to the dashboard when you're accessing the root page and are authenticated
-      } else if ($scope.user.isAuthenticated && $location.path() === '/') {
-        apiService.analytics.trackEvent(['Authentication', 'Redirect to dashboard']);
-        $scope.user._redirectToDashboardPage();
-      }
-    };
-
-    /**
-     * Set the current user information
-     */
-    $scope.user._handleUserLoaded = function(data) {
-      $scope.user.profile = data;
-      $scope.user.isLoaded = true;
-      // Check whether the current user is authenticated or not
-      $scope.user.isAuthenticated = $scope.user.profile && $scope.user.profile.is_logged_in;
-      $scope.user._handleAccessToPage();
-    };
-
-    /**
-     * Get the actual user information
-     */
-    $scope.user._fetch = function(){
-      $http.get('/api/my/status').success($scope.user._handleUserLoaded);
-    };
-
-    /**
-     * Remove OAuth permissions for a service for the currently logged in user
-     * @param {String} authorizationService The authorization service (e.g. 'google')
-     */
-    $scope.user.removeOAuth = function(authorizationService) {
-      // Send the request to remove the authorization for the specific OAuth service
-      // Only when the request was successful, we update the UI
-      $http.post('/api/' + authorizationService + '/remove_authorization').success(function(){
-        $scope.user.profile['has_' + authorizationService + '_access_token'] = false;
-      });
-      apiService.analytics.trackEvent(['OAuth', 'Remove', 'service: ' + authorizationService]);
-    };
-
-    $scope.user.enableOAuth = function(authorizationService) {
-      apiService.analytics.trackEvent(['OAuth', 'Enable', 'service: ' + authorizationService]);
-      window.location = '/api/' + authorizationService + '/request_authorization';
-    };
-
-    /**
-     * Sign the current user in.
-     */
-    $scope.user.signIn = function() {
-      apiService.analytics.trackEvent(['Authentication', 'Redirect to login']);
-      window.location = '/login';
-    };
-
-    /**
-     * Sign the current user out.
-     */
-    $scope.user.signOut = function() {
-      $http.post('/logout').success(function(data) {
-        if (data && data.redirect_url) {
-          apiService.analytics.trackEvent(['Authentication', 'Redirect to logout']);
-          window.location = data.redirect_url;
+    var fireApiEvents = function() {
+      for (var i in $scope.api) {
+        if ($scope.api.hasOwnProperty(i) && $scope.api[i].events) {
+          for (var j in $scope.api[i].events) {
+            if ($scope.api[i].events.hasOwnProperty(j)) {
+              watchEvent(i, j);
+            }
+          }
         }
-      });
-    };
-
-    /**
-     * Opt-out.
-     */
-    $scope.user.optOut = function() {
-      $http.post('/api/my/opt_out').success(function() {
-        apiService.analytics.trackEvent(['Settings', 'User opt-out']);
-        $scope.user.signOut();
-      });
+      }
     };
 
     /**
@@ -126,17 +53,11 @@
      *  - Handle the page access
      *  - Send the right controller name
      */
-    $scope.$on('$routeChangeSuccess', function() {
-      if(!$scope.user.profile) {
-        $scope.user._fetch();
-      } else {
-        $scope.user._handleAccessToPage();
-      }
-      // Pass in controller name so we can set active location in menu
-      $scope.controller_name = $route.current.controller;
+    $scope.$on('$routeChangeSuccess', function(evt, current) {
+      fireApiEvents();
+      apiService.user.handleRouteChange();
+      apiService.util.changeControllerName(current.controller);
     });
-
-    $scope.api = apiService;
 
   }]);
 

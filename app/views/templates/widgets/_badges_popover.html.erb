@@ -1,4 +1,4 @@
-<div data-ng-controller="BadgesController" class="cc-launcher-icons cc-left" data-ng-class="{true:'cc-badge-hasacademic'}[user.profile.student_info.reg_status.code!=null]">
+<div data-ng-controller="BadgesController" class="cc-launcher-icons cc-left" data-ng-class="{true:'cc-badge-hasacademic'}[api.user.profile.student_info.reg_status.code!=null]">
   <div data-ng-repeat="badge in badges"
     class="cc-popover-container cc-popover-status cc-left">
     <button class="cc-header-icon"
@@ -10,7 +10,7 @@
     </button>
     <div class="cc-popover cc-popover-arrow cc-badgepopover cc-badgepopover-{{badge.display.name|lowercase}}" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
       <!-- Title -->
-      <div class="cc-popover-title" data-ng-switch on="user.profile.has_google_access_token && badge.display.name">
+      <div class="cc-popover-title" data-ng-switch on="api.user.profile.has_google_access_token && badge.display.name">
         <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}"><i class="icon-external-link"></i>
           <span class="cc-visuallyhidden" data-ng-bind-template="Go to {{badge.display.name}}"></span>
         </a>
@@ -20,17 +20,17 @@
         data-ng-bind-template="Unaccepted {{badge.display.name}} Invitations"></h4>
         <div data-ng-switch-default>
           <h4 data-ng-bind-template="{{badge.display.name}} (Not connected)"
-          data-ng-show="!user.profile.has_google_access_token"></h4>
+          data-ng-show="!api.user.profile.has_google_access_token"></h4>
           <h4 data-ng-bind-template="{{badge.display.name}} Updates"
-          data-ng-show="user.profile.has_google_access_token"></h4>
+          data-ng-show="api.user.profile.has_google_access_token"></h4>
         </div>
       </div>
-      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && user.profile.has_google_access_token">
+      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && api.user.profile.has_google_access_token">
         No items available for your <a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} account"></a>
       </div>
-      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && !user.profile.has_google_access_token">
+      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && !api.user.profile.has_google_access_token">
         To display your bConnected activity, visit the
-         <button class="cc-button-link cc-popover-link" data-ng-click="user._redirectToSettingsPage()">settings page</button>
+         <button class="cc-button-link cc-popover-link" data-ng-click="api.util.redirect('settings')">settings page</button>
       </div>
       <!-- Item container -->
       <ul class="cc-popover-items">

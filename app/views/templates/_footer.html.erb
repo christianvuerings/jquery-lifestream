@@ -20,11 +20,11 @@
       <li>Current DB Schema: <span data-ng-bind="versions.current_db_schema" /></li>
       <li>Previous Release's DB Schema: <span data-ng-bind="versions.previous_release_db_schema" /></li>
       <li>Up Since: <span data-ng-bind="first_visited" /></li>
-      <li>UID: <span data-ng-bind="user.profile.uid" id="user_id"></span></li>
+      <li>UID: <span data-ng-bind="api.user.profile.uid" id="user_id"></span></li>
       <li>
         <button class="tiny button" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>
         <div class="cc-footer-confirmation" data-ng-show="deleteSelf">Are you sure?
-          <button class="first tiny button" data-ng-click="user.optOut()">Yes</button>
+          <button class="first tiny button" data-ng-click="api.user.optOut()">Yes</button>
           <button class="tiny button" data-ng-click="deleteSelf=false">No</button>
         </div>
       </li>

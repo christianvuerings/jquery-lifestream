@@ -38,7 +38,7 @@
       for (var i in link.roles) {
         if (link.roles.hasOwnProperty(i) &&
             link.roles[i] === true &&
-            link.roles[i] ===  $scope.user.profile.roles[i]) {
+            link.roles[i] ===  $scope.api.user.profile.roles[i]) {
           addToTopCategories(link);
           return true;
         }
@@ -120,8 +120,8 @@
     };
 
     // We need to wait until the user is loaded
-    $scope.$watch('user.isAuthenticated', function(isAuthenticated) {
-      if (isAuthenticated) {
+    $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
+      if(isAuthenticated) {
         getLinks();
       }
     });

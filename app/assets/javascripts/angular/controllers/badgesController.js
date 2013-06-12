@@ -130,8 +130,8 @@
      * have also cleared up a rendering delay issue, since $digest might have been working unnecessarily
      * hard on $scope.badges
      */
-    $scope.$watch('user.profile.is_logged_in + \',\' + user.profile.has_google_access_token', function(newTokenTuple) {
-      if (newTokenTuple.split(",")[0] === "true") {
+    $scope.$watch('api.user.profile.is_logged_in + \',\' + api.user.profile.has_google_access_token', function(newTokenTuple) {
+      if (newTokenTuple.split(',')[0] === 'true') {
         fetch();
       }
     });

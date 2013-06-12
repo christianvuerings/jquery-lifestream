@@ -9,24 +9,24 @@
   <div class="large-9 small-8 columns cc-settings-service-description-block">
     <div data-ng-show="service=='google'">
       <strong>bConnected</strong><br />
-      <span class="cc-settings-service-description" data-ng-show="!user.profile.google_email || !user.profile.has_google_access_token">
+      <span class="cc-settings-service-description" data-ng-show="!api.user.profile.google_email || !api.user.profile.has_google_access_token">
         Connect your Google Apps for Education account in order to access your drive, mail and calendar.
       </span>
-      <span class="cc-settings-service-description" data-ng-show="user.profile.google_email && user.profile.has_google_access_token" data-ng-bind-template="Connected as: {{user.profile.google_email}}"></span>
+      <span class="cc-settings-service-description" data-ng-show="api.user.profile.google_email && api.user.profile.has_google_access_token" data-ng-bind-template="Connected as: {{api.user.profile.google_email}}"></span>
     </div>
     <div data-ng-show="service=='canvas'">
       <strong>Canvas</strong><br />
-      <span class="cc-settings-service-description" data-ng-show="!user.profile.canvas_email || !user.profile.has_canvas_access_token">
+      <span class="cc-settings-service-description" data-ng-show="!api.user.profile.canvas_email || !api.user.profile.has_canvas_access_token">
         Connect your Canvas account to be able to see Canvas-hosted class sites, assignments and activity. <a href="https://ets.berkeley.edu/article/what-canvas">Learn more about Canvas</a>.
       </span>
-      <span class="cc-settings-service-description" data-ng-show="user.profile.canvas_email && user.profile.has_canvas_access_token" data-ng-bind-template="Connected as: {{user.profile.canvas_email}}"></span>
+      <span class="cc-settings-service-description" data-ng-show="api.user.profile.canvas_email && api.user.profile.has_canvas_access_token" data-ng-bind-template="Connected as: {{api.user.profile.canvas_email}}"></span>
     </div>
   </div>
 
   <div data-ng-show="loopname=='connected'">
     <div class="large-2 small-4 columns">
-      <button data-ng-show="user.profile['has_' + service + '_access_token']"
-        class="radius button medium" data-ng-click="user.removeOAuth('{{service}}')">
+      <button data-ng-show="api.user.profile['has_' + service + '_access_token']"
+        class="radius button medium" data-ng-click="api.user.removeOAuth('{{service}}')">
         Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
       </button>
     </div>
@@ -35,17 +35,17 @@
   <div data-ng-show="loopname=='unconnected'">
     <div class="large-2 small-4 columns">
       <button data-ng-show="service=='google'"
-        class="radius button medium success" data-ng-click="user.enableOAuth('google')">
+        class="radius button medium success" data-ng-click="api.user.enableOAuth('google')">
         Connect <span class="cc-visuallyhidden">Google Access</span>
       </button>
 
-      <div data-ng-show="user.profile.has_canvas_account">
+      <div data-ng-show="api.user.profile.has_canvas_account">
         <button data-ng-show="service=='canvas'"
-          class="radius button medium success" data-ng-click="user.enableOAuth('canvas')">
+          class="radius button medium success" data-ng-click="api.user.enableOAuth('canvas')">
           Connect <span class="cc-visuallyhidden">Canvas Access</span>
         </button>
       </div>
-      <div data-ng-show="!user.profile.has_canvas_account">
+      <div data-ng-show="!api.user.profile.has_canvas_account">
         <button data-ng-show="service=='canvas'"
           class="radius button medium secondary">
           Unavailable <span class="cc-visuallyhidden">Canvas Access</span>

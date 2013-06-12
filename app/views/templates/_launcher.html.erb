@@ -7,7 +7,7 @@
       <%= render 'templates/svg/calcentral_logo' %>
     </a>
   </div>
-  <nav class="cc-header-icons" data-ng-show="user.isAuthenticated">
+  <nav class="cc-header-icons" data-ng-show="api.user.events.isAuthenticated">
     <%= render 'templates/widgets/badges_popover' %>
     <%= render 'templates/widgets/academic_profile_popover' %>
     <%= render 'templates/widgets/gear_popover' %>
