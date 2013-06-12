@@ -44,26 +44,28 @@
         </div>
 
         <div class="cc-academics-status-and-blocks">
-          <h3>Status and Blocks</h3>
+          <h3><span data-ng-show="user.profile.student_info.reg_status.code!=null">Status and </span>Blocks</h3>
 
-          <h4>Status Type</h4>
-          <div class="row cc-academics-column-labels">
-            <div class="large-4 small-4 columns">Type</div>
-            <div class="large-4 small-4 columns end">Status</div>
-          </div>
-          <div class="row">
-            <div class="large-4 small-4 columns">Registration</div>
-            <div class="large-4 small-4 columns end">
-              <i class="cc-icon"
-                data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
-              </i>
+          <div data-ng-show="user.profile.student_info.reg_status.code!=null">
+            <h4>Status Type</h4>
+            <div class="row cc-academics-column-labels">
+              <div class="large-4 small-4 columns">Type</div>
+              <div class="large-4 small-4 columns end">Status</div>
             </div>
-          </div>
-          <div class="row">
-            <div class="large-4 small-4 columns">California Residency</div>
-            <div class="large-4 small-4 columns end">
-              <i class="cc-icon" data-ng-class="{'icon-ok-sign':(user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(user.profile.student_info.california_residency=='needsAction')}"></i>
-              <span data-ng-bind="user.profile.student_info.california_residency.summary"></span>
+            <div class="row">
+              <div class="large-4 small-4 columns">Registration</div>
+              <div class="large-4 small-4 columns end">
+                <i class="cc-icon"
+                  data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[user.profile.student_info.reg_status.summary=='Registered']">
+                </i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-4 small-4 columns">California Residency</div>
+              <div class="large-4 small-4 columns end">
+                <i class="cc-icon" data-ng-class="{'icon-ok-sign':(user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(user.profile.student_info.california_residency=='needsAction')}"></i>
+                <span data-ng-bind="user.profile.student_info.california_residency.summary"></span>
+              </div>
             </div>
           </div>
 
