@@ -21,15 +21,19 @@ class CanvasAccountSectionsReportProxy < CanvasProxy
         "_start_provisioning_report_sections",
         { method: :post }
     )
-    report_id = JSON.parse(response.body)['id']
-
-    # Wait a bit for the report to finish...
-    sleep(5)
-    response = request_uncached(
-        "accounts/#{settings.account_id}/reports/provisioning_csv/#{report_id}",
-        "_check_provisioning_report"
-    )
     report_status = JSON.parse(response.body)
+    report_id = report_status['id']
+
+    tries = 0
+    while ['created', 'running'].include?(report_status['status']) && (tries < 5) do
+      sleep(2)
+      tries += 1
+      response = request_uncached(
+          "accounts/#{settings.account_id}/reports/provisioning_csv/#{report_id}",
+          "_check_provisioning_report"
+      )
+      report_status = JSON.parse(response.body)
+    end
 
     if report_status['status'] == 'complete'
       report_url = report_status['file_url']

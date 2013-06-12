@@ -145,4 +145,15 @@ describe CampusData do
     end
   end
 
+  it "should be able to get a whole lot of user records" do
+    known_uids = ['192517', '238382', '2040', '3060', '211159', '322279']
+    lotsa_uids = Array.new(1000 - known_uids.length) {|i| i + 1 }
+    lotsa_uids.concat(known_uids)
+    user_data = CampusData.get_basic_people_attributes(lotsa_uids)
+    user_data.each do |row|
+      known_uids.delete(row['ldap_uid'])
+    end
+    known_uids.empty?.should be_true
+  end
+
 end
