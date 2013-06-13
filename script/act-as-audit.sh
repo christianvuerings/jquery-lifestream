@@ -23,5 +23,4 @@ if [ -s $LOGFILE ]; then
 fi
 
 # Delete old empty log files after 90 days
-#/bin/find $HOME/log/act_as_*.log.gz -mtime +90 -empty -exec /bin/rm '{}' \;
-/bin/find $LOGFILEDIR/ -name "act_as_*" -type f -mtime +1 -exec /bin/rm '{}' \;
+/bin/find $LOGFILEDIR/ -name "act_as_*" -type f -mtime +90 -exec /bin/rm '{}' \;
