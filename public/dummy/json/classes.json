@@ -1,53 +1,57 @@
 {
   "classes": [
     {
+      "id": "BIOLOGY:1A:2013-C",
+      "name": "General Biology Lecture",
+      "course_code": "BIOLOGY 1A",
+      "term_yr": "2013",
+      "term_cd": "C",
+      "dept": "BIOLOGY",
+      "catid": "1A",
+      "site_url": "/academics/semester/summer-2013/class/7309",
+      "emitter": "Campus",
+      "color_class": "campus-class"
+    },
+    {
+      "id": "LAW:2089S:2013-C",
+      "name": "Fundamentals of U.S. Law",
+      "course_code": "LAW 2089S",
+      "term_yr": "2013",
+      "term_cd": "C",
+      "dept": "LAW",
+      "catid": "2089S",
+      "site_url": "/academics/semester/summer-2013/class/55858",
+      "emitter": "Campus",
+      "color_class": "campus-class"
+    },
+    {
       "name": "Lessons from the Cambrian Explosion",
-      "course_code": "PLEO 22",
-      "id": "750027",
+      "course_code": "Bio 1a Lec 3",
+      "id": "1093164",
       "emitter": "Canvas",
-      "color_class": "canvas-class"
+      "color_class": "canvas-class",
+      "site_url": "https://notquitecanvas/courses/1093164",
+      "courses": [
+        {
+          "id": "BIOLOGY:1A:2013-C"
+        }
+      ]
     },
     {
-      "name": "Endurance Running",
-      "course_code": "Endurance Running 101",
-      "id": "ba324114-0f04-4167-b2da-93c0df28d9d2",
+      "id": "095d5b02-afde-4186-a668-0b84734b1d5c",
+      "site_url": "https://notquitebspace.example.edu/portal/site/095d5b02-afde-4186-a668-0b84734b1d5c",
       "emitter": "bSpace",
-      "color_class": "bspace-class"
-    },
-    {
-      "name": "Intermediate JavaScript",
-      "course_code": "Javascript-101",
-      "id": "830013",
-      "emitter": "Canvas",
-      "color_class": "canvas-class"
-    },
-    {
-      "name": "Physics for Scientists and Engineers",
-      "course_code": "PHYSICS 7B",
-      "id": "cddb1acd-3e57-4f6a-9e66-a27a9a59b55f",
-      "emitter": "Campus",
-      "color_class": "bspace-class"
-    },
-    {
-      "name": "Responsive Design Workshop",
-      "course_code": "Responsive-Design",
-      "id": "830065",
-      "emitter": "Canvas",
-      "color_class": "canvas-class"
-    },
-    {
-      "name": "Biology for Poets",
-      "course_code": "Biology",
-      "id": "832071",
-      "emitter": "Campus",
-      "color_class": "canvas-class"
-    },
-    {
-      "name": "Applied Sabrmetrics",
-      "course_code": "Stat 150C",
-      "id": "760795",
-      "emitter": "Canvas",
-      "color_class": "canvas-class"
+      "groups": [
+        "7c4d4a5c-07c6-4ab8-a32c-78c6820f2596"
+      ],
+      "course_code": "BIOLOGY 1A DIS 03 Su13",
+      "name": "Talk about life",
+      "color_class": "bspace-class",
+      "courses": [
+        {
+          "id": "BIOLOGY:1A:2013-C"
+        }
+      ]
     }
   ]
 }
