@@ -4,6 +4,15 @@
       text-decoration: none;
     }
   }
+  li {
+    margin-left: 20px;
+    &.failed {
+      color: $cc-color-red;
+    }
+    &.success {
+      color: $cc-color-green-plus;
+    }
+  }
   h1 {
     color: $cc-color-dark-grey;
     font-size: 24px;
