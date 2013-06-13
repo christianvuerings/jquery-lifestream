@@ -1,4 +1,4 @@
-class CanvasCoursesProxy < CanvasProxy
+class CanvasUserCoursesProxy < CanvasProxy
 
   def courses
     request("courses", "_courses")

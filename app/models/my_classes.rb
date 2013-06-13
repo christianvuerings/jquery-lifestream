@@ -22,7 +22,7 @@ class MyClasses < MyMergedModel
 
   def process_canvas_courses
     response = []
-    canvas_proxy = CanvasCoursesProxy.new(user_id: @uid)
+    canvas_proxy = CanvasUserCoursesProxy.new(user_id: @uid)
     canvas_courses = canvas_proxy.courses
     return response unless (canvas_courses && canvas_courses.status == 200)
     begin

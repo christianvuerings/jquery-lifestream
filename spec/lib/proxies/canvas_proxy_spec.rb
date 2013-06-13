@@ -30,7 +30,7 @@ describe CanvasProxy do
   end
 
   it "should get courses as known student", :testext => true do
-    client = CanvasCoursesProxy.new(:user_id => @user_id)
+    client = CanvasUserCoursesProxy.new(:user_id => @user_id)
     response = client.courses
     courses = JSON.parse(response.body)
     courses.size.should > 0
@@ -89,7 +89,7 @@ describe CanvasProxy do
   end
 
   it "should return nil if server is not available" do
-    client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
+    client = CanvasUserCoursesProxy.new(user_id: @user_id, fake: false)
     stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
     suppress_rails_logging {
       response = client.courses
@@ -99,7 +99,7 @@ describe CanvasProxy do
   end
 
   it "should return nil if server returns error status" do
-    client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
+    client = CanvasUserCoursesProxy.new(user_id: @user_id, fake: false)
     stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_return(
         status: 503,
         body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
