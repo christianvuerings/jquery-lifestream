@@ -5,7 +5,9 @@
       data-ng-class="{true:'cc-header-icon-selected'}[api.popover.status('cc-{{badge.display.name}}-popover-status')]"
       data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-{{badge.display.name}}-popover-status')">
       <div class="cc-ir cc-icon cc-icon-24 cc-left {{badge.display.additionalClasses}}"></div>
-      <span class="cc-visuallyhidden" data-ng-bind-template="Show your {{badge.display.name}} info"></span>
+      <span class="cc-visuallyhidden" data-ng-hide="api.popover.status('cc-{{badge.display.name}}-popover-status')">Show</span>
+      <span class="cc-visuallyhidden" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">Hide</span>
+      <span class="cc-visuallyhidden" data-ng-bind-template="your {{badge.display.name}}"></span>
       <div class="cc-left cc-badge-count" data-ng-hide="badge.display.name==='bDrive'" data-ng-bind="badge.count"></div>
     </button>
     <div class="cc-popover cc-popover-arrow cc-badgepopover cc-badgepopover-{{badge.display.name|lowercase}}" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
