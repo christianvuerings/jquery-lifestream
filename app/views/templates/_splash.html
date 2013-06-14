@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="templates/splash.html">
   <div class="row">
     <div class="large-6 columns">
-      <%= image_tag "calcentral_logo_big.png", :size => "372x40", :alt => "CalCentral logo", :class => "cc-page-splash-logo" %>
+      <%= image_tag "calcentral_logo_big.png", :size => "372x40", :alt => "", :class => "cc-page-splash-logo" %>
       <h1>Welcome to CalCentral.</h1>
       <div class="cc-page-splash-subtitle">Unify, Personalize, Discover</div>
       <button class="radius button cc-page-splash-signin" data-ng-click="api.user.signIn()">Sign in with your CalNet ID</button>
@@ -10,7 +10,7 @@
     <div class="large-6 columns">
       <div class="cc-page-splash-status">
         <h2>CalCentral Releases</h2>
-        <a href="https://ets.berkeley.edu/news/ets-launches-calcentral-platform-release">Tell me more</a>
+        <a href="https://ets.berkeley.edu/calcentral">Tell me more<span class="cc-visuallyhidden"> about the CalCentral releases</span></a>
       </div>
     </div>
   </div>
@@ -47,37 +47,37 @@
     <div class="row">
       <div class="large-7 columns">
         <h2>Assignments and Tasks</h2>
-        <p>CalCentral displays todo items that have been assigned to you in the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas</a> learning management system (which will eventually replace bSpace). <strong>Assignments and Tasks</strong> also lets you add personal todo-list items, and syncs them back to your bCal tasks list.</p>
+        <p>CalCentral displays to-do items that have been assigned to you in the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas</a> learning management system (which will eventually replace bSpace). <strong>Assignments and Tasks</strong> also lets you add personal to-do list items, and syncs them back to your bCal tasks list.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_assignments_tasks_215x100.png", :size => "215x100" %>
+        <%= image_tag "splash_assignments_tasks_215x100.png", :size => "215x100", :alt => "" %>
       </div>
     </div>
     <div class="row">
       <div class="large-7 columns">
         <h2>Recent Activity</h2>
-        <p><strong>Recent Activity</strong> displays relevant updates from campus systems.  Displayed activities currently come from <a href="http://bspace.berkeley.edu">bSpace</a>, Canvas and BearFacts.</p>
+        <p>Displays relevant updates from campus systems. Displayed activities currently come from <a href="http://bspace.berkeley.edu">bSpace</a>, Canvas and BearFacts.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_notifications_215x100.png", :size => "215x100" %>
+        <%= image_tag "splash_notifications_215x100.png", :size => "215x100", :alt => "" %>
       </div>
     </div>
     <div class="row">
       <div class="large-7 columns">
         <h2>My Classes</h2>
-        <p><strong>My Classes</strong> gives you easy access to your current bSpace and Canvas course sites.</p>
+        <p>Gives you easy access to your current bSpace and Canvas course sites.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_my_classes_215x100.png", :size => "215x100" %>
+        <%= image_tag "splash_my_classes_215x100.png", :size => "215x100", :alt => "" %>
       </div>
     </div>
     <div class="row">
       <div class="large-7 columns">
         <h2>My Groups</h2>
-        <p><strong>My Groups</strong> gives you access to your online group collaborations.  Currently, CalCentral supports bSpace project sites and groups participating in Canvas.</p>
+        <p>Gives you access to your online group collaborations. Currently, CalCentral supports bSpace project sites and groups participating in Canvas.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_my_groups_215x100.png", :size => "215x100" %>
+        <%= image_tag "splash_my_groups_215x100.png", :size => "215x100", :alt => "" %>
       </div>
     </div>
   </div>
