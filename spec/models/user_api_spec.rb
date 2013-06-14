@@ -37,18 +37,7 @@ describe "UserApi" do
   it "should return a user data structure" do
     user_data = UserApi.new(@random_id).get_feed
     user_data[:preferred_name].should == @default_name
-    user_data[:has_canvas_access_token].should_not be_nil
-  end
-  it "should return whether Canvas access is granted" do
-    CanvasProxy.stub(:access_granted?).and_return(true, false)
-    user_data = UserApi.new(@random_id).get_feed
-    user_data[:has_canvas_access_token].should be_true
-    # Our cache invalidation code won't be designed to handle service
-    # stub changes, and so we clear the cache explicitly before
-    # re-requesting the user status feed.
-    Rails.cache.clear
-    user_data = UserApi.new(@random_id).get_feed
-    user_data[:has_canvas_access_token].should be_false
+    user_data[:has_canvas_account].should_not be_nil
   end
   it "should return whether the user is registered with Canvas" do
     CanvasProxy.stub(:has_account?).and_return(true, false)

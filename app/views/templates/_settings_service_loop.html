@@ -2,8 +2,6 @@
   <!-- Dont show the icon column on small screens -->
   <div class="large-1 columns hide-for-small">
     <%= image_tag "icon_bconnected_32x32.png", :size => "32x32", :alt => "", :data => { :ng_show => "service=='google'" } %>
-
-    <%= image_tag "icon_canvas_32x32.png", :size => "32x32", :alt => "", :data => { :ng_show => "service=='canvas'" } %>
   </div>
 
   <div class="large-9 small-8 columns cc-settings-service-description-block">
@@ -13,13 +11,6 @@
         Connect your Google Apps for Education account in order to access your drive, mail and calendar.<br />Be sure you have logged out of any personal Google accounts before you perform this operation.
       </span>
       <span class="cc-settings-service-description" data-ng-show="api.user.profile.google_email && api.user.profile.has_google_access_token" data-ng-bind-template="Connected as: {{api.user.profile.google_email}}"></span>
-    </div>
-    <div data-ng-show="service=='canvas'">
-      <strong>Canvas</strong><br />
-      <span class="cc-settings-service-description" data-ng-show="!api.user.profile.canvas_email || !api.user.profile.has_canvas_access_token">
-        Connect your Canvas account to be able to see Canvas-hosted class sites, assignments and activity.<br /><a href="https://ets.berkeley.edu/article/what-canvas">Learn more about Canvas</a>.
-      </span>
-      <span class="cc-settings-service-description" data-ng-show="api.user.profile.canvas_email && api.user.profile.has_canvas_access_token" data-ng-bind-template="Connected as: {{api.user.profile.canvas_email}}"></span>
     </div>
   </div>
 
@@ -38,19 +29,6 @@
         class="radius button medium success" data-ng-click="api.user.enableOAuth('google')">
         Connect <span class="cc-visuallyhidden">Google Access</span>
       </button>
-
-      <div data-ng-show="api.user.profile.has_canvas_account">
-        <button data-ng-show="service=='canvas'"
-          class="radius button medium success" data-ng-click="api.user.enableOAuth('canvas')">
-          Connect <span class="cc-visuallyhidden">Canvas Access</span>
-        </button>
-      </div>
-      <div data-ng-show="!api.user.profile.has_canvas_account">
-        <button data-ng-show="service=='canvas'"
-          class="radius button medium secondary">
-          Unavailable <span class="cc-visuallyhidden">Canvas Access</span>
-        </button>
-      </div>
     </div>
   </div>
 </script>

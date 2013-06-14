@@ -1,11 +1,6 @@
 class CanvasAccountSectionsReportProxy < CanvasProxy
   require 'csv'
 
-  def initialize(options = {})
-    options[:admin] = true
-    super(options)
-  end
-
   def get_csv(term_id)
     # The "provisioning_csv" report includes all sections, whether they have an SIS ID or not,
     # and so rows for the Canvas-only sections need to be skipped.

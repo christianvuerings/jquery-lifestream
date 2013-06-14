@@ -2,7 +2,6 @@
   "is_logged_in": true,
   "uid": "2040",
   "preferred_name": "Mr. Oliver Heyer",
-  "has_canvas_access_token": true,
   "has_google_access_token": false,
   "reg_status": {
     "code": null,
