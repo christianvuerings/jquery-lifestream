@@ -16,8 +16,8 @@ class CanvasSisImportProxy < CanvasProxy
   end
 
   def post_enrollments(term_id, csv_file_path)
-    upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/comma-separated-values') }
-    url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}"
+    upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv') }
+    url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}"
     response = request_uncached(url, '_sis_import_enrollments', {
         method: :post,
         connection: @multipart_conn,
@@ -26,8 +26,8 @@ class CanvasSisImportProxy < CanvasProxy
   end
 
   def post_users(csv_file_path)
-    upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/comma-separated-values') }
-    url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv"
+    upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv') }
+    url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv"
     response = request_uncached(url, '_sis_import_users', {
         method: :post,
         connection: @multipart_conn,
