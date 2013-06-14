@@ -29,9 +29,9 @@ describe "MyBadges" do
     mangled_feed = badges.get_feed
     mangled_feed[:badges].empty?.should_not be_true
     mangled_feed[:badges]["bdrive"][:count].should == 10
-    mangled_feed[:badges]["bdrive"][:items].size.should == 5
+    mangled_feed[:badges]["bdrive"][:items].size.should == 10
     mangled_feed[:badges]["bcal"][:count].should == 6
-    mangled_feed[:badges]["bcal"][:items].size.should == 5
+    mangled_feed[:badges]["bcal"][:items].size.should == 6
     mangled_feed[:badges]["bcal"][:items].select { |entry|
       entry[:all_day_event]
     }.size.should == 1

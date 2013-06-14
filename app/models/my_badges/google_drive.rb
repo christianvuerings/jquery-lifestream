@@ -9,7 +9,7 @@ module MyBadges
       # Puts a max page-request limit on the drive listing to prevent an excessive number of pages from coming back.
       @page_limiter = 4
       # Limiter on the maximum number of changed drive files to be concerned about.
-      @count_limiter = 5
+      @count_limiter = 25
     end
 
     def fetch_counts

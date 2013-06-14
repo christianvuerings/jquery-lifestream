@@ -6,7 +6,7 @@ module MyBadges
 
     def initialize(uid)
       @uid = uid
-      @count_limiter = 5
+      @count_limiter = 25
     end
 
     def fetch_counts(params = {})

@@ -72,6 +72,9 @@ body {
       .icon_11_document_list {
         background-image: asset-data-url('drive_icons/icon_11_document_list.png');
       }
+      .icon_11_image_list {
+        background-image: asset-data-url('drive_icons/icon_11_image_list.png');
+      }
       .icon_11_form_list {
         background-image: asset-data-url('drive_icons/icon_11_form_list.png');
       }
@@ -80,6 +83,9 @@ body {
       }
       .icon_11_script_list {
         background-image: asset-data-url('drive_icons/icon_11_script_list.png');
+      }
+      .icon_11_shared_collection_list {
+        background-image: asset-data-url('drive_icons/icon_11_shared_collection_list.png');
       }
 
       .bdrive-icon {
@@ -120,6 +126,12 @@ body {
   }
 
   .cc-badgepopover {
+
+    .cc-popover-items {
+      max-height: 300px;
+      overflow: auto;
+      width: 100%;
+    }
 
     .cc-badgepopover-noitems {
       background: $cc-color-white;
