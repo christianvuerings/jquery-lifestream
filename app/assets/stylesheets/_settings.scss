@@ -14,6 +14,15 @@
     color: $cc-color-medium-grey;
     font-size: 18px;
   }
+  .cc-settings-apitest-list {
+    margin-left: 20px;
+    .cc-settings-apitest-failed {
+      color: $cc-color-red;
+    }
+    .cc-settings-apitest-success {
+      color: $cc-color-green-plus;
+    }
+  }
   .cc-settings-dashboard-link {
     display: block;
     font-weight: bold;

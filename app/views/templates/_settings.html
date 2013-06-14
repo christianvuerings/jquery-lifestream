@@ -49,6 +49,19 @@
       <form data-ng-show="api.user.profile.is_acting_as" data-ng-submit="admin.stopActAs()">
         <button class="radius button medium" id="cc-settings-act-as-stop-submit" type="submit">Stop acting as</button>
       </form>
+
+      <div data-ng-controller="ApiTestController" data-ng-show="apiTest.enabled">
+        <h3>Api Test</h3>
+        <form class="api-test-form" data-ng-submit="runApiTest()">
+          <button class="radius button medium" id="cc-settings-run-api-test-submit" data-ng-disabled="apiTest.running" type="submit">Run test</button>
+          <div class="cc-settings-section">
+            <ul class="cc-settings-apitest-list">
+              <li data-ng-class="{'cc-settings-apitest-failed': (route.status == 'failed'), 'cc-settings-apitest-success': (route.status == 'success')}"
+                  data-ng-repeat="route in apiTest.data" data-ng-bind-template="{{route.route}}: {{route.status}}"></li>
+            </ul>
+          </div>
+        </form>
+      </div>
     </div>
 
   </div>
