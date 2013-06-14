@@ -61,6 +61,9 @@ class CanvasRefreshFromCampus
     end
   end
 
+  # Uploading a single zipped archive containing both users and enrollments would be safer and more efficient.
+  # However, a batch update can only be done for one term. If we decide to limit Canvas refreshes
+  # to a single term, then we should change this code.
   def import_csv_files(users_csv_filename, term_enrollment_csv_files)
     import_proxy = CanvasSisImportProxy.new
     response = import_proxy.post_users(users_csv_filename)
