@@ -3,22 +3,20 @@
     <h2>My Groups</h2>
   </div>
   <div class="cc-widget-mygroups-container" data-cc-spinner-directive>
-    <div class="cc-widget-mygroups-myclasses-list">
-      <ul class="cc-widget-list">
-        <li data-ng-repeat="group in groups">
-          <a data-ng-href="{{group.site_url}}"
-            data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)">
-            <div class="cc-widget-list-column-left">
-              <div
-                class="cc-icon"
-                data-ng-class="'cc-icon-{{group.emitter|lowercase}}'">
-              </div>
+    <ul class="cc-widget-list">
+      <li data-ng-repeat="group in groups">
+        <a data-ng-href="{{group.site_url}}"
+          data-ng-click="api.analytics.trackExternalLink('My Groups', group.emitter, group.site_url)">
+          <div class="cc-widget-list-column-left">
+            <div
+              class="cc-icon"
+              data-ng-class="'cc-icon-{{group.emitter|lowercase}}'">
             </div>
-            <strong class="cc-ellipsis" data-ng-bind="group.title"></strong>
-          </a>
-        </li>
-      </ul>
-    </div>
+          </div>
+          <strong class="cc-ellipsis" data-ng-bind="group.title"></strong>
+        </a>
+      </li>
+    </ul>
     <div data-ng-show="!groups.length" class="cc-widget-text">
       There are currently no groups available.
     </div>

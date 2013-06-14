@@ -2,30 +2,37 @@
   <div class="cc-widget-title">
     <h2>My Classes <span class="cc-widget-title-sub cc-right"><%= Settings.sakai_proxy.current_terms.first %></span></h2>
   </div>
-  <div class="cc-widget-myclasses-container" data-cc-spinner-directive>
-    <div class="cc-widget-mygroups-myclasses-list">
-      <ul class="cc-widget-list">
-        <li data-ng-repeat="class in classes">
-          <a data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
-            data-ng-href="{{class.site_url}}">
-            <div class="cc-widget-list-column-left">
+  <div data-cc-spinner-directive>
+    <ul class="cc-widget-list">
+      <li data-ng-repeat="(id, class) in allClasses"
+      data-ng-class="{'cc-widget-list-selected': class._show}">
+        <div class="cc-widget-list-hover"
+        data-cc-accessible-focus-directive
+        data-ng-click="api.widget.toggleShow(allClasses, class, 'My Classes')">
+          <strong class="cc-ellipsis" data-ng-bind="class.course_code"></strong>
+          <div class="cc-ellipsis cc-widget-list-light" data-ng-show="!!class.name" data-ng-bind="class.name"></div>
+          <div data-ng-show="class._show">
+          <ul class="cc-widget-sublist">
+            <li data-ng-repeat="subclass in class.subclasses">
               <div
                 class="cc-icon"
                 data-ng-class="{
                   'bSpace':'cc-icon-bspace',
-                  'Campus':'icon-book',
                   'Canvas':'cc-icon-canvas'
                 }
-                [class.emitter]">
+                [subclass.emitter]">
               </div>
-            </div>
-            <strong class="cc-ellipsis" data-ng-bind="class.course_code"></strong>
-            <div class="cc-ellipsis cc-widget-list-light" data-ng-show="!!class.name" data-ng-bind="class.name"></div>
+              <strong><a class="cc-ellipsis" data-ng-bind="subclass.name" data-ng-href="{{subclass.site_url}}"></a></strong>
+            </li>
+          </ul>
+          <a class="cc-widget-sublist-extra" data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
+            data-ng-href="{{class.site_url}}">
+            <strong>Class details</strong>
           </a>
-        </li>
-      </ul>
-    </div>
-    <div data-ng-show="!classes.length" class="cc-widget-text">
+        </div>
+      </li>
+    </ul>
+    <div data-ng-show="!allClassesLength" class="cc-widget-text">
       There are currently no classes available.
     </div>
   </div>
