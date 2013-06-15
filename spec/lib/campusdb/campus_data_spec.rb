@@ -95,7 +95,7 @@ describe CampusData do
   it "should find where a person is enrolled" do
     sections = CampusData.get_enrolled_sections('300939', 2013, 'C')
     sections.should_not be_nil
-    sections.length.should == 2 if CampusData.test_data?
+    sections.length.should == 3 if CampusData.test_data?
   end
 
   it "should find where a person is teaching" do
