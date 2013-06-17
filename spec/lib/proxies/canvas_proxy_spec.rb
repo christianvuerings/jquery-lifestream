@@ -114,4 +114,21 @@ describe CanvasProxy do
     response.should_not be_nil
   end
 
+  it "should get Sections for any known Course" do
+    puts Rails.env
+    puts Rails.logger
+    client = CanvasUserCoursesProxy.new(user_id: @user_id)
+    response = client.courses
+    courses = JSON.parse(response.body)
+    courses.each do |course|
+      sections_proxy = CanvasCourseSectionsProxy.new(course_id: course['id'])
+      sections_response = sections_proxy.sections_list
+      sections = JSON.parse(sections_response.body)
+      sections.should_not be_nil
+      sections.each do |section|
+        section['id'].blank?.should be_false
+      end
+    end
+  end
+
 end

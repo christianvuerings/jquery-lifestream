@@ -38,6 +38,19 @@
       ]
     },
     {
+      "name": "Project Group 4",
+      "course_code": "",
+      "id": "1093164",
+      "emitter": "Canvas",
+      "color_class": "canvas-class",
+      "site_url": "https://notquitecanvas/groups/101261",
+      "courses": [
+        {
+          "id": "BIOLOGY:1A:2013-C"
+        }
+      ]
+    },
+    {
       "id": "095d5b02-afde-4186-a668-0b84734b1d5c",
       "site_url": "https://notquitebspace.example.edu/portal/site/095d5b02-afde-4186-a668-0b84734b1d5c",
       "emitter": "bSpace",

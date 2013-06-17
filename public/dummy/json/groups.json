@@ -3,8 +3,9 @@
     {
       "id": "49957",
       "title": "Canvas/ETS Collaboration",
-      "site_url": "https://stanford.instructure.com/groups/49957",
+      "site_url": "https://some.instructure.com/groups/49957",
       "emitter": "Canvas",
+      "site_type": "group",
       "color_class": "bspace-group"
     },
     {
@@ -13,7 +14,7 @@
       "id": "7ea7d89c-b87c-4221-a2ea-16aee252b967",
       "site_url": "https://sakai-dev.berkeley.edu/portal/site/7ea7d89c-b87c-4221-a2ea-16aee252b967",
       "emitter": "bSpace",
-      "color_class": "canvas-group"
+      "color_class": "bspace-group"
     },
     {
       "title": "UIE Seminars & UCD Group Resources",
@@ -24,11 +25,13 @@
       "color_class": "bspace-group"
     },
     {
-      "title": "A bSpace sandbox",
-      "short_description": "A bSpace sandbox: Now with 25% more sand!",
-      "id": "b3833e7d-fab2-42ae-80d8-2fad0e1dd147",
-      "site_url": "https://sakai-dev.berkeley.edu/portal/site/b3833e7d-fab2-42ae-80d8-2fad0e1dd147",
-      "emitter": "bSpace",
+      "title": "A course where I teach",
+      "short_description": "A Canvas course site: Now a group!",
+      "id": "4398539",
+      "site_url": "https://some.instructure.com/courses/4398539",
+      "emitter": "Canvas",
+      "site_type": "course",
+      "role": "teacher",
       "color_class": "canvas-group"
     }
   ]
