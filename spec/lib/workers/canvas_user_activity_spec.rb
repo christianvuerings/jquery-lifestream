@@ -3,10 +3,10 @@ require "spec_helper"
 describe "CanvasUserActivityHandler" do
 
   before do
-    @random_id = Time.now.to_f.to_s.gsub(".", "")
-    fake_feed = CanvasUserActivityProxy.new({:fake => true}).user_activity
+    @user_id = Settings.canvas_proxy.test_user_id
+    fake_feed = CanvasUserActivityProxy.new({fake: true}).user_activity
     @fake_feed = JSON.parse(fake_feed.body)
-    @fake_canvas_proxy = CanvasCoursesProxy.new({fake: true})
+    @fake_canvas_proxy = CanvasUserCoursesProxy.new({fake: true})
   end
 
   after do
@@ -15,15 +15,14 @@ describe "CanvasUserActivityHandler" do
   end
 
   it "should be able to process a normal canvas feed" do
-    options = {:fake => true, :user_id => @random_id}
-    handler = CanvasUserActivityHandler.new(options)
+    handler = CanvasUserActivityHandler.new({user_id: Settings.canvas_proxy.test_user_id, fake: true})
     activities = handler.get_feed_results
     activities.instance_of?(Array).should == true
     # Activities contains 20 items but 2 need to be filtered out
     activities.size.should == 18
     activities.each do | activity |
       activity[:id].blank?.should_not == true
-      activity[:user_id].should == @random_id
+      activity[:user_id].should == @user_id
       activity[:date][:epoch].is_a?(Integer).should == true
       activity[:color_class].should == "canvas-class"
       activity[:source].blank?.should_not be_true
@@ -35,8 +34,8 @@ describe "CanvasUserActivityHandler" do
   # Cache stores are only enabled on testext
   it "should be able to work with warmed MyClassses entries", :testext => true do
     CanvasProxy.stub(:access_granted?).and_return(true)
-    CanvasCoursesProxy.stub(:new).and_return(@fake_canvas_proxy)
-    options = {:fake => true, :user_id => @random_id}
+    CanvasUserCoursesProxy.stub(:new).and_return(@fake_canvas_proxy)
+    options = {:fake => true, :user_id => @user_id}
     handler = CanvasUserActivityHandler.new(options)
     activities = handler.get_feed_results
     activities.instance_of?(Array).should == true
@@ -46,10 +45,10 @@ describe "CanvasUserActivityHandler" do
   end
 
   it "should be able to ignore malformed entries from the canvas feed" do
-    bad_date_entry = { "id" => @random_id, "user_id" => @random_id, "created_at" => "stone-age"}
+    bad_date_entry = { "id" => @user_id, "user_id" => @user_id, "created_at" => "stone-age"}
     @fake_feed << bad_date_entry
     CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return(@fake_feed)
-    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
+    handler = CanvasUserActivityHandler.new({:user_id => @user_id})
     activities = handler.get_feed_results
     activities.instance_of?(Array).should == true
     activities.size.should == 18
@@ -59,7 +58,7 @@ describe "CanvasUserActivityHandler" do
   it "should sometimes have score and instructor message appended to the summary field" do
     # Search for a particular entry in the cassette and make sure it's appended to properly
     CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return(@fake_feed)
-    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
+    handler = CanvasUserActivityHandler.new({:user_id => @user_id})
     activities = handler.get_feed_results
     activity = activities.select {|entry| entry[:id] == "canvas_40544495"}.first
     activity[:summary].should eq("Please write more neatly next time. 87 out of 100 - Good work!")
@@ -68,7 +67,7 @@ describe "CanvasUserActivityHandler" do
   it "should strip system generated 'click here' URLs from the summary field" do
     # But should not over-strip by removing instructor-added 'click here' URLs
     CanvasUserActivityWorker.any_instance.stub(:fetch_user_activity).and_return(@fake_feed)
-    handler = CanvasUserActivityHandler.new({:user_id => @random_id})
+    handler = CanvasUserActivityHandler.new({:user_id => @user_id})
     activities = handler.get_feed_results
 
     activity = activities.select {|entry| entry[:id] == "canvas_43225861"}.first

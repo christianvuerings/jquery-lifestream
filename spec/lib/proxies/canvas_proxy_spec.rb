@@ -4,13 +4,11 @@ describe CanvasProxy do
 
   before do
     @user_id = Settings.canvas_proxy.test_user_id
-    Oauth2Data.new_or_update(@user_id, CanvasProxy::APP_ID,
-                             Settings.canvas_proxy.test_user_access_token)
     @client = CanvasProxy.new(:user_id => @user_id)
   end
 
   it "should see an account list as admin" do
-    admin_client = CanvasProxy.new(admin: true)
+    admin_client = CanvasProxy.new
     response = admin_client.request('accounts', '_admin')
     accounts = JSON.parse(response.body)
     accounts.size.should > 0
@@ -30,7 +28,7 @@ describe CanvasProxy do
   end
 
   it "should get courses as known student", :testext => true do
-    client = CanvasCoursesProxy.new(:user_id => @user_id)
+    client = CanvasUserCoursesProxy.new(:user_id => @user_id)
     response = client.courses
     courses = JSON.parse(response.body)
     courses.size.should > 0
@@ -65,7 +63,6 @@ describe CanvasProxy do
   end
 
   it "should get user activity feed using the Tammi account" do
-    # by the time the fake access token is used below, it probably has well expired
     begin
       proxy = CanvasUserActivityProxy.new(:fake => true)
       response = proxy.user_activity
@@ -89,7 +86,7 @@ describe CanvasProxy do
   end
 
   it "should return nil if server is not available" do
-    client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
+    client = CanvasUserCoursesProxy.new(user_id: @user_id, fake: false)
     stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
     suppress_rails_logging {
       response = client.courses
@@ -99,7 +96,7 @@ describe CanvasProxy do
   end
 
   it "should return nil if server returns error status" do
-    client = CanvasCoursesProxy.new(user_id: @user_id, fake: false)
+    client = CanvasUserCoursesProxy.new(user_id: @user_id, fake: false)
     stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_return(
         status: 503,
         body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
@@ -115,14 +112,6 @@ describe CanvasProxy do
     client = CanvasUserProfileProxy.new(:user_id => @user_id)
     response = client.user_profile
     response.should_not be_nil
-  end
-
-  it "should not find an unregistered user's profile" do
-    client = CanvasUserProfileProxy.new(:user_id => 'MaynardGKrebs')
-    suppress_rails_logging {
-      response = client.user_profile
-      response.should be_nil
-    }
   end
 
 end

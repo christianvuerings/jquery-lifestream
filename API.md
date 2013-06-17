@@ -16,7 +16,6 @@ Projected endpoints:
   },
   first_login_at: <datetime or nil when you have not logged in yet>
   first_name: <string if exists else "">
-  has_canvas_access_token: <boolean>
   has_canvas_account: <boolean>
   has_google_access_token: <boolean>
   is_logged_in: <boolean>

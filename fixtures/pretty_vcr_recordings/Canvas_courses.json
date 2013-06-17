@@ -4,7 +4,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/courses",
+        "uri": "https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_user_id%3A300846",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

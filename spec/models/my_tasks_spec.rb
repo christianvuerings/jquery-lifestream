@@ -17,7 +17,7 @@ describe "MyTasks" do
                                                                             :refresh_token => Settings.google_proxy.test_user_refresh_token,
                                                                             :expiration_time => 0)
     @fake_canvas_proxy = CanvasProxy.new({fake: true})
-    @fake_canvas_upcoming_events_proxy = CanvasUpcomingEventsProxy.new({fake: true, user_id: Settings.canvas_proxy.test_user_id})
+    @fake_canvas_upcoming_events_proxy = CanvasUpcomingEventsProxy.new({fake: true})
     @fake_canvas_todo_proxy = CanvasTodoProxy.new({fake: true})
 
   end

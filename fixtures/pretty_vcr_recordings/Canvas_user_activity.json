@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/users/self/activity_stream",
+        "uri": "https://ucberkeley.instructure.com/api/v1/users/self/activity_stream?as_user_id=sis_user_id%3A300846",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -38,7 +38,7 @@
             "\"8d7f04434ff1dfa2989da91ce21e735c\""
           ],
           "link": [
-            "<https://ucberkeley.instructure.com/api/v1/users/self/activity_stream?page=1&per_page=21>; rel=\"first\""
+            "<https://ucberkeley.instructure.com/api/v1/users/self/activity_stream?as_user_id=sis_user_id%3A300846?page=1&per_page=21>; rel=\"first\""
           ],
           "p3p": [
             "CP=\"None, see http://www.instructure.com/privacy-policy\""

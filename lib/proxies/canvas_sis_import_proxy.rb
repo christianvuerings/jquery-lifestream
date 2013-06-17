@@ -2,7 +2,6 @@ class CanvasSisImportProxy < CanvasProxy
   require 'csv'
 
   def initialize(options = {})
-    options[:admin] = true
     super(options)
     @multipart_conn = multipart_conn
   end

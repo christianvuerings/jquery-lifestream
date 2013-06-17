@@ -4,7 +4,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/users/self/groups",
+        "uri": "https://ucberkeley.instructure.com/api/v1/users/self/groups?as_user_id=sis_user_id%3A300846",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -43,7 +43,7 @@
             "\"96e0c8c92b8d1f4f708d64e5503efb57\""
           ],
           "link": [
-            "<https://ucberkeley.instructure.com/api/v1/users/self/groups?page=1&per_page=10>; rel=\"first\""
+            "<https://ucberkeley.instructure.com/api/v1/users/self/groups?as_user_id=sis_user_id%3A300846?page=1&per_page=10>; rel=\"first\""
           ],
           "p3p": [
             "CP=\"None, see http://www.instructure.com/privacy-policy\""

@@ -3,7 +3,7 @@ require "spec_helper"
 describe "MyClasses" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_canvas_proxy = CanvasCoursesProxy.new({fake: true})
+    @fake_canvas_proxy = CanvasUserCoursesProxy.new({fake: true})
     @fake_canvas_courses = JSON.parse(@fake_canvas_proxy.courses.body)
     @fake_sakai_proxy = SakaiUserSitesProxy.new({fake: true})
   end
@@ -55,7 +55,7 @@ describe "MyClasses" do
     SakaiUserSitesProxy.stub(:new).and_return(@fake_sakai_proxy)
     CampusUserCoursesProxy.stub(:access_granted?).and_return(false)
     response = OpenStruct.new({body: 'derp derp', status: 200})
-    CanvasCoursesProxy.any_instance.stub(:courses).and_return(response)
+    CanvasUserCoursesProxy.any_instance.stub(:courses).and_return(response)
     my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should be > 0 if SakaiData.test_data?
     my_classes[:classes].each do |my_class|

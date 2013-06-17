@@ -8,7 +8,7 @@
 
     apiService.util.setTitle('Settings');
 
-    var services = ['canvas', 'google'];
+    var services = ['google'];
 
     var refreshServices = function(profile) {
       $scope.connected_services = services.filter(function(element) {

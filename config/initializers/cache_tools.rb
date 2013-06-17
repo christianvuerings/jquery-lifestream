@@ -29,7 +29,7 @@ module Calcentral
         CampusUserCoursesProxy => :expire,
 
         CanvasProxy => :expire,
-        CanvasCoursesProxy => :expire,
+        CanvasUserCoursesProxy => :expire,
         CanvasGroupsProxy => :expire,
         CanvasTodoProxy => :expire,
         CanvasUpcomingEventsProxy => :expire,
