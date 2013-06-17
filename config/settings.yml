@@ -125,6 +125,7 @@ cache:
     GoogleEventsProxy: <%= 1.hour %>
     GoogleTasksListProxy: <%= 1.hour %>
     GoogleTasksProxy: <%= 1.hour %>
+    MyRefreshController: <%= 2.minutes %>
     MyRegBlocks: <%= 24.hours %>
     SakaiProxy: <%= 24.hours %>
     SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
@@ -152,7 +153,7 @@ developer_auth:
 
 hot_plate:
   startup_delay: <%= 15.seconds %>
-  warmup_interval: <%= 20.minutes %>
+  warmup_interval: <%= 12.hours %>
   last_visit_cutoff: <%= 10.days %>
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.

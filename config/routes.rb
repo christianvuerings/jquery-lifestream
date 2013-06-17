@@ -23,6 +23,7 @@ Calcentral::Application.routes.draw do
   match '/api/my/academics' => 'my_academics#get_feed', :as => :my_academics, :defaults => { :format => 'json' }
   match '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   match '/api/my/campuslinks/expire' => 'my_campus_links#expire'
+  match '/api/my/refresh' => 'my_refresh#refresh'
 
   match '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
