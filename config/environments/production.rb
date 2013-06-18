@@ -72,7 +72,7 @@ Calcentral::Application.configure do
           :race_condition_ttl => Settings.cache.race_condition_ttl
       }
   )
-  config.cache_store.logger = Logger.new("#{Rails.root}/log/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
+  config.cache_store.logger = Logger.new("#{CalcentralLogging.log_root}/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
   config.cache_store.logger.level = Logger::DEBUG
 
 end

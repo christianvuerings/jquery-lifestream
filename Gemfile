@@ -1,8 +1,11 @@
 source "https://rubygems.org"
+source 'http://torquebox.org/rubygems'
 
 # The core framework
 # https://github.com/rails/rails
 gem "rails", "3.2.13"
+
+gem "activerecord-jdbc-adapter", "~> 1.2.9"
 
 # Postgresql adapter
 gem "activerecord-jdbcpostgresql-adapter", "~> 1.2.9"
@@ -42,7 +45,6 @@ gem "log4r", "~> 1.1.10"
 gem "active_attr", "~> 0.8.1"
 
 # for production deployment
-gem "trinidad", "~> 1.4.4"
 gem "jruby-activemq", "~> 5.5.1"
 
 # Addressable is a replacement for the URI implementation that is part of Ruby's standard library.
@@ -58,6 +60,8 @@ gem 'nokogiri', "~> 1.5.9"
 # for simplified relational data management. rails_admin requires devise.
 gem 'rails_admin', "~> 0.4.8"
 gem "devise", "~> 2.2.4"
+
+gem "torquebox-server", "~> 2.3.2"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -148,7 +152,6 @@ group :development do
 end
 
 group :test do
-  gem "activerecord-jdbc-adapter", "~> 1.2.9"
   gem "activerecord-jdbcsqlite3-adapter", "~> 1.2.9"
 end
 

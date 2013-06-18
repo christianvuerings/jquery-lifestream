@@ -5,7 +5,7 @@ module FakeableProxy
     c.cassette_library_dir = 'fixtures/vcr_cassettes'
     c.hook_into :webmock, :faraday
     c.allow_http_connections_when_no_cassette = true
-    c.debug_logger = File.open(Rails.root.join("log", "vcr-debug.log"), 'w')
+    c.debug_logger = File.open("#{CalcentralLogging.log_root}/vcr-debug.log", 'w')
     c.after_http_request do |request, response|
       # so we don't record sensitive auth headers
       if !response.blank?

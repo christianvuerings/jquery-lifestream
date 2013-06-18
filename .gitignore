@@ -37,3 +37,12 @@ app/assets/stylesheets/application.css
 
 # Ignore processed VCR files
 /fixtures/vcr_cassettes/*.json
+
+# Ignore git version stamp
+/versions/git.txt
+
+# Ignore torquebox build files
+*.knob
+
+# Ignore pesky Oracle jars
+/lib/ojdbc*.jar

@@ -100,12 +100,17 @@ You may already have an Oracle driver from MyBerkeley-OAE development, in which 
 rake db:schema:load
 ```
 
-11. Start the server
+11. Deploy into TorqueBox
 ```bash
-rails s
+bundle exec torquebox deploy .
 ```
 
-12. Access your development server at [localhost:3000](http://localhost:3000/).
+12. Start the server
+```bash
+bundle exec torquebox run -p=3000
+```
+
+13. Access your development server at [localhost:3000](http://localhost:3000/).
 Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 
 ## Front-end Testing
