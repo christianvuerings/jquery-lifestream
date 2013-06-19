@@ -15,7 +15,7 @@ git fetch $TARGET_REMOTE 2>&1 | $LOGIT
 git fetch -t $TARGET_REMOTE 2>&1 | $LOGIT
 git reset --hard HEAD 2>&1 | $LOGIT
 git checkout -qf $TARGET_BRANCH 2>&1 | $LOGIT
-echo "Last commit:" | $LOGIT
+echo "Last commit in source tree:" | $LOGIT
 git log -1 | $LOGIT
 echo | $LOGIT
 
@@ -26,8 +26,13 @@ echo "`date`: Stopping CalCentral..." | $LOGIT
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
-echo "`date`: Fetching new CalCentral knob..." | $LOGIT
+echo "`date`: Fetching new calcentral.knob..." | $LOGIT
 wget --no-check-certificate $WAR_URL
+
+echo "Unzipping knob..." | $LOGIT
+unzip -o calcentral.knob
+echo "Last commit in calcentral.knob:" | $LOGIT
+cat versions/git.txt | $LOGIT
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
