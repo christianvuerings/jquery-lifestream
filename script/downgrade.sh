@@ -3,9 +3,9 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LAST_VERSION=`cat versions/previous_release_db_schema.txt`
+LAST_VERSION=`cat deploy/versions/previous_release_db_schema.txt`
 
-LOG=`date +"log/start-stop_%Y-%m-%d.log"`
+LOG=`date +"$PWD/log/start-stop_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
 
 echo | $LOGIT
