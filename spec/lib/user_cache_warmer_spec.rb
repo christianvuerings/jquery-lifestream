@@ -15,8 +15,7 @@ describe UserCacheWarmer do
       model.should_receive(:get_feed)
     end
 
-    worker = UserCacheWarmer::WarmingWorker.new
-    worker.warm @user_id
+    UserCacheWarmer.do_warm @user_id
   end
 
 end

@@ -69,7 +69,6 @@ class SessionsController < ApplicationController
 
   def continue_login_success(uid)
     session[:user_id] = uid
-    Calcentral::USER_CACHE_WARMER.warm session[:user_id]
     redirect_to '/dashboard', :notice => "Signed in!"
   end
 
