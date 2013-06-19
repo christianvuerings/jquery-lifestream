@@ -1,19 +1,29 @@
 class HotPlate
 
-  unless Rails.env.test? || Rails.env.testext?
-    include Celluloid
-  end
   include ActiveRecordHelper
   attr_reader :total_warmups
 
   def initialize
     @total_warmups = 0
     @total_time = 0
+    @stopped = false
+  end
+
+  def start
+    if Settings.hot_plate.enabled
+      Thread.new { run }
+    else
+      Rails.logger.info "#{self.class.name} is disabled, not starting thread"
+    end
+  end
+
+  def stop
+    @stopped = true
   end
 
   def run
     sleep Settings.hot_plate.startup_delay
-    while true do
+    until @stopped do
       Rails.logger.debug "#{self.class.name} waking up to warm user caches"
       warm
       sleep Settings.hot_plate.warmup_interval

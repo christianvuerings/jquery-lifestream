@@ -12,12 +12,10 @@ module CalcentralLogging
     Rails.logger = Log4r::Logger.new(app_name)
     Rails.logger.level = DEBUG
     Rails.logger.outputters = init_file_loggers(app_name, format)
+  end
 
-    stdout = Outputter.stdout #controlled by Settings.logger.level
-    stdout.formatter = format
-    # level has to be set in the logger initializer, after Settings const is initialized.
-    # see initializers/logging.rb
-    Rails.logger.outputters << stdout
+  def log_root
+    ENV["CALCENTRAL_LOG_DIR"] || "#{Rails.root}/log"
   end
 
   private
@@ -29,11 +27,12 @@ module CalcentralLogging
       filename_suffix += "-#{level}"
 
       Log4r::DateFileOutputter.new('outputter', {
-        dirname: "#{Rails.root}/log",
+        dirname: CalcentralLogging.log_root,
         filename: "#{app_name}#{filename_suffix}.log",
         formatter: format,
         level: Object.const_get("#{level}")
       })
     end
   end
+
 end

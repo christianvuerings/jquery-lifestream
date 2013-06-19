@@ -1,5 +1,7 @@
 ENV["APP_NAME"] = "backstage"
 
+#require File.expand_path("../../../config/environment", __FILE__)
+
 class Backstage
 
   def self.start

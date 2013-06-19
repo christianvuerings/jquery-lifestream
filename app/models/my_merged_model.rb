@@ -1,4 +1,3 @@
-require 'lib/cacheable.rb'
 
 class MyMergedModel
   include ActiveAttr::Model

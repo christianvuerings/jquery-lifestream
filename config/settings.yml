@@ -145,6 +145,7 @@ ist_jms:
 #  password: PASSWORD
   freshen_recording: false
   fake: true
+  enabled: true
 
 # This will enable http basic auth for the app and should NEVER be enabled in production
 developer_auth:
@@ -155,6 +156,7 @@ hot_plate:
   startup_delay: <%= 15.seconds %>
   warmup_interval: <%= 12.hours %>
   last_visit_cutoff: <%= 10.days %>
+  enabled: true
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:

@@ -1,4 +1,3 @@
-module Calcentral
 
   class PopulateCampusH2 < ActiveRecord::Base
     Rails.application.config.after_initialize do
@@ -358,4 +357,3 @@ module Calcentral
       end
     end
   end
-end

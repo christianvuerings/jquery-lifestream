@@ -1,5 +1,4 @@
 # encoding: utf-8
-module Calcentral
 
   class PopulateSakaiH2 < ActiveRecord::Base
     Rails.application.config.after_initialize do
@@ -228,4 +227,3 @@ module Calcentral
       end
     end
   end
-end

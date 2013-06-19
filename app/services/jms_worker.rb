@@ -1,19 +1,27 @@
 class JmsWorker
-  include Celluloid
-  JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
 
-  finalizer :jms_worker_finalizer
+  JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
 
   def initialize
     @jms = nil
     @handler = JmsMessageHandler.new
+    @stopped = false
   end
 
-  def jms_worker_finalizer
-    Rails.logger.info "#{Thread.current} is closing"
+  def start
+    if Settings.ist_jms.enabled
+      Thread.new { run }
+    else
+      Rails.logger.info "#{self.class.name} is disabled, not starting thread"
+    end
+  end
+
+  def stop
+    @stopped = true
+    Rails.logger.info "#{self.class.name} #{Thread.current} is closing"
     if (@jms)
       @jms.close
-      Rails.logger.info "JmsWorker got #{@jms.count} messages"
+      Rails.logger.info "#{self.class.name} got #{@jms.count} messages"
     end
     @handler.terminate
   end
@@ -31,7 +39,7 @@ class JmsWorker
       begin
         @jms ||= JmsConnection.new
       rescue => e
-        Rails.logger.warn "Unable to start JMS listener: #{e.class} #{e.message}"
+        Rails.logger.warn "#{self.class.name} Unable to start JMS listener: #{e.class} #{e.message}"
         sleep(30.minutes)
       end
     end

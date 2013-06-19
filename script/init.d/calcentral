@@ -7,10 +7,8 @@
 # Customize the following variables
 RUN_AS_USER="app_calcentral"
 CC_BASE="$HOME/calcentral"
-START_SCRIPT="$CC_BASE/script/start-trinidad.sh"
-STOP_SCRIPT="$CC_BASE/script/stop-trinidad.sh"
-BG_START_SCRIPT="$CC_BASE/script/start-backstage.sh"
-BG_STOP_SCRIPT="$CC_BASE/script/stop-backstage.sh"
+START_SCRIPT="$CC_BASE/script/start-torquebox.sh"
+STOP_SCRIPT="$CC_BASE/script/stop-torquebox.sh"
 DOCROOT="/var/www/html/calcentral"
 OFFLINE_FILE="$DOCROOT/calcentral-in-maintenance"
 NIGHTLY_HTML="$DOCROOT/index_nightly.html"
@@ -63,14 +61,6 @@ emergency () {
 }
 
 start() {
-  if [ "X$NODEONE" != "X" ]; then
-    if [ ! -x "$BG_START_SCRIPT" ]; then
-      echo "$BG_START_SCRIPT doesn't exist or is not executable"
-      exit 1
-    fi
-    echo "Starting background processor..."
-    $BG_START_SCRIPT
-  fi
   if [ ! -x "$START_SCRIPT" ]; then
     echo "$START_SCRIPT doesn't exist or is not executable"
     exit 1
@@ -80,14 +70,6 @@ start() {
 }
 
 stop() {
-  if [ "X$NODEONE" != "X" ]; then
-    if [ ! -x "$BG_STOP_SCRIPT" ]; then
-      echo "$BG_STOP_SCRIPT doesn't exist or is not executable"
-      exit 1
-    fi
-    echo "Stopping background processor..."
-    $BG_STOP_SCRIPT
-  fi
   if [ ! -x "$STOP_SCRIPT" ]; then
     echo "$STOP_SCRIPT doesn't exist or is not executable"
     exit 1
@@ -98,7 +80,7 @@ stop() {
 
 status() {
   # The return value of this function may be used by other scripts
-  JPS_RESULTS=`jps -mlv | grep bin/trinidad | cut -d ' ' -f 1`
+  JPS_RESULTS=`jps -mlv | grep torquebox | cut -d ' ' -f 1`
   if [ -n "$JPS_RESULTS" ]; then
     echo "PID: $JPS_RESULTS"
   else
