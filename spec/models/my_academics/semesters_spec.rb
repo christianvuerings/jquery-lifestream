@@ -25,4 +25,19 @@ describe "MyAcademics::Semesters" do
     oski_semesters[0][:schedule][0][:instructors][0][:name].should == "Yu-Hung Lin"
   end
 
+  it "should handle badly formatted p/np fields for course data", :if => SakaiData.test_data? do
+    oski_campus_courses = CampusUserCoursesProxy.new({:user_id => "61889", :fake => true}).get_campus_courses
+    oski_campus_courses.first[:pnp_flag] = nil
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return(oski_campus_courses)
+
+    feed = {}
+    MyAcademics::Semesters.new("61889").merge(feed)
+    feed.empty?.should be_false
+    oski_semesters = feed[:semesters]
+    oski_semesters.length.should == 1
+    oski_semesters[0][:name].should == "Summer 2013"
+    oski_semesters[0][:schedule].length.should >= 1
+    oski_semesters[0][:schedule][0][:grade_option].should == ''
+  end
+
 end

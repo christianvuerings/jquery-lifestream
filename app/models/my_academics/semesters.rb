@@ -15,7 +15,12 @@ class MyAcademics::Semesters
 
       units = course[:unit]
       title = course[:name].titleize
-      grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
+      if course[:pnp_flag].present?
+        grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
+      else
+        Rails.logger.warn "#{self.class.name} - Course #{course[:ccn]} has a empty 'pnp_flag' field: #{course}"
+        grade_option = ''
+      end
       ccn = course[:ccn]
       format = course[:instruction_format]
       section = course[:section_num]
