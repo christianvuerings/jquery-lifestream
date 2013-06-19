@@ -22,10 +22,9 @@ namespace :calcentral_dev do
   task :update, :roles => :calcentral_dev_host do
     # Take everything offline first.
     script_folder = project_root + ("/script")
-    run "cd #{script_folder}; ./upgrade.sh"
-    # Run db migrate on the first app server
     servers = find_servers_for_task(current_task)
     servers.each do |server|
+      run "cd #{script_folder}; ./upgrade.sh", :hosts => server
       run "cd #{script_folder}; ./init.d/calcentral start", :hosts => server
     end
   end
