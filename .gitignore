@@ -46,3 +46,6 @@ app/assets/stylesheets/application.css
 
 # Ignore pesky Oracle jars
 /lib/ojdbc*.jar
+
+# Ignore deploy directory
+/deploy
