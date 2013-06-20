@@ -22,9 +22,19 @@ namespace :calcentral_dev do
   task :update, :roles => :calcentral_dev_host do
     # Take everything offline first.
     script_folder = project_root + ("/script")
+    run "cd #{script_folder}; ./init.d/calcentral stop"
+    # Run db migrate on the first app server
     servers = find_servers_for_task(current_task)
+    run "cd #{script_folder}; ./update-build.sh"
+    transaction do
+      servers.each_with_index do |server, index|
+        if (index == 0)
+          logger.debug "---- Server: #{server.host} running migrate in transaction on offline app servers"
+          run "cd #{script_folder}; ./migrate.sh", :hosts => server
+        end
+      end
+    end
     servers.each do |server|
-      run "cd #{script_folder}; ./upgrade.sh", :hosts => server
       run "cd #{script_folder}; ./init.d/calcentral start", :hosts => server
     end
   end
@@ -38,9 +48,10 @@ namespace :sandbox_dev_host do
     rake = fetch(:rake, 'bundle exec rake')
     rails_env = fetch(:rails_env, 'production')
     find_servers_for_task(current_task).each do |server|
+      run "cd #{server.options[:project_root].concat('/script')}; ./stop-trinidad.sh", :hosts => server
       run "cd #{server.options[:project_root].concat('/script')}; ./update-build.sh", :hosts => server
       run "cd #{server.options[:project_root].concat('/script')}; ./migrate.sh", :hosts => server
-      run "cd #{server.options[:project_root].concat('/script')}; ./start-torquebox.sh", :hosts => server
+      run "cd #{server.options[:project_root].concat('/script')}; ./start-trinidad.sh", :hosts => server
     end
   end
 end
