@@ -16,6 +16,10 @@ export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
 LOG_DIR=${CALCENTRAL_LOG_DIR:=`pwd`"/log"}
 export CALCENTRAL_LOG_DIR=$LOG_DIR
 
+# Enable rvm and use the correct Ruby version and gem set.
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+source .rvmrc
+
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: Database migration CalCentral on app node: `hostname -s`..." | $LOGIT

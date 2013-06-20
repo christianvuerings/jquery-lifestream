@@ -9,6 +9,10 @@ WAR_URL=${WAR_URL:="https://bamboo.media.berkeley.edu/bamboo/browse/MYB-MVPWAR/l
 LOG=`date +"$PWD/log/update-build_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
 
+# Enable rvm and use the correct Ruby version and gem set.
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+source .rvmrc
+
 echo "=========================================" | $LOGIT
 echo "`date`: Updating CalCentral source code from:" $TARGET_REMOTE ", branch:" $TARGET_BRANCH | $LOGIT
 git fetch $TARGET_REMOTE 2>&1 | $LOGIT
@@ -34,7 +38,7 @@ echo "`date`: Fetching new calcentral.knob..." | $LOGIT
 curl -k -s $WAR_URL > calcentral.knob
 
 echo "Unzipping knob..." | $LOGIT
-jar xvf calcentral.knob
+jar xf calcentral.knob
 echo "Last commit in calcentral.knob:" | $LOGIT
 cat versions/git.txt | $LOGIT
 
