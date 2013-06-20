@@ -40,7 +40,7 @@ sleep 30
 
 # removing the maint page causes the Rails app to restart, for reasons unknown.
 # So we'll wait a bit and then tickle the home page to warm up the app.
-sleep 30
+sleep 45
 
 # now check if the app is alive (which will also warm up caches)
 ./script/check-alive.sh || exit 1
