@@ -82,7 +82,7 @@ group :assets do
 
   # Ruby wrapper for UglifyJS JavaScript compressor
   # https://github.com/lautis/uglifier
-  gem "uglifier", "~> 2.1.1"
+  gem "uglifier", "~> 1.3.0"
 
   # Font awesome - an icon font
   # https://github.com/littlebtc/font-awesome-sass-rails
