@@ -31,7 +31,7 @@ cd deploy
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: Fetching new calcentral.knob..." | $LOGIT
-curl -k $WAR_URL > calcentral.knob
+curl -k -s $WAR_URL > calcentral.knob
 
 echo "Unzipping knob..." | $LOGIT
 jar xvf calcentral.knob
