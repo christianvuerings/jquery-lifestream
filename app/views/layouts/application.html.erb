@@ -13,6 +13,12 @@
     <%= favicon_link_tag 'favicon.ico' %>
     <%= favicon_link_tag 'favicon.png', :rel => 'icon', :type => 'image/png' %>
 
+    <!--
+      TODO - remove when AngularJS 1.1.6 or 1.2.0 gets released
+      https://github.com/angular/angular.js/pull/2969
+    -->
+    <base href="/">
+
     <!-- Included CSS Files -->
     <%= stylesheet_link_tag "application" %>
 
