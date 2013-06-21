@@ -14,6 +14,6 @@
 //= require_tree ./lib
 //= require raven
 //= require pikaday
-//= require 1.1.4/angular-1.1.4
-//= require 1.1.4/angular-sanitize-1.1.4
+//= require angular
+//= require angular-sanitize
 //= require_tree .
