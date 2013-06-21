@@ -10,7 +10,7 @@
      */
     var changeControllerName = function(name) {
       $rootScope._controller_name = name;
-    }
+    };
 
     /**
      * Redirect to a page
@@ -24,7 +24,10 @@
      */
     var preventBubble = function($event) {
       $event.stopPropagation();
-      $event.preventDefault();
+      // When it's not an anchor tag, we also prevent the default event
+      if ($event.target.nodeName !== 'A') {
+        $event.preventDefault();
+      }
     };
 
     /**

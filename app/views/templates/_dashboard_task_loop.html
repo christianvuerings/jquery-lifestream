@@ -54,7 +54,7 @@
       <div class="cc-clearfix">
         <a class="cc-button"
         data-ng-show="task.emitter=='Canvas'"
-        data-ng-click="api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"
+        data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"
         data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a>
 
         <button class="cc-button cc-button-blue"
