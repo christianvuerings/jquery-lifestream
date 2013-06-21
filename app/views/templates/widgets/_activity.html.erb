@@ -32,7 +32,7 @@
             <div class="cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity._show && !activity.elements">
               <p data-ng-bind-html="activity.summary" data-cc-truncate-directive="filter:'linky', length:180" class="cc-widget-activities-summary">
               </p>
-              <a class="cc-button" data-ng-click="api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)" data-ng-href="{{activity.source_url}}">View in {{activity.emitter}}</a>
+              <a class="cc-button" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)" data-ng-href="{{activity.source_url}}">View in {{activity.emitter}}</a>
             </div>
             <div class="cc-widget-activities-sub-text-margin cc-widget-tasks-activities-more" data-ng-show="activity._show && activity.elements">
               <ul class="cc-widget-activities-sub-activity-list">
@@ -49,7 +49,7 @@
                       </div>
                       <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="sub_activity.summary" data-cc-truncate-directive="filter:'linky', length:180">
                       </p>
-                      <a class="cc-button" data-ng-click="api.analytics.trackExternalLink('Activities', sub_activity.source, sub_activity.source_url)" data-ng-href="{{sub_activity.source_url}}">View in {{sub_activity.emitter}}</a>
+                      <a class="cc-button" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', sub_activity.source, sub_activity.source_url)" data-ng-href="{{sub_activity.source_url}}">View in {{sub_activity.emitter}}</a>
                     </div>
                   </div>
                 </li>
