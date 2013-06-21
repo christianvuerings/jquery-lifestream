@@ -1,11 +1,15 @@
 class JmsWorker
 
   JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
+  MUTEX = Mutex.new
 
   def initialize
     @jms = nil
     @handler = JmsMessageHandler.new
     @stopped = false
+    MUTEX.synchronize do
+      @last_message_received_at = ''
+    end
   end
 
   def start
@@ -52,6 +56,9 @@ class JmsWorker
           f.puts('')
         end
       end
+      MUTEX.synchronize do
+        @last_message_received_at = Time.zone.now
+      end
       yield(msg)
     end
   end
@@ -59,14 +66,21 @@ class JmsWorker
   def read_fake
     File.open(JMS_RECORDING, 'r').each("\n\n") do |msg_yaml|
       msg = YAML::load(msg_yaml)
+      MUTEX.synchronize do
+        @last_message_received_at = Time.zone.now
+      end
       yield(msg)
     end
   end
 
   def ping
-    msg = "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors"
-    msg << "; #{@jms.count} listened messages" if @jms
-    msg
+    MUTEX.synchronize do
+      if @jms
+        "#{self.class.name} #{@jms.count} received messages; last message received at #{@last_message_received_at.to_s}"
+      else
+        "#{self.class.name} JMS connection is not initialized (fake = #{Settings.ist_jms.fake}); last message received at #{@last_message_received_at.to_s}"
+      end
+    end
   end
 
   # Debugging helper.

@@ -43,6 +43,7 @@ Calcentral::Application.routes.draw do
   match '/api/tools/styles' => 'tools#get_styles', :via => :get
 
   match '/api/server_info' => 'server_runtime#get_info', :via => :get
+  match '/api/stats' => 'stats#get_stats', :via => :get, :defaults => { :format => 'json' }
 
   match '/auth/cas/callback' => 'sessions#lookup'
   match '/auth/failure' => 'sessions#failure'
