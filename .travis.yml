@@ -5,10 +5,6 @@ rvm:
   - "jruby-head"
 
 env:
-  - JRUBY_OPTS="--client -Xcext.enabled=false" DISPLAY=:99.0 logger.level=WARN
-
-matrix:
-  allow_failures:
-    - rvm: jruby-head # Waiting on fibers fix for celluloid on jruby-1.7.3+
+  - JRUBY_OPTS="--client -Xcext.enabled=false -J-Xmx900m" DISPLAY=:99.0 logger.level=WARN
 
 before_install: sh -e /etc/init.d/xvfb start
