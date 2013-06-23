@@ -18,6 +18,13 @@ module CalcentralLogging
     ENV["CALCENTRAL_LOG_DIR"] || "#{Rails.root}/log"
   end
 
+  def init_stdout
+    format = PatternFormatter.new(:pattern => "[%d] [%l] %m")
+    stdout = Outputter.stdout #controlled by Settings.logger.level
+    stdout.formatter = format
+    Rails.logger.outputters << stdout
+  end
+
   private
 
   def init_file_loggers(app_name, format)

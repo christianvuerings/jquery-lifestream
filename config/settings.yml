@@ -1,5 +1,6 @@
 logger:
   level: <%= ENV['logger.level'] || WARN %>
+  stdout: <%= ENV['LOGGER_STDOUT'] %>
 
 application:
   # Set to true if testing production env without Apache/Nginx
