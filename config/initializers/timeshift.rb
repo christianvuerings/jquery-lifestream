@@ -49,8 +49,8 @@ Rails.application.config.after_initialize do
       ":::DAY_AFTER_TOMORROW:::" => today.advance(days: 2).rfc3339,
   }
 
-  Rails.logger.info "Timeshifter: Today = #{today}; epoch = #{today.to_i}"
-  Rails.logger.info "Timeshifter: Substitutions = #{substitutions.inspect}"
+  Rails.logger.debug "Timeshifter: Today = #{today}; epoch = #{today.to_i}"
+  Rails.logger.debug "Timeshifter: Substitutions = #{substitutions.inspect}"
 
   processed_dir = Rails.root.join("fixtures", "vcr_cassettes")
 
