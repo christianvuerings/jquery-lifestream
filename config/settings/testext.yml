@@ -1,5 +1,7 @@
 application:
   layer: "testext"
+logger:
+  stdout: <%= ENV['LOGGER_STDOUT'] || 'only' %>
 postgres:
   database: calcentral_test
   username: calcentral_test
