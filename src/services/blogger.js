@@ -10,8 +10,8 @@ $.fn.lifestream.feeds.blogger = function( config, callback ) {
   parseBlogger = function ( input ) {
     var output = [], list, i = 0, j, item, k, l;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.feed.entry ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.feed.entry ) {
       list = input.query.results.feed.entry;
       j = list.length;
       for ( ; i < j; i++) {
@@ -45,8 +45,8 @@ $.fn.lifestream.feeds.blogger = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="http://'
-      + config.user + '.blogspot.com/feeds/posts/default"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="http://' +
+      config.user + '.blogspot.com/feeds/posts/default"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseBlogger(data));

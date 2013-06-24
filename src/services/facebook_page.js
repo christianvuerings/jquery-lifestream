@@ -31,9 +31,9 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + 'www.facebook.com/feeds/page.php?id='
-      + config.user + '&format=rss20"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      'www.facebook.com/feeds/page.php?id=' +
+      config.user + '&format=rss20"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseFBPage(data));

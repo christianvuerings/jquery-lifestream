@@ -3,15 +3,15 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
 
   var template = $.extend({},
     {
-      commented: '<a href="http://www.reddit.com/r/${item.data.subreddit}'
-        + '/comments/${item.data.link_id.substring(3)}/u/'
-        + '${item.data.name.substring(3)}?context=3">commented '
-        + '(${score})</a> in <a href="http://www.reddit.com/r/'
-        + '${item.data.subreddit}">${item.data.subreddit}</a>',
-      created: '<a href="http://www.reddit.com${item.data.permalink}">'
-        + 'created new thread (${score})</a> in '
-        + '<a href="http://www.reddit.com/r/${item.data.subreddit}">'
-        + '${item.data.subreddit}</a>'
+      commented: '<a href="http://www.reddit.com/r/${item.data.subreddit}' +
+        '/comments/${item.data.link_id.substring(3)}/u/' +
+        '${item.data.name.substring(3)}?context=3">commented ' +
+        '(${score})</a> in <a href="http://www.reddit.com/r/' +
+        '${item.data.subreddit}">${item.data.subreddit}</a>',
+      created: '<a href="http://www.reddit.com${item.data.permalink}">' +
+        'created new thread (${score})</a> in ' +
+        '<a href="http://www.reddit.com/r/${item.data.subreddit}">' +
+        '${item.data.subreddit}</a>'
     },
     config.template);
 
@@ -51,8 +51,8 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
     success: function( data ) {
       var output = [], i = 0, j;
 
-      if(data && data.data && data.data.children
-          && data.data.children.length > 0) {
+      if(data && data.data && data.data.children &&
+        data.data.children.length > 0) {
         j = data.data.children.length;
         for( ; i<j; i++) {
           var item = data.data.children[i];

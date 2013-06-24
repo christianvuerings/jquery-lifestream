@@ -29,9 +29,8 @@ $.fn.lifestream.feeds.mendeley = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url='
-      + '"http://www.mendeley.com/groups/'
-      + config.user + '/feed/rss/"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url=' +
+      '"http://www.mendeley.com/groups/' + config.user + '/feed/rss/"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseMendeley(data));

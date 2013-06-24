@@ -9,11 +9,11 @@ $.fn.lifestream.feeds.deviantart = function( config, callback ) {
 
   $.ajax({
     url: $.fn.lifestream.createYqlUrl(
-      'select title,link,pubDate from rss where '
-      + 'url="http://backend.deviantart.com/rss.xml?q=gallery%3A'
-      + encodeURIComponent(config.user)
-      + '&type=deviation'
-      + '" | unique(field="title")'
+      'select title,link,pubDate from rss where ' +
+      'url="http://backend.deviantart.com/rss.xml?q=gallery%3A' +
+      encodeURIComponent(config.user) +
+      '&type=deviation' +
+      '" | unique(field="title")'
     ),
     dataType: 'jsonp',
     success: function( resp ) {

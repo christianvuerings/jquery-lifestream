@@ -3,8 +3,8 @@ $.fn.lifestream.feeds.googlereader = function( config, callback ) {
 
   var template = $.extend({},
     {
-      starred: 'shared <a href="{{if link.href}}${link.href}'
-        + '{{else}}${source.link.href}{{/if}}">${title.content}</a>'
+      starred: 'shared <a href="{{if link.href}}${link.href}' +
+        '{{else}}${source.link.href}{{/if}}">${title.content}</a>'
     },
     config.template),
 
@@ -31,9 +31,9 @@ $.fn.lifestream.feeds.googlereader = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + 'www.google.com/reader/public/atom/user%2F'
-      + config.user + '%2Fstate%2Fcom.google%2Fbroadcast"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      'www.google.com/reader/public/atom/user%2F' +
+      config.user + '%2Fstate%2Fcom.google%2Fbroadcast"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseReader(data));

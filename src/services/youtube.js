@@ -3,10 +3,10 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
 
   var template = $.extend({},
     {
-      uploaded: 'uploaded <a href="${video.player.default}" '
-        + 'title="${video.description}">${video.title}</a>',
-      favorited: 'favorited <a href="${video.player.default}" '
-        + 'title="${video.description}">${video.title}</a>'
+      uploaded: 'uploaded <a href="${video.player.default}" ' +
+        'title="${video.description}">${video.title}</a>',
+      favorited: 'favorited <a href="${video.player.default}" ' +
+        'title="${video.description}">${video.title}</a>'
     },
     config.template),
 
@@ -48,8 +48,8 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user
-      + "/favorites?v=2&alt=jsonc",
+    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+      "/favorites?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseYoutube(data, 'favorited'));
@@ -57,8 +57,8 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   });
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user
-      + "/uploads?v=2&alt=jsonc",
+    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+      "/uploads?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseYoutube(data, 'uploaded'));

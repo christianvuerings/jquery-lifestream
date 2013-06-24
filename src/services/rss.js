@@ -30,8 +30,8 @@ $.fn.lifestream.feeds.rss = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      config.user + '"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseReader(data));

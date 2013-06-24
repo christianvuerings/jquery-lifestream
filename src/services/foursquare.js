@@ -26,9 +26,9 @@ $.fn.lifestream.feeds.foursquare = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from rss where url='
-      + '"https://feeds.foursquare.com/history/'
-      + config.user + '.rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from rss where url=' +
+      '"https://feeds.foursquare.com/history/' +
+      config.user + '.rss"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseFoursquare(data));

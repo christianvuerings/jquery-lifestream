@@ -29,8 +29,8 @@ $.fn.lifestream.feeds.slideshare = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://www.slideshare.net/rss/user/' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://www.slideshare.net/rss/user/' + config.user + '"'),
     dataType: "jsonp",
     success: function( data ) {
       callback(parseSlideshare(data));

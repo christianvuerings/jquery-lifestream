@@ -10,8 +10,8 @@ $.fn.lifestream.feeds.instapaper = function( config, callback ) {
   parseInstapaper = function( input ) {
     var output = [], list, i = 0, j, item;
 
-    if(input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item) {
+    if(input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item) {
 
       list = input.query.results.rss.channel.item;
       j = list.length;
@@ -28,9 +28,9 @@ $.fn.lifestream.feeds.instapaper = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url='
-      + '"http://www.instapaper.com/starred/rss/'
-      + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url=' +
+      '"http://www.instapaper.com/starred/rss/' +
+      config.user + '"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseInstapaper(data));

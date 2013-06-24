@@ -8,8 +8,8 @@ $.fn.lifestream.feeds.flickr = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://api.flickr.com/services/feeds/photos_public.gne?id="
-      + config.user + "&lang=en-us&format=json",
+    url: "http://api.flickr.com/services/feeds/photos_public.gne?id=" +
+      config.user + "&lang=en-us&format=json",
     dataType: "jsonp",
     jsonp: 'jsoncallback',
     success: function( data ) {

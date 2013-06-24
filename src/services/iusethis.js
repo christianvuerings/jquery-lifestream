@@ -11,8 +11,8 @@ $.fn.lifestream.feeds.iusethis = function( config, callback ) {
     var output = [], list, i, j, k, l, m = 0, n, item, title, actions,
       action, what, os, oss = ["iPhone", "OS X", "Windows"];
 
-    if (input.query && input.query.count && input.query.count > 0
-      && input.query.results.rss) {
+    if (input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss) {
       n = input.query.results.rss.length;
       actions = ['started using', 'stopped using', 'stopped loving',
                  'Downloaded', 'commented on', 'updated entry for',
@@ -58,12 +58,12 @@ $.fn.lifestream.feeds.iusethis = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://iphone.iusethis.com/user/feed.rss/' + config.user
-      + '" or '
-      + 'url="http://osx.iusethis.com/user/feed.rss/' + config.user
-      + '" or '
-      + 'url="http://win.iusethis.com/user/feed.rss/' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://iphone.iusethis.com/user/feed.rss/' + config.user +
+      '" or ' +
+      'url="http://osx.iusethis.com/user/feed.rss/' + config.user +
+      '" or ' +
+      'url="http://win.iusethis.com/user/feed.rss/' + config.user + '"'),
     dataType: "jsonp",
     success: function( data ) {
       callback(parseIusethis(data));

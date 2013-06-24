@@ -22,9 +22,9 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
        title = item.description;
        link = question_link + item.post_id;
     }
-    else if (item.timeline_type === "revision"
-          || item.timeline_type === "accepted"
-          || item.timeline_type === "askoranswered") {
+    else if (item.timeline_type === "revision" ||
+        item.timeline_type === "accepted" ||
+        item.timeline_type === "askoranswered") {
       text = (item.timeline_type === 'askoranswered' ?
              item.action : item.action + ' ' + item.post_type);
       title = item.detail || item.description || "";
@@ -41,9 +41,8 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://api.stackoverflow.com/1.1/users/" + config.user
-           + "/timeline?"
-           + "jsonp",
+    url: "http://api.stackoverflow.com/1.1/users/" + config.user +
+      "/timeline?jsonp",
     dataType: "jsonp",
     jsonp: 'jsonp',
     success: function( data ) {

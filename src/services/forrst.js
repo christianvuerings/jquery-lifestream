@@ -3,8 +3,7 @@ $.fn.lifestream.feeds.forrst = function( config, callback ) {
 
   var template = $.extend({},
     {
-      posted: 'posted a ${post_type} '
-        + '<a href="${post_url}">${title}</a>'
+      posted: 'posted a ${post_type} <a href="${post_url}">${title}</a>'
     },
     config.template);
 

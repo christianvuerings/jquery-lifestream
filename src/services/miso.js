@@ -19,8 +19,8 @@ $.fn.lifestream.feeds.miso = function( config, callback ) {
         var item = list[i];
 
         output.push({
-          url: 'http://www.gomiso.com/feeds/user/' + config.user
-            + '/checkins.rss',
+          url: 'http://www.gomiso.com/feeds/user/' + config.user +
+            '/checkins.rss',
           date: new Date( item.pubDate ),
           config: config,
           html: $.tmpl( template.watched, item )
@@ -31,8 +31,8 @@ $.fn.lifestream.feeds.miso = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + 'http://www.gomiso.com/feeds/user/' + config.user + '/checkins.rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      'http://www.gomiso.com/feeds/user/' + config.user + '/checkins.rss"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseMiso(data));

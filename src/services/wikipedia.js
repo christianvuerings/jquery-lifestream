@@ -10,9 +10,9 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://" + language
-    + ".wikipedia.org/w/api.php?action=query&ucuser="
-    + config.user + "&list=usercontribs&ucdir=older&format=json",
+    url: "http://" + language +
+      ".wikipedia.org/w/api.php?action=query&ucuser=" +
+      config.user + "&list=usercontribs&ucdir=older&format=json",
     dataType: "jsonp",
     success: function( data ) {
       var output = [], i = 0, j;
@@ -25,8 +25,8 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
 
           // Fastest way to get the URL.
           // Alternatively, we'd have to poll wikipedia for the pageid's link
-          item.url = 'http://' + language + '.wikipedia.org/wiki/'
-          + item.title.replace(' ', '_');
+          item.url = 'http://' + language + '.wikipedia.org/wiki/' +
+            item.title.replace(' ', '_');
 
           output.push({
             date: new Date( item.timestamp ),

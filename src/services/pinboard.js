@@ -29,8 +29,8 @@ $.fn.lifestream.feeds.pinboard = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://feeds.pinboard.in/rss/u:' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://feeds.pinboard.in/rss/u:' + config.user + '"'),
     dataType: "jsonp",
     success: function( data ) {
       callback(parsePinboard(data));

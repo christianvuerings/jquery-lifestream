@@ -12,8 +12,8 @@ $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
 
     var output = [], list, i = 0, j, item;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item ) {
       list = input.query.results.rss.channel.item;
       j = list.length;
       for ( ; i < j; i++) {
@@ -29,8 +29,8 @@ $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://mlkshk.com/user/' + config.user + '/rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://mlkshk.com/user/' + config.user + '/rss"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseMlkshk(data));

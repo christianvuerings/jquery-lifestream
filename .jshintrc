@@ -3,7 +3,6 @@
   "curly": true,
   "eqeqeq": true,
   "es3": true,
-  "laxbreak": true,
   "latedef": true,
   "maxlen": 78,
   "noarg": true,

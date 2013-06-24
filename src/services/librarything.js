@@ -3,9 +3,9 @@ $.fn.lifestream.feeds.librarything = function( config, callback ) {
 
   var template = $.extend({},
     {
-      book: 'added <a href="http://www.librarything.com/work/book/${book.book_id}"'
-          + ' title="${book.title} by ${book.author_fl}">'
-          + '${book.title} by ${book.author_fl}</a> to my library'
+      book: 'added <a href="http://www.librarything.com/work/book/${book.book_id}"' +
+        ' title="${book.title} by ${book.author_fl}">' +
+        '${book.title} by ${book.author_fl}</a> to my library'
     },
     config.template),
 

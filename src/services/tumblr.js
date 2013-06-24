@@ -121,9 +121,9 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select *'
-      + ' from tumblr.posts where username="' + config.user + '"'
-      + ' and num="' + limit + '"'),
+    url: $.fn.lifestream.createYqlUrl('select *' +
+      ' from tumblr.posts where username="' + config.user + '"' +
+      ' and num="' + limit + '"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseTumblr(data));
