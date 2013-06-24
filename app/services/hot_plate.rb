@@ -3,10 +3,15 @@ class HotPlate
   include ActiveRecordHelper
   attr_reader :total_warmups
 
+  MUTEX = Mutex.new
+
   def initialize
-    @total_warmups = 0
-    @total_time = 0
-    @stopped = false
+    MUTEX.synchronize do
+      @total_warmups = 0
+      @total_time = 0
+      @last_warmup = ''
+      @stopped = false
+    end
   end
 
   def start
@@ -31,7 +36,9 @@ class HotPlate
   end
 
   def ping
-    "#{self.class.name} #{Thread.list.size} threads; #{Celluloid::Actor.all.count} actors; #{@total_warmups} total warmups requested; #{@total_time}s total spent warming"
+    MUTEX.synchronize do
+      "#{self.class.name} #{@total_warmups} total warmups requested; #{@total_time}s total spent warming; last warmup at #{@last_warmup.to_s}"
+    end
   end
 
   def warm
@@ -41,6 +48,7 @@ class HotPlate
         today = Time.zone.today.to_time_in_current_zone.to_datetime
         cutoff = today.advance(:seconds => -1 * Settings.hot_plate.last_visit_cutoff)
         purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
+        warmups = 0
 
         visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
         Rails.logger.info "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
@@ -50,7 +58,7 @@ class HotPlate
             Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
             begin
               UserCacheWarmer.do_warm visit.uid
-              @total_warmups += 1
+              warmups += 1
             rescue Exception => e
               Rails.logger.error "#{self.class.name} Got exception while warming cache for user #{visit.uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
             end
@@ -59,7 +67,11 @@ class HotPlate
 
         end_time = Time.now.to_f
         time = end_time - start_time
-        @total_time += time
+        MUTEX.synchronize do
+          @total_warmups += warmups
+          @total_time += time
+          @last_warmup = Time.zone.now
+        end
         Rails.logger.info "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
 
         visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)

@@ -61,6 +61,8 @@ gem 'nokogiri', "~> 1.5.9"
 gem 'rails_admin', "~> 0.4.8"
 gem "devise", "~> 2.2.4"
 
+gem "torquebox", "~> 2.3.2"
+
 gem "torquebox-server", "~> 2.3.2"
 
 # Gems used only for assets and not required
