@@ -83,9 +83,9 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
     }
     else if (status.type === 'GistEvent' ) {
       if (status.payload.action === 'create') {
-        status.payload.action = 'created'
+        status.payload.action = 'created';
       } else if (status.payload.action === 'update') {
-        status.payload.action = 'updated'
+        status.payload.action = 'updated';
       }
       return $.tmpl( template.gistEvent, {status: status} );
     }

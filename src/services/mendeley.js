@@ -21,7 +21,7 @@ $.fn.lifestream.feeds.mendeley = function( config, callback ) {
           date: new Date(item.pubDate),
           config: config,
           url: 'http://mendeley.com/groups/' + config.user,
-          html: $.tmpl( tmplt, item ),
+          html: $.tmpl( tmplt, item )
         });
       }
     }

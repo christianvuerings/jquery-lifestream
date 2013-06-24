@@ -207,6 +207,7 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 ``` javascript
 for (var i = 0, j = length; i < j; i++) {
 ```
+* Use jshint on you files. `.jshintrc` contains the necessary configuration
 
 ## Ideas
 Stuff that isn"t implemented yet, but would be nice to have:
@@ -254,21 +255,16 @@ Places on the web where this plug-in got mentioned:
 
 A list of sites that use the jQuery Lifestream plug-in:
 
-[Alex Buznik (Russian)](http://buznik.net/j/my-social-media), 
-[Alesh Houdek](http://alesh.com), 
-[Armin Roșu](http://armin.ro/), 
-[Bender Rodriges](http://bbrodriges.github.com/blog/), 
-[Blake Embrey](http://blakeembrey.me/#lifestream), 
-[BrainDump2.0](http://mgiulio.altervista.org/), 
-[Cirle of Hope](http://www.circleofhope.net/), 
-[Dennis Metzcher](http://lifestream.metzcher.com/), 
-[Devin Berg](http://www.devinberg.com/), 
-[Erik Ostrom](http://www.erikostrom.com/), 
-[Libby Baldwin](http://libbybaldwin.github.com/), 
-[Robbie.io](http://robbie.io/life.html), 
-[Sam Tardif](http://www.codeandstuff.com/), 
-[Sebastix](http://www.sebastix.nl/), 
-[Simon Gaeremynck](http://gaeremynck.com/), 
+[Alesh Houdek](http://alesh.com),
+[Armin Roșu](http://armin.ro/),
+[BrainDump2.0](http://mgiulio.altervista.org/),
+[Dennis Metzcher](http://lifestream.metzcher.com/),
+[Devin Berg](http://www.devinberg.com/),
+[Erik Ostrom](http://www.erikostrom.com/),
+[Libby Baldwin](http://libbybaldwin.github.com/),
+[Sam Tardif](http://www.codeandstuff.com/),
+[Sebastix](http://www.sebastix.nl/),
+[Simon Gaeremynck](http://gaeremynck.com/),
 [Sunny Walker](http://miraclesalad.com/)
 
 ## Special Thanks

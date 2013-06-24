@@ -42,7 +42,7 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
   },
 
   parseBitbucket = function( input ) {
-    var output = [], i = 0;
+    var output = [];
     if (input.query && input.query.count && input.query.count > 0) {
       $.each(input.query.results.json, function () {
         output.push({

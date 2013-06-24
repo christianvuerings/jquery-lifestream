@@ -18,9 +18,9 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
       link = stackoverflow_link + "?tab=reputation";
     }
     else if (item.timeline_type === "comment") {
-     	text = "commented on";
-     	title = item.description;
-     	link = question_link + item.post_id;
+       text = "commented on";
+       title = item.description;
+       link = question_link + item.post_id;
     }
     else if (item.timeline_type === "revision"
           || item.timeline_type === "accepted"

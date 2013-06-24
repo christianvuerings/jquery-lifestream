@@ -19,7 +19,7 @@ $.fn.lifestream.feeds.zotero = function( config, callback ) {
           date: new Date(item.updated),
           config: config,
           url: 'http://zotero.com/users/' + config.user,
-          html: $.tmpl( template.flagged, item ),
+          html: $.tmpl( template.flagged, item )
         });
       }
     }

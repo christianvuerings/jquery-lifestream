@@ -14,7 +14,7 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
       + 'http://bitly.com/u/' + config.user + '.json"'),
     dataType: "jsonp",
     success: function( input ) {
-      var output = [], i = 0, j;
+      var output = [], i = 0, j, list;
       if ( input.query && input.query.count && input.query.results.json ) {
         list = input.query.results.json;
         j = list.length;

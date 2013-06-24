@@ -18,7 +18,7 @@ $.fn.lifestream.feeds.citeulike = function( config, callback ) {
           date: new Date(item.date),
           config: config,
           url: 'http://www.citeulike.org/user/' + config.user,
-          html: $.tmpl( template.saved, item ),
+          html: $.tmpl( template.saved, item )
         });
       }
     }

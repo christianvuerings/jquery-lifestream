@@ -1,0 +1,18 @@
+{
+  "bitwise": true,
+  "curly": true,
+  "eqeqeq": true,
+  "es3": true,
+  "laxbreak": true,
+  "latedef": true,
+  "maxlen": 78,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "trailing": true,
+  "undef": true,
+  "unused": true,
+  // environment
+  "browser": true,
+  "jquery": true
+}

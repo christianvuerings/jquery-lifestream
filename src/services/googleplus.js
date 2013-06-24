@@ -28,13 +28,13 @@ $.fn.lifestream.feeds.googleplus = function( config, callback ) {
 
   $.ajax({
     url: "https://www.googleapis.com/plus/v1/people/" + config.user +
-	    "/activities/public",
-	  data: {
-	    key: config.key
-	  },
+      "/activities/public",
+    data: {
+      key: config.key
+    },
     dataType: 'jsonp',
     success: function( data ) {
-	   if (data.error) {
+     if (data.error) {
         callback([]);
         if (console && console.error) {
           console.error('Error loading Google+ stream.', data.error);

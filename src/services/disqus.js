@@ -3,7 +3,7 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
 
   var template = $.extend({},
     {
-      post: 'commented on <a href="${url}">${thread.title}</a>',      
+      post: 'commented on <a href="${url}">${thread.title}</a>',
       thread_like: 'liked <a href="${url}">${thread.title}</a>'
     },
     config.template),
@@ -15,7 +15,7 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
       j = input.length;
       for( ; i<j; i++) {
         item = input[i];
-        
+
         // replies to your comments are included by default
         if (item.type !== 'reply') {
           output.push({
@@ -23,7 +23,7 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
             config: config,
             html: $.tmpl( template[item.type], item.object )
           });
-        }       
+        }
       }
     }
 
@@ -33,14 +33,14 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
   $.ajax({
     url: "https://disqus.com/api/3.0/users/listActivity.json",
       data: {
-      	user: config.user,
+        user: config.user,
         api_key: config.key
       },
     dataType: 'jsonp',
     success: function( data ) {
        if (data.code === 2) {
         callback([]);
-        
+
         // log error to console if not on IE
         if (console && console.error) {
           console.error('Error loading Disqus stream.', data.response);
