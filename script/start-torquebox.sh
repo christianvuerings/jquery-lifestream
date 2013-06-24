@@ -30,7 +30,7 @@ LOG_DIR=${CALCENTRAL_LOG_DIR:=`pwd`"/log"}
 export CALCENTRAL_LOG_DIR=$LOG_DIR
 
 cd deploy
-nohup bundle exec torquebox run -p=3000 --jvm-options="$JVM_OPTS" --clustered < /dev/null > $TORQUEBOX_LOG 2>> $LOG  &
+nohup bundle exec torquebox run -p=3000 --jvm-options="$JVM_OPTS" --clustered --max-threads=25 < /dev/null > $TORQUEBOX_LOG 2>> $LOG  &
 cd ..
 
 # wait a bit to let server start up
