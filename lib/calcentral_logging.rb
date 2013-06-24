@@ -22,8 +22,12 @@ module CalcentralLogging
 
     # Currently, the file loggers use a hardcoded set of log levels.
     # The configured logger levels therefore only apply to stdout.
+    config_level = Settings.logger.level
+    if config_level.is_a?(String)
+      config_level = "Log4r::#{config_level}".constantize
+    end
     std_outputters = Rails.logger.outputters.select {|x| x.is_a?(Log4r::StdoutOutputter)}
-    std_outputters.each {|x| x.level = Settings.logger.level}
+    std_outputters.each {|x| x.level = config_level}
   end
 
   def log_root

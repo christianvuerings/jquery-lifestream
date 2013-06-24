@@ -1,5 +1,5 @@
 logger:
-  level: <%= ENV['logger.level'] || WARN %>
+  level: <%= ENV['LOGGER_LEVEL'] || WARN %>
   stdout: <%= ENV['LOGGER_STDOUT'] %>
 
 application:
