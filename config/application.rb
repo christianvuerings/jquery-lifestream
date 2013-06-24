@@ -24,9 +24,18 @@ end
 module Calcentral
   class Application < Rails::Application
     initializer :amend_yaml_config, :before => :load_environment_config do
-      CalcentralLogging.init_logging
+      # Log4r has the quirk that its logging level constants (referred to
+      # by our configuration files) are not available until a Log4r instance
+      # has been loaded. We therefore need a bootstrap logger to be able to
+      # configure the final logger.
+      Rails.logger = Log4r::Logger.new('initial')
+      Rails.logger.outputters = Outputter.stdout
+
       amended_config = CalcentralConfig.load_settings
       Kernel.const_set(:Settings, amended_config)
+
+      # Initialize logging ASAP, rather than waiting for full application initialization.
+      CalcentralLogging.init_logging
     end
     initializer :amend_rb_config, :after => :load_environment_config do
       CalcentralConfig.load_ruby_configs

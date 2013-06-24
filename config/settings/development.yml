@@ -1,5 +1,7 @@
 application:
   layer: "development"
+logger:
+  stdout: <%= ENV['LOGGER_STDOUT'] || true %>
 postgres:
   database: calcentral_development
   username: calcentral_development
