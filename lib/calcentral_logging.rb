@@ -4,14 +4,26 @@ include Log4r
 
 module CalcentralLogging
   extend self
-  # We want to configure logging early, but not before Rake tasks start.
-  def init_logging
-    app_name = ENV["APP_NAME"] || "calcentral"
-    format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
 
+  def init_logging
+    # Set up top-level log4r logger with default log level.
+    app_name = ENV["APP_NAME"] || "calcentral"
     Rails.logger = Log4r::Logger.new(app_name)
     Rails.logger.level = DEBUG
-    Rails.logger.outputters = init_file_loggers(app_name, format)
+
+    # Set up outputters based on configuration.
+    to_stdout = Settings.logger.stdout
+    if to_stdout
+      init_stdout
+    end
+    if to_stdout != 'only'
+      init_file_loggers(app_name)
+    end
+
+    # Currently, the file loggers use a hardcoded set of log levels.
+    # The configured logger levels therefore only apply to stdout.
+    std_outputters = Rails.logger.outputters.select {|x| x.is_a?(Log4r::StdoutOutputter)}
+    std_outputters.each {|x| x.level = Settings.logger.level}
   end
 
   def log_root
@@ -27,18 +39,19 @@ module CalcentralLogging
 
   private
 
-  def init_file_loggers(app_name, format)
+  def init_file_loggers(app_name)
+    format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
     logger_levels = Log4r::LNAMES.dup - ["ALL", "OFF"]
     logger_levels.map do |level|
       filename_suffix = (Rails.env == "production") ? '' : "-#{Rails.env}"
       filename_suffix += "-#{level}"
-
-      Log4r::DateFileOutputter.new('outputter', {
+      outputter = Log4r::DateFileOutputter.new('outputter', {
         dirname: CalcentralLogging.log_root,
         filename: "#{app_name}#{filename_suffix}.log",
         formatter: format,
         level: Object.const_get("#{level}")
       })
+      Rails.logger.outputters << outputter
     end
   end
 
