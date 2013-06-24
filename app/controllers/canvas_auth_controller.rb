@@ -6,7 +6,7 @@ class CanvasAuthController < AuthController
     CanvasProxy::APP_ID
   end
 
-  def get_client(final_redirect = "")
+  def get_client(final_redirect = '', force_domain = true)
     Signet::OAuth2::Client.new(
         :authorization_uri => Settings.canvas_proxy.authorization_uri,
         :token_credential_uri => Settings.canvas_proxy.token_credential_uri,

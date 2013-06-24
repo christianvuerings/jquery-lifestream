@@ -7,7 +7,7 @@ class AuthController < ApplicationController
     nil
   end
 
-  def get_client(final_redirect = "")
+  def get_client(final_redirect = '', force_domain = true)
     nil
   end
 
@@ -18,7 +18,10 @@ class AuthController < ApplicationController
   def request_authorization
     expire
     final_redirect = params[:final_redirect] || "/settings"
-    client = get_client final_redirect
+    if params[:force_domain].present? && params[:force_domain] == 'false'
+      client = get_client final_redirect, force_domain = false
+    end
+    client ||= get_client final_redirect
     url = client.authorization_uri.to_s
     Rails.logger.debug "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
     redirect_to url
