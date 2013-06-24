@@ -104,32 +104,21 @@ sentry_url: "https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185"
 cache:
   # Array of server addresses in cluster (for memcached)
   servers: ["localhost"]
-  maximum_expires_in: <%= 48.hours %>
+  maximum_expires_in: <%= 1.year %>
   race_condition_ttl: <%= 10.seconds %>
   stale_connection_flush_interval: <%= 5.minutes %>
   expiration:
     default: <%= 35.minutes %>
-    BearfactsRegblocksProxy: <%= 24.hours %>
-    BlogFeed: <%= 1.hour %>
-    CalLinkMembershipsProxy: <%= 24.hours %>
-    CalLinkOrganizationProxy: <%= 48.hours %>
-    CampusCourseSectionsProxy: <%= 24.hours %>
-    CampusUserClassesProxy: <%= 4.hours %>
-    CanvasCoursesProxy: <%= 8.hours %>
-    CanvasGroupsProxy: <%= 8.hours %>
-    CanvasTodoProxy: <%= 1.hour %>
-    CanvasUpcomingEventsProxy: <%= 1.hour %>
-    CanvasUserProfileProxy: <%= 1.hour %>
-    GoogleDriveListProxy: <%= 1.hour %>
-    GoogleEventsListProxy: <%= 1.hour %>
-    GoogleEventsProxy: <%= 1.hour %>
-    GoogleTasksListProxy: <%= 1.hour %>
-    GoogleTasksProxy: <%= 1.hour %>
-    MyRefreshController: <%= 2.minutes %>
-    MyRegBlocks: <%= 24.hours %>
-    SakaiProxy: <%= 24.hours %>
-    SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
-    SakaiUserSitesProxy: <%= 4.hours %>
+    MyAcademics::Merged: <%= 1.year %>
+    MyActivities: <%= 1.year %>
+    MyBadges::Merged: <%= 1.year %>
+    MyCampusLinks: <%= 1.year %>
+    MyClasses: <%= 1.year %>
+    MyGroups: <%= 1.year %>
+    MyTasks::Merged: <%= 1.year %>
+    MyUpNext: <%= 1.year %>
+    MyRefreshController: <%= 30.seconds %>
+    UserApi: <%= 1.year %>
     UserApiController: <%= 4.hours %>
 
 # Cache warmer settings

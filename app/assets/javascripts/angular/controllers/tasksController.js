@@ -38,7 +38,10 @@
         $scope.updateTaskLists();
       });
     };
-    $scope.getTasks();
+
+    $scope.$on('calcentral.api.refresh.refreshed', function() {
+      $scope.getTasks();
+    });
 
     var toggleStatus = function(task) {
       if (task.status === 'completed') {
@@ -87,7 +90,7 @@
     $scope.clearCompletedTasks = function() {
       apiService.analytics.trackEvent(['Tasks', 'Clear completed tasks', 'Clear completed tasks']);
       $http.post('/api/my/tasks/clear_completed', {"emitter": "Google"}).success(function(data) {
-        if(data.tasks_cleared) {
+        if (data.tasks_cleared) {
           $scope.getTasks();
         } else {
           // Again, some error handling?

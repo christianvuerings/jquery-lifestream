@@ -6,8 +6,14 @@
    */
   calcentral.controller('MyGroupsController', ['$http', '$scope', function($http, $scope) {
 
-    $http.get('/api/my/groups').success(function(data) {
-      angular.extend($scope, data);
+    var getMyGroups = function() {
+      $http.get('/api/my/groups').success(function(data) {
+        angular.extend($scope, data);
+      });
+    };
+
+    $scope.$on('calcentral.api.refresh.refreshed', function() {
+      getMyGroups();
     });
 
   }]);

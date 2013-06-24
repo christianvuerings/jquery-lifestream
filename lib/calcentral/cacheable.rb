@@ -3,7 +3,7 @@ module Calcentral
   module Cacheable
 
     def fetch_from_cache(id = nil)
-      key = id ? self.cache_key(id) : self.global_cache_key
+      key = key id
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
       Rails.cache.fetch(
           key,
@@ -11,6 +11,11 @@ module Calcentral
       ) do
         yield
       end
+    end
+
+    def in_cache?(id = nil)
+      key = key id
+      Rails.cache.exist? key
     end
 
     def expires_in
@@ -28,11 +33,14 @@ module Calcentral
     end
 
     def expire(id = nil)
-      key = id ? self.cache_key(id) : self.global_cache_key
+      key = key id
       Rails.cache.delete(key, :force => true)
       Rails.logger.debug "Expired cache_key #{key}"
     end
 
+    def key(id = nil)
+      id ? self.cache_key(id) : self.global_cache_key
+    end
   end
 
 end

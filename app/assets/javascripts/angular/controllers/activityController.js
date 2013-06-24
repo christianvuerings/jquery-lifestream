@@ -139,10 +139,16 @@
       };
     };
 
-    $http.get('/api/my/activities').success(function(data) {
-    //$http.get('/dummy/json/activities.json').success(function(data) {
-      angular.extend($scope, data);
-      activitiesModel(data);
+    var getMyActivity = function() {
+      $http.get('/api/my/activities').success(function(data) {
+      //$http.get('/dummy/json/activities.json').success(function(data) {
+        angular.extend($scope, data);
+        activitiesModel(data);
+      });
+    };
+
+    $scope.$on('calcentral.api.refresh.refreshed', function() {
+      getMyActivity();
     });
 
   }]);

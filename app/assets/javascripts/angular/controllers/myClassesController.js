@@ -6,8 +6,14 @@
    */
   calcentral.controller('MyClassesController', ['$http', '$scope', function($http, $scope) {
 
-    $http.get('/api/my/classes').success(function(data) {
-      angular.extend($scope, data);
+    var getMyClasses = function() {
+      $http.get('/api/my/classes').success(function(data) {
+        angular.extend($scope, data);
+      });
+    };
+
+    $scope.$on('calcentral.api.refresh.refreshed', function() {
+      getMyClasses();
     });
 
   }]);
