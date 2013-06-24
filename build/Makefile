@@ -16,27 +16,27 @@ script_min = ../download/js/script.min.js
 all: jls jls-min uglifyjs uglifyjs-min service-list script-min
 
 jls: $(jls)
-	
+
 jls-min: $(jls_min)
-	
+
 uglifyjs: $(uglifyjs)
-	
+
 uglifyjs-min: $(uglifyjs_min)
-	
+
 script-min: $(script_min)
-	
+
 service-list:
 	@echo "Building $(service_list)"
 	@node service-list.js $(services) > $(service_list)
-	
+
 $(jls): $(modules) | $(main)
 	@echo "Building $@"
 	@cat $^ > $@
 
 $(jls_min): $(jls)
 	@echo "Building $@"
-	@uglifyjs $^ > $@
-	
+	@uglifyjs $^ --compress --mangle --comments > $@
+
 $(uglifyjs): uglifyjs-cs-prologue.js parse-js-prologue.js parse-js.js \
 parse-js-epilogue.js process-prologue.js process.js process-epilogue.js \
 squeeze-more-prologue.js squeeze-more.js squeeze-more-epilogue.js \
@@ -46,8 +46,8 @@ uglifyjs-cs-epilogue.js
 
 $(uglifyjs_min): $(uglifyjs)
 	@echo "Building $@"
-	@uglifyjs $^ > $@
-	
+	@uglifyjs $^ --compress --mangle --comments > $@
+
 $(script_min): $(script)
 	@echo "Building $@"
-	@uglifyjs $^ > $@
+	@uglifyjs $^ --compress --mangle --comments > $@
