@@ -204,6 +204,15 @@ To become yourself again, access
 https://[hostname]/stop_act_as
 ```
 
+### Logging
+
+Logging behavior and destination can be controlled from the command line or shell scripts via env variables:
+
+* `LOGGER_STDOUT=false` - Only log to the default files
+* `LOGGER_STDOUT=true` - Log to standard output as well as the default files
+* `LOGGER_STDOUT=only` - Only log to standard output
+* `LOGGER_LEVEL=DEBUG` - Set logging level; acceptable values are 'FATAL', 'ERROR', 'WARN', 'INFO', and 'DEBUG'
+
 ### Tips
 
 1. On Mac OS X, to get RubyMine to pick up the necessary environment variables, open a new shell, set the environment variables, and:
