@@ -32,7 +32,8 @@ IP_ADDR=`ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk 
 
 cd deploy
 
-cp ~/.calcentral_config/standalone-ha.xml ./vendor/bundle/jruby/1.9/gems/torquebox-server-2.3.2-java/jboss/standalone/configuration/
+JBOSS_HOME=`bundle exec torquebox env jboss_home`
+cp ~/.calcentral_config/standalone-ha.xml $JBOSS_HOME/standalone/configuration/
 
 nohup bundle exec torquebox run -b $IP_ADDR -p=3000 --jvm-options="$JVM_OPTS" --clustered --max-threads=25 < /dev/null > $TORQUEBOX_LOG 2>> $LOG  &
 cd ..
