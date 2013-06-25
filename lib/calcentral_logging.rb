@@ -42,7 +42,6 @@ module CalcentralLogging
     format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
 
     filename_suffix = (Rails.env == "production") ? '' : "-#{Rails.env}"
-    filename_suffix += "-#{Log4r::LNAMES[Settings.logger.level]}"
 
     outputter = Log4r::DateFileOutputter.new('outputter', {
       dirname: CalcentralLogging.log_root,
