@@ -19,7 +19,7 @@ class AuthController < ApplicationController
     expire
     final_redirect = params[:final_redirect] || "/settings"
     if params[:force_domain].present? && params[:force_domain] == 'false'
-      client = get_client final_redirect, force_domain = false
+      client = get_client(final_redirect, force_domain = false)
     end
     client ||= get_client final_redirect
     url = client.authorization_uri.to_s
