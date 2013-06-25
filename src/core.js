@@ -1,9 +1,10 @@
 /*!
  * jQuery Lifestream Plug-in
- * @version 0.4.0
  * Show a stream of your online activity
- *
- * Copyright 2011, Christian Vuerings - http://denbuzze.com
+ * @version   0.4.0
+ * @author    Christian Vuerings et al.
+ * @copyright Copyright 2011, Christian Vuerings - http://denbuzze.com
+ * @license   https://github.com/christianv/jquery-lifestream/blob/master/LICENSE MIT
  */
 /*global jQuery */
 ;(function( $ ){

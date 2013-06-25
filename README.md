@@ -93,7 +93,7 @@ Use `make target` and replace _target_ with the target you want to use.
 
 * [Node](https://github.com/joyent/node/wiki/Installation)
 * [Npm](http://npmjs.org/)
-* [UglifyJS](https://github.com/mishoo/UglifyJS/)
+* [UglifyJS 2](https://github.com/mishoo/UglifyJS2)
 
 ## Usage
 
