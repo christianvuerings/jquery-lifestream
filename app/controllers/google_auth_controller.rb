@@ -6,9 +6,12 @@ class GoogleAuthController < AuthController
     GoogleProxy::APP_ID
   end
 
-  def get_client(final_redirect = "")
+  def get_client(final_redirect = '', force_domain = true)
     google_client = Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1"})
     client = google_client.authorization
+    unless force_domain == false
+      client.authorization_uri= URI 'https://accounts.google.com/o/oauth2/auth?hd=berkeley.edu'
+    end
     client.client_id = Settings.google_proxy.client_id
     client.client_secret = Settings.google_proxy.client_secret
     client.redirect_uri = url_for(
