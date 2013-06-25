@@ -235,7 +235,7 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
   },
 
   parseBitbucket = function( input ) {
-    var output = [], i = 0;
+    var output = [];
     if (input.query && input.query.count && input.query.count > 0) {
       $.each(input.query.results.json, function () {
         output.push({
@@ -250,11 +250,11 @@ $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select events.event,'
-       + 'events.node, events.created_on,'
-       + 'events.repository.name, events.repository.owner '
-       + 'from json where url = "https://api.bitbucket.org/1.0/users/'
-       + config.user + '/events/"'),
+    url: $.fn.lifestream.createYqlUrl('select events.event,' +
+      'events.node, events.created_on,' +
+      'events.repository.name, events.repository.owner ' +
+      'from json where url = "https://api.bitbucket.org/1.0/users/' +
+      config.user + '/events/"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseBitbucket(data));
@@ -270,18 +270,18 @@ $.fn.lifestream.feeds.bitly = function( config, callback ) {
 
   var template = $.extend({},
     {
-      created: 'created URL <a href="${short_url}" title="${title}">'
-        + '${short_url}</a>'
+      created: 'created URL <a href="${short_url}" title="${title}">' +
+        '${short_url}</a>'
     },
     config.template);
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select data.short_url, data.created, '
-      + 'data.title from json where url="'
-      + 'http://bitly.com/u/' + config.user + '.json"'),
+    url: $.fn.lifestream.createYqlUrl('select data.short_url, data.created, '+
+      'data.title from json where url="' +
+      'http://bitly.com/u/' + config.user + '.json"'),
     dataType: "jsonp",
     success: function( input ) {
-      var output = [], i = 0, j;
+      var output = [], i = 0, j, list;
       if ( input.query && input.query.count && input.query.results.json ) {
         list = input.query.results.json;
         j = list.length;
@@ -317,8 +317,8 @@ $.fn.lifestream.feeds.blogger = function( config, callback ) {
   parseBlogger = function ( input ) {
     var output = [], list, i = 0, j, item, k, l;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.feed.entry ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.feed.entry ) {
       list = input.query.results.feed.entry;
       j = list.length;
       for ( ; i < j; i++) {
@@ -352,8 +352,8 @@ $.fn.lifestream.feeds.blogger = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="http://'
-      + config.user + '.blogspot.com/feeds/posts/default"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="http://' +
+      config.user + '.blogspot.com/feeds/posts/default"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseBlogger(data));
@@ -387,7 +387,7 @@ $.fn.lifestream.feeds.citeulike = function( config, callback ) {
           date: new Date(item.date),
           config: config,
           url: 'http://www.citeulike.org/user/' + config.user,
-          html: $.tmpl( template.saved, item ),
+          html: $.tmpl( template.saved, item )
         });
       }
     }
@@ -422,8 +422,8 @@ $.fn.lifestream.feeds.dailymotion = function( config, callback ) {
 
     var output = [], list, i = 0, j, item;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item ) {
       list = input.query.results.rss.channel.item;
       j = list.length;
       for ( ; i < j; i++) {
@@ -441,8 +441,8 @@ $.fn.lifestream.feeds.dailymotion = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://www.dailymotion.com/rss/user/' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://www.dailymotion.com/rss/user/' + config.user + '"'),
     dataType: "jsonp",
     success: function( data ) {
       callback(parseDailymotion(data));
@@ -503,11 +503,11 @@ $.fn.lifestream.feeds.deviantart = function( config, callback ) {
 
   $.ajax({
     url: $.fn.lifestream.createYqlUrl(
-      'select title,link,pubDate from rss where '
-      + 'url="http://backend.deviantart.com/rss.xml?q=gallery%3A'
-      + encodeURIComponent(config.user)
-      + '&type=deviation'
-      + '" | unique(field="title")'
+      'select title,link,pubDate from rss where ' +
+      'url="http://backend.deviantart.com/rss.xml?q=gallery%3A' +
+      encodeURIComponent(config.user) +
+      '&type=deviation' +
+      '" | unique(field="title")'
     ),
     dataType: 'jsonp',
     success: function( resp ) {
@@ -542,7 +542,7 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
 
   var template = $.extend({},
     {
-      post: 'commented on <a href="${url}">${thread.title}</a>',      
+      post: 'commented on <a href="${url}">${thread.title}</a>',
       thread_like: 'liked <a href="${url}">${thread.title}</a>'
     },
     config.template),
@@ -554,7 +554,7 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
       j = input.length;
       for( ; i<j; i++) {
         item = input[i];
-        
+
         // replies to your comments are included by default
         if (item.type !== 'reply') {
           output.push({
@@ -562,7 +562,7 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
             config: config,
             html: $.tmpl( template[item.type], item.object )
           });
-        }       
+        }
       }
     }
 
@@ -572,14 +572,14 @@ $.fn.lifestream.feeds.disqus = function( config, callback ) {
   $.ajax({
     url: "https://disqus.com/api/3.0/users/listActivity.json",
       data: {
-      	user: config.user,
+        user: config.user,
         api_key: config.key
       },
     dataType: 'jsonp',
     success: function( data ) {
        if (data.code === 2) {
         callback([]);
-        
+
         // log error to console if not on IE
         if (console && console.error) {
           console.error('Error loading Disqus stream.', data.response);
@@ -653,13 +653,13 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
     var output = [], list, i = 0, j;
 
     if(input.query && input.query.count && input.query.count >0) {
-	  list = input.query.results.rss.channel.item;
+      list = input.query.results.rss.channel.item;
       j = list.length;
       for( ; i<j; i++) {
         var item = list[i];
         if( $.trim( item.title ) ){
           output.push({
-            date: new Date(item["pubDate"]),
+            date: new Date(item.pubDate),
             config: config,
             html: $.tmpl( template.wall_post, item )
           });
@@ -670,12 +670,12 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + 'www.facebook.com/feeds/page.php?id='
-      + config.user + '&format=rss20"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      'www.facebook.com/feeds/page.php?id=' +
+      config.user + '&format=rss20"'),
     dataType: 'jsonp',
     success: function( data ) {
-	  callback(parseFBPage(data));
+      callback(parseFBPage(data));
     }
   });
 
@@ -696,8 +696,8 @@ $.fn.lifestream.feeds.flickr = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://api.flickr.com/services/feeds/photos_public.gne?id="
-      + config.user + "&lang=en-us&format=json",
+    url: "http://api.flickr.com/services/feeds/photos_public.gne?id=" +
+      config.user + "&lang=en-us&format=json",
     dataType: "jsonp",
     jsonp: 'jsoncallback',
     success: function( data ) {
@@ -780,8 +780,8 @@ $.fn.lifestream.feeds.formspring = function( config, callback ) {
   var parseFormspring = function ( input ) {
     var output = [], list, i = 0, j, item;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item ) {
       list = input.query.results.rss.channel.item;
       j = list.length;
       for ( ; i < j; i++) {
@@ -799,8 +799,8 @@ $.fn.lifestream.feeds.formspring = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://www.formspring.me/profile/' + config.user + '.rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://www.formspring.me/profile/' + config.user + '.rss"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseFormspring(data));
@@ -819,8 +819,7 @@ $.fn.lifestream.feeds.forrst = function( config, callback ) {
 
   var template = $.extend({},
     {
-      posted: 'posted a ${post_type} '
-        + '<a href="${post_url}">${title}</a>'
+      posted: 'posted a ${post_type} <a href="${post_url}">${title}</a>'
     },
     config.template);
 
@@ -879,9 +878,9 @@ $.fn.lifestream.feeds.foursquare = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from rss where url='
-      + '"https://feeds.foursquare.com/history/'
-      + config.user + '.rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from rss where url=' +
+      '"https://feeds.foursquare.com/history/' +
+      config.user + '.rss"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseFoursquare(data));
@@ -938,51 +937,52 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
 
   var template = $.extend({},
     {
-      commitCommentEvent: 'commented on <a href="http://github.com/'
-      + '${status.repo.name}">${status.repo.name}</a>',
-      createBranchEvent: 'created branch <a href="http://github.com/'
-      + '${status.repo.name}/tree/${status.payload.ref}">'
-      + '${status.payload.ref}</a> at <a href="http://github.com/'
-      + '${status.repo.name}">${status.repo.name}</a>',
-      createRepositoryEvent: 'created repository <a href="http://github.com/'
-      + '${status.repo.name}">${status.repo.name}</a>',
-      createTagEvent: 'created tag <a href="http://github.com/'
-      + '${status.repo.name}/tree/${status.payload.ref}">'
-      + '${status.payload.ref}</a> at <a href="http://github.com/'
-      + '${status.repo.name}">${status.repo.name}</a>',
-      deleteBranchEvent: 'deleted branch ${status.payload.ref} at '
-      + '<a href="http://github.com/${status.repo.name}">'
-      + '${status.repo.name}</a>',
-      deleteTagEvent: 'deleted tag ${status.payload.ref} at '
-      + '<a href="http://github.com/${status.repo.name}">'
-      + '${status.repo.name}</a>',
-      followEvent: 'started following <a href="http://github.com/'
-      + '${status.payload.target.login}">${status.payload.target.login}</a>',
-      forkEvent: 'forked <a href="http://github.com/${status.repo.name}">'
-      + '${status.repo.name}</a>',
-      gistEvent: '${status.payload.action} gist '
-      + '<a href="http://gist.github.com/${status.payload.gist.id}">'
-      + '${status.payload.gist.id}</a>',
-      issueCommentEvent: 'commented on issue <a href="http://github.com/'
-      + '${status.repo.name}/issues/${status.payload.issue.number}">'
-      + '${status.payload.issue.number}</a> on <a href="http://github.com/'
-      + '${status.repo.name}">${status.repo.name}</a>',
-      issuesEvent: '${status.payload.action} issue '
-      + '<a href="http://github.com/${status.repo.name}/issues/'
-      + '${status.payload.issue.number}">${status.payload.issue.number}</a> '
-      + 'on <a href="http://github.com/${status.repo.name}">'
-      + '${status.repo.name}</a>',
-      pullRequestEvent: '${status.payload.action} pull request '
-      + '<a href="http://github.com/${status.repo.name}/pull/'
-      + '${status.payload.number}">${status.payload.number}</a> on '
-      + '<a href="http://github.com/${status.repo.name}">'
-      + '${status.repo.name}</a>',
-      pushEvent: 'pushed to <a href="http://github.com/${status.repo.name}'
-      + '/tree/${status.payload.ref}">${status.payload.ref}</a> at '
-      + '<a href="http://github.com/${status.repo.name}">'
-      + '${status.repo.name}</a>',
-      watchEvent: 'started watching <a href="http://github.com/'
-      + '${status.repo.name}">${status.repo.name}</a>'
+      commitCommentEvent: 'commented on <a href="http://github.com/' +
+        '${status.repo.name}">${status.repo.name}</a>',
+      createBranchEvent: 'created branch <a href="http://github.com/' +
+        '${status.repo.name}/tree/${status.payload.ref}">' +
+        '${status.payload.ref}</a> at <a href="http://github.com/' +
+        '${status.repo.name}">${status.repo.name}</a>',
+      createRepositoryEvent: 'created repository ' +
+        '<a href="http://github.com/' +
+        '${status.repo.name}">${status.repo.name}</a>',
+      createTagEvent: 'created tag <a href="http://github.com/' +
+        '${status.repo.name}/tree/${status.payload.ref}">' +
+        '${status.payload.ref}</a> at <a href="http://github.com/' +
+        '${status.repo.name}">${status.repo.name}</a>',
+      deleteBranchEvent: 'deleted branch ${status.payload.ref} at ' +
+        '<a href="http://github.com/${status.repo.name}">' +
+        '${status.repo.name}</a>',
+      deleteTagEvent: 'deleted tag ${status.payload.ref} at ' +
+        '<a href="http://github.com/${status.repo.name}">' +
+        '${status.repo.name}</a>',
+      followEvent: 'started following <a href="http://github.com/' +
+        '${status.payload.target.login}">${status.payload.target.login}</a>',
+      forkEvent: 'forked <a href="http://github.com/${status.repo.name}">' +
+        '${status.repo.name}</a>',
+      gistEvent: '${status.payload.action} gist ' +
+        '<a href="http://gist.github.com/${status.payload.gist.id}">' +
+        '${status.payload.gist.id}</a>',
+      issueCommentEvent: 'commented on issue <a href="http://github.com/' +
+        '${status.repo.name}/issues/${status.payload.issue.number}">' +
+        '${status.payload.issue.number}</a> on <a href="http://github.com/' +
+        '${status.repo.name}">${status.repo.name}</a>',
+      issuesEvent: '${status.payload.action} issue ' +
+        '<a href="http://github.com/${status.repo.name}/issues/' +
+        '${status.payload.issue.number}">${status.payload.issue.number}</a> '+
+        'on <a href="http://github.com/${status.repo.name}">' +
+        '${status.repo.name}</a>',
+      pullRequestEvent: '${status.payload.action} pull request ' +
+        '<a href="http://github.com/${status.repo.name}/pull/' +
+        '${status.payload.number}">${status.payload.number}</a> on ' +
+        '<a href="http://github.com/${status.repo.name}">' +
+        '${status.repo.name}</a>',
+      pushEvent: 'pushed to <a href="http://github.com/${status.repo.name}' +
+        '/tree/${status.payload.ref}">${status.payload.ref}</a> at ' +
+        '<a href="http://github.com/${status.repo.name}">' +
+        '${status.repo.name}</a>',
+      watchEvent: 'started watching <a href="http://github.com/' +
+        '${status.repo.name}">${status.repo.name}</a>'
     },
     config.template),
 
@@ -990,24 +990,24 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
     if (status.type === 'CommitCommentEvent' ) {
       return $.tmpl( template.commitCommentEvent, {status: status} );
     }
-    else if (status.type === 'CreateEvent'
-          && status.payload.ref_type === 'branch') {
+    else if (status.type === 'CreateEvent' &&
+        status.payload.ref_type === 'branch') {
       return $.tmpl( template.createBranchEvent, {status: status} );
     }
-    else if (status.type === 'CreateEvent'
-          && status.payload.ref_type === 'repository') {
+    else if (status.type === 'CreateEvent' &&
+        status.payload.ref_type === 'repository') {
       return $.tmpl( template.createRepositoryEvent, {status: status} );
     }
-    else if (status.type === 'CreateEvent'
-          && status.payload.ref_type === 'tag') {
+    else if (status.type === 'CreateEvent' &&
+        status.payload.ref_type === 'tag') {
       return $.tmpl( template.createTagEvent, {status: status} );
     }
-    else if (status.type === 'DeleteEvent'
-          && status.payload.ref_type === 'branch') {
+    else if (status.type === 'DeleteEvent' &&
+        status.payload.ref_type === 'branch') {
       return $.tmpl( template.deleteBranchEvent, {status: status} );
     }
-    else if (status.type === 'DeleteEvent'
-          && status.payload.ref_type === 'tag') {
+    else if (status.type === 'DeleteEvent' &&
+        status.payload.ref_type === 'tag') {
       return $.tmpl( template.deleteTagEvent, {status: status} );
     }
     else if (status.type === 'FollowEvent' ) {
@@ -1018,9 +1018,9 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
     }
     else if (status.type === 'GistEvent' ) {
       if (status.payload.action === 'create') {
-        status.payload.action = 'created'
+        status.payload.action = 'created';
       } else if (status.payload.action === 'update') {
-        status.payload.action = 'updated'
+        status.payload.action = 'updated';
       }
       return $.tmpl( template.gistEvent, {status: status} );
     }
@@ -1063,10 +1063,10 @@ $.fn.lifestream.feeds.github = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select '
-      + 'json.type, json.actor, json.repo, json.payload, json.created_at '
-      + 'from json where url="https://api.github.com/users/' + config.user
-      + '/events/public?per_page=100"'),
+    url: $.fn.lifestream.createYqlUrl('select ' +
+      'json.type, json.actor, json.repo, json.payload, json.created_at ' +
+      'from json where url="https://api.github.com/users/' + config.user +
+      '/events/public?per_page=100"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseGithub(data));
@@ -1086,8 +1086,12 @@ $.fn.lifestream.feeds.googleplus = function( config, callback ) {
 
   var template = $.extend({},
     {
-    posted: '<a href="${actor.url}">${actor.displayName}</a> has posted a new entry <a href="${url}" '
-        + 'title="${id}">${title}</a> <!--With--> ${object.replies.totalItems} replies, ${object.plusoners.totalItems} +1s, ${object.resharers.totalItems} Reshares'
+    posted: '<a href="${actor.url}">${actor.displayName}</a>' +
+      ' has posted a new entry <a href="${url}" ' +
+      'title="${id}">${title}</a> <!--With--> ' +
+      '${object.replies.totalItems} replies, ' +
+      '${object.plusoners.totalItems} +1s, ' +
+      '${object.resharers.totalItems} Reshares'
     },
     config.template),
 
@@ -1111,13 +1115,13 @@ $.fn.lifestream.feeds.googleplus = function( config, callback ) {
 
   $.ajax({
     url: "https://www.googleapis.com/plus/v1/people/" + config.user +
-	    "/activities/public",
-	  data: {
-	    key: config.key
-	  },
+      "/activities/public",
+    data: {
+      key: config.key
+    },
     dataType: 'jsonp',
     success: function( data ) {
-	   if (data.error) {
+     if (data.error) {
         callback([]);
         if (console && console.error) {
           console.error('Error loading Google+ stream.', data.error);
@@ -1142,8 +1146,8 @@ $.fn.lifestream.feeds.googlereader = function( config, callback ) {
 
   var template = $.extend({},
     {
-      starred: 'shared <a href="{{if link.href}}${link.href}'
-        + '{{else}}${source.link.href}{{/if}}">${title.content}</a>'
+      starred: 'shared <a href="{{if link.href}}${link.href}' +
+        '{{else}}${source.link.href}{{/if}}">${title.content}</a>'
     },
     config.template),
 
@@ -1170,9 +1174,9 @@ $.fn.lifestream.feeds.googlereader = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + 'www.google.com/reader/public/atom/user%2F'
-      + config.user + '%2Fstate%2Fcom.google%2Fbroadcast"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      'www.google.com/reader/public/atom/user%2F' +
+      config.user + '%2Fstate%2Fcom.google%2Fbroadcast"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseReader(data));
@@ -1242,8 +1246,8 @@ $.fn.lifestream.feeds.instapaper = function( config, callback ) {
   parseInstapaper = function( input ) {
     var output = [], list, i = 0, j, item;
 
-    if(input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item) {
+    if(input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item) {
 
       list = input.query.results.rss.channel.item;
       j = list.length;
@@ -1260,9 +1264,9 @@ $.fn.lifestream.feeds.instapaper = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url='
-      + '"http://www.instapaper.com/starred/rss/'
-      + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url=' +
+      '"http://www.instapaper.com/starred/rss/' +
+      config.user + '"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseInstapaper(data));
@@ -1289,8 +1293,8 @@ $.fn.lifestream.feeds.iusethis = function( config, callback ) {
     var output = [], list, i, j, k, l, m = 0, n, item, title, actions,
       action, what, os, oss = ["iPhone", "OS X", "Windows"];
 
-    if (input.query && input.query.count && input.query.count > 0
-      && input.query.results.rss) {
+    if (input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss) {
       n = input.query.results.rss.length;
       actions = ['started using', 'stopped using', 'stopped loving',
                  'Downloaded', 'commented on', 'updated entry for',
@@ -1336,12 +1340,12 @@ $.fn.lifestream.feeds.iusethis = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://iphone.iusethis.com/user/feed.rss/' + config.user
-      + '" or '
-      + 'url="http://osx.iusethis.com/user/feed.rss/' + config.user
-      + '" or '
-      + 'url="http://win.iusethis.com/user/feed.rss/' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://iphone.iusethis.com/user/feed.rss/' + config.user +
+      '" or ' +
+      'url="http://osx.iusethis.com/user/feed.rss/' + config.user +
+      '" or ' +
+      'url="http://win.iusethis.com/user/feed.rss/' + config.user + '"'),
     dataType: "jsonp",
     success: function( data ) {
       callback(parseIusethis(data));
@@ -1360,17 +1364,17 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
 
   var template = $.extend({},
     {
-      loved: 'loved <a href="${url}">${name}</a> by '
-        + '<a href="${artist.url}">${artist.name}</a>'
+      loved: 'loved <a href="${url}">${name}</a> by ' +
+        '<a href="${artist.url}">${artist.name}</a>'
     },
     config.template),
 
   parseLastfm = function( input ) {
     var output = [], list, i = 0, j;
 
-    if(input.query && input.query.count && input.query.count > 0
-        && input.query.results.lovedtracks
-        && input.query.results.lovedtracks.track) {
+    if(input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.lovedtracks &&
+        input.query.results.lovedtracks.track) {
       list = input.query.results.lovedtracks.track;
       j = list.length;
       for( ; i<j; i++) {
@@ -1387,9 +1391,9 @@ $.fn.lifestream.feeds.lastfm = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url='
-      + '"http://ws.audioscrobbler.com/2.0/user/'
-      + config.user + '/lovedtracks.xml"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url=' +
+      '"http://ws.audioscrobbler.com/2.0/user/' +
+      config.user + '/lovedtracks.xml"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseLastfm(data));
@@ -1409,9 +1413,9 @@ $.fn.lifestream.feeds.librarything = function( config, callback ) {
 
   var template = $.extend({},
     {
-      book: 'added <a href="http://www.librarything.com/work/book/${book.book_id}"'
-          + ' title="${book.title} by ${book.author_fl}">'
-          + '${book.title} by ${book.author_fl}</a> to my library'
+      book: 'added <a href="http://www.librarything.com/work/book/${book.book_id}"' +
+        ' title="${book.title} by ${book.author_fl}">' +
+        '${book.title} by ${book.author_fl}</a> to my library'
     },
     config.template),
 
@@ -1422,7 +1426,7 @@ $.fn.lifestream.feeds.librarything = function( config, callback ) {
       // LibraryThing returns a hash that maps id to Book objects
       // which leads to the following slightly weird for loop.
       for (i in input.books) {
-      	if (input.books.hasOwnProperty(i)) {
+        if (input.books.hasOwnProperty(i)) {
           var book = input.books[i];
           output.push({
             date : new Date(book.entry_stamp * 1000),
@@ -1473,7 +1477,7 @@ $.fn.lifestream.feeds.mendeley = function( config, callback ) {
           date: new Date(item.pubDate),
           config: config,
           url: 'http://mendeley.com/groups/' + config.user,
-          html: $.tmpl( tmplt, item ),
+          html: $.tmpl( tmplt, item )
         });
       }
     }
@@ -1481,9 +1485,8 @@ $.fn.lifestream.feeds.mendeley = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url='
-      + '"http://www.mendeley.com/groups/'
-      + config.user + '/feed/rss/"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url=' +
+      '"http://www.mendeley.com/groups/' + config.user + '/feed/rss/"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseMendeley(data));
@@ -1519,8 +1522,8 @@ $.fn.lifestream.feeds.miso = function( config, callback ) {
         var item = list[i];
 
         output.push({
-          url: 'http://www.gomiso.com/feeds/user/' + config.user
-            + '/checkins.rss',
+          url: 'http://www.gomiso.com/feeds/user/' + config.user +
+            '/checkins.rss',
           date: new Date( item.pubDate ),
           config: config,
           html: $.tmpl( template.watched, item )
@@ -1531,8 +1534,8 @@ $.fn.lifestream.feeds.miso = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + 'http://www.gomiso.com/feeds/user/' + config.user + '/checkins.rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      'http://www.gomiso.com/feeds/user/' + config.user + '/checkins.rss"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseMiso(data));
@@ -1561,8 +1564,8 @@ $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
 
     var output = [], list, i = 0, j, item;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item ) {
       list = input.query.results.rss.channel.item;
       j = list.length;
       for ( ; i < j; i++) {
@@ -1578,8 +1581,8 @@ $.fn.lifestream.feeds.mlkshk = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://mlkshk.com/user/' + config.user + '/rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://mlkshk.com/user/' + config.user + '/rss"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseMlkshk(data));
@@ -1624,8 +1627,8 @@ $.fn.lifestream.feeds.pinboard = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://feeds.pinboard.in/rss/u:' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://feeds.pinboard.in/rss/u:' + config.user + '"'),
     dataType: "jsonp",
     success: function( data ) {
       callback(parsePinboard(data));
@@ -1651,8 +1654,8 @@ $.fn.lifestream.feeds.posterous = function( config, callback ) {
   var parsePosterous = function ( input ) {
     var output = [], list, i = 0, j, item;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item ) {
       list = input.query.results.rss.channel.item;
       j = list.length;
       for ( ; i < j; i++) {
@@ -1670,8 +1673,8 @@ $.fn.lifestream.feeds.posterous = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://' + config.user + '.posterous.com/rss.xml"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://' + config.user + '.posterous.com/rss.xml"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parsePosterous(data));
@@ -1738,15 +1741,15 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
 
   var template = $.extend({},
     {
-      commented: '<a href="http://www.reddit.com/r/${item.data.subreddit}'
-        + '/comments/${item.data.link_id.substring(3)}/u/'
-        + '${item.data.name.substring(3)}?context=3">commented '
-        + '(${score})</a> in <a href="http://www.reddit.com/r/'
-        + '${item.data.subreddit}">${item.data.subreddit}</a>',
-      created: '<a href="http://www.reddit.com${item.data.permalink}">'
-        + 'created new thread (${score})</a> in '
-        + '<a href="http://www.reddit.com/r/${item.data.subreddit}">'
-        + '${item.data.subreddit}</a>'
+      commented: '<a href="http://www.reddit.com/r/${item.data.subreddit}' +
+        '/comments/${item.data.link_id.substring(3)}/u/' +
+        '${item.data.name.substring(3)}?context=3">commented ' +
+        '(${score})</a> in <a href="http://www.reddit.com/r/' +
+        '${item.data.subreddit}">${item.data.subreddit}</a>',
+      created: '<a href="http://www.reddit.com${item.data.permalink}">' +
+        'created new thread (${score})</a> in ' +
+        '<a href="http://www.reddit.com/r/${item.data.subreddit}">' +
+        '${item.data.subreddit}</a>'
     },
     config.template);
 
@@ -1786,8 +1789,8 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
     success: function( data ) {
       var output = [], i = 0, j;
 
-      if(data && data.data && data.data.children
-          && data.data.children.length > 0) {
+      if(data && data.data && data.data.children &&
+        data.data.children.length > 0) {
         j = data.data.children.length;
         for( ; i<j; i++) {
           var item = data.data.children[i];
@@ -1844,8 +1847,8 @@ $.fn.lifestream.feeds.rss = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="'
-      + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      config.user + '"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseReader(data));
@@ -1891,8 +1894,8 @@ $.fn.lifestream.feeds.slideshare = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://www.slideshare.net/rss/user/' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://www.slideshare.net/rss/user/' + config.user + '"'),
     dataType: "jsonp",
     success: function( data ) {
       callback(parseSlideshare(data));
@@ -1918,8 +1921,8 @@ $.fn.lifestream.feeds.snipplr = function( config, callback ) {
   var parseSnipplr = function ( input ) {
     var output = [], list, i = 0, j, item;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item ) {
       list = input.query.results.rss.channel.item;
       j = list.length;
       for ( ; i < j; i++) {
@@ -1937,8 +1940,8 @@ $.fn.lifestream.feeds.snipplr = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where '
-      + 'url="http://snipplr.com/rss/users/' + config.user + '"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://snipplr.com/rss/users/' + config.user + '"'),
     dataType: "jsonp",
     success: function ( data ) {
       callback(parseSnipplr(data));
@@ -1966,13 +1969,13 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
       link = stackoverflow_link + "?tab=reputation";
     }
     else if (item.timeline_type === "comment") {
-     	text = "commented on";
-     	title = item.description;
-     	link = question_link + item.post_id;
+       text = "commented on";
+       title = item.description;
+       link = question_link + item.post_id;
     }
-    else if (item.timeline_type === "revision"
-          || item.timeline_type === "accepted"
-          || item.timeline_type === "askoranswered") {
+    else if (item.timeline_type === "revision" ||
+        item.timeline_type === "accepted" ||
+        item.timeline_type === "askoranswered") {
       text = (item.timeline_type === 'askoranswered' ?
              item.action : item.action + ' ' + item.post_type);
       title = item.detail || item.description || "";
@@ -1989,9 +1992,8 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://api.stackoverflow.com/1.1/users/" + config.user
-           + "/timeline?"
-           + "jsonp",
+    url: "http://api.stackoverflow.com/1.1/users/" + config.user +
+      "/timeline?jsonp",
     dataType: "jsonp",
     jsonp: 'jsonp',
     success: function( data ) {
@@ -2087,14 +2089,14 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
     case 'conversation':
       title = post['conversation-title'];
       if (!title) {
-        title = post['conversation'].line;
+        title = post.conversation.line;
         if (typeof(title) !== 'string') {
-          title = line[0].label + ' ' + line[0].content + ' ....';
+          title = title[0].label + ' ' + title[0].content + ' ...';
         }
       }
       return title;
     case 'answer':
-      return post['question'];
+      return post.question;
     default:
       return post.type;
     }
@@ -2134,15 +2136,18 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
         }
       }
       else if ( $.isPlainObject(input.query.results.posts.post) ) {
-        output.push(createTumblrOutput(config,input.query.results.posts.post));
+        output.push(
+          createTumblrOutput(config,input.query.results.posts.post)
+        );
       }
     }
     return output;
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select *'
-      + ' from tumblr.posts where username="'+ config.user +'" and num="' + limit + '"'),
+    url: $.fn.lifestream.createYqlUrl('select *' +
+      ' from tumblr.posts where username="' + config.user + '"' +
+      ' and num="' + limit + '"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseTumblr(data));
@@ -2354,9 +2359,9 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://" + language
-    + ".wikipedia.org/w/api.php?action=query&ucuser="
-    + config.user + "&list=usercontribs&ucdir=older&format=json",
+    url: "http://" + language +
+      ".wikipedia.org/w/api.php?action=query&ucuser=" +
+      config.user + "&list=usercontribs&ucdir=older&format=json",
     dataType: "jsonp",
     success: function( data ) {
       var output = [], i = 0, j;
@@ -2369,8 +2374,8 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
 
           // Fastest way to get the URL.
           // Alternatively, we'd have to poll wikipedia for the pageid's link
-          item.url = 'http://' + language + '.wikipedia.org/wiki/'
-          + item.title.replace(' ', '_');
+          item.url = 'http://' + language + '.wikipedia.org/wiki/' +
+            item.title.replace(' ', '_');
 
           output.push({
             date: new Date( item.timestamp ),
@@ -2403,8 +2408,8 @@ $.fn.lifestream.feeds.wordpress = function( config, callback ) {
   var parseWordpress = function ( input ) {
     var output = [], list, i = 0, j, item;
 
-    if ( input.query && input.query.count && input.query.count > 0
-        && input.query.results.rss.channel.item ) {
+    if ( input.query && input.query.count && input.query.count > 0 &&
+        input.query.results.rss.channel.item ) {
       list = input.query.results.rss.channel.item;
       j = list.length;
       for ( ; i < j; i++) {
@@ -2426,12 +2431,12 @@ $.fn.lifestream.feeds.wordpress = function( config, callback ) {
   if ( config.user ){
     // If the config.user property starts with http:// we assume that is the
     // full url to the user his blog. We append the /feed to the url.
-    url = (config.user.indexOf('http://') === 0
-               ? config.user + '/feed'
-               : 'http://' + config.user + '.wordpress.com/feed');
+    url = (config.user.indexOf('http://') === 0 ?
+        config.user + '/feed' :
+        'http://' + config.user + '.wordpress.com/feed');
     $.ajax({
-      url: $.fn.lifestream.createYqlUrl('select * from xml where '
-        + 'url="' + url + '"'),
+      url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+        'url="' + url + '"'),
       dataType: "jsonp",
       success: function ( data ) {
         callback(parseWordpress(data));
@@ -2451,10 +2456,10 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
 
   var template = $.extend({},
     {
-      uploaded: 'uploaded <a href="${video.player.default}" '
-        + 'title="${video.description}">${video.title}</a>',
-      favorited: 'favorited <a href="${video.player.default}" '
-        + 'title="${video.description}">${video.title}</a>'
+      uploaded: 'uploaded <a href="${video.player.default}" ' +
+        'title="${video.description}">${video.title}</a>',
+      favorited: 'favorited <a href="${video.player.default}" ' +
+        'title="${video.description}">${video.title}</a>'
     },
     config.template),
 
@@ -2480,7 +2485,7 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
         }
 
         // Don't add unavailable items (private, rejected, failed)
-        if (!video.player && !video.player.default) {
+        if (!video.player && !video.player['default']) {
           continue;
         }
 
@@ -2496,8 +2501,8 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user
-      + "/favorites?v=2&alt=jsonc",
+    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+      "/favorites?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseYoutube(data, 'favorited'));
@@ -2505,8 +2510,8 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   });
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user
-      + "/uploads?v=2&alt=jsonc",
+    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+      "/uploads?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseYoutube(data, 'uploaded'));
@@ -2542,7 +2547,7 @@ $.fn.lifestream.feeds.zotero = function( config, callback ) {
           date: new Date(item.updated),
           config: config,
           url: 'http://zotero.com/users/' + config.user,
-          html: $.tmpl( template.flagged, item ),
+          html: $.tmpl( template.flagged, item )
         });
       }
     }
@@ -2550,9 +2555,9 @@ $.fn.lifestream.feeds.zotero = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url='
-      + '"https://api.zotero.org/users/'
-      + config.user + '/items"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url=' +
+      '"https://api.zotero.org/users/' +
+      config.user + '/items"'),
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseZotero(data));
