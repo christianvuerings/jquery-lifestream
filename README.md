@@ -2,7 +2,7 @@
 
 ![jQuery Lifestream Logo](http://christianv.github.com/jquery-lifestream/design/logo_v1_64.png)
 
-Show a stream of your online activity.  
+Show a stream of your online activity.
 Check out [the example][example] or create [your own lifestream][melifestream] instantly.
 
 [![Follow us on twitter](http://f.cl.ly/items/2z1p0w320g1q0T061m1u/twitter_follow.png)](http://twitter.com/jq_lifestream)
@@ -57,7 +57,7 @@ Currently supports the following feeds:
 * [Youtube](http://youtube.com)
 * [Zotero](http://zotero.com)
 
-Feel free to fork the project and add your own feeds in.  
+Feel free to fork the project and add your own feeds in.
 Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] when you're finished.
 
 ## Extensions
@@ -76,12 +76,14 @@ Use `make target` and replace _target_ with the target you want to use.
 
 * **jls**:
   Build jquery.lifestream.js, the non-minified version of jQuery Lifestream
-* **jls-min**: 
+* **jls-min**:
   Build jquery.lifestream.min.js, the minified version of jQuery Lifestream
+* **jls-css**:
+  Build css/lifestream.css, the stylesheet containing the favicons
 * **script-min**:
   Build download/js/script.min.js, this script is the main script for the
   download page
-* **uglifyjs**: 
+* **uglifyjs**:
   Build download/js/uglify-cs.js, a custom version of UglifyJS patched
   to work in the browser
 * **uglifyjs-min**:
@@ -117,7 +119,7 @@ Add the following to the &lt;head&gt; or &lt;body&gt; tag of your HTML page.
   });
 </script>
 ```
-The above code will always use the latest version of the script.  
+The above code will always use the latest version of the script.
 If you want to use it in production, download the [minified](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.min.js)
 or [uncompressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.js) file and host it yourself.
 
@@ -129,7 +131,7 @@ You also need to add a bit of HTML:
 
 ### jQuery Templates
 
-You have the ability to use jQuery templates for your feed.  
+You have the ability to use jQuery templates for your feed.
 Checkout the [template page](http://christianv.github.com/jquery-lifestream/template.html) to see an overview of the current available templates.
 
 Usage:
@@ -172,23 +174,21 @@ $("#lifestream").lifestream({
 
 `limit`: (_integer_) Specify how many elements you want in your lifestream (default = 10).
 
-`list`: (_array_) Array containing other JSON objects with information about each item.  
-Each item should have a _service_ and a _user_.  
+`list`: (_array_) Array containing other JSON objects with information about each item.
+Each item should have a _service_ and a _user_.
 For more information about each _service_, check out the [source code][examplesource] of the [example page][example].
 
 ## Commit to the project
 
 ### Add your own feed
 
-Adding in your own feed is pretty easy.  
+Adding in your own feed is pretty easy.
 Have a look at [this commit](https://github.com/christianv/jquery-lifestream/commit/529a06db159b4123ee3b2cc604f3a3ed698c6e9a) which adds support for the last.fm feed.
 
-### Create data:URI for an icon
+### Add your favicon
 
 1. [Convert](http://converticon.com/) the favicon.ico of a site to a .png file. (e.g. http://google.com/favicon.ico)
 2. [Optimize](http://www.smushit.com/ysmush.it/) the .png file. Save it in src/favicons/.
-3. [Make](http://www.dopiaza.org/tools/datauri/) a data:URI for it.
-4. Put the data:URI in css/lifestream.css (alphabetical order).
 
 ### How to commit?
 
@@ -278,6 +278,6 @@ Have a look at [our tags](https://github.com/christianv/jquery-lifestream/tags) 
 
 [jquery-lifestream]: https://github.com/christianv/jquery-lifestream
 [melifestream]: http://christianv.github.com/jquery-lifestream/me/
-[example]: http://christianv.github.com/jquery-lifestream/example.html 
+[example]: http://christianv.github.com/jquery-lifestream/example.html
 "Example page"
 [examplesource]: https://github.com/christianv/jquery-lifestream/blob/master/example.html#files "Source code of the example page"

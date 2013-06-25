@@ -1,23 +1,29 @@
 src = ../src
 services = $(src)/services
+favicons = $(src)/favicons
 build = .
 main = ..
 modules = $(src)/core.js $(services)/*.js
 service_list = ../download/services.json
 jls = $(main)/jquery.lifestream.js
 jls_min = $(main)/jquery.lifestream.min.js
+jls_css = $(main)/css/lifestream.css
 uglifyjs = ../download/js/uglifyjs-cs.js
 uglifyjs_min = ../download/js/uglifyjs-cs.min.js
 script = ../download/js/script.js
 script_min = ../download/js/script.min.js
 
-.PHONY: all jls jls-min uglifyjs uglifyjs-min service-list script-min
+.PHONY: all jls jls-min jls-css uglifyjs uglifyjs-min service-list script-min
 
-all: jls jls-min uglifyjs uglifyjs-min service-list script-min
+all: jls jls-min jls-css uglifyjs uglifyjs-min service-list script-min
 
 jls: $(jls)
 
 jls-min: $(jls_min)
+
+jls-css:
+	@echo "Building $@"
+	@node compile-css.js $(favicons) > $(jls_css)
 
 uglifyjs: $(uglifyjs)
 
