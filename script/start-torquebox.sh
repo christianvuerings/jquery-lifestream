@@ -28,9 +28,14 @@ export JRUBY_OPTS=$OPTS
 JVM_OPTS=${CALCENTRAL_JVM_OPTS:="\-server \-verbose:gc \-XX:+PrintGCTimeStamps \-XX:+PrintGCDetails \-XX:+UseParallelOldGC \-Xms1200m \-Xmx1200m \-Xmn500m \-XX:PermSize=256m \-XX:MaxPermSize=256m"}
 LOG_DIR=${CALCENTRAL_LOG_DIR:=`pwd`"/log"}
 export CALCENTRAL_LOG_DIR=$LOG_DIR
+IP_ADDR=`ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'`
 
 cd deploy
-nohup bundle exec torquebox run -p=3000 --jvm-options="$JVM_OPTS" --clustered < /dev/null > $TORQUEBOX_LOG 2>> $LOG  &
+
+JBOSS_HOME=`bundle exec torquebox env jboss_home`
+cp ~/.calcentral_config/standalone-ha.xml $JBOSS_HOME/standalone/configuration/
+
+nohup bundle exec torquebox run -b $IP_ADDR -p=3000 --jvm-options="$JVM_OPTS" --clustered --max-threads=25 < /dev/null > $TORQUEBOX_LOG 2>> $LOG  &
 cd ..
 
 # wait a bit to let server start up
