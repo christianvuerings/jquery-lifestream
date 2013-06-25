@@ -24,7 +24,11 @@
     /**
      * Refresh the services, we only want to do this on initial page load
      */
-    apiService.refresh.startRefresh();
+    $rootScope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
+      if (isAuthenticated) {
+        apiService.refresh.startRefresh();
+      }
+    });
 
   }]);
 

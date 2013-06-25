@@ -13,7 +13,9 @@
      *   - Sleep for x seconds
      *   - Expire the user cache
      *   - Warm up the user cache
-     *   - Return a 204 when the data is available
+     *   - Returns 200 if a warmup was performed,
+     *     304 if no warmup was performed (because it was done too recently),
+     *     and 401 if the user is anonymous.
      * As soon as this function start and also when it's finished, we should update all the widgets
      */
     var startRefresh = function() {
