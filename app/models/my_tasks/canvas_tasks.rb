@@ -52,7 +52,7 @@ module MyTasks
               formatted_entry["due_date"]["has_time"] = true
             end
 
-            Rails.logger.info "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+            Rails.logger.debug "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
             @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
           end
         end
@@ -82,7 +82,7 @@ module MyTasks
             format_date_into_entry!(due_date, formatted_entry, "due_date")
             bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
             formatted_entry["bucket"] = bucket
-            Rails.logger.info "#{self.class.name} Putting Canvas upcoming_events event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+            Rails.logger.debug "#{self.class.name} Putting Canvas upcoming_events event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
             @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
           end
         end

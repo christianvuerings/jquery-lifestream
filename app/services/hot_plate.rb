@@ -87,7 +87,6 @@ class HotPlate
       }
 
     ensure
-      Rails.logger.debug "Clearing connections for thread and other dead threads after cache warming: #{self.object_id}"
       ActiveRecord::Base.clear_active_connections!
     end
 

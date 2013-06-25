@@ -46,7 +46,6 @@ class SessionsController < ApplicationController
     begin
       reset_session
     ensure
-      Rails.logger.debug "Clearing connections for thread and other dead threads due to user logout: #{self.object_id}"
       ActiveRecord::Base.clear_active_connections!
     end
     render :json => {

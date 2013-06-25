@@ -12,13 +12,8 @@ module CalcentralLogging
     Rails.logger.level = DEBUG
 
     # Set up outputters based on configuration.
-    to_stdout = Settings.logger.stdout
-    if to_stdout
-      init_stdout
-    end
-    if to_stdout != 'only'
-      init_file_loggers(app_name)
-    end
+    init_stdout if Settings.logger.stdout
+    init_file_logger(app_name) if Settings.logger.stdout != 'only'
 
     # Currently, the file loggers use a hardcoded set of log levels.
     # The configured logger levels therefore only apply to stdout.
@@ -43,20 +38,18 @@ module CalcentralLogging
 
   private
 
-  def init_file_loggers(app_name)
+  def init_file_logger(app_name)
     format = PatternFormatter.new(:pattern => "[%d] [%l] [CalCentral] %m")
-    logger_levels = Log4r::LNAMES.dup - ["ALL", "OFF"]
-    logger_levels.map do |level|
-      filename_suffix = (Rails.env == "production") ? '' : "-#{Rails.env}"
-      filename_suffix += "-#{level}"
-      outputter = Log4r::DateFileOutputter.new('outputter', {
-        dirname: CalcentralLogging.log_root,
-        filename: "#{app_name}#{filename_suffix}.log",
-        formatter: format,
-        level: Object.const_get("#{level}")
-      })
-      Rails.logger.outputters << outputter
-    end
+
+    filename_suffix = (Rails.env == "production") ? '' : "-#{Rails.env}"
+
+    outputter = Log4r::DateFileOutputter.new('outputter', {
+      dirname: CalcentralLogging.log_root,
+      filename: "#{app_name}#{filename_suffix}.log",
+      formatter: format,
+      level: Settings.logger.level,
+    })
+    Rails.logger.outputters << outputter
   end
 
 end

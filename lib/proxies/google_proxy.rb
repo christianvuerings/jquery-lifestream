@@ -24,11 +24,9 @@ class GoogleProxy < BaseProxy
     @current_token = @authorization.access_token
 
     @start = Time.now.to_f
-    Rails.logger.debug "GoogleProxy timer initialized at #{@start}"
   end
 
   def request(request_params={})
-    Rails.logger.debug "GoogleProxy timer param setup begins at #{Time.now.to_f - @start}s after init"
     page_params = setup_page_params(request_params)
 
     result_pages = Enumerator.new do |yielder|
@@ -121,7 +119,7 @@ class GoogleProxy < BaseProxy
 
 
   def setup_page_params(request_params)
-    page_params = {
+    {
       params: request_params[:params],
       body: request_params[:body],
       headers: request_params[:headers],
@@ -131,9 +129,6 @@ class GoogleProxy < BaseProxy
                                                            request_params[:method]),
       page_limiter: request_params[:page_limiter]
     }
-
-    Rails.logger.debug "#{self.class.name} GoogleProxy timer finished looking up resource_method at #{Time.now.to_f - @start}; method = #{page_params[:resource_method].inspect}"
-    page_params
   end
 
   def self.access_granted?(user_id)

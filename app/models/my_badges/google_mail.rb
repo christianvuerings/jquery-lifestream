@@ -20,7 +20,7 @@ module MyBadges
     def internal_fetch_counts(params = {})
       google_proxy = GoogleMailListProxy.new(user_id: @uid)
       google_mail_results = google_proxy.mail_unread
-      Rails.logger.debug "Processing #{google_mail_results} GMail XML results"
+      Rails.logger.debug "#{self.class.name}: Processing #{google_mail_results} GMail XML results"
       response = {:count => 0, :items => []}
       if google_mail_results && google_mail_results.response
         nokogiri_xml = nil
@@ -107,7 +107,7 @@ module MyBadges
         end
         items
       rescue Exception => e
-        Rails.logger.fatal "Error parsing XML output for mail items from GoogleMailListProxy: #{e}"
+        Rails.logger.fatal "#{self.class.name} Error parsing XML output for mail items from GoogleMailListProxy: #{e}"
         Rails.logger.debug "Full dump of xml: #{nokogiri_xml}"
       end
       items

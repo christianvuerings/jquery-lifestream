@@ -31,7 +31,7 @@ class UserApi < MyMergedModel
   end
 
   def self.delete(uid)
-    logger.debug "#{self.class.name} removing user #{uid} from UserData"
+    logger.info "#{self.class.name} removing user #{uid} from UserData"
     user = nil
     use_pooled_connection {
       user = UserData.where(:uid => uid).first
@@ -55,6 +55,7 @@ class UserApi < MyMergedModel
       # Avoid race condition problems, UserData could have been modified or already instantiated
       # by another thread.
       @calcentral_user_data = UserData.where(uid: @uid).first_or_create do |record|
+        Rails.logger.debug "#{self.class.name} recording first login for #{@uid}"
         record.preferred_name = @override_name
         record.first_login_at = @first_login_at
       end

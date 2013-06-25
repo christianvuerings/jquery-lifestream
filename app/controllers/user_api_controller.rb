@@ -11,11 +11,9 @@ class UserApiController < ApplicationController
     Rails.cache.fetch(
       "flush_stale_connections_#{ServerRuntime.get_settings["hostname"]}",
       :expires_in => Settings.cache.stale_connection_flush_interval) {
-      Rails.logger.debug "#{self.class.name} Clearing stale cached connections"
       ActiveRecord::Base.connection_pool.clear_stale_cached_connections!
       true
     }
-    logger.debug "mystatus for uid '#{session[:user_id]}'"
     if session[:user_id]
       # wrap UserVisit.record_session inside a cache lookup so that we have to write UserVisit records less often.
       self.class.fetch_from_cache session[:user_id] do
@@ -37,14 +35,12 @@ class UserApiController < ApplicationController
   end
 
   def record_first_login
-    logger.debug "#{self.class.name} recording first login for #{session[:user_id]}"
     UserApi.new(session[:user_id]).record_first_login
     render :nothing => true, :status => 204
   end
 
   def delete
     if session[:user_id]
-      logger.debug "#{self.class.name} removing user #{session[:user_id]}"
       UserApi.delete(session[:user_id])
     end
     render :nothing => true, :status => 204

@@ -1,6 +1,7 @@
 application:
   layer: "testext"
 logger:
+  level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
   stdout: <%= ENV['LOGGER_STDOUT'] || 'only' %>
 postgres:
   database: calcentral_test

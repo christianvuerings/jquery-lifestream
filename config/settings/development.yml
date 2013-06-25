@@ -1,3 +1,5 @@
+logger:
+  level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
 application:
   layer: "development"
 logger:

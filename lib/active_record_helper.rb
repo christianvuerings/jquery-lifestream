@@ -67,19 +67,7 @@ module ActiveRecordHelper
   end
 
   def self.shared_log_threads
-    if Rails.logger.debug?
-      actors = Celluloid::Actor.all
-      actor_class_names = actors.map { |actor|
-        begin
-          actor.class.name
-        rescue Celluloid::DeadActorError
-          "DeadActor"
-        end
-      }
-      Rails.logger.debug "Live Actors in system #{actors.size}: #{actor_class_names}"
-    elsif Rails.logger.info?
-      Rails.logger.info "#{Celluloid::Actor.all.size} actors in the system."
-    end
+    # Need to rewrite this to match Torquebox/Ruby's default threading model.
   end
 
   def self.shared_use_pooled_connection(&block)
