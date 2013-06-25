@@ -44,7 +44,6 @@ class SessionsController < ApplicationController
 
   def destroy
     begin
-      Calcentral::USER_CACHE_EXPIRATION.notify session[:user_id]
       reset_session
     ensure
       Rails.logger.debug "Clearing connections for thread and other dead threads due to user logout: #{self.object_id}"
