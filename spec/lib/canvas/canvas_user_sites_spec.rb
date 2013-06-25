@@ -272,7 +272,8 @@ describe CanvasUserSites do
     }.should_not be_nil
     feed[:classes].index { |site|
       site[:id] == '321' &&
-          site[:site_type] == 'group'
+          site[:site_type] == 'group' &&
+          site[:source] == 'BIOLOGY 1A'
     }.should_not be_nil
     feed[:groups].length.should == 2
     feed[:groups].index { |site|

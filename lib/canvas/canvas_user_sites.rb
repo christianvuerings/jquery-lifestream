@@ -106,6 +106,7 @@ class CanvasUserSites < MyMergedModel
           title: site['name'],
           site_type: 'group',
           courses: groups_course[:courses],
+          source: groups_course[:course_code],
           emitter: CanvasProxy::APP_ID,
           color_class: "canvas-class",
           site_url: "#{@url_root}/groups/#{site['id']}"

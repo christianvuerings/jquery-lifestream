@@ -31,6 +31,7 @@
       "emitter": "Canvas",
       "color_class": "canvas-class",
       "site_url": "https://notquitecanvas/courses/1093164",
+      "site_type": "course",
       "courses": [
         {
           "id": "BIOLOGY:1A:2013-C"
@@ -44,6 +45,8 @@
       "emitter": "Canvas",
       "color_class": "canvas-class",
       "site_url": "https://notquitecanvas/groups/101261",
+      "source": "Bio 1a Lec 3",
+      "site_type": "group",
       "courses": [
         {
           "id": "BIOLOGY:1A:2013-C"
