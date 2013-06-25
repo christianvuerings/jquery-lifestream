@@ -10,6 +10,7 @@ class MyAcademics::Semesters
     schedule = []
 
     feed.each do |course|
+      next unless course[:role] == 'Student'
       course_number = course[:course_code]
       next unless course_number.strip.length
 
