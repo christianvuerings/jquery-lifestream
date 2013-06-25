@@ -21,7 +21,7 @@ class CanvasUserActivityHandler
       raw_activity_feed = @worker.fetch_user_activity
       @processed_feed = @processor.process_feed(raw_activity_feed)
     rescue Exception => e
-      Rails.logger.info "#{self.class.name} with exception: #{e.message}"
+      Rails.logger.warn "#{self.class.name} with exception: #{e.message}"
     end
   end
 
@@ -31,7 +31,7 @@ class CanvasUserActivityHandler
     begin
       @processed_feed
     rescue Exception => e
-      Rails.logger.info "#{self.class.name} with exception: #{e.message}"
+      Rails.logger.warn "#{self.class.name} with exception: #{e.message}"
       nil
     end
   end

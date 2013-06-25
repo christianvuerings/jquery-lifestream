@@ -1,6 +1,7 @@
 # The test environment should require minimal configuration, and is the one targeted by travis.
 # Avoid creating too many dependencies (if any) on a test.local.yml
 logger:
+  level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
   stdout: <%= ENV['LOGGER_STDOUT'] || 'only' %>
 application:
   layer: "test"

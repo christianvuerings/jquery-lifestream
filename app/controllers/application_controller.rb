@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   # callback URLs, we need to override.
   def default_url_options
     if defined?(Settings.application.protocol) && !Settings.application.protocol.blank?
-      logger.debug("Setting default URL protocol to #{Settings.application.protocol}")
+      Rails.logger.debug("Setting default URL protocol to #{Settings.application.protocol}")
       {protocol: Settings.application.protocol}
     else
       {}

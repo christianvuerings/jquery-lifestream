@@ -9,7 +9,7 @@ class MyGroups < MyMergedModel
     response[:groups].concat(process_canvas_sites) if CanvasProxy.access_granted?(@uid)
     response[:groups].concat(process_callink_sites) if CalLinkProxy.access_granted?(@uid)
     response[:groups].sort! { |x, y| x[:title].casecmp(y[:title]) }
-    logger.debug "#{self.class.name} get_feed is #{response.inspect}"
+    Rails.logger.debug "#{self.class.name} get_feed is #{response.inspect}"
     response
   end
 
@@ -48,7 +48,7 @@ class MyGroups < MyMergedModel
     cal_link_groups = membership_proxy.get_memberships
     return response unless cal_link_groups && cal_link_groups[:status_code] == 200
 
-    Rails.logger.debug "body = #{cal_link_groups[:body]}"
+    Rails.logger.debug "#{self.class.name}::process_callink_sites: body = #{cal_link_groups[:body]}"
     if cal_link_groups[:body] && cal_link_groups[:body]["items"]
       seen_orgs = Set.new
       cal_link_groups[:body]["items"].each do |group|

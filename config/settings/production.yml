@@ -1,3 +1,5 @@
+logger:
+  level: <%= ENV['LOGGER_LEVEL'] || WARN %>
 application:
   # Set if running behind Apache/Nginx + https
   protocol: "https://"

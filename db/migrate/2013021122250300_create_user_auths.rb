@@ -35,7 +35,7 @@ class CreateUserAuths < ActiveRecord::Migration
     test_user_ids.uniq!
 
     test_user_ids.each do |uid|
-      Rails.logger.debug "Flagging #{uid} as a test user"
+      Rails.logger.info "Flagging #{uid} as a test user"
       UserAuth.new_or_update_test_user! uid
     end
 

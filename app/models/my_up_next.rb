@@ -20,7 +20,7 @@ class MyUpNext < MyMergedModel
     results = fetch_events(@uid, opts)
     up_next[:items] = process_events(results)
 
-    logger.debug "MyUpNext get_feed is #{up_next.inspect}"
+    Rails.logger.debug "#{self.class.name}::get_feed: #{up_next.inspect}"
     up_next
   end
 

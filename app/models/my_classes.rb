@@ -9,7 +9,7 @@ class MyClasses < MyMergedModel
     if CampusUserCoursesProxy.access_granted?(@uid)
       response[:classes].concat(CampusUserCoursesProxy.new({:user_id => @uid}).get_campus_courses)
     end
-    logger.debug "MyClasses get_feed is #{response.inspect}"
+    Rails.logger.debug "MyClasses get_feed is #{response.inspect}"
     response
   end
 
