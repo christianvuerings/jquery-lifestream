@@ -12,6 +12,8 @@ LOGIT="tee -a $LOG"
 source .rvmrc
 
 export RAILS_ENV=production
+export LOGGER_STDOUT=only
+export LOGGER_LEVEL=INFO
 export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
 
 echo | $LOGIT
