@@ -17,6 +17,7 @@ echo "`date`: Stopping running instances of backstage..." | $LOGIT
 source .rvmrc
 
 export RAILS_ENV=production
+export LOGGER_STDOUT=only
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT

@@ -12,6 +12,7 @@ if [ -z $1 ]; then
 fi
 
 export RAILS_ENV=production
+export LOGGER_STDOUT=only
 export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
 LOG_DIR=${CALCENTRAL_LOG_DIR:=`pwd`"/log"}
 export CALCENTRAL_LOG_DIR=$LOG_DIR
