@@ -1,8 +1,7 @@
-logger:
-  level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
 application:
   layer: "development"
 logger:
+  level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
   stdout: <%= ENV['LOGGER_STDOUT'] || true %>
 postgres:
   database: calcentral_development
