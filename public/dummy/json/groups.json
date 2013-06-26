@@ -6,7 +6,7 @@
       "site_url": "https://some.instructure.com/groups/49957",
       "emitter": "Canvas",
       "site_type": "group",
-      "color_class": "bspace-group"
+      "color_class": "canvas-group"
     },
     {
       "title": "OE IT Design Initiative",
@@ -14,6 +14,7 @@
       "id": "7ea7d89c-b87c-4221-a2ea-16aee252b967",
       "site_url": "https://sakai-dev.berkeley.edu/portal/site/7ea7d89c-b87c-4221-a2ea-16aee252b967",
       "emitter": "bSpace",
+      "site_type": "course",
       "color_class": "bspace-group"
     },
     {
@@ -22,6 +23,7 @@
       "id": "b1df3076-88c5-43cc-00d2-632b196f8497",
       "site_url": "https://sakai-dev.berkeley.edu/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
       "emitter": "bSpace",
+      "site_type": "project",
       "color_class": "bspace-group"
     },
     {

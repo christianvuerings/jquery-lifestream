@@ -26,10 +26,13 @@ class SakaiUserSitesProxy < SakaiProxy
     site_to_groups
   end
 
+  # Because this data structure is used by multiple top-level feeds, it's essential
+  # that it be cached efficiently.
   def get_categorized_sites
     self.class.fetch_from_cache @uid do
-      categories = {}
+      categories = {classes: [], groups: []}
       if (sakai_user_id = get_sakai_user_id)
+        campus_user_courses = CampusUserCoursesProxy.new(user_id: @uid).get_campus_courses
         site_to_groups = get_site_to_groups_hash(sakai_user_id)
         get_filtered_users_sites(sakai_user_id).each do |row|
           site_id = row['site_id']
@@ -40,17 +43,22 @@ class SakaiUserSitesProxy < SakaiProxy
           }
           site[:short_description] = row['short_desc'] unless row['short_desc'].blank?
           site[:groups] = site_to_groups[site_id]
+          site[:site_type] = row['type']
           case row['type']
             when 'project'
               site[:title] = row['title'] || ''
               site[:color_class] = 'bspace-group'
-              (categories[:groups] ||= []) << site
+              categories[:groups] << site
             when 'course'
               site[:course_code] = row['title']
               site[:name] = row['short_desc']
               site[:color_class] = 'bspace-class'
-              site[:courses] = get_courses_from_provider(row['provider_id'])
-              (categories[:classes] ||= []) << site
+              if (linked_enrollments = get_courses_from_provider(campus_user_courses, row['provider_id']))
+                site[:courses] = linked_enrollments
+                categories[:classes] << site
+              else
+                categories[:groups] << site
+              end
           end
         end
       end
@@ -58,7 +66,7 @@ class SakaiUserSitesProxy < SakaiProxy
     end
   end
 
-  def get_courses_from_provider(provider_string)
+  def get_courses_from_provider(campus_user_courses, provider_string)
     if !provider_string.blank?
       # Looks like "2013-B-7405+2013-B-7414+2013-B-7417+2013-B-7420+2013-B-7423+2013-B-7426"
       section_ids = provider_string.split('+')
@@ -71,19 +79,25 @@ class SakaiUserSitesProxy < SakaiProxy
         (term_yr, term_cd, ccn) = section_id.split('-')
         ccns << ccn
       end
-      courses_data = CampusData.get_courses_from_sections(term_yr, term_cd, ccns)
-      courses = courses_data.collect do |cd|
-        {
-            term_yr: cd['term_yr'],
-            term_cd: cd['term_cd'],
-            dept: cd['dept_name'],
-            catid: cd['catalog_id']
-        }
+      linked_courses = Set.new
+      campus_user_courses.each do |course|
+        if course[:term_yr] == term_yr &&
+            course[:term_cd] == term_cd &&
+            course[:role] == 'Student' &&
+            course[:sections].index { |sect| ccns.include?(sect[:ccn])}
+          linked_courses.add(course[:id])
+        end
+      end
+      # TODO Support more ad-hoc maintenance of secondary section memberships, by connecting
+      # sites for sections in which the student is not officially enrolled.
+      if !linked_courses.empty?
+        linked_courses.to_a.collect! { |id| {id: id} }
+      else
+        nil
       end
     else
-      courses = []
+      nil
     end
-    courses
   end
 
 end

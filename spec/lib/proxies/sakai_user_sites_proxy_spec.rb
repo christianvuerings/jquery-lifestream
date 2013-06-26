@@ -25,9 +25,11 @@ describe SakaiUserSitesProxy do
     excluded_term_idx = all_sites.index{|s| s['term'] && !@client.current_terms.include?(s['term'])}
     excluded_term_idx.should_not be_nil
     excluded_site_id = all_sites[excluded_term_idx]['site_id']
-    course_feed = @client.get_categorized_sites[:classes]
-    bad_idx = course_feed.index{|s| s[:id] == excluded_site_id}
-    bad_idx.should be_nil
+    category_map = @client.get_categorized_sites
+    category_map.each_value do |sites|
+      bad_idx = sites.index{|s| s[:id] == excluded_site_id}
+      bad_idx.should be_nil
+    end
   end
 
   it "should not see unpublished sites", :if => SakaiData.test_data? do
@@ -62,19 +64,80 @@ describe SakaiUserSitesProxy do
     end
   end
 
-  it "should see any course offerings associated with a course site" do
-    course_feed = @client.get_categorized_sites[:classes]
-    if SakaiData.test_data?
-      course_feed.each do |site|
-        site[:courses].should_not be_nil
-        site[:courses].each do |course_info|
-          course_info[:dept].should_not be_nil
-          course_info[:catid].should_not be_nil
-          course_info[:term_cd].should_not be_nil
-          course_info[:term_yr].should_not be_nil
-        end
-      end
-    end
+  it "should see any course offerings associated with a course site if enrolled" do
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return([
+        {
+            id: "LAW:201S:2013-C",
+            term_yr: "2013",
+            term_cd: "C",
+            dept: "LAW",
+            catid: "201S",
+            course_code: "LAW 201S",
+            sections: [{ccn: "55810"}, {ccn: "55835"}],
+            role: "Student"
+        }
+    ])
+    SakaiData.stub(:get_users_sites).and_return ([
+        {
+            "site_id"=>"rackety-chile",
+            "type"=>"course",
+            "title"=>"A legal course site",
+            "term"=>"Summer 2013",
+            "provider_id"=>"2013-C-14645+2013-C-55835"
+        }
+    ])
+    sites_feed = @client.get_categorized_sites
+    sites_feed[:classes].length.should == 1
+    site = sites_feed[:classes][0]
+    site[:courses].length.should == 1
+    site[:courses][0][:id].should == "LAW:201S:2013-C"
   end
+
+  it "should put a course site in groups if not enrolled as a student" do
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return([
+         {
+             id: "LAW:201S:2013-C",
+             term_yr: "2013",
+             term_cd: "C",
+             dept: "LAW",
+             catid: "201S",
+             course_code: "LAW 201S",
+             sections: [{ccn: "55810"}, {ccn: "55835"}],
+             role: "Instructor"
+         },
+         {
+             id: "DWIN:117:2013-C",
+             term_yr: "2013",
+             term_cd: "C",
+             dept: "DWIN",
+             catid: "117",
+             course_code: "DWIN 117",
+             sections: [{ccn: "95959"}],
+             role: "Student"
+         }
+    ])
+    SakaiData.stub(:get_users_sites).and_return ([
+        {
+            "site_id"=>"rackety-chile",
+            "type"=>"course",
+            "title"=>"A legal course site",
+            "term"=>"Summer 2013",
+            "provider_id"=>"2013-C-14645+2013-C-55835"
+        },
+        {
+            "site_id"=>"bricka-brack",
+            "type"=>"course",
+            "title"=>"An off-the-books course site",
+            "term"=>"Summer 2013",
+            "provider_id"=>"2013-C-34985"
+        }
+    ])
+    sites_feed = @client.get_categorized_sites
+    sites_feed[:classes].empty?.should be_true
+    sites_feed[:groups].length.should == 2
+    sites_feed[:groups].each do |site|
+      site[:site_type].should == 'course'
+    end
+ end
 
 end

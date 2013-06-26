@@ -38,14 +38,14 @@ class CampusUserCoursesProxy < BaseProxy
   #    "waitlist_pos": 2
   # },
   def get_campus_courses
+    # Because this data structure is used by multiple top-level feeds, it's essential
+    # that it be cached efficiently.
     self.class.fetch_from_cache @uid do
       campus_classes = []
       previous_item = {}
       current_terms.each do |term|
         term_yr = term.term_yr
         term_cd = term.term_cd
-        # The SQL ordering is such that the feed currently only needs the first section record for every
-        # course offering. If we later have a need for the full list of sections, they're available.
         enrollments = CampusData.get_enrolled_sections(@uid, term_yr, term_cd)
         enrollments.each do |row|
           if (item = row_to_feed_item(row, previous_item))

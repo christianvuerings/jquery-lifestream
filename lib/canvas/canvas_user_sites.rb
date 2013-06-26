@@ -10,6 +10,9 @@
 #       student but not officially enrolled in any linked section.
 # Since "My Groups" depends on the contents of "My Classes", both should draw from
 # a single data object.
+#
+# Because this data structure is used by multiple top-level feeds, it's essential
+# that it be cached efficiently.
 
 class CanvasUserSites < MyMergedModel
 
@@ -66,6 +69,8 @@ class CanvasUserSites < MyMergedModel
               coffering[:term_cd] == campus_section[:term_cd] &&
               coffering[:sections].index{ |csect| csect[:ccn].to_s == campus_section[:ccn] }
         end
+        # TODO Support more ad-hoc maintenance of secondary section memberships, by connecting
+        # sites for sections in which the student is not officially enrolled.
         if matched_course_idx
           linked_course_ids.add(campus_user_courses[matched_course_idx][:id])
         end
