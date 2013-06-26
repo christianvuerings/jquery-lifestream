@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/dashboard_task_noitems.html">
-  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0">
+  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0 && api.user.profile.has_google_access_token">
     <h3 class="cc-widget-tasks-section-label"><span data-ng-bind="tasks_mode" class="cc-capitalize"></span></h3>
     <div data-ng-show="counts.opposite !== 0">
       <p class="cc-widget-tasks-no-items-first">You currently have <strong>0</strong> <span data-ng-bind="tasks_mode"></span> tasks or assignments and <strong data-ng-bind="counts.opposite"></strong> <span data-ng-bind="tasks_mode_opposite"></span> tasks and assignments.</p>
@@ -9,5 +9,8 @@
       <p class="cc-widget-tasks-no-items-first">You have no <span data-ng-bind="tasks_mode"></span> tasks and assignments.</p>
     </div>
     <p>To <strong>create a task</strong>, click the <em>New Task</em> button.</p>
+  </div>
+  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0 && counts.opposite === 0 && !api.user.profile.has_google_access_token">
+    <p class="cc-widget-tasks-no-items-first">You currently have no Canvas tasks and have not authorized access for Google. View <a href="/settings">Settings</a> to enable google access.</p>
   </div>
 </script>
