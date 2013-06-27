@@ -25,9 +25,10 @@ $cc-color-light-grey: #dddddd;
 $cc-color-lighter-medium-grey: #999;
 $cc-color-light-medium-grey: #6e6e6e;
 $cc-color-list-border: #cacaca;
-$cc-color-main-background: #f2f2f2;
+$cc-color-main-background: #f6f6f6;
 $cc-color-medium-grey: #424242;
-$cc-color-navigation: #366079;
+$cc-color-navigation: #2b6281;
+$cc-color-navigation-sub: #427694;
 $cc-color-placeholder: #aaa;
 $cc-color-popover-border: #d6d6d6;
 $cc-color-popover-calendar: #f6f6f6;
@@ -303,7 +304,7 @@ button {
 
 /* Container */
 .cc-container-main {
-  background-color: $cc-color-white;
+  background-color: $cc-color-main-background;
 }
 
 .bummer-404 {

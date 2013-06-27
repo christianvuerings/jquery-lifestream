@@ -1,6 +1,5 @@
 /* Tasks and Assigments widget */
 .cc-widget-tasks {
-  padding: 0 10px;
   .cc-button-group {
     margin-top: 10px;
   }
@@ -8,7 +7,7 @@
     padding: 10px;
   }
   .cc-widget-title .cc-button {
-    margin-top: 4px;
+    margin: 4px 10px 0 0;
   }
   .cc-alert-text {
     margin-bottom: 5px;
@@ -29,6 +28,7 @@
     }
     .cc-widget-tasks-no-items-first {
       border-top: 1px solid $cc-color-widget-background;
+      margin-top: 12px;
       padding-top: 12px;
     }
   }
@@ -66,6 +66,7 @@
   }
   .cc-widget-tasks-col-date {
     margin-right: -100%;
+    padding-right: 10px;
     right: 50px;
     text-align: right;
     width: 60px;
@@ -80,7 +81,7 @@
     clear: both;
     color: $cc-color-widget-section-label;
     font-size: 14px;
-    margin: 10px 0 0 0;
+    margin: 10px 20px 0 10px;
     overflow: hidden;
   }
   .cc-widget-tasks-section-label-red {
@@ -108,6 +109,7 @@
 
     li {
       border-bottom: 1px solid $cc-color-widget-background;
+      margin-right: 10px;
       &:first-child {
         border-top: 1px solid $cc-color-widget-background;
         margin-top: 12px;

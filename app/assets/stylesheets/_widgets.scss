@@ -1,3 +1,11 @@
+.cc-widget {
+  background: #fff;
+  margin: 15px 15px 0 0;
+  overflow: hidden;
+}
+.cc-widget-last {
+  margin-right: 0;
+}
 .cc-widget-list {
   font-size: 12px;
   margin: 0;
@@ -64,10 +72,6 @@
     padding: 5px 10px;
   }
 }
-.cc-widget-title-transparent {
-  background: transparent;
-  border-bottom: 1px solid $cc-color-widget-background;
-}
 .cc-widget-title-sub {
   color: $cc-color-lighter-medium-grey;
   font-size: 13px;
@@ -79,5 +83,8 @@
 @media only screen and (max-width: 767px) {
   .cc-widget-title-sub {
     margin-top: 0;
+  }
+  .cc-widget {
+    margin: 0;
   }
 }
