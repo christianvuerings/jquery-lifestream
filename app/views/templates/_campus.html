@@ -15,21 +15,25 @@
         </div>
       </div>
 
-      <h1>{{currentTopCategory}}</h1>
+      <h1 data-ng-bind="currentTopCategory" class="hide-for-small"></h1>
 
-      <div class="cc-page-campus-content-subcontainer" data-ng-repeat="subcategory in subcategories">
+      <div class="cc-widget" data-ng-show="currentTopCategory">
+        <div class="cc-widget-title">
+          <h2>Links for <span data-ng-bind="currentTopCategory"></span></h2>
+        </div>
+        <div class="cc-page-campus-content-subcontainer" data-ng-repeat="subcategory in subcategories">
+          <h3>{{subcategory}}</h3>
 
-        <h2>{{subcategory}}</h2>
-
-        <ul>
-          <li data-ng-repeat="link in links | orderBy:'name' | linksubcategory:subcategory">
-            <a data-ng-href="{{link.url}}"
-              data-ng-click="api.analytics.trackExternalLink('Campus links', subcategory, link.url)"
-              title="{{link.description}}">{{link.name}}</a>
-          </li>
-        </ul>
-
+          <ul>
+            <li data-ng-repeat="link in links | orderBy:'name' | linksubcategory:subcategory">
+              <a data-ng-href="{{link.url}}"
+                data-ng-click="api.analytics.trackExternalLink('Campus links', subcategory, link.url)"
+                title="{{link.description}}">{{link.name}}</a>
+            </li>
+          </ul>
+        </div>
       </div>
+
     </div>
 
     <div class="large-3 pull-9 columns cc-page-campus-navigation">
@@ -37,8 +41,8 @@
       <div data-ng-repeat="navitem in campusdata.navigation">
         <h3 data-ng-show="navitem.label">{{navitem.label}}</h3>
         <ul>
-          <li data-ng-repeat="category in navitem.categories" data-ng-show="topcategories[category.name]">
-            <a data-ng-class="{'cc-page-campus-navigation-active':(currentTopCategory==category.name)}" data-ng-href="/campus/{{category.id}}">{{category.name}}</a>
+          <li data-ng-class="{'active':(currentTopCategory==category.name)}" data-ng-repeat="category in navitem.categories" data-ng-show="topcategories[category.name]">
+            <a data-ng-href="/campus/{{category.id}}">{{category.name}}</a>
           </li>
         </ul>
       </div>
