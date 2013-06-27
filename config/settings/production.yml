@@ -13,3 +13,5 @@ campusdb:
   pool: 5
   timeout: 5000
 secret_token: some 128 char random hex string
+canvas_proxy:
+  export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
