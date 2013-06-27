@@ -81,14 +81,17 @@ describe SakaiUserSitesProxy do
         {
             "site_id"=>"rackety-chile",
             "type"=>"course",
-            "title"=>"A legal course site",
+            "title"=>"Law 201S",
             "term"=>"Summer 2013",
+            "short_desc"=>"A legal course site",
             "provider_id"=>"2013-C-14645+2013-C-55835"
         }
     ])
     sites_feed = @client.get_categorized_sites
     sites_feed[:classes].length.should == 1
     site = sites_feed[:classes][0]
+    site[:name].should == "A legal course site"
+    site[:course_code].should == "Law 201S"
     site[:courses].length.should == 1
     site[:courses][0][:id].should == "LAW:201S:2013-C"
   end
@@ -137,6 +140,7 @@ describe SakaiUserSitesProxy do
     sites_feed[:groups].length.should == 2
     sites_feed[:groups].each do |site|
       site[:site_type].should == 'course'
+      site[:title].blank?.should be_false
     end
  end
 

@@ -50,13 +50,15 @@ class SakaiUserSitesProxy < SakaiProxy
               site[:color_class] = 'bspace-group'
               categories[:groups] << site
             when 'course'
-              site[:course_code] = row['title']
-              site[:name] = row['short_desc']
-              site[:color_class] = 'bspace-class'
               if (linked_enrollments = get_courses_from_provider(campus_user_courses, row['provider_id']))
                 site[:courses] = linked_enrollments
+                site[:course_code] = row['title']
+                site[:name] = row['short_desc']
+                site[:color_class] = 'bspace-class'
                 categories[:classes] << site
               else
+                site[:title] = row['title']
+                site[:color_class] = 'bspace-group'
                 categories[:groups] << site
               end
           end
