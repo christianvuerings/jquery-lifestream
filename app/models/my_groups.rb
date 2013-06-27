@@ -21,25 +21,8 @@ class MyGroups < MyMergedModel
   end
 
   def process_canvas_sites
-    response = []
-    canvas_proxy = CanvasGroupsProxy.new(user_id: @uid)
-    canvas_groups = canvas_proxy.groups
-    return response unless canvas_groups && (canvas_groups.status == 200)
-    begin
-      JSON.parse(canvas_groups.body).each do |group|
-        response.push(
-          {
-            title: group["name"],
-            id: group["id"].to_s,
-            emitter: CanvasProxy::APP_ID,
-            color_class: "canvas-group",
-            site_url: "#{canvas_proxy.url_root}/groups/#{group['id']}"
-          })
-      end
-    rescue JSON::ParserError
-      Rails.logger.warn "Failed to parse canvas_groups.body: #{canvas_groups.body} in #{self.class.name}."
-    end
-    response
+    canvas_proxy = CanvasUserSites.new(@uid)
+    canvas_proxy.get_feed[:groups] || []
   end
 
   def process_callink_sites

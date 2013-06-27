@@ -193,6 +193,10 @@ describe CanvasUserSites do
     group = feed[:groups][0]
     group[:id].should == '321'
     group[:site_type].should == 'group'
+    group[:title].blank?.should be_false
+    group[:site_url].blank?.should be_false
+    group[:emitter].should == "Canvas"
+    group[:color_class].should == "canvas-group"
   end
 
   it "should put suitable course-linked Canvas Group sites into classes" do
