@@ -3,15 +3,13 @@ class HotPlate
   include ActiveRecordHelper
   attr_reader :total_warmups
 
-  MUTEX = Mutex.new
-
   def initialize
-    MUTEX.synchronize do
-      @total_warmups = 0
-      @total_time = 0
-      @last_warmup = ''
-      @stopped = false
-    end
+    @stopped = false
+    Rails.cache.write(self.class.cache_key, {
+      :total_warmups => 0,
+      :total_time => 0,
+      :last_warmup => ''
+    })
   end
 
   def start
@@ -35,10 +33,17 @@ class HotPlate
     end
   end
 
-  def ping
-    MUTEX.synchronize do
-      "#{self.class.name} #{@total_warmups} total warmups requested; #{@total_time}s total spent warming; last warmup at #{@last_warmup.to_s}"
+  def self.ping
+    stats = Rails.cache.read(self.cache_key)
+    if stats
+      "#{self.name} #{stats[:total_warmups]} total warmups requested; #{stats[:total_time]}s total spent warming; last warmup at #{stats[:last_warmup].to_s}"
+    else
+      "#{self.name} Stats are not available"
     end
+  end
+
+  def self.cache_key
+    'HotPlate/Stats'
   end
 
   def warm
@@ -67,10 +72,14 @@ class HotPlate
 
         end_time = Time.now.to_f
         time = end_time - start_time
-        MUTEX.synchronize do
-          @total_warmups += warmups
-          @total_time += time
-          @last_warmup = Time.zone.now
+
+        stats = Rails.cache.read(self.class.cache_key)
+        if stats
+          Rails.cache.write(self.class.cache_key, {
+            :total_warmups => stats[:total_warmups] + warmups,
+            :total_time => stats[:total_time] + time,
+            :last_warmup => Time.zone.now
+          })
         end
         Rails.logger.info "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
 

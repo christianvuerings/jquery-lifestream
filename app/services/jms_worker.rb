@@ -1,15 +1,14 @@
 class JmsWorker
 
   JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
-  MUTEX = Mutex.new
 
   def initialize
     @jms = nil
     @handler = JmsMessageHandler.new
     @stopped = false
-    MUTEX.synchronize do
-      @last_message_received_at = ''
-    end
+    Rails.cache.write(self.class.cache_key, {
+      :last_message_received_at => ''
+    })
   end
 
   def start
@@ -32,9 +31,9 @@ class JmsWorker
 
   def run
     if Settings.ist_jms.fake
-      read_fake {|msg| @handler.handle(msg)}
+      read_fake { |msg| @handler.handle(msg) }
     else
-      read_jms {|msg| @handler.handle(msg)}
+      read_jms { |msg| @handler.handle(msg) }
     end
   end
 
@@ -56,9 +55,9 @@ class JmsWorker
           f.puts('')
         end
       end
-      MUTEX.synchronize do
-        @last_message_received_at = Time.zone.now
-      end
+      Rails.cache.write(self.class.cache_key, {
+        :last_message_received_at => Time.zone.now
+      })
       yield(msg)
     end
   end
@@ -66,20 +65,27 @@ class JmsWorker
   def read_fake
     File.open(JMS_RECORDING, 'r').each("\n\n") do |msg_yaml|
       msg = YAML::load(msg_yaml)
-      MUTEX.synchronize do
-        @last_message_received_at = Time.zone.now
-      end
+      Rails.cache.write(self.class.cache_key, {
+        :last_message_received_at => Time.zone.now
+      })
       yield(msg)
     end
   end
 
-  def ping
-    MUTEX.synchronize do
+  def self.cache_key
+    'JmsWorker/Stats'
+  end
+
+  def self.ping
+    stats = Rails.cache.read(self.cache_key)
+    if stats
       if @jms
-        "#{self.class.name} #{@jms.count} received messages; last message received at #{@last_message_received_at.to_s}"
+        "#{self.name} #{@jms.count} received messages; last message received at #{stats[:last_message_received_at].to_s}"
       else
-        "#{self.class.name} JMS connection is not initialized (fake = #{Settings.ist_jms.fake}); last message received at #{@last_message_received_at.to_s}"
+        "#{self.name} JMS connection is not initialized (fake = #{Settings.ist_jms.fake}); last message received at #{stats[:last_message_received_at].to_s}"
       end
+    else
+      "#{self.name} Stats are not available"
     end
   end
 

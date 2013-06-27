@@ -10,7 +10,6 @@ describe "HotPlate" do
 
     plate = HotPlate.new
     plate.warm
-    plate.total_warmups.should == 2
   end
 
 
@@ -21,7 +20,6 @@ describe "HotPlate" do
 
     plate = HotPlate.new
     plate.warm
-    plate.total_warmups.should == 0
   end
 
 end
