@@ -39,8 +39,10 @@
     };
 
     var getMyClasses = function() {
-      //$http.get('/api/my/classes').success(function(data) {
-      $http.get('/dummy/json/classes.json').success(function(data) {
+      $http.get('/api/my/classes').success(function(data) {
+      //$http.get('/dummy/json/classes.json').success(function(data) {
+        campusClasses = {};
+        otherClasses = [];
         angular.extend($scope, data);
         if (data.classes) {
           parseClasses(data.classes);
