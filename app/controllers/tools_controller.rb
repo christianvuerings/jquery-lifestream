@@ -8,16 +8,20 @@ class ToolsController < ApplicationController
     style_dir = Dir.glob(Rails.root.join('app', 'assets', 'stylesheets', '*'))
 
     style_dir.each do |filename|
-      f = File.open(filename, "r")
-      f.each_line do |line|
-        if line.start_with?("$cc-color-")
-          # Strip from right of semicolon in case someone adds a comment after a color
-          line = line.gsub(/;.*$/,'')
-          # Trim cruft and split on semicolons
-          temparr = line.rstrip().delete(' ').delete('$').delete(';').split(':')
-          color = {"name" => temparr[0], "hex" => temparr[1]}
-          colorvars.push(color)
+      begin
+        f = File.open(filename, "r")
+        f.each_line do |line|
+          if line.start_with?("$cc-color-")
+            # Strip from right of semicolon in case someone adds a comment after a color
+            line = line.gsub(/;.*$/,'')
+            # Trim cruft and split on semicolons
+            temparr = line.rstrip().delete(' ').delete('$').delete(';').split(':')
+            color = {"name" => temparr[0], "hex" => temparr[1]}
+            colorvars.push(color)
+          end
         end
+      rescue Exception
+        Rails.logger.warn "Exception thrown in ToolsController::get_styles: #{$!}"
       end
     end
 
