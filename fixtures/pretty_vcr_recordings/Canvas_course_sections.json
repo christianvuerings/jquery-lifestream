@@ -1,0 +1,210 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/767330/sections",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Thu, 20 Jun 2013 22:09:03 GMT"
+          ],
+          "etag": [
+            "\"25fedc62aa546e344806a2ad30c60299\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=VpfaCezEteGconeudR1o0Q.eT0Gw-nsx5vyKGphO4PGYfxu1Zdx-iCSzA5FVTYoWnEyVK0I703mGEG4WAwViCftEhmOOQdUioh0X_WDVIo9KPQiIdkUITgAAASOcR9T4JgEE6lOc0ix6jowQoDMem5IJQVyl6KOjjperLSlI6r8GXwKGKoq3ep4uWj2vEIXoZk.Fs7V1fsGUaK_b6kN2EJ0do6H12o.UcN9gA; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "f1093080-bc23-0130-3150-02f885576c21"
+          ],
+          "x-runtime": [
+            "734"
+          ],
+          "x-session-id": [
+            "faa91ecba6f74030e2238f9b68c90066"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "290"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "course_id": 767330,
+              "end_at": null,
+              "id": 1237012,
+              "name": "Canvas-only Section",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": null
+            },
+            {
+              "course_id": 767330,
+              "end_at": null,
+              "id": 1237009,
+              "name": "2013-C-7309",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2013-C-7309"
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 20 Jun 2013 22:09:03 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/833382/sections",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Thu, 20 Jun 2013 22:10:04 GMT"
+          ],
+          "etag": [
+            "\"3d4f9dce4c6aa25629d0f9d7ec8ccbeb\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=jUcD4HHFRka9zLJ2l6rkwA.cHIeGljTlhkArk3xe-hX3dfOOgcYJ41q6S0NIBX98VZDqiJqrrkkBnzKhfkhwBn8zg8tSunvDglPDubNKps2zLzH23fuPykxPBeoFJA6xiUhyPXwOirj-x0Tp8zQTlZPCsnWmKqcQOD1SFLpibZSf0nOopOS8MmL1kdAJtyyed4.ucPTtoAvYl7_jKXFo4x704a96XA.UcN9vA; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "15284270-bc24-0130-c9a4-02f885779982"
+          ],
+          "x-runtime": [
+            "270"
+          ],
+          "x-session-id": [
+            "39db715dac732502db616957cd286ff7"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "150"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "course_id": 833382,
+              "end_at": null,
+              "id": 1237014,
+              "name": "2013-C-16171",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2013-C-16171"
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 20 Jun 2013 22:10:04 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

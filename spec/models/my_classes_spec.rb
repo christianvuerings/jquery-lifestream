@@ -3,25 +3,38 @@ require "spec_helper"
 describe "MyClasses" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_canvas_proxy = CanvasUserCoursesProxy.new({fake: true})
-    @fake_canvas_courses = JSON.parse(@fake_canvas_proxy.courses.body)
-    @fake_sakai_proxy = SakaiUserSitesProxy.new({fake: true})
+    @fake_canvas = {
+        classes: [{
+            id: '1023614',
+            emitter: 'Canvas',
+            courses: [ { id: 'BIOLOGY:1A:2013-C'}]
+        }]
+    }
+    @fake_sakai = {
+        classes: [{
+            id: '095d5b02-afde-4186-a668-0b84734b1d5c',
+            emitter: 'bSpace',
+            courses: [ { id: 'BIOLOGY:1A:2013-C'}]
+        }]
+    }
+    @fake_campus = [{
+        id: 'BIOLOGY:1A:2013-C',
+        course_code: 'BIOLOGY 1A',
+        emitter: 'Campus'
+    }]
   end
 
-  it "should contain all my Canvas courses" do
-    @fake_canvas_courses.size.should be > 0
-    Oauth2Data.stub(:get).and_return({"access_token" => "something"})
-    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-    SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
-    CampusUserCoursesProxy.stub(:access_granted?).and_return(false)
-    my_classes = MyClasses.new(@user_id).get_feed
-    my_classes[:classes].size.should == @fake_canvas_courses.size
-    my_classes[:classes].each do |my_class|
-      my_class[:emitter].should == CanvasProxy::APP_ID
-      my_class[:course_code].should_not be_nil
-      my_class[:id].instance_of?(String).should == true
-      my_class[:site_url].should_not be_nil
-    end
+  it "should contain all my Canvas courses which match enrolled sections" do
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    SakaiProxy.stub(:access_granted?).and_return(false)
+    CampusUserCoursesProxy.stub(:access_granted?).and_return(true)
+    CanvasUserSites.any_instance.stub(:get_feed).and_return(@fake_canvas)
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return(@fake_campus)
+    feed = MyClasses.new(@user_id).get_feed
+    my_classes = feed[:classes]
+    my_classes.size.should == 2
+    my_classes.index{|entry| entry[:emitter] == CanvasProxy::APP_ID && entry[:id] == '1023614'}.should_not be_nil
+    my_classes.index{|entry| entry[:emitter] == CampusUserCoursesProxy::APP_ID && entry[:id] == 'BIOLOGY:1A:2013-C'}.should_not be_nil
   end
 
   it "should return successfully without Canvas or bSpace access" do
@@ -29,81 +42,28 @@ describe "MyClasses" do
     SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
     CanvasProxy.should_not_receive(:new)
     SakaiUserSitesProxy.should_not_receive(:new)
-    CampusUserCoursesProxy.stub(:access_granted?).and_return(false)
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return([])
     my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should == 0
   end
 
   it "should return bSpace course sites for the current term" do
     CanvasProxy.stub(:access_granted?).and_return(false)
-    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
-    SakaiUserSitesProxy.stub(:new).and_return(@fake_sakai_proxy)
-    CampusUserCoursesProxy.stub(:access_granted?).and_return(false)
-    my_classes = MyClasses.new(@user_id).get_feed
-    my_classes[:classes].size.should be > 0 if SakaiData.test_data?
-    my_classes[:classes].each do |my_class|
-      my_class[:emitter].should == "bSpace"
-      my_class[:course_code].should_not be_nil
-      my_class[:id].instance_of?(String).should == true
-      my_class[:site_url].should_not be_nil
-    end
+    SakaiProxy.stub(:access_granted?).and_return(true)
+    CampusUserCoursesProxy.stub(:access_granted?).and_return(true)
+    SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return(@fake_sakai)
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return(@fake_campus)
+    feed = MyClasses.new(@user_id).get_feed
+    my_classes = feed[:classes]
+    my_classes.size.should == 2
+    my_classes.index{|entry| entry[:emitter] == SakaiProxy::APP_ID && entry[:id] == '095d5b02-afde-4186-a668-0b84734b1d5c'}.should_not be_nil
+    my_classes.index{|entry| entry[:emitter] == CampusUserCoursesProxy::APP_ID && entry[:id] == 'BIOLOGY:1A:2013-C'}.should_not be_nil
   end
 
-  it "should return bSpace courses when Canvas returns bad responses" do
-    CanvasProxy.stub(:access_granted?).and_return(true)
-    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
-    SakaiUserSitesProxy.stub(:new).and_return(@fake_sakai_proxy)
-    CampusUserCoursesProxy.stub(:access_granted?).and_return(false)
-    response = OpenStruct.new({body: 'derp derp', status: 200})
-    CanvasUserCoursesProxy.any_instance.stub(:courses).and_return(response)
-    my_classes = MyClasses.new(@user_id).get_feed
-    my_classes[:classes].size.should be > 0 if SakaiData.test_data?
-    my_classes[:classes].each do |my_class|
-      my_class[:emitter].should == "bSpace"
-    end
-  end
-
-  it "should return bSpace courses when Canvas service is unavailable" do
-    CanvasProxy.stub(:access_granted?).and_return(true)
-    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
-    SakaiUserSitesProxy.stub(:new).and_return(@fake_sakai_proxy)
-    CanvasProxy.any_instance.stub(:request).and_return(nil)
-    CampusUserCoursesProxy.stub(:access_granted?).and_return(false)
-    my_classes = MyClasses.new(@user_id).get_feed
-    my_classes[:classes].size.should be > 0 if SakaiData.test_data?
-    my_classes[:classes].each do |my_class|
-      my_class[:emitter].should == "bSpace"
-    end
-  end
-
-  it "should return Canvas courses when bSpace service is unavailable" do
-    CanvasProxy.stub(:access_granted?).and_return(true)
-    CanvasProxy.stub(:new).and_return(@fake_canvas_proxy)
-    SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
-    SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return({status_code: 503})
-    CampusUserCoursesProxy.stub(:access_granted?).and_return(false)
-    my_classes = MyClasses.new(@user_id).get_feed
-    my_classes[:classes].size.should be > 0
-    my_classes[:classes].each do |my_class|
-      my_class[:emitter].should == "Canvas"
-    end
-  end
-
-  it "should return classes in which I officially teach or am enrolled" do
+  it "should return classes in which I am officially enrolled" do
     CanvasProxy.stub(:access_granted?).and_return(false)
     SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
-    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return(
-        [{id: "COG SCI:C102:2013-B",
-          site_url:
-              "http://osoc.berkeley.edu/OSOC/osoc?p_term=SP&x=0&p_classif=--+Choose+a+Course+Classification+--&p_deptname=--+Choose+a+Department+Name+--&p_presuf=--+Choose+a+Course+Prefix%2fSuffix+--&y=0&p_course=C102&p_dept=COG+SCI",
-          course_code: "COG SCI C102",
-          emitter: "Campus",
-          name: "Scientific Approaches to Consciousness",
-          color_class: "campus-class",
-          courses:
-              [{:term_yr=>"2013", :term_cd=>"B", :dept=>"COG SCI", :catid=>"C102"}],
-          role: "Student"}]
-    )
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return(@fake_campus)
     my_classes = MyClasses.new(@user_id).get_feed
     my_classes[:classes].size.should be > 0
     my_classes[:classes].each do |my_class|

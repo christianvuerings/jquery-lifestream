@@ -33,8 +33,7 @@ module Calcentral
         CanvasGroupsProxy => :expire,
         CanvasTodoProxy => :expire,
         CanvasUpcomingEventsProxy => :expire,
-        CanvasUserActivityProxy => :expire,
-        CanvasUserActivityProcessor => :expire,
+        CanvasUserActivityStreamProxy => :expire,
         CanvasUserProfileProxy => :expire,
 
         MyBadges::GoogleCalendar => :expire,

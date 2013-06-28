@@ -12,7 +12,8 @@ class MyActivities < MyMergedModel
   end
 
   def get_feed_internal
-    activities = get_canvas_activity
+    activities = []
+    append_canvas_activities(activities)
     append_notifications(activities)
     append_sakai_announcements(activities)
     append_regblocks(activities)
@@ -23,12 +24,12 @@ class MyActivities < MyMergedModel
 
   private
 
-  def get_canvas_activity
+  def append_canvas_activities(activities)
     if CanvasProxy.access_granted?(@uid)
-      canvas_activity_feed = CanvasUserActivityHandler.new(user_id: @uid)
-      canvas_results = canvas_activity_feed.get_feed_results
+      canvas_activity_feed = CanvasUserActivities.new(@uid)
+      canvas_results = canvas_activity_feed.get_feed
+      activities.concat(canvas_results)
     end
-    canvas_results ||= []
   end
 
   def append_notifications(activities)
@@ -67,7 +68,7 @@ class MyActivities < MyMergedModel
               }
               case category
                 when :classes
-                  announcement[:source] = site[:course_code]
+                  announcement[:source] = site[:name]
                 when :groups
                   announcement[:source] = site[:title]
               end

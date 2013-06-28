@@ -6,7 +6,7 @@ describe "MyActivities" do
     @user_id = rand(99999).to_s
     @fake_sakai_user_sites = SakaiUserSitesProxy.new(fake: true)
     @fake_bearfacts_proxy = BearfactsRegblocksProxy.new(fake: true)
-    @fake_canvas_proxy = CanvasUserActivityProxy.new(fake: true)
+    @fake_canvas_proxy = CanvasUserActivityStreamProxy.new(fake: true)
     @documented_types = ['alert', 'announcement', 'assignment',
                          'discussion', 'grade_posting', 'message', 'webconference']
   end
@@ -81,7 +81,7 @@ describe "MyActivities" do
 
   it "should get properly formatted Canvas activities when bSpace is not available" do
     CanvasProxy.stub(:access_granted?).and_return(true)
-    CanvasUserActivityProxy.stub(:new).and_return(@fake_canvas_proxy)
+    CanvasUserActivityStreamProxy.stub(:new).and_return(@fake_canvas_proxy)
     SakaiProxy.stub(:access_granted?).and_return(true)
     SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return({})
     my_activities = MyActivities.new(@user_id).get_feed

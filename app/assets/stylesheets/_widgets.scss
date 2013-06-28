@@ -44,7 +44,7 @@
 .cc-widget-list-selected {
   background: $cc-color-widget-more-background;
 }
-.cc-widget-list li > a, .cc-widget-list-hover {
+.cc-widget-list > li > a, .cc-widget-list-hover {
   overflow: hidden;
   padding: 10px 15px;
   &:hover, &:focus {
@@ -57,6 +57,27 @@
     }
   }
 }
+
+.cc-widget-sublist {
+  list-style-type: none;
+  margin-left: 0;
+  margin-top: 5px;
+  > li {
+    a {
+      display: block;
+    }
+    padding: 5px 0 0 0;
+    .cc-icon {
+      float: left;
+      margin: 0 10px 0 0;
+    }
+  }
+}
+.cc-widget-sublist-extra {
+  display: block;
+  margin-top: 10px;
+}
+
 .cc-widget-text {
   padding: 15px 20px 20px 20px;
 }
