@@ -15,7 +15,7 @@ describe CanvasProxy do
   end
 
   it "should get real user activity feed using the Tammi account", :testext => true do
-    proxy = CanvasUserActivityProxy.new(
+    proxy = CanvasUserActivityStreamProxy.new(
       :user_id => @user_id
     )
     response = proxy.user_activity

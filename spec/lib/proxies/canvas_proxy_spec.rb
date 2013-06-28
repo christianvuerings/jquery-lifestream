@@ -64,7 +64,7 @@ describe CanvasProxy do
 
   it "should get user activity feed using the Tammi account" do
     begin
-      proxy = CanvasUserActivityProxy.new(:fake => true)
+      proxy = CanvasUserActivityStreamProxy.new(:fake => true)
       response = proxy.user_activity
       user_activity = JSON.parse(response.body)
       user_activity.kind_of?(Array).should be_true
