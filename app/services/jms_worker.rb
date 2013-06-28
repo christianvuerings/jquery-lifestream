@@ -6,9 +6,6 @@ class JmsWorker
     @jms = nil
     @handler = JmsMessageHandler.new
     @stopped = false
-    Rails.cache.write(self.class.cache_key, {
-      :last_message_received_at => ''
-    })
   end
 
   def start
@@ -57,7 +54,7 @@ class JmsWorker
       end
       Rails.cache.write(self.class.cache_key, {
         :last_message_received_at => Time.zone.now
-      })
+      }, :expires_in => 0)
       yield(msg)
     end
   end
@@ -67,7 +64,7 @@ class JmsWorker
       msg = YAML::load(msg_yaml)
       Rails.cache.write(self.class.cache_key, {
         :last_message_received_at => Time.zone.now
-      })
+      }, :expires_in => 0)
       yield(msg)
     end
   end

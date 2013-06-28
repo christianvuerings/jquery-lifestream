@@ -101,25 +101,27 @@ google_analytics_id: UA-XXXXXX-X
 # We use https://getsentry.com for our JavaScript Error logging
 sentry_url: "https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185"
 
-# Cache settings
+# Cache settings. 0 means never expire.
+# WARNING: memcached's upper limit is 30 days. Specifying longer expiration than that will
+# result in entries expiring instantly.
 cache:
   # Array of server addresses in cluster (for memcached)
   servers: ["localhost"]
-  maximum_expires_in: <%= 1.year %>
+  maximum_expires_in: <%= 29.days %>
   race_condition_ttl: <%= 10.seconds %>
   stale_connection_flush_interval: <%= 5.minutes %>
   expiration:
     default: <%= 35.minutes %>
-    MyAcademics::Merged: <%= 1.year %>
-    MyActivities: <%= 1.year %>
-    MyBadges::Merged: <%= 1.year %>
-    MyCampusLinks: <%= 1.year %>
-    MyClasses: <%= 1.year %>
-    MyGroups: <%= 1.year %>
-    MyTasks::Merged: <%= 1.year %>
-    MyUpNext: <%= 1.year %>
+    MyAcademics::Merged: 0
+    MyActivities: 0
+    MyBadges::Merged: 0
+    MyCampusLinks: 0
+    MyClasses: 0
+    MyGroups: 0
+    MyTasks::Merged: 0
+    MyUpNext: 0
     MyRefreshController: <%= 30.seconds %>
-    UserApi: <%= 1.year %>
+    UserApi: 0
     UserApiController: <%= 4.hours %>
 
 # Cache warmer settings
