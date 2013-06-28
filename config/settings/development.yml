@@ -9,3 +9,17 @@ postgres:
   password: secret
   host: localhost
   port: 5432
+
+
+cache:
+  expiration:
+    default: <%= 35.minutes %>
+    MyAcademics::Merged: <%= 1.day %>
+    MyActivities: <%= 1.day %>
+    MyBadges::Merged: <%= 1.day %>
+    MyCampusLinks: <%= 1.day %>
+    MyClasses: <%= 1.day %>
+    MyGroups: <%= 1.day %>
+    MyTasks::Merged: <%= 1.day %>
+    MyUpNext: <%= 1.day %>
+    UserApi: <%= 1.day %>
