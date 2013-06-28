@@ -5,11 +5,6 @@ class HotPlate
 
   def initialize
     @stopped = false
-    Rails.cache.write(self.class.cache_key, {
-      :total_warmups => 0,
-      :total_time => 0,
-      :last_warmup => ''
-    })
   end
 
   def start
@@ -73,14 +68,20 @@ class HotPlate
         end_time = Time.now.to_f
         time = end_time - start_time
 
-        stats = Rails.cache.read(self.class.cache_key)
-        if stats
-          Rails.cache.write(self.class.cache_key, {
-            :total_warmups => stats[:total_warmups] + warmups,
-            :total_time => stats[:total_time] + time,
-            :last_warmup => Time.zone.now
-          })
+        stats = Rails.cache.fetch(self.class.cache_key, :expires_in => 0) do
+          {
+            :total_warmups => 0,
+            :total_time => 0,
+            :last_warmup => ''
+          }
         end
+
+        Rails.cache.write(self.class.cache_key, {
+          :total_warmups => stats[:total_warmups] + warmups,
+          :total_time => stats[:total_time] + time,
+          :last_warmup => Time.zone.now
+        }, :expires_in => 0)
+
         Rails.logger.info "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
 
         visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
