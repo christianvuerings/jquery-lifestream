@@ -22,11 +22,14 @@ class MyAcademics::Semesters
         Rails.logger.warn "#{self.class.name} - Course #{course[:ccn]} has a empty 'pnp_flag' field: #{course}"
         grade_option = ''
       end
-      ccn = course[:ccn]
-      format = course[:instruction_format]
-      section = course[:section_num]
-      schedules = course[:schedules]
-      instructors = course[:instructors]
+      # Currently this feed only shows the primary section of the student's enrollments
+      # in the course (although there are plans to show secondary sections as well).
+      primary_section = course[:sections][0]
+      ccn = primary_section[:ccn]
+      format = primary_section[:instruction_format]
+      section = primary_section[:section_num]
+      schedules = primary_section[:schedules]
+      instructors = primary_section[:instructors]
       schedule << {
         :course_number => course_number,
         :ccn => ccn,
