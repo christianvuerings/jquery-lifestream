@@ -152,14 +152,14 @@ class CanvasUserActivities
 
   def process_source(entry, canvas_sites)
     if entry['context_type'] == 'Group'
-      idx = canvas_sites.index {|site| site[:id] == entry['group_id'] && site[:site_type] == 'group'}
+      idx = canvas_sites.index {|site| site[:id] == entry['group_id'].to_s && site[:site_type] == 'group'}
       if idx
         site = canvas_sites[idx]
         source = site[:source] || site[:name] || site[:title]
         color_class = site[:color_class]
       end
     elsif entry['context_type'] == 'Course'
-      idx = canvas_sites.index {|site| site[:id] == entry['course_id'] && site[:site_type] == 'course'}
+      idx = canvas_sites.index {|site| site[:id] == entry['course_id'].to_s && site[:site_type] == 'course'}
       if idx
         site = canvas_sites[idx]
         source = site[:course_code] || site[:name] || site[:title]

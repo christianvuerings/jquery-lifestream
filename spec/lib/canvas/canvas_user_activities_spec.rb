@@ -66,7 +66,7 @@ describe CanvasUserActivities do
     canvas_sites_feed = {
         classes: [
             {
-                id: 1,
+                id: '1',
                 course_code: 'Course Code 1',
                 name: 'Course site name 1',
                 site_type: 'course',
@@ -75,13 +75,13 @@ describe CanvasUserActivities do
         ],
         groups: [
             {
-                id: 3,
+                id: '3',
                 title: 'Group title 3',
                 site_type: 'group',
                 color_class: 'canvas-group'
             },
             {
-                id: 2,
+                id: '2',
                 title: 'Course-as-group title',
                 site_type: 'course',
                 color_class: 'canvas-group'
