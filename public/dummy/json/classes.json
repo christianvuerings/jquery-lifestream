@@ -69,7 +69,7 @@
       "emitter": "Canvas",
       "color_class": "canvas-class",
       "site_url": "https://notquitecanvas/groups/101261",
-      "source": "Bio 1a Lec 3",
+      "source": "Lessons from the Cambrian Explosion",
       "site_type": "group",
       "courses": [
         {
@@ -84,8 +84,9 @@
       "groups": [
         "7c4d4a5c-07c6-4ab8-a32c-78c6820f2596"
       ],
-      "course_code": "BIOLOGY 1A DIS 03 Su13",
-      "name": "Talk about life",
+      "course_code": "",
+      "name": "BIOLOGY 1A DIS 03 Su13",
+      "short_description": "Talk about life",
       "color_class": "bspace-class",
       "courses": [
         {

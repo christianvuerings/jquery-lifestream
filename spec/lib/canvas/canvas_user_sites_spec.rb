@@ -34,12 +34,14 @@ describe CanvasUserSites do
             {
                 id: 123,
                 enrollments: [{type: 'student'}],
-                course_code: 'BIOLOGY 1A'
+                course_code: 'Bio 1A summer',
+                name: 'Biology 1A catch-up'
             },
             {
                 id: 234,
                 enrollments: [{type: 'student'}],
-                course_code: 'SOCIOL 136'
+                course_code: 'SOCIOL 13.6. Su',
+                name: 'Urban Sociology'
             }
         ])
     )
@@ -87,6 +89,8 @@ describe CanvasUserSites do
     feed[:classes].length.should == 1
     class_item = feed[:classes][0]
     class_item[:id].should == '123'
+    class_item[:name].should == 'Biology 1A catch-up'
+    class_item[:course_code].should == 'Bio 1A summer'
     class_courses = class_item[:courses]
     class_courses.length.should == 1
     class_courses[0][:id].should == 'BIOLOGY:1A:2013-C'
@@ -95,6 +99,7 @@ describe CanvasUserSites do
     group[:id].should == '234'
     group[:site_type].should == 'course'
     group[:role].should == 'student'
+    group[:title].should == 'Urban Sociology'
   end
 
   it "should put a Canvas Course site without any official enrollment connection into groups" do
@@ -133,7 +138,8 @@ describe CanvasUserSites do
             {
                 id: 123,
                 enrollments: [{type: 'teacher'}],
-                course_code: 'BIOLOGY 1A'
+                course_code: 'Bio 1A',
+                name: 'Biology for surfers'
             }
         ])
     )
@@ -173,6 +179,7 @@ describe CanvasUserSites do
     group[:id].should == '123'
     group[:site_type].should == 'course'
     group[:role].should == 'teacher'
+    group[:title].should == 'Biology for surfers'
   end
 
   it "should put a community-style Canvas Group into groups" do
@@ -205,12 +212,14 @@ describe CanvasUserSites do
             {
                 id: 123,
                 enrollments: [{type: 'student'}],
-                course_code: 'BIOLOGY 1A'
+                course_code: 'Bio 1A',
+                name: 'Biology for surfers'
             },
             {
                 id: 234,
                 enrollments: [{type: 'student'}],
-                course_code: 'SOCIOL 136'
+                course_code: 'SOCIOL 136',
+                name: 'Sociumi'
             }
         ])
     )
@@ -277,7 +286,7 @@ describe CanvasUserSites do
     feed[:classes].index { |site|
       site[:id] == '321' &&
           site[:site_type] == 'group' &&
-          site[:source] == 'BIOLOGY 1A'
+          site[:source] == 'Biology for surfers'
     }.should_not be_nil
     feed[:groups].length.should == 2
     feed[:groups].index { |site|

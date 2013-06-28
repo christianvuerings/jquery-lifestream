@@ -162,7 +162,7 @@ class CanvasUserActivities
       idx = canvas_sites.index {|site| site[:id] == entry['course_id'].to_s && site[:site_type] == 'course'}
       if idx
         site = canvas_sites[idx]
-        source = site[:course_code] || site[:name] || site[:title]
+        source = site[:name] || site[:title]
         color_class = site[:color_class]
       end
     end

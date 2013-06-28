@@ -90,8 +90,8 @@ describe SakaiUserSitesProxy do
     sites_feed = @client.get_categorized_sites
     sites_feed[:classes].length.should == 1
     site = sites_feed[:classes][0]
-    site[:name].should == "A legal course site"
-    site[:course_code].should == "Law 201S"
+    site[:short_description].should == "A legal course site"
+    site[:name].should == "Law 201S"
     site[:courses].length.should == 1
     site[:courses][0][:id].should == "LAW:201S:2013-C"
   end

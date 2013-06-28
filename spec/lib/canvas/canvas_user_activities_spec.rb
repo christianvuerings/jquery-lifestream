@@ -98,7 +98,7 @@ describe CanvasUserActivities do
     end
     enrolled_activity = activities.select{|item| item[:id] == 'canvas_1999'}[0]
     enrolled_activity[:color_class].should == 'canvas-class'
-    enrolled_activity[:source].should == 'Course Code 1'
+    enrolled_activity[:source].should == 'Course site name 1'
     unofficial_activity = activities.select{|item| item[:id] == 'canvas_2999'}[0]
     unofficial_activity[:color_class].should == 'canvas-group'
     unofficial_activity[:source].should == 'Course-as-group title'

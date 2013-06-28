@@ -52,8 +52,7 @@ class SakaiUserSitesProxy < SakaiProxy
             when 'course'
               if (linked_enrollments = get_courses_from_provider(campus_user_courses, row['provider_id']))
                 site[:courses] = linked_enrollments
-                site[:course_code] = row['title']
-                site[:name] = row['short_desc']
+                site[:name] = row['title']
                 site[:color_class] = 'bspace-class'
                 categories[:classes] << site
               else

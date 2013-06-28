@@ -68,7 +68,7 @@ class MyActivities < MyMergedModel
               }
               case category
                 when :classes
-                  announcement[:source] = site[:course_code]
+                  announcement[:source] = site[:name]
                 when :groups
                   announcement[:source] = site[:title]
               end
