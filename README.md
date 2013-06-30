@@ -24,6 +24,7 @@ Currently supports the following feeds:
 * [Disqus](http://disqus.com)
 * [Dribbble](http://dribbble.com)
 * [Facebook Pages](http://www.facebook.com/pages)
+* [Fancy](http://www.fancy.com)
 * [Flickr](http://flickr.com)
 * [Foomark](http://foomark.com)
 * [Formspring](http://formspring.com)
