@@ -73,6 +73,6 @@ Calcentral::Application.configure do
       }
   )
   config.cache_store.logger = Logger.new("#{CalcentralLogging.log_root}/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
-  config.cache_store.logger.level = Logger::DEBUG
+  config.cache_store.logger.level = Logger::ERROR
 
 end
