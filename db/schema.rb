@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013062807582200) do
+ActiveRecord::Schema.define(:version => 2013070116269900) do
 
   create_table "link_categories", :force => true do |t|
     t.string   "name",                          :null => false
@@ -109,5 +109,13 @@ ActiveRecord::Schema.define(:version => 2013062807582200) do
 
   add_index "user_visits", ["last_visit_at"], :name => "index_user_visits_on_last_visit_at"
   add_index "user_visits", ["uid"], :name => "index_user_visits_on_uid", :unique => true
+
+  create_table "user_whitelists", :force => true do |t|
+    t.string   "uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_whitelists", ["uid"], :name => "index_user_whitelists_on_uid", :unique => true
 
 end
