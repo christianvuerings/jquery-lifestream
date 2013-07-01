@@ -53,8 +53,12 @@
         </div>
       </li>
     </ul>
-    <div data-ng-show="!items.length" class="cc-widget-text">
+    <div data-ng-show="!items.length && api.user.profile.has_google_access_token" class="cc-widget-text">
       You have no events scheduled for the rest of the day.
     </div>
+    <div data-ng-show="!items.length && !api.user.profile.has_google_access_token" class="cc-widget-text">
+      To see events from your bCal calendar, connect CalCentral to your bConnected account on the <a href="/settings">Settings</a> page.
+    </div>
+
   </div>
 </div>
