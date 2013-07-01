@@ -57,6 +57,8 @@
       });
     };
 
+    $scope.hideDisclaimer = true;
+
     // Wait until user profile is fully loaded before hitting academics data
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
