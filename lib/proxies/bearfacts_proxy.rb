@@ -16,13 +16,6 @@ class BearfactsProxy < BaseProxy
   end
 
   def request(path, vcr_cassette, params = {})
-    unless Settings.features.bearfacts
-      return {
-        :body => "",
-        :status_code => 200
-      }
-    end
-
     self.class.fetch_from_cache(@uid) do
       student_id = lookup_student_id
       if student_id.nil?

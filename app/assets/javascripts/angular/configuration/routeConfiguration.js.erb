@@ -14,7 +14,6 @@
       controller: 'SplashController',
       isPublic: true
     }).
-    <% if Settings.features.bearfacts %>
     when('/academics', {
       templateUrl: 'templates/academics.html',
       controller: 'AcademicsController'
@@ -27,7 +26,6 @@
       templateUrl: 'templates/academics_classinfo.html',
       controller: 'AcademicsController'
     }).
-    <% end %>
     // We actually need to duplicate the campus items, more info on
     // http://stackoverflow.com/questions/12524533
     when('/campus', {
