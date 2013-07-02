@@ -36,14 +36,14 @@
       data-ng-show="this.$parent.section.title != 'Unscheduled'">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-show="task.due_date && task.bucket != 'Due Today' && tasks_mode != 'completed'">
-        {{task.due_date.epoch * 1000 | date:'MM/dd'}}
+        {{task.due_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}
       </span>
       <div
         data-ng-show="task.emitter=='Canvas' && task.due_date.has_time"
         class="cc-widget-tasks-timestamp">
           {{task.due_date.epoch * 1000 | date:'h a'}}
       </div>
-      <span data-ng-show="tasks_mode=='completed'">{{task.completed_date.epoch * 1000 | date:'MM/dd'}}</span>
+      <span data-ng-show="tasks_mode=='completed'">{{task.completed_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}</span>
     </div>
   </div>
 
