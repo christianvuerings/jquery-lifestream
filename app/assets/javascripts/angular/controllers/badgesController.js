@@ -137,6 +137,11 @@
     });
 
     $scope.badges = orderBadges(defaults);
+
+    $scope.$on('calcentral.api.refresh.refreshed', function() {
+      fetch();
+    });
+
   }]);
 
 })(window.calcentral);
