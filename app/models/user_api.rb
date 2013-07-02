@@ -109,4 +109,11 @@ class UserApi < MyMergedModel
     }
   end
 
+  def self.is_allowed_to_log_in?(uid)
+    # if UserData.where(uid: @uid) return true
+    # if CanvasProxy.has_account?(uid) return true
+    # if is in user_whitelists table return true
+    false
+  end
+
 end
