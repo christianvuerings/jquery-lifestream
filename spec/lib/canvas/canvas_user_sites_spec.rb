@@ -49,6 +49,12 @@ describe CanvasUserSites do
         stub_proxy(:sections_list, [
             {
                 course_id: 123,
+                id: 58685,
+                name: 'Some non-campus section',
+                sis_section_id: 'Some-odd-thing'
+            },
+            {
+                course_id: 123,
                 id: 58686,
                 name: '2013-C-7309',
                 sis_section_id: 'SEC:2013-C-7309'
