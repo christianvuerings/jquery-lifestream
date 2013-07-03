@@ -112,4 +112,19 @@ describe Oauth2Data do
     access_token.should be_nil
   end
 
+  it "should remove dismiss_reminder app_data when a new google token is stored" do
+    Oauth2Data.dismiss_google_reminder(@random_id).should be_true
+    Oauth2Data.is_google_reminder_dismissed(@random_id).should be_true
+    Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID, 'top', 'secret')
+    Oauth2Data.is_google_reminder_dismissed(@random_id).should be_empty
+  end
+
+  it "new_or_update should merge new app_data into existing app_data" do
+    Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID, 'top', 'secret', 0, {app_data:{'foo' => 'foo?'}})
+    Oauth2Data.send(:get_appdata_field, GoogleProxy::APP_ID, @random_id, 'foo' ).should == 'foo?'
+    Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID, 'top', 'secret', 0, {app_data:{'baz' => 'baz!'}})
+    Oauth2Data.send(:get_appdata_field, GoogleProxy::APP_ID, @random_id, 'baz' ).should == 'baz!'
+    Oauth2Data.send(:get_appdata_field, GoogleProxy::APP_ID, @random_id, 'foo' ).should == 'foo?'
+  end
+
 end

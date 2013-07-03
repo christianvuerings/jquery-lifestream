@@ -2,6 +2,8 @@ require 'google/api_client'
 
 class GoogleAuthController < AuthController
 
+  respond_to :json
+
   def app_id
     GoogleProxy::APP_ID
   end
@@ -30,6 +32,14 @@ class GoogleAuthController < AuthController
 
   def connected_token_callback(uid)
     Oauth2Data.update_google_email! uid
+  end
+
+  def dismiss_reminder
+    result = false
+    if (!GoogleProxy.access_granted? session[:user_id])
+      result = Oauth2Data.dismiss_google_reminder(session[:user_id])
+    end
+    render json: {:result => result}
   end
 
 end

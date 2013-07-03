@@ -39,6 +39,7 @@ Calcentral::Application.routes.draw do
   match '/api/google/request_authorization'=> 'google_auth#request_authorization'
   match '/api/google/handle_callback' => 'google_auth#handle_callback'
   match '/api/google/remove_authorization' => 'google_auth#remove_authorization', :via => :post
+  match '/api/google/dismiss_reminder' => 'google_auth#dismiss_reminder', :defaults => { :format => 'json'}, :via => :post
 
   match '/api/tools/styles' => 'tools#get_styles', :via => :get
 
