@@ -40,8 +40,8 @@ class Oauth2Data < ActiveRecord::Base
     get_appdata_field(CanvasProxy::APP_ID, user_id, 'email')
   end
 
-  def self.get_google_dismiss_reminder_setting(user_id)
-    get_appdata_field(GoogleProxy::APP_ID, user_id, 'dismiss_reminder')
+  def self.is_google_reminder_dismissed(user_id)
+    get_appdata_field(GoogleProxy::APP_ID, user_id, 'is_reminder_dismissed')
   end
 
   def self.update_google_email!(user_id)
@@ -90,7 +90,7 @@ class Oauth2Data < ActiveRecord::Base
           Rails.logger.warn "#{self.class.name}: Oauth2Data:app_data not saved (either blank? or not a hash): #{options[:app_data]}"
         end
       end
-      entry.app_data.delete_if {|key, value| key == 'dismiss_reminder'} if entry.access_token.present?
+      entry.app_data.delete_if {|key, value| key == 'is_reminder_dismissed'} if entry.access_token.present?
       entry.save
     }
   end
@@ -98,7 +98,7 @@ class Oauth2Data < ActiveRecord::Base
   def self.dismiss_google_reminder(user_id)
     new_or_update(user_id, GoogleProxy::APP_ID, '', '', 0, {
       app_data: {
-        'dismiss_reminder' => true
+        'is_reminder_dismissed' => true
       }
     })
   end

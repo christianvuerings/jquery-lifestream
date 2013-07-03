@@ -114,9 +114,9 @@ describe Oauth2Data do
 
   it "should remove dismiss_reminder app_data when a new google token is stored" do
     Oauth2Data.dismiss_google_reminder(@random_id).should be_true
-    Oauth2Data.get_google_dismiss_reminder_setting(@random_id).should be_true
+    Oauth2Data.is_google_reminder_dismissed(@random_id).should be_true
     Oauth2Data.new_or_update(@random_id, GoogleProxy::APP_ID, 'top', 'secret')
-    Oauth2Data.get_google_dismiss_reminder_setting(@random_id).should be_empty
+    Oauth2Data.is_google_reminder_dismissed(@random_id).should be_empty
   end
 
   it "new_or_update should merge new app_data into existing app_data" do
