@@ -25,7 +25,7 @@
                 <i class="icon-{{activities.typeToIcon[activity.type]}} cc-left"></i>
                 <div class="cc-widget-activities-text-margin">
                   <strong>{{activity.title}}</strong>
-                  <div class="cc-widget-subtitle">{{activity.source}}, {{activity.date.epoch * 1000 | date:'MMM d'}}</div>
+                  <div class="cc-widget-subtitle">{{activity.source}}, {{activity.date.epoch * 1000 | cc.dateInYear:'MMM d':'MMM d yyyy'}}</div>
                 </div>
               </div>
             </div>
