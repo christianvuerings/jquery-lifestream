@@ -10,7 +10,7 @@ campusdb:
   url: jdbc:oracle:thin:@<yer_host>:<yer_port>:<yer_sid>
   username: <yer_username>
   password: <yer_password>
-  pool: 5
+  pool: 95
   timeout: 5000
 secret_token: some 128 char random hex string
 canvas_proxy:
