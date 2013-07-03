@@ -6,28 +6,27 @@ class JmsWorker
     @jms = nil
     @handler = JmsMessageHandler.new
     @stopped = false
+    @count = 0
   end
 
   def start
     if Settings.ist_jms.enabled
+      Rails.logger.warn "#{self.class.name} Starting up"
       Thread.new { run }
     else
-      Rails.logger.info "#{self.class.name} is disabled, not starting thread"
+      Rails.logger.warn "#{self.class.name} is disabled, not starting thread"
     end
   end
 
   def stop
     @stopped = true
-    Rails.logger.info "#{self.class.name} #{Thread.current} is closing"
-    if (@jms)
-      @jms.close
-      Rails.logger.info "#{self.class.name} got #{@jms.count} messages"
-    end
-    @handler.terminate
+    Rails.logger.warn "#{self.class.name} #{Thread.current} is stopping"
+    Rails.logger.warn "#{JmsWorker.ping}"
   end
 
   def run
     if Settings.ist_jms.fake
+      Rails.logger.warn "#{self.class.name} Reading fake messages"
       read_fake { |msg| @handler.handle(msg) }
     else
       read_jms { |msg| @handler.handle(msg) }
@@ -39,10 +38,11 @@ class JmsWorker
       begin
         @jms ||= JmsConnection.new
       rescue => e
-        Rails.logger.warn "#{self.class.name} Unable to start JMS listener: #{e.class} #{e.message}"
+        Rails.logger.error "#{self.class.name} Unable to start JMS listener: #{e.class} #{e.message}"
         sleep(30.minutes)
       end
     end
+    Rails.logger.warn "#{self.class.name} JMS Connection is initialized"
     @jms.start_listening_with() do |msg|
       if Settings.ist_jms.freshen_recording
         File.open(JMS_RECORDING, 'a') do |f|
@@ -52,9 +52,7 @@ class JmsWorker
           f.puts('')
         end
       end
-      Rails.cache.write(self.class.cache_key, {
-        :last_message_received_at => Time.zone.now
-      }, :expires_in => 0)
+      write_stats(@jms.count)
       yield(msg)
     end
   end
@@ -62,11 +60,17 @@ class JmsWorker
   def read_fake
     File.open(JMS_RECORDING, 'r').each("\n\n") do |msg_yaml|
       msg = YAML::load(msg_yaml)
-      Rails.cache.write(self.class.cache_key, {
-        :last_message_received_at => Time.zone.now
-      }, :expires_in => 0)
+      @count += 1
+      write_stats(@count)
       yield(msg)
     end
+  end
+
+  def write_stats(count)
+    Rails.cache.write(self.class.cache_key, {
+      :last_message_received_at => Time.zone.now,
+      :count => count
+    }, :expires_in => 0)
   end
 
   def self.cache_key
@@ -76,11 +80,7 @@ class JmsWorker
   def self.ping
     stats = Rails.cache.read(self.cache_key)
     if stats
-      if @jms
-        "#{self.name} #{@jms.count} received messages; last message received at #{stats[:last_message_received_at].to_s}"
-      else
-        "#{self.name} JMS connection is not initialized (fake = #{Settings.ist_jms.fake}); last message received at #{stats[:last_message_received_at].to_s}"
-      end
+      "#{self.name} #{stats[:count]} received messages; last message received at #{stats[:last_message_received_at].to_s}"
     else
       "#{self.name} Stats are not available"
     end

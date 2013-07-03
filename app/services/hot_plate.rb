@@ -11,12 +11,14 @@ class HotPlate
     if Settings.hot_plate.enabled
       Thread.new { run }
     else
-      Rails.logger.info "#{self.class.name} is disabled, not starting thread"
+      Rails.logger.warn "#{self.class.name} is disabled, not starting thread"
     end
   end
 
   def stop
     @stopped = true
+    Rails.logger.warn "#{self.class.name} #{Thread.current} is stopping"
+    Rails.logger.warn "#{HotPlate.ping}"
   end
 
   def run
@@ -51,7 +53,7 @@ class HotPlate
         warmups = 0
 
         visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
-        Rails.logger.info "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
+        Rails.logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
@@ -82,7 +84,7 @@ class HotPlate
           :last_warmup => Time.zone.now
         }, :expires_in => 0)
 
-        Rails.logger.info "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
+        Rails.logger.warn "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
 
         visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
         deleted_count = 0
@@ -93,7 +95,7 @@ class HotPlate
             deleted_count += 1
           end
         end
-        Rails.logger.info "#{self.class.name} Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
+        Rails.logger.warn "#{self.class.name} Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
       }
 
     ensure
