@@ -132,7 +132,7 @@ class GoogleProxy < BaseProxy
   end
 
   def self.access_granted?(user_id)
-    Settings.google_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"] != nil)
+    Settings.google_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"].present?)
   end
 
   private

@@ -33,11 +33,15 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.get_google_email(user_id)
-    get_email(GoogleProxy::APP_ID, user_id)
+    get_appdata_field(GoogleProxy::APP_ID, user_id, 'email')
   end
 
   def self.get_canvas_email(user_id)
-    get_email(CanvasProxy::APP_ID, user_id)
+    get_appdata_field(CanvasProxy::APP_ID, user_id, 'email')
+  end
+
+  def self.get_google_dismiss_reminder_setting(user_id)
+    get_appdata_field(GoogleProxy::APP_ID, user_id, 'dismiss_reminder')
   end
 
   def self.update_google_email!(user_id)
@@ -80,13 +84,23 @@ class Oauth2Data < ActiveRecord::Base
       entry.expiration_time = expiration_time
       if !options.blank?
         if !options[:app_data].blank? && options[:app_data].is_a?(Hash)
-          entry.app_data = options[:app_data]
+          entry.app_data ||= {}
+          entry.app_data.merge! options[:app_data]
         else
           Rails.logger.warn "#{self.class.name}: Oauth2Data:app_data not saved (either blank? or not a hash): #{options[:app_data]}"
         end
       end
+      entry.app_data.delete_if {|key, value| key == 'dismiss_reminder'} if entry.access_token.present?
       entry.save
     }
+  end
+
+  def self.dismiss_google_reminder(user_id)
+    new_or_update(user_id, GoogleProxy::APP_ID, '', '', 0, {
+      app_data: {
+        'dismiss_reminder' => true
+      }
+    })
   end
 
   def encrypt_tokens
@@ -104,6 +118,7 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.encrypt_with_iv(value)
+    return value if value.blank?
     cipher = OpenSSL::Cipher::Cipher.new(@@encryption_algorithm)
     cipher.encrypt
     iv = cipher.random_iv
@@ -114,6 +129,7 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.decrypt_with_iv(value_with_iv)
+    return value_with_iv if value_with_iv.blank?
     cipher = OpenSSL::Cipher::Cipher.new(@@encryption_algorithm)
     cipher.decrypt
     cipher.key = @@encryption_key
@@ -124,15 +140,15 @@ class Oauth2Data < ActiveRecord::Base
 
   private
 
-  def self.get_email(app_id, uid)
+  def self.get_appdata_field(app_id, uid, field)
     oauth2_data = false
     use_pooled_connection {
       oauth2_data = self.where(uid: uid, app_id: app_id).first
     }
-    if oauth2_data && oauth2_data.app_data && oauth2_data.app_data["email"]
-      oauth2_data.app_data["email"]
+    if oauth2_data && oauth2_data.app_data && oauth2_data.app_data[field]
+      oauth2_data.app_data[field]
     else
-      ""
+      ''
     end
   end
 
