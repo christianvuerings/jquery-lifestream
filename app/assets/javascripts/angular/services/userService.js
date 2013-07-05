@@ -30,7 +30,6 @@
      */
     var _setFirstLogin = function() {
       profile.first_login_at = (new Date()).getTime();
-      utilService.redirect('settings');
     };
 
     /**
