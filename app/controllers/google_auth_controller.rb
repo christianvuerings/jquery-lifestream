@@ -39,6 +39,7 @@ class GoogleAuthController < AuthController
     if (!GoogleProxy.access_granted? session[:user_id])
       result = Oauth2Data.dismiss_google_reminder(session[:user_id])
     end
+    UserApi.new(session[:user_id]).expire_cache
     render json: {:result => result}
   end
 

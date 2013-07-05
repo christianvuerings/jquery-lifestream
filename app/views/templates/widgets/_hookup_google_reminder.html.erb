@@ -1,0 +1,21 @@
+<div data-ng-controller="HookupGoogleReminderController">
+  <div class="cc-widget cc-widget-hookup-google-reminder" data-ng-show="showReminderCard">
+    <div class="cc-widget-title">
+      <h2>Connect CalCentral to bConnected</h2>
+    </div>
+    <div class="cc-widget-hookup-google-reminder-container">
+      <div class="cc-widget-hookup-google-reminder-subtitle">
+        <div class="cc-widget-hookup-google-reminder-subtitle-icon"></div>
+        <h3>bConnected</h3>
+      </div>
+      <div class="cc-widget-hookup-google-reminder-content">
+        <p>You have not connected CalCentral to your <a href="//bconnected.berkeley.edu/usingbconn">Google Apps for Education Account</a>. Connecting will allow you to access your drive, tasks, mail and calendar.</p>
+        <p>To connect, click "Go to Settings" below.</p>
+      </div>
+      <div class="cc-widget-hookup-google-reminder-content-buttons">
+        <a class="button medium radius cc-button-blue" href="/settings">Go to Settings</a>
+        <button class="button medium radius secondary" data-ng-click="dismissReminder()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>
