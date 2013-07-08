@@ -110,25 +110,21 @@ class MyActivities < MyMergedModel
         end
         type = block.css("blockType").text.strip
         status = block.css("status").text.strip
-        reason = block.css("reason")
-        office = block.css("office")
+        translated_codes = RegBlockCodeTranslator.new().translate_bearfacts_proxy(block.css('reasonCode').text, block.css('office').text)
+        message = translated_codes[:message]
+        block_reason = translated_codes[:reason]
+        block_type = translated_codes[:type]
 
-        title = "#{type} Block #{status}"
-        summary = "The #{type} Block on your account"
-        unless office.empty?
-          summary += " from #{office.text.strip}"
-        end
-        unless reason.empty?
-          summary += " due to a #{reason.text.strip}"
-        end
-        summary += " is #{status}."
+        title = "#{block_type} block due to #{block_reason} #{status.upcase}"
 
         Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{type}, blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
 
         notification = {
-            id: "",
+            id: '',
             title: title,
-            summary: summary,
+            summary: message,
+            short_description: block_reason,
+            block_type: block_type,
             type: notification_type,
             date: format_date(notification_date),
             source: "Bearfacts",
