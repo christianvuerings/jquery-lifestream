@@ -66,8 +66,12 @@ class SessionsController < ApplicationController
   private
 
   def continue_login_success(uid)
-    session[:user_id] = uid
-    redirect_to '/dashboard', :notice => "Signed in!"
+    if UserApi.is_allowed_to_log_in?(uid)
+      session[:user_id] = uid
+      redirect_to '/dashboard', :notice => "Signed in!"
+    else
+      redirect_to '/sorry'
+    end
   end
 
   def valid_params?(user_uid, act_as_uid)

@@ -52,6 +52,11 @@
       templateUrl: 'templates/tools_styles.html',
       controller: 'StylesController'
     }).
+    when('/sorry', {
+      templateUrl: 'templates/sorry.html',
+      controller: 'SorryController',
+      isPublic: true
+    }).
     // Redirect to a 404 page
     otherwise({
       templateUrl: 'templates/404.html',
