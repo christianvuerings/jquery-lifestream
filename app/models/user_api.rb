@@ -6,7 +6,7 @@ class UserApi < MyMergedModel
   end
 
   def init
-    use_pooled_connection{
+    use_pooled_connection {
       @calcentral_user_data ||= UserData.where(:uid => @uid).first
     }
     @campus_attributes ||= CampusData.get_person_attributes(@uid) || {}
@@ -99,14 +99,32 @@ class UserApi < MyMergedModel
       :preferred_name => self.preferred_name,
       :roles => @campus_attributes[:roles],
       :student_info => {
-          :california_residency => @campus_attributes[:california_residency],
-          :education_level => @campus_attributes[:education_level],
-          :reg_status => @campus_attributes[:reg_status],
-          :reg_block => @campus_attributes[:reg_block],
-          :units_enrolled => @campus_attributes[:units_enrolled]
+        :california_residency => @campus_attributes[:california_residency],
+        :education_level => @campus_attributes[:education_level],
+        :reg_status => @campus_attributes[:reg_status],
+        :reg_block => @campus_attributes[:reg_block],
+        :units_enrolled => @campus_attributes[:units_enrolled]
       },
       :uid => @uid
     }
+  end
+
+  def self.is_allowed_to_log_in?(uid)
+    unless Settings.features.user_whitelist
+      return true
+    end
+    if UserData.where(uid: uid).first.present?
+      return true
+    end
+    if UserWhitelist.where(uid: uid).first.present?
+      return true
+    end
+    # TODO add something like if CampusData.is_first_year_student(uid) when the BF_STUDENT_VW table is available.
+    # See CLC-2127 and subtasks for details.
+    if CanvasProxy.has_account?(uid)
+      return true
+    end
+    false
   end
 
 end

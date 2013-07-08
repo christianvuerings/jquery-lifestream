@@ -153,3 +153,4 @@ hot_plate:
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
   live_campus_links_data: false
+  user_whitelist: false
