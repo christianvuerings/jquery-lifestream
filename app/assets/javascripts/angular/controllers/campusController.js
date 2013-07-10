@@ -52,13 +52,13 @@
      * @return {Boolean} Whether a link is in the current category
      */
     var isLinkInCategory = function(link) {
+      link.subCategories = [];
       for (var i = 0; i < link.categories.length; i++) {
         if (link.categories[i].topcategory === $scope.currentTopCategory) {
-          link.currentSubCategory = link.categories[i].subcategory;
-          return true;
+          link.subCategories.push(link.categories[i].subcategory);
         }
       }
-      return false;
+      return (link.subCategories.length > 0);
     };
 
     /**
@@ -75,7 +75,9 @@
       angular.forEach(links, function(link) {
         if (canViewLink(link) && isLinkInCategory(link)) {
           $scope.links.push(link);
-          addToSubcategories(link.currentSubCategory);
+          for (var i = 0; i < link.subCategories.length; i++) {
+            addToSubcategories(link.subCategories[i]);
+          }
         }
       });
       $scope.subcategories.sort();
@@ -140,8 +142,11 @@
     return function(items, name){
       var arrayToReturn = [];
       for (var i = 0; i < items.length; i++){
-        if (items[i].currentSubCategory === name) {
-          arrayToReturn.push(items[i]);
+        var item = items[i];
+        for (var j = 0; j < item.subCategories.length; j++) {
+          if (item.subCategories[j] === name) {
+            arrayToReturn.push(item);
+          }
         }
       }
 
