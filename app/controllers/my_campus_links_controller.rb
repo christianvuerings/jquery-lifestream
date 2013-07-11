@@ -16,7 +16,10 @@ class MyCampusLinksController < ApplicationController
     end
     Rails.logger.info "Expiring MyCampusLinks cache"
     MyCampusLinks.expire nil
-    render :nothing => true, :status => 204
+    MyCampusLinks.new(nil, nil).get_feed
+    render :json => {
+      :refreshed => Time.now.to_s
+    }.to_json
   end
 
 end
