@@ -211,6 +211,21 @@ describe "MyTasks" do
     valid_feed = my_tasks_model.get_feed
     valid_feed["tasks"].select {|entry| entry["emitter"] == "Google"}.empty?.should be_true
   end
+
+  it "should not explode on Canvas feeds that have invalid json" do
+    GoogleProxy.stub(:access_granted?).and_return(false)
+    CanvasProxy.stub(:access_granted?).and_return(true)
+    CanvasUpcomingEventsProxy.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
+    CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
+    unparseable = OpenStruct.new(:status => 200, :body => "unparseable")
+    CanvasUpcomingEventsProxy.any_instance.stub(:upcoming_events).and_return(unparseable)
+    CanvasTodoProxy.any_instance.stub(:todo).and_return(unparseable)
+
+    my_tasks_model = MyTasks::Merged.new(@user_id)
+    valid_feed = my_tasks_model.get_feed
+    valid_feed["tasks"].length.should == 0
+  end
+
 end
 
 def get_task_list_id_and_task_id
