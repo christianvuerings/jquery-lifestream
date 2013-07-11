@@ -169,7 +169,7 @@
                 <div class="large-6 small-6 columns cc-academics-label-col">Class</div>
                 <div class="large-3 small-3 columns">Units</div>
               </div>
-              <div class="row" data-ng-repeat="sem in semester.schedule">
+              <div class="row" data-ng-repeat="sem in semester.schedule" data-ng-show="sem.is_primary_section">
                 <div class="large-6 small-6 columns cc-academics-label-col" data-ng-bind="sem.course_number"></div>
                 <div class="large-3 small-3 columns" data-ng-bind="sem.units"></div>
               </div>

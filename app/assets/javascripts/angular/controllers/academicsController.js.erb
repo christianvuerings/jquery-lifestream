@@ -27,6 +27,7 @@
         angular.extend($scope, data);
         $scope.exam_schedule = data.exam_schedule;
         $scope.semesters = data.semesters;
+        $scope.selected_course_sections = [];
 
         // Some users (e.g. test-xxx users) may be missing the "student" role but still need ability to view My Academics pages
         $scope.can_view_academics = $scope.api.user.profile.roles.student || $scope.college_and_level.standing == 'Undergraduate';
@@ -43,11 +44,16 @@
 
         // Get selected course from URL params and extract data from selected semester schedule
         if ($routeParams.ccn) {
-          angular.forEach($scope.selected_semester.schedule, function(course) {
+          angular.forEach($scope.selected_semester.schedule, function (course) {
             if (course.ccn === $routeParams.ccn) {
               $scope.selected_course = course;
+              $scope.selected_course_sections.push(course);
+            }
+            if ($scope.selected_course !== undefined && !course.is_primary_section && course.course_number === $scope.selected_course.course_number) {
+              $scope.selected_course_sections.push(course);
             }
           });
+
         }
 
         parseExamSchedule();
@@ -98,7 +104,7 @@
 
       angular.forEach($scope.selected_courses, function(course) {
         // Don't calculate for pass/no-pass courses!
-        if (course.grade_option === 'Letter' && course.units) {
+        if (course.grade_option === 'Letter' && course.units && course.is_primary_section) {
           course.score = parseFloat(course.estimated_grade, 10) * course.units;
           total_units += parseFloat(course.units, 10);
           total_score += course.score;

@@ -13,7 +13,7 @@ describe "MyAcademics::Semesters" do
     oski_semesters = feed[:semesters]
     oski_semesters.length.should == 1
     oski_semesters[0][:name].should == "Summer 2013"
-    oski_semesters[0][:schedule].length.should == 2
+    oski_semesters[0][:schedule].length.should == 3
     oski_semesters[0][:schedule][0][:schedules][0][:schedule].should == "M 4:00P-5:00P"
     oski_semesters[0][:schedule][0][:course_number].should == "BIOLOGY 1A"
     oski_semesters[0][:schedule][0][:ccn].should == "7309"
@@ -23,6 +23,7 @@ describe "MyAcademics::Semesters" do
     oski_semesters[0][:schedule][0][:format].should == "LEC"
     oski_semesters[0][:schedule][0][:section].should == "003"
     oski_semesters[0][:schedule][0][:instructors][0][:name].should == "Yu-Hung Lin"
+    oski_semesters[0][:schedule][0][:is_primary_section].should be_true
   end
 
   it "should handle badly formatted p/np fields for course data", :if => SakaiData.test_data? do

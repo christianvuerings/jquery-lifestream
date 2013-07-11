@@ -22,25 +22,34 @@ class MyAcademics::Semesters
         Rails.logger.warn "#{self.class.name} - Course #{course[:ccn]} has a empty 'pnp_flag' field: #{course}"
         grade_option = ''
       end
-      # Currently this feed only shows the primary section of the student's enrollments
-      # in the course (although there are plans to show secondary sections as well).
-      primary_section = course[:sections][0]
-      ccn = primary_section[:ccn]
-      format = primary_section[:instruction_format]
-      section = primary_section[:section_num]
-      schedules = primary_section[:schedules]
-      instructors = primary_section[:instructors]
-      schedule << {
-        :course_number => course_number,
-        :ccn => ccn,
-        :title => title,
-        :units => units,
-        :grade_option => grade_option,
-        :section => section,
-        :format => format,
-        :schedules => schedules,
-        :instructors => instructors
-      }
+      i = 0
+      course[:sections].each do |this_section|
+        Rails.logger.info "this_section schedules = #{this_section[:schedules]}"
+        ccn = this_section[:ccn]
+        format = this_section[:instruction_format]
+        section = this_section[:section_num]
+        section_label = "#{format} #{section}"
+        course_label = "#{course_number} #{title}"
+        schedules = this_section[:schedules]
+        instructors = this_section[:instructors]
+        is_primary_section = (i == 0)
+        schedule << {
+          :course_number => course_number,
+          :ccn => ccn,
+          :title => title,
+          :units => units,
+          :grade_option => grade_option,
+          :section => section,
+          :format => format,
+          :section_label => section_label,
+          :course_label => course_label,
+          :schedules => schedules,
+          :instructors => instructors,
+          :is_primary_section => is_primary_section
+        }
+        i += 1
+      end
+
     end
 
     # TODO handle multiple current semesters as defined in Settings.current_terms_codes
