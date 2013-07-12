@@ -19,15 +19,23 @@
         <div class="large-2 small-2 columns">Units</div>
       </div>
       <div data-ng-show="selected_semester.schedule.length">
-        <div class="row" data-ng-repeat="course in selected_courses">
-          <div class="large-3 small-4 columns">
-            <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}">
-              <span data-ng-bind="course.course_number"></span>
-            </a>
+        <div data-ng-repeat="course in selected_courses">
+          <div class="row" data-ng-show="course.is_primary_section">
+            <div class="large-3 small-4 columns">
+              <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}">
+                <span data-ng-bind="course.course_number"></span>
+              </a>
+            </div>
+            <div class="large-4 small-4 columns cc-ellipsis" data-ng-bind="course.title"></div>
+            <div class="large-3 small-2 columns"></div>
+            <div class="large-2 small-2 columns"></div>
           </div>
-          <div class="large-4 small-4 columns cc-ellipsis" data-ng-bind="course.title"></div>
-          <div class="large-3 small-2 columns" data-ng-bind="course.grade_option"></div>
-          <div class="large-2 small-2 columns" data-ng-bind="course.units"></div>
+          <div class="row">
+            <div class="large-3 small-4 columns" data-ng-bind="course.section_label"></div>
+            <div class="large-4 small-4 columns">&nbsp;</div>
+            <div class="large-3 small-2 columns" data-ng-bind="course.grade_option"></div>
+            <div class="large-2 small-2 columns" data-ng-bind="course.units"></div>
+          </div>
         </div>
       </div>
       <div data-ng-show="!selected_semester.schedule.length">
@@ -70,6 +78,7 @@
           <div
             class="row cc-academics-calculator-row "
             data-ng-repeat="course in selected_courses"
+            data-ng-show="course.is_primary_section"
           >
             <div class="large-5 small-5 columns" data-ng-bind="course.course_number"></div>
             <div class="large-3 small-3 columns" data-ng-bind="course.units" data-ng-show="course.units"></div>
