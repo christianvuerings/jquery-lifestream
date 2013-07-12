@@ -13,6 +13,7 @@ class HotPlate
     else
       Rails.logger.warn "#{self.class.name} is disabled, not starting thread"
     end
+    Rails.cache.write(self.class.server_cache_key, ServerRuntime.get_settings["hostname"], :expires_in => 0)
   end
 
   def stop
@@ -32,15 +33,20 @@ class HotPlate
 
   def self.ping
     stats = Rails.cache.read(self.cache_key)
+    server = Rails.cache.read(self.server_cache_key)
     if stats
-      "#{self.name} #{stats[:total_warmups]} total warmups requested; #{stats[:total_time]}s total spent warming; last warmup at #{stats[:last_warmup].to_s}"
+      "#{self.name} Running on #{server}; #{stats[:total_warmups]} total warmups requested; #{stats[:total_time]}s total spent warming; last warmup at #{stats[:last_warmup].to_s}"
     else
-      "#{self.name} Stats are not available"
+      "#{self.name} Running on #{server}; Stats are not available"
     end
   end
 
   def self.cache_key
     'HotPlate/Stats'
+  end
+
+  def self.server_cache_key
+    'HotPlate/Server'
   end
 
   def warm
