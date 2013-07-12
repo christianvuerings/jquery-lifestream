@@ -48,8 +48,7 @@
             if (course.ccn === $routeParams.ccn) {
               $scope.selected_course = course;
               $scope.selected_course_sections.push(course);
-            }
-            if ($scope.selected_course !== undefined && !course.is_primary_section && course.course_number === $scope.selected_course.course_number) {
+            } else if ($scope.selected_course !== undefined && !course.is_primary_section && course.course_number === $scope.selected_course.course_number) {
               $scope.selected_course_sections.push(course);
             }
           });
