@@ -32,4 +32,11 @@ describe JmsMessageHandler do
     }
   end
 
+  it "should pass the proper timestamp to the processors" do
+    @reg_status_processor.should_receive(:process).exactly(4).times
+    @final_grades_processor.should_receive(:process).exactly(4).times
+    @messages.each do |msg|
+      @handler.handle msg
+    end
+  end
 end

@@ -40,7 +40,7 @@ class AbstractEventProcessor
     if dupe.empty?
       false
     else
-      Rails.logger.info "#{self.class.name} We got a duplicate notification, skipping. Event: #{event}"
+      Rails.logger.warn "#{self.class.name} We got a duplicate notification, skipping. Event: #{event}"
       true
     end
   end
