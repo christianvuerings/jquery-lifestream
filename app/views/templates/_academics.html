@@ -71,18 +71,20 @@
 
           <h4>Active Blocks</h4>
           <div class="row cc-academics-column-labels">
-            <div class="large-4 small-4 columns">Type</div>
-            <div class="large-4 small-4 columns">Reason</div>
-            <div class="large-4 small-4 columns">Blocked</div>
+            <div class="large-3 small-2 columns">Type</div>
+            <div class="large-3 small-4 columns">Reason</div>
+            <div class="large-2 small-2 columns">Office</div>
+            <div class="large-2 small-2 columns end">Blocked</div>
           </div>
           <div data-ng-show="regblocks.active_blocks.length">
             <div
               class="row"
               data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
             >
-              <div class="large-4 small-4 columns" data-ng-bind="block.type"></div>
-              <div class="large-4 small-4 columns" data-ng-bind="block.reason"></div>
-              <div class="large-4 small-4 columns" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
+              <div class="large-3 small-2 columns" data-ng-bind="block.type"></div>
+              <div class="large-3 small-4 columns" data-ng-bind="block.reason"></div>
+              <div class="large-2 small-2 columns" data-ng-bind="block.office || '&nbsp;'"></div>
+              <div class="large-2 small-2 columns end" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
             </div>
           </div>
           <div data-ng-show="!regblocks.active_blocks.length">
@@ -107,6 +109,7 @@
             <div class="row cc-academics-column-labels">
               <div class="large-3 small-2 columns">Type</div>
               <div class="large-3 small-4 columns">Reason</div>
+              <div class="large-2 small-2 columns">Office</div>
               <div class="large-2 small-2 columns">Blocked</div>
               <div class="large-2 small-2 columns end">Cleared</div>
             </div>
@@ -121,6 +124,7 @@
                 class="large-3 small-4 columns"
                 data-ng-bind="block.reason || '&nbsp;'">
               </div>
+              <div class="large-2 small-2 columns" data-ng-bind="block.office || '&nbsp;'"></div>
               <div
                 class="large-2 small-2 columns"
                 data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'">
