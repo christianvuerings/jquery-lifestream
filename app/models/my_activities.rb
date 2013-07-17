@@ -127,10 +127,10 @@ class MyActivities < MyMergedModel
             block_type: block_type,
             type: notification_type,
             date: format_date(notification_date),
-            source: "Bearfacts",
+            source: "BearFacts",
             source_url: "https://bearfacts.berkeley.edu/bearfacts/",
             url: "https://bearfacts.berkeley.edu/bearfacts/",
-            emitter: "Bearfacts",
+            emitter: "BearFacts",
             color_class: "campus-item"
         }
         activities << notification
