@@ -32,8 +32,8 @@ describe "MyActivities" do
     oski_activities = MyActivities.new("61889").get_feed
     oski_activities[:activities].empty?.should be_false
     oski_activities[:activities].each do |act|
-      act[:emitter].should == "Bearfacts"
-      act[:source].should == "Bearfacts"
+      act[:emitter].should == "BearFacts"
+      act[:source].should == "BearFacts"
       @documented_types.include?(act[:type]).should be_true
     end
   end
