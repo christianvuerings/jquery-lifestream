@@ -78,20 +78,22 @@ class Oauth2Data < ActiveRecord::Base
 
   def self.new_or_update(user_id, app_id, access_token, refresh_token=nil, expiration_time=nil, options={})
     use_pooled_connection {
-      entry = self.where(:uid => user_id, :app_id => app_id).first_or_initialize
-      entry.access_token = access_token
-      entry.refresh_token = refresh_token
-      entry.expiration_time = expiration_time
-      if !options.blank?
-        if !options[:app_data].blank? && options[:app_data].is_a?(Hash)
-          entry.app_data ||= {}
-          entry.app_data.merge! options[:app_data]
-        else
-          Rails.logger.warn "#{self.class.name}: Oauth2Data:app_data not saved (either blank? or not a hash): #{options[:app_data]}"
+      retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
+        entry = self.where(:uid => user_id, :app_id => app_id).first_or_initialize
+        entry.access_token = access_token
+        entry.refresh_token = refresh_token
+        entry.expiration_time = expiration_time
+        if !options.blank?
+          if !options[:app_data].blank? && options[:app_data].is_a?(Hash)
+            entry.app_data ||= {}
+            entry.app_data.merge! options[:app_data]
+          else
+            Rails.logger.warn "#{self.class.name}: Oauth2Data:app_data not saved (either blank? or not a hash): #{options[:app_data]}"
+          end
         end
+        entry.app_data.delete_if {|key, value| key == 'is_reminder_dismissed'} if entry.access_token.present?
+        entry.save
       end
-      entry.app_data.delete_if {|key, value| key == 'is_reminder_dismissed'} if entry.access_token.present?
-      entry.save
     }
   end
 
