@@ -61,9 +61,12 @@ gem 'nokogiri', "~> 1.5.9"
 gem 'rails_admin', "~> 0.4.8"
 gem "devise", "~> 2.2.4"
 
+# TorqueBox app server
 gem "torquebox", "~> 2.3.2"
-
 gem "torquebox-server", "~> 2.3.2"
+
+# for trying, and trying again, and then giving up.
+gem "retriable", "~> 1.3.3.1"
 
 # Gems used only for assets and not required
 # in production environments by default.

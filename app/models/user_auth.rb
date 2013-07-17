@@ -12,12 +12,14 @@ class UserAuth < ActiveRecord::Base
 
   def self.new_or_update_superuser!(uid)
     use_pooled_connection {
-      user = self.where(uid: uid).first_or_initialize
-      #super-user and test-user flags should probably be mutually exclusive...
-      user.is_superuser = true
-      user.is_test_user = false
-      user.active = true
-      user.save
+      retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
+        user = self.where(uid: uid).first_or_initialize
+        #super-user and test-user flags should probably be mutually exclusive...
+        user.is_superuser = true
+        user.is_test_user = false
+        user.active = true
+        user.save
+      end
     }
   end
 
@@ -30,11 +32,13 @@ class UserAuth < ActiveRecord::Base
 
   def self.new_or_update_test_user!(uid)
     use_pooled_connection {
-      user = self.where(uid: uid).first_or_initialize
-      user.is_superuser = false
-      user.is_test_user = true
-      user.active = true
-      user.save
+      retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
+        user = self.where(uid: uid).first_or_initialize
+        user.is_superuser = false
+        user.is_test_user = true
+        user.active = true
+        user.save
+      end
     }
   end
 end

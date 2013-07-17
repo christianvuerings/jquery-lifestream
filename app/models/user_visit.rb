@@ -13,9 +13,11 @@ class UserVisit < ActiveRecord::Base
 
   def self.record(uid)
     use_pooled_connection {
-      visit = self.where(uid: uid).first_or_initialize
-      visit.last_visit_at = DateTime.now
-      visit.save
+      retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
+        visit = self.where(uid: uid).first_or_initialize
+        visit.last_visit_at = DateTime.now
+        visit.save
+      end
     }
   end
 
