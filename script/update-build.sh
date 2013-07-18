@@ -51,3 +51,5 @@ echo "------------------------------------------" | $LOGIT
 echo "`date`: Deploying new CalCentral knob..." | $LOGIT
 bundle exec torquebox deploy calcentral.knob --env=production | $LOGIT
 
+echo "Copying assets into /var/www/html/calcentral" | $LOGIT
+cp -Rvf public/assets /var/www/html/calcentral/ | $LOGIT
