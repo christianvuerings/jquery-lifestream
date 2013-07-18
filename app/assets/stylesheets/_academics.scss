@@ -130,6 +130,7 @@
     padding: 0 10px 10px 10px;
 
     .cc-widget-list-hover {
+      padding: 0;
       .cc-active-block-entry {
         border-bottom: 1px solid $cc-color-light-grey;
         margin-bottom: 0;
@@ -144,7 +145,6 @@
         line-height: 1.3;
         margin: 5px 0;
       }
-      padding: 0;
     }
   }
 }
