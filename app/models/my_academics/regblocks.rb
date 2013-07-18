@@ -27,8 +27,10 @@ class MyAcademics::Regblocks
       is_active = cleared_date.nil?
       type = to_text block.css("blockType")
       status = to_text block.css("status")
-      reason = to_text block.css("reason")
       office = to_text block.css("office")
+      translated_codes = RegBlockCodeTranslator.new().translate_bearfacts_proxy(block.css('reasonCode').text, block.css('office').text)
+      reason = translated_codes[:reason]
+      message = translated_codes[:message]
 
       reg_block = {
         status: status,
@@ -36,7 +38,8 @@ class MyAcademics::Regblocks
         blocked_date: format_date(blocked_date, "%-m/%d/%Y"),
         cleared_date: format_date(cleared_date, "%-m/%d/%Y"),
         reason: reason,
-        office: office
+        office: office,
+        message: message,
       }
       if is_active
         active_blocks << reg_block

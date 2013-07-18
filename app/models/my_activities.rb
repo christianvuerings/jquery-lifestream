@@ -101,21 +101,24 @@ class MyActivities < MyMergedModel
       end
 
       if include_in_feed?(blocked_date, cleared_date)
+        type = block.css("blockType").text.strip
+        status = block.css("status").text.strip
+
+        translated_codes = RegBlockCodeTranslator.new().translate_bearfacts_proxy(block.css('reasonCode').text, block.css('office').text)
+        block_type = translated_codes[:type]
+        block_reason = translated_codes[:reason]
+        office = translated_codes[:office]
         if cleared_date
           notification_type = "message"
           notification_date = cleared_date
+          title ="#{block_type} Block Cleared: #{block_reason}"
+          message = "This block, placed on #{format_date(blocked_date)[:date_string]}, was cleared on #{format_date(cleared_date)[:date_string]}"
         else
           notification_type = "alert"
           notification_date = blocked_date
+          message = translated_codes[:message]
+          title = "#{block_type} Block Placed: #{block_reason}"
         end
-        type = block.css("blockType").text.strip
-        status = block.css("status").text.strip
-        translated_codes = RegBlockCodeTranslator.new().translate_bearfacts_proxy(block.css('reasonCode').text, block.css('office').text)
-        message = translated_codes[:message]
-        block_reason = translated_codes[:reason]
-        block_type = translated_codes[:type]
-
-        title = "#{block_type} block due to #{block_reason} #{status.upcase}"
 
         Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{type}, blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
 
@@ -123,7 +126,7 @@ class MyActivities < MyMergedModel
             id: '',
             title: title,
             summary: message,
-            short_description: block_reason,
+            short_description: office,
             block_type: block_type,
             type: notification_type,
             date: format_date(notification_date),
