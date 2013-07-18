@@ -120,8 +120,6 @@ class MyActivities < MyMergedModel
           title = "#{block_type} Block Placed: #{block_reason}"
         end
 
-
-
         Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{type}, blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
 
         notification = {

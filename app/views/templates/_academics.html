@@ -71,20 +71,39 @@
 
           <h4>Active Blocks</h4>
           <div class="row cc-academics-column-labels">
-            <div class="large-3 small-2 columns">Type</div>
+            <div class="large-2 small-2 columns">Type</div>
             <div class="large-3 small-4 columns">Reason</div>
             <div class="large-2 small-2 columns">Office</div>
             <div class="large-2 small-2 columns end">Blocked</div>
           </div>
           <div data-ng-show="regblocks.active_blocks.length">
-            <div
-              class="row"
-              data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
-            >
-              <div class="large-3 small-2 columns" data-ng-bind="block.type"></div>
-              <div class="large-3 small-4 columns" data-ng-bind="block.reason"></div>
-              <div class="large-2 small-2 columns" data-ng-bind="block.office || '&nbsp;'"></div>
-              <div class="large-2 small-2 columns end" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
+            <div data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
+                 class="cc-widget-list-hover"
+                 data-ng-click="api.widget.toggleShow(regblocks.active_blocks, block, 'Active Blocks')">
+              <div class="row cc-active-block-entry">
+                <div class="large-2 small-2 columns"><i class="icon-exclamation-sign"></i><span data-ng-bind="block.type"></span></div>
+                <div class="large-3 small-4 columns cc-ellipsis" data-ng-bind="block.reason"></div>
+                <div class="large-2 small-2 columns" data-ng-bind="block.office || '&nbsp;'"></div>
+                <div class="large-2 small-2 columns end" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
+              </div>
+              <div data-ng-show="block._show">
+                <div class="row">
+                  <div class="large-3 small-2 columns">&nbsp;</div>
+                  <div class="large-9 small-10 columns end" data-ng-bind-html-unsafe="block.message"></div>
+                </div>
+                <div class="row">
+                  <div class="large-3 small-2 columns">&nbsp;</div>
+                  <div class="large-9 small-10 columns end">
+                    <p><button class="cc-button-link"
+                               data-ng-click="api.util.preventBubble($event);block._show_regblock_definition=!!!block._show_regblock_definition">
+                      <i class="icon-question-sign text-info"></i>What is a registration block?</button>
+                    </p>
+                    <p data-ng-show="block._show_regblock_definition">A registration block prevents you from being "officially registered" as a student who is attending U.C. Berkeley. You must have both enrolled in classes and paid your fees to be an "officially registered" student.
+                      <a href="http://studentcentral.berkeley.edu/node/96">Learn more about blocks >></a>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div data-ng-show="!regblocks.active_blocks.length">
@@ -107,7 +126,7 @@
           </div>
           <div class="cc-academics-block-history" data-ng-show="show_block_history">
             <div class="row cc-academics-column-labels">
-              <div class="large-3 small-2 columns">Type</div>
+              <div class="large-2 small-2 columns">Type</div>
               <div class="large-3 small-4 columns">Reason</div>
               <div class="large-2 small-2 columns">Office</div>
               <div class="large-2 small-2 columns">Blocked</div>
@@ -116,10 +135,7 @@
             <div
               class="row"
               data-ng-repeat="block in regblocks.inactive_blocks | orderBy:'blocked_date.epoch':true">
-              <div
-                class="large-3 small-2 columns"
-                data-ng-bind="block.type || '&nbsp;'">
-              </div>
+              <div class="large-2 small-2 columns" data-ng-bind="block.type || '&nbsp;'"></div>
               <div
                 class="large-3 small-4 columns"
                 data-ng-bind="block.reason || '&nbsp;'">
