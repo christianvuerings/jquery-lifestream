@@ -135,7 +135,9 @@
         border-bottom: 1px solid $cc-color-light-grey;
         margin-bottom: 0;
         padding: 5px 0;
-
+      }
+      .cc-active-block-entry-content {
+        padding-left: 5px;
       }
       i {
         padding-right: 5px;

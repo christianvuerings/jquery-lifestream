@@ -77,23 +77,22 @@
             <div class="large-2 small-2 columns end">Blocked</div>
           </div>
           <div data-ng-show="regblocks.active_blocks.length">
-            <div data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true"
-                 class="cc-widget-list-hover"
-                 data-ng-click="api.widget.toggleShow(regblocks.active_blocks, block, 'Active Blocks')">
+            <div class="cc-widget-list-hover"
+                 data-cc-accessible-focus-directive
+                 data-ng-click="api.widget.toggleShow(regblocks.active_blocks, block, 'Active Blocks')"
+                 data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true">
               <div class="row cc-active-block-entry">
                 <div class="large-2 small-2 columns"><i class="icon-exclamation-sign"></i><span data-ng-bind="block.type"></span></div>
                 <div class="large-3 small-4 columns cc-ellipsis" data-ng-bind="block.reason"></div>
                 <div class="large-2 small-2 columns" data-ng-bind="block.office || '&nbsp;'"></div>
                 <div class="large-2 small-2 columns end" data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></div>
               </div>
-              <div data-ng-show="block._show">
+              <div class="cc-active-block-entry-content" data-ng-show="block._show">
                 <div class="row">
-                  <div class="large-3 small-2 columns">&nbsp;</div>
-                  <div class="large-9 small-10 columns end" data-ng-bind-html-unsafe="block.message"></div>
+                  <div class="large-12 small-12 columns" data-ng-bind-html-unsafe="block.message"></div>
                 </div>
                 <div class="row">
-                  <div class="large-3 small-2 columns">&nbsp;</div>
-                  <div class="large-9 small-10 columns end">
+                  <div class="large-12 small-12 columns">
                     <p><button class="cc-button-link"
                                data-ng-click="api.util.preventBubble($event);block._show_regblock_definition=!block._show_regblock_definition">
                       <i class="icon-question-sign text-info"></i>What is a registration block?</button>
