@@ -59,12 +59,13 @@ class CampusUserCoursesProxy < BaseProxy
             previous_item = item
           end
         end
+        previous_item = {}
         assigneds = CampusData.get_instructing_sections(@uid, term_yr, term_cd)
         assigneds.each do |row|
-          if (item = row_to_feed_item(row, previous_id))
+          if (item = row_to_feed_item(row, previous_item))
             item[:role] = 'Instructor'
             campus_classes << item
-            previous_id = item[:id]
+            previous_item = item
           end
         end
       end

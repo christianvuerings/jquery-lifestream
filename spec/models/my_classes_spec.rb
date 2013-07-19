@@ -71,4 +71,11 @@ describe "MyClasses" do
       my_class[:course_code].should_not be_nil
     end
   end
+
+  it "should return some classes for only instructors", :if => CampusData.test_data? do
+    #Match this with some instructor from populate_campus_h2, like this awful Cog Sci/Bio teacher
+    my_classes = MyClasses.new('192517').get_feed
+    results = my_classes[:classes].select {|entry| entry[:role] == "Instructor" }
+    (results.size >= 2).should be_true
+  end
 end
