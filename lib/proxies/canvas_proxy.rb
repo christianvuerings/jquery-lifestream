@@ -72,7 +72,7 @@ class CanvasProxy < BaseProxy
 
   def self.current_sis_term_ids
     sis_term_ids = []
-    Settings.sakai_proxy.current_terms_codes.each do |t|
+    Settings.canvas_proxy.current_terms_codes.each do |t|
       sis_term_ids.push("TERM:#{t.term_yr}-#{t.term_cd}")
     end
     sis_term_ids
