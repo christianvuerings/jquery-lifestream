@@ -7,7 +7,8 @@
   calcentral.controller('TasksController', ['$filter', '$http', '$scope', 'apiService', function($filter, $http, $scope, apiService) {
 
     // Initial mode for Tasks view
-    $scope.tasks_mode = 'scheduled';
+    $scope.current_task_mode = 'scheduled';
+    $scope.task_modes = ['scheduled', 'unscheduled', 'completed'];
 
     var calculateCounts = function() {
       $scope.counts = {
@@ -18,7 +19,7 @@
     };
 
     var setCounts = function() {
-      var isScheduled = ($scope.tasks_mode === 'scheduled');
+      var isScheduled = ($scope.current_task_mode === 'scheduled');
       $scope.counts.current = isScheduled ? $scope.counts.scheduled : $scope.counts.unscheduled;
       $scope.counts.opposite = isScheduled ? $scope.counts.unscheduled : $scope.counts.scheduled;
     };
@@ -105,7 +106,7 @@
     // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasks_mode) {
       apiService.analytics.trackEvent(['Tasks', 'Switch mode', tasks_mode]);
-      $scope.tasks_mode = tasks_mode;
+      $scope.current_task_mode = tasks_mode;
       setCounts();
     };
 

@@ -2,6 +2,9 @@
 .cc-widget-tasks {
   .cc-button-group {
     margin-top: 10px;
+    .cc-button {
+      text-transform: capitalize;
+    }
   }
   .cc-widget-list-hover {
     padding: 10px;
