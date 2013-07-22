@@ -1,9 +1,13 @@
 class MyCampusLinksController < ApplicationController
 
+  extend Calcentral::Cacheable
+
   def get_feed
     if session[:user_id]
-      # nil user ID makes the MyCampusLinks cache on a global level
-      render :json => MyCampusLinks.new(nil, nil).get_feed.to_json
+      json = self.class.fetch_from_cache {
+        MyCampusLinks.new.get_feed.to_json
+      }
+      render :json => json
     else
       render :json => {}.to_json
     end
@@ -14,12 +18,9 @@ class MyCampusLinksController < ApplicationController
     unless UserAuth.is_superuser?(session[:user_id])
       return render :nothing => true, :status => 401
     end
-    Rails.logger.info "Expiring MyCampusLinks cache"
-    MyCampusLinks.expire nil
-    MyCampusLinks.new(nil, nil).get_feed
-    render :json => {
-      :refreshed => Time.now.to_s
-    }.to_json
+    Rails.logger.info "Expiring MyCampusLinksController cache"
+    self.class.expire
+    get_feed
   end
 
 end

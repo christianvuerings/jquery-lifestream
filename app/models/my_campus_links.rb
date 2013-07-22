@@ -1,4 +1,4 @@
-class MyCampusLinks < MyMergedModel
+class MyCampusLinks
 
 =begin
 
@@ -14,7 +14,7 @@ class MyCampusLinks < MyMergedModel
 
 =end
 
-  def get_feed_internal
+  def get_feed
     # Feed consists of two primary sections: Navigation and Links
     links = []
     navigation = []
