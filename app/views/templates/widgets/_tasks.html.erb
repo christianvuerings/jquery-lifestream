@@ -16,34 +16,25 @@
     </div>
   </div>
   <div class="cc-tasks-list" data-cc-spinner-directive>
-    <div data-ng-switch data-on="tasks_mode">
+    <div data-ng-switch data-on="current_task_mode">
 
       <div class="row collapse">
         <div class="large-10 large-centered columns">
-          <ul class="cc-button-group cc-even-3">
-            <li>
+          <ul class="cc-button-group cc-even-3" role="tablist">
+            <li data-ng-repeat="task_mode in task_modes">
               <button class="cc-button"
-                data-ng-click="switchTasksMode('scheduled')"
-                data-ng-class="{'cc-button-selected':(tasks_mode=='scheduled')}">Scheduled
-              </button>
-            </li>
-            <li>
-              <button class="cc-button"
-                data-ng-click="switchTasksMode('unscheduled')"
-                data-ng-class="{'cc-button-selected':(tasks_mode=='unscheduled')}">Unscheduled
-              </button>
-            </li>
-            <li>
-              <button class="cc-button"
-                data-ng-click="switchTasksMode('completed')"
-                data-ng-class="{'cc-button-selected':(tasks_mode=='completed')}">Completed
+                data-ng-click="switchTasksMode(task_mode)"
+                data-ng-class="{'cc-button-selected':(current_task_mode==task_mode)}"
+                aria-selected="{{current_task_mode==task_mode}}"
+                role="tab"
+                data-ng-bind="task_mode">
               </button>
             </li>
           </ul>
         </div>
       </div>
 
-      <div data-ng-switch-when="scheduled">
+      <div data-ng-switch-when="scheduled" role="tabpanel">
         <div data-ng-include src="'templates/dashboard_task_noitems.html'" data-onload="tasks_mode_opposite='unscheduled'"></div>
         <div data-ng-hide="counts.scheduled === 0">
           <div>
@@ -56,7 +47,7 @@
               </li>
             </ul>
             <p data-ng-show="!overdueTasks.length" class="cc-widget-text">
-              There are currently no {{tasks_mode}} tasks/assignments that are overdue.
+              There are currently no {{current_task_mode}} tasks/assignments that are overdue.
             </p>
           </div>
 
@@ -70,7 +61,7 @@
               </li>
             </ul>
             <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text">
-              There are currently no {{tasks_mode}} tasks/assignments that are due today.
+              There are currently no {{current_task_mode}} tasks/assignments that are due today.
             </p>
           </div>
 
@@ -84,13 +75,13 @@
               </li>
             </ul>
             <p data-ng-show="!futureTasks.length" class="cc-widget-text">
-              There are currently no {{tasks_mode}} tasks/assignments that are due in the future.
+              There are currently no {{current_task_mode}} tasks/assignments that are due in the future.
             </p>
           </div>
         </div>
       </div>
 
-      <div data-ng-switch-when="unscheduled">
+      <div data-ng-switch-when="unscheduled" role="tabpanel">
         <div data-ng-include src="'templates/dashboard_task_noitems.html'" data-onload="tasks_mode_opposite='scheduled'"></div>
         <div data-ng-hide="counts.unscheduled === 0">
           <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> </h3>
@@ -104,7 +95,7 @@
         </div>
       </div>
 
-      <div data-ng-switch-when="completed">
+      <div data-ng-switch-when="completed" role="tabpanel">
         <h3 class="cc-widget-tasks-section-label">Total <span class="cc-widget-tasks-section-label-count" data-ng-bind="completedTasks.length"></span> <span class="cc-right">Completed</span></h3>
 
         <ul class="cc-widget-tasks-list">
