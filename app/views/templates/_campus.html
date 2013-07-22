@@ -4,17 +4,6 @@
 
     <div class="large-9 push-3 columns cc-page-campus-content">
 
-      <div data-ng-show="currentTopCategory==''">
-        <div class="large-6 columns hide-for-small">
-          <%= image_tag "ucb_campanile.jpg", :size => "308x484", :alt => "UC Berkeley Campanile" %>
-        </div>
-
-        <div class="large-6 columns">
-          <h1>Campus Pages</h1>
-          <p class="cc-page-campus-content-explanation">CalCentral Campus Pages offer a jumping off point into the broader campus. They encourage the discovery of campus resources, with content personalized to each person.</p>
-        </div>
-      </div>
-
       <h1 data-ng-bind="currentTopCategory" class="hide-for-small"></h1>
 
       <div class="cc-widget" data-ng-show="currentTopCategory">
