@@ -68,10 +68,7 @@
     var setLinks = function(links) {
       $scope.links = [];
       $scope.subcategories = [];
-      $scope.topcategories = {
-        // Should always be visible, this is the landing page
-        'Campus Pages': true
-      };
+      $scope.topcategories = {};
       angular.forEach(links, function(link) {
         if (canViewLink(link) && isLinkInCategory(link)) {
           $scope.links.push(link);
@@ -90,6 +87,13 @@
      */
     var getCategoryName = function(categoryId) {
       var navigation = $scope.campusdata.navigation;
+
+      // We want to explicitly check for undefined here
+      // since other values need to result in a 404.
+      if (categoryId === undefined) {
+        return navigation[0].categories[0].name;
+      }
+
       for (var i = 0; i < navigation.length; i++) {
         for (var j = 0; j < navigation[i].categories.length; j++) {
           if (navigation[i].categories[j].id === categoryId) {
@@ -112,14 +116,8 @@
       //$http.get('/json/campuslinks.json').success(function(campusdata) {
         $scope.campusdata = campusdata;
 
-        var title = 'Campus';
-        if ($routeParams.category) {
-          $scope.currentTopCategory = getCategoryName($routeParams.category);
-          title += ' - ' + $scope.currentTopCategory;
-        } else {
-          $scope.currentTopCategory = '';
-        }
-
+        $scope.currentTopCategory = getCategoryName($routeParams.category);
+        var title = 'Campus - ' + $scope.currentTopCategory;
         apiService.util.setTitle(title);
 
         setLinks($scope.campusdata.links);

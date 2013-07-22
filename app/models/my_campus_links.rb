@@ -19,18 +19,6 @@ class MyCampusLinks
     links = []
     navigation = []
 
-    # Begin navigation section
-    main_nav_top = {
-      "label" => "",
-      "categories" => [
-        {
-          "id" => "",
-          "name" => "Campus Pages"
-        }
-      ]
-    }
-    navigation.push(main_nav_top)
-
     @maincats = LinkCategory.where("root_level = ?", true)
     @maincats.each do |cat|
       @section = {
