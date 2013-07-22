@@ -49,7 +49,7 @@
 
   <div data-ng-show="task._show">
     <div class="cc-widget-tasks-more" data-ng-hide="editorEnabled">
-      <div data-ng-bind-html="task.notes" data-cc-truncate-directive="filter:'linky', length:300"></div>
+      <div data-ng-bind-html="task.notes | linky"></div>
 
       <div class="cc-clearfix">
         <a class="cc-button"
