@@ -67,15 +67,34 @@ class CanvasRefreshFromCampus
   def import_csv_files(users_csv_filename, term_enrollment_csv_files)
     import_proxy = CanvasSisImportProxy.new
     response = import_proxy.post_users(users_csv_filename)
-    if response
-      term_enrollment_csv_files.each do |term_id, csv_filename|
-        response = import_proxy.post_enrollments(term_id, csv_filename)
-        if response.nil?
-          Rails.logger.error("Unable to POST enrollment CSV #{csv_filename} to Canvas")
+    if response && response.status == 200
+      Rails.logger.warn "#{self.class.name} User import response = #{response.inspect}"
+
+      json = JSON.parse(response.body)
+      import_id = json["id"]
+      import_status = import_proxy.import_status(import_id)
+      import_success = import_proxy.import_was_successful?(import_status)
+
+      if import_success
+        term_enrollment_csv_files.each do |term_id, csv_filename|
+          enrollment_response = import_proxy.post_enrollments(term_id, csv_filename)
+          if enrollment_response && enrollment_response.status == 200
+            enrollment_json = JSON.parse(enrollment_response.body)
+            enrollment_import_id = enrollment_json["id"]
+            enrollment_import_status = import_proxy.import_status(enrollment_import_id)
+            enrollment_import_success = import_proxy.import_was_successful?(enrollment_import_status)
+            unless enrollment_import_success
+              Rails.logger.error("#{self.class.name} Enrollment import failed or incompletely processed. Import status: #{enrollment_import_status}")
+            end
+          else
+            Rails.logger.error("Unable to POST enrollment CSV #{csv_filename} to Canvas")
+          end
         end
+      else
+        Rails.logger.error("#{self.class.name} User import failed or incompletely processed; skipping enrollments. Import status: #{import_status}")
       end
     else
-      Rails.logger.error("Unable to POST users CSV #{users_csv_filename} to Canvas; skipping enrollments")
+      Rails.logger.error("Unable to POST users CSV #{users_csv_filename} to Canvas; skipping enrollments. Response = #{response}")
     end
   end
 
