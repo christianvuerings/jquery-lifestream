@@ -115,7 +115,7 @@ cache:
     MyAcademics::Merged: 0
     MyActivities: 0
     MyBadges::Merged: 0
-    MyCampusLinks: 0
+    MyCampusLinksController: 0
     MyClasses: 0
     MyGroups: 0
     MyTasks::Merged: 0
