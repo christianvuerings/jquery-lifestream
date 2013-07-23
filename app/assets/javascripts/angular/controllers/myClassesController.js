@@ -21,34 +21,34 @@
 
     var appendGroupsToOther = function(categorizedClasses, groups) {
       groups.forEach(function(value) {
-        categorizedClasses['Other'][value.id] = value;
+        categorizedClasses.other[value.id] = value;
       });
       return categorizedClasses;
     };
 
     var bindScopes = function(categorizedClasses) {
-      var studentLength = Object.keys(categorizedClasses['Student']).length;
-      var instructorLength = Object.keys(categorizedClasses['Instructor']).length
-      var otherLength = Object.keys(categorizedClasses['Other']).length
+      var studentLength = Object.keys(categorizedClasses.student).length;
+      var instructorLength = Object.keys(categorizedClasses.instructor).length
+      var otherLength = Object.keys(categorizedClasses.other).length
 
       $scope.allClassesPresent = (studentLength || instructorLength || otherLength);
       $scope.allClasses = [
         {
-          "categoryId": "Student",
+          "categoryId": "student",
           "categoryTitle": "Enrollments",
-          "data": categorizedClasses["Student"],
+          "data": categorizedClasses.student,
           "length": studentLength
         },
         {
-          "categoryId": "Instructor",
+          "categoryId": "instructor",
           "categoryTitle": "Teaching",
-          "data": categorizedClasses["Instructor"],
+          "data": categorizedClasses.instructor,
           "length": instructorLength
         },
         {
-          "categoryId": "Other",
+          "categoryId": "other",
           "categoryTitle": "Other Site Memberships",
-          "data": categorizedClasses["Other"],
+          "data": categorizedClasses.other,
           "length": otherLength
         }
       ];
@@ -56,16 +56,17 @@
 
     var categorizeByRole = function(allClassesHash) {
       var categorizedClasses = {
-        'Student': {},
-        'Instructor': {},
-        'Other': {}
+        'student': {},
+        'instructor': {},
+        'other': {}
       };
       angular.forEach(allClassesHash.campusClasses, function(value, key) {
         //Unlikely to hit the 'Other' case but doesn't hurt to make it robust
-        if (value.role  === 'Instructor' || value.role === 'Student') {
-          categorizedClasses[value.role][key] = value;
+        var role = value.role.toLowerCase() || '';
+        if (role  === 'instructor' || role === 'student') {
+          categorizedClasses[role][key] = value;
         } else {
-          categorizedClasses['Other'][key] = value;
+          categorizedClasses.other[key] = value;
         }
       });
 

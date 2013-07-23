@@ -4,19 +4,19 @@
   </div>
   <div data-cc-spinner-directive>
     <div data-ng-show="allClassesPresent" data-ng-repeat="category in allClasses"
-         data-ng-class="'cc-widget-classes-{{ category.categoryId | lowercase }}'">
+         data-ng-class="'cc-widget-classes-{{ category.categoryId }}'">
       <div class="cc-widget-subtitle" data-ng-show="category.length">
         <h3 data-ng-bind="category.categoryTitle"></h3>
       </div>
       <ul class="cc-widget-list">
         <li data-ng-repeat="(id, class) in category.data"
-            data-ng-class="{'cc-widget-list-selected': class._show && category.categoryId != 'Other'}">
+            data-ng-class="{'cc-widget-list-selected': class._show && category.categoryId !== 'other'}">
           <div data-ng-switch="category.categoryId">
-            <a data-ng-switch-when="Other" data-ng-href="{{class.site_url}}"
+            <a data-ng-switch-when="other" data-ng-href="{{class.site_url}}"
                data-ng-click="api.analytics.trackExternalLink('My Other Site Memberships', class.emitter, class.site_url)">
               <div class="cc-widget-list-hover">
                 <div class="cc-widget-list-column-left">
-                  <div class="cc-icon" data-ng-class="'cc-icon-{{class.emitter|lowercase}}'"></div>
+                  <div class="cc-icon" data-ng-class="'cc-icon-{{ class.emitter|lowercase }}'"></div>
                 </div>
                 <strong class="cc-ellipsis" data-ng-bind="class.title"></strong>
               </div>
