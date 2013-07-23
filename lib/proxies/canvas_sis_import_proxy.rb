@@ -42,30 +42,32 @@ class CanvasSisImportProxy < CanvasProxy
     })
   end
 
+  # import may not be completed the first time we ask for it, so loop until it is ready.
   def import_status(import_id)
     url = "accounts/#{settings.account_id}/sis_imports/#{import_id}"
     status = nil
     sleep 2
-    retriable(:on => ReportNotReadyException, :tries => 5, :interval => 2) do
+    # TODO how many tries and how long an interval is reasonable here?
+    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 5, :interval => 2) do
       response = request_uncached(url, '_sis_import_status', {
         method: :get
       })
-      if response.nil?
-        Rails.logger.warn "#{self.class.name} SIS Import Status Report missing or errored; will retry in 2s"
-        raise ReportNotReadyException
+      unless response.present? && response.body.present?
+        Rails.logger.error "#{self.class.name} SIS Import #{import_id} Status Report missing or errored; will retry later"
+        raise CanvasSisImportProxy::ReportNotReadyException
       end
       json = JSON.parse response.body
       if json["workflow_state"] == "initializing" || json["workflow_state"] == "created"
-        Rails.logger.warn "#{self.class.name} SIS Import Status Report exists but is not yet ready; will retry in 2s"
-        raise ReportNotReadyException
+        Rails.logger.info "#{self.class.name} SIS Import #{import_id} Status Report exists but is not yet ready; will retry later"
+        raise CanvasSisImportProxy::ReportNotReadyException
       else
         status = json
       end
     end
     if status.nil?
-      Rails.logger.error "#{self.class.name} SIS Import Status Report not available after 5 tries, giving up"
+      Rails.logger.error "#{self.class.name} SIS Import #{import_id} Status Report not available after 5 tries, giving up"
     end
-    Rails.logger.warn "#{self.class.name} Import status = #{status}"
+    Rails.logger.debug "#{self.class.name} Import #{import_id} Status Report = #{status}"
     status
   end
 

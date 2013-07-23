@@ -68,7 +68,7 @@ class CanvasRefreshFromCampus
     import_proxy = CanvasSisImportProxy.new
     response = import_proxy.post_users(users_csv_filename)
     if response && response.status == 200
-      Rails.logger.warn "#{self.class.name} User import response = #{response.inspect}"
+      Rails.logger.debug "#{self.class.name} User import response = #{response.inspect}"
 
       json = JSON.parse(response.body)
       import_id = json["id"]
