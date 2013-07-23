@@ -7,7 +7,11 @@
     /**
      * Toggle whether an item for a widget should be shown or not
      */
-    var toggleShow = function(items, item, widget) {
+    var toggleShow = function(event, items, item, widget) {
+      // Ignore toggling on Anchor events
+      if (event && event.toElement && event.toElement.tagName === 'A') {
+        return;
+      }
 
       // Toggle the current item
       item._show = !item._show;
