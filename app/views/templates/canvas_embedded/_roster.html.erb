@@ -1,0 +1,16 @@
+<script type="text/ng-template" id="templates/canvas_embedded/roster.html">
+  <div class="large-12 columns">
+    <h2>In Canvas course {{canvas_course.id}}</h2>
+    <ul>
+      <li data-ng-repeat="student in students">
+        <div data-ng-show="student.photo"><img data-ng-src="{{student.photo}}"/></div>
+        <div data-ng-hide="student.photo">
+          <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
+        </div>
+        <div>{{student.first_name}}</div>
+        <div style="font-weight:bold;">{{student.last_name}}</div>
+        <div>{{student.student_id}}</div>
+      </li>
+    </ul>
+  </div>
+</script>

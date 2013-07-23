@@ -1,0 +1,54 @@
+{
+    "canvas_course": {
+        "id": "767330"
+    },
+    "sections": [
+        {
+            "id": "98163",
+            "name": "LEC 001",
+            "sis_id": "SEC:2013-C-12346"
+        },
+        {
+            "id": "81555",
+            "name": "Informal backchat"
+        }
+    ],
+    "students": [
+        {
+            "id": "484855",
+            "first_name": "BILLAL",
+            "last_name": "ABDELGHAFFAR",
+            "student_id": "234234234",
+            "photo": "/canvas/777/photo/98765",
+            "sections": [
+                {
+                    "id": "98163"
+                }
+            ]
+        },
+        {
+            "id": "484856",
+            "first_name": "SEIFELDIN ALY HUSSEIN",
+            "last_name": "AHMED",
+            "student_id": "234234233",
+            "photo": "/canvas/777/photo/98764",
+            "sections": [
+            ]
+        },
+        {
+            "id": "484857",
+            "first_name": "JOSÉ",
+            "last_name": "DABLANTES PAEZ",
+            "student_id": "234234232",
+            "sections": [
+                {
+                    "id": "98163"
+                },
+                {
+                    "id": "81555"
+                }
+            ]
+        }
+
+    ]
+}

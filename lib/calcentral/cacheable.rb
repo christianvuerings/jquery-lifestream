@@ -9,7 +9,9 @@ module Calcentral
           key,
           :expires_in => self.expires_in
       ) do
-        yield
+        if block_given?
+          yield
+        end
       end
     end
 

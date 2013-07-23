@@ -82,4 +82,14 @@ class CanvasProxy < BaseProxy
     parsed = /SEC:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])-(?<ccn>\d+).*/.match(sis_term_id)
   end
 
+  def next_page_params(response)
+    # If the response's link header included a "next" page pointer...
+    if response && (next_link = LinkHeader.parse(response['link']).find_link(['rel', 'next']))
+      # ... then extract the query string from its URL.
+      next_query_string = /.+\?(.+)/.match(next_link.href)[1]
+    else
+      nil
+    end
+  end
+
 end

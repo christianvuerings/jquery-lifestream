@@ -54,6 +54,10 @@ describe CampusData do
       # we will only have predictable enrollments in our fake Oracle db.
       students.empty?.should be_false
     end
+    students.each do |student_row|
+      student_row["enroll_status"].blank?.should be_false
+      student_row["student_id"].blank?.should be_false
+    end
   end
 
   it "should find a course" do

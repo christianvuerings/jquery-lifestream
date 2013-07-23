@@ -57,6 +57,14 @@
       controller: 'SorryController',
       isPublic: true
     }).
+    when('/canvas/embedded/rosters', {
+      templateUrl: 'templates/canvas_embedded/roster.html',
+      controller: 'CanvasEmbeddedController'
+    }).
+    when('/canvas/rosters/:canvas_course_id', {
+      templateUrl: 'templates/canvas_embedded/roster.html',
+      controller: 'CanvasEmbeddedController'
+    }).
     // Redirect to a 404 page
     otherwise({
       templateUrl: 'templates/404.html',

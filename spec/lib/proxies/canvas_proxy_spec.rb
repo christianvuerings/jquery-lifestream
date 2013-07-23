@@ -85,6 +85,13 @@ describe CanvasProxy do
     end
   end
 
+  it "should fetch all course students even if the Canvas feed is paged" do
+    # The VCR recording has been edited to have four pages of results, only one student per page.
+    proxy = CanvasCourseStudentsProxy.new(course_id: 767330, fake: true)
+    students = proxy.full_students_list
+    students.length.should == 4
+  end
+
   it "should return nil if server is not available" do
     client = CanvasUserCoursesProxy.new(user_id: @user_id, fake: false)
     stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)

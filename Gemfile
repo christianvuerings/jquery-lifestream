@@ -31,9 +31,11 @@ gem "faraday_middleware", "~> 0.9.0"
 gem "signet", "~> 0.4.5"
 gem "google-api-client", "~> 0.6.4"
 
+# LTI support
+gem 'ims-lti', :git => "https://github.com/instructure/ims-lti.git"
+
 # for VCR http recording tool
 gem "vcr", "~> 2.5.0"
-gem "jruby-openssl", "~> 0.8.8"
 
 # for memcached connection
 gem "dalli", "~> 2.6.4"
@@ -56,6 +58,9 @@ gem "celluloid", "~> 0.14.1"
 
 # for parsing formatted html
 gem 'nokogiri', "~> 1.5.9"
+
+# for parsing paged feeds
+gem 'link_header', "~> 0.0.7"
 
 # for simplified relational data management. rails_admin requires devise.
 gem 'rails_admin', "~> 0.4.8"
