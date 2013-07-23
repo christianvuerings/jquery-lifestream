@@ -77,6 +77,16 @@
   display: block;
   margin-top: 10px;
 }
+.cc-widget-subtitle {
+  background: $cc-color-light-medium-grey;
+
+  h3 {
+    color: $cc-color-widget-highlight-background;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 10px;
+  }
+}
 
 .cc-widget-text {
   padding: 15px 20px 20px 20px;
