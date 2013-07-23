@@ -1,6 +1,9 @@
 require 'csv'
 
 class CanvasRefreshFromCampus
+
+  include ClassLogger
+
   def initialize
     @export_dir = Settings.canvas_proxy.export_directory
     if !File.exists?(@export_dir)
@@ -36,18 +39,18 @@ class CanvasRefreshFromCampus
       end
       enrollments_csv.close
       if File.zero?(csv_filename)
-        Rails.logger.warn("No Canvas enrollment records for #{term_id} - SKIPPING REFRESH")
+        logger.warn("No Canvas enrollment records for #{term_id} - SKIPPING REFRESH")
       else
         total_enrollments = CSV.read(csv_filename, {headers: true}).length
-        Rails.logger.info("Will refresh #{total_enrollments} Canvas enrollment records for #{term_id}")
+        logger.info("Will refresh #{total_enrollments} Canvas enrollment records for #{term_id}")
         term_enrollment_csv_files[term_id] = csv_filename
       end
     end
     if user_ids.empty?
-      Rails.logger.warn("No Canvas user account records for enrollments - SKIPPING REFRESH")
+      logger.warn("No Canvas user account records for enrollments - SKIPPING REFRESH")
       nil
     else
-      Rails.logger.info("Will refresh #{user_ids.length} Canvas user records")
+      logger.info("Will refresh #{user_ids.length} Canvas user records")
       users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users.csv"
       users_csv = CSV.open(users_csv_filename, 'wb',
                            {
@@ -67,15 +70,34 @@ class CanvasRefreshFromCampus
   def import_csv_files(users_csv_filename, term_enrollment_csv_files)
     import_proxy = CanvasSisImportProxy.new
     response = import_proxy.post_users(users_csv_filename)
-    if response
-      term_enrollment_csv_files.each do |term_id, csv_filename|
-        response = import_proxy.post_enrollments(term_id, csv_filename)
-        if response.nil?
-          Rails.logger.error("Unable to POST enrollment CSV #{csv_filename} to Canvas")
+    if response && response.status == 200
+      logger.debug "User import response = #{response.inspect}"
+
+      json = JSON.parse(response.body)
+      import_id = json["id"]
+      import_status = import_proxy.import_status(import_id)
+      import_success = import_proxy.import_was_successful?(import_status)
+
+      if import_success
+        term_enrollment_csv_files.each do |term_id, csv_filename|
+          enrollment_response = import_proxy.post_enrollments(term_id, csv_filename)
+          if enrollment_response && enrollment_response.status == 200
+            enrollment_json = JSON.parse(enrollment_response.body)
+            enrollment_import_id = enrollment_json["id"]
+            enrollment_import_status = import_proxy.import_status(enrollment_import_id)
+            enrollment_import_success = import_proxy.import_was_successful?(enrollment_import_status)
+            unless enrollment_import_success
+              logger.error("Enrollment import failed or incompletely processed. Import status: #{enrollment_import_status}")
+            end
+          else
+            logger.error("Unable to POST enrollment CSV #{csv_filename} to Canvas")
+          end
         end
+      else
+        logger.error("User import failed or incompletely processed; skipping enrollments. Import status: #{import_status}")
       end
     else
-      Rails.logger.error("Unable to POST users CSV #{users_csv_filename} to Canvas; skipping enrollments")
+      logger.error("Unable to POST users CSV #{users_csv_filename} to Canvas; skipping enrollments. Response = #{response}")
     end
   end
 
@@ -114,7 +136,7 @@ class CanvasRefreshFromCampus
         total_user_ids << uid
       end
     else
-      Rails.logger.warn("Badly formatted sis_section_id for Canvas section #{section}")
+      logger.warn("Badly formatted sis_section_id for Canvas section #{section}")
     end
   end
 
@@ -134,7 +156,7 @@ class CanvasRefreshFromCampus
         total_user_ids << uid
       end
     else
-      Rails.logger.warn("Badly formatted sis_section_id for Canvas section #{section}")
+      logger.warn("Badly formatted sis_section_id for Canvas section #{section}")
     end
   end
 
@@ -148,7 +170,7 @@ class CanvasRefreshFromCampus
         if (sis_section_id = row['section_id'])
           sis_course_id = row['course_id']
           if (sis_course_id.blank?)
-            Rails.logger.warn("Canvas section has SIS ID but course does not: #{row}")
+            logger.warn("Canvas section has SIS ID but course does not: #{row}")
           else
             sections.push({
                 section_id: sis_section_id,
@@ -171,12 +193,12 @@ class CanvasRefreshFromCampus
         if (sis_section_id = row['section_id'])
           sis_course_id = row['course_id']
           if (sis_course_id.blank?)
-            Rails.logger.warn("Canvas section has SIS ID but course does not: #{row}")
+            logger.warn("Canvas section has SIS ID but course does not: #{row}")
             response = update_proxy.generate_course_sis_id(row['canvas_course_id'])
             if response
               course_data = JSON.parse(response.body)
               sis_course_id = course_data['sis_course_id']
-              Rails.logger.warn("Added SIS ID to Canvas course: #{course_data}")
+              logger.warn("Added SIS ID to Canvas course: #{course_data}")
             end
           end
         end

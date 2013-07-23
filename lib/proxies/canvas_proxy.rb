@@ -42,7 +42,7 @@ class CanvasProxy < BaseProxy
         end
         # Canvas proxy returns nil for error response.
         if response.status >= 400
-          Rails.logger.warn "CanvasProxy connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}"
+          Rails.logger.error "CanvasProxy connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}"
           nil
         else
           response

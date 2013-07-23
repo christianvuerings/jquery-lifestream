@@ -1,5 +1,6 @@
 class CanvasSisImportProxy < CanvasProxy
   require 'csv'
+  include ClassLogger
 
   def initialize(options = {})
     super(options)
@@ -17,7 +18,7 @@ class CanvasSisImportProxy < CanvasProxy
   def post_enrollments(term_id, csv_file_path)
     upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv') }
     url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}"
-    response = request_uncached(url, '_sis_import_enrollments', {
+    request_uncached(url, '_sis_import_enrollments', {
         method: :post,
         connection: @multipart_conn,
         body: upload_body
@@ -27,7 +28,7 @@ class CanvasSisImportProxy < CanvasProxy
   def post_users(csv_file_path)
     upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv') }
     url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv"
-    response = request_uncached(url, '_sis_import_users', {
+    request_uncached(url, '_sis_import_users', {
         method: :post,
         connection: @multipart_conn,
         body: upload_body
@@ -37,9 +38,46 @@ class CanvasSisImportProxy < CanvasProxy
   def generate_course_sis_id(canvas_course_id)
     sis_course_id = "C:#{canvas_course_id}"
     url = "courses/#{canvas_course_id}?course[sis_course_id]=#{sis_course_id}"
-    response = request_uncached(url, '_put_sis_course_id', {
+    request_uncached(url, '_put_sis_course_id', {
         method: :put
     })
+  end
+
+  # import may not be completed the first time we ask for it, so loop until it is ready.
+  def import_status(import_id)
+    url = "accounts/#{settings.account_id}/sis_imports/#{import_id}"
+    status = nil
+    sleep 2
+    # TODO how many tries and how long an interval is reasonable here?
+    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 5, :interval => 2) do
+      response = request_uncached(url, '_sis_import_status', {
+        method: :get
+      })
+      unless response.present? && response.body.present?
+        logger.error "Import ID #{import_id} Status Report missing or errored; will retry later"
+        raise CanvasSisImportProxy::ReportNotReadyException
+      end
+      json = JSON.parse response.body
+      if json["workflow_state"] == "initializing" || json["workflow_state"] == "created"
+        logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
+        raise CanvasSisImportProxy::ReportNotReadyException
+      else
+        status = json
+      end
+    end
+    if status.nil?
+      logger.error "Import ID #{import_id} Status Report not available after 5 tries, giving up"
+    end
+    logger.debug "Import ID #{import_id} Status Report = #{status}"
+    status
+  end
+
+  def import_was_successful?(json)
+    json.present? && json["progress"] == 100 && (json["workflow_state"] == "imported" || json ["workflow_state"] == "imported_with_messages")
+  end
+
+  class ReportNotReadyException < Exception
+
   end
 
 end
