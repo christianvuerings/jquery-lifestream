@@ -25,6 +25,12 @@ Calcentral::Application.routes.draw do
   match '/api/my/campuslinks/expire' => 'my_campus_links#expire'
   match '/api/my/refresh' => 'my_refresh#refresh', :defaults => { :format => 'json' }
 
+  # Canvas embedded application support.
+  match '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
+  # A Canvas course ID of "embedded" means to retrieve from session properties.
+  match '/api/academics/rosters/canvas/:canvas_course_id' => 'canvas_rosters#get_feed', :as => :canvas_roster, :defaults => { :format => 'json' }
+  match '/canvas/:canvas_course_id/photo/:person_id' => 'canvas_rosters#photo', :defaults => { :format => 'jpeg' }, :action => 'show'
+
   match '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
   match '/api/blog/release_notes/latest' => 'blog_feed#get_latest_release_notes', :as => :blog_latest_release_notes, :defaults => { :format => 'json' }

@@ -61,22 +61,20 @@ class CanvasUserSites < MyMergedModel
     linked_course_ids = Set.new
     canvas_sections.each do |canvas_section|
       sis_id = canvas_section['sis_section_id']
-      if !sis_id.blank?
-        if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(sis_id))
-          matched_course_idx = campus_user_courses.index do |coffering|
-            coffering[:role] == 'Student' &&
-                coffering[:term_yr].to_s == campus_section[:term_yr] &&
-                coffering[:term_cd] == campus_section[:term_cd] &&
-                coffering[:sections].index{ |csect| csect[:ccn].to_s == campus_section[:ccn] }
-          end
-          # TODO Support more ad-hoc maintenance of secondary section memberships, by connecting
-          # sites for sections in which the student is not officially enrolled.
-          if matched_course_idx
-            linked_course_ids.add(campus_user_courses[matched_course_idx][:id])
-          end
-        else
-          Rails.logger.debug("Unparsable sis_section_id #{sis_id} for Canvas course #{course_id}")
+      if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(sis_id))
+        matched_course_idx = campus_user_courses.index do |coffering|
+          coffering[:role] == 'Student' &&
+              coffering[:term_yr].to_s == campus_section[:term_yr] &&
+              coffering[:term_cd] == campus_section[:term_cd] &&
+              coffering[:sections].index{ |csect| csect[:ccn].to_s == campus_section[:ccn] }
         end
+        # TODO Support more ad-hoc maintenance of secondary section memberships, by connecting
+        # sites for sections in which the student is not officially enrolled.
+        if matched_course_idx
+          linked_course_ids.add(campus_user_courses[matched_course_idx][:id])
+        end
+      else
+        Rails.logger.debug("Unparsable sis_section_id #{sis_id} for Canvas course #{course_id}")
       end
     end
     if linked_course_ids.empty?

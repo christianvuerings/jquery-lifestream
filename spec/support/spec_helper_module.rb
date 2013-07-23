@@ -9,4 +9,13 @@ module SpecHelperModule
       Rails.logger = original_logger
     end
   end
+
+  def stub_proxy(feed_method, stub_body)
+    proxy = double()
+    response = double()
+    response.stub(:status).and_return(200)
+    response.stub(:body).and_return(stub_body.to_json)
+    proxy.stub(feed_method).and_return(response)
+    proxy
+  end
 end

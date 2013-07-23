@@ -70,7 +70,7 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id
       from bspace_person_info_vw pi
       where pi.ldap_uid in (#{up_to_1000_ldap_uids.join(', ')})
       SQL
@@ -105,11 +105,12 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select roster.student_ldap_uid ldap_uid
-      from bspace_class_roster_vw roster
+      select roster.student_ldap_uid ldap_uid, roster.enroll_status, person.student_id, person.first_name, person.last_name
+      from bspace_class_roster_vw roster, bspace_person_info_vw person
       where roster.term_yr = #{connection.quote(term_yr)}
         and roster.term_cd = #{connection.quote(term_cd)}
         and roster.course_cntl_num = #{connection.quote(ccn)}
+        and roster.student_ldap_uid = person.ldap_uid
       SQL
       result = connection.select_all(sql)
     }
@@ -240,6 +241,19 @@ class CampusData < OracleDatabase
         order by bci.instructor_func
       SQL
       result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.get_photo(ldap_uid)
+    result = {}
+    use_pooled_connection {
+      sql = <<-SQL
+        select ph.bytes, ph.photo
+        from bspace_student_photo_vw ph
+        where ph.student_ldap_uid=#{connection.quote(ldap_uid)}
+      SQL
+      result = connection.select_one(sql)
     }
     result
   end
