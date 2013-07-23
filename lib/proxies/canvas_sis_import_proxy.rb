@@ -1,5 +1,6 @@
 class CanvasSisImportProxy < CanvasProxy
   require 'csv'
+  include ClassLogger
 
   def initialize(options = {})
     super(options)
@@ -53,21 +54,21 @@ class CanvasSisImportProxy < CanvasProxy
         method: :get
       })
       unless response.present? && response.body.present?
-        Rails.logger.error "#{self.class.name} SIS Import #{import_id} Status Report missing or errored; will retry later"
+        logger.error "Import ID #{import_id} Status Report missing or errored; will retry later"
         raise CanvasSisImportProxy::ReportNotReadyException
       end
       json = JSON.parse response.body
       if json["workflow_state"] == "initializing" || json["workflow_state"] == "created"
-        Rails.logger.info "#{self.class.name} SIS Import #{import_id} Status Report exists but is not yet ready; will retry later"
+        logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
         raise CanvasSisImportProxy::ReportNotReadyException
       else
         status = json
       end
     end
     if status.nil?
-      Rails.logger.error "#{self.class.name} SIS Import #{import_id} Status Report not available after 5 tries, giving up"
+      logger.error "Import ID #{import_id} Status Report not available after 5 tries, giving up"
     end
-    Rails.logger.debug "#{self.class.name} Import #{import_id} Status Report = #{status}"
+    logger.debug "Import ID #{import_id} Status Report = #{status}"
     status
   end
 
