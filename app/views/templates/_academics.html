@@ -79,7 +79,7 @@
           <div data-ng-show="regblocks.active_blocks.length">
             <div class="cc-widget-list-hover"
                  data-cc-accessible-focus-directive
-                 data-ng-click="api.widget.toggleShow(regblocks.active_blocks, block, 'Active Blocks')"
+                 data-ng-click="api.widget.toggleShow($event, regblocks.active_blocks, block, 'Active Blocks')"
                  data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true">
               <div class="row cc-active-block-entry">
                 <div class="large-2 small-2 columns"><i class="icon-exclamation-sign"></i><span data-ng-bind="block.type"></span></div>
@@ -89,7 +89,7 @@
               </div>
               <div class="cc-active-block-entry-content" data-ng-show="block._show">
                 <div class="row">
-                  <div class="large-12 small-12 columns" data-ng-bind-html-unsafe="block.message"></div>
+                  <div class="large-12 small-12 columns" data-cc-compile-directive="block.message"></div>
                 </div>
                 <div class="row">
                   <div class="large-12 small-12 columns">

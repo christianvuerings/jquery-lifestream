@@ -20,10 +20,10 @@ class RegBlockCodeTranslator
       <p>To clear this block you must pay the balance:</p>
       <ul>
       <li>via credit card ONLINE through your personal
-      <a class="cc-outbound-link" data-ng-href="http://oskicat.berkeley.edu/screens/ssoauth.html?service=https%3a%2f%2foskicat.berkeley.edu%3a443%2f">
+      <a href="http://oskicat.berkeley.edu/screens/ssoauth.html?service=https%3a%2f%2foskicat.berkeley.edu%3a443%2f">
       MyOskiCat account</a>; or</li>
       <li>In person at the Privileges Desk (198 Doe) during our
-      <a class="cc-outbound-link" data-ng-href="http://www.lib.berkeley.edu/hours/?day=&libraries%5Bid%5D%5B%5D=177&commit=Show+hours">normal business hours</a>.
+      <a href="http://www.lib.berkeley.edu/hours/?day=&libraries%5Bid%5D%5B%5D=177&commit=Show+hours">normal business hours</a>.
       Payments are accepted via credit/debit card or personal check.</li>
       </ul>
     EOS
@@ -33,7 +33,7 @@ class RegBlockCodeTranslator
       HPSL or Institutional loan. Until this block is cleared, you <strong>cannot</strong> register for classes, use certain campus services
       (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center), or obtain official
       campus transcripts.</p>
-      <p>To clear this block, log into ACS and make an online payment at <a class="cc-outbound-link" data-ng-href="http://www.acs-education.com/">www.acs-education.com</a>.
+      <p>To clear this block, log into ACS and make an online payment at <a href="http://www.acs-education.com/">www.acs-education.com</a>.
       If you have questions, contact an account consultant at (510) 642-7001.</p>
     EOS
 
@@ -42,8 +42,8 @@ class RegBlockCodeTranslator
       Until this block is cleared, you <strong>cannot</strong> register for classes, use certain campus services (e.g. libraries, health services,
       recreational sports facilities, Class Pass bus travel, Career Center), or obtain official campus transcripts.</p>
       <p>To clear this block, please submit a payment. For a complete listing of CARS payment options visit
-      <a class="cc-outbound-link" data-ng-href="http://studentcentral.berkeley.edu/payments">studentcentral.berkeley.edu/payments</a>. If you have questions, visit
-      Cal Student Central at <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?sproulhall">120 Sproul Hall</a> or call
+      <a href="http://studentcentral.berkeley.edu/payments">studentcentral.berkeley.edu/payments</a>. If you have questions, visit
+      Cal Student Central at <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?sproulhall">120 Sproul Hall</a> or call
       (510) 664-9181.</p>
     EOS
 
@@ -63,7 +63,7 @@ class RegBlockCodeTranslator
       campus transcripts.</p>
       <p>To clear this block, follow these procedures:</p>
       <ul>
-      <li>Freshmen: Call (510) 642-3175 or email us at <a class="cc-outbound-link" data-ng-href="mailto:freshmanadmit@berkeley.edu">freshmanadmit@berkeley.edu</a>.</li>
+      <li>Freshmen: Call (510) 642-3175 or email us at <a href="mailto:freshmanadmit@berkeley.edu">freshmanadmit@berkeley.edu</a>.</li>
       <li>Transfers: Contact your assigned Admissions Officer as listed at the bottom of your Conditions of Admission.</li>
       </ul>
       <p>The Office of Undergraduate Admissions is located at 110 Sproul Hall.</p>
@@ -72,7 +72,7 @@ class RegBlockCodeTranslator
     admissions_grad = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by the Graduate Admissions Office because you have not
       submitted one or more required documents.</p>
-      <p>To clear this block, please contact Graduate Admissions at (510) 642-7405 or <a class="cc-outbound-link" data-ng-href="mailto:gradadm@berkeley.edu">
+      <p>To clear this block, please contact Graduate Admissions at (510) 642-7405 or <a href="mailto:gradadm@berkeley.edu">
       gradadm@berkeley.edu</a>.</p>
     EOS
 
@@ -83,7 +83,7 @@ class RegBlockCodeTranslator
       health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or
       obtain official campus transcripts.</p>
       <p>To clear this block, you must pay the balance on your CARS account and wait two weeks after your payment has cleared.
-      If you have questions about this block, please contact <a class="cc-outbound-link" data-ng-href="http://studentcentral.berkeley.edu/">Cal Student Central</a>
+      If you have questions about this block, please contact <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a>
       at 120 Sproul Hall or call (510) 664-9181.</p>
     EOS
 
@@ -93,7 +93,7 @@ class RegBlockCodeTranslator
       term, until this block is cleared you <strong>cannot</strong> enroll in classes for the next term term, use campus services (e.g. libraries,
       health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades,
       or obtain official campus transcripts.</p>
-      <p>To clear this block, contact <a class="cc-outbound-link" data-ng-href="http://studentcentral.berkeley.edu/">Cal Student Central</a> at 120 Sproul Hall,
+      <p>To clear this block, contact <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a> at 120 Sproul Hall,
       or call (510) 664-9181. You may also call the EAP main office at UC Santa Barbara at (805) 893-4812.</p>
     EOS
 
@@ -105,7 +105,7 @@ class RegBlockCodeTranslator
       libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final
       grades, or obtain official campus transcripts.</p>
       <p>Please feel free to contact the Center for Student Conduct at 510-643-9069 or email
-      <a class="cc-outbound-link" data-ng-href="mailto:studentconduct@berkeley.edu">studentconduct@berkeley.edu</a> for more information regarding your block.</p>
+      <a href="mailto:studentconduct@berkeley.edu">studentconduct@berkeley.edu</a> for more information regarding your block.</p>
     EOS
 
     student_health_registrar = <<-EOS
@@ -113,7 +113,7 @@ class RegBlockCodeTranslator
       Student Health Service. Though you may enroll in classes for the current term term, until this block is cleared you
       <strong>cannot</strong> enroll in classes for the next term term, use campus services (e.g. libraries, health services, recreational
       sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
-      <p>To clear this block, visit University Health Service at the <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?tang">Tang
+      <p>To clear this block, visit University Health Service at the <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?tang">Tang
       Center</a>, 2222 Bancroft Way.</p>
     EOS
 
@@ -122,7 +122,7 @@ class RegBlockCodeTranslator
       that prevents you from attending classes. Though you may enroll in classes for the current term term, until this block
       is cleared you <strong>cannot</strong> enroll in classes for  the next term term, use campus services (e.g. library, RSF, Class Pass,
       Career Center), receive final grades, or obtain formal campus transcripts.</p>
-      <p>To clear this block, please contact <a class="cc-outbound-link" data-ng-href="http://www.uhs.berkeley.edu/students/counseling/socialservices.shtml">UHS
+      <p>To clear this block, please contact <a href="http://www.uhs.berkeley.edu/students/counseling/socialservices.shtml">UHS
       Social Services</a>.</p>
     EOS
 
@@ -133,7 +133,7 @@ class RegBlockCodeTranslator
       Career Center), receive final grades, or obtain formal campus transcripts.</p>
 
       <p>To clear this block, please follow the instructions on the
-      <a class="cc-outbound-link" data-ng-href="http://www.uhs.berkeley.edu/students/immunization/hepatitisb.shtml">Hepatitis B: Condition of Enrollment</a> page.</p>
+      <a href="http://www.uhs.berkeley.edu/students/immunization/hepatitisb.shtml">Hepatitis B: Condition of Enrollment</a> page.</p>
     EOS
 
     academic_grad = <<-EOS
@@ -147,8 +147,8 @@ class RegBlockCodeTranslator
       term. If you are not enrolled in classes, you will not be an officially registered student. You must be an officially
       registered student to use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus
       travel, Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
-      <p>For more information on this block go to the <a class="cc-outbound-link" data-ng-href="http://nature.berkeley.edu/site/oisa.php">Office of Instruction and
-      Student Affairs</a>, <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?mulford">260 Mulford Hall</a> Monday - Friday
+      <p>For more information on this block go to the <a href="http://nature.berkeley.edu/site/oisa.php">Office of Instruction and
+      Student Affairs</a>, <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?mulford">260 Mulford Hall</a> Monday - Friday
       8am-12pm p.m. and 1-5 p.m. or call (510) 642-0542.</p>
     EOS
 
@@ -160,7 +160,7 @@ class RegBlockCodeTranslator
       recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official
       campus transcripts.</p>
       <p>To clear this block please contact Barbara Felkins in the Haas Undergraduate Program Office at
-      <a class="cc-outbound-link" data-ng-href="mailto:felkins@haas.berkeley.edu">felkins@haas.berkeley.edu</a> or (510) 642-1421.</p>
+      <a href="mailto:felkins@haas.berkeley.edu">felkins@haas.berkeley.edu</a> or (510) 642-1421.</p>
     EOS
 
     academic_ced = <<-EOS
@@ -170,7 +170,7 @@ class RegBlockCodeTranslator
       campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.),
       receive final grades, or obtain official campus transcripts.</p>
       <p>For more information, meet with an adviser in 250 Wurster Hall. For adviser contact information, see
-      <a class="cc-outbound-link" data-ng-href="http://ced.berkeley.edu/ced/students/undergraduate-advising/">http://ced.berkeley.edu/ced/students/undergraduate-advising/.</a></p>
+      <a href="http://ced.berkeley.edu/ced/students/undergraduate-advising/">http://ced.berkeley.edu/ced/students/undergraduate-advising/.</a></p>
     EOS
 
     academic_engin = <<-EOS
@@ -180,8 +180,8 @@ class RegBlockCodeTranslator
       services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or
       obtain official campus transcripts.</p>
       <p>For the specific nature of the academic issue(s) that resulted in this block and for instructions on how to clear it,
-      <a class="cc-outbound-link" data-ng-href="http://coe.berkeley.edu/ESS">schedule an appointment</a> to meet with with your ESS Advisor in
-      <a class="cc-outbound-link" data-ng-href="http://www.google.com/url?q=http%3A%2F%2Fwww.berkeley.edu%2Fmap%2F3dmap%2F3dmap.shtml%3Fbechtel&sa=D&sntz=1&usg=AFQjCNGKye4-S5sNjzyDQnu3mx3xYZOI6A">
+      <a href="http://coe.berkeley.edu/ESS">schedule an appointment</a> to meet with with your ESS Advisor in
+      <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.berkeley.edu%2Fmap%2F3dmap%2F3dmap.shtml%3Fbechtel&sa=D&sntz=1&usg=AFQjCNGKye4-S5sNjzyDQnu3mx3xYZOI6A">
       230 Bechtel Center</a>.</p>
     EOS
 
@@ -190,7 +190,7 @@ class RegBlockCodeTranslator
       for the next term term. If you are not enrolled in classes, you will not be an officially registered student. You
       must be an officially registered student to use campus services (e.g. libraries, health services, recreational sports
       facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
-      <p>To clear this block, contact your staff advisor in the <a class="cc-outbound-link" data-ng-href="http://chemistry.berkeley.edu/student_info/undergrad_info/people/office_directory.php">
+      <p>To clear this block, contact your staff advisor in the <a href="http://chemistry.berkeley.edu/student_info/undergrad_info/people/office_directory.php">
       College of Chemistry Undergraduate Advising Office</a>.</p>
     EOS
 
@@ -201,7 +201,7 @@ class RegBlockCodeTranslator
       student to use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel,
       Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
       <p>To clear this block please submit an official copy of your undergraduate transcript to the Law School Registrar,
-      <a class="cc-outbound-link" data-ng-href="http://www.google.com/url?q=http%3A%2F%2Fwww.berkeley.edu%2Fmap%2F3dmap%2F3dmap.shtml%3Fboalt&sa=D&sntz=1&usg=AFQjCNGhnjxiepqkZDQ43OadhOwinxR0Wg">270
+      <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.berkeley.edu%2Fmap%2F3dmap%2F3dmap.shtml%3Fboalt&sa=D&sntz=1&usg=AFQjCNGhnjxiepqkZDQ43OadhOwinxR0Wg">270
       Boalt Hall</a>, Berkeley, CA  94720-7200.</p>
     EOS
 
@@ -211,8 +211,8 @@ class RegBlockCodeTranslator
       enroll in classes for the next term term. If you are not enrolled in classes, you will not be an officially registered
       student. You must be an officially registered student to use campus services (e.g. libraries, health services, recreational
       sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
-      <p>To clear this block, meet with an advisor in <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?wurster">250 Wurster
-      Hall</a> or <a class="cc-outbound-link" data-ng-href="http://ced.berkeley.edu/ced/students/undergraduate-advising/">contact your major advisor</a>.</p>
+      <p>To clear this block, meet with an advisor in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?wurster">250 Wurster
+      Hall</a> or <a href="http://ced.berkeley.edu/ced/students/undergraduate-advising/">contact your major advisor</a>.</p>
     EOS
 
     rnc_engin = <<-EOS
@@ -221,9 +221,9 @@ class RegBlockCodeTranslator
       not enrolled in classes, you will not be an officially registered student. You must be an officially registered student to
       use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center,
       etc.), receive final grades, or obtain official campus transcripts.</p>
-      <p>For instructions on how to clear this block, <a class="cc-outbound-link" data-ng-href="http://coe.berkeley.edu/ESS">schedule an appointment</a> to meet
+      <p>For instructions on how to clear this block, <a href="http://coe.berkeley.edu/ESS">schedule an appointment</a> to meet
       with your ESS Advisor in
-      <a class="cc-outbound-link" data-ng-href="http://www.google.com/url?q=http%3A%2F%2Fwww.berkeley.edu%2Fmap%2F3dmap%2F3dmap.shtml%3Fbechtel&sa=D&sntz=1&usg=AFQjCNGKye4-S5sNjzyDQnu3mx3xYZOI6A">230
+      <a href="http://www.google.com/url?q=http%3A%2F%2Fwww.berkeley.edu%2Fmap%2F3dmap%2F3dmap.shtml%3Fbechtel&sa=D&sntz=1&usg=AFQjCNGKye4-S5sNjzyDQnu3mx3xYZOI6A">230
       Bechtel Center</a>.</p>
     EOS
 
@@ -234,7 +234,7 @@ class RegBlockCodeTranslator
       to use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career
       Center, etc.), receive final grades, or obtain official campus transcripts.</p>
       <p>To clear this block, contact your staff advisor in the
-      <a class="cc-outbound-link" data-ng-href="http://chemistry.berkeley.edu/student_info/undergrad_info/people/office_directory.php">College of Chemistry
+      <a href="http://chemistry.berkeley.edu/student_info/undergrad_info/people/office_directory.php">College of Chemistry
       Undergraduate Advising Office</a>.</p>
     EOS
 
@@ -251,7 +251,7 @@ class RegBlockCodeTranslator
       schedule.</li>
       </ul>
       <p>You must choose one of these options as we will not release the block via email or phone. Our office is located in
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
     EOS
 
     minimum_progress = <<-EOS
@@ -267,16 +267,16 @@ class RegBlockCodeTranslator
       <li>In-person, phone and Skype appointments: Monday - Friday, 9 a.m. - 4 p.m. Call (510) 642-1483 a week in advance to
       schedule.</li>
       </ul>
-      <p>Be sure to bring a completed <a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/fp/SSLCt.pdf">Minimum Study List Contract</a> with
+      <p>Be sure to bring a completed <a href="http://ls-advise.berkeley.edu/fp/SSLCt.pdf">Minimum Study List Contract</a> with
       you to your advising appointment. You must choose one of the options above as we will not release the block via email or
-      phone. Our office is located in <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
+      phone. Our office is located in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
       <p>Important notes:</p>
       <ul>
       <li>The College of Letters and Science requires you to maintain 13 units each semester. If you have received approval
-      from the College for a <a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/faq/enroll13.html">reduced course load</a>, you must maintain
+      from the College for a <a href="http://ls-advise.berkeley.edu/faq/enroll13.html">reduced course load</a>, you must maintain
       the number of units for which you have been approved.</li>
       <li>If you are a current degree candidate and will graduate at the end of this term, you must visit us in
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> for approval to go below 13 units.</li>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> for approval to go below 13 units.</li>
       <li>If you believe our records are inaccurate, please contact the college advising office at (510) 642-1483.</li>
       </ul>
     EOS
@@ -290,17 +290,17 @@ class RegBlockCodeTranslator
       <p>Next steps to clear this block:</p>
       <ul>
       <li>Contact your intended major department immediately and declare your major. Once you've declared a major, visit us in
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to have your block released.</li>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to have your block released.</li>
       <li>If you are unable to declare at this time, contact your intended major department immediately and fill out the
-      <a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/fp/09Intent_Declare.pdf">Conditions to Declare form</a>. Once you have completed this
-      form visit us in <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your continued
+      <a href="http://ls-advise.berkeley.edu/fp/09Intent_Declare.pdf">Conditions to Declare form</a>. Once you have completed this
+      form visit us in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your continued
       enrollment with a college adviser.</li>
       <li>If you are having difficulty deciding on a major, please contact our office at
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your situation with a college
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your situation with a college
       adviser.</li>
       <li>If you believe that our information is incorrect, please call (510) 642-1483 or visit
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> so that your record may be updated.</li>
-      <p><a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> so that your record may be updated.</li>
+      <p><a href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
       <p>Your prompt attention to this matter will benefit your academic progress since it affects your ability to enroll in
       classes and be officially registered with the University. Being official registered impacts your ability to use campus
       services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center), receive
@@ -320,16 +320,16 @@ class RegBlockCodeTranslator
       <li>In-person, phone and Skype appointments: Monday - Friday, 9 a.m. - 4 p.m. Call (510) 642-1483 a week in advance to
       schedule.</li>
       </ul>
-      <p>Be sure to bring a completed <a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/fp/SSLCt.pdf">Minimum Study List Contract</a> with
+      <p>Be sure to bring a completed <a href="http://ls-advise.berkeley.edu/fp/SSLCt.pdf">Minimum Study List Contract</a> with
       you to your advising appointment. You must choose one of the options above as we will not release the block via email or
-      phone. Our office is located in <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
+      phone. Our office is located in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
       <p>Important notes:</p>
       <ul>
       <li>The College of Letters and Science requires you to maintain 13 units each semester. If you have received approval
-      from the College for a <a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/faq/enroll13.html">reduced course load</a>, you must maintain
+      from the College for a <a href="http://ls-advise.berkeley.edu/faq/enroll13.html">reduced course load</a>, you must maintain
       the number of units for which you have been approved.</li>
       <li>If you are a current degree candidate and will graduate at the end of this term, you must visit us in
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> for approval to go below 13 units.</li>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> for approval to go below 13 units.</li>
       <li>If you believe our records are inaccurate, please contact the college advising office at (510) 642-1483.</li>
       </ul>
     EOS
@@ -347,7 +347,7 @@ class RegBlockCodeTranslator
       <p>Next steps:</p>
       <ul>
       <li>If you intend to graduate at the end of this term, please visit
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> and declare your candidacy.</li>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> and declare your candidacy.</li>
       <li>Contact us if you would like to meet with an adviser to discuss the options you have to complete your degree.</li>
       </ul>
       <p>If you believe our records are inaccurate, please call us at (510) 642-1483.</p>
@@ -362,18 +362,18 @@ class RegBlockCodeTranslator
       <p>Next steps to clear this block:</p>
       <ul>
       <li>Contact your intended major department immediately and declare your major. Once you've declared a major, visit us in
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to have your block released.</li>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to have your block released.</li>
       <li>If you are unable to declare at this time, contact your intended major department immediately and fill out the
-      <a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/fp/09Intent_Declare.pdf">Conditions to Declare form</a>. Once you have completed
-      this form visit us in <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your
+      <a href="http://ls-advise.berkeley.edu/fp/09Intent_Declare.pdf">Conditions to Declare form</a>. Once you have completed
+      this form visit us in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your
       continued enrollment with a college adviser.</li>
       <li>If you are having difficulty deciding on a major, please contact our office at
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your situation with a
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your situation with a
       college adviser.</li>
       <li>If you believe that our information is incorrect, please call (510) 642-1483 or visit
-      <a class="cc-outbound-link" data-ng-href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> so that your record may be updated.</li>
+      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> so that your record may be updated.</li>
       </ul>
-      <p><a class="cc-outbound-link" data-ng-href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
+      <p><a href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
       <p>Your prompt attention to this matter will benefit your academic progress since it affects your ability to enroll in
       classes and be officially registered with the University. Being official registered impacts your ability to use campus
       services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center), receive

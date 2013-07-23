@@ -8,7 +8,7 @@
       data-ng-class="{'cc-widget-list-selected': class._show}">
         <div class="cc-widget-list-hover"
         data-cc-accessible-focus-directive
-        data-ng-click="api.widget.toggleShow(allClasses, class, 'My Classes')">
+        data-ng-click="api.widget.toggleShow($event, allClasses, class, 'My Classes')">
           <strong class="cc-ellipsis" data-ng-bind="class.course_code"></strong>
           <div class="cc-ellipsis cc-widget-list-light" data-ng-show="!!class.name" data-ng-bind="class.name"></div>
           <div data-ng-show="class._show">
