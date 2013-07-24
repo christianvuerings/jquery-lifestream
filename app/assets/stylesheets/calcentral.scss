@@ -145,9 +145,6 @@ button {
   &.selected {
     @include background(linear-gradient(#7ec9df, #35b5d4));
   }
-  &.secondary {
-    border-left: 1px solid $cc-color-lighter-medium-grey;
-  }
   &.button.small {
     font-size: 13px;
     padding: 4px 6px;
@@ -329,7 +326,9 @@ http://stackoverflow.com/questions/6269420
 @import "icons";
 /* Widgets */
 @import "widgets";
-/* Widgets */
+/* Tables */
+@import "tables";
+/* Useful */
 @import "useful";
 
 /* Dashboard */

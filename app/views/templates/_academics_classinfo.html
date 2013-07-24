@@ -3,77 +3,78 @@
     class="cc-page-academics"
     data-ng-show="can_view_academics"
   >
-    <div class="column">
-      <h1>
-        <a href="/academics">My Academics</a> &raquo;
-        <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
-        <span data-ng-bind="selected_course.course_label"></span>
-      </h1>
-    </div>
+    <h1>
+      <a href="/academics">My Academics</a> &raquo;
+      <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
+      <span data-ng-bind="selected_course.course_label"></span>
+    </h1>
 
     <div class="large-6 small-12 columns cc-academics-page-left">
-      <h2>Class Information</h2>
-
-      <h3>My Enrollment</h3>
-
-      <div class="row cc-academics-column-labels">
-        <div class="large-3 small-5 columns">Section</div>
-        <div class="large-4 small-5 columns end">CCN</div>
-      </div>
-
-      <div class="row" data-ng-repeat="sec in selected_course_sections">
-        <div class="large-3 small-5 columns" data-ng-bind="sec.section_label"></div>
-        <div class="large-4 small-5 columns end" data-ng-bind="sec.ccn"></div>
-      </div>
-
-      <h3>Class Info</h3>
-
-      <h4>Course Offering</h4>
-
-      <div class="row">
-        <div class="large-2 small-4 columns cc-academics-empasize">Units</div>
-        <div
-            data-ng-show="selected_course.units"
-            class="large-4 small-8 columns end"
-            data-ng-bind="selected_course.units">
+      <div class="cc-widget">
+        <div class="cc-widget-title">
+          <h2>Enrollment</h2>
         </div>
-        <div
-            data-ng-show="!selected_course.units"
-            class="large-4 small-8 columns end">--
-        </div>
-      </div>
+        <div class="cc-widget-padding">
+          <h3>My Enrollment</h3>
 
-      <div class="row">
-        <div class="large-2 small-4 columns cc-academics-empasize">Grading</div>
-        <div class="large-4 small-8 columns end" data-ng-bind="selected_course.grade_option"></div>
-      </div>
+          <div class="row collapse cc-academics-column-labels">
+            <div class="large-3 small-5 columns">Section</div>
+            <div class="large-4 small-5 columns end">CCN</div>
+          </div>
 
-      <div class="row">
-        <div class="large-2 small-4 columns cc-academics-empasize">
-          <data-ng-pluralize count="selected_course.instructors.length"
-                             when="{'0': 'Instructor', '1': 'Instructor', 'other': 'Instructors'}">
-          </data-ng-pluralize>
-        </div>
-        <div class="large-4 small-8 columns end">
-          <span data-ng-repeat="instructor in selected_course.instructors"><span data-ng-hide='$index==0'>, </span><span data-ng-bind="instructor.name"></span></span>
-        </div>
-      </div>
+          <div class="row collapse" data-ng-repeat="sec in selected_course_sections">
+            <div class="large-3 small-5 columns" data-ng-bind="sec.section_label"></div>
+            <div class="large-4 small-5 columns end" data-ng-bind="sec.ccn"></div>
+          </div>
 
-      <h4>Section Schedules</h4>
+          <h3>Class Info</h3>
 
-      <div class="row" data-ng-repeat="sec in selected_course_sections">
-        <div class="large-3 small-5 columns" data-ng-bind="sec.section_label"></div>
-        <div class="large-6 small-10 columns end">
-          <div data-ng-repeat="sked in sec.schedules" class="cc-academics-schedule-room">
-            <span data-ng-bind="sked.schedule"></span> |
-            <span data-ng-bind="sked.room_number"></span> <span data-ng-bind="sked.building_name"></span> <br />
+          <h4>Course Offering</h4>
+
+          <div class="row collapse">
+            <div class="large-2 small-4 columns cc-academics-empasize">Units</div>
+            <div
+                data-ng-show="selected_course.units"
+                class="large-4 small-8 columns end"
+                data-ng-bind="selected_course.units">
+            </div>
+            <div
+                data-ng-show="!selected_course.units"
+                class="large-4 small-8 columns end">--
+            </div>
+          </div>
+
+          <div class="row collapse">
+            <div class="large-2 small-4 columns cc-academics-empasize">Grading</div>
+            <div class="large-4 small-8 columns end" data-ng-bind="selected_course.grade_option"></div>
+          </div>
+
+          <div class="row collapse">
+            <div class="large-2 small-4 columns cc-academics-empasize">
+              <data-ng-pluralize count="selected_course.instructors.length"
+                                 when="{'0': 'Instructor', '1': 'Instructor', 'other': 'Instructors'}">
+              </data-ng-pluralize>
+            </div>
+            <div class="large-4 small-8 columns end">
+              <span data-ng-repeat="instructor in selected_course.instructors"><span data-ng-hide='$index==0'>, </span><span data-ng-bind="instructor.name"></span></span>
+            </div>
+          </div>
+          <h4>Section Schedules</h4>
+
+          <div class="row collapse" data-ng-repeat="sec in selected_course_sections">
+            <div class="large-3 small-5 columns" data-ng-bind="sec.section_label"></div>
+            <div class="large-6 small-10 columns end">
+              <div data-ng-repeat="sked in sec.schedules" class="cc-academics-schedule-room">
+                <span data-ng-bind="sked.schedule"></span> |
+                <span data-ng-bind="sked.room_number"></span> <span data-ng-bind="sked.building_name"></span> <br />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
 
-    <div class="large-6 columns cc-academics-page-right">
+    <div class="large-6 columns">
       <!-- <h2>Resources</h2> -->
     </div>
 
