@@ -2,6 +2,10 @@
 # Script to create user and enrollment CSV files in "tmp/canvas" and then
 # upload them to Canvas.
 
+# Make sure the normal shell environment is in place, since it may not be
+# when running as a cron job.
+source "$HOME/.bash_profile"
+
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
 LOG=`date +"$PWD/log/canvas_refresh_%Y-%m-%d.log"`
