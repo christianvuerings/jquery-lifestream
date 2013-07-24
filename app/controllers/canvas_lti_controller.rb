@@ -23,7 +23,7 @@ class CanvasLtiController < ApplicationController
       logger.warn("Session authenticated by LTI; user = #{session[:user_id]}")
       render
     else
-      logger.error("Error parsing LTI request #{params.inspect}")
+      logger.error("Error parsing LTI request; returning error message")
       # TODO Test the result of a redirect or an error status return.
       render inline: "<html><body><p>The application cannot start. An error has been logged.</p></body></html>"
     end
