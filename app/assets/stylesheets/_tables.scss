@@ -1,0 +1,30 @@
+.cc-table {
+  border: none;
+  border-spacing: 0;
+  font-size: 12px;
+  margin: 0;
+  width: 100%;
+  p {
+    margin: 0;
+    padding: 5px 10px;
+  }
+  thead {
+    background: transparent;
+  }
+  tr {
+    &:nth-of-type(even) {
+      background: transparent;
+    }
+    td, th {
+      color: $body-font-color;
+      padding: 2px 2px 2px 0;
+    }
+    th {
+      color: $cc-color-light-medium-grey;
+      font-weight: bold;
+    }
+  }
+  ul {
+    margin-left: 35px;
+  }
+}
