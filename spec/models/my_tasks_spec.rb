@@ -44,7 +44,7 @@ describe "MyTasks" do
         today_counter = 2
         future_counter = 10
       end
-      unscheduled_counter = 1
+      unscheduled_counter = 2
 
       valid_feed["tasks"].each do |task|
         task["title"].blank?.should == false
@@ -77,8 +77,10 @@ describe "MyTasks" do
           task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
           task["link_url"].should == task["source_url"]
           task["color_class"].should == "canvas-class"
-          task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-          task["due_date"]["epoch"].should >= 1352447940
+          if task["due_date"]
+            task["due_date"]["date_string"] =~ /\d\d\/\d\d/
+            task["due_date"]["epoch"].should >= 1351641600
+          end
         end
       end
 
