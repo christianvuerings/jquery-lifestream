@@ -48,8 +48,8 @@ class CanvasSisImportProxy < CanvasProxy
     url = "accounts/#{settings.account_id}/sis_imports/#{import_id}"
     status = nil
     sleep 2
-    # TODO how many tries and how long an interval is reasonable here?
-    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 5, :interval => 2) do
+    # Large batch user and enrollment imports can be slow.
+    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 40, :interval => 20) do
       response = request_uncached(url, '_sis_import_status', {
         method: :get
       })
@@ -58,7 +58,7 @@ class CanvasSisImportProxy < CanvasProxy
         raise CanvasSisImportProxy::ReportNotReadyException
       end
       json = JSON.parse response.body
-      if json["workflow_state"] == "initializing" || json["workflow_state"] == "created"
+      if ["initializing", "created", "importing"].include?(json["workflow_state"])
         logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
         raise CanvasSisImportProxy::ReportNotReadyException
       else
