@@ -42,7 +42,7 @@ class CanvasRefreshFromCampus
         logger.warn("No Canvas enrollment records for #{term_id} - SKIPPING REFRESH")
       else
         total_enrollments = CSV.read(csv_filename, {headers: true}).length
-        logger.info("Will refresh #{total_enrollments} Canvas enrollment records for #{term_id}")
+        logger.warn("Will refresh #{total_enrollments} Canvas enrollment records for #{term_id}")
         term_enrollment_csv_files[term_id] = csv_filename
       end
     end
@@ -50,7 +50,7 @@ class CanvasRefreshFromCampus
       logger.warn("No Canvas user account records for enrollments - SKIPPING REFRESH")
       nil
     else
-      logger.info("Will refresh #{user_ids.length} Canvas user records")
+      logger.warn("Will refresh #{user_ids.length} Canvas user records")
       users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users.csv"
       users_csv = CSV.open(users_csv_filename, 'wb',
                            {
