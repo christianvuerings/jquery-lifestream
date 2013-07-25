@@ -63,7 +63,8 @@ class CanvasUserSites < MyMergedModel
       sis_id = canvas_section['sis_section_id']
       if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(sis_id))
         matched_course_idx = campus_user_courses.index do |coffering|
-          coffering[:role] == 'Student' &&
+          #TODO: worth changing this matching if there's a 'GSI' role later on.
+          (coffering[:role] == 'Student' || coffering[:role] == 'Instructor') &&
               coffering[:term_yr].to_s == campus_section[:term_yr] &&
               coffering[:term_cd] == campus_section[:term_cd] &&
               coffering[:sections].index{ |csect| csect[:ccn].to_s == campus_section[:ccn] }
