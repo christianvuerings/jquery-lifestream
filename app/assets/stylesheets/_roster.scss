@@ -1,0 +1,42 @@
+.cc-page-roster {
+  background: $cc-color-white;
+  padding: 20px;
+  overflow: hidden;
+
+  .cc-roster-search {
+    border: none;
+    background: transparent;
+    margin: 0 0 20px 0;
+    overflow: hidden;
+    padding: 0;
+
+    .cc-roster-input {
+      background: $cc-color-white;
+      border: 1px solid $cc-color-button-border;
+      border-radius: 5px;
+      font-size: 12px;
+      margin: 0 15px 0 0;
+      padding: 5px 10px 5px 5px;
+      width: 200px;
+    }
+    .cc-select {
+      width: 200px;
+    }
+  }
+
+  .cc-page-roster-list {
+    list-style-type: none;
+    li {
+      display: block;
+      float: left;
+      padding: 5px;
+      text-align: center;
+      width: 180px;
+
+      img {
+        height: 96px;
+        max-width: 72px;
+      }
+    }
+  }
+}

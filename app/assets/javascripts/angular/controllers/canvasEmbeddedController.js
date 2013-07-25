@@ -11,8 +11,8 @@
       var canvas_course_id = $routeParams.canvas_course_id || 'embedded';
       $http.get('/api/academics/rosters/canvas/' + canvas_course_id).success(function(data) {
         angular.extend($scope, data);
-      })
-    }
+      });
+    };
 
     getRoster();
   }]);

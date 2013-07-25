@@ -1,16 +1,32 @@
 <script type="text/ng-template" id="templates/canvas_embedded/roster.html">
-  <div class="large-12 columns">
-    <h2>In Canvas course {{canvas_course.id}}</h2>
-    <ul>
-      <li data-ng-repeat="student in students">
-        <div data-ng-show="student.photo"><img data-ng-src="{{student.photo}}"/></div>
-        <div data-ng-hide="student.photo">
-          <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
+  <div class="cc-page-roster" data-cc-spinner-directive>
+
+      <form class="cc-roster-search">
+        <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
+
+        <div class="cc-select cc-left">
+          <select data-ng-model="search.sections">
+            <option value="">All Sections</option>
+            <option value="{{section.id}}" data-ng-repeat="section in sections">{{section.name}}</option>
+          </select>
         </div>
-        <div>{{student.first_name}}</div>
-        <div style="font-weight:bold;">{{student.last_name}}</div>
-        <div>{{student.student_id}}</div>
-      </li>
-    </ul>
+      </form>
+
+      <!--<h1>Canvas course: <span data-ng-bind="canvas_course.id"></span></h1>-->
+      <ul class="cc-page-roster-list">
+        <li data-ng-repeat="student in students | filter:search | orderBy:'last_name'">
+          <div data-ng-show="student.photo">
+            <img data-ng-src="{{student.photo}}" width="72" height="96" />
+          </div>
+          <div data-ng-hide="student.photo">
+            <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
+          </div>
+          <div class="cc-ellipsis" data-ng-bind="student.first_name"></div>
+          <div class="cc-ellipsis"><strong data-ng-bind="student.last_name"></strong></div>
+          <div data-ng-bind="student.student_id"></div>
+        </li>
+      </ul>
+    </div>
+
   </div>
 </script>
