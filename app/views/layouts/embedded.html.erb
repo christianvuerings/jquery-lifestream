@@ -29,10 +29,8 @@
 </head>
 
 <body
-  data-ng-class="{'':(off_canvas_menu._show)}"
+  data-ng-class="{'cc-page-splash':(_controller_name=='SplashController'),'cc-offcanvas-show':(off_canvas_menu._show)}"
   data-ng-click="api.popover.closeAll()">
-
-  <h1>EMBEDDED LAYOUT</h1>
 
   <%= yield %>
 </body>
