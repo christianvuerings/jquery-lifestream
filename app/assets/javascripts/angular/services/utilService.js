@@ -13,6 +13,13 @@
     };
 
     /**
+     * Check whether CalCentral is being loaded within an iframe
+     */
+    var isInIframe = function() {
+      return !!window.parent.frames.length;
+    };
+
+    /**
      * Redirect to a page
      */
     var redirect = function(page) {
@@ -41,6 +48,7 @@
     // Expose methods
     return {
       changeControllerName: changeControllerName,
+      isInIframe: isInIframe,
       preventBubble: preventBubble,
       redirect: redirect,
       setTitle: setTitle
