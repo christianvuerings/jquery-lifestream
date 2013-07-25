@@ -119,8 +119,13 @@ class UserApi < MyMergedModel
     if UserWhitelist.where(uid: uid).first.present?
       return true
     end
-    # TODO add something like if CampusData.is_first_year_student(uid) when the BF_STUDENT_VW table is available.
-    # See CLC-2127 and subtasks for details.
+    if (info = CampusData.get_student_info(uid))
+      Settings.user_whitelist.first_year_codes.each do |code|
+        if code.term_yr == info["first_reg_term_yr"] && code.term_cd == info["first_reg_term_cd"]
+          return true
+        end
+      end
+    end
     if CanvasProxy.has_account?(uid)
       return true
     end
