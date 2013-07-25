@@ -138,7 +138,7 @@ describe CanvasUserSites do
     group[:role].should == 'student'
   end
 
-  it "should put an instructor's Canvas Course site into groups" do
+  it "should put an instructor's Canvas Course site into classes if it's an official enrollment" do
     CanvasUserCoursesProxy.stub(:new).and_return(
         stub_proxy(:courses, [
             {
@@ -179,13 +179,47 @@ describe CanvasUserSites do
     CanvasGroupsProxy.stub(:new).and_return(stub_proxy(:groups, []))
     model = CanvasUserSites.new(@uid)
     feed = model.get_feed_internal
+    feed[:groups].empty?.should be_true
+    feed[:classes].length.should == 1
+    classes = feed[:classes][0]
+    classes[:id].should == '123'
+    classes[:site_type].should == 'course'
+    classes[:role].should == 'teacher'
+    classes[:name].should == 'Biology for surfers'
+  end
+
+  it "should put an instructor's Canvas Course site into groups if it's NOT an official enrollment" do
+    CanvasUserCoursesProxy.stub(:new).and_return(
+      stub_proxy(:courses, [
+        {
+          id: 123,
+          enrollments: [{type: 'teacher'}],
+          course_code: 'Bio 1A',
+          name: 'Biology for surfers'
+        }
+      ])
+    )
+    CanvasCourseSectionsProxy.stub(:new).with({course_id: 123}).and_return(
+      stub_proxy(:sections_list, [
+        {
+          course_id: 123,
+          id: 58686,
+          name: '2013-C-7309',
+          sis_section_id: 'SEC:2013-C-7309'
+        }
+      ])
+    )
+    CampusUserCoursesProxy.stub_chain(:new, :get_campus_courses).and_return([])
+    CanvasGroupsProxy.stub(:new).and_return(stub_proxy(:groups, []))
+    model = CanvasUserSites.new(@uid)
+    feed = model.get_feed_internal
     feed[:classes].empty?.should be_true
     feed[:groups].length.should == 1
-    group = feed[:groups][0]
-    group[:id].should == '123'
-    group[:site_type].should == 'course'
-    group[:role].should == 'teacher'
-    group[:title].should == 'Biology for surfers'
+    groups = feed[:groups][0]
+    groups[:id].should == '123'
+    groups[:site_type].should == 'course'
+    groups[:role].should == 'teacher'
+    groups[:title].should == 'Biology for surfers'
   end
 
   it "should put a community-style Canvas Group into groups" do

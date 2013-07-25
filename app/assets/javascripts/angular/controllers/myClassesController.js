@@ -20,7 +20,11 @@
     };
 
     var appendGroupsToOther = function(categorizedClasses, groups) {
-      groups.forEach(function(value) {
+      var filtered_groups = groups.filter(function(value) {
+        return (value.site_type && value.site_type === 'course')
+      });
+
+      filtered_groups.forEach(function(value) {
         categorizedClasses.other[value.id] = value;
       });
       return categorizedClasses;
