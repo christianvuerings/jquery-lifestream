@@ -72,7 +72,7 @@ describe "UserApi" do
     UserData.where(:uid => @random_id).should == []
   end
   it "should say everyone is allowed to log in if the whitelist is disabled" do
-    UserApi.is_allowed_to_log_in?(-1).should == true
+    UserApi.is_allowed_to_log_in?(0).should == true
   end
   it "should say a user who's already logged in is ok to log in" do
     Settings.features.user_whitelist = true
@@ -93,7 +93,7 @@ describe "UserApi" do
   it "should say a user who hasn't logged in, has no canvas acct, and isn't in the whitelist cannot log in" do
     Settings.features.user_whitelist = true
     CanvasProxy.stub(:has_account?).and_return(false)
-    UserApi.is_allowed_to_log_in?(-1).should == false
+    UserApi.is_allowed_to_log_in?(0).should == false
   end
   it "should say a freshman undergrad can log in" do
     Settings.features.user_whitelist = true
