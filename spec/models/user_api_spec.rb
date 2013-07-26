@@ -72,7 +72,7 @@ describe "UserApi" do
     UserData.where(:uid => @random_id).should == []
   end
   it "should say everyone is allowed to log in if the whitelist is disabled" do
-    UserApi.is_allowed_to_log_in?('nonexistent').should == true
+    UserApi.is_allowed_to_log_in?("0").should == true
   end
   it "should say a user who's already logged in is ok to log in" do
     Settings.features.user_whitelist = true
@@ -93,6 +93,26 @@ describe "UserApi" do
   it "should say a user who hasn't logged in, has no canvas acct, and isn't in the whitelist cannot log in" do
     Settings.features.user_whitelist = true
     CanvasProxy.stub(:has_account?).and_return(false)
-    UserApi.is_allowed_to_log_in?('nonexistent').should == false
+    UserApi.is_allowed_to_log_in?("0").should == false
+  end
+  it "should say a freshman undergrad can log in" do
+    Settings.features.user_whitelist = true
+    CanvasProxy.stub(:has_account?).and_return(false)
+    CampusData.stub(:get_student_info).and_return(
+      {
+        "first_reg_term_cd" => "D",
+        "first_reg_term_yr" => "2013"
+      })
+    UserApi.is_allowed_to_log_in?(@random_id).should == true
+  end
+  it "should say a junior undergrad cannot log in" do
+    Settings.features.user_whitelist = true
+    CanvasProxy.stub(:has_account?).and_return(false)
+    CampusData.stub(:get_student_info).and_return(
+      {
+        "first_reg_term_cd" => "D",
+        "first_reg_term_yr" => "2011"
+      })
+    UserApi.is_allowed_to_log_in?(@random_id).should == false
   end
 end

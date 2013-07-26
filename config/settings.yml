@@ -161,6 +161,18 @@ hot_plate:
   last_visit_cutoff: <%= 10.days %>
   enabled: true
 
+user_whitelist:
+  first_year_codes: [
+    {
+      term_yr: "2013",
+      term_cd: "D"
+    },
+    {
+      term_yr: "2014",
+      term_cd: "B"
+    }
+  ]
+
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
   live_campus_links_data: false

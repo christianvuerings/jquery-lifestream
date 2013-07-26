@@ -258,6 +258,19 @@ class CampusData < OracleDatabase
     result
   end
 
+  def self.get_student_info(ldap_uid)
+    result = {}
+    use_pooled_connection {
+      sql = <<-SQL
+        select s.cum_gpa, s.tot_units, s.first_reg_term_cd, s.first_reg_term_yr
+        from calcentral_student_info_vw s
+        where s.student_ldap_uid=#{connection.quote(ldap_uid)}
+      SQL
+      result = connection.select_one(sql)
+    }
+    result
+  end
+
   def self.database_alive?
     is_alive = false
     begin

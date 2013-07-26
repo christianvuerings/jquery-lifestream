@@ -160,4 +160,13 @@ describe CampusData do
     known_uids.empty?.should be_true
   end
 
+  it "should be able to look up Tammi's student info" do
+    info = CampusData.get_student_info "300939"
+    info.should_not be_nil
+    if CampusData.test_data?
+      info["first_reg_term_cd"].should == "D"
+      info["first_reg_term_yr"].should == "2013"
+    end
+  end
+
 end
