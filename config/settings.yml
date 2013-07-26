@@ -134,6 +134,8 @@ cache:
     UserApi: 0
     UserApiController: <%= 4.hours %>
     CanvasLti: <%= 5.minutes %>
+    CanvasCourseStudentsProxy: <%= 15.minutes %>
+    CanvasCourseTeachersProxy: <%= 5.minutes %>
 
 # Cache warmer settings
 cache_warmer:
