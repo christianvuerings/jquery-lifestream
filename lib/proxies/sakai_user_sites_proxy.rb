@@ -79,7 +79,6 @@ class SakaiUserSitesProxy < SakaiProxy
       campus_user_courses.each do |course|
         if course[:term_yr] == term_yr &&
             course[:term_cd] == term_cd &&
-            #TODO: support other official enrollment memberships (GSIs?)
             (course[:role] == 'Student' || course[:role] == 'Instructor') &&
             course[:sections].index { |sect| ccns.include?(sect[:ccn])}
           linked_courses.add(course[:id])
