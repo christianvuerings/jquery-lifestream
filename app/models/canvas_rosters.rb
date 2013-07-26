@@ -15,12 +15,12 @@ class CanvasRosters
 
   # Must be protected by a call to "user_authorized?"!
   def get_feed
-    self.class.fetch_from_cache @canvas_course_id do
-      if user_authorized?
+    if user_authorized?
+      self.class.fetch_from_cache @canvas_course_id do
         get_feed_internal
-      else
-        nil
       end
+    else
+      nil
     end
   end
 
