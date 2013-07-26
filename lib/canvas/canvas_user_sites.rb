@@ -78,39 +78,28 @@ class CanvasUserSites < MyMergedModel
         Rails.logger.debug("Unparsable sis_section_id #{sis_id} for Canvas course #{course_id}")
       end
     end
-    if linked_course_ids.empty?
-      merged_sites[:groups] << {
-          id: course_id.to_s,
-          title: site['name'],
-          site_type: 'course',
-          role: role,
-          emitter: CanvasProxy::APP_ID,
-          color_class: "canvas-group",
-          site_url: "#{@url_root}/courses/#{course_id}"
-      }
-    else
-      merged_sites[:classes] << {
-          id: course_id.to_s,
-          name: site['name'],
-          course_code: site['course_code'],
-          site_type: 'course',
-          role: role,
-          courses: linked_course_ids.collect { |co| {id: co}},
-          emitter: CanvasProxy::APP_ID,
-          color_class: "canvas-class",
-          site_url: "#{@url_root}/courses/#{course_id}"
-      }
-    end
+    linked_course_ids = linked_course_ids.collect { |co| {id: co}} || []
+    merged_sites[:classes] << {
+        id: course_id.to_s,
+        name: site['name'],
+        course_code: site['course_code'],
+        site_type: 'course',
+        role: role,
+        courses: linked_course_ids,
+        emitter: CanvasProxy::APP_ID,
+        color_class: "canvas-class",
+        site_url: "#{@url_root}/courses/#{course_id}"
+    }
   end
 
   def merge_group_site(site, merged_sites)
     class_sites = merged_sites[:classes]
     if site['context_type'] == 'Course' &&
-        (course_site_idx = class_sites.index { |class_site| class_site[:id] == site['course_id'].to_s })
+      (course_site_idx = class_sites.index { |class_site| class_site[:id] == site['course_id'].to_s })
       groups_course = class_sites[course_site_idx]
       merged_sites[:classes] << {
           id: site['id'].to_s,
-          title: site['name'],
+          name: site['name'],
           site_type: 'group',
           courses: groups_course[:courses],
           source: groups_course[:name],
@@ -121,7 +110,7 @@ class CanvasUserSites < MyMergedModel
     else
       merged_sites[:groups] << {
           id: site['id'].to_s,
-          title: site['name'],
+          name: site['name'],
           site_type: 'group',
           emitter: CanvasProxy::APP_ID,
           color_class: "canvas-group",

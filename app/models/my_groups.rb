@@ -8,7 +8,7 @@ class MyGroups < MyMergedModel
     response[:groups].concat(process_sakai_sites) if SakaiUserSitesProxy.access_granted?(@uid)
     response[:groups].concat(process_canvas_sites) if CanvasProxy.access_granted?(@uid)
     response[:groups].concat(process_callink_sites) if CalLinkProxy.access_granted?(@uid)
-    response[:groups].sort! { |x, y| x[:title].casecmp(y[:title]) }
+    response[:groups].sort! { |x, y| x[:name].casecmp(y[:name]) }
     Rails.logger.debug "#{self.class.name} get_feed is #{response.inspect}"
     response
   end
@@ -44,7 +44,7 @@ class MyGroups < MyMergedModel
             site_url = "https://" + organization["items"][0]["profileUrl"]
           end
           response.push({
-            title: group["organizationName"],
+            name: group["organizationName"],
             id: group["organizationId"].to_s,
             emitter: CalLinkProxy::APP_ID,
             color_class: "callink-group",

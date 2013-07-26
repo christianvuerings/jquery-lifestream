@@ -46,20 +46,15 @@ class SakaiUserSitesProxy < SakaiProxy
           site[:site_type] = row['type']
           case row['type']
             when 'project'
-              site[:title] = row['title'] || ''
+              site[:name] = row['title'] || ''
               site[:color_class] = 'bspace-group'
               categories[:groups] << site
             when 'course'
-              if (linked_enrollments = get_courses_from_provider(campus_user_courses, row['provider_id']))
-                site[:courses] = linked_enrollments
-                site[:name] = row['title']
-                site[:color_class] = 'bspace-class'
-                categories[:classes] << site
-              else
-                site[:title] = row['title']
-                site[:color_class] = 'bspace-group'
-                categories[:groups] << site
-              end
+              linked_enrollments = get_courses_from_provider(campus_user_courses, row['provider_id']) || []
+              site[:courses] = linked_enrollments
+              site[:name] = row['title']
+              site[:color_class] = 'bspace-class'
+              categories[:classes] << site
           end
         end
       end
@@ -84,7 +79,8 @@ class SakaiUserSitesProxy < SakaiProxy
       campus_user_courses.each do |course|
         if course[:term_yr] == term_yr &&
             course[:term_cd] == term_cd &&
-            course[:role] == 'Student' &&
+            #TODO: support other official enrollment memberships (GSIs?)
+            (course[:role] == 'Student' || course[:role] == 'Instructor') &&
             course[:sections].index { |sect| ccns.include?(sect[:ccn])}
           linked_courses.add(course[:id])
         end
