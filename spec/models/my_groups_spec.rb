@@ -54,7 +54,7 @@ describe "MyGroups" do
         group_hash[key].should_not be_nil
         group = group_hash[key]
         group[:id].blank?.should be_false
-        group[:title].blank?.should be_false
+        group[:name].blank?.should be_false
         group[:site_url].blank?.should be_false
         group[:emitter].should == "CalLink"
         group[:color_class].should == "callink-group"
@@ -67,18 +67,18 @@ describe "MyGroups" do
     SakaiUserSitesProxy.stub(:access_granted?).and_return(true)
     CalLinkProxy.stub(:access_granted?).and_return(false)
     sakai_project_site_feed = {groups: [
-        {title: "Zsite", id: "zsite-id", site_url: "http://sakai/zsite-id"},
-        {title: "csite", id: "csite-id", site_url: "http://sakai/csite-id"}
+        {name: "Zsite", id: "zsite-id", site_url: "http://sakai/zsite-id"},
+        {name: "csite", id: "csite-id", site_url: "http://sakai/csite-id"}
     ]}
     SakaiUserSitesProxy.any_instance.stub(:get_categorized_sites).and_return(sakai_project_site_feed)
     canvas_groups_feed = {groups: [
-        {title: 'Agroup', id: 'agroup-id', site_url: "http://canvas/agroup-id"}
+        {name: 'Agroup', id: 'agroup-id', site_url: "http://canvas/agroup-id"}
     ]}
     CanvasUserSites.any_instance.stub(:get_feed).and_return(canvas_groups_feed)
     my_groups = MyGroups.new(@user_id).get_feed
-    my_groups[:groups][0][:title].should == "Agroup"
-    my_groups[:groups][1][:title].should == "csite"
-    my_groups[:groups][2][:title].should == "Zsite"
+    my_groups[:groups][0][:name].should == "Agroup"
+    my_groups[:groups][1][:name].should == "csite"
+    my_groups[:groups][2][:name].should == "Zsite"
   end
 
   it "should return bSpace sites when Canvas and CalLink services are unavailable" do
@@ -89,7 +89,7 @@ describe "MyGroups" do
         and_return({
                        groups: [
                            {
-                               title: "Sakai Reunion Planning",
+                               name: "Sakai Reunion Planning",
                                id: "xxx-yyy",
                                site_url: "http://www.example.com/site/xxx-yyy",
                                emitter: SakaiProxy::APP_ID

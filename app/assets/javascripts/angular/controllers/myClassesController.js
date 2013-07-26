@@ -19,17 +19,6 @@
       return classesHash;
     };
 
-    var appendGroupsToOther = function(categorizedClasses, groups) {
-      var filtered_groups = groups.filter(function(value) {
-        return (value.site_type && value.site_type === 'course')
-      });
-
-      filtered_groups.forEach(function(value) {
-        categorizedClasses.other[value.id] = value;
-      });
-      return categorizedClasses;
-    };
-
     var bindScopes = function(categorizedClasses) {
       var studentLength = Object.keys(categorizedClasses.student).length;
       var instructorLength = Object.keys(categorizedClasses.instructor).length
@@ -73,35 +62,29 @@
           categorizedClasses.other[key] = value;
         }
       });
+      var non_official_classes = allClassesHash.otherClasses.filter(function(value) {
+        return (value.courses.length === 0);
+      });
+      non_official_classes.forEach(function(value) {
+        categorizedClasses.other[value.id] = value;
+      });
 
       return categorizedClasses;
     };
 
-    var getMyClasses = function() {
-      var deferred = $q.defer();
-      var httpGet = $http.get('/api/my/classes');
-
-      httpGet.success(function(data) {
+    var getMyClasses = function(callback) {
       //$http.get('/dummy/json/classes.json').success(function(data) {
+      $http.get('/api/my/classes').success(function(data) {
         if (data.classes) {
-          deferred.resolve(parseClasses(data.classes));
+          callback(parseClasses(data.classes));
+          angular.extend($scope, data);
         }
-      }).error(deferred.reject);
-
-      return deferred.promise;
-    };
-
-    var getMyGroups = function() {
-      var deferred = $q.defer();
-      $http.get('/api/my/groups').success(deferred.resolve).error(deferred.reject);
-
-      return deferred.promise;
+      });
     };
 
     var parseClasses = function(classes) {
       var classesHash = splitClasses(classes);
       addSubclasses(classesHash);
-
       return categorizeByRole(classesHash);
     };
 
@@ -123,12 +106,7 @@
     };
 
     $scope.$on('calcentral.api.refresh.refreshed', function() {
-      $q.all([getMyClasses(), getMyGroups()]).then(function(dataArray) {
-        var categorizedClasses = dataArray[0];
-        appendGroupsToOther(categorizedClasses, dataArray[1].groups);
-        bindScopes(categorizedClasses);
-        angular.extend($scope, dataArray[1]);
-      });
+      getMyClasses(bindScopes);
     });
   }]);
 

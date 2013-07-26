@@ -96,7 +96,7 @@ describe SakaiUserSitesProxy do
     site[:courses][0][:id].should == "LAW:201S:2013-C"
   end
 
-  it "should put a course site in groups if not enrolled as a student" do
+  it "should put a course site in classes if enrolled as an instructor" do
     CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return([
          {
              id: "LAW:201S:2013-C",
@@ -133,14 +133,29 @@ describe SakaiUserSitesProxy do
             "title"=>"An off-the-books course site",
             "term"=>"Summer 2013",
             "provider_id"=>"2013-C-34985"
+        },
+        {
+          "site_id"=>"never-ending-project",
+          "type"=>"project",
+          "title"=>"trivial project",
+          "term"=>"Summer 2013",
+          "provider_id"=>"2013-C-1"
         }
     ])
     sites_feed = @client.get_categorized_sites
-    sites_feed[:classes].empty?.should be_true
-    sites_feed[:groups].length.should == 2
-    sites_feed[:groups].each do |site|
+    sites_feed[:groups].length.should == 1
+    sites_feed[:classes].length.should == 2
+    non_official_class = 0
+    official_class = 0
+    sites_feed[:classes].each do |site|
       site[:site_type].should == 'course'
-      site[:title].blank?.should be_false
+      site[:name].blank?.should be_false
+      if site[:courses].present?
+        official_class += 1
+      else
+        non_official_class += 1
+      end
+
     end
  end
 
