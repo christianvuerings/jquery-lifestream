@@ -1,4 +1,4 @@
-(function (document, $) {
+(function (window, document, $) {
   'use strict';
   $(document).ready(function () {
     var $calcentral_header = $('<ul id="calcentral-custom-header">');
@@ -8,4 +8,12 @@
     var $calcentral_footer = $('<p><span>Canvas Pilot,</span> part of the <a href="http://ets.berkeley.edu/bspace-replacement" target="_blank">bSpace Replacement project</a></p>');
     $('#footer div').prepend($calcentral_footer);
   });
-})(window.document, window.$);
+
+  window.onmessage = function(e) {
+    if (e && e.data && e.data.height) {
+      setTimeOut(function() {
+        document.getElementById('tool_content').style.height = e.data.height + 'px';
+      }, 100);
+    }
+  };
+})(window, window.document, window.$);

@@ -8,8 +8,6 @@
 
     apiService.util.setTitle('Canvas Embedded View');
 
-    var currentHeight = 0;
-
     /**
      * Post a message to the parent
      * @param {String|Object} message Message you want to send over.
@@ -21,17 +19,9 @@
     };
 
     var postHeight = function() {
-      var measuredHeight = document.body.scrollHeight;
-      if (currentHeight !== measuredHeight) {
-        postMessage({
-          height: measuredHeight
-        });
-        currentHeight = measuredHeight;
-      }
-    };
-
-    var resizeHandler = function() {
-      window.addEventListener('resize', postHeight, false);
+      postMessage({
+        height: document.body.scrollHeight
+      });
     };
 
     var getRoster = function() {
