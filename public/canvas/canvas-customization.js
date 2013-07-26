@@ -11,9 +11,7 @@
 
   window.onmessage = function(e) {
     if (e && e.data && e.data.height) {
-      setTimeOut(function() {
-        document.getElementById('tool_content').style.height = e.data.height + 'px';
-      }, 100);
+      document.getElementById('tool_content').style.height = e.data.height + 'px';
     }
   };
 })(window, window.document, window.$);
