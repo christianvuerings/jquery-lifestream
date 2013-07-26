@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   def access_log
     # HTTP_X_FORWARDED_FOR is the client's IP when we're behind Apache; REMOTE_ADDR otherwise
     remote = request.env["HTTP_X_FORWARDED_FOR"] || request.env["REMOTE_ADDR"]
-    line = "ACCESS_LOG #{remote} #{request.request_method} #{request.fullpath} #{status}"
+    line = "ACCESS_LOG #{remote} #{request.request_method} #{request.filtered_path} #{status}"
     if session[:original_user_id]
       line += " uid=#{session[:original_user_id]}_acting_as_uid=#{session[:user_id]}"
     else
