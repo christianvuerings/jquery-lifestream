@@ -2,14 +2,14 @@
   "groups": [
     {
       "id": "49957",
-      "title": "Canvas/ETS Collaboration",
+      "name": "Canvas/ETS Collaboration",
       "site_url": "https://some.instructure.com/groups/49957",
       "emitter": "Canvas",
       "site_type": "group",
       "color_class": "canvas-group"
     },
     {
-      "title": "OE IT Design Initiative",
+      "name": "OE IT Design Initiative",
       "short_description": "OE IT Design Initiative: Solution for all our needs",
       "id": "7ea7d89c-b87c-4221-a2ea-16aee252b967",
       "site_url": "https://sakai-dev.berkeley.edu/portal/site/7ea7d89c-b87c-4221-a2ea-16aee252b967",
@@ -18,7 +18,7 @@
       "color_class": "bspace-group"
     },
     {
-      "title": "UIE Seminars & UCD Group Resources",
+      "name": "UIE Seminars & UCD Group Resources",
       "short_description": "UIE Seminars & UCD Group Resources: Lots of goodies",
       "id": "b1df3076-88c5-43cc-00d2-632b196f8497",
       "site_url": "https://sakai-dev.berkeley.edu/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
@@ -27,7 +27,7 @@
       "color_class": "bspace-group"
     },
     {
-      "title": "A course where I teach",
+      "name": "A course where I teach",
       "short_description": "A Canvas course site: Now a group!",
       "id": "4398539",
       "site_url": "https://some.instructure.com/courses/4398539",
