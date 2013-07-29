@@ -17,6 +17,7 @@
 
     <div class="cc-widget-tasks-col cc-widget-tasks-col-left">
       <input type="checkbox"
+        id="cc-wdiget-tasks-checkbox-{{$index}}"
         data-ng-click="api.util.preventBubble($event)"
         data-ng-change="changeTaskState(task)"
         data-ng-disabled="!!task.editor_is_processing"
@@ -25,6 +26,12 @@
         data-ng-show="task.emitter=='Google'"
         data-ng-true-value="completed"
       >
+      <label for="cc-wdiget-tasks-checkbox-{{$index}}" data-ng-show="task.emitter!='Canvas'" class="cc-visuallyhidden">
+        <span data-ng-bind-template="mark {{task.title}} as"></span>
+        <span data-ng-bind="{true:'not'}[task.status=='completed']"></span>
+        completed
+      </label>
+
       <div
         class="cc-icon cc-icon-canvas"
         data-ng-show="task.emitter=='Canvas'">
