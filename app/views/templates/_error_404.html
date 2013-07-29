@@ -1,16 +1,25 @@
 <script type="text/ng-template" id="templates/404.html">
-  <div class="large-6 small columns">
+  <div class="cc-page-404">
 
-    <h1 class="bummer-404">Bummer!</h1>
+    <h1 class="cc-visuallyhidden">Page not found</h1>
 
-    <p>
-      <%= image_tag "404_300x300.png", :size => "300x300", :alt => "404" %>
-    </p>
 
-    <p>
-      Sorry - that which you seek does not exist.<br />
-      Please make sure you&apos;re logged in, or start from the <a href="/dashboard">CalCentral Dashboard</a>.
-    </p>
+    <div class="cc-widget cc-page-404-container">
+      <div class="cc-widget-title">
+        <h2>Oops!</h2>
+      </div>
+
+      <div class="cc-widget-padding">
+        <div class="cc-left cc-page-404-container-text">
+          <h3>Cannot Find That Page</h3>
+          <p>
+            For some reason CalCentral is unable to find the page you requested. To go to CalCentral, click the button below. To report a missing page, click the <a href="http://ets.berkeley.edu/calcentral-feedback">Feedback</a> link.
+          </p>
+        </div>
+        <%= image_tag "glass_magnifying_200x175.jpg", :size => "200x175", :alt => "", :class => "cc-right" %>
+        <a href="/dashboard" class="cc-button cc-button-blue cc-page-404-button">Go To Dashboard</a>
+      </div>
+    </div>
 
   </div>
 </script>

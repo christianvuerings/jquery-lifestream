@@ -1,5 +1,5 @@
 <!-- Top Navbar -->
-<div class="row cc-navigation-bar">
+<div class="row cc-navigation-bar ng-cloak" data-ng-show="api.user.events.isAuthenticated">
   <ul>
     <li data-ng-class="{true:'active'}[_controller_name=='DashboardController']"><a href="/dashboard" data-ng-click="off_canvas_menu._show=false"><i class="icon-home"></i> My Dashboard</a></li>
     <li data-ng-class="{true:'active'}[_controller_name=='AcademicsController']" data-ng-show="api.user.profile.roles.student">

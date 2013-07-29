@@ -1,0 +1,45 @@
+/* 404 page */
+.cc-page-404 {
+  background: $cc-color-dark-blue;
+  overflow: hidden;
+  .cc-page-404-container {
+    font-size: 18px;
+    margin: 135px auto;
+    padding: 0;
+    width: 635px;
+    h3 {
+      font-size: 20px;
+      margin: 0 0 15px 0;
+      padding: 0;
+    }
+    .cc-page-404-button {
+      clear: both;
+      float: left;
+      font-size: 18px;
+    }
+    .cc-widget-title h2 {
+      font-size: 20px;
+      padding: 10px 35px;
+    }
+    .cc-widget-padding {
+      overflow: hidden;
+      padding: 35px;
+    }
+  }
+  .cc-page-404-container-text {
+    width: 350px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    img {
+      display: none;
+    }
+    .cc-page-404-container  {
+      margin: 0;
+      width: 100%;
+    }
+    .cc-page-404-container-text {
+      width: 100%;
+    }
+  }
+}
