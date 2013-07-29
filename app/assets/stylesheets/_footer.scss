@@ -5,12 +5,13 @@ body {
     clear: both;
     line-height: 1.5;
     overflow: hidden;
-    padding: 10px 10px 15px;
+    padding: 15px 10px;
 
     a {
       font-weight: bold;
     }
     .cc-footer-links {
+      float: right;
       margin-top: 10px;
       text-align: right;
       a {
@@ -23,6 +24,7 @@ body {
       }
     }
     .cc-footer-copyright {
+      float: left;
       margin-top: 10px;
     }
 
@@ -39,10 +41,34 @@ body {
     .cc-footer-confirmation {
       padding-top: 5px;
     }
+
+    @media only screen and (max-width: 767px) {
+      background: $cc-color-footer-dark-background;
+      color: $cc-color-light-grey;
+      .cc-footer-copyright {
+        color: $cc-color-light-grey;
+        float: right;
+        margin: 0;
+      }
+      .cc-footer-links {
+        clear: both;
+        float: left;
+        a {
+          border-right: 1px solid $cc-color-button-selected;
+          color: $cc-color-footer-links;
+          font-weight: normal;
+          padding: 0 10px 0;
+          &:first-child {
+            padding-left: 0;
+          }
+          &:last-child {
+            border-right: none;
+            padding-right: 0;
+          }
+        }
+      }
+    }
+
   }
 }
-@media only screen and (max-width: 767px) {
-  body footer svg {
-    float: none;
-  }
-}
+

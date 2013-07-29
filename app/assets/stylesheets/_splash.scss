@@ -117,12 +117,16 @@ $cc-color-splash-blue-light: #0073C3;
     .cc-container-main {
       background-position: center 225px;
       background-size: contain;
+      padding: 0 10px;
+    }
+    .cc-page-splash-blog-panel {
+      margin-top: 25px;
     }
     .cc-page-splash-features {
       padding: 0 0 30px;
     }
     .cc-page-splash-features-title {
-      margin: 100px 0 0;
+      margin: 25px 0 0;
     }
     .cc-page-splash-features img {
       float: none;
