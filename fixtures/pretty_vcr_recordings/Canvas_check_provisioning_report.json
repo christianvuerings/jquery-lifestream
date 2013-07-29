@@ -80,9 +80,9 @@
           "debug_json": {
             "id": 11938,
             "parameters": {
-              "enrollment_term": "sis_term_id:TERM:2013-C",
+              "enrollment_term": "sis_term_id:TERM:2013-D",
               "sections": "1",
-              "extra_text": "Term: Summer 2013; Reports: sections "
+              "extra_text": "Term: Fall 2013; Reports: sections "
             },
             "progress": 100,
             "status": "complete",

@@ -48,7 +48,7 @@ describe CampusData do
   end
 
   it "should find some students in Biology 1a" do
-    students = CampusData.get_enrolled_students("7309", "2013", "C")
+    students = CampusData.get_enrolled_students("7309", "2013", "D")
     students.should_not be_nil
     if CampusData.test_data?
       # we will only have predictable enrollments in our fake Oracle db.
@@ -72,7 +72,7 @@ describe CampusData do
   end
 
   it "should find courses from sections" do
-    courses = CampusData.get_courses_from_sections("2013", "C", ["7309", "7366", "7372", "16171"])
+    courses = CampusData.get_courses_from_sections("2013", "D", ["7309", "7366", "7372", "16171"])
     pp courses
     courses.should_not be_nil
     if CampusData.test_data?
@@ -86,7 +86,7 @@ describe CampusData do
   end
 
   it "should find sections from course" do
-    sections = CampusData.get_sections_from_course('BIOLOGY', '1A', 2013, 'C')
+    sections = CampusData.get_sections_from_course('BIOLOGY', '1A', 2013, 'D')
     sections.empty?.should be_false
     if CampusData.test_data?
       # Should not include canceled section
@@ -97,13 +97,13 @@ describe CampusData do
   end
 
   it "should find where a person is enrolled" do
-    sections = CampusData.get_enrolled_sections('300939', 2013, 'C')
+    sections = CampusData.get_enrolled_sections('300939', 2013, 'D')
     sections.should_not be_nil
     sections.length.should == 3 if CampusData.test_data?
   end
 
   it "should find where a person is teaching" do
-    sections = CampusData.get_instructing_sections('192517', 2013, 'C')
+    sections = CampusData.get_instructing_sections('192517', 2013, 'D')
     sections.should_not be_nil
     sections.length.should == 3 if CampusData.test_data?
   end
@@ -131,7 +131,7 @@ describe CampusData do
   end
 
   it "should return class schedule data" do
-    data = CampusData.get_section_schedules("2013", "C", "16171")
+    data = CampusData.get_section_schedules("2013", "D", "16171")
     data.should_not be_nil
     if CampusData.test_data?
       data[0]["building_name"].should == "WHEELER"
@@ -140,7 +140,7 @@ describe CampusData do
   end
 
   it "should return instructor data given a course control number" do
-    data = CampusData.get_section_instructors("2013", "C", "7309")
+    data = CampusData.get_section_instructors("2013", "D", "7309")
     data.should_not be_nil
     if CampusData.test_data?
       data.length.should == 2
