@@ -158,8 +158,6 @@ developer_auth:
   password: topsecret!
 
 hot_plate:
-  startup_delay: <%= 15.seconds %>
-  warmup_interval: <%= 12.hours %>
   last_visit_cutoff: <%= 10.days %>
   enabled: true
 
