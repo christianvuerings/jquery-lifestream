@@ -1,8 +1,11 @@
 <script type="text/ng-template" id="templates/splash.html">
   <div class="row">
     <div class="large-6 columns">
-      <%= image_tag "calcentral_logo_big.png", :size => "372x40", :alt => "", :class => "cc-page-splash-logo" %>
-      <h1>Welcome to CalCentral.</h1>
+      <div class="cc-page-splash-logo-container">
+        <%= image_tag "calcentral_logo_big.png", :size => "372x40", :alt => "", :class => "cc-page-splash-logo cc-left" %>
+        <div class="cc-page-splash-beta">Beta</div>
+      </div>
+      <h1 class="cc-clearfix">Welcome to CalCentral.</h1>
       <div class="cc-page-splash-subtitle">Unify, Personalize, Discover</div>
       <button class="radius button cc-page-splash-signin" data-ng-click="api.user.signIn()">Sign in with your CalNet ID</button>
     </div>
@@ -32,25 +35,30 @@
   </div>
 
   <div class="row">
-    <h1 class="cc-page-splash-features-title twelve columns small-12">
-      CalCentral keeps you informed
-    </h1>
+    <div class="columns small-12 large-12">
+      <h1 class="cc-page-splash-features-title">
+        CalCentral keeps you informed
+      </h1>
+    </div>
   </div>
 
   <div class="cc-page-splash-features">
     <div class="row">
-      <div class="large-12 columns">
+      <div class="large-7 columns">
         <h2>Up Next</h2>
         <p>CalCentral is integrated with Berkeley&#39;s <a href="http://bconnected.berkeley.edu/">bConnected</a> implementation of Google Apps, so you can see at a glance what&apos;s <strong>Up Next</strong> on your bCal schedule.</p>
+      </div>
+      <div class="large-5 columns">
+        <%= image_tag "splash_up_next_241x140.png", :size => "241x140", :alt => "" %>
       </div>
     </div>
     <div class="row">
       <div class="large-7 columns">
-        <h2>Assignments and Tasks</h2>
-        <p>CalCentral displays to-do items that have been assigned to you in the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas</a> learning management system (which will eventually replace bSpace). <strong>Assignments and Tasks</strong> also lets you add personal to-do list items, and syncs them back to your bCal tasks list.</p>
+        <h2>To Do</h2>
+        <p>CalCentral displays to-do items that have been assigned to you in the <a href="https://ets.berkeley.edu/article/what-canvas">Canvas</a> learning management system (which will eventually replace bSpace). <strong>To Do</strong> also lets you add personal to-do list items, and syncs them back to your bCal tasks list.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_assignments_tasks_215x100.png", :size => "215x100", :alt => "" %>
+        <%= image_tag "splash_todo_241x184.png", :size => "241x184", :alt => "" %>
       </div>
     </div>
     <div class="row">
@@ -59,7 +67,7 @@
         <p>Displays relevant updates from campus systems. Displayed activities currently come from <a href="http://bspace.berkeley.edu">bSpace</a>, Canvas and BearFacts.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_notifications_215x100.png", :size => "215x100", :alt => "" %>
+        <%= image_tag "splash_notifications_241x157.png", :size => "241x157", :alt => "" %>
       </div>
     </div>
     <div class="row">
@@ -68,7 +76,7 @@
         <p>Gives you easy access to your current bSpace and Canvas course sites.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_my_classes_215x100.png", :size => "215x100", :alt => "" %>
+        <%= image_tag "splash_my_classes_241x200.png", :size => "241x200", :alt => "" %>
       </div>
     </div>
     <div class="row">
@@ -77,7 +85,7 @@
         <p>Gives you access to your online group collaborations. Currently, CalCentral supports bSpace project sites and groups participating in Canvas.</p>
       </div>
       <div class="large-5 columns">
-        <%= image_tag "splash_my_groups_215x100.png", :size => "215x100", :alt => "" %>
+        <%= image_tag "splash_my_groups_241x121.png", :size => "241x121", :alt => "" %>
       </div>
     </div>
   </div>
