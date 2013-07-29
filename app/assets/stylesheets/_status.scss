@@ -1,8 +1,8 @@
-/* 404 page */
-.cc-page-404 {
+/* Status pages - 404/sorry */
+.cc-page-status {
   background: $cc-color-dark-blue;
   overflow: hidden;
-  .cc-page-404-container {
+  .cc-page-status-container {
     font-size: 18px;
     margin: 135px auto;
     padding: 0;
@@ -12,21 +12,21 @@
       margin: 0 0 15px 0;
       padding: 0;
     }
-    .cc-page-404-button {
+    .cc-page-status-button {
       clear: both;
       float: left;
       font-size: 18px;
     }
     .cc-widget-title h2 {
-      font-size: 20px;
+      font-size: 25px;
       padding: 10px 35px;
     }
     .cc-widget-padding {
       overflow: hidden;
-      padding: 35px;
+      padding: 25px 35px;
     }
   }
-  .cc-page-404-container-text {
+  .cc-page-status-container-text {
     width: 350px;
   }
 
@@ -34,12 +34,26 @@
     img {
       display: none;
     }
-    .cc-page-404-container  {
+    .cc-page-status-container  {
       margin: 0;
       width: 100%;
     }
-    .cc-page-404-container-text {
+    .cc-page-status-container-text {
       width: 100%;
     }
+  }
+}
+
+.cc-page-sorry {
+  .cc-page-sorry-beta {
+    background: $cc-color-green-light;
+    border: 10px solid $cc-color-blue-dark;
+    border-left: none;
+    border-right: none;
+    @include box-shadow(0 4px 8px #888);
+    color: $cc-color-white;
+    font-size: 48px;
+    font-weight: bold;
+    padding: 10px 25px;
   }
 }
