@@ -60,10 +60,6 @@ canvas_proxy:
   current_terms_codes: [
     {
       term_yr: "2013",
-      term_cd: "C"
-    },
-    {
-      term_yr: "2013",
       term_cd: "D"
     }
   ]
@@ -79,10 +75,10 @@ sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
   fake_user_id: "300939"
-  current_terms: ["Summer 2013"]
+  current_terms: ["Fall 2013"]
   current_terms_codes: [ {
     term_yr: "2013",
-    term_cd: "C"
+    term_cd: "D"
   }]
   # Timestamp in UTC, needed when testing against older DB snapshot
   fake_now:

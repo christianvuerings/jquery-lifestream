@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "post",
-        "uri": "https://ucberkeley.test.instructure.com/api/v1/accounts/90242/reports/provisioning_csv?parameters%5Benrollment_term%5D=sis_term_id%3ATERM%3A2013-C&parameters%5Bsections%5D=1",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/accounts/90242/reports/provisioning_csv?parameters%5Benrollment_term%5D=sis_term_id%3ATERM%3A2013-D&parameters%5Bsections%5D=1",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -80,7 +80,7 @@
           "debug_json": {
             "id": 11938,
             "parameters": {
-              "enrollment_term": "sis_term_id:TERM:2013-C",
+              "enrollment_term": "sis_term_id:TERM:2013-D",
               "sections": "1"
             },
             "progress": 0,
