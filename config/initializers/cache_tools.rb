@@ -17,12 +17,6 @@ module Calcentral
         MyUpNext => :expire,
         MyGroups => :expire,
         MyActivities => :expire,
-        MyAcademics::Merged => :expire,
-
-        BearfactsExamsProxy => :expire,
-        BearfactsProfileProxy => :expire,
-        BearfactsRegblocksProxy => :expire,
-        BearfactsScheduleProxy => :expire,
 
         CalLinkMembershipsProxy => :expire,
 

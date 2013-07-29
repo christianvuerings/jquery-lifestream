@@ -3,31 +3,12 @@ class HotPlate
   include ActiveRecordHelper
   attr_reader :total_warmups
 
-  def initialize
-    @stopped = false
-  end
-
-  def start
-    if Settings.hot_plate.enabled
-      Thread.new { run }
-    else
-      Rails.logger.warn "#{self.class.name} is disabled, not starting thread"
-    end
-    Rails.cache.write(self.class.server_cache_key, ServerRuntime.get_settings["hostname"], :expires_in => 0)
-  end
-
-  def stop
-    @stopped = true
-    Rails.logger.warn "#{self.class.name} #{Thread.current} is stopping"
-    Rails.logger.warn "#{HotPlate.ping}"
-  end
-
   def run
-    sleep Settings.hot_plate.startup_delay
-    until @stopped do
-      Rails.logger.debug "#{self.class.name} waking up to warm user caches"
+    Rails.cache.write(self.class.server_cache_key, ServerRuntime.get_settings["hostname"], :expires_in => 0)
+    if Settings.hot_plate.enabled
       warm
-      sleep Settings.hot_plate.warmup_interval
+    else
+      Rails.logger.warn "#{self.class.name} is disabled, skipping warmup"
     end
   end
 

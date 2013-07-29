@@ -26,6 +26,20 @@ module Calcentral
       [exp, Settings.cache.maximum_expires_in].min
     end
 
+    def bearfacts_derived_expiration
+      # Bearfacts data is refreshed daily at 0730, so we will always expire at 0800 sharp on the day after today.
+      # nb: memcached interprets expiration values greater than 30 days worth of seconds as a Unix timestamp. This
+      # logic may not work on caching systems other than memcached.
+      today = Time.zone.today.to_time_in_current_zone.to_datetime.advance(:hours => 8)
+      now = Time.zone.now
+      if now.to_i > today.to_i
+        tomorrow = today.advance(:days => 1)
+        tomorrow.to_i
+      else
+        today.to_i
+      end
+    end
+
     def cache_key(uid)
       "user/#{uid}/#{self.name}"
     end

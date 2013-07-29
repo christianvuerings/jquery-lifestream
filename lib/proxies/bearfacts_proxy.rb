@@ -6,6 +6,10 @@ class BearfactsProxy < BaseProxy
     super(Settings.bearfacts_proxy, options)
   end
 
+  def self.expires_in
+    self.bearfacts_derived_expiration
+  end
+
   def lookup_student_id
     student = CampusData.get_person_attributes @uid
     if student.nil?
