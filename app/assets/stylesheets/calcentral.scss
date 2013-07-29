@@ -12,6 +12,7 @@ $cc-color-button-grey: #bebebe;
 $cc-color-button-hover: #d5d5d5;
 $cc-color-button-regular: #e5e5e5;
 $cc-color-button-selected: #949494;
+$cc-color-blue-dark: #002f58;
 $cc-color-blue-hover: #f2f9fe;
 $cc-color-dark-blue: #6e7a83;
 $cc-color-dark-grey: #2c2d2e;
@@ -330,9 +331,6 @@ http://stackoverflow.com/questions/6269420
 /* Date Picker */
 @import "datepicker";
 
-/* 404 */
-@import "404";
-
 /* Academics */
 @import "academics";
 
@@ -355,6 +353,9 @@ http://stackoverflow.com/questions/6269420
 
 /* Splash */
 @import "splash";
+
+/* Status pages: 404/sorry */
+@import "status";
 
 /* Off Canvas */
 @import "offcanvas";
