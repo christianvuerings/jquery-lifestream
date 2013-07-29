@@ -11,8 +11,16 @@ $cc-color-splash-blue-light: #0073C3;
     display: none;
   }
 
+  .cc-page-splash-beta {
+    color: $cc-color-light-medium-grey;
+    font-size: 18px;
+    margin-top: 60px;
+  }
   .cc-page-splash-logo {
     margin-top: 60px;
+  }
+  .cc-page-splash-logo-container {
+    overflow: hidden;
   }
   h1 {
     color: $cc-color-splash-blue-dark;
@@ -74,13 +82,12 @@ $cc-color-splash-blue-light: #0073C3;
     }
   }
   .cc-page-splash-features-title {
-    border-bottom: 1px solid $cc-color-list-border;
+    background: $cc-color-widget-background;
     color: $body-font-color;
-    line-height: 1.6;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: normal;
-    padding-bottom: 5px;
-    text-align: center;
+    margin-top: 40px;
+    padding: 10px 15px;
   }
 
   .cc-page-splash-blog-panel {
