@@ -1,8 +1,10 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
-<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled)}"
+<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled), 'cc-widget-list-hover-opened':(task._show)}"
   data-cc-accessible-focus-directive
   data-ng-click="api.widget.toggleShow($event, tasks, task, 'Tasks')"
   data-ng-controller="TaskEditorController">
+
+  <span class="cc-visuallyhidden" data-ng-bind-template="Show {{task._show ? 'less' : 'more'}} information about {{task.title}}"></span>
 
   <div
     data-ng-hide="editorEnabled">
