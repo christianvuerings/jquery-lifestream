@@ -64,4 +64,29 @@ describe CanvasRefreshFromCampus do
     worker.repair_sis_ids_for_term(CanvasProxy.current_sis_term_ids[0])
   end
 
+  it "should distinguish waitlisted students" do
+    enrolled = rand(99999)
+    waitlisted = rand(99999)
+    CampusData.stub(:get_enrolled_students).and_return(
+        [
+            {
+                'ldap_uid' => enrolled,
+                'enroll_status' => 'E'
+            },
+            {
+                'ldap_uid' => waitlisted,
+                'enroll_status' => 'W'
+            }
+        ]
+    )
+    enrollments = []
+    users = []
+    worker = CanvasRefreshFromCampus.new
+    worker.accumulate_section_enrollments({section_id: "SEC:2013-C-333"}, enrollments, users)
+    enrollments.length.should == 2
+    users.length.should == 2
+    enrollments.index {|enr| enr['user_id'] == enrolled && enr['role'] == 'student'}.should_not be_nil
+    enrollments.index {|enr| enr['user_id'] == waitlisted && enr['role'] == 'Waitlist Student'}.should_not be_nil
+  end
+
 end

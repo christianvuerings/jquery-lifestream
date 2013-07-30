@@ -4,6 +4,11 @@ class CanvasRefreshFromCampus
 
   include ClassLogger
 
+  ENROLL_STATUS_TO_CANVAS_ROLE = {
+      'E' => 'student',
+      'W' => 'Waitlist Student'
+  }
+
   def initialize
     @export_dir = Settings.canvas_proxy.export_directory
     if !File.exists?(@export_dir)
@@ -129,7 +134,7 @@ class CanvasRefreshFromCampus
         total_enrollments << {
             'course_id' => section[:course_id],
             'user_id' => uid,
-            'role' => 'student',
+            'role' => ENROLL_STATUS_TO_CANVAS_ROLE[enr['enroll_status']],
             'section_id' => section_id,
             'status' => 'active'
         }
