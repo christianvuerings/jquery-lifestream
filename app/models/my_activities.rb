@@ -111,13 +111,17 @@ class MyActivities < MyMergedModel
         if cleared_date
           notification_type = "message"
           notification_date = cleared_date
-          title ="#{block_type} Block Cleared: #{block_reason}"
+          title ="#{block_type} Block Cleared"
           message = "This block, placed on #{format_date(blocked_date)[:date_string]}, was cleared on #{format_date(cleared_date)[:date_string]}"
         else
           notification_type = "alert"
           notification_date = blocked_date
           message = translated_codes[:message]
-          title = "#{block_type} Block Placed: #{block_reason}"
+          title = "#{block_type} Block Placed"
+        end
+
+        unless (block_type == 'Academic' && block_reason == 'Academic')
+          title += ": #{block_reason}"
         end
 
         Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{type}, blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
