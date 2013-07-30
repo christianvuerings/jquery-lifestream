@@ -4,5 +4,5 @@ services:
 jobs:
   hot.plate:
     job: HotPlate
-    cron: '0 1 8,20 * * ? *'
+    cron: '0 1 8 * * ? *'
     singleton: true
