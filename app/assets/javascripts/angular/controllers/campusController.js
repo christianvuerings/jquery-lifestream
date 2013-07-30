@@ -108,7 +108,7 @@
      */
     var getLinks = function() {
       // Data contains "links" and "navigation"
-      var link_data_url = '/json/campuslinks.json';
+      var link_data_url = '/json/campuslinks_v16.json';
       if ($scope.api.user.profile.features.live_campus_links_data) {
         link_data_url = '/api/my/campuslinks';
       }

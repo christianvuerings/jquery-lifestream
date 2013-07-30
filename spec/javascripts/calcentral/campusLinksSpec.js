@@ -11,7 +11,7 @@ describe('Campus links', function() {
   beforeEach(inject(function() {
     jasmine.getJSONFixtures().fixturesPath = 'public/json/';
     jasmine.getFixtures().fixturesPath = 'public';
-    json = getJSONFixture('campuslinks.json');
+    json = getJSONFixture('campuslinks_v16.json');
 
   }));
 
