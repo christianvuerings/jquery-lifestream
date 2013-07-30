@@ -82,10 +82,11 @@
   background: $cc-color-light-medium-grey;
 
   h3 {
-    color: $cc-color-widget-highlight-background;
-    font-size: 14px;
+    color: $cc-color-white;
+    font-size: 12px;
+    font-weight: normal;
     margin: 0;
-    padding: 5px 10px;
+    padding: 2px 16px;
   }
 }
 
