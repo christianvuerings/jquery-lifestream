@@ -29,7 +29,7 @@ class MyAcademics::Semesters
         format = this_section[:instruction_format]
         section = this_section[:section_num]
         section_label = "#{format} #{section}"
-        course_label = "#{course_number} #{title}"
+        course_label = "#{course_number}"
         schedules = this_section[:schedules]
         instructors = this_section[:instructors]
         is_primary_section = (i == 0)
