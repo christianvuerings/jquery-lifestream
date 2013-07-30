@@ -237,7 +237,6 @@ class CampusData < OracleDatabase
           and bci.term_yr = #{connection.quote(term_yr)}
           and bci.term_cd = #{connection.quote(term_cd)}
           and bci.course_cntl_num = #{connection.quote(ccn)}
-          and ( bci.instructor_func = 1 or bci.instructor_func = 3 )
         order by bci.instructor_func
       SQL
       result = connection.select_all(sql)
