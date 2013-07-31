@@ -229,7 +229,7 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-        select p.person_name, p.ldap_uid
+        select p.person_name, p.ldap_uid, bci.instructor_func
         from bspace_course_instructor_vw bci
         join bspace_course_info_vw c on c.term_yr = bci.term_yr and c.term_cd = bci.term_cd and c.course_cntl_num = bci.course_cntl_num
         join bspace_person_info_vw p on p.ldap_uid = bci.instructor_ldap_uid
