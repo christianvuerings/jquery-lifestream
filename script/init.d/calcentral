@@ -11,7 +11,6 @@ START_SCRIPT="$CC_BASE/script/start-torquebox.sh"
 STOP_SCRIPT="$CC_BASE/script/stop-torquebox.sh"
 DOCROOT="/var/www/html/calcentral"
 OFFLINE_FILE="$DOCROOT/calcentral-in-maintenance"
-NIGHTLY_HTML="$DOCROOT/index_nightly.html"
 MAINT_HTML="$DOCROOT/index_maintenance.html"
 EMERGENCY_HTML="$DOCROOT/index_emergency.html"
 INDEX_HTML="$DOCROOT/index.html"
@@ -43,11 +42,6 @@ online() {
 
 offline () {
     $TOUCH $OFFLINE_FILE
-}
-
-nightly () {
-    $CP $NIGHTLY_HTML $INDEX_HTML
-    offline
 }
 
 maint () {
@@ -109,9 +103,6 @@ case "$1" in
   offline)
         offline
         ;;
-  nightly)
-        nightly
-        ;;
   maint)
         maint
         ;;
@@ -119,7 +110,7 @@ case "$1" in
         emergency
         ;;
   *)
-        echo "Usage: $0 {start|stop|restart|status|online|offline|nightly|maint|emergency}"
+        echo "Usage: $0 {start|stop|restart|status|online|offline|maint|emergency}"
 esac
 
 exit
