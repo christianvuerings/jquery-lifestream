@@ -49,8 +49,8 @@
       "color_class": "campus-class"
     },
     {
-      "name": "Lessons from the Cambrian Explosion",
-      "course_code": "Bio 1a Lec 3",
+      "short_description": "Lessons from the Cambrian Explosion",
+      "name": "Bio 1a Lec 3",
       "id": "1093164",
       "emitter": "Canvas",
       "color_class": "canvas-class",
@@ -64,7 +64,6 @@
     },
     {
       "name": "Project Group 4",
-      "course_code": "",
       "id": "1093164",
       "emitter": "Canvas",
       "color_class": "canvas-class",
@@ -84,7 +83,6 @@
       "groups": [
         "7c4d4a5c-07c6-4ab8-a32c-78c6820f2596"
       ],
-      "course_code": "",
       "name": "BIOLOGY 1A DIS 03 Su13",
       "short_description": "Talk about life",
       "color_class": "bspace-class",
