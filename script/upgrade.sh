@@ -10,6 +10,7 @@ fi
 
 ./script/update-build.sh
 
+# run migrate.sh only if we are on node 1
 if [ "X$NODEONE" != "X" ]; then
   ./script/migrate.sh
 fi
