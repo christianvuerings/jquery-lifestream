@@ -19,69 +19,73 @@
 				text-decoration: none;
 			}
 
-			table {
-				width: 720px;
-				margin-left: auto;
-				margin-right: auto;
-				margin-top: 80px;
-				border-collapse: collapse;
-				border: 0;
+			.container {
+				margin: 72px auto;
+				padding-left: 31px;
 			}
 
-			table td {
-				padding: 12px 32px;
-				border: 0;
+			.calcentral-logo, .card-header, .card-body, .footer {
+				margin: 0 auto;
+				padding-left: 31px;
+				width: 660px;			
 			}
 
-			.table-column1 {
-				width: 75%;
-			}
-
-			.table-column-icon {
-				padding: 12px 20px;
-			}
-
-			.table-spacer {
-				height: 48px;
-			}
-
-			.table-header {
-				padding: 8px 31px;
+			.calcentral-logo {
 				height: 36px;
 				background-color: #022149;
+				padding-top: 16px;
+				line-height: 36px;
 			}
 
 			.card-header {
 				height: 48px;
+				padding-top: 12px;
+				padding-bottom: 12px;
 				background-color: #E4E4E4;
 				font-size: 24px;
 				color: #33333;
+				line-height: 48px;
 			}
 
 			.card-body {
+				padding-top: 10px;
+				padding-bottom: 10px;
 				background-color: #FFFFFF;
 				font-size: 18px;
+				overflow: hidden;
+			}
+
+			.card-content {							
+				float: left;
+				width: 440px;
+				padding-right: 10px;
+				font-size: 18px;
 				color: #33333;
-				vertical-align: top;
 			}
 
 			.footer {
-				padding: 12px 30px;
 				height: 46px;
 				background-color: #F4F4F4;
-				font-size: 12px;
-				color: #33333;
 				vertical-align: middle;
+				padding-top: 15px;
+				padding-bottom: 12px;
+				line-height: 46px;
 			}
 
 			.emphasis {
 				font-weight: bold;
 			}
 			
+			.page-icon {
+				float: left;
+				width: 190px;
+			}
+
 			.sprite {
-				background-image: url('maintenence_images.png');
+				background-image: url('maintenance_images.png');
 				background-color: transparent;
 				background-repeat: no-repeat;
+				padding: 5px;
 				display: block;
 			}
 
@@ -94,12 +98,12 @@
 			#img_2_berkeley_logotype {
 				height: 36px;
 				width: 215px;
-				background-position: -2px -50px;
+				background-position: -4px -50px;
 			}
 
-			#img_3_maintenance_icon {
-				height: 190px;
-				width: 184px;
+			#img_3_page_icon {
+				height: 234px;
+				width: 194px;
 				background-position: 0px -100px;
 			}
 
@@ -107,23 +111,16 @@
 	</head>
 	
 	<body>
-		<table>
-			<tr>
-			   <td class="table-header" colspan="2">
-					<div class="sprite" id="img_1_calcentral_logotype">
-					</div>
-			   </td>
-			</tr>
-			<tr>
-			   <td class="card-header" colspan="2">
-					We'll Be Back Soon
-			   </td>
-			</tr>
-			<tr>
-				<td class="card-body" table-column1">
-					<p><span class="emphasis">CalCentral is temporarily unavailable between 12:00pm - 1:00pm due to scheduled maintenance.</class></p>
+		<div class="container">
+			<div class="calcentral-logo">
+				<div class="sprite" id="img_1_calcentral_logotype"></div>
+			</div>
+			<div class="card-header">We'll Be Back Soon</div>
+			<div class="card-body">
+				<div class="card-content">
+					<p><span class="emphasis">CalCentral is temporarily unavailable between 6:00am - 7:00am due to scheduled maintenance.</span></p>
 					<p>We apologize for the inconvienence.</p>
-					<p>While CalCentral is unavailable, you can access your course sites and other important campus sites through the following direct links:
+					<p>We are working to bring CalCentral back up. In the meantime, you can access your course sites and other important campus sites through the following direct links:
 						<ul>
 							<li><a href="https://bspace.berkeley.edu">bSpace</a></li>
 							<li><a href="https://ucberkeley.instructure.com">Canvas</a></li>
@@ -133,18 +130,14 @@
 						</ul>
 					</p>
 					<p>Please <a href="http://ets.berkeley.edu/calcentral-feedback">contact us</a> for assistance with CalCentral.</p>
-				</td>
-				<td class="card-body table-column-icon">
-					<div class="sprite" id="img_3_maintenance_icon">
-					</div>
-				</td>
-			</tr>
-			<tr>
-			   <td class="footer" colspan="2">
-					<div class="sprite" id="img_2_berkeley_logotype">
-					</div>
-			   </td>
-			</tr>
-		</table>
+				</div>
+				<div class="page-icon">
+					<div class="sprite" id="img_3_page_icon"></div>
+				</div>
+			</div>
+			<div class="footer">
+				<div class="sprite" id="img_2_berkeley_logotype"></div>
+			</div>
+		</div>
 	</body>
 </html>
