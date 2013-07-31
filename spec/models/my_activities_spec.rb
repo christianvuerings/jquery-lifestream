@@ -33,7 +33,7 @@ describe "MyActivities" do
     oski_activities[:activities].empty?.should be_false
     oski_activities[:activities].each do |act|
       act[:emitter].should == "BearFacts"
-      act[:source].should == "BearFacts"
+      act[:source].should_not == "Bearfacts"
       @documented_types.include?(act[:type]).should be_true
     end
   end

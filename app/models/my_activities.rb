@@ -112,7 +112,7 @@ class MyActivities < MyMergedModel
           notification_type = "message"
           notification_date = cleared_date
           title ="#{block_type} Block Cleared"
-          message = "This block, placed on #{format_date(blocked_date)[:date_string]}, was cleared on #{format_date(cleared_date)[:date_string]}"
+          message = "This block, placed on #{format_date(blocked_date)[:date_string]}, was cleared on #{format_date(cleared_date)[:date_string]}."
         else
           notification_type = "alert"
           notification_date = blocked_date
@@ -134,7 +134,7 @@ class MyActivities < MyMergedModel
             block_type: block_type,
             type: notification_type,
             date: format_date(notification_date),
-            source: "BearFacts",
+            source: office,
             source_url: "https://bearfacts.berkeley.edu/bearfacts/",
             url: "https://bearfacts.berkeley.edu/bearfacts/",
             emitter: "BearFacts",
