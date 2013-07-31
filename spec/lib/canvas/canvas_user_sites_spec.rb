@@ -97,8 +97,8 @@ describe CanvasUserSites do
     feed[:classes].length.should >= 1
     class_item = feed[:classes].select{|klass| klass[:courses].present?}[0]
     class_item[:id].should == '123'
-    class_item[:name].should == 'Biology 1A catch-up'
-    class_item[:course_code].should == 'Bio 1A summer'
+    class_item[:short_description].should == 'Biology 1A catch-up'
+    class_item[:name].should == 'Bio 1A summer'
     class_courses = class_item[:courses]
     class_courses.length.should == 1
     class_courses[0][:id].should == 'BIOLOGY:1A:2013-C'
@@ -106,7 +106,8 @@ describe CanvasUserSites do
     unofficial_class_item[:id].should == '234'
     unofficial_class_item[:site_type].should == 'course'
     unofficial_class_item[:role].should == 'student'
-    unofficial_class_item[:name].should == 'Urban Sociology'
+    unofficial_class_item[:short_description].should == 'Urban Sociology'
+    unofficial_class_item[:name].should == 'SOCIOL 13.6. Su'
     feed[:groups].length.should == 0
   end
 
@@ -187,7 +188,7 @@ describe CanvasUserSites do
     classes[:id].should == '123'
     classes[:site_type].should == 'course'
     classes[:role].should == 'teacher'
-    classes[:name].should == 'Biology for surfers'
+    classes[:name].should == 'Bio 1A'
   end
 
   it "should put a community-style Canvas Group into groups" do
@@ -208,7 +209,7 @@ describe CanvasUserSites do
     group = feed[:groups][0]
     group[:id].should == '321'
     group[:site_type].should == 'group'
-    group[:name].blank?.should be_false
+    group[:name].should == 'The Left Banke'
     group[:site_url].blank?.should be_false
     group[:emitter].should == "Canvas"
     group[:color_class].should == "canvas-group"
@@ -302,7 +303,7 @@ describe CanvasUserSites do
       # Official canvas group, wired by canvas course association above
       site[:id] == '321' &&
         site[:site_type] == 'group' &&
-        site[:source] == 'Biology for surfers' &&
+        site[:source] == 'Bio 1A' &&
         site[:name] == 'Project Group 4'
     }.should_not be_nil
     feed[:classes].index { |site|

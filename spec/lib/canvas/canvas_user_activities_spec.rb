@@ -67,8 +67,8 @@ describe CanvasUserActivities do
         classes: [
             {
                 id: '1',
-                course_code: 'Course Code 1',
-                name: 'Course site name 1',
+                name: 'Course Code 1',
+                short_description: 'Course site name 1',
                 site_type: 'course',
                 color_class: 'canvas-class'
             }
@@ -76,13 +76,13 @@ describe CanvasUserActivities do
         groups: [
             {
                 id: '3',
-                title: 'Group title 3',
+                name: 'Group title 3',
                 site_type: 'group',
                 color_class: 'canvas-group'
             },
             {
                 id: '2',
-                title: 'Course-as-group title',
+                name: 'Course-as-group title',
                 site_type: 'course',
                 color_class: 'canvas-group'
             }
@@ -98,7 +98,7 @@ describe CanvasUserActivities do
     end
     enrolled_activity = activities.select{|item| item[:id] == 'canvas_1999'}[0]
     enrolled_activity[:color_class].should == 'canvas-class'
-    enrolled_activity[:source].should == 'Course site name 1'
+    enrolled_activity[:source].should == 'Course Code 1'
     unofficial_activity = activities.select{|item| item[:id] == 'canvas_2999'}[0]
     unofficial_activity[:color_class].should == 'canvas-group'
     unofficial_activity[:source].should == 'Course-as-group title'

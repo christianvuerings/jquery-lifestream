@@ -3,11 +3,14 @@
 #
 # Current Dashboard UX divides all Canvas Course and Group memberships between two
 # widgets:
-#   "My Classes" : Canvas Courses and Groups which are officially integrated with
-#       a section in which the current user is enrolled as a student.
-#   "My Groups" : Everything else, including all Courses in which the current user
-#       is an instructor or GSI, and all Courses in which the current user is a
-#       student but not officially enrolled in any linked section.
+#
+#   "My Classes" : Canvas Courses, along with Canvas Groups whose context is a
+#       Canvas Course where the user is a member. Course descriptions include links back to
+#       any connected campus sections in which the current user is officially enrolled
+#       or instructing.
+#
+#   "My Groups" : Other Canvas Groups.
+#
 # Since "My Groups" depends on the contents of "My Classes", both should draw from
 # a single data object.
 #
@@ -69,8 +72,6 @@ class CanvasUserSites < MyMergedModel
               coffering[:term_cd] == campus_section[:term_cd] &&
               coffering[:sections].index{ |csect| csect[:ccn].to_s == campus_section[:ccn] }
         end
-        # TODO Support more ad-hoc maintenance of secondary section memberships, by connecting
-        # sites for sections in which the student is not officially enrolled.
         if matched_course_idx
           linked_course_ids.add(campus_user_courses[matched_course_idx][:id])
         end
@@ -81,8 +82,8 @@ class CanvasUserSites < MyMergedModel
     linked_course_ids = linked_course_ids.collect { |co| {id: co}} || []
     merged_sites[:classes] << {
         id: course_id.to_s,
-        name: site['name'],
-        course_code: site['course_code'],
+        short_description: site['name'],
+        name: site['course_code'],
         site_type: 'course',
         role: role,
         courses: linked_course_ids,
