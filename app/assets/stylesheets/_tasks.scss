@@ -65,13 +65,13 @@
     width: 30px;
   }
   .cc-widget-tasks-col-title {
-    padding: 0 30px;
+    padding: 0 50px 0 30px;
     width: 100%;
   }
   .cc-widget-tasks-col-date {
     margin-right: -100%;
     padding-right: 10px;
-    right: 60px;
+    right: 75px;
     text-align: right;
     width: 75px;
   }
@@ -85,7 +85,7 @@
     clear: both;
     color: $cc-color-widget-section-label;
     font-size: 14px;
-    margin: 10px 20px 0 10px;
+    margin: 10px 30px 0 10px;
     overflow: hidden;
   }
   .cc-widget-tasks-section-label-red {
