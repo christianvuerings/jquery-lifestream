@@ -229,7 +229,7 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-        select p.person_name, p.ldap_uid
+        select p.person_name, p.ldap_uid, bci.instructor_func
         from bspace_course_instructor_vw bci
         join bspace_course_info_vw c on c.term_yr = bci.term_yr and c.term_cd = bci.term_cd and c.course_cntl_num = bci.course_cntl_num
         join bspace_person_info_vw p on p.ldap_uid = bci.instructor_ldap_uid
@@ -237,7 +237,6 @@ class CampusData < OracleDatabase
           and bci.term_yr = #{connection.quote(term_yr)}
           and bci.term_cd = #{connection.quote(term_cd)}
           and bci.course_cntl_num = #{connection.quote(ccn)}
-          and ( bci.instructor_func = 1 or bci.instructor_func = 3 )
         order by bci.instructor_func
       SQL
       result = connection.select_all(sql)
