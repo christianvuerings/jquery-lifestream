@@ -12,19 +12,19 @@
         <li data-ng-repeat="(id, class) in category.data"
             data-ng-class="{'cc-widget-list-selected': class._show && category.categoryId !== 'other'}">
           <div data-ng-switch="category.categoryId">
-            <a data-ng-switch-when="other" data-ng-href="{{class.site_url}}"
+            <a data-ng-switch-when="other" class="cc-widget-list-link" data-ng-href="{{class.site_url}}"
                data-ng-click="api.analytics.trackExternalLink('My Other Site Memberships', class.emitter, class.site_url)">
-              <div class="cc-widget-list-hover">
-                <div class="cc-widget-list-column-left">
-                  <div class="cc-icon" data-ng-class="'cc-icon-{{ class.emitter|lowercase }}'"></div>
-                </div>
-                <strong class="cc-ellipsis" data-ng-bind="class.name"></strong>
+              <div class="cc-widget-list-column-left">
+                <div class="cc-icon" data-ng-class="'cc-icon-{{ class.emitter|lowercase }}'"></div>
               </div>
+              <strong class="cc-ellipsis" data-ng-bind="class.name"></strong>
             </a>
             <div data-ng-switch-default
                  class="cc-widget-list-hover"
+                 data-ng-class="{'cc-widget-list-hover-opened':(class._show)}"
                  data-cc-accessible-focus-directive
                  data-ng-click="api.widget.toggleShow($event, category.data, class, 'My Classes')">
+              <span class="cc-visuallyhidden" data-ng-bind-template="Show {{class._show ? 'less' : 'more'}} information about {{class.course_code}}"></span>
               <strong class="cc-ellipsis" data-ng-bind="class.course_code"></strong>
               <div class="cc-ellipsis cc-widget-list-light" data-ng-show="!!class.name" data-ng-bind="class.name">
               </div>

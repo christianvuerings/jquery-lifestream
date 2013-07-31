@@ -43,8 +43,9 @@
 .cc-widget-list-selected {
   background: $cc-color-widget-more-background;
 }
-.cc-widget-list > li > a, .cc-widget-list-hover {
+.cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link, .cc-widget-list-hover {
   overflow: hidden;
+  position: relative;
   padding: 10px 15px;
   &:hover, &:focus {
     background: $cc-color-blue-hover;
@@ -56,6 +57,42 @@
     }
   }
 }
+.cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link {
+  display: block;
+}
+.cc-widget-list-hover:not(tr) {
+  &:hover, &:focus {
+    &:before {
+      border-bottom: 4px solid transparent;
+      border-right: 4px solid $body-font-color;
+      border-top: 4px solid transparent;
+      content: "";
+      height: 0;
+      right: 7px;
+      position: absolute;
+      top: 14px;
+      width: 0;
+    }
+  }
+}
+.cc-widget-list{
+  .cc-widget-list-hover-opened {
+    &:hover, &:focus {
+      &:before {
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid $body-font-color;
+        content: "";
+        height: 0;
+        right: 7px;
+        position: absolute;
+        top: 17px;
+        width: 0;
+      }
+    }
+  }
+}
+
 .cc-widget-padding {
   padding: 10px;
 }

@@ -145,7 +145,9 @@ describe CampusData do
     if CampusData.test_data?
       data.length.should == 2
       data[0]["person_name"].should == "Yu-Hung Lin"
+      data[0]["instructor_func"].should == "1"
       data[1]["person_name"].should == "Chris Tweney"
+      data[1]["instructor_func"].should == "4"
     end
   end
 

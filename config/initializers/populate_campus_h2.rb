@@ -345,8 +345,7 @@
         INSERT INTO bspace_course_instructor_vw (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7366, 192517, ' ', '2', '1');
         INSERT INTO bspace_course_instructor_vw (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 16171, 192517, ' ', '2', '1');
         INSERT INTO bspace_course_instructor_vw (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 192517, ' ', '2', '1');
-        INSERT INTO bspace_course_instructor_vw (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 904715, ' ', '2', '1');
-        INSERT INTO bspace_course_instructor_vw (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 2040, ' ', '2', '4');
+        INSERT INTO bspace_course_instructor_vw (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 904715, ' ', '2', '4');
 
         -- Course Student records
         Insert into BSPACE_CLASS_ROSTER_VW (TERM_YR,TERM_CD,COURSE_CNTL_NUM,STUDENT_LDAP_UID,UG_GRAD_FLAG,ROLE_CD,UNIT,ENROLL_STATUS,PNP_FLAG,WAIT_LIST_SEQ_NUM,CREDIT_CD) values (2013, 'D', 7309, 300939,'G','1',5,'E','N ',0,'  ');
