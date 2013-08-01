@@ -2,8 +2,7 @@ class MyClasses < MyMergedModel
 
   def get_feed_internal
     response = {
-        :classes => [],
-        :current_term => Settings.sakai_proxy.current_terms.first
+        :classes => []
     }
     if CampusUserCoursesProxy.access_granted?(@uid)
       response[:classes].concat(CampusUserCoursesProxy.new({:user_id => @uid}).get_campus_courses)

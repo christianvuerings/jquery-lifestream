@@ -104,9 +104,6 @@ group :assets do
 
   # Raven.js - library for JS error logging
   gem "ravenjs-gem", "~> 1.0.7.0"
-
-  # Gon - Rails variables in JS
-  gem "gon", "~> 4.1.1"
 end
 
 # Oracle adapter
