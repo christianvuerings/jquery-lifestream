@@ -37,6 +37,7 @@ Calcentral::Application.routes.draw do
 
   match '/api/my/opt_out'=> 'user_api#delete', :via => :post
   match '/api/clear_cache' => 'application#clear_cache'
+  match '/api/refresh_logging' => 'refresh_logging#refresh_logging', :defaults => { :format => 'json' }
 
   match '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
   match '/canvas/oAuthResponse' => 'canvas_auth#handle_callback'
