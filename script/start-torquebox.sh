@@ -40,13 +40,9 @@ nohup bundle exec torquebox run -b $IP_ADDR -p=3000 --jvm-options="$JVM_OPTS" --
 cd ..
 
 # wait a bit to let server start up
-sleep 30
+sleep 120
 
 ./script/init.d/calcentral online
-
-# removing the maint page causes the Rails app to restart, for reasons unknown.
-# So we'll wait a bit and then tickle the home page to warm up the app.
-sleep 45
 
 # now check if the app is alive (which will also warm up caches)
 ./script/check-alive.sh || exit 1
