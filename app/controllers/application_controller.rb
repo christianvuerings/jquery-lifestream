@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :get_settings
+  before_filter :get_settings, :initialize_gon
   after_filter :access_log
 
   # Disable most of the default headers provided by secure_headers gem, leaving just x-frame for now
@@ -46,6 +46,13 @@ class ApplicationController < ActionController::Base
 
   def get_settings
     @server_settings = ServerRuntime.get_settings
+  end
+
+  def initialize_gon
+    gon.application_version = ServerRuntime.get_settings["versions"]["application"]
+    gon.client_hostname = ServerRuntime.get_settings["hostname"]
+    gon.google_analytics_id = Settings.google_analytics_id
+    gon.sentry_url = Settings.sentry_url
   end
 
   def access_log
