@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/users/sis_user_id:MaynardGKrebs/profile",
+        "uri": "https://ucberkeley.instructure.com/api/v1/users/sis_login_id:MaynardGKrebs/profile",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -82,7 +82,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/users/sis_user_id:300846/profile",
+        "uri": "https://ucberkeley.instructure.com/api/v1/users/sis_login_id:300846/profile",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

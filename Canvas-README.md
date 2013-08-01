@@ -55,7 +55,7 @@ Sets the app to show up as a Course site tool, visible to teachers and admins, a
         <lticm:property name="url">http://localhost:3000/canvas/embedded/rosters</lticm:property>
         <lticm:property name="text">Roster Photos</lticm:property>
         <lticm:property name="visibility">admins</lticm:property>
-        <lticm:property name="default">disabled</lticm:property>
+        <lticm:property name="default">enabled</lticm:property>
         <lticm:property name="enabled">true</lticm:property>
       </lticm:options>
     </blti:extensions>
