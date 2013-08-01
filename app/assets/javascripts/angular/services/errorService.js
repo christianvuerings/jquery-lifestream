@@ -1,10 +1,10 @@
-(function(angular, Raven) {
+(function(angular, calcentral_config, Raven) {
 
   'use strict';
 
   angular.module('calcentral.services').service('errorService', [function() {
 
-    Raven.config('<%= Settings.sentry_url %>').install();
+    Raven.config(calcentral_config.sentry_url).install();
 
     /**
      * Send an error exception
@@ -14,15 +14,15 @@
 
     var send = function(exception) {
       var exception = exception.message || exception;
-      var app_version = <%= ServerRuntime.get_settings["versions"]["application"] %>;
-      var client_host_name = '<%= ServerRuntime.get_settings["hostname"] %>';
       var uid = document.getElementById('user_id').innerHTML;
 
-      Raven.captureMessage(exception, {tags: {
-        app_version: app_version,
-        host: client_host_name,
-        uid: uid
-      }});
+      Raven.captureMessage(exception, {
+        tags: {
+          app_version: calcentral_config.application_version,
+          host: calcentral_config.client_hostname,
+          uid: uid
+        }
+      });
     };
 
     // Expose methods
@@ -32,4 +32,4 @@
 
   }]);
 
-}(window.angular, window.Raven));
+}(window.angular, window.calcentral_config, window.Raven));

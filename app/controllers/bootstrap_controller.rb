@@ -5,6 +5,10 @@ class BootstrapController < ApplicationController
   caches_action :index, :layout => false
 
   def index
+    gon.application_version = ServerRuntime.get_settings["versions"]["application"]
+    gon.client_hostname = ServerRuntime.get_settings["hostname"]
+    gon.google_analytics_id = Settings.google_analytics_id
+    gon.sentry_url = Settings.sentry_url
     respond_to :html
   end
 
