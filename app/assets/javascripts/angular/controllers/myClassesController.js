@@ -4,7 +4,7 @@
   /**
    * My Classes controller
    */
-  calcentral.controller('MyClassesController', ['$http', '$scope', function($http, $scope) {
+  calcentral.controller('MyClassesController', ['$http', '$scope', '$q', function($http, $scope, $q) {
 
     var addSubclasses = function(classesHash) {
       for (var j = 0; j < classesHash.otherClasses.length; j++) {
@@ -21,8 +21,8 @@
 
     var bindScopes = function(categorizedClasses) {
       var studentLength = Object.keys(categorizedClasses.student).length;
-      var instructorLength = Object.keys(categorizedClasses.instructor).length;
-      var otherLength = Object.keys(categorizedClasses.other).length;
+      var instructorLength = Object.keys(categorizedClasses.instructor).length
+      var otherLength = Object.keys(categorizedClasses.other).length
 
       $scope.allClassesPresent = (studentLength || instructorLength || otherLength);
       $scope.allClasses = [
@@ -90,7 +90,7 @@
 
     var splitClasses = function(classes) {
       var campusClasses = {};
-      var otherClasses = [];
+      var otherClasses = []
       for (var i = 0; i < classes.length; i++) {
         if (classes[i].emitter === 'Campus') {
           campusClasses[classes[i].id] = classes[i];
