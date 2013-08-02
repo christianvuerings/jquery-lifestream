@@ -22,6 +22,11 @@
     <!-- Included CSS Files -->
     <%= stylesheet_link_tag "application" %>
 
+    <!-- Pass rails variables to JS -->
+    <script>
+      window.calcentral_config = <%= @calcentral_config %>;
+    </script>
+
     <!-- Included JS Files  -->
     <%= javascript_include_tag "application" %>
   <% end %>
