@@ -11,6 +11,7 @@
 #   - dist/**/*.js
 #
 src_files:
+  - ../spec/javascripts/initialize/calcentral_config.js
   - assets/application.js
   - assets/jquery.js
   - assets/jasmine-jquery.js

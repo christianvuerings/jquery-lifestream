@@ -104,6 +104,7 @@ group :assets do
 
   # Raven.js - library for JS error logging
   gem "ravenjs-gem", "~> 1.0.7.0"
+
 end
 
 # Oracle adapter
