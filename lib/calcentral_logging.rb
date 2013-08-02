@@ -3,7 +3,32 @@ require 'log4r/outputter/datefileoutputter'
 include Log4r
 
 module CalcentralLogging
+  include ClassLogger
   extend self
+
+  def refresh_logging_level
+    response = {}
+    settings_hash = CalcentralConfig.load_settings
+    old_logger_level = Rails.logger.level
+    new_logger_level = (settings_hash && settings_hash.logger && settings_hash.logger.level)
+    if (!new_logger_level.nil? && new_logger_level != old_logger_level &&
+      new_logger_level.is_a?(Integer) &&
+      (0...Log4r::LNAMES.length).include?(new_logger_level))
+      old_logger_level_name = Log4r::LNAMES[old_logger_level]
+      new_logger_level_name = Log4r::LNAMES[new_logger_level]
+
+      Rails.logger.warn "Changing log level from #{old_logger_level_name} to #{new_logger_level_name}"
+      Rails.logger.level = new_logger_level
+      response = {
+        old_logger_level: old_logger_level_name,
+        new_logger_level: new_logger_level_name,
+      }
+    else
+      Rails.logger.warn "Unknown, unchanged, or empty new log level (old -> new):"\
+        "#{old_logger_level} -> #{new_logger_level}, ignoring."
+    end
+    response
+  end
 
   def init_logging
     # Set up top-level log4r logger with default log level.
