@@ -25,7 +25,10 @@
                  data-cc-accessible-focus-directive
                  data-ng-click="api.widget.toggleShow($event, category.data, class, 'My Classes')">
               <span class="cc-visuallyhidden" data-ng-bind-template="Show {{class._show ? 'less' : 'more'}} information about {{class.course_code}}"></span>
-              <strong class="cc-ellipsis" data-ng-bind="class.course_code"></strong>
+              <div class="cc-ellipsis">
+                <strong data-ng-bind="class.course_code"></strong>
+                <span class="cc-widget-list-light" data-ng-show="class.waitlist_pos" data-ng-bind-template="- #{{ class.waitlist_pos }} on the wait list"></span>
+              </div>
               <div class="cc-ellipsis cc-widget-list-light" data-ng-show="!!class.name" data-ng-bind="class.name">
               </div>
               <div data-ng-show="class._show">
