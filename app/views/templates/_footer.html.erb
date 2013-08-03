@@ -34,6 +34,14 @@
         </div>
       </li>
     </ul>
+    <div data-ng-controller="BasicAuthController" data-ng-show="api.user.profile.is_basic_auth_enabled">
+      <form action="" data-ng-submit="basicauth.connect()">
+        <h3>Basic Auth</h3>
+        <p><input data-ng-model="basicauth.login" name="email" type="text" placeholder="Login" required /></p>
+        <p><input data-ng-model="basicauth.password" name="password" type="password" placeholder="Password" required /></p>
+        <p><button type="submit">Login</button></p>
+      </form>
+    </div>
   </div>
 
 </footer>
