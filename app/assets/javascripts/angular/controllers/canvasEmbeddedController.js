@@ -29,6 +29,9 @@
       $http.get('/api/academics/rosters/canvas/' + canvas_course_id).success(function(data) {
         angular.extend($scope, data);
         window.setInterval(postHeight, 250);
+      }).error(function(data, status) {
+        angular.extend($scope, data);
+        $scope.error_status = status;
       });
     };
 

@@ -28,6 +28,10 @@
       // We can do this as soon as we get good error responses back from the server.
       if (angular.isObject(response.data)) {
         response.data._is_loading = false;
+      } else {
+        response.data = {
+          _is_loading: false
+        };
       }
       return $q.reject(response);
 
