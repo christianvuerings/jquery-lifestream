@@ -30,6 +30,7 @@ class RoutesListController < ApplicationController
         /api/canvas/request_authorization
         /api/google/request_authorization
         /api/google/handle_callback
+        /api/academics/rosters/canvas/:canvas_course_id
       )
     test_routes.reject {|x| x.empty? || blacklist.include?(x)}
   end
