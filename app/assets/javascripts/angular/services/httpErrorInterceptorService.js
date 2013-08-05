@@ -23,7 +23,6 @@
 
       if (status >= 400) {
         errorService.send('httpErrorInterceptorService - ' + response.status + ' - ' + response.config.url);
-        return;
       }
       // otherwise
       return $q.reject(response);

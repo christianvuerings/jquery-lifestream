@@ -1,31 +1,34 @@
 <script type="text/ng-template" id="templates/canvas_embedded/roster.html">
   <div class="cc-page-roster" data-cc-spinner-directive>
 
-      <form class="cc-roster-search">
-        <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
+    <form class="cc-roster-search" data-ng-hide="error_status">
+      <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
 
-        <div class="cc-select cc-left">
-          <select data-ng-model="search.sections">
-            <option value="">All Sections</option>
-            <option value="{{section.id}}" data-ng-repeat="section in sections">{{section.name}}</option>
-          </select>
+      <div class="cc-select cc-left">
+        <select data-ng-model="search.sections">
+          <option value="">All Sections</option>
+          <option value="{{section.id}}" data-ng-repeat="section in sections">{{section.name}}</option>
+        </select>
+      </div>
+    </form>
+
+    <ul class="cc-page-roster-list">
+      <li data-ng-repeat="student in students | filter:search | orderBy:'last_name'">
+        <div data-ng-show="student.photo">
+          <img data-ng-src="{{student.photo}}" width="72" height="96" />
         </div>
-      </form>
+        <div data-ng-hide="student.photo">
+          <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
+        </div>
+        <div class="cc-ellipsis" data-ng-bind="student.first_name"></div>
+        <div class="cc-ellipsis"><strong data-ng-bind="student.last_name"></strong></div>
+        <div data-ng-bind="student.student_id"></div>
+      </li>
+    </ul>
 
-      <ul class="cc-page-roster-list">
-        <li data-ng-repeat="student in students | filter:search | orderBy:'last_name'">
-          <div data-ng-show="student.photo">
-            <img data-ng-src="{{student.photo}}" width="72" height="96" />
-          </div>
-          <div data-ng-hide="student.photo">
-            <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
-          </div>
-          <div class="cc-ellipsis" data-ng-bind="student.first_name"></div>
-          <div class="cc-ellipsis"><strong data-ng-bind="student.last_name"></strong></div>
-          <div data-ng-bind="student.student_id"></div>
-        </li>
-      </ul>
-    </div>
+    <p data-ng-show="error_status">
+      <i class="icon-warning-sign"></i> You must be a teacher in this Canvas course to view official student rosters.
+    </p>
 
   </div>
 </script>
