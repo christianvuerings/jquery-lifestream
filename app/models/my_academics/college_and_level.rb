@@ -15,18 +15,18 @@ class MyAcademics::CollegeAndLevel
       ug_grad_flag = to_text doc.css("ugGradFlag")
       standing = ug_grad_flag.upcase == "U" ? "Undergraduate" : "Graduate"
       level = to_text(general_profile.css("nonAPLevel")).titleize
-      college = to_text(general_profile.css("collegePrimary"))
-      major = to_text(general_profile.css("majorPrimary")).titleize
+      college = Colleges.get(to_text(general_profile.css("collegePrimary")))
+      major = Majors.get(to_text(general_profile.css("majorPrimary")))
       # special handling for multiple majors
       if major == "Double"
-        second_major = to_text(general_profile.css("majorSecond")).titleize
-        third_major = to_text(general_profile.css("majorThird")).titleize
+        second_major = Majors.get(to_text(general_profile.css("majorSecond")))
+        third_major = Majors.get(to_text(general_profile.css("majorThird")))
         major = second_major + ", " + third_major
       end
       if major == "Triple"
-        second_major = to_text(general_profile.css("majorSecond")).titleize
-        third_major = to_text(general_profile.css("majorThird")).titleize
-        fourth_major = to_text(general_profile.css("majorFourth")).titleize
+        second_major = Majors.get(to_text(general_profile.css("majorSecond")))
+        third_major = Majors.get(to_text(general_profile.css("majorThird")))
+        fourth_major = Majors.get(to_text(general_profile.css("majorFourth")))
         major = second_major + ", " + third_major + ", " + fourth_major
       end
       data[:college_and_level] = {
