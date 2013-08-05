@@ -14,7 +14,6 @@
         </div>
         <div class="cc-widget-padding">
           <h3>Current</h3>
-
           <table class="cc-table">
             <thead>
               <th>Course Number</th>
@@ -25,8 +24,8 @@
             <tbody data-ng-show="selected_semester.schedule.length" data-ng-repeat="course in selected_courses">
               <tr data-ng-show="course.is_primary_section">
                 <td>
-                  <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}">
-                    <span data-ng-bind="course.course_number"></span>
+                  <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}"
+                     data-ng-bind="course.course_number">
                   </a>
                 </td>
                 <td class="cc-ellipsis" data-ng-bind="course.title"></td>
@@ -48,6 +47,30 @@
               </tr>
             </tbody>
           </table>
+          <div data-ng-show="waitlisted_courses.length">
+            <h3>Wait Lists</h3>
+            <table class="cc-table">
+              <thead>
+                <th>Course Number &amp; Section</th>
+                <th>Title</th>
+                <th>Waitlist Position / Class Size</th>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="course in waitlisted_courses">
+                  <td>
+                    <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}"
+                       data-ng-bind="course.course_number">
+                    </a>
+                    <span data-ng-bind="course.section_label"></span>
+                  </td>
+                  <td class="cc-ellipsis" data-ng-bind="course.title"></td>
+                  <td>
+                    <strong data-ng-bind="course.waitlist_pos"></strong> on list of class of <strong data-ng-bind="course.enroll_limit"></strong>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
