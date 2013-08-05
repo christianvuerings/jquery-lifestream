@@ -1,6 +1,6 @@
 <div class="cc-widget cc-widget-classes" data-ng-controller="MyClassesController">
   <div class="cc-widget-title">
-    <h2>My Classes <span class="cc-widget-title-sub cc-right" data-ng-bind="current_term"></span></h2>
+    <h2>My Classes <span class="cc-widget-title-sub cc-right" data-ng-bind-template="{{current_term}}"></span></h2>
   </div>
   <div data-cc-spinner-directive>
     <div data-ng-show="allClassesPresent" data-ng-repeat="category in allClasses"
