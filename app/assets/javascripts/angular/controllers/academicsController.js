@@ -40,6 +40,17 @@
             }
           });
           $scope.selected_courses = $scope.selected_semester.schedule;
+          var enrolled_courses = [];
+          var waitlisted_courses = [];
+          $scope.selected_courses.forEach(function(elt) {
+            if (elt.waitlist_pos) {
+              waitlisted_courses.push(elt);
+            } else {
+              enrolled_courses.push(elt);
+            }
+          });
+          $scope.enrolled_courses = enrolled_courses;
+          $scope.waitlisted_courses = waitlisted_courses;
         }
 
         // Get selected course from URL params and extract data from selected semester schedule

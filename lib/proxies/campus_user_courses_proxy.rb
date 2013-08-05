@@ -54,6 +54,7 @@ class CampusUserCoursesProxy < BaseProxy
             item[:pnp_flag] = row['pnp_flag']
             if row['enroll_status'] == 'W'
               item[:waitlist_pos] = row['wait_list_seq_num']
+              item[:enroll_limit] = row['enroll_limit']
             end
             campus_classes << item
             previous_item = item

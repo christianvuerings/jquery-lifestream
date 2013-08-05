@@ -22,6 +22,7 @@ class MyAcademics::Semesters
         Rails.logger.warn "#{self.class.name} - Course #{course[:ccn]} has a empty 'pnp_flag' field: #{course}"
         grade_option = ''
       end
+      waitlist_pos = course[:waitlist_pos] if course[:waitlist_pos].present?
       i = 0
       course[:sections].each do |this_section|
         Rails.logger.info "this_section schedules = #{this_section[:schedules]}"
@@ -33,7 +34,7 @@ class MyAcademics::Semesters
         schedules = this_section[:schedules]
         instructors = this_section[:instructors]
         is_primary_section = (i == 0)
-        schedule << {
+        entry = {
           :course_number => course_number,
           :ccn => ccn,
           :title => title,
@@ -47,6 +48,11 @@ class MyAcademics::Semesters
           :instructors => instructors,
           :is_primary_section => is_primary_section
         }
+        if waitlist_pos.present?
+          entry[:waitlist_pos] = waitlist_pos
+          entry[:enroll_limit] = course[:enroll_limit]
+        end
+        schedule << entry
         i += 1
       end
 
