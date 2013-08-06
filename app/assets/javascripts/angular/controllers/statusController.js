@@ -9,6 +9,7 @@
     var showStatusError = function() {
       $scope.showStatusError =
         $scope.api.user.profile.student_info &&
+        $scope.api.user.profile.student_info.california_residency &&
         ($scope.api.user.profile.student_info.reg_status.needsAction ||
         $scope.api.user.profile.student_info.california_residency.needsAction ||
         $scope.api.user.profile.student_info.reg_block.needsAction);
