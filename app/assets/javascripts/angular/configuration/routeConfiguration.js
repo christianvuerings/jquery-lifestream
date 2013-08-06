@@ -38,7 +38,8 @@
     }).
     when('/dashboard', {
       templateUrl: 'templates/dashboard.html',
-      controller: 'DashboardController'
+      controller: 'DashboardController',
+      shouldRefresh: true
     }).
     when('/settings', {
       templateUrl: 'templates/settings.html',
