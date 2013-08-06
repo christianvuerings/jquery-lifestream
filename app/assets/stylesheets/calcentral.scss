@@ -281,8 +281,9 @@ button {
     color: $cc-color-medium-grey;
     cursor: pointer;
     margin: 0;
-    padding: 5px 10px 7px;
+    padding: 5px 45% 7px 10px;
     width: 130%;
+    -moz-appearance: window;
     -webkit-appearance: none;
     option {
       width: 100%;
