@@ -142,4 +142,9 @@
   .cc-widget-tasks-list-red {
     border-left-color: $cc-color-red;
   }
+  @media only screen and (max-width: 767px) {
+    .cc-widget-tasks-container {
+      padding: 0 10px 10px;
+    }
+  }
 }
