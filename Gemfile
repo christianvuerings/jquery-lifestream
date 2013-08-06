@@ -64,7 +64,7 @@ gem 'link_header', "~> 0.0.7"
 
 # for simplified relational data management. rails_admin requires devise.
 gem 'rails_admin', "~> 0.4.8"
-gem "devise", "~> 2.2.4"
+gem "devise", "~> 2.2.5"
 
 # TorqueBox app server
 gem "torquebox", "~> 2.3.2"

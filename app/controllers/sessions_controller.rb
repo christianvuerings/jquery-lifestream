@@ -66,6 +66,9 @@ class SessionsController < ApplicationController
   private
 
   def continue_login_success(uid)
+    # Force a new CSRF token to be generated on login.
+    # http://homakov.blogspot.com.es/2013/06/cookie-forcing-protection-made-easy.html
+    session.try(:delete, :_csrf_token)
     if UserApi.is_allowed_to_log_in?(uid)
       session[:user_id] = uid
       redirect_to '/dashboard', :notice => "Signed in!"
