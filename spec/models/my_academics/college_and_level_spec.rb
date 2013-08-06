@@ -12,9 +12,9 @@ describe "MyAcademics::CollegeAndLevel" do
 
     oski_college = feed[:college_and_level]
     oski_college.should_not be_nil
-    oski_college[:college].should == "ENGR"
+    oski_college[:college].should == "College of Engineering"
     oski_college[:standing].should == "Undergraduate"
-    oski_college[:major].should == "Economics, Rhetoric, Business Admin"
+    oski_college[:major].should == "Economics, Rhetoric, Business Administration"
   end
 
 end
