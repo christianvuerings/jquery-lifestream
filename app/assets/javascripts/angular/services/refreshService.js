@@ -19,7 +19,6 @@
      * As soon as this function start and also when it's finished, we should update all the widgets
      */
     var startRefresh = function() {
-      events.refreshed++;
 
       // This success is only going to happen when we get a 2xx back
       // We won't get a 2xx back when the refresh is cached
