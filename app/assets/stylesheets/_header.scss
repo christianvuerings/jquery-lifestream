@@ -140,8 +140,9 @@ body {
 
     .cc-popover-items {
       max-height: 300px;
-      overflow: auto;
+      overflow: scroll;
       width: 100%;
+      -webkit-overflow-scrolling: touch;
     }
 
     .cc-badgepopover-noitems {
