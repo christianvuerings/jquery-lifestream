@@ -19,13 +19,9 @@
       apiService.events.fireApiEvents($rootScope.api);
       apiService.user.handleRouteChange();
       apiService.util.changeControllerName(current.controller);
-    });
 
-    /**
-     * Refresh the services, we only want to do this on initial page load
-     */
-    $rootScope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
-      if (isAuthenticated) {
+      // Refresh the services, we only want to do this on certain pages
+      if (current.$$route.shouldRefresh) {
         apiService.refresh.startRefresh();
       }
     });
