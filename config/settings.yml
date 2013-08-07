@@ -173,3 +173,4 @@ user_whitelist:
 features:
   live_campus_links_data: false
   user_whitelist: false
+  academic_status: false
