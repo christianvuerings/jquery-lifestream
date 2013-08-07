@@ -8,7 +8,6 @@
   calcentral.controller('CampusController', [
     '$http', '$routeParams', '$scope', 'apiService', function($http, $routeParams, $scope, apiService) {
 
-
     /**
      * Add to the subcategories list if it doesn't exist yet
      * @param {String} subcategory The subcategory you want to add
@@ -86,7 +85,7 @@
      * @return {String} The category name
      */
     var getCategoryName = function(categoryId) {
-      var navigation = $scope.campusdata.navigation;
+      var navigation = $scope.navigation;
 
       // We want to explicitly check for undefined here
       // since other values need to result in a 404.
@@ -114,13 +113,13 @@
       }
       $http.get(link_data_url).success(function(campusdata) {
       //$http.get('/json/campuslinks.json').success(function(campusdata) {
-        $scope.campusdata = campusdata;
+        angular.extend($scope, campusdata);
 
         $scope.currentTopCategory = getCategoryName($routeParams.category);
         var title = 'Campus - ' + $scope.currentTopCategory;
         apiService.util.setTitle(title);
 
-        setLinks($scope.campusdata.links);
+        setLinks($scope.links);
       });
     };
 
