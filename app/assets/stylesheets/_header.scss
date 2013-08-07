@@ -38,7 +38,7 @@ body {
 
   .cc-popover-title {
     background: $cc-color-white;
-    @include background(linear-gradient(top, $cc-color-white, $cc-color-popover-title-gradient));
+    @include background(linear-gradient($cc-color-white, $cc-color-popover-title-gradient));
     border-bottom: 1px solid $cc-color-popover-border;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
