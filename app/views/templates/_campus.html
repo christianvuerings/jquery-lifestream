@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/campus.html">
 
-  <div class="cc-page-campus" data-ng-cloak>
+  <div class="cc-page-campus" data-ng-cloak data-cc-spinner-directive>
 
     <div class="large-9 push-3 columns cc-page-campus-content">
 
@@ -27,7 +27,7 @@
 
     <div class="large-3 pull-9 columns cc-page-campus-navigation">
 
-      <div data-ng-repeat="navitem in campusdata.navigation">
+      <div data-ng-repeat="navitem in navigation">
         <h3 data-ng-show="navitem.label">{{navitem.label}}</h3>
         <ul>
           <li data-ng-class="{'active':(currentTopCategory==category.name)}" data-ng-repeat="category in navitem.categories" data-ng-show="topcategories[category.name]">
