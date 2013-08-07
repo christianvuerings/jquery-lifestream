@@ -39,7 +39,7 @@ $cc-color-splash-blue-light: #0073C3;
   }
   .cc-page-splash-signin {
     background: $cc-color-splash-blue-dark;
-    @include background(linear-gradient(top, $cc-color-splash-blue-light, $cc-color-splash-blue-dark));
+    @include background(linear-gradient($cc-color-splash-blue-light, $cc-color-splash-blue-dark));
     box-shadow: none;
     font-size: 13px;
     padding-bottom: 10px;
