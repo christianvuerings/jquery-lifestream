@@ -224,6 +224,7 @@ body {
     &.cc-header-icon-selected, &:hover, &:focus {
       background: $cc-color-header-icon-background;
       border-radius: 5px;
+      text-decoration: none;
       i {
         text-decoration: none;
       }
