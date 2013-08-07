@@ -1,0 +1,32 @@
+/* Custom scrollbars in webkit */
+.cc-scroll {
+  &::-webkit-scrollbar {
+    height: 7px;
+    width: 7px;
+  }
+  &::-webkit-scrollbar-button:start:decrement {
+    display: block;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-button:vertical:increment {
+    background-color: transparent
+  }
+  &::-webkit-scrollbar-track:enabled {
+    background-color: rgba(113,112,107,0.1);
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb:vertical {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 5px;
+    height: 50px;
+  }
+  &::-webkit-scrollbar-thumb:horizontal {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 5px;
+    width: 50px;
+  }
+}
