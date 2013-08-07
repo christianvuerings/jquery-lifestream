@@ -20,14 +20,14 @@
       '/api/my/up_next': 'items',
       '/api/server_info': 'first_visited',
       '/api/smoke_test_routes': 'routes',
-      '/api/tools/styles': 'colors',
+      '/api/tools/styles': 'colors'
     };
 
     $scope.apiTest = {
       data: [],
       enabled: false,
       running: false
-    }
+    };
 
     var hitEndpoint = function(index) {
       var request = $http.get($scope.apiTest.data[index].route);
@@ -66,7 +66,7 @@
       if (parseInt(index, 10)+1 >= $scope.apiTest.data.length) {
         $scope.apiTest.running = false;
       }
-    }
+    };
 
     $scope.runApiTest = function() {
       $scope.apiTest.running = true;
@@ -81,5 +81,5 @@
       }
     });
 
-  }])
+  }]);
 })(window.calcentral);
