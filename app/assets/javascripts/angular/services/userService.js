@@ -60,15 +60,6 @@
     var _handleUserLoaded = function(data) {
       angular.extend(profile, data);
 
-      // TODO remove as soon as the registration status data gets refreshed
-      angular.extend(profile, {
-        student_info: {
-          reg_status: {
-            code: null
-          }
-        }
-      });
-
       events.isLoaded = true;
       // Check whether the current user is authenticated or not
       events.isAuthenticated = profile && profile.is_logged_in;
