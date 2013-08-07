@@ -18,9 +18,17 @@ body {
   float: left;
   height: 40px;
   padding-top: 6px;
+  width: 195px;
   svg {
     margin: 0 10px;
   }
+}
+.cc-header-beta {
+  color: $cc-color-gold;
+  font-size: 12px;
+  margin-top: 6px;
+  opacity: 0.9;
+  text-transform: uppercase;
 }
 
 /* Header icons */
