@@ -4,11 +4,11 @@
 
     <div class="large-9 push-3 columns cc-page-campus-content">
 
-      <h1 data-ng-bind="currentTopCategory" class="hide-for-small"></h1>
+      <h1 data-ng-bind="currentTopCategory"></h1>
 
       <div class="cc-widget" data-ng-show="currentTopCategory">
         <div class="cc-widget-title">
-          <h2>Links for <span data-ng-bind="currentTopCategory"></span></h2>
+          <h2>Links</h2>
         </div>
         <div class="cc-page-campus-content-subcontainer" data-ng-repeat="subcategory in subcategories">
           <h3>{{subcategory}}</h3>
