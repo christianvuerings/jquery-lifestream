@@ -74,45 +74,47 @@
               </div>
 
               <h4>Active Blocks</h4>
-              <table class="cc-table">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Reason</th>
-                    <th>Office</th>
-                    <th>Blocked</th>
-                  </tr>
-                </thead>
-                <tbody data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true">
-                  <tr class="cc-widget-list-hover"
-                     data-cc-accessible-focus-directive
-                     data-ng-click="api.widget.toggleShow($event, regblocks.active_blocks, block, 'Active Blocks')">
-                    <td><i class="icon-exclamation-sign"></i><span data-ng-bind="block.type"></span></td>
-                    <td class="cc-ellipsis" data-ng-bind="block.reason"></td>
-                    <td data-ng-bind="block.office || '&nbsp;'"></td>
-                    <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></td>
-                  </tr>
-                  <tr data-ng-show="block._show">
-                    <td data-ng-bind-html-unsafe="block.message" colspan="4"></td>
-                  </tr>
-                  <tr data-ng-show="block._show">
-                    <td colspan="4">
-                      <button class="cc-button-link cc-academics-what-is-registration-block"
-                              data-ng-click="api.util.preventBubble($event);block._show_regblock_definition=!block._show_regblock_definition">
-                        <i class="icon-question-sign text-info"></i>What is a registration block?
-                      </button>
-                    </td>
-                  </tr>
-                  <tr data-ng-show="block._show_regblock_definition">
-                    <td colspan="4">
-                      <p>
-                        A registration block prevents you from being "officially registered" as a student who is attending U.C. Berkeley. You must have both enrolled in classes and paid your fees to be an "officially registered" student.
-                        <a href="http://studentcentral.berkeley.edu/node/96">Learn more about blocks &raquo;</a>
-                      </p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="cc-table" data-ng-show="regblocks.active_blocks">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Reason</th>
+                      <th>Office</th>
+                      <th>Blocked</th>
+                    </tr>
+                  </thead>
+                  <tbody data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true">
+                    <tr class="cc-widget-list-hover"
+                       data-cc-accessible-focus-directive
+                       data-ng-click="api.widget.toggleShow($event, regblocks.active_blocks, block, 'Active Blocks')">
+                      <td><i class="icon-exclamation-sign"></i><span data-ng-bind="block.type"></span></td>
+                      <td class="cc-ellipsis" data-ng-bind="block.reason"></td>
+                      <td data-ng-bind="block.office || '&nbsp;'"></td>
+                      <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></td>
+                    </tr>
+                    <tr data-ng-show="block._show">
+                      <td data-ng-bind-html-unsafe="block.message" colspan="4"></td>
+                    </tr>
+                    <tr data-ng-show="block._show">
+                      <td colspan="4">
+                        <button class="cc-button-link cc-academics-what-is-registration-block"
+                                data-ng-click="api.util.preventBubble($event);block._show_regblock_definition=!block._show_regblock_definition">
+                          <i class="icon-question-sign text-info"></i>What is a registration block?
+                        </button>
+                      </td>
+                    </tr>
+                    <tr data-ng-show="block._show_regblock_definition">
+                      <td colspan="4">
+                        <p>
+                          A registration block prevents you from being "officially registered" as a student who is attending U.C. Berkeley. You must have both enrolled in classes and paid your fees to be an "officially registered" student.
+                          <a href="http://studentcentral.berkeley.edu/node/96">Learn more about blocks &raquo;</a>
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
               <div data-ng-show="!regblocks.active_blocks.length">
                 <div class="row collapse">
                   <div class="large-6 columns end">You have no active blocks at this time.</div>
@@ -132,46 +134,50 @@
                 </div>
               </div>
 
-              <table class="cc-table cc-academics-block-history" data-ng-show="show_block_history">
+              <div class="cc-table">
+                <table class="cc-academics-block-history" data-ng-show="show_block_history">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Reason</th>
+                      <th>Office</th>
+                      <th>Blocked</th>
+                      <th>Cleared</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="block in regblocks.inactive_blocks | orderBy:'blocked_date.epoch':true">
+                      <td data-ng-bind="block.type || '&nbsp;'"></td>
+                      <td data-ng-bind="block.reason || '&nbsp;'"></td>
+                      <td data-ng-bind="block.office || '&nbsp;'"></td>
+                      <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+                      <td data-ng-bind="block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <h3>University Requirements</h3>
+            <div class="cc-table">
+              <table class="cc-table">
                 <thead>
                   <tr>
-                    <th>Type</th>
-                    <th>Reason</th>
-                    <th>Office</th>
-                    <th>Blocked</th>
-                    <th>Cleared</th>
+                    <th>Requirement</th>
+                    <th>Met?</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr data-ng-repeat="block in regblocks.inactive_blocks | orderBy:'blocked_date.epoch':true">
-                    <td data-ng-bind="block.type || '&nbsp;'"></td>
-                    <td data-ng-bind="block.reason || '&nbsp;'"></td>
-                    <td data-ng-bind="block.office || '&nbsp;'"></td>
-                    <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
-                    <td data-ng-bind="block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+                  <tr data-ng-repeat="requirement in requirements">
+                    <td data-ng-bind="requirement.name"></td>
+                    <td>
+                      <i data-ng-class="{'cc-icon icon-ok-sign':(requirement.status=='met'), 'cc-icon icon-edit':(requirement.status!='met')}"></i>
+                      <span class="cc-visuallyhidden" data-ng-bind-template="{{requirement.name}} has {{requirement.status!='met' ? 'not' : ''}} been met"></span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
-            <h3>University Requirements</h3>
-            <table class="cc-table">
-              <thead>
-                <tr>
-                  <th>Requirement</th>
-                  <th>Met?</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ng-repeat="requirement in requirements">
-                  <td data-ng-bind="requirement.name"></td>
-                  <td>
-                    <i data-ng-class="{'cc-icon icon-ok-sign':(requirement.status=='met'), 'cc-icon icon-edit':(requirement.status!='met')}"></i>
-                    <span class="cc-visuallyhidden" data-ng-bind-template="{{requirement.name}} has {{requirement.status!='met' ? 'not' : ''}} been met"></span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>

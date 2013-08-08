@@ -1,30 +1,37 @@
 .cc-table {
-  border: none;
-  border-spacing: 0;
-  font-size: 12px;
-  margin: 0;
-  width: 100%;
+  overflow-x: scoll;
+  table {
+    border: none;
+    border-spacing: 0;
+    font-size: 12px;
+    margin: 0;
+    width: 100%;
+    thead {
+    background: transparent;
+    }
+    tr {
+      &:nth-of-type(even) {
+        background: transparent;
+      }
+      td, th {
+        color: $body-font-color;
+        padding: 2px 2px 2px 0;
+        vertical-align: top;
+      }
+      th {
+        color: $cc-color-light-medium-grey;
+        font-weight: bold;
+      }
+    }
+  }
   p {
     margin: 0;
     padding: 5px 10px;
   }
-  thead {
-    background: transparent;
-  }
-  tr {
-    &:nth-of-type(even) {
-      background: transparent;
-    }
-    td, th {
-      color: $body-font-color;
-      padding: 2px 2px 2px 0;
-    }
-    th {
-      color: $cc-color-light-medium-grey;
-      font-weight: bold;
-    }
-  }
   ul {
     margin-left: 35px;
+  }
+  @media only screen and (max-width: 767px) {
+    overflow: auto;
   }
 }
