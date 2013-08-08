@@ -1,5 +1,6 @@
 class CanvasReportProxy < CanvasProxy
   require 'csv'
+  include ClassLogger
 
   def get_sis_export_csv(object_type, term_id = nil)
     get_account_csv('sis_export', object_type, term_id)
@@ -18,17 +19,7 @@ class CanvasReportProxy < CanvasProxy
     )
     report_status = JSON.parse(response.body)
     report_id = report_status['id']
-
-    tries = 0
-    while ['created', 'running'].include?(report_status['status']) && (tries < 20) do
-      sleep(20)
-      tries += 1
-      response = request_uncached(
-          "accounts/#{settings.account_id}/reports/#{report_type}_csv/#{report_id}",
-          "_check_#{report_type}_report_#{object_type}"
-      )
-      report_status = JSON.parse(response.body)
-    end
+    report_status = check_report_status(report_type, object_type, report_id)
 
     if report_status['status'] == 'complete'
       report_url = report_status['file_url']
@@ -62,9 +53,40 @@ class CanvasReportProxy < CanvasProxy
       end
       csv
     else
-      Rails.logger.warn("Unexpected status when downloading report ID #{report_id} : #{response.body}")
+      logger.warn("Unexpected status when downloading report ID #{report_id} : #{response.body}")
       nil
     end
+  end
+
+  def check_report_status(report_type, object_type, report_id)
+    url = "accounts/#{settings.account_id}/reports/#{report_type}_csv/#{report_id}"
+    status = nil
+    sleep 5
+    tries = 40
+    retriable(on: CanvasReportProxy::ReportNotReadyException, tries: tries, interval: 20) do
+      response = request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
+          method: :get
+      })
+      unless response.present? && response.body.present?
+        logger.error "Report ID #{report_id} status missing or errored; will retry later"
+        raise CanvasReportProxy::ReportNotReadyException
+      end
+      json = JSON.parse response.body
+      if ['created', 'running'].include?(json["status"])
+        logger.info "Report ID #{report_id} exists but is not yet ready; will retry later"
+        raise CanvasReportProxy::ReportNotReadyException
+      else
+        status = json
+      end
+    end
+    if status.nil?
+      logger.error "Report ID #{report_id} not available after #{tries} tries, giving up"
+    end
+    logger.debug "Report ID #{report_id} status = #{status}"
+    status
+  end
+
+  class ReportNotReadyException < Exception
   end
 
 end
