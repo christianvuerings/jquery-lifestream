@@ -7,7 +7,7 @@
     margin: 0;
     width: 100%;
     thead {
-    background: transparent;
+      background: transparent;
     }
     tr {
       &:nth-of-type(even) {
@@ -22,6 +22,10 @@
         color: $cc-color-light-medium-grey;
         font-weight: bold;
       }
+      .cc-table-subheader {
+        color: $body-font-color;
+        font-weight: normal;
+      }
     }
   }
   p {
@@ -34,4 +38,9 @@
   @media only screen and (max-width: 767px) {
     overflow: auto;
   }
+}
+.cc-table-top-border {
+  border-top: 1px solid $cc-color-popover-border;
+  margin-top: 5px;
+  padding-top: 5px;
 }

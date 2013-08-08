@@ -16,35 +16,63 @@
           </div>
 
           <div class="cc-widget-padding">
-            <h3>College and Level</h3>
+            <h3>Standing, Major and Level</h3>
 
-            <div class="row collapse">
-              <div class="large-2 small-4 columns">College</div>
-              <div
-                class="large-10 small-8 columns cc-academics-empasize"
-                data-ng-bind="college_and_level.college">
-              </div>
+            <div class="cc-table cc-table-top-border">
+              <table>
+                <thead>
+                  <tr>
+                    <th width="20%">General</th>
+                    <th class="cc-table-subheader">Standing</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td><strong data-ng-bind="college_and_level.standing"></strong></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="row collapse">
-              <div class="large-2 small-4 columns">Major</div>
-              <div
-                class="large-10 small-8 columns cc-academics-empasize"
-                data-ng-bind="college_and_level.major">
-              </div>
+
+            <div class="cc-table cc-table-top-border">
+              <table>
+                <thead>
+                  <tr>
+                    <th width="20%">College and Major</th>
+                    <th class="cc-table-subheader">College</th>
+                    <th class="cc-table-subheader">Major</th>
+                  </tr>
+                </thead>
+                <tbody data-ng-repeat="college in college_and_level.colleges">
+                  <tr>
+                    <td></td>
+                    <td><strong data-ng-bind="college.college"></strong></td>
+                    <td><strong data-ng-bind="college.major"></strong></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="row collapse">
-              <div class="large-2 small-4 columns">Standing</div>
-              <div
-                class="large-10 small-8 columns cc-academics-empasize"
-                data-ng-bind="college_and_level.standing">
-              </div>
-            </div>
-            <div class="row collapse">
-              <div class="large-2 small-4 columns">Level</div>
-              <div
-                class="large-10 small-8 columns cc-academics-empasize"
-                data-ng-bind="college_and_level.level">
-              </div>
+
+            <div class="cc-table cc-table-top-border">
+              <table>
+                <thead>
+                  <tr>
+                    <th width="20%">Level</th>
+                    <th class="cc-table-subheader">Including AP</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td><strong data-ng-bind="college_and_level.level"></strong></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <div class="cc-academics-status-and-blocks">
@@ -161,7 +189,7 @@
 
             <h3>University Requirements</h3>
             <div class="cc-table">
-              <table class="cc-table">
+              <table>
                 <thead>
                   <tr>
                     <th>Requirement</th>
