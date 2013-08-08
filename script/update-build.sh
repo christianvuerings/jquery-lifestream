@@ -5,6 +5,7 @@ cd $( dirname "${BASH_SOURCE[0]}" )/..
 TARGET_REMOTE=${REMOTE:-origin}
 TARGET_BRANCH=${BRANCH:-master}
 WAR_URL=${WAR_URL:="https://bamboo.media.berkeley.edu/bamboo/browse/MYB-MVPWAR/latest/artifact/JOB1/warfile/calcentral.knob"}
+$MAX_ASSET_AGE_IN_DAYS=${$MAX_ASSET_AGE_IN_DAYS:="45"}
 
 LOG=`date +"$PWD/log/update-build_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
@@ -53,3 +54,6 @@ bundle exec torquebox deploy calcentral.knob --env=production | $LOGIT
 
 echo "Copying assets into /var/www/html/calcentral" | $LOGIT
 cp -Rvf public/assets /var/www/html/calcentral/ | $LOGIT
+
+echo "Deleting old assets from /var/www/html/calcentral" | $LOGIT
+find /var/www/html/calcentral -mtime +$MAX_ASSET_AGE_IN_DAYS
