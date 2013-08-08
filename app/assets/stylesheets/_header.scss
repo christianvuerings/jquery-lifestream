@@ -155,7 +155,7 @@ body {
 
     .cc-popover-items {
       max-height: 300px;
-      overflow: scroll;
+      overflow-y: scroll;
       width: 100%;
       -webkit-overflow-scrolling: touch;
     }
@@ -201,6 +201,9 @@ body {
       .cc-badgepopover-item-details-summary {
         color: $cc-color-popover-text;
         font-size: 11px;
+        i {
+          margin-top: 2px;
+        }
       }
       .cc-badgepopover-item-details-all-day {
         font-size: 10px;
