@@ -3,11 +3,11 @@ require "spec_helper"
 describe CanvasRefreshFromCampus do
 
   before do
-    @fake_sections_report_proxy = CanvasAccountSectionsReportProxy.new({fake: true})
+    @fake_sections_report_proxy = CanvasSectionsReportProxy.new({fake: true})
   end
 
   it "should extract SIS-integrated sections from CSV" do
-    CanvasAccountSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
+    CanvasSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
     worker = CanvasRefreshFromCampus.new
     test_term_id = CanvasProxy.current_sis_term_ids[0]
     canvas_sections = worker.get_all_sis_sections_for_term(test_term_id)
@@ -20,23 +20,22 @@ describe CanvasRefreshFromCampus do
   end
 
   it "should accumulate section enrollments and users for known sections", :if => SakaiData.test_data? do
-    CanvasAccountSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
+    CanvasSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
     worker = CanvasRefreshFromCampus.new
     test_term_id = CanvasProxy.current_sis_term_ids[0]
     canvas_sections = worker.get_all_sis_sections_for_term(test_term_id)
     user_ids = Set.new
     enrollments = []
+    users = []
     canvas_sections.each do |cs|
-      worker.accumulate_section_enrollments(cs, enrollments, user_ids)
-      worker.accumulate_section_instructors(cs, enrollments, user_ids)
+      worker.accumulate_section_enrollments(cs, enrollments, users)
+      worker.accumulate_section_instructors(cs, enrollments, users)
     end
     enrollments.length.should == 5
     (enrollments.select {|r| r['role'] == 'student'}).length.should == 2
     (enrollments.select {|r| r['role'] == 'teacher'}).length.should == 3
-    user_ids.length.should == 3
-    user_data = []
-    worker.accumulate_user_data(user_ids, user_data)
-    user_data.length.should == user_ids.length
+    users.uniq!
+    users.length.should == 3
   end
 
   it "should be able to get a whole lot of user records" do
@@ -56,11 +55,11 @@ describe CanvasRefreshFromCampus do
   end
 
   it "should be able to add missing course SIS IDs" do
-    CanvasAccountSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
+    CanvasSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
     fake_import_proxy = CanvasSisImportProxy.new({fake: true})
     CanvasSisImportProxy.stub(:new).and_return(fake_import_proxy)
     fake_import_proxy.should_receive(:generate_course_sis_id).with('1093165').and_call_original
-    worker = CanvasRefreshFromCampus.new
+    worker = CanvasRepairSections.new
     worker.repair_sis_ids_for_term(CanvasProxy.current_sis_term_ids[0])
   end
 
@@ -71,11 +70,15 @@ describe CanvasRefreshFromCampus do
         [
             {
                 'ldap_uid' => enrolled,
-                'enroll_status' => 'E'
+                'enroll_status' => 'E',
+                'student_id' => enrolled,
+                'affiliations' => 'STUDENT-TYPE-REGISTERED'
             },
             {
                 'ldap_uid' => waitlisted,
-                'enroll_status' => 'W'
+                'enroll_status' => 'W',
+                'student_id' => waitlisted,
+                'affiliations' => 'STUDENT-TYPE-REGISTERED'
             }
         ]
     )
@@ -84,9 +87,9 @@ describe CanvasRefreshFromCampus do
     worker = CanvasRefreshFromCampus.new
     worker.accumulate_section_enrollments({section_id: "SEC:2013-C-333"}, enrollments, users)
     enrollments.length.should == 2
-    users.length.should == 2
-    enrollments.index {|enr| enr['user_id'] == enrolled && enr['role'] == 'student'}.should_not be_nil
-    enrollments.index {|enr| enr['user_id'] == waitlisted && enr['role'] == 'Waitlist Student'}.should_not be_nil
+    users.uniq.length.should == 2
+    enrollments.index {|enr| enr['user_id'] == enrolled.to_s && enr['role'] == 'student'}.should_not be_nil
+    enrollments.index {|enr| enr['user_id'] == waitlisted.to_s && enr['role'] == 'Waitlist Student'}.should_not be_nil
   end
 
 end

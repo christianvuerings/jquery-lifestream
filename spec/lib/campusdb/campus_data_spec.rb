@@ -171,4 +171,30 @@ describe CampusData do
     end
   end
 
+  it "should use affiliations to decide whether the user is a student" do
+    CampusData.is_student?(
+        {
+            'student_id' => 1,
+            'affiliations' => 'AFFILIATE-TYPE-GENERAL,EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED'
+        }
+    ).should be_false
+    CampusData.is_student?(
+        {
+            'student_id' => 2,
+            'affiliations' => 'STUDENT-TYPE-REGISTERED,EMPLOYEE-TYPE-STAFF'
+        }
+    ).should be_true
+    CampusData.is_student?(
+        {
+            'affiliations' => 'STUDENT-TYPE-REGISTERED,EMPLOYEE-TYPE-STAFF'
+        }
+    ).should be_false
+    CampusData.is_student?(
+        {
+            'student_id' => 3,
+            'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-TYPE-NOT REGISTERED'
+        }
+    ).should be_true
+  end
+
 end
