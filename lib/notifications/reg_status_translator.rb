@@ -16,7 +16,7 @@ class RegStatusTranslator
 
     return false unless accept?(event) && timestamp && uid && reg_status
 
-    explanation = notification_status_explanation reg_status["reg_status_cd"]
+    explanation = status_explanation reg_status["reg_status_cd"]
     status = status reg_status["reg_status_cd"]
 
     title = "Registration status updated to: #{status}"
@@ -88,7 +88,7 @@ class RegStatusTranslator
     ["C", "L", "N", "R", "S", "V"].include?(reg_status.upcase)
   end
 
-  def notification_status_explanation(reg_status)
+  def status_explanation(reg_status)
 
     if reg_status == nil
       return nil
@@ -130,16 +130,5 @@ class RegStatusTranslator
 
   end
 
-  def status_explanation(reg_status)
-    if reg_status == nil
-      return nil
-    end
-
-    if is_registered(reg_status)
-      ''
-    else
-      '<a href="http://registrar.berkeley.edu/FAQS.html">About registration status</a>'
-    end
-  end
 end
 

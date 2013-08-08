@@ -8,7 +8,7 @@ class RegBlockFlagTranslator
     }
 
     if response[:needsAction]
-      response[:explanation] = 'See <a class="cc-outbound-link" data-ng-href="https://bearfacts.berkeley.edu/bearfacts/">BearFacts</a> for more information.'
+      response[:explanation] = 'See <a href="/academics">My Academics</a> for more information.'
     else
       response[:summary] = 'None'
     end
