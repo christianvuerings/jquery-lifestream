@@ -20,12 +20,12 @@ describe "MyAcademics::CollegeAndLevel" do
     oski_college[:standing].should == "Undergraduate"
   end
 
-  it "should get Tammi's multiple college enrollments" do
-    tammi_proxy = BearfactsProfileProxy.new({:user_id => "300939", :fake => true})
+  it "should get test-300940's multiple college enrollments" do
+    tammi_proxy = BearfactsProfileProxy.new({:user_id => "300940", :fake => true})
     BearfactsProfileProxy.stub(:new).and_return(tammi_proxy)
 
     feed = {}
-    MyAcademics::CollegeAndLevel.new("300939").merge(feed)
+    MyAcademics::CollegeAndLevel.new("300940").merge(feed)
     feed.empty?.should be_false
 
     colleges = feed[:college_and_level][:colleges]
