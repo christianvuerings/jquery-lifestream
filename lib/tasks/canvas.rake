@@ -19,7 +19,7 @@ namespace :canvas do
     if (term_id.blank?)
       Rails.logger.error("Must specify TERM_ID=YourSisTermId")
     else
-      canvas_worker = CanvasRefreshFromCampus.new
+      canvas_worker = CanvasRepairSections.new
       canvas_worker.repair_sis_ids_for_term(term_id)
     end
   end

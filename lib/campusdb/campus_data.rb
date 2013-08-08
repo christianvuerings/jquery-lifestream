@@ -70,7 +70,7 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
       from bspace_person_info_vw pi
       where pi.ldap_uid in (#{up_to_1000_ldap_uids.join(', ')})
       SQL
@@ -105,7 +105,8 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select roster.student_ldap_uid ldap_uid, roster.enroll_status, person.student_id, person.first_name, person.last_name
+      select roster.student_ldap_uid ldap_uid, roster.enroll_status,
+        person.first_name, person.last_name, person.email_address, person.student_id, person.affiliations
       from bspace_class_roster_vw roster, bspace_person_info_vw person
       where roster.term_yr = #{connection.quote(term_yr)}
         and roster.term_cd = #{connection.quote(term_cd)}
@@ -229,7 +230,8 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-        select p.person_name, p.ldap_uid, bci.instructor_func
+        select p.person_name, p.ldap_uid, bci.instructor_func,
+          p.first_name, p.last_name, p.email_address, p.student_id, p.affiliations
         from bspace_course_instructor_vw bci
         join bspace_course_info_vw c on c.term_yr = bci.term_yr and c.term_cd = bci.term_cd and c.course_cntl_num = bci.course_cntl_num
         join bspace_person_info_vw p on p.ldap_uid = bci.instructor_ldap_uid
@@ -281,6 +283,11 @@ class CampusData < OracleDatabase
       Rails.logger.warn("Oracle server is down: #{exception}")
     end
     is_alive
+  end
+
+  def self.is_student?(person_attributes)
+    !person_attributes['student_id'].blank? &&
+        /STUDENT-TYPE-/.match(person_attributes['affiliations'])
   end
 
 end

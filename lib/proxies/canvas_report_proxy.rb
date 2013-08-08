@@ -1,31 +1,31 @@
-class CanvasAccountSectionsReportProxy < CanvasProxy
+class CanvasReportProxy < CanvasProxy
   require 'csv'
 
-  def get_csv(term_id)
-    # The "provisioning_csv" report includes all sections, whether they have an SIS ID or not,
-    # and so rows for the Canvas-only sections need to be skipped.
-    #
-    # Given good data, the most efficient sections report is "sis_export_csv", since that returns
-    # only the sections which can be refreshed via SIS import.
-    #
-    # We get the provisioning report instead so we can check for problematic data
-    # (particularly SIS-ID-ed sections belonging to a course that's missing its SIS ID),
-    # and possibly repair it before importing campus data.
+  def get_sis_export_csv(object_type, term_id = nil)
+    get_account_csv('sis_export', object_type, term_id)
+  end
+
+  def get_provisioning_csv(object_type, term_id = nil)
+    get_account_csv('provisioning', object_type, term_id)
+  end
+
+  def get_account_csv(report_type, object_type, term_id)
+    term_param = term_id.blank? ? '' : "&parameters[enrollment_term]=sis_term_id:#{term_id}"
     response = request_uncached(
-        "accounts/#{settings.account_id}/reports/provisioning_csv?parameters[enrollment_term]=sis_term_id:#{term_id}&parameters[sections]=1",
-        "_start_provisioning_report_sections",
+        "accounts/#{settings.account_id}/reports/#{report_type}_csv?parameters[#{object_type}]=1#{term_param}",
+        "_start_#{report_type}_report_#{object_type}",
         { method: :post }
     )
     report_status = JSON.parse(response.body)
     report_id = report_status['id']
 
     tries = 0
-    while ['created', 'running'].include?(report_status['status']) && (tries < 5) do
-      sleep(2)
+    while ['created', 'running'].include?(report_status['status']) && (tries < 20) do
+      sleep(20)
       tries += 1
       response = request_uncached(
-          "accounts/#{settings.account_id}/reports/provisioning_csv/#{report_id}",
-          "_check_provisioning_report"
+          "accounts/#{settings.account_id}/reports/#{report_type}_csv/#{report_id}",
+          "_check_#{report_type}_report_#{object_type}"
       )
       report_status = JSON.parse(response.body)
     end
@@ -37,14 +37,14 @@ class CanvasAccountSectionsReportProxy < CanvasProxy
       file_id = /.+\/files\/(\d+)\/download/.match(report_url)[1]
       response = request_uncached(
           "files/#{file_id}",
-          "_provisioning_report_file"
+          "_#{report_type}_report_file_#{object_type}"
       )
       file_info = JSON.parse(response.body)
       # Canvas's Files API builds an authorization token into the URL, which allows for redirection
       # to the file storage host but which conflicts with the authorization header we use for other API calls
       # and jams our VCR.
       if @fake
-        csv = CSV.read('fixtures/pretty_vcr_recordings/Canvas_provisioning_report_csv.csv', {headers: true})
+        csv = CSV.read("fixtures/pretty_vcr_recordings/Canvas_#{report_type}_report_#{object_type}_csv.csv", {headers: true})
       else
         conn = Faraday.new(file_info["url"]) do |c|
           c.use FaradayMiddleware::FollowRedirects
@@ -52,7 +52,7 @@ class CanvasAccountSectionsReportProxy < CanvasProxy
         end
         csv_response = request_uncached(
             "",
-            "_provisioning_report_csv",
+            "_#{report_type}_report_#{object_type}_csv",
             {
                 uri: file_info["url"],
                 non_oauth_connection: conn
@@ -66,4 +66,5 @@ class CanvasAccountSectionsReportProxy < CanvasProxy
       nil
     end
   end
+
 end

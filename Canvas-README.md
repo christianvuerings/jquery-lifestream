@@ -44,7 +44,7 @@ Sets the app to show up as a Course site tool, visible to teachers and admins, a
     http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
-    <blti:title>Rosters</blti:title>
+    <blti:title>Roster Photos</blti:title>
     <blti:description>Browse and search official roster photos</blti:description>
     <blti:icon></blti:icon>
     <blti:launch_url>http://localhost:3000/canvas/embedded/rosters</blti:launch_url>

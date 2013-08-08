@@ -1,6 +1,6 @@
 require 'csv'
 
-class CanvasRefreshFromCampus
+class CanvasRefreshFromCampus < CanvasMaintenance
 
   include ClassLogger
 
@@ -24,23 +24,31 @@ class CanvasRefreshFromCampus
   end
 
   def make_csv_files
-    user_ids = Set.new
+    raw_users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-with-duplicates.csv"
+    users_csv = CSV.open(
+        raw_users_csv_filename, 'wb',
+        {
+            headers: 'user_id,login_id,first_name,last_name,email,status',
+            write_headers: true
+        }
+    )
     term_ids = CanvasProxy.current_sis_term_ids
     term_enrollment_csv_files = {}
     term_ids.each do |term_id|
       # Prevent collisions between the SIS_ID code and the filesystem.
       sanitized_term_id = term_id.gsub(/[^a-z0-9\-.]+/i, '_')
       csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{sanitized_term_id}-enrollments.csv"
-      enrollments_csv = CSV.open(csv_filename, 'wb',
-                                 {
-                                     headers: 'course_id,user_id,role,section_id,status,associated_user_id',
-                                     write_headers: true
-                                 }
+      enrollments_csv = CSV.open(
+          csv_filename, 'wb',
+          {
+              headers: 'course_id,user_id,role,section_id,status,associated_user_id',
+              write_headers: true
+          }
       )
       sections = get_all_sis_sections_for_term(term_id)
       sections.each do |section|
-        accumulate_section_enrollments(section, enrollments_csv, user_ids)
-        accumulate_section_instructors(section, enrollments_csv, user_ids)
+        accumulate_section_enrollments(section, enrollments_csv, users_csv)
+        accumulate_section_instructors(section, enrollments_csv, users_csv)
       end
       enrollments_csv.close
       if File.zero?(csv_filename)
@@ -51,20 +59,14 @@ class CanvasRefreshFromCampus
         term_enrollment_csv_files[term_id] = csv_filename
       end
     end
-    if user_ids.empty?
+    users_csv.close
+    users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users.csv"
+    users_count = csv_without_duplications(raw_users_csv_filename, users_csv_filename)
+    if users_count == 0
       logger.warn("No Canvas user account records for enrollments - SKIPPING REFRESH")
       nil
     else
-      logger.warn("Will refresh #{user_ids.length} Canvas user records")
-      users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users.csv"
-      users_csv = CSV.open(users_csv_filename, 'wb',
-                           {
-                               headers: 'user_id,login_id,first_name,last_name,email,status',
-                               write_headers: true
-                           }
-      )
-      accumulate_user_data(user_ids, users_csv)
-      users_csv.close
+      logger.warn("Will refresh #{users_count} Canvas user records")
       { users: users_csv_filename, enrollments: term_enrollment_csv_files }
     end
   end
@@ -114,7 +116,7 @@ class CanvasRefreshFromCampus
       results = CampusData.get_basic_people_attributes(working_slice)
       results.each do |row|
         users_csv << {
-            'user_id' => row['ldap_uid'],
+            'user_id' => derive_sis_user_id(row),
             'login_id' => row['ldap_uid'],
             'first_name' => row['first_name'],
             'last_name' => row['last_name'],
@@ -125,7 +127,7 @@ class CanvasRefreshFromCampus
     end
   end
 
-  def accumulate_section_enrollments(section, total_enrollments, total_user_ids)
+  def accumulate_section_enrollments(section, total_enrollments, total_users)
     section_id = section[:section_id]
     if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(section_id))
       section_enrollments = CampusData.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
@@ -133,19 +135,19 @@ class CanvasRefreshFromCampus
         uid = enr['ldap_uid']
         total_enrollments << {
             'course_id' => section[:course_id],
-            'user_id' => uid,
+            'user_id' => derive_sis_user_id(enr),
             'role' => ENROLL_STATUS_TO_CANVAS_ROLE[enr['enroll_status']],
             'section_id' => section_id,
             'status' => 'active'
         }
-        total_user_ids << uid
+        total_users << canvas_user_from_campus_row(enr)
       end
     else
       logger.warn("Badly formatted sis_section_id for Canvas section #{section}")
     end
   end
 
-  def accumulate_section_instructors(section, total_enrollments, total_user_ids)
+  def accumulate_section_instructors(section, total_enrollments, total_users)
     section_id = section[:section_id]
     if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(section_id))
       section_instructors = CampusData.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
@@ -153,12 +155,12 @@ class CanvasRefreshFromCampus
         uid = ins['ldap_uid']
         total_enrollments << {
             'course_id' => section[:course_id],
-            'user_id' => uid,
+            'user_id' => derive_sis_user_id(ins),
             'role' => 'teacher',
             'section_id' => section_id,
             'status' => 'active'
         }
-        total_user_ids << uid
+        total_users << canvas_user_from_campus_row(ins)
       end
     else
       logger.warn("Badly formatted sis_section_id for Canvas section #{section}")
@@ -167,7 +169,7 @@ class CanvasRefreshFromCampus
 
   def get_all_sis_sections_for_term(term_id)
     sections = []
-    report_proxy = CanvasAccountSectionsReportProxy.new
+    report_proxy = CanvasSectionsReportProxy.new
     csv = report_proxy.get_csv(term_id)
     if (csv)
       update_proxy = CanvasSisImportProxy.new
@@ -187,28 +189,6 @@ class CanvasRefreshFromCampus
       end
     end
     sections
-  end
-
-  def repair_sis_ids_for_term(term_id)
-    report_proxy = CanvasAccountSectionsReportProxy.new
-    csv = report_proxy.get_csv(term_id)
-    if (csv)
-      update_proxy = CanvasSisImportProxy.new
-      csv.each do |row|
-        if (sis_section_id = row['section_id'])
-          sis_course_id = row['course_id']
-          if (sis_course_id.blank?)
-            logger.warn("Canvas section has SIS ID but course does not: #{row}")
-            response = update_proxy.generate_course_sis_id(row['canvas_course_id'])
-            if response
-              course_data = JSON.parse(response.body)
-              sis_course_id = course_data['sis_course_id']
-              logger.warn("Added SIS ID to Canvas course: #{course_data}")
-            end
-          end
-        end
-      end
-    end
   end
 
 end
