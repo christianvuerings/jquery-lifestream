@@ -16,22 +16,26 @@
           </div>
 
           <div class="cc-widget-padding">
-            <h3>College and Level</h3>
+            <h3>Standing, Major and Level</h3>
 
-            <div class="row collapse">
-              <div class="large-2 small-4 columns">College</div>
-              <div
-                class="large-10 small-8 columns cc-academics-empasize"
-                data-ng-bind="college_and_level.college">
-              </div>
-            </div>
-            <div class="row collapse">
-              <div class="large-2 small-4 columns">Major</div>
-              <div
-                class="large-10 small-8 columns cc-academics-empasize"
-                data-ng-bind="college_and_level.major">
-              </div>
-            </div>
+            <table class="cc-table">
+              <thead>
+              <tr>
+                <th>College and Major</th>
+                <th>College</th>
+                <th>Major</th>
+              </tr>
+              </thead>
+              <tbody data-ng-repeat="college in college_and_level.colleges">
+              <tr class="cc-widget-list-hover"
+                  data-cc-accessible-focus-directive>
+                <td></td>
+                <td data-ng-bind="college.college"></td>
+                <td data-ng-bind="college.major"></td>
+              </tr>
+              </tbody>
+            </table>
+
             <div class="row collapse">
               <div class="large-2 small-4 columns">Standing</div>
               <div

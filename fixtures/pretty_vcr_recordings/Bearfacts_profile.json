@@ -96,6 +96,50 @@
         "http_version": null
       },
       "recorded_at": "Tue, 28 May 2013 22:10:43 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://localhost:3001/bearfacts-apis/student/22300939",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "date": [
+            "Thu, 08 Aug 2013 16:37:20 GMT"
+          ],
+          "content-type": [
+            "application/xml"
+          ],
+          "content-length": [
+            "3379"
+          ],
+          "connection": [
+            "close"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<studentProfile asOfDate=\"August 08, 2013 12:00 AM\" termName=\"Fall\" termYear=\"2013\" xmlns=\"urn:berkeley.edu/babl\">\n  <showRegistrationAlertMsg>false</showRegistrationAlertMsg>\n  <regBlockStatusCode>0</regBlockStatusCode>\n  <studentType>STUDENT</studentType>\n  <ugGradFlag>U</ugGradFlag>\n  <noProfileDataFlag>false</noProfileDataFlag>\n  <studentGeneralProfile>\n    <corpEducLevel>SENIOR   </corpEducLevel>\n    <nonAPLevel>SENIOR   </nonAPLevel>\n    <studentName>\n      <firstName>WWOPQUQWWW</firstName>\n      <middleName/>\n\n      <middleInitial/>\n\n      <lastName>EBBEITSTBBB</lastName>\n    </studentName>\n    <birthDate>05/18/1969</birthDate>\n    <sex>F</sex>\n    <collegePrimary>CONCURNT</collegePrimary>\n    <collegeSecond>NAT RES </collegeSecond>\n    <collegeThird>ENV DSGN</collegeThird>\n    <majorPrimary>DOUBLE                                  </majorPrimary>\n    <majorSecond>CONSERV&amp;RSRC STUDIES                    </majorSecond>\n    <majorThird>LANDSCAPE ARCH                          </majorThird>\n    <anticipGradDate>30-MAY-14</anticipGradDate>\n    <isActiveAthlete>false</isActiveAthlete>\n    <isInternational>false</isInternational>\n    <isConfidential>false</isConfidential>\n  </studentGeneralProfile>\n  <studentTermProfile>\n    <adminCancel>false</adminCancel>\n    <registration>NOT REGISTERED</registration>\n    <unitsEnrolled>12.0</unitsEnrolled>\n    <confirmedSchedule>PERM. ADDRESS</confirmedSchedule>\n    <academicStatus>GOOD STANDING</academicStatus>\n    <californiaResidencyStatus>CALIFORNIA RESIDENT                 </californiaResidencyStatus>\n    <regSpecialProgram>NONE                     </regSpecialProgram>\n    <newStudent>false</newStudent>\n  </studentTermProfile>\n  <underGradReqProfile>\n    <subjectA>REQT SATISFIED</subjectA>\n    <americanHistory>REQT SATISFIED</americanHistory>\n    <americanInstitutions>REQT SATISFIED</americanInstitutions>\n    <americanCultures>REQT SATISFIED</americanCultures>\n  </underGradReqProfile>\n  <studentContacts>\n    <studentContact addressType=\"LOCAL\" badAddressFlag=\"false\">\n      <address disclosure=\"false\">\n        <streetOne>5555 QPE TPW E  YQU           </streetOne>\n        <city>BERKELEY                 </city>\n        <state>CA</state>\n        <postalCode>94703</postalCode>\n        <postalCodeTwo/>\n\n      </address>\n      <phone disclosure=\"false\">\n        <telAreaCode>800</telAreaCode>\n        <telExchange>555</telExchange>\n        <telNumber>9588</telNumber>\n      </phone>\n      <lastUpdateDate>2010-12-28 00:00:00.0</lastUpdateDate>\n      <lastUpdateUserId>UGAP100 </lastUpdateUserId>\n    </studentContact>\n    <studentContact addressType=\"BILLING\" badAddressFlag=\"false\">\n      <address disclosure=\"false\"/>\n\n      <phone disclosure=\"false\"/>\n\n    </studentContact>\n    <studentContact addressType=\"PERMANENT\" badAddressFlag=\"false\">\n      <address disclosure=\"false\">\n        <streetOne>5555 QPE TPW E  YQU           </streetOne>\n        <city>BERKELEY                 </city>\n        <state>CA</state>\n        <postalCode>94703</postalCode>\n        <postalCodeTwo/>\n\n      </address>\n      <phone disclosure=\"false\">\n        <telAreaCode>800</telAreaCode>\n        <telExchange>555</telExchange>\n        <telNumber>5788</telNumber>\n      </phone>\n      <lastUpdateDate>2010-12-28 00:00:00.0</lastUpdateDate>\n      <lastUpdateUserId>UGAP100 </lastUpdateUserId>\n    </studentContact>\n    <emailAddress>not_a_real_name@domain.edu                                              </emailAddress>\n    <emailDisclosure>false</emailDisclosure>\n    <emailLastUpdateDate>2011-05-02 00:00:00.0</emailLastUpdateDate>\n    <emailLastUpdateUserId>STUDENT </emailLastUpdateUserId>\n    <badEmailAddressFlag>false</badEmailAddressFlag>\n    <addressAvailableFlag>true</addressAvailableFlag>\n  </studentContacts>\n</studentProfile>\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 08 Aug 2013 16:37:20 GMT"
     }
   ],
   "recorded_with": "VCR 2.4.0"
