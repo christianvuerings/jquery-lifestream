@@ -56,4 +56,5 @@ echo "Copying assets into /var/www/html/calcentral" | $LOGIT
 cp -Rvf public/assets /var/www/html/calcentral/ | $LOGIT
 
 echo "Deleting old assets from /var/www/html/calcentral" | $LOGIT
-find /var/www/html/calcentral -delete -mtime +$MAX_ASSET_AGE_IN_DAYS
+find /var/www/html/calcentral -delete -mtime +$MAX_ASSET_AGE_IN_DAYS | $LOGIT
+
