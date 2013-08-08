@@ -14,7 +14,7 @@ When on a Torquebox-enabled shared servers, be sure to `cd deploy` before runnin
 * `RAILS_ENV=production bundle exec rake canvas:make_csv_files`
 
     A more conservative version of the above, which generates the CSV files in "tmp/canvas" and lets you check them before uploading them to Canvas.
-* `RAILS_ENV=production bundle exec rake canvas:repair_sis_ids TERM_ID='TERM:2013-C'`
+* `RAILS_ENV=production bundle exec rake canvas:repair_course_sis_ids TERM_ID='TERM:2013-C'`
 
     Our current integration scheme links a Canvas Course Section's SIS ID to the ID of an official section in campus systems. E.g., a Canvas Section whose sis_id was `SEC:2013-C-7309` would draw enrollments and instructors from CCN 7309 Summer 2013. For imports to work, the section's Canvas Course must have _some_ SIS ID, but what it is doesn't matter (for now). This task is an administrative convenience so that we don't manually have to come up with Course SIS IDs.
     1. Request a Canvas report on the sections of the specified term.

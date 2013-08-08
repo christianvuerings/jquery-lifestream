@@ -13,8 +13,14 @@ namespace :canvas do
     Rails.logger.info("Generated CSV files = #{csv_files.inspect}")
   end
 
+  desc 'Reformat Canvas user SIS IDs with the currently configured scheme'
+  task :reformat_sis_user_ids => :environment do
+    canvas_worker = CanvasReformatSisUserIds.new
+    canvas_worker.convert_all_sis_user_ids
+  end
+
   desc 'Repair Canvas Course SIS IDs (TERM_ID=x)'
-  task :repair_sis_ids => :environment do
+  task :repair_course_sis_ids => :environment do
     term_id = ENV["TERM_ID"]
     if (term_id.blank?)
       Rails.logger.error("Must specify TERM_ID=YourSisTermId")
