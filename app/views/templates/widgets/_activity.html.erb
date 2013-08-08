@@ -17,6 +17,7 @@
     <ul class="cc-widget-activities-list">
       <li data-ng-repeat="activity in activities.list | filter:search" data-ng-class="{'cc-widget-list-selected': activity._show}">
         <div class="cc-widget-list-hover"
+          data-ng-class="{'cc-widget-list-hover-opened':(activity._show)}"
           data-cc-accessible-focus-directive
           data-ng-click="api.widget.toggleShow($event, activities.list, activity, 'Recent Activity')">
             <div>

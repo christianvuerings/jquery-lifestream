@@ -75,20 +75,18 @@
     }
   }
 }
-.cc-widget-list{
-  .cc-widget-list-hover-opened {
-    &:hover, &:focus {
-      &:before {
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-top: 4px solid $body-font-color;
-        content: "";
-        height: 0;
-        right: 7px;
-        position: absolute;
-        top: 17px;
-        width: 0;
-      }
+.cc-widget-list-hover-opened:not(tr) {
+  &:hover, &:focus {
+    &:before {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid $body-font-color;
+      content: "";
+      height: 0;
+      right: 7px;
+      position: absolute;
+      top: 17px;
+      width: 0;
     }
   }
 }
