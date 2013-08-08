@@ -19,10 +19,22 @@
       return classesHash;
     };
 
+    var sortOther = function(a, b) {
+      var name1 = a.name.toLowerCase();
+      var name2 = b.name.toLowerCase();
+      if (name1 < name2) {
+        return -1;
+      }
+      if (name1 > name2) {
+        return 1;
+      }
+      return 0;
+    };
+
     var bindScopes = function(categorizedClasses) {
-      var studentLength = Object.keys(categorizedClasses.student).length;
-      var instructorLength = Object.keys(categorizedClasses.instructor).length;
-      var otherLength = Object.keys(categorizedClasses.other).length;
+      var studentLength = categorizedClasses.student.length;
+      var instructorLength = categorizedClasses.instructor.length;
+      var otherLength = categorizedClasses.other.length;
 
       $scope.allClassesPresent = (studentLength || instructorLength || otherLength);
       $scope.allClasses = [
@@ -41,7 +53,7 @@
         {
           "categoryId": "other",
           "categoryTitle": "Other Site Memberships",
-          "data": categorizedClasses.other,
+          "data": categorizedClasses.other.sort(sortOther),
           "length": otherLength
         }
       ];
@@ -49,24 +61,24 @@
 
     var categorizeByRole = function(allClassesHash) {
       var categorizedClasses = {
-        'student': {},
-        'instructor': {},
-        'other': {}
+        'student': [],
+        'instructor': [],
+        'other': []
       };
-      angular.forEach(allClassesHash.campusClasses, function(value, key) {
+      angular.forEach(allClassesHash.campusClasses, function(value) {
         //Unlikely to hit the 'Other' case but doesn't hurt to make it robust
         var role = value.role.toLowerCase() || '';
         if (role  === 'instructor' || role === 'student') {
-          categorizedClasses[role][key] = value;
+          categorizedClasses[role].push(value);
         } else {
-          categorizedClasses.other[key] = value;
+          categorizedClasses.other.push(value);
         }
       });
       var non_official_classes = allClassesHash.otherClasses.filter(function(value) {
         return (value.courses.length === 0);
       });
       non_official_classes.forEach(function(value) {
-        categorizedClasses.other[value.id] = value;
+        categorizedClasses.other.push(value);
       });
 
       return categorizedClasses;

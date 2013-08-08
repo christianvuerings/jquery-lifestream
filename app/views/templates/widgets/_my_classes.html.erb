@@ -9,7 +9,7 @@
         <h3 data-ng-bind="category.categoryTitle"></h3>
       </div>
       <ul class="cc-widget-list">
-        <li data-ng-repeat="(id, class) in category.data"
+        <li data-ng-repeat="class in category.data"
             data-ng-class="{'cc-widget-list-selected': class._show && category.categoryId !== 'other'}">
           <div data-ng-switch="category.categoryId">
             <a data-ng-switch-when="other" class="cc-widget-list-link" data-ng-href="{{class.site_url}}"
