@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('popoverService', [function() {
+  angular.module('calcentral.services').service('popoverService', ['$document', '$rootScope', function($document, $scope) {
 
     var popovers = {};
 
@@ -11,6 +11,15 @@
      */
     var closeAll = function() {
       popovers = {};
+    };
+
+    /**
+     * Close all the popovers when it's initiated from a click on the document
+     * We need to do a $scope.$apply in order to fill in the $scope
+     */
+    var closeAllClick = function() {
+      closeAll();
+      $scope.$apply();
     };
 
     /**
@@ -32,12 +41,25 @@
     };
 
     /**
+     * Bind the event handlers for the document
+     * @param {Boolean} popoverShown Whether a popover is shown
+     */
+    var bindEventHandlers = function(popoverShown) {
+      if (popoverShown) {
+        $document.bind('click', closeAllClick);
+      } else {
+        $document.unbind('click', closeAllClick);
+      }
+    };
+
+    /**
      * Toggle a certain popover
      * @param {String} popover Popover name
      */
     var toggle = function(popover) {
       closeOthers(popover);
       popovers[popover] = !popovers[popover];
+      bindEventHandlers(popovers[popover]);
     };
 
     // Expose methods
