@@ -20,6 +20,7 @@
         exam_schedule[element.date.epoch].push(element);
       });
       $scope.exam_schedule = exam_schedule;
+      $scope.exam_schedule_length = Object.keys(exam_schedule).length;
     };
 
     $scope.getAcademics = function() {
