@@ -2,10 +2,8 @@
 # Script to update and build a shared deployment of CalCentral.
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
-TARGET_REMOTE=${REMOTE:-origin}
-TARGET_BRANCH=${BRANCH:-master}
 WAR_URL=${WAR_URL:="https://bamboo.media.berkeley.edu/bamboo/browse/MYB-MVPWAR/latest/artifact/JOB1/warfile/calcentral.knob"}
-$MAX_ASSET_AGE_IN_DAYS=${$MAX_ASSET_AGE_IN_DAYS:="45"}
+MAX_ASSET_AGE_IN_DAYS=${MAX_ASSET_AGE_IN_DAYS:="45"}
 
 LOG=`date +"$PWD/log/update-build_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
@@ -14,15 +12,8 @@ LOGIT="tee -a $LOG"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 source .rvmrc
 
-echo "=========================================" | $LOGIT
-echo "`date`: Updating CalCentral source code from:" $TARGET_REMOTE ", branch:" $TARGET_BRANCH | $LOGIT
-git fetch $TARGET_REMOTE 2>&1 | $LOGIT
-git fetch -t $TARGET_REMOTE 2>&1 | $LOGIT
-git reset --hard HEAD 2>&1 | $LOGIT
-git checkout -qf $TARGET_BRANCH 2>&1 | $LOGIT
-echo "Last commit in source tree:" | $LOGIT
-git log -1 | $LOGIT
-echo | $LOGIT
+# update source tree (from which these scripts run)
+./script/update-source.sh
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
