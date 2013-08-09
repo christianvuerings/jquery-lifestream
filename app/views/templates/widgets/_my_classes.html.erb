@@ -40,10 +40,14 @@
                   </li>
                 </ul>
                 <a class="cc-widget-sublist-extra"
+                   data-ng-show="class.site_url"
                    data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
                    data-ng-href="{{class.site_url}}">
                   <strong>Class details</strong>
                 </a>
+                <div data-ng-show="!class.site_url">
+                  Class details unavailable
+                </div>
               </div>
             </div>
           </div>

@@ -65,6 +65,7 @@ class CampusUserCoursesProxy < BaseProxy
         assigneds.each do |row|
           if (item = row_to_feed_item(row, previous_item))
             item[:role] = 'Instructor'
+            item[:site_url] = nil
             campus_classes << item
             previous_item = item
           end
