@@ -211,7 +211,7 @@ describe CanvasUserSites do
     group[:site_type].should == 'group'
     group[:name].should == 'The Left Banke'
     group[:site_url].blank?.should be_false
-    group[:emitter].should == "Canvas"
+    group[:emitter].should == "bCourses"
     group[:color_class].should == "canvas-group"
   end
 

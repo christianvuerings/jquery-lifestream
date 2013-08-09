@@ -45,7 +45,7 @@ class CanvasUserActivities
     formatted_entry[:user_id] = @uid
     formatted_entry[:title] = title
     formatted_entry.merge!(process_source(entry, canvas_sites))
-    formatted_entry[:emitter] = "Canvas"
+    formatted_entry[:emitter] = "bCourses"
     formatted_entry[:url] = entry["html_url"]
     formatted_entry[:source_url] = entry["html_url"]
     formatted_entry[:summary] = process_message(entry)
@@ -146,7 +146,7 @@ class CanvasUserActivities
   end
 
   def filter_classes(classes = [])
-    classes.select! { |entry| entry[:emitter] == "Canvas"}
+    classes.select! { |entry| entry[:emitter] == "bCourses"}
     classes_hash = Hash[*classes.map { |entry| [Integer(entry[:id], 10), entry]}.flatten]
   end
 

@@ -6,7 +6,7 @@
    */
   calcentral.controller('CanvasEmbeddedController', ['apiService', '$http', '$routeParams', '$scope', '$window', function (apiService, $http, $routeParams, $scope, $window) {
 
-    apiService.util.setTitle('Canvas Embedded View');
+    apiService.util.setTitle('bCourses Embedded View');
 
     /**
      * Post a message to the parent

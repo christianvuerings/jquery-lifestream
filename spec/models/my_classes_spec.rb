@@ -6,7 +6,7 @@ describe "MyClasses" do
     @fake_canvas = {
         classes: [{
             id: '1023614',
-            emitter: 'Canvas',
+            emitter: 'bCourses',
             courses: [ { id: 'BIOLOGY:1A:2013-C'}]
         }]
     }
@@ -33,7 +33,7 @@ describe "MyClasses" do
     feed = MyClasses.new(@user_id).get_feed
     my_classes = feed[:classes]
     my_classes.size.should == 2
-    my_classes.index{|entry| entry[:emitter] == CanvasProxy::APP_ID && entry[:id] == '1023614'}.should_not be_nil
+    my_classes.index{|entry| entry[:emitter] == CanvasProxy::APP_NAME && entry[:id] == '1023614'}.should_not be_nil
     my_classes.index{|entry| entry[:emitter] == CampusUserCoursesProxy::APP_ID && entry[:id] == 'BIOLOGY:1A:2013-C'}.should_not be_nil
   end
 

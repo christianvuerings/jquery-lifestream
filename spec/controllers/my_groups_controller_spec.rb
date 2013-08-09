@@ -22,7 +22,7 @@ describe MyGroupsController do
     json_response["groups"].each do |group_entry|
       group_entry["id"].blank?.should_not == true
       group_entry["site_url"].blank?.should_not == true
-      (group_entry["emitter"] =~ (/(canvas|bspace|callink)$/i)).should_not be_nil
+      (group_entry["emitter"] =~ (/(bcourses|bspace|callink)$/i)).should_not be_nil
     end
 
   end

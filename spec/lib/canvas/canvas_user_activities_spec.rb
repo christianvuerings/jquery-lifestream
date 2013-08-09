@@ -19,7 +19,7 @@ describe CanvasUserActivities do
       activity[:date][:epoch].is_a?(Integer).should == true
       ['canvas-class', 'canvas-group'].include?(activity[:color_class]).should be_true
       activity[:source].blank?.should_not be_true
-      activity[:emitter].should == "Canvas"
+      activity[:emitter].should == "bCourses"
       activity[:type].blank?.should_not == true
     end
   end
@@ -93,7 +93,7 @@ describe CanvasUserActivities do
     activities.length.should == 4
     activities.each do | activity |
       activity[:user_id].should == @user_id
-      activity[:emitter].should == "Canvas"
+      activity[:emitter].should == "bCourses"
       activity[:type].blank?.should_not == true
     end
     enrolled_activity = activities.select{|item| item[:id] == 'canvas_1999'}[0]

@@ -6,7 +6,7 @@ describe "MyGroups" do
     @fake_canvas = {
         groups: [{
                       id: '1023614',
-                      emitter: 'Canvas'
+                      emitter: 'bCourses'
                   }]
     }
     @fake_sakai = {
@@ -36,7 +36,7 @@ describe "MyGroups" do
       group_hash.keys do |key|
         group_hash[key].should_not be_nil
         group = group_hash[key]
-        group[:emitter].should == "Canvas"
+        group[:emitter].should == "bCourses"
       end
     end
   end

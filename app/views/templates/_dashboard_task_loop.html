@@ -28,15 +28,15 @@
         data-ng-show="task.emitter=='Google'"
         data-ng-true-value="completed"
       >
-      <label for="cc-wdiget-tasks-checkbox-{{$index}}" data-ng-show="task.emitter!='Canvas'" class="cc-visuallyhidden">
+      <label for="cc-wdiget-tasks-checkbox-{{$index}}" data-ng-show="task.emitter!='bCourses'" class="cc-visuallyhidden">
         <span data-ng-bind-template="mark {{task.title}} as"></span>
         <span data-ng-bind="{true:'not'}[task.status=='completed']"></span>
         completed
       </label>
 
       <div
-        class="cc-icon cc-icon-canvas"
-        data-ng-show="task.emitter=='Canvas'">
+        class="cc-icon cc-icon-bcourses"
+        data-ng-show="task.emitter=='bCourses'">
       </div>
     </div>
 
@@ -48,7 +48,7 @@
         {{task.due_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}
       </span>
       <div
-        data-ng-show="task.emitter=='Canvas' && task.due_date.has_time"
+        data-ng-show="task.emitter=='bCourses' && task.due_date.has_time"
         class="cc-widget-tasks-timestamp">
           {{task.due_date.epoch * 1000 | date:'h a'}}
       </div>
@@ -62,7 +62,7 @@
 
       <div class="cc-clearfix">
         <a class="cc-button"
-        data-ng-show="task.emitter=='Canvas'"
+        data-ng-show="task.emitter=='bCourses'"
         data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"
         data-ng-href="{{task.link_url}}">View in {{task.emitter}}</a>
 
