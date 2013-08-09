@@ -13,8 +13,12 @@
      */
 
     var send = function(exception) {
-      var exception = exception.message || exception;
-      var uid = document.getElementById('user_id').innerHTML;
+      exception = exception.message || exception;
+      var userIdElement = document.getElementById('user_id');
+      var uid;
+      if (userIdElement && userIdElement.innerHTML) {
+        uid = userIdElement.innerHTML;
+      }
 
       Raven.captureMessage(exception, {
         tags: {
