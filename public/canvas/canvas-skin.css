@@ -14,7 +14,7 @@
     list-style: none;
     float: right;
     font-size: 12px;
-    margin-left: 13px;
+    margin-left: 10px;
     margin-bottom: 4px;
     padding: 0 10px;
     background: transparent url('https://ucberkeley.instructure.com/images/canvas/top_bar_bg.png?1358195888') repeat-x;
@@ -53,11 +53,11 @@
 }
 
 #header-logo, #header.no-user #header-logo {
-    background: url(/canvas/berkeley-canvas-logo.png) no-repeat;
-    width: 136px;
-    bottom: 12px;
+    background: url(/canvas/bcourses-logo-header.png) no-repeat;
+    bottom: 10px;
+    left: 19px;
     top: auto;
-    left: 16px;
+    width: 142px;
 }
 
 #main {
@@ -66,16 +66,24 @@
 
 /* Canvas Footer */
 
+.with-left-side #footer {
+    margin-left: 56px;
+}
+
 #footer {
-    padding: 0 0 0 120px;
     background: url(/canvas/ucberkeley-logo.png) center left no-repeat;
     height: 50px;
+    padding: 0 0 0 120px;
 }
 
 #footer div {
-    padding-left: 10px;
+    background: transparent url(/canvas/canvas-logo-footer.png) no-repeat right center;
     border-left: 1px solid #AAA;
     height: 100%;
+    margin-right: 286px;
+    padding-right: 137px;
+    padding-right: 137px;
+    width: 438px;
 }
 
 #footer img {
@@ -89,8 +97,8 @@
 #footer p {
     font-size: 12px;
     line-height: 12px;
-    padding: 10px 0 2px;
     margin: 0;
+    padding: 10px 0 2px;
 }
 
 #footer p span {
