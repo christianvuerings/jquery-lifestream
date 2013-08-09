@@ -46,6 +46,6 @@ bundle exec torquebox deploy calcentral.knob --env=production | $LOGIT
 echo "Copying assets into /var/www/html/calcentral" | $LOGIT
 cp -Rvf public/assets /var/www/html/calcentral/ | $LOGIT
 
-echo "Deleting old assets from /var/www/html/calcentral" | $LOGIT
-find /var/www/html/calcentral -delete -mtime +$MAX_ASSET_AGE_IN_DAYS | $LOGIT
+echo "Deleting old assets from /var/www/html/calcentral/assets" | $LOGIT
+find /var/www/html/calcentral/assets -type f -delete -mtime +$MAX_ASSET_AGE_IN_DAYS | $LOGIT
 
