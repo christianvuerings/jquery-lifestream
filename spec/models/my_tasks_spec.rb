@@ -73,7 +73,7 @@ describe "MyTasks" do
             task["due_date"]["epoch"].should >= 1351641600
           end
         end
-        if task["emitter"] == CanvasProxy::APP_ID
+        if task["emitter"] == CanvasProxy::APP_NAME
           task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
           task["link_url"].should == task["source_url"]
           task["color_class"].should == "canvas-class"
@@ -97,7 +97,7 @@ describe "MyTasks" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     my_tasks = MyTasks::Merged.new @user_id
     expect {
-      my_tasks.update_task({"emitter" => CanvasProxy::APP_ID, "foo" => "badly formatted entry"})
+      my_tasks.update_task({"emitter" => CanvasProxy::APP_NAME, "foo" => "badly formatted entry"})
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       (error.message =~ (/Missing parameter\(s\). Required: \[/)).nil?.should_not == true
@@ -108,7 +108,7 @@ describe "MyTasks" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     my_tasks = MyTasks::Merged.new @user_id
     expect {
-      my_tasks.update_task({"type" => "sometype", "emitter" => "Canvas", "status" => "half-baked" })
+      my_tasks.update_task({"type" => "sometype", "emitter" => "bCourses", "status" => "half-baked" })
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       error.message.should == "Invalid parameter for: status"
@@ -194,7 +194,7 @@ describe "MyTasks" do
   it "should do nothing to Canvas Tasks" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     my_tasks_model = MyTasks::Merged.new(@user_id)
-    response = my_tasks_model.clear_completed_tasks params={"emitter" => "Canvas"}
+    response = my_tasks_model.clear_completed_tasks params={"emitter" => "bCourses"}
     response.should == {:tasks_cleared => false}
   end
 

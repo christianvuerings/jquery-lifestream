@@ -4,7 +4,7 @@
       "id": "49957",
       "name": "Canvas/ETS Collaboration",
       "site_url": "https://some.instructure.com/groups/49957",
-      "emitter": "Canvas",
+      "emitter": "bCourses",
       "site_type": "group",
       "color_class": "canvas-group"
     },
@@ -31,7 +31,7 @@
       "short_description": "A Canvas course site: Now a group!",
       "id": "4398539",
       "site_url": "https://some.instructure.com/courses/4398539",
-      "emitter": "Canvas",
+      "emitter": "bCourses",
       "site_type": "course",
       "role": "teacher",
       "color_class": "canvas-group"

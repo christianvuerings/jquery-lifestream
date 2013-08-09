@@ -52,7 +52,7 @@
       "short_description": "Lessons from the Cambrian Explosion",
       "name": "Bio 1a Lec 3",
       "id": "1093164",
-      "emitter": "Canvas",
+      "emitter": "bCourses",
       "color_class": "canvas-class",
       "site_url": "https://notquitecanvas/courses/1093164",
       "site_type": "course",
@@ -65,7 +65,7 @@
     {
       "name": "Project Group 4",
       "id": "1093164",
-      "emitter": "Canvas",
+      "emitter": "bCourses",
       "color_class": "canvas-class",
       "site_url": "https://notquitecanvas/groups/101261",
       "source": "Lessons from the Cambrian Explosion",

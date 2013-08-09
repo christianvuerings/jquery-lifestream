@@ -90,7 +90,9 @@
 
     $scope.clearCompletedTasks = function() {
       apiService.analytics.trackEvent(['Tasks', 'Clear completed tasks', 'Clear completed tasks']);
-      $http.post('/api/my/tasks/clear_completed', {"emitter": "Google"}).success(function(data) {
+      $http.post('/api/my/tasks/clear_completed', {
+        emitter: 'Google'
+      }).success(function(data) {
         if (data.tasks_cleared) {
           $scope.getTasks();
         } else {

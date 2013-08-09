@@ -36,7 +36,7 @@ module MyTasks
               formatted_entry = {
                 "type" => "assignment",
                 "title" => result["assignment"]["name"],
-                "emitter" => CanvasProxy::APP_ID,
+                "emitter" => CanvasProxy::APP_NAME,
                 "link_url" => result["assignment"]["html_url"],
                 "source_url" => result["assignment"]["html_url"],
                 "color_class" => "canvas-class",
@@ -85,7 +85,7 @@ module MyTasks
               formatted_entry = {
                 "type" => type,
                 "title" => result["title"],
-                "emitter" => CanvasProxy::APP_ID,
+                "emitter" => CanvasProxy::APP_NAME,
                 "link_url" => result["html_url"],
                 "source_url" => result["html_url"],
                 "color_class" => "canvas-class",

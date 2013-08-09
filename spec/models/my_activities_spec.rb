@@ -87,7 +87,7 @@ describe "MyActivities" do
     my_activities = MyActivities.new(@user_id).get_feed
     my_activities[:activities].empty?.should be_false
     my_activities[:activities].each do |act|
-      act[:emitter].should == 'Canvas'
+      act[:emitter].should == 'bCourses'
       @documented_types.include?(act[:type]).should be_true
     end
   end

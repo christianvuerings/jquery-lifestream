@@ -5,6 +5,7 @@ class CanvasProxy < BaseProxy
 
   attr_accessor :client
   APP_ID = "Canvas"
+  APP_NAME = "bCourses"
 
   def initialize(options = {})
     super(Settings.canvas_proxy, options)

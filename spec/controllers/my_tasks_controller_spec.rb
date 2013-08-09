@@ -64,7 +64,7 @@ describe MyTasksController do
   it "should fail on deleting a canvas task" do
     session[:user_id] = @user_id
     CanvasProxy.stub(:access_granted?).and_return(true)
-    hash = {"task_id" => "gobblygook", "emitter" => "Canvas"}
+    hash = {"task_id" => "gobblygook", "emitter" => "bCourses"}
     post :delete_task, hash
     json_response = JSON.parse(response.body)
     json_response["task_deleted"].should be_false

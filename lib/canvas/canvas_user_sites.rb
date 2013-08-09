@@ -87,7 +87,7 @@ class CanvasUserSites < MyMergedModel
         site_type: 'course',
         role: role,
         courses: linked_course_ids,
-        emitter: CanvasProxy::APP_ID,
+        emitter: CanvasProxy::APP_NAME,
         color_class: "canvas-class",
         site_url: "#{@url_root}/courses/#{course_id}"
     }
@@ -104,7 +104,7 @@ class CanvasUserSites < MyMergedModel
           site_type: 'group',
           courses: groups_course[:courses],
           source: groups_course[:name],
-          emitter: CanvasProxy::APP_ID,
+          emitter: CanvasProxy::APP_NAME,
           color_class: "canvas-class",
           site_url: "#{@url_root}/groups/#{site['id']}"
       }
@@ -113,7 +113,7 @@ class CanvasUserSites < MyMergedModel
           id: site['id'].to_s,
           name: site['name'],
           site_type: 'group',
-          emitter: CanvasProxy::APP_ID,
+          emitter: CanvasProxy::APP_NAME,
           color_class: "canvas-group",
           site_url: "#{@url_root}/groups/#{site['id']}"
       }
