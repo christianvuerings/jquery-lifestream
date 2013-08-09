@@ -4,8 +4,4 @@ class PopulateCampusLinksV16 < ActiveRecord::Migration
     CampusLinkLoader.load_links! "/public/json/campuslinks_v16.json"
   end
 
-  def self.down
-    CampusLinkLoader.delete_links!
-  end
-
 end
