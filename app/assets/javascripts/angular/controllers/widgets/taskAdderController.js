@@ -15,6 +15,13 @@
       $scope.show_add_task = false;
       $scope.tasks.push(data);
       $scope.updateTaskLists();
+
+      // Go the the right tab when adding a task
+      if (data.due_date) {
+        $scope.switchTasksMode('scheduled');
+      } else {
+        $scope.switchTasksMode('unscheduled');
+      }
     };
 
     $scope.addTask = function() {
