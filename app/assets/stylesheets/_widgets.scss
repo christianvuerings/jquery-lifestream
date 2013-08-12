@@ -60,7 +60,7 @@
 .cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link {
   display: block;
 }
-.cc-widget-list-hover:not(tr) {
+.cc-widget-list-hover:not(tr):not(.cc-widget-list-hover-notriangle) {
   &:hover, &:focus {
     &:before {
       border-bottom: 4px solid transparent;
@@ -75,7 +75,7 @@
     }
   }
 }
-.cc-widget-list-hover-opened:not(tr) {
+.cc-widget-list-hover-opened:not(tr):not(.cc-widget-list-hover-notriangle) {
   &:hover, &:focus {
     &:before {
       border-left: 4px solid transparent;
