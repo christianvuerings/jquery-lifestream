@@ -101,7 +101,7 @@
           if (value.start_time && value.start_time.epoch) {
             var momentized_start_time = dateService.moment(value.start_time.epoch * 1000);
             value.start_time.display = {
-              'month': momentized_start_time.format('MMMM'),
+              'month': momentized_start_time.format('MMM'),
               'day': momentized_start_time.format('DD'),
               'day_of_week': momentized_start_time.format('ddd'),
               'range_start': processDisplayRange(value.start_time.epoch, value.all_day_event, true)
