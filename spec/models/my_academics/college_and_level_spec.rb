@@ -14,6 +14,8 @@ describe "MyAcademics::CollegeAndLevel" do
     oski_college.should_not be_nil
     oski_college[:colleges].size.should == 3
     oski_college[:colleges][0][:college].should == "College of Engineering"
+    oski_college[:colleges][1][:college].should == ""
+    oski_college[:colleges][2][:college].should == ""
     oski_college[:colleges][0][:major].should == "Economics"
     oski_college[:colleges][1][:major].should == "Rhetoric"
     oski_college[:colleges][2][:major].should == "Business Administration"
@@ -36,4 +38,23 @@ describe "MyAcademics::CollegeAndLevel" do
     colleges[1][:major].should == "Landscape Architecture"
 
   end
+
+  it "should get get a concurrent enrollment triple major's multiple college enrollments" do
+    triple_proxy = BearfactsProfileProxy.new({:user_id => "212379", :fake => true})
+    BearfactsProfileProxy.stub(:new).and_return(triple_proxy)
+
+    feed = {}
+    MyAcademics::CollegeAndLevel.new("212379").merge(feed)
+    feed.empty?.should be_false
+
+    colleges = feed[:college_and_level][:colleges]
+    colleges.size.should == 3
+    colleges[0][:college].should == "College of Chemistry"
+    colleges[0][:major].should == "Chemistry"
+    colleges[1][:college].should == "College of Letters & Science"
+    colleges[1][:major].should == "Applied Mathematics"
+    colleges[2][:college].should == ""
+    colleges[2][:major].should == "Physics"
+  end
+
 end
