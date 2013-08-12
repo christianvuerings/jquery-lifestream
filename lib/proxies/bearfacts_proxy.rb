@@ -1,5 +1,7 @@
 class BearfactsProxy < BaseProxy
 
+  include ClassLogger
+
   APP_ID = "Bearfacts"
 
   def initialize(options = {})
@@ -23,14 +25,14 @@ class BearfactsProxy < BaseProxy
     self.class.fetch_from_cache(@uid) do
       student_id = lookup_student_id
       if student_id.nil?
-        Rails.logger.warn "#{self.class.name}: Lookup of student_id for uid #@uid failed, cannot call Bearfacts API path #{path}"
+        logger.info "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API path #{path}"
         {
           :body => "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API",
           :status_code => 400
         }
       else
         url = "#{Settings.bearfacts_proxy.base_url}#{path}"
-        Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
+        logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
         begin
           response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
             token_params = {token: Settings.bearfacts_proxy.token}
@@ -46,17 +48,17 @@ class BearfactsProxy < BaseProxy
             ).get
           }
           if response.status >= 400
-            Rails.logger.warn "#{self.class.name}: Connection failed: #{response.status} #{response.body}"
+            logger.error "Connection failed: #{response.status} #{response.body}"
             return nil
           end
 
-          Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
+          logger.debug "Remote server status #{response.status}, Body = #{response.body}"
           {
             :body => response.body,
             :status_code => response.status
           }
         rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
-          Rails.logger.warn "#{self.class.name}: Connection failed: #{e.class} #{e.message}"
+          logger.error "Connection failed: #{e.class} #{e.message}"
           {
             :body => "Remote server unreachable",
             :status_code => 503
