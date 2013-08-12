@@ -22,8 +22,8 @@
               <table>
                 <thead>
                   <tr>
-                    <th width="20%">General</th>
-                    <th class="cc-table-subheader">Standing</th>
+                    <th width="25%">General</th>
+                    <th class="cc-table-subheader" scope="col">Standing</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -41,9 +41,9 @@
               <table>
                 <thead>
                   <tr>
-                    <th width="20%">College and Major</th>
-                    <th class="cc-table-subheader">College</th>
-                    <th class="cc-table-subheader">Major</th>
+                    <th width="25%">College and Major</th>
+                    <th class="cc-table-subheader" scope="col">College</th>
+                    <th class="cc-table-subheader" scope="col">Major</th>
                   </tr>
                 </thead>
                 <tbody data-ng-repeat="college in college_and_level.colleges">
@@ -60,8 +60,8 @@
               <table>
                 <thead>
                   <tr>
-                    <th width="20%">Level</th>
-                    <th class="cc-table-subheader">Including AP</th>
+                    <th width="25%">Level</th>
+                    <th class="cc-table-subheader" scope="col">Including AP</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -107,10 +107,10 @@
                 <table>
                   <thead>
                     <tr>
-                      <th>Type</th>
-                      <th>Reason</th>
-                      <th>Office</th>
-                      <th>Blocked</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Reason</th>
+                      <th scope="col">Office</th>
+                      <th scope="col">Blocked</th>
                     </tr>
                   </thead>
                   <tbody data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true">
@@ -167,11 +167,11 @@
                 <table class="cc-academics-block-history" data-ng-show="show_block_history">
                   <thead>
                     <tr>
-                      <th>Type</th>
-                      <th>Reason</th>
-                      <th>Office</th>
-                      <th>Blocked</th>
-                      <th>Cleared</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Reason</th>
+                      <th scope="col">Office</th>
+                      <th scope="col">Blocked</th>
+                      <th scope="col">Cleared</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -192,13 +192,13 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Requirement</th>
-                    <th>Met?</th>
+                    <th scope="col" width="25%">Requirement</th>
+                    <th scope="col">Met?</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr data-ng-repeat="requirement in requirements">
-                    <td data-ng-bind="requirement.name"></td>
+                    <th data-ng-bind="requirement.name" scope="row" class="cc-table-subheader"></th>
                     <td>
                       <i data-ng-class="{'cc-icon icon-ok-sign':(requirement.status=='met'), 'cc-icon icon-edit':(requirement.status!='met')}"></i>
                       <span class="cc-visuallyhidden" data-ng-bind-template="{{requirement.name}} has {{requirement.status!='met' ? 'not' : ''}} been met"></span>

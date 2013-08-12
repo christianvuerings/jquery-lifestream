@@ -17,10 +17,10 @@
           <div class="cc-table">
             <table>
               <thead>
-                <th>Course Number</th>
-                <th>Title</th>
-                <th>Grade Option</th>
-                <th>Units</th>
+                <th scope="col">Course Number</th>
+                <th scope="col">Title</th>
+                <th scope="col">Grade Option</th>
+                <th scope="col">Units</th>
               </thead>
               <tbody data-ng-show="selected_semester.schedule.length" data-ng-repeat="course in selected_courses">
                 <tr data-ng-show="course.is_primary_section">
