@@ -78,28 +78,38 @@
             <div class="cc-academics-status-and-blocks">
               <h3><span data-ng-show="api.user.profile.student_info.reg_status.code!=null && api.user.profile.features.academic_status">Status and </span>Blocks</h3>
 
-              <div data-ng-show="api.user.profile.student_info.reg_status.code!=null && api.user.profile.features.academic_status">
+              <div class="cc-table" data-ng-show="api.user.profile.student_info.reg_status.code!=null && api.user.profile.features.academic_status">
                 <h4>Status Type</h4>
-                <div class="row collapse cc-academics-column-labels">
-                  <div class="large-4 small-4 columns">Type</div>
-                  <div class="large-8 small-8 columns end">Status</div>
-                </div>
-                <div class="row collapse">
-                  <div class="large-4 small-4 columns">Registration</div>
-                  <div class="large-8 small-8 columns end">
-                    <i class="cc-icon"
-                      data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[api.user.profile.student_info.reg_status.summary=='Registered']">
-                    </i>
-                    <span data-ng-bind="api.user.profile.student_info.reg_status.summary"></span> <span data-ng-bind-template="- {{api.user.profile.student_info.reg_status.explanation}}"></span>
-                  </div>
-                </div>
-                <div class="row collapse">
-                  <div class="large-4 small-4 columns">California Residency</div>
-                  <div class="large-8 small-8 columns end">
-                    <i class="cc-icon" data-ng-class="{'icon-ok-sign':(api.user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
-                    <span data-ng-bind="api.user.profile.student_info.california_residency.summary"></span>
-                  </div>
-                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col" width="20%">Type</th>
+                      <th scope="col" width="20%">Status</th>
+                      <th scope="col">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="cc-table-subheader" scope="row">Registration</td>
+                      <td>
+                        <i class="cc-icon"
+                          data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[api.user.profile.student_info.reg_status.summary=='Registered']">
+                        </i>
+                        <span data-ng-bind="api.user.profile.student_info.reg_status.summary"></span>
+                      </td>
+                      <td data-ng-bind-html="api.user.profile.student_info.reg_status.explanation"></td>
+                    </tr>
+                    <tr>
+                      <th class="cc-table-subheader" scope="row">California Residency</td>
+                      <td>
+                        <i class="cc-icon"
+                          data-ng-class="{'icon-ok-sign':(api.user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
+                        <span data-ng-bind="api.user.profile.student_info.california_residency.summary"></span>
+                      </td>
+                      <td data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               <h4>Active Blocks</h4>
