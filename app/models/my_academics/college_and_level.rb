@@ -21,7 +21,7 @@ class MyAcademics::CollegeAndLevel
 
       # this code block is not very DRY, but that makes it easier to understand the wacky requirements. See CLC-2017 for background.
       if primary_college_abbv.in?(["GRAD DIV", "LAW", "CONCURNT"])
-        if primary_major == "Double"
+        if primary_major == "Double" || primary_major == "Triple"
           colleges << {
             :college => Colleges.get(to_text(general_profile.css("collegeSecond"))),
             :major => Majors.get(to_text(general_profile.css("majorSecond")))
@@ -30,6 +30,12 @@ class MyAcademics::CollegeAndLevel
             :college => Colleges.get(to_text(general_profile.css("collegeThird"))),
             :major => Majors.get(to_text(general_profile.css("majorThird")))
           }
+          if primary_major == "Triple"
+            colleges << {
+              :college => Colleges.get(to_text(general_profile.css("collegeFourth"))),
+              :major => Majors.get(to_text(general_profile.css("majorFourth")))
+            }
+          end
         else
           colleges << {
             :college => Colleges.get(primary_college_abbv),
@@ -37,7 +43,7 @@ class MyAcademics::CollegeAndLevel
           }
         end
       else
-        if primary_major == "Double"
+        if primary_major == "Double" || primary_major == "Triple"
           colleges << {
             :college => Colleges.get(primary_college_abbv),
             :major => Majors.get(to_text(general_profile.css("majorSecond")))
@@ -46,19 +52,12 @@ class MyAcademics::CollegeAndLevel
             :college => "",
             :major => Majors.get(to_text(general_profile.css("majorThird")))
           }
-        elsif primary_major == "Triple"
-          colleges << {
-            :college => Colleges.get(primary_college_abbv),
-            :major => Majors.get(to_text(general_profile.css("majorSecond")))
-          }
-          colleges << {
-            :college => "",
-            :major => Majors.get(to_text(general_profile.css("majorThird")))
-          }
-          colleges << {
-            :college => "",
-            :major => Majors.get(to_text(general_profile.css("majorFourth")))
-          }
+          if primary_major == "Triple"
+            colleges << {
+              :college => "",
+              :major => Majors.get(to_text(general_profile.css("majorFourth")))
+            }
+          end
         else
           colleges << {
             :college => Colleges.get(primary_college_abbv),
