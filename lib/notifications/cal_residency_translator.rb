@@ -17,7 +17,7 @@ class CalResidencyTranslator
       # The flag is NULL
       response = {
           summary: 'Not received',
-          explanation: 'Please <a href="http://registrar.berkeley.edu/Registrar/slrfaq.html">submit documentation about your residency status</a> as soon as possible.',
+          explanation: 'Please <a href="http://registrar.berkeley.edu/Registrar/how_slr.html">submit documentation about your residency status</a> as soon as possible.',
           needsAction: true
       }
     end
