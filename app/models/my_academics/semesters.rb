@@ -15,7 +15,7 @@ class MyAcademics::Semesters
       next unless course_number.strip.length
 
       units = course[:unit]
-      title = course[:name].titleize
+      title = course[:name]
       if course[:pnp_flag].present?
         grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
       else
