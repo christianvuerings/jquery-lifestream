@@ -184,6 +184,50 @@
         "http_version": null
       },
       "recorded_at": "Mon, 12 Aug 2013 20:15:11 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://localhost:3001/bearfacts-apis/student/99999990",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "date": [
+            "Tue, 13 Aug 2013 17:34:00 GMT"
+          ],
+          "content-type": [
+            "application/xml"
+          ],
+          "content-length": [
+            "2928"
+          ],
+          "connection": [
+            "close"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<studentProfile asOfDate=\"August 13, 2013 12:00 AM\" termName=\"Fall\" termYear=\"2013\" xmlns=\"urn:berkeley.edu/babl\">\n  <showRegistrationAlertMsg>false</showRegistrationAlertMsg>\n  <regBlockStatusCode>0</regBlockStatusCode>\n  <studentType>STUDENT</studentType>\n  <ugGradFlag>G</ugGradFlag>\n  <noProfileDataFlag>false</noProfileDataFlag>\n  <studentGeneralProfile>\n    <corpEducLevel>DOCTORAL </corpEducLevel>\n    <futureTBLevel>ADV DOC  </futureTBLevel>\n    <studentName>\n      <firstName>QQEOQU</firstName>\n      <middleName/>\n\n      <middleInitial/>\n\n      <lastName>PTTWETS</lastName>\n    </studentName>\n    <birthDate>01/16/1986</birthDate>\n    <sex>F</sex>\n    <collegePrimary>LAW     </collegePrimary>\n    <majorPrimary>DOUBLE                                  </majorPrimary>\n    <majorSecond>JURSPRDNCE&amp;SOC POLCY                    </majorSecond>\n    <majorThird>LAW                                     </majorThird>\n    <anticipGradDate>30-MAY-15</anticipGradDate>\n    <isActiveAthlete>false</isActiveAthlete>\n    <isInternational>false</isInternational>\n    <isConfidential>false</isConfidential>\n  </studentGeneralProfile>\n  <studentTermProfile>\n    <adminCancel>false</adminCancel>\n    <registration>REGISTERED    </registration>\n    <unitsEnrolled>12.0</unitsEnrolled>\n    <confirmedSchedule>PERM. ADDRESS</confirmedSchedule>\n    <academicStatus>GOOD STANDING</academicStatus>\n    <californiaResidencyStatus>CALIFORNIA RESIDENT                 </californiaResidencyStatus>\n    <regSpecialProgram>NONE                     </regSpecialProgram>\n    <degreeCandidateDate>    </degreeCandidateDate>\n    <newStudent>false</newStudent>\n  </studentTermProfile>\n  <underGradReqProfile/>\n\n  <studentContacts>\n    <studentContact addressType=\"LOCAL\" badAddressFlag=\"false\">\n      <address disclosure=\"false\">\n        <streetOne>55 QRQ QW                     </streetOne>\n        <city>SAN FRANCISCO            </city>\n        <postalCode>94103</postalCode>\n        <postalCodeTwo/>\n\n      </address>\n      <phone disclosure=\"false\"/>\n\n      <lastUpdateDate>2011-06-14 00:00:00.0</lastUpdateDate>\n      <lastUpdateUserId>REGP311 </lastUpdateUserId>\n    </studentContact>\n    <studentContact addressType=\"BILLING\" badAddressFlag=\"false\">\n      <address disclosure=\"false\"/>\n\n      <phone disclosure=\"false\"/>\n\n    </studentContact>\n    <studentContact addressType=\"PERMANENT\" badAddressFlag=\"false\">\n      <address disclosure=\"false\">\n        <streetOne>55 QRQ QW                     </streetOne>\n        <city>SAN FRANCISCO            </city>\n        <state>CA</state>\n        <postalCode>94103</postalCode>\n        <postalCodeTwo/>\n\n      </address>\n      <phone disclosure=\"false\"/>\n\n      <lastUpdateDate>2011-06-14 00:00:00.0</lastUpdateDate>\n      <lastUpdateUserId>REGP311 </lastUpdateUserId>\n    </studentContact>\n    <emailAddress>not_a_real_name@domain.edu                                              </emailAddress>\n    <emailDisclosure>false</emailDisclosure>\n    <emailLastUpdateDate>2011-06-22 00:00:00.0</emailLastUpdateDate>\n    <emailLastUpdateUserId>STUDENT </emailLastUpdateUserId>\n    <badEmailAddressFlag>false</badEmailAddressFlag>\n    <addressAvailableFlag>true</addressAvailableFlag>\n  </studentContacts>\n</studentProfile>\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 13 Aug 2013 17:34:00 GMT"
     }
   ],
   "recorded_with": "VCR 2.4.0"
