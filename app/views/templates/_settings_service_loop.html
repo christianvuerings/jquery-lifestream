@@ -18,7 +18,7 @@
     <div class="large-2 small-4 columns">
       <button data-ng-show="api.user.profile['has_' + service + '_access_token']"
         data-ng-disabled="api.user.profile['is_acting_as']"
-        class="radius button medium" data-ng-click="api.user.removeOAuth('{{service}}')">
+        class="cc-button" data-ng-click="api.user.removeOAuth('{{service}}')">
         Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
       </button>
     </div>
@@ -28,7 +28,7 @@
     <div class="large-2 small-4 columns">
       <button data-ng-show="service=='google'"
         data-ng-disabled="api.user.profile['is_acting_as']"
-        class="radius button medium success" data-ng-click="api.user.enableOAuth('google')">
+        class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth('google')">
         Connect <span class="cc-visuallyhidden">Google Access</span>
       </button>
     </div>
