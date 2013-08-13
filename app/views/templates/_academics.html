@@ -117,10 +117,10 @@
                 <table>
                   <thead>
                     <tr>
-                      <th scope="col">Type</th>
-                      <th scope="col">Reason</th>
-                      <th scope="col">Office</th>
-                      <th scope="col">Blocked</th>
+                      <th scope="col" width="20%">Type</th>
+                      <th scope="col" width="20%">Reason</th>
+                      <th scope="col" width="20%">Office</th>
+                      <th scope="col" width="40%">Blocked</th>
                     </tr>
                   </thead>
                   <tbody data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true">
@@ -165,7 +165,7 @@
                 </p>
                 <div data-ng-show="regblocks.inactive_blocks.length">
                   <button
-                    class="cc-academics-showhide-text button radius small"
+                    class="cc-academics-showhide-text button radius small cc-button-blue"
                     data-ng-click="toggleBlockHistory()">
                       <span data-ng-show="!show_block_history">Show block history</span>
                       <span data-ng-show="show_block_history">Hide block history</span>
@@ -177,11 +177,11 @@
                 <table class="cc-academics-block-history" data-ng-show="show_block_history">
                   <thead>
                     <tr>
-                      <th scope="col">Type</th>
-                      <th scope="col">Reason</th>
-                      <th scope="col">Office</th>
-                      <th scope="col">Blocked</th>
-                      <th scope="col">Cleared</th>
+                      <th scope="col" width="20%">Type</th>
+                      <th scope="col" width="20%">Reason</th>
+                      <th scope="col" width="20%">Office</th>
+                      <th scope="col" width="20%">Blocked</th>
+                      <th scope="col" width="20%">Cleared</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -221,7 +221,7 @@
         </div>
       </div>
       <div class="large-4 columns">
-        <div class="cc-widget">
+        <div class="cc-widget cc-widget-last">
           <div class="cc-widget-title">
             <h2 class="cc-left">Current Semester</h2>
             <a href="https://telebears.berkeley.edu/tranreq/" class="cc-right cc-academics-orderlink">
@@ -239,12 +239,16 @@
                       <a data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a>
                   </div>
                   <div class="row collapse cc-academics-empasize">
-                    <div class="large-6 small-6 columns cc-academics-label-col">Class</div>
-                    <div class="large-3 small-3 columns">Units</div>
+                    <div class="small-3 columns cc-academics-label-col">Class</div>
+                    <div class="small-7 columns">Title</div>
+                    <div class="small-2 columns">Units</div>
                   </div>
                   <div class="row collapse" data-ng-repeat="sem in semester.schedule" data-ng-show="sem.is_primary_section">
-                    <div class="large-6 small-6 columns cc-academics-label-col" data-ng-bind="sem.course_number"></div>
-                    <div class="large-3 small-3 columns" data-ng-bind="sem.units"></div>
+                    <div class="small-3 columns cc-academics-label-col">
+                      <a data-ng-href="/academics/semester/{{semester.slug}}/class/{{sem.ccn}}" data-ng-bind="sem.course_number"></a>
+                    </div>
+                    <div class="small-7 columns" data-ng-bind="sem.title"></div>
+                    <div class="small-2 columns" data-ng-bind="sem.units"></div>
                   </div>
                 </div>
               </div>
