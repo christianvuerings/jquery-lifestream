@@ -17,13 +17,14 @@ class MyAcademics::CollegeAndLevel
       level = to_text(general_profile.css("nonAPLevel")).titleize
       colleges = []
       primary_college_abbv = to_text(general_profile.css("collegePrimary"))
+      primary_college = Colleges.get(primary_college_abbv)
       primary_major = Majors.get(to_text(general_profile.css("majorPrimary")))
 
       # this code block is not very DRY, but that makes it easier to understand the wacky requirements. See CLC-2017 for background.
       if primary_college_abbv.in?(["GRAD DIV", "LAW", "CONCURNT"])
         if primary_major == "Double" || primary_major == "Triple"
           colleges << {
-            :college => Colleges.get(to_text(general_profile.css("collegeSecond"))),
+            :college => (general_profile.css("collegeSecond").blank? ? primary_college : Colleges.get(to_text(general_profile.css("collegeSecond")))),
             :major => Majors.get(to_text(general_profile.css("majorSecond")))
           }
           colleges << {
@@ -38,14 +39,14 @@ class MyAcademics::CollegeAndLevel
           end
         else
           colleges << {
-            :college => Colleges.get(primary_college_abbv),
+            :college => primary_college,
             :major => primary_major
           }
         end
       else
         if primary_major == "Double" || primary_major == "Triple"
           colleges << {
-            :college => Colleges.get(primary_college_abbv),
+            :college => primary_college,
             :major => Majors.get(to_text(general_profile.css("majorSecond")))
           }
           colleges << {
@@ -60,7 +61,7 @@ class MyAcademics::CollegeAndLevel
           end
         else
           colleges << {
-            :college => Colleges.get(primary_college_abbv),
+            :college => primary_college,
             :major => primary_major
           }
         end
