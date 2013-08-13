@@ -188,7 +188,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://localhost:3001/bearfacts-apis/student/99999990",
+        "uri": "https://localhost:3001/bearfacts-apis/student/99999997",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
