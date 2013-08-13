@@ -30,6 +30,13 @@
      * Prevent a click event from bubbling up to its parents
      */
     var preventBubble = function($event) {
+
+      // We don't need to do anything when you hit the enter key.
+      // In that instance the event will be undefined.
+      if (!$event) {
+        return;
+      }
+
       $event.stopPropagation();
       // When it's not an anchor tag, we also prevent the default event
       if ($event.target.nodeName !== 'A') {
