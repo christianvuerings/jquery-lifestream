@@ -58,11 +58,11 @@ describe "MyAcademics::CollegeAndLevel" do
   end
 
   it "should get a double Law major correctly" do
-    double_proxy = BearfactsProfileProxy.new({:user_id => "232588", :fake => true})
+    double_proxy = BearfactsProfileProxy.new({:user_id => "212381", :fake => true})
     BearfactsProfileProxy.stub(:new).and_return(double_proxy)
 
     feed = {}
-    MyAcademics::CollegeAndLevel.new("232588").merge(feed)
+    MyAcademics::CollegeAndLevel.new("212381").merge(feed)
     feed.empty?.should be_false
 
     colleges = feed[:college_and_level][:colleges]
