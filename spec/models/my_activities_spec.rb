@@ -21,6 +21,7 @@ describe "MyActivities" do
     my_activities[:activities].each do |act|
       act[:emitter].should == 'bSpace'
       act[:type].should == 'announcement'
+      act[:source].blank?.should be_false
     end
   end
 
