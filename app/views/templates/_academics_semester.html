@@ -30,14 +30,15 @@
                     </a>
                   </td>
                   <td data-ng-bind="course.title"></td>
-                  <td></td>
-                  <td></td>
+                  <td data-ng-bind="course.grade_option"></td>
+                  <td data-ng-bind="course.units"></td>
+
                 </tr>
                 <tr>
                   <td data-ng-bind="course.section_label"></td>
                   <td>&nbsp;</td>
-                  <td data-ng-bind="course.grade_option"></td>
-                  <td data-ng-bind="course.units"></td>
+                  <td></td>
+                  <td></td>
                 </tr>
               </tbody>
               <tbody data-ng-show="!selected_semester.schedule.length">
