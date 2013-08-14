@@ -2,12 +2,16 @@
   background: #fff;
   margin: 15px 15px 0 0;
 
+  /*
+    See https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css
+    For an explanation of this magic
+  */
   &:before, &:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+    content: " ";
+    display: table;
   }
   &:after {
-      clear: both;
+    clear: both;
   }
 }
 .cc-widget-last {
