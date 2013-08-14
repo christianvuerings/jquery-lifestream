@@ -57,4 +57,20 @@ describe "MyAcademics::CollegeAndLevel" do
     colleges[2][:major].should == "Physics"
   end
 
+  it "should get a double Law major correctly" do
+    double_proxy = BearfactsProfileProxy.new({:user_id => "212381", :fake => true})
+    BearfactsProfileProxy.stub(:new).and_return(double_proxy)
+
+    feed = {}
+    MyAcademics::CollegeAndLevel.new("212381").merge(feed)
+    feed.empty?.should be_false
+
+    colleges = feed[:college_and_level][:colleges]
+    colleges.size.should == 2
+    colleges[0][:college].should == "School of Law"
+    colleges[0][:major].should == "Jurisprudence And Social Policy"
+    colleges[1][:college].should == ""
+    colleges[1][:major].should == "Law"
+  end
+
 end
