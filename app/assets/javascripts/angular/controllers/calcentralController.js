@@ -21,7 +21,7 @@
       apiService.util.changeControllerName(current.controller);
 
       // Refresh the services, we only want to do this on certain pages
-      if (current.$$route.shouldRefresh) {
+      if (current.$$route && current.$$route.shouldRefresh) {
         apiService.refresh.startRefresh();
       }
     });
