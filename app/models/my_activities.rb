@@ -63,15 +63,10 @@ class MyActivities < MyMergedModel
                   type: 'announcement',
                   date: format_date(sakai_ann['message_date']),
                   source_url: sakai_ann['source_url'],
+                  source: site[:name],
                   emitter: site[:emitter],
                   color_class: site[:color_class]
               }
-              case category
-                when :classes
-                  announcement[:source] = site[:name]
-                when :groups
-                  announcement[:source] = site[:title]
-              end
               activities << announcement
             end
           end

@@ -5,7 +5,7 @@ describe SakaiSiteAnnouncementsProxy do
   before do
     # Site IDs in test data
     @site_with_ten_current = '29fc31ae-ff14-419f-a132-5576cae2474e'
-    @site_with_one_current = '45042d5d-9b88-43cf-a83a-464e1f0444fc'
+    @site_with_one_current = '29d475ae-a1c1-493f-b721-fcfeebdb038d'
     @unpublished_site = 'cc56df9a-3ae1-4362-a4a0-6c5133ec8750'
     @site_group_with_one = '282e0a88-d923-46fe-85f9-1db0e4048e19'
   end
