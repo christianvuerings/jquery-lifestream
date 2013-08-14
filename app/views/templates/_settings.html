@@ -42,7 +42,10 @@
         </div>
         <div class="row">
           <div class="small-9 small-offset-3 columns">
-            <button class="cc-button cc-button-blue" id="cc-settings-act-as-submit" type="submit">Submit</button>
+            <button
+              class="cc-button cc-button-blue"
+              data-ng-disabled="!admin.act_as.uid"
+              type="submit">Submit</button>
           </div>
         </div>
       </form>
