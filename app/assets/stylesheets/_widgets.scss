@@ -1,6 +1,14 @@
 .cc-widget {
   background: #fff;
   margin: 15px 15px 0 0;
+
+  &:before, &:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+  }
+  &:after {
+      clear: both;
+  }
 }
 .cc-widget-last {
   margin-right: 0;
