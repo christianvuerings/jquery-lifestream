@@ -1,8 +1,9 @@
+<%= render 'templates/accessibilty' %>
 <%= render 'templates/ieold' %>
 <%= render 'templates/launcher' %>
 
 <div class="cc-off-canvas-container">
-  <div class="cc-offcanvas-left">
+  <div class="cc-offcanvas-left" id="cc-navigation">
     <%= render 'templates/navigation' %>
   </div>
 
@@ -11,7 +12,7 @@
     class="row cc-container-main"
     data-ng-class="{'collapse':(_controller_name=='DashboardController' || _controller_name=='AcademicsController')}"
     role="main">
-      <div data-ng-view></div>
+      <div id="cc-main-content" data-ng-view></div>
     </div>
     <%= render 'templates/footer' %>
   </div>
