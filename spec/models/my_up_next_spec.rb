@@ -41,7 +41,6 @@ describe "MyUpNext" do
   it "should return an empty feed for act-as users" do
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
     GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleProxy.any_instance.stub(:events_list).and_return(@fake_google_events_array)
     another_user = @user_id
     while (another_user == @user_id)
       another_user = rand(99999).to_s
@@ -54,7 +53,6 @@ describe "MyUpNext" do
     too_late = Time.zone.today.to_time_in_current_zone.to_datetime.end_of_day
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    GoogleProxy.any_instance.stub(:events_list).and_return(@fake_google_events_array)
     valid_feed = MyUpNext.new(@user_id).get_feed
     valid_feed[:items].size.should be > 0
     out_of_scope_items = valid_feed[:items].select { |entry|

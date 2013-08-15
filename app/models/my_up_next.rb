@@ -103,6 +103,7 @@ class MyUpNext < MyMergedModel
       response_page.data["items"].each do |entry|
         next unless is_current_all_day_event?(entry["start"])
         next unless entry["summary"] && entry["summary"].kind_of?(String)
+        next if is_declined_event?(entry)
 
         formatted_entry = {
           :attendees => handle_attendees(entry["attendees"]),
@@ -140,4 +141,12 @@ class MyUpNext < MyMergedModel
     end
     result
   end
+
+  def is_declined_event?(entry)
+    entry && entry['attendees'] &&
+        (entry['attendees'].index {|attendee|
+          attendee['self'] == true && attendee['responseStatus'] == 'declined'
+        })
+  end
+
 end
