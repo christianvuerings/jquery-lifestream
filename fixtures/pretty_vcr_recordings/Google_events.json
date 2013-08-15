@@ -262,7 +262,55 @@
                 "sequence": 0,
                 "reminders": {
                   "useDefault": true
-                }
+                },
+                "attendees": [
+                  {
+                    "self": true,
+                    "responseStatus": "accepted"
+                  },
+                  {
+                    "responseStatus": "needsAction"
+                  }
+                ]
+              },
+              {
+                "kind":"calendar#event",
+                "etag":"\"MzcDyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\"",
+                "id":"_feingpb4elm6ab9n6oqjge1dcpkmsobc81n6irjac5hmutbiedin6bj3dtmg",
+                "status":"confirmed",
+                "htmlLink":"https://www.google.com/calendar/event?eid=Y3WlbG1ncGI0ZWxtNmFiOW42b3FqZ2UxZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ",
+                "created":"1900-01-01T12:00:00.000Z",
+                "updated":"2012-10-09T23:07:19.000Z",
+                "summary":"Carouse with Oski",
+                "creator":{
+                  "email":"oski@example.com",
+                  "displayName":"Oski the Bear"
+                },
+                "organizer":{
+                  "email":"oski@example.com",
+                  "displayName":"Oski the Bear"
+                },
+                "start":{
+                  "dateTime":"2012-12-14T11:30:00-08:00"
+                },
+                "end":{
+                  "dateTime":"2012-12-14T14:30:00-08:00"
+                },
+                "sequence":0,
+                "reminders":{
+                  "useDefault":true
+                },
+                "attendees": [
+                  {
+                    "self": true,
+                    "responseStatus": "declined"
+                  },
+                  {
+                    "email": "oski@example.com",
+                    "displayName": "Oski the Bear",
+                    "responseStatus": "accepted"
+                  }
+                ]
               },
               {
                 "kind": "calendar#event",
@@ -868,7 +916,56 @@
                       "sequence":0,
                       "reminders":{
                           "useDefault":true
-                      }
+                      },
+                      "attendees": [
+                        {
+                          "self": true,
+                          "responseStatus": "accepted"
+                        },
+                        {
+                          "responseStatus": "needsAction"
+                        }
+                      ]
+                  },
+                  {
+                      "kind":"calendar#event",
+                      "etag":"\"MzcDyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\"",
+                      "id":"_feingpb4elm6ab9n6oqjge1dcpkmsobc81n6irjac5hmutbiedin6bj3dtmg",
+                      "status":"confirmed",
+                      "htmlLink":"https://www.google.com/calendar/event?eid=Y3WlbG1ncGI0ZWxtNmFiOW42b3FqZ2UxZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ",
+                      "created":"1900-01-01T12:00:00.000Z",
+                      "updated":"2012-10-09T23:07:19.000Z",
+                      "summary":"Carouse with Oski",
+                      "creator":{
+                          "email":"oski@example.com",
+                          "displayName":"Oski the Bear"
+                      },
+                      "organizer":{
+                          "email":"oski@example.com",
+                          "displayName":"Oski the Bear"
+                      },
+                      "start":{
+                          "dateTime":":::TODAY_THREE_THIRTY:::"
+                      },
+                      "end":{
+                          "dateTime":":::TODAY_FOUR_THIRTY:::"
+                      },
+                      "iCalUID":"schedule-76588-final@ninjacourses.com",
+                      "sequence":0,
+                      "reminders":{
+                          "useDefault":true
+                      },
+                      "attendees": [
+                        {
+                          "self": true,
+                          "responseStatus": "declined"
+                        },
+                        {
+                          "email": "oski@example.com",
+                          "displayName": "Oski the Bear",
+                          "responseStatus": "accepted"
+                        }
+                      ]
                   },
                   {
                       "kind": "calendar#event",

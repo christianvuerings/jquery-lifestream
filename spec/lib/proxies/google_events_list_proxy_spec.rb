@@ -7,14 +7,14 @@ describe 'GoogleEventsProxy(events_list)' do
   end
 
   it "should simulate a fake, valid event list response (assuming a valid recorded fixture)" do
-    #Pre-recorded response has 13 entries, split into batches of 10.
+    #Pre-recorded response has 14 entries, split into batches of 10.
     proxy = GoogleEventsListProxy.new(:fake => true)
     response_array = proxy.events_list({:maxResults => 10}).first 2
 
     #sample response payload: https://developers.google.com/google-apps/calendar/v3/reference/events/list
     response_array[0].data["kind"].should == "calendar#events"
     response_array.size.should == 2
-    (response_array[0].data["items"].size + response_array[1].data["items"].size).should == 13
+    (response_array[0].data["items"].size + response_array[1].data["items"].size).should == 14
   end
 
   it "should return a fake event list response that matches what the UI sends for the up-next widget in fake mode" do
@@ -31,7 +31,7 @@ describe 'GoogleEventsProxy(events_list)' do
         }).first
     ]
     response_array.size.should == 1
-    response_array[0].data["items"].size.should == 5
+    response_array[0].data["items"].size.should == 6
   end
 
   it "should simulate a token update before a real request using the Tammi account", :testext => true do
