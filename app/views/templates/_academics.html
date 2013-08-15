@@ -248,7 +248,7 @@
                       <a data-ng-href="/academics/semester/{{semester.slug}}/class/{{sem.ccn}}" data-ng-bind="sem.course_number"></a>
                     </div>
                     <div class="small-7 columns" data-ng-bind="sem.title"></div>
-                    <div class="small-2 columns" data-ng-bind="sem.units"></div>
+                    <div class="small-2 columns" data-ng-bind="sem.units | number:1"></div>
                   </div>
                 </div>
               </div>
