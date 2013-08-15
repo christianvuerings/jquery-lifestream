@@ -36,7 +36,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Link', 'LinkCategory', 'LinkSection', 'UserRole', 'UserWhitelist']
+  config.included_models = ['Link', 'LinkCategory', 'LinkSection', 'UserAuth', 'UserRole', 'UserWhitelist']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -98,6 +98,10 @@ RailsAdmin.config do |config|
 
   config.model 'UserWhitelist' do
     label "Whitelisted User"
+  end
+
+  config.model 'UserAuth' do
+    label "User Authorizations"
   end
 
   config.navigation_static_label = "Tools"
