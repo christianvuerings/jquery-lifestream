@@ -1,13 +1,13 @@
 <header>
-  <div class="cc-offcanvas-icon cc-left">
+  <div class="cc-offcanvas-icon cc-left" data-ng-show="api.user.events.isAuthenticated">
     <button data-ng-click="off_canvas_menu._show=!off_canvas_menu._show" /><i class="icon-reorder"></i></button>
   </div>
-  <div class="cc-header-logo">
+  <div class="cc-header-logo" data-ng-class="{'hide-for-small':(api.user.events.isAuthenticated)}">
     <a href="/dashboard">
       <%= render 'templates/svg/calcentral_logo' %>
     </a>
   </div>
-  <div class="cc-header-beta cc-left">Beta</div>
+  <div class="cc-header-beta cc-left" data-ng-class="{'hide-for-small':(api.user.events.isAuthenticated)}">Beta</div>
   <nav class="cc-header-icons ng-cloak" data-ng-show="api.user.events.isAuthenticated">
     <%= render 'templates/widgets/badges_popover' %>
     <%= render 'templates/widgets/academic_profile_popover' %>
