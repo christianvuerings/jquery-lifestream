@@ -52,6 +52,11 @@ $cc-color-widget-background: #ebebeb;
 $cc-color-widget-more-background: #f7f7f7;
 $cc-color-widget-section-label: #515151;
 
+/* HTML */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 /* Body */
 body {
   background-color: $cc-color-main-background;
