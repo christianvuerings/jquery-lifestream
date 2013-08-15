@@ -25,12 +25,14 @@ describe "CanvasRosters" do
                     {
                         'course_section_id' => unlinked_section_id,
                         "enrollment_state" => "active",
-                        "role" => "StudentEnrollment"
+                        "role" => "StudentEnrollment",
+                        "html_url" => "https://example.com/courses/#{course_id}/users/#{official_student_in_canvas_id}"
                     },
                     {
                         'course_section_id' => linked_section_id,
                         "enrollment_state" => "active",
-                        "role" => "StudentEnrollment"
+                        "role" => "StudentEnrollment",
+                        "html_url" => "https://example.com/courses/#{course_id}/users/#{official_student_in_canvas_id}"
                     }
                 ]
             },
@@ -41,7 +43,8 @@ describe "CanvasRosters" do
                     {
                         'course_section_id' => linked_section_id,
                         "enrollment_state" => "active",
-                        "role" => "StudentEnrollment"
+                        "role" => "StudentEnrollment",
+                        "html_url" => "https://example.com/courses/#{course_id}/users/#{unofficial_student_in_canvas_id}"
                     }
                 ]
             }
@@ -91,6 +94,7 @@ describe "CanvasRosters" do
     student[:first_name].blank?.should be_false
     student[:last_name].blank?.should be_false
     student[:sections].length.should == 2
+    student[:profile_url].blank?.should be_false
   end
 
 

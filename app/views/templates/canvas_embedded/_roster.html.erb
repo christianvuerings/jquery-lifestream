@@ -15,10 +15,14 @@
     <ul class="cc-page-roster-list">
       <li data-ng-repeat="student in students | filter:search | orderBy:'last_name'">
         <div data-ng-show="student.photo">
-          <img data-ng-src="{{student.photo}}" width="72" height="96" />
+          <a data-ng-href="{{student.profile_url}}">
+            <img data-ng-src="{{student.photo}}" width="72" height="96" />
+          </a>
         </div>
         <div data-ng-hide="student.photo">
-          <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
+          <a data-ng-href="{{student.profile_url}}">
+            <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
+          </a>
         </div>
         <div class="cc-ellipsis" data-ng-bind="student.first_name"></div>
         <div class="cc-ellipsis"><strong data-ng-bind="student.last_name"></strong></div>
