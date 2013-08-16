@@ -320,6 +320,9 @@ Read more about why we're using @import instead of require at
 http://stackoverflow.com/questions/6269420
 */
 
+/* Accessibility */
+@import "accessibility";
+
 /* Header */
 @import "header";
 /* Top navigation */
