@@ -76,7 +76,10 @@ class CanvasRosters
       login_id = canvas_student['login_id']
       if (campus_student = campus_enrollment_map[login_id])
         campus_student[:id] = canvas_student['id']
-        campus_student[:sections] = canvas_student['enrollments'].collect {|enr| {id: enr['course_section_id']} }
+        if (canvas_enrollments = canvas_student['enrollments']) && !canvas_enrollments.blank?
+          campus_student[:sections] = canvas_enrollments.collect {|enr| {id: enr['course_section_id']} }
+          campus_student[:profile_url] = canvas_enrollments[0]['html_url']
+        end
         campus_student[:login_id] = login_id
         if campus_student[:enroll_status] == 'E'
           campus_student[:photo] = "/canvas/#{@canvas_course_id}/photo/#{canvas_student['id']}"

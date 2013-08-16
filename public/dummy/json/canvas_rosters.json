@@ -20,6 +20,7 @@
             "last_name": "ABDELGHAFFAR",
             "student_id": "234234234",
             "photo": "/canvas/777/photo/98765",
+            "profile_url": "https://example.com/courses/767330/users/484855",
             "sections": [
                 {
                     "id": "98163"
@@ -32,6 +33,7 @@
             "last_name": "AHMED",
             "student_id": "234234233",
             "photo": "/canvas/777/photo/98764",
+            "profile_url": "https://example.com/courses/767330/users/484856",
             "sections": [
             ]
         },
@@ -40,6 +42,7 @@
             "first_name": "JOSÉ",
             "last_name": "DABLANTES PAEZ",
             "student_id": "234234232",
+            "profile_url": "https://example.com/courses/767330/users/484857",
             "sections": [
                 {
                     "id": "98163"
