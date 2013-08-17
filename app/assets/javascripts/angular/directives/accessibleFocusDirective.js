@@ -12,7 +12,7 @@
         // This is basically our link function,
         // we need to return it within the compile function.
         return function(scope, elm, attrs) {
-          elm.bind('keydown keypress', function(event) {
+          elm.bind('keydown', function(event) {
 
             // Check whether you've hit the ENTER key
             // and whether the element itself is actually focussed
