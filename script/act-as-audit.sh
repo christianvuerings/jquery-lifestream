@@ -15,7 +15,7 @@ fi
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-/bin/egrep -h "ACT-AS|acting_as" log/calcentral*WARN_${YESTERDAY}.log > $LOGFILE
+/bin/egrep -h "ACT-AS|acting_as" log/calcentral*${YESTERDAY}.log > $LOGFILE
 
 if [ -s $LOGFILE ]; then
   /bin/mail -s "CalCentral act-as audit for $YESTERDAY" $RECIPIENT < $LOGFILE
