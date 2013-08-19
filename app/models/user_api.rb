@@ -102,7 +102,7 @@ class UserApi < MyMergedModel
         :california_residency => @campus_attributes[:california_residency],
         :education_level => @campus_attributes[:education_level],
         :reg_status => @campus_attributes[:reg_status],
-        :reg_block => @campus_attributes[:reg_block],
+        :reg_block => get_reg_blocks,
         :units_enrolled => @campus_attributes[:units_enrolled]
       },
       :uid => @uid
@@ -130,6 +130,31 @@ class UserApi < MyMergedModel
       return true
     end
     false
+  end
+
+  def get_reg_blocks
+    blocks_feed = MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
+    response = {
+      unavailable: blocks_feed.blank?,
+      needsAction: blocks_feed[:active_blocks].present?,
+      blocks: []
+    }
+
+    if response[:needsAction]
+      response[:explanation] = 'See <a href="/academics">My Academics</a> for more information.'
+
+      blocks_feed[:active_blocks].each do |block|
+        response[:blocks].push(
+          {
+            name: "#{block[:block_type]}",
+            summary: "#{block[:block_type]} block from #{block[:short_description]} due to #{block[:reason]}"
+          })
+      end
+    else
+      response[:summary] = 'None'
+    end
+
+    response
   end
 
 end

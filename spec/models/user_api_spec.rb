@@ -115,4 +115,22 @@ describe "UserApi" do
       })
     UserApi.is_allowed_to_log_in?(@random_id).should == false
   end
+
+  context "valid regblocks" do
+    let! (:oski_blocks_proxy) { BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true}) }
+    before do
+      BearfactsProxy.any_instance.stub(:lookup_student_id).and_return(11667051)
+      BearfactsRegblocksProxy.stub(:new).and_return(oski_blocks_proxy)
+    end
+
+    subject { UserApi.new("61889").get_feed[:student_info] }
+    it "should return some valid regblocks" do
+      subject[:reg_block].should be_present
+      subject[:reg_block][:explanation].should be_present
+      subject[:reg_block][:blocks].should be_present
+      subject[:reg_block][:blocks].each do |block|
+        %w(name summary).each { |key| block[key.to_sym].should be_present}
+      end
+    end
+  end
 end

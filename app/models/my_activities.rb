@@ -76,68 +76,69 @@ class MyActivities < MyMergedModel
     activities
   end
 
-  def append_regblocks(activities)
-    proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
-    blocks_feed = proxy.get
-
-    #Bearfacts proxy will return nil on >= 400 errors.
-    return activities if blocks_feed.nil?
-
-    doc = Nokogiri::XML blocks_feed[:body]
-    doc.css("studentRegistrationBlock").each do |block|
-      blocked_date = cleared_date = nil
-      begin
-        blocked_date = DateTime.parse(block.css("blockedDate").text)
-      rescue ArgumentError # no date
-      end
-      begin
-        cleared_date = DateTime.parse(block.css("clearedDate").text)
-      rescue ArgumentError # no date
-      end
-
-      if include_in_feed?(blocked_date, cleared_date)
-        type = block.css("blockType").text.strip
-        status = block.css("status").text.strip
-
-        translated_codes = RegBlockCodeTranslator.new().translate_bearfacts_proxy(block.css('reasonCode').text, block.css('office').text)
-        block_type = translated_codes[:type]
-        block_reason = translated_codes[:reason]
-        office = translated_codes[:office]
-        if cleared_date
-          notification_type = "message"
-          notification_date = cleared_date
-          title ="#{block_type} Block Cleared"
-          message = "This block, placed on #{format_date(blocked_date)[:date_string]}, was cleared on #{format_date(cleared_date)[:date_string]}."
-        else
-          notification_type = "alert"
-          notification_date = blocked_date
-          message = translated_codes[:message]
-          title = "#{block_type} Block Placed"
-        end
-
-        unless (block_type == 'Academic' && block_reason == 'Academic')
-          title += ": #{block_reason}"
-        end
-
-        Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{type}, blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
-
-        notification = {
-            id: '',
-            title: title,
-            summary: message,
-            short_description: office,
-            block_type: block_type,
-            type: notification_type,
-            date: format_date(notification_date),
-            source: office,
-            source_url: "https://bearfacts.berkeley.edu/bearfacts/",
-            url: "https://bearfacts.berkeley.edu/bearfacts/",
-            emitter: "BearFacts",
-            color_class: "campus-item"
-        }
-        activities << notification
+  def process_block!(block)
+    blocked_date = block.try(:[], :blocked_date).try(:[], :epoch)
+    cleared_date = block.try(:[], :cleared_date).try(:[], :epoch)
+    if include_in_feed?(blocked_date, cleared_date)
+      block.merge!(
+        {
+          id: '',
+          source: block[:short_description] || '',
+          source_url: "https://bearfacts.berkeley.edu/bearfacts/",
+          url: "https://bearfacts.berkeley.edu/bearfacts/",
+          emitter: "BearFacts",
+          color_class: "campus-item"
+        })
+      if cleared_date
+        process_cleared_block!(block)
       else
-        Rails.logger.debug "#{self.class.name} Reg block too old to include in feed, skipping. blocked_date = #{blocked_date}; to_i = #{blocked_date.to_i}; cleared_date = #{cleared_date}"
+        process_active_block!(block)
+      end
+
+      unless (block[:block_type] == 'Academic' && block[:reason] == 'Academic')
+        block[:title] += ": #{block[:reason]}"
+      end
+
+      Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{block[:block_type]}," \
+        "blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
+      block
+    else
+      Rails.logger.debug "#{self.class.name} Reg block too old to include in feed, skipping. " \
+        "blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
+      nil
+    end
+  end
+
+  def process_cleared_block!(block)
+    block.merge!(
+      {
+        type: "message",
+        date: block[:cleared_date],
+        title: "#{block[:block_type]} Block Cleared",
+        summary: "This block, placed on #{block[:blocked_date][:date_string]}, "\
+          "was cleared on #{block[:cleared_date][:date_string]}."
+      })
+  end
+
+  def process_active_block!(block)
+    block.merge!(
+      {
+        type: "alert",
+        date: block[:blocked_date],
+        title: "#{block[:block_type]} Block Placed",
+        summary: block[:message],
+      }
+    )
+  end
+
+  def append_regblocks(activities)
+    blocks_feed = MyRegBlocks.new(@uid, @original_uid).get_feed
+    return activities if blocks_feed.empty?
+
+    %w(active_blocks inactive_blocks).each do |block_category|
+      blocks_feed[block_category.to_sym].each do |block|
+        notification = process_block!(block)
+        activities << notification if notification.present?
       end
     end
   end

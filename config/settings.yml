@@ -133,6 +133,7 @@ cache:
     CanvasLti: <%= 5.minutes %>
     CanvasCourseStudentsProxy: <%= 15.minutes %>
     CanvasCourseTeachersProxy: <%= 5.minutes %>
+    MyRegBlocks: <%= 10.minutes %>
 
 # Cache warmer settings
 cache_warmer:
