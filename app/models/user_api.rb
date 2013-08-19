@@ -133,7 +133,7 @@ class UserApi < MyMergedModel
   end
 
   def get_reg_blocks
-    blocks_feed = MyRegBlocks.new(@uid, @original_uid).get_feed
+    blocks_feed = MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
     response = {
       unavailable: blocks_feed.blank?,
       needsAction: blocks_feed[:active_blocks].present?,
