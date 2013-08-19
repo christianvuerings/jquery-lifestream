@@ -11,6 +11,7 @@ module Calcentral
 
     {
         UserApi => :expire,
+        MyRegBlocks => :expire,
         MyClasses => :expire,
         MyTasks::Merged => :expire,
         MyBadges::Merged => :expire,
