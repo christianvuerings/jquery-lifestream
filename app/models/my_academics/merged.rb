@@ -10,6 +10,7 @@ class MyAcademics::Merged < MyMergedModel
     feed = {}
     [
       MyAcademics::CollegeAndLevel,
+      MyAcademics::GpaUnits,
       MyAcademics::Requirements,
       MyAcademics::Regblocks,
       MyAcademics::Semesters,

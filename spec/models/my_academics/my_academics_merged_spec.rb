@@ -6,6 +6,7 @@ describe "MyAcademics::Merged" do
 
     model_classes = [
       MyAcademics::CollegeAndLevel,
+      MyAcademics::GpaUnits,
       MyAcademics::Requirements,
       MyAcademics::Regblocks,
       MyAcademics::Semesters,
