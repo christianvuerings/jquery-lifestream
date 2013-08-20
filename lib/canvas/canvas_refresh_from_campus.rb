@@ -78,14 +78,13 @@ class CanvasRefreshFromCampus < CanvasMaintenance
     import_proxy = CanvasSisImportProxy.new
     response = import_proxy.post_users(users_csv_filename)
     if response && response.status == 200
-      logger.debug "User import response = #{response.inspect}"
-
       json = JSON.parse(response.body)
       import_id = json["id"]
       import_status = import_proxy.import_status(import_id)
       import_success = import_proxy.import_was_successful?(import_status)
 
       if import_success
+        logger.warn("User import succeeded")
         term_enrollment_csv_files.each do |term_id, csv_filename|
           enrollment_response = import_proxy.post_enrollments(term_id, csv_filename)
           if enrollment_response && enrollment_response.status == 200
@@ -93,7 +92,9 @@ class CanvasRefreshFromCampus < CanvasMaintenance
             enrollment_import_id = enrollment_json["id"]
             enrollment_import_status = import_proxy.import_status(enrollment_import_id)
             enrollment_import_success = import_proxy.import_was_successful?(enrollment_import_status)
-            unless enrollment_import_success
+            if enrollment_import_success
+              logger.warn("Enrollment import succeeded")
+            else
               logger.error("Enrollment import failed or incompletely processed. Import status: #{enrollment_import_status}")
             end
           else
