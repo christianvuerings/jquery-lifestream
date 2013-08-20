@@ -29,4 +29,8 @@ class CanvasLtiController < ApplicationController
     end
   end
 
+  def lti_roster_photos
+    respond_to :xml
+  end
+
 end
