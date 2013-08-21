@@ -30,6 +30,7 @@
               element.css('display', 'block');
               element.bind('click', function(){
                 el.scrollIntoView();
+                el.setAttribute('tabindex', -1);
                 el.focus();
               });
             // Otherwise, hide it
