@@ -133,7 +133,9 @@ class MyActivities < MyMergedModel
 
   def append_regblocks(activities)
     blocks_feed = MyRegBlocks.new(@uid, @original_uid).get_feed
-    return activities if blocks_feed.empty?
+    if blocks_feed.empty? || blocks_feed[:online] == false
+      return activities
+    end
 
     %w(active_blocks inactive_blocks).each do |block_category|
       blocks_feed[block_category.to_sym].each do |block|

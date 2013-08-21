@@ -6,7 +6,11 @@ class MyRegBlocks < MyMergedModel
     blocks_feed = proxy.get
 
     #Bearfacts proxy will return nil on >= 400 errors.
-    return {} if blocks_feed.nil?
+    if blocks_feed.nil?
+      return {
+        online: false,
+      }
+    end
     active_blocks = []
     inactive_blocks = []
 
@@ -55,8 +59,9 @@ class MyRegBlocks < MyMergedModel
     inactive_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
 
     {
-      :active_blocks => active_blocks,
-      :inactive_blocks => inactive_blocks
+      online: true,
+      active_blocks: active_blocks,
+      inactive_blocks: inactive_blocks
     }
   end
 
