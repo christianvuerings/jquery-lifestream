@@ -11,8 +11,9 @@
     <div
     class="row cc-container-main"
     data-ng-class="{'collapse':(_controller_name=='DashboardController' || _controller_name=='AcademicsController')}"
+    id="cc-main-content"
     role="main">
-      <div id="cc-main-content" data-ng-view></div>
+      <div data-ng-view></div>
     </div>
     <%= render 'templates/footer' %>
   </div>
