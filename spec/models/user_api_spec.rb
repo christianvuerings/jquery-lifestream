@@ -132,7 +132,7 @@ describe "UserApi" do
     end
 
     it "bearfacts API should be online" do
-      subject[:reg_block][:online].should be_true
+      subject[:reg_block][:available].should be_true
     end
 
     it "needsAction should be true" do
@@ -152,7 +152,7 @@ describe "UserApi" do
     end
 
     it "bearfacts API should be offline" do
-      subject[:reg_block][:online].should be_false
+      subject[:reg_block][:available].should be_false
     end
 
     it "needsAction should be false" do

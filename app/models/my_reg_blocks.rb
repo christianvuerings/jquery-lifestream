@@ -8,7 +8,7 @@ class MyRegBlocks < MyMergedModel
     #Bearfacts proxy will return nil on >= 400 errors.
     if blocks_feed.nil?
       return {
-        online: false,
+        available: false,
       }
     end
     active_blocks = []
@@ -59,7 +59,7 @@ class MyRegBlocks < MyMergedModel
     inactive_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
 
     {
-      online: true,
+      available: true,
       active_blocks: active_blocks,
       inactive_blocks: inactive_blocks
     }

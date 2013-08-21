@@ -117,7 +117,7 @@
               </div>
 
               <h4>Active Blocks</h4>
-              <div class="cc-table" data-ng-show="regblocks.active_blocks && regblocks.online">
+              <div class="cc-table" data-ng-show="regblocks.active_blocks && regblocks.available">
                 <table>
                   <thead>
                     <tr>
@@ -158,17 +158,17 @@
                   </tbody>
                 </table>
               </div>
-              <div data-ng-show="!regblocks.active_blocks.length && regblocks.online">
+              <div data-ng-show="!regblocks.active_blocks.length && regblocks.available">
                 <div class="row collapse">
                   <div class="large-6 columns end">You have no active blocks at this time.</div>
                 </div>
               </div>
-              <div data-ng-show="!regblocks.online">
+              <div data-ng-show="!regblocks.available">
                 <div class="row collapse">
-                  <div class="large-6 columns end"><i class="icon-warning-sign"></i>Block message is currently unavilable.</div>
+                  <div class="large-6 columns end"><i class="icon-warning-sign cc-unavailable"></i>Block message is currently unavilable.</div>
                 </div>
               </div>
-              <div class="cc-academics-showhide-block-history" data-ng-show="regblocks.online">
+              <div class="cc-academics-showhide-block-history" data-ng-show="regblocks.available">
                 <p class="cc-academics-nolink cc-academics-empasize"
                   data-ng-show="!regblocks.inactive_blocks.length">No block history
                 </p>

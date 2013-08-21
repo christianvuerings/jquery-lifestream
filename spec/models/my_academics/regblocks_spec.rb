@@ -34,7 +34,7 @@ describe "MyAcademics::Regblocks" do
     end
 
     it "should be offline with empty blocks" do
-      subject[:online].should be_false
+      subject[:available].should be_false
       %w(active_blocks inactive_blocks).each { |key| subject[key.to_sym].should be_empty }
     end
   end

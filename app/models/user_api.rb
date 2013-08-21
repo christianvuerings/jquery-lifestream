@@ -135,7 +135,7 @@ class UserApi < MyMergedModel
   def get_reg_blocks
     blocks_feed = MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
     response = {
-      online: blocks_feed.present? && blocks_feed[:online],
+      available: blocks_feed.present? && blocks_feed[:available],
       needsAction: blocks_feed[:active_blocks].present?,
       active_blocks: blocks_feed[:active_blocks] ? blocks_feed[:active_blocks].length : 0
     }
