@@ -4,43 +4,42 @@
     data-ng-show="show_add_task || editorEnabled" novalidate >
     <div class="row collapse">
       <div class="large-3 small-3 columns">
-        <label for="cc-widget-tasks-addtask-title-{{$index}}"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
+        <label for="cc-widget-tasks-addtask-title-{{$parent.$id}}"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
       </div>
       <div class="large-9 small-9 columns">
         <input
           data-cc-focus-directive="add_edit_task._focusInput"
-          data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title-{{$index}}"
+          data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title-{{$parent.$id}}"
           type="text" placeholder="Enter your task title here" required aria-required="true" />
       </div>
     </div>
     <div class="row collapse">
       <div class="large-3 small-3 columns">
-        <label for="cc-widget-tasks-addtask-date-{{$index}}">Due:</label>
+        <label for="cc-widget-tasks-addtask-date-{{$parent.$id}}">Due:</label>
       </div>
       <div class="large-7 small-7 columns cc-widget-tasks-date-input">
         <input type="text"
           data-ng-model="add_edit_task.due_date"
           name="add_task_due_date"
-          id="cc-widget-tasks-addtask-date-{{$index}}"
+          id="cc-widget-tasks-addtask-date-{{$parent.$id}}"
           placeholder="mm/dd/yyyy"
-          data-cc-date-validator-directive
-          data-cc-datepicker-directive />
+          data-cc-date-validator-directive />
         <p class="cc-alert cc-alert-text" role="alert" data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccDateValidator">
           Please use mm/dd/yyyy date format
         </p>
       </div>
       <div class="large-2 small-2 columns">
-        <button class="cc-button-transparent cc-widget-tasks-addtask-calendar-icon" data-ng-click="api.util.preventBubble($event);_show_picker=!_show_picker" tabindex="-1">
+        <button class="cc-button-transparent cc-widget-tasks-addtask-calendar-icon" data-ng-click="api.util.preventBubble($event)" tabindex="-1" data-cc-datepicker-directive="cc-widget-tasks-addtask-date-{{$parent.$id}}">
           <i class="icon-calendar"></i>
         </button>
       </div>
     </div>
     <div class="row collapse">
       <div class="large-3 small-3 columns">
-        <label for="cc-widget-tasks-addtask-note-{{$index}}">Notes:</label>
+        <label for="cc-widget-tasks-addtask-note-{{$parent.$id}}">Notes:</label>
       </div>
       <div class="large-9 small-9 columns">
-        <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$index}}" rows="2" /></textarea>
+        <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$parent.$id}}" rows="2" /></textarea>
       </div>
     </div>
     <div class="row collapse" data-ng-show="!editorEnabled && task_adder_is_processing">
