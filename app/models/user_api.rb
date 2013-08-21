@@ -135,24 +135,10 @@ class UserApi < MyMergedModel
   def get_reg_blocks
     blocks_feed = MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
     response = {
-      unavailable: blocks_feed.blank?,
+      available: blocks_feed.present? && blocks_feed[:available],
       needsAction: blocks_feed[:active_blocks].present?,
-      blocks: []
+      active_blocks: blocks_feed[:active_blocks] ? blocks_feed[:active_blocks].length : 0
     }
-
-    if response[:needsAction]
-      response[:explanation] = 'See <a href="/academics">My Academics</a> for more information.'
-
-      blocks_feed[:active_blocks].each do |block|
-        response[:blocks].push(
-          {
-            name: "#{block[:block_type]}",
-            summary: "#{block[:block_type]} block from #{block[:short_description]} due to #{block[:reason]}"
-          })
-      end
-    else
-      response[:summary] = 'None'
-    end
 
     response
   end

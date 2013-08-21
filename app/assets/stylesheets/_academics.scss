@@ -121,4 +121,9 @@
   .cc-widget {
     overflow: hidden;
   }
+
+  .cc-unavailable {
+    color: $cc-color-gold !important;
+    padding-right: 5px;
+  }
 }

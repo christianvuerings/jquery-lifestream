@@ -7,8 +7,9 @@ class MyAcademics::Regblocks
     blocks = MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
 
     data[:regblocks] = {
-      :active_blocks => blocks[:active_blocks],
-      :inactive_blocks => blocks[:inactive_blocks]
+      available: blocks[:available],
+      active_blocks: blocks[:active_blocks] || [],
+      inactive_blocks: blocks[:inactive_blocks] || []
     }
 
   end

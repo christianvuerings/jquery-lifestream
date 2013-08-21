@@ -7,6 +7,7 @@ describe MyRegBlocks do
 
   it "should return some regblocks for oski" do
     subject[:active_blocks].empty?.should be_false
+    subject[:available].should be_true
     subject[:active_blocks].each do |block|
       block[:status].should == "Active"
       block[:type].should_not be_nil

@@ -22,7 +22,21 @@ describe "MyAcademics::Regblocks" do
       block[:status].should == "Released"
       block[:type].should_not be_nil
     end
+  end
 
+  context "Offline BearfactsApi for regblocks" do
+    before { BearfactsRegblocksProxy.any_instance.stub(:get).and_return {} }
+
+    subject do
+      feed = {}
+      MyAcademics::Regblocks.new("61889").merge(feed)
+      feed[:regblocks]
+    end
+
+    it "should be offline with empty blocks" do
+      subject[:available].should be_false
+      %w(active_blocks inactive_blocks).each { |key| subject[key.to_sym].should be_empty }
+    end
   end
 
 end

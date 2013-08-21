@@ -124,13 +124,39 @@ describe "UserApi" do
     end
 
     subject { UserApi.new("61889").get_feed[:student_info] }
-    it "should return some valid regblocks" do
+
+    it "should return some active_blocks" do
       subject[:reg_block].should be_present
-      subject[:reg_block][:explanation].should be_present
-      subject[:reg_block][:blocks].should be_present
-      subject[:reg_block][:blocks].each do |block|
-        %w(name summary).each { |key| block[key.to_sym].should be_present}
-      end
+      subject[:reg_block][:active_blocks].should be_present
+      subject[:reg_block][:active_blocks].should > 0
+    end
+
+    it "bearfacts API should be online" do
+      subject[:reg_block][:available].should be_true
+    end
+
+    it "needsAction should be true" do
+      subject[:reg_block][:needsAction].should be_true
+    end
+
+  end
+
+  context "invalid/offline regblock" do
+    before { BearfactsRegblocksProxy.any_instance.stub(:get).and_return {} }
+
+    subject { UserApi.new("61889").get_feed[:student_info] }
+    it "should have no active blocks" do
+      subject[:reg_block].should be_present
+      subject[:reg_block][:active_blocks].should be_present
+      subject[:reg_block][:active_blocks].should eq(0)
+    end
+
+    it "bearfacts API should be offline" do
+      subject[:reg_block][:available].should be_false
+    end
+
+    it "needsAction should be false" do
+      subject[:reg_block][:needsAction].should be_false
     end
   end
 end
