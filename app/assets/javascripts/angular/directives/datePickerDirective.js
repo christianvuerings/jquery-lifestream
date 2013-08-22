@@ -3,9 +3,12 @@
 
   angular.module('calcentral.directives').directive('ccDatepickerDirective', ['$document', function($document) {
     return {
-      restrict: 'A', // Restrict it to attributes.
+
+      // Restrict the directive to attributes
+      restrict: 'A',
       link: function(scope, elm, attrs, ctrl) {
 
+        // Keep track on whether the picker has been initialized before or not
         scope._picker_initialized = false;
 
         var initializePicker = function () {
@@ -14,44 +17,33 @@
           var inputElement = $document[0].querySelector('#' + attrs.ccDatepickerDirective);
           var angularInputElement = angular.element(inputElement);
 
+          /**
+           * Setup the picker
+           */
           var picker = new Pikaday({
-            bound: false,
-            field: inputElement,
+            bound: false, // We're not bounding directly to a field since otherwise it opens when you tab through (not accessible)
+            field: inputElement, // The element that should open when we hit the datepicker button.
             format: 'MM/DD/YYYY',
             onSelect: function() {
+
               // We need to set the view value
               // so validation happens correctly every time
               angularInputElement.controller('ngModel').$setViewValue(inputElement.value);
+
               // We need to call an extra digest call, otherwise the $watch isn't executed
               if(!scope.$$phase) {
                 scope.$digest();
               }
 
+              // Every time we select a value, we completely destroy the picker.
+              // We do this because then we have less events hanging around + less elements in the DOM
               closeAll();
             }
           });
 
-          var closeAll = function () {
-            scope._picker_shown = false;
-            scope._picker_initialized = false;
-            watchmodel();
-            watchshown();
-            picker.destroy();
-          };
-
-          // Wath the model for any changes
-          // e.g. when you switch on the editor mode for tasks
-          // the model will change. If this happens, we should
-          // also set the correct date in for the picker
-          var watchmodel = scope.$watch(attrs.ngModel, function(newValue) {
-
-            // newValue will be undefined when there is no date
-            // in that case, we don't need to set the date for the picker
-            if (newValue) {
-              picker.setDate(inputElement.value);
-            }
-          }, true);
-
+          /**
+           * Show/hide depending on the value of the _picker_shown variable.
+           */
           var watchshown = scope.$watch('_picker_shown', function(showPicker) {
             if (showPicker) {
               picker.show();
@@ -60,13 +52,31 @@
             }
           });
 
+          /**
+           * Close the picker and unset all the events that were bound to it.
+           */
+          var closeAll = function() {
+            scope._picker_shown = false;
+            scope._picker_initialized = false;
+            watchshown();
+            picker.destroy();
+            $document.unbind('click', closeAll);
+          };
+
+          $document.bind('click', closeAll);
+
         };
 
         // Bind the click event handler on the button
         elm.bind('click', function() {
           scope._picker_shown = !scope._picker_shown;
+
           if (scope._picker_initialized) {
+
+            // We need this extra $apply since otherwise the watchshown() method won't be actived
             scope.$apply();
+
+            // When the picker has been initialized before, we don't need to do it again.
             return;
           }
 
