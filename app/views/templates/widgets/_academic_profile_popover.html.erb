@@ -29,9 +29,6 @@
           <div class="cc-launcher-status-description">
             <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_block.needsAction]"></i>
             <strong>Registration Blocks:</strong> <span data-ng-bind="api.user.profile.student_info.reg_block.active_blocks"></span>
-            <p data-ng-repeat="block in api.user.profile.student_info.reg_block.blocks">
-              <strong><span data-ng-bind="block.name"></span>:</strong> <span data-ng-bind="block.summary"></span>
-            </p>
           </div>
         </a>
       </li>
