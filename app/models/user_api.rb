@@ -100,10 +100,8 @@ class UserApi < MyMergedModel
       :roles => @campus_attributes[:roles],
       :student_info => {
         :california_residency => @campus_attributes[:california_residency],
-        :education_level => @campus_attributes[:education_level],
         :reg_status => @campus_attributes[:reg_status],
         :reg_block => get_reg_blocks,
-        :units_enrolled => @campus_attributes[:units_enrolled]
       },
       :uid => @uid
     }

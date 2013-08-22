@@ -24,7 +24,6 @@
       "explanation": "",
       "needsAction": false
     },
-    "education_level": "Freshman",
     "reg_status": {
       "code": "C",
       "summary": "Registered",
@@ -32,11 +31,10 @@
       "needsAction": false
     },
     "reg_block": {
-      "needsAction": false,
-      "summary": "None",
-      "blocks": []
-    },
-    "units_enrolled": "0"
+      "available": true,
+      "needsAction": "true",
+      "active_blocks": 50
+    }
   },
   "uid": "61889"
 }
