@@ -285,8 +285,7 @@ body {
     }
   }
   .cc-launcher-status-description {
-    margin-left: 20px;
-    line-height: 1.3;
+    padding: 5px 0;
   }
   .cc-popover-status {
     margin-right: 5px;
@@ -307,8 +306,7 @@ body {
     }
   }
   .cc-popover-academic-status {
-    background: $cc-color-white;
-    padding: 15px;
+    padding-bottom: 5px;
   }
 }
 

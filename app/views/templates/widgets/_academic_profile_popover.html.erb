@@ -11,42 +11,39 @@
     </i>
   </button>
   <div class="cc-popover cc-popover-arrow cc-popover-academic-status" data-ng-show="api.popover.status('cc-popover-academic-status')">
-    <h4>Academic Profile</h4>
-    <p>
-      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_status.needsAction]"></i>
-      <div class="cc-launcher-status-description">
-        <strong>Registration Status:</strong> <span data-ng-bind="api.user.profile.student_info.reg_status.summary"><br />
-        <span data-ng-bind-html="api.user.profile.student_info.reg_status.explanation"></span>
-      </div>
-    </p>
-    <p>
-      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_block.needsAction]"></i>
-      <div class="cc-launcher-status-description">
-        <strong>Registration Blocks<span data-ng-show="api.user.profile.student_info.reg_block.summary">:</span></strong> <span data-ng-bind="api.user.profile.student_info.reg_block.summary"></span><br />
-        <span data-ng-bind-html-unsafe="api.user.profile.student_info.reg_block.explanation"></span>
-        <p data-ng-repeat="block in api.user.profile.student_info.reg_block.blocks">
-          <strong><span data-ng-bind="block.name"></span>:</strong> <span data-ng-bind="block.summary"></span>
-        </p>
-      </div>
-    </p>
-    <p>
-      <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-stop'}[api.user.profile.student_info.california_residency.needsAction]"></i>
-      <div class="cc-launcher-status-description">
-        <strong>California Residency:</strong> <span data-ng-bind="api.user.profile.student_info.california_residency.summary"><br />
-        <span data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></span>
-      </div>
-    </p>
-    <p>
-      <i class="cc-left icon-stop"></i>
-      <div class="cc-launcher-status-description">
-        <strong>Education Level:</strong> <span data-ng-bind="api.user.profile.student_info.education_level">
-      </div>
-    </p>
-    <p>
-      <i class="cc-left icon-stop"></i>
-      <div class="cc-launcher-status-description">
-        <strong>Units Enrolled:</strong> <span data-ng-bind="api.user.profile.student_info.units_enrolled">
-      </div>
-    </p>
-  </div>
+    <div class="cc-popover-title">
+      <h4>Academic Profile</h4>
+    </div>
+    <ul class="cc-popover-items">
+      <li class="cc-popover-item">
+        <a class="cc-popover-item-details" href="/academics">
+          <div class="cc-launcher-status-description">
+            <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_status.needsAction]"></i>
+            <strong>Registration Status:</strong> <span data-ng-bind="api.user.profile.student_info.reg_status.summary"><br />
+            <span data-ng-bind-html="api.user.profile.student_info.reg_status.explanation"></span>
+          </div>
+        </a>
+      </li>
+      <li class="cc-popover-item">
+        <a class="cc-popover-item-details" href="/academics">
+          <div class="cc-launcher-status-description">
+            <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_block.needsAction]"></i>
+            <strong>Registration Blocks:</strong> <span data-ng-bind="api.user.profile.student_info.reg_block.active_blocks"></span>
+            <p data-ng-repeat="block in api.user.profile.student_info.reg_block.blocks">
+              <strong><span data-ng-bind="block.name"></span>:</strong> <span data-ng-bind="block.summary"></span>
+            </p>
+          </div>
+        </a>
+      </li>
+      <li class="cc-popover-item">
+        <a class="cc-popover-item-details" href="/academics">
+          <div class="cc-launcher-status-description">
+            <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.california_residency.needsAction]"></i>
+            <strong>California Residency:</strong> <span data-ng-bind="api.user.profile.student_info.california_residency.summary"><br />
+            <span data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></span>
+          </div>
+        </a>
+      </li>
+    </div>
+  </ul>
 </div>
