@@ -16,9 +16,16 @@ body {
 /* Header logo */
 .cc-header-logo {
   float: left;
-  height: 40px;
-  padding-top: 6px;
-  width: 195px;
+  a {
+    display: block;
+    height: 40px;
+    padding-top: 6px;
+    width: 195px;
+    &:focus, &:hover {
+      border-bottom: 2px solid $cc-color-gold;
+      opacity: 0.9;
+    }
+  }
   svg {
     margin: 0 10px;
   }
