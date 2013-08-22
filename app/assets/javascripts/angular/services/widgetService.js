@@ -32,6 +32,11 @@
         }
       }
 
+      // Scroll to element so it is in the browsers viewport
+      if (event && event.toElement && item._show) {
+        event.toElement.scrollIntoView();
+      }
+
       analyticsService.trackEvent(['Detailed view', item._show ? 'Open' : 'Close', widget]);
     };
 
