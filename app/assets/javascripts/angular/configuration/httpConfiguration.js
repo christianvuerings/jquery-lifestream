@@ -8,11 +8,14 @@
   // Set the configuration
   calcentral.config(['$httpProvider', function($httpProvider) {
 
-    // Add the http error inceptorservice to the list of response inceptors
+    // Add the HTTP error service
     $httpProvider.responseInterceptors.push('httpErrorInterceptorService');
 
-    // Add the http spinner servive to the list of response inceptors
+    // Add the spinner service
     $httpProvider.responseInterceptors.push('spinnerInterceptorService');
+
+    // Add the location bar service
+    $httpProvider.responseInterceptors.push('locationbarInterceptorService');
 
   }]);
 
