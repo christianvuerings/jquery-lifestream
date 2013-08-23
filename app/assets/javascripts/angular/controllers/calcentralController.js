@@ -16,6 +16,7 @@
      *  - Send the right controller name
      */
     $rootScope.$on('$routeChangeSuccess', function(evt, current) {
+      apiService.auth.isLoggedInRedirect();
       apiService.events.fireApiEvents($rootScope.api);
       apiService.user.handleRouteChange();
       apiService.util.changeControllerName(current.controller);

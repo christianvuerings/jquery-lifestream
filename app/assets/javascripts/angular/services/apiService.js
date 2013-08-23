@@ -4,6 +4,7 @@
 
   angular.module('calcentral.services').service('apiService', [
     'analyticsService',
+    'authService',
     'apiEventService',
     'dateService',
     'errorService',
@@ -14,6 +15,7 @@
     'widgetService',
     function(
       analyticsService,
+      authService,
       apiEventService,
       dateService,
       errorService,
@@ -26,6 +28,7 @@
     // API
     var api = {
       analytics: analyticsService,
+      auth: authService,
       events: apiEventService,
       date: dateService,
       error: errorService,
