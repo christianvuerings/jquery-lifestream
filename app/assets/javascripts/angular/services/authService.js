@@ -15,8 +15,8 @@
       // otherwise the back button doesn't trigger a new response
       $timeout(function() {
         $http.get('/api/my/am_i_logged_in').success(function(data) {
-          if (data && !data.am_i_logged_in && $route && !$route.isPublic) {
-            utilService.redirect('');
+          if (data && !data.am_i_logged_in && $route && $route.current && !$route.current.isPublic) {
+            window.location = '/';
           }
         })
       }, 0);
