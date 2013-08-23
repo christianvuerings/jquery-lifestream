@@ -31,6 +31,12 @@
 .icon-exclamation-sign, .icon-warning-sign {
   color: #ac120e;
 }
+
+.cc-unavailable {
+  color: $cc-color-gold !important;
+  padding-right: 5px;
+}
+
 .icon-ok, .icon-ok-sign {
   color: #007748 !important;
 }

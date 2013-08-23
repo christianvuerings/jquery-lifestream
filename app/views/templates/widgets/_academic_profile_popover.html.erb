@@ -27,8 +27,12 @@
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_block.needsAction]"></i>
-            <strong>Registration Blocks:</strong> <span data-ng-bind="api.user.profile.student_info.reg_block.active_blocks"></span>
+            <i class="cc-left"
+               data-ng-class="{'icon-exclamation-sign': api.user.profile.student_info.reg_block.needsAction,
+               'icon-warning-sign cc-unavailable': !api.user.profile.student_info.reg_block.available,
+               'icon-ok-sign': !api.user.profile.student_info.reg_block.needsAction && api.user.profile.student_info.reg_block.available}"></i>
+            <strong>Registration Blocks:</strong> <span data-ng-show="api.user.profile.student_info.reg_block.available" data-ng-bind="api.user.profile.student_info.reg_block.active_blocks"></span>
+            <span data-ng-hide="api.user.profile.student_info.reg_block.available">Currently Unavailable</span>
           </div>
         </a>
       </li>
