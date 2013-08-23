@@ -7,6 +7,15 @@ class UserApiController < ApplicationController
     # with time, not when the cache is forcibly cleared.
   end
 
+  def am_i_logged_in
+    response.headers["Cache-Control"] = "no-cache, no-store, private, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "-1"
+    render :json => {
+      :am_i_logged_in => !!session[:user_id]
+    }.to_json
+  end
+
   def mystatus
     Rails.cache.fetch(
       "flush_stale_connections_#{ServerRuntime.get_settings["hostname"]}",
