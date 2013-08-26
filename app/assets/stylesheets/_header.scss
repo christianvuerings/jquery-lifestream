@@ -44,8 +44,7 @@ body {
   float: right;
 
   .cc-popover-title {
-    background: $cc-color-white;
-    @include background(linear-gradient($cc-color-white, $cc-color-popover-title-gradient));
+    background: $cc-color-popover-title-background;
     border-bottom: 1px solid $cc-color-popover-border;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -267,7 +266,7 @@ body {
   .cc-popover-gear {
     .cc-header-icon {
       &.cc-header-icon-selected {
-        background: $cc-color-white;
+        background: $cc-color-popover-title-background;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         color: $cc-color-popover-text;
