@@ -107,6 +107,7 @@ class CampusData < OracleDatabase
         and roster.term_cd = #{connection.quote(term_cd)}
         and roster.course_cntl_num = #{connection.quote(ccn)}
         and roster.student_ldap_uid = person.ldap_uid
+        and roster.enroll_status != 'D'
       SQL
       result = connection.select_all(sql)
     }

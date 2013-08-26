@@ -66,6 +66,8 @@ describe CanvasRefreshFromCampus do
   it "should distinguish waitlisted students" do
     enrolled = rand(99999)
     waitlisted = rand(99999)
+    concurrent = rand(99999)
+    dropped = rand(99999)
     CampusData.stub(:get_enrolled_students).and_return(
         [
             {
@@ -79,6 +81,18 @@ describe CanvasRefreshFromCampus do
                 'enroll_status' => 'W',
                 'student_id' => waitlisted,
                 'affiliations' => 'STUDENT-TYPE-REGISTERED'
+            },
+            {
+                'ldap_uid' => concurrent,
+                'enroll_status' => 'C',
+                'student_id' => concurrent,
+                'affiliations' => 'STUDENT-TYPE-REGISTERED'
+            },
+            {
+                'ldap_uid' => dropped,
+                'enroll_status' => 'D',
+                'student_id' => dropped,
+                'affiliations' => 'STUDENT-TYPE-REGISTERED'
             }
         ]
     )
@@ -86,10 +100,12 @@ describe CanvasRefreshFromCampus do
     users = []
     worker = CanvasRefreshFromCampus.new
     worker.accumulate_section_enrollments({section_id: "SEC:2013-C-333"}, enrollments, users)
-    enrollments.length.should == 2
-    users.uniq.length.should == 2
+    enrollments.length.should == 3
+    users.uniq.length.should == 3
     enrollments.index {|enr| enr['user_id'] == enrolled.to_s && enr['role'] == 'student'}.should_not be_nil
+    enrollments.index {|enr| enr['user_id'] == concurrent.to_s && enr['role'] == 'student'}.should_not be_nil
     enrollments.index {|enr| enr['user_id'] == waitlisted.to_s && enr['role'] == 'Waitlist Student'}.should_not be_nil
+    enrollments.index {|enr| enr['user_id'] == dropped.to_s}.should be_nil
   end
 
 end

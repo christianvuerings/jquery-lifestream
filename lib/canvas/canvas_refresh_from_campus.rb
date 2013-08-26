@@ -6,7 +6,9 @@ class CanvasRefreshFromCampus < CanvasMaintenance
 
   ENROLL_STATUS_TO_CANVAS_ROLE = {
       'E' => 'student',
-      'W' => 'Waitlist Student'
+      'W' => 'Waitlist Student',
+      # Concurrent enrollment
+      'C' => 'student'
   }
 
   def initialize
@@ -133,15 +135,17 @@ class CanvasRefreshFromCampus < CanvasMaintenance
     if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(section_id))
       section_enrollments = CampusData.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
       section_enrollments.each do |enr|
-        uid = enr['ldap_uid']
-        total_enrollments << {
-            'course_id' => section[:course_id],
-            'user_id' => derive_sis_user_id(enr),
-            'role' => ENROLL_STATUS_TO_CANVAS_ROLE[enr['enroll_status']],
-            'section_id' => section_id,
-            'status' => 'active'
-        }
-        total_users << canvas_user_from_campus_row(enr)
+        if (role = ENROLL_STATUS_TO_CANVAS_ROLE[enr['enroll_status']])
+          uid = enr['ldap_uid']
+          total_enrollments << {
+              'course_id' => section[:course_id],
+              'user_id' => derive_sis_user_id(enr),
+              'role' => role,
+              'section_id' => section_id,
+              'status' => 'active'
+          }
+          total_users << canvas_user_from_campus_row(enr)
+        end
       end
     else
       logger.warn("Badly formatted sis_section_id for Canvas section #{section}")
