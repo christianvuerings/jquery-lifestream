@@ -37,6 +37,9 @@
   color: $cc-color-list-border !important;
   text-decoration: line-through !important;
 }
+.cc-uppercase {
+  text-transform: uppercase;
+}
 
 /* Spinner */
 .cc-spinner {

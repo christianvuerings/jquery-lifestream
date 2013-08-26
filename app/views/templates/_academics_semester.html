@@ -3,11 +3,18 @@
     class="cc-page-academics"
     data-ng-show="can_view_academics"
   >
-    <h1>
+    <h1 class="cc-ellipsis cc-left">
       <a href="/academics">My Academics</a> &raquo; <span data-ng-bind="selected_semester.name"></span>
     </h1>
+    <div class="cc-right cc-academics-prev-next cc-uppercase">
+      <a class="cc-academics-prev" data-ng-show="previous_semester.slug" data-ng-href="/academics/semester/{{previous_semester.slug}}">Prev semester</a>
+      <span class="cc-academics-prev cc-academics-prev-next-disabled" data-ng-hide="previous_semester.slug">Prev semester</span>
+      <span class="cc-academics-prev-next-devider"> | </span>
+      <a class="cc-academics-next" data-ng-show="next_semester.slug" data-ng-href="/academics/semester/{{next_semester.slug}}">Next semester</a>
+      <span class="cc-academics-next cc-academics-prev-next-disabled" data-ng-hide="next_semester.slug">Next semester</span>
+    </div>
 
-    <div class="large-8 small-12 columns cc-academics-page-left">
+    <div class="large-8 columns cc-academics-page-left cc-clearfix">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Enrollment</h2>
@@ -102,7 +109,7 @@
     </div>
 
     <div class="large-4 columns">
-      <div class="cc-widget cc-widget-last">
+      <div class="cc-widget cc-widget-interesting cc-widget-last">
         <div class="cc-widget-title">
           <h2>GPA Calculator</h2>
         </div>
@@ -153,7 +160,7 @@
             <div class="row collapse cc-academics-calculator-disclaimer" data-ng-show="selected_courses.length">
               <div class="large-12 small-12 columns">
                 <p>This calculator provides a "best guess" calculation of your GPA based on available data<span data-ng-show="hideDisclaimer">...</span>
-                  <span data-ng-show="!hideDisclaimer">and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br />When grades are available, your actual grade will replace the popup menu for that class. Once a semester is over, if any grades are still not available a popup menu will remain that will allow you to enter your estimated grade.</span>
+                  <span data-ng-show="!hideDisclaimer">and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />When grades are available, your actual grade will replace the popup menu for that class. Once a semester is over, if any grades are still not available a popup menu will remain that will allow you to enter your estimated grade.</span>
 
                   <button class="cc-button-link" data-ng-show="hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show more</button>
                   <button class="cc-button-link" data-ng-show="!hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show less</button>
