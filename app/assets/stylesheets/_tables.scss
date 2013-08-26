@@ -1,6 +1,7 @@
 .cc-table {
-  overflow-x: scoll;
+  overflow-x: auto;
   table {
+    background: transparent;
     border: none;
     border-spacing: 0;
     font-size: 12px;

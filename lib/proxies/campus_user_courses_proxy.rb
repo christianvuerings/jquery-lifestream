@@ -16,6 +16,60 @@ class CampusUserCoursesProxy < BaseProxy
     @settings.current_terms_codes
   end
 
+  def get_all_campus_courses
+    # Because this data structure is used by multiple top-level feeds, it's essential
+    # that it be cached efficiently.
+    self.class.fetch_from_cache "all-courses-#{@uid}" do
+      campus_classes = {}
+      previous_item = {}
+
+      enrollments = CampusData.get_enrolled_sections(@uid)
+      enrollments.each do |row|
+        if (item = row_to_feed_item(row, previous_item))
+          item[:role] = 'Student'
+          item[:unit] = row['unit']
+          item[:pnp_flag] = row['pnp_flag']
+          item[:grade] = row["grade"]
+          item[:transcript_unit] = row["transcript_unit"]
+          if row['enroll_status'] == 'W'
+            item[:waitlist_pos] = row['wait_list_seq_num']
+            item[:enroll_limit] = row['enroll_limit']
+          end
+          semester_key = "#{item[:term_yr]}-#{item[:term_cd]}"
+          campus_classes[semester_key] ||= []
+          campus_classes[semester_key] << item
+          previous_item = item
+        end
+      end
+
+      previous_item = {}
+      assigneds = CampusData.get_instructing_sections(@uid)
+      assigneds.each do |row|
+        if (item = row_to_feed_item(row, previous_item))
+          item[:role] = 'Instructor'
+          item[:site_url] = nil
+          semester_key = "#{item[:term_yr]}-#{item[:term_cd]}"
+          campus_classes[semester_key] ||= []
+          campus_classes[semester_key] << item
+          previous_item = item
+        end
+      end
+
+      campus_classes.values.each do |semester|
+        semester.each do |course|
+          course[:sections].each do |section|
+            proxy = CampusCourseSectionsProxy.new({term_yr: course[:term_yr],
+                                                   term_cd: course[:term_cd],
+                                                   ccn: section[:ccn]})
+            section.merge!(proxy.get_section_data)
+          end
+        end
+      end
+
+      campus_classes
+    end
+  end
+
   # Example:
   # {
   #    "id": "COG SCI:C102:2013-B",
@@ -38,45 +92,16 @@ class CampusUserCoursesProxy < BaseProxy
   #    "waitlist_pos": 2
   # },
   def get_campus_courses
-    # Because this data structure is used by multiple top-level feeds, it's essential
-    # that it be cached efficiently.
     self.class.fetch_from_cache @uid do
+      all_courses = get_all_campus_courses
       campus_classes = []
-      previous_item = {}
+
       current_terms.each do |term|
-        term_yr = term.term_yr
-        term_cd = term.term_cd
-        enrollments = CampusData.get_enrolled_sections(@uid, term_yr, term_cd)
-        enrollments.each do |row|
-          if (item = row_to_feed_item(row, previous_item))
-            item[:role] = 'Student'
-            item[:unit] = row['unit']
-            item[:pnp_flag] = row['pnp_flag']
-            if row['enroll_status'] == 'W'
-              item[:waitlist_pos] = row['wait_list_seq_num']
-              item[:enroll_limit] = row['enroll_limit']
-            end
-            campus_classes << item
-            previous_item = item
+        semester_key = "#{term.term_yr}-#{term.term_cd}"
+        if all_courses[semester_key]
+          all_courses[semester_key].each do |course|
+            campus_classes << course
           end
-        end
-        previous_item = {}
-        assigneds = CampusData.get_instructing_sections(@uid, term_yr, term_cd)
-        assigneds.each do |row|
-          if (item = row_to_feed_item(row, previous_item))
-            item[:role] = 'Instructor'
-            item[:site_url] = nil
-            campus_classes << item
-            previous_item = item
-          end
-        end
-      end
-      campus_classes.each do |course|
-        course[:sections].each do |section|
-          proxy = CampusCourseSectionsProxy.new({term_yr: course[:term_yr],
-                                                 term_cd: course[:term_cd],
-                                                 ccn: section[:ccn]})
-          section.merge!(proxy.get_section_data)
         end
       end
       campus_classes

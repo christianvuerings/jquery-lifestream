@@ -232,36 +232,41 @@
       <div class="large-4 columns">
         <div class="cc-widget cc-widget-last">
           <div class="cc-widget-title">
-            <h2 class="cc-left">Current Semester</h2>
+            <h2 class="cc-left">Semesters</h2>
             <a href="https://telebears.berkeley.edu/tranreq/" class="cc-right cc-academics-orderlink">
               <strong>Order transcripts</strong>
             </a>
           </div>
 
-          <div class="cc-widget-padding">
-            <div class="row collapse">
-              <div class="small-12 columns end" data-ng-repeat="semester in semesters">
-                <div
-                  class="cc-academics-calendar"
-                  data-ng-class="{'cc-academics-current-semester':(semester.is_current==true)}">
-                  <div class="cc-academics-calendar-link">
-                      <a data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a>
-                  </div>
-                  <div class="row collapse cc-academics-empasize">
-                    <div class="small-3 columns cc-academics-label-col">Class</div>
-                    <div class="small-7 columns">Title</div>
-                    <div class="small-2 columns">Units</div>
-                  </div>
-                  <div class="row collapse" data-ng-repeat="sem in semester.schedule" data-ng-show="sem.is_primary_section">
-                    <div class="small-3 columns cc-academics-label-col">
-                      <a data-ng-href="/academics/semester/{{semester.slug}}/class/{{sem.ccn}}" data-ng-bind="sem.course_number"></a>
-                    </div>
-                    <div class="small-7 columns" data-ng-bind="sem.title"></div>
-                    <div class="small-2 columns" data-ng-bind="sem.units | number:1"></div>
-                  </div>
-                </div>
+          <div class="cc-academics-semesters">
+
+            <div class="cc-table cc-academics-semester cc-academics-semester-{{semester.time_bucket}}" data-ng-repeat="semester in semesters">
+              <div>
+                <h3><a data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th width="25%" scope="col">Class</th>
+                      <th width="55%" scope="col" data-ng-show="{{semester.time_bucket == 'current'}}">Title</th>
+                      <th width="20%" scope="col">
+                        <span data-ng-show="{{semester.time_bucket == 'current'}}">Units</span>
+                        <span data-ng-show="{{semester.time_bucket != 'current'}}" title="Units">Un.</span>
+                      </th>
+                      <th width="25%" scope="col" data-ng-show="{{semester.time_bucket == 'past'}}" title="Grades">Gr.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-ng-repeat="sem in semester.schedule" data-ng-show="sem.is_primary_section">
+                      <td><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{sem.ccn}}" data-ng-bind="sem.course_number"></a></td>
+                      <td data-ng-bind="sem.title" data-ng-show="{{semester.time_bucket == 'current'}}"></td>
+                      <td data-ng-bind="sem.units | number:1"></td>
+                      <td data-ng-bind="sem.grade" data-ng-show="{{semester.time_bucket == 'past'}}">Gr.</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
+
           </div>
         </div>
       </div>

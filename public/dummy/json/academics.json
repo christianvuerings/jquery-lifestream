@@ -448,69 +448,170 @@
   },
   "semesters": [
     {
-      "name": "Summer 2013",
-      "slug": "summer-2013",
-      "is_current": true,
+      "name": "Spring 2014",
+      "slug": "spring-2014",
+      "time_bucket": "future",
       "schedule": [
         {
-          "course_number": "EDUC 140AC",
-          "ccn": "23731",
-          "title": "Liter:Ind & Soc Dev",
-          "units": "",
+          "course_number": "BIOLOGY 1A",
+          "ccn": "7309",
+          "title": "General Biology Lecture",
+          "units": "5.0",
           "grade_option": "Letter",
-          "section": "LEC 001",
+          "section": "003",
           "format": "LEC",
-          "schedule": "TuTh 12:30P-2:00P",
-          "instructor": "HULL, G A"
+          "section_label": "LEC 003",
+          "course_label": "BIOLOGY 1A",
+          "schedules": [],
+          "instructors": [],
+          "is_primary_section": true,
+          "grade": null
+        }
+      ]
+    },
+    {
+      "name": "Fall 2013",
+      "slug": "fall-2013",
+      "time_bucket": "current",
+      "schedule": [
+        {
+          "course_number": "BIOLOGY 1A",
+          "ccn": "7309",
+          "title": "General Biology Lecture",
+          "units": "5.0",
+          "grade_option": "Letter",
+          "section": "003",
+          "format": "LEC",
+          "section_label": "LEC 003",
+          "course_label": "BIOLOGY 1A",
+          "schedules": [
+            {
+              "building_name": "VALLEY LSB",
+              "room_number": "2030",
+              "schedule": "M 4:00P-5:00P"
+            }
+          ],
+          "instructors": [
+            {
+              "name": "Yu-Hung Lin",
+              "uid": "192517"
+            },
+            {
+              "name": "Chris Tweney",
+              "uid": "904715"
+            }
+          ],
+          "is_primary_section": true,
+          "grade": null
         },
         {
-          "course_number": "PSYCH 101",
-          "ccn": "73980",
-          "title": "Res & Data Analysis",
-          "units": "4.0",
+          "course_number": "BIOLOGY 1A",
+          "ccn": "7366",
+          "title": "General Biology Lecture",
+          "units": "5.0",
           "grade_option": "Letter",
-          "section": "LEC 001",
-          "format": "LEC",
-          "schedule": "TuTh 8:00A-9:30A",
-          "instructor": "GADE, C J"
+          "section": "201",
+          "format": "DIS",
+          "section_label": "DIS 201",
+          "course_label": "BIOLOGY 1A",
+          "schedules": [
+            {
+              "building_name": "VALLEY LSB",
+              "room_number": "2030",
+              "schedule": "M 4:00P-5:00P"
+            }
+          ],
+          "instructors": [
+            {
+              "name": "Yu-Hung Lin",
+              "uid": "192517"
+            }
+          ],
+          "is_primary_section": false,
+          "grade": null
         },
         {
-          "course_number": "BIO 1A",
-          "ccn": "12345",
-          "title": "Biology for Poets",
-          "units": "4.0",
-          "grade_option": "Letter",
-          "section": "LEC 001",
-          "format": "LEC",
-          "schedule": "MW 3:00P-4:00P",
-          "instructor": "SMITH, J"
-        },
-        {
-          "course_number": "PSYCH C120",
-          "ccn": "74058",
-          "title": "Issues In Cognition",
+          "course_number": "COG SCI C147",
+          "ccn": "16171",
+          "title": "Language Disorders",
           "units": "3.0",
           "grade_option": "Letter",
-          "section": "LEC 001",
+          "section": "001",
           "format": "LEC",
-          "schedule": "MW 1:00P-2:00P",
-          "instructor": "LOMBROZO, T"
+          "section_label": "LEC 001",
+          "course_label": "COG SCI C147",
+          "schedules": [
+            {
+              "building_name": "WHEELER",
+              "room_number": "0210",
+              "schedule": "TuTh 2:00P-3:30P"
+            },
+            {
+              "building_name": "DWINELLE",
+              "room_number": "117",
+              "schedule": "W 4:00P-5:30P"
+            }
+          ],
+          "instructors": [
+            {
+              "name": "Yu-Hung Lin",
+              "uid": "192517"
+            }
+          ],
+          "is_primary_section": true,
+          "grade": null
+        }
+      ]
+    },
+    {
+      "name": "Spring 2012",
+      "slug": "spring-2012",
+      "time_bucket": "past",
+      "schedule": [
+        {
+          "course_number": "BIOLOGY 1A",
+          "ccn": "7366",
+          "title": "General Biology Lecture",
+          "units": "5.0",
+          "grade_option": "Letter",
+          "section": "201",
+          "format": "DIS",
+          "section_label": "DIS 201",
+          "course_label": "BIOLOGY 1A",
+          "schedules": [],
+          "instructors": [
+            {
+              "name": "Yu-Hung Lin",
+              "uid": "192517"
+            }
+          ],
+          "is_primary_section": true,
+          "grade": "B"
         },
         {
-          "course_number": "PSYCH 133",
-          "ccn": "74220",
-          "title": "Psychology Of Sleep",
+          "course_number": "COG SCI C147",
+          "ccn": "16171",
+          "title": "Language Disorders",
           "units": "3.0",
-          "grade_option": "P/NP",
-          "section": "LEC 001",
+          "grade_option": "Letter",
+          "section": "001",
           "format": "LEC",
-          "schedule": "MW 12:00P-1:00P",
-          "instructor": "HARVEY, A G"
+          "section_label": "LEC 001",
+          "course_label": "COG SCI C147",
+          "schedules": [],
+          "instructors": [
+            {
+              "name": "Yu-Hung Lin",
+              "uid": "192517"
+            }
+          ],
+          "is_primary_section": true,
+          "grade": "C+"
         }
       ]
     }
   ],
-  "current_semester_index": 0,
+  "current_semester_index": 1,
   "exam_schedule": {
     "Tue May 14": [
       {

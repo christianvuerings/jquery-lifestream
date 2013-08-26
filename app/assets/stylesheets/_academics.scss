@@ -48,9 +48,6 @@
   .cc-academics-calendar {
     font-size: 11px;
     line-height: 1.5em;
-    .cc-academics-label-col {
-      padding-right: 0;
-    }
   }
   .cc-academics-calendar-link {
     font-size: 14px;
@@ -87,6 +84,43 @@
   .cc-academics-schedule-room {
     line-height: 1.3;
     margin-bottom: 5px;
+  }
+  .cc-academics-semester {
+    margin: 0 20px 20px 0;
+    > div {
+      border: 1px solid $cc-color-list-border;
+      overflow-x: auto;
+      padding: 10px;
+      width: 50%;
+    }
+    h3 {
+      font-size: 14px;
+      margin: 0;
+    }
+    table {
+      font-size: 10px;
+    }
+  }
+  .cc-academics-semester-current {
+    font-size: 100%;
+    > div {
+      background: $cc-color-blue-hover;
+      width: 100%;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    table {
+      font-size: 12px;
+    }
+  }
+  .cc-academics-semester-future {
+    > div {
+      background: $cc-color-widget-more-background;
+    }
+  }
+  .cc-academics-semesters {
+    padding: 20px 0 0 20px;
   }
   .cc-academics-showhide-block-history {
     margin-top: 10px;

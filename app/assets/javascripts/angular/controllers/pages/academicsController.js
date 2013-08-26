@@ -8,6 +8,21 @@
 
     apiService.util.setTitle('My Academics');
 
+    var gradeopts = [
+      {grade: 'A', weight: 4},
+      {grade: 'A-', weight: 3.7},
+      {grade: 'B+', weight: 3.3},
+      {grade: 'B', weight: 3},
+      {grade: 'B-', weight: 2.7},
+      {grade: 'C+', weight: 2.3},
+      {grade: 'C', weight: 2},
+      {grade: 'C-', weight: 1.7},
+      {grade: 'D+', weight: 1.3},
+      {grade: 'D', weight: 1},
+      {grade: 'D-', weight: 0.7},
+      {grade: 'F', weight: 0}
+    ];
+
     /**
      * We're putting the exams in buckets per date
      */
@@ -99,28 +114,16 @@
       apiService.analytics.trackEvent(['Block history', 'Show history panel - ' + $scope.show_block_history ? 'Show' : 'Hide']);
     };
 
-    $scope.gradeopts = [
-      {grade: 'A', weight: 4},
-      {grade: 'A-', weight: 3.7},
-      {grade: 'B+', weight: 3.3},
-      {grade: 'B', weight: 3},
-      {grade: 'B-', weight: 2.7},
-      {grade: 'C+', weight: 2.3},
-      {grade: 'C', weight: 2},
-      {grade: 'C-', weight: 1.7},
-      {grade: 'D+', weight: 1.3},
-      {grade: 'D', weight: 1},
-      {grade: 'D-', weight: 0.7},
-      {grade: 'F', weight: 0}
-    ];
+    $scope.gradeopts = gradeopts;
 
-    $scope.gpaUpdateCourse = function(course, estimated_grade) {
-      // Update course object on scope and recalculate overall GPA
-      course.estimated_grade = estimated_grade;
-      $scope.gpaCalculate();
+    var findWeight = function(grade) {
+      var weight = gradeopts.filter(function(element) {
+        return element.grade === grade;
+      });
+      return weight[0];
     };
 
-    $scope.gpaCalculate = function() {
+    var gpaCalculate = function() {
       // Recalculate GPA on every dropdown change.
       var total_units = 0;
       var total_score = 0;
@@ -128,7 +131,8 @@
       angular.forEach($scope.selected_courses, function(course) {
         // Don't calculate for pass/no-pass courses!
         if (course.grade_option === 'Letter' && course.units && course.is_primary_section) {
-          course.score = parseFloat(course.estimated_grade, 10) * course.units;
+          var grade = course.grade ? findWeight(course.grade).weight : course.estimated_grade;
+          course.score = parseFloat(grade, 10) * course.units;
           total_units += parseFloat(course.units, 10);
           total_score += course.score;
         }
@@ -137,12 +141,18 @@
       $scope.estimated_gpa = total_score / total_units;
     };
 
+    $scope.gpaUpdateCourse = function(course, estimated_grade) {
+      // Update course object on scope and recalculate overall GPA
+      course.estimated_grade = estimated_grade;
+      gpaCalculate();
+    };
+
     $scope.gpaInit = function() {
       // On page load, set default values and calculate starter GPA
       angular.forEach($scope.selected_courses, function(course) {
         course.estimated_grade = 4;
       });
-      $scope.gpaCalculate();
+      gpaCalculate();
     };
   }]);
 })(window.calcentral);
