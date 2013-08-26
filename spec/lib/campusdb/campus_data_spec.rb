@@ -96,16 +96,21 @@ describe CampusData do
     end
   end
 
-  it "should find where a person is enrolled" do
-    sections = CampusData.get_enrolled_sections('300939', 2013, 'D')
+  it "should find where a person is enrolled, with grades where available" do
+    sections = CampusData.get_enrolled_sections('300939')
     sections.should_not be_nil
-    sections.length.should == 3 if CampusData.test_data?
+    if CampusData.test_data?
+      sections.length.should == 6
+      sections[0]["grade"].should be_nil
+      sections[4]["grade"].should == "B "
+      sections[5]["grade"].should == "C+"
+    end
   end
 
   it "should find where a person is teaching" do
-    sections = CampusData.get_instructing_sections('192517', 2013, 'D')
+    sections = CampusData.get_instructing_sections('192517')
     sections.should_not be_nil
-    sections.length.should == 3 if CampusData.test_data?
+    sections.length.should == 5 if CampusData.test_data?
   end
 
   it "should check whether the db is alive" do
