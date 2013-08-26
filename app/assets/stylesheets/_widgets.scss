@@ -160,6 +160,15 @@
   text-transform: uppercase;
 }
 
+.cc-widget-interesting {
+  .cc-widget-title {
+    background: $cc-color-dark-blue;
+    h2 {
+      color: $cc-color-white;
+    }
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .cc-widget-title-sub {
     margin-top: 0;

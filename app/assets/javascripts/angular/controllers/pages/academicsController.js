@@ -45,6 +45,33 @@
       }
     };
 
+    var updatePrevNextSemester = function(semesters, selected_semester) {
+      var previous_semester = {};
+      var next_semester = {};
+      var selected_semester_index = false;
+
+      var semesters_length = semesters.length;
+      for (var i = 0; i < semesters_length; i++) {
+        var element = semesters[i];
+        if (element.slug === selected_semester.slug) {
+          selected_semester_index = i;
+          continue;
+        }
+        if (element.slug !== selected_semester.slug) {
+          if (selected_semester_index === false) {
+            next_semester = element;
+            continue;
+          }
+          if (selected_semester_index !== false) {
+            previous_semester = element;
+            break;
+          }
+        }
+      };
+      $scope.previous_semester = previous_semester;
+      $scope.next_semester = next_semester;
+    };
+
     $scope.getAcademics = function() {
       $http.get('/api/my/academics').success(function(data) {
         angular.extend($scope, data);
@@ -63,6 +90,7 @@
             }
           });
           checkPageExists($scope.selected_semester);
+          updatePrevNextSemester(data.semesters, $scope.selected_semester);
 
           if ($scope.selected_semester) {
             $scope.selected_courses = $scope.selected_semester.schedule;

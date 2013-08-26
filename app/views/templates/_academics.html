@@ -257,7 +257,7 @@
                   </thead>
                   <tbody>
                     <tr data-ng-repeat="sem in semester.schedule" data-ng-show="sem.is_primary_section">
-                      <td><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{sem.ccn}}" data-ng-bind="sem.course_number"></a></td>
+                      <td class="cc-ellipsis"><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{sem.ccn}}" data-ng-bind="sem.course_number"></a></td>
                       <td data-ng-bind="sem.title" data-ng-show="{{semester.time_bucket == 'current'}}"></td>
                       <td data-ng-bind="sem.units | number:1"></td>
                       <td data-ng-bind="sem.grade" data-ng-show="{{semester.time_bucket == 'past'}}">Gr.</td>

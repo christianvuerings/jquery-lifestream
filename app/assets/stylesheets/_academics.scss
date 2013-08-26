@@ -81,6 +81,47 @@
       margin-bottom: 5px;
     }
   }
+  .cc-academics-prev-next {
+    font-size: 11px;
+    margin: 20px 20px 10px 10px;
+    .cc-academics-next, .cc-academics-prev {
+      position: relative;
+      &:before {
+        border-bottom: 4px solid transparent;
+        border-top: 4px solid transparent;
+        content: "";
+        height: 0;
+        position: absolute;
+        top: 1px;
+        width: 0;
+      }
+    }
+    .cc-academics-next {
+      &:before {
+        border-left: 4px solid $cc-color-link;
+        right: -8px;
+      }
+    }
+    .cc-academics-prev {
+      &:before {
+        border-right: 4px solid $cc-color-link;
+        left: -8px;
+      }
+    }
+    .cc-academics-prev-next-disabled {
+      color: $cc-color-lighter-medium-grey;
+      &.cc-academics-next {
+        &:before {
+          border-left: 4px solid $cc-color-lighter-medium-grey;
+        }
+      }
+      &.cc-academics-prev {
+        &:before {
+          border-right: 4px solid $cc-color-lighter-medium-grey;
+        }
+      }
+    }
+  }
   .cc-academics-schedule-room {
     line-height: 1.3;
     margin-bottom: 5px;
