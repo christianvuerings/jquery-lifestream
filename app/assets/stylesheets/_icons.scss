@@ -29,8 +29,13 @@
 
 /* Fontawesome icons */
 .icon-exclamation-sign, .icon-warning-sign {
-  color: #ac120e;
+  color: #ac120e !important;
 }
+
+.cc-unavailable {
+  color: $cc-color-gold !important;
+}
+
 .icon-ok, .icon-ok-sign {
   color: #007748 !important;
 }

@@ -145,6 +145,9 @@
         margin: 5px 0;
       }
     }
+    .cc-unavailable {
+      padding-right: 5px;
+    }
   }
   .cc-academics-what-is-registration-block {
     margin-left: 10px;
@@ -154,10 +157,5 @@
   }
   .cc-widget {
     overflow: hidden;
-  }
-
-  .cc-unavailable {
-    color: $cc-color-gold !important;
-    padding-right: 5px;
   }
 }
