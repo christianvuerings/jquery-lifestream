@@ -91,7 +91,7 @@
     We also add a border by painting another arrow behind the first one
    */
   &:after {
-    border-bottom: 10px solid #fff;
+    border-bottom: 10px solid $cc-color-popover-title-background;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     margin-left: -10px;
