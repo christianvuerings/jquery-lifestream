@@ -26,8 +26,8 @@ class BlogFeed < BaseProxy
       # Process and strip description
       snippet = entry.xpath('description').text
       snippet = Nokogiri::HTML(snippet).text # To strip all HTML tags, first convert to Nokogiri HTML node
-      snippet = snippet.gsub!( /read more$/, "" ) # Trim off text appended to description by Drupal
-      snippet = snippet.gsub!( /\n/, "" )
+      snippet = snippet.gsub(/read more$/, "") # Trim off text appended to description by Drupal
+      snippet = snippet.gsub(/\n/, "")
       response[:entries].push({
                                 title: entry.xpath('title').text,
                                 link: entry.xpath('link').text,
