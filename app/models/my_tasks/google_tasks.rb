@@ -112,7 +112,6 @@ module MyTasks
         "emitter" => GoogleProxy::APP_ID,
         "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
         "id" => entry["id"],
-        "updated" => entry["updated"],
         "source_url" => entry["selfLink"] || "",
         "color_class" => "google-task"
       }
@@ -121,7 +120,7 @@ module MyTasks
       formatted_entry["notes"] = entry["notes"] if entry["notes"]
 
       if entry["completed"]
-        format_date_into_entry!(convert_due_date(entry["completed"]), formatted_entry, "completed_date")
+        format_date_into_entry!(convert_date(entry["completed"]), formatted_entry, "completed_date")
       end
 
       status = "needs_action" if entry["status"] == "needsAction"
@@ -137,6 +136,11 @@ module MyTasks
         due_date = due_date.to_time_in_current_zone.to_datetime.advance(:hours => 23, :minutes => 59, :seconds => 59)
       end
       formatted_entry["bucket"] = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
+
+      if formatted_entry["bucket"] == "Unscheduled"
+        format_date_into_entry!(convert_date(entry["updated"]), formatted_entry, "updated_date")
+      end
+
       Rails.logger.debug "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{formatted_entry["bucket"]} bucket: #{formatted_entry}"
       format_date_into_entry!(due_date, formatted_entry, "due_date")
       Rails.logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
