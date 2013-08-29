@@ -115,47 +115,39 @@
         </div>
 
         <div class="cc-widget-padding">
-          <div class="large-12 small-12 columns">
-            <div class="row collapse">
-              <div class="large-12 small-12 columns">
-                <h4>Estimate your grades for <span data-ng-bind="selected_semester.name"></span></h4>
-              </div>
-            </div>
-            <div data-ng-show="selected_courses.length">
-              <div class="row collapse cc-academics-calculator-grid-section">
-                <div class="large-5 small-5 columns cc-academics-column-labels">Class</div>
-                <div class="large-3 small-3 columns cc-academics-column-labels">Units</div>
-                <div class="large-3 small-3 columns end cc-academics-column-labels">Grade</div>
-              </div>
-
-              <div
-                class="row collapse cc-academics-calculator-row "
-                data-ng-repeat="course in selected_courses"
-                data-ng-show="course.is_primary_section"
-              >
-                <div class="large-5 small-5 columns" data-ng-bind="course.course_number"></div>
-                <div class="large-3 small-3 columns" data-ng-bind="course.units" data-ng-show="course.units"></div>
-                <div class="large-3 small-3 columns" data-ng-show="!course.units">--</div>
-                <div class="large-3 small-3 columns end">
-                  <select
-                    data-ng-show="course.grade_option=='Letter' && course.units && !course.grade"
-                    data-ng-model="course.estimated_grade"
-                    data-ng-change="gpaUpdateCourse(course, course.estimated_grade)"
-                    data-ng-options="g.weight as g.grade for g in gradeopts"
-                  >
-                  </select>
-                  <span data-ng-show="course.grade" data-ng-bind="course.grade"></span>
-                </div>
-                <div
-                  data-ng-show="course.grade_option!='Letter'"
-                  class="large-3 small-3 columns end"
-                  data-ng-bind="course.grade_option">
-                </div>
-              </div>
-              <div class="row collapse cc-academics-calculator-row cc-academics-empasize">
-                <div class="large-8 small-8 columns">Estimated semester GPA:</div>
-                <div class="large-4 small-4 columns" data-ng-bind="(estimated_gpa | number:2) || 'N/A'"></div>
-              </div>
+          <div>
+            <h4>Estimate your grades for <span data-ng-bind="selected_semester.name"></span></h4>
+            <div class="cc-table" data-ng-show="selected_courses.length">
+              <table>
+                <thead>
+                  <th scope="col" width="60%">Class</th>
+                  <th scope="col">Units</th>
+                  <th scope="col">Grade</th>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="course in selected_courses" data-ng-show="course.is_primary_section">
+                    <td data-ng-bind="course.course_number"></td>
+                    <td data-ng-bind="course.units" data-ng-show="course.units"></td>
+                    <td data-ng-show="!course.units">--</td>
+                    <td>
+                      <select
+                        data-ng-show="course.grade_option=='Letter' && course.units && !course.grade"
+                        data-ng-model="course.estimated_grade"
+                        data-ng-change="gpaUpdateCourse(course, course.estimated_grade)"
+                        data-ng-options="g.weight as g.grade for g in gradeopts"
+                      >
+                      </select>
+                      <span data-ng-show="course.grade" data-ng-bind="course.grade"></span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <tr>
+                    <td colspan="2"><strong>Estimated semester GPA:</strong></td>
+                    <td><strong data-ng-bind="(estimated_gpa | number:2) || 'N/A'"></strong></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="row collapse cc-academics-calculator-disclaimer" data-ng-show="selected_courses.length">
               <div class="large-12 small-12 columns">
