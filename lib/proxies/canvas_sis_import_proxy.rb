@@ -49,7 +49,7 @@ class CanvasSisImportProxy < CanvasProxy
     status = nil
     sleep 2
     # Large batch user and enrollment imports can be slow.
-    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 50, :interval => 20) do
+    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 100, :interval => 20) do
       response = request_uncached(url, '_sis_import_status', {
         method: :get
       })
