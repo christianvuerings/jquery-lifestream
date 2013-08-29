@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('authService', ['$http', '$route', '$timeout', 'utilService', function($http, $route, $timeout, utilService) {
+  angular.module('calcentral.services').service('authService', ['$http', '$route', '$timeout', function($http, $route, $timeout) {
 
     /**
      * Check whether the current user is logged in or not
@@ -18,9 +18,9 @@
           if (data && !data.am_i_logged_in && $route && $route.current && !$route.current.isPublic) {
             window.location = '/';
           }
-        })
+        });
       }, 0);
-    }
+    };
 
     // Expose methods
     return {

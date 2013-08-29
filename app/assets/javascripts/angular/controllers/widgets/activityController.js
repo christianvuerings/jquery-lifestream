@@ -147,8 +147,10 @@
       });
     };
 
-    $scope.$on('calcentral.api.refresh.refreshed', function() {
-      getMyActivity();
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
+        getMyActivity();
+      }
     });
 
   }]);

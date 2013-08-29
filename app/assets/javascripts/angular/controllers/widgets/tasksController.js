@@ -36,12 +36,16 @@
     $scope.getTasks = function() {
       return $http.get('/api/my/tasks').success(function(data) {
         angular.extend($scope, data);
-        $scope.updateTaskLists();
+        if ($scope.tasks) {
+          $scope.updateTaskLists();
+        }
       });
     };
 
-    $scope.$on('calcentral.api.refresh.refreshed', function() {
-      $scope.getTasks();
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
+        $scope.getTasks();
+      }
     });
 
     var toggleStatus = function(task) {
