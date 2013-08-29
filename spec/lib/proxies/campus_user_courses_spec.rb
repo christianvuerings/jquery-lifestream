@@ -39,7 +39,7 @@ describe CampusUserCoursesProxy do
   it "should return pre-populated test enrollments for all semesters", :if => SakaiData.test_data? do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
-    client = CampusUserCoursesProxy.new({user_id: '300939', })
+    client = CampusUserCoursesProxy.new({user_id: '300939'})
     courses = client.get_all_campus_courses
     courses.empty?.should be_false
     courses["2012-B"].length.should == 2
