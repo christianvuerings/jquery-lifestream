@@ -1,6 +1,11 @@
 require "spec_helper"
 
 describe CampusData do
+
+  before do
+    @current_terms = Settings.sakai_proxy.current_terms_codes
+  end
+
   it "should find Oliver" do
     data = CampusData.get_person_attributes(2040)
     data['first_name'].should == "Oliver"
@@ -107,10 +112,22 @@ describe CampusData do
     end
   end
 
+  it "should be able to limit enrollment queries" do
+    sections = CampusData.get_enrolled_sections('300939', @current_terms)
+    sections.should_not be_nil
+    sections.length.should == 3 if CampusData.test_data?
+  end
+
   it "should find where a person is teaching" do
     sections = CampusData.get_instructing_sections('192517')
     sections.should_not be_nil
     sections.length.should == 5 if CampusData.test_data?
+  end
+
+  it "should be able to limit teaching assignment queries" do
+    sections = CampusData.get_instructing_sections('192517', @current_terms)
+    sections.should_not be_nil
+    sections.length.should == 3 if CampusData.test_data?
   end
 
   it "should check whether the db is alive" do
