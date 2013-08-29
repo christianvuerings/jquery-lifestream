@@ -16,6 +16,10 @@ class CampusUserCoursesProxy < BaseProxy
     @settings.current_terms_codes
   end
 
+  def academic_terms
+    @settings.academic_terms
+  end
+
   def get_all_campus_courses
     # Because this data structure is used by multiple top-level feeds, it's essential
     # that it be cached efficiently.
@@ -23,7 +27,7 @@ class CampusUserCoursesProxy < BaseProxy
       campus_classes = {}
       previous_item = {}
 
-      enrollments = CampusData.get_enrolled_sections(@uid)
+      enrollments = CampusData.get_enrolled_sections(@uid, academic_terms.student)
       enrollments.each do |row|
         if (item = row_to_feed_item(row, previous_item))
           item[:role] = 'Student'
@@ -43,7 +47,7 @@ class CampusUserCoursesProxy < BaseProxy
       end
 
       previous_item = {}
-      assigneds = CampusData.get_instructing_sections(@uid)
+      assigneds = CampusData.get_instructing_sections(@uid, academic_terms.instructor)
       assigneds.each do |row|
         if (item = row_to_feed_item(row, previous_item))
           item[:role] = 'Instructor'

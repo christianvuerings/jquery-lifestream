@@ -3,6 +3,8 @@ require "spec_helper"
 describe "MyAcademics::Semesters" do
 
   it "should get properly formatted data from fake Oracle MV", :if => SakaiData.test_data? do
+    Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
+    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
     oski_schedule_proxy = CampusUserCoursesProxy.new({:fake => true})
     CampusUserCoursesProxy.stub(:new).and_return(oski_schedule_proxy)
 
@@ -36,7 +38,23 @@ describe "MyAcademics::Semesters" do
 
   end
 
+  it "should be able to constrain semester range", :if => SakaiData.test_data? do
+    terms_constraint = Settings.sakai_proxy.current_terms_codes
+    Settings.sakai_proxy.academic_terms.stub(:student).and_return(terms_constraint)
+    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(terms_constraint)
+    oski_schedule_proxy = CampusUserCoursesProxy.new({:fake => true})
+    CampusUserCoursesProxy.stub(:new).and_return(oski_schedule_proxy)
+    feed = {}
+    MyAcademics::Semesters.new("300939").merge(feed)
+    feed.empty?.should be_false
+    feed[:current_semester_index].should == 0
+    oski_semesters = feed[:semesters]
+    oski_semesters.length.should == terms_constraint.length
+  end
+
   it "should handle badly formatted p/np fields for course data", :if => SakaiData.test_data? do
+    Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
+    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
     oski_campus_courses = CampusUserCoursesProxy.new({:fake => true}).get_all_campus_courses
     oski_campus_courses.values.each do |semester|
       semester.each do |course|

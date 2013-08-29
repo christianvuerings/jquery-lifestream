@@ -57,6 +57,7 @@ canvas_proxy:
   # Only used for testing + recording responses
   test_user_id: "300846"
   test_user_access_token: "someMumboJumbo"
+  # Used to import campus users and enrollments
   current_terms_codes: [
     {
       term_yr: "2013",
@@ -77,10 +78,25 @@ sakai_proxy:
   fake: false
   fake_user_id: "300939"
   current_terms: ["Fall 2013"]
+  # Used both for Dashboard widgets and for bSpace integration
   current_terms_codes: [ {
     term_yr: "2013",
     term_cd: "D"
   }]
+  # Used to constrain My Academics range
+  academic_terms:
+    student: [
+      {
+        term_yr: "2013",
+        term_cd: "D"
+      }
+    ]
+    instructor: [
+      {
+        term_yr: "2013",
+        term_cd: "D"
+      }
+    ]
   # Timestamp in UTC, needed when testing against older DB snapshot
   fake_now:
 cal_link_proxy:

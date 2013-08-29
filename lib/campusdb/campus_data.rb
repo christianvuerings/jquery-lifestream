@@ -162,8 +162,9 @@ class CampusData < OracleDatabase
   end
 
   # Catalog ID sorting is: "99", "101L", "C103", "C107L", "110", "110L", "C112", "C112L"
-  def self.get_enrolled_sections(person_id)
+  def self.get_enrolled_sections(person_id, terms = nil)
     result = []
+    terms_clause = terms_query_clause('r', terms)
     use_pooled_connection {
       sql = <<-SQL
       select r.term_yr, r.term_cd, r.course_cntl_num, r.enroll_status, r.wait_list_seq_num, r.unit, r.pnp_flag,
@@ -182,6 +183,7 @@ class CampusData < OracleDatabase
           and trim(t.dept_cd) = c.dept_name
           and trim(t.course_num) = c.catalog_id )
       where r.student_ldap_uid = #{connection.quote(person_id)}
+        #{terms_clause}
       order by r.term_yr desc, r.term_cd desc, c.dept_name,
         c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
         c.primary_secondary_cd, c.instruction_format, c.section_num
@@ -191,8 +193,9 @@ class CampusData < OracleDatabase
     result
   end
 
-  def self.get_instructing_sections(person_id)
+  def self.get_instructing_sections(person_id, terms = nil)
     result = []
+    terms_clause = terms_query_clause('i', terms)
     use_pooled_connection {
       sql = <<-SQL
       select c.term_yr, c.term_cd, c.course_cntl_num,
@@ -201,6 +204,7 @@ class CampusData < OracleDatabase
       from bspace_course_instructor_vw i
       join bspace_course_info_vw c on c.term_yr = i.term_yr and c.term_cd = i.term_cd and c.course_cntl_num = i.course_cntl_num
       where i.instructor_ldap_uid = #{connection.quote(person_id)}
+        #{terms_clause}
       order by c.term_yr desc, c.term_cd desc, c.dept_name,
         c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
         c.primary_secondary_cd, c.instruction_format, c.section_num
@@ -289,6 +293,20 @@ class CampusData < OracleDatabase
   def self.is_student?(person_attributes)
     !person_attributes['student_id'].blank? &&
         /STUDENT-TYPE-/.match(person_attributes['affiliations'])
+  end
+
+  def self.terms_query_clause(table, terms)
+    if !terms.blank?
+      clause = 'and ('
+      terms.each_index do |idx|
+        clause.concat(' or ') if idx > 0
+        clause.concat("(#{table}.term_cd='#{terms[idx].term_cd}' and #{table}.term_yr=#{terms[idx].term_yr})")
+      end
+      clause.concat(')')
+      clause
+    else
+      ''
+    end
   end
 
 end
