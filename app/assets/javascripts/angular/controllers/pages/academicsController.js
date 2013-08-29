@@ -67,9 +67,10 @@
             break;
           }
         }
-      };
+      }
       $scope.previous_semester = previous_semester;
       $scope.next_semester = next_semester;
+      $scope.prev_next_semester_show = semesters_length > 1;
     };
 
     $scope.getAcademics = function() {
