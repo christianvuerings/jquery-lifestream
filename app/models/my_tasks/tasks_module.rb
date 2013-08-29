@@ -49,17 +49,17 @@ module MyTasks
       bucket
     end
 
-    def format_date_into_entry!(due, formatted_entry, field_name)
-      if !due.blank?
-        formatted_entry[field_name] = format_date(due).stringify_keys
+    def format_date_into_entry!(date, formatted_entry, field_name)
+      if !date.blank?
+        formatted_entry[field_name] = format_date(date).stringify_keys
       end
     end
 
-    def convert_due_date(due_date)
-      if due_date.blank?
+    def convert_date(date)
+      if date.blank?
         nil
       else
-        DateTime.parse(due_date.to_s)
+        DateTime.parse(date.to_s)
       end
     end
 

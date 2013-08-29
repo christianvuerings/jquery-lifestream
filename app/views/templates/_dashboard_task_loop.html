@@ -41,8 +41,7 @@
     </div>
 
     <div
-      class="cc-widget-tasks-col cc-widget-tasks-col-date"
-      data-ng-show="this.$parent.section.title != 'Unscheduled'">
+      class="cc-widget-tasks-col cc-widget-tasks-col-date">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-show="task.due_date && task.bucket != 'Due Today' && tasks_mode != 'completed'">
         {{task.due_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}
@@ -53,6 +52,13 @@
           {{task.due_date.epoch * 1000 | date:'h a'}}
       </div>
       <span data-ng-show="tasks_mode=='completed'">{{task.completed_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}</span>
+    </div>
+    <div
+      class="cc-widget-tasks-col cc-widget-tasks-col-date"
+      data-ng-show="task.updated_date">
+      <span>
+        {{task.updated_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}
+      </span>
     </div>
   </div>
 

@@ -45,7 +45,7 @@ module MyTasks
               if result["assignment"]["description"] != ""
                 formatted_entry["notes"] = ActionView::Base.full_sanitizer.sanitize(result["assignment"]["description"])
               end
-              due_date = convert_due_date(result["assignment"]["due_at"])
+              due_date = convert_date(result["assignment"]["due_at"])
               format_date_into_entry!(due_date, formatted_entry, "due_date")
               bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
               formatted_entry["bucket"] = bucket
@@ -91,7 +91,7 @@ module MyTasks
                 "color_class" => "canvas-class",
                 "status" => "inprogress"
               }
-              due_date = convert_due_date(result["start_at"])
+              due_date = convert_date(result["start_at"])
               format_date_into_entry!(due_date, formatted_entry, "due_date")
               bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
               formatted_entry["bucket"] = bucket
