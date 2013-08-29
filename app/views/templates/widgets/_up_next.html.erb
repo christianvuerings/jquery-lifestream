@@ -46,7 +46,7 @@
             <p class="cc-widget-mycalendar-indent" data-ng-bind="item.organizer"></p>
             <span data-ng-show="item.attendees" class="cc-widget-mycalendar-header">Invitees:</span>
             <ul class="cc-widget-mycalendar-list-attendees cc-widget-mycalendar-indent">
-              <li data-ng-repeat="attendee in item.attendees" class="cc-ellipsis" data-ng-bind="attendee"></li>
+              <li data-ng-repeat="attendee in item.attendees track by $index" class="cc-ellipsis" data-ng-bind="attendee"></li>
             </ul>
             <p class="cc-widget-mycalendar-indent">
               <a class="cc-button" data-ng-href="{{item.html_link}}" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
