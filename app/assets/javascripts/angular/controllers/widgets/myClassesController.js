@@ -117,8 +117,10 @@
       };
     };
 
-    $scope.$on('calcentral.api.refresh.refreshed', function() {
-      getMyClasses(bindScopes);
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
+        getMyClasses(bindScopes);
+      }
     });
   }]);
 

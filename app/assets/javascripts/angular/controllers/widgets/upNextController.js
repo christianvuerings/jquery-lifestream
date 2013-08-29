@@ -12,8 +12,10 @@
       });
     };
 
-    $scope.$on('calcentral.api.refresh.refreshed', function() {
-      getUpNext();
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
+        getUpNext();
+      }
     });
 
   }]);

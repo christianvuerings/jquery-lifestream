@@ -138,8 +138,10 @@
 
     $scope.badges = orderBadges(defaults);
 
-    $scope.$on('calcentral.api.refresh.refreshed', function() {
-      fetch();
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
+        fetch();
+      }
     });
 
   }]);

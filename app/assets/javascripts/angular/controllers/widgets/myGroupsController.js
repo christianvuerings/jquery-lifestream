@@ -12,8 +12,10 @@
       });
     };
 
-    $scope.$on('calcentral.api.refresh.refreshed', function() {
-      getMyGroups();
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
+        getMyGroups();
+      }
     });
 
   }]);
