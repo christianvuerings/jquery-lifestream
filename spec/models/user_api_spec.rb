@@ -121,6 +121,7 @@ describe "UserApi" do
     CanvasProxy.stub(:has_account?).and_return(false)
     UserApi.is_allowed_to_log_in?("212388").should be_true
     UserApi.is_allowed_to_log_in?("212389").should be_false
+    UserApi.is_allowed_to_log_in?("212390").should be_false
   end
 
   context "valid regblocks" do

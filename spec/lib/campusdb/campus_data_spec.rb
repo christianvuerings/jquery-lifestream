@@ -220,9 +220,10 @@ describe CampusData do
   end
 
   it "should find a grad student that used to be an undergrad", if: CampusData.test_data? do
-    CampusData.is_grad_student_previous_ugrad?("212388").should be_true
-    CampusData.is_grad_student_previous_ugrad?("212389").should be_false #grad student, but not previous ugrad
-    CampusData.is_grad_student_previous_ugrad?("300939").should be_false #ugrad only
+    CampusData.is_previous_ugrad?("212388").should be_true
+    CampusData.is_previous_ugrad?("212389").should be_true #grad student expired, previous ugrad
+    CampusData.is_previous_ugrad?("212390").should be_false #grad student, but not previous ugrad
+    CampusData.is_previous_ugrad?("300939").should be_true #ugrad only
   end
 
 
