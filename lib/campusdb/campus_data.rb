@@ -268,13 +268,36 @@ class CampusData < OracleDatabase
     result = {}
     use_pooled_connection {
       sql = <<-SQL
-        select s.cum_gpa, s.tot_units, s.first_reg_term_cd, s.first_reg_term_yr
+        select s.cum_gpa, s.tot_units, s.first_reg_term_cd, s.first_reg_term_yr,
+          s.ug_grad_flag
         from calcentral_student_info_vw s
         where s.student_ldap_uid=#{connection.quote(ldap_uid)}
       SQL
       result = connection.select_one(sql)
     }
     result
+  end
+
+
+
+  def self.is_grad_student_previous_ugrad?(ldap_uid)
+    result = {}
+    use_pooled_connection {
+      # A somewhat expensive query. Use with caution.
+      sql = <<-SQL
+        select si.student_ldap_uid from calcentral_student_info_vw si
+        join (
+          select ts.student_ldap_uid from calcentral_transcript_vw ts
+          where ts.line_type = 'U'
+          and ts.student_ldap_uid = #{connection.quote(ldap_uid)}
+        ) old_ug_uids on
+        (old_ug_uids.student_ldap_uid = si.student_ldap_uid)
+        where si.ug_grad_flag = 'G'
+        and si.student_ldap_uid = #{connection.quote(ldap_uid)}
+      SQL
+      result = connection.select_one(sql)
+    }
+    result.present?
   end
 
   def self.database_alive?

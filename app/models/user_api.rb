@@ -127,6 +127,10 @@ class UserApi < MyMergedModel
     if CanvasProxy.has_account?(uid)
       return true
     end
+    if (info.try(:[], "ug_grad_flag") == "G" && CampusData.is_grad_student_previous_ugrad?(uid))
+      return true
+    end
+
     false
   end
 

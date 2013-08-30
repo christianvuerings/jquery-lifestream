@@ -116,6 +116,13 @@ describe "UserApi" do
     UserApi.is_allowed_to_log_in?(@random_id).should == false
   end
 
+  it "grad students who used to be undergrads can log in", if: CampusData.test_data? do
+    Settings.features.user_whitelist = true
+    CanvasProxy.stub(:has_account?).and_return(false)
+    UserApi.is_allowed_to_log_in?("212388").should be_true
+    UserApi.is_allowed_to_log_in?("212389").should be_false
+  end
+
   context "valid regblocks" do
     let! (:oski_blocks_proxy) { BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true}) }
     before do
