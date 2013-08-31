@@ -75,7 +75,7 @@ describe CanvasUserSites do
     )
     CampusUserCoursesProxy.stub_chain(:new, :get_campus_courses).and_return([
         {
-            id: 'BIOLOGY:1A:2013-C',
+            id: 'BIOLOGY-1A-2013-C',
             term_yr: 2013,
             term_cd: 'C',
             dept: 'BIOLOGY',
@@ -101,7 +101,7 @@ describe CanvasUserSites do
     class_item[:name].should == 'Bio 1A summer'
     class_courses = class_item[:courses]
     class_courses.length.should == 1
-    class_courses[0][:id].should == 'BIOLOGY:1A:2013-C'
+    class_courses[0][:id].should == 'BIOLOGY-1A-2013-C'
     unofficial_class_item = feed[:classes].select{|klass| klass[:courses].empty?}[0]
     unofficial_class_item[:id].should == '234'
     unofficial_class_item[:site_type].should == 'course'
@@ -164,7 +164,7 @@ describe CanvasUserSites do
     )
     CampusUserCoursesProxy.stub_chain(:new, :get_campus_courses).and_return([
         {
-            id: 'BIOLOGY:1A:2013-C',
+            id: 'BIOLOGY-1A-2013-C',
             term_yr: 2013,
             term_cd: 'C',
             dept: 'BIOLOGY',
@@ -254,7 +254,7 @@ describe CanvasUserSites do
     )
     CampusUserCoursesProxy.stub_chain(:new, :get_campus_courses).and_return([
         {
-            id: 'BIOLOGY:1A:2013-C',
+            id: 'BIOLOGY-1A-2013-C',
             term_yr: 2013,
             term_cd: 'C',
             dept: 'BIOLOGY',

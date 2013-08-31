@@ -34,6 +34,7 @@ class MyAcademics::Semesters
           grade_option = ''
         end
         waitlist_pos = course[:waitlist_pos] if course[:waitlist_pos].present?
+        slug = course_to_slug(course[:dept], course[:catid])
         i = 0
         course[:sections].each do |this_section|
           Rails.logger.info "this_section schedules = #{this_section[:schedules]}"
@@ -44,9 +45,10 @@ class MyAcademics::Semesters
           course_label = "#{course_number}"
           schedules = this_section[:schedules]
           instructors = this_section[:instructors]
-          is_primary_section = (i == 0)
+          is_primary_section = this_section[:is_primary_section]
           entry = {
             :course_number => course_number,
+            :slug => slug,
             :ccn => ccn,
             :title => title,
             :units => units,
@@ -87,7 +89,7 @@ class MyAcademics::Semesters
 
       semesters << {
         :name => semester_name,
-        :slug => make_slug(semester_name),
+        :slug => TermCodes.to_slug(term_yr, term_cd),
         :time_bucket => time_bucket,
         :schedule => schedule
       }

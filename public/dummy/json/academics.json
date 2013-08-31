@@ -454,6 +454,7 @@
       "schedule": [
         {
           "course_number": "BIOLOGY 1A",
+          "slug": "biology-1a",
           "ccn": "7309",
           "title": "General Biology Lecture",
           "units": "5.0",
@@ -476,6 +477,7 @@
       "schedule": [
         {
           "course_number": "BIOLOGY 1A",
+          "slug": "biology-1a",
           "ccn": "7309",
           "title": "General Biology Lecture",
           "units": "5.0",
@@ -506,6 +508,7 @@
         },
         {
           "course_number": "BIOLOGY 1A",
+          "slug": "biology-1a",
           "ccn": "7366",
           "title": "General Biology Lecture",
           "units": "5.0",
@@ -532,6 +535,7 @@
         },
         {
           "course_number": "COG SCI C147",
+          "slug": "cog_sci-c147",
           "ccn": "16171",
           "title": "Language Disorders",
           "units": "3.0",
@@ -570,6 +574,7 @@
       "schedule": [
         {
           "course_number": "BIOLOGY 1A",
+          "slug": "biology-1a",
           "ccn": "7366",
           "title": "General Biology Lecture",
           "units": "5.0",
@@ -590,6 +595,7 @@
         },
         {
           "course_number": "COG SCI C147",
+          "slug": "cog_sci-c147",
           "ccn": "16171",
           "title": "Language Disorders",
           "units": "3.0",
@@ -612,6 +618,121 @@
     }
   ],
   "current_semester_index": 1,
+  "teaching": [
+    {
+      "course_number": "BIO 123A",
+      "slug": "bio-123a",
+      "title": "General Biology and the Cambrian Biota",
+      "semesters": [
+        {
+          "name": "Summer 2013",
+          "slug": "summer-2013",
+          "role": "GSI",
+          "sections": [
+            {
+              "ccn": "27606",
+              "instruction_format": "LEC",
+              "section_num": "002",
+              "schedules": [
+                {
+                  "building_name": "PIMENTAL",
+                  "room_number": "1",
+                  "schedule": "MWF 8:00A-9:00A"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "David Weisblatd",
+                  "email": "dw@example.edu",
+                  "uid": "21345"
+                }
+              ]
+            },
+            {
+              "ccn": "276019",
+              "instruction_format": "LAB",
+              "section_num": "201",
+              "schedules": [
+                {
+                  "building_name": "LECONTE",
+                  "room_number": "0004",
+                  "schedule": "F 12:00P-1:00P"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ]
+            },
+            {
+              "ccn": "49713",
+              "instruction_format": "DIS",
+              "section_num": "008",
+              "schedules": [ ],
+              "instructors": [
+                {
+                  "name": "Oski Bear",
+                  "email": "oski@example.edu",
+                  "uid": "61889"
+                },
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ]
+            }
+          ],
+          "class_sites": [
+            {
+              "id": "11866397",
+              "short_description": "Confessions of a Biotician",
+              "name": "BIO 123A Everyone",
+              "emitter": "bCourses",
+              "color_class": "canvas-class",
+              "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397"
+            },
+            {
+              "id": "de1f491a-525e-4848-952b-11866397",
+              "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
+              "emitter": "bSpace",
+              "name": "Bio 123A DIS 008 Su13",
+              "color_class": "bspace-class"
+            }
+          ]
+        },
+        {
+          "id": "BIO-123A-2013-D",
+          "name": "Fall 2013",
+          "role": "Instructor",
+          "sections": [
+            {
+              "ccn": "27607",
+              "instruction_format": "LEC",
+              "section_num": "003",
+              "schedules": [
+                {
+                  "building_name": "PIMENTAL",
+                  "room_number": "12",
+                  "schedule": "MWF 11:00A-12:00P"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "exam_schedule": {
     "Tue May 14": [
       {

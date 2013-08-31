@@ -6,7 +6,7 @@ class MyClasses < MyMergedModel
         :current_term => Settings.sakai_proxy.current_terms.first
     }
     if CampusUserCoursesProxy.access_granted?(@uid)
-      response[:classes].concat(CampusUserCoursesProxy.new({:user_id => @uid}).get_campus_courses)
+      response[:classes].concat(process_campus_courses)
       response[:classes].concat(process_canvas_courses) if CanvasProxy.access_granted?(@uid)
       response[:classes].concat(process_sakai_sites) if SakaiUserSitesProxy.access_granted?(@uid)
     end
@@ -15,6 +15,20 @@ class MyClasses < MyMergedModel
   end
 
   private
+
+  def process_campus_courses
+    campus_courses = CampusUserCoursesProxy.new({:user_id => @uid}).get_campus_courses
+    campus_courses.each do |course|
+      # Point to My Academics class page
+      course[:site_url] = MyAcademics::AcademicsModule.class_to_url(
+          course[:term_cd],
+          course[:term_yr],
+          course[:dept],
+          course[:catid]
+      )
+    end
+    campus_courses
+  end
 
   def process_sakai_sites
     sakai_proxy = SakaiUserSitesProxy.new({:user_id => @uid})

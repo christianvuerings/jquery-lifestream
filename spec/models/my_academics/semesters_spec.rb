@@ -25,6 +25,7 @@ describe "MyAcademics::Semesters" do
     oski_semesters[1][:schedule][0][:schedules][0][:schedule].should == "M 4:00P-5:00P"
     oski_semesters[1][:schedule][0][:course_number].should == "BIOLOGY 1A"
     oski_semesters[1][:schedule][0][:ccn].should == "7309"
+    oski_semesters[1][:schedule][0][:slug].should == "biology-1a"
     oski_semesters[1][:schedule][0][:grade].should be_nil
     oski_semesters[1][:schedule][0][:title].should == "General Biology Lecture"
     oski_semesters[1][:schedule][0][:units].should == "5.0"

@@ -110,12 +110,12 @@
         }
 
         // Get selected course from URL params and extract data from selected semester schedule
-        if ($routeParams.ccn) {
+        if ($routeParams.course_slug) {
           angular.forEach($scope.selected_semester.schedule, function (course) {
-            if (course.ccn === $routeParams.ccn) {
-              $scope.selected_course = course;
-              $scope.selected_course_sections.push(course);
-            } else if ($scope.selected_course !== undefined && !course.is_primary_section && course.course_number === $scope.selected_course.course_number) {
+            if (course.slug === $routeParams.course_slug) {
+              if ($scope.selected_course == undefined) {
+                $scope.selected_course = course;
+              }
               $scope.selected_course_sections.push(course);
             }
           });
