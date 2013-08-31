@@ -27,6 +27,7 @@ class MyAcademics::Teaching
             role: course[:role],
             # TODO Inject nested sections (if instructor in primary) or nesting section (if GSI in secondary).
             sections: course[:sections]
+            # TODO Add class sites with section linkages.
         }
       end
     end
