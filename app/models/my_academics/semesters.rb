@@ -5,6 +5,7 @@ class MyAcademics::Semesters
   def merge(data)
     proxy = CampusUserCoursesProxy.new({:user_id => @uid})
     feed = proxy.get_all_campus_courses
+    transcripts = proxy.get_all_transcripts
     current_semester_index = 0
     is_past = false
     is_future = true
@@ -21,7 +22,10 @@ class MyAcademics::Semesters
         next unless course_number.strip.length
 
         # If we have a transcript unit, it needs to trump the unit.
-        units = course[:transcript_unit] ? course[:transcript_unit] : course[:unit]
+        transcript = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
+        units = transcript[:transcript_unit] ? transcript[:transcript] : course[:unit]
+        grade = transcript[:grade]
+
         title = course[:name]
         if course[:pnp_flag].present?
           grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
@@ -30,7 +34,6 @@ class MyAcademics::Semesters
           grade_option = ''
         end
         waitlist_pos = course[:waitlist_pos] if course[:waitlist_pos].present?
-        grade = course[:grade] ? course[:grade].strip : nil
         i = 0
         course[:sections].each do |this_section|
           Rails.logger.info "this_section schedules = #{this_section[:schedules]}"
@@ -95,5 +98,20 @@ class MyAcademics::Semesters
 
     data[:semesters] = semesters
     data[:current_semester_index] = current_semester_index
+  end
+
+  def find_transcript_data(transcripts, term_yr, term_cd, dept_name, catalog_id)
+    transcripts.each do |t|
+      if t['term_yr'] == term_yr &&
+          t['term_cd'] == term_cd &&
+          t['dept_name'] == dept_name &&
+          t['catalog_id'] == catalog_id
+        return {
+            transcript_unit: t['transcript_unit'],
+            grade: t['grade']
+        }
+      end
+    end
+    {}
   end
 end

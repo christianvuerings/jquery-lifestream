@@ -167,26 +167,37 @@ class CampusData < OracleDatabase
     terms_clause = terms_query_clause('r', terms)
     use_pooled_connection {
       sql = <<-SQL
-      select r.term_yr, r.term_cd, r.course_cntl_num, r.enroll_status, r.wait_list_seq_num, r.unit, r.pnp_flag,
+      select c.term_yr, c.term_cd, c.course_cntl_num, r.enroll_status, r.wait_list_seq_num, r.unit, r.pnp_flag,
         c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
-        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.enroll_limit,
-        t.grade, t.unit as transcript_unit
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.enroll_limit
       from bspace_class_roster_vw r
       join bspace_course_info_vw c on (
         c.term_yr = r.term_yr
           and c.term_cd = r.term_cd
           and c.course_cntl_num = r.course_cntl_num )
-      left outer join calcentral_transcript_vw t on (
-        t.student_ldap_uid = r.student_ldap_uid
-          and t.term_yr = r.term_yr
-          and t.term_cd = r.term_cd
-          and trim(t.dept_cd) = c.dept_name
-          and trim(t.course_num) = c.catalog_id )
       where r.student_ldap_uid = #{connection.quote(person_id)}
         #{terms_clause}
-      order by r.term_yr desc, r.term_cd desc, c.dept_name,
+      order by c.term_yr desc, c.term_cd desc, c.dept_name,
         c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
         c.primary_secondary_cd, c.instruction_format, c.section_num
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.get_transcript_grades(person_id, terms = nil)
+    result = []
+    terms_clause = terms_query_clause('t', terms)
+    use_pooled_connection {
+      sql = <<-SQL
+      select t.term_yr, t.term_cd, trim(t.dept_cd) as dept_name, trim(t.course_num) as catalog_id,
+        trim(t.grade) as grade, t.unit as transcript_unit
+      from calcentral_transcript_vw t where
+        t.student_ldap_uid = #{connection.quote(person_id)}
+          and t.unit != 0
+          #{terms_clause}
+      order by t.term_yr desc, t.term_cd desc, dept_name, catalog_id
       SQL
       result = connection.select_all(sql)
     }
@@ -317,7 +328,7 @@ class CampusData < OracleDatabase
       clause = 'and ('
       terms.each_index do |idx|
         clause.concat(' or ') if idx > 0
-        clause.concat("(#{table}.term_cd='#{terms[idx].term_cd}' and #{table}.term_yr=#{terms[idx].term_yr})")
+        clause.concat("(#{table}.term_cd=#{connection.quote(terms[idx].term_cd)} and #{table}.term_yr=#{connection.quote(terms[idx].term_yr)})")
       end
       clause.concat(')')
       clause

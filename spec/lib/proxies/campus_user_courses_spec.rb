@@ -43,10 +43,6 @@ describe CampusUserCoursesProxy do
     courses = client.get_all_campus_courses
     courses.empty?.should be_false
     courses["2012-B"].length.should == 2
-    courses["2012-B"].each do |course|
-      course[:grade].blank?.should be_false
-      course[:transcript_unit].blank?.should be_false
-    end
     courses["2013-D"].length.should == 2
     courses["2013-D"].each do |course|
       course[:id].blank?.should be_false

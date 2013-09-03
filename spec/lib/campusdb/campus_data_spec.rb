@@ -104,11 +104,23 @@ describe CampusData do
   it "should find where a person is enrolled, with grades where available" do
     sections = CampusData.get_enrolled_sections('300939')
     sections.should_not be_nil
+    transcripts = CampusData.get_transcript_grades('300939')
+    transcripts.should_not be_nil
     if CampusData.test_data?
       sections.length.should == 6
-      sections[0]["grade"].should be_nil
-      sections[4]["grade"].should == "B "
-      sections[5]["grade"].should == "C+"
+      transcripts.length.should == 2
+      expected_grades = {4 => 'B', 5 => 'C+'}
+      expected_grades.keys.each do |idx|
+        section = sections[idx]
+        transcript = transcripts.select {|t|
+          t['term_yr'] == section['term_yr'] &&
+              t['term_cd'] == section['term_cd'] &&
+              t['dept_name'] == section['dept_name'] &&
+              t['catalog_id'] == section['catalog_id']
+        }[0]
+        transcript.should_not be_nil
+        transcript['grade'].should == expected_grades[idx]
+      end
     end
   end
 
