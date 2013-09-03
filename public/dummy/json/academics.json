@@ -721,8 +721,8 @@
           ]
         },
         {
-          "id": "BIO-123A-2013-D",
           "name": "Fall 2013",
+          "slug": "fall-2013",
           "role": "Instructor",
           "sections": [
             {
