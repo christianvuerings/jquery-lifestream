@@ -30,7 +30,7 @@ class MyAcademics::Semesters
         if course[:pnp_flag].present?
           grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
         else
-          Rails.logger.warn "#{self.class.name} - Course #{course[:ccn]} has a empty 'pnp_flag' field: #{course}"
+          Rails.logger.warn "#{self.class.name} - Course #{course[:course_code]} has a empty 'pnp_flag' field: #{course}"
           grade_option = ''
         end
         waitlist_pos = course[:waitlist_pos] if course[:waitlist_pos].present?
