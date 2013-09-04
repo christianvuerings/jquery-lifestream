@@ -45,18 +45,6 @@ feature 'MyBadges urls:' do
     @fake_calendar_events = GoogleEventsListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
   end
 
-  scenario 'see if munged urls from google_mail badges resolve', :testext => true do
-    #This requires a live mailbox with a non-empty INBOX.
-    GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleMailListProxy.stub(:new).and_return(@real_mail_list)
-
-    results = MyBadges::GoogleMail.new(@user_id).fetch_counts
-    results[:items].size.should_not == 0
-    regex = 'mail/?fs=1&source=atom#all'
-    results[:items].first[:link].include?('mail/?fs=1&source=atom#all').should be_true
-    selenium_check_url_exists results[:items].first[:link]
-  end
-
   scenario 'see if munged urls from google_calendar badges resolve', :testext => true do
     #This requires an existing event to be exist from the time listed below.
     event_listed_after = "2013-05-09T12:42:02-07:00"
