@@ -34,7 +34,9 @@ describe "MyAcademics::Semesters" do
     oski_semesters[1][:schedule][0][:instructors][0][:name].should == "Yu-Hung Lin"
     oski_semesters[1][:schedule][0][:is_primary_section].should be_true
     oski_semesters[2][:schedule][0][:grade].should == "B"
+    oski_semesters[2][:schedule][0][:units].should == "4.0"
     oski_semesters[2][:schedule][1][:grade].should == "C+"
+    oski_semesters[2][:schedule][1][:units].should == "3.0"
 
   end
 

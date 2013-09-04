@@ -23,7 +23,7 @@ class MyAcademics::Semesters
 
         # If we have a transcript unit, it needs to trump the unit.
         transcript = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
-        units = transcript[:transcript_unit] ? transcript[:transcript] : course[:unit]
+        units = transcript[:transcript_unit] ? transcript[:transcript_unit] : course[:unit]
         grade = transcript[:grade]
 
         title = course[:name]
