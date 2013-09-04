@@ -64,27 +64,7 @@ module MyBadges
               entry[key.to_sym] = get_node_value(key, raw_entry)
             end
             entry[:modified_time] = get_node_value("modified", raw_entry)
-            entry[:link] = get_nodeset('link', raw_entry.search('link')).first['href'] || ''
-
-            # Because normal google accounts are in a separate domain from berkeley.edu google accounts,
-            # there are issues with multiple logged in google sessions which triggers some rather unrecoverable
-            # errors on when clicking off to the remote link. This should help with the problem by enforcing
-            # a specific domain restriction, based on the stored oauth token. See CLC-1765
-            # (https://jira.media.berkeley.edu/jira/browse/CLC-1765) and
-            # CLC-1762 (https://jira.media.berkeley.edu/jira/browse/CLC-1762)
-            #
-            # With google mail, the current unmodified URL will link off to an unrecoverable page with an
-            # obscure 404 message (i'm assuming this is due to how they expected the mail atom feed to be consumed).
-            begin
-              message_id = Rack::Utils.parse_query(URI.parse(entry[:link]).query)["message_id"]
-              domain_subpath = "a/berkeley.edu/" if @rewrite_url
-              domain_subpath ||= ""
-              if !message_id.nil?
-                entry[:link] = "https://mail.google.com/#{domain_subpath}mail/?fs=1&source=atom#all/#{message_id}"
-              end
-            rescue Exception => e
-              Rails.logger.warn "#{self.class.name} unable to parse link #{entry[:link]} for message_id: #{e}"
-            end
+            entry[:link] = "http://bmail.berkeley.edu/"
 
             author_set = get_nodeset('author', raw_entry.search('author'))
             entry[:editor] = get_node_value('name', author_set)
