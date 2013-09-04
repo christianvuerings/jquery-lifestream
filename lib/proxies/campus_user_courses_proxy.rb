@@ -74,6 +74,12 @@ class CampusUserCoursesProxy < BaseProxy
     end
   end
 
+  def get_all_transcripts
+    self.class.fetch_from_cache "all-transcripts-#{@uid}" do
+      CampusData.get_transcript_grades(@uid, academic_terms.student)
+    end
+  end
+
   # Example:
   # {
   #    "id": "COG SCI:C102:2013-B",

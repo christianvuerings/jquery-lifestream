@@ -182,7 +182,7 @@
         "TERM_YR" NUMBER,
         "TRANSF_GRDPT" NUMBER,
         "TRANSF_PASSED_UNIT" NUMBER,
-        "UNIT" NUMBER,
+        "UNIT" NUMBER(3,1),
         "CHNG_DATE" TIMESTAMP,
         "CHNG_USERID" VARCHAR2(50),
         "DNLD_DATE" TIMESTAMP,
