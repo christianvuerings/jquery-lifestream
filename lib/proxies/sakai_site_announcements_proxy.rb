@@ -41,7 +41,8 @@ class SakaiSiteAnnouncementsProxy < SakaiProxy
     end
   end
 
-  def get_announcements(site_groups = [])
+  def get_announcements(site_groups = nil)
+    site_groups ||= []
     announcements = get_all_announcements
     announcements.select do |ann|
       ann['to_group_ids'].nil? || !(ann['to_group_ids'] & site_groups).empty?
