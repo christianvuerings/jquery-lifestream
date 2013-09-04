@@ -39,7 +39,7 @@
             <div
                 data-ng-show="selected_course.units"
                 class="large-4 small-8 columns end"
-                data-ng-bind="selected_course.units">
+                data-ng-bind="selected_course.units | number:1">
             </div>
             <div
                 data-ng-show="!selected_course.units"
