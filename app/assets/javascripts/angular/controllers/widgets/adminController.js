@@ -12,6 +12,10 @@
      * Act as someone else
      */
     $scope.admin.actAs = function() {
+      if (!$scope.admin.act_as || !$scope.admin.act_as.uid) {
+        return;
+      }
+
       var user = {
         uid: $scope.admin.act_as.uid
       };
