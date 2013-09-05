@@ -274,6 +274,24 @@ button {
   }
 }
 
+/* List */
+.cc-list-links {
+  list-style-type: none;
+  margin: 10px 0;
+  a {
+    display: block;
+    margin-left: 16px;
+    &:before {
+      content: '\25A0';
+      color: #61889d;
+      float: left;
+      margin-left: -16px;
+      margin-top: -2px;
+      padding-right: 8px;
+    }
+  }
+}
+
 /* Select */
 /* We need to wrap a select in a <div> to have consistent styling */
 .cc-select {
@@ -297,6 +315,11 @@ button {
       width: 100%;
     }
   }
+}
+
+/* Text */
+.cc-text-light {
+  color: $cc-color-lighter-medium-grey;
 }
 
 /* Message for oldIE */

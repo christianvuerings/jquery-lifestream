@@ -17,18 +17,18 @@
           data-ng-click="api.widget.toggleShow($event, items, item, 'Up Next')">
           <div class="cc-widget-list-column-left cc-widget-mycalendar-datelist-time">
             <div data-ng-switch data-on="item.is_all_day">
-              <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-widget-list-light">all<br />day</div>
+              <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-text-light">all<br />day</div>
               <div data-ng-switch-when="false">
                 <div class="cc-widget-mycalendar-datelist-time cc-left">
                   <strong data-ng-bind="item.start.epoch * 1000 | date:'h:mm'"></strong><br>
-                  <span class="cc-widget-list-light" data-ng-bind="item.start.epoch * 1000 | date:'a' | uppercase"></span>
+                  <span class="cc-text-light" data-ng-bind="item.start.epoch * 1000 | date:'a' | uppercase"></span>
                 </div>
               </div>
             </div>
           </div>
           <div class="cc-widget-mycalendar-datelist-summary">
             <strong class="cc-ellipsis" data-ng-bind="item.summary"></strong>
-            <div class="cc-ellipsis cc-widget-mycalendar-datelist-location cc-widget-list-light" data-ng-bind="item.location" data-ng-show="item.location"></div>
+            <div class="cc-ellipsis cc-widget-mycalendar-datelist-location cc-text-light" data-ng-bind="item.location" data-ng-show="item.location"></div>
           </div>
           <div class="cc-widget-mycalendar-more" data-ng-show="item._show">
             <div class="cc-widget-mycalendar-startend">

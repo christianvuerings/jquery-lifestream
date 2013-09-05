@@ -13,7 +13,7 @@
         <div class="cc-page-campus-content-subcontainer" data-ng-repeat="subcategory in subcategories">
           <h3>{{subcategory}}</h3>
 
-          <ul>
+          <ul class="cc-list-links">
             <li data-ng-repeat="link in links | orderBy:'name' | linksubcategory:subcategory">
               <a data-ng-href="{{link.url}}"
                 data-ng-click="api.analytics.trackExternalLink('Campus links', subcategory, link.url)"

@@ -22,7 +22,7 @@
           "schedules": [], "instructors": [{"name": "Gee Esai", "uid": "1111"}]}
       ],
       "role": "Student",
-      "waitlist_pos": 2,
+      "waitlist_position": 2,
       "emitter": "Campus",
       "color_class": "campus-class"
     },

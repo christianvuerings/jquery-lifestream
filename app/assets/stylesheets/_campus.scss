@@ -29,20 +29,6 @@
   }
   .cc-page-campus-content {
     padding: 15px 25px;
-    a {
-      margin-left: 16px;
-      &:before {
-        content: '\25A0';
-        color: #61889d;
-        float: left;
-        margin-left: -16px;
-        margin-top: -2px;
-        padding-right: 8px;
-      }
-    }
-    ul {
-      list-style-type: none;
-    }
   }
   .cc-page-campus-content-explanation {
     max-width: 400px;
