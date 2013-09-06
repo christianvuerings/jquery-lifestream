@@ -48,7 +48,7 @@ describe "MyGroups" do
     CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
     my_groups = MyGroups.new(@user_id).get_feed
     my_groups[:groups].is_a?(Array).should == true
-    my_groups[:groups].size.should == 5
+    my_groups[:groups].size.should == 8
     my_groups[:groups].each do |group_hash|
       group_hash.keys do |key|
         group_hash[key].should_not be_nil
@@ -60,6 +60,18 @@ describe "MyGroups" do
         group[:color_class].should == "callink-group"
       end
     end
+  end
+
+  it "should filter out blacklisted CalLink groups" do
+    CanvasProxy.stub(:access_granted?).and_return(false)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
+    CalLinkProxy.stub(:access_granted?).and_return(true)
+    CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    my_groups = MyGroups.new(@user_id).get_feed
+    my_groups[:groups].is_a?(Array).should == true
+    bad_groups = %w(91370 59672 45984 46063 91891 93520 67825)
+    (my_groups[:groups].select {|group| bad_groups.include?(group[:id])}).should be_empty
+    (my_groups[:groups].select {|group| group[:emitter] == "CalLink"}).should be_present
   end
 
   it "should sort groups alphabetically" do
