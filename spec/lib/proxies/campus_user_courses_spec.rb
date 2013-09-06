@@ -24,7 +24,7 @@ describe CampusUserCoursesProxy do
       sections.each do |section|
         if section[:ccn] == "16171"
           section[:instruction_format].blank?.should be_false
-          section[:section_num].blank?.should be_false
+          section[:section_number].blank?.should be_false
           section[:instructors].length.should == 1
           section[:instructors][0][:name].should == "Yu-Hung Lin"
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
@@ -53,7 +53,7 @@ describe CampusUserCoursesProxy do
       sections.each do |section|
         if section[:ccn] == "16171"
           section[:instruction_format].blank?.should be_false
-          section[:section_num].blank?.should be_false
+          section[:section_number].blank?.should be_false
           section[:instructors].length.should == 1
           section[:instructors][0][:name].should == "Yu-Hung Lin"
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"

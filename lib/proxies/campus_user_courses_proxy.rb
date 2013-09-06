@@ -91,9 +91,9 @@ class CampusUserCoursesProxy < BaseProxy
   #    "dept": "COG SCI",
   #    "catid": "C102",
   #    "sections": [
-  #      {"ccn": "12345", "instruction_format": "LEC", "section_num": "001",
+  #      {"ccn": "12345", "instruction_format": "LEC", "section_number": "001",
   #        "schedules": [], "instructors": [{"name": "Dr. X", "uid": "999"}]},
-  #      {"ccn": "12346", "instruction_format": "DIS", "section_num": "101",
+  #      {"ccn": "12346", "instruction_format": "DIS", "section_number": "101",
   #        "schedules": [], "instructors": [{"name": "Gee Esai", "uid": "1111"}]}
   #    ]
   #    "role": "Student", (or "Instructor")
@@ -142,12 +142,19 @@ class CampusUserCoursesProxy < BaseProxy
   end
 
   def row_to_section_data(row)
-    {
+    section_data = {
         ccn: row['course_cntl_num'],
         instruction_format: row['instruction_format'],
         is_primary_section: (row['primary_secondary_cd'] == 'P'),
-        section_num: row['section_num']
+        section_label: "#{row['instruction_format']} #{row['section_num']}",
+        section_number: row['section_num']
     }
+    # This only applies to enrollment records and will be skipped for instructors.
+    if row['enroll_status'] == 'W'
+      section_data[:waitlist_position] = row['wait_list_seq_num']
+      section_data[:enroll_limit] = row['enroll_limit']
+    end
+    section_data
   end
 
 end

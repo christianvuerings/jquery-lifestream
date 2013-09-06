@@ -681,6 +681,7 @@
               "instruction_format": "LEC",
               "section_label": "LEC 002",
               "section_number": "002",
+              "is_primary_section": true,
               "schedules": [
                 {
                   "building_name": "PIMENTAL",
@@ -701,6 +702,7 @@
               "instruction_format": "LAB",
               "section_label": "LAB 201",
               "section_number": "201",
+              "is_primary_section": false,
               "instructors": [
                 {
                   "name": "Mary Salinger",
@@ -721,6 +723,7 @@
               "ccn": "49713",
               "instruction_format": "DIS",
               "section_number": "008",
+              "is_primary_section": false,
               "schedules": [],
               "instructors": [
                 {
@@ -754,6 +757,7 @@
               "instruction_format": "LEC",
               "section_label": "LEC 003",
               "section_number": "003",
+              "is_primary_section": false,
               "instructors": [
                 {
                   "name": "Mary Salinger",

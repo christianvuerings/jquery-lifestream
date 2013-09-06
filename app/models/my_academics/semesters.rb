@@ -2,104 +2,68 @@ class MyAcademics::Semesters
 
   include MyAcademics::AcademicsModule
 
+  def initialize(uid)
+    super(uid)
+    current_terms = Settings.sakai_proxy.current_terms_codes
+    @min_term = @max_term = nil
+    current_terms.each do |t|
+      if @min_term == nil
+        @min_term = t
+        @max_term = t
+      else
+        if t.term_yr < @min_term.term_yr || (t.term_yr == @min_term.term_yr && t.term_cd < @min_term.term_cd)
+          @min_term = t
+        end
+        if t.term_yr > @max_term.term_yr || (t.term_yr == @max_term.term_yr && t.term_cd > @max_term.term_cd)
+          @max_term = t
+        end
+      end
+    end
+  end
+
   def merge(data)
     proxy = CampusUserCoursesProxy.new({:user_id => @uid})
     feed = proxy.get_all_campus_courses
     transcripts = proxy.get_all_transcripts
-    current_semester_index = 0
-    is_past = false
-    is_future = true
     semesters = []
 
-    feed.keys.each do |semester_key|
-      term_yr = semester_key.split("-")[0]
-      term_cd = semester_key.split("-")[1]
-      schedule = []
-
-      feed[semester_key].each do |course|
+    feed.keys.each do |term_key|
+      (term_yr, term_cd) = term_key.split("-")
+      semester = {
+          name: TermCodes.to_english(term_yr, term_cd),
+          slug: TermCodes.to_slug(term_yr, term_cd),
+          time_bucket: time_bucket(term_yr, term_cd),
+          classes: []
+      }
+      feed[term_key].each do |course|
         next unless course[:role] == 'Student'
-        course_number = course[:course_code]
-        next unless course_number.strip.length
 
         # If we have a transcript unit, it needs to trump the unit.
         transcript = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
         units = transcript[:transcript_unit] ? transcript[:transcript_unit] : course[:unit]
-        grade = transcript[:grade]
 
-        title = course[:name]
         if course[:pnp_flag].present?
           grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
         else
           Rails.logger.warn "#{self.class.name} - Course #{course[:course_code]} has a empty 'pnp_flag' field: #{course}"
           grade_option = ''
         end
-        waitlist_pos = course[:waitlist_pos] if course[:waitlist_pos].present?
-        slug = course_to_slug(course[:dept], course[:catid])
-        i = 0
-        course[:sections].each do |this_section|
-          Rails.logger.info "this_section schedules = #{this_section[:schedules]}"
-          ccn = this_section[:ccn]
-          format = this_section[:instruction_format]
-          section = this_section[:section_num]
-          section_label = "#{format} #{section}"
-          course_label = "#{course_number}"
-          schedules = this_section[:schedules]
-          instructors = this_section[:instructors]
-          is_primary_section = this_section[:is_primary_section]
-          entry = {
-            :course_number => course_number,
-            :slug => slug,
-            :ccn => ccn,
-            :title => title,
-            :units => units,
-            :grade_option => grade_option,
-            :section => section,
-            :format => format,
-            :section_label => section_label,
-            :course_label => course_label,
-            :schedules => schedules,
-            :instructors => instructors,
-            :is_primary_section => is_primary_section,
-            :grade => grade
-          }
-          if waitlist_pos.present?
-            entry[:waitlist_pos] = waitlist_pos
-            entry[:enroll_limit] = course[:enroll_limit]
-          end
-          schedule << entry
-          i += 1
-        end
-      end
 
-      semester_name = TermCodes.to_english(term_yr, term_cd)
-      is_current = Settings.sakai_proxy.current_terms.include?(semester_name)
-      if is_current
-        current_semester_index = semesters.size
-        is_future = false
+        class_info = {
+            course_number: course[:course_code],
+            grade: transcript[:grade],
+            grade_option: grade_option,
+            slug: course_to_slug(course[:dept], course[:catid]),
+            title: course[:name],
+            units: units,
+            sections: course[:sections]
+        }
+        semester[:classes] << class_info
       end
-
-      time_bucket = ''
-      if is_current
-        time_bucket = 'current'
-      elsif is_past
-        time_bucket = 'past'
-      elsif is_future
-        time_bucket = 'future'
-      end
-
-      semesters << {
-        :name => semester_name,
-        :slug => TermCodes.to_slug(term_yr, term_cd),
-        :time_bucket => time_bucket,
-        :schedule => schedule
-      }
-      if is_current
-        is_past = true # so the next semesters in the loop show up as past
-      end
+      semesters << semester unless semester[:classes].empty?
     end
 
     data[:semesters] = semesters
-    data[:current_semester_index] = current_semester_index
   end
 
   def find_transcript_data(transcripts, term_yr, term_cd, dept_name, catalog_id)
@@ -116,4 +80,19 @@ class MyAcademics::Semesters
     end
     {}
   end
+
+
+  def time_bucket(term_yr, term_cd)
+    if @min_term.present?
+      if term_yr < @min_term.term_yr || (term_yr == @min_term.term_yr && term_cd < @min_term.term_cd)
+        bucket = 'past'
+      elsif term_yr > @max_term.term_yr || (term_yr == @max_term.term_yr && term_cd > @max_term.term_cd)
+        bucket = 'future'
+      else
+        bucket = 'current'
+      end
+      bucket
+    end
+  end
+
 end

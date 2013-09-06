@@ -13,12 +13,12 @@
         {
           "ccn": "12345",
           "instruction_format": "LEC",
-          "section_num": "001",
+          "section_number": "001",
           "schedules": [
             {"building_name": "DOE LIBRARY", "room_number": "0425", "schedule": "MTuWTh 12:00P-2:00P"}
           ],
           "instructors": [{"name": "Dr. X", "uid": "999"}]},
-        {"ccn": "12346", "instruction_format": "DIS", "section_num": "101",
+        {"ccn": "12346", "instruction_format": "DIS", "section_number": "101",
           "schedules": [], "instructors": [{"name": "Gee Esai", "uid": "1111"}]}
       ],
       "role": "Student",
@@ -39,7 +39,7 @@
         {
           "ccn": "4567",
           "instruction_format": "SEM",
-          "section_num": "009",
+          "section_number": "009",
           "schedules": [],
           "instructors": [{"name": "Fritz Lang", "uid": "9992"}]
         }
