@@ -4,21 +4,7 @@ class MyAcademics::Semesters
 
   def initialize(uid)
     super(uid)
-    current_terms = Settings.sakai_proxy.current_terms_codes
-    @min_term = @max_term = nil
-    current_terms.each do |t|
-      if @min_term == nil
-        @min_term = t
-        @max_term = t
-      else
-        if t.term_yr < @min_term.term_yr || (t.term_yr == @min_term.term_yr && t.term_cd < @min_term.term_cd)
-          @min_term = t
-        end
-        if t.term_yr > @max_term.term_yr || (t.term_yr == @max_term.term_yr && t.term_cd > @max_term.term_cd)
-          @max_term = t
-        end
-      end
-    end
+    @current_term = Settings.sakai_proxy.current_terms_codes[0]
   end
 
   def merge(data)
@@ -83,16 +69,14 @@ class MyAcademics::Semesters
 
 
   def time_bucket(term_yr, term_cd)
-    if @min_term.present?
-      if term_yr < @min_term.term_yr || (term_yr == @min_term.term_yr && term_cd < @min_term.term_cd)
-        bucket = 'past'
-      elsif term_yr > @max_term.term_yr || (term_yr == @max_term.term_yr && term_cd > @max_term.term_cd)
-        bucket = 'future'
-      else
-        bucket = 'current'
-      end
-      bucket
+    if term_yr < @current_term.term_yr || (term_yr == @current_term.term_yr && term_cd < @current_term.term_cd)
+      bucket = 'past'
+    elsif term_yr > @current_term.term_yr || (term_yr == @current_term.term_yr && term_cd > @current_term.term_cd)
+      bucket = 'future'
+    else
+      bucket = 'current'
     end
+    bucket
   end
 
 end

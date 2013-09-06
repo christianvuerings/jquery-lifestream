@@ -78,8 +78,9 @@ sakai_proxy:
   fake: false
   fake_user_id: "300939"
   current_terms: ["Fall 2013"]
-  # Used both for Dashboard widgets and for bSpace integration
-  current_terms_codes: [ {
+  # The first term in the array is the one happening now. The rest of the array will
+  # also be included in the Dashboard widgets.
+  current_terms_codes: [{
     term_yr: "2013",
     term_cd: "D"
   }]
