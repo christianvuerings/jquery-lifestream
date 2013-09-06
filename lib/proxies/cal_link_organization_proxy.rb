@@ -15,7 +15,7 @@ class CalLinkOrganizationProxy < CalLinkProxy
       params = build_params
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url}; params = #{params}, cache expiration #{self.class.expires_in}"
       begin
-        response = FakeableProxy.wrap_request(APP_ID + "_organization", @fake, {:match_requests_on => [:method, :path, :body]}) {
+        response = FakeableProxy.wrap_request(APP_ID + "_organization", @fake, {:match_requests_on => [:method, :path, self.method(:custom_query_matcher).to_proc, :body]}) {
           Faraday::Connection.new(
               :url => url,
               :params => params
@@ -41,6 +41,18 @@ class CalLinkOrganizationProxy < CalLinkProxy
   end
 
   private
+
+  def custom_query_matcher(uri_1, uri_2)
+    a_uri = URI(uri_1.uri).query
+    b_uri = URI(uri_2.uri).query
+    if !a_uri.blank? && !b_uri.blank?
+      a_param_hash = CGI::parse(a_uri)
+      b_param_hash = CGI::parse(b_uri)
+      a_param_hash["organizationId"] == b_param_hash["organizationId"]
+    else
+      a_uri == b_uri
+    end
+  end
 
   def build_params
     params = super
