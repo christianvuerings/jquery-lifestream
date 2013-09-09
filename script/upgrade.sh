@@ -8,6 +8,8 @@ if [[ "${HOSTNAME}" = ets-calcentral-*-01\.ist.berkeley.edu ]]; then
   NODEONE="yes"
 fi
 
+./script/init.d/calcentral maint
+
 ./script/update-build.sh
 
 # run migrate.sh only if we are on node 1
