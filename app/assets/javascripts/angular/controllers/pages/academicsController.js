@@ -114,7 +114,7 @@
     };
 
     var findSemester = function(semesters, slug, selected_semester) {
-      if (selected_semester) {
+      if (selected_semester || !semesters) {
         return selected_semester;
       }
 
@@ -203,7 +203,7 @@
       $scope.semesters = data.semesters;
 
       // Some users (e.g. test-xxx users) may be missing the "student" role but still need ability to view My Academics pages
-      $scope.can_view_academics = $scope.api.user.profile.roles.student || $scope.college_and_level.standing == 'Undergraduate';
+      $scope.can_view_academics = $scope.api.user.profile.roles.student || $scope.api.user.profile.roles.faculty || $scope.college_and_level.standing == 'Undergraduate';
 
       $scope.teaching = parseTeaching(data.teaching_semesters);
       $scope.teaching_length = Object.keys($scope.teaching).length;
