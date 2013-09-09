@@ -9,7 +9,7 @@ wget --recursive --quiet http://$IP_ADDR:3000/
 wget --recursive --quiet http://$IP_ADDR:3000/api/ping
 cd $IP_ADDR\:3000
 
-grep "\"server_alive\"\:true" ping > /dev/null || { echo "WARNING: Calcentral is dead or seriously malfunctioning!" ; exit 1 ; }
+grep "server_alive" ping > /dev/null || { echo "WARNING: Calcentral is dead or seriously malfunctioning!" ; exit 1 ; }
 
 echo "Server is alive"
 
