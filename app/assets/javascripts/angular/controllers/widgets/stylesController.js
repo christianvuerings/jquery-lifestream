@@ -6,20 +6,11 @@
    */
   calcentral.controller('StylesController', ['$scope', '$http', '$location', '$anchorScroll', function($scope, $http, $location, $anchorScroll) {
 
-    $http.get('/api/tools/styles').success(function(data) {
-      $scope.colorvars = data.colors;
-
-      // Set lightdark class for each color
-      angular.forEach($scope.colorvars, function(obj){
-        obj.lightdark = darkOrLight(hexToRgb(obj.hex));
-      });
-    });
-
     // Handle in-page links, via http://stackoverflow.com/a/14717011/8438
     $scope.scrollTo = function(id) {
       $location.hash(id);
       $anchorScroll();
-    }
+    };
 
     var hexToRgb = function(hex) {
       // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -34,15 +25,24 @@
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
       } : null;
-    }
+    };
 
     var darkOrLight = function(rgbVals) {
-      var brightness = (rgbVals['r'] * 299) + (rgbVals['g'] * 587) + (rgbVals['b'] * 114);
+      var brightness = (rgbVals.r * 299) + (rgbVals.g * 587) + (rgbVals.b * 114);
       brightness = brightness / 255000;
 
       // Values range from 0 to 1. Less than 0.6 should be dark enough for light text.
       return (brightness <= 0.6);
     };
+
+    $http.get('/api/tools/styles').success(function(data) {
+      $scope.colorvars = data.colors;
+
+      // Set lightdark class for each color
+      angular.forEach($scope.colorvars, function(obj) {
+        obj.lightdark = darkOrLight(hexToRgb(obj.hex));
+      });
+    });
 
   }]);
 
