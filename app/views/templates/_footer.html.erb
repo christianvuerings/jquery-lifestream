@@ -18,24 +18,22 @@
 
   <div class="large-12 columns" data-ng-show="footer.showInfo">
     <ul>
-      <li>Hostname: <span data-ng-bind="hostname" /></li>
-      <li><a data-ng-href="https://github.com/ets-berkeley-edu/calcentral/commit/{{git_commit}}">Git commit: <span data-ng-bind="git_commit" /></a></li>
-      <li>Application Version: <span data-ng-bind="versions.application" /></li>
-      <li>API Version: <span data-ng-bind="versions.api" /></li>
-      <li>Current DB Schema: <span data-ng-bind="versions.current_db_schema" /></li>
-      <li>Previous Release's DB Schema: <span data-ng-bind="versions.previous_release_db_schema" /></li>
-      <li>Up Since: <span data-ng-bind="first_visited" /></li>
+      <li>Hostname: <span data-ng-bind="hostname"></span></li>
       <li>UID: <span data-ng-bind="api.user.profile.uid" id="user_id"></span></li>
-      <li>
-        <button class="cc-button cc-button-blue" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>
-        <div class="cc-footer-confirmation" data-ng-show="deleteSelf">Are you sure?
-          <button class="cc-button cc-button-blue" data-ng-click="api.user.optOut()">Yes</button>
-          <button class="cc-button" data-ng-click="deleteSelf=false">No</button>
-        </div>
-      </li>
+      <li>Application Version: <span data-ng-bind="versions.application"></span></li>
+      <li>API Version: <span data-ng-bind="versions.api"></span></li>
+      <li>Current DB Schema: <span data-ng-bind="versions.current_db_schema"></span></li>
+      <li>Previous Release DB Schema: <span data-ng-bind="versions.previous_release_db_schema"></span></li>
+      <li>Up Since: <span data-ng-bind="first_visited"></span></li>
+      <li>Links: <a data-ng-href="https://github.com/ets-berkeley-edu/calcentral/commit/{{git_commit}}">Git commit</a>, <a href="/tools/styles">Styles Reference</a></li>
     </ul>
+    <button class="cc-button cc-button-blue" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>
+    <div class="cc-footer-confirmation" data-ng-show="deleteSelf">Are you sure?
+      <button class="cc-button cc-button-blue" data-ng-click="api.user.optOut()">Yes</button>
+      <button class="cc-button" data-ng-click="deleteSelf=false">No</button>
+    </div>
     <div data-ng-controller="BasicAuthController" data-ng-show="api.user.profile.is_basic_auth_enabled">
-      <form action="" method="post" data-ng-submit="basicauth.connect()">
+      <form class="cc-footer-form" action="" method="post" data-ng-submit="basicauth.connect()">
         <h3>Basic Auth</h3>
         <p><input data-ng-model="basicauth.login" name="email" type="text" placeholder="Login" required /></p>
         <p><input data-ng-model="basicauth.password" autocomplete="off" name="password" type="password" placeholder="Password" required /></p>
