@@ -15,6 +15,7 @@
   }
   h3 {
     font-size: 16px;
+    margin-bottom: 5px;
     &:not(:first-of-type) {
       margin-top: 20px;
     }
@@ -52,6 +53,16 @@
     margin-bottom: 10px;
     margin-top: 0;
   }
+  .cc-academics-class-sites-list {
+    a {
+      display: block;
+      padding: 2px 10px;
+    }
+    i {
+      display: block;
+      margin-right: 10px;
+    }
+  }
   .cc-academics-column-labels {
     color: $cc-color-light-medium-grey;
     font-weight: bold;
@@ -62,9 +73,6 @@
   .cc-academics-exam-block {
     margin-bottom: 20px;
     max-width: 400px;
-    .icon-map-marker {
-      margin-left: 5px;
-    }
   }
   .cc-academics-nolink {
     color: $cc-color-light-medium-grey;

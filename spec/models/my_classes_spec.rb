@@ -7,19 +7,23 @@ describe "MyClasses" do
         classes: [{
             id: '1023614',
             emitter: 'bCourses',
-            courses: [ { id: 'BIOLOGY:1A:2013-C'}]
+            courses: [ { id: 'BIOLOGY-1A-2013-C'}]
         }]
     }
     @fake_sakai = {
         classes: [{
             id: '095d5b02-afde-4186-a668-0b84734b1d5c',
             emitter: 'bSpace',
-            courses: [ { id: 'BIOLOGY:1A:2013-C'}]
+            courses: [ { id: 'BIOLOGY-1A-2013-C'}]
         }]
     }
     @fake_campus = [{
-        id: 'BIOLOGY:1A:2013-C',
+        id: 'BIOLOGY-1A-2013-C',
         course_code: 'BIOLOGY 1A',
+        term_yr: '2013',
+        term_cd: 'C',
+        dept: 'BIOLOGY',
+        catid: '1A',
         emitter: 'Campus'
     }]
   end
@@ -34,7 +38,7 @@ describe "MyClasses" do
     my_classes = feed[:classes]
     my_classes.size.should == 2
     my_classes.index{|entry| entry[:emitter] == CanvasProxy::APP_NAME && entry[:id] == '1023614'}.should_not be_nil
-    my_classes.index{|entry| entry[:emitter] == CampusUserCoursesProxy::APP_ID && entry[:id] == 'BIOLOGY:1A:2013-C'}.should_not be_nil
+    my_classes.index{|entry| entry[:emitter] == CampusUserCoursesProxy::APP_ID && entry[:id] == 'BIOLOGY-1A-2013-C'}.should_not be_nil
   end
 
   it "should return successfully without Canvas or bSpace access" do
@@ -57,7 +61,7 @@ describe "MyClasses" do
     my_classes = feed[:classes]
     my_classes.size.should == 2
     my_classes.index{|entry| entry[:emitter] == SakaiProxy::APP_ID && entry[:id] == '095d5b02-afde-4186-a668-0b84734b1d5c'}.should_not be_nil
-    my_classes.index{|entry| entry[:emitter] == CampusUserCoursesProxy::APP_ID && entry[:id] == 'BIOLOGY:1A:2013-C'}.should_not be_nil
+    my_classes.index{|entry| entry[:emitter] == CampusUserCoursesProxy::APP_ID && entry[:id] == 'BIOLOGY-1A-2013-C'}.should_not be_nil
   end
 
   it "should return classes in which I am officially enrolled" do
@@ -69,6 +73,7 @@ describe "MyClasses" do
     my_classes[:classes].each do |my_class|
       my_class[:emitter].should == "Campus"
       my_class[:course_code].should_not be_nil
+      my_class[:site_url].blank?.should be_false
     end
   end
 
@@ -77,5 +82,8 @@ describe "MyClasses" do
     my_classes = MyClasses.new('192517').get_feed
     results = my_classes[:classes].select {|entry| entry[:role] == "Instructor" }
     (results.size >= 2).should be_true
+    results.each do |my_class|
+      my_class[:site_url].blank?.should be_false
+    end
   end
 end

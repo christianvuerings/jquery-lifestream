@@ -5,11 +5,16 @@
   >
     <h1>
       <a href="/academics">My Academics</a> &raquo;
-      <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
-      <span data-ng-bind="selected_course.course_label"></span>
+      <span data-ng-show="!is_instructor_gsi">
+        <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
+        <span data-ng-bind="selected_course.course_number"></span>
+      </span>
+      <span data-ng-show="is_instructor_gsi">
+        <span data-ng-bind="selected_course.course_number"></span> | <span data-ng-bind="selected_semester.name"></span>
+      </span>
     </h1>
 
-    <div class="large-6 small-12 columns cc-academics-page-left">
+    <div class="large-4 columns cc-academics-page-left">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Class information</h2>
@@ -18,58 +23,56 @@
           <h3>Class Title</h3>
           <div data-ng-bind="selected_course.title"></div>
 
-          <h3>My Enrollment</h3>
+          <h3 data-ng-show="selected_course.role">My Role</h3>
+          <div data-ng-bind="selected_course.role"></div>
 
-          <div class="row collapse cc-academics-column-labels">
-            <div class="large-3 small-5 columns">Section</div>
-            <div class="large-4 small-5 columns end">CCN</div>
-          </div>
+          <h3 data-ng-show="selected_course.sections.length && !is_instructor_gsi">My Enrollment</h3>
 
-          <div class="row collapse" data-ng-repeat="sec in selected_course_sections">
-            <div class="large-3 small-5 columns" data-ng-bind="sec.section_label"></div>
-            <div class="large-4 small-5 columns end" data-ng-bind="sec.ccn"></div>
+          <div class="cc-table" data-ng-show="selected_course.sections.length && !is_instructor_gsi">
+            <table>
+              <thead>
+                <tr>
+                  <th width="25%">Section</th>
+                  <th>CCN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="sec in selected_course.sections">
+                  <td data-ng-bind="sec.section_label"></td>
+                  <td data-ng-bind="sec.ccn"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <h3>Class Info</h3>
 
           <h4>Course Offering</h4>
 
-          <div class="row collapse">
-            <div class="large-2 small-4 columns cc-academics-empasize">Units</div>
-            <div
-                data-ng-show="selected_course.units"
-                class="large-4 small-8 columns end"
-                data-ng-bind="selected_course.units | number:1">
-            </div>
-            <div
-                data-ng-show="!selected_course.units"
-                class="large-4 small-8 columns end">--
-            </div>
+          <div class="cc-table">
+            <table>
+              <tbody>
+                <tr>
+                  <th scope="row" width="25%">Units</th>
+                  <td data-ng-show="selected_course.units" data-ng-bind="selected_course.units"></td>
+                  <td data-ng-show="!selected_course.units | number:1">--</td>
+                </tr>
+                <tr data-ng-show="selected_course.grade_option">
+                  <th scope="row">Grading</th>
+                  <td data-ng-bind="selected_course.grade_option"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
-          <div class="row collapse">
-            <div class="large-2 small-4 columns cc-academics-empasize">Grading</div>
-            <div class="large-4 small-8 columns end" data-ng-bind="selected_course.grade_option"></div>
-          </div>
+          <h4 data-ng-show="selected_course_count_schedules">Section Schedules</h4>
 
-          <div class="row collapse">
-            <div class="large-2 small-4 columns cc-academics-empasize">
-              <data-ng-pluralize count="selected_course.instructors.length"
-                                 when="{'0': 'Instructor', '1': 'Instructor', 'other': 'Instructors'}">
-              </data-ng-pluralize>
-            </div>
-            <div class="large-4 small-8 columns end">
-              <span data-ng-repeat="instructor in selected_course.instructors"><span data-ng-hide='$index==0'>, </span><span data-ng-bind="instructor.name"></span></span>
-            </div>
-          </div>
-          <h4>Section Schedules</h4>
-
-          <div class="row collapse" data-ng-repeat="sec in selected_course_sections">
-            <div class="large-3 small-5 columns" data-ng-bind="sec.section_label"></div>
-            <div class="large-6 small-10 columns end">
-              <div data-ng-repeat="sked in sec.schedules" class="cc-academics-schedule-room">
-                <span data-ng-bind="sked.schedule"></span> |
-                <span data-ng-bind="sked.room_number"></span> <span data-ng-bind="sked.building_name"></span> <br />
+          <div class="row collapse" data-ng-repeat="section in selected_course.sections">
+            <div class="small-3 columns" data-ng-show="section.schedules" data-ng-bind="section.section_label"></div>
+            <div class="small-9 columns">
+              <div data-ng-repeat="schedule in section.schedules" data-ng-show="section.schedules" class="cc-academics-schedule-room">
+                <span data-ng-bind="schedule.schedule"></span> |
+                <span data-ng-bind="schedule.room_number"></span> <span data-ng-bind="schedule.building_name"></span> <br />
               </div>
             </div>
           </div>
@@ -77,8 +80,45 @@
       </div>
     </div>
 
-    <div class="large-6 columns">
-      <!-- <h2>Resources</h2> -->
+    <div class="large-4 columns" data-ng-show="selected_course_count_instructors">
+      <div class="cc-widget">
+        <div class="cc-widget-title">
+          <h2 data-ng-pluralize count="selected_course_count_instructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
+        </div>
+        <div class="cc-widget-padding">
+          <div data-ng-repeat="section in selected_course.sections">
+            <h3 data-ng-bind="section.section_label"></h3>
+            <ul>
+              <li data-ng-repeat="instructor in section.instructors">
+                <a data-ng-href="https://calnet.berkeley.edu/directory/details.pl?uid={{instructor.uid}}" data-ng-bind="instructor.name"></a>
+                <a data-ng-show="instructor.email" title="Email {{instructor.name}}" data-ng-href="mailto:{{instructor.email}}">
+                  <span class="cc-visuallyhidden">Email {{instructor.name}}</span>
+                  <i class="cc-icon icon-envelope"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="large-4 columns" data-ng-show="selected_course.class_sites.length">
+      <div class="cc-widget">
+        <div class="cc-widget-title">
+          <h2>Class Sites</h2>
+        </div>
+        <div class="cc-widget-padding">
+          <ul class="cc-academics-class-sites-list">
+            <li data-ng-repeat="site in selected_course.class_sites">
+              <a data-ng-href="{{site.site_url}}"
+                 data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
+                <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
+                <strong class="cc-ellipsis" data-ng-bind="site.name"></strong>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="cc-page-academics" data-ng-hide="api.user.profile.roles.student">

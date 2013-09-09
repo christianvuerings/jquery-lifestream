@@ -10,6 +10,7 @@ describe "MyAcademics::Merged" do
       MyAcademics::Requirements,
       MyAcademics::Regblocks,
       MyAcademics::Semesters,
+      MyAcademics::Teaching,
       MyAcademics::Exams
     ]
     model_classes.each do |klass|

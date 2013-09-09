@@ -29,10 +29,10 @@
                 <th scope="col">Grade Option</th>
                 <th scope="col">Units</th>
               </thead>
-              <tbody data-ng-show="selected_semester.schedule.length" data-ng-repeat="course in selected_courses">
-                <tr data-ng-show="course.is_primary_section">
+              <tbody data-ng-show="selected_courses.length" data-ng-repeat="course in enrolled_courses">
+                <tr>
                   <td>
-                    <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}"
+                    <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.slug}}"
                        data-ng-bind="course.course_number">
                     </a>
                   </td>
@@ -41,14 +41,14 @@
                   <td data-ng-bind="course.units | number:1"></td>
 
                 </tr>
-                <tr>
-                  <td data-ng-bind="course.section_label"></td>
+                <tr data-ng-repeat="section in course.sections">
+                  <td data-ng-bind="section.section_label"></td>
                   <td>&nbsp;</td>
                   <td></td>
                   <td></td>
                 </tr>
               </tbody>
-              <tbody data-ng-show="!selected_semester.schedule.length">
+              <tbody data-ng-show="!selected_courses.length">
                 <tr>
                   <td>
                     <p>You are not currently enrolled in any courses.</p>
@@ -66,17 +66,18 @@
                   <th>Title</th>
                   <th>Waitlist Position / Class Size</th>
                 </thead>
-                <tbody>
-                  <tr data-ng-repeat="course in waitlisted_courses">
+                <tbody data-ng-repeat="course in waitlisted_courses">
+                  <tr data-ng-repeat="section in course.sections">
+                    {{section}}
                     <td>
-                      <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.ccn}}"
+                      <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.slug}}"
                          data-ng-bind="course.course_number">
                       </a>
-                      <span data-ng-bind="course.section_label"></span>
+                      <span data-ng-bind="section.section_label"></span>
                     </td>
                     <td data-ng-bind="course.title"></td>
                     <td>
-                      <strong data-ng-bind="course.waitlist_pos"></strong> on list of class of <strong data-ng-bind="course.enroll_limit"></strong>
+                      <strong data-ng-bind="section.waitlist_position"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
                     </td>
                   </tr>
                 </tbody>
@@ -125,7 +126,7 @@
                   <th scope="col">Grade</th>
                 </thead>
                 <tbody>
-                  <tr data-ng-repeat="course in selected_courses" data-ng-show="course.is_primary_section">
+                  <tr data-ng-repeat="course in selected_courses">
                     <td data-ng-bind="course.course_number"></td>
                     <td data-ng-bind="course.units" data-ng-show="course.units"></td>
                     <td data-ng-show="!course.units">--</td>

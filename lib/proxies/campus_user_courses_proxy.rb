@@ -51,7 +51,6 @@ class CampusUserCoursesProxy < BaseProxy
       assigneds.each do |row|
         if (item = row_to_feed_item(row, previous_item))
           item[:role] = 'Instructor'
-          item[:site_url] = nil
           semester_key = "#{item[:term_yr]}-#{item[:term_cd]}"
           campus_classes[semester_key] ||= []
           campus_classes[semester_key] << item
@@ -82,9 +81,8 @@ class CampusUserCoursesProxy < BaseProxy
 
   # Example:
   # {
-  #    "id": "COG SCI:C102:2013-B",
+  #    "id": "COG_SCI-C102-2013-B",
   #    "course_code": "COG SCI C102",
-  #    "site_url": "/academics/semester/spring-2013/class/12345",
   #    "emitter": "Campus",
   #    "name": "Scientific Approaches to Consciousness",
   #    "color_class": "campus-class",
@@ -93,9 +91,9 @@ class CampusUserCoursesProxy < BaseProxy
   #    "dept": "COG SCI",
   #    "catid": "C102",
   #    "sections": [
-  #      {"ccn": "12345", "instruction_format": "LEC", "section_num": "001",
+  #      {"ccn": "12345", "instruction_format": "LEC", "section_number": "001",
   #        "schedules": [], "instructors": [{"name": "Dr. X", "uid": "999"}]},
-  #      {"ccn": "12346", "instruction_format": "DIS", "section_num": "101",
+  #      {"ccn": "12346", "instruction_format": "DIS", "section_number": "101",
   #        "schedules": [], "instructors": [{"name": "Gee Esai", "uid": "1111"}]}
   #    ]
   #    "role": "Student", (or "Instructor")
@@ -119,13 +117,11 @@ class CampusUserCoursesProxy < BaseProxy
   end
 
   def row_to_feed_item(row, previous_item)
-    course_id = "#{row['dept_name']}:#{row['catalog_id']}:#{row['term_yr']}-#{row['term_cd']}"
+    course_id = "#{row['dept_name']}-#{row['catalog_id']}-#{row['term_yr']}-#{row['term_cd']}"
+    # Make it embeddable as an element in a URL path.
+    course_id = course_id.downcase.gsub(/[^a-z0-9-]+/, '_')
     if course_id == previous_item[:id]
-      previous_item[:sections] << {
-          ccn: row['course_cntl_num'],
-          instruction_format: row['instruction_format'],
-          section_num: row['section_num']
-      }
+      previous_item[:sections] << row_to_section_data(row)
       nil
     else
       {
@@ -135,33 +131,30 @@ class CampusUserCoursesProxy < BaseProxy
           dept: row['dept_name'],
           catid: row['catalog_id'],
           course_code: "#{row['dept_name']} #{row['catalog_id']}",
-          site_url: course_to_url(row['term_cd'], row['term_yr'], row['dept_name'], row['course_cntl_num']),
           emitter: 'Campus',
           name: row['course_title'],
           color_class: "campus-class",
           sections: [
-              {
-                  ccn: row['course_cntl_num'],
-                  instruction_format: row['instruction_format'],
-                  section_num: row['section_num']
-              }
+            row_to_section_data(row)
           ]
       }
     end
   end
 
-  # Link campus courses to internal class pages for the current semester.
-  # TODO: Update to use full class IDs, not just CCNs
-  def course_to_url(term_cd, term_year, department, ccn)
-    term = case term_cd
-             when 'B' then 'spring'
-             when 'C' then 'summer'
-             when 'D' then "fall"
-             else
-               Rails.logger.warn("Unknown term code #{term_cd} for #{department} #{ccn}")
-               return ''
-           end
-    "/academics/semester/#{term}-#{term_year}/class/#{ccn}"
+  def row_to_section_data(row)
+    section_data = {
+        ccn: row['course_cntl_num'],
+        instruction_format: row['instruction_format'],
+        is_primary_section: (row['primary_secondary_cd'] == 'P'),
+        section_label: "#{row['instruction_format']} #{row['section_num']}",
+        section_number: row['section_num']
+    }
+    # This only applies to enrollment records and will be skipped for instructors.
+    if row['enroll_status'] == 'W'
+      section_data[:waitlist_position] = row['wait_list_seq_num']
+      section_data[:enroll_limit] = row['enroll_limit']
+    end
+    section_data
   end
 
 end

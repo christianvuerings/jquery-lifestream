@@ -1,4 +1,5 @@
 module MyAcademics::AcademicsModule
+  extend self
 
   def initialize(uid)
     @uid = uid
@@ -25,6 +26,15 @@ module MyAcademics::AcademicsModule
     else
       text.downcase.gsub(/[^a-z0-9]+/, '-').chomp('-')
     end
+  end
+
+  # Link campus courses to internal class pages for the current semester.
+  def class_to_url(term_cd, term_year, department, catalog_id)
+    "/academics/semester/#{TermCodes.to_slug(term_year, term_cd)}/class/#{course_to_slug(department, catalog_id)}"
+  end
+
+  def course_to_slug(department, catalog_id)
+    "#{department.downcase.gsub(/[^a-z0-9]+/, '_')}-#{catalog_id.downcase.gsub(/[^a-z0-9]+/, '_')}"
   end
 
 end

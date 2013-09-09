@@ -67,7 +67,7 @@ describe SakaiUserSitesProxy do
   it "should see any course offerings associated with a course site if enrolled" do
     CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return([
         {
-            id: "LAW:201S:2013-D",
+            id: "LAW-201S-2013-D",
             term_yr: "2013",
             term_cd: "D",
             dept: "LAW",
@@ -93,13 +93,13 @@ describe SakaiUserSitesProxy do
     site[:short_description].should == "A legal course site"
     site[:name].should == "Law 201S"
     site[:courses].length.should == 1
-    site[:courses][0][:id].should == "LAW:201S:2013-D"
+    site[:courses][0][:id].should == "LAW-201S-2013-D"
   end
 
   it "should put a course site in classes if enrolled as an instructor" do
     CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return([
          {
-             id: "LAW:201S:2013-D",
+             id: "LAW-201S-2013-D",
              term_yr: "2013",
              term_cd: "D",
              dept: "LAW",
@@ -109,7 +109,7 @@ describe SakaiUserSitesProxy do
              role: "Instructor"
          },
          {
-             id: "DWIN:117:2013-D",
+             id: "DWIN-117-2013-D",
              term_yr: "2013",
              term_cd: "D",
              dept: "DWIN",

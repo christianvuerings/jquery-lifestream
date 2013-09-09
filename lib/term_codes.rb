@@ -16,4 +16,12 @@ class TermCodes
     "#{term} #{term_yr}"
   end
 
+  def self.to_slug(term_yr, term_cd)
+    term = self.codes[term_cd.to_sym]
+    unless term
+      raise ArgumentError, "No such term code: #{term_cd}"
+    end
+    "#{term.downcase}-#{term_yr}"
+  end
+
 end

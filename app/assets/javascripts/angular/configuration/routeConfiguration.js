@@ -22,7 +22,11 @@
       templateUrl: 'templates/academics_semester.html',
       controller: 'AcademicsController'
     }).
-    when('/academics/semester/:semester_slug/class/:ccn', {
+    when('/academics/semester/:semester_slug/class/:class_slug', {
+      templateUrl: 'templates/academics_classinfo.html',
+      controller: 'AcademicsController'
+    }).
+    when('/academics/teaching-semester/:teaching_semester_slug/class/:class_slug', {
       templateUrl: 'templates/academics_classinfo.html',
       controller: 'AcademicsController'
     }).

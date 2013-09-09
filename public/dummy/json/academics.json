@@ -451,21 +451,47 @@
       "name": "Spring 2014",
       "slug": "spring-2014",
       "time_bucket": "future",
-      "schedule": [
+      "classes": [
         {
           "course_number": "BIOLOGY 1A",
-          "ccn": "7309",
+          "grade": null,
+          "grade_option": "Letter",
+          "slug": "biology-1a",
           "title": "General Biology Lecture",
           "units": "5.0",
-          "grade_option": "Letter",
-          "section": "003",
-          "format": "LEC",
-          "section_label": "LEC 003",
-          "course_label": "BIOLOGY 1A",
-          "schedules": [],
-          "instructors": [],
-          "is_primary_section": true,
-          "grade": null
+          "sections": [
+            {
+              "ccn": "7309",
+              "enroll_limit": "105",
+              "instruction_format": "LEC",
+              "instructors": [],
+              "is_primary_section": true,
+              "schedules": [],
+              "section_label": "LEC 003",
+              "section_number": "003",
+              "waitlist_position": "29"
+            },
+            {
+              "ccn": "7311",
+              "enroll_limit": "35",
+              "instruction_format": "DIS",
+              "instructors": [],
+              "is_primary_section": false,
+              "schedules": [],
+              "section_label": "DIS 005",
+              "section_number": "005",
+              "waitlist_position": "3"
+            },
+            {
+              "ccn": "7310",
+              "instruction_format": "LEC",
+              "instructors": [],
+              "is_primary_section": false,
+              "schedules": [],
+              "section_label": "LEC 004",
+              "section_number": "004"
+            }
+          ]
         }
       ]
     },
@@ -473,93 +499,96 @@
       "name": "Fall 2013",
       "slug": "fall-2013",
       "time_bucket": "current",
-      "schedule": [
+      "classes": [
         {
           "course_number": "BIOLOGY 1A",
-          "ccn": "7309",
+          "grade": null,
+          "grade_option": "Letter",
+          "slug": "biology-1a",
           "title": "General Biology Lecture",
           "units": "5.0",
-          "grade_option": "Letter",
-          "section": "003",
-          "format": "LEC",
-          "section_label": "LEC 003",
-          "course_label": "BIOLOGY 1A",
-          "schedules": [
+          "sections": [
             {
-              "building_name": "VALLEY LSB",
-              "room_number": "2030",
-              "schedule": "M 4:00P-5:00P"
-            }
-          ],
-          "instructors": [
-            {
-              "name": "Yu-Hung Lin",
-              "uid": "192517"
+              "ccn": "7309",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 003",
+              "section_number": "003",
+              "instructors": [
+                {
+                  "name": "Yu-Hung Lin",
+                  "uid": "192517"
+                },
+                {
+                  "name": "Chris Tweney",
+                  "uid": "904715"
+                }
+              ],
+              "schedules": [
+                {
+                  "building_name": "VALLEY LSB",
+                  "room_number": "2030",
+                  "schedule": "M 4:00P-5:00P"
+                }
+              ]
             },
             {
-              "name": "Chris Tweney",
-              "uid": "904715"
+              "ccn": "7310",
+              "instruction_format": "DIS",
+              "is_primary_section": false,
+              "section_label": "DIS 201",
+              "section_number": "201",
+              "instructors": [
+                {
+                  "email": "scrapeit@berkeley.edu",
+                  "name": "Christian Vuerings",
+                  "uid": "978966"
+                }
+              ],
+              "schedules": [
+                {
+                  "building_name": "PIMENTAL",
+                  "room_number": "1",
+                  "schedule": "M 2:00P-3:00P"
+                }
+              ]
             }
-          ],
-          "is_primary_section": true,
-          "grade": null
-        },
-        {
-          "course_number": "BIOLOGY 1A",
-          "ccn": "7366",
-          "title": "General Biology Lecture",
-          "units": "5.0",
-          "grade_option": "Letter",
-          "section": "201",
-          "format": "DIS",
-          "section_label": "DIS 201",
-          "course_label": "BIOLOGY 1A",
-          "schedules": [
-            {
-              "building_name": "VALLEY LSB",
-              "room_number": "2030",
-              "schedule": "M 4:00P-5:00P"
-            }
-          ],
-          "instructors": [
-            {
-              "name": "Yu-Hung Lin",
-              "uid": "192517"
-            }
-          ],
-          "is_primary_section": false,
-          "grade": null
+          ]
         },
         {
           "course_number": "COG SCI C147",
-          "ccn": "16171",
+          "grade": null,
+          "grade_option": "Letter",
+          "slug": "cog_sci-c147",
           "title": "Language Disorders",
           "units": "3.0",
-          "grade_option": "Letter",
-          "section": "001",
-          "format": "LEC",
-          "section_label": "LEC 001",
-          "course_label": "COG SCI C147",
-          "schedules": [
+          "sections": [
             {
-              "building_name": "WHEELER",
-              "room_number": "0210",
-              "schedule": "TuTh 2:00P-3:30P"
-            },
-            {
-              "building_name": "DWINELLE",
-              "room_number": "117",
-              "schedule": "W 4:00P-5:30P"
+              "ccn": "16171",
+              "instruction_format": "LEC",
+              "is_primary_section": true,
+              "section_label": "LEC 001",
+              "section_number": "001",
+              "instructors": [
+                {
+                  "name": "Yu-Hung Lin",
+                  "uid": "192517"
+                }
+              ],
+              "schedules": [
+                {
+                  "building_name": "WHEELER",
+                  "room_number": "0210",
+                  "schedule": "TuTh 2:00P-3:30P"
+                },
+                {
+                  "building_name": "DWINELLE",
+                  "room_number": "117",
+                  "schedule": "W 4:00P-5:30P"
+                }
+              ]
             }
-          ],
-          "instructors": [
-            {
-              "name": "Yu-Hung Lin",
-              "uid": "192517"
-            }
-          ],
-          "is_primary_section": true,
-          "grade": null
+          ]
         }
       ]
     },
@@ -567,90 +596,236 @@
       "name": "Spring 2012",
       "slug": "spring-2012",
       "time_bucket": "past",
-      "schedule": [
+      "classes": [
         {
           "course_number": "BIOLOGY 1A",
-          "ccn": "7366",
+          "grade": "B",
+          "grade_option": "Letter",
+          "slug": "biology-1a",
           "title": "General Biology Lecture",
           "units": "5.0",
-          "grade_option": "Letter",
-          "section": "201",
-          "format": "DIS",
-          "section_label": "DIS 201",
-          "course_label": "BIOLOGY 1A",
-          "schedules": [],
-          "instructors": [
+          "sections": [
             {
-              "name": "Yu-Hung Lin",
-              "uid": "192517"
+              "ccn": "7366",
+              "instruction_format": "DIS",
+              "section_label": "DIS 201",
+              "section_number": "201",
+              "schedules": [],
+              "instructors": [
+                {
+                  "name": "Yu-Hung Lin",
+                  "uid": "192517"
+                }
+              ],
+              "is_primary_section": true
             }
-          ],
-          "is_primary_section": true,
-          "grade": "B"
+          ]
         },
         {
           "course_number": "COG SCI C147",
-          "ccn": "16171",
+          "grade": "C+",
+          "grade_option": "Letter",
+          "is_primary_section": true,
+          "slug": "cog_sci-c147",
           "title": "Language Disorders",
           "units": "3.0",
-          "grade_option": "Letter",
-          "section": "001",
-          "format": "LEC",
-          "section_label": "LEC 001",
-          "course_label": "COG SCI C147",
-          "schedules": [],
-          "instructors": [
+          "sections": [
             {
-              "name": "Yu-Hung Lin",
-              "uid": "192517"
+              "ccn": "16171",
+              "instruction_format": "LEC",
+              "section_label": "LEC 001",
+              "section_number": "001",
+              "schedules": [],
+              "instructors": [
+                {
+                  "name": "Yu-Hung Lin",
+                  "uid": "192517"
+                }
+              ]
             }
-          ],
-          "is_primary_section": true,
-          "grade": "C+"
+          ]
         }
       ]
     }
   ],
-  "current_semester_index": 1,
-  "exam_schedule": {
-    "Tue May 14": [
-      {
-        "time": "8:00A",
-        "location": {
-          "raw_location": "390 HEARST MIN",
-          "display": "Hearst Memorial Mining Building",
-          "lat": "37.874459999999999",
-          "lon": "-122.25727000000001",
-          "room_number": "390"
-        },
-        "course_number": "Psychology C120"
-      }
-    ],
-    "Wed May 15": [
-      {
-        "time": "3:00P",
-        "location": {
-          "raw_location": "100 GPB",
-          "display": "Genetics & Plant Biology Building",
-          "lat": "37.873429999999999",
-          "lon": "-122.26473",
-          "room_number": "100"
-        },
-        "course_number": "Psychology 133"
-      }
-    ],
-    "Thu May 16": [
-      {
-        "time": "3:00P",
-        "location": {
-          "raw_location": "2060 VALLEY LSB",
-          "display": "Valley Life Sciences Building",
-          "lat": "37.871479999999998",
-          "lon": "-122.26211000000001",
-          "room_number": "2060"
-        },
-        "course_number": "Education 140"
-      }
-    ]
-  }
+  "teaching_semesters": [
+    {
+      "name": "Summer 2013",
+      "slug": "summer-2013",
+      "classes": [
+        {
+          "course_number": "BIO 123A",
+          "role": "GSI",
+          "slug": "bio-123a",
+          "title": "General Biology and the Cambrian Biota",
+          "class_sites": [
+            {
+              "id": "11866397",
+              "short_description": "Confessions of a Biotician",
+              "name": "BIO 123A Everyone",
+              "emitter": "bCourses",
+              "color_class": "canvas-class",
+              "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397"
+            },
+            {
+              "id": "de1f491a-525e-4848-952b-11866397",
+              "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
+              "emitter": "bSpace",
+              "name": "Bio 123A DIS 008 Su13",
+              "color_class": "bspace-class"
+            }
+          ],
+          "sections": [
+            {
+              "ccn": "27606",
+              "instruction_format": "LEC",
+              "section_label": "LEC 002",
+              "section_number": "002",
+              "is_primary_section": true,
+              "schedules": [
+                {
+                  "building_name": "PIMENTAL",
+                  "room_number": "1",
+                  "schedule": "MWF 8:00A-9:00A"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "David Weisblatd",
+                  "email": "dw@example.edu",
+                  "uid": "21345"
+                }
+              ]
+            },
+            {
+              "ccn": "27619",
+              "instruction_format": "LAB",
+              "section_label": "LAB 201",
+              "section_number": "201",
+              "is_primary_section": false,
+              "instructors": [
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ],
+              "schedules": [
+                {
+                  "building_name": "LECONTE",
+                  "room_number": "0004",
+                  "schedule": "F 12:00P-1:00P"
+                }
+              ]
+            },
+            {
+              "section_label": "DIS 008",
+              "ccn": "49713",
+              "instruction_format": "DIS",
+              "section_number": "008",
+              "is_primary_section": false,
+              "schedules": [],
+              "instructors": [
+                {
+                  "name": "Oski Bear",
+                  "email": "oski@example.edu",
+                  "uid": "61889"
+                },
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fall 2013",
+      "slug": "fall-2013",
+      "classes": [
+        {
+          "course_number": "BIO 123A",
+          "role": "Instructor",
+          "slug": "bio-123a",
+          "title": "General Biology and the Cambrian Biota",
+          "sections": [
+            {
+              "ccn": "27607",
+              "instruction_format": "LEC",
+              "section_label": "LEC 003",
+              "section_number": "003",
+              "is_primary_section": false,
+              "instructors": [
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ],
+              "schedules": [
+                {
+                  "building_name": "PIMENTAL",
+                  "room_number": "12",
+                  "schedule": "MWF 11:00A-12:00P"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "exam_schedule": [
+    {
+      "date": {
+        "epoch": 1387324800,
+        "date_time": "2013-12-18T00:00:00+00:00",
+        "date_string": "Wed December 18"
+      },
+      "time": "8:00A",
+      "location": {
+        "raw_location": "390 HEARST MIN",
+        "display": "Hearst Memorial Mining Building",
+        "lat": "37.874459999999999",
+        "lon": "-122.25727000000001",
+        "room_number": "390"
+      },
+      "course_number": "Psychology C120"
+    },
+    {
+      "date": {
+        "epoch": 1387324800,
+        "date_time": "2013-12-18T00:00:00+00:00",
+        "date_string": "Wed December 18"
+      },
+      "time": "3:00P",
+      "location": {
+        "raw_location": "100 GPB",
+        "display": "Genetics & Plant Biology Building",
+        "lat": "37.873429999999999",
+        "lon": "-122.26473",
+        "room_number": "100"
+      },
+      "course_number": "Psychology 133"
+    },
+    {
+      "date": {
+        "epoch": 1387324800,
+        "date_time": "2013-12-18T00:00:00+00:00",
+        "date_string": "Wed December 18"
+      },
+      "time": "3:00P",
+      "location": {
+        "raw_location": "2060 VALLEY LSB",
+        "display": "Valley Life Sciences Building",
+        "lat": "37.871479999999998",
+        "lon": "-122.26211000000001",
+        "room_number": "2060"
+      },
+      "course_number": "Education 140"
+    }
+  ]
 }
