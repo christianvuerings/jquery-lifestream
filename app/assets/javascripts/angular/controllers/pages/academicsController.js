@@ -10,6 +10,10 @@
 
     var gradeopts = [
       {
+        grade: 'A+',
+        weight: 4
+      },
+      {
         grade: 'A',
         weight: 4
       },
@@ -273,13 +277,17 @@
       angular.forEach($scope.selected_courses, function(course) {
         // Don't calculate for pass/no-pass courses!
         if (course.grade_option === 'Letter' && course.units) {
-          var grade = course.grade ? findWeight(course.grade).weight : course.estimated_grade;
+          var grade;
+          if (course.grade && findWeight(course.grade)) {
+            grade = findWeight(course.grade).weight;
+          } else {
+            grade = course.estimated_grade;
+          }
           course.score = parseFloat(grade, 10) * course.units;
           total_units += parseFloat(course.units, 10);
           total_score += course.score;
         }
       });
-
       $scope.estimated_gpa = total_score / total_units;
     };
 
