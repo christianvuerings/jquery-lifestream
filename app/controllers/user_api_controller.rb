@@ -34,7 +34,7 @@ class UserApiController < ApplicationController
           :is_basic_auth_enabled => Settings.developer_auth.enabled,
           :is_logged_in => true,
           :features => Settings.features.marshal_dump,
-          :is_acting_as => is_acting_as_someone_else?
+          :acting_as_uid => acting_as_uid
       }.merge!(user_data).to_json
     else
       render :json => {
@@ -59,9 +59,9 @@ class UserApiController < ApplicationController
 
   private
 
-  def is_acting_as_someone_else?
+  def acting_as_uid
     if session[:original_user_id] && session[:user_id]
-      return session[:original_user_id] != session[:user_id]
+      return session[:original_user_id]
     else
       return false
     end
