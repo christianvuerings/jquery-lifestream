@@ -38,6 +38,7 @@ class MyGroups < MyMergedModel
         if seen_orgs.add? group["organizationId"]
           org = CalLinkOrganizationProxy.new({:org_id => group["organizationId"]}).get_organization
           next unless org && org[:status_code] == 200
+          next unless filter_callink_organization!(org).present?
           organization = org[:body]
           site_url = "https://callink.berkeley.edu/"
           if organization["items"] && organization["items"][0] && organization["items"][0]["profileUrl"]
@@ -54,5 +55,24 @@ class MyGroups < MyMergedModel
       end
     end
     response
+  end
+
+  private
+  def filter_callink_organization!(org)
+    return [] unless org[:body] && org[:body]["items"].present?
+    org[:body]["items"].reject! do |item|
+      (self.class.type_name_blacklist.include?(item["typeName"].downcase) ||
+        self.class.status_blacklist.include?(item["status"].downcase))
+    end
+    return [] if org[:body]["items"].blank?
+    org
+  end
+
+  def self.type_name_blacklist
+    ["new organizations", "campus departments", "hidden", "admin"]
+  end
+
+  def self.status_blacklist
+    %w(inactive locked frozen)
   end
 end
