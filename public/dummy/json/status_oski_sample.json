@@ -3,7 +3,7 @@
   "features": {
     "bearfacts": true
   },
-  "is_acting_as": false,
+  "acting_as_uid": false,
   "is_admin": false,
   "first_login_at": "2013-04-05T13:08:23-07:00",
   "first_name": "Oski",

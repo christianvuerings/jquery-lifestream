@@ -19,7 +19,8 @@
   <div class="large-12 columns" data-ng-show="footer.showInfo">
     <ul>
       <li>Hostname: <span data-ng-bind="hostname"></span></li>
-      <li>UID: <span data-ng-bind="api.user.profile.uid" id="user_id"></span></li>
+      <li>UID: <span data-ng-bind="api.user.profile.uid" id="cc-footer-uid"></span></li>
+      <li data-ng-show="api.user.profile.acting_as_uid">Acting as UID: <span id="cc-footer-actingas-uid" data-ng-bind="api.user.profile.acting_as_uid"></span></li>
       <li>Application Version: <span data-ng-bind="versions.application"></span></li>
       <li>API Version: <span data-ng-bind="versions.api"></span></li>
       <li>Current DB Schema: <span data-ng-bind="versions.current_db_schema"></span></li>

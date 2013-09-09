@@ -17,7 +17,7 @@
   <div data-ng-show="loopname=='connected'">
     <div class="large-2 small-4 columns">
       <button data-ng-show="api.user.profile['has_' + service + '_access_token']"
-        data-ng-disabled="api.user.profile['is_acting_as']"
+        data-ng-disabled="api.user.profile['acting_as_uid']"
         class="cc-button" data-ng-click="api.user.removeOAuth('{{service}}')">
         Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
       </button>
@@ -27,7 +27,7 @@
   <div data-ng-show="loopname=='unconnected'">
     <div class="large-2 small-4 columns">
       <button data-ng-show="service=='google'"
-        data-ng-disabled="api.user.profile['is_acting_as']"
+        data-ng-disabled="api.user.profile['acting_as_uid']"
         class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth('google')">
         Connect <span class="cc-visuallyhidden">Google Access</span>
       </button>
