@@ -210,6 +210,7 @@ button {
   background: $cc-color-button-disabled-background !important;
   border: 1px solid transparent !important;
   color: $cc-color-button-disabled !important;
+  cursor: auto !important;
   opacity: 1 !important;
   &:focus, &:hover {
     background: $cc-color-button-disabled-background !important;
