@@ -1,5 +1,4 @@
 <script type="text/ng-template" id="templates/academics.html">
-
   <div
     class="cc-page-academics"
     data-cc-spinner-directive>
@@ -8,7 +7,7 @@
         <h1>My Academics</h1>
       </div>
 
-      <div class="large-8 columns cc-academics-page-left">
+      <div class="large-8 columns cc-academics-page-left" data-ng-show="api.user.profile.roles.student">
         <div class="cc-widget">
           <div class="cc-widget-title">
             <h2>Records</h2>
@@ -228,7 +227,7 @@
           </div>
         </div>
       </div>
-      <div class="large-4 columns">
+      <div class="large-4 columns" data-ng-class="{'pull-8':(!api.user.profile.roles.student)}">
         <div class="cc-widget cc-widget-last" data-ng-show="teaching_length">
           <div class="cc-widget-title">
             <h2>Teaching</h2>
@@ -246,7 +245,7 @@
           </div>
         </div>
 
-        <div class="cc-widget cc-widget-last">
+        <div class="cc-widget cc-widget-last" data-ng-show="api.user.profile.roles.student">
           <div class="cc-widget-title">
             <h2 class="cc-left">Semesters</h2>
             <a href="https://telebears.berkeley.edu/tranreq/" class="cc-right cc-academics-orderlink">
@@ -286,19 +285,17 @@
           </div>
         </div>
       </div>
-      <div class="cc-page-academics" data-ng-hide="api.user.profile.roles.student" data-ng-cloak>
-        <div class="large-12 small-12 columns">
-          <h2>Data not available</h2>
-          <p>
-            This page displays academic status information for UC Berkeley students,
-            and is not available to faculty or staff.
-          </p>
-          <p>
-            If you believe you are seeing this message
-            in error, please contact <a href="https://ets.berkeley.edu/help/calcentral">CalCentral Help</a>.
-          </p>
-        </div>
-      </div>
+    </div>
+  </div>
+  <div class="cc-page-academics" data-ng-hide="can_view_academics" data-ng-cloak>
+    <div class="large-12 small-12 columns">
+      <h2>Data not available</h2>
+      <p>
+        This page displays academic status information for UC Berkeley students and faculty, and is not available to staff.
+      </p>
+      <p>
+        If you believe you are seeing this message is an error, please contact <a href="https://ets.berkeley.edu/help/calcentral">CalCentral Help</a>.
+      </p>
     </div>
   </div>
 </script>
