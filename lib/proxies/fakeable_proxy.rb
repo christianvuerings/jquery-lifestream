@@ -20,6 +20,11 @@ module FakeableProxy
        "https://www.googleapis.com/discovery/v1/apis",
        "https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest"].include?(request.uri)
     end
+    # Preserve exact bytes for response body with invalid encoding
+    c.preserve_exact_body_bytes do |http_message|
+      http_message.body.encoding.name == 'ASCII-8BIT' ||
+        !http_message.body.valid_encoding?
+    end
   end
 
   def wrap_request(proxy_id, force_fake = nil, extra_cassette_options = {}, &proc_block)

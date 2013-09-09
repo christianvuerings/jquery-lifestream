@@ -41,7 +41,7 @@ namespace :vcr do
         json = JSON.parse(content)
         json["http_interactions"].each do |interaction|
           original_string = interaction["response"]["body"]["string"]
-          if original_string.length >= 2
+          if original_string && original_string.length >= 2
             begin
               interaction["response"]["body"]["debug_json"] = JSON.parse(original_string)
             rescue JSON::ParserError
