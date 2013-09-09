@@ -62,6 +62,11 @@
       controller: 'SorryController',
       isPublic: true
     }).
+    when('/uid_error', {
+      templateUrl: 'templates/uid_error.html',
+      controller: 'uidErrorController',
+      isPublic: true
+    }).
     when('/canvas/embedded/rosters', {
       templateUrl: 'templates/canvas_embedded/roster.html',
       controller: 'CanvasEmbeddedController'

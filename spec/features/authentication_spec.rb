@@ -28,4 +28,12 @@ feature "authentication" do
       OmniAuth.config.logger = original_logger
     end
   end
+
+  scenario "broken authentication" do
+    login_with_cas "oski.bear@stanford.edu"
+    current_path.should eq("/uid_error")
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response["is_logged_in"].should be_false
+  end
 end
