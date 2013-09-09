@@ -42,7 +42,7 @@ cd ..
 # wait a bit to let server start up
 sleep 120
 
-./script/init.d/calcentral online
-
 # now check if the app is alive (which will also warm up caches)
 ./script/check-alive.sh || exit 1
+
+./script/init.d/calcentral online
