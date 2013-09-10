@@ -69,7 +69,10 @@ class SessionsController < ApplicationController
     # Force a new CSRF token to be generated on login.
     # http://homakov.blogspot.com.es/2013/06/cookie-forcing-protection-made-easy.html
     session.try(:delete, :_csrf_token)
-    if UserApi.is_allowed_to_log_in?(uid)
+    if (Integer(uid, 10) rescue nil).nil?
+      Rails.logger.warn "FAILED login with CAS UID: #{uid}"
+      redirect_to '/uid_error'
+    elsif UserApi.is_allowed_to_log_in?(uid)
       session[:user_id] = uid
       redirect_to '/dashboard', :notice => "Signed in!"
     else
