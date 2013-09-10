@@ -14,7 +14,9 @@ class MyAcademics::CollegeAndLevel
     if general_profile
       ug_grad_flag = to_text doc.css("ugGradFlag")
       standing = ug_grad_flag.upcase == "U" ? "Undergraduate" : "Graduate"
-      level = to_text(general_profile.css("nonAPLevel")).titleize
+      level = to_text(general_profile.css("corpEducLevel")).titleize
+      nonAPLevel = to_text(general_profile.css("nonAPLevel")).titleize
+      futureTBLevel = to_text(general_profile.css("futureTBLevel")).titleize
       colleges = []
       primary_college_abbv = to_text(general_profile.css("collegePrimary"))
       primary_college = Colleges.get(primary_college_abbv)
@@ -70,6 +72,8 @@ class MyAcademics::CollegeAndLevel
       data[:college_and_level] = {
         standing: standing,
         level: level,
+        non_ap_level: nonAPLevel,
+        future_telebears_level: futureTBLevel,
         colleges: colleges
       }
     end
