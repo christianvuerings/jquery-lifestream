@@ -41,10 +41,18 @@
               <table>
                 <thead>
                   <tr>
-                    <th width="25%">College and Major</th>
-                    <th width="25%" class="cc-table-subheader" scope="col">College</th>
-                    <th width="25%" class="cc-table-subheader" scope="col">Major</th>
-                    <th></th>
+                    <th width="25%">
+                      <span data-ng-show="is_undergratuate">College and Major</span>
+                      <span data-ng-show="!is_undergratuate">School and Program</span>
+                    </th>
+                    <th width="25%" class="cc-table-subheader" scope="col">
+                      <span data-ng-show="is_undergratuate">College</span>
+                      <span data-ng-show="!is_undergratuate">School</span>
+                    </th>
+                    <th width="50%" class="cc-table-subheader" scope="col">
+                      <span data-ng-show="is_undergratuate">Major</span>
+                      <span data-ng-show="!is_undergratuate">Program</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody data-ng-repeat="college in college_and_level.colleges">
@@ -52,7 +60,6 @@
                     <td></td>
                     <td><strong data-ng-bind="college.college"></strong></td>
                     <td><strong data-ng-bind="college.major"></strong></td>
-                    <td></td>
                   </tr>
                 </tbody>
               </table>
@@ -63,15 +70,24 @@
                 <thead>
                   <tr>
                     <th width="25%">Level</th>
-                    <th class="cc-table-subheader" scope="col">Including AP</th>
-                    <th></th>
+                    <th width="25%" class="cc-table-subheader" scope="col">
+                      <span data-ng-show="is_undergratuate">Including AP</span>
+                      <span data-ng-show="!is_undergratuate">Current</span>
+                    </th>
+                    <th width="25%" data-ng-show="is_undergratuate" class="cc-table-subheader" scope="col">
+                      <span>Not Including AP</span>
+                      <span data-ng-show="!is_undergratuate">Current</span>
+                    </th>
+                    <th width="{{is_undergratuate && '25' || '50'}}%" class="cc-table-subheader" scope="col">Future (Tele-BEARS)
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td></td>
                     <td><strong data-ng-bind="college_and_level.level"></strong></td>
-                    <td></td>
+                    <td data-ng-show="is_undergratuate"><strong data-ng-bind="college_and_level.non_ap_level"></strong></td>
+                    <td><strong data-ng-bind="college_and_level.future_telebears_level"></strong></td>
                   </tr>
                 </tbody>
               </table>

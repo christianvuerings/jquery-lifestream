@@ -205,6 +205,8 @@
       // Some users (e.g. test-xxx users) may be missing the "student" role but still need ability to view My Academics pages
       $scope.can_view_academics = $scope.api.user.profile.roles.student || $scope.api.user.profile.roles.faculty || $scope.college_and_level.standing == 'Undergraduate';
 
+      $scope.is_undergratuate = ($scope.college_and_level.standing === 'Undergraduate');
+
       $scope.teaching = parseTeaching(data.teaching_semesters);
       $scope.teaching_length = Object.keys($scope.teaching).length;
 
