@@ -113,6 +113,14 @@ bearfacts_proxy:
   app_key: ''
   base_url: "https://apis-dev.berkeley.edu/bearfacts-apis"
 
+myfinaid_proxy:
+  fake: false
+  token: secret set per deployment layer
+  app_id: ''
+  app_key: ''
+  base_url: "https://apis-dev.berkeley.edu/myfinaid"
+  term_year: "2013"
+
 blog_latest_release_notes_feed_proxy:
   fake: false
   feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
