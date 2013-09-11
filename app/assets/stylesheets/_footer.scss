@@ -10,13 +10,16 @@ body {
     a {
       font-weight: bold;
     }
-    .cc-footer-links {
-      float: right;
-      margin-top: 10px;
-      text-align: right;
-      a {
-        padding-left: 21px;
-      }
+    svg {
+      float: left;
+      margin-right: 20px;
+    }
+    ul {
+      margin-top: 20px;
+      padding-left: 18px;
+    }
+    .cc-footer-actingas {
+      padding-bottom: 90px;
     }
     .cc-footer-berkeley {
       &:hover {
@@ -27,29 +30,28 @@ body {
       float: left;
       margin-top: 10px;
     }
-
-    svg {
-      float: left;
-      margin-right: 20px;
-    }
-
-    ul {
-      margin-top: 20px;
-      padding-left: 18px;
-    }
-
     .cc-footer-confirmation {
       padding-top: 5px;
     }
-
     .cc-footer-form {
       background: transparent;
       border: none;
+    }
+    .cc-footer-links {
+      float: right;
+      margin-top: 10px;
+      text-align: right;
+      a {
+        padding-left: 21px;
+      }
     }
 
     @media only screen and (max-width: 767px) {
       background: $cc-color-footer-dark-background;
       color: $cc-color-light-grey;
+      a {
+        color: $cc-color-footer-links;
+      }
       .cc-footer-copyright {
         color: $cc-color-light-grey;
         float: right;
@@ -60,7 +62,6 @@ body {
         float: left;
         a {
           border-right: 1px solid $cc-color-button-selected;
-          color: $cc-color-footer-links;
           font-weight: normal;
           padding: 0 10px 0;
           &:first-child {

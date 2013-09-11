@@ -1,0 +1,16 @@
+.cc-actingas-fixed {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+  p {
+    background: $cc-color-white;
+    border-top: 2px solid $cc-color-gold;
+    line-height: 27px;
+    margin: 0;
+    opacity: 0.8;
+    overflow: hidden;
+    padding: 10px 15px;
+  }
+}
