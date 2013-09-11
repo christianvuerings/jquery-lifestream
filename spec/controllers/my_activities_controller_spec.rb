@@ -16,7 +16,7 @@ describe MyActivitiesController do
   it "should be an non-empty activities feed on authenticated user" do
     session[:user_id] = @user_id
     dummy = JSON.parse(File.read(Rails.root.join('public/dummy/json/activities.json')))
-    MyActivities.any_instance.stub(:get_feed).and_return(dummy)
+    MyActivities::Merged.any_instance.stub(:get_feed).and_return(dummy)
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
@@ -26,7 +26,7 @@ describe MyActivitiesController do
   it "should return a valid activities feed for an authenticated user" do
     session[:user_id] = @user_id
     dummy = JSON.parse(File.read(Rails.root.join('public/dummy/json/activities.json')))
-    MyActivities.any_instance.stub(:get_feed).and_return(dummy)
+    MyActivities::Merged.any_instance.stub(:get_feed).and_return(dummy)
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response["activities"].instance_of?(Array).should == true

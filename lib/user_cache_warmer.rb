@@ -11,7 +11,7 @@ class UserCacheWarmer
       MyTasks::Merged.new(uid),
       MyBadges::Merged.new(uid),
       MyUpNext.new(uid),
-      MyActivities.new(uid),
+      MyActivities::Merged.new(uid),
       MyAcademics::Merged.new(uid)
     ].each do |model|
       model.get_feed
