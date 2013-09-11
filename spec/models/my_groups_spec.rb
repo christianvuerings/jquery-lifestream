@@ -41,38 +41,52 @@ describe "MyGroups" do
     end
   end
 
-  it "should include CalLink groups" do
-    CanvasProxy.stub(:access_granted?).and_return(false)
-    SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
-    CalLinkProxy.stub(:access_granted?).and_return(true)
-    CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
-    my_groups = MyGroups.new(@user_id).get_feed
-    my_groups[:groups].is_a?(Array).should == true
-    my_groups[:groups].size.should == 8
-    my_groups[:groups].each do |group_hash|
-      group_hash.keys do |key|
-        group_hash[key].should_not be_nil
-        group = group_hash[key]
-        group[:id].blank?.should be_false
-        group[:name].blank?.should be_false
-        group[:site_url].blank?.should be_false
-        group[:emitter].should == "CalLink"
-        group[:color_class].should == "callink-group"
+  context "Fake Callink groups tests" do
+    before(:each) do
+      @orig_setting = Settings.cal_link_proxy.fake
+      Settings.cal_link_proxy.fake = true
+      CanvasProxy.stub(:access_granted?).and_return(false)
+      SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
+      CalLinkProxy.stub(:access_granted?).and_return(true)
+      CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
+    end
+
+    after(:each) do
+      Settings.cal_link_proxy.fake = @orig_setting
+    end
+
+    let(:my_groups) { MyGroups.new(@user_id).get_feed }
+
+    subject { my_groups[:groups] }
+
+    it "should include non-empty CalLink groups" do
+      subject.is_a?(Array).should be_true
+      subject.size.should be > 0
+      subject.each do |group_hash|
+        group_hash.keys do |key|
+          group_hash[key].should_not be_nil
+          group = group_hash[key]
+          group[:id].blank?.should be_false
+          group[:name].blank?.should be_false
+          group[:site_url].blank?.should be_false
+          group[:emitter].should == "CalLink"
+          group[:color_class].should == "callink-group"
+        end
       end
     end
+
+    it "should filter out blacklisted CalLink groups" do
+      subject.is_a?(Array).should == true
+      bad_groups = %w(91370 59672 45984 46063 91891 93520 67825)
+      (subject.select {|group| bad_groups.include?(group[:id])}).should be_empty
+      (subject.select {|group| group[:emitter] == "CalLink"}).should be_present
+    end
+
   end
 
-  it "should filter out blacklisted CalLink groups" do
-    CanvasProxy.stub(:access_granted?).and_return(false)
-    SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
-    CalLinkProxy.stub(:access_granted?).and_return(true)
-    CalLinkMembershipsProxy.stub(:new).and_return(@fake_cal_link_proxy)
-    my_groups = MyGroups.new(@user_id).get_feed
-    my_groups[:groups].is_a?(Array).should == true
-    bad_groups = %w(91370 59672 45984 46063 91891 93520 67825)
-    (my_groups[:groups].select {|group| bad_groups.include?(group[:id])}).should be_empty
-    (my_groups[:groups].select {|group| group[:emitter] == "CalLink"}).should be_present
-  end
+
+
+
 
   it "should sort groups alphabetically" do
     CanvasProxy.stub(:access_granted?).and_return(true)
