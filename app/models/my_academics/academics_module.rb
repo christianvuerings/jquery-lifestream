@@ -29,8 +29,9 @@ module MyAcademics::AcademicsModule
   end
 
   # Link campus courses to internal class pages for the current semester.
-  def class_to_url(term_cd, term_year, department, catalog_id)
-    "/academics/semester/#{TermCodes.to_slug(term_year, term_cd)}/class/#{course_to_slug(department, catalog_id)}"
+  def class_to_url(term_cd, term_year, department, catalog_id, role)
+    teaching_str = (role == 'Instructor') ? 'teaching-' : ''
+    "/academics/#{teaching_str}semester/#{TermCodes.to_slug(term_year, term_cd)}/class/#{course_to_slug(department, catalog_id)}"
   end
 
   def course_to_slug(department, catalog_id)
