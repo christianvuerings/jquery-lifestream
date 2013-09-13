@@ -69,10 +69,20 @@ class MyGroups < MyMergedModel
   end
 
   def self.type_name_blacklist
-    ["new organizations", "campus departments", "hidden", "admin"]
+    [
+      "admin",
+      "asuc government office",
+      "asuc government program",
+      "campus departments",
+      "default",
+      "ga government office",
+      "ga government program",
+      "hidden",
+      "new organizations",
+    ]
   end
 
   def self.status_blacklist
-    %w(inactive locked frozen)
+    %w(frozen inactive locked)
   end
 end
