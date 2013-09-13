@@ -88,11 +88,11 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
     subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
 
     it { should_not be_empty}
-    it { subject[:semesters].length.should eq 3}
-    it { subject[:semesters][0][:name].should == "Spring 2014" }
+    it { subject[:semesters].length.should eq 4}
+    it { subject[:semesters][0][:name].should == "Spring 2015" }
     it { subject[:semesters][0][:classes].length.should == 1 }
     it { subject[:semesters][0][:classes][0][:grade_option].should == '' }
-    it { subject[:semesters][1][:name].should == "Fall 2013" }
+    it { subject[:semesters][1][:name].should == "Spring 2014" }
     it { subject[:semesters][1][:classes][0][:grade_option].should == '' }
   end
 

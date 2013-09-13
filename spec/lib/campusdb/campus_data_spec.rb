@@ -107,9 +107,9 @@ describe CampusData do
     transcripts = CampusData.get_transcript_grades('300939')
     transcripts.should_not be_nil
     if CampusData.test_data?
-      sections.length.should == 6
+      sections.length.should == 7
       transcripts.length.should == 2
-      expected_grades = {4 => 'B', 5 => 'C+'}
+      expected_grades = {5 => 'B', 6 => 'C+'}
       expected_grades.keys.each do |idx|
         section = sections[idx]
         transcript = transcripts.select {|t|
