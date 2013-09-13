@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyActivities::SakaiAnnouncements do
+describe MyActivities::SakaiAnnouncements, :if => SakaiData.test_data? do
   let!(:oski_uid) { "61889" }
   let!(:fake_sakai_user_sites) { SakaiUserSitesProxy.new(fake: true) }
   let(:documented_types) { %w(announcement) }
