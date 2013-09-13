@@ -24,7 +24,8 @@ class MyClasses < MyMergedModel
           course[:term_cd],
           course[:term_yr],
           course[:dept],
-          course[:catid]
+          course[:catid],
+          course[:role]
       )
     end
     campus_courses
