@@ -1,18 +1,21 @@
 <script type="text/ng-template" id="templates/academics_classinfo.html">
   <div
     class="cc-page-academics"
+    data-cc-spinner-directive
     data-ng-show="can_view_academics"
   >
-    <h1>
-      <a href="/academics">My Academics</a> &raquo;
-      <span data-ng-show="!is_instructor_gsi">
-        <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
-        <span data-ng-bind="selected_course.course_number"></span>
-      </span>
-      <span data-ng-show="is_instructor_gsi">
-        <span data-ng-bind="selected_course.course_number"></span> | <span data-ng-bind="selected_semester.name"></span>
-      </span>
-    </h1>
+    <div>
+      <h1>
+        <a href="/academics">My Academics</a> &raquo;
+        <span data-ng-show="!is_instructor_gsi">
+          <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
+          <span data-ng-bind="selected_course.course_number"></span>
+        </span>
+        <span data-ng-show="is_instructor_gsi">
+          <span data-ng-bind="selected_course.course_number"></span> | <span data-ng-bind="selected_semester.name"></span>
+        </span>
+      </h1>
+    </div>
 
     <div class="large-4 columns cc-academics-page-left">
       <div class="cc-widget">

@@ -1,11 +1,14 @@
 <script type="text/ng-template" id="templates/academics_semester.html">
   <div
     class="cc-page-academics"
+    data-cc-spinner-directive
     data-ng-show="can_view_academics"
   >
-    <h1 class="cc-ellipsis cc-left">
-      <a href="/academics">My Academics</a> &raquo; <span data-ng-bind="selected_semester.name"></span>
-    </h1>
+    <div>
+      <h1 class="cc-ellipsis cc-left">
+        <a href="/academics">My Academics</a> &raquo; <span data-ng-bind="selected_semester.name"></span>
+      </h1>
+    </div>
     <div class="cc-right cc-academics-prev-next cc-uppercase" data-ng-show="prev_next_semester_show">
       <a class="cc-academics-prev" data-ng-show="previous_semester.slug" data-ng-href="/academics/semester/{{previous_semester.slug}}">Prev semester</a>
       <span class="cc-academics-prev cc-academics-prev-next-disabled" data-ng-hide="previous_semester.slug">Prev semester</span>
