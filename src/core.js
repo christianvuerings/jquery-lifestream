@@ -162,8 +162,9 @@
    * @return {String} A valid YQL URL
    */
   $.fn.lifestream.createYqlUrl = function( query ) {
-      return ( 'http://query.yahooapis.com/v1/public/yql?q=__QUERY__&env=' +
-      'store://datatables.org/alltableswithkeys&format=json')
+      return ( ('https:' === document.location.protocol ? 'https' : 'http') +
+        '://query.yahooapis.com/v1/public/yql?q=__QUERY__' +
+        '&env=' + 'store://datatables.org/alltableswithkeys&format=json')
         .replace( "__QUERY__" , encodeURIComponent( query ) );
   };
 
