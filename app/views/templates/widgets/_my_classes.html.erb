@@ -26,10 +26,10 @@
                  data-ng-click="api.widget.toggleShow($event, category.data, class, 'My Classes')">
               <span class="cc-visuallyhidden" data-ng-bind-template="Show {{class._show ? 'less' : 'more'}} information about {{class.course_code}}"></span>
               <div class="cc-ellipsis">
-                <strong data-ng-bind="class.course_code"></strong>
+                <strong data-ng-bind="class.course_code" data-ng-class="{'cc-italic': class.waitlist_position}"></strong>
                 <span class="cc-text-light" data-ng-show="class.waitlist_position" data-ng-bind-template="- #{{ class.waitlist_position }} on the wait list"></span>
               </div>
-              <div class="cc-ellipsis cc-text-light" data-ng-show="!!class.name" data-ng-bind="class.name">
+              <div class="cc-ellipsis cc-text-light" data-ng-class="{'cc-italic': class.waitlist_position}" data-ng-show="!!class.name" data-ng-bind="class.name">
               </div>
               <div data-ng-show="class._show">
                 <ul class="cc-widget-sublist">
