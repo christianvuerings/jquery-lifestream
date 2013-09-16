@@ -15,10 +15,20 @@ describe "BearfactsProfileProxy" do
     response[:status_code].should == 400
   end
 
-  it "should get Oski Bear's profile from a real server", :testext => true, :ignore => true do
+  it "should get Oski Bear's profile from a real server", :testext => true do
     client = BearfactsProfileProxy.new({:user_id => "61889", :fake => false})
     xml = client.get
     xml.should_not be_nil
+  end
+
+  context "connection failure" do
+    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH) }
+    after(:each) { WebMock.reset! }
+
+    subject { BearfactsProfileProxy.new({:user_id => "61889", :fake => false}).get }
+
+    it { subject[:body].should eq("Remote server unreachable") }
+    it { subject[:status_code].should be > 500 }
   end
 
 end
