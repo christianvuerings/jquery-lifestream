@@ -30,8 +30,8 @@
                   <tr>
                     <td></td>
                     <td><strong data-ng-bind="college_and_level.standing"></strong></td>
-                    <td><strong data-ng-bind="gpa_units.total_units"></strong></td>
-                    <td><strong data-ng-bind="gpa_units.cumulative_gpa"></strong></td>
+                    <td data-ng-show="gpa_units.total_units !== null"><strong data-ng-bind="gpa_units.total_units"></strong></td>
+                    <td data-ng-show="gpa_units.cumulative_gpa !== null"><strong data-ng-bind="gpa_units.cumulative_gpa"></strong></td>
                   </tr>
                 </tbody>
               </table>
@@ -261,7 +261,7 @@
           </div>
         </div>
 
-        <div class="cc-widget cc-widget-last" data-ng-show="api.user.profile.roles.student">
+        <div class="cc-widget cc-widget-last" data-ng-show="api.user.profile.roles.student && semesters.length">
           <div class="cc-widget-title">
             <h2 class="cc-left">Semesters</h2>
             <a href="https://telebears.berkeley.edu/tranreq/" class="cc-right cc-academics-orderlink">
