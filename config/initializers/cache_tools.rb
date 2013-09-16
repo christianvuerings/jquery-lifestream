@@ -8,39 +8,45 @@ module Calcentral
     USER_CACHE_WARMER = UserCacheWarmer.new
 
     USER_CACHE_EXPIRATION = UserCacheInvalidator.new
+    MERGED_FEEDS_EXPIRATION = UserCacheInvalidator.new
 
     {
-        UserApi => :expire,
-        MyRegBlocks => :expire,
-        MyClasses => :expire,
-        MyTasks::Merged => :expire,
-        MyBadges::Merged => :expire,
-        MyUpNext => :expire,
-        MyGroups => :expire,
-        MyActivities::Merged => :expire,
+      MyRegBlocks => :expire,
+      CalLinkMembershipsProxy => :expire,
 
-        CalLinkMembershipsProxy => :expire,
+      CampusUserCoursesProxy => :expire,
 
-        CampusUserCoursesProxy => :expire,
+      CanvasProxy => :expire,
+      CanvasUserCoursesProxy => :expire,
+      CanvasGroupsProxy => :expire,
+      CanvasTodoProxy => :expire,
+      CanvasUpcomingEventsProxy => :expire,
+      CanvasUserActivityStreamProxy => :expire,
+      CanvasUserProfileProxy => :expire,
 
-        CanvasProxy => :expire,
-        CanvasUserCoursesProxy => :expire,
-        CanvasGroupsProxy => :expire,
-        CanvasTodoProxy => :expire,
-        CanvasUpcomingEventsProxy => :expire,
-        CanvasUserActivityStreamProxy => :expire,
-        CanvasUserProfileProxy => :expire,
+      MyBadges::GoogleCalendar => :expire,
+      MyBadges::GoogleDrive => :expire,
+      MyBadges::GoogleMail => :expire,
+      MyTasks::GoogleTasks => :expire,
 
-        MyBadges::GoogleCalendar => :expire,
-        MyBadges::GoogleDrive => :expire,
-        MyBadges::GoogleMail => :expire,
-        MyTasks::GoogleTasks => :expire,
-
-        SakaiProxy => :expire,
-        SakaiUserSitesProxy => :expire
-
+      SakaiProxy => :expire,
+      SakaiUserSitesProxy => :expire
     }.each do |key, value|
       USER_CACHE_EXPIRATION.add_observer(key, value)
+    end
+
+    merged_feeds = {
+      UserApi => :expire,
+      MyClasses => :expire,
+      MyGroups => :expire,
+      MyActivities::Merged => :expire,
+      MyTasks::Merged => :expire,
+      MyBadges::Merged => :expire,
+      MyUpNext => :expire
+    }
+    merged_feeds.each do |key, value|
+      USER_CACHE_EXPIRATION.add_observer(key, value)
+      MERGED_FEEDS_EXPIRATION.add_observer(key, value)
     end
 
     #Pseudo-prefix constant

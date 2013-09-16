@@ -35,13 +35,14 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def self.warmup_request(uid)
-    if uid
-      self.queue.publish uid
-    end
+    self.queue.publish uid
   end
 
   def on_message(body)
-    logger.warn "Got TorqueBox message: body = #{body.inspect}, message = #{message.inspect}"
+    logger.debug "Got TorqueBox message: body = #{body.inspect}, message = #{message.inspect}"
+    unless body.blank?
+      warmup_merged_feeds body
+    end
   end
 
   def on_error(exception)
@@ -63,13 +64,8 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
-            begin
-              UserCacheWarmer.do_warm visit.uid
-              warmups += 1
-            rescue Exception => e
-              logger.error "#{self.class.name} Got exception while warming cache for user #{visit.uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
-            end
+            expire_then_complete_warmup visit.uid
+            warmups += 1
           end
         end
 
@@ -108,6 +104,24 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
       ActiveRecord::Base.clear_active_connections!
     end
 
+  end
+
+  def expire_then_complete_warmup(uid)
+    Calcentral::USER_CACHE_EXPIRATION.notify uid
+    begin
+      UserCacheWarmer.do_warm uid
+    rescue Exception => e
+      logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
+    end
+  end
+
+  def warmup_merged_feeds(uid)
+    Calcentral::USER_CACHE_EXPIRATION.notify uid
+    begin
+      UserCacheWarmer.do_warm uid
+    rescue Exception => e
+      logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
+    end
   end
 
 end
