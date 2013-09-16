@@ -6,3 +6,9 @@ jobs:
     job: HotPlate
     cron: '0 1 8 * * ? *'
     singleton: true
+
+queues:
+  /queues/warmup_request:
+
+messaging:
+  /queues/warmup_request: WarmupRequestSubscriber

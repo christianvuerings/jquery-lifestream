@@ -476,6 +476,7 @@ DEPENDENCIES
   simplecov (~> 0.7.1)
   therubyrhino (~> 2.0.1)
   torquebox (~> 2.3.2)
+  torquebox-messaging (~> 2.3.2)
   torquebox-server (~> 2.3.2)
   uglifier (~> 2.1.1)
   vcr (~> 2.5.0)

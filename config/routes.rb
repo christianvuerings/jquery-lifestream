@@ -25,6 +25,7 @@ Calcentral::Application.routes.draw do
   match '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   match '/api/my/campuslinks/expire' => 'my_campus_links#expire'
   match '/api/my/refresh' => 'my_refresh#refresh', :defaults => { :format => 'json' }
+  match '/api/my/warmup_request' => 'my_refresh#warmup_request', :defaults => { :format => 'json' }
 
   # Canvas embedded application support.
   match '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
