@@ -119,7 +119,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def warmup_merged_feeds(uid)
-    Calcentral::USER_CACHE_EXPIRATION.notify uid
+    Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
     rescue Exception => e
