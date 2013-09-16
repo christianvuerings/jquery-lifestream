@@ -1,5 +1,5 @@
 class MyActivities::Notifications
-  include MyActivities::Base, ActiveRecordHelper
+  include ActiveRecordHelper
 
   def self.translators
     @translators ||= {}

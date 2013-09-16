@@ -1,5 +1,4 @@
 class MyActivities::RegBlocks
-  include MyActivities::Base
 
   def self.append!(uid, activities)
     blocks_feed = MyRegBlocks.new(uid).get_feed

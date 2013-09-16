@@ -4,7 +4,6 @@ describe MyActivities::Merged do
   let!(:user_id) { rand(99999).to_s }
   let(:array_inserter) do
     class ArrayInserter
-      include MyActivities::Base
 
       def self.append!(uid, activities)
         activities << ["#{self.name} #{uid}"]
@@ -15,7 +14,6 @@ describe MyActivities::Merged do
 
   let(:hash_inserter) do
     class HashInserter
-      include MyActivities::Base
 
       def self.append!(uid, activities)
         activities << Hash[*[self.name, uid]]

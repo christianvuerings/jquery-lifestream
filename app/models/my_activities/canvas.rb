@@ -1,5 +1,4 @@
 class MyActivities::Canvas
-  include MyActivities::Base
 
   def self.append!(uid, activities)
     return unless CanvasProxy.access_granted?(uid)

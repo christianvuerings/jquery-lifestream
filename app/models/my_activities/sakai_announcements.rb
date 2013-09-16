@@ -1,5 +1,5 @@
 class MyActivities::SakaiAnnouncements
-  include MyActivities::Base, DatedFeed
+  include DatedFeed
 
   def self.append!(uid, activities)
     return activities unless SakaiProxy.access_granted?(uid)
