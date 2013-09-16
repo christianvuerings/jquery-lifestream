@@ -11,4 +11,5 @@ queues:
   /queues/warmup_request:
 
 messaging:
-  /queues/warmup_request: WarmupRequestSubscriber
+  /queues/warmup_request: HotPlate
+  default_message_encoding: text

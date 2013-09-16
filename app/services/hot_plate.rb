@@ -1,6 +1,6 @@
-class HotPlate
+class HotPlate < TorqueBox::Messaging::MessageProcessor
 
-  include ActiveRecordHelper
+  include ActiveRecordHelper, ClassLogger
   attr_reader :total_warmups
 
   def run
@@ -8,7 +8,7 @@ class HotPlate
     if Settings.hot_plate.enabled
       warm
     else
-      Rails.logger.warn "#{self.class.name} is disabled, skipping warmup"
+      logger.warn "#{self.class.name} is disabled, skipping warmup"
     end
   end
 
@@ -30,6 +30,25 @@ class HotPlate
     'HotPlate/Server'
   end
 
+  def self.queue
+    @queue ||= TorqueBox::Messaging::Queue.new('/queues/warmup_request')
+  end
+
+  def self.warmup_request(uid)
+    if uid
+      self.queue.publish uid
+    end
+  end
+
+  def on_message(body)
+    logger.warn "Got TorqueBox message: body = #{body.inspect}, message = #{message.inspect}"
+  end
+
+  def on_error(exception)
+    logger.error "Got an exception handling a message: #{exception.inspect}"
+    raise exception
+  end
+
   def warm
     begin
       start_time = Time.now.to_f
@@ -40,7 +59,7 @@ class HotPlate
         warmups = 0
 
         visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
-        Rails.logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
+        logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
@@ -49,7 +68,7 @@ class HotPlate
               UserCacheWarmer.do_warm visit.uid
               warmups += 1
             rescue Exception => e
-              Rails.logger.error "#{self.class.name} Got exception while warming cache for user #{visit.uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
+              logger.error "#{self.class.name} Got exception while warming cache for user #{visit.uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
             end
           end
         end
@@ -71,7 +90,7 @@ class HotPlate
           :last_warmup => Time.zone.now
         }, :expires_in => 0)
 
-        Rails.logger.warn "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
+        logger.warn "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
 
         visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
         deleted_count = 0
@@ -82,7 +101,7 @@ class HotPlate
             deleted_count += 1
           end
         end
-        Rails.logger.warn "#{self.class.name} Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
+        logger.warn "#{self.class.name} Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
       }
 
     ensure
