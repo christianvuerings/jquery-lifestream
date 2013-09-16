@@ -1,7 +1,7 @@
 /*!
  * jQuery Lifestream Plug-in
  * Show a stream of your online activity
- * @version   0.4.0
+ * @version   0.4.1
  * @author    Christian Vuerings et al.
  * @copyright Copyright 2011, Christian Vuerings - http://denbuzze.com
  * @license   https://github.com/christianv/jquery-lifestream/blob/master/LICENSE MIT
