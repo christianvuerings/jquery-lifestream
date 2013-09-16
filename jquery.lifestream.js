@@ -1,7 +1,7 @@
 /*!
  * jQuery Lifestream Plug-in
  * Show a stream of your online activity
- * @version   0.4.1
+ * @version   0.4.2
  * @author    Christian Vuerings et al.
  * @copyright Copyright 2011, Christian Vuerings - http://denbuzze.com
  * @license   https://github.com/christianv/jquery-lifestream/blob/master/LICENSE MIT
@@ -689,6 +689,53 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
 
 };
 })(jQuery);(function($) {
+  'use strict';
+
+  $.fn.lifestream.feeds.fancy = function( config, callback ) {
+
+    var template = $.extend({},
+      {
+        fancied: 'fancy\'d <a href="${link}">${title}</a>'
+      },
+      config.template),
+
+    parseFancy = function( input ) {
+      var output = [], i = 0, j;
+
+      if(input.query && input.query.count && input.query.count > 0) {
+        j = input.query.count;
+        for( ; i<j; i++) {
+          var item = input.query.results.item[i];
+          output.push({
+            date: new Date(item.pubDate),
+            config: config,
+            html: $.tmpl( template.fancied, item )
+          });
+        }
+      }
+
+      return output;
+    };
+
+    $.ajax({
+      url: $.fn.lifestream.createYqlUrl('SELECT * FROM xml ' +
+        'WHERE url="http://www.fancy.com/rss/' + config.user +
+        '" AND itemPath="/rss/channel/item"'),
+      dataType: 'jsonp',
+      success: function( data ) {
+        callback(parseFancy(data));
+      }
+    });
+
+    // Expose the template.
+    // We use this to check which templates are available
+    return {
+      "template" : template
+    };
+
+  };
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.flickr = function( config, callback ) {
 
   var template = $.extend({},
@@ -2223,110 +2270,116 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 };
 })(jQuery);(function($) {
   "use strict";
-$.fn.lifestream.feeds.twitter = function( config, callback ) {
-  var yql = 'USE "http://yqlblog.net/samples/data.html.cssselect.xml"' +
-      ' AS data.html.cssselect;' +
-      ' SELECT * FROM data.html.cssselect' +
-      ' WHERE url = "https://twitter.com/' + config.user + '"' +
-      ' AND css = ".js-stream-tweet"',
-  template = $.extend({},
-    {
-      posted: '{{html tweet}}'
+
+  $.fn.lifestream.feeds.twitter = function( config, callback ) {
+    var template = $.extend({},
+      {
+        "posted": '{{html tweet}}'
+      },
+      config.template),
+    jsonpCallbackName = 'jlsTwitterCallback' +
+      config.user.replace(/[^a-zA-Z0-9]+/g, ''),
+
+    /**
+     * Add links to the twitter feed.
+     * Hashes, @ and regular links are supported.
+     * @private
+     * @param {String} tweet A string of a tweet
+     * @return {String} A linkified tweet
+     */
+    linkify = function( tweet ) {
+
+      var link = function( t ) {
+        return t.replace(
+          /[a-z]+:\/\/[a-z0-9\-_]+\.[a-z0-9\-_:~%&\?\/.=]+[^:\.,\)\s*$]/ig,
+          function( m ) {
+            return '<a href="' + m + '">' +
+              ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m ) +
+              '</a>';
+          }
+        );
+      },
+      at = function( t ) {
+        return t.replace(
+          /(^|[^\w]+)\@([a-zA-Z0-9_]{1,15})/g,
+          function( m, m1, m2 ) {
+            return m1 + '<a href="http://twitter.com/' + m2 + '">@' +
+              m2 + '</a>';
+          }
+        );
+      },
+      hash = function( t ) {
+        return t.replace(
+          /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
+          function( m, m1, m2 ) {
+            return m1 + '<a href="http://search.twitter.com/search?q=%23' +
+            m2 + '">#' + m2 + '</a>';
+          }
+        );
+      };
+
+      return hash(at(link(tweet)));
+
     },
-    config.template),
+    /**
+     * Parse the input from twitter
+     * @private
+     * @param  {Object[]} items
+     * @return {Object[]} Array of Twitter status messages.
+     */
+    parseTwitter = function( items ) {
+      var output = [], i = 0, j = items.length;
 
-  /**
-   * Add links to the twitter feed.
-   * Hashes, @ and regular links are supported.
-   * @private
-   * @param {String} tweet A string of a tweet
-   * @return {String} A linkified tweet
-   */
-  linkify = function( tweet ) {
-
-    var link = function( t ) {
-      return t.replace(
-        /[a-z]+:\/\/[a-z0-9\-_]+\.[a-z0-9\-_:~%&\?\/.=]+[^:\.,\)\s*$]/ig,
-        function( m ) {
-          return '<a href="' + m + '">' +
-            ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m ) +
-            '</a>';
-        }
-      );
-    },
-    at = function( t ) {
-      return t.replace(
-        /(^|[^\w]+)\@([a-zA-Z0-9_]{1,15})/g,
-        function( m, m1, m2 ) {
-          return m1 + '<a href="http://twitter.com/' + m2 + '">@' +
-            m2 + '</a>';
-        }
-      );
-    },
-    hash = function( t ) {
-      return t.replace(
-        /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
-        function( m, m1, m2 ) {
-          return m1 + '<a href="http://search.twitter.com/search?q=%23' +
-          m2 + '">#' + m2 + '</a>';
-        }
-      );
-    };
-
-    return hash(at(link(tweet)));
-
-  },
-  /**
-   * Parse the input from twitter
-   */
-  parseTwitter = function( input ) {
-    var output = [],
-      $xml = $(input);
-
-    $xml.find('.js-stream-tweet').each(function(){
-      var $tweet = $(this),
-        text = $tweet.find('.js-tweet-text')
-          .find('.tco-ellipsis').remove().end()
-          .text(),
-        $time = $tweet.find('.tweet-timestamp'),
-        created_at = new Date($time.attr('title')),
-        url = $time.attr('href');
+      for( i; i < j; i++ ) {
+        var status = items[i];
 
         output.push({
-          date: created_at,
-          config: config,
-          html: $.tmpl( template.posted, {
-            tweet: linkify( text ),
-            complete_url: 'http://twitter.com/#!/' + url
+          "date": new Date(status.created_at * 1000), // unix time
+          "config": config,
+          "html": $.tmpl( template.posted, {
+            "tweet": linkify(status.text),
+            "complete_url": 'http://twitter.com/' + config.user +
+              "/status/" + status.id_str
           } ),
-          url: 'http://twitter.com/#!/' + config.user
+          "url": 'http://twitter.com/' + config.user
         });
+      }
+
+      return output;
+    };
+
+    /**
+     * Global JSONP callback
+     * This should allow for better response caching by YQL.
+     * @param  {Object[]} data YQL response items
+     * @return {undefined}
+     */
+    window[jsonpCallbackName] = function(data) {
+      if ( data.query && data.query.count > 0 ) {
+        callback(parseTwitter(data.query.results.items));
+      }
+    };
+
+    $.ajax({
+      "url": $.fn.lifestream.createYqlUrl('USE ' +
+        '"http://arminrosu.github.io/twitter-open-data-table/table.xml" ' +
+        'AS twitter; SELECT * FROM twitter WHERE screen_name = "' +
+        config.user + '"'),
+      "cache": true,
+      'data': {
+        '_maxage': 300 // cache for 5 minutes
+      },
+      "dataType": 'jsonp',
+      "jsonpCallback": jsonpCallbackName // better caching
     });
 
-    return output;
+    // Expose the template.
+    // We use this to check which templates are available
+    return {
+      "template" : template
+    };
+
   };
-
-  $.ajax({
-    // we need xml so we can get the entire tweet text
-    url: "http://query.yahooapis.com/v1/public/yql?q=" +
-      encodeURIComponent(yql),
-    dataType: 'text',
-    success: function( xml ) {
-      callback(parseTwitter(
-          // revert yql beautification
-          xml.replace(/(\r\n|\n|\r)/gm, '').replace(/>\s+</gm, '><')
-            .replace(/\s+/gm, ' ')
-      ));
-    }
-  });
-
-  // Expose the template.
-  // We use this to check which templates are available
-  return {
-    "template" : template
-  };
-
-};
 })(jQuery);
 (function($) {
 $.fn.lifestream.feeds.vimeo = function( config, callback ) {
@@ -2545,7 +2598,7 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
         }
 
         // Don't add unavailable items (private, rejected, failed)
-        if (!video.player && !video.player['default']) {
+        if (!video.player || !video.player['default']) {
           continue;
         }
 
