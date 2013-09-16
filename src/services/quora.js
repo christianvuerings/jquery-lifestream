@@ -8,18 +8,39 @@ $.fn.lifestream.feeds.quora = function( config, callback ) {
     config.template),
 
   /**
+   * Get the link
+   * Straigth copy from RSS
+   *
+   * @param  {Object} channel
+   * @return {String}
+   */
+  getChannelUrl = function(channel){
+    var i = 0, j = channel.link.length;
+
+    for( ; i < j; i++) {
+      var link = channel.link[i];
+      if( typeof link === 'string' ) {
+        return link;
+      }
+    }
+
+    return '';
+  },
+
+  /**
    * Parse the input from quora feed
    */
-  parseReader = function( input ) {
-    var output = [], list, i = 0, j;
+  parseRSS = function( input ) {
+    var output = [], list = [], i = 0, j = 0, url = '';
     if(input.query && input.query.count && input.query.count > 0) {
       list = input.query.results.rss.channel.item;
       j = list.length;
+      url = getChannelUrl(input.query.results.rss.channel);
       for( ; i<j; i++) {
         var item = list[i];
 
         output.push({
-          url: 'http://www.google.com/reader/shared' + config.user,
+          url: url,
           date: new Date( item.pubDate ),
           config: config,
           html: $.tmpl( template.posted, item )
@@ -30,11 +51,11 @@ $.fn.lifestream.feeds.quora = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="http://www.quora.com/' +
-      config.user + '/rss"'),
+    url: $.fn.lifestream.createYqlUrl('select * from xml where ' +
+      'url="http://www.quora.com/' + config.user + '/rss"'),
     dataType: 'jsonp',
     success: function( data ) {
-      callback(parseReader(data));
+      callback(parseRSS(data));
     }
   });
 

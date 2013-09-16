@@ -32,7 +32,6 @@ Currently supports the following feeds:
 * [Gimmebar](http://gimmebar.com)
 * [Github](http://github.com)
 * [Google+](http://plus.google.com)
-* [Google Reader](http://google.com/reader)
 * [Hypem](http://hypem.com/)
 * [Instapaper](http://www.instapaper.com)
 * [Iusethis](http://osx.iusethis.com/)
