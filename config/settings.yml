@@ -201,3 +201,4 @@ features:
   live_campus_links_data: false
   user_whitelist: false
   academic_status: false
+  my_fin_aid: false

@@ -17,7 +17,7 @@ module Calcentral
         MyBadges::Merged => :expire,
         MyUpNext => :expire,
         MyGroups => :expire,
-        MyActivities => :expire,
+        MyActivities::Merged => :expire,
 
         CalLinkMembershipsProxy => :expire,
 

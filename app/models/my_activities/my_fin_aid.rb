@@ -1,0 +1,3 @@
+class MyActivities::MyFinAid
+
+end
