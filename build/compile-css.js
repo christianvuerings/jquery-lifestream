@@ -3,21 +3,21 @@ var fs = require('fs'),
   path = require('path'),
   baseDir = process.argv[2],
   files = [],
-  styles = '';
-
-// get the mime type base on extension
-// easier than installing modules, but more accident-prone
-var getMimeType = function(filepath) {
-  var types = {
+  mimeTypes = {
     'gif': 'image/gif',
     'jpe': 'image/jpeg',
     'jpg': 'image/jpeg',
     'jpeg': 'image/jpeg',
     'png': 'image/png'
   },
-  extension = path.extname(filepath).replace('.', '');
+  styles = '';
 
-  return types[extension];
+// get the mime type based on extension
+// easier than installing modules, but more accident-prone
+var getMimeType = function(filepath) {
+  var extension = path.extname(filepath).replace('.', '');
+
+  return mimeTypes[extension];
 };
 
 // gets an image and gives you the full css class
@@ -30,7 +30,12 @@ var base64Encode = function(filepath) {
 
 files = fs.readdirSync(baseDir);
 files.sort().forEach(function(filename){
-  styles += base64Encode( baseDir + '/' + filename ) + "\n";
+  var allowedExtensions = Object.keys(mimeTypes),
+    fileExtension = path.extname(filename).replace('.', '');
+  // make sure only allowed files are parse
+  if ( allowedExtensions.indexOf(fileExtension) >= 0 ) {
+    styles += base64Encode( baseDir + '/' + filename ) + "\n";
+  }
 });
 
 process.stdout.write(styles);

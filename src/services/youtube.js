@@ -32,7 +32,7 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
         }
 
         // Don't add unavailable items (private, rejected, failed)
-        if (!video.player && !video.player['default']) {
+        if (!video.player || !video.player['default']) {
           continue;
         }
 
