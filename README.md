@@ -37,6 +37,7 @@ Currently supports the following feeds:
 * [Iusethis](http://osx.iusethis.com/)
 * [Last.fm](http://last.fm)
 * [LibraryThing.com](http://librarything.com)
+* [Linkedin.com](http://linkedin.com) (via [Network Updates RSS feed](http://www.linkedin.com/rssAdmin?display=&trk=uscp_rss))
 * [Mendeley](http://mendeley.com)
 * [Miso](http://gomiso.com)
 * [Mlkshk](http://mlkshk.com)
@@ -203,13 +204,14 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 * Put all `var` statements in the beginning of a function
 * Use === & !== for comparing variables
 * Use the following spacing rules:
+
 ``` javascript
 for (var i = 0, j = length; i < j; i++) {
 ```
-* Use jshint on you files. `.jshintrc` contains the necessary configuration
+* Use jshint on your files. `.jshintrc` contains the necessary configuration
 
 ## Ideas
-Stuff that isn"t implemented yet, but would be nice to have:
+Stuff that isn't implemented yet, but would be nice to have:
 
 * Add support for [Twitter Web Intents](http://dev.twitter.com/pages/intents)
 
