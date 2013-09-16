@@ -24,11 +24,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.cc-required-field-indicator {
-  color: #ff0000;
+.cc-italic {
+  font-style: italic;
 }
 .cc-left {
   float: left;
+}
+.cc-required-field-indicator {
+  color: $cc-color-red;
 }
 .cc-right {
   float: right;
