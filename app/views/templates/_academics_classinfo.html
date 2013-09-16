@@ -48,11 +48,11 @@
             </table>
           </div>
 
-          <h3>Class Info</h3>
+          <h3 data-ng-show="selected_course_count_schedules || selected_course.units || selected_course.grade_option">Class Info</h3>
 
-          <h4>Course Offering</h4>
+          <h4 data-ng-hide="is_instructor_gsi">Course Offering</h4>
 
-          <div class="cc-table">
+          <div data-ng-hide="is_instructor_gsi" class="cc-table">
             <table>
               <tbody>
                 <tr>
