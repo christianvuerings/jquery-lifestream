@@ -91,7 +91,7 @@
         <div class="cc-widget-padding">
           <div data-ng-repeat="section in selected_course.sections">
             <h3 data-ng-bind="section.section_label"></h3>
-            <ul>
+            <ul class="cc-academics-instructors">
               <li data-ng-repeat="instructor in section.instructors">
                 <a data-ng-href="https://calnet.berkeley.edu/directory/details.pl?uid={{instructor.uid}}" data-ng-bind="instructor.name"></a>
                 <a data-ng-show="instructor.email" title="Email {{instructor.name}}" data-ng-href="mailto:{{instructor.email}}">
