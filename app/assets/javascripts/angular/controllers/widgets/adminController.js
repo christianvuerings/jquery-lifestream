@@ -17,7 +17,7 @@
       }
 
       var user = {
-        uid: $scope.admin.act_as.uid
+        uid: $scope.admin.act_as.uid + ''
       };
       $http.post('/act_as', user).success(function() {
         location.reload();
