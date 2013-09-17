@@ -97,7 +97,7 @@ form {
   input {
     background: $cc-color-white;
     font-family: Arial;
-    &[type="text"], &[type="password"] {
+    &[type="text"], &[type="password"], &[type="number"] {
       border: transparent;
       font-size: 12px;
       width: 100%;
