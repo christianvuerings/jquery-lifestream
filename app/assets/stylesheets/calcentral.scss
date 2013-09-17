@@ -76,6 +76,7 @@ h3 {
 
 /* Inset list items */
 ul {
+  list-style-type: none;
   margin: 0;
   padding: 0;
 }
@@ -246,7 +247,6 @@ button {
 }
 
 .cc-button-group {
-  list-style-type: none;
   li {
     float: left;
     margin: 0 0 0 -1px;
@@ -277,7 +277,6 @@ button {
 
 /* List */
 .cc-list-links {
-  list-style-type: none;
   margin: 10px 0;
   a {
     display: block;

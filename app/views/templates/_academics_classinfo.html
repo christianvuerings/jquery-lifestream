@@ -57,8 +57,8 @@
               <tbody>
                 <tr>
                   <th scope="row" width="25%">Units</th>
-                  <td data-ng-show="selected_course.units" data-ng-bind="selected_course.units"></td>
-                  <td data-ng-show="!selected_course.units | number:1">--</td>
+                  <td data-ng-show="selected_course.units" data-ng-bind="selected_course.units  | number:1"></td>
+                  <td data-ng-show="!selected_course.units">--</td>
                 </tr>
                 <tr data-ng-show="selected_course.grade_option">
                   <th scope="row">Grading</th>
