@@ -71,7 +71,6 @@
                 </thead>
                 <tbody data-ng-repeat="course in waitlisted_courses">
                   <tr data-ng-repeat="section in course.sections">
-                    {{section}}
                     <td>
                       <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.slug}}"
                          data-ng-bind="course.course_number">
