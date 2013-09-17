@@ -7,7 +7,12 @@ class MyAcademics::Requirements
     profile_feed = profile_proxy.get
     return data if profile_feed.nil?
 
-    doc = Nokogiri::XML profile_feed[:body]
+    begin
+      doc = Nokogiri::XML(profile_feed[:body], &:strict)
+    rescue Nokogiri::XML::SyntaxError
+      #Will only get here on >400 errors, which are already logged
+      return data
+    end
 
     requirements = []
     req_nodes = doc.css("underGradReqProfile")

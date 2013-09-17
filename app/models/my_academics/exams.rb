@@ -3,15 +3,21 @@ class MyAcademics::Exams
   include MyAcademics::AcademicsModule
   include DatedFeed
 
-  def merge(data)
+  def merge(data = {})
     proxy = BearfactsExamsProxy.new({:user_id => @uid})
     feed = proxy.get
 
     #Bearfacts proxy will return nil on >= 400 errors.
-    return {} if feed.nil?
+    return data if feed.nil?
 
     exams = []
-    doc = Nokogiri::XML feed[:body]
+    begin
+      doc = Nokogiri::XML(feed[:body], &:strict)
+    rescue Nokogiri::XML::SyntaxError
+      #Will only get here on >400 errors, which are already logged
+      return data
+    end
+
     return data unless (matches_current_year_term? doc.css("studentFinalExamSchedules"))
 
     doc.css("studentFinalExamSchedule").each do |exam|
