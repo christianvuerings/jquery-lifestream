@@ -9,7 +9,9 @@ jobs:
 
 queues:
   /queues/warmup_request:
+  /queues/feed_changed:
 
 messaging:
   /queues/warmup_request: HotPlate
-  default_message_encoding: text
+  /queues/feed_changed: FeedChangedSubscriber
+
