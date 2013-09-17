@@ -38,6 +38,12 @@
   ul {
     margin-left: 35px;
   }
+  .cc-table-right {
+    text-align: right;
+  }
+  .cc-table-right-spacing {
+    padding-right: 5%;
+  }
   @media only screen and (max-width: 767px) {
     overflow: auto;
   }

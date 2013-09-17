@@ -30,7 +30,7 @@
                 <th scope="col">Course Number</th>
                 <th scope="col">Title</th>
                 <th scope="col">Grade Option</th>
-                <th scope="col">Units</th>
+                <th class="cc-table-right" scope="col">Units</th>
               </thead>
               <tbody data-ng-show="selected_courses.length" data-ng-repeat="course in enrolled_courses">
                 <tr>
@@ -41,7 +41,7 @@
                   </td>
                   <td data-ng-bind="course.title"></td>
                   <td data-ng-bind="course.grade_option"></td>
-                  <td data-ng-bind="course.units | number:1"></td>
+                  <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
 
                 </tr>
                 <tr data-ng-repeat="section in course.sections">
@@ -124,13 +124,13 @@
               <table>
                 <thead>
                   <th scope="col" width="60%">Class</th>
-                  <th scope="col">Units</th>
+                  <th scope="col" class="cc-table-right cc-table-right-spacing">Units</th>
                   <th scope="col">Grade</th>
                 </thead>
                 <tbody>
                   <tr data-ng-repeat="course in selected_courses">
                     <td data-ng-bind="course.course_number"></td>
-                    <td data-ng-bind="course.units" data-ng-show="course.units"></td>
+                    <td class="cc-table-right cc-table-right-spacing" data-ng-bind="course.units | number:1" data-ng-show="course.units"></td>
                     <td data-ng-show="!course.units">--</td>
                     <td>
                       <select

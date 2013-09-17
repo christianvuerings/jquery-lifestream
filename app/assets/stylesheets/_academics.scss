@@ -132,12 +132,14 @@
     margin-bottom: 5px;
   }
   .cc-academics-semester {
-    margin: 0 20px 20px 0;
+    float: left;
+    padding: 0 20px 20px 0;
+    width: 50%;
     > div {
       border: 1px solid $cc-color-list-border;
+      min-height: 150px;
       overflow-x: auto;
       padding: 10px;
-      width: 50%;
     }
     h3 {
       font-size: 14px;
@@ -149,9 +151,9 @@
   }
   .cc-academics-semester-current {
     font-size: 100%;
+    width: 100%;
     > div {
       background: $cc-color-blue-hover;
-      width: 100%;
     }
     h3 {
       font-size: 18px;
