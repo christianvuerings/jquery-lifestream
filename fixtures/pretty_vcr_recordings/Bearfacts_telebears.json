@@ -1,0 +1,58 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/11667051/reg/appointments",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "server": [
+            "ngx_openresty/1.2.8.6"
+          ],
+          "date": [
+            "Wed, 18 Sep 2013 20:20:27 GMT"
+          ],
+          "content-type": [
+            "application/xml"
+          ],
+          "content-length": [
+            "701"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "keep-alive": [
+            "timeout=20"
+          ],
+          "x-3scale-proxy-secret-token": [
+            "Shared_secret_sent_from_proxy_to_API_backend"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<telebearsAppointment asOfDate=\"September 18, 2013 12:00 AM\" termName=\"Fall\" termYear=\"2013\" xmlns=\"urn:berkeley.edu/babl\">\n  <telebearsAppointmentPhase>\n    <period>I</period>\n    <startDate>Monday    04/08/13 09:30 AM</startDate>\n    <endDate>Tuesday   04/09/13 09:30 AM</endDate>\n  </telebearsAppointmentPhase>\n  <telebearsAppointmentPhase>\n    <period>II</period>\n    <startDate>Tuesday   07/09/13 09:00 AM</startDate>\n    <endDate>Wednesday 07/10/13 09:00 AM</endDate>\n  </telebearsAppointmentPhase>\n  <eligRegStatusCode>C</eligRegStatusCode>\n  <ugGradFlag>U</ugGradFlag>\n  <authReleaseCode>A</authReleaseCode>\n  <collegeCdPrimary>16</collegeCdPrimary>\n  <majorCdPrimary>300</majorCdPrimary>\n</telebearsAppointment>\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Wed, 18 Sep 2013 20:20:27 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}
