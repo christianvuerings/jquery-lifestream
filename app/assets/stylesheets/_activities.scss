@@ -16,10 +16,9 @@
         border-bottom: none;
       }
     }
-  }
-
-  .cc-widget-activities-activity {
-    border-bottom: 1px solid $cc-color-light-grey;
+    li.cc-widget-activities-list-undated {
+      border-bottom: 2px solid $cc-color-shadow-color;
+    }
   }
 
   .cc-widget-activities-sub-activity-container {

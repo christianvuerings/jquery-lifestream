@@ -25,6 +25,7 @@
         announcement: 'bullhorn',
         assignment: 'book',
         discussion: 'comments',
+        financial: 'usd',
         grade_posting: 'trophy',
         message: 'ok-sign',
         webconference: 'facetime-video'
@@ -88,6 +89,9 @@
           return original_source.filter(function(value, index, arr) {
             // the multiElementArray stores arrays of multiElementSource for
             // items captured by the filter below.
+            if (!value.date) {
+              return false;
+            }
             var multiElementSource = original_source.filter(function(sub_value, sub_index) {
               return ((sub_index !== index) &&
                 (sub_value.source === value.source) &&
@@ -125,10 +129,26 @@
           });
         };
 
+        var undated_results = source.filter(function(value) {
+          return !value.date;
+        }).sort(function(a, b) {
+          var a_title = a.title.toLowerCase();
+          var b_title = b.title.toLowerCase();
+          if (a_title === b_title) {
+            return 0;
+          }
+          return (a_title > b_title) ? 1 : -1;
+        });
+        if (undated_results && undated_results.length) {
+          undated_results[undated_results.length - 1].is_last_undated = true;
+        }
+
         var result = spliceMultiSourceElements(source);
         multiElementArray = processMultiElementArray(multiElementArray);
 
-        return result.concat(multiElementArray).sort(sortFunction);
+        var dated_results = result.concat(multiElementArray).sort(sortFunction);
+
+        return undated_results.concat(dated_results);
       };
 
       $scope.activities = {
