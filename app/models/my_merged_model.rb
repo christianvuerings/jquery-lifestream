@@ -1,5 +1,5 @@
 class MyMergedModel
-  include ActiveAttr::Model,ClassLogger
+  include ActiveAttr::Model, ClassLogger
   extend Calcentral::Cacheable
 
   def initialize(uid, options={})
@@ -59,15 +59,6 @@ class MyMergedModel
 
   def is_acting_as_nonfake_user?
     @original_uid && @uid != @original_uid && !UserAuth.is_test_user?(@uid)
-  end
-
-  def self.inherited(subclass)
-    @subclasses ||= {}
-    @subclasses[subclass.name] = subclass
-  end
-
-  def self.subclasses
-    @subclasses
   end
 
 end

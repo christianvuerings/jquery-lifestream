@@ -35,18 +35,20 @@ module Calcentral
       USER_CACHE_EXPIRATION.add_observer(key, value)
     end
 
-    merged_feeds = {
-      UserApi => :expire,
-      MyClasses => :expire,
-      MyGroups => :expire,
-      MyActivities::Merged => :expire,
-      MyTasks::Merged => :expire,
-      MyBadges::Merged => :expire,
-      MyUpNext => :expire
-    }
-    merged_feeds.each do |key, value|
-      USER_CACHE_EXPIRATION.add_observer(key, value)
-      MERGED_FEEDS_EXPIRATION.add_observer(key, value)
+    merged_feeds_array = [
+      UserApi,
+      MyClasses,
+      MyGroups,
+      MyActivities::Merged,
+      MyTasks::Merged,
+      MyBadges::Merged,
+      MyUpNext
+    ]
+    MERGED_FEEDS = {}
+    merged_feeds_array.each do |feed|
+      USER_CACHE_EXPIRATION.add_observer(feed, :expire)
+      MERGED_FEEDS_EXPIRATION.add_observer(feed, :expire)
+      MERGED_FEEDS[feed.name] = feed
     end
 
     #Pseudo-prefix constant

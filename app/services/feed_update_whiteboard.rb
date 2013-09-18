@@ -4,10 +4,18 @@ class FeedUpdateWhiteboard < TorqueBox::Messaging::MessageProcessor
   extend Calcentral::Cacheable
 
   def on_message(body)
-    logger.debug "Got TorqueBox message: body = #{body.inspect}, message = #{message.inspect}"
+    unless body && body[:feed]
+      logger.debug "Got empty TorqueBox message; skipping"
+      return
+    end
     feed_name = body[:feed]
-    feed_class = MyMergedModel.subclasses[feed_name]
+    feed_class = Calcentral::MERGED_FEEDS[feed_name]
+    unless feed_class
+      logger.error "Got TorqueBox message but can't determine its origin feed class: body = #{body.inspect}, message = #{message.inspect}"
+      return
+    end
 
+    logger.debug "Processing TorqueBox message: body = #{body.inspect}, message = #{message.inspect}"
     uid = body[:uid]
     whiteboard = self.class.get_whiteboard(uid)
     last_updated = feed_class.get_last_modified(uid)
