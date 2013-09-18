@@ -29,6 +29,11 @@
 
     <!-- Included JS Files  -->
     <%= javascript_include_tag "application" %>
+
+    <!-- Base 64 encoding for IE9 -->
+    <!--[if lte IE 9]>
+    <script src="https://rawgithub.com/davidchambers/Base64.js/master/base64.js"></script>
+    <![endif]-->
   <% end %>
   <%= csrf_meta_tags %>
 </head>
