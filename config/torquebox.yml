@@ -13,5 +13,5 @@ queues:
 
 messaging:
   /queues/warmup_request: HotPlate
-  /queues/feed_changed: FeedChangedSubscriber
+  /queues/feed_changed: FeedUpdateWhiteboard
 

@@ -30,13 +30,9 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     'HotPlate/Server'
   end
 
-  def self.queue
-    @queue ||= TorqueBox::Messaging::Queue.new('/queues/warmup_request')
-  end
-
   def self.warmup_request(uid)
     Rails.cache.fetch("HotPlate/WarmupRequestRateLimiter-#{uid}", :expires_in => 2.minutes) do
-      self.queue.publish uid
+      Calcentral::Messaging.publish('/queues/warmup_request', uid)
       true
     end
   end

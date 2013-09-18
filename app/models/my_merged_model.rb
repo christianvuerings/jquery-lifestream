@@ -19,7 +19,7 @@ class MyMergedModel
     uid = @uid
     uid = Calcentral::PSEUDO_USER_PREFIX + @uid if is_acting_as_nonfake_user?
 
-    last_modified = get_last_modified uid
+    last_modified = self.class.get_last_modified uid
     old_hash = last_modified[:hash]
     Rails.logger.info "Last_modified = #{last_modified.inspect}"
 
@@ -31,8 +31,9 @@ class MyMergedModel
       last_modified[:hash] = Digest::SHA1.hexdigest(feed.to_json)
       Rails.logger.info "Last_modified key = #{self.class.last_modified_cache_key(uid)} just before writing: #{last_modified.inspect}"
       if old_hash != last_modified[:hash]
-        Rails.logger.info "Last_modified hash has changed, sending feed changed message"
-        self.class.queue.publish({:feed => self.class.name, :uid => uid})
+        feed_name = self.class.name.to_s
+        Rails.logger.info "Last_modified hash has changed, sending feed changed message for #{feed_name}, uid #{uid}"
+        Calcentral::Messaging.publish('/queues/feed_changed', {:feed => feed_name, :uid => uid})
       end
 
       Rails.cache.write(self.class.last_modified_cache_key(uid), last_modified, :expires_in => 28.days)
@@ -40,8 +41,8 @@ class MyMergedModel
     end
   end
 
-  def get_last_modified(uid)
-    Rails.cache.fetch(self.class.last_modified_cache_key(uid), :expires_in => 28.days) do
+  def self.get_last_modified(uid)
+    Rails.cache.fetch(self.last_modified_cache_key(uid), :expires_in => 28.days) do
       {
         :hash => '',
         :timestamp => 0
@@ -61,8 +62,13 @@ class MyMergedModel
     @original_uid && @uid != @original_uid && !UserAuth.is_test_user?(@uid)
   end
 
-  def self.queue
-    @queue ||= TorqueBox::Messaging::Queue.new('/queues/feed_changed')
+  def self.inherited(subclass)
+    @subclasses ||= {}
+    @subclasses[subclass.name] = subclass
+  end
+
+  def self.subclasses
+    @subclasses
   end
 
 end
