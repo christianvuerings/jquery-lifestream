@@ -203,3 +203,6 @@ features:
   user_whitelist: false
   academic_status: false
   my_fin_aid: false
+
+messaging:
+  enabled: true
