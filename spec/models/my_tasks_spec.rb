@@ -163,10 +163,6 @@ describe "MyTasks" do
     GoogleUpdateTaskProxy.stub(:new).and_return(@fake_google_update_task_proxy)
     my_tasks = MyTasks::Merged.new @user_id
     Rails.cache.should_receive(:fetch).with(MyTasks::Merged.cache_key(@user_id), anything())
-    Rails.cache.should_receive(:fetch).with(MyTasks::Merged.last_modified_cache_key(@user_id), {:expires_in => 28.days}).and_return({
-                                                                                                                                      :hash => '',
-                                                                                                                                      :timestamp => 0
-                                                                                                                                    })
     my_tasks.get_feed
     task_list_id, task_id = get_task_list_id_and_task_id
     Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key(@user_id), anything())

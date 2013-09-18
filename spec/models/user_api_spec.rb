@@ -127,7 +127,6 @@ describe "UserApi" do
   context "proper cache handling" do
     it "should cache the feed" do
       UserApi.should_receive(:fetch_from_cache).with(@random_id)
-      Rails.cache.should_receive(:fetch).with(UserApi.last_modified_cache_key(@random_id), {:expires_in=>28.days}).and_return({:timestamp => 1234, :hash => "foo"})
       UserApi.new(@random_id).get_feed
     end
 
