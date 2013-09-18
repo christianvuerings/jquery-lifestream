@@ -54,4 +54,20 @@ describe "MyAcademics::Exams" do
     
     feed[:exam_schedule].should be_nil
   end
+
+  context "failing bearfacts proxy" do
+    before(:each) do
+      stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
+      BearfactsProfileProxy.new({:user_id => "212381", :fake => false})
+    end
+    after(:each) { WebMock.reset! }
+
+    subject do
+      MyAcademics::Exams.new("212381").merge(@feed = {})
+      @feed
+    end
+
+    it { should be_blank }
+
+  end
 end

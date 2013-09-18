@@ -14,7 +14,15 @@ class MyRegBlocks < MyMergedModel
     active_blocks = []
     inactive_blocks = []
 
-    doc = Nokogiri::XML blocks_feed[:body]
+    begin
+      doc = Nokogiri::XML(blocks_feed[:body], &:strict)
+    rescue Nokogiri::XML::SyntaxError
+      #Will only get here on >400 errors, which are already logged
+      return {
+        available: false,
+      }
+    end
+
     doc.css("studentRegistrationBlock").each do |block|
       blocked_date = cleared_date = nil
       begin

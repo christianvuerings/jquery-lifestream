@@ -21,4 +21,14 @@ describe "BearfactsProfileProxy" do
     xml.should_not be_nil
   end
 
+  context "connection failure" do
+    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH) }
+    after(:each) { WebMock.reset! }
+
+    subject { BearfactsProfileProxy.new({:user_id => "61889", :fake => false}).get }
+
+    it { subject[:body].should eq("Remote server unreachable") }
+    it { subject[:status_code].should be > 500 }
+  end
+
 end

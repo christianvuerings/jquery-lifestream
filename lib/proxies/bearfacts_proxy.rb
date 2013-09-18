@@ -57,7 +57,7 @@ class BearfactsProxy < BaseProxy
             :body => response.body,
             :status_code => response.status
           }
-        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError, Errno::EHOSTUNREACH => e
           logger.error "Connection failed: #{e.class} #{e.message}"
           {
             :body => "Remote server unreachable",
