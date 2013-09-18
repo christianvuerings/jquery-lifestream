@@ -135,9 +135,7 @@ describe "UserApi" do
       user_api = UserApi.new(@random_id)
       user_api.get_feed
       original_last_modified = UserApi.get_last_modified(@random_id)
-      user_api.get_feed
-      unchanged_last_modified = UserApi.get_last_modified(@random_id)
-      original_last_modified.should == unchanged_last_modified
+
       sleep 1
 
       user_api.preferred_name="New Name"
@@ -147,6 +145,20 @@ describe "UserApi" do
       new_last_modified[:hash].should_not == original_last_modified[:hash]
       new_last_modified[:timestamp].should_not == original_last_modified[:timestamp]
     end
+
+    it "should not update the last modified hash when content hasn't changed" do
+      user_api = UserApi.new(@random_id)
+      user_api.get_feed
+      original_last_modified = UserApi.get_last_modified(@random_id)
+
+      sleep 1
+
+      Calcentral::USER_CACHE_EXPIRATION.notify @random_id
+      user_api.get_feed
+      unchanged_last_modified = UserApi.get_last_modified(@random_id)
+      original_last_modified.should == unchanged_last_modified
+    end
+
   end
 
   context "valid regblocks" do
