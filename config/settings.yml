@@ -65,7 +65,7 @@ canvas_proxy:
       term_cd: "D"
     }
   ]
-  mixed_sis_user_id: false
+  mixed_sis_user_id: true
 google_proxy:
   client_id: 1
   client_secret: 'someMumboJumbo'
