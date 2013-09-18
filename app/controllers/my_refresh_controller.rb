@@ -28,13 +28,4 @@ class MyRefreshController < ApplicationController
     end
   end
 
-  def warmup_request
-    if session[:user_id]
-      HotPlate.warmup_request session[:user_id]
-      render :nothing => true, :status => 204
-    else
-      render :nothing => true, :status => 401
-    end
-  end
-
 end

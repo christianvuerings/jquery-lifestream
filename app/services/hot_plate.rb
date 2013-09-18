@@ -38,7 +38,6 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def on_message(body)
-    logger.debug "Got TorqueBox message: body = #{body.inspect}, message = #{message.inspect}"
     unless body.blank?
       warmup_merged_feeds body
     end
@@ -115,6 +114,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def warmup_merged_feeds(uid)
+    logger.debug "Warming up merged feeds for uid #{uid}"
     Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid

@@ -51,6 +51,19 @@ module Calcentral
       MERGED_FEEDS[feed.name] = feed
     end
 
+    # TODO to allow us to back out CLC-2512 and preserve the old behavior, this list is separate.
+    # Combine the 2 lists of merged feeds once CLC-2512 and the whole live update experience
+    # are safely launched to the public.
+    merged_feeds_not_expired_by_old_refresh = [
+      CanvasUserSites,
+      MyAcademics::Merged,
+      MyRegBlocks
+    ]
+    merged_feeds_not_expired_by_old_refresh.each do |feed|
+      MERGED_FEEDS_EXPIRATION.add_observer(feed, :expire)
+      MERGED_FEEDS[feed.name] = feed
+    end
+
     #Pseudo-prefix constant
     PSEUDO_USER_PREFIX = "pseudo_"
 
