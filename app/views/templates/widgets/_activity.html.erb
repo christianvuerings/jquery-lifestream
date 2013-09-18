@@ -15,60 +15,63 @@
 
   <div data-cc-spinner-directive>
     <ul class="cc-widget-activities-list">
-      <li data-ng-repeat="activity in activities.list | filter:search" data-ng-class="{'cc-widget-list-selected': activity._show}">
+      <li data-ng-repeat="activity in activities.list | filter:search" data-ng-class="{'cc-widget-list-selected': activity._show, 'cc-widget-activities-list-undated': activity.is_last_undated}">
         <div class="cc-widget-list-hover"
           data-ng-class="{'cc-widget-list-hover-opened':(activity._show)}"
           data-cc-accessible-focus-directive
           data-ng-click="api.widget.toggleShow($event, activities.list, activity, 'Recent Activity')">
-            <div>
-              <div class="cc-widget-activities-text-column">
-                <i class="icon-{{activities.typeToIcon[activity.type]}} cc-left"></i>
-                <div class="cc-widget-activities-text-margin">
-                  <strong>{{activity.title}}</strong>
-                  <div>{{activity.source}}, {{activity.date.epoch * 1000 | cc.dateInYear:'MMM d':'MMM d yyyy'}}</div>
+          <div>
+            <div class="cc-widget-activities-text-column">
+              <i class="icon-{{activities.typeToIcon[activity.type]}} cc-left"></i>
+              <div class="cc-widget-activities-text-margin">
+                <strong>{{activity.title}}</strong>
+                <div>
+                  {{activity.source}}
+                  <span data-ng-show="activity.date">, {{activity.date.epoch * 1000 | cc.dateInYear:'MMM d':'MMM d yyyy'}}</span>
                 </div>
               </div>
             </div>
-            <div class="cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity._show && !activity.elements">
-              <div data-ng-switch="activity.emitter">
-                <p data-ng-switch-when="BearFacts" data-cc-compile-directive="activity.summary" class="cc-widget-activities-summary"></p>
-                <p data-ng-switch-default data-ng-bind-html="activity.summary | linky" class="cc-widget-activities-summary"></p>
-              </div>
-              <a class="cc-button" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)" data-ng-href="{{activity.source_url}}">
-                View in {{activity.emitter}}
-                <span class="cc-visuallyhidden">View more info about {{ activity.title }} in {{ activity.source }}</span>
-              </a>
-            </div>
-            <div class="cc-widget-activities-sub-text-margin cc-widget-tasks-activities-more" data-ng-show="activity._show && activity.elements">
-              <ul class="cc-widget-activities-sub-activity-list">
-                <li data-ng-repeat="sub_activity in activity.elements" class="cc-widget-activities-sub-activity-container">
-                  <div class="cc-widget-list-hover cc-widget-list-hover-notriangle"
-                    data-cc-accessible-focus-directive
-                    data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, activity.elements, sub_activity, 'Recent Threaded Activity')">
-                    <div class="cc-widget-activities-sub-activity" data-ng-class="{'cc-widget-activities-sub-activity-closed': !sub_activity._show, 'cc-widget-activities-sub-activity-open': sub_activity._show}">
-                      {{sub_activity.title}}
-                    </div>
-                    <div class="cc-widget-activities-sub-activity-more" data-ng-show="sub_activity._show">
-                      <div class="cc-widget-activities-sub-activity-date-string">
-                        at {{sub_activity.date.epoch * 1000 | date:'h:mma'}}
-                      </div>
-                      <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="sub_activity.summary | linky">
-                      </p>
-                      <a class="cc-button" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', sub_activity.source, sub_activity.source_url)" data-ng-href="{{sub_activity.source_url}}">
-                        View in {{sub_activity.emitter}}
-                        <span class="cc-visuallyhidden">View more info about {{ sub_activity.title }} in {{ sub_activity.source }}</span>
-                      </a>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </div>
-        </li>
-      </ul>
+          <div class="cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity._show && !activity.elements">
+            <div data-ng-switch="activity.emitter">
+              <p data-ng-switch-when="BearFacts" data-cc-compile-directive="activity.summary" class="cc-widget-activities-summary"></p>
+              <p data-ng-switch-default data-ng-bind-html="activity.summary | linky" class="cc-widget-activities-summary"></p>
+            </div>
+            <a class="cc-button" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)" data-ng-href="{{activity.source_url}}">
+              View in {{activity.emitter}}
+              <span class="cc-visuallyhidden">View more info about {{ activity.title }} in {{ activity.source }}</span>
+            </a>
+          </div>
+          <div class="cc-widget-activities-sub-text-margin cc-widget-tasks-activities-more" data-ng-show="activity._show && activity.elements">
+            <ul class="cc-widget-activities-sub-activity-list">
+              <li data-ng-repeat="sub_activity in activity.elements" class="cc-widget-activities-sub-activity-container">
+                <div class="cc-widget-list-hover cc-widget-list-hover-notriangle"
+                  data-cc-accessible-focus-directive
+                  data-ng-click="api.util.preventBubble($event);api.widget.toggleShow($event, activity.elements, sub_activity, 'Recent Threaded Activity')">
+                  <div class="cc-widget-activities-sub-activity" data-ng-class="{'cc-widget-activities-sub-activity-closed': !sub_activity._show, 'cc-widget-activities-sub-activity-open': sub_activity._show}">
+                    {{sub_activity.title}}
+                  </div>
+                  <div class="cc-widget-activities-sub-activity-more" data-ng-show="sub_activity._show">
+                    <div class="cc-widget-activities-sub-activity-date-string">
+                      at {{sub_activity.date.epoch * 1000 | date:'h:mma'}}
+                    </div>
+                    <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="sub_activity.summary | linky">
+                    </p>
+                    <a class="cc-button" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', sub_activity.source, sub_activity.source_url)" data-ng-href="{{sub_activity.source_url}}">
+                      View in {{sub_activity.emitter}}
+                      <span class="cc-visuallyhidden">View more info about {{ sub_activity.title }} in {{ sub_activity.source }}</span>
+                    </a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+    </ul>
 
-      <div data-ng-show="!activities.length" class="cc-widget-text">
-        You have no recent activity at this time.
-      </div>
+    <div data-ng-show="!activities.length" class="cc-widget-text">
+      You have no recent activity at this time.
     </div>
   </div>
+</div>

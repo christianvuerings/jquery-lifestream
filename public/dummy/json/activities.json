@@ -95,7 +95,7 @@
       "title": "November CARS bill Posted",
       "summary": "Your November CARS bill of $987 is due by October 22",
       "source": "Student Billing",
-      "type": "finances",
+      "type": "financial",
       "date": {
         "epoch": 1348185901,
         "date_time": "2013-12-28T19:52:27+00:00",
@@ -140,16 +140,71 @@
       "id": 8,
       "title": "Incomplete Emergency Loan Application Notice",
       "summary": "Your Loan Promissory Note has not been submitted with a signature",
-      "source": "MyFinAid",
-      "type": "finances",
+      "source": "Financial Aid",
+      "type": "message",
       "date": {
         "epoch": 1348185901,
         "date_time": "2013-12-02T19:52:27+00:00",
         "date_string": "12/2"
       },
       "source_url": "http://example.com",
-      "emitter": "bSpace",
-      "color_class": "bspace-group"
+      "emitter": "Financial Aid",
+      "color_class": "myfinaid-class"
+    },
+    {
+      "id": "",
+      "title": "Admission Process Incomplete (transcript received, not reviewed)",
+      "summary": "The Admissions Office has received, but not yet completed the review of your high school transcript.  This review must be completed and your high school graduation, or equivalent, verified before you can receive any federal aid.  Contact the Admissions Office to resolve this matter.",
+      "source": "Financial Aid",
+      "type": "alert",
+      "date": "",
+      "source_url": "",
+      "emitter": "Financial Aid",
+      "color_class": "myfinaid-class"
+    },
+    {
+      "id": "",
+      "title": "Units less than half-time for fall - Cal Grant",
+      "summary": "Your Cal Grant cannot pay until you are enrolled at least half-time for the fall semester.",
+      "source": "Financial Aid",
+      "type": "alert",
+      "date": "",
+      "source_url": "",
+      "emitter": "Financial Aid",
+      "color_class": "myfinaid-class"
+    },
+    {
+      "id": "",
+      "title": "Units less than half-time for spring - Cal Grant",
+      "summary": "Your Cal Grant cannot pay until you are enrolled at least half-time for the spring semester.",
+      "source": "Financial Aid",
+      "type": "alert",
+      "date": "",
+      "source_url": "",
+      "emitter": "Financial Aid",
+      "color_class": "myfinaid-class"
+    },
+    {
+      "id": "",
+      "title": "Units less than half-time for fall - DL",
+      "summary": "Your Direct Loan will not pay until you are enrolled at least half-time for the fall semester.",
+      "source": "Financial Aid",
+      "type": "alert",
+      "date": "",
+      "source_url": "",
+      "emitter": "Financial Aid",
+      "color_class": "myfinaid-class"
+    },
+    {
+      "id": "",
+      "title": "Berkeley Middle Class Access Plan (MCAP)",
+      "summary": "You are eligible for the Berkeley Middle Class Access Plan (MCAP).  Your Federal Parent Contribution is already lower than the MCAP limit of 15% of your total income, and your awards reflect this best option. To learn more about the Berkeley Middle Class Access Plan, please follow the link to the right.",
+      "source": "Financial Aid",
+      "type": "alert",
+      "date": "",
+      "source_url": "http://students.berkeley.edu/finaid/undergraduates/types_mcap.htm",
+      "emitter": "Financial Aid",
+      "color_class": "myfinaid-class"
     }
   ]
 }
