@@ -45,14 +45,29 @@ describe MyActivities::MyFinAid do
     end
 
     it { should_not be_blank }
-    it { subject.length.should eq(5) }
+    it { subject.length.should eq(11) }
     it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
     it { subject.each { |entry| entry[:title].should be_present } }
-    it { subject.each { |entry| entry[:summary].should be_present } }
     it { subject.each { |entry| entry[:source].should eq("Financial Aid") } }
-    it "diagnotic messages have no dates" do
-      alerts = subject.select { |entry| entry[:type] == "alert" }
-      alerts.each { |entry| entry[:date].should be_blank }
+
+    context "alert types" do
+      subject do
+        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        @activities.select { |entry| entry[:type] == "alert" }
+      end
+
+      it { subject.length.should eq(6) }
+      it { subject.each { |entry| entry[:date].should be_blank } }
+    end
+
+    context "financial types" do
+      subject do
+        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        @activities.select { |entry| entry[:type] == "financial" }
+      end
+
+      it { subject.length.should eq(5) }
+      it { subject.each { |entry| entry[:title].should be_present } }
     end
 
   end
