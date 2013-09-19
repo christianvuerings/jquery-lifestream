@@ -238,5 +238,17 @@ describe CampusData do
     CampusData.is_previous_ugrad?("300939").should be_true #ugrad only
   end
 
+  it "should say an instructor has instructional history", if: CampusData.test_data? do
+    CampusData.has_instructor_history?("192517", Settings.sakai_proxy.academic_terms.instructor).should be_true
+  end
+
+  it "should say a student has student history", if: CampusData.test_data? do
+    CampusData.has_student_history?("300939", Settings.sakai_proxy.academic_terms.student).should be_true
+  end
+
+  it "should say a staff member does not have instructional or student history", if: CampusData.test_data? do
+    CampusData.has_instructor_history?("2040", Settings.sakai_proxy.academic_terms.instructor).should be_false
+    CampusData.has_student_history?("2040", Settings.sakai_proxy.academic_terms.student).should be_false
+  end
 
 end

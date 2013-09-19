@@ -63,4 +63,14 @@ describe CampusUserCoursesProxy do
     end
   end
 
+  it "should say that Tammi has student history", :if => SakaiData.test_data? do
+    client = CampusUserCoursesProxy.new({user_id: '300939'})
+    client.has_student_history?.should be_true
+  end
+
+  it "should say that Yu-Hung has instructor history", :if => SakaiData.test_data? do
+    client = CampusUserCoursesProxy.new({user_id: '192517'})
+    client.has_instructor_history?.should be_true
+  end
+
 end
