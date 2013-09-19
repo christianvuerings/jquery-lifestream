@@ -45,7 +45,7 @@ describe MyActivities::MyFinAid do
     end
 
     it { should_not be_blank }
-    it { subject.length.should eq(9) }
+    it { subject.length.should eq(11) }
     it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
     it { subject.each { |entry| entry[:title].should be_present } }
     it { subject.each { |entry| entry[:source].should eq("Financial Aid") } }
@@ -66,7 +66,8 @@ describe MyActivities::MyFinAid do
         @activities.select { |entry| entry[:type] == "financial" }
       end
 
-      it { subject.length.should eq(3) }
+      it { subject.length.should eq(5) }
+      it { subject.each { |entry| entry[:title].should be_present } }
     end
 
   end
