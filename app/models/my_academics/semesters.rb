@@ -29,7 +29,7 @@ class MyAcademics::Semesters
         units = transcript[:transcript_unit] ? transcript[:transcript_unit] : course[:unit]
 
         if course[:pnp_flag].present?
-          grade_option = course[:pnp_flag].upcase == "Y" ? "P/NP" : "Letter"
+          grade_option = course[:pnp_flag].strip == "Y" ? "P/NP" : "Letter"
         else
           Rails.logger.warn "#{self.class.name} - Course #{course[:course_code]} has a empty 'pnp_flag' field: #{course}"
           grade_option = ''
