@@ -26,7 +26,12 @@ class MyActivities::MyFinAid
       summary = document.css("Supplemental Usage Content[Type='TXT']").text.strip
       url = document.css("Supplemental Usage Content[Type='URL']").text.strip
 
-      status = decode_status(date, document.css("Status").text.strip) rescue next
+      begin
+        status = decode_status(date, document.css("Status").text.strip)
+      rescue ArgumentError
+        logger.error "Unable to decode finAid status for document: #{document.inspect} date: #{date.inspect}, status: #{status.inspect}"
+        next
+      end
 
       result = {
         id: '',
@@ -97,8 +102,7 @@ class MyActivities::MyFinAid
         reviewed: true,
       }
     else
-      logger.error "Unable to decode finAid status date: #{date.inspect}, status: #{status.inspect}"
-      raise ArgumentError, "Cannot decode params"
+      raise ArgumentError, "Cannot decode date: #{date} status: #{status}"
     end
   end
 end
