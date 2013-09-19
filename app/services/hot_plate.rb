@@ -62,6 +62,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
+            # TODO CLC-2512 when we are sure Live Updates UX is all done, switch this out and use warmup_merged_feeds instead.
             expire_then_complete_warmup visit.uid
             warmups += 1
           end
