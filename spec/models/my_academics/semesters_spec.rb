@@ -25,6 +25,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       it { subject[0][:time_bucket].should eq 'future'}
       it { subject[0][:classes].length.should eq 1 }
       it { subject[0][:classes][0][:course_number].should eq "BIOLOGY 1A" }
+      it { subject[0][:classes][0][:grade_option].should eq "P/NP" }
       it { subject[0][:classes][0][:sections].length.should eq 1 }
       it { subject[0][:classes][0][:sections][0][:ccn].should eq "7309" }
       it { subject[0][:classes][0][:sections][0][:waitlist_position].should eq "42" }
