@@ -38,9 +38,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def on_message(body)
-    unless body.blank?
-      warmup_merged_feeds body
-    end
+    warmup_merged_feeds body unless body.blank?
   end
 
   def on_error(exception)

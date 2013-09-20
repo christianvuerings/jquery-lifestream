@@ -161,17 +161,15 @@ cache:
     CanvasCourseTeachersProxy: <%= 5.minutes %>
     MyRegBlocks: 0
 
-    CampusUserCoursesProxy: <%= 24.hours %>
-
     CanvasUserSites: 0
-    CanvasUserCoursesProxy: <%= 2.hours %>
-    CanvasGroupsProxy: <%= 2.hours %>
+    CanvasUserCoursesProxy: <%= 30.minutes %>
+    CanvasGroupsProxy: <%= 30.minutes %>
     CanvasUserActivityStreamProxy: <%= 10.minutes %>
     CanvasTodoProxy: <%= 20.minutes %>
     CanvasUpcomingEventsProxy: <%= 20.minutes %>
 
-    SakaiUserSitesProxy: <%= 4.hours %>
-    SakaiSiteAnnouncementsProxy: <%= 2.hours %>
+    SakaiUserSitesProxy: <%= 30.minutes %>
+    SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
 
     MyBadges::GoogleCalendar: <%= 2.minutes %>
     MyBadges::GoogleDrive: <%= 10.minutes %>

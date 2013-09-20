@@ -8,6 +8,10 @@ class CampusUserCoursesProxy < BaseProxy
     @uid = @settings.fake_user_id if @fake
   end
 
+  def self.expires_in
+    self.bearfacts_derived_expiration
+  end
+
   def self.access_granted?(uid)
     !uid.blank?
   end

@@ -13,6 +13,10 @@ class CampusCourseSectionsProxy < BaseProxy
     "global/#{self.name}/#{section_id}"
   end
 
+  def self.expires_in
+    self.bearfacts_derived_expiration
+  end
+
   def get_section_data
     self.class.fetch_from_cache @section_id do
       feed = {}
