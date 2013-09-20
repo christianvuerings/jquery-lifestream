@@ -7,6 +7,10 @@
         restrict: 'A',
         link: function(scope, elm) {
 
+          if (!scope || !scope.exam || !scope.exam.location) {
+            return;
+          }
+
           // building_link_name is used in the location name handed to Google Maps.
           // Need to pre-process in case it includes special chars. We are guaranteed
           // to have a raw building name, but not a pretty display name
