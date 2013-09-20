@@ -124,6 +124,42 @@ describe "UserApi" do
     UserApi.is_allowed_to_log_in?("212390").should be_false
   end
 
+  context "proper cache handling" do
+    it "should cache the feed" do
+      UserApi.should_receive(:fetch_from_cache).with(@random_id)
+      UserApi.new(@random_id).get_feed
+    end
+
+    it "should update the last modified hash when content changes" do
+      user_api = UserApi.new(@random_id)
+      user_api.get_feed
+      original_last_modified = UserApi.get_last_modified(@random_id)
+
+      sleep 1
+
+      user_api.preferred_name="New Name"
+      user_api.save
+      user_api.get_feed
+      new_last_modified = UserApi.get_last_modified(@random_id)
+      new_last_modified[:hash].should_not == original_last_modified[:hash]
+      new_last_modified[:timestamp].should_not == original_last_modified[:timestamp]
+    end
+
+    it "should not update the last modified hash when content hasn't changed" do
+      user_api = UserApi.new(@random_id)
+      user_api.get_feed
+      original_last_modified = UserApi.get_last_modified(@random_id)
+
+      sleep 1
+
+      Calcentral::USER_CACHE_EXPIRATION.notify @random_id
+      user_api.get_feed
+      unchanged_last_modified = UserApi.get_last_modified(@random_id)
+      original_last_modified.should == unchanged_last_modified
+    end
+
+  end
+
   context "valid regblocks" do
     let! (:oski_blocks_proxy) { BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true}) }
     before do

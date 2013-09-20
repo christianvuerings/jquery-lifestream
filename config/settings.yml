@@ -159,7 +159,27 @@ cache:
     CanvasLti: <%= 5.minutes %>
     CanvasCourseStudentsProxy: <%= 15.minutes %>
     CanvasCourseTeachersProxy: <%= 5.minutes %>
-    MyRegBlocks: <%= 10.minutes %>
+    MyRegBlocks: 0
+
+    CanvasUserSites: 0
+    CanvasUserCoursesProxy: <%= 30.minutes %>
+    CanvasGroupsProxy: <%= 30.minutes %>
+    CanvasUserActivityStreamProxy: <%= 10.minutes %>
+    CanvasTodoProxy: <%= 20.minutes %>
+    CanvasUpcomingEventsProxy: <%= 20.minutes %>
+
+    SakaiUserSitesProxy: <%= 30.minutes %>
+    SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
+
+    MyBadges::GoogleCalendar: <%= 2.minutes %>
+    MyBadges::GoogleDrive: <%= 10.minutes %>
+    MyBadges::GoogleMail: <%= 2.minutes %>
+
+    CalLinkMembershipsProxy: <%= 4.hours %>
+    CalLinkOrganizationProxy: <%= 4.hours %>
+
+    GoogleTasksListProxy: <%= 10.minutes %>
+    GoogleEventsListProxy: <%= 2.minutes %>
 
 # Cache warmer settings
 cache_warmer:
@@ -203,3 +223,6 @@ features:
   user_whitelist: false
   academic_status: false
   my_fin_aid: false
+
+messaging:
+  enabled: true

@@ -28,19 +28,4 @@ class MyRefreshController < ApplicationController
     end
   end
 
-  def warmup_request
-    if session[:user_id]
-      self.class.queue.publish(session[:user_id], {:encoding => :text})
-      render :nothing => true, :status => 204
-    else
-      render :nothing => true, :status => 401
-    end
-  end
-
-  private
-
-  def self.queue
-    @queue ||= TorqueBox::Messaging::Queue.new('/queues/warmup_request')
-  end
-
 end

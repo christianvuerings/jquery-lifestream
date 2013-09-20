@@ -9,6 +9,15 @@ jobs:
 
 queues:
   /queues/warmup_request:
+    durable: false
+  /queues/feed_changed:
+    durable: false
 
 messaging:
-  /queues/warmup_request: WarmupRequestSubscriber
+  /queues/warmup_request:
+    HotPlate:
+      concurrency: 1
+  /queues/feed_changed:
+    FeedUpdateWhiteboard:
+      singleton: true
+
