@@ -81,7 +81,9 @@
     var checkPageExists = function(page) {
       if (!page) {
         apiService.util.redirect('404');
-        return;
+        return false;
+      } else {
+        return true;
       }
     };
 
@@ -215,7 +217,9 @@
           is_instructor_gsi = true;
         }
         selected_semester = findSemester(data.teaching_semesters, $routeParams.teaching_semester_slug, selected_semester);
-        checkPageExists(selected_semester);
+        if (!checkPageExists(selected_semester)) {
+          return;
+        }
         updatePrevNextSemester(data.semesters, selected_semester);
 
         if (selected_semester) {
@@ -239,7 +243,9 @@
             break;
           }
         }
-        checkPageExists($scope.selected_course);
+        if (!checkPageExists($scope.selected_course)) {
+          return;
+        }
         $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
         $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
       }
