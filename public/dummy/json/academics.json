@@ -827,5 +827,42 @@
       },
       "course_number": "Education 140"
     }
-  ]
+  ],
+  "telebears": {
+    "term": "Fall",
+    "year": 2013,
+    "adviser_code_required": {
+      "required": true,
+      "message": "Before your Tele-BEARS appointment you need to get a code from your adviser"
+    },
+    "phases": [
+      {
+        "period": "Tele-BEARS Phase I",
+        "startTime": {
+          "epoch": 1365442200,
+          "date_time": "2013-04-08T09:30:00-08:00",
+          "date_string": "4/08"
+        },
+        "endTime": {
+          "epoch": 1365528600,
+          "date_time": "2013-04-09T09:30:00-08:00",
+          "date_string":"4/09"
+        }
+      },
+      {
+        "period": "Tele-BEARS Phase II",
+        "startTime": {
+          "epoch": 1373389200,
+          "date_time": "2013-07-09T09:00:00-08:00",
+          "date_string": "7/09"
+        },
+        "endTime": {
+          "epoch": 1373475600,
+          "date_time": "2013-07-10T09:00:00-08:00",
+          "date_string": "7/10"
+        }
+      }
+    ],
+    "url": "http://registrar.berkeley.edu/tbfaqs.html"
+  }
 }

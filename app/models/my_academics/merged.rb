@@ -15,7 +15,8 @@ class MyAcademics::Merged < MyMergedModel
       MyAcademics::Regblocks,
       MyAcademics::Semesters,
       MyAcademics::Teaching,
-      MyAcademics::Exams
+      MyAcademics::Exams,
+      MyAcademics::Telebears,
     ].each do |provider|
       provider.new(@uid).merge(feed)
     end
