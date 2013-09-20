@@ -204,6 +204,35 @@
       padding-right: 5px;
     }
   }
+  .cc-academics-telebears {
+    h4 {
+      font-size: 12px;
+      font-weight: bold;
+      margin: 0;
+    }
+    .cc-adviser-message {
+      color: #000;
+      font-size: 13px;
+      margin-left: 10px;
+      overflow: hidden;
+      padding-left: 10px;
+    }
+    .cc-adviser-message-container {
+      padding: 10px 0;
+    }
+    .cc-more-info {
+      font-weight: bold;
+      padding-top: 10px;
+    }
+    .cc-telebears-phases {
+      overflow: hidden;
+      padding-bottom: 10px;
+    }
+    .cc-telebears-time-tag {
+      font-weight: bold;
+      color: $cc-color-lighter-medium-grey;
+    }
+  }
   .cc-academics-what-is-registration-block {
     margin-left: 10px;
     i {

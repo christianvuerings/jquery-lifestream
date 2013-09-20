@@ -250,6 +250,17 @@
       }
 
       $scope.gpaInit(); // Initialize GPA calculator with selected courses
+
+      //only show telebears appointment if term and semester matches
+      $scope.telebears = null;
+      if (data.semesters && data.semesters.length > 1) {
+        var current_semester = data.semesters.filter(function(value) {
+          return value.time_bucket == "current";
+        }).shift() || "";
+        if (current_semester.name === (data.telebears.term + " " + data.telebears.year)) {
+          $scope.telebears = data.telebears;
+        }
+      }
     };
 
     $scope.hideDisclaimer = true;
@@ -312,6 +323,7 @@
           ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
 
         $http.get('/api/my/academics').success(parseAcademics);
+//        $http.get('/dummy/json/academics.json').success(parseAcademics);
       }
     });
 
