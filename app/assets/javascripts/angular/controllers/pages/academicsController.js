@@ -255,8 +255,8 @@
       $scope.telebears = null;
       if (data.semesters && data.semesters.length > 1) {
         var current_semester = data.semesters.filter(function(value) {
-          return value.time_bucket == "current";
-        }).shift() || "";
+          return value.time_bucket === "current";
+        }).shift() || {};
         if (current_semester.name === (data.telebears.term + " " + data.telebears.year)) {
           $scope.telebears = data.telebears;
         }

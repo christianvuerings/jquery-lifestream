@@ -250,26 +250,26 @@
           </div>
           <div class="cc-widget-padding">
             <div>
-            <h3 class="cc-left">Telebears</h3>
-            <span class="cc-more-info cc-right"><a data-ng-href="{{telebears.url}}">More Info</a></span>
+              <h3 class="cc-left">Telebears</h3>
+              <strong class="cc-more-info cc-right"><a data-ng-href="{{telebears.url}}">More Info</a></strong>
             </div>
             <div class="cc-clearfix cc-adviser-message-container">
-                <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[telebears.adviser_code_required.required]">
-                </i>
-                <div class="cc-adviser-message" data-ng-bind="telebears.adviser_code_required.message"></div>
+              <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[telebears.adviser_code_required.required]">
+              </i>
+              <div class="cc-adviser-message" data-ng-bind="telebears.adviser_code_required.message"></div>
             </div>
             <div class="cc-telebears-phases">
               <div data-ng-repeat="phase in telebears.phases">
                 <h4 data-ng-bind="phase.period"></h4>
                 <ul>
-                <li>
-                  <div class="columns large-2 small-3"><span class="cc-telebears-time-tag">Start</span></div>
-                  <div class="columns large-10 small-9" data-ng-bind="phase.startTime.epoch | date:'EEEE MM/dd/yy | h:mm a'"></div>
-                </li>
-                <li>
-                  <div class="columns large-2 small-3"><span class="cc-telebears-time-tag">End</span></div>
-                  <div class="columns large-10 small-9" data-ng-bind="phase.endTime.epoch | date:'EEEE MM/dd/yy | h:mm a'"></div>
-                </li>
+                  <li>
+                    <div class="columns large-2 small-3"><strong class="cc-telebears-time-tag">Start</strong></div>
+                    <div class="columns large-10 small-9" data-ng-bind="phase.startTime.epoch | date:'EEEE MM/dd/yy | h:mm a'"></div>
+                  </li>
+                  <li>
+                    <div class="columns large-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
+                    <div class="columns large-10 small-9" data-ng-bind="phase.endTime.epoch | date:'EEEE MM/dd/yy | h:mm a'"></div>
+                  </li>
                 </ul>
               </div>
             </div>
