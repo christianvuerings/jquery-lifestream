@@ -204,7 +204,7 @@
 
       $scope.semesters = data.semesters;
 
-      $scope.is_undergratuate = ($scope.college_and_level.standing === 'Undergraduate');
+      $scope.is_undergratuate = ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teaching_semesters);
       $scope.teaching_length = Object.keys($scope.teaching).length;
