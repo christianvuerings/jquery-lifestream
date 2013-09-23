@@ -4,7 +4,7 @@ describe MyActivities::MyFinAid do
   let!(:oski_uid) { "61889" }
   let!(:fake_oski_finaid){ MyfinaidProxy.new({user_id: oski_uid, fake: true}) }
   let!(:non_student_uid) { '212377' }
-  let(:documented_types) { %w(alert financial) }
+  let(:documented_types) { %w(alert financial message) }
 
   it { described_class.should respond_to(:append!) }
 
@@ -45,7 +45,7 @@ describe MyActivities::MyFinAid do
     end
 
     it { should_not be_blank }
-    it { subject.length.should eq(11) }
+    it { subject.length.should eq(13) }
     it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
     it { subject.each { |entry| entry[:title].should be_present } }
     it { subject.each { |entry| entry[:source].should eq("Financial Aid") } }
@@ -56,7 +56,7 @@ describe MyActivities::MyFinAid do
         @activities.select { |entry| entry[:type] == "alert" }
       end
 
-      it { subject.length.should eq(6) }
+      it { subject.length.should eq(10) }
       it { subject.each { |entry| entry[:date].should be_blank } }
     end
 
@@ -66,7 +66,17 @@ describe MyActivities::MyFinAid do
         @activities.select { |entry| entry[:type] == "financial" }
       end
 
-      it { subject.length.should eq(5) }
+      it { subject.length.should eq(1) }
+      it { subject.each { |entry| entry[:title].should be_present } }
+    end
+
+    context "message types" do
+      subject do
+        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        @activities.select { |entry| entry[:type] == "message" }
+      end
+
+      it { subject.length.should eq(2) }
       it { subject.each { |entry| entry[:title].should be_present } }
     end
 

@@ -2,7 +2,7 @@ class MyActivities::MyFinAid
   include DatedFeed, ClassLogger
 
   def self.append!(uid, activities)
-    finaid_proxy = MyfinaidProxy.new({user_id: uid})
+    finaid_proxy = MyfinaidProxy.new({ user_id: uid })
 
     return unless finaid_proxy.lookup_student_id.present?
     return unless feed = finaid_proxy.get.try(:[], :body)
@@ -12,16 +12,28 @@ class MyActivities::MyFinAid
       return
     end
 
+    aid_year = content.at_css("AidYears AidYear[Default='X']")
+    begin
+      cutoff_date = DateTime.new(Integer(aid_year.text, 10)).prev_year
+    rescue
+      logger.error "Unable to parse AidYear from feed: #{aid_year.inspect}"
+      cutoff_date = nil
+    end
+
     append_diagnostics!(content.css("DiagnosticData Diagnostic"), activities)
-    append_documents!(content.css("TrackDocs Document"), activities)
+    append_documents!(content.css("TrackDocs Document"), cutoff_date, activities)
   end
 
   private
-  def self.append_documents!(documents, activities)
+  def self.append_documents!(documents, cutoff_date, activities)
     documents.each do |document|
       title = document.css("Name").text.strip
 
       date = DateTime.parse(document.css("Date").text.strip) rescue ""
+      if (date.present? && cutoff_date.present? && date < cutoff_date)
+        logger.info "Document is too old to be shown: #{date.inspect} < #{cutoff_date}"
+        next
+      end
       date = format_date(date) if date.present?
       summary = document.css("Supplemental Usage Content[Type='TXT']").text.strip
       url = document.css("Supplemental Usage Content[Type='URL']").text.strip
@@ -51,7 +63,7 @@ class MyActivities::MyFinAid
         result[:type] = "financial"
         result[:title].concat " - no action required, document received not yet reviewed"
       elsif(status.values.all?)
-        result[:type] = "financial"
+        result[:type] = "message"
         result[:title].concat " -  no action required, document reviewed and processed"
       end
 
@@ -89,7 +101,7 @@ class MyActivities::MyFinAid
       reviewed: false,
     }
 
-    if date.blank? && status == 'Q'
+    if date.blank? && (status.blank? || status == 'Q')
       default
     elsif date.present? && status == 'N'
       {
