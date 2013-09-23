@@ -2,7 +2,7 @@
 <div class="row cc-navigation-bar ng-cloak" data-ng-show="api.user.events.isAuthenticated">
   <ul>
     <li data-ng-class="{true:'active'}[_controller_name=='DashboardController']"><a href="/dashboard" data-ng-click="off_canvas_menu._show=false"><i class="icon-home"></i>My Dashboard</a></li>
-    <li data-ng-class="{true:'active'}[_controller_name=='AcademicsController']" data-ng-show="api.user.profile.roles.student || api.user.profile.roles.faculty">
+    <li data-ng-class="{true:'active'}[_controller_name=='AcademicsController']" data-ng-show="api.user.profile.student_info.has_academics_tab">
       <a href="/academics" data-ng-click="off_canvas_menu._show=false"><i class="icon-book"></i>My Academics</a>
     </li>
     <li data-ng-class="{true:'active'}[_controller_name=='CampusController']"><a href="/campus" data-ng-click="off_canvas_menu._show=false"><i class="icon-th-large"></i>My Campus</a></li>
