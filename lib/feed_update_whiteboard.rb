@@ -35,4 +35,8 @@ class FeedUpdateWhiteboard < TorqueBox::Messaging::MessageProcessor
     end
   end
 
+  def self.expires_in
+    0
+  end
+
 end
