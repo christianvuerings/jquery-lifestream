@@ -336,7 +336,7 @@ class CampusData < OracleDatabase
       SQL
       result = connection.select_one(sql)
     }
-    Rails.logger.info "Instructor history result = #{result}"
+    Rails.logger.debug "Instructor #{ldap_uid} history for terms #{instructor_terms} count = #{result}"
     return result["course_count"].to_i > 0
   end
 
@@ -353,7 +353,7 @@ class CampusData < OracleDatabase
       SQL
       result = connection.select_one(sql)
     }
-    Rails.logger.info "Student history result = #{result}"
+    Rails.logger.debug "Student #{ldap_uid} history for terms #{student_terms} count = #{result}"
     return result["course_count"].to_i > 0
   end
 
