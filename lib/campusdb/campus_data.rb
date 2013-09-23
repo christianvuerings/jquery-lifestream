@@ -323,6 +323,40 @@ class CampusData < OracleDatabase
         /STUDENT-TYPE-/.match(person_attributes['affiliations'])
   end
 
+  def self.has_instructor_history?(ldap_uid, instructor_terms = nil)
+    result = {}
+    instructor_terms_clause = terms_query_clause('r', instructor_terms)
+    use_pooled_connection {
+      sql = <<-SQL
+        select count(r.term_yr) as course_count
+        from bspace_course_instructor_vw r
+        where r.instructor_ldap_uid = #{connection.quote(ldap_uid)}
+          and rownum < 2
+          #{instructor_terms_clause}
+      SQL
+      result = connection.select_one(sql)
+    }
+    Rails.logger.debug "Instructor #{ldap_uid} history for terms #{instructor_terms} count = #{result}"
+    return result["course_count"].to_i > 0
+  end
+
+  def self.has_student_history?(ldap_uid, student_terms = nil)
+    result = {}
+    student_terms_clause = terms_query_clause('r', student_terms)
+    use_pooled_connection {
+      sql = <<-SQL
+        select count(r.term_yr) as course_count
+        from bspace_class_roster_vw r
+        where r.student_ldap_uid = #{connection.quote(ldap_uid)}
+          and rownum < 2
+          #{student_terms_clause}
+      SQL
+      result = connection.select_one(sql)
+    }
+    Rails.logger.debug "Student #{ldap_uid} history for terms #{student_terms} count = #{result}"
+    return result["course_count"].to_i > 0
+  end
+
   def self.terms_query_clause(table, terms)
     if !terms.blank?
       clause = 'and ('

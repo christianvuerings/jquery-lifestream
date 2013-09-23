@@ -5,11 +5,14 @@ describe "UserApi" do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     @default_name = "Joe Default"
     CampusData.stub(:get_person_attributes) do |uid|
-      if uid == @random_id
-        {'person_name' => @default_name}
-      else
-        {}
-      end
+      {
+        'person_name' => @default_name,
+        :roles => {
+          :student => true,
+          :faculty => false,
+          :staff => false
+        }
+      }
     end
   end
 
@@ -122,6 +125,30 @@ describe "UserApi" do
     UserApi.is_allowed_to_log_in?("212388").should be_true
     UserApi.is_allowed_to_log_in?("212389").should be_false
     UserApi.is_allowed_to_log_in?("212390").should be_false
+  end
+
+  it "should say random student gets the academics tab", if: CampusData.test_data? do
+    user_data = UserApi.new(@random_id).get_feed
+    user_data[:student_info][:has_academics_tab].should be_true
+  end
+
+  it "should say Chris does not get the academics tab", if: CampusData.test_data? do
+    CampusData.stub(:get_person_attributes).and_return(
+      {
+        'person_name' => @default_name,
+        :roles => {
+          :student => false,
+          :faculty => false,
+          :staff => true
+        }
+      })
+    fake_courses_proxy = CampusUserCoursesProxy.new({:fake => true})
+    fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
+    fake_courses_proxy.stub(:has_student_history?).and_return(false)
+    CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
+
+    user_data = UserApi.new("904715").get_feed
+    user_data[:student_info][:has_academics_tab].should be_false
   end
 
   context "proper cache handling" do

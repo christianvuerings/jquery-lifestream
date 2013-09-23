@@ -324,10 +324,7 @@
     // Wait until user profile is fully loaded before hitting academics data
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
-        // Some users (e.g. test-xxx users) may be missing the "student" role but still need ability to view My Academics pages
-        $scope.can_view_academics = $scope.api.user.profile.roles.student || $scope.api.user.profile.roles.faculty ||
-          ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
-
+        $scope.can_view_academics = $scope.api.user.profile.student_info.has_academics_tab;
         $http.get('/api/my/academics').success(parseAcademics);
 //        $http.get('/dummy/json/academics.json').success(parseAcademics);
       }

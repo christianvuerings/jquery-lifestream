@@ -120,6 +120,18 @@ class CampusUserCoursesProxy < BaseProxy
     end
   end
 
+  def has_student_history?
+    self.class.fetch_from_cache @uid do
+      CampusData.has_student_history?(@uid, academic_terms.student)
+    end
+  end
+
+  def has_instructor_history?
+    self.class.fetch_from_cache @uid do
+      CampusData.has_instructor_history?(@uid, academic_terms.instructor)
+    end
+  end
+
   def row_to_feed_item(row, previous_item)
     course_id = "#{row['dept_name']}-#{row['catalog_id']}-#{row['term_yr']}-#{row['term_cd']}"
     # Make it embeddable as an element in a URL path.

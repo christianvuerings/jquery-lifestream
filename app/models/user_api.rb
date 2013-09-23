@@ -85,6 +85,7 @@ class UserApi < MyMergedModel
     canvas_mail = Oauth2Data.get_canvas_email(@uid)
     is_google_reminder_dismissed = Oauth2Data.is_google_reminder_dismissed(@uid)
     is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
+    campus_courses_proxy = CampusUserCoursesProxy.new({:user_id => @uid})
     {
       :is_admin => UserAuth.is_superuser?(@uid),
       :first_login_at => @first_login_at,
@@ -102,6 +103,11 @@ class UserApi < MyMergedModel
         :california_residency => @campus_attributes[:california_residency],
         :reg_status => @campus_attributes[:reg_status],
         :reg_block => get_reg_blocks,
+        :has_academics_tab => (@campus_attributes[:roles][:student] ||
+          @campus_attributes[:roles][:faculty] ||
+          campus_courses_proxy.has_instructor_history? ||
+          campus_courses_proxy.has_student_history?
+        )
       },
       :uid => @uid
     }
