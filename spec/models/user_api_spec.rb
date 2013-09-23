@@ -130,7 +130,25 @@ describe "UserApi" do
   it "should say random student gets the academics tab", if: CampusData.test_data? do
     user_data = UserApi.new(@random_id).get_feed
     user_data[:student_info][:has_academics_tab].should be_true
-    user_data[:student_info][:has_student_history].should be_true
+  end
+
+  it "should say Chris does not get the academics tab", if: CampusData.test_data? do
+    CampusData.stub(:get_person_attributes).and_return(
+      {
+        'person_name' => @default_name,
+        :roles => {
+          :student => false,
+          :faculty => false,
+          :staff => true
+        }
+      })
+    fake_courses_proxy = CampusUserCoursesProxy.new({:fake => true})
+    fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
+    fake_courses_proxy.stub(:has_student_history?).and_return(false)
+    CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
+
+    user_data = UserApi.new("904715").get_feed
+    user_data[:student_info][:has_academics_tab].should be_false
   end
 
   context "proper cache handling" do

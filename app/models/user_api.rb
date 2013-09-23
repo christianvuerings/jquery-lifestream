@@ -107,8 +107,7 @@ class UserApi < MyMergedModel
           @campus_attributes[:roles][:faculty] ||
           campus_courses_proxy.has_instructor_history? ||
           campus_courses_proxy.has_student_history?
-        ),
-        :has_student_history => (@campus_attributes[:roles][:student] || campus_courses_proxy.has_student_history?)
+        )
       },
       :uid => @uid
     }
