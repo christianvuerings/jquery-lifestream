@@ -121,13 +121,13 @@ class CampusUserCoursesProxy < BaseProxy
   end
 
   def has_student_history?
-    self.class.fetch_from_cache @uid do
+    self.class.fetch_from_cache "has_student_history-#{@uid}" do
       CampusData.has_student_history?(@uid, academic_terms.student)
     end
   end
 
   def has_instructor_history?
-    self.class.fetch_from_cache @uid do
+    self.class.fetch_from_cache "has_instructor_history-#{@uid}" do
       CampusData.has_instructor_history?(@uid, academic_terms.instructor)
     end
   end
