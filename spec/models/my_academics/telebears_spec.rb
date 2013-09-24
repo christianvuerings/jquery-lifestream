@@ -3,12 +3,26 @@ require 'spec_helper'
 describe MyAcademics::Telebears do
   let!(:oski_uid){ "61889" }
   let(:non_student_uid) { '212377' }
+  let!(:no_telebears_student) { '300939' }
   let!(:fake_oski_feed) { BearfactsTelebearsProxy.new({:user_id => oski_uid, :fake => true}) }
+  let!(:fake_no_telebears_student_feed) { BearfactsTelebearsProxy.new({:user_id => no_telebears_student, :fake => true}) }
 
   shared_examples "empty telebears response" do
     it { should_not be_empty }
     its([:foo]) { should eq('baz') }
     its([:telebears]) { should be_empty }
+  end
+
+  context "no telebears appointment student" do
+    before(:each) do
+      BearfactsTelebearsProxy.stub(:new).and_return(fake_no_telebears_student_feed)
+      BearfactsTelebearsProxy.any_instance.stub(:lookup_student_id).and_return("22300939")
+    end
+    subject { MyAcademics::Telebears.new(no_telebears_student).merge(@feed ||= {foo: 'baz'}); @feed }
+
+    # Makes sure that the shared example isn't returning false oks due to an empty feed.
+    it { BearfactsTelebearsProxy.new({user_id: no_telebears_student}).get.should_not be_blank }
+    it_behaves_like "empty telebears response"
   end
 
   context "dead remote proxy (5xx errors)" do

@@ -3,6 +3,59 @@
     {
       "request": {
         "method": "get",
+        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/22300939/reg/appointments",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "server": [
+            "ngx_openresty/1.2.8.6"
+          ],
+          "date": [
+            "Tue, 24 Sep 2013 19:07:57 GMT"
+          ],
+          "content-type": [
+            "application/xml"
+          ],
+          "content-length": [
+            "163"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "keep-alive": [
+            "timeout=20"
+          ],
+          "x-3scale-proxy-secret-token": [
+            "Shared_secret_sent_from_proxy_to_API_backend"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<telebearsAppointment asOfDate=\"September 24, 2013 12:00 AM\" termName=\"Fall\" termYear=\"2013\" xmlns=\"urn:berkeley.edu/babl\"/>\n\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 24 Sep 2013 19:07:57 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
         "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/11667051/reg/appointments",
         "body": {
           "encoding": "US-ASCII",
