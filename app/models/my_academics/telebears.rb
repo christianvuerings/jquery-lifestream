@@ -19,8 +19,9 @@ class MyAcademics::Telebears
 
     return unless term.present? && year.present?
 
-    adviser_code_required = decode_adviser_code_required(doc.at_css("telebearsAppointment authReleaseCode").text.strip)
-    phases = parse_appointment_phases(doc.css("telebearsAppointment telebearsAppointmentPhase"))
+    auth_release_code = doc.at_css("telebearsAppointment authReleaseCode").text.strip rescue return
+    adviser_code_required = decode_adviser_code_required(auth_release_code)
+    phases = parse_appointment_phases(doc.css("telebearsAppointment telebearsAppointmentPhase") || [])
 
     data[:telebears] = {
       term: term,
