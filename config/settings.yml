@@ -145,6 +145,7 @@ cache:
   stale_connection_flush_interval: <%= 30.seconds %>
   expiration:
     default: <%= 35.minutes %>
+    HotPlate: <%= 2.minutes %>
     MyAcademics::Merged: 0
     MyActivities: 0
     MyBadges::Merged: 0

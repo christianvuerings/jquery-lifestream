@@ -1,5 +1,6 @@
 class HotPlate < TorqueBox::Messaging::MessageProcessor
 
+  extend Calcentral::Cacheable
   include ActiveRecordHelper, ClassLogger
   attr_reader :total_warmups
 
@@ -31,7 +32,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def self.warmup_request(uid)
-    Rails.cache.fetch("HotPlate/WarmupRequestRateLimiter-#{uid}", :expires_in => 2.minutes) do
+    Rails.cache.fetch("HotPlate/WarmupRequestRateLimiter-#{uid}", :expires_in => self.expires_in) do
       Calcentral::Messaging.publish('/queues/warmup_request', uid)
       true
     end
