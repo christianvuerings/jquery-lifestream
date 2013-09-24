@@ -18,6 +18,7 @@ class MyClasses < MyMergedModel
 
   def process_campus_courses
     campus_courses = CampusUserCoursesProxy.new({:user_id => @uid}).get_campus_courses
+    return [] unless campus_courses
     campus_courses.each do |course|
       # Point to My Academics class page
       course[:site_url] = MyAcademics::AcademicsModule.class_to_url(
