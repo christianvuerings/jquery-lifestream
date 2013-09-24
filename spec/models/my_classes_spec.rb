@@ -86,4 +86,13 @@ describe "MyClasses" do
       my_class[:site_url].blank?.should be_false
     end
   end
+
+  it "should not explode if CampusUserCoursesProxy returns false instead of an array" do
+    CanvasProxy.stub(:access_granted?).and_return(false)
+    SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
+    CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return(false)
+    my_classes = MyClasses.new(@user_id).get_feed
+    my_classes.length.should == 2
+  end
+
 end
