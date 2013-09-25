@@ -264,11 +264,11 @@
                 <ul>
                   <li>
                     <div class="columns large-2 small-3"><strong class="cc-telebears-time-tag">Start</strong></div>
-                    <div class="columns large-10 small-9" data-ng-bind="phase.startTime.epoch | date:'EEEE MM/dd/yy | h:mm a'"></div>
+                    <div class="columns large-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | date:'EEEE MM/dd/yy | h:mm a'"></div>
                   </li>
                   <li>
                     <div class="columns large-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
-                    <div class="columns large-10 small-9" data-ng-bind="phase.endTime.epoch | date:'EEEE MM/dd/yy | h:mm a'"></div>
+                    <div class="columns large-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | date:'EEEE MM/dd/yy | h:mm a'"></div>
                   </li>
                 </ul>
               </div>
