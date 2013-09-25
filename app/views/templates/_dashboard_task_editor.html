@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="templates/dashboard_task_editor.html">
   <form class="cc-widget-tasks-form" name="cc_widget_tasks_form"
     data-ng-submit="!editorEnabled && addTask() || editorEnabled && editTask(task)"
-    data-ng-show="show_add_task || editorEnabled" novalidate >
+    data-ng-show="addTaskPanelState.showAddTask || editorEnabled" novalidate >
     <div class="row collapse">
       <div class="large-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-title-{{$parent.$id}}"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
@@ -42,7 +42,7 @@
         <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$parent.$id}}" rows="2" /></textarea>
       </div>
     </div>
-    <div class="row collapse" data-ng-show="!editorEnabled && task_adder_is_processing">
+    <div class="row collapse" data-ng-show="!editorEnabled && addTaskPanelState.isProcessing">
       <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
         Task is being added...
       </div>
@@ -52,10 +52,10 @@
         Task is being updated...
       </div>
     </div>
-    <div class="row collapse" data-ng-show="!task_adder_is_processing || !task.editor_is_processing">
+    <div class="row collapse" data-ng-show="!addTaskPanelState.isProcessing || !task.editor_is_processing">
       <div class="large-9 large-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
         <button type="submit"
-          data-ng-disabled="cc_widget_tasks_form.$invalid || task_adder_is_processing"
+          data-ng-disabled="cc_widget_tasks_form.$invalid || addTaskPanelState.isProcessing"
           class="cc-button"
           data-ng-class="{'cc-button-blue':(cc_widget_tasks_form.$valid), 'cc-button-disabled':(cc_widget_tasks_form.$invalid)}"
           >

@@ -4,7 +4,7 @@
       <h2 class="cc-left">To Do</h2>
       <button
           class="cc-button cc-right"
-          data-ng-class="{'cc-button-selected':(show_add_task)}"
+          data-ng-class="{'cc-button-selected':(panelState.showAddTask)}"
           data-ng-show="api.user.profile.has_google_access_token && (current_task_mode!='completed' || !completedTasks.length)"
           data-ng-click="toggleAddTask()">
         <i class="icon-plus cc-button-plus-icon"></i>
