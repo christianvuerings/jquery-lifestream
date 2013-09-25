@@ -1,6 +1,6 @@
 class GoogleEventsInsertProxy < GoogleEventsProxy
   def insert_event(body)
-    request(api: self.singleton_class.api,
+    request(api: self.class.api,
             params: { "calendarId" => "primary" },
             resource: "events",
             method: "insert",
