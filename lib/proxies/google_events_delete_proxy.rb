@@ -1,6 +1,6 @@
 class GoogleEventsDeleteProxy < GoogleEventsProxy
   def delete_event(event_id)
-    request(api: "calendar",
+    request(api: self.singleton_class.api,
             params: { "calendarId" => "primary", "eventId" => "#{event_id}" },
             resource: "events",
             method: "delete",
