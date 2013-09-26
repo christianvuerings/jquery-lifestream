@@ -7,7 +7,7 @@
   calcentral.controller('ApiTestController', ['$http', '$scope', function($http, $scope) {
 
     // Crude way of testing against the http.success responses due to insufficient status codes.
-    var validKeyDict = {
+    var response_dictionary = {
       '/api/blog/release_notes/latest': 'entries',
       '/api/my/academics': 'college_and_level',
       '/api/my/activities': 'activities',
@@ -23,23 +23,25 @@
       '/api/tools/styles': 'colors'
     };
 
-    $scope.apiTest = {
+    $scope.api_test = {
       data: [],
       enabled: false,
+      show_tests: false,
       running: false
     };
 
     var hitEndpoint = function(index) {
-      var request = $http.get($scope.apiTest.data[index].route);
+      var request = $http.get($scope.api_test.data[index].route);
       request.success(function(data) {
-        if (validKeyDict[$scope.apiTest.data[index].route]) {
-          $scope.apiTest.data[index].status = data[validKeyDict[$scope.apiTest.data[index].route]] ? 'success' : 'failed';
+        var route = response_dictionary[$scope.api_test.data[index].route];
+        if (route) {
+          $scope.api_test.data[index].status = data[route] ? 'success' : 'failed';
         } else {
-          $scope.apiTest.data[index].status = 'success';
+          $scope.api_test.data[index].status = 'success';
         }
       });
       request.error(function() {
-        $scope.apiTest.data[index].status = 'failed';
+        $scope.api_test.data[index].status = 'failed';
       });
       request.success(function() {
         runOnLastEndpoint(index);
@@ -50,27 +52,28 @@
 
     var initTestRoutes = function() {
       $http.get('/api/smoke_test_routes').success(function(data) {
-        var newData = [];
+        var output = [];
         angular.forEach(data.routes, function(value) {
-          newData.push({
+          output.push({
             route: value,
             status: 'pending'
           });
         });
-        $scope.apiTest.data = newData;
-        $scope.apiTest.enabled = true;
+        $scope.api_test.data = output;
+        $scope.api_test.enabled = true;
       });
     };
 
     var runOnLastEndpoint = function(index) {
-      if (parseInt(index, 10)+1 >= $scope.apiTest.data.length) {
-        $scope.apiTest.running = false;
+      if (parseInt(index, 10)+1 >= $scope.api_test.data.length) {
+        $scope.api_test.running = false;
       }
     };
 
     $scope.runApiTest = function() {
-      $scope.apiTest.running = true;
-      angular.forEach($scope.apiTest.data, function(value, index) {
+      $scope.api_test.running = true;
+      $scope.api_test.show_tests = true;
+      angular.forEach($scope.api_test.data, function(value, index) {
         hitEndpoint(index);
       });
     };
