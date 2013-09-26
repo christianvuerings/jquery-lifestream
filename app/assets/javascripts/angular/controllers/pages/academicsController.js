@@ -257,13 +257,13 @@
 
       $scope.gpaInit(); // Initialize GPA calculator with selected courses
 
-      //only show telebears appointment if term and semester matches
+      //show telebears appointment if the semester path matches the termYear + code from telebears
       $scope.telebears = null;
       if (data.semesters && data.semesters.length > 1) {
         var current_semester = data.semesters.filter(function(value) {
           return value.time_bucket === "current";
         }).shift() || {};
-        if (current_semester.name === (data.telebears.term + " " + data.telebears.year)) {
+        if ($scope.selected_semester.slug === current_semester.slug) {
           $scope.telebears = data.telebears;
         }
       }
