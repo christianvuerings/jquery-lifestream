@@ -42,18 +42,17 @@ class FinancialsProxy < BaseProxy
             )
           }
           if response.code >= 400
-            logger.error "Connection failed: #{response.code} #{response.body}"
+            logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
             return nil
           end
 
-          logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+          logger.debug "Remote server status #{response.code}; url = #{url}"
           {
             :body => JSON.parse(response.body),
             :status_code => response.code
           }
-            # TODO handle HTTParty error statuses
-        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError, Errno::EHOSTUNREACH => e
-          logger.error "Connection failed: #{e.class} #{e.message}"
+        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+          logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
           {
             :body => "Remote server unreachable",
             :status_code => 503

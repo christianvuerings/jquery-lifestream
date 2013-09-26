@@ -23,4 +23,20 @@ describe FinancialsProxy do
     it { subject[:body]["student"]["summary"]["futureActivity"].should == "222.5" }
   end
 
+  context "unreachable remote server (5xx errors)" do
+    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.financials_proxy.base_url)}.*/).to_raise(Errno::ECONNREFUSED) }
+    after(:each) { WebMock.reset! }
+    subject { live_oski_financials }
+
+    it { subject[:body].should eq("Remote server unreachable") }
+    it { subject[:status_code].should eq(503) }
+  end
+
+  context "errors on remote server" do
+    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.financials_proxy.base_url)}.*/).to_return(:status => 403) }
+    after(:each) { WebMock.reset! }
+
+    subject { live_oski_financials }
+    it { should be_nil }
+  end
 end
