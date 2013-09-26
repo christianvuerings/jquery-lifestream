@@ -9,6 +9,8 @@ canvas_proxy:
   fake: true
 google_proxy:
   fake: true
+financials_proxy:
+  fake: true
 sakai_proxy:
   fake: false
   # Keyed to H2 test data
