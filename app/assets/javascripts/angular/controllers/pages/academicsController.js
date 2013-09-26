@@ -269,6 +269,21 @@
       }
     };
 
+    $scope.addTelebearsAppointment = function(phasesArray) {
+      for(var i in phasesArray) {
+        var payload = {
+          'summary': phasesArray[i].period,
+          'start': {
+            'epoch': phasesArray[i].startTime.epoch
+          },
+          'end': {
+            'epoch': phasesArray[i].endTime.epoch
+          }
+        }
+        $http.post('/api/my/event', payload);
+      }
+    };
+
     $scope.hideDisclaimer = true;
 
     $scope.toggleBlockHistory = function() {
