@@ -11,6 +11,7 @@ module Calcentral
     MERGED_FEEDS_EXPIRATION = UserCacheInvalidator.new
 
     {
+      MyFinancials => :expire,
       MyRegBlocks => :expire,
       CalLinkMembershipsProxy => :expire,
 
@@ -38,6 +39,7 @@ module Calcentral
     merged_feeds_array = [
       UserApi,
       MyClasses,
+      MyFinancials,
       MyGroups,
       MyActivities::Merged,
       MyTasks::Merged,

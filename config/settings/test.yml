@@ -34,6 +34,7 @@ cache:
     MyBadges::Merged: <%= 1.day %>
     MyCampusLinks: <%= 1.day %>
     MyClasses: <%= 1.day %>
+    MyFinancials: <%= 1.day %>
     MyGroups: <%= 1.day %>
     MyTasks::Merged: <%= 1.day %>
     MyUpNext: <%= 1.day %>
