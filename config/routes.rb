@@ -22,6 +22,7 @@ Calcentral::Application.routes.draw do
   match '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
   match '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
   match '/api/my/academics' => 'my_academics#get_feed', :as => :my_academics, :defaults => { :format => 'json' }
+  match '/api/my/financials' => 'my_financials#get_feed', :as => :my_financials, :defaults => {:format => 'json'}
   match '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   match '/api/my/campuslinks/expire' => 'my_campus_links#expire'
   match '/api/my/refresh' => 'my_refresh#refresh', :defaults => { :format => 'json' }

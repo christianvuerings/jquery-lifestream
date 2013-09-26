@@ -7,6 +7,7 @@ class UserCacheWarmer
     [
       UserApi.new(uid),
       MyClasses.new(uid),
+      MyFinancials.new(uid),
       MyGroups.new(uid),
       MyTasks::Merged.new(uid),
       MyBadges::Merged.new(uid),
