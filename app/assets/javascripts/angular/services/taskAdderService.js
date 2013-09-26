@@ -5,9 +5,9 @@
   angular.module('calcentral.services').service('taskAdderService', ['$http', '$q', 'apiService', function($http, $q, apiService) {
 
     var _taskPanelState = {
-      "showAddTask": false,
-      "isProcessing": false,
-      "newTask": {}
+      'isProcessing': false,
+      'showAddTask': false,
+      'newTask': {}
     };
 
     var getState = function() {
@@ -18,16 +18,27 @@
       return _taskPanelState.newTask;
     }
 
+    var setTaskState = function(task) {
+      _taskPanelState.newTask.title = task.title;
+      _taskPanelState.newTask.notes = task.notes;
+      _taskPanelState.newTask.due_date = task.due_date;
+    }
+
     var resetState = function() {
-      _taskPanelState = {
-        "showAddTask": false,
-        "isProcessing": false,
-        "newTask": {}
-      };
+      _taskPanelState.isProcessing = false;
+      _taskPanelState.showAddTask = false;
+      _taskPanelState.newTask.title = '';
+      _taskPanelState.newTask.notes = '';
+      _taskPanelState.newTask.due_date = '';
+      _taskPanelState.newTask._focusInput = false;
     };
 
-    var toggleAddTask = function() {
-      _taskPanelState.showAddTask = !_taskPanelState.showAddTask;
+    var toggleAddTask = function(value) {
+      if (value) {
+        _taskPanelState.showAddTask = value;
+      } else {
+        _taskPanelState.showAddTask = !_taskPanelState.showAddTask;
+      }
       apiService.analytics.trackEvent(['Tasks', 'Add panel - ' + _taskPanelState.showAddTask ? 'Show' : 'Hide']);
     };
 
@@ -69,6 +80,7 @@
       getState: getState,
       getTaskState: getTaskState,
       resetState: resetState,
+      setTaskState: setTaskState,
       toggleAddTask: toggleAddTask
     };
 

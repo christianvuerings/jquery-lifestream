@@ -41,6 +41,7 @@
               View in {{activity.emitter}}
               <span class="cc-visuallyhidden">View more info about {{ activity.title }} in {{ activity.source }}</span>
             </a>
+            <a class="cc-button" data-ng-click="addTask(activity)">Make task</a>
           </div>
           <div class="cc-widget-activities-sub-text-margin cc-widget-tasks-activities-more" data-ng-show="activity._show && activity.elements">
             <ul class="cc-widget-activities-sub-activity-list">
@@ -61,6 +62,7 @@
                       View in {{sub_activity.emitter}}
                       <span class="cc-visuallyhidden">View more info about {{ sub_activity.title }} in {{ sub_activity.source }}</span>
                     </a>
+                    <a class="cc-button" data-ng-click="addTask(sub_activity)">Make task</a>
                   </div>
                 </div>
               </li>

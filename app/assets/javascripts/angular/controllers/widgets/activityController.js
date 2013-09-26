@@ -4,7 +4,7 @@
   /**
    * Activity controller
    */
-  calcentral.controller('ActivityController', ['$http', '$scope', function($http, $scope) {
+  calcentral.controller('ActivityController', ['$http', '$scope', 'dateService', 'taskAdderService', function($http, $scope, dateService, taskAdderService) {
 
     var activitiesModel = function(activityResponse) {
       var activities = activityResponse.activities;
@@ -166,6 +166,18 @@
         activitiesModel(data);
       });
     };
+
+    $scope.addTask = function(activity) {
+      var due_date = activity.date.epoch ? dateService.moment(activity.date.epoch * 1000).format('MM/DD/YYYY') : '';
+
+      taskAdderService.setTaskState({
+        'title': activity.title,
+        'notes': activity.summary || '',
+        'due_date': due_date
+      });
+
+      taskAdderService.toggleAddTask(true);
+    }
 
     $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
       if (refreshed) {
