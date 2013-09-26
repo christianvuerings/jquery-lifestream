@@ -15,7 +15,7 @@ describe MyFinancialsController do
 
   it "should be an non-empty financials feed on authenticated user" do
     MyFinancials.any_instance.stub(:get_feed).and_return(
-      [{student: "foo"}])
+      [{summary: "foo"}])
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
