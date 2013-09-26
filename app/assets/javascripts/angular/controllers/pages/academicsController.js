@@ -259,7 +259,7 @@
 
       //show telebears appointment if the semester path matches the termYear + code from telebears
       $scope.telebears = null;
-      if (data.semesters && data.semesters.length > 1) {
+      if (data.semesters && data.semesters.length > 1 && $routeParams.semester_slug) {
         var current_semester = data.semesters.filter(function(value) {
           return value.time_bucket === "current";
         }).shift() || {};
