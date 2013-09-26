@@ -122,6 +122,12 @@ myfinaid_proxy:
   base_url: "https://apis-dev.berkeley.edu/myfinaid"
   term_year: "2013"
 
+financials_proxy:
+  fake: false
+  base_url: "https://integration-qa.berkeley.edu/cfv"
+  username: ''
+  password: ''
+
 blog_latest_release_notes_feed_proxy:
   fake: false
   feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
@@ -225,6 +231,7 @@ features:
   academic_status: false
   my_fin_aid: false
   activity_to_task: false
+  financials: false
 
 messaging:
   enabled: true
