@@ -8,11 +8,6 @@ class MyfinaidProxy < BaseProxy
     super(Settings.myfinaid_proxy, options)
   end
 
-  def lookup_student_id
-    student = CampusData.get_person_attributes @uid
-    student.try(:[], "student_id")
-  end
-
   def get
     request("", "myfinaid")
   end
