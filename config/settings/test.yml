@@ -26,7 +26,7 @@ oauth2:
 features:
   act_as: true
   bearfacts: true
-
+  financials: true
 
 cache:
   expiration:
