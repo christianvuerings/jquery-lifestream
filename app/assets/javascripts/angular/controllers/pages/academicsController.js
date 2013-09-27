@@ -270,7 +270,7 @@
     };
 
     $scope.addTelebearsAppointment = function(phasesArray) {
-      for(var i in phasesArray) {
+      for(var i=0; i < phasesArray.length; i++) {
         var payload = {
           'summary': phasesArray[i].period,
           'start': {
