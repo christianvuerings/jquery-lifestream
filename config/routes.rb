@@ -27,10 +27,7 @@ Calcentral::Application.routes.draw do
   match '/api/my/campuslinks/expire' => 'my_campus_links#expire'
   match '/api/my/refresh' => 'my_refresh#refresh', :defaults => { :format => 'json' }
   match '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
-
-  scope '/api/my', defaults: { format: 'json' }, as: "api_my" do
-    resource :event, only: [:create], controller: "my_events"
-  end
+  match '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }
 
   # Canvas embedded application support.
   match '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
