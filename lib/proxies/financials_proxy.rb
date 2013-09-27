@@ -12,16 +12,6 @@ class FinancialsProxy < BaseProxy
     request("/student/#{lookup_student_id}", "financials")
   end
 
-  # TODO refactor to reduce duplication
-  def lookup_student_id
-    student = CampusData.get_person_attributes @uid
-    if student.nil?
-      nil
-    else
-      student["student_id"]
-    end
-  end
-
   def request(path, vcr_cassette, params = {})
     self.class.fetch_from_cache(@uid) do
       student_id = lookup_student_id
