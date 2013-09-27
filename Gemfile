@@ -90,11 +90,11 @@ group :assets do
   gem "sass-rails", "~> 3.2.6"
   gem "coffee-rails", "~> 3.2.2"
   gem "compass-rails", "~> 1.0.3"
-  gem "zurb-foundation", "4.3.2"
+  gem "zurb-foundation", "4.2.1"
 
   # Ruby wrapper for UglifyJS JavaScript compressor
   # https://github.com/lautis/uglifier
-  gem "uglifier", "~> 2.2.1"
+  gem "uglifier", "~> 2.1.1"
 
   # Font awesome - an icon font
   # https://github.com/littlebtc/font-awesome-sass-rails
@@ -102,7 +102,7 @@ group :assets do
 
   # Moment.js
   # https://github.com/derekprior/momentjs-rails
-  gem "momentjs-rails", "~> 2.2.1"
+  gem "momentjs-rails", "~> 2.0.0.2"
 
   # Raven.js - library for JS error logging
   gem "ravenjs-gem", "~> 1.0.7.0"
@@ -125,11 +125,11 @@ group :development, :test , :testext do
   # Test our JavaScript code.
   # https://github.com/pivotal/jasmine-gem
   gem "jasmine", "~> 1.3.1"
-  gem "jquery-rails", "~> 3.0.4"
-  gem "jasmine-jquery-rails", "~> 1.5.6"
+  gem "jquery-rails", "~> 2.2.1"
+  gem "jasmine-jquery-rails", "~> 1.4.2"
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem "selenium-webdriver", "~> 2.35.1"
+  gem "selenium-webdriver", "~> 2.32.1"
 
   gem "therubyrhino", "~> 2.0.1"
 
@@ -161,7 +161,7 @@ group :development do
 
   # Adds extra information to the requests
   # Enables the RailsPanel chrome extension
-  gem "meta_request", "~> 0.2.8"
+  gem "meta_request", "~> 0.2.6"
 end
 
 group :test do
