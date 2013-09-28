@@ -169,7 +169,7 @@ class CampusData < OracleDatabase
       sql = <<-SQL
       select c.term_yr, c.term_cd, c.course_cntl_num, r.enroll_status, r.wait_list_seq_num, r.unit, r.pnp_flag,
         c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
-        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.enroll_limit
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.enroll_limit, c.cred_cd
       from bspace_class_roster_vw r
       join bspace_course_info_vw c on (
         c.term_yr = r.term_yr

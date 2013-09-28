@@ -73,28 +73,108 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
     it { subject[:semesters].length.should eq terms_constraint.length }
   end
 
-  context "should handle badly formatted p/np fields for course data" do
-    before(:each) do
-      Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
-      Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
-      oski_campus_courses = CampusUserCoursesProxy.new({:fake => true}).get_all_campus_courses
-      oski_campus_courses.values.each do |semester|
-        semester.each do |course|
-          course[:pnp_flag] = nil
-        end
-      end
-      CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(oski_campus_courses)
-    end
-
-    subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
-
-    it { should_not be_empty}
+  shared_examples "basic semester check" do
+    it { should_not be_empty }
     it { subject[:semesters].length.should eq 4}
     it { subject[:semesters][0][:name].should == "Spring 2015" }
     it { subject[:semesters][0][:classes].length.should == 1 }
-    it { subject[:semesters][0][:classes][0][:grade_option].should == '' }
     it { subject[:semesters][1][:name].should == "Spring 2014" }
-    it { subject[:semesters][1][:classes][0][:grade_option].should == '' }
+  end
+
+  context "grading options" do
+    before(:each) do
+      Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
+      Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
+      @oski_campus_courses = CampusUserCoursesProxy.new({:fake => true}).get_all_campus_courses
+    end
+
+    context "P/NP grading option (course default)" do
+      before(:each) do
+        @oski_campus_courses.values.each do |semester|
+          semester.each do |course|
+            course[:pnp_flag] = 'N'
+            course[:cred_cd] = 'PF'
+          end
+        end
+        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+      end
+
+      subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
+
+      it_behaves_like "basic semester check"
+      it { subject[:semesters][0][:classes][0][:grade_option].should == 'P/NP' }
+      it { subject[:semesters][1][:classes][0][:grade_option].should == 'P/NP' }
+    end
+
+    context "P/NP grading option (user option)" do
+      before(:each) do
+        @oski_campus_courses.values.each do |semester|
+          semester.each do |course|
+            course[:pnp_flag] = 'Y'
+            course[:cred_cd] = nil
+          end
+        end
+        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+      end
+
+      subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
+
+      it_behaves_like "basic semester check"
+      it { subject[:semesters][0][:classes][0][:grade_option].should == 'P/NP' }
+      it { subject[:semesters][1][:classes][0][:grade_option].should == 'P/NP' }
+    end
+
+    context "S/U grading option" do
+      before(:each) do
+        @oski_campus_courses.values.each do |semester|
+          semester.each do |course|
+            course[:pnp_flag] = 'N'
+            course[:cred_cd] = 'SU'
+          end
+        end
+        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+      end
+
+      subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
+
+      it_behaves_like "basic semester check"
+      it { subject[:semesters][0][:classes][0][:grade_option].should == 'S/U' }
+      it { subject[:semesters][1][:classes][0][:grade_option].should == 'S/U' }
+    end
+
+    context "letter grades" do
+      before(:each) do
+        @oski_campus_courses.values.each do |semester|
+          semester.each do |course|
+            course[:pnp_flag] = 'N'
+            course[:cred_cd] = nil
+          end
+        end
+        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+      end
+
+      subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
+
+      it_behaves_like "basic semester check"
+      it { subject[:semesters][0][:classes][0][:grade_option].should == 'Letter' }
+      it { subject[:semesters][1][:classes][0][:grade_option].should == 'Letter' }
+    end
+
+    context "badly formatted p/np fields on roster views" do
+      before(:each) do
+        @oski_campus_courses.values.each do |semester|
+          semester.each { |course| course[:pnp_flag] = nil }
+        end
+        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+      end
+
+      subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
+
+      it_behaves_like "basic semester check"
+      it { subject[:semesters][0][:classes][0][:grade_option].should == '' }
+      it { subject[:semesters][1][:classes][0][:grade_option].should == '' }
+    end
+
   end
 
 end

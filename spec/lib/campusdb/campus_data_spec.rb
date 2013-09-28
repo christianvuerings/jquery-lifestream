@@ -130,6 +130,13 @@ describe CampusData do
     sections.length.should == 3 if CampusData.test_data?
   end
 
+  context "#get_enrolled_sections", if: SakaiData.test_data? do
+    subject { CampusData.get_enrolled_sections('300939') }
+
+    it { should_not be_blank }
+    it { subject.all? { |section| section.has_key?("cred_cd") } }
+  end
+
   it "should find where a person is teaching" do
     sections = CampusData.get_instructing_sections('192517')
     sections.should_not be_nil

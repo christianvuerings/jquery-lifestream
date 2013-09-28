@@ -38,6 +38,7 @@ class CampusUserCoursesProxy < BaseProxy
           item[:unit] = row['unit']
           item[:pnp_flag] = row['pnp_flag']
           item[:grade] = row["grade"]
+          item[:cred_cd] = row["cred_cd"]
           item[:transcript_unit] = row["transcript_unit"]
           if row['enroll_status'] == 'W'
             item[:waitlist_pos] = row['wait_list_seq_num']
