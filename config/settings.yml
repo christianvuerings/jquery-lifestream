@@ -233,6 +233,7 @@ features:
   my_fin_aid: false
   activity_to_task: false
   financials: false
+  telebears: false
 
 messaging:
   enabled: true
