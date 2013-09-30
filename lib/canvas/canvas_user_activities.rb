@@ -166,7 +166,7 @@ class CanvasUserActivities
         color_class = site[:color_class]
       end
     end
-    source ||= 'Canvas'
+    source ||= 'bCourses'
     color_class ||= 'canvas-group'
     {source: source, color_class: color_class}
   end
