@@ -59,9 +59,22 @@ describe MyAcademics::Telebears do
       it { subject[:telebears][:adviser_code_required][:required].should be_true }
       it { subject[:telebears][:adviser_code_required][:message].should_not be_include("CalSO") }
       it { subject[:telebears][:phases].length.should eq(2)}
-      it { subject[:telebears][:phases].first[:startTime][:date_time].should eq("2013-04-08T09:30:00-08:00") }
-      it { subject[:telebears][:phases].first[:endTime][:date_time].should eq("2013-04-09T09:30:00-08:00") }
+    end
+
+    context "fake oski feed, timezone & server specifice setting tests", testext: true do
+      subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
+
+      it { subject[:telebears][:phases].first[:startTime][:epoch].should eq(1365438600) }
+      it { subject[:telebears][:phases].first[:endTime][:epoch].should eq(1365525000) }
       it { subject[:telebears][:url].should_not be_blank }
+      it "should have the same timezone setting as specified from the server" do
+        %w(startTime endTime).each do |key|
+          time_string = subject[:telebears][:phases].first[key.to_sym][:date_time]
+          tz_from_string = DateTime.parse(time_string).rfc3339
+          server_enforced_tz = Time.zone.parse(time_string).to_datetime.rfc3339
+          tz_from_string.should eq(server_enforced_tz)
+        end
+      end
     end
 
     context "fake oski feed, advisercode = P" do

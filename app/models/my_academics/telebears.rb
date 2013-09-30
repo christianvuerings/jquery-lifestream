@@ -42,8 +42,10 @@ class MyAcademics::Telebears
       startTime, endTime = %w(startDate endDate).map do |key|
         value = phase.css(key).text.strip
         next "" unless value.present?
-        value = value.squish.concat(" PST")
-        value = DateTime.strptime(value, "%A %m/%d/%y %I:%M %p %Z")
+        value.squish!
+        # According to telebears, we're suppose to assume the time == our system time zone (PST).
+        # Forcing the timezone on the parsing causes DST translation problems.
+        value = Time.strptime(value, "%A %m/%d/%y %I:%M %p").to_datetime
         format_date(value)
       end
       next unless period.present?
