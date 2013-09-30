@@ -4,9 +4,10 @@
     var $calcentral_header = $('<ul id="calcentral-custom-header">');
     $('<li><a href="https://calcentral.berkeley.edu/dashboard">CalCentral Dashboard</a></li>').appendTo($calcentral_header);
     $('#topbar').prepend($calcentral_header);
-    $('#footer span').wrap('<div />');
-    var $calcentral_footer = $('<p><span>bCourses, powered by <a href="http://www.instructure.com/higher-education" target="_blank">Canvas</a></span> part of the <a href="http://ets.berkeley.edu/bspace-replacement" target="_blank">bSpace Replacement project</a></p>');
-    $('#footer div').prepend($calcentral_footer);
+    $('#footer a.footer-logo').remove();
+    $('#footer span').wrap('<div class="bcourses-footer"></div>');
+    var $bcourses_footer = $('<p><span>bCourses, powered by <a href="http://www.instructure.com/higher-education" target="_blank">Canvas</a></span> part of the <a href="http://ets.berkeley.edu/bspace-replacement" target="_blank">LMS Replacement project</a></p>');
+    $('#footer div.bcourses-footer').prepend($bcourses_footer);
   });
 
   window.onmessage = function(e) {
