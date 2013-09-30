@@ -27,6 +27,7 @@ features:
   act_as: true
   bearfacts: true
   financials: true
+  telebears: true
 
 cache:
   expiration:
