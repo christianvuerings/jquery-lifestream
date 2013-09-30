@@ -37,7 +37,7 @@ class MyMergedModel
       last_modified[:timestamp] = Time.now.to_i
       feed_name = self.class.name.to_s
       Rails.cache.write(self.class.last_modified_cache_key(uid), last_modified, :expires_in => 28.days)
-      logger.debug "Last_modified hash has changed, sending feed changed message for #{feed_name}, uid #{uid}, hash #{last_modified[:hash]}"
+      logger.debug "#{feed_name} content has changed, sending feed_changed message for uid #{uid}, hash=#{last_modified[:hash]}"
       Calcentral::Messaging.publish('/queues/feed_changed', {:feed => feed_name, :uid => uid})
     end
   end
