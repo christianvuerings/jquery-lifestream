@@ -114,7 +114,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def warmup_merged_feeds(uid)
-    logger.debug "Warming up merged feeds for uid #{uid}"
+    logger.debug "Processing warmup_request message for uid #{uid}"
     Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid

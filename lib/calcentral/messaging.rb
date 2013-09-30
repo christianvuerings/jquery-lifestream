@@ -6,11 +6,11 @@ module Calcentral
 
     def self.publish(queue_name, message = {})
       unless Settings.messaging.enabled
-        logger.debug "TorqueBox messaging is disabled, not really sending message. Queue: #{queue_name}. Message content: #{message}"
+        logger.debug "#{queue_name} disabled, not really sending message: #{message}"
         return
       end
       queue = self.get_queue queue_name
-      logger.debug "TorqueBox queue #{queue_name} is enabled, sending message content: #{message}"
+      logger.debug "#{queue_name} enabled, sending message: #{message}"
       queue.publish message
     end
 

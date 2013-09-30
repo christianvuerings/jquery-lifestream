@@ -15,7 +15,7 @@ class FeedUpdateWhiteboard < TorqueBox::Messaging::MessageProcessor
       return
     end
 
-    logger.debug "Processing TorqueBox message: body = #{body.inspect}, message = #{message.inspect}"
+    logger.debug "Processing feed_changed message: body = #{body.inspect}"
     uid = body[:uid]
     whiteboard = self.class.get_whiteboard(uid)
     last_updated = feed_class.get_last_modified(uid)
