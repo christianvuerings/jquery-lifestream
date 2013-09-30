@@ -107,7 +107,7 @@ describe CanvasUserActivities do
     group_activity[:source].should == 'Group title 3'
     siteless_activity = activities.select{|item| item[:id] == 'canvas_4999'}[0]
     siteless_activity[:color_class].should == 'canvas-group'
-    siteless_activity[:source].should == 'Canvas'
+    siteless_activity[:source].should == 'bCourses'
     siteless_activity[:title].should == 'New/Updated Conversation'
     siteless_activity[:type].should == 'discussion'
   end
