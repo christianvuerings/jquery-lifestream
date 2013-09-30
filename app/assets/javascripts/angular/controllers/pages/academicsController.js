@@ -263,7 +263,7 @@
         var current_semester = data.semesters.filter(function(value) {
           return value.time_bucket === "current";
         }).shift() || {};
-        if ($scope.selected_semester.slug === current_semester.slug) {
+        if (data.telebears && $scope.selected_semester.slug === data.telebears.slug) {
           $scope.telebears = data.telebears;
         }
       }

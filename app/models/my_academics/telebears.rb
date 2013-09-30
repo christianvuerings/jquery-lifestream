@@ -27,6 +27,7 @@ class MyAcademics::Telebears
     data[:telebears] = {
       term: term,
       year: year,
+      slug: "#{term.downcase}-#{year}",
       adviser_code_required: adviser_code_required,
       phases: phases.compact,
       url: "http://registrar.berkeley.edu/tbfaqs.html"
