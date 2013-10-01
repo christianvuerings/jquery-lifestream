@@ -116,7 +116,7 @@
         <div class="cc-widget-title">
           <h2>Appointments</h2>
         </div>
-        <div class="cc-widget-padding">
+        <div class="cc-widget-padding cc-clearfix-container">
           <div>
             <h3 class="cc-left">Tele-BEARS for {{ telebears.term }} {{ telebears.year }}</h3>
             <strong class="cc-more-info cc-right"><a data-ng-href="{{telebears.url}}">More Info</a></strong>
@@ -141,9 +141,16 @@
               </ul>
             </div>
           </div>
-          <button class="cc-button" data-ng-if="api.user.profile.has_google_access_token" data-ng-click="addTelebearsAppointment(telebears.phases)">
+          <button class="cc-button cc-left" data-ng-if="api.user.profile.has_google_access_token" data-ng-click="addTelebearsAppointment(telebears.phases)">
             Add Appointments to bCal
           </button>
+          <div
+            class="cc-academics-telebears-indicator cc-left"
+            data-cc-loading-directive="telebears_appointment_loading"
+            data-cc-loading-process="Adding..."
+            data-cc-loading-success="Events added."
+            data-cc-loading-error="Events not added. Try again later.">
+          </div>
         </div>
       </div>
       <div class="cc-widget cc-widget-interesting cc-widget-last">
