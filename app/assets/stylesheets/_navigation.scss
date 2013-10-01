@@ -2,9 +2,11 @@
   background-color: $cc-color-navigation;
   clear: both;
   ul {
+    float: left;
     margin: 0;
     overflow: hidden;
     padding: 0;
+    width: 70%;
     > li {
       margin: 0;
       padding: 0;
@@ -17,7 +19,7 @@
         font-weight: bold;
       }
       > a {
-        color: #e6e6e6;
+        color: $cc-color-lighter-grey;
         display: block;
         float: left;
         margin: 5px 0 5px 10px;

@@ -84,11 +84,11 @@
       return categorizedClasses;
     };
 
-    var getMyClasses = function(callback) {
+    var getMyClasses = function() {
       //$http.get('/dummy/json/classes.json').success(function(data) {
       $http.get('/api/my/classes').success(function(data) {
         if (data.classes) {
-          callback(parseClasses(data.classes));
+          bindScopes(parseClasses(data.classes));
           angular.extend($scope, data);
         }
       });
@@ -117,11 +117,12 @@
       };
     };
 
-    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
-      if (refreshed) {
-        getMyClasses(bindScopes);
+    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
+      if (services && services.MyClasses) {
+        getMyClasses();
       }
     });
+    getMyClasses();
   }]);
 
 })(window.calcentral);
