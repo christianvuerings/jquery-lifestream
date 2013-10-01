@@ -113,6 +113,32 @@ bundle exec torquebox run -p=3000
 13. Access your development server at [localhost:3000](http://localhost:3000/).
 Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 
+## Enable live updates
+
+In order to have live updates you'll need to perform the following steps:
+
+1. Install and run memcached
+1. Add the following lines to development.local.yml:
+```
+messaging:
+  enabled: true
+```
+1. In development.rb change the cache store option to
+```
+# Caching store
+config.cache_store = ActiveSupport::Cache.lookup_store(
+    :dalli_store,
+    *Settings.cache.servers,
+    {
+        :expires_in => Settings.cache.maximum_expires_in,
+        :namespace => ServerRuntime.get_settings["git_commit"],
+        :race_condition_ttl => Settings.cache.race_condition_ttl
+    }
+)
+```
+1. start the server with torquebox
+
+
 ## Front-end Testing
 
 Front-end [jasmine](http://pivotal.github.com/jasmine/) tests live in spec/javascripts/calcentral/*.

@@ -3,7 +3,7 @@
 @import "compass/css3/user-interface";
 
 /* CalCentral Specific */
-@import 'colors';
+@import "colors";
 
 /* HTML */
 html {
@@ -320,6 +320,8 @@ http://stackoverflow.com/questions/6269420
 @import "datepicker";
 /* Act As */
 @import "actas";
+/* Updated Feeds */
+@import "updated_feeds";
 
 /* Academics */
 @import "academics";

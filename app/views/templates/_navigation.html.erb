@@ -7,4 +7,7 @@
     </li>
     <li data-ng-class="{true:'active'}[_controller_name=='CampusController']"><a href="/campus" data-ng-click="off_canvas_menu._show=false"><i class="icon-th-large"></i>My Campus</a></li>
   </ul>
+  <div class="cc-updated-feeds ng-cloak" data-ng-controller="UpdatedFeedsController" data-ng-show="has_updates">
+    New data is available. <button class="cc-button" data-ng-click="refreshFeeds()">Load</button>
+  </div>
 </div>
