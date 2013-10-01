@@ -291,6 +291,14 @@ button {
   background-color: $cc-color-main-background;
 }
 
+/* Row collapse bug by foundation */
+.row.collapse {
+  .column, .columns {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 /*
 Read more about why we're using @import instead of require at
 http://stackoverflow.com/questions/6269420
