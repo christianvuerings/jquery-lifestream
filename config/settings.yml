@@ -149,7 +149,6 @@ cache:
   maximum_expires_in: <%= 29.days %>
   race_condition_ttl: <%= 10.seconds %>
   stale_connection_flush_interval: <%= 30.seconds %>
-  feed_update_refresh_interval: <%= 30.seconds %>
   expiration:
     default: <%= 35.minutes %>
     HotPlate: <%= 2.minutes %>
