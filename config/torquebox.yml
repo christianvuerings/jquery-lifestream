@@ -19,5 +19,5 @@ messaging:
       concurrency: 1
   /queues/feed_changed:
     FeedUpdateWhiteboard:
-      singleton: true
+      singleton: false
 
