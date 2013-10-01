@@ -5,7 +5,7 @@ class FeedUpdateWhiteboard < TorqueBox::Messaging::MessageProcessor
 
   def on_message(body)
     unless body && body[:feed]
-      logger.debug "Got empty TorqueBox message; skipping"
+      logger.warn "Got empty TorqueBox message; skipping"
       return
     end
     feed_name = body[:feed]
@@ -15,7 +15,7 @@ class FeedUpdateWhiteboard < TorqueBox::Messaging::MessageProcessor
       return
     end
 
-    logger.debug "Processing feed_changed message: body = #{body.inspect}"
+    logger.warn "Processing feed_changed message: body = #{body.inspect}"
     uid = body[:uid]
     whiteboard = self.class.get_whiteboard(uid)
     last_updated = feed_class.get_last_modified(uid)
