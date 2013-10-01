@@ -56,6 +56,7 @@ describe MyAcademics::Telebears do
       its([:telebears]) { should_not be_blank }
       it { subject[:telebears][:term].should eq("Fall") }
       it { subject[:telebears][:year].should eq(2013) }
+      it { subject[:telebears][:slug].should eq("fall-2013") }
       it { subject[:telebears][:adviser_code_required][:required].should be_true }
       it { subject[:telebears][:adviser_code_required][:message].should_not be_include("CalSO") }
       it { subject[:telebears][:phases].length.should eq(2)}
