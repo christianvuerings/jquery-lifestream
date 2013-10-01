@@ -18,6 +18,14 @@
 .cc-clearfix {
   clear: both;
 }
+.cc-clearfix-container:before,
+.cc-clearfix-container:after {
+    content: " ";
+    display: table;
+}
+.cc-clearfix-container:after {
+    clear: both;
+}
 .cc-ellipsis {
   display: block;
   overflow: hidden;
@@ -29,6 +37,11 @@
 }
 .cc-left {
   float: left;
+}
+.cc-loading {
+  i {
+    margin-right: 5px;
+  }
 }
 .cc-required-field-indicator {
   color: $cc-color-red;

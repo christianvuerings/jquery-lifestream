@@ -4,7 +4,7 @@
   /**
    * Academics controller
    */
-  calcentral.controller('AcademicsController', ['apiService', '$http', '$routeParams', '$scope', function(apiService, $http, $routeParams, $scope) {
+  calcentral.controller('AcademicsController', ['apiService', '$http', '$routeParams', '$scope', '$q', function(apiService, $http, $routeParams, $scope, $q) {
 
     apiService.util.setTitle('My Academics');
 
@@ -270,7 +270,9 @@
     };
 
     $scope.addTelebearsAppointment = function(phasesArray) {
-      for(var i=0; i < phasesArray.length; i++) {
+      var phases = [];
+      $scope.telebears_appointment_loading = 'Process';
+      for (var i = 0; i < phasesArray.length; i++) {
         var payload = {
           'summary': phasesArray[i].period,
           'start': {
@@ -279,9 +281,14 @@
           'end': {
             'epoch': phasesArray[i].endTime.epoch
           }
-        }
-        $http.post('/api/my/event', payload);
+        };
+        phases.push($http.post('/api/my/event', payload));
       }
+      $q.all(phases).then(function(results) {
+        $scope.telebears_appointment_loading = 'Success';
+      }, function(error_results) {
+        $scope.telebears_appointment_loading = 'Error';
+      });
     };
 
     $scope.hideDisclaimer = true;
@@ -341,7 +348,7 @@
       if (isAuthenticated) {
         $scope.can_view_academics = $scope.api.user.profile.student_info.has_academics_tab;
         $http.get('/api/my/academics').success(parseAcademics);
-//        $http.get('/dummy/json/academics.json').success(parseAcademics);
+        //$http.get('/dummy/json/academics.json').success(parseAcademics);
       }
     });
 
