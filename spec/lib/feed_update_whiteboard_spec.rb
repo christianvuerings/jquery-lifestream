@@ -8,7 +8,7 @@ describe "FeedUpdateWhiteboard" do
 
   it "should save the status of a mock UserAPI update event" do
     @board.on_message("1234")
-    saved = Rails.cache.read(FeedUpdateWhiteboard.cache_key("1234"))
+    saved = FeedUpdateWhiteboard.get_whiteboard("1234")
     saved["UserApi"].should_not be_nil
   end
 
