@@ -6,12 +6,12 @@ module Calcentral
 
     def self.publish(queue_name, message = {})
       unless Settings.messaging.enabled
-        logger.debug "#{queue_name} disabled, not really sending message: #{message}"
+        logger.warn "#{queue_name} disabled, not really sending message: #{message}"
         return
       end
       queue = self.get_queue queue_name
-      logger.debug "#{queue_name} sending message: #{message}"
-      queue.publish(message, {ttl: 5000})
+      logger.warn "#{queue_name} sending message: #{message}"
+      queue.publish(message, {ttl: 10000, persistent: false})
     end
 
     private

@@ -9,9 +9,9 @@ jobs:
 
 queues:
   /queues/warmup_request:
-    durable: true
+    durable: false
   /queues/feed_changed:
-    durable: true
+    durable: false
 
 messaging:
   /queues/warmup_request:
