@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/sis_course_id:CRS:2013-D-757999",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/sis_course_id:CRS:2013-D-757999?include%5B%5D=term",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -94,6 +94,13 @@
             "public_syllabus": false,
             "storage_quota_mb": 1024,
             "hide_final_grades": false,
+            "term": {
+              "end_at": "2013-12-23T08:00:00Z",
+              "id": 4821,
+              "name": "Fall 2013",
+              "start_at": "2013-08-22T07:00:00Z",
+              "sis_term_id": "TERM:2013-D"
+            },
             "apply_assignment_group_weights": false,
             "calendar": {
               "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_xyz.ics"

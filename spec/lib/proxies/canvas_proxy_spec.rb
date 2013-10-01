@@ -33,6 +33,8 @@ describe CanvasProxy do
     courses = JSON.parse(response.body)
     courses.size.should > 0
     courses[0]['course_code'].should_not be_nil
+    courses[0]['term'].should_not be_nil
+    courses[0]['term']['name'].should_not be_nil
   end
 
   it "should get the upcoming_events feed for a known user", :testext => true do
