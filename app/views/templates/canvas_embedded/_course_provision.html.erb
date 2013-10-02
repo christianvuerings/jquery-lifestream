@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/canvas_embedded/course_provision.html">
-  <div>
+  <div class="cc-page-course-provision">
 
     <div>
       <form data-ng-show="is_admin" data-ng-submit="fetchFeed()" id="cc-page-provision-actas-form">
@@ -43,7 +43,7 @@
                                id="cc-page-provision-checkbox-{{$index}}"
                                data-ng-model="section.selected"
                         >
-                        <label for="cc-page-provision-checkbox-{{$index}}">
+                        <label for="cc-page-provision-checkbox-{{$index}}" class="cc-provision-section-label">
                           {{course.course_number}} {{section.section_label}} ({{section.ccn}})
                         </label>
                       </div>
