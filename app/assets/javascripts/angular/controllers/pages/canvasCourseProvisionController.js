@@ -1,27 +1,31 @@
-(function (calcentral) {
+(function(calcentral) {
   'use strict';
 
   /**
    * Canvas course provisioning LTI app controller
    */
-  calcentral.controller('CanvasCourseProvisionController', ['apiService', '$http', '$routeParams', '$scope', '$window', function (apiService, $http, $routeParams, $scope, $window) {
+  calcentral.controller('CanvasCourseProvisionController', ['apiService', '$http', '$scope', '$window', function (apiService, $http, $scope, $window) {
     apiService.util.setTitle('bCourses Course Provision');
 
     /**
      * Post a message to the parent
      * @param {String|Object} message Message you want to send over.
      */
-    var postMessage = function(message) {
+    /*var postMessage = function(message) {
       if ($window.parent) {
         $window.parent.postMessage(message, '*');
       }
-    };
+    };*/
 
-    var postHeight = function() {
+    /**
+     * TODO - use postHeight when you're changing the page height.
+     * With this particular widget we could perhaps have a default height?
+     */
+    /*var postHeight = function() {
       postMessage({
         height: document.body.scrollHeight
       });
-    };
+    };*/
 
     $scope.courseSiteCreated = function(data) {
       angular.extend($scope, data);
@@ -45,7 +49,7 @@
           new_course.instructor_id = $scope.acting_as;
         }
         angular.extend($scope, {
-          current_workflow_step: "created",
+          current_workflow_step: 'created',
           _is_loading: true
         });
         $http.post('/api/academics/canvas/course_provision/create', new_course)
@@ -56,7 +60,7 @@
 
     $scope.fetchFeed = function() {
       angular.extend($scope, {
-        current_workflow_step: "selecting",
+        current_workflow_step: 'selecting',
         _is_loading: true,
         created_status: false
       });
@@ -69,7 +73,7 @@
       $http.get(feed_url).success(function(data) {
         angular.extend($scope, data);
         if ($scope.teaching_semesters && $scope.teaching_semesters.length > 0) {
-          $scope.switchSemester($scope.teaching_semesters[0])
+          $scope.switchSemester($scope.teaching_semesters[0]);
         }
       });
     };

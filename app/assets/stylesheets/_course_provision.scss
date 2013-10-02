@@ -1,12 +1,48 @@
 .cc-page-course-provision {
-  background: $cc-color-white;
-  padding: 20px;
-  overflow: hidden;
+  padding: 10px 20px;
 
-  .cc-provision-section-label {
-    display:inline;
+  .cc-page-provision-actas-form {
+    background: $cc-color-white;
+    input[type="text"] {
+      margin-right: 10px;
+      padding: 13px 5px 12px;
+      width: 140px;
+    }
+  }
+
+  .cc-page-provision-choices {
+    overflow: hidden;
+    li {
+      border-left: 1px solid $cc-color-popover-border;
+      max-width: 250px;
+      float: left;
+      padding: 15px;
+      width: 50%;
+      &:first-child {
+        border: none;
+      }
+    }
+  }
+
+  .cc-page-provision-feedback {
+    padding: 5px 0 15px;
+    i {
+      margin-right: 5px;
+    }
+    > div {
+      margin-top: 5px;
+    }
+  }
+
+  .cc-page-provision-section-label {
+    display: inline;
     margin-left: 1em;
     text-align: left;
+  }
+
+  .cc-page-provision-margin {
+    margin: 0 0 10px;
+    overflow: hidden;
   }
 
 }

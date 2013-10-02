@@ -1,89 +1,100 @@
 <script type="text/ng-template" id="templates/canvas_embedded/course_provision.html">
   <div class="cc-page-course-provision">
 
-    <div>
-      <form data-ng-show="is_admin" data-ng-submit="fetchFeed()" id="cc-page-provision-actas-form">
-        <input class="cc-left" id="cc-provision-act-as-uid" placeholder="Instructor UID" data-ng-model="acting_as"/>
-        <button class="cc-button cc-button-blue" type="submit">As instructor</button>
-      </form>
-    </div>
+    <form data-ng-show="is_admin" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
+      <input class="cc-left" placeholder="Instructor UID" data-ng-model="acting_as" type="text" />
+      <button class="cc-button cc-button-blue" type="submit">As instructor</button>
+    </form>
 
-    <h1>Create a Course Site</h1>
+    <div class="cc-widget cc-widget-last">
+      <div class="cc-widget-title">
+        <h2>Create a Course Site</h2>
+      </div>
 
-    <div data-ng-show="current_workflow_step === 'selecting'">
-      <div data-cc-spinner-directive>
-        <div data-ng-hide="teaching_semesters && teaching_semesters.length > 0">
-          No courses found.
-        </div>
-        <div data-ng-show="teaching_semesters && teaching_semesters.length > 0">
-          <div class="row collapse">
-            <div class="large-10 large-centered columns">
-              <ul class="cc-button-group cc-even-3" role="tablist">
-                <li data-ng-repeat="semester in teaching_semesters">
-                  <button class="cc-button"
-                          data-ng-click="switchSemester(semester)"
-                          data-ng-class="{'cc-button-selected':(current_semester==semester.slug)}"
-                          aria-selected="{{current_semester==semester.slug}}"
-                          role="tab"
-                          data-ng-bind="semester.name">
-                  </button>
-                </li>
-              </ul>
+      <div class="cc-widget-padding">
+
+        <div data-ng-show="current_workflow_step === 'selecting'">
+          <div data-cc-spinner-directive>
+            <div data-ng-hide="teaching_semesters && teaching_semesters.length > 0">
+              No courses found.
             </div>
-          </div>
-          <form data-ng-submit="createCourseSite(selected_courses)" id="cc-page-provision-select-section-form">
-            <div>
-              <ul>
-                <li data-ng-repeat="course in selected_courses">
-                  <strong>{{course.title}} ({{course.course_number}})</strong>
-                  <ul>
-                    <li data-ng-repeat="section in course.sections">
-                      <div>
-                        <input type="checkbox"
-                               id="cc-page-provision-checkbox-{{$index}}"
-                               data-ng-model="section.selected"
-                        >
-                        <label for="cc-page-provision-checkbox-{{$index}}" class="cc-provision-section-label">
-                          {{course.course_number}} {{section.section_label}} ({{section.ccn}})
-                        </label>
-                      </div>
+            <div data-ng-show="teaching_semesters && teaching_semesters.length > 0">
+              <div class="row collapse">
+                <div class="large-5 columns">
+                  <ul class="cc-button-group cc-even-{{teaching_semesters.length}} cc-page-provision-margin" role="tablist">
+                    <li data-ng-repeat="semester in teaching_semesters">
+                      <button class="cc-button"
+                              data-ng-click="switchSemester(semester)"
+                              data-ng-class="{'cc-button-selected':(current_semester==semester.slug)}"
+                              aria-selected="{{current_semester==semester.slug}}"
+                              role="tab"
+                              data-ng-bind="semester.name">
+                      </button>
                     </li>
                   </ul>
+                </div>
+              </div>
+              <form data-ng-submit="createCourseSite(selected_courses)">
+                <div>
+                  <ul class="cc-page-provision-margin">
+                    <li data-ng-repeat="course in selected_courses">
+                      <strong>{{course.title}} ({{course.course_number}})</strong>
+                      <ul>
+                        <li data-ng-repeat="section in course.sections">
+                          <div>
+                            <input type="checkbox"
+                                   id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
+                                   data-ng-model="section.selected">
+                            <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}" class="cc-page-provision-section-label">
+                              {{course.course_number}} {{section.section_label}} ({{section.ccn}})
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <button class="cc-button cc-button-blue" type="submit">Create Course Site</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div data-ng-show="current_workflow_step === 'created'">
+          <div data-ng-hide="created_status">
+            <p>Generating new course site for selected sections....</p>
+          </div>
+          <div data-cc-spinner-directive>
+            <div data-ng-show="created_status">
+              <div class="cc-page-provision-feedback">
+                {{created_status}} : "{{created_course_site_short_name}}" site created
+                <i class="cc-left"
+                 data-ng-class="{'icon-exclamation-sign': created_status !== 'Success',
+                 'icon-ok-sign': created_status === 'Success'}"></i>
+                 <div data-ng-show="created_message">{{created_message}}</div>
+              </div>
+              <strong>
+                You may now:
+              </strong>
+              <ul class="cc-page-provision-choices">
+                <li>
+                  Go to <a data-ng-href="{{created_course_site_url}}" data-ng-bind="created_course_site_short_name"></a> to finish setting up your site.
+                </li>
+                <li>
+                  Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a>
                 </li>
               </ul>
+              <div>
+                <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()">Create another Course Site</button>
+              </div>
             </div>
-            <div>
-              <button class="cc-button cc-button-blue" type="submit">Create Course Site</button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div data-ng-show="current_workflow_step === 'created'" id="cc-page-provision-created">
-      <div data-ng-hide="created_status">
-        <p>Generating new course site for selected sections....</p>
       </div>
-      <div data-cc-spinner-directive>
-        <div data-ng-show="created_status" id="cc-page-provision-created-inner">
-          <div>{{created_status}} : "{{created_course_site_short_name}}" site created</div>
-          <div data-ng-show="created_message">{{created_message}}</div>
-          <div>
-            You may now:
-          </div>
-          <div>
-            <div id="cc-page-provision-created-url">
-              Go to <a data-ng-href="{{created_course_site_url}}" data-ng-bind="created_course_site_short_name"></a> to finish setting up your site.
-            </div>
-            <div id="cc-page-provision-created-all-url">
-              Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a>
-            </div>
-          </div>
-          <div>
-            <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()">Create another Course Site</button>
-          </div>
-        </div>
-      </div>
+
     </div>
 
   </div>
