@@ -8,24 +8,8 @@
     apiService.util.setTitle('bCourses Course Provision');
 
     /**
-     * Post a message to the parent
-     * @param {String|Object} message Message you want to send over.
+     * TODO When this app is embedded in bCourses, add iframe sizing (as in the Roster Photos app).
      */
-    /*var postMessage = function(message) {
-      if ($window.parent) {
-        $window.parent.postMessage(message, '*');
-      }
-    };*/
-
-    /**
-     * TODO - use postHeight when you're changing the page height.
-     * With this particular widget we could perhaps have a default height?
-     */
-    /*var postHeight = function() {
-      postMessage({
-        height: document.body.scrollHeight
-      });
-    };*/
 
     $scope.courseSiteCreated = function(data) {
       angular.extend($scope, data);

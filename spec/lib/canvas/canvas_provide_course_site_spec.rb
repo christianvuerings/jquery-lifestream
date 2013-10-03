@@ -100,8 +100,8 @@ describe CanvasProvideCourseSite do
     term_yr = '2013'
     term_cd = 'D'
     CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
-    selected_courses_list = [
-        {:course_number => "ENGIN 7",
+    course_data = {
+        :course_number => "ENGIN 7",
          :dept => "ENGIN",
          :slug => "engin-7",
          :title =>
@@ -112,10 +112,12 @@ describe CanvasProvideCourseSite do
                :instruction_format => "DIS",
                :is_primary_section => false,
                :section_label => "DIS 102",
-               :section_number => "102"}]}
-    ]
+               :section_number => "102"}]
+    }
     worker = CanvasProvideCourseSite.new(user_id: rand(99999).to_s)
-    canvas_course = worker.generate_course_site_definition(term_yr, term_cd, selected_courses_list)
+    canvas_course = worker.generate_course_site_definition(term_yr, term_cd,
+      worker.subaccount_for_department(course_data[:dept]),
+      course_data)
     canvas_course['course_id'].present?.should be_true
     canvas_course['short_name'].should == 'ENGIN 7 DIS 102'
     canvas_course['long_name'].should == 'Introduction to Computer Programming for Scientists and Engineers'
@@ -128,8 +130,8 @@ describe CanvasProvideCourseSite do
     term_yr = '2013'
     term_cd = 'D'
     CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
-    selected_courses_list = [
-        {:course_number => "ENGIN 7",
+    course_data = {
+        :course_number => "ENGIN 7",
          :dept => "ENGIN",
          :slug => "engin-7",
          :title =>
@@ -140,14 +142,15 @@ describe CanvasProvideCourseSite do
                :instruction_format => "DIS",
                :is_primary_section => false,
                :section_label => "DIS 102",
-               :section_number => "102"}]}
-    ]
+               :section_number => "102"}]
+    }
     worker = CanvasProvideCourseSite.new(user_id: rand(99999).to_s)
-    first_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, selected_courses_list)
+    subaccount = worker.subaccount_for_department(course_data[:dept])
+    first_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
     first_course_sis_id = first_canvas_course['course_id']
     CanvasExistenceCheckProxy.any_instance.should_receive(:course_defined?).with(first_course_sis_id).and_return(true)
     CanvasExistenceCheckProxy.any_instance.should_receive(:course_defined?).with(anything).and_return(false)
-    second_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, selected_courses_list)
+    second_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
     second_course_sis_id = second_canvas_course['course_id']
     second_course_sis_id.present?.should be_true
     second_course_sis_id.should_not == first_course_sis_id

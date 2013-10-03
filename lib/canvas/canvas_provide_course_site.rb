@@ -56,49 +56,69 @@ class CanvasProvideCourseSite < CanvasCsv
       # sections.
       campus_courses = filter_courses_by_ccns(candidate_courses_list, term_slug, ccns)
 
-      # Create Canvas course site.
-      # Because the course's term is not included in the "Create a new course" API, we must use CSV import.
-      if (canvas_course_row = generate_course_site_definition(term[:yr], term[:cd], campus_courses))
-        sis_course_id = canvas_course_row['course_id']
-        course_site_short_name = canvas_course_row['short_name']
+      if campus_courses.present?
+        # Derive course site SIS ID, course code (short name), and title from first section's course info.
+        course_source = campus_courses[0]
+        department = course_source[:dept]
 
-        # Add Canvas course sections to match the source sections. We could use the "Create course section" API,
-        # but to reduce API usage we instead use CSV import.
-        if (canvas_section_rows = generate_section_definitions(term[:yr], term[:cd], canvas_course_row['course_id'], campus_courses))
-          # Add current instructor so that link to course site will work.
-          # TODO Need to skip this when we support direct administrative creation of course sites based on sections.
-          # TODO Can eliminate this step if we import all official instructors for the sections.
-          user_rows = accumulate_user_data([@uid], [])
-          membership_rows = generate_course_memberships(canvas_section_rows, user_rows[0])
+        # Check that we have a departmental location for this course.
+        if (subaccount = subaccount_for_department(department))
+          # Create Canvas course site.
+          # Because the course's term is not included in the "Create a new course" API, we must use CSV import.
+          if (canvas_course_row = generate_course_site_definition(term[:yr], term[:cd], subaccount, course_source))
+            sis_course_id = canvas_course_row['course_id']
+            course_site_short_name = canvas_course_row['short_name']
 
-          outcome = import_course(canvas_course_row, canvas_section_rows, user_rows, membership_rows)
-          if outcome[:created_status] != 'ERROR'
-            # TODO Perform initial import of official campus instructors for these sections.
+            # Add Canvas course sections to match the source sections. We could use the "Create course section" API,
+            # but to reduce API usage we instead use CSV import.
+            if (canvas_section_rows = generate_section_definitions(term[:yr], term[:cd], canvas_course_row['course_id'], campus_courses))
+              # Add current instructor so that link to course site will work.
+              # TODO Need to skip this when we support direct administrative creation of course sites based on sections.
+              # TODO Can eliminate this step if we import all official instructors for the sections.
+              user_rows = accumulate_user_data([@uid], [])
+              membership_rows = generate_course_memberships(canvas_section_rows, user_rows[0])
 
-            # TODO Perform initial import of official campus student enrollments.
+              outcome = import_course(canvas_course_row, canvas_section_rows, user_rows, membership_rows)
+              if outcome[:created_status] != 'ERROR'
+                # TODO Perform initial import of official campus instructors for these sections.
 
-            if (found_url = course_site_url(sis_course_id))
-              outcome['created_course_site_url'] = found_url
-              outcome['created_course_site_short_name'] = course_site_short_name
-            else
-              outcome = {
-                  created_status: 'ERROR',
-                  created_message: 'Unexpected error creating course site!'
-              }
+                # TODO Perform initial import of official campus student enrollments.
+
+                if (found_url = course_site_url(sis_course_id))
+                  outcome['created_course_site_url'] = found_url
+                  outcome['created_course_site_short_name'] = course_site_short_name
+                else
+                  outcome = {
+                      created_status: 'ERROR',
+                      created_message: "Unexpected error creating #{course_site_short_name} course site!"
+                  }
+                end
+              end
+              # TODO Expire user's Canvas-related caches to maintain UX consistency.
             end
+          else
+            outcome = {
+                created_status: 'ERROR',
+                created_message: 'Could not define new course site!'
+            }
           end
-          # TODO Expire user's Canvas-related caches to maintain UX consistency.
+        else
+          outcome = {
+              created_status: 'ERROR',
+              created_message: "Could not find bCourses account for department #{department}"
+          }
         end
       else
         outcome = {
-            status: 'ERROR',
-            message: 'No courses found!'
+            created_status: 'ERROR',
+            created_message: 'No courses found!'
         }
       end
+
     else
       outcome = {
-          status: 'ERROR',
-          message: 'Invalid term specified!'
+          created_status: 'ERROR',
+          created_message: 'Invalid term specified!'
       }
     end
     outcome
@@ -128,7 +148,6 @@ class CanvasProvideCourseSite < CanvasCsv
     filtered
   end
 
-
   # We add the instructor as a teacher in the default section of the course. This should
   # be enough to grant site access before a full campus data refresh is done.
   def generate_course_memberships(section_rows, instructor_row)
@@ -145,30 +164,20 @@ class CanvasProvideCourseSite < CanvasCsv
     enrollments
   end
 
-  def generate_course_site_definition(term_yr, term_cd, campus_section_data)
-    if !campus_section_data.empty?
-      existence_proxy = CanvasExistenceCheckProxy.new
-      # Derive course site SIS ID, course code (short name), and title from first section's course info.
-      source = campus_section_data[0]
-      subaccount = "ACCT:#{source[:dept]}"
-      if !existence_proxy.account_defined?(subaccount)
-        # There is no programmatic way to create a subaccount in Canvas.
-        logger.error("Cannot provision course site; bCourses account #{subaccount} does not exist!")
-        return
-      end
-      first_section = source[:sections][0]
-      if (sis_id = generate_unique_sis_course_id(existence_proxy, source[:slug], term_yr, term_cd))
-        {
-            'course_id' => sis_id,
-            'short_name' => "#{source[:course_number]} #{first_section[:section_label]}",
-            'long_name' => source[:title],
-            'account_id' => subaccount,
-            'term_id' => CanvasProxy.term_to_sis_id(term_yr, term_cd),
-            'status' => 'active'
-        }
-      else
-        logger.error("Unable to generate unique Canvas course SIS ID for #{source}; will NOT create site")
-      end
+  def generate_course_site_definition(term_yr, term_cd, subaccount, campus_course_data)
+    first_section = campus_course_data[:sections][0]
+    if (sis_id = generate_unique_sis_course_id(CanvasExistenceCheckProxy.new, campus_course_data[:slug], term_yr, term_cd))
+      {
+          'course_id' => sis_id,
+          'short_name' => "#{campus_course_data[:course_number]} #{first_section[:section_label]}",
+          'long_name' => campus_course_data[:title],
+          'account_id' => subaccount,
+          'term_id' => CanvasProxy.term_to_sis_id(term_yr, term_cd),
+          'status' => 'active'
+      }
+    else
+      logger.error("Unable to generate unique Canvas course SIS ID for #{source}; will NOT create site")
+      nil
     end
   end
 
@@ -263,7 +272,7 @@ class CanvasProvideCourseSite < CanvasCsv
         logger.error("Imported course from #{courses_csv_file} but sections did not import from #{sections_csv_file}")
         {
             created_status: 'WARNING',
-            created_message: 'Course site was created without any sections!'
+            created_message: 'Course site was created without any sections or members!'
         }
       end
     else
@@ -271,6 +280,17 @@ class CanvasProvideCourseSite < CanvasCsv
           created_status: 'ERROR',
           created_message: 'Course site could not be created!'
       }
+    end
+  end
+
+  def subaccount_for_department(department)
+    subaccount = "ACCT:#{department}"
+    if !CanvasExistenceCheckProxy.new.account_defined?(subaccount)
+      # There is no programmatic way to create a subaccount in Canvas.
+      logger.error("Cannot provision course site; bCourses account #{subaccount} does not exist!")
+      nil
+    else
+      subaccount
     end
   end
 
