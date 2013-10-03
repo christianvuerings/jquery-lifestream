@@ -221,6 +221,11 @@ button {
     width: 100%;
   }
 }
+.cc-even-2 {
+  li {
+    width: 50%;
+  }
+}
 .cc-even-3 {
   li {
     width: 33.33333%;
@@ -346,6 +351,9 @@ http://stackoverflow.com/questions/6269420
 
 /* Roster */
 @import "roster";
+
+/* My Finances */
+@import "myfinances";
 
 /* Settings */
 @import "settings";
