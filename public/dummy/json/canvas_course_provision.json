@@ -1,0 +1,28 @@
+{
+  "is_admin": true,
+  "acting_as": "192517",
+  "teaching_semesters": [
+    {
+      "name": "Fall 2013",
+      "slug": "fall-2013",
+      "classes": [
+        {
+          "course_number": "BIO 123A",
+          "dept": "BIO",
+          "role": "Instructor",
+          "slug": "bio-123a",
+          "title": "General Biology and the Cambrian Biota",
+          "sections": [
+            {
+              "ccn": "27607",
+              "instruction_format": "LEC",
+              "section_label": "LEC 003",
+              "section_number": "003",
+              "is_primary_section": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/sections/sis_section_id:SEC:2013-D-757999",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Tue, 17 Sep 2013 16:50:13 GMT"
+          ],
+          "etag": [
+            "\"a8f874f6a49ac90d3c7919ed4c8dba34\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=.--1_XLzHGTP6g.-.UjiIRQ; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;s=19;c=cluster19;z=us-east-1c;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "252eccc0-01e7-0131-ad9e-02f885576c21"
+          ],
+          "x-runtime": [
+            "76"
+          ],
+          "x-session-id": [
+            "d544e81c9a23823b3d3e48033e20b92d"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "152"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "course_id": 1121,
+            "end_at": null,
+            "id": 1593,
+            "name": "STAT 5432 LEC 001",
+            "nonxlist_course_id": null,
+            "start_at": null,
+            "sis_section_id": "SEC:2013-D-757999"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 17 Sep 2013 16:50:13 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

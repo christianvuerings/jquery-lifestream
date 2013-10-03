@@ -2,11 +2,11 @@
   'use strict';
 
   /**
-   * Canvas embedded LTI tool controller
+   * Canvas roster photos LTI app controller
    */
-  calcentral.controller('CanvasEmbeddedController', ['apiService', '$http', '$routeParams', '$scope', '$window', function (apiService, $http, $routeParams, $scope, $window) {
+  calcentral.controller('CanvasRosterController', ['apiService', '$http', '$routeParams', '$scope', '$window', function (apiService, $http, $routeParams, $scope, $window) {
 
-    apiService.util.setTitle('bCourses Embedded View');
+    apiService.util.setTitle('bCourses Roster Photos');
 
     /**
      * Post a message to the parent

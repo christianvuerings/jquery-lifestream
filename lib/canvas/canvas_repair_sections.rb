@@ -1,4 +1,4 @@
-class CanvasRepairSections < CanvasMaintenance
+class CanvasRepairSections < CanvasCsv
   include ClassLogger
 
   def repair_sis_ids_for_term(term_id)

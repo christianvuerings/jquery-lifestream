@@ -1,0 +1,114 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/sis_course_id:CRS:2013-D-757999",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Tue, 17 Sep 2013 16:50:08 GMT"
+          ],
+          "etag": [
+            "\"72bc2741809e62d10ba7e093cf478913\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=UMvSfuYUXIU8ayGXCUVozA.--Fo..UjiIQQ; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;s=19;c=cluster19;z=us-east-1c;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "22b3eb20-01e7-0131-ad9e-02f885576c21"
+          ],
+          "x-runtime": [
+            "400"
+          ],
+          "x-session-id": [
+            "b268f18bf2facccca9f811d741824f2f"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "497"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "account_id": 128847,
+            "course_code": "STAT 5432 Fa2013",
+            "default_view": "feed",
+            "id": 1121,
+            "name": "Whither Statistics",
+            "start_at": "2013-08-29T22:28:26-07:00",
+            "end_at": null,
+            "public_syllabus": false,
+            "storage_quota_mb": 1024,
+            "hide_final_grades": false,
+            "apply_assignment_group_weights": false,
+            "calendar": {
+              "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_xyz.ics"
+            },
+            "sis_course_id": "CRS:2013-D-757999",
+            "enrollments": [
+
+            ],
+            "workflow_state": "available"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 17 Sep 2013 16:50:09 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

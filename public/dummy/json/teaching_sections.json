@@ -1,0 +1,68 @@
+{
+  "name": "Summer 2013",
+  "slug": "summer-2013",
+  "classes": [
+    {
+      "course_number": "BIO 123A",
+      "role": "Instructor",
+      "slug": "bio-123a",
+      "title": "General Biology and the Cambrian Biota",
+      "class_sites": [
+        {
+          "id": "11866397",
+          "short_description": "Confessions of a Biotician",
+          "name": "BIO 123A Everyone",
+          "emitter": "bCourses",
+          "color_class": "canvas-class",
+          "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397",
+          "sections": [
+            {
+              "ccn": "27606"
+            },
+            {
+              "ccn": "27619"
+            },
+            {
+              "ccn": "49713"
+            }
+          ]
+        },
+        {
+          "id": "de1f491a-525e-4848-952b-11866397",
+          "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
+          "emitter": "bSpace",
+          "name": "Bio 123A DIS 008 Su13",
+          "color_class": "bspace-class",
+          "sections": [
+            {
+              "ccn": "49713"
+            }
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "ccn": "27606",
+          "instruction_format": "LEC",
+          "section_label": "LEC 002",
+          "section_number": "002",
+          "is_primary_section": true
+        },
+        {
+          "ccn": "27619",
+          "instruction_format": "LAB",
+          "section_label": "LAB 201",
+          "section_number": "201",
+          "is_primary_section": false
+        },
+        {
+          "section_label": "DIS 008",
+          "ccn": "49713",
+          "instruction_format": "DIS",
+          "section_number": "008",
+          "is_primary_section": false
+        }
+      ]
+     }
+  ]
+}

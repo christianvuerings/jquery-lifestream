@@ -1,0 +1,104 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/sis_account_id:ACCT:L%20&%20S",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Tue, 17 Sep 2013 20:56:21 GMT"
+          ],
+          "etag": [
+            "\"5dddd339255153d034b8921d6e362f8d\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=.---..UjjB9g; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=190000000090242;s=19;c=cluster19;z=us-east-1c;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "87f88d90-0209-0131-ae47-02f8856d54b5"
+          ],
+          "x-runtime": [
+            "405"
+          ],
+          "x-session-id": [
+            "57a9cb62d86df9d4092f93ca91657a3a"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "258"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "id": 1845,
+            "name": "L & S",
+            "parent_account_id": 90242,
+            "root_account_id": 90242,
+            "default_storage_quota_mb": 1024,
+            "default_user_storage_quota_mb": 50,
+            "default_group_storage_quota_mb": 50,
+            "default_time_zone": "America/Denver",
+            "sis_account_id": "ACCT:L & S"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 17 Sep 2013 20:56:22 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

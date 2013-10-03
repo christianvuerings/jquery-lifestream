@@ -2,8 +2,7 @@
   'use strict';
 
   /**
-   * This directive will make sure that external links are always opened in a new window
-   * To make it more accessible, we also add an extra message to each element.
+   * This attribute will replace the element by a spinner until data is returned in an HTTP respsonse.
    */
   angular.module('calcentral.directives').directive('ccSpinnerDirective', function() {
     return {

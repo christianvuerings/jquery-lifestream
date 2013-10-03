@@ -26,6 +26,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       it { subject[0][:classes].length.should eq 1 }
       it { subject[0][:classes][0][:course_number].should eq "BIOLOGY 1A" }
       it { subject[0][:classes][0][:grade_option].should eq "P/NP" }
+      it { subject[0][:classes][0][:dept].should eq "BIOLOGY" }
       it { subject[0][:classes][0][:sections].length.should eq 1 }
       it { subject[0][:classes][0][:sections][0][:ccn].should eq "7309" }
       it { subject[0][:classes][0][:sections][0][:waitlist_position].should eq "42" }
@@ -38,6 +39,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       it { subject[3][:time_bucket].should eq 'past' }
       it { subject[2][:classes].length.should eq 2 }
       it { subject[2][:classes][0][:course_number].should eq "BIOLOGY 1A" }
+      it { subject[2][:classes][0][:dept].should eq "BIOLOGY" }
       it { subject[2][:classes][0][:sections].length.should eq 2 }
       it { subject[2][:classes][0][:sections][0][:ccn].should eq "7309" }
       it { subject[2][:classes][0][:sections][0][:schedules][0][:schedule].should eq "M 4:00P-5:00P" }
