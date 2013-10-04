@@ -44,6 +44,7 @@ class MyAcademics::Semesters
 
         class_info = {
             course_number: course[:course_code],
+            dept: course[:dept],
             grade: transcript[:grade],
             grade_option: grade_option,
             slug: course_to_slug(course[:dept], course[:catid]),

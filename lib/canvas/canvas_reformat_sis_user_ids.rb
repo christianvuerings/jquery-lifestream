@@ -1,4 +1,4 @@
-class CanvasReformatSisUserIds < CanvasMaintenance
+class CanvasReformatSisUserIds < CanvasCsv
   include ClassLogger
 
   def convert_all_sis_user_ids

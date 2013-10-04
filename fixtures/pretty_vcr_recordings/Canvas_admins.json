@@ -1,0 +1,137 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/admins?per_page=30",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Fri, 20 Sep 2013 21:25:55 GMT"
+          ],
+          "etag": [
+            "\"6ca9bae7de519eab7ce16183db767678\""
+          ],
+          "link": [
+            "<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/admins?page=1&per_page=30>; rel=\"current\",<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/admins?page=1&per_page=30>; rel=\"first\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=LIe-lEvjekK0kBUK4PD7Rg.7ayQ7EC8Zj5VD_0-fnI9xFLJncix2L9xDisTITerephmR_6YwSp9CNsxC5S-gT24Fa5ZUYH7GXPgwGRIkBMDbc3WvhS0_KZIYuGyPKqOLSA.RwdKrgfXs8hCDr2pyYpOIc7wIYA.Ujy9ZA; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=190000000090242;s=19;c=cluster19;z=us-east-1b;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "28a8ff30-0469-0131-923e-02f88540aa71"
+          ],
+          "x-runtime": [
+            "311"
+          ],
+          "x-session-id": [
+            "93c951c3c88133b8580bc4cce84aae1f"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "4177"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "id": 9122,
+              "role": "AccountAdmin",
+              "user": {
+                "id": 3075912,
+                "name": "Jon Hays",
+                "sortable_name": "Hays, Jon",
+                "short_name": "Jon Hays",
+                "sis_user_id": "323487",
+                "sis_login_id": "323487",
+                "login_id": "323487"
+              }
+            },
+            {
+              "id": 9682,
+              "role": "Support Admin",
+              "user": {
+                "id": 3113129,
+                "name": "Sage Adams",
+                "sortable_name": "Adams, Sage",
+                "short_name": "Sage Adams",
+                "sis_user_id": "972716",
+                "sis_login_id": "972716",
+                "login_id": "972716"
+              }
+            },
+            {
+              "id": 14874,
+              "role": "Developer Admin",
+              "user": {
+                "id": 3057507,
+                "name": "Eli Cochran",
+                "sortable_name": "Cochran, Eli",
+                "short_name": "Eli Cochran",
+                "sis_user_id": "322279",
+                "sis_login_id": "322279",
+                "login_id": "322279"
+              }
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 20 Sep 2013 21:25:56 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

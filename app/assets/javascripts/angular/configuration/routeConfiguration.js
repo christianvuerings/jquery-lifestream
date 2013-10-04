@@ -73,11 +73,15 @@
     }).
     when('/canvas/embedded/rosters', {
       templateUrl: 'templates/canvas_embedded/roster.html',
-      controller: 'CanvasEmbeddedController'
+      controller: 'CanvasRosterController'
     }).
     when('/canvas/rosters/:canvas_course_id', {
       templateUrl: 'templates/canvas_embedded/roster.html',
-      controller: 'CanvasEmbeddedController'
+      controller: 'CanvasRosterController'
+    }).
+    when('/canvas/course_provision', {
+      templateUrl: 'templates/canvas_embedded/course_provision.html',
+      controller: 'CanvasCourseProvisionController'
     }).
     // Redirect to a 404 page
     otherwise({

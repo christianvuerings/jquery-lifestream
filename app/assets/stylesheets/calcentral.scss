@@ -50,7 +50,7 @@ form {
     background: $cc-color-white;
     font-family: Arial;
     &[type="text"], &[type="password"], &[type="number"] {
-      border: transparent;
+      border: transparent 1px solid;
       font-size: 12px;
       width: 100%;
       &:focus {
@@ -221,6 +221,11 @@ button {
     width: 100%;
   }
 }
+.cc-even-1 {
+  li {
+    width: 100%;
+  }
+}
 .cc-even-2 {
   li {
     width: 50%;
@@ -229,6 +234,11 @@ button {
 .cc-even-3 {
   li {
     width: 33.33333%;
+  }
+}
+.cc-even-4 {
+  li {
+    width: 25%;
   }
 }
 
@@ -349,7 +359,8 @@ http://stackoverflow.com/questions/6269420
 /* Campus */
 @import "campus";
 
-/* Roster */
+/* Canvas external apps */
+@import "course_provision";
 @import "roster";
 
 /* My Finances */

@@ -75,13 +75,17 @@ class CanvasProxy < BaseProxy
   def self.current_sis_term_ids
     sis_term_ids = []
     Settings.canvas_proxy.current_terms_codes.each do |t|
-      sis_term_ids.push("TERM:#{t.term_yr}-#{t.term_cd}")
+      sis_term_ids.push(term_to_sis_id(t.term_yr, t.term_cd))
     end
     sis_term_ids
   end
 
   def self.sis_section_id_to_ccn_and_term(sis_term_id)
     parsed = /SEC:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])-(?<ccn>\d+).*/.match(sis_term_id)
+  end
+
+  def self.term_to_sis_id(term_yr, term_cd)
+    "TERM:#{term_yr}-#{term_cd}"
   end
 
   def next_page_params(response)

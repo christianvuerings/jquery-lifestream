@@ -454,6 +454,7 @@
       "classes": [
         {
           "course_number": "BIOLOGY 1A",
+          "dept": "BIOLOGY",
           "grade": null,
           "grade_option": "Letter",
           "slug": "biology-1a",
@@ -502,6 +503,7 @@
       "classes": [
         {
           "course_number": "BIOLOGY 1A",
+          "dept": "BIOLOGY",
           "grade": null,
           "grade_option": "Letter",
           "slug": "biology-1a",
@@ -557,6 +559,7 @@
         },
         {
           "course_number": "COG SCI C147",
+          "dept": "COG SCI",
           "grade": null,
           "grade_option": "Letter",
           "slug": "cog_sci-c147",
@@ -599,6 +602,7 @@
       "classes": [
         {
           "course_number": "BIOLOGY 1A",
+          "dept": "BIOLOGY",
           "grade": "B",
           "grade_option": "Letter",
           "slug": "biology-1a",
@@ -623,6 +627,7 @@
         },
         {
           "course_number": "COG SCI C147",
+          "dept": "COG SCI",
           "grade": "C+",
           "grade_option": "Letter",
           "is_primary_section": true,
@@ -655,6 +660,7 @@
       "classes": [
         {
           "course_number": "BIO 123A",
+          "dept": "BIO",
           "role": "GSI",
           "slug": "bio-123a",
           "title": "General Biology and the Cambrian Biota",
@@ -665,14 +671,30 @@
               "name": "BIO 123A Everyone",
               "emitter": "bCourses",
               "color_class": "canvas-class",
-              "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397"
+              "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397",
+              "sections": [
+                {
+                  "ccn": "27606"
+                },
+                {
+                  "ccn": "27619"
+                },
+                {
+                  "ccn": "49713"
+                }
+              ]
             },
             {
               "id": "de1f491a-525e-4848-952b-11866397",
               "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
               "emitter": "bSpace",
               "name": "Bio 123A DIS 008 Su13",
-              "color_class": "bspace-class"
+              "color_class": "bspace-class",
+              "sections": [
+                {
+                  "ccn": "49713"
+                }
+              ]
             }
           ],
           "sections": [
@@ -748,6 +770,7 @@
       "classes": [
         {
           "course_number": "BIO 123A",
+          "dept": "BIO",
           "role": "Instructor",
           "slug": "bio-123a",
           "title": "General Biology and the Cambrian Biota",

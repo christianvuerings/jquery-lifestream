@@ -15,24 +15,55 @@ class CanvasSisImportProxy < CanvasProxy
     end
   end
 
-  def post_enrollments(term_id, csv_file_path)
+  def import_all_term_enrollments(term_id, csv_file_path)
+    import_with_check(csv_file_path, '_sis_import_enrollments', "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
+  end
+
+  def import_courses(csv_file_path)
+    import_with_check(csv_file_path, '_sis_import_courses')
+  end
+
+  def import_enrollments(csv_file_path)
+    import_with_check(csv_file_path, '_sis_import_enrollments')
+  end
+
+  def import_sections(csv_file_path)
+    import_with_check(csv_file_path, '_sis_import_sections')
+  end
+
+  def import_users(csv_file_path)
+    import_with_check(csv_file_path, '_sis_import_users')
+  end
+
+  def import_with_check(csv_file_path, vcr_id, extra_params = '')
+    response = post_sis_import(csv_file_path, vcr_id, extra_params)
+    import_successful?(response)
+  end
+
+  def post_sis_import(csv_file_path, vcr_id, extra_params)
     upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv') }
-    url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}"
-    request_uncached(url, '_sis_import_enrollments', {
+    url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv#{extra_params}"
+    request_uncached(url, vcr_id, {
         method: :post,
         connection: @multipart_conn,
         body: upload_body
     })
   end
 
-  def post_users(csv_file_path)
-    upload_body = { attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv') }
-    url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv"
-    request_uncached(url, '_sis_import_users', {
-        method: :post,
-        connection: @multipart_conn,
-        body: upload_body
-    })
+  def import_successful?(response)
+    if response && response.status == 200
+      json = JSON.parse(response.body)
+      import_status = import_status(json["id"])
+      if import_was_successful?(import_status)
+        logger.debug("SIS import succeeded; status: #{import_status}")
+        true
+      else
+        logger.error("SIS import failed or incompletely processed; status: #{import_status}")
+        false
+      end
+    else
+      false
+    end
   end
 
   def generate_course_sis_id(canvas_course_id)

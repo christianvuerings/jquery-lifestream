@@ -21,6 +21,7 @@ class MyAcademics::Teaching
         course_slug = course_to_slug(course[:dept], course[:catid])
         teaching_semester[:classes] << {
             course_number: course[:course_code],
+            dept: course[:dept],
             slug: course_slug,
             title: course[:name],
             # TODO Settle role logic ("Instructor" vs. "GSI"), especially for non-grad-students who taught secondary sections.
