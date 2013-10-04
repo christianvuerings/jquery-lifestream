@@ -17,12 +17,7 @@ class UserApiController < ApplicationController
   end
 
   def mystatus
-    Rails.cache.fetch(
-      "flush_stale_connections_#{ServerRuntime.get_settings["hostname"]}",
-      :expires_in => Settings.cache.stale_connection_flush_interval) {
-      ActiveRecord::Base.connection_pool.clear_stale_cached_connections!
-      true
-    }
+    ActiveRecordHelper.clear_stale_connections
     if session[:user_id]
       # wrap UserVisit.record_session inside a cache lookup so that we have to write UserVisit records less often.
       self.class.fetch_from_cache session[:user_id] do
