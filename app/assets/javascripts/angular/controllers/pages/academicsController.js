@@ -259,13 +259,11 @@
 
       //show telebears appointment if the semester path matches the termYear + code from telebears
       $scope.telebears = null;
-      if (data.semesters && data.semesters.length > 1 && $routeParams.semester_slug) {
+      if (data.semesters && data.semesters.length > 1) {
         var current_semester = data.semesters.filter(function(value) {
           return value.time_bucket === "current";
         }).shift() || {};
-        if (data.telebears && $scope.selected_semester.slug === data.telebears.slug) {
-          $scope.telebears = data.telebears;
-        }
+        $scope.telebears = data.telebears;
       }
     };
 
@@ -347,8 +345,8 @@
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
         $scope.can_view_academics = $scope.api.user.profile.student_info.has_academics_tab;
-        $http.get('/api/my/academics').success(parseAcademics);
-        //$http.get('/dummy/json/academics.json').success(parseAcademics);
+        //$http.get('/api/my/academics').success(parseAcademics);
+        $http.get('/dummy/json/academics.json').success(parseAcademics);
       }
     });
 

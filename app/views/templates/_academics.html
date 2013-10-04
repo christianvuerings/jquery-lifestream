@@ -295,6 +295,25 @@
                     </tr>
                   </tbody>
                 </table>
+                <div class="cc-academics-semesters-telebears" data-ng-show="telebears.slug === semester.slug">
+                  <h4>Tele-BEARS</h4>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th width="25%" scope="col">Phase</th>
+                        <th width="35%" scope="col">Start Date</th>
+                        <th width="40%" scope="col">Start Time</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-ng-repeat="phase in telebears.phases">
+                        <td data-ng-bind="phase.period.substr(17,2)"></td>
+                        <td data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d'"></td>
+                        <td data-ng-bind="phase.startTime.epoch * 1000 | date:'h:mm a'"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 
