@@ -94,9 +94,9 @@
     };
 
     var statuses = {
-      'open': ['Current','PastDue','Future'],
+      'open': ['Current','PastDue','Future', 'Error', 'Unapplied'],
       'minimumamountdue': ['Current','PastDue'],
-      'all': ['Current','PastDue','Future', 'Closed']
+      'all': ['Current','PastDue','Future', 'Closed', 'Error', 'Unapplied']
     };
 
     /**
