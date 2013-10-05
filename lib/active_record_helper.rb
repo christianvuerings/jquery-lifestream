@@ -40,6 +40,15 @@ module ActiveRecordHelper
     }
   end
 
+  def self.clear_active_connections
+    Rails.cache.fetch(
+      "ActiveRecordHelper/flush_active_connections_#{ServerRuntime.get_settings["hostname"]}",
+      :expires_in => Settings.cache.stale_connection_flush_interval) {
+      ActiveRecord::Base.clear_active_connections!
+      true
+    }
+  end
+
   module ClassMethods
     # No clue where this class method could be called from, so making the params more explicit.
     def log_access(conn, conn_handler, name)
