@@ -105,7 +105,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def expire_then_complete_warmup(uid)
-    ActiveRecordHelper.clear_stale_connections
+    ActiveRecordHelper.clear_active_connections
     Calcentral::USER_CACHE_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
@@ -116,7 +116,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
   def warmup_merged_feeds(uid)
     logger.warn "Processing warmup_request message for uid #{uid}"
-    ActiveRecordHelper.clear_stale_connections
+    ActiveRecordHelper.clear_active_connections
     Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
