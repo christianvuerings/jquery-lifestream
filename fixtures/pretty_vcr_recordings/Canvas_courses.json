@@ -95,6 +95,12 @@
               "end_at": null,
               "account_id": 90243,
               "hide_final_grades": false,
+              "term": {
+                "end_at": "2013-12-23T08:00:00Z",
+                "id": 4821,
+                "name": "Fall 2013",
+                "start_at": "2013-08-22T07:00:00Z"
+              },
               "calendar": {
                 "ics": "https://ucberkeley.instructure.com/feeds/calendars/course_zEaJooSacLbZBLIdPKqIdFKwRpSGm7c2PpdG4ulA.ics"
               },
