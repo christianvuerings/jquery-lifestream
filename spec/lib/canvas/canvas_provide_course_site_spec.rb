@@ -100,6 +100,7 @@ describe CanvasProvideCourseSite do
     term_yr = '2013'
     term_cd = 'D'
     CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
+    CanvasExistenceCheckProxy.any_instance.stub(:course_defined?).and_return(false)
     course_data = {
         :course_number => "ENGIN 7",
          :dept => "ENGIN",
@@ -129,7 +130,6 @@ describe CanvasProvideCourseSite do
   it "should generate a unique Course SIS ID for the selected courses" do
     term_yr = '2013'
     term_cd = 'D'
-    CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
     course_data = {
         :course_number => "ENGIN 7",
          :dept => "ENGIN",
@@ -145,11 +145,19 @@ describe CanvasProvideCourseSite do
                :section_number => "102"}]
     }
     worker = CanvasProvideCourseSite.new(user_id: rand(99999).to_s)
+
+    # RSpec does not currently redefine any_instance class stubs: http://stackoverflow.com/questions/18092601/rspec-any-instance-stub-does-not-restub-old-instances
+    stub_existence_check = double
+    stub_existence_check.should_receive(:account_defined?).and_return(true)
+    stub_existence_check.should_receive(:course_defined?).and_return(false)
+    CanvasExistenceCheckProxy.stub(:new).and_return(stub_existence_check)
+
     subaccount = worker.subaccount_for_department(course_data[:dept])
     first_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
     first_course_sis_id = first_canvas_course['course_id']
-    CanvasExistenceCheckProxy.any_instance.should_receive(:course_defined?).with(first_course_sis_id).and_return(true)
-    CanvasExistenceCheckProxy.any_instance.should_receive(:course_defined?).with(anything).and_return(false)
+    stub_existence_check.should_receive(:course_defined?).twice do |id|
+      id == first_course_sis_id
+    end
     second_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
     second_course_sis_id = second_canvas_course['course_id']
     second_course_sis_id.present?.should be_true
@@ -214,7 +222,6 @@ describe CanvasProvideCourseSite do
     term_yr = '2013'
     term_cd = 'D'
     ccn = rand(99999).to_s
-    CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
     courses_list = [
         {:course_number => "ENGIN 7",
          :dept => "ENGIN",
@@ -230,11 +237,20 @@ describe CanvasProvideCourseSite do
                :section_number => "102"}]}
     ]
     sis_course_id = 'CRS:ENGIN-7-2013-D-8383'
+
+    # RSpec does not currently redefine any_instance class stubs: http://stackoverflow.com/questions/18092601/rspec-any-instance-stub-does-not-restub-old-instances
+    stub_existence_check = double
+    stub_existence_check.should_receive(:section_defined?).and_return(false)
+    CanvasExistenceCheckProxy.stub(:new).and_return(stub_existence_check)
+
     worker = CanvasProvideCourseSite.new(user_id: rand(99999).to_s)
     first_canvas_section = worker.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)[0]
     first_canvas_section_id = first_canvas_section['section_id']
-    CanvasExistenceCheckProxy.any_instance.should_receive(:section_defined?).with(first_canvas_section_id).and_return(true)
-    CanvasExistenceCheckProxy.any_instance.should_receive(:section_defined?).with(anything).and_return(false)
+
+    stub_existence_check.should_receive(:section_defined?).twice do |id|
+      id == first_canvas_section_id
+    end
+
     second_canvas_section = worker.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)[0]
     second_canvas_section_id = second_canvas_section['section_id']
     second_canvas_section_id.present?.should be_true
