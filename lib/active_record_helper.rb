@@ -44,7 +44,7 @@ module ActiveRecordHelper
     Rails.cache.fetch(
       "ActiveRecordHelper/flush_active_connections_#{ServerRuntime.get_settings["hostname"]}",
       :expires_in => Settings.cache.stale_connection_flush_interval) {
-      ActiveRecord::Base.connection_pool.clear_active_connections!
+      ActiveRecord::Base.clear_active_connections!
       true
     }
   end
