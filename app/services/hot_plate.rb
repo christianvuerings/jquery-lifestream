@@ -99,13 +99,13 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
       }
 
     ensure
-      ActiveRecord::Base.clear_active_connections!
+      ActiveRecordHelper.clear_active_connections
+      ActiveRecordHelper.clear_stale_connections
     end
 
   end
 
   def expire_then_complete_warmup(uid)
-    ActiveRecordHelper.clear_active_connections
     Calcentral::USER_CACHE_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
@@ -116,12 +116,14 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
   def warmup_merged_feeds(uid)
     logger.warn "Processing warmup_request message for uid #{uid}"
-    ActiveRecordHelper.clear_active_connections
     Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
     rescue Exception => e
       logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
+    ensure
+      ActiveRecordHelper.clear_active_connections
+      ActiveRecordHelper.clear_stale_connections
     end
   end
 
