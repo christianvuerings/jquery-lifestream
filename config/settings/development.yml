@@ -1,15 +1,11 @@
 application:
   layer: "development"
-logger:
-  level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
-  stdout: <%= ENV['LOGGER_STDOUT'] || true %>
-postgres:
-  database: calcentral_development
-  username: calcentral_development
-  password: secret
-  host: localhost
-  port: 5432
 
+bearfacts_proxy:
+  fake: true
+
+blog_latest_release_notes_feed_proxy:
+  fake: true
 
 cache:
   expiration:
@@ -25,5 +21,34 @@ cache:
     MyUpNext: <%= 1.day %>
     UserApi: <%= 1.day %>
 
+canvas_proxy:
+  fake: true
+
+cas_server: 'auth-test.berkeley.edu/cas'
+cas_logout_url: 'https://auth-test.berkeley.edu/cas/logout'
+
+financials_proxy:
+  fake: true
+
+google_proxy:
+  fake: true
+
+logger:
+  level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
+  stdout: <%= ENV['LOGGER_STDOUT'] || true %>
+
 messaging:
   enabled: false
+
+myfinaid_proxy:
+  fake: true
+
+postgres:
+  database: calcentral_development
+  username: calcentral_development
+  password: secret
+  host: localhost
+  port: 5432
+
+sakai_proxy:
+  fake: true
