@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/22300939/reg/appointments",
+        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/22300939/reg/appointments?academicTerm=FT",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -56,7 +56,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/11667051/reg/appointments",
+        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/11667051/reg/appointments?academicTerm=FT",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
