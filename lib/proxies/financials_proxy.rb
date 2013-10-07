@@ -13,9 +13,6 @@ class FinancialsProxy < BaseProxy
   end
 
   def request(path, vcr_cassette, params = {})
-    unless Settings.features.financials
-      return nil
-    end
     self.class.fetch_from_cache(@uid) do
       student_id = lookup_student_id
       if student_id.nil?
