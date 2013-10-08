@@ -45,7 +45,7 @@
       controller: 'DashboardController',
       fireUpdatedFeeds: true
     }).
-    when('/myfinances', {
+    when('/finances', {
       templateUrl: 'templates/myfinances.html',
       controller: 'MyFinancesController'
     }).
