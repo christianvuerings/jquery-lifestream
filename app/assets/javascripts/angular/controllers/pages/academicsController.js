@@ -280,6 +280,7 @@
             'epoch': phasesArray[i].endTime.epoch
           }
         };
+        apiService.analytics.trackEvent(['Telebears', 'Add Appointment', 'Phase: ' + payload.summary]);
         phases.push($http.post('/api/my/event', payload));
       }
       $q.all(phases).then(function(results) {
