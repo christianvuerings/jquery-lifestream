@@ -52,11 +52,26 @@ module Calcentral
       key = key id
       Rails.cache.delete(key, :force => true)
       Rails.logger.debug "Expired cache_key #{key}"
+      if caches_json?
+        key = json_key id
+        Rails.cache.delete(key, :force => true)
+        Rails.logger.debug "Expired cache_key #{key}"
+      end
     end
 
     def key(id = nil)
       id ? self.cache_key(id) : self.global_cache_key
     end
+
+    def json_key(id = nil)
+      key "json-#{id}"
+    end
+
+    # override to return true if your cacheable thing also caches a JSONified copy of its data.
+    def caches_json?
+      false
+    end
+
   end
 
 end

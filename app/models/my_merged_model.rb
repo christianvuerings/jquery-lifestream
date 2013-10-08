@@ -27,6 +27,14 @@ class MyMergedModel
     end
   end
 
+  def get_feed_as_json(*opts)
+    # cache the JSONified feed for maximum efficiency when we're called by a controller.
+    self.class.fetch_from_cache "json-#{@uid}" do
+      feed = get_feed(*opts)
+      feed.to_json
+    end
+  end
+
   def notify_if_feed_changed(feed, uid)
     last_modified = self.class.get_last_modified uid
     old_hash = last_modified ? last_modified[:hash] : ""
@@ -51,6 +59,10 @@ class MyMergedModel
 
   def self.last_modified_cache_key(uid)
     "user/#{uid}/#{self.name}/LastModified"
+  end
+
+  def self.caches_json?
+    true
   end
 
   def expire_cache

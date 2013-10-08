@@ -3,7 +3,7 @@ class MyTasksController < ApplicationController
   before_filter :check_authentication
 
   def get_feed
-    render :json => MyTasks::Merged.new(session[:user_id], :original_user_id => session[:original_user_id]).get_feed.to_json
+    render :json => MyTasks::Merged.new(session[:user_id], :original_user_id => session[:original_user_id]).get_feed_as_json
   end
 
   def self.define_passthrough(endpoint)
