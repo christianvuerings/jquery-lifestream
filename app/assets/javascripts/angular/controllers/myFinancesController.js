@@ -43,7 +43,7 @@
       var test = Object.prototype.toString.call(item) === '[object Date]';
       if (test) {
         obj.transDueDateShow = $filter('date')(item, 'MMM d');
-        if (obj.transStatus === 'PastDue') {
+        if (obj.transStatus === 'Past due') {
           obj._isPastDueDate = true;
         }
       }
@@ -94,9 +94,9 @@
     };
 
     var statuses = {
-      'open': ['Current','PastDue','Future', 'Error', 'Unapplied'],
-      'minimumamountdue': ['Current','PastDue'],
-      'all': ['Current','PastDue','Future', 'Closed', 'Error', 'Unapplied']
+      'open': ['Current','Past due','Future', 'Error', 'Unapplied'],
+      'minimumamountdue': ['Current','Past due'],
+      'all': ['Current','Past due','Future', 'Closed', 'Error', 'Unapplied']
     };
 
     /**

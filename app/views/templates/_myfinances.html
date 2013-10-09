@@ -115,7 +115,7 @@
                 </thead>
                 <tbody
                   data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | filter:notrefundFilter | orderBy:sort.column:sort.descending"
-                  data-ng-class="{'cc-page-myfinances-table-row-selected':(item._showdetail==true), 'cc-page-myfinances-table-row-blue':(item.transStatus=='Current' || item.transStatus=='PastDue')}"
+                  data-ng-class="{'cc-page-myfinances-table-row-selected':(item._showdetail==true), 'cc-page-myfinances-table-row-blue':(item.transStatus=='Current' || item.transStatus=='Past due')}"
                   data-ng-click="item._showdetail = !item._showdetail"
                   data-cc-accessible-focus-directive>
                   <tr class="cc-page-myfinances-table-row">
