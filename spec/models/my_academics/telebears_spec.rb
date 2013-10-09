@@ -60,6 +60,8 @@ describe MyAcademics::Telebears do
       it { subject[:telebears][:adviser_code_required][:required].should be_true }
       it { subject[:telebears][:adviser_code_required][:message].should_not be_include("CalSO") }
       it { subject[:telebears][:phases].length.should eq(2)}
+      it { subject[:semesters].length.should eq(1) }
+      it { subject[:semesters][0][:slug].should eq("fall-2013") }
     end
 
     context "fake oski feed, timezone & server specifice setting tests", testext: true do

@@ -23,15 +23,31 @@ class MyAcademics::Telebears
     auth_release_code = doc.at_css("telebearsAppointment authReleaseCode").text.strip rescue return
     adviser_code_required = decode_adviser_code_required(auth_release_code)
     phases = parse_appointment_phases(doc.css("telebearsAppointment telebearsAppointmentPhase") || [])
+    slug = "#{term.downcase}-#{year}"
 
     data[:telebears] = {
       term: term,
       year: year,
-      slug: "#{term.downcase}-#{year}",
+      slug: slug,
       adviser_code_required: adviser_code_required,
       phases: phases.compact,
       url: "http://registrar.berkeley.edu/tbfaqs.html"
     }
+
+    # now make sure the semester of this Telebears appointment is represented in the feed, even if it has no classes.
+    this_semester_in_feed = false
+    data[:semesters] ||= []
+    data[:semesters].each do |semester|
+      if semester[:slug] == slug
+        this_semester_in_feed = true
+        break
+      end
+    end
+
+    unless this_semester_in_feed
+      data[:semesters].unshift(MyAcademics::Semesters.build_semester(year.to_s, TermCodes.to_code(term)))
+    end
+
   end
 
   private
