@@ -16,14 +16,20 @@ class MyMergedModel
   end
 
   def get_feed(*opts)
-    uid = @uid
-    uid = Calcentral::PSEUDO_USER_PREFIX + @uid if is_acting_as_nonfake_user?
-
+    uid = effective_uid
     self.class.fetch_from_cache uid do
       init
       feed = get_feed_internal(*opts)
       notify_if_feed_changed(feed, uid)
       feed
+    end
+  end
+
+  def get_feed_as_json(*opts)
+    # cache the JSONified feed for maximum efficiency when we're called by a controller.
+    self.class.fetch_from_cache "json-#{effective_uid}" do
+      feed = get_feed(*opts)
+      feed.to_json
     end
   end
 
@@ -53,12 +59,24 @@ class MyMergedModel
     "user/#{uid}/#{self.name}/LastModified"
   end
 
+  def self.caches_json?
+    true
+  end
+
   def expire_cache
     self.class.expire(@uid)
   end
 
   def is_acting_as_nonfake_user?
     @original_uid && @uid != @original_uid && !UserAuth.is_test_user?(@uid)
+  end
+
+  def effective_uid
+    if is_acting_as_nonfake_user?
+      Calcentral::PSEUDO_USER_PREFIX + @uid
+    else
+      @uid
+    end
   end
 
 end
