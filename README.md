@@ -122,19 +122,9 @@ In order to have live updates you'll need to perform the following steps:
 ```
 messaging:
   enabled: true
-```
-1. In development.rb change the cache store option to
-```
-# Caching store
-config.cache_store = ActiveSupport::Cache.lookup_store(
-    :dalli_store,
-    *Settings.cache.servers,
-    {
-        :expires_in => Settings.cache.maximum_expires_in,
-        :namespace => ServerRuntime.get_settings["git_commit"],
-        :race_condition_ttl => Settings.cache.race_condition_ttl
-    }
-)
+
+cache:
+  store: "memcached"
 ```
 1. start the server with torquebox
 
