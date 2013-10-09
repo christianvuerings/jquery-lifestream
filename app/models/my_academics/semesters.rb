@@ -4,7 +4,19 @@ class MyAcademics::Semesters
 
   def initialize(uid)
     super(uid)
-    @current_term = Settings.sakai_proxy.current_terms_codes[0]
+  end
+
+  def self.current_term
+    Settings.sakai_proxy.current_terms_codes[0]
+  end
+
+  def self.build_semester(term_yr, term_cd)
+    {
+      name: TermCodes.to_english(term_yr, term_cd),
+      slug: TermCodes.to_slug(term_yr, term_cd),
+      time_bucket: self.time_bucket(term_yr, term_cd),
+      classes: []
+    }
   end
 
   def merge(data)
@@ -15,12 +27,7 @@ class MyAcademics::Semesters
 
     feed.keys.each do |term_key|
       (term_yr, term_cd) = term_key.split("-")
-      semester = {
-          name: TermCodes.to_english(term_yr, term_cd),
-          slug: TermCodes.to_slug(term_yr, term_cd),
-          time_bucket: time_bucket(term_yr, term_cd),
-          classes: []
-      }
+      semester = self.class.build_semester(term_yr, term_cd)
       feed[term_key].each do |course|
         next unless course[:role] == 'Student'
 
@@ -76,10 +83,10 @@ class MyAcademics::Semesters
   end
 
 
-  def time_bucket(term_yr, term_cd)
-    if term_yr < @current_term.term_yr || (term_yr == @current_term.term_yr && term_cd < @current_term.term_cd)
+  def self.time_bucket(term_yr, term_cd)
+    if term_yr < self.current_term.term_yr || (term_yr == self.current_term.term_yr && term_cd < self.current_term.term_cd)
       bucket = 'past'
-    elsif term_yr > @current_term.term_yr || (term_yr == @current_term.term_yr && term_cd > @current_term.term_cd)
+    elsif term_yr > self.current_term.term_yr || (term_yr == self.current_term.term_yr && term_cd > self.current_term.term_cd)
       bucket = 'future'
     else
       bucket = 'current'
