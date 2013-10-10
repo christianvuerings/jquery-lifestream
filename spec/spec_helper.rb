@@ -15,6 +15,9 @@ require 'capybara/rails'
 require 'webmock/rspec'
 require 'support/spec_helper_module'
 
+# create tmp/cache directory if necessary, otherwise the Rails.cache.clear statement before each test may fail
+FileUtils.mkdir_p("tmp/cache") unless File.exists?("tmp/cache")
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}

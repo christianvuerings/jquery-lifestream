@@ -62,17 +62,4 @@ Calcentral::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Caching store
-  config.cache_store = ActiveSupport::Cache.lookup_store(
-      :dalli_store,
-      *Settings.cache.servers,
-      {
-          :expires_in => Settings.cache.maximum_expires_in,
-          :namespace => ServerRuntime.get_settings["git_commit"],
-          :race_condition_ttl => Settings.cache.race_condition_ttl
-      }
-  )
-  config.cache_store.logger = Logger.new("#{CalcentralLogging.log_root}/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
-  config.cache_store.logger.level = Logger::ERROR
-
 end

@@ -41,11 +41,4 @@ Calcentral::Application.configure do
   # Turn off all page, action, fragment caching
   config.action_controller.perform_caching = false
 
-  # Caching store
-  config.cache_store = ActiveSupport::Cache.lookup_store(:memory_store,
-                                                         :size => 16.megabytes,
-                                                         :namespace => ServerRuntime.get_settings["git_commit"])
-  config.cache_store.logger = Logger.new("#{CalcentralLogging.log_root}/cache-#{Rails.env}_#{Time.now.strftime('%Y-%m-%d')}.log")
-  config.cache_store.logger.level = Logger::DEBUG
-
 end

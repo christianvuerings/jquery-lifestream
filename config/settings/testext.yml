@@ -25,6 +25,8 @@ features:
   telebears: true
 
 cache:
+  store: "memory"
+  log_level: <%= Logger::DEBUG %>
   expiration:
     default: <%= 35.minutes %>
     MyAcademics::Merged: <%= 1.day %>
