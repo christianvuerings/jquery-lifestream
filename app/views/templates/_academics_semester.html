@@ -17,7 +17,7 @@
       <span class="cc-academics-next cc-academics-prev-next-disabled" data-ng-hide="next_semester.slug">Next semester</span>
     </div>
 
-    <div class="large-8 columns cc-academics-page-left cc-clearfix">
+    <div class="large-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="!selected_courses.length && selected_semester.time_bucket === 'future'">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Enrollment</h2>
@@ -111,7 +111,7 @@
       </div>
     </div>
 
-    <div class="large-4 columns">
+    <div class="large-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selected_courses.length && selected_semester.time_bucket === 'future')}">
       <div class="cc-academics-telebears cc-widget cc-widget-last" data-ng-if="telebears.slug === selected_semester.slug">
         <div class="cc-widget-title">
           <h2>Appointments</h2>
@@ -153,7 +153,7 @@
           </div>
         </div>
       </div>
-      <div class="cc-widget cc-widget-interesting cc-widget-last">
+      <div data-ng-show="selected_semester.time_bucket !== 'future'" class="cc-widget cc-widget-interesting cc-widget-last">
         <div class="cc-widget-title">
           <h2>GPA Calculator</h2>
         </div>
