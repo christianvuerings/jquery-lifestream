@@ -18,9 +18,6 @@
       $scope,
       apiService) {
 
-    //TODO, ideally we would be getting this from the back-end
-    var currentTerm = 'Fall 2013';
-
     var transTypes = [];
 
     var parseDate = function(obj, i) {
@@ -112,7 +109,7 @@
       $scope.myfinances.terms = terms;
 
       $scope.search = {
-        'transTerm': currentTerm
+        'transTerm': $scope.myfinances.current_term
       };
     };
 
