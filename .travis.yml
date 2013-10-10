@@ -2,7 +2,10 @@ bundler_args: --without development testext production
 
 rvm:
   - "jruby-19mode"
-  - "jruby-head"
+
+matrix:
+  include:
+    - { rvm: jruby-19mode }
 
 env:
   - JRUBY_OPTS="--client -Xcext.enabled=false -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN
