@@ -67,7 +67,7 @@
           <div class="cc-page-myfinances-account-activity" data-ng-if="myfinances.activity.length">
             <div class="row cc-page-myfinances-terms">
               <div class="small-4 columns">
-                <input placeholder="Search..." data-ng-model="search.transDesc">
+                <input placeholder="Search descriptions..." data-ng-model="search.transDesc">
               </div>
               <div class="small-4 small-offset-4 columns">
                 <select class="cc-right" data-ng-model="search.transTerm" data-ng-show="transStatusSearch=='' && search.transType!='Refund'" id="cc-page-myfinances-select-term" data-ng-options="value.label as value.label for (label, value) in myfinances.terms | orderBy:['-transTermYr', 'transTermCd']">
