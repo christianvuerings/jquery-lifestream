@@ -70,9 +70,7 @@
                 <input placeholder="Search..." data-ng-model="search.transDesc">
               </div>
               <div class="small-4 small-offset-4 columns">
-                <select class="cc-right" data-ng-model="search.transTerm" data-ng-show="transStatusSearch=='' && search.transType!='Refund'" id="cc-page-myfinances-select-term">
-                  <option value="" data-ng-selected="term==''">All Terms</option>
-                  <option value="{{term}}" data-ng-repeat="term in myfinances.terms" data-ng-selected="term==currentTerm">{{term}}</option>
+                <select class="cc-right" data-ng-model="search.transTerm" data-ng-show="transStatusSearch=='' && search.transType!='Refund'" id="cc-page-myfinances-select-term" data-ng-options="value.label as value.label for (label, value) in myfinances.terms | orderBy:['-transTermYr', 'transTermCd']">
                 </select>
               </div>
             </div>
