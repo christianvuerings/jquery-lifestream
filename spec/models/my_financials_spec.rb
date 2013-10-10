@@ -14,6 +14,7 @@ describe "MyFinancials" do
     subject { MyFinancials.new(oski_uid).get_feed }
     it { should_not be_nil }
     its(["summary"]) { should_not be_nil }
+    its(["current_term"]) { should == Settings.sakai_proxy.current_terms.first }
   end
 
   context "it should not explode on a proxy error state" do
