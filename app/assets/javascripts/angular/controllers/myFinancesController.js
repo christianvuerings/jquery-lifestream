@@ -55,9 +55,9 @@
       }
     };
 
-    var parseData = function() {
+    var parseData = function(data) {
       transTypes = [];
-      var finances = angular.copy($scope.myfinances);
+      var finances = angular.copy(data);
       for (var i in finances.summary) {
         if (finances.summary.hasOwnProperty(i)){
           parseDate(finances.summary, i);
@@ -169,10 +169,10 @@
       // Data contains all the financial information for the current student
       $http.get('/api/my/financials').success(function(data) {
 
-        $scope.myfinances = data;
+        angular.extend($scope, data);
 
         if (data && data.summary && data.activity) {
-          parseData();
+          parseData(data);
 
           createTerms();
 
