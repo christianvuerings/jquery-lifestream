@@ -18,6 +18,9 @@
       $scope,
       apiService) {
 
+    //TODO, ideally we would be getting this from the back-end
+    var currentTerm = 'Fall 2013';
+
     var transTypes = [];
 
     var parseDate = function(obj, i) {
@@ -83,14 +86,34 @@
 
     var createTerms = function() {
       var terms = [];
+      var addedTerms = [];
       for (var i = 0; i < $scope.myfinances.activity.length; i++){
         var item = $scope.myfinances.activity[i];
 
-        if (terms.indexOf(item.transTerm) === -1) {
-          terms.push(item.transTerm);
+        if (addedTerms.indexOf(item.transTerm) === -1) {
+          addedTerms.push(item.transTerm);
+
+          if (item.transTerm === 'Payment') {
+            // A payment doesn't have a year associate to it so we add a bogus one
+            item.transTermYr = 9999;
+          }
+          terms.push({
+            'transTermYr': item.transTermYr,
+            'transTermCd': item.transTermCd,
+            'label': item.transTerm,
+            'value': item.transTerm
+          });
         }
       }
+      terms.push({
+        'label': 'All',
+        'value': ''
+      });
       $scope.myfinances.terms = terms;
+
+      $scope.search = {
+        'transTerm': currentTerm
+      };
     };
 
     var statuses = {
@@ -224,9 +247,6 @@
         $scope.searchStatuses = statuses.all;
       }
     });
-
-    // TODO, ideally we would be getting this from the back-end
-    $scope.currentTerm = 'Fall 2013';
 
     $scope.statusFilter = function(item) {
       return ($scope.searchStatuses.indexOf(item.transStatus) !== -1);
