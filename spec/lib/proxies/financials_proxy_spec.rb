@@ -3,7 +3,7 @@ require 'spec_helper'
 describe FinancialsProxy do
 
   let(:live_oski_financials) { FinancialsProxy.new({user_id: "61889"}).get }
-  let(:fake_tammi_financials) { FinancialsProxy.new({user_id: "300939", fake: true}).get }
+  let(:fake_tammi_financials) { FinancialsProxy.new({user_id: "300940", fake: true}).get }
   let(:fake_oski_financials) { FinancialsProxy.new({user_id: "61889", fake: true}).get }
   let(:non_student_financials) { FinancialsProxy.new({user_id: "212377"}).get }
 
