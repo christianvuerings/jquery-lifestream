@@ -37,7 +37,8 @@ class CalLinkMembershipsProxy < CalLinkProxy
     params = super
     params.merge(
         {
-            :username => @uid
+            :username => @uid,
+            :currentMembershipsOnly => true
         })
   end
 
