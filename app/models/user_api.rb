@@ -107,7 +107,7 @@ class UserApi < MyMergedModel
         :reg_block => get_reg_blocks,
         :has_student_history => has_student_history,
         :has_instructor_history => has_instructor_history,
-        :has_academics_tab => (@campus_attributes[:roles][:student] ||
+        :has_academics_tab => @campus_attributes && @campus_attributes[:roles] && (@campus_attributes[:roles][:student] ||
           @campus_attributes[:roles][:faculty] ||
           has_instructor_history ||
           has_student_history
