@@ -151,6 +151,17 @@ describe "UserApi" do
     user_data[:student_info][:has_academics_tab].should be_false
   end
 
+  it "should not explode when CampusData returns empty" do
+    CampusData.stub(:get_person_attributes).and_return({})
+    fake_courses_proxy = CampusUserCoursesProxy.new({:fake => true})
+    fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
+    fake_courses_proxy.stub(:has_student_history?).and_return(false)
+    CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
+
+    user_data = UserApi.new("904715").get_feed
+    user_data[:student_info][:has_academics_tab].should be_nil
+  end
+
   context "proper cache handling" do
     it "should cache the feed" do
       UserApi.should_receive(:fetch_from_cache).with(@random_id)
