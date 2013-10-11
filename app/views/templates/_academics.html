@@ -300,15 +300,15 @@
                   <table>
                     <thead>
                       <tr>
-                        <th width="25%" scope="col">Phase</th>
-                        <th width="35%" scope="col">Start Date</th>
-                        <th width="40%" scope="col">Start Time</th>
+                        <th width="10%" scope="col">Phase</th>
+                        <th width="40%" scope="col" class="cc-telebears-date-padding">Start Date</th>
+                        <th width="50%" scope="col">Start Time</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr data-ng-repeat="phase in telebears.phases">
-                        <td data-ng-bind="phase.period.substr(17,2)"></td>
-                        <td data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d'"></td>
+                        <td data-ng-bind="phase.period.substr(17,2)" class="cc-telebears-phase-center"></td>
+                        <td data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d'" class="cc-telebears-date-padding"></td>
                         <td data-ng-bind="phase.startTime.epoch * 1000 | date:'h:mm a'"></td>
                       </tr>
                     </tbody>

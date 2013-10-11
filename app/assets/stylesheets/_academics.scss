@@ -215,6 +215,7 @@
       margin-left: 10px;
       overflow: hidden;
       padding-left: 10px;
+      padding-bottom: 2px;
     }
     .cc-adviser-message-container {
       padding: 10px 0;
@@ -225,6 +226,9 @@
     .cc-telebears-phases {
       overflow: hidden;
       padding-bottom: 10px;
+      .cc-telebears-end {
+        padding-bottom: 5px;
+      }
     }
     .cc-telebears-time-tag {
       color: $cc-color-lighter-medium-grey;
@@ -241,9 +245,15 @@
   }
   .cc-academics-semesters-telebears {
     h4 {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       margin-top: 15px;
+    }
+    .cc-telebears-phase-center {
+      text-align: center;
+    }
+    .cc-telebears-date-padding {
+      padding-left: 20px;
     }
   }
 }
