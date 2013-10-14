@@ -32,7 +32,9 @@ class FinancialsProxy < BaseProxy
             )
           }
           if response.code >= 400
-            logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
+            unless response.code == 404
+              logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
+            end
             return nil
           end
 
