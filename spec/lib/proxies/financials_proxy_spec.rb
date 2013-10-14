@@ -26,8 +26,7 @@ describe FinancialsProxy do
 
   context "non-student should not get any financials" do
     subject { non_student_financials }
-    its([:body]) { should == "Lookup of student_id for uid 212377 failed, cannot call CFV API" }
-    its([:status_code]) { should == 400 }
+    it { should be_nil }
   end
 
   context "fake oski financials" do
