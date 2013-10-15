@@ -123,7 +123,6 @@ In order to have live updates you'll need to perform the following steps:
 ```
 messaging:
   enabled: true
-
 cache:
   store: "memcached"
 ```
