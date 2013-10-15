@@ -51,10 +51,10 @@
               </div>
               <div class="small-9 columns">
                 <div data-ng-show="myfinances.summary.minimumAmountDue >= 0">
-                  Amount Due Now <button class="cc-button cc-right">Pay Now</button>
+                  Amount Due Now <button class="cc-button cc-right" data-ng-show="myfinances.summary.minimumAmountDue > 0">Pay Now</button>
                 </div>
                 <div data-ng-show="myfinances.summary.minimumAmountDue < 0">
-                  Credit Balance <button class="cc-button cc-right">Pay Now</button>
+                  Credit Balance
                 </div>
                 <div data-ng-show="myfinances.summary.totalPastDueAmount > 0" class="cc-page-myfinances-total-pastdue">Includes Past Due Amount of <span data-cc-amount-directive="myfinances.summary.totalPastDueAmount"></span></div>
                 <button class="cc-button cc-right cc-clearfix" data-ng-show="myfinances.summary.anticipatedAid==0">View MyFinAid</button>
