@@ -18,7 +18,14 @@
     var polling_time = 60; // Polling time in seconds
 
     // In the first iteration, we only update the services on the dashboard page.
-    var to_update_services = ['MyActivities::Merged', 'MyClasses', 'MyGroups', 'MyTasks::Merged', 'MyUpNext'];
+    var to_update_services = [
+      'MyActivities::Merged',
+      'MyBadges::Merged',
+      'MyClasses',
+      'MyGroups',
+      'MyTasks::Merged',
+      'MyUpNext'
+    ];
 
     /**
      * Check whether there are updated to any of the feeds.
