@@ -201,6 +201,10 @@
     }
   }
   .cc-academics-telebears {
+    h3 {
+      font-size: 13px;
+      font-weight: bold;
+    }
     h4 {
       font-size: 12px;
       font-weight: bold;
@@ -221,13 +225,15 @@
       padding: 10px 0;
     }
     .cc-more-info {
+      font-size: 12px;
+      margin-left: 30px;
       padding-top: 10px;
     }
     .cc-telebears-phases {
       overflow: hidden;
       padding-bottom: 10px;
-      .cc-telebears-end {
-        padding-bottom: 5px;
+      ul {
+        font-size: 0.9em;
       }
     }
     .cc-telebears-time-tag {

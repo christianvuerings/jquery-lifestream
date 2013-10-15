@@ -118,16 +118,16 @@
         </div>
         <div class="cc-widget-padding cc-clearfix-container">
           <div>
-            <h3 class="cc-left">Tele-BEARS for {{ telebears.term }} {{ telebears.year }}</h3>
-            <strong class="cc-more-info cc-right"><a data-ng-href="{{telebears.url}}">More Info</a></strong>
+            <h3 class="cc-left">Tele-BEARS for {{ telebears.term }} {{ telebears.year }}
+            <strong class="cc-more-info"><a data-ng-href="{{telebears.url}}">More Info</a></strong></h3>
           </div>
           <div class="cc-clearfix cc-adviser-message-container">
             <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[telebears.adviser_code_required.required]">
             </i>
             <div class="cc-adviser-message" data-ng-bind="telebears.adviser_code_required.message"></div>
           </div>
-          <div class="cc-telebears-phases">
-            <div data-ng-repeat="phase in telebears.phases">
+          <div>
+            <div class="cc-telebears-phases" data-ng-repeat="phase in telebears.phases">
               <h4 data-ng-bind="phase.period"></h4>
               <ul>
                 <li>
@@ -135,8 +135,8 @@
                   <div class="columns large-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d | h:mm a'"></div>
                 </li>
                 <li>
-                  <div class="columns large-2 small-3 cc-telebears-end"><strong class="cc-telebears-time-tag">End</strong></div>
-                  <div class="columns large-10 small-9 cc-telebears-end" data-ng-bind="phase.endTime.epoch * 1000 | date:'EEE MMM d | h:mm a'"></div>
+                  <div class="columns large-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
+                  <div class="columns large-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | date:'EEE MMM d | h:mm a'"></div>
                 </li>
               </ul>
             </div>
