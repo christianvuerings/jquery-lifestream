@@ -1,11 +1,13 @@
 class HotPlate < TorqueBox::Messaging::MessageProcessor
 
-  extend Calcentral::Cacheable
+  extend Calcentral::Cacheable, Calcentral::StatAccumulator
   include ActiveRecordHelper, ClassLogger
   attr_reader :total_warmups
 
+  TOTAL_WARMUPS_REQUESTED = "Total Warmups Requested"
+  TOTAL_WARMUP_TIME = "Total Warmup Time"
+
   def run
-    Rails.cache.write(self.class.server_cache_key, ServerRuntime.get_settings["hostname"], :expires_in => 0)
     if Settings.hot_plate.enabled
       warm
     else
@@ -14,21 +16,13 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def self.ping
-    stats = Rails.cache.read(self.cache_key)
-    server = Rails.cache.read(self.server_cache_key)
-    if stats
-      "#{self.name} Running on #{server}; #{stats[:total_warmups]} total warmups requested; #{stats[:total_time]}s total spent warming; last warmup at #{stats[:last_warmup].to_s}"
+    warmup_count = self.report TOTAL_WARMUPS_REQUESTED
+    time = self.report TOTAL_WARMUP_TIME
+    if warmup_count || time
+      "#{self.name} #{warmup_count} #{time}"
     else
-      "#{self.name} Running on #{server}; Stats are not available"
+      "#{self.name} Stats are not available, HotPlate may not have run yet"
     end
-  end
-
-  def self.cache_key
-    'HotPlate/Stats'
-  end
-
-  def self.server_cache_key
-    'HotPlate/Server'
   end
 
   def self.warmup_request(uid)
@@ -49,42 +43,19 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
   def warm
     begin
-      start_time = Time.now.to_f
       use_pooled_connection {
         today = Time.zone.today.to_time_in_current_zone.to_datetime
         cutoff = today.advance(:seconds => -1 * Settings.hot_plate.last_visit_cutoff)
         purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
-        warmups = 0
 
         visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
         logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            # TODO CLC-2512 when we are sure Live Updates UX is all done, switch this out and use warmup_merged_feeds instead.
-            expire_then_complete_warmup visit.uid
-            warmups += 1
+            self.class.warmup_request visit.uid
           end
         end
-
-        end_time = Time.now.to_f
-        time = end_time - start_time
-
-        stats = Rails.cache.fetch(self.class.cache_key, :expires_in => 0) do
-          {
-            :total_warmups => 0,
-            :total_time => 0,
-            :last_warmup => ''
-          }
-        end
-
-        Rails.cache.write(self.class.cache_key, {
-          :total_warmups => stats[:total_warmups] + warmups,
-          :total_time => stats[:total_time] + time,
-          :last_warmup => Time.zone.now
-        }, :expires_in => 0)
-
-        logger.warn "#{self.class.name} Warmed up #{visits.size} users in #{time}s; cutoff date #{cutoff}"
 
         visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
         deleted_count = 0
@@ -115,6 +86,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def warmup_merged_feeds(uid)
+    start_time = Time.now.to_i
     logger.warn "Processing warmup_request message for uid #{uid}"
     Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
     begin
@@ -125,6 +97,10 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
       ActiveRecordHelper.clear_active_connections
       ActiveRecordHelper.clear_stale_connections
     end
+    end_time = Time.now.to_i
+    time = end_time - start_time
+    self.class.increment(TOTAL_WARMUP_TIME, time)
+    self.class.increment(TOTAL_WARMUPS_REQUESTED, 1)
   end
 
 end

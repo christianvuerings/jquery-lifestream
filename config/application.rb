@@ -39,7 +39,6 @@ module Calcentral
     end
     initializer :amend_rb_config, :after => :load_environment_config do
       CalcentralConfig.load_ruby_configs
-      CalcentralCaching.setup_cache_store
     end
 
     # Settings in config/environments/* take precedence over those specified here.

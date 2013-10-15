@@ -1,12 +1,16 @@
 class JmsWorker
 
+  extend Calcentral::StatAccumulator
+
   JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
+
+  RECEIVED_MESSAGES = "Received Messages"
+  LAST_MESSAGE_RECEIVED_TIME = "Last Message Received Time"
 
   def initialize
     @jms = nil
     @handler = JmsMessageHandler.new
     @stopped = false
-    @count = 0
   end
 
   def start
@@ -16,7 +20,6 @@ class JmsWorker
     else
       Rails.logger.warn "#{self.class.name} is disabled, not starting thread"
     end
-    Rails.cache.write(self.class.server_cache_key, ServerRuntime.get_settings["hostname"], :expires_in => 0)
   end
 
   def stop
@@ -53,7 +56,7 @@ class JmsWorker
           f.puts('')
         end
       end
-      write_stats(@jms.count)
+      write_stats
       yield(msg)
     end
   end
@@ -61,32 +64,22 @@ class JmsWorker
   def read_fake
     File.open(JMS_RECORDING, 'r').each("\n\n") do |msg_yaml|
       msg = YAML::load(msg_yaml)
-      @count += 1
-      write_stats(@count)
+      write_stats
       yield(msg)
     end
   end
 
-  def write_stats(count)
-    Rails.cache.write(self.class.cache_key, {
-      :last_message_received_at => Time.zone.now,
-      :count => count
-    }, :expires_in => 0)
-  end
-
-  def self.cache_key
-    'JmsWorker/Stats'
-  end
-
-  def self.server_cache_key
-    'JmsWorker/Server'
+  def write_stats
+    self.class.increment(RECEIVED_MESSAGES, 1)
+    self.class.write(LAST_MESSAGE_RECEIVED_TIME, Time.zone.now)
   end
 
   def self.ping
-    stats = Rails.cache.read(self.cache_key)
-    server = Rails.cache.read(self.server_cache_key)
-    if stats
-      "#{self.name} Running on #{server}; #{stats[:count]} received messages; last message received at #{stats[:last_message_received_at].to_s}"
+    received_messages = self.report RECEIVED_MESSAGES
+    last_received_message_time = self.report LAST_MESSAGE_RECEIVED_TIME
+    server = ServerRuntime.get_settings["hostname"]
+    if received_messages
+      "#{self.name} Running on #{server}; #{received_messages}; #{last_received_message_time}"
     else
       "#{self.name} Running on #{server}; Stats are not available"
     end
