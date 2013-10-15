@@ -81,6 +81,22 @@
       $scope.transTypes = transTypes.sort();
     };
 
+    /**
+     * Sort the terms
+     * First "Payments" then "All" and then the terms in descending order
+     */
+    var sortTerms = function(a, b) {
+      if (a.transTermYr !== b.transTermYr) {
+        return b.transTermYr - a.transTermYr;
+      }
+
+      if (a.transTermCd > b.transTermCd) {
+        return 1;
+      } else if (a.transTermCd < b.transTermCd) {
+        return -1;
+      }
+    };
+
     var createTerms = function() {
       var terms = [];
       var addedTerms = [];
@@ -90,7 +106,7 @@
         if (addedTerms.indexOf(item.transTerm) === -1) {
           addedTerms.push(item.transTerm);
 
-          if (item.transTerm === 'Payment') {
+          if (item.transTerm === 'Payment' || item.transTerm === 'Payments') {
             // A payment doesn't have a year associate to it so we add a bogus one
             item.transTermYr = 9999;
           }
@@ -104,8 +120,12 @@
       }
       terms.push({
         'label': 'All',
-        'value': ''
+        'value': '',
+        'transTermYr': 9998
       });
+
+      terms = terms.sort(sortTerms);
+
       $scope.myfinances.terms = terms;
 
       $scope.search = {
