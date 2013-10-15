@@ -118,15 +118,16 @@ Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 In order to have live updates you'll need to perform the following steps:
 
 1. Install and run memcached
-1. Add the following lines to development.local.yml:
+
+2. Add the following lines to development.local.yml
 ```
 messaging:
-  enabled: true
-
+        enabled: true
 cache:
-  store: "memcached"
+        store: "memcached"
 ```
-1. start the server with torquebox
+
+3. start the server with torquebox
 
 
 ## Front-end Testing
