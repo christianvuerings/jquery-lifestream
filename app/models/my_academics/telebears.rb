@@ -91,7 +91,7 @@ class MyAcademics::Telebears
     when "C"
       {
         required: true,
-        message: "At CalSO you need to get an adviser code. You need this code to get" \
+        message: "At CalSO you need to get an adviser code. You need this code to get " \
           "into Tele-BEARS for your appointment"
       }
     else
