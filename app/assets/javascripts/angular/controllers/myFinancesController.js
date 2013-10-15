@@ -127,25 +127,7 @@
       for (var i = 0; i < $scope.myfinances.activity.length; i++){
         var item = $scope.myfinances.activity[i];
 
-        if (statusArray.indexOf(item.transStatus) !== -1 && item.transType !== 'Refund') {
-          count++;
-        }
-      }
-      if (count !== 0) {
-        $scope.countButtons++;
-      }
-      return count;
-    };
-
-    /**
-     * Cound how many refunds someone has
-     */
-    var createCountRefund = function() {
-      var count = 0;
-      for (var i = 0; i < $scope.myfinances.activity.length; i++){
-        var item = $scope.myfinances.activity[i];
-
-        if (item.transType === 'Refund') {
+        if (statusArray.indexOf(item.transStatus) !== -1) {
           count++;
         }
       }
@@ -162,7 +144,6 @@
       $scope.countButtons = 0;
       $scope.counts = {
         'open': createCount(statuses.open),
-        'refunds': createCountRefund(),
         'all': createCount(statuses.all)
       };
       $scope.countButtonsClass = $scope.countButtons === 1 ? 'cc-page-myfinances-100' : 'cc-even-' + $scope.countButtons;
@@ -247,14 +228,6 @@
 
     $scope.statusFilter = function(item) {
       return ($scope.searchStatuses.indexOf(item.transStatus) !== -1);
-    };
-
-    $scope.notrefundFilter = function(item) {
-      if ($scope.notrefund && item.transType === 'Refund') {
-        return false;
-      } else {
-        return true;
-      }
     };
 
     // We need to wait until the user is loaded

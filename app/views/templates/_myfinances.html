@@ -76,17 +76,13 @@
             </div>
             <div class="row">
               <div class="small-11 large-7 small-centered columns">
-                <ul class="cc-button-group {{countButtonsClass}}" data-ng-init="transStatusSearch='';notrefund=true">
+                <ul class="cc-button-group {{countButtonsClass}}" data-ng-init="transStatusSearch=''">
                   <li data-ng-show="counts.open!=0">
-                    <button class="cc-button" data-ng-click="transStatusSearch='open';search.transTerm='';search.transType='';notrefund=true" data-ng-class="{'cc-button-selected':(transStatusSearch=='open')}">Account Balance
+                    <button class="cc-button" data-ng-click="transStatusSearch='open';search.transTerm='';search.transType=''" data-ng-class="{'cc-button-selected':(transStatusSearch=='open')}">Account Balance
                     </button>
                   </li>
                   <li>
-                    <button class="cc-button cc-button-selected" data-ng-click="transStatusSearch='';search.transTerm='';search.transType='';notrefund=true" data-ng-class="{'cc-button-selected':(transStatusSearch=='' && search.transType!='Refund')}">Transaction History
-                    </button>
-                  </li>
-                  <li data-ng-show="counts.refunds!=0">
-                    <button class="cc-button" data-ng-click="transStatusSearch='';search.transTerm='';search.transType='Refund';notrefund=false" data-ng-class="{'cc-button-selected':(search.transType=='Refund')}">$ Paid Out
+                    <button class="cc-button cc-button-selected" data-ng-click="transStatusSearch='';search.transTerm='';search.transType='';notrefund=false" data-ng-class="{'cc-button-selected':(transStatusSearch=='')}">Transaction History
                     </button>
                   </li>
                 </ul>
@@ -112,7 +108,7 @@
                   </th>
                 </thead>
                 <tbody
-                  data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | filter:notrefundFilter | orderBy:sort.column:sort.descending"
+                  data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | orderBy:sort.column:sort.descending"
                   data-ng-class="{'cc-page-myfinances-table-row-selected':(item._showdetail==true), 'cc-page-myfinances-table-row-blue':(item.transStatus=='Current' || item.transStatus=='Past due')}"
                   data-ng-click="item._showdetail = !item._showdetail"
                   data-cc-accessible-focus-directive>
