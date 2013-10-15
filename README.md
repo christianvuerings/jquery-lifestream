@@ -119,7 +119,7 @@ In order to have live updates you'll need to perform the following steps:
 
 1. Install and run memcached
 
-2. Add the following lines to development.local.yml
+1. Add the following lines to development.local.yml
 
 ```
 messaging:
@@ -128,8 +128,7 @@ messaging:
 cache:
   store: "memcached"
 ```
-
-3. start the server with torquebox
+1. start the server with torquebox
 
 
 ## Front-end Testing
