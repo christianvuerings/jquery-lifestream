@@ -75,11 +75,15 @@ class CampusCourseSectionsProxy < BaseProxy
     found_schedules = CampusData.get_section_schedules(@term_yr, @term_cd, @ccn)
     if found_schedules
       # TODO add building map data if available
-      found_schedules.each do |schedule|
-        schedules << {:building_name => schedule['building_name'],
-                      :room_number => schedule['room_number'],
-                      :schedule => translate_meeting(schedule)
-        }
+      found_schedules.each do |schedule_event|
+        schedule_event.reject! { |k,v| v.nil? }
+
+        if schedule_event.count > 0
+          schedules << {:building_name => schedule_event['building_name'],
+                        :room_number => schedule_event['room_number'],
+                        :schedule => translate_meeting(schedule_event)
+          }
+        end
       end
     end
     feed.merge!({:schedules => schedules})
