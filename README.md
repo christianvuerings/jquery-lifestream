@@ -122,9 +122,9 @@ In order to have live updates you'll need to perform the following steps:
 2. Add the following lines to development.local.yml
 ```
 messaging:
-    enabled: true
+        enabled: true
 cache:
-    store: "memcached"
+        store: "memcached"
 ```
 
 3. start the server with torquebox
