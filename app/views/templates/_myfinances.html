@@ -62,9 +62,9 @@
             </div>
           </div>
 
-          <h2 data-ng-if="myfinances.activity.length">Account Activity</h2>
+          <h2 data-ng-show="myfinances.activity.length">Account Activity</h2>
 
-          <div class="cc-page-myfinances-account-activity" data-ng-if="myfinances.activity.length">
+          <div class="cc-page-myfinances-account-activity" data-ng-show="myfinances.activity.length">
             <div class="row cc-page-myfinances-terms">
               <div class="small-4 columns">
                 <input placeholder="Search descriptions..." data-ng-model="search.transDesc">
