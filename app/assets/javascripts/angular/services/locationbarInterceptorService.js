@@ -8,19 +8,16 @@
    */
   angular.module('calcentral.services').factory('locationbarInterceptorService', ['$window' , function($window) {
 
-    var success = function(response) {
+    return {
 
-      // We make sure to only scroll when the user hasn't scrolled before
-      if (!pageYOffset) {
-        $window.scrollTo(0, 1);
+      response: function(response) {
+        // We make sure to only scroll when the user hasn't scrolled before
+        if (!pageYOffset) {
+          $window.scrollTo(0, 1);
+        }
+        return response;
       }
 
-      return response;
-    };
-
-    // Return the function
-    return function(promise) {
-      return promise.then(success);
     };
 
   }]);
