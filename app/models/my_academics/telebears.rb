@@ -67,7 +67,7 @@ class MyAcademics::Telebears
       end
       next unless period.present?
       {
-        period: "Tele-BEARS Phase #{period}",
+        period: "#{period}",
         startTime: startTime,
         endTime: endTime,
       }
