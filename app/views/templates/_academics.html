@@ -307,7 +307,7 @@
                     </thead>
                     <tbody>
                       <tr data-ng-repeat="phase in telebears.phases">
-                        <td data-ng-bind="phase.period.substr(17,2)" class="cc-telebears-phase-center"></td>
+                        <td data-ng-bind="phase.number" class="cc-telebears-phase-center"></td>
                         <td data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d'" class="cc-telebears-date-padding"></td>
                         <td data-ng-bind="phase.startTime.epoch * 1000 | date:'h:mm a'"></td>
                       </tr>
