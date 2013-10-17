@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('widgetService', ['analyticsService', function(analyticsService) {
+  angular.module('calcentral.services').service('widgetService', ['analyticsService', '$timeout', function(analyticsService, $timeout) {
 
     /**
      * Toggle whether an item for a widget should be shown or not
@@ -34,7 +34,8 @@
 
       // Scroll to element so it is in the browsers viewport
       if (event && event.toElement && item._show) {
-        event.toElement.scrollIntoView();
+        var scrollIntoView = function() {event.toElement.scrollIntoView()};
+        $timeout(scrollIntoView, 1);
       }
 
       analyticsService.trackEvent(['Detailed view', item._show ? 'Open' : 'Close', widget]);
