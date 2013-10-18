@@ -27,14 +27,14 @@
           <div class="cc-table">
             <table>
               <thead>
-                <th scope="col">Course Number</th>
+                <th scope="col" class="cc-table-right-spacing">Course Number</th>
                 <th scope="col">Title</th>
                 <th scope="col">Grade Option</th>
                 <th class="cc-table-right" scope="col">Units</th>
               </thead>
               <tbody data-ng-show="selected_courses.length" data-ng-repeat="course in enrolled_courses">
                 <tr>
-                  <td>
+                  <td class="cc-table-right-spacing">
                     <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.slug}}"
                        data-ng-bind="course.course_number">
                     </a>

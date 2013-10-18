@@ -164,7 +164,7 @@
   }
 }
 
-.cc-widget-table-hover {
+.cc-widget-table-hover td {
   &:hover, &:focus {
     &:after {
       border-bottom: 4px solid transparent;
@@ -178,14 +178,14 @@
   }
 }
 
-.cc-widget-table-hover-opened {
+.cc-widget-table-hover-opened td {
   &:hover, &:focus {
     &:after {
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
       border-top: 4px solid #474747;
       content: "";
-      margin-top: 10px;
+      margin-top: 7px;
       position: absolute;
       right: 50px;
     }
