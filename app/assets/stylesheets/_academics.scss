@@ -1,17 +1,7 @@
 .cc-page-academics {
   overflow: hidden;
-  h1, h2, h3, h4 {
+  h2, h3, h4 {
     color: $cc-color-medium-grey;
-  }
-  h1 {
-    font-size: 22px;
-    font-weight: normal;
-    margin-bottom: 0;
-    margin-left: 10px;
-    margin-top: 10px;
-    @media only screen and (max-width: 767px) {
-      margin-bottom: 15px;
-    }
   }
   h3 {
     font-size: 16px;

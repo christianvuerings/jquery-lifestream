@@ -97,6 +97,26 @@
       }
     };
 
+    /**
+     * Select the current term when it exists
+     */
+    var selectCurrentTerm = function(addedTerms, terms) {
+      var current_term = $scope.myfinances.current_term;
+      var to_select_term = '';
+
+      if (addedTerms.indexOf(current_term) !== -1) {
+        // When the current term actually exists in the list, we select it
+        to_select_term = $scope.myfinances.current_term;
+      } else {
+        // Otherwise we select the 2nd item in the list
+        to_select_term = terms[1] ? terms[1].value : terms[0].value;
+      }
+
+      $scope.search = {
+        'transTerm': to_select_term
+      };
+    };
+
     var createTerms = function() {
       var terms = [];
       var addedTerms = [];
@@ -128,9 +148,7 @@
 
       $scope.myfinances.terms = terms;
 
-      $scope.search = {
-        'transTerm': $scope.myfinances.current_term
-      };
+      selectCurrentTerm(addedTerms, terms);
     };
 
     var statuses = {
@@ -166,7 +184,6 @@
         'open': createCount(statuses.open),
         'all': createCount(statuses.all)
       };
-      $scope.countButtonsClass = $scope.countButtons === 1 ? 'cc-page-myfinances-100' : 'cc-even-' + $scope.countButtons;
     };
 
     /**

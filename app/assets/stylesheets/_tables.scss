@@ -51,6 +51,14 @@
     overflow: auto;
   }
 }
+.cc-table-sortable {
+  th {
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
 .cc-table-top-border {
   border-top: 1px solid $cc-color-popover-border;
   margin-top: 5px;
