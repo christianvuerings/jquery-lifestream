@@ -152,9 +152,9 @@
     };
 
     var statuses = {
-      'open': ['Current','Past due','Future', 'Error', 'Unapplied'],
+      'open': ['Current','Past due','Future', 'Error', 'Unapplied', 'Installment', 'Open'],
       'minimumamountdue': ['Current','Past due'],
-      'all': ['Current','Past due','Future', 'Closed', 'Error', 'Unapplied']
+      'all': ['Current','Past due','Future', 'Closed', 'Error', 'Unapplied', 'Installment', 'Open']
     };
 
     /**
