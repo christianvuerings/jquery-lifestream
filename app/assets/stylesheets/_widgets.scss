@@ -164,7 +164,7 @@
   }
 }
 
-.cc-widget-table-hover td {
+.cc-widget-table-hover td:not(.cc-widget-table-hover-notriangle) {
   &:hover, &:focus {
     &:after {
       border-bottom: 4px solid transparent;
@@ -178,7 +178,7 @@
   }
 }
 
-.cc-widget-table-hover-opened td {
+.cc-widget-table-hover-opened td:not(.cc-widget-table-hover-notriangle) {
   &:hover, &:focus {
     &:after {
       border-left: 4px solid transparent;

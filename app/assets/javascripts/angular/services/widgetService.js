@@ -17,9 +17,11 @@
       item._show = !item._show;
 
       // Hide all the other items
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].$$hashKey !== item.$$hashKey) {
-          items[i]._show = false;
+      if (angular.isArray(items)) {
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].$$hashKey !== item.$$hashKey) {
+            items[i]._show = false;
+          }
         }
       }
 

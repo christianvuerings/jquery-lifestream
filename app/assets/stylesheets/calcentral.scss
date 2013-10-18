@@ -19,6 +19,17 @@ body {
 h1 {
   font-size: 32px;
 }
+.cc-heading-page-title {
+  color: $cc-color-medium-grey;
+  font-size: 22px;
+  font-weight: normal;
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-top: 10px;
+  @media only screen and (max-width: 767px) {
+    margin-bottom: 15px;
+  }
+}
 h2 {
   font-size: 24px;
 }
