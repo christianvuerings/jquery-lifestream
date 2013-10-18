@@ -3,7 +3,7 @@ source 'http://torquebox.org/rubygems'
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.13"
+gem "rails", "3.2.15"
 
 gem "activerecord-jdbc-adapter", "~> 1.2.9"
 
