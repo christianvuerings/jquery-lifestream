@@ -80,7 +80,6 @@ bundle install
 8. Copy and update the settings
 ```
 mkdir ~/.calcentral_config
-cp config/settings.yml ~/.calcentral_config/settings.local.yml
 cp config/settings/testext.yml ~/.calcentral_config/testext.local.yml
 cp config/settings/development.yml ~/.calcentral_config/development.local.yml
 cp config/settings/production.yml ~/.calcentral_config/production.local.yml
