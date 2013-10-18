@@ -9,33 +9,34 @@ git clone git@github.com:[your_github_acct]/calcentral.git
 
 
 ###Configuring Remotes
-To keep track of original repository, add a remote named upstream. (This is a one time change.)
+To keep track of original repository, add a remote named ets. (This is a one time change.)
 
 ```bash
-git remote add upstream https://github.com/ets-berkeley-edu/calcentral.git
+git remote add ets https://github.com/ets-berkeley-edu/calcentral.git
 ```
 
 
 ###Pull in upstream changes
-To sync changes from upstream repository to your forked repository run the following code.
+To sync changes from remote ets repository to your forked repository run the following code.
 Follow this step everytime you want update your forked repository with changes in original repository.
 
 ```bash
-git fetch upstream
+git fetch ets
 # Fetches any new changes from the original repository
 
-git merge upstream/master
+git merge ets/master
 # Merges any changes fetched into your working files
 ```
 
-For more information on configuring remotes and updating forked repository check this [link](https://help.github.com/articles/fork-a-repo#pull-in-upstream-changes)
+For more information on configuring remotes and updating forked repository check this [link.](https://help.github.com/articles/fork-a-repo#pull-in-upstream-changes)
 
 
 ###Creating a new branch.
 To create a new github branch 
 
 ```bash
-git checkout -b <new branch name> ets-berkeley-edu/master
+git checkout -b CLC-XXXX ets/master
+# The new branch name should be of the format CLC-XXXX where XXXX is the Jira Issue ID.
 ```
 
 
@@ -45,8 +46,8 @@ git add .
 # git add . adds all the files with changes. 
 # Individual files can also added using the command git add <filename>
 
-git commit -m "commit message"
-git push origin <new branch name>
+git commit -m "[CLC-XXXX] - commit message"
+git push origin CLC-XXXX
 ```
 
 
@@ -61,7 +62,7 @@ Check this [link](https://help.github.com/articles/creating-a-pull-request) for 
 
 
 ###Updating a Pull request.
-After making a pull request, if there are any changes to be done in the same PR.
+To make changes to a Pull Request.
 
 1. Checkout the same branch in which the changes were previously made.
 2. Make new changes and run the following commands.
