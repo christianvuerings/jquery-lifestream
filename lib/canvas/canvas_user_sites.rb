@@ -17,11 +17,19 @@
 # Because this data structure is used by multiple top-level feeds, it's essential
 # that it be cached efficiently.
 
-class CanvasUserSites < MyMergedModel
+class CanvasUserSites
+  include ClassLogger
+  extend Calcentral::Cacheable
 
-  def initialize(uid, options=nil)
-    super(uid, options)
+  def initialize(uid)
+    @uid = uid
     @url_root = Settings.canvas_proxy.url_root
+  end
+
+  def get_feed
+    self.class.fetch_from_cache @uid do
+      get_feed_internal
+    end
   end
 
   def get_feed_internal

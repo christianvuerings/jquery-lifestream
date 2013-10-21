@@ -14,8 +14,7 @@ class UserCacheWarmer
       MyUpNext.new(uid),
       MyActivities::Merged.new(uid),
       MyAcademics::Merged.new(uid),
-      MyRegBlocks.new(uid),
-      CanvasUserSites.new(uid)
+      MyRegBlocks.new(uid)
     ].each do |model|
       model.get_feed
     end

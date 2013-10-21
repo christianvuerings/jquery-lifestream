@@ -24,6 +24,7 @@ module Calcentral
       CanvasUpcomingEventsProxy => :expire,
       CanvasUserActivityStreamProxy => :expire,
       CanvasUserProfileProxy => :expire,
+      CanvasUserSites => :expire,
 
       MyBadges::GoogleCalendar => :expire,
       MyBadges::GoogleDrive => :expire,
@@ -45,7 +46,6 @@ module Calcentral
       MyTasks::Merged,
       MyBadges::Merged,
       MyUpNext,
-      CanvasUserSites,
       MyRegBlocks
     ]
     MERGED_FEEDS = {}
