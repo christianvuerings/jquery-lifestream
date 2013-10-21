@@ -119,7 +119,7 @@
                   <th width="15%" data-ng-click="changeSorting('transDate')">
                     Date <i data-ng-class="getSortClass('transDate')"></i>
                   </th>
-                  <th width="35%" data-ng-click="changeSorting('transDesc')">
+                  <th width="40%" data-ng-click="changeSorting('transDesc')">
                     Description <i data-ng-class="getSortClass('transDesc')"></i>
                   </th>
                   <th width="25%" data-ng-click="changeSorting('transBalanceAmount')" class="cc-table-right cc-table-right-spacing">
@@ -128,8 +128,8 @@
                   <th width="10%" data-ng-click="changeSorting('transType')">
                     Type <i data-ng-class="getSortClass('transType')"></i>
                   </th>
-                  <th width="20%" data-ng-click="changeSorting('transDueDate')">
-                    Due Date <i data-ng-class="getSortClass('transDueDate')"></i>
+                  <th width="15%" data-ng-click="changeSorting('transDueDate')" class="cc-table-center">Due <span class="cc-hide-for-small">Now</span>
+                    <i data-ng-class="getSortClass('transDueDate')"></i>
                   </th>
                 </tr>
               </thead>
@@ -139,21 +139,21 @@
                 data-ng-class="{'cc-widget-table-hover-opened cc-widget-list-selected':(item._show)}"
                 data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
                  data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | orderBy:sort.column:sort.descending">
-                <tr>
-                  <td class="cc-widget-table-hover-notriangle" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}" data-ng-bind="item.transDate | date:'MM/dd/yy'"></td>
-                  <td class="cc-widget-table-hover-notriangle" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}">
+                <tr data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate === true)}">
+                  <td class="cc-widget-table-hover-notriangle" data-ng-bind="item.transDate | date:'MM/dd/yy'"></td>
+                  <td class="cc-widget-table-hover-notriangle">
                     <div data-ng-bind="item.transDesc" class="cc-ellipsis"></div>
                   </td>
-                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}"></td>
-                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}">
+                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount"></td>
+                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type">
                     <span class="hide-for-small" data-ng-bind="item.transType"></span>
                     <div class="hide-for-medium-up">
                       <i class="cc-icon" data-ng-attr-title="{{item.transType}}"
                          data-ng-class="{'icon-file-alt icon-rotate-270':(item.transType==='Adjustment'),'icon-plus-sign':(item.transType !== 'Adjustment' && item.transBalanceAmount > 0),'icon-minus-sign':(item.transType !== 'Adjustment' && item.transBalanceAmount < 0)}"></i>
                     </div>
                   </td>
-                  <td class="cc-widget-table-hover-notriangle">
-                    <span data-ng-show="item._show || item.transStatus!='Closed'" data-ng-bind="item.transDueDateShow" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}"></span>
+                  <td class="cc-widget-table-hover-notriangle cc-table-center">
+                    <i class="cc-icon" data-ng-class="{'icon-exclamation':(item._isDueNow === 1),'icon-exclamation-sign':(item._isDueNow === 2)}" data-ng-if="item._isDueNow > 0">
                   </td>
                 </tr>
                 <tr class="cc-page-myfinances-normal" data-ng-if="item._show">
@@ -167,6 +167,10 @@
                       <div data-ng-show="item.originalAmount">
                         <strong>Original Amount:</strong>
                         <span class="cc-page-myfinances-amount" data-cc-amount-directive="item.originalAmount"></span>
+                      </div>
+                      <div data-ng-show="item.transDueDateShow">
+                        <strong>Due Date:</strong>
+                        <span data-ng-bind="item.transDueDateShow"></span>
                       </div>
                       <div data-ng-show="item.transDept">
                         <strong>Department:</strong>

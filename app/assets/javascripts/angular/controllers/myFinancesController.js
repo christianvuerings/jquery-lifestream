@@ -42,9 +42,14 @@
       var item = obj[i];
       var test = Object.prototype.toString.call(item) === '[object Date]';
       if (test) {
-        obj.transDueDateShow = $filter('date')(item, 'MMM d');
+        obj.transDueDateShow = $filter('date')(item, 'MM/dd/yy');
         if (obj.transStatus === 'Past due') {
           obj._isPastDueDate = true;
+          obj._isDueNow = 2; // Past due
+        } else if (obj.transStatus !== 'Closed') {
+          obj._isDueNow = 1; // Current due
+        } else {
+          obj._isDueNow = 0; // Closed
         }
       }
     };
