@@ -48,6 +48,7 @@ describe MyActivities::MyFinAid do
     it { subject.length.should eq(13) }
     it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
     it { subject.each { |entry| entry[:title].should be_present } }
+    it { subject.each { |entry| entry[:source_url].should be_present } }
     it { subject.each { |entry| entry[:source].should eq("Financial Aid") } }
 
     context "alert types" do

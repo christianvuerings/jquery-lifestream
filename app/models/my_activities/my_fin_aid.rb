@@ -37,6 +37,7 @@ class MyActivities::MyFinAid
       date = format_date(date) if date.present?
       summary = document.css("Supplemental Usage Content[Type='TXT']").text.strip
       url = document.css("Supplemental Usage Content[Type='URL']").text.strip
+      url = "https://myfinaid.berkeley.edu" if url.blank?
 
       begin
         status = decode_status(date, document.css("Status").text.strip)
@@ -76,8 +77,9 @@ class MyActivities::MyFinAid
       next unless diagnostic.css("Categories Category[Name='CAT01']").text.try(:strip) == 'W'
 
       title = diagnostic.css("Message").text.strip
-      url = diagnostic.css("URL").text.strip || ""
-      summary = diagnostic.css("Usage Content[Type='TXT']").text.strip || ""
+      url = diagnostic.css("URL").text.strip
+      url = "https://myfinaid.berkeley.edu" if url.blank?
+      summary = diagnostic.css("Usage Content[Type='TXT']").text.strip
 
       next unless (title.present? && summary.present?)
 

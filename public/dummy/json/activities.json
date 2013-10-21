@@ -158,7 +158,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "",
+      "source_url": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "color_class": "myfinaid-class"
     },
@@ -169,7 +169,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "",
+      "source_url": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "color_class": "myfinaid-class"
     },
@@ -180,7 +180,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "",
+      "source_url": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "color_class": "myfinaid-class"
     },
@@ -191,7 +191,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "",
+      "source_url": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "color_class": "myfinaid-class"
     },
