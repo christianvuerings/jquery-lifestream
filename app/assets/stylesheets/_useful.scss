@@ -160,3 +160,9 @@
   position: absolute;
   width: 1px;
 }
+
+@media only screen and (max-width: 767px) {
+  .cc-hide-for-small {
+    display: none !important;
+  }
+}

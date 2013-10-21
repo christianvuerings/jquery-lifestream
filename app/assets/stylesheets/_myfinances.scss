@@ -3,7 +3,9 @@
     text-align: right;
   }
   .cc-page-myfinances-red {
-    color: $cc-color-red;
+    &, & td {
+      color: $cc-color-red;
+    }
   }
   .cc-page-myfinances-normal {
     color: #666;
