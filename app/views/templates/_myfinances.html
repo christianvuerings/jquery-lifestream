@@ -49,11 +49,11 @@
                 </div>
               </div>
             </li>
-            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-hide="isAllZero">
-              <div class="small-8 columns" data-ng-show="myfinances.summary.futureActivity!=0">
+            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-hide="isAllZero" data-ng-show="myfinances.summary.futureActivity!==0">
+              <div class="small-8 columns">
                 Charges Not Yet Due
               </div>
-              <div class="small-4 columns" data-ng-show="myfinances.summary.futureActivity!=0">
+              <div class="small-4 columns">
                 <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.futureActivity"></div>
               </div>
             </li>
@@ -140,16 +140,19 @@
                 data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
                  data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | orderBy:sort.column:sort.descending">
                 <tr>
-                  <td data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}" data-ng-bind="item.transDate | date:'MM/dd/yy'"></td>
-                  <td data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}">
+                  <td class="cc-widget-table-hover-notriangle" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}" data-ng-bind="item.transDate | date:'MM/dd/yy'"></td>
+                  <td class="cc-widget-table-hover-notriangle" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}">
                     <div data-ng-bind="item.transDesc" class="cc-ellipsis"></div>
                   </td>
-                  <td class="cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}"></td>
-                  <td class="cc-page-myfinances-type" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}">
-                    <span class="hide-for-small">{{item.transType}}</span>
-                    <img data-ng-src="/assets/cfv/cfv-{{item.transType | lowercase}}.png" height="32" width="32" class="hide-for-medium-up" />
+                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}"></td>
+                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}">
+                    <span class="hide-for-small" data-ng-bind="item.transType"></span>
+                    <div class="hide-for-medium-up">
+                      <i class="cc-icon" data-ng-attr-title="{{item.transType}}"
+                         data-ng-class="{'icon-file-alt icon-rotate-270':(item.transType==='Adjustment'),'icon-plus-sign':(item.transType !== 'Adjustment' && item.transBalanceAmount > 0),'icon-minus-sign':(item.transType !== 'Adjustment' && item.transBalanceAmount < 0)}"></i>
+                    </div>
                   </td>
-                  <td>
+                  <td class="cc-widget-table-hover-notriangle">
                     <span data-ng-show="item._show || item.transStatus!='Closed'" data-ng-bind="item.transDueDateShow" data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate==true)}"></span>
                   </td>
                 </tr>
@@ -173,22 +176,15 @@
                         <strong>Term:</strong>
                         <span data-ng-bind="item.transTerm"></span>
                       </div>
+                      <div data-ng-show="item.transType" class="hide-for-medium-up">
+                        <strong>Type:</strong>
+                        <span data-ng-bind="item.transType"></span>
+                      </div>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
-          </div>
-          <div class="cc-widget-padding hide-for-medium-up">
-            <h3>Transaction Types</h3>
-            <div class="cc-page-myfinances-legend">
-              <ul>
-                <li data-ng-repeat="item in transTypes">
-                  <img data-ng-src="/assets/cfv/cfv-{{item | lowercase}}.png" height="32" width="32" />
-                  <div class="cc-page-myfinances-legend-text">{{item}}</div>
-                </li>
-              </ul>
-            </div>
           </div>
 
         </div>
