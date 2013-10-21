@@ -171,7 +171,7 @@ cache:
     CanvasCourseTeachersProxy: <%= 5.minutes %>
     MyRegBlocks: 0
 
-    CanvasUserSites: 0
+    CanvasUserSites: <%= 15.minutes %>
     CanvasUserCoursesProxy: <%= 30.minutes %>
     CanvasGroupsProxy: <%= 30.minutes %>
     CanvasUserActivityStreamProxy: <%= 10.minutes %>
