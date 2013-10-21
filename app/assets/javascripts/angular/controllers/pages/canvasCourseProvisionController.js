@@ -5,11 +5,24 @@
    * Canvas course provisioning LTI app controller
    */
   calcentral.controller('CanvasCourseProvisionController', ['apiService', '$http', '$scope', '$window', function (apiService, $http, $scope, $window) {
+
     apiService.util.setTitle('bCourses Course Provision');
 
     /**
-     * TODO When this app is embedded in bCourses, add iframe sizing (as in the Roster Photos app).
+     * Post a message to the parent
+     * @param {String|Object} message Message you want to send over.
      */
+    var postMessage = function(message) {
+      if ($window.parent) {
+        $window.parent.postMessage(message, '*');
+      }
+    };
+
+    var postHeight = function() {
+      postMessage({
+        height: document.body.scrollHeight
+      });
+    };
 
     $scope.courseSiteCreated = function(data) {
       angular.extend($scope, data);
@@ -56,6 +69,7 @@
       }
       $http.get(feed_url).success(function(data) {
         angular.extend($scope, data);
+        window.setInterval(postHeight, 250);
         if ($scope.teaching_semesters && $scope.teaching_semesters.length > 0) {
           $scope.switchSemester($scope.teaching_semesters[0]);
         }

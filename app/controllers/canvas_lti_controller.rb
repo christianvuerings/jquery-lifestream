@@ -33,4 +33,8 @@ class CanvasLtiController < ApplicationController
     respond_to :xml
   end
 
+  def lti_course_provision
+    respond_to :xml
+  end
+
 end
