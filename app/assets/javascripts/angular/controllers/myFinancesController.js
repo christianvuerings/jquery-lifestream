@@ -18,8 +18,6 @@
       $scope,
       apiService) {
 
-    var transTypes = [];
-
     var parseDate = function(obj, i) {
       var regex = /^(\d{4})[\-](0?[1-9]|1[012])[\-](0?[1-9]|[12][0-9]|3[01])$/;
       var item = obj[i] + '';
@@ -54,14 +52,7 @@
       }
     };
 
-    var addToTranstypes = function(element) {
-      if (transTypes.indexOf(element.transType) === -1) {
-        transTypes.push(element.transType);
-      }
-    };
-
     var parseData = function(data) {
-      transTypes = [];
       var finances = angular.copy(data);
       for (var i in finances.summary) {
         if (finances.summary.hasOwnProperty(i)){
@@ -75,7 +66,6 @@
           if (element.hasOwnProperty(j)){
 
             parseDate(element, j);
-            addToTranstypes(element);
             if (j === 'transDueDate') {
               parseDueDate(element, j);
             }
@@ -83,7 +73,6 @@
         }
       });
       $scope.myfinances = finances;
-      $scope.transTypes = transTypes.sort();
     };
 
     /**
