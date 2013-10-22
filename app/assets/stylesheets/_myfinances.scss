@@ -7,11 +7,10 @@
       color: $cc-color-red;
     }
   }
-  .cc-page-myfinances-normal {
-    color: #666;
-  }
   .cc-page-myfinances-green {
-    color: $cc-color-green;
+    &, & td {
+      color: $cc-color-green;
+    }
   }
   .cc-page-myfinances-legend {
     margin-bottom: 30px;
