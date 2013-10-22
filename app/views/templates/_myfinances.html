@@ -139,7 +139,7 @@
                 data-ng-class="{'cc-widget-table-hover-opened cc-widget-list-selected':(item._show)}"
                 data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
                  data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | orderBy:sort.column:sort.descending">
-                <tr data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate === true)}">
+                <tr data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate === true), 'cc-page-myfinances-green':(item.transBalanceAmount < 0)}">
                   <td class="cc-widget-table-hover-notriangle" data-ng-bind="item.transDate | date:'MM/dd/yy'"></td>
                   <td class="cc-widget-table-hover-notriangle">
                     <div data-ng-bind="item.transDesc" class="cc-ellipsis"></div>
@@ -156,7 +156,7 @@
                     <i class="cc-icon" data-ng-class="{'icon-exclamation':(item._isDueNow === '2_current_due'),'icon-exclamation-sign':(item._isDueNow === '1_past_due')}" data-ng-if="item._isDueNow !== 0">
                   </td>
                 </tr>
-                <tr class="cc-page-myfinances-normal" data-ng-if="item._show">
+                <tr data-ng-if="item._show">
                   <td class="cc-widget-table-hover-notriangle"></td>
                   <td class="cc-widget-table-hover-notriangle" colspan="4">
                     <div class="row collapse">
