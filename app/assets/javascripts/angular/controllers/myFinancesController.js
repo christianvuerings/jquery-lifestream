@@ -45,9 +45,9 @@
         obj.transDueDateShow = $filter('date')(item, 'MM/dd/yy');
         if (obj.transStatus === 'Past due') {
           obj._isPastDueDate = true;
-          obj._isDueNow = 2; // Past due
+          obj._isDueNow = '1_past_due'; // Past due
         } else if (obj.transStatus !== 'Closed') {
-          obj._isDueNow = 1; // Current due
+          obj._isDueNow = '2_current_due'; // Current due
         } else {
           obj._isDueNow = 0; // Closed
         }
@@ -247,10 +247,10 @@
      */
     $scope.changeSorting = function(column) {
       var sort = $scope.sort;
-      if (sort.column === column) {
+      if (angular.equals(sort.column, [column])) {
         sort.descending = !sort.descending;
       } else {
-        sort.column = column;
+        sort.column = [column];
         sort.descending = false;
       }
     };

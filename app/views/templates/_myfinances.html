@@ -128,8 +128,8 @@
                   <th width="10%" data-ng-click="changeSorting('transType')">
                     Type <i data-ng-class="getSortClass('transType')"></i>
                   </th>
-                  <th width="15%" data-ng-click="changeSorting('transDueDate')" class="cc-table-center">Due <span class="cc-hide-for-small">Now</span>
-                    <i data-ng-class="getSortClass('transDueDate')"></i>
+                  <th width="15%" data-ng-click="changeSorting('_isDueNow')" class="cc-table-center">Due <span class="cc-hide-for-small">Now</span>
+                    <i data-ng-class="getSortClass('_isDueNow')"></i>
                   </th>
                 </tr>
               </thead>
@@ -153,7 +153,7 @@
                     </div>
                   </td>
                   <td class="cc-widget-table-hover-notriangle cc-table-center">
-                    <i class="cc-icon" data-ng-class="{'icon-exclamation':(item._isDueNow === 1),'icon-exclamation-sign':(item._isDueNow === 2)}" data-ng-if="item._isDueNow > 0">
+                    <i class="cc-icon" data-ng-class="{'icon-exclamation':(item._isDueNow === '2_current_due'),'icon-exclamation-sign':(item._isDueNow === '1_past_due')}" data-ng-if="item._isDueNow !== 0">
                   </td>
                 </tr>
                 <tr class="cc-page-myfinances-normal" data-ng-if="item._show">
