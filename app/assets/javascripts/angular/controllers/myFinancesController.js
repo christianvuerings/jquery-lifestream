@@ -54,6 +54,15 @@
       }
     };
 
+    var titleCaseDescription = function(obj, i) {
+      obj[i] = obj[i].replace(/\w\S*/g, function(text) {
+        if (!text) {
+          return '';
+        }
+        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase();
+      });
+    };
+
     var addToTranstypes = function(element) {
       if (transTypes.indexOf(element.transType) === -1) {
         transTypes.push(element.transType);
@@ -78,6 +87,9 @@
             addToTranstypes(element);
             if (j === 'transDueDate') {
               parseDueDate(element, j);
+            }
+            if (j === 'transDesc') {
+              titleCaseDescription(element, j);
             }
           }
         }
