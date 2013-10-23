@@ -77,15 +77,13 @@ export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C"
 bundle install
 ```
 
-8. Copy and update the settings
+8. Set up a local settings directory:
 ```
 mkdir ~/.calcentral_config
-cp config/settings/testext.yml ~/.calcentral_config/testext.local.yml
-cp config/settings/development.yml ~/.calcentral_config/development.local.yml
-cp config/settings/production.yml ~/.calcentral_config/production.local.yml
 ```
-and update the settings in the `.local.yml` files.
-Settings live outside of the project dir to prevent accidental commits to the repo.
+Default settings are loaded from your source code in `config/settings.yml` and `config/settings/ENVIRONMENT_NAME.yml`. For example, the configuration used when running tests with `RAILS_ENV=test` is determined by the combination of `config/settings/test.yml` and `config/settings.yml`.
+Because we don't store passwords and other sensitive data in source code, any RAILS_ENV other than `test` requires overriding some default settings.
+Do this by creating `ENVIRONMENT.local.yml` files in your `~/.calcentral_config` directory. For example, your `~.calcentral_config/development.local.yml` file may include access tokens and URLs for a locally running Canvas server.
 You can also create Ruby configuration files like "settings.local.rb" and "development.local.rb" to amend the standard `config/environments/*.rb` files.
 
 9. Install JDBC driver (for Oracle connection)
