@@ -257,6 +257,12 @@
       }
     });
 
+    $scope.$watch('search.transTerm', function(transTerm) {
+      if (transTerm) {
+        $scope.search_term = transTerm;
+      }
+    });
+
     $scope.statusFilter = function(item) {
       return ($scope.searchStatuses.indexOf(item.transStatus) !== -1);
     };
