@@ -46,9 +46,10 @@
           obj._isDueNow = '1_past_due'; // Past due
         } else if (obj.transStatus !== 'Closed') {
           obj._isDueNow = '2_current_due'; // Current due
-        } else {
-          obj._isDueNow = 0; // Closed
         }
+      }
+      if (!obj._isDueNow) {
+        obj._isDueNow = 0; // Closed
       }
     };
 
