@@ -13,7 +13,9 @@ source .rvmrc
 
 export RAILS_ENV=production
 export LOGGER_STDOUT=only
-export JRUBY_OPTS="-Xcext.enabled=true -J-Xmx900m"
+# Temporary workaround for a JRuby 1.7.4 + Java 1.7 + JIT/invokedynamic bug : CLC-2732
+export JRUBY_OPTS="-Xcext.enabled=true -J-Xmx900m -J-XX:MaxPermSize=500m -J-Djruby.compile.mode=OFF"
+# export JRUBY_OPTS="-Xcext.enabled=true -J-Xmx900m"
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
