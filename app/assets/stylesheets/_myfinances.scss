@@ -70,6 +70,9 @@
   }
   .cc-page-myfinances-table {
     margin: 0 10px 30px;
+    table {
+      table-layout: fixed;
+    }
     td, th {
       border-bottom: 1px solid $cc-color-widget-background;
       font-size: 12px;
