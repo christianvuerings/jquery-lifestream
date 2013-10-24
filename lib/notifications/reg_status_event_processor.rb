@@ -7,7 +7,7 @@ class RegStatusEventProcessor < AbstractEventProcessor
 
   def process_internal(event, timestamp)
     response = []
-    uids = event['payload']['uid']
+    uids = event['payload']['uid'] || []
     uids.each do |uid|
       next if uid == 0
       singular_event = {

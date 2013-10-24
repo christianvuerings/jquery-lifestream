@@ -6,6 +6,13 @@ describe RegStatusEventProcessor do
     @processor = RegStatusEventProcessor.new
   end
 
+  let(:empty_payload) { JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":""}') }
+
+  context "empty payload" do
+    subject { @processor.process(empty_payload, Time.now.to_datetime) }
+    it { should be_false }
+  end
+
   it "should not handle an event topic it doesn't know how to handle" do
     event = JSON.parse('{"topic":"Bearfallacies:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
