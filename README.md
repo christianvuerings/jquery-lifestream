@@ -23,7 +23,7 @@ brew update
 brew install postgresql
 initdb /usr/local/var/postgres
 ```
-__For Mountain Lion users ONLY:__ There's a few [extra steps](http://nextmarvel.net/blog/2011/09/brew-install-postgresql-on-os-x-lion/).
+__For Mountain Lion & Mavericks users ONLY:__ There's a few [extra steps](http://nextmarvel.net/blog/2011/09/brew-install-postgresql-on-os-x-lion/).
 
 
 2. Start postgres, add the user and create the necessary databases
