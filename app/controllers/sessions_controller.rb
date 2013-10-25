@@ -107,7 +107,8 @@ class SessionsController < ApplicationController
       return false
     end
 
-    if !UserAuth.is_superuser?(session[:user_id])
+    auth_user_id = session[:original_user_id] || user_uid
+    if !UserAuth.is_superuser?(auth_user_id)
       Rails.logger.warn "ACT-AS: User #{user_uid} FAILS to login to #{act_as_uid}, #{user_uid} isn't a superuser."
       return false
     end

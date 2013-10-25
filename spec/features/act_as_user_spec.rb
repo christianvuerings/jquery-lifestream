@@ -36,6 +36,45 @@ feature "act_as_user" do
     response["uid"].should == "192517"
   end
 
+  scenario "switch to another user without clicking stop acting as" do
+    # disabling the cache_warmer while we're switching back and forth between users
+    # The switching back triggers a cache invalidation, while the warming thread is still running.
+    Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
+    login_with_cas "192517"
+    UserAuth.stub(:is_superuser?, '192517').and_return(true)
+    suppress_rails_logging {
+      act_as_user "2040"
+    }
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response["is_logged_in"].should be_true
+    response["uid"].should == "2040"
+
+    suppress_rails_logging {
+      act_as_user "1234"
+    }
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response["is_logged_in"].should be_true
+    response["uid"].should == "1234"
+
+    suppress_rails_logging {
+      act_as_user "9876"
+    }
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response["is_logged_in"].should be_true
+    response["uid"].should == "9876"
+
+    suppress_rails_logging {
+     stop_act_as_user
+    }
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response["is_logged_in"].should be_true
+    response["uid"].should == "192517"
+  end
+
   scenario "provide faulty param while switching users" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     login_with_cas "192517"
