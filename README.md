@@ -43,6 +43,7 @@ Currently supports the following feeds:
 * [Miso](http://gomiso.com)
 * [Mlkshk](http://mlkshk.com)
 * [Pinboard](http://pinboard.in)
+* [Pocket](http://getpocket.com)
 * [Posterous](http://posterous.com)
 * [Quora](http://quora.com)
 * [Reddit](http://reddit.com)
@@ -263,6 +264,7 @@ A list of sites that use the jQuery Lifestream plug-in:
 [Dennis Metzcher](http://lifestream.metzcher.com/),
 [Devin Berg](http://www.devinberg.com/),
 [Erik Ostrom](http://www.erikostrom.com/),
+[Ethan Brown](http://www.etano.net/),
 [Libby Baldwin](http://libbybaldwin.github.com/),
 [Sam Tardif](http://www.codeandstuff.com/),
 [Sebastix](http://www.sebastix.nl/),
