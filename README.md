@@ -179,6 +179,21 @@ rails s -e production
 bundle exec rake assets:clean
 ```
 
+### Java Out of Memory exception
+
+If you're getting something like the following error:
+
+```
+Java::JavaLang::OutOfMemoryError: Java heap space
+```
+
+Make sure that you're memory settings for Java are high enough.
+Add the following to your `JRUBY_OPTS`:
+
+```
+JRUBY_OPTS="-J-Xmx900m -J-XX:MaxPermSize=500m"
+```
+
 ### Start the server with TorqueBox
 
 In production we use [TorqueBox](http://torquebox.org/) as this provides us with messaging, scheduling, caching, and daemons.
