@@ -97,17 +97,12 @@ You may already have an Oracle driver from MyBerkeley-OAE development, in which 
 rake db:schema:load
 ```
 
-11. Deploy into TorqueBox
+11. Start the server
 ```bash
-bundle exec torquebox deploy .
+rails s
 ```
 
-12. Start the server
-```bash
-bundle exec torquebox run -p=3000
-```
-
-13. Access your development server at [localhost:3000](http://localhost:3000/).
+12. Access your development server at [localhost:3000](http://localhost:3000/).
 Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 
 ## Enable live updates
@@ -117,15 +112,14 @@ In order to have live updates you'll need to perform the following steps:
 1. Install and run memcached
 
 2. Add the following lines to development.local.yml
-```
+```yaml
 messaging:
-        enabled: true
+  enabled: true
 cache:
-        store: "memcached"
+  store: "memcached"
 ```
 
-3. start the server with torquebox
-
+3. Start the server with TorqueBox
 
 ## Front-end Testing
 
@@ -185,11 +179,43 @@ rails s -e production
 bundle exec rake assets:clean
 ```
 
+### Start the server with TorqueBox
+
+In production we use [TorqueBox](http://torquebox.org/) as this provides us with messaging, scheduling, caching, and daemons.
+
+1. Deploy into TorqueBox (only needs to happen once in a while)
+```bash
+bundle exec torquebox deploy .
+```
+
+2. Start the server
+```bash
+bundle exec torquebox run -p=3000
+```
+
 ### Test connection
 
 Make sure you are on the Berkeley network or connected through [preconfigured VPN](https://kb.berkeley.edu/jivekb/entry.jspa?externalID=2665) for the Oracle connection.
 If you use VPN, use group #1 (1-Campus_VPN)
 
+### Enable basic authentication
+
+Basic authentication will enable you to log in without using CAS.
+This is necessary when your application can't be CAS authenticated or when you're testing mobile browsers.
+**Note** only enable this in fake mode or in development.
+
+1. Add the following setting to your `environment.yml` file (e.g. `development.yml`)
+```bash
+developer_auth:
+  enabled: false
+  password: topsecret!
+```
+
+2. (re)start the server for the changes to take effect.
+
+3. Click on the footer (Berkeley logo) when you load the page.
+
+4. You should be seeing the [Basic Auth screen](http://cl.ly/SA6C). As the login you should use the UID (e.g. 61889, oski) and then password from the settings file.
 
 ### "Act As" another user
 
