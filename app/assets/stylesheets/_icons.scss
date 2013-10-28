@@ -28,7 +28,7 @@
 }
 
 /* Fontawesome icons */
-.icon-exclamation-sign, .icon-warning-sign {
+.fa-exclamation-circle, .fa-exclamation-triangle {
   color: #ac120e !important;
 }
 
@@ -36,9 +36,9 @@
   color: $cc-color-gold !important;
 }
 
-.icon-ok, .icon-ok-sign {
+.fa-check, .fa-check-circle {
   color: #007748 !important;
 }
-.icon-stop {
+.fa-stop {
   color: $cc-color-medium-grey !important;
 }

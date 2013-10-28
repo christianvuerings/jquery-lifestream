@@ -32,7 +32,7 @@
           // Link to map only if we have both lat and lon; otherwise just display building name
           var element = '';
           if (scope.exam.location.lat && scope.exam.location.lon) {
-            element = $compile('<a data-ng-href="https://maps.google.com/maps?q={{exam.location.lat}},{{exam.location.lon}}+({{exam.location.building_link_name}})" title="{{exam.location.building_tooltip_name}}">{{exam.location.raw_location}} <i class="cc-icon icon-map-marker"></i></a>')(scope);
+            element = $compile('<a data-ng-href="https://maps.google.com/maps?q={{exam.location.lat}},{{exam.location.lon}}+({{exam.location.building_link_name}})" title="{{exam.location.building_tooltip_name}}">{{exam.location.raw_location}} <i class="cc-icon fa fa-map-marker"></i></a>')(scope);
           } else {
             element = $compile('<span>{{exam.location.raw_location}}</span>')(scope);
           }

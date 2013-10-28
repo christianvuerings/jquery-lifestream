@@ -7,15 +7,6 @@ GIT
       oauth (~> 0.4.5)
       uuid
 
-GIT
-  remote: https://github.com/pduersteler/font-awesome-sass-rails.git
-  revision: 50375dfa80a0f75746f4402e6831e06812191f43
-  ref: 50375dfa
-  specs:
-    font-awesome-sass-rails (3.2.1.0)
-      railties (>= 3.1.1)
-      sass-rails (>= 3.1.1)
-
 GEM
   remote: https://rubygems.org/
   remote: http://torquebox.org/rubygems/
@@ -71,7 +62,6 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    bcrypt-ruby (3.1.1)
     bcrypt-ruby (3.1.1-java)
     blankslate (2.1.2.4)
     bootstrap-sass (2.3.2.0)
@@ -136,7 +126,7 @@ GEM
       faraday (>= 0.7.4, < 0.9)
     ffi (1.9.0)
     ffi (1.9.0-java)
-    font-awesome-rails (3.2.1.1)
+    font-awesome-rails (4.0.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.4)
     fssm (0.2.10)
@@ -166,7 +156,6 @@ GEM
     headless (1.0.1)
     highline (1.6.19)
     hike (1.2.3)
-    http_parser.rb (0.5.3)
     http_parser.rb (0.5.3-java)
     httparty (0.11.0)
       multi_json (~> 1.0)
@@ -235,7 +224,6 @@ GEM
     net-ssh (2.6.7)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    nokogiri (1.5.10)
     nokogiri (1.5.10-java)
     oauth (0.4.7)
     omniauth (1.1.4)
@@ -289,7 +277,6 @@ GEM
       bootstrap-sass (~> 2.2)
       builder (~> 3.0)
       coffee-rails (>= 3.1, < 5)
-      font-awesome-rails (~> 3.0)
       haml (~> 4.0)
       jquery-rails (>= 2.1, < 4)
       jquery-ui-rails (~> 3.0)
@@ -458,7 +445,7 @@ DEPENDENCIES
   devise (~> 2.2.5)
   faraday (~> 0.8.7)
   faraday_middleware (~> 0.9.0)
-  font-awesome-sass-rails!
+  font-awesome-rails (~> 4.0.0.0)
   google-api-client (~> 0.6.4)
   guard-livereload (~> 1.4.0)
   headless (~> 1.0.1)

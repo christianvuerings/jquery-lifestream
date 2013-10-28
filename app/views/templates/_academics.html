@@ -110,8 +110,8 @@
                     <tr>
                       <th class="cc-table-subheader" scope="row">Registration</td>
                       <td>
-                        <i class="cc-icon"
-                          data-ng-class="{true:'icon-ok-sign',false:'icon-exclamation-sign'}[api.user.profile.student_info.reg_status.summary=='Registered']">
+                        <i class="cc-icon fa"
+                          data-ng-class="{true:'fa-check-circle',false:'fa-exclamation-circle'}[api.user.profile.student_info.reg_status.summary=='Registered']">
                         </i>
                         <span data-ng-bind="api.user.profile.student_info.reg_status.summary"></span>
                       </td>
@@ -120,8 +120,8 @@
                     <tr>
                       <th class="cc-table-subheader" scope="row">California Residency</td>
                       <td>
-                        <i class="cc-icon"
-                          data-ng-class="{'icon-ok-sign':(api.user.profile.student_info.california_residency!='needsAction'), 'cc-icon icon-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
+                        <i class="cc-icon fa"
+                          data-ng-class="{'fa-check-circle':(api.user.profile.student_info.california_residency!='needsAction'), 'fa-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
                         <span data-ng-bind="api.user.profile.student_info.california_residency.summary"></span>
                       </td>
                       <td data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></td>
@@ -146,7 +146,7 @@
                        data-ng-class="{'cc-widget-table-hover-opened':(block._show)}"
                        data-cc-accessible-focus-directive
                        data-ng-click="api.widget.toggleShow($event, regblocks.active_blocks, block, 'Active Blocks')">
-                      <td><i class="icon-exclamation-sign"></i><span data-ng-bind="block.type"></span></td>
+                      <td><i class="fa fa-exclamation-circle"></i><span data-ng-bind="block.type"></span></td>
                       <td class="cc-ellipsis" data-ng-bind="block.reason"></td>
                       <td data-ng-bind="block.office || '&nbsp;'"></td>
                       <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></td>
@@ -158,7 +158,7 @@
                       <td colspan="4">
                         <button class="cc-button-link cc-academics-what-is-registration-block"
                                 data-ng-click="api.util.preventBubble($event);block._show_regblock_definition=!block._show_regblock_definition">
-                          <i class="icon-question-sign text-info"></i>What is a registration block?
+                          <i class="fa fa-question-circle text-info"></i>What is a registration block?
                         </button>
                       </td>
                     </tr>
@@ -180,7 +180,7 @@
               </div>
               <div data-ng-show="!regblocks.available">
                 <div class="row collapse">
-                  <div class="large-6 columns end"><i class="icon-warning-sign cc-unavailable"></i>Block message is currently unavailable.</div>
+                  <div class="large-6 columns end"><i class="fa fa-exclamation-triangle cc-unavailable"></i>Block message is currently unavailable.</div>
                 </div>
               </div>
               <div class="cc-academics-showhide-block-history" data-ng-show="regblocks.available">
@@ -234,7 +234,7 @@
                   <tr data-ng-repeat="requirement in requirements">
                     <th data-ng-bind="requirement.name" scope="row" class="cc-table-subheader"></th>
                     <td>
-                      <i data-ng-class="{'cc-icon icon-ok-sign':(requirement.status=='met'), 'cc-icon icon-edit':(requirement.status!='met')}"></i>
+                      <i class="cc-icon fa" data-ng-class="{'fa-check-circle':(requirement.status=='met'), 'fa-edit':(requirement.status!='met')}"></i>
                       <span class="cc-visuallyhidden" data-ng-bind-template="{{requirement.name}} has {{requirement.status!='met' ? 'not' : ''}} been met"></span>
                     </td>
                   </tr>

@@ -21,14 +21,14 @@
       };
 
       var typeToIcon = {
-        alert: 'exclamation-sign',
+        alert: 'exclamation-circle',
         announcement: 'bullhorn',
         assignment: 'book',
         discussion: 'comments',
         financial: 'usd',
         grade_posting: 'trophy',
-        message: 'ok-sign',
-        webconference: 'facetime-video'
+        message: 'check-circle',
+        webconference: 'video-camera'
       };
 
       /**

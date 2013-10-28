@@ -7,7 +7,7 @@
           data-ng-class="{'cc-button-selected':(panelState.showAddTask)}"
           data-ng-show="api.user.profile.has_google_access_token && (current_task_mode!='completed' || !completedTasks.length)"
           data-ng-click="toggleAddTask()">
-        <i class="icon-plus cc-button-plus-icon"></i>
+        <i class="fa fa-plus cc-button-plus-icon"></i>
         <span>New Task</span>
       </button>
       <button class="cc-button cc-right" data-ng-show="completedTasks.length && current_task_mode=='completed'" data-ng-click="clearCompletedTasks()">Delete completed tasks</button>
