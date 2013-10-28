@@ -13,15 +13,15 @@
           var icon = '';
 
           if (indicator === 'Error') {
-            icon = 'exclamation';
+            icon = 'fa-exclamation';
           } else if (indicator === 'Process') {
-            icon = 'spinner icon-spin';
+            icon = 'fa-spinner fa-spin';
           } else if (indicator === 'Success') {
-            icon = 'ok';
+            icon = 'fa-check';
           }
 
           if (icon) {
-            icon = '<i class="icon-' + icon + '"></i>';
+            icon = '<i class="fa ' + icon + '"></i>';
           }
 
           elm.html(icon + html);

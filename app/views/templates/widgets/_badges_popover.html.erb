@@ -13,7 +13,7 @@
     <div class="cc-popover cc-popover-arrow cc-badgepopover cc-badgepopover-{{badge.display.name|lowercase}}" data-ng-show="api.popover.status('cc-{{badge.display.name}}-popover-status')">
       <!-- Title -->
       <div class="cc-popover-title" data-ng-switch on="api.user.profile.has_google_access_token && badge.display.name">
-        <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}"><i class="icon-external-link"></i>
+        <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}"><i class="fa fa-external-link"></i>
           <span class="cc-visuallyhidden" data-ng-bind-template="Go to {{badge.display.name}}"></span>
         </a>
         <h4 data-ng-switch-when="bMail"
@@ -45,7 +45,7 @@
                   <span data-ng-bind="item.title"></span>
                 </div>
                 <div class="cc-badgepopover-item-details-summary" data-ng-show="item.summary">
-                  <i class="icon-envelope-alt cc-left"></i><span class="cc-ellipsis" data-ng-bind="item.summary"></span>
+                  <i class="fa fa-envelope-o cc-left"></i><span class="cc-ellipsis" data-ng-bind="item.summary"></span>
                 </div>
               </a>
             </div>
@@ -76,7 +76,7 @@
             </div>
             <div data-ng-switch-when="bDrive">
               <a class="cc-badgepopover-item-details cc-badgepopover-item-drive" data-ng-href="{{item.link}}">
-                <i data-ng-hide="item.icon_class" class="icon-hdd cc-left icon-muted icon-2x"></i>
+                <i data-ng-hide="item.icon_class" class="fa fa-hdd-o cc-left"></i>
                 <div class="cc-icon bdrive-icon {{item.icon_class}}" data-ng-show="item.icon_class"></div>
                 <div class="cc-badgepopover-item-details-title cc-ellipsis">
                   <span class="cc-popover-link" data-ng-bind="item.title"></span>

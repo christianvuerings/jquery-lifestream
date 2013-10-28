@@ -5,8 +5,8 @@
   <button class="cc-header-icon cc-header-icon-font cc-icon-status-person"
     data-ng-class="{'cc-icon-status-person-haslayover':(showStatusError),'cc-header-icon-selected':(api.popover.status('cc-popover-academic-status'))}"
     data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-academic-status')" title="Show your academic profile">
-    <i class="icon-user"></i>
-    <i data-ng-class="{true:'cc-icon cc-icon-status-person-layover icon-exclamation-sign'}[showStatusError]">
+    <i class="fa fa-user"></i>
+    <i data-ng-class="{true:'cc-icon cc-icon-status-person-layover fa fa-exclamation-circle'}[showStatusError]">
     </i>
   </button>
   <div class="cc-popover cc-popover-arrow cc-popover-academic-status" data-ng-show="api.popover.status('cc-popover-academic-status')">
@@ -17,7 +17,7 @@
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.reg_status.needsAction]"></i>
+            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle'}[api.user.profile.student_info.reg_status.needsAction]"></i>
             <strong>Registration Status:</strong> <span data-ng-bind="api.user.profile.student_info.reg_status.summary"><br />
             <span data-ng-bind-html="api.user.profile.student_info.reg_status.explanation"></span>
           </div>
@@ -26,10 +26,10 @@
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left"
-               data-ng-class="{'icon-exclamation-sign': api.user.profile.student_info.reg_block.needsAction,
-               'icon-warning-sign cc-unavailable': !api.user.profile.student_info.reg_block.available,
-               'icon-ok-sign': !api.user.profile.student_info.reg_block.needsAction && api.user.profile.student_info.reg_block.available}"></i>
+            <i class="cc-left fa"
+               data-ng-class="{'fa-exclamation-circle': api.user.profile.student_info.reg_block.needsAction,
+               'fa-exclamation-triangle cc-unavailable': !api.user.profile.student_info.reg_block.available,
+               'fa-check-circle': !api.user.profile.student_info.reg_block.needsAction && api.user.profile.student_info.reg_block.available}"></i>
             <strong>Registration Blocks:</strong> <span data-ng-show="api.user.profile.student_info.reg_block.available" data-ng-bind="api.user.profile.student_info.reg_block.active_blocks"></span>
             <span data-ng-hide="api.user.profile.student_info.reg_block.available">Currently Unavailable</span>
           </div>
@@ -38,7 +38,7 @@
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left" data-ng-class="{true:'icon-exclamation-sign',false:'icon-ok-sign'}[api.user.profile.student_info.california_residency.needsAction]"></i>
+            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle'}[api.user.profile.student_info.california_residency.needsAction]"></i>
             <strong>California Residency:</strong> <span data-ng-bind="api.user.profile.student_info.california_residency.summary"><br />
             <span data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></span>
           </div>

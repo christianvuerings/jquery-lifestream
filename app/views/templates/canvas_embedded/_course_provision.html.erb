@@ -70,7 +70,7 @@
             <div data-ng-show="created_status === 'Success'">
               <div class="cc-page-provision-feedback">
                 {{created_status}} : "{{created_course_site_short_name}}" site created
-                <i class="cc-left icon-ok-sign"></i>
+                <i class="cc-left fa fa-check-circle"></i>
                 <div data-ng-show="created_message">{{created_message}}</div>
               </div>
               <strong>
@@ -91,7 +91,7 @@
             <div data-ng-show="created_status === 'WARNING'">
               <div class="cc-page-provision-feedback">
                 {{created_status}} : "{{created_course_site_short_name}}" site creation was incomplete
-                <i class="cc-left icon-exclamation-sign"></i>
+                <i class="cc-left fa fa-exclamation-circle"></i>
                 <div data-ng-show="created_message">{{created_message}}</div>
               </div>
               <strong>
@@ -112,7 +112,7 @@
             <div data-ng-show="created_status === 'ERROR'">
               <div class="cc-page-provision-feedback">
                 {{created_status}} : {{created_message}}
-                <i class="cc-left icon-exclamation-sign"></i>
+                <i class="cc-left fa fa-exclamation-circle"></i>
                 <div data-ng-show="created_message">
                   <strong>
                     Report this issue to <a href="http://ets.berkeley.edu/calcentral-feedback">CalCentral support</a>

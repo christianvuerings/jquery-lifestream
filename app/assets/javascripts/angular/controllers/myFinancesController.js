@@ -229,7 +229,7 @@
      */
     $scope.getSortClass = function(column) {
       var sortUpDown = $scope.sort.descending ? 'down' : 'up';
-      return column == $scope.sort.column && 'icon-chevron-' + sortUpDown;
+      return column == $scope.sort.column && 'fa fa-chevron-' + sortUpDown;
     };
 
     /**

@@ -1,19 +1,19 @@
 <!-- Top Navbar -->
 <div class="row cc-navigation-bar ng-cloak" data-ng-show="api.user.events.isAuthenticated">
   <ul>
-    <li data-ng-class="{true:'active'}[_controller_name=='DashboardController']"><a href="/dashboard" data-ng-click="off_canvas_menu._show=false"><i class="icon-home"></i>My Dashboard</a></li>
+    <li data-ng-class="{true:'active'}[_controller_name=='DashboardController']"><a href="/dashboard" data-ng-click="off_canvas_menu._show=false"><i class="fa fa-home"></i>My Dashboard</a></li>
     <li data-ng-class="{true:'active'}[_controller_name=='AcademicsController']" data-ng-show="api.user.profile.student_info.has_academics_tab">
-      <a href="/academics" data-ng-click="off_canvas_menu._show=false"><i class="icon-book"></i>My Academics</a>
+      <a href="/academics" data-ng-click="off_canvas_menu._show=false"><i class="fa fa-book"></i>My Academics</a>
     </li>
-    <li data-ng-class="{true:'active'}[_controller_name=='CampusController']"><a href="/campus" data-ng-click="off_canvas_menu._show=false"><i class="icon-th-large"></i>My Campus</a></li>
-    <li data-ng-class="{true:'active'}[_controller_name=='MyFinancesController']"  data-ng-show="api.user.profile.roles.student && api.user.profile.features.financials"><a href="/finances" data-ng-click="off_canvas_menu._show=false"><i class="icon-usd"></i>My Finances</a></li>
+    <li data-ng-class="{true:'active'}[_controller_name=='CampusController']"><a href="/campus" data-ng-click="off_canvas_menu._show=false"><i class="fa fa-th-large"></i>My Campus</a></li>
+    <li data-ng-class="{true:'active'}[_controller_name=='MyFinancesController']"  data-ng-show="api.user.profile.roles.student && api.user.profile.features.financials"><a href="/finances" data-ng-click="off_canvas_menu._show=false"><i class="fa fa-usd"></i>My Finances</a></li>
   </ul>
   <div class="cc-updated-feeds ng-cloak" data-ng-controller="UpdatedFeedsController" data-ng-show="_controller_name === 'DashboardController'">
     <div data-ng-show="has_updates">
       New data is available. <button class="cc-button" data-ng-click="refreshFeeds()">Load</button>
     </div>
     <div data-ng-show="is_loading && !has_updates" class="cc-updated-feeds-loading">
-      Checking for new data. <i class="icon-refresh icon-spin"></i>
+      Checking for new data. <i class="fa fa-refresh fa-spin"></i>
     </div>
   </div>
 </div>
