@@ -121,7 +121,8 @@
         if (addedTerms.indexOf(item.transTerm) === -1) {
           addedTerms.push(item.transTerm);
 
-          if (item.transTerm === 'Payment' || item.transTerm === 'Payments') {
+          if (item.transTermCd === 'Payments') {
+            item.transTerm = 'Payments';
             // A payment doesn't have a year associate to it so we add a bogus one
             item.transTermYr = 9999;
           }
