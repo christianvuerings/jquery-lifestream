@@ -15,6 +15,8 @@ class MyAcademics::Telebears
       return
     end
 
+    return if doc.at_css("telebearsAppointment").nil?
+
     term, year = %w(termName termYear).map { |key| doc.at_css("telebearsAppointment").attr(key) }
     year = Integer(year, 10) rescue nil
 
