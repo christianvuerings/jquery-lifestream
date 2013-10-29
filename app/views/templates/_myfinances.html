@@ -27,7 +27,7 @@
                   <div class="cc-page-myfinances-account-summary-subtitle cc-page-myfinances-light">includes charges not yet due</div>
                 </div>
                 <div class="small-4 columns">
-                  <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.totalCurrentBalance"></div>
+                  <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.accountBalance"></div>
                 </div>
 
                 <div class="cc-page-myfinances-light" data-ng-show="myfinances._show && !isAllZero">
@@ -49,7 +49,17 @@
                 </div>
               </div>
             </li>
-            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-hide="isAllZero" data-ng-show="myfinances.summary.futureActivity!==0">
+
+            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-if="!isAllZero && myfinances.summary.unbilledActivity !== 0">
+              <div class="small-8 columns">
+                Anticipated Aid <div class="cc-page-myfinances-account-summary-subtitle cc-page-myfinances-light">not yet disbursed</div>
+              </div>
+              <div class="small-4 columns">
+                <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.unbilledActivity"></div>
+              </div>
+            </li>
+
+            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-if="!isAllZero && myfinances.summary.futureActivity !== 0">
               <div class="small-8 columns">
                 Charges Not Yet Due
               </div>
@@ -57,15 +67,15 @@
                 <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.futureActivity"></div>
               </div>
             </li>
-            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-hide="isAllZero">
+            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-if="!isAllZero">
               <div class="small-8 columns">
-                <div data-ng-show="myfinances.summary.minimumAmountDue >= 0">
+                <div data-ng-if="myfinances.summary.minimumAmountDue >= 0">
                   Amount Due Now
                 </div>
-                <div data-ng-show="myfinances.summary.minimumAmountDue < 0">
+                <div data-ng-if="myfinances.summary.minimumAmountDue < 0">
                   Credit Balance
                 </div>
-                <div data-ng-show="myfinances.summary.totalPastDueAmount > 0" class="cc-page-myfinances-red cc-page-myfinances-account-summary-subtitle">Includes Past Due Amount of <span data-cc-amount-directive="myfinances.summary.totalPastDueAmount"></span>
+                <div data-ng-if="myfinances.summary.totalPastDueAmount > 0" class="cc-page-myfinances-red cc-page-myfinances-account-summary-subtitle">Includes Past Due Amount of <span data-cc-amount-directive="myfinances.summary.totalPastDueAmount"></span>
                 </div>
               </div>
               <div class="small-4 columns">
@@ -76,7 +86,7 @@
           </ul>
 
           <div class="cc-page-myfinances-account-summary-buttons">
-            <a class="cc-button cc-button-blue" data-ng-show="myfinances.summary.minimumAmountDue > 0" href="http://studentbilling.berkeley.edu/carsPaymentOptions.htm">Make Payment</a>
+            <a class="cc-button cc-button-blue" data-ng-if="myfinances.summary.minimumAmountDue > 0" href="http://studentbilling.berkeley.edu/carsPaymentOptions.htm">Make Payment</a>
           </div>
         </div>
       </div>
@@ -151,12 +161,12 @@
                   <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type">
                     <span class="hide-for-small" data-ng-bind="item.transType"></span>
                     <div class="hide-for-medium-up">
-                      <i class="cc-icon fa" data-ng-attr-title="{{item.transType}}"
+                      <i class="fa" data-ng-attr-title="{{item.transType}}"
                          data-ng-class="{'fa-usd':(item.transType==='Adjustment'),'fa-plus':(item.transType !== 'Adjustment' && item.transBalanceAmount > 0),'fa-minus':(item.transType !== 'Adjustment' && item.transBalanceAmount < 0)}"></i>
                     </div>
                   </td>
                   <td class="cc-widget-table-hover-notriangle cc-table-center">
-                    <i class="cc-icon fa" data-ng-class="{'fa-exclamation':(item._isDueNow === '2_current_due'),'fa-exclamation-circle':(item._isDueNow === '1_past_due')}" data-ng-if="item._isDueNow !== 0">
+                    <i class="fa" data-ng-class="{'fa-exclamation':(item._isDueNow === '2_current_due'),'fa-exclamation-circle':(item._isDueNow === '1_past_due')}" data-ng-if="item._isDueNow !== 0">
                   </td>
                 </tr>
                 <tr data-ng-if="item._show">
