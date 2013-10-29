@@ -103,7 +103,7 @@ class CanvasProvideCourseSite < CanvasCsv
     filtered = []
     idx = courses_list.index {|term| term[:slug] == term_slug}
     if idx.blank?
-      logger.error("term_slug does not match current term code")
+      logger.error("Specified term_slug '#{term_slug}' does not match current term code")
       raise ArgumentError, "No courses found!"
     end
     courses = courses_list[idx][:classes]
