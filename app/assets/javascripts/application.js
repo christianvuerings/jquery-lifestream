@@ -14,6 +14,7 @@
 //= require_tree ./lib
 //= require raven
 //= require pikaday
+//= require placeholder
 //= require angular-unstable
 //= require angular-sanitize
 //= require_tree .
