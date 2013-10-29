@@ -4,8 +4,11 @@ describe MyAcademics::Telebears do
   let!(:oski_uid){ "61889" }
   let(:non_student_uid) { '212377' }
   let!(:no_telebears_student) { '300939' }
+  let!(:empty_student) { '192517' }
+
   let!(:fake_oski_feed) { BearfactsTelebearsProxy.new({:user_id => oski_uid, :fake => true}) }
   let!(:fake_no_telebears_student_feed) { BearfactsTelebearsProxy.new({:user_id => no_telebears_student, :fake => true}) }
+  let!(:empty_student_feed) { BearfactsTelebearsProxy.new({:user_id => empty_student, :fake => true}) }
 
   shared_examples "empty telebears response" do
     it { should_not be_empty }
@@ -125,6 +128,18 @@ describe MyAcademics::Telebears do
       it { subject[:telebears][:term].should eq("Fall") }
       it { subject[:telebears][:adviser_code_required][:required].should be_false }
       it { subject[:telebears][:phases].length.should eq(2)}
+    end
+
+    context "student with feed that exists but doesn't have telebearsAppointments element" do
+      before(:each) do
+        BearfactsTelebearsProxy.stub(:new).and_return(empty_student_feed)
+        BearfactsTelebearsProxy.any_instance.stub(:lookup_student_id).and_return(empty_student)
+      end
+      subject { MyAcademics::Telebears.new(empty_student).merge(@feed ||= {foo: 'baz'}); @feed }
+
+      # Makes sure that the shared example isn't returning false oks due to an empty feed.
+      it { BearfactsTelebearsProxy.new({user_id: empty_student}).get.should_not be_blank }
+      it_behaves_like "empty telebears response"
     end
 
   end

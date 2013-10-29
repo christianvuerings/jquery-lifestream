@@ -105,6 +105,59 @@
         "http_version": null
       },
       "recorded_at": "Wed, 18 Sep 2013 20:20:27 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/192517/reg/appointments?academicTerm=FT",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "server": [
+            "ngx_openresty/1.2.8.6"
+          ],
+          "date": [
+            "Wed, 18 Sep 2013 20:20:27 GMT"
+          ],
+          "content-type": [
+            "application/xml"
+          ],
+          "content-length": [
+            "701"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "keep-alive": [
+            "timeout=20"
+          ],
+          "x-3scale-proxy-secret-token": [
+            "Shared_secret_sent_from_proxy_to_API_backend"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><foo></foo>\n\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Wed, 18 Sep 2013 20:20:27 GMT"
     }
   ],
   "recorded_with": "VCR 2.5.0"
