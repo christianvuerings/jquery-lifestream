@@ -52,8 +52,8 @@ describe CanvasCourseProvisionController do
 		end
 
 		it "returns CanvasCourseProvision object initialized using actual user and act_as id" do
-			user_id 					= "1044777"
-			as_instructor_id 	= "1234"
+			user_id = "1044777"
+			as_instructor_id = "1234"
 			session.stub!(:[]).with(:user_id).and_return(user_id)
 			result = subject.valid_model(as_instructor_id)
 			result.should be_an_instance_of CanvasCourseProvision
