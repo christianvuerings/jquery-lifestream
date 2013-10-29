@@ -15,15 +15,19 @@ do
   echo "------------------------------------------" | $LOGIT
   echo "`date`: Stopping CalCentral server $TORQUEBOX_PID..." | $LOGIT
   count=0
-  # first try to kill politely
-  while kill -s SIGTERM $TORQUEBOX_PID 2>/dev/null
+  while kill -0 SIGTERM $TORQUEBOX_PID 2>/dev/null
   do
-      sleep 1;
-      (( count++ ))
-      if (( count > 9 ))
-      then
-          echo "`date`: CalCentral server $TORQUEBOX_PID did not respond to SIGTERM, sending kill -9..." | $LOGIT
-          kill -9 $TORQUEBOX_PID 2>/dev/null
-       fi
+    (( count++ ))
+    if (( count < 15 ))
+    then
+      # first try to kill politely
+      kill -s SIGTERM $TORQUEBOX_PID 2>/dev/null
+      sleep 1
+    else
+      echo "`date`: CalCentral server $TORQUEBOX_PID did not respond to SIGTERM, sending kill -9..." | $LOGIT
+      kill -9 $TORQUEBOX_PID 2>/dev/null
+    fi
   done
 done
+# Protect against process-not-found exit statuses
+exit 0
