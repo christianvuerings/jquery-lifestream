@@ -1,10 +1,42 @@
 .cc-page-myfinances {
+  .cc-page-myfinances-account-activity-search {
+    font-size: 12px;
+    margin: 6px 10px 0 5px;
+  }
+  .cc-page-myfinances-account-activity-selection {
+    margin: 20px 10px;
+    .cc-button-group {
+      margin-right: 10px;
+      max-width: 200px;
+    }
+    .cc-select {
+      max-width: 120px;
+    }
+  }
+  .cc-page-myfinances-account-summary-buttons {
+    margin: 10px 20px 10px 10px;
+  }
+  .cc-page-myfinances-account-summary-list {
+    font-size: 14px;
+    padding: 0;
+    .cc-page-myfinances-account-summary-item {
+      padding: 8px 20px 8px 10px;
+    }
+    .cc-page-myfinances-account-summary-subtitle {
+      font-size: 11px;
+      margin-top: -5px;
+    }
+  }
   .cc-page-myfinances-amount {
     text-align: right;
   }
-  .cc-page-myfinances-red {
-    &, & td {
-      color: $cc-color-red;
+  .cc-page-myfinances-deferred-payment-plan {
+    background: $cc-color-widget-background;
+    font-size: 12px;
+    padding: 5px 10px;
+    i {
+      color: $body-font-color !important;
+      margin-left: 5px;
     }
   }
   .cc-page-myfinances-green {
@@ -34,38 +66,9 @@
   .cc-page-myfinances-lighter {
     color: $cc-color-lighter-medium-grey;
   }
-  .cc-page-myfinances-account-summary-buttons {
-    margin: 10px 20px 10px 10px;
-    .cc-button {
-      display: inline-block;
-    }
-  }
-  .cc-page-myfinances-account-summary-list {
-    font-size: 14px;
-    padding: 0;
-    .cc-page-myfinances-account-summary-item {
-      padding: 8px 20px 8px 10px;
-    }
-    .cc-page-myfinances-account-summary-subtitle {
-      font-size: 11px;
-      margin-top: -5px;
-    }
-    .cc-page-myfinances-amount {
-      font-weight: bold;
-    }
-  }
-  .cc-page-myfinances-account-activity-search {
-    font-size: 12px;
-    margin: 6px 10px 0 5px;
-  }
-  .cc-page-myfinances-account-activity-selection {
-    margin: 20px 10px;
-    .cc-button-group {
-      margin-right: 10px;
-      max-width: 200px;
-    }
-    .cc-select {
-      max-width: 120px;
+  .cc-page-myfinances-red {
+    &, & td {
+      color: $cc-color-red;
     }
   }
   .cc-page-myfinances-table {
@@ -86,5 +89,9 @@
     i {
       margin-left: 9px;
     }
+  }
+  .cc-page-myfinances-unapplied-awards {
+    border-top: 2px solid $cc-color-widget-background;
+    font-style: italic;
   }
 }
