@@ -133,6 +133,10 @@
             'value': item.transTerm
           });
         }
+
+        if (item.transTermCd === 'Payments') {
+          item.transTerm = 'Payments';
+        }
       }
       terms.push({
         'label': 'All',
