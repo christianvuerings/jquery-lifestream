@@ -63,6 +63,10 @@ canvas_proxy:
     {
       term_yr: "2013",
       term_cd: "D"
+    },
+    {
+      term_yr: "2014",
+      term_cd: "B"
     }
   ]
   mixed_sis_user_id: true
