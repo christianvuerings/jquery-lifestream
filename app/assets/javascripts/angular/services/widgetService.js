@@ -7,11 +7,14 @@
     /**
      * Toggle whether an item for a widget should be shown or not
      */
-    var toggleShow = function(event, items, item, widget) {
+    var toggleShow = function(event, items, item, widget, scroll_to_element) {
       // Ignore toggling on Anchor events
       if (event && event.toElement && event.toElement.tagName === 'A') {
         return;
       }
+
+      // Whether to scroll to an element, the default is true
+      scroll_to_element = scroll_to_element === false ? false : true;
 
       // Toggle the current item
       item._show = !item._show;
@@ -35,9 +38,10 @@
       }
 
       // Scroll to element so it is in the browsers viewport
-      if (event && event.toElement && item._show) {
-        var scrollIntoView = function() {event.toElement.scrollIntoView()};
-        $timeout(scrollIntoView, 1);
+      if (event && event.toElement && item._show && scroll_to_element) {
+        $timeout(function() {
+          event.toElement.scrollIntoView();
+        }, 1);
       }
 
       analyticsService.trackEvent(['Detailed view', item._show ? 'Open' : 'Close', widget]);

@@ -52,7 +52,7 @@
                 class="cc-widget-list-hover cc-page-myfinances-account-summary-item"
                 data-ng-class="{'cc-widget-list-hover-opened':(myfinances._show)}"
                 data-cc-accessible-focus-directive
-                data-ng-click="api.widget.toggleShow($event, null, myfinances, 'My Finances - Summary')">
+                data-ng-click="api.widget.toggleShow($event, null, myfinances, 'My Finances - Summary', false)">
 
                 <div class="small-8 columns">Account Balance
                   <div class="cc-page-myfinances-account-summary-subtitle cc-page-myfinances-light">includes charges not yet due</div>
@@ -156,7 +156,7 @@
                 class="cc-widget-table-hover"
                 data-cc-accessible-focus-directive
                 data-ng-class="{'cc-widget-table-hover-opened cc-widget-list-selected':(item._show)}"
-                data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
+                data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction', false)"
                  data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | orderBy:sort.column:sort.descending">
                 <tr data-ng-class="{'cc-page-myfinances-red':(item._isPastDueDate === true), 'cc-page-myfinances-green':(item.transBalanceAmount < 0)}">
                   <td class="cc-widget-table-hover-notriangle">
