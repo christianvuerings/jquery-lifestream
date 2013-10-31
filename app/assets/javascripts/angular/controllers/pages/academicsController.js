@@ -148,6 +148,32 @@
       return classes;
     };
 
+    var getAllClasses = function(semesters) {
+      var classes = [];
+      for (var i = 0; i < semesters.length; i++) {
+        for (var j = 0; j < semesters[i].classes.length; j++) {
+          if (semesters[i].time_bucket !== 'future') {
+            classes.push(semesters[i].classes[j]);
+          }
+        }
+      }      
+
+      return classes;
+    };
+
+    var getPreviousClasses = function(semesters) {
+      var classes = [];
+      for (var i = 0; i < semesters.length; i++) {
+        for (var j = 0; j < semesters[i].classes.length; j++) {
+          if (semesters[i].time_bucket !== 'future' && semesters[i].time_bucket !== 'current') {
+            classes.push(semesters[i].classes[j]);
+          }
+        }
+      }      
+
+      return classes;
+    };
+
     var findTeachingSemester = function(semesters, semester) {
       for (var i = 0; i < semesters.length; i++) {
         if (semester.slug === semesters[i].slug) {
@@ -203,6 +229,9 @@
       angular.extend($scope, data);
 
       $scope.semesters = data.semesters;
+
+      $scope.all_courses = getAllClasses(data.semesters);
+      $scope.previous_courses = getPreviousClasses(data.semesters);
 
       $scope.is_undergratuate = ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
 
@@ -326,6 +355,7 @@
       // Update course object on scope and recalculate overall GPA
       course.estimated_grade = estimated_grade;
       gpaCalculate();
+      cumulativeGpaCalculate($scope.all_courses, "estimated")
     };
 
     $scope.gpaInit = function() {
@@ -334,6 +364,38 @@
         course.estimated_grade = 4;
       });
       gpaCalculate();
+      cumulativeGpaCalculate($scope.previous_courses, "current")
+      cumulativeGpaCalculate($scope.all_courses, "estimated")
+    };
+
+    var cumulativeGpaCalculate = function(courses, gpa_type) {
+      // Recalculate GPA on every dropdown change.
+      var total_units = 0;
+      var total_score = 0;
+      angular.forEach(courses, function(course) {
+        // Don't calculate for pass/no-pass courses!
+        if (course.grade_option === 'Letter' && course.units) {
+          var grade;
+          if (course.grade && findWeight(course.grade)) {
+            grade = findWeight(course.grade).weight;
+          } else {
+            if (gpa_type === "estimated") {
+              grade = course.estimated_grade;
+            }
+          }
+          if (grade) {
+            course.score = parseFloat(grade, 10) * course.units;
+            total_units += parseFloat(course.units, 10);
+            total_score += course.score;
+          }
+        }
+      });
+      if (gpa_type === "estimated") {
+        $scope.estimated_cumulative_gpa = total_score / total_units;
+      }
+      else {
+        $scope.current_cumulative_gpa = total_score / total_units;
+      }
     };
 
     // Wait until user profile is fully loaded before hitting academics data

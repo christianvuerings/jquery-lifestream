@@ -162,6 +162,13 @@
           <div>
             <h4>Estimate your grades for <span data-ng-bind="selected_semester.name"></span></h4>
             <div class="cc-table" data-ng-show="selected_courses.length">
+              <table data-ng-show="selected_semester.time_bucket === 'current'">
+                <tbody>
+                    <td><strong>Current GPA: </strong></td>
+                    <td><strong data-ng-bind="(current_cumulative_gpa | number:2) || 'N/A'"></strong></td>
+                  </tr>
+                </tbody>
+              </table>
               <table>
                 <thead>
                   <th scope="col" width="60%">Class</th>
@@ -190,13 +197,17 @@
                     <td colspan="2"><strong>Estimated semester GPA:</strong></td>
                     <td><strong data-ng-bind="(estimated_gpa | number:2) || 'N/A'"></strong></td>
                   </tr>
+                  <tr data-ng-show="selected_semester.time_bucket === 'current'">
+                    <td colspan="2"><strong>Estimated cumulative GPA:</strong></td>
+                    <td><strong data-ng-bind="(estimated_cumulative_gpa | number:2) || 'N/A'"></strong></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
             <div class="row collapse cc-academics-calculator-disclaimer" data-ng-show="selected_courses.length">
               <div class="large-12 small-12 columns">
                 <p>This calculator provides a "best guess" calculation of your GPA based on available data<span data-ng-show="hideDisclaimer">...</span>
-                  <span data-ng-show="!hideDisclaimer">and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />When grades are available, your actual grade will replace the popup menu for that class. Once a semester is over, if any grades are still not available a popup menu will remain that will allow you to enter your estimated grade.</span>
+                  <span data-ng-show="!hideDisclaimer">and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />When grades are available, your actual grade will replace the popup menu for that class. Once a semester is over, if any grades are still not available a popup menu will remain that will allow you to enter your estimated grade.<br /><br />The estimated cumulative GPA calculation does not consider repeated courses.</span>
 
                   <button class="cc-button-link" data-ng-show="hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show more</button>
                   <button class="cc-button-link" data-ng-show="!hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show less</button>
