@@ -6,9 +6,11 @@ feature 'MyBadges urls:' do
   def selenium_check_url_exists(url, truthy_match = nil)
     truthy_match ||= url
     visit url
-    within("div.email-div") { fill_in "Email", with: Settings.google_proxy.test_user_email }
-    within("div.passwd-div") { fill_in "Passwd", with: Settings.google_proxy.test_user_password }
-    click_on "Sign in"
+    within("div.signin-card") {
+      fill_in "Email", with: Settings.google_proxy.test_user_email
+      fill_in "Passwd", with: Settings.google_proxy.test_user_password
+      click_button "signIn"
+    }
     visit url
     sleep 5 #waiting for redirect
     current_url.include?(truthy_match).should be_true
