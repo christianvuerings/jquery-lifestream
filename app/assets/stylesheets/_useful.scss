@@ -59,6 +59,9 @@
 
 /* Spinner */
 .cc-spinner {
+  margin: 20px auto;
+  max-height: 16px;
+  max-width: 16px;
   div {
     display: none;
   }
@@ -69,8 +72,6 @@
     display: block;
     font-family: FontAwesome;
     font-size: 20px;
-    margin: 20px 0;
-    text-align: center;
   }
 }
 
