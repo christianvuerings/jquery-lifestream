@@ -23,6 +23,13 @@
 .idea/
 *.iml
 
+# Ignore .DS_Store files on Mac
+.DS_Store
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
 # Ignore the SASS cache
 .sass-cache
 
