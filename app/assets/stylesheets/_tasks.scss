@@ -19,38 +19,15 @@
     margin: 2px;
   }
   .cc-widget-text {
+    padding-bottom: 0;
     margin-bottom: 0;
   }
-  .cc-widget-tasks-no-items {
-    p {
-      margin-bottom: 0;
-      padding: 0 20px 5px 20px;
-    }
-    .cc-widget-tasks-no-items-first {
-      border-top: 1px solid $cc-color-widget-background;
-      margin-bottom: 12px;
-      margin-top: 12px;
-      padding-top: 12px;
-    }
-  }
-  .cc-widget-tasks-form {
-    line-height: 1;
-    margin-top: 5px;
+  .cc-widget-tasks-bottom-margin {
+    margin-bottom: 16px;
   }
   .cc-widget-tasks-button-top-margin {
     margin-top: 15px;
     margin-bottom: 15px;
-  }
-  .cc-widget-tasks-date-input .ng-invalid {
-    margin-bottom: 2px;
-  }
-  .cc-widget-tasks-taskslider {
-    margin: 10px 0;
-  }
-  .cc-widget-tasks-timestamp {
-    font-size: 11px;
-    font-weight: bold;
-    margin-top: -2px;
   }
   /* d.alistapart.com/holygrail/example_3.html */
   .cc-widget-tasks-col {
@@ -72,34 +49,12 @@
     text-align: right;
     width: 75px;
   }
-  .cc-widget-tasks-more {
-    padding-left: 30px;
-    div {
-      margin-bottom: 10px;
-    }
+  .cc-widget-tasks-date-input .ng-invalid {
+    margin-bottom: 2px;
   }
-  .cc-widget-tasks-section-label {
-    clear: both;
-    color: $cc-color-widget-section-label;
-    font-size: 14px;
-    margin: 10px 30px 0 10px;
-    overflow: hidden;
-  }
-  .cc-widget-tasks-section-label-red {
-    color: $cc-color-red;
-  }
-  .cc-widget-tasks-section-label-count {
-    background: $cc-color-button-grey;
-    color: $cc-color-white;
-    font-size: 13px;
-    font-weight: bold;
-    padding: 5px;
-  }
-  .cc-widget-tasks-section-label-count-green {
-    background: $cc-color-green-label;
-  }
-  .cc-widget-tasks-section-label-count-red {
-    background: $cc-color-red;
+  .cc-widget-tasks-form {
+    line-height: 1;
+    margin-top: 5px;
   }
   .cc-widget-tasks-list {
     border-left: 4px solid $cc-color-button-grey;
@@ -137,6 +92,55 @@
   }
   .cc-widget-tasks-list-red {
     border-left-color: $cc-color-red;
+  }
+  .cc-widget-tasks-more {
+    padding-left: 30px;
+    div {
+      margin-bottom: 10px;
+    }
+  }
+  .cc-widget-tasks-no-items {
+    p {
+      margin-bottom: 0;
+      padding: 0 20px 5px 20px;
+    }
+    .cc-widget-tasks-no-items-first {
+      border-top: 1px solid $cc-color-widget-background;
+      margin-bottom: 12px;
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+  }
+  .cc-widget-tasks-section-label {
+    clear: both;
+    color: $cc-color-widget-section-label;
+    font-size: 14px;
+    margin: 10px 30px 0 10px;
+    overflow: hidden;
+  }
+  .cc-widget-tasks-section-label-red {
+    color: $cc-color-red;
+  }
+  .cc-widget-tasks-section-label-count {
+    background: $cc-color-button-grey;
+    color: $cc-color-white;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px;
+  }
+  .cc-widget-tasks-section-label-count-green {
+    background: $cc-color-green-label;
+  }
+  .cc-widget-tasks-section-label-count-red {
+    background: $cc-color-red;
+  }
+  .cc-widget-tasks-taskslider {
+    margin: 10px 0;
+  }
+  .cc-widget-tasks-timestamp {
+    font-size: 11px;
+    font-weight: bold;
+    margin-top: -2px;
   }
   @media only screen and (max-width: 767px) {
     .cc-widget-tasks-container {
