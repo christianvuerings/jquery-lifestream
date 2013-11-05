@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccAmountDirective', ['$filter', function($filter) {
+  angular.module('calcentral.directives').directive('ccAmountDirective', [function() {
 
     var isNumber = function(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
@@ -18,12 +18,11 @@
             return;
           }
 
-          var currency = $filter('number')(value, 2);
           var text = '';
           if (value >= 0) {
-            text = '  $ ' + currency;
+            text = '  $ ' + value;
           } else {
-            text = '- $ ' + currency.replace('-', '');
+            text = '- $ ' + value.replace('-', '');
             element.addClass('cc-page-myfinances-green');
           }
 
