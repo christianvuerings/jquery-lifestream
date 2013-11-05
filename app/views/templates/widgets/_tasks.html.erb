@@ -38,7 +38,7 @@
       <div data-ng-switch-when="scheduled" role="tabpanel" aria-live="polite">
         <div data-ng-include src="'templates/dashboard_task_noitems.html'" data-onload="tasks_mode_opposite='unscheduled'"></div>
         <div data-ng-hide="counts.scheduled === 0">
-          <div>
+          <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
             <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
               <li
@@ -52,7 +52,7 @@
             </p>
           </div>
 
-          <div>
+          <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
             <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
               <li
@@ -66,7 +66,7 @@
             </p>
           </div>
 
-          <div>
+          <div class="cc-clearfix-container">
             <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
             <ul class="cc-widget-tasks-list">
               <li
