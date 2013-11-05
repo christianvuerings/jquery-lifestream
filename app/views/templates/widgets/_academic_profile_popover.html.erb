@@ -17,7 +17,7 @@
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle'}[api.user.profile.student_info.reg_status.needsAction]"></i>
+            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[api.user.profile.student_info.reg_status.needsAction]"></i>
             <strong>Registration Status:</strong> <span data-ng-bind="api.user.profile.student_info.reg_status.summary"><br />
             <span data-ng-bind-html="api.user.profile.student_info.reg_status.explanation"></span>
           </div>
@@ -29,7 +29,7 @@
             <i class="cc-left fa"
                data-ng-class="{'fa-exclamation-circle': api.user.profile.student_info.reg_block.needsAction,
                'fa-exclamation-triangle cc-unavailable': !api.user.profile.student_info.reg_block.available,
-               'fa-check-circle': !api.user.profile.student_info.reg_block.needsAction && api.user.profile.student_info.reg_block.available}"></i>
+               'fa-check-circle cc-icon-green': !api.user.profile.student_info.reg_block.needsAction && api.user.profile.student_info.reg_block.available}"></i>
             <strong>Registration Blocks:</strong> <span data-ng-show="api.user.profile.student_info.reg_block.available" data-ng-bind="api.user.profile.student_info.reg_block.active_blocks"></span>
             <span data-ng-hide="api.user.profile.student_info.reg_block.available">Currently Unavailable</span>
           </div>
@@ -38,7 +38,7 @@
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle'}[api.user.profile.student_info.california_residency.needsAction]"></i>
+            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[api.user.profile.student_info.california_residency.needsAction]"></i>
             <strong>California Residency:</strong> <span data-ng-bind="api.user.profile.student_info.california_residency.summary"><br />
             <span data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></span>
           </div>

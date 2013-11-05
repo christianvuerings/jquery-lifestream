@@ -111,7 +111,7 @@
                       <th class="cc-table-subheader" scope="row">Registration</td>
                       <td>
                         <i class="cc-icon fa"
-                          data-ng-class="{true:'fa-check-circle',false:'fa-exclamation-circle'}[api.user.profile.student_info.reg_status.summary=='Registered']">
+                          data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle'}[api.user.profile.student_info.reg_status.summary=='Registered']">
                         </i>
                         <span data-ng-bind="api.user.profile.student_info.reg_status.summary"></span>
                       </td>
@@ -121,7 +121,7 @@
                       <th class="cc-table-subheader" scope="row">California Residency</td>
                       <td>
                         <i class="cc-icon fa"
-                          data-ng-class="{'fa-check-circle':(api.user.profile.student_info.california_residency!='needsAction'), 'fa-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
+                          data-ng-class="{'fa-check-circle cc-icon-green':(api.user.profile.student_info.california_residency!='needsAction'), 'fa-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
                         <span data-ng-bind="api.user.profile.student_info.california_residency.summary"></span>
                       </td>
                       <td data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></td>
@@ -234,7 +234,7 @@
                   <tr data-ng-repeat="requirement in requirements">
                     <th data-ng-bind="requirement.name" scope="row" class="cc-table-subheader"></th>
                     <td>
-                      <i class="cc-icon fa" data-ng-class="{'fa-check-circle':(requirement.status=='met'), 'fa-edit':(requirement.status!='met')}"></i>
+                      <i class="cc-icon fa" data-ng-class="{'fa-check-circle cc-icon-green':(requirement.status=='met'), 'fa-edit':(requirement.status!='met')}"></i>
                       <span class="cc-visuallyhidden" data-ng-bind-template="{{requirement.name}} has {{requirement.status!='met' ? 'not' : ''}} been met"></span>
                     </td>
                   </tr>

@@ -70,6 +70,13 @@
       }
     };
 
+    var parseTransStatus = function(element, summary) {
+      if (element && element.transStatus && element.transStatus === 'Installment') {
+        element._isDPP = true;
+        summary._hasDPPTransactions = true;
+      }
+    };
+
     var parseData = function(data) {
       var finances = angular.copy(data);
       for (var i in finances.summary) {
@@ -81,11 +88,12 @@
 
       finances.activity.forEach(function(element) {
         parseTransBalanceAmount(element);
+        parseTransStatus(element, finances.summary);
         for (var j in element) {
           if (element.hasOwnProperty(j)){
 
             parseDate(element, j);
-            parseAmount(element, j)
+            parseAmount(element, j);
             if (j === 'transDueDate') {
               parseDueDate(element, j);
             }
