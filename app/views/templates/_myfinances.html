@@ -125,7 +125,7 @@
               </div>
               <div class="small-5 columns">
                 <div class="cc-select cc-right" data-ng-show="transStatusSearch==''">
-                  <select data-ng-model="search.transTerm" id="cc-page-myfinances-select-term" data-ng-options="t.value as t.label for t in myfinances.terms">
+                  <select data-ng-model="search.transTerm" id="cc-page-myfinances-select-term" data-ng-options="t.value as t.label for t in myfinances.terms" data-ng-change="search_term = search.transTerm">
                   </select>
                 </div>
               </div>
