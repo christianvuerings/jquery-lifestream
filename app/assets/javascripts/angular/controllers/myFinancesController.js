@@ -49,7 +49,18 @@
         }
       }
       if (!obj._isDueNow) {
-        obj._isDueNow = 0; // Closed
+        obj._isDueNow = '3_closed'; // Closed
+      }
+    };
+
+    /**
+     * We need to parse the amount to a fixed float
+     * The reason for doing this is search, so you can find 25.00 (instead of 25)
+     */
+    var parseAmount = function(obj, i) {
+      var item = obj[i];
+      if (angular.isNumber(item)) {
+        obj[i] = item.toFixed(2);
       }
     };
 
@@ -58,6 +69,7 @@
       for (var i in finances.summary) {
         if (finances.summary.hasOwnProperty(i)){
           parseDate(finances.summary, i);
+          parseAmount(finances.summary, i);
         }
       }
 
@@ -67,6 +79,7 @@
           if (element.hasOwnProperty(j)){
 
             parseDate(element, j);
+            parseAmount(element, j)
             if (j === 'transDueDate') {
               parseDueDate(element, j);
             }
