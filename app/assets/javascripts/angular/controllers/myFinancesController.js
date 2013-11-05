@@ -18,6 +18,12 @@
       $scope,
       apiService) {
 
+    var sortTermsIndex = {
+      'Fall': 0,
+      'Summer': 1,
+      'Spring': 2
+    };
+
     var parseDate = function(obj, i) {
       var regex = /^(\d{4})[\-](0?[1-9]|1[012])[\-](0?[1-9]|[12][0-9]|3[01])$/;
       var item = obj[i] + '';
@@ -85,9 +91,12 @@
         return b.transTermYr - a.transTermYr;
       }
 
-      if (a.transTermCd > b.transTermCd) {
+      var a_search = sortTermsIndex[a.transTermCd];
+      var b_search = sortTermsIndex[b.transTermCd];
+
+      if (a_search > b_search) {
         return 1;
-      } else if (a.transTermCd < b.transTermCd) {
+      } else if (a_search < b_search) {
         return -1;
       }
     };
