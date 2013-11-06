@@ -176,6 +176,7 @@ class CampusData < OracleDatabase
           and c.term_cd = r.term_cd
           and c.course_cntl_num = r.course_cntl_num )
       where r.student_ldap_uid = #{person_id.to_i}
+        and c.section_cancel_flag is null
         #{terms_clause}
       order by c.term_yr desc, c.term_cd desc, c.dept_name,
         c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
@@ -215,6 +216,7 @@ class CampusData < OracleDatabase
       from bspace_course_instructor_vw i
       join bspace_course_info_vw c on c.term_yr = i.term_yr and c.term_cd = i.term_cd and c.course_cntl_num = i.course_cntl_num
       where i.instructor_ldap_uid = #{person_id.to_i}
+        and c.section_cancel_flag is null
         #{terms_clause}
       order by c.term_yr desc, c.term_cd desc, c.dept_name,
         c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
