@@ -26,12 +26,11 @@ module MyTasks
             all_tasks.push formatted_entry
           end
         end
-        # TODO handle nulls on either side of this comparison.
-        all_tasks.sort! { |a, b| b[:due_date][:epoch] <=> a[:due_date][:epoch] }
+        all_tasks.sort! { |a, b| (a[:due_date].nil? ? 0 : a[:due_date][:epoch]) <=> (b[:due_date].nil? ? 0 : b[:due_date][:epoch]) }
         all_tasks.each do |formatted_entry|
           @future_count += push_if_feed_has_room!(formatted_entry, filtered_tasks, @future_count)
         end
-        tasks
+        filtered_tasks
       }
     end
 
