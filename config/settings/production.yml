@@ -4,6 +4,7 @@ application:
   # Set if running behind Apache/Nginx + https
   protocol: "https://"
   layer: "production"
+  fake_proxies_enabled: false
 campusdb:
   adapter: jdbc
   driver: oracle.jdbc.OracleDriver
