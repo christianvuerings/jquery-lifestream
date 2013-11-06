@@ -10,6 +10,9 @@ application:
   # protocol: "https://"
   fake_cas: false
   fake_cas_id: "1" # Change this to the UID you want to fake cas auth with.
+  # Neither VCR nor WebMock are thread-safe, and so fake proxy support should
+  # be disabled when no fakes are needed (e.g., in production).
+  fake_proxies_enabled: true
 
 cas_server: 'localhost:1234/cas'
 cas_logout_url: 'https://localhost:4321/cas/logout'
