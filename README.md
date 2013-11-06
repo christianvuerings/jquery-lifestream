@@ -23,18 +23,18 @@ brew update
 brew install postgresql
 initdb /usr/local/var/postgres
 ```
-2. __For Mountain Lion & Mavericks users ONLY:__ Fix Postgres paths as [detailed here](http://nextmarvel.net/blog/2011/09/brew-install-postgresql-on-os-x-lion/).
+1. __For Mountain Lion & Mavericks users ONLY:__ Fix Postgres paths as [detailed here](http://nextmarvel.net/blog/2011/09/brew-install-postgresql-on-os-x-lion/).
 
-3. __For Mountain Lion & Mavericks users ONLY:__ If you can connect to Postgres via psql, but not via JDBC (you see "Connection refused" errors in the CalCentral
+1. __For Mountain Lion & Mavericks users ONLY:__ If you can connect to Postgres via psql, but not via JDBC (you see "Connection refused" errors in the CalCentral
 app log), then edit /usr/local/var/postgres/pg_hba.conf and make sure you have these lines:
 ```
 host    all             all             127.0.0.1/32            md5
 host    all             all             samehost                md5
 ```
 
-4. __For Mountain Lion & Mavericks users ONLY:__ [Install XQuartz](http://xquartz.macosforge.org/landing/) and make sure that /opt/X11/bin is on your PATH.
+1. __For Mountain Lion & Mavericks users ONLY:__ [Install XQuartz](http://xquartz.macosforge.org/landing/) and make sure that /opt/X11/bin is on your PATH.
 
-5. Start postgres, add the user and create the necessary databases
+1. Start postgres, add the user and create the necessary databases. (If your PostgreSQL server is managed externally, you'll probably need to create a schema that matches the database username. See CLC-893 for details.)
 ```bash
 pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
 psql postgres
@@ -49,20 +49,18 @@ create user calcentral_test with password 'secret';
 grant all privileges on database calcentral_test to calcentral_test;
 ```
 
-(If your PostgreSQL server is managed externally, you'll probably need to create a schema that matches the database username. See CLC-893 for details.)
-
-6. Fork this repository, then:
+1. Fork this repository, then:
 ```bash
 git clone git@github.com:[your_github_acct]/calcentral.git
 ```
 
-7. Go inside the `calcentral` repository
+1. Go inside the `calcentral` repository
 ```bash
 cd calcentral
 # Answer "yes" if it asks you to trust a new .rvmrc file.
 ```
 
-8. Install jruby
+1. Install jruby
 ```bash
 rvm get head
 rvm install jruby-1.7.3
@@ -71,7 +69,7 @@ cd calcentral
 # Answer "yes" again if it asks you to trust a new .rvmrc file.
 ```
 
-9. (Optional for development) Make JRuby faster & enable C extensions by running this or put in your .bashrc:
+1. (Optional for development) Make JRuby faster & enable C extensions by running this or put in your .bashrc:
 ```bash
 export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C"
 ```
@@ -80,12 +78,12 @@ export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C"
      * (set your JRUBY_OPTS)
      * ```bundle install```
 
-10. Download the appropriate gems with [Bundler](http://gembundler.com/rails3.html)
+1. Download the appropriate gems with [Bundler](http://gembundler.com/rails3.html)
 ```bash
 bundle install
 ```
 
-11. Set up a local settings directory:
+1. Set up a local settings directory:
 ```
 mkdir ~/.calcentral_config
 ```
@@ -94,23 +92,23 @@ Because we don't store passwords and other sensitive data in source code, any RA
 Do this by creating `ENVIRONMENT.local.yml` files in your `~/.calcentral_config` directory. For example, your `~.calcentral_config/development.local.yml` file may include access tokens and URLs for a locally running Canvas server.
 You can also create Ruby configuration files like "settings.local.rb" and "development.local.rb" to amend the standard `config/environments/*.rb` files.
 
-12. Install JDBC driver (for Oracle connection)
+1. Install JDBC driver (for Oracle connection)
 You may already have an Oracle driver from MyBerkeley-OAE development, in which case you just need to copy it to your project ./lib directory:
 ```cp ~/.m2/repository/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar ./lib/```
   * Otherwise, download [ojdbc6.jar](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
   * Copy ojdbc6.jar to your project's lib folder```
 
-13. Initialize PostgreSQL database tables
+1. Initialize PostgreSQL database tables
 ```bash
 rake db:schema:load
 ```
 
-14. Start the server
+1. Start the server
 ```bash
 rails s
 ```
 
-15. Access your development server at [localhost:3000](http://localhost:3000/).
+1. Access your development server at [localhost:3000](http://localhost:3000/).
 Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
 
 ## Enable live updates
@@ -119,7 +117,7 @@ In order to have live updates you'll need to perform the following steps:
 
 1. Install and run memcached
 
-2. Add the following lines to development.local.yml
+1. Add the following lines to development.local.yml
 ```yaml
 messaging:
   enabled: true
@@ -127,7 +125,7 @@ cache:
   store: "memcached"
 ```
 
-3. Start the server with TorqueBox
+1. Start the server with TorqueBox
 
 ## Front-end Testing
 
@@ -155,7 +153,7 @@ create database calcentral_production;
 grant all privileges on database calcentral_production to calcentral_development;
 ```
 
-2. In calcentral_config/production.local.yml, you'll need the following entries:
+1. In calcentral_config/production.local.yml, you'll need the following entries:
 ```
 secret_token: "Some random 30-char string"
 postgres: [credentials for your separate production db (copy/modify from development.local.yml)]
@@ -165,24 +163,24 @@ google_proxy: and canvas_proxy: [copy from development.local.yml]
     serve_static_assets: true
 ```
 
-3. Populate the production db by invoking your production settings:
+1. Populate the production db by invoking your production settings:
 ```
 rake db:schema:load RAILS_ENV="production"
 ```
 
-4. Precompile the assets: [(more info)](http://stackoverflow.com/questions/7275636/rails-3-1-0-actionviewtemplateerrror-application-css-isnt-precompiled)
+1. Precompile the assets: [(more info)](http://stackoverflow.com/questions/7275636/rails-3-1-0-actionviewtemplateerrror-application-css-isnt-precompiled)
 ```bash
 bundle exec rake assets:precompile
 ```
 
-5. Start the server in production mode
+1. Start the server in production mode
 ```bash
 rails s -e production
 ```
 
-6. If you're not able to connect to Google or Canvas, export the data in the oauth2 from your development db and import them into the same table in your production db.
+1. If you're not able to connect to Google or Canvas, export the data in the oauth2 from your development db and import them into the same table in your production db.
 
-7. After testing, remove the static assets and generated pages
+1. After testing, remove the static assets and generated pages
 ```bash
 bundle exec rake assets:clean
 ```
@@ -211,7 +209,7 @@ In production we use [TorqueBox](http://torquebox.org/) as this provides us with
 bundle exec torquebox deploy .
 ```
 
-2. Start the server
+1. Start the server
 ```bash
 bundle exec torquebox run -p=3000
 ```
@@ -234,11 +232,11 @@ developer_auth:
   password: topsecret!
 ```
 
-2. (re)start the server for the changes to take effect.
+1. (re)start the server for the changes to take effect.
 
-3. Click on the footer (Berkeley logo) when you load the page.
+1. Click on the footer (Berkeley logo) when you load the page.
 
-4. You should be seeing the [Basic Auth screen](http://cl.ly/SA6C). As the login you should use the UID (e.g. 61889, oski) and then password from the settings file.
+1. You should be seeing the [Basic Auth screen](http://cl.ly/SA6C). As the login you should use the UID (e.g. 61889, oski) and then password from the settings file.
 
 ### "Act As" another user
 
@@ -283,9 +281,9 @@ Logging behavior and destination can be controlled from the command line or shel
 /Applications/RubyMine.app/Contents/MacOS/rubymine &
 ```
 
-2. If you want to explore the Oracle database on Mac OS X, use [SQL Developer](http://www.oracle.com/technetwork/developer-tools/sql-developer/overview/index.html)
+1. If you want to explore the Oracle database on Mac OS X, use [SQL Developer](http://www.oracle.com/technetwork/developer-tools/sql-developer/overview/index.html)
 
-3. We support **source maps** for SASS in development mode. There is a [great blog post](http://fonicmonkey.net/2013/03/25/native-sass-scss-source-map-support-in-chrome-and-rails/) explaining how to set it up and use it.
+1. We support **source maps** for SASS in development mode. There is a [great blog post](http://fonicmonkey.net/2013/03/25/native-sass-scss-source-map-support-in-chrome-and-rails/) explaining how to set it up and use it.
 
 ### Best Practices
 
