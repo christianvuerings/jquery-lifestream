@@ -15,7 +15,7 @@
           </div>
 
           <div class="cc-page-myfinances-deferred-payment-plan" data-ng-if="myfinances.summary.isOnDPP">
-            Deferred Payment Plan <i class="fa fa-check"></i>
+            Deferred Payment Plan (DPP) <i class="fa fa-check"></i>
           </div>
 
           <ul class="cc-widget-list cc-page-myfinances-account-summary-list">
@@ -144,8 +144,11 @@
                   <th width="30%" data-ng-click="changeSorting('transBalanceAmount')" class="cc-table-right cc-table-right-spacing">
                     <i data-ng-class="getSortClass('transBalanceAmount')"></i> Amount
                   </th>
-                  <th width="10%" data-ng-click="changeSorting('transType')">
+                  <th width="10%" data-ng-click="changeSorting('transType')" data-ng-if="!myfinances.summary._hasDPPTransactions">
                     Type <i data-ng-class="getSortClass('transType')"></i>
+                  </th>
+                  <th width="10%" data-ng-click="changeSorting('_isDPP')" class="cc-table-center" data-ng-if="myfinances.summary._hasDPPTransactions">
+                    DPP <i data-ng-class="getSortClass('_isDPP')"></i>
                   </th>
                   <th width="15%" data-ng-click="changeSorting('_isDueNow')" class="cc-table-center">Due <span class="cc-hide-for-small">Now</span>
                     <i data-ng-class="getSortClass('_isDueNow')"></i>
@@ -167,12 +170,15 @@
                     <div data-ng-bind="item.transDesc" data-ng-class="{'cc-ellipsis':(!item._show)}"></div>
                   </td>
                   <td class="cc-widget-table-hover-notriangle cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount"></td>
-                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type">
+                  <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type" data-ng-if="!myfinances.summary._hasDPPTransactions">
                     <span class="hide-for-small" data-ng-bind="item.transType"></span>
                     <div class="hide-for-medium-up">
                       <i class="fa" data-ng-attr-title="{{item.transType}}"
                          data-ng-class="{'fa-usd':(item.transType==='Adjustment'),'fa-plus':(item.transType !== 'Adjustment' && item.transBalanceAmount > 0),'fa-minus':(item.transType !== 'Adjustment' && item.transBalanceAmount < 0)}"></i>
                     </div>
+                  </td>
+                  <td class="cc-widget-table-hover-notriangle cc-table-center" data-ng-if="myfinances.summary._hasDPPTransactions">
+                    <i class="fa" data-ng-class="{'fa-check':(item._isDPP)}" data-ng-if="item._isDPP">
                   </td>
                   <td class="cc-widget-table-hover-notriangle cc-table-center">
                     <i class="fa" data-ng-class="{'fa-exclamation':(item._isDueNow === '2_current_due'),'fa-exclamation-circle':(item._isDueNow === '1_past_due')}" data-ng-if="item._isDueNow !== 0">
@@ -182,27 +188,27 @@
                   <td class="cc-widget-table-hover-notriangle"></td>
                   <td class="cc-widget-table-hover-notriangle" colspan="4">
                     <div class="row collapse">
-                      <div data-ng-show="item.transId">
+                      <div data-ng-if="item.transId">
                         <strong>Transaction #:</strong>
                         <span data-ng-bind="item.transId"></span>
                       </div>
-                      <div data-ng-show="item.originalAmount">
+                      <div data-ng-if="item.originalAmount">
                         <strong>Original Amount:</strong>
                         <span class="cc-page-myfinances-amount" data-cc-amount-directive="item.originalAmount"></span>
                       </div>
-                      <div data-ng-show="item.transDueDateShow">
+                      <div data-ng-if="item.transDueDateShow">
                         <strong>Due Date:</strong>
                         <span data-ng-bind="item.transDueDateShow"></span>
                       </div>
-                      <div data-ng-show="item.transDept">
+                      <div data-ng-if="item.transDept">
                         <strong>Department:</strong>
                         <a data-ng-bind="item.transDept" data-ng-click="api.util.preventBubble($event)" data-ng-href="{{item.transDeptUrl}}"></a>
                       </div>
-                      <div data-ng-show="item.transTerm">
+                      <div data-ng-if="item.transTerm">
                         <strong>Term:</strong>
                         <span data-ng-bind="item.transTerm"></span>
                       </div>
-                      <div data-ng-show="item.transType" class="hide-for-medium-up">
+                      <div data-ng-if="item.transType" data-ng-class="{'hide-for-medium-up':!myfinances.summary._hasDPPTransactions}">
                         <strong>Type:</strong>
                         <span data-ng-bind="item.transType"></span>
                       </div>

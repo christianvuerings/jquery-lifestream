@@ -1,9 +1,9 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccLoadingDirective', ['$timeout', function($timeout) {
+  angular.module('calcentral.directives').directive('ccLoadingDirective', [function() {
     return {
-      link: function(scope, elm, attrs, ctrl) {
+      link: function(scope, elm, attrs) {
 
         var cc_loading_class = 'cc-loading';
         var cc_loading_classes = 'cc-loading-error cc-loading-process cc-loading-success';
@@ -17,7 +17,7 @@
           } else if (indicator === 'Process') {
             icon = 'fa-spinner fa-spin';
           } else if (indicator === 'Success') {
-            icon = 'fa-check';
+            icon = 'fa-check cc-icon-green';
           }
 
           if (icon) {
