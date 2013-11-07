@@ -23,21 +23,14 @@
 #
 # Any code that is left outside the two blocks will be run during preforking
 # *and* during each_run -- that's probably not what you want.
-#
-# These instructions should self-destruct in 10 seconds.  If they don't, feel
-# free to delete them.
-
 
 require 'rubygems'
 require 'spork'
-#uncomment the following line to use spork with the debugger
-#require 'spork/ext/ruby-debug'
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
-
 
 
   ENV["SIMPLE_COV_ENABLED"] ||= "true"
@@ -47,7 +40,7 @@ Spork.prefork do
     SimpleCov.start 'rails'
   end
 
-# This file is copied to spec/ when you run 'rails generate rspec:install'
+  # This file is copied to spec/ when you run 'rails generate rspec:install'
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
@@ -57,12 +50,12 @@ Spork.prefork do
   require 'webmock/rspec'
   require 'support/spec_helper_module'
 
-# create tmp/cache directory if necessary, otherwise the Rails.cache.clear statement before each test may fail
+  # create tmp/cache directory if necessary, otherwise the Rails.cache.clear statement before each test may fail
   FileUtils.mkdir_p("tmp/cache") unless File.exists?("tmp/cache")
 
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+  # Requires supporting ruby files with custom matchers and macros, etc,
+  # in spec/support/ and its subdirectories.
+  Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   RSpec.configure do |config|
     # ## Mock Framework
