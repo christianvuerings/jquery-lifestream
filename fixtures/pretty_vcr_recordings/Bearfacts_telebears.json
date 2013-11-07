@@ -109,7 +109,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/192517/reg/appointments?academicTerm=FT",
+        "uri": "https://apis-dev.berkeley.edu/bearfacts-apis/student/238382/reg/appointments?academicTerm=FT",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

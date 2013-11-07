@@ -7,7 +7,7 @@ describe 'MyAcademics::Teaching' do
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
 
     feed = {}
-    MyAcademics::Teaching.new("192517").merge(feed)
+    MyAcademics::Teaching.new("238382").merge(feed)
     feed.empty?.should be_false
 
     teaching = feed[:teaching_semesters]

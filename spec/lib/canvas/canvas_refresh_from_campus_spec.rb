@@ -39,7 +39,7 @@ describe CanvasRefreshFromCampus do
   end
 
   it "should be able to get a whole lot of user records" do
-    known_first = ['192517', '238382', '2040']
+    known_first = ['238382', '2040']
     known_last = ['3060', '211159', '322279']
     lotsa = []
     lotsa.concat(known_first)

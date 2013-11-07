@@ -99,7 +99,7 @@ describe CanvasProvideCourseSite do
   describe "#candidate_courses_list" do
     it "should get properly formatted candidate course list from fake Oracle MV", :if => SakaiData.test_data? do
       Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
-      terms_feed = CanvasProvideCourseSite.new(user_id: "192517").candidate_courses_list
+      terms_feed = CanvasProvideCourseSite.new(user_id: "238382").candidate_courses_list
       terms_feed.length.should == 1
       terms_feed[0][:name].should == "Fall 2013"
       feed = terms_feed[0][:classes]

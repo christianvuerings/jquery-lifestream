@@ -138,13 +138,13 @@ describe CampusData do
   end
 
   it "should find where a person is teaching" do
-    sections = CampusData.get_instructing_sections('192517')
+    sections = CampusData.get_instructing_sections('238382')
     sections.should_not be_nil
     sections.length.should == 5 if CampusData.test_data?
   end
 
   it "should be able to limit teaching assignment queries" do
-    sections = CampusData.get_instructing_sections('192517', @current_terms)
+    sections = CampusData.get_instructing_sections('238382', @current_terms)
     sections.should_not be_nil
     sections.length.should == 3 if CampusData.test_data?
   end
@@ -185,7 +185,7 @@ describe CampusData do
     data.should_not be_nil
     if CampusData.test_data?
       data.length.should == 2
-      data[0]["person_name"].should == "Yu-Hung Lin"
+      data[0]["person_name"].present?.should be_true
       data[0]["instructor_func"].should == "1"
       data[1]["person_name"].should == "Chris Tweney"
       data[1]["instructor_func"].should == "4"
@@ -193,7 +193,7 @@ describe CampusData do
   end
 
   it "should be able to get a whole lot of user records" do
-    known_uids = ['192517', '238382', '2040', '3060', '211159', '322279']
+    known_uids = ['238382', '2040', '3060', '211159', '322279']
     lotsa_uids = Array.new(1000 - known_uids.length) {|i| i + 1 }
     lotsa_uids.concat(known_uids)
     user_data = CampusData.get_basic_people_attributes(lotsa_uids)
@@ -246,7 +246,7 @@ describe CampusData do
   end
 
   it "should say an instructor has instructional history", if: CampusData.test_data? do
-    CampusData.has_instructor_history?("192517", Settings.sakai_proxy.academic_terms.instructor).should be_true
+    CampusData.has_instructor_history?("238382", Settings.sakai_proxy.academic_terms.instructor).should be_true
   end
 
   it "should say a student has student history", if: CampusData.test_data? do

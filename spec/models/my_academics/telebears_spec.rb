@@ -4,7 +4,7 @@ describe MyAcademics::Telebears do
   let!(:oski_uid){ "61889" }
   let(:non_student_uid) { '212377' }
   let!(:no_telebears_student) { '300939' }
-  let!(:empty_student) { '192517' }
+  let!(:empty_student) { '238382' }
 
   let!(:fake_oski_feed) { BearfactsTelebearsProxy.new({:user_id => oski_uid, :fake => true}) }
   let!(:fake_no_telebears_student_feed) { BearfactsTelebearsProxy.new({:user_id => no_telebears_student, :fake => true}) }

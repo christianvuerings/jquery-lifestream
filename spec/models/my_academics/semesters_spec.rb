@@ -51,7 +51,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       it { subject[2][:classes][0][:sections][0][:instruction_format].should eq "LEC" }
       it { subject[2][:classes][0][:sections][0][:section_number].should eq "003" }
       it { subject[2][:classes][0][:sections][0][:section_label].should eq "LEC 003" }
-      it { subject[2][:classes][0][:sections][0][:instructors][0][:name].should eq "Yu-Hung Lin" }
+      it { subject[2][:classes][0][:sections][0][:instructors][0][:name].present?.should be_true }
       it { subject[2][:classes][0][:sections][0][:is_primary_section].should be_true }
       it { subject[3][:classes][0][:grade].should eq "B" }
       it { subject[3][:classes][0][:units].should eq "4.0" }

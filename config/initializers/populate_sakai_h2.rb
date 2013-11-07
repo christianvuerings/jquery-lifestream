@@ -183,7 +183,6 @@
         Insert into SAKAI_USER_ID_MAP (USER_ID,EID) values ('d610e475-8227-43cd-9ad0-0f5f494e3e48','177473');
         Insert into SAKAI_USER_ID_MAP (USER_ID,EID) values ('18437','18437');
         Insert into SAKAI_USER_ID_MAP (USER_ID,EID) values ('191779','191779');
-        Insert into SAKAI_USER_ID_MAP (USER_ID,EID) values ('192517','192517');
         Insert into SAKAI_USER_ID_MAP (USER_ID,EID) values ('2040','2040');
         Insert into SAKAI_USER_ID_MAP (USER_ID,EID) values ('208861','208861');
         Insert into SAKAI_USER_ID_MAP (USER_ID,EID) values ('211159','211159');

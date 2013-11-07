@@ -190,7 +190,6 @@
         );
 
         -- Real development environment users
-        Insert into CALCENTRAL_PERSON_INFO_VW (LDAP_UID,STUDENT_ID,INSTRUCTOR_FLAG,UG_GRAD_FLAG,PERSON_TYPE,EMAIL_DISCLOS_CD,FIRST_NAME,LAST_NAME,PERSON_NAME,EMAIL_ADDRESS,TELEPHONE,AFFILIATIONS) values (192517, 192517,null,'U','U','Y','Yu-Hung','Lin','Yu-Hung Lin','192517@example.edu',null,'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED');
         Insert into CALCENTRAL_PERSON_INFO_VW (LDAP_UID,STUDENT_ID,INSTRUCTOR_FLAG,UG_GRAD_FLAG,PERSON_TYPE,EMAIL_DISCLOS_CD,FIRST_NAME,LAST_NAME,PERSON_NAME,EMAIL_ADDRESS,TELEPHONE,AFFILIATIONS) values (238382, 238382,null,'G','G','N','BERNADETTE ANNE','GEUY','GEUY,BERNADETTE ANNE','238382@example.edu',null,'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED');
         Insert into CALCENTRAL_PERSON_INFO_VW (LDAP_UID,STUDENT_ID,INSTRUCTOR_FLAG,UG_GRAD_FLAG,PERSON_TYPE,EMAIL_DISCLOS_CD,FIRST_NAME,LAST_NAME,PERSON_NAME,EMAIL_ADDRESS,TELEPHONE,AFFILIATIONS) values (592722, 592722,null,'U','U','N','MICHAEL SCOTT','ELLISON','ELLISON,MICHAEL SCOTT','592722@example.edu',null,'EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED');
         Insert into CALCENTRAL_PERSON_INFO_VW (LDAP_UID,STUDENT_ID,INSTRUCTOR_FLAG,UG_GRAD_FLAG,PERSON_TYPE,EMAIL_DISCLOS_CD,FIRST_NAME,LAST_NAME,PERSON_NAME,EMAIL_ADDRESS,TELEPHONE,AFFILIATIONS) values (863980, 863980,null,'U','U','N','FAISAL KARIM','MERCHANT','MERCHANT,FAISAL KARIM','863980@example.edu',null,'STUDENT-TYPE-REGISTERED,EMPLOYEE-STATUS-EXPIRED');
@@ -375,12 +374,12 @@
         INSERT INTO CALCENTRAL_CLASS_SCHEDULE_VW (TERM_YR, TERM_CD, COURSE_CNTL_NUM, MULTI_ENTRY_CD, BUILDING_NAME, ROOM_NUMBER, MEETING_DAYS, MEETING_START_TIME, MEETING_START_TIME_AMPM_FLAG, MEETING_END_TIME, MEETING_END_TIME_AMPM_FLAG, PRINT_CD) VALUES (2015, 'B', 7309, ' ', 'VALLEY LSB', '2030', ' M', '0400', 'P', '0500', 'P', 'H');
 
         -- Course Instructor records
-        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7366, 192517, ' ', '2', '1');
-        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 16171, 192517, ' ', '2', '1');
-        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 192517, ' ', '2', '1');
+        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7366, 238382, ' ', '2', '1');
+        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 16171, 238382, ' ', '2', '1');
+        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 904715, ' ', '2', '4');
-        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2012, 'B', 7366, 192517, ' ', '2', '1');
-        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2012, 'B', 16171, 192517, ' ', '2', '1');
+        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2012, 'B', 7366, 238382, ' ', '2', '1');
+        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2012, 'B', 16171, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2015, 'B', 7309, 904715, ' ', '2', '4');
 
         -- Course Student records

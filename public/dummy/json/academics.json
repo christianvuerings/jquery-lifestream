@@ -518,8 +518,8 @@
               "section_number": "003",
               "instructors": [
                 {
-                  "name": "Yu-Hung Lin",
-                  "uid": "192517"
+                  "name": "Bernadette Geuy",
+                  "uid": "238382"
                 },
                 {
                   "name": "Chris Tweney",
@@ -574,8 +574,8 @@
               "section_number": "001",
               "instructors": [
                 {
-                  "name": "Yu-Hung Lin",
-                  "uid": "192517"
+                  "name": "Bernadette Geuy",
+                  "uid": "238382"
                 }
               ],
               "schedules": [
@@ -617,8 +617,8 @@
               "schedules": [],
               "instructors": [
                 {
-                  "name": "Yu-Hung Lin",
-                  "uid": "192517"
+                  "name": "Bernadette Geuy",
+                  "uid": "238382"
                 }
               ],
               "is_primary_section": true
@@ -643,8 +643,8 @@
               "schedules": [],
               "instructors": [
                 {
-                  "name": "Yu-Hung Lin",
-                  "uid": "192517"
+                  "name": "Bernadette Geuy",
+                  "uid": "238382"
                 }
               ]
             }
