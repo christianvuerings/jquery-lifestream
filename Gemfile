@@ -151,6 +151,8 @@ group :development, :test , :testext do
   #Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
   #from Ruby code, hiding some low-level action.
   gem "headless", "~> 1.0.1"
+
+  gem "spork", "~> 0.9.2"
 end
 
 group :development do
