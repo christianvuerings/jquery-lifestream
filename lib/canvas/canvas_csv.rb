@@ -1,6 +1,6 @@
 require 'csv'
 
-class CanvasCsv
+class CanvasCsv < CsvExport
   include ClassLogger
 
   ENROLL_STATUS_TO_CANVAS_ROLE = {
@@ -11,10 +11,7 @@ class CanvasCsv
   }
 
   def initialize
-    @export_dir = Settings.canvas_proxy.export_directory
-    if !File.exists?(@export_dir)
-      FileUtils.mkdir_p(@export_dir)
-    end
+    super(Settings.canvas_proxy)
   end
 
   def accumulate_user_data(user_ids, users_csv)

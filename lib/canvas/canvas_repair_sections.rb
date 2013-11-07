@@ -1,6 +1,10 @@
 class CanvasRepairSections < CanvasCsv
   include ClassLogger
 
+  def initialize
+    super
+  end
+
   def repair_sis_ids_for_term(term_id)
     report_proxy = CanvasSectionsReportProxy.new
     csv = report_proxy.get_csv(term_id)

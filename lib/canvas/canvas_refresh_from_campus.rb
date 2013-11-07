@@ -3,6 +3,10 @@ require 'csv'
 class CanvasRefreshFromCampus < CanvasCsv
   include ClassLogger
 
+  def initialize
+    super
+  end
+
   def full_refresh
     csv_files = make_csv_files
     if csv_files

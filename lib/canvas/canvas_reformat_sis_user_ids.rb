@@ -1,6 +1,10 @@
 class CanvasReformatSisUserIds < CanvasCsv
   include ClassLogger
 
+  def initialize
+    super
+  end
+
   def convert_all_sis_user_ids
     # Get the current Canvas user IDs.
     ldap_to_canvas_ids = fetch_canvas_user_id_map
