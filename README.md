@@ -121,6 +121,24 @@ cache:
 
 3. Start the server with TorqueBox
 
+## Back-end Testing
+
+Back-end (rspec) tests live in spec/*.
+
+To run the tests from the command line:
+```
+rspec
+```
+
+To run the tests faster, use spork, which is a little server that keeps the Rails app initialized while you change code
+and run multiple tests against it. Command line:
+```
+spork (...wait a minute for startup...)
+rspec --drb spec/lib/my_spec.rb
+```
+
+You can even run Spork right inside [IntelliJ RubyMine or IDEA](http://www.jetbrains.com/ruby/webhelp/using-drb-server.html).
+
 ## Front-end Testing
 
 Front-end [jasmine](http://pivotal.github.com/jasmine/) tests live in spec/javascripts/calcentral/*.
