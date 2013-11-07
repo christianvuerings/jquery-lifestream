@@ -246,3 +246,11 @@ features:
 
 messaging:
   enabled: true
+
+oec:
+  export_directory: 'tmp/oec'
+  current_terms_codes: [{
+    term_yr: "2013",
+    term_cd: "D"
+  }]
+  departments: [ 'STAT', 'SPANISH', 'PORTUG', 'CHEM' ]
