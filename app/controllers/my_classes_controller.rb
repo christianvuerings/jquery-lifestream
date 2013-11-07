@@ -10,25 +10,26 @@ class MyClassesController < ApplicationController
 
   def ul_to_dict(ul)
     books = []
-    book_list = ul.xpath('./li')
-
-    book_list.each do |bl|
-      temp = {
-        :title => bl.xpath('.//h3[@class="material-group-title"]').text.split("\n")[0],
-        :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src').text,
-        :isbn => bl.xpath('.//span[@id="materialISBN"]').text.split(":")[1],
-        :author => bl.xpath('.//span[@id="materialAuthor"]').text.split(":")[1],
-        :edition => bl.xpath('.//span[@id="materialEdition"]').text.split(":")[1],
-        :copyright_year => bl.xpath('.//span[@id="materialCopyrightYear"]').text.split(":")[1],
-        :publisher => bl.xpath('.//span[@id="materialPublisher"]').text.split(":")[1]
-      }
-      books.push(temp)
-    end 
+    if ul.length > 0
+      book_list = ul.xpath('./li')
+      book_list.each do |bl|
+        temp = {
+          :title => bl.xpath('.//h3[@class="material-group-title"]').text.split("\n")[0],
+          :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src').text,
+          :isbn => bl.xpath('.//span[@id="materialISBN"]').text.split(":")[1],
+          :author => bl.xpath('.//span[@id="materialAuthor"]').text.split(":")[1],
+          :edition => bl.xpath('.//span[@id="materialEdition"]').text.split(":")[1],
+          :copyright_year => bl.xpath('.//span[@id="materialCopyrightYear"]').text.split(":")[1],
+          :publisher => bl.xpath('.//span[@id="materialPublisher"]').text.split(":")[1]
+        }
+        books.push(temp)
+      end 
+    end
     return books
   end
 
   def get_books
-    puts params[:ccn]
+    puts params
   	require 'open-uri'
 
     ##########################
@@ -46,9 +47,11 @@ class MyClassesController < ApplicationController
     required_text_list = text_books1.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
     recommended_text_list = text_books1.xpath('//h2[contains(text(), "Recommended")]/following::ul[1]')
     optional_text_list = text_books1.xpath('//h2[contains(text(), "Optional")]/following::ul')
-    #puts recommended_text_list
+    puts recommended_text_list
+
     required_books = ul_to_dict(required_text_list)
-    #recommended_books = ul_to_dict(recommended_text_list)
+    recommended_books = ul_to_dict(recommended_text_list)
+    optional_books = ul_to_dict(optional_text_list)
 
     puts required_books
     #puts recommended_books
@@ -87,8 +90,12 @@ class MyClassesController < ApplicationController
 
     response = {
     	#:books_details => books
-      :required_books => required_books,
-      :recommended_books => recommended_books
+      :required_books => {:type => "Required",
+                          :books => required_books},
+      :recommended_books => {:type => "Recommended",
+                          :books => recommended_books},
+      :optional_books => {:type => "Optional",
+                          :books => optional_books},
     }
 
     render :json => response.to_json

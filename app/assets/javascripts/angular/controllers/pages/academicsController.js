@@ -225,8 +225,19 @@
       return count;
     };
 
+    // $scope.getTextbooks = function() {
+    //   var course_info = {"ccn": "41578", "term": "2013D"};
+    //   var url = 'books_details';
+    //   $http.post(url, course_info).success(function(books) {
+    //     console.log(books);
+    //     $scope.books = books;
+    //   });
+    // };
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
+
+      $scope.semesters = data.semesters;
 
       var course_info = {"ccn": "41578", "term": "2013D"};
       var url = 'books_details';
@@ -234,8 +245,6 @@
         console.log(books);
         $scope.books = books;
       });
-
-      $scope.semesters = data.semesters;
 
       $scope.all_courses = getAllClasses(data.semesters);
       $scope.previous_courses = getPreviousClasses(data.semesters);

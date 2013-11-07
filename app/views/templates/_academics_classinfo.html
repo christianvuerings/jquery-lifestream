@@ -123,5 +123,36 @@
         </div>
       </div>
     </div>
+
+    <!-- <div style="display: none">{{getTextbooks()}}</div> -->
+    <div class="large-4 columns" data-ng-show="books">
+      <div class="cc-widget">
+        <div class="cc-widget-title">
+          <h2>Textbooks</h2>
+        </div>
+        <div data-ng-repeat="books_category in books">
+          <h5 class="cc-widget-padding" data-ng-show="books_category.books">{{books_category.type}}</h5>
+          <div class="cc-table" data-ng-show="books_category.books">
+            <table>
+              <tbody>
+                <tr data-ng-repeat="book in books_category.books">
+                  <td data-ng-show="book.image"><img alt="" src="{{book.image}}" width="128" height="160"></td>
+                  <td>
+                    <h5 data-ng-bind="book.title"></h5>
+                    <ul class="cc-table-textbooks-list">
+                      <li data-ng-show="book.author">Author: {{book.author}}</li>
+                      <li data-ng-show="book.isbn">ISBN: {{book.isbn}}</li>
+                      <li data-ng-show="book.edition">Edition: {{book.edition}}</li>
+                      <li data-ng-show="book.publisher">Publisher: {{book.publisher}}</li>
+                      <li data-ng-show="book.copyright_year">Copyright Year: {{book.copyright_year}}</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </script>
