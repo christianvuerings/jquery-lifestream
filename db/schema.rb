@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013081414003322) do
+ActiveRecord::Schema.define(:version => 2013110718285000) do
 
   create_table "link_categories", :force => true do |t|
     t.string   "name",                          :null => false

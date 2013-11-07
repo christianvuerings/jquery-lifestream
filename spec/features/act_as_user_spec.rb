@@ -17,8 +17,8 @@ feature "act_as_user" do
     # The switching back triggers a cache invalidation, while the warming thread is still running.
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
-    login_with_cas "192517"
-    UserAuth.stub(:is_superuser?, '192517').and_return(true)
+    login_with_cas "238382"
+    UserAuth.stub(:is_superuser?, '238382').and_return(true)
     suppress_rails_logging {
       act_as_user "2040"
     }
@@ -33,19 +33,19 @@ feature "act_as_user" do
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
-    response["uid"].should == "192517"
+    response["uid"].should == "238382"
   end
 
   scenario "switch to another user without clicking stop acting as" do
     # disabling the cache_warmer while we're switching back and forth between users
     # The switching back triggers a cache invalidation, while the warming thread is still running.
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
-    UserAuth.stub(:is_superuser?).with('192517').and_return(true)
+    UserAuth.stub(:is_superuser?).with('238382').and_return(true)
     UserAuth.stub(:is_superuser?).with('2040').and_return(false)
     UserAuth.stub(:is_superuser?).with('1234').and_return(false)
     UserAuth.stub(:is_superuser?).with('9876').and_return(false)
 
-    login_with_cas "192517"
+    login_with_cas "238382"
     act_as_user "2040"
     visit "/api/my/status"
     response = JSON.parse(page.body)
@@ -68,37 +68,37 @@ feature "act_as_user" do
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
-    response["uid"].should == "192517"
+    response["uid"].should == "238382"
   end
 
   scenario "provide faulty param while switching users" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
-    login_with_cas "192517"
-    UserAuth.stub(:is_superuser?, '192517').and_return(true)
+    login_with_cas "238382"
+    UserAuth.stub(:is_superuser?, '238382').and_return(true)
     suppress_rails_logging {
       act_as_user "gobbly-gook"
     }
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
-    response["uid"].should == "192517"
+    response["uid"].should == "238382"
   end
 
   scenario "making sure act_as doesn't expose google data for non-fake users", :testext => true do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
-    UserAuth.stub(:is_superuser?, '192517').and_return(true)
+    UserAuth.stub(:is_superuser?, '238382').and_return(true)
     UserAuth.stub(:is_superuser?, '2040').and_return(true)
     UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
-    %w(192517 2040 11002820).each do |user|
+    %w(238382 2040 11002820).each do |user|
       login_with_cas user
       visit "/api/my/up_next"
       response = JSON.parse(page.body)
       response["items"].empty?.should be_false
       Rails.cache.exist?("user/#{user}/MyUpNext").should be_true
     end
-    login_with_cas "192517"
+    login_with_cas "238382"
     act_as_user "2040"
     UserAuth.stub(:is_test_user?, '2040').and_return(false)
     UserData.unstub(:where)

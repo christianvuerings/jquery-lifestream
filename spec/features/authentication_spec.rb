@@ -4,11 +4,11 @@ feature "authentication" do
   scenario "Working authentication, login and logout" do
     # Logging in and out quickly also triggers a rapid cache warming and expiration issue.
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
-    login_with_cas "192517"
+    login_with_cas "238382"
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
-    response["uid"].should == "192517"
+    response["uid"].should == "238382"
     logout_of_cas
     visit "/api/my/status"
     response = JSON.parse(page.body)
@@ -21,9 +21,9 @@ feature "authentication" do
     begin
       OmniAuth.config.logger = Logger.new "/dev/null"
       break_cas
-      login_with_cas "192517"
+      login_with_cas "238382"
       page.status_code.should == 401
-      restore_cas "192517"
+      restore_cas "238382"
     ensure
       OmniAuth.config.logger = original_logger
     end

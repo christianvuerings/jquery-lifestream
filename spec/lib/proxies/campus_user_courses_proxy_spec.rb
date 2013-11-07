@@ -26,7 +26,7 @@ describe CampusUserCoursesProxy do
           section[:instruction_format].blank?.should be_false
           section[:section_number].blank?.should be_false
           section[:instructors].length.should == 1
-          section[:instructors][0][:name].should == "Yu-Hung Lin"
+          section[:instructors][0][:name].present?.should be_true
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
           section[:schedules][0][:building_name].should == "WHEELER"
         end
@@ -56,7 +56,7 @@ describe CampusUserCoursesProxy do
           section[:instruction_format].blank?.should be_false
           section[:section_number].blank?.should be_false
           section[:instructors].length.should == 1
-          section[:instructors][0][:name].should == "Yu-Hung Lin"
+          section[:instructors][0][:name].present?.should be_true
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
           section[:schedules][0][:building_name].should == "WHEELER"
         end
@@ -69,8 +69,8 @@ describe CampusUserCoursesProxy do
     client.has_student_history?.should be_true
   end
 
-  it "should say that Yu-Hung has instructor history", :if => SakaiData.test_data? do
-    client = CampusUserCoursesProxy.new({user_id: '192517'})
+  it "should say that our fake teacher has instructor history", :if => SakaiData.test_data? do
+    client = CampusUserCoursesProxy.new({user_id: '238382'})
     client.has_instructor_history?.should be_true
   end
 
