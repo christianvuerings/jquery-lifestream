@@ -5,43 +5,12 @@
 
 /* Note: Canvas files need to referenced with a full URL because the origin for this file is the CalCentral server */
 
-/* CalCentral Navigation */
-
-#calcentral-custom-header {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    float: right;
-    font-size: 12px;
-    margin-left: 10px;
-    margin-bottom: 4px;
-    padding: 0 10px;
-    background: transparent url('https://ucberkeley.instructure.com/images/canvas/top_bar_bg.png?1358195888') repeat-x;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 5px;
-    border: 1px solid rgba(0,0,0,0.3);
-    border-top: 0;
-}
-
-#calcentral-custom-header li {
-    position: relative;
-    color: white;
-    float: left;
-    line-height: 1em;
-    margin: 5px 5px 5px 0;
-}
-
-#calcentral-custom-header a {
-    color: white;
-    padding-left: 20px;
-    background: url(/canvas/calcentral-return-arrow.png) 0 no-repeat;
-}
-
 /* Canvas Header */
 
 #header {
-  background: #45758B;
+  background: #003262 url(/canvas/bcourses-background.png) no-repeat;
+  top: 0;
+  left: 0;
 }
 
 #header-inner {
@@ -53,11 +22,12 @@
 }
 
 #header-logo, #header.no-user #header-logo {
-    background: url(/canvas/bcourses-logo-header.png) no-repeat;
-    bottom: 10px;
+    background: url(/canvas/bcourses-logotype-header.png) no-repeat;
+    bottom: 20px;
     left: 19px;
     top: auto;
-    width: 142px;
+    width: 150px;
+    height: 33px;
 }
 
 #main {
@@ -83,15 +53,31 @@
     margin-right: 286px;
     padding-left: 10px;
     padding-right: 137px;
-    width: 438px;
+    width: 470px;
+    border-right: 1px solid #AAA;
 }
 
 #footer img {
     display: none;
 }
 
-#footer-links a:first-child {
+#footer-links, #bCourses-footer-links {
     padding-left: 0;
+}
+
+#footer-links a, #bCourses-footer-links a {
+    border-left: 1px solid #5c5c5c;
+    color: #5c5c5c;
+    padding-right: 2px;
+    padding-left: 5px;
+}
+
+#footer-links a:first-child, #bCourses-footer-links a:first-child  {
+    padding-left: 0;
+}
+
+#footer-links a[class=icon-twitter]:before, #footer-links a[class=icon-facebook-boxed]:before {
+    font-size: 14px !important;
 }
 
 #footer p {

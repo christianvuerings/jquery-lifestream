@@ -1,13 +1,12 @@
 (function (window, document, $) {
   'use strict';
   $(document).ready(function () {
-    var $calcentral_header = $('<ul id="calcentral-custom-header">');
-    $('<li><a href="https://calcentral.berkeley.edu/dashboard">CalCentral Dashboard</a></li>').appendTo($calcentral_header);
-    $('#topbar').prepend($calcentral_header);
     $('#footer a.footer-logo').remove();
     $('#footer span').wrap('<div class="bcourses-footer"></div>');
-    var $bcourses_footer = $('<p><span>bCourses, powered by <a href="http://www.instructure.com/higher-education" target="_blank">Canvas</a></span> part of the <a href="http://ets.berkeley.edu/bspace-replacement" target="_blank">LMS Replacement project</a></p>');
+    var $bcourses_footer = $('<p><span>bCourses, powered by <a href="http://www.instructure.com/higher-education" target="_blank">canvas</a></span>, part of the <a href="http://ets.berkeley.edu/bcourses" target="_blank">bSpace Replacement Project</a></p>');
+    var $bcourses_links = $('<span id="footer-links"><a href="http://ets.berkeley.edu/bcourses/support" target="_blank">bCourses Support</a><a href="http://asuc.org/honorcode/index.php" target="_blank">UC Berkeley Honor Code</a><a href="http://www.instructure.com/policies/privacy-policy-instructure" target="_blank">Privacy Policy</a><a href="http://www.instructure.com/policies/terms-of-use-internet2" target="_blank">Terms of Service</a><a href="http://www.facebook.com/pages/UC-Berkeley-Educational-Technology-Services/108164709233254" target="_blank" class="icon-facebook-boxed"><span class="screenreader-only">Facebook</span></a><a href="http://www.twitter.com/etsberkeley" target="_blank" class="icon-twitter"><span class="screenreader-only">Twitter</span></a></span>');
     $('#footer div.bcourses-footer').prepend($bcourses_footer);
+    $('#footer span#footer-links').replaceWith($bcourses_links);
   });
 
   window.onmessage = function(e) {
