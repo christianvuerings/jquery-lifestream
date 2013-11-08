@@ -67,7 +67,7 @@ describe "MyUpNext" do
     Google::APIClient.stub(:execute).and_raise(StandardError)
     GoogleEventsListProxy.stub(:new).and_return(@real_events_list)
     dead_feed = MyUpNext.new @user_id
-    dead_feed.get_feed.should == {:items => []}
+    dead_feed.get_feed[:items].should == []
   end
 
 end
