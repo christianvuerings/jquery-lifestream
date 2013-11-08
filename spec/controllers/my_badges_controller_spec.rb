@@ -22,7 +22,7 @@ describe MyBadgesController do
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
-    json_response.size.should == 1
+    json_response.size.should == 2
     json_response["badges"].empty?.should_not be_true
     existing_badges = %w(bcal bdrive bmail)
     existing_badges.each do |badge|

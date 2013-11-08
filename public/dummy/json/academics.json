@@ -888,5 +888,13 @@
       }
     ],
     "url": "http://registrar.berkeley.edu/tbfaqs.html"
+  },
+  "last_modified": {
+    "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
+    "timestamp": {
+      "epoch": 1383947240,
+      "date_time": "2013-11-08T13:47:20-08:00",
+      "date_string": "11/08"
+    }
   }
 }

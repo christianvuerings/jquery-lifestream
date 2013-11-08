@@ -1,5 +1,5 @@
 class MyMergedModel
-  include ActiveAttr::Model, ClassLogger
+  include ActiveAttr::Model, ClassLogger, DatedFeed
   extend Calcentral::Cacheable
 
   def initialize(uid, options={})
@@ -20,7 +20,9 @@ class MyMergedModel
     self.class.fetch_from_cache uid do
       init
       feed = get_feed_internal(*opts)
-      notify_if_feed_changed(feed, uid)
+      last_modified = notify_if_feed_changed(feed, uid)
+      feed[:last_modified] = last_modified
+      feed[:last_modified][:timestamp] = format_date(Time.at(last_modified[:timestamp]).to_datetime)
       feed
     end
   end
@@ -44,6 +46,7 @@ class MyMergedModel
       Rails.cache.write(self.class.last_modified_cache_key(uid), last_modified, :expires_in => 28.days)
       Calcentral::Messaging.publish('/queues/feed_changed', uid)
     end
+    last_modified
   end
 
   def self.get_last_modified(uid)
