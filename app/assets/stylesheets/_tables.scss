@@ -50,13 +50,14 @@
   .cc-table-right-spacing {
     padding-right: 5% !important;
   }
-  .cc-table-textbooks-list {
-    margin-left: 0px;
-  }
   @media only screen and (max-width: 767px) {
     overflow: auto;
   }
 }
+.cc-textbooks-list {
+    overflow: auto;
+    padding-bottom: 10px;
+  }
 .cc-table-sortable {
   th {
     &:hover {

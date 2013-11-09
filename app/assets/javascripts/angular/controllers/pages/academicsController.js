@@ -225,26 +225,33 @@
       return count;
     };
 
-    // $scope.getTextbooks = function() {
-    //   var course_info = {"ccn": "41578", "term": "2013D"};
-    //   var url = 'books_details';
-    //   $http.post(url, course_info).success(function(books) {
-    //     console.log(books);
-    //     $scope.books = books;
-    //   });
-    // };
+    /**
+     * TODO
+     * [getTextbooks description]
+     * @param  {[type]} selected_course
+     * @return {[type]}
+     */
+    var getTextbooks  = function(selected_course) {
+      var ccns = [];
+
+      for (var i = 0; i < selected_course.sections.length; i++) {
+        ccns[i] = selected_course.sections[i].ccn;
+      }
+
+      var course_info = {
+        "ccns": ccns,
+        "slug": $scope.selected_semester.slug
+      };
+
+      $http.post('api/my/books_details', course_info).success(function(books) {
+        $scope.books = books;
+      }); 
+    };
 
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
       $scope.semesters = data.semesters;
-
-      var course_info = {"ccn": "41578", "term": "2013D"};
-      var url = 'books_details';
-      $http.post(url, course_info).success(function(books) {
-        console.log(books);
-        $scope.books = books;
-      });
 
       $scope.all_courses = getAllClasses(data.semesters);
       $scope.previous_courses = getPreviousClasses(data.semesters);
@@ -293,6 +300,8 @@
         }
         $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
         $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
+
+        getTextbooks($scope.selected_course)
       }
 
       if (data.exam_schedule) {
