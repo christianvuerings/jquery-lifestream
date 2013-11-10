@@ -30,13 +30,15 @@
   .cc-page-myfinances-amount {
     text-align: right;
   }
-  .cc-page-myfinances-deferred-payment-plan {
+  .cc-page-myfinances-dpp {
     background: $cc-color-widget-background;
+  }
+  .cc-page-myfinances-dpp-amounts {
     font-size: 12px;
-    padding: 5px 10px;
-    i {
-      margin-left: 5px;
-    }
+  }
+  .cc-page-myfinances-dpp-note {
+    font-size: 11px;
+    margin-top: 5px;
   }
   .cc-page-myfinances-green {
     &, & td {
