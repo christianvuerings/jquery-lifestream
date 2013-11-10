@@ -14,11 +14,30 @@
             <h2>Summary</h2>
           </div>
 
-          <div class="cc-page-myfinances-deferred-payment-plan" data-ng-if="myfinances.summary.isOnDPP">
-            Deferred Payment Plan (DPP) <i class="fa fa-check"></i>
-          </div>
-
           <ul class="cc-widget-list cc-page-myfinances-account-summary-list">
+
+            <li class="cc-page-myfinances-account-summary-item cc-clearfix-container cc-page-myfinances-dpp" data-ng-if="myfinances.summary.isOnDPP">
+              <div class="small-12 columns">
+                <strong>Deferred Payment Plan</strong>
+              </div>
+              <div class="cc-page-myfinances-dpp-amounts">
+                <div class="small-8 columns">
+                  DPP Balance <sup>1</sup>
+                </div>
+                <div class="small-4 columns">
+                  <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppBalance"></div>
+                </div>
+                <div class="small-8 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount">
+                  DPP Normal Installment Amount
+                </div>
+                <div class="small-4 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount">
+                  <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppNormalInstallmentAmount"></div>
+                </div>
+              </div>
+              <div class="small-12 columns cc-page-myfinances-dpp-note">
+                1: Reflected in charges with DPP listed in Activity
+              </div>
+            </li>
 
             <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-if="!isAllZero">
               <div class="small-8 columns">
