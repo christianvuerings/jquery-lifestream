@@ -12,6 +12,12 @@ describe FinancialsProxy do
     its([:status_code]) { should == 200 }
     it { subject[:body]["student"].should_not be_nil }
     it { subject[:body]["student"]["summary"].should_not be_nil }
+    it { subject[:body]["student"]["summary"]["accountBalance"].is_a?(Numeric).should be_true }
+    it { subject[:body]["student"]["summary"]["minimumAmountDue"].is_a?(Numeric).should be_true }
+    it { Date.parse(subject[:body]["student"]["summary"]["minimumAmountDueDate"]).is_a?(Date).should be_true }
+    it { (subject[:body]["student"]["summary"]["isOnDPP"].is_a?(TrueClass) ||
+        subject[:body]["student"]["summary"]["isOnDPP"].is_a?(FalseClass)
+    ).should be_true }
   end
 
   context "oski live financials", testext: true do
@@ -32,7 +38,7 @@ describe FinancialsProxy do
   context "fake oski financials" do
     subject { fake_oski_financials }
     it_behaves_like "has some minimal oski data"
-    it { subject[:body]["student"]["summary"]["futureActivity"].should == "222.5" }
+    it { subject[:body]["student"]["summary"]["futureActivity"].should == 25.0 }
   end
 
   context "unreachable remote server (5xx errors)" do
