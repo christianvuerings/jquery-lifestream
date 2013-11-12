@@ -1,8 +1,8 @@
 <div class="cc-widget cc-widget-mycalendar" data-ng-controller="UpNextController">
   <div class="cc-widget-title">
     <h2>
-      <span data-ng-bind="api.date.now | date:'EEEE'"></span>
-      <span data-ng-bind="api.date.now | date:'MMM d'" class="cc-widget-title-sub"></span>
+      <span data-ng-bind="lastModifiedDate | date:'EEEE'"></span>
+      <span data-ng-bind="lastModifiedDate | date:'MMM d'" class="cc-widget-title-sub"></span>
     </h2>
   </div>
   <div class="cc-widget-mycalendar-container" data-cc-spinner-directive>
