@@ -42,6 +42,7 @@ module FakeableProxy
   private
 
   def record_new_responses(proxy_id, extra_cassette_options, proc_block)
+    WebMock.enable!
     Rails.logger.info "#{self.class.name}  Recording new response for #{proxy_id}"
     VCR.configure do |c|
       c.cassette_library_dir = 'fixtures/pretty_vcr_recordings'
