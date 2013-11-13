@@ -140,6 +140,7 @@
       $scope.search = {
         'transTerm': to_select_term
       };
+      $scope.search_term = to_select_term;
     };
 
     var createTerms = function() {
