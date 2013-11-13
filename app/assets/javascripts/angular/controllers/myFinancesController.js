@@ -50,7 +50,7 @@
         if (obj.transStatus === 'Past due') {
           obj._isPastDueDate = true;
           obj._isDueNow = '1_past_due'; // Past due
-        } else if (obj.transStatus !== 'Closed') {
+        } else if (obj.transStatus === 'Current' || obj.transStatus === 'Installment') {
           obj._isDueNow = '2_current_due'; // Current due
         }
       }
