@@ -221,12 +221,12 @@
      */
     var checkAllZero = function() {
       var summary = $scope.myfinances.summary;
-      $scope.isAllZero = (summary.anticipatedAid === 0 &&
-        summary.lastStatementBalance === 0 &&
-        summary.unbilledActivity === 0 &&
-        summary.futureActivity === 0 &&
-        summary.totalPastDueAmount === 0 &&
-        summary.minimumAmountDue === 0);
+      $scope.isAllZero = (summary.anticipatedAid === '0.00' &&
+        summary.lastStatementBalance === '0.00' &&
+        summary.unbilledActivity === '0.00' &&
+        summary.futureActivity === '0.00' &&
+        summary.totalPastDueAmount === '0.00' &&
+        summary.minimumAmountDue === '0.00');
     };
 
     /**

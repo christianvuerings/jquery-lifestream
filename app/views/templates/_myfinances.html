@@ -27,10 +27,10 @@
                 <div class="small-4 columns">
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppBalance"></div>
                 </div>
-                <div class="small-8 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount > 0">
+                <div class="small-8 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
                   DPP Normal Installment Amount
                 </div>
-                <div class="small-4 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount > 0">
+                <div class="small-4 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppNormalInstallmentAmount"></div>
                 </div>
               </div>
@@ -56,7 +56,7 @@
                 </div>
               </div>
 
-              <section class="cc-clearfix-container" data-ng-if="!isAllZero && myfinances.summary.futureActivity !== 0">
+              <section class="cc-clearfix-container" data-ng-if="!isAllZero && myfinances.summary.futureActivity !== '0.00'">
                 <div class="small-8 columns">
                   Charges Not Yet Due
                 </div>
@@ -93,9 +93,9 @@
                   <div class="small-4 columns">
                     <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.unbilledActivity"></div>
                   </div>
-                  <div class="small-12 columns">
-                    <a href="https://bearfacts.berkeley.edu/bearfacts/student/CARS/ebill.do?bfaction=accessEBill">View Statements</a>
-                  </div>
+                </div>
+                <div class="small-12 columns cc-page-myfinances-light" data-ng-show="myfinances._show">
+                  <a href="https://bearfacts.berkeley.edu/bearfacts/student/CARS/ebill.do?bfaction=accessEBill">View Statements</a>
                 </div>
               </div>
             </li>
@@ -200,7 +200,7 @@
                     <i class="fa" data-ng-class="{'fa-check':(item._isDPP)}" data-ng-if="item._isDPP">
                   </td>
                   <td class="cc-widget-table-hover-notriangle cc-table-center">
-                    <i class="fa" data-ng-class="{'fa-exclamation':(item._isDueNow === '2_current_due'),'fa-exclamation-circle':(item._isDueNow === '1_past_due')}" data-ng-if="item._isDueNow !== 0">
+                    <i class="fa" data-ng-class="{'fa-exclamation':(item._isDueNow === '2_current_due'),'fa-exclamation-circle':(item._isDueNow === '1_past_due')}" data-ng-if="item._isDueNow !== '3_closed'">
                   </td>
                 </tr>
                 <tr data-ng-if="item._show">
