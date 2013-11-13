@@ -215,7 +215,7 @@
                         <strong>Original Amount:</strong>
                         <span class="cc-page-myfinances-amount" data-cc-amount-directive="item.originalAmount"></span>
                       </div>
-                      <div data-ng-if="item.transDueDateShow">
+                      <div data-ng-if="item.transDueDateShow && !(item.transStatus === 'Closed' && item.transType === 'Refund')">
                         <strong>Due Date:</strong>
                         <span data-ng-bind="item.transDueDateShow"></span>
                       </div>
