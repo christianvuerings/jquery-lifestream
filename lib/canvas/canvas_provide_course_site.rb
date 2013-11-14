@@ -1,11 +1,184 @@
 class CanvasProvideCourseSite < CanvasCsv
+  include TorqueBox::Messaging::Backgroundable
   include ClassLogger
+
+  BG_JOB_CACHE_EXPIRATION = 24.hours.to_i
+
+  attr_reader :uid, :status, :cache_key
+
+  #####################################
+  # Class Methods
+
+  def self.unique_job_id
+    Time.now.to_f.to_s.gsub('.','')
+  end
+
+  def self.find(cache_key)
+    Rails.cache.fetch(cache_key)
+  end
+
+  #####################################
+  # Instance Methods
 
   # Currently this depends on an instructor's point of view.
   # TODO Also support admin/superuser provisioning for sections which do not yet have an instructor assigned to them.
-  def initialize(options = {})
+  def initialize(uid, options = {})
     super()
-    @uid = options[:user_id]
+    raise ArgumentError, "uid must be a String" if uid.class != String
+    @uid = uid
+    @status = 'New' # Changes to 'Processing', 'Completed', or 'Error'
+    @errors = []
+    @completed_steps = []
+    @import_data = {}
+    generate_cache_key
+  end
+
+  def create_course_site(term_slug, ccns)
+    @status = "Processing"
+    save
+    logger.info("Course provisioning job started. Job state updated in cache key #{@cache_key}, expiring in #{BG_JOB_CACHE_EXPIRATION}")
+    @import_data['term_slug'] = term_slug
+    @import_data['term'] = find_term(term_slug)
+    @import_data['ccns'] = ccns
+
+    prepare_users_courses_list
+    identify_department_subaccount
+    prepare_course_site_definition
+    prepare_section_definitions
+    prepare_user_definitions
+    prepare_course_site_memberships
+
+    # TODO Upload ZIP archives instead and do more detailed parsing of the import status.
+    import_course_site(@import_data['course_site_definition'])
+    import_sections(@import_data['section_definitions'])
+    import_users(@import_data['user_definitions'])
+    import_enrollments(@import_data['course_memberships'])
+
+    # TODO Perform initial import of official campus instructors for these sections.
+    # TODO Perform initial import of official campus student enrollments.
+    retrieve_course_site_details
+
+    # TODO Expire user's Canvas-related caches to maintain UX consistency.
+    @status = "Completed"
+    save
+  rescue StandardError => error
+    logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
+    save_with_error(error.message)
+    raise error
+  end
+
+  def prepare_users_courses_list
+    raise RuntimeError, "Unable to prepare course list. Term slug not present." if @import_data['term_slug'].blank?
+    raise RuntimeError, "Unable to prepare course list. CCNs not present." if @import_data['ccns'].blank?
+
+    # Check permissions. The user must have instructor access (direct or inherited via section-nesting) to all sections.
+    @import_data['courses'] = filter_courses_by_ccns(candidate_courses_list, @import_data['term_slug'], @import_data['ccns'])
+    complete_step("Prepared courses list")
+  end
+
+  def identify_department_subaccount
+    raise RuntimeError, "Unable identify department subaccount. Course list not loaded or empty." if @import_data['courses'].blank?
+
+    # Derive course site SIS ID, course code (short name), and title from first section's course info.
+    department = @import_data['courses'][0][:dept]
+
+    # Check that we have a departmental location for this course.
+    @import_data['subaccount'] = subaccount_for_department(department)
+
+    complete_step("Identified department sub-account")
+  end
+
+  def prepare_course_site_definition
+    raise RuntimeError, "Unable to prepare course site definition. Term data is not present." if @import_data['term'].blank?
+    raise RuntimeError, "Unable to prepare course site definition. Department subaccount ID not present." if @import_data['subaccount'].blank?
+    raise RuntimeError, "Unable to prepare course site definition. Courses list is not present." if @import_data['courses'].blank?
+
+    # Because the course's term is not included in the "Create a new course" API, we must use CSV import.
+    @import_data['course_site_definition'] = generate_course_site_definition(@import_data['term'][:yr], @import_data['term'][:cd], @import_data['subaccount'], @import_data['courses'][0])
+    @import_data['sis_course_id'] = @import_data['course_site_definition']['course_id']
+    @import_data['course_site_short_name'] = @import_data['course_site_definition']['short_name']
+    complete_step("Prepared course site definition")
+  end
+
+  def prepare_section_definitions
+    raise RuntimeError, "Unable to prepare section definitions. Term data is not present." if @import_data['term'].blank?
+    raise RuntimeError, "Unable to prepare section definitions. SIS Course ID is not present." if @import_data['sis_course_id'].blank?
+    raise RuntimeError, "Unable to prepare section definitions. Courses list is not present." if @import_data['courses'].blank?
+
+    # Add Canvas course sections to match the source sections.
+    # We could use the "Create course section" API, but to reduce API usage we instead use CSV import.
+    @import_data['section_definitions'] = generate_section_definitions(@import_data['term'][:yr], @import_data['term'][:cd], @import_data['sis_course_id'], @import_data['courses'])
+    complete_step("Prepared section definitions")
+  end
+
+  def prepare_user_definitions
+    raise RuntimeError, "Unable to prepare user definition. User ID is not present." if @uid.blank?
+    # Add current instructor so that link to course site will work.
+    # TODO Need to skip this when we support direct administrative creation of course sites based on sections.
+    # TODO Can eliminate this step if we import all official instructors for the sections.
+    @import_data['user_definitions'] = accumulate_user_data([@uid], [])
+    complete_step("Prepared user definitions")
+  end
+
+  def prepare_course_site_memberships
+    raise RuntimeError, "Unable to prepare course site memberships. Section definitions are not present." if @import_data['section_definitions'].blank?
+    raise RuntimeError, "Unable to prepare course site memberships. User definitions are not present." if @import_data['user_definitions'].blank?
+    @import_data['course_memberships'] = generate_course_memberships(@import_data['section_definitions'], @import_data['user_definitions'][0])
+    complete_step("Prepared course site memberships")
+  end
+
+  def import_course_site(canvas_course_row)
+    @import_data['courses_csv_file'] = make_courses_csv("#{csv_filename_prefix}-course.csv", [canvas_course_row])
+    response = CanvasSisImportProxy.new.import_courses(@import_data['courses_csv_file'])
+    raise RuntimeError, 'Course site could not be created.' if response.blank?
+    logger.warn("Successfully imported course from: #{@import_data['courses_csv_file']}")
+    complete_step("Imported course")
+  end
+
+  def import_sections(canvas_section_rows)
+    @import_data['sections_csv_file'] = make_sections_csv("#{csv_filename_prefix}-sections.csv", canvas_section_rows)
+    response = CanvasSisImportProxy.new.import_sections(@import_data['sections_csv_file'])
+    if response.blank?
+      logger.error("Imported course from #{@import_data['courses_csv_file']} but sections did not import from #{@import_data['sections_csv_file']}")
+      raise RuntimeError, "Course site was created without any sections or members! Section import failed."
+    else
+      logger.warn("Successfully imported sections from: #{@import_data['sections_csv_file']}")
+      complete_step("Imported sections")
+    end
+  end
+
+  def import_users(canvas_user_rows)
+    @import_data['users_csv_file'] = make_users_csv("#{csv_filename_prefix}-users.csv", canvas_user_rows)
+    response = CanvasSisImportProxy.new.import_users(@import_data['users_csv_file'])
+    if response.blank?
+      logger.error("Imported course and sections from #{@import_data['courses_csv_file']}, #{@import_data['sections_csv_file']} but users did not import from #{@import_data['users_csv_file']}")
+      raise RuntimeError, "Course site was created but members may be missing! User import failed."
+    else
+      logger.warn("Successfully imported users from: #{@import_data['users_csv_file']}")
+      complete_step("Imported users")
+    end
+  end
+
+  def import_enrollments(canvas_enrollment_rows)
+    @import_data['enrollments_csv_file'] = make_enrollments_csv("#{csv_filename_prefix}-enrollments.csv", canvas_enrollment_rows)
+    response = CanvasSisImportProxy.new.import_enrollments(@import_data['enrollments_csv_file'])
+    if response.blank?
+      logger.error("Imported course, sections, and users from #{@import_data['courses_csv_file']}, #{@import_data['sections_csv_file']}, #{@import_data['users_csv_file']} but memberships did not import from #{@import_data['enrollments_csv_file']}")
+      raise RuntimeError, "Course site was created but members may not be enrolled! Enrollment import failed."
+    else
+      logger.warn("Successfully imported enrollments from: #{@import_data['enrollments_csv_file']}")
+      complete_step("Imported instructor enrollment")
+    end
+  end
+
+  def retrieve_course_site_details
+    raise RuntimeError, "Unable to retrieve course site details. SIS Course ID not present." if @import_data['sis_course_id'].blank?
+    @import_data['course_site_url'] = course_site_url(@import_data['sis_course_id'])
+    complete_step("Retrieved new course site details")
+  end
+
+  def csv_filename_prefix
+    @export_filename_prefix ||= "#{@export_dir}/course_provision-#{DateTime.now.strftime('%F')}-#{SecureRandom.hex(8)}"
   end
 
   def course_site_url(sis_id)
@@ -15,13 +188,12 @@ class CanvasProvideCourseSite < CanvasCsv
     "#{Settings.canvas_proxy.url_root}/courses/#{course_data['id']}"
   end
 
-
   def current_terms
     @current_terms ||= Settings.canvas_proxy.current_terms_codes.collect do |term|
       {
-          yr: term.term_yr,
-          cd: term.term_cd,
-          slug: TermCodes.to_slug(term.term_yr, term.term_cd)
+        yr: term.term_yr,
+        cd: term.term_cd,
+        slug: TermCodes.to_slug(term.term_yr, term.term_cd)
       }
     end
   end
@@ -33,6 +205,7 @@ class CanvasProvideCourseSite < CanvasCsv
   end
 
   def candidate_courses_list
+    raise RuntimeError, "User ID not found for candidate" if @uid.blank?
     terms_filter = current_terms
 
     # Get all sections for which this user is an instructor, sorted in a useful fashion.
@@ -52,51 +225,6 @@ class CanvasProvideCourseSite < CanvasCsv
     else
       []
     end
-  end
-
-  def create_course_site(term_slug, ccns)
-    term = find_term(term_slug)
-
-    # Check permissions. The user must have instructor access (direct or inherited via section-nesting) to all sections.
-    campus_courses = filter_courses_by_ccns(candidate_courses_list, term_slug, ccns)
-
-    # Derive course site SIS ID, course code (short name), and title from first section's course info.
-    course_source = campus_courses[0]
-    department = course_source[:dept]
-
-    # Check that we have a departmental location for this course.
-    subaccount = subaccount_for_department(department)
-
-    # Create Canvas course site.
-    # Because the course's term is not included in the "Create a new course" API, we must use CSV import.
-    canvas_course_row = generate_course_site_definition(term[:yr], term[:cd], subaccount, course_source)
-
-    sis_course_id = canvas_course_row['course_id']
-    course_site_short_name = canvas_course_row['short_name']
-
-    # Add Canvas course sections to match the source sections.
-    # We could use the "Create course section" API, but to reduce API usage we instead use CSV import.
-    canvas_section_rows = generate_section_definitions(term[:yr], term[:cd], canvas_course_row['course_id'], campus_courses)
-
-    # Add current instructor so that link to course site will work.
-    # TODO Need to skip this when we support direct administrative creation of course sites based on sections.
-    # TODO Can eliminate this step if we import all official instructors for the sections.
-    user_rows = accumulate_user_data([@uid], [])
-    membership_rows = generate_course_memberships(canvas_section_rows, user_rows[0])
-
-    outcome = import_course(canvas_course_row, canvas_section_rows, user_rows, membership_rows)
-    return outcome if outcome[:created_status] == 'ERROR'
-
-    # TODO Perform initial import of official campus instructors for these sections.
-    # TODO Perform initial import of official campus student enrollments.
-
-    found_url = course_site_url(sis_course_id)
-
-    outcome['created_course_site_url'] = found_url
-    outcome['created_course_site_short_name'] = course_site_short_name
-
-    # TODO Expire user's Canvas-related caches to maintain UX consistency.
-    outcome
   end
 
   def filter_courses_by_ccns(courses_list, term_slug, ccns)
@@ -213,41 +341,6 @@ class CanvasProvideCourseSite < CanvasCsv
     sis_id
   end
 
-  # TODO Upload a ZIP archive instead and do more detailed parsing of the import status.
-  def import_course(canvas_course_row, canvas_section_rows, canvas_user_rows, canvas_enrollment_rows)
-    uuid = SecureRandom.hex(8)
-    filename_prefix = "#{@export_dir}/course_provision-#{DateTime.now.strftime('%F')}-#{uuid}"
-    courses_csv_file = make_courses_csv("#{filename_prefix}-course.csv", [canvas_course_row])
-    sections_csv_file = make_sections_csv("#{filename_prefix}-sections.csv", canvas_section_rows)
-    users_csv_file = make_users_csv("#{filename_prefix}-users.csv", canvas_user_rows)
-    enrollments_csv_file = make_enrollments_csv("#{filename_prefix}-enrollments.csv", canvas_enrollment_rows)
-    import_proxy = CanvasSisImportProxy.new
-
-    imported_courses_response = import_proxy.import_courses(courses_csv_file)
-    raise RuntimeError, 'Course site could not be created!' if imported_courses_response.blank?
-
-    imported_sections_response = import_proxy.import_sections(sections_csv_file)
-    if imported_sections_response.blank?
-      logger.error("Imported course from #{courses_csv_file} but sections did not import from #{sections_csv_file}")
-      return response_hash('WARNING', 'Course site was created without any sections or members!')
-    end
-
-    imported_users_response = import_proxy.import_users(users_csv_file)
-    if imported_users_response.blank?
-      logger.error("Imported course and sections from #{courses_csv_file}, #{sections_csv_file} but users did not import from #{users_csv_file}")
-      return response_hash('WARNING', 'Course site was created but members may be missing!')
-    end
-
-    imported_enrollments_response = import_proxy.import_enrollments(enrollments_csv_file)
-    if imported_enrollments_response.blank?
-      logger.error("Imported course, sections, and users from #{courses_csv_file}, #{sections_csv_file}, #{users_csv_file} but memberships did not import from #{enrollments_csv_file}")
-      return response_hash('WARNING', 'Course site was created but members may not be enrolled!')
-    end
-
-    logger.warn("Successfully imported course from: #{courses_csv_file}, #{sections_csv_file}, #{users_csv_file}, #{enrollments_csv_file}")
-    response_hash('Success')
-  end
-
   def subaccount_for_department(department)
     subaccount = "ACCT:#{department}"
     if !CanvasExistenceCheckProxy.new.account_defined?(subaccount)
@@ -259,14 +352,47 @@ class CanvasProvideCourseSite < CanvasCsv
     end
   end
 
-  def response_hash(status, message = '')
-    raise ArgumentError, "String type expected" if (status.class != String || message.class != String)
-    response = { created_status: status }
-    response[:created_message] = message unless message.blank?
-    response
+  def save
+    raise RuntimeError, "Unable to save. cache_key missing" if @cache_key.blank?
+    Rails.cache.write(@cache_key, self, expires_in: BG_JOB_CACHE_EXPIRATION)
+  end
+
+  def complete_step(step_text)
+    @completed_steps << step_text
+    save
+  end
+
+  def to_json
+    job_status = {
+      job_id: @cache_key,
+      status: @status,
+      completed_steps: @completed_steps,
+      percent_complete: (@completed_steps.count.to_f / 11.0).round(2),
+    }
+    job_status['error'] = @errors.join('; ') if @errors.count > 0
+    job_status['course_site'] = { short_name: @import_data['course_site_short_name'], url: @import_data['course_site_url'] } if @status == 'Completed'
+    job_status.to_json
+  end
+
+  def job_id
+    @cache_key
   end
 
   class IdNotUniqueException < Exception
   end
+
+  private
+
+    def generate_cache_key
+      job_id = CanvasProvideCourseSite.unique_job_id
+      @cache_key = "canvas.courseprovision.#{@uid}.#{job_id}"
+      logger.info("Cache key generated for job: #{@cache_key}")
+    end
+
+    def save_with_error(error_message)
+      @status = 'Error'
+      @errors << error_message
+      save
+    end
 
 end

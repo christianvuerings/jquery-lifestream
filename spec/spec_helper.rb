@@ -96,6 +96,7 @@ Spork.prefork do
 
     # Include Auth helper:
     config.include IntegrationSpecHelper, :type => :feature
+    config.include RequestSpecHelper, :type => :request
 
     # Clear out cache at the beginning of each test.
     config.before :each do

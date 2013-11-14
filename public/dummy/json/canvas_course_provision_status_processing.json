@@ -1,18 +1,16 @@
 // Canvas Course Provisioning Job Status Response
-// Scenario: Course provisioning failed
+// Scenario: Still being processed
 // GET /api/academics/canvas/course_provision/status.json?job_id=canvas.courseprovision.12345.1383330151057
 {
   "job_id": "canvas.courseprovision.12345.1383330151057",
-  "status": "Error",
+  "status": "Processing",
   "completed_steps": [
     "Prepared courses list",
     "Identified department sub-account",
     "Prepared course site definition",
     "Prepared section definitions",
     "Prepared user definitions",
-    "Prepared course site memberships",
-    "Imported course"
+    "Prepared course site memberships"
   ],
-  "percent_complete": 0.64,
-  "error": "Course site was created without any sections or members!"
+  "percent_complete": 0.55
 }
