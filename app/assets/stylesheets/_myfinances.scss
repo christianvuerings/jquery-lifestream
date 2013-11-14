@@ -67,6 +67,9 @@
   .cc-page-myfinances-lighter {
     color: $cc-color-lighter-medium-grey;
   }
+  .cc-page-myfinances-not-amount-due-dpp {
+    font-size: 11px;
+  }
   .cc-page-myfinances-red {
     &, & td {
       color: $cc-color-red;

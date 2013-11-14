@@ -64,6 +64,11 @@
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.futureActivity"></div>
                 </div>
               </section>
+              <section class="cc-clearfix-container cc-page-myfinances-not-amount-due-dpp" data-ng-if="myfinances.summary.isOnDPP && !myfinances.summary.isDppPastDue">
+                <div class="small-12 columns">
+                  These do not include the amount due on DPP.
+                </div>
+              </section>
             </li>
 
             <li data-ng-class="{'cc-widget-list-selected': myfinances._show}">
@@ -99,8 +104,7 @@
                 </div>
               </div>
             </li>
-
-            <li data-ng-if="myfinances.summary.minimumAmountDue > 0">
+            <li data-ng-if="myfinances.summary.accountBalance !== '0.00'">
               <div class="cc-page-myfinances-account-summary-buttons">
                 <a class="cc-button cc-button-blue" href="http://studentbilling.berkeley.edu/carsPaymentOptions.htm">Make Payment</a>
               </div>
