@@ -125,7 +125,7 @@
     </div>
 
     <div class="large-4 columns" data-ng-if="books.has_books">
-      <div class="cc-widget">
+      <div class="cc-widget cc-widget-last">
         <div class="cc-widget-title">
           <h2>Textbooks</h2>
         </div>
@@ -135,7 +135,7 @@
             <div data-ng-if="books_category.books">
               <div data-ng-repeat="book in books_category.books" class="cc-textbooks-list">
                 <div class="small-4 columns rows" data-ng-if="book.image">
-                  <img alt="" data-ng-src="{{book.image}}" width="110" height="160"></img>
+                  <img data-ng-alt="Textbook cover for {{book.title}}" data-ng-src="{{book.image}}" width="110" height="160"></img>
                 </div>
                 <div class="small-8 columns rows">
                   <h4 data-ng-bind="book.title"></h4>

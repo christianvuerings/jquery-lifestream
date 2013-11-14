@@ -156,7 +156,7 @@
             classes.push(semesters[i].classes[j]);
           }
         }
-      }      
+      }
 
       return classes;
     };
@@ -169,7 +169,7 @@
             classes.push(semesters[i].classes[j]);
           }
         }
-      }      
+      }
 
       return classes;
     };
@@ -226,10 +226,8 @@
     };
 
     /**
-     * TODO
-     * [getTextbooks description]
-     * @param  {[type]} selected_course
-     * @return {[type]}
+     * Get Textbooks for the selected course
+     * @param  {Object} selected_course Selected Course Object
      */
     var getTextbooks  = function(selected_course) {
       var ccns = [];
@@ -239,13 +237,13 @@
       }
 
       var course_info = {
-        "ccns": ccns,
-        "slug": $scope.selected_semester.slug
+        'ccns[]': ccns,
+        'slug': $scope.selected_semester.slug
       };
 
-      $http.post('api/my/books_details', course_info).success(function(books) {
+      $http.get('api/my/books_details', {params: course_info}).success(function(books) {
         $scope.books = books;
-      }); 
+      });
     };
 
     var parseAcademics = function(data) {
@@ -428,7 +426,7 @@
       if (isAuthenticated) {
         $scope.can_view_academics = $scope.api.user.profile.student_info.has_academics_tab;
         $http.get('/api/my/academics').success(parseAcademics);
-        //$http.get('/dummy/json/academics.json').success(parseAcademics);
+        //$http.get('/dummy/json/academics1.json').success(parseAcademics);
       }
     });
 

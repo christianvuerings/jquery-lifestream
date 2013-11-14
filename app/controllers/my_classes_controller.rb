@@ -30,7 +30,7 @@ class MyClassesController < ApplicationController
           :chegg_link => chegg_url + isbn
         }
         books.push(book_detail)
-      end 
+      end
     end
     books
   end
@@ -51,7 +51,7 @@ class MyClassesController < ApplicationController
   end
 
   def get_books
-  	require 'open-uri'
+    require 'open-uri'
 
     ccns = params[:ccns]
     slug = params[:slug]
@@ -73,9 +73,7 @@ class MyClassesController < ApplicationController
       optional_text_list = text_books.xpath('//h2[contains(text(), "Optional")]/following::ul[1]')
 
       required_books.push(ul_to_dict(required_text_list))
-
       recommended_books.push(ul_to_dict(recommended_text_list))
-
       optional_books.push(ul_to_dict(optional_text_list))
     end
 
