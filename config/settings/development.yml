@@ -23,6 +23,9 @@ cache:
     MyUpNext: <%= 1.day %>
     UserApi: <%= 1.day %>
 
+cal_link_proxy:
+  fake: true
+
 canvas_proxy:
   fake: true
 
