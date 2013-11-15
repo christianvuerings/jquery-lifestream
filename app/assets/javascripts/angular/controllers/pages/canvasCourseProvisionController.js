@@ -24,37 +24,34 @@
       });
     };
 
-    var stop;
-    $scope.courseSiteJobStatusLoader = function() {
-      angular.extend($scope, {current_workflow_step: 'monitoring_job'});
-      stop = $timeout(function() {
-        $scope.fetchStatus();
-        if ($scope.status == 'Error') {
-          $timeout.cancel(stop);
-        } else if ($scope.status == 'Completed') {
-          $timeout.cancel(stop);
-        } else {
-          $scope.courseSiteJobStatusLoader();
-        }
+    var statusProcessor = function() {
+      if ($scope.status === 'Processing' || $scope.status === 'New') {
+        courseSiteJobStatusLoader();
+      } else {
+        $timeout.cancel(timeout_promise);
+      }
+    };
+
+    var timeout_promise;
+    var courseSiteJobStatusLoader = function() {
+      $scope.current_workflow_step = 'monitoring_job';
+      timeout_promise = $timeout(function() {
+        fetchStatus(statusProcessor);
       }, 2000);
     };
 
-    $scope.stopJobStatusLoader = function() {
-      $timeout.cancel(stop);
-    };
-
-    $scope.clearCourseSiteJob = function() {
+    var clearCourseSiteJob = function() {
       delete $scope.job_id;
       delete $scope.job_request_status;
       delete $scope.status;
       delete $scope.completed_steps;
       delete $scope.percent_complete;
-    }
+    };
 
     $scope.courseSiteJobCreated = function(data) {
       angular.extend($scope, data);
-      $scope.courseSiteJobStatusLoader();
-    }
+      courseSiteJobStatusLoader();
+    };
 
     $scope.createCourseSiteJob = function(selected_courses) {
       var ccns = [];
@@ -74,23 +71,28 @@
           new_course.instructor_id = $scope.acting_as;
         }
         $http.post('/api/academics/canvas/course_provision/create', new_course)
-            .success($scope.courseSiteJobCreated)
-            .error($scope.courseSiteJobCreated);
+          .success($scope.courseSiteJobCreated)
+          .error(function() {
+            angular.extend($scope, {
+              current_workflow_step: 'monitoring_job',
+              status: 'Error',
+              error: 'Failed to create course provisioning job.'
+            });
+          });
       }
     };
 
-    $scope.fetchStatus = function() {
+    var fetchStatus = function(callback) {
       var status_url = '/api/academics/canvas/course_provision/status.json?job_id='+ $scope.job_id;
       $http.get(status_url).success(function(data) {
         angular.extend($scope, data);
-        angular.extend($scope, {
-          percent_complete_rounded: Math.round($scope.percent_complete * 100)
-        })
+        $scope.percent_complete_rounded = Math.round($scope.percent_complete * 100);
+        callback();
       });
-    }
+    };
 
     $scope.fetchFeed = function() {
-      $scope.clearCourseSiteJob();
+      clearCourseSiteJob();
       angular.extend($scope, {
         current_workflow_step: 'selecting',
         _is_loading: true,
