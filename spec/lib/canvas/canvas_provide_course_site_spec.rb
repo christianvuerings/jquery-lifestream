@@ -41,36 +41,37 @@ describe CanvasProvideCourseSite do
     end
 
     it "has the users id" do
-      canvas_provide_course_site.uid.should == uid
+      expect(canvas_provide_course_site.uid).to eq uid
     end
 
     it "defaults to status 'new'" do
-      canvas_provide_course_site.status.should == 'New'
+      expect(canvas_provide_course_site.status).to eq 'New'
     end
 
     it "initializes the completed steps array" do
-      canvas_provide_course_site.instance_eval { @completed_steps }.should == []
+      expect(canvas_provide_course_site.instance_eval { @completed_steps }).to eq []
     end
 
     it "initializes the error array" do
-      canvas_provide_course_site.instance_eval { @errors }.should == []
+      expect(canvas_provide_course_site.instance_eval { @errors }).to eq []
     end
 
     it "initializes the import data hash" do
-      canvas_provide_course_site.instance_eval { @import_data }.should == {}
+      expect(canvas_provide_course_site.instance_eval { @import_data }).to be_an_instance_of Hash
+      expect(canvas_provide_course_site.instance_eval { @import_data }).to eq({})
     end
 
     it "initializes with unique cache key" do
       CanvasProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
-      canvas_provide_course_site.cache_key.should == "canvas.courseprovision.#{uid}.1383330151057"
+      expect(canvas_provide_course_site.cache_key).to eq "canvas.courseprovision.#{uid}.1383330151057"
     end
 
     it "saves the state to cache" do
       retrieved_job = CanvasProvideCourseSite.find(canvas_provide_course_site.job_id)
-      retrieved_job.class.should == CanvasProvideCourseSite
-      retrieved_job.uid.should == canvas_provide_course_site.instance_eval { @uid }
-      retrieved_job.status.should == 'New'
-      retrieved_job.job_id.should == canvas_provide_course_site.job_id
+      expect(retrieved_job).to be_an_instance_of CanvasProvideCourseSite
+      expect(retrieved_job.uid).to eq canvas_provide_course_site.instance_eval { @uid }
+      expect(retrieved_job.status).to eq 'New'
+      expect(retrieved_job.job_id).to eq canvas_provide_course_site.job_id
     end
   end
 
