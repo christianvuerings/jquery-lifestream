@@ -64,7 +64,9 @@ class CanvasProvideCourseSite < CanvasCsv
     save
   rescue StandardError => error
     logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
-    save_with_error(error.message)
+    @status = 'Error'
+    @errors << error.message
+    save
     raise error
   end
 
@@ -381,13 +383,5 @@ class CanvasProvideCourseSite < CanvasCsv
 
   class IdNotUniqueException < Exception
   end
-
-  private
-
-    def save_with_error(error_message)
-      @status = 'Error'
-      @errors << error_message
-      save
-    end
 
 end

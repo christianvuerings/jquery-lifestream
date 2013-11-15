@@ -127,7 +127,7 @@ describe CanvasProvideCourseSite do
 
     it "sets status as completed and saves" do
       canvas_provide_course_site.create_course_site("fall-2013", ["1136", "1204"])
-      cached_object = CanvasProvideCourseSite.find(canvas_provide_course_site.cache_key)
+      cached_object = CanvasProvideCourseSite.find(canvas_provide_course_site.job_id)
       cached_object.status.should == "Completed"
     end
   end
