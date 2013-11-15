@@ -67,6 +67,10 @@
             <i class="fa fa-spinner fa-spin"></i>
             Sending course provisioning request....
           </div>
+          <div data-ng-show="status === 'New'">
+            <i class="fa fa-spinner fa-spin"></i>
+            Course provisioning request sent. Awaiting processing....
+          </div>
           <div data-ng-show="status">
             <ul>
               <li data-ng-repeat="step in completed_steps">
