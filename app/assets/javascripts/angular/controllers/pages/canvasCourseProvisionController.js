@@ -4,7 +4,7 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  calcentral.controller('CanvasCourseProvisionController', ['apiService', '$http', '$scope', '$window', function (apiService, $http, $scope, $window) {
+  calcentral.controller('CanvasCourseProvisionController', ['apiService', '$http', '$scope', '$timeout', '$window', function (apiService, $http, $scope, $timeout, $window) {
 
     apiService.util.setTitle('bCourses Course Provision');
 
@@ -24,11 +24,36 @@
       });
     };
 
-    $scope.courseSiteCreated = function(data) {
-      angular.extend($scope, data);
+    var statusProcessor = function() {
+      if ($scope.status === 'Processing' || $scope.status === 'New') {
+        courseSiteJobStatusLoader();
+      } else {
+        $timeout.cancel(timeout_promise);
+      }
     };
 
-    $scope.createCourseSite = function(selected_courses) {
+    var timeout_promise;
+    var courseSiteJobStatusLoader = function() {
+      $scope.current_workflow_step = 'monitoring_job';
+      timeout_promise = $timeout(function() {
+        fetchStatus(statusProcessor);
+      }, 2000);
+    };
+
+    var clearCourseSiteJob = function() {
+      delete $scope.job_id;
+      delete $scope.job_request_status;
+      delete $scope.status;
+      delete $scope.completed_steps;
+      delete $scope.percent_complete;
+    };
+
+    var courseSiteJobCreated = function(data) {
+      angular.extend($scope, data);
+      courseSiteJobStatusLoader();
+    };
+
+    $scope.createCourseSiteJob = function(selected_courses) {
       var ccns = [];
       angular.forEach(selected_courses, function(course) {
         angular.forEach(course.sections, function(section) {
@@ -45,17 +70,33 @@
         if ($scope.acting_as) {
           new_course.instructor_id = $scope.acting_as;
         }
-        angular.extend($scope, {
-          current_workflow_step: 'created',
-          _is_loading: true
-        });
         $http.post('/api/academics/canvas/course_provision/create', new_course)
-            .success($scope.courseSiteCreated)
-            .error($scope.courseSiteCreated);
+          .success(courseSiteJobCreated)
+          .error(function() {
+            angular.extend($scope, {
+              current_workflow_step: 'monitoring_job',
+              status: 'Error',
+              error: 'Failed to create course provisioning job.'
+            });
+          });
       }
     };
 
+    var fetchStatus = function(callback) {
+      var status_request = {
+        url: '/api/academics/canvas/course_provision/status.json',
+        method: 'GET',
+        params: { 'job_id': $scope.job_id }
+      };
+      $http(status_request).success(function(data) {
+        angular.extend($scope, data);
+        $scope.percent_complete_rounded = Math.round($scope.percent_complete * 100);
+        callback();
+      });
+    };
+
     $scope.fetchFeed = function() {
+      clearCourseSiteJob();
       angular.extend($scope, {
         current_workflow_step: 'selecting',
         _is_loading: true,

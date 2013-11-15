@@ -27,17 +27,15 @@ class CanvasCourseProvision
   end
 
   def create_course_site(term_slug, ccns)
-    # Must be protected by a call to "user_authorized?"!
-    if user_authorized?
-      instructor_uid = @as_instructor || @uid
-      CanvasProvideCourseSite.new(user_id: instructor_uid).create_course_site(term_slug, ccns)
-    else
-      nil
-    end
+    return nil unless user_authorized?
+    instructor_uid = @as_instructor || @uid
+    cpcs = CanvasProvideCourseSite.new(instructor_uid)
+    cpcs.background.create_course_site(term_slug, ccns)
+    cpcs.job_id
   end
 
   def get_feed_internal(instructor_uid)
-    teaching_semesters = CanvasProvideCourseSite.new(user_id: instructor_uid).candidate_courses_list
+    teaching_semesters = CanvasProvideCourseSite.new(instructor_uid).candidate_courses_list
     {
         is_admin: user_admin?,
         acting_as: @as_instructor,

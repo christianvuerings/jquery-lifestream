@@ -40,6 +40,7 @@ Calcentral::Application.routes.draw do
   match '/api/academics/canvas/course_provision' => 'canvas_course_provision#get_feed', :as => :canvas_course_provision, :defaults => { :format => 'json' }
   match '/api/academics/canvas/course_provision_as/:instructor_id' => 'canvas_course_provision#get_feed', :as => :canvas_course_provision, :defaults => { :format => 'json' }
   match '/api/academics/canvas/course_provision/create' => 'canvas_course_provision#create_course_site', :via => :post, :as => :canvas_course_create, :defaults => { :format => 'json' }
+  match '/api/academics/canvas/course_provision/status' => 'canvas_course_provision#job_status', :via => :get, :as => :canvas_course_job_status, :defaults => { :format => 'json' }
 
   match '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
