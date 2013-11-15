@@ -83,8 +83,12 @@
     };
 
     var fetchStatus = function(callback) {
-      var status_url = '/api/academics/canvas/course_provision/status.json?job_id='+ $scope.job_id;
-      $http.get(status_url).success(function(data) {
+      var status_request = {
+        url: '/api/academics/canvas/course_provision/status.json',
+        method: 'GET',
+        params: { 'job_id': $scope.job_id }
+      };
+      $http(status_request).success(function(data) {
         angular.extend($scope, data);
         $scope.percent_complete_rounded = Math.round($scope.percent_complete * 100);
         callback();
