@@ -1,6 +1,3 @@
-// Canvas Course Provisioning Job Response
-// Scenario: Failure creating course provisioning job
-// POST /api/academics/canvas/course_provision/create.json
 {
   "job_request_status": "Error",
   "job_id": null,

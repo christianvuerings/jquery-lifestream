@@ -1,6 +1,3 @@
-// Course Provisioning Feed Response
-// GET /api/academics/canvas/course_provision.json
-// GET /api/academics/canvas/course_provision_as/:instructor_id.json
 {
   "is_admin": true,
   "acting_as": "238382",

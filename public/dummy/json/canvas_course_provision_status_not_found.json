@@ -1,6 +1,3 @@
-// Canvas Course Provisioning Job Status Response
-// Scenario: Job not found to obtain status from
-// GET /api/academics/canvas/course_provision/status.json?job_id=canvas.courseprovision.12345.1383330151057
 {
   "job_id": "canvas.courseprovision.12345.1383330151057",
   "status": "Error",
