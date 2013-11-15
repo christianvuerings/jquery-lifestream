@@ -48,7 +48,7 @@
       delete $scope.percent_complete;
     };
 
-    $scope.courseSiteJobCreated = function(data) {
+    var courseSiteJobCreated = function(data) {
       angular.extend($scope, data);
       courseSiteJobStatusLoader();
     };
@@ -71,7 +71,7 @@
           new_course.instructor_id = $scope.acting_as;
         }
         $http.post('/api/academics/canvas/course_provision/create', new_course)
-          .success($scope.courseSiteJobCreated)
+          .success(courseSiteJobCreated)
           .error(function() {
             angular.extend($scope, {
               current_workflow_step: 'monitoring_job',
