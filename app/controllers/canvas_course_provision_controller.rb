@@ -19,7 +19,7 @@ class CanvasCourseProvisionController < ApplicationController
   def create_course_site
     model = valid_model(params[:instructor_id])
     # Since we expect the CCNs to have been provided by our own code rather than a human being,
-    # we don't worry so muche about invalid numbers.
+    # we don't worry so much about invalid numbers.
     job_id = model.create_course_site(params[:term_slug], params[:ccns])
     render json: { job_request_status: "Success", job_id: job_id}.to_json
   rescue SecurityError => error
