@@ -68,6 +68,14 @@ describe CanvasProvideCourseSite do
       CanvasProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
       canvas_provide_course_site.cache_key.should == "canvas.courseprovision.#{uid}.1383330151057"
     end
+
+    it "saves the state to cache" do
+      retrieved_job = CanvasProvideCourseSite.find(canvas_provide_course_site.job_id)
+      retrieved_job.class.should == CanvasProvideCourseSite
+      retrieved_job.uid.should == canvas_provide_course_site.instance_eval { @uid }
+      retrieved_job.status.should == 'New'
+      retrieved_job.job_id.should == canvas_provide_course_site.job_id
+    end
   end
 
   describe "#create_course_site" do

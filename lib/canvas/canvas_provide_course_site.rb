@@ -30,7 +30,8 @@ class CanvasProvideCourseSite < CanvasCsv
     @errors = []
     @completed_steps = []
     @import_data = {}
-    generate_cache_key
+    @cache_key = "canvas.courseprovision.#{@uid}.#{CanvasProvideCourseSite.unique_job_id}"
+    save
   end
 
   def create_course_site(term_slug, ccns)
@@ -382,12 +383,6 @@ class CanvasProvideCourseSite < CanvasCsv
   end
 
   private
-
-    def generate_cache_key
-      job_id = CanvasProvideCourseSite.unique_job_id
-      @cache_key = "canvas.courseprovision.#{@uid}.#{job_id}"
-      logger.info("Cache key generated for job: #{@cache_key}")
-    end
 
     def save_with_error(error_message)
       @status = 'Error'
