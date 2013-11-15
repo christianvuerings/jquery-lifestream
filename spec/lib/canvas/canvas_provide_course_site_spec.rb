@@ -6,10 +6,6 @@ describe CanvasProvideCourseSite do
   let(:canvas_provide_course_site)    { CanvasProvideCourseSite.new(uid) }
   let(:worker)                        { canvas_provide_course_site }
 
-  it "has BG_JOB_CACHE_EXPIRATION constant" do
-    CanvasProvideCourseSite::BG_JOB_CACHE_EXPIRATION.should == 86400
-  end
-
   #####################################
   # Class Methods
 
@@ -940,6 +936,11 @@ describe CanvasProvideCourseSite do
   end
 
   describe "#save" do
+    it "raises exception if cache expiration not present" do
+      Settings.cache.expiration.stub(:CanvasCourseProvisioningJobs).and_return(nil)
+      expect { canvas_provide_course_site.save }.to raise_error(RuntimeError, "Unable to save. Cache expiration setting not present.")
+    end
+
     it "raises exception if cache key not present" do
       canvas_provide_course_site.instance_eval { @cache_key = nil }
       expect { canvas_provide_course_site.save }.to raise_error(RuntimeError, "Unable to save. cache_key missing")

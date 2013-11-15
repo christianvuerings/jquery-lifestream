@@ -2,8 +2,6 @@ class CanvasProvideCourseSite < CanvasCsv
   include TorqueBox::Messaging::Backgroundable
   include ClassLogger
 
-  BG_JOB_CACHE_EXPIRATION = 24.hours.to_i
-
   attr_reader :uid, :status, :cache_key
 
   #####################################
@@ -37,7 +35,7 @@ class CanvasProvideCourseSite < CanvasCsv
   def create_course_site(term_slug, ccns)
     @status = "Processing"
     save
-    logger.info("Course provisioning job started. Job state updated in cache key #{@cache_key}, expiring in #{BG_JOB_CACHE_EXPIRATION}")
+    logger.info("Course provisioning job started. Job state updated in cache key #{@cache_key}")
     @import_data['term_slug'] = term_slug
     @import_data['term'] = find_term(term_slug)
     @import_data['ccns'] = ccns
@@ -357,7 +355,8 @@ class CanvasProvideCourseSite < CanvasCsv
 
   def save
     raise RuntimeError, "Unable to save. cache_key missing" if @cache_key.blank?
-    Rails.cache.write(@cache_key, self, expires_in: BG_JOB_CACHE_EXPIRATION)
+    raise RuntimeError, "Unable to save. Cache expiration setting not present." if Settings.cache.expiration.CanvasCourseProvisioningJobs == nil
+    Rails.cache.write(@cache_key, self, expires_in: Settings.cache.expiration.CanvasCourseProvisioningJobs)
   end
 
   def complete_step(step_text)
