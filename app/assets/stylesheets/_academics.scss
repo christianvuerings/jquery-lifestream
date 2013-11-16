@@ -215,9 +215,12 @@
       padding: 10px 0;
     }
     .cc-more-info {
+      float: right;
       font-size: 12px;
-      margin-left: 30px;
-      padding-top: 10px;
+      padding: 2px;
+    }
+    .cc-telebears-title {
+      width: 100%;
     }
     .cc-telebears-phases {
       overflow: hidden;
