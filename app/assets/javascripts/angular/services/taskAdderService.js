@@ -16,13 +16,13 @@
 
     var getTaskState = function() {
       return _taskPanelState.newTask;
-    }
+    };
 
     var setTaskState = function(task) {
       _taskPanelState.newTask.title = task.title;
       _taskPanelState.newTask.notes = task.notes;
       _taskPanelState.newTask.due_date = task.due_date;
-    }
+    };
 
     var resetState = function() {
       _taskPanelState.isProcessing = false;
@@ -30,7 +30,7 @@
       _taskPanelState.newTask.title = '';
       _taskPanelState.newTask.notes = '';
       _taskPanelState.newTask.due_date = '';
-      _taskPanelState.newTask._focusInput = false;
+      _taskPanelState.newTask.focusInput = false;
     };
 
     var toggleAddTask = function(value) {

@@ -27,14 +27,14 @@ describe('User service', function() {
   });
 
   it('should set the anonymous userdata correctly', function() {
-    userService._handleUserLoaded(getJSONFixture('status_loggedout.json'));
+    userService.handleUserLoaded(getJSONFixture('status_loggedout.json'));
     expect(userService.isAuthenticated).toBeFalsy();
   });
 
   it('should set the signed in userdata correctly', function() {
     $httpBackend.when('POST', '/api/my/record_first_login').respond({});
     var status = getJSONFixture('status_first_login.json');
-    userService._handleUserLoaded(status);
+    userService.handleUserLoaded(status);
 
     expect(userService.events.isAuthenticated).toBeTruthy();
     expect(userService.profile.uid).toBeDefined();

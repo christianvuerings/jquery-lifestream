@@ -43,7 +43,7 @@
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
               <li
                 data-ng-repeat="task in overdueTasks"
-                data-ng-class="{'cc-widget-list-selected': task._show}">
+                data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
             </ul>
@@ -57,7 +57,7 @@
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
               <li
                 data-ng-repeat="task in dueTodayTasks"
-                data-ng-class="{'cc-widget-list-selected': task._show}">
+                data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
             </ul>
@@ -71,7 +71,7 @@
             <ul class="cc-widget-tasks-list">
               <li
                 data-ng-repeat="task in futureTasks"
-                data-ng-class="{'cc-widget-list-selected': task._show}">
+                data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
             </ul>
@@ -89,7 +89,7 @@
           <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in unscheduledTasks"
-              data-ng-class="{'cc-widget-list-selected': task._show}">
+              data-ng-class="{'cc-widget-list-selected': task.show}">
               <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
           </ul>
@@ -102,7 +102,7 @@
         <ul class="cc-widget-tasks-list">
           <li
             data-ng-repeat="task in completedTasks"
-            data-ng-class="{'cc-widget-list-selected': task._show}">
+            data-ng-class="{'cc-widget-list-selected': task.show}">
             <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
           </li>
         </ul>
