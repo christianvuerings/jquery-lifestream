@@ -99,7 +99,7 @@
       clearCourseSiteJob();
       angular.extend($scope, {
         current_workflow_step: 'selecting',
-        _is_loading: true,
+        is_loading: true,
         created_status: false
       });
       var feed_url = '';

@@ -8,16 +8,16 @@
     return {
       restrict: 'A',
       link: function(scope, elm) {
-        scope._is_loading = true;
+        scope.is_loading = true;
 
         /**
-         * Check whether _is_loading has changed
+         * Check whether is_loading has changed
          */
         var watch = function(value) {
           elm.toggleClass('cc-spinner', value);
         };
 
-        scope.$watch('_is_loading', watch);
+        scope.$watch('is_loading', watch);
       }
     };
   });

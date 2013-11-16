@@ -1,10 +1,10 @@
 <script type="text/ng-template" id="templates/dashboard_task_loop.html">
-<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled), 'cc-widget-list-hover-opened':(task._show)}"
+<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled), 'cc-widget-list-hover-opened':(task.show)}"
   data-cc-accessible-focus-directive
   data-ng-click="api.widget.toggleShow($event, tasks, task, 'Tasks')"
   data-ng-controller="TaskEditorController">
 
-  <span class="cc-visuallyhidden" data-ng-bind-template="Show {{task._show ? 'less' : 'more'}} information about {{task.title}}"></span>
+  <span class="cc-visuallyhidden" data-ng-bind-template="Show {{task.show ? 'less' : 'more'}} information about {{task.title}}"></span>
 
   <div
     data-ng-hide="editorEnabled">
@@ -12,7 +12,7 @@
     <div class="cc-widget-tasks-col cc-widget-tasks-col-title">
       <div
         class="cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task._show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.editor_is_processing)}">
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.editor_is_processing)}">
         <strong>{{task.title}}</strong>
       </div>
     </div>
@@ -62,7 +62,7 @@
     </div>
   </div>
 
-  <div data-ng-show="task._show">
+  <div data-ng-show="task.show">
     <div class="cc-widget-tasks-more" data-ng-hide="editorEnabled">
       <div class="cc-clearfix" data-ng-show="task.completed_date && task.due_date">Due Date:
         <span data-ng-bind="task.due_date.epoch * 1000 | cc.dateInYear:'MM/dd'"></span>

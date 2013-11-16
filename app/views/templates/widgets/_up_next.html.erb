@@ -1,18 +1,18 @@
 <div class="cc-widget cc-widget-mycalendar" data-ng-controller="UpNextController">
   <div class="cc-widget-title">
     <h2>
-      <span data-ng-bind="lastModifiedDate | date:'EEEE'"></span>
+      <span data-ng-bind="lastModifiedDate | date:'EEEE'">Up Next</span>
       <span data-ng-bind="lastModifiedDate | date:'MMM d'" class="cc-widget-title-sub"></span>
     </h2>
   </div>
   <div class="cc-widget-mycalendar-container" data-cc-spinner-directive>
     <ul class="cc-widget-list cc-widget-mycalendar-datelist">
       <!-- First loop: timestamped items -->
-      <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item._show}">
-        <span class="cc-visuallyhidden" data-ng-bind-template="Show {{item._show ? 'less' : 'more'}} information about {{item.summary}}"></span>
+      <li data-ng-repeat="item in items" data-ng-class="{'cc-widget-list-selected': item.show}">
+        <span class="cc-visuallyhidden" data-ng-bind-template="Show {{item.show ? 'less' : 'more'}} information about {{item.summary}}"></span>
         <div
           class="cc-widget-list-hover"
-          data-ng-class="{'cc-widget-list-hover-opened':(item._show)}"
+          data-ng-class="{'cc-widget-list-hover-opened':(item.show)}"
           data-cc-accessible-focus-directive
           data-ng-click="api.widget.toggleShow($event, items, item, 'Up Next')">
           <div class="cc-widget-list-column-left cc-widget-mycalendar-datelist-time">
@@ -30,7 +30,7 @@
             <strong class="cc-ellipsis" data-ng-bind="item.summary"></strong>
             <div class="cc-ellipsis cc-widget-mycalendar-datelist-location cc-text-light" data-ng-bind="item.location" data-ng-show="item.location"></div>
           </div>
-          <div class="cc-widget-mycalendar-more" data-ng-show="item._show">
+          <div class="cc-widget-mycalendar-more" data-ng-show="item.show">
             <div class="cc-widget-mycalendar-startend">
               <div data-ng-switch data-on="item.is_all_day">
                 <div data-ng-switch-when="true"><p data-ng-bind="item.start.epoch * 1000 | date:'EEE, MMMM d'"></p></div>

@@ -17,13 +17,13 @@
       scroll_to_element = scroll_to_element === false ? false : true;
 
       // Toggle the current item
-      item._show = !item._show;
+      item.show = !item.show;
 
       // Hide all the other items
       if (angular.isArray(items)) {
         for (var i = 0; i < items.length; i++) {
           if (items[i].$$hashKey !== item.$$hashKey) {
-            items[i]._show = false;
+            items[i].show = false;
           }
         }
       }
@@ -32,19 +32,19 @@
       if (angular.isObject(items)) {
         for (var j in items) {
           if (items.hasOwnProperty(j) && items[j].$$hashKey !== item.$$hashKey) {
-            items[j]._show = false;
+            items[j].show = false;
           }
         }
       }
 
       // Scroll to element so it is in the browsers viewport
-      if (event && event.toElement && item._show && scroll_to_element) {
+      if (event && event.toElement && item.show && scroll_to_element) {
         $timeout(function() {
           event.toElement.scrollIntoView();
         }, 1);
       }
 
-      analyticsService.trackEvent(['Detailed view', item._show ? 'Open' : 'Close', widget]);
+      analyticsService.trackEvent(['Detailed view', item.show ? 'Open' : 'Close', widget]);
     };
 
     // Expose the methods

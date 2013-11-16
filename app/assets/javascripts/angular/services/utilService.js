@@ -9,7 +9,7 @@
      * @param {String} name The name of the controller
      */
     var changeControllerName = function(name) {
-      $rootScope._controller_name = name;
+      $rootScope.controller_name = name;
     };
 
     /**
