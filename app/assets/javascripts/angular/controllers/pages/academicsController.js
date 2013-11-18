@@ -241,7 +241,7 @@
         'slug': $scope.selected_semester.slug
       };
 
-      $http.get('api/my/books_details', {params: course_info}).success(function(books) {
+      $http.get('api/my/textbooks_details', {params: course_info}).success(function(books) {
         $scope.books = books;
       });
     };
