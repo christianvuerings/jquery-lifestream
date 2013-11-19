@@ -5,7 +5,18 @@
    * Badges controller
    */
 
-  calcentral.controller('BadgesController', ['$http', '$scope', 'dateService', 'errorService', function($http, $scope, dateService, errorService) {
+  calcentral.controller('BadgesController', [
+    'apiService',
+    'dateService',
+    'errorService',
+    '$http',
+    '$scope',
+    function(
+      apiService,
+      dateService,
+      errorService,
+      $http,
+      $scope) {
 
     var defaults = {
       'bcal': {
@@ -120,6 +131,7 @@
 
     var fetch = function() {
       $http.get('/api/my/badges').success(function(data) {
+        apiService.updatedFeeds.feedLoaded(data);
         decorateBadges(processCalendarEvents(data.badges || {}));
       });
     };

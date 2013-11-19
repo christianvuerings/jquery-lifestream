@@ -23,6 +23,7 @@ class MyMergedModel
       last_modified = notify_if_feed_changed(feed, uid)
       feed[:last_modified] = last_modified
       feed[:last_modified][:timestamp] = format_date(Time.at(last_modified[:timestamp]).to_datetime)
+      feed[:feed_name] = self.class.name
       feed
     end
   end

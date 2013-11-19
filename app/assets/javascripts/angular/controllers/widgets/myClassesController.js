@@ -4,7 +4,14 @@
   /**
    * My Classes controller
    */
-  calcentral.controller('MyClassesController', ['$http', '$scope', function($http, $scope) {
+  calcentral.controller('MyClassesController', [
+    'apiService',
+    '$http',
+    '$scope',
+    function(
+      apiService,
+      $http,
+      $scope) {
 
     var addSubclasses = function(classesHash) {
       for (var j = 0; j < classesHash.otherClasses.length; j++) {
@@ -87,6 +94,7 @@
     var getMyClasses = function() {
       //$http.get('/dummy/json/classes.json').success(function(data) {
       $http.get('/api/my/classes').success(function(data) {
+        apiService.updatedFeeds.feedLoaded(data);
         if (data.classes) {
           bindScopes(parseClasses(data.classes));
           angular.extend($scope, data);

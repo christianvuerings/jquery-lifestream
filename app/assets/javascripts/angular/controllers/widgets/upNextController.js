@@ -4,7 +4,14 @@
   /**
    * My Up Next controller
    */
-  calcentral.controller('UpNextController', ['$http', '$scope', function($http, $scope) {
+  calcentral.controller('UpNextController', [
+    'apiService',
+    '$http',
+    '$scope',
+    function(
+      apiService,
+      $http,
+      $scope) {
 
     /**
      * Make sure that we're not showing wrong date information to the user.
@@ -18,6 +25,7 @@
 
     var getUpNext = function() {
       $http.get('/api/my/up_next').success(function(data) {
+        apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
         setLastModifiedDate(data.last_modified.timestamp.epoch);
       });

@@ -4,7 +4,16 @@
   /**
    * Tasks controller
    */
-  calcentral.controller('TasksController', ['$filter', '$http', '$scope', 'apiService', function($filter, $http, $scope, apiService) {
+  calcentral.controller('TasksController', [
+    'apiService',
+    '$filter',
+    '$http',
+    '$scope',
+    function(
+      apiService,
+      $filter,
+      $http,
+      $scope) {
 
     // Initial mode for Tasks view
     $scope.current_task_mode = 'scheduled';
@@ -35,6 +44,7 @@
 
     $scope.getTasks = function() {
       return $http.get('/api/my/tasks').success(function(data) {
+        apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
         if ($scope.tasks) {
           $scope.updateTaskLists();
