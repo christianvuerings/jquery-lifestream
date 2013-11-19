@@ -42,7 +42,7 @@
             <li class="cc-page-myfinances-account-summary-item cc-clearfix-container" data-ng-if="!isAllZero">
               <div class="small-8 columns">
                 <strong data-ng-if="myfinances.summary.minimumAmountDue >= 0">
-                  Amount Due Now
+                  <span data-ng-if="myfinances.summary.isOnDPP && !myfinances.summary.isDppPastDue">Other</span> Amount Due Now
                 </strong>
                 <strong data-ng-if="myfinances.summary.minimumAmountDue < 0">
                   Credit Balance
@@ -173,7 +173,7 @@
                   <th width="10%" data-ng-click="changeSorting('isDPP')" class="cc-table-center" data-ng-if="myfinances.summary.hasDPPTransactions">
                     DPP <i data-ng-class="getSortClass('isDPP')"></i>
                   </th>
-                  <th width="15%" data-ng-click="changeSorting('isDueNow')" class="cc-table-center">Due <span class="cc-hide-for-small">Now</span>
+                  <th width="15%" data-ng-click="changeSorting('isDueNow')" class="cc-table-center">Due
                     <i data-ng-class="getSortClass('isDueNow')"></i>
                   </th>
                 </tr>
