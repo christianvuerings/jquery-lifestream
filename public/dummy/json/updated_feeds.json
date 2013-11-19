@@ -17,7 +17,11 @@
   },
   "MyFinancials": {
     "hash": "bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f",
-    "timestamp": 1384803977
+    "timestamp": {
+      "epoch": 1384887169,
+      "date_time": "2013-11-19T10:52:49-08:00",
+      "date_string": "11/19"
+    }
   },
   "MyGroups": {
     "hash": "e47bf2c7a9cc81a868f83751ce957d74234eec8d",
@@ -29,7 +33,11 @@
   },
   "MyActivities::Merged": {
     "hash": "82d2ffa6bfa110c6cd52cbbf76fa8573ad251380",
-    "timestamp": 1384803957
+    "timestamp": {
+      "epoch": 1384887169,
+      "date_time": "2013-11-19T10:52:49-08:00",
+      "date_string": "11/19"
+    }
   },
   "MyTasks::Merged": {
     "hash": "352bb2886043b585d5c4ab4ad1b6f41119d39d2c",
@@ -57,7 +65,11 @@
   },
   "MyRegBlocks": {
     "hash": "bdc0a25364c9c3f116b78ab39647021ddb966934",
-    "timestamp": 1384803953
+    "timestamp": {
+      "epoch": 1384887169,
+      "date_time": "2013-11-19T10:52:49-08:00",
+      "date_string": "11/19"
+    }
   },
   "MyAcademics::Merged": {
     "hash": "9404af1dce85b347ce871dbee3b555aecc0afb6a",
