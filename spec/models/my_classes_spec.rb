@@ -91,7 +91,7 @@ describe "MyClasses" do
     SakaiUserSitesProxy.stub(:access_granted?).and_return(false)
     CampusUserCoursesProxy.any_instance.stub(:get_campus_courses).and_return(false)
     my_classes = MyClasses.new(@user_id).get_feed
-    my_classes.length.should == 3
+    my_classes.length.should == 4
   end
 
 end

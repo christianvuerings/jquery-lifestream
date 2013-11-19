@@ -7,7 +7,7 @@ describe "MyFinancials" do
   before(:each) { FinancialsProxy.stub(:new).and_return(fake_financials_proxy) }
 
   shared_examples "blank feed" do
-    it { subject.length.should == 1 }
+    it { subject.length.should == 2 }
   end
 
   context "happy path" do
