@@ -181,7 +181,7 @@ describe "UserApi" do
       new_last_modified = UserApi.get_last_modified(@random_id)
       new_last_modified[:hash].should_not == original_last_modified[:hash]
       new_last_modified[:timestamp].should_not == original_last_modified[:timestamp]
-      new_last_modified[:timestamp].should == feed[:last_modified][:timestamp][:epoch]
+      new_last_modified[:timestamp][:epoch].should == feed[:last_modified][:timestamp][:epoch]
     end
 
     it "should not update the last modified hash when content hasn't changed" do
@@ -195,7 +195,7 @@ describe "UserApi" do
       feed = user_api.get_feed
       unchanged_last_modified = UserApi.get_last_modified(@random_id)
       original_last_modified.should == unchanged_last_modified
-      original_last_modified[:timestamp].should == feed[:last_modified][:timestamp][:epoch]
+      original_last_modified[:timestamp][:epoch].should == feed[:last_modified][:timestamp][:epoch]
     end
 
   end

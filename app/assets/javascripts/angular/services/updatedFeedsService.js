@@ -16,7 +16,7 @@
       update_services: {},
       services_with_updates: {}
     };
-    var services = {};
+    var feedsLoadedData = {};
     var initial_polling_time = 10; // Initial polling time in seconds
     var polling_time = 60; // Polling time in seconds
 
@@ -48,7 +48,6 @@
       $timeout(function() {
         events.services_with_updates = {};
         events.update_services = {};
-        services = {};
       }, 1);
     };
 
@@ -66,12 +65,15 @@
 
       for (var service in data) {
         if (data.hasOwnProperty(service) && to_update_services.indexOf(service) !== -1) {
-          // The first time we encounter it, we just need to add it to the list
-          if (!services[service]) {
-            services[service] = data[service];
-          // The next time, we need to check whether the timestamps are different or not
-          } else if (services[service] && services[service].timestamp !== data[service].timestamp) {
-            events.services_with_updates[service] = services[service];
+
+          // We need to check whether the timestamps are different or not
+          if (data[service] &&
+            feedsLoadedData[service] &&
+            data[service].timestamp  &&
+            feedsLoadedData[service].timestamp &&
+            data[service].timestamp.epoch > feedsLoadedData[service].timestamp.epoch) {
+
+            events.services_with_updates[service] = data[service];
           }
         }
       }
@@ -84,24 +86,16 @@
     var polling = function(auto_refresh) {
       $http.get('/api/my/updated_feeds').success(function(data) {
       //$http.get('/dummy/json/updated_feeds.json').success(function(data) {
+        events.is_loading = false;
         parseUpdatedFeeds(data, auto_refresh);
+
+        // Now we poll every 60 seconds
+        $timeout(polling, polling_time * 1000);
       }).error(function(data, response_code) {
         if (response_code && response_code === 401) {
           userService.signOut();
         }
       });
-
-      if (events.is_loading) {
-
-        // Second time we poll at 10 seconds and automatically refresh the feeds
-        $timeout(function() {
-          events.is_loading = false;
-          polling(true);
-        }, initial_polling_time * 1000);
-      } else {
-        // Now we poll every 60 seconds
-        $timeout(polling, polling_time * 1000);
-      }
     };
 
     /**
@@ -112,8 +106,40 @@
       // Show the loading spinning indicator
       events.is_loading = true;
 
-      // First time we poll at 0 seconds
-      polling();
+      // First time we poll at 10 seconds
+      $timeout(function() {
+        polling(true);
+      }, initial_polling_time * 1000);
+    };
+
+    /**
+     * Check the properties on the feed data that is coming back
+     * @param {Object} data Feed data
+     * @return {Boolean} True when it's valid
+     */
+    var isValidFeed = function(data) {
+      return !!(data && data.feed_name && data.last_modified);
+    };
+
+    /**
+     * Add data from the feed to the overall object
+     * We also add counts to see whether we need to automatically reload the feed or not.
+     * @param {Object} data Feed data
+     */
+    var addFeedData = function(data) {
+      feedsLoadedData[data.feed_name] = data.last_modified;
+    };
+
+    /**
+     * When a live update feed has loaded, this function gets executed
+     * @param {data} data JSON coming back from the server
+     */
+    var feedLoaded = function(data) {
+      if (isValidFeed(data)) {
+        addFeedData(data);
+      } else {
+        throw 'updatedFeedsService - the feed doesn\'t have the right properties';
+      }
     };
 
     /**
@@ -121,6 +147,7 @@
      */
     return {
       events: events,
+      feedLoaded: feedLoaded,
       hasUpdates: hasUpdates,
       refreshFeeds: refreshFeeds,
       startPolling: startPolling

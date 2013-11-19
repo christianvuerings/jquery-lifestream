@@ -22,7 +22,7 @@ class MyMergedModel
       feed = get_feed_internal(*opts)
       last_modified = notify_if_feed_changed(feed, uid)
       feed[:last_modified] = last_modified
-      feed[:last_modified][:timestamp] = format_date(Time.at(last_modified[:timestamp]).to_datetime)
+      feed[:feed_name] = self.class.name
       feed
     end
   end
@@ -42,7 +42,7 @@ class MyMergedModel
 
     # has content changed? if so, save last_modified to cache and trigger a message
     if old_hash != last_modified[:hash]
-      last_modified[:timestamp] = Time.now.to_i
+      last_modified[:timestamp] = format_date(Time.now.to_datetime)
       Rails.cache.write(self.class.last_modified_cache_key(uid), last_modified, :expires_in => 28.days)
       Calcentral::Messaging.publish('/queues/feed_changed', uid)
     end
@@ -53,7 +53,7 @@ class MyMergedModel
     Rails.cache.fetch(self.last_modified_cache_key(uid), :expires_in => 28.days) do
       {
         :hash => '',
-        :timestamp => 0
+        :timestamp => format_date(DateTime.new(0))
       }
     end
   end
