@@ -13,10 +13,10 @@
 
               <div class="row">
                 <div class="small-4 columns">
-                  <label for="right-label" class="right inline">UID List</label>
+                  <label for="cc-page-user-provision-uid-list">UID List</label>
                 </div>
                 <div class="small-8 columns">
-                  <textarea id="right-label" name="uids" data-ng-model="raw_uids" ng-list='/[- |\,\t\n\.]/'
+                  <textarea id="cc-page-user-provision-uid-list" name="uids" data-ng-model="raw_uids" ng-list='/[- |\,\t\n\.]/'
                     placeholder="Paste your list of UIDs here organized one UID per a line, or separated by spaces or commas."></textarea>
 
                   <small class="error" data-ng-show="check_performed && userImportForm.uids.$error.required">
