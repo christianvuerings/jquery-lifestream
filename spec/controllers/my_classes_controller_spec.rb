@@ -1,5 +1,4 @@
 require "spec_helper"
-require "open-uri"
 
 describe MyClassesController do
 
