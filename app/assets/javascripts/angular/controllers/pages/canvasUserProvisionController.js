@@ -4,7 +4,7 @@
   /**
    * Canvas user provisioning LTI app controller
    */
-  calcentral.controller('CanvasUserProvisionController', ['apiService', '$http', '$scope', '$window', function (apiService, $http, $scope, $window) {
+  calcentral.controller('CanvasUserProvisionController', ['apiService', '$http', '$scope', function (apiService, $http, $scope) {
 
     apiService.util.setTitle('bCourses User Provision');
 
@@ -21,7 +21,7 @@
         var import_request = {
           url: '/api/academics/canvas/user_provision/user_import.json',
           method: 'POST',
-          params: { 'user_ids': valid_list }
+          params: { user_ids: valid_list }
         };
 
         $http(import_request).success(function(data) {
