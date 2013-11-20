@@ -23,14 +23,14 @@ echo "`date`: Updating and rebuilding CalCentral..." | $LOGIT
 
 # Load all dependencies.
 echo "`date`: bundle install..." | $LOGIT
-bundle install --deployment
+bundle install --deployment || { echo "ERROR: bundle install failed" ; exit 1 ; }
 
 # Rebuild static assets (HTML, JS, etc.) after update.
 echo "`date`: Rebuilding static assets..." | $LOGIT
-bundle exec rake assets:precompile
+bundle exec rake assets:precompile || { echo "ERROR: asset compilation failed" ; exit 1 ; }
 
 # Stamp version number
-git log --pretty=format:'%H' -n 1 > versions/git.txt
+git log --pretty=format:'%H' -n 1 > versions/git.txt || { echo "ERROR: git log command failed" ; exit 1 ; }
 
 # copy Oracle jar and tools.jar into ./lib
 echo "`date`: Getting external driver files..." | $LOGIT
@@ -38,6 +38,6 @@ echo "`date`: Getting external driver files..." | $LOGIT
 
 # build the knob
 echo "`date`: Building calcentral.knob..." | $LOGIT
-bundle exec rake torquebox:archive NAME=calcentral
+bundle exec rake torquebox:archive NAME=calcentral || { echo "ERROR: torquebox archive failed" ; exit 1 ; }
 
 
