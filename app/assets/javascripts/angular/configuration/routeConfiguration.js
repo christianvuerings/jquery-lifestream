@@ -79,6 +79,10 @@
       templateUrl: 'templates/canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
+    when('/canvas/embedded/user_provision', {
+      templateUrl: 'templates/canvas_embedded/user_provision.html',
+      controller: 'CanvasUserProvisionController'
+    }).
     when('/canvas/rosters/:canvas_course_id', {
       templateUrl: 'templates/canvas_embedded/roster.html',
       controller: 'CanvasRosterController'
