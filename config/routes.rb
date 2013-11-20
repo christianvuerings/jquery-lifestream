@@ -33,6 +33,7 @@ Calcentral::Application.routes.draw do
   match '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
   match '/canvas/lti_roster_photos' => 'canvas_lti#lti_roster_photos', :defaults => { :format => 'xml' }
   match '/canvas/lti_course_provision' => 'canvas_lti#lti_course_provision', :defaults => { :format => 'xml' }
+  match '/canvas/lti_user_provision' => 'canvas_lti#lti_user_provision', :defaults => { :format => 'xml' }
 
   # A Canvas course ID of "embedded" means to retrieve from session properties.
   match '/api/academics/rosters/canvas/:canvas_course_id' => 'canvas_rosters#get_feed', :as => :canvas_roster, :defaults => { :format => 'json' }
