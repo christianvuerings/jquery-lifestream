@@ -34,7 +34,7 @@
 
     $scope.$watch('addTaskPanelState.showAddTask', function(newValue) {
       if (newValue) {
-        $scope.add_edit_task._focusInput = true;
+        $scope.add_edit_task.focusInput = true;
       }
     }, true);
 

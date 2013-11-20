@@ -16,6 +16,7 @@
     'calcentral.directives',
     'calcentral.filters',
     'calcentral.services',
+    'ngRoute',
     'ngSanitize'
   ]);
 
