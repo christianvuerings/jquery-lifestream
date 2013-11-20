@@ -87,6 +87,10 @@
       templateUrl: 'templates/canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
+    when('/canvas/user_provision', {
+      templateUrl: 'templates/canvas_embedded/user_provision.html',
+      controller: 'CanvasUserProvisionController'
+    }).
     // Redirect to a 404 page
     otherwise({
       templateUrl: 'templates/404.html',
