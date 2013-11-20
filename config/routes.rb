@@ -33,6 +33,7 @@ Calcentral::Application.routes.draw do
   match '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
   match '/canvas/lti_roster_photos' => 'canvas_lti#lti_roster_photos', :defaults => { :format => 'xml' }
   match '/canvas/lti_course_provision' => 'canvas_lti#lti_course_provision', :defaults => { :format => 'xml' }
+  match '/canvas/lti_user_provision' => 'canvas_lti#lti_user_provision', :defaults => { :format => 'xml' }
 
   # A Canvas course ID of "embedded" means to retrieve from session properties.
   match '/api/academics/rosters/canvas/:canvas_course_id' => 'canvas_rosters#get_feed', :as => :canvas_roster, :defaults => { :format => 'json' }
@@ -41,6 +42,8 @@ Calcentral::Application.routes.draw do
   match '/api/academics/canvas/course_provision_as/:instructor_id' => 'canvas_course_provision#get_feed', :as => :canvas_course_provision, :defaults => { :format => 'json' }
   match '/api/academics/canvas/course_provision/create' => 'canvas_course_provision#create_course_site', :via => :post, :as => :canvas_course_create, :defaults => { :format => 'json' }
   match '/api/academics/canvas/course_provision/status' => 'canvas_course_provision#job_status', :via => :get, :as => :canvas_course_job_status, :defaults => { :format => 'json' }
+
+  match '/api/academics/canvas/user_provision/user_import' => 'canvas_user_provision#user_import', :as => :canvas_user_provision_import, :defaults => { :format => 'json' }
 
   match '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
