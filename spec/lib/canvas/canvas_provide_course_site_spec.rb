@@ -171,6 +171,14 @@ describe CanvasProvideCourseSite do
       assigned_courses[0][:course_number].should == "COMPSCI 10"
     end
 
+    it "lets admins specify CCNs directly" do
+      canvas_provide_course_site.instance_eval { @import_data['is_admin_by_ccns'] = true }
+      canvas_provide_course_site.should_not_receive(:candidate_courses_list)
+      canvas_provide_course_site.should_not_receive(:filter_courses_by_ccns)
+      canvas_provide_course_site.should_receive(:courses_list_from_ccns).and_return(@filtered_courses_list)
+      canvas_provide_course_site.prepare_users_courses_list
+    end
+
     it "updates completed steps list" do
       canvas_provide_course_site.stub(:candidate_courses_list).and_return(true)
       canvas_provide_course_site.should_receive(:filter_courses_by_ccns).and_return("user_courses_list")
@@ -933,6 +941,37 @@ describe CanvasProvideCourseSite do
 
     it "should raise exception when slug does not match a current term code" do
       expect { canvas_provide_course_site.find_term('winter-3011') }.to raise_error(ArgumentError, "term_slug does not match current term code")
+    end
+  end
+
+  describe "#courses_list_from_ccns" do
+    # Lock down to a known set of sections, either in the test DB or in real campus data.
+    let(:term_codes_array) {
+      SakaiData.test_data? ?
+          [{yr: '2013', cd: 'D', slug: "fall-2013"}] :
+          [{yr: '2013', cd: 'B', slug: "spring-2013"}]
+    }
+    before { canvas_provide_course_site.stub(:current_terms).and_return(term_codes_array)}
+    it "formats section information for known CCNs" do
+      good_ccns = [7309, 7366, 16171]
+      bad_ccns = [919191]
+      semesters_list = canvas_provide_course_site.courses_list_from_ccns(term_codes_array[0][:slug], (good_ccns + bad_ccns))
+      expect(semesters_list.length).to eq 1
+      classes_list = semesters_list[0][:classes]
+      expect(classes_list.length).to eq 2
+      bio_class = classes_list[0]
+      expect(bio_class[:course_number]).to eq 'BIOLOGY 1A'
+      sections = bio_class[:sections]
+      expect(sections.length).to eq 2
+      expect(sections[0][:ccn].to_i).to eq 7309
+      expect(sections[0][:section_label]).to eq 'LEC 003'
+      expect(sections[0][:is_primary_section]).to be_true
+      expect(sections[1][:ccn].to_i).to eq 7366
+      expect(sections[1][:is_primary_section]).to be_false
+      cog_sci_class = classes_list[1]
+      sections = cog_sci_class[:sections]
+      expect(sections.length).to eq 1
+      expect(sections[0][:ccn].to_i).to eq 16171
     end
   end
 

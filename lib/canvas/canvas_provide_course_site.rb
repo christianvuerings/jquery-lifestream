@@ -32,26 +32,27 @@ class CanvasProvideCourseSite < CanvasCsv
     save
   end
 
-  def create_course_site(term_slug, ccns)
+  def create_course_site(term_slug, ccns, is_admin_by_ccns = false)
     @status = "Processing"
     save
     logger.info("Course provisioning job started. Job state updated in cache key #{@cache_key}")
     @import_data['term_slug'] = term_slug
     @import_data['term'] = find_term(term_slug)
     @import_data['ccns'] = ccns
+    @import_data['is_admin_by_ccns'] = is_admin_by_ccns
 
     prepare_users_courses_list
     identify_department_subaccount
     prepare_course_site_definition
     prepare_section_definitions
-    prepare_user_definitions
-    prepare_course_site_memberships
+    prepare_user_definitions unless is_admin_by_ccns
+    prepare_course_site_memberships unless is_admin_by_ccns
 
     # TODO Upload ZIP archives instead and do more detailed parsing of the import status.
     import_course_site(@import_data['course_site_definition'])
     import_sections(@import_data['section_definitions'])
-    import_users(@import_data['user_definitions'])
-    import_enrollments(@import_data['course_memberships'])
+    import_users(@import_data['user_definitions']) unless is_admin_by_ccns
+    import_enrollments(@import_data['course_memberships']) unless is_admin_by_ccns
 
     # TODO Perform initial import of official campus instructors for these sections.
     # TODO Perform initial import of official campus student enrollments.
@@ -72,8 +73,17 @@ class CanvasProvideCourseSite < CanvasCsv
     raise RuntimeError, "Unable to prepare course list. Term slug not present." if @import_data['term_slug'].blank?
     raise RuntimeError, "Unable to prepare course list. CCNs not present." if @import_data['ccns'].blank?
 
-    # Check permissions. The user must have instructor access (direct or inherited via section-nesting) to all sections.
-    @import_data['courses'] = filter_courses_by_ccns(candidate_courses_list, @import_data['term_slug'], @import_data['ccns'])
+    if @import_data['is_admin_by_ccns']
+      # Admins can specify semester and CCNs directly, without access checks.
+      semester_wrapped_list = courses_list_from_ccns(@import_data['term_slug'], @import_data['ccns'])
+      courses_list = semester_wrapped_list.present? ?
+        semester_wrapped_list[0][:classes] :
+        []
+    else
+      # Otherwise, the user must have instructor access (direct or inherited via section-nesting) to all sections.
+      courses_list = filter_courses_by_ccns(candidate_courses_list, @import_data['term_slug'], @import_data['ccns'])
+    end
+    @import_data['courses'] = courses_list
     complete_step("Prepared courses list")
   end
 
@@ -194,7 +204,8 @@ class CanvasProvideCourseSite < CanvasCsv
       {
         yr: term.term_yr,
         cd: term.term_cd,
-        slug: TermCodes.to_slug(term.term_yr, term.term_cd)
+        slug: TermCodes.to_slug(term.term_yr, term.term_cd),
+        name: TermCodes.to_english(term.term_yr, term.term_cd)
       }
     end
   end
@@ -226,6 +237,24 @@ class CanvasProvideCourseSite < CanvasCsv
     else
       []
     end
+  end
+
+  # When an admin specifies CCNs directly, we cannot repurpose an existing MyAcademics::Teaching feed.
+  # Instead, mimic its data structure.
+  def courses_list_from_ccns(term_slug, ccns)
+    courses_list = []
+    term = find_term(term_slug)
+    proxy = CampusUserCoursesProxy.new({user_id: @uid})
+    feed = proxy.get_selected_sections(term[:yr], term[:cd], ccns)
+    feed.keys.each do |term_key|
+      (term_yr, term_cd) = term_key.split("-")
+      semester = MyAcademics::AcademicsModule.semester_info(term_yr, term_cd)
+      feed[term_key].each do |course|
+        semester[:classes] << MyAcademics::AcademicsModule.class_info(course)
+      end
+      courses_list << semester unless semester[:classes].empty?
+    end
+    courses_list
   end
 
   def filter_courses_by_ccns(courses_list, term_slug, ccns)
