@@ -61,64 +61,54 @@ class TextbooksProxy < BaseProxy
 
   def request(vcr_cassette, params = {})
     self.class.fetch_from_cache(@ccn) do
-      student_id = lookup_student_id
-      if student_id.nil?
-        logger.info "Lookup of student_id for uid #@uid failed, cannot call bkstr API path #{path}"
-        return nil
-      else
-        required_books = []
-        recommended_books = []
-        optional_books = []
-        begin
-          @ccns.each do |ccn|
-            path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
-            url = "#{Settings.textbooks_proxy.base_url}#{path}"
-            logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
-            response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
-              HTTParty.get(
-                url,
-                digest_auth: {username: Settings.textbooks_proxy.username, password: Settings.textbooks_proxy.password}
-              )
-            }
-            if response.code >= 400
-              unless response.code == 404
-                logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
-              end
-              return nil
-            end
-
-            text_books = Nokogiri::HTML(response.body)
-            logger.debug "Remote server status #{response.code}; url = #{url}"
-            text_books = text_books.xpath('//h2 | //ul')
-
-            required_text_list = text_books.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
-            recommended_text_list = text_books.xpath('//h2[contains(text(), "Recommended")]/following::ul[1]')
-            optional_text_list = text_books.xpath('//h2[contains(text(), "Optional")]/following::ul[1]')
-            required_books.push(ul_to_dict(required_text_list))
-            recommended_books.push(ul_to_dict(recommended_text_list))
-            optional_books.push(ul_to_dict(optional_text_list))
-          end
-
-          book_response = {
-            :required_books => {:type => "Required",
-                                :books => required_books.flatten},
-            :recommended_books => {:type => "Recommended",
-                                :books => recommended_books.flatten},
-            :optional_books => {:type => "Optional",
-                                :books => optional_books.flatten},
+      required_books = []
+      recommended_books = []
+      optional_books = []
+      status_code = ''
+      begin
+        @ccns.each do |ccn|
+          path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
+          url = "#{Settings.textbooks_proxy.base_url}#{path}"
+          logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+          response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
+            HTTParty.get(
+              url,
+              digest_auth: {username: Settings.textbooks_proxy.username, password: Settings.textbooks_proxy.password}
+            )
           }
+          status_code = response.code
+          text_books = Nokogiri::HTML(response.body)
+          logger.debug "Remote server status #{response.code}; url = #{url}"
+          text_books = text_books.xpath('//h2 | //ul')
 
-          book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
-          {
-            body: book_response,
-          }
-        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
-          logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
-          {
-            body: "Remote server unreachable",
-            status_code: 503
-          }
+          required_text_list = text_books.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
+          recommended_text_list = text_books.xpath('//h2[contains(text(), "Recommended")]/following::ul[1]')
+          optional_text_list = text_books.xpath('//h2[contains(text(), "Optional")]/following::ul[1]')
+          required_books.push(ul_to_dict(required_text_list))
+          recommended_books.push(ul_to_dict(recommended_text_list))
+          optional_books.push(ul_to_dict(optional_text_list))
         end
+
+        book_response = {
+          :required_books => {:type => "Required",
+                              :books => required_books.flatten},
+          :recommended_books => {:type => "Recommended",
+                              :books => recommended_books.flatten},
+          :optional_books => {:type => "Optional",
+                              :books => optional_books.flatten},
+        }
+
+        book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
+        {
+          body: book_response,
+          status_code: status_code
+        }
+      rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+        logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
+        {
+          body: "Remote server unreachable",
+          status_code: 503
+        }
       end
     end
   end
