@@ -38,4 +38,22 @@ module MyAcademics::AcademicsModule
     "#{department.downcase.gsub(/[^a-z0-9]+/, '_')}-#{catalog_id.downcase.gsub(/[^a-z0-9]+/, '_')}"
   end
 
+  def semester_info(term_yr, term_cd)
+    {
+      name: TermCodes.to_english(term_yr, term_cd),
+      slug: TermCodes.to_slug(term_yr, term_cd),
+      classes: []
+    }
+  end
+
+  def class_info(campus_course)
+    {
+      course_number: campus_course[:course_code],
+      dept: campus_course[:dept],
+      slug: course_to_slug(campus_course[:dept], campus_course[:catid]),
+      title: campus_course[:name],
+      sections: campus_course[:sections]
+    }
+  end
+
 end

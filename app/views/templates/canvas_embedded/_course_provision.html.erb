@@ -1,10 +1,47 @@
 <script type="text/ng-template" id="templates/canvas_embedded/course_provision.html">
   <div class="cc-page-course-provision">
 
-    <form data-ng-show="is_admin" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
-      <input class="cc-left" placeholder="Instructor UID" data-ng-model="acting_as" type="text" />
-      <button class="cc-button cc-button-blue" type="submit">As instructor</button>
-    </form>
+    <div data-ng-show="is_admin">
+
+      <div class="cc-widget">
+        <button class="cc-button"
+                data-ng-click="toggleAdminMode()">
+          <span data-ng-show="admin_mode !== 'by_ccn'">Switch to CCN input</span>
+          <span data-ng-show="admin_mode === 'by_ccn'">Switch to acting as instructor</span>
+        </button>
+      </div>
+
+      <form data-ng-show="admin_mode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
+        <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" />
+        <button class="cc-button cc-button-blue" type="submit">As instructor</button>
+      </form>
+
+      <div data-ng-show="admin_mode === 'by_ccn'">
+        <div data-ng-show="admin_semesters && admin_semesters.length > 0">
+          <div class="row collapse">
+            <div class="large-5 columns">
+              <ul class="cc-button-group cc-even-{{admin_semesters.length}} cc-page-provision-margin" role="tablist">
+                <li data-ng-repeat="semester in admin_semesters">
+                  <button class="cc-button"
+                          data-ng-click="switchAdminSemester(semester)"
+                          data-ng-class="{'cc-button-selected':(current_admin_semester==semester.slug)}"
+                          aria-selected="{{current_admin_semester==semester.slug}}"
+                          role="tab"
+                          data-ng-bind="semester.name">
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <form data-ng-submit="fetchFeed()">
+          <textarea data-ng-model="admin_by_ccns" data-ng-list="/[- |\,\s\n\r\t]/"
+            placeholder="Paste your list of CCNs here, separated by commas or spaces">
+          </textarea>
+          <button class="cc-button cc-button-blue" type="submit">Review matching CCNs</button>
+        </form>
+      </div>
+    </div>
 
     <div class="cc-widget cc-widget-last">
       <div class="cc-widget-title">
