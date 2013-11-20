@@ -49,13 +49,15 @@
         obj.transDueDateShow = $filter('date')(item, 'MM/dd/yy');
         if (obj.transStatus === 'Past due') {
           obj.isPastDueDate = true;
-          obj.isDueNow = '1_past_due'; // Past due
+          obj.isDueNow = '1_past_due';
         } else if (obj.transStatus === 'Current' || obj.transStatus === 'Installment') {
-          obj.isDueNow = '2_current_due'; // Current due
+          obj.isDueNow = '2_current_due';
+        } else if (obj.transStatus === 'Future') {
+          obj.isDueNow = '3_future_due';
         }
       }
       if (!obj.isDueNow) {
-        obj.isDueNow = '3_closed'; // Closed
+        obj.isDueNow = '4_closed';
       }
     };
 
@@ -105,7 +107,7 @@
 
     /**
      * Sort the terms
-     * First "Payments" then "All" and then the terms in descending order
+     * First "All" and then the terms in descending order
      */
     var sortTerms = function(a, b) {
       if (a.transTermYr !== b.transTermYr) {
@@ -133,8 +135,8 @@
         // When the current term actually exists in the list, we select it
         to_select_term = $scope.myfinances.current_term;
       } else {
-        // Otherwise we select the 2nd item in the list
-        to_select_term = terms[1] ? terms[1].value : terms[0].value;
+        // Otherwise we select the first item in the list
+        to_select_term = terms[0].value;
       }
 
       $scope.search = {
@@ -152,21 +154,12 @@
         if (addedTerms.indexOf(item.transTerm) === -1) {
           addedTerms.push(item.transTerm);
 
-          if (item.transTermCd === 'Payments') {
-            item.transTerm = 'Payments';
-            // A payment doesn't have a year associate to it so we add a bogus one
-            item.transTermYr = 9999;
-          }
           terms.push({
             'transTermYr': item.transTermYr,
             'transTermCd': item.transTermCd,
             'label': item.transTerm,
             'value': item.transTerm
           });
-        }
-
-        if (item.transTermCd === 'Payments') {
-          item.transTerm = 'Payments';
         }
       }
       terms.push({
