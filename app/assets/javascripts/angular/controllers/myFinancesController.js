@@ -48,14 +48,14 @@
       if (test) {
         obj.transDueDateShow = $filter('date')(item, 'MM/dd/yy');
         if (obj.transStatus === 'Past due') {
-          obj._isPastDueDate = true;
-          obj._isDueNow = '1_past_due'; // Past due
+          obj.isPastDueDate = true;
+          obj.isDueNow = '1_past_due'; // Past due
         } else if (obj.transStatus === 'Current' || obj.transStatus === 'Installment') {
-          obj._isDueNow = '2_current_due'; // Current due
+          obj.isDueNow = '2_current_due'; // Current due
         }
       }
-      if (!obj._isDueNow) {
-        obj._isDueNow = '3_closed'; // Closed
+      if (!obj.isDueNow) {
+        obj.isDueNow = '3_closed'; // Closed
       }
     };
 
@@ -72,8 +72,8 @@
 
     var parseTransStatus = function(element, summary) {
       if (element && element.transStatus && element.transStatus === 'Installment') {
-        element._isDPP = true;
-        summary._hasDPPTransactions = true;
+        element.isDPP = true;
+        summary.hasDPPTransactions = true;
       }
     };
 

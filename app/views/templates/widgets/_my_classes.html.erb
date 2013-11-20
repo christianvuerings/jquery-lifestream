@@ -10,7 +10,7 @@
       </div>
       <ul class="cc-widget-list">
         <li data-ng-repeat="class in category.data"
-            data-ng-class="{'cc-widget-list-selected': class._show && category.categoryId !== 'other'}">
+            data-ng-class="{'cc-widget-list-selected': class.show && category.categoryId !== 'other'}">
           <div data-ng-switch="category.categoryId">
             <a data-ng-switch-when="other" class="cc-widget-list-link" data-ng-href="{{class.site_url}}"
                data-ng-click="api.analytics.trackExternalLink('My Other Site Memberships', class.emitter, class.site_url)">
@@ -21,17 +21,17 @@
             </a>
             <div data-ng-switch-default
                  class="cc-widget-list-hover"
-                 data-ng-class="{'cc-widget-list-hover-opened':(class._show)}"
+                 data-ng-class="{'cc-widget-list-hover-opened':(class.show)}"
                  data-cc-accessible-focus-directive
                  data-ng-click="api.widget.toggleShow($event, category.data, class, 'My Classes')">
-              <span class="cc-visuallyhidden" data-ng-bind-template="Show {{class._show ? 'less' : 'more'}} information about {{class.course_code}}"></span>
+              <span class="cc-visuallyhidden" data-ng-bind-template="Show {{class.show ? 'less' : 'more'}} information about {{class.course_code}}"></span>
               <div class="cc-ellipsis">
                 <strong data-ng-bind="class.course_code" data-ng-class="{'cc-italic': class.waitlist_position}"></strong>
                 <span class="cc-text-light" data-ng-show="class.waitlist_position" data-ng-bind-template="- #{{ class.waitlist_position }} on the wait list"></span>
               </div>
               <div class="cc-ellipsis cc-text-light" data-ng-class="{'cc-italic': class.waitlist_position}" data-ng-show="!!class.name" data-ng-bind="class.name">
               </div>
-              <div data-ng-show="class._show">
+              <div data-ng-show="class.show">
                 <ul class="cc-widget-sublist">
                   <li data-ng-repeat="subclass in class.subclasses">
                     <div class="cc-icon" data-ng-class="{'bSpace':'cc-icon-bspace', 'bCourses':'cc-icon-bcourses'}[subclass.emitter]">

@@ -14,7 +14,7 @@
 
         // The data will be a string when it's a template that has been requested.
         if (angular.isObject(response.data)) {
-          response.data._is_loading = false;
+          response.data.is_loading = false;
         }
         return response;
       },
@@ -29,10 +29,10 @@
         // message to the user when an error occurs
         // We can do this as soon as we get good error responses back from the server.
         if (angular.isObject(response.data)) {
-          response.data._is_loading = false;
+          response.data.is_loading = false;
         } else {
           response.data = {
-            _is_loading: false
+            is_loading: false
           };
         }
         return $q.reject(response);
