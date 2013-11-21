@@ -301,7 +301,9 @@
         $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
         $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
 
-        getTextbooks($scope.selected_course)
+        if ($scope.api.user.profile.features.textbooks) {
+          getTextbooks($scope.selected_course)
+        }
       }
 
       if (data.exam_schedule) {
