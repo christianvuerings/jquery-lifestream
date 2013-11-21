@@ -42,3 +42,13 @@
 .fa-stop {
   color: $cc-color-medium-grey !important;
 }
+
+.cc-icon-amazon {
+  background-image: asset-data-url('amazon.png');
+  display: inline-block;
+}
+
+.cc-icon-chegg {
+  background-image: asset-data-url('chegg.png');
+  display: inline-block;
+}

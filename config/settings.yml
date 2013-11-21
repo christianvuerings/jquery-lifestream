@@ -136,6 +136,12 @@ financials_proxy:
   username: ''
   password: ''
 
+textbooks_proxy:
+  fake: false
+  base_url: "https://www.bkstr.com"
+  username: ''
+  password: ''
+
 blog_latest_release_notes_feed_proxy:
   fake: false
   feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
@@ -245,6 +251,7 @@ features:
   activity_to_task: false
   financials: false
   telebears: false
+  textbooks: false
 
 messaging:
   enabled: true

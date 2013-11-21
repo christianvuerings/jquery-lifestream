@@ -35,6 +35,9 @@ cas_logout_url: 'https://auth-test.berkeley.edu/cas/logout'
 financials_proxy:
   fake: true
 
+textbooks_proxy:
+  fake: true
+
 google_proxy:
   fake: true
 
@@ -74,3 +77,4 @@ features:
   activity_to_task: true
   financials: true
   telebears: true
+  textbooks: true

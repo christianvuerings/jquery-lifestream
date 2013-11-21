@@ -23,6 +23,7 @@ features:
   bearfacts: true
   financials: true
   telebears: true
+  textbooks: true
 
 cache:
   store: "memory"

@@ -156,7 +156,7 @@
             classes.push(semesters[i].classes[j]);
           }
         }
-      }      
+      }
 
       return classes;
     };
@@ -169,7 +169,7 @@
             classes.push(semesters[i].classes[j]);
           }
         }
-      }      
+      }
 
       return classes;
     };
@@ -225,6 +225,29 @@
       return count;
     };
 
+    /**
+     * Get Textbooks for the selected course
+     * @param  {Object} selected_course Selected Course Object
+     */
+    var getTextbooks  = function(selected_course) {
+      var ccns = [];
+
+      for (var i = 0; i < selected_course.sections.length; i++) {
+        ccns[i] = selected_course.sections[i].ccn;
+      }
+
+      var course_info = {
+        'ccns[]': ccns,
+        'slug': $scope.selected_semester.slug
+      };
+
+      $http.get('api/my/textbooks_details', {params: course_info}).success(function(books) {
+        if (books) {
+          $scope.books = books;
+        }
+      });
+    };
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
@@ -277,6 +300,10 @@
         }
         $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
         $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
+
+        if ($scope.api.user.profile.features.textbooks) {
+          getTextbooks($scope.selected_course)
+        }
       }
 
       if (data.exam_schedule) {
