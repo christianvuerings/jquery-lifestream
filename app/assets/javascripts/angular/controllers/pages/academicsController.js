@@ -242,7 +242,9 @@
       };
 
       $http.get('api/my/textbooks_details', {params: course_info}).success(function(books) {
-        $scope.books = books;
+        if (books) {
+          $scope.books = books;
+        }
       });
     };
 
