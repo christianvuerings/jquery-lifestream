@@ -9,9 +9,7 @@ class CanvasCourseProxy < CanvasProxy
   end
 
   def course
-    self.class.fetch_from_cache @course_id do
-      request_uncached("courses/sis_course_id:#{@course_id}?include[]=term", "_course")
-    end
+    request_uncached("courses/sis_course_id:#{@course_id}?include[]=term", "_course")
   end
 
 end
