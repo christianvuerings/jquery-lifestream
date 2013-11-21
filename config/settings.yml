@@ -135,8 +135,6 @@ financials_proxy:
 textbooks_proxy:
   fake: false
   base_url: "https://www.bkstr.com"
-  username: ''
-  password: ''
 
 blog_latest_release_notes_feed_proxy:
   fake: false
