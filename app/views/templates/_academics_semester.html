@@ -189,6 +189,7 @@
                       >
                       </select>
                       <span data-ng-show="course.grade" data-ng-bind="course.grade"></span>
+                      <span data-ng-if="course.grade_option!=='Letter' && selected_semester.time_bucket === 'current'" data-ng-bind="course.grade_option"></span>
                     </td>
                   </tr>
                 </tbody>
