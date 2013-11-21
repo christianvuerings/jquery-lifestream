@@ -132,7 +132,21 @@
         if (!$scope.current_admin_semester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
           $scope.switchAdminSemester($scope.admin_semesters[0]);
         }
+        if ($scope.admin_mode === 'by_ccn' && $scope.admin_by_ccns) {
+          selectAllSections();
+        }
       });
+    };
+
+    var selectAllSections = function() {
+      var new_selected_courses = [];
+      angular.forEach($scope.selected_courses, function(course) {
+        angular.forEach(course.sections, function(section) {
+          section.selected = true;
+        });
+        new_selected_courses.push(course);
+      })
+      $scope.selected_courses = new_selected_courses;
     };
 
     $scope.switchAdminSemester = function(semester) {
