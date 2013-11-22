@@ -72,9 +72,7 @@ class TextbooksProxy < BaseProxy
           logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
           response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
             HTTParty.get(
-              url,
-              digest_auth: {username: Settings.textbooks_proxy.username, password: Settings.textbooks_proxy.password}
-            )
+              url            )
           }
           status_code = response.code
           text_books = Nokogiri::HTML(response.body)
