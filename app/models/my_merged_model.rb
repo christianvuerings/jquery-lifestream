@@ -68,10 +68,15 @@ class MyMergedModel
 
   def expire_cache
     self.class.expire(@uid)
+    self.class.expire(Calcentral::PSEUDO_USER_PREFIX + @uid)
   end
 
   def is_acting_as_nonfake_user?
     @original_uid && @uid != @original_uid && !UserAuth.is_test_user?(@uid)
+  end
+
+  def pseudo_cache_key
+    self.class.cache_key(Calcentral::PSEUDO_USER_PREFIX + @uid)
   end
 
   def effective_uid

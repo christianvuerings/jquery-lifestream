@@ -57,6 +57,7 @@ class CanvasProvideCourseSite < CanvasCsv
     # TODO Perform initial import of official campus instructors for these sections.
     # TODO Perform initial import of official campus student enrollments.
     retrieve_course_site_details
+    expire_instructor_sites_cache
 
     # TODO Expire user's Canvas-related caches to maintain UX consistency.
     @status = "Completed"
@@ -186,6 +187,13 @@ class CanvasProvideCourseSite < CanvasCsv
     raise RuntimeError, "Unable to retrieve course site details. SIS Course ID not present." if @import_data['sis_course_id'].blank?
     @import_data['course_site_url'] = course_site_url(@import_data['sis_course_id'])
     complete_step("Retrieved new course site details")
+  end
+
+  def expire_instructor_sites_cache
+    CanvasUserCoursesProxy.expire(@uid)
+    CanvasUserSites.expire(@uid)
+    MyClasses.new(@uid).expire_cache
+    complete_step("Clearing bCourses course site cache")
   end
 
   def csv_filename_prefix
@@ -398,7 +406,7 @@ class CanvasProvideCourseSite < CanvasCsv
       job_id: @cache_key,
       status: @status,
       completed_steps: @completed_steps,
-      percent_complete: (@completed_steps.count.to_f / 11.0).round(2),
+      percent_complete: (@completed_steps.count.to_f / 12.0).round(2),
     }
     job_status['error'] = @errors.join('; ') if @errors.count > 0
     job_status['course_site'] = { short_name: @import_data['course_site_short_name'], url: @import_data['course_site_url'] } if @status == 'Completed'
