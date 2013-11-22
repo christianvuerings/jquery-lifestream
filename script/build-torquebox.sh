@@ -23,7 +23,7 @@ echo "`date`: Updating and rebuilding CalCentral..." | $LOGIT
 
 # Load all dependencies.
 echo "`date`: bundle install..." | $LOGIT
-bundle install --deployment || { echo "ERROR: bundle install failed" ; exit 1 ; }
+bundle install --deployment --local || { echo "ERROR: bundle install failed" ; exit 1 ; }
 
 # Rebuild static assets (HTML, JS, etc.) after update.
 echo "`date`: Rebuilding static assets..." | $LOGIT
