@@ -4,5 +4,5 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-bundle install --local || { echo "WARNING: bundle install --local failed, running bundle package"; bundle package || { echo "ERROR: bundle package failed"; exit 1; } }
+bundle install --local || { echo "WARNING: bundle install --local failed, running bundle package"; bundle package --all || { echo "ERROR: bundle package failed"; exit 1; } }
 
