@@ -88,6 +88,7 @@
       default_order.forEach(function(value, index) {
         if ($scope.badges.length > index &&
           $scope.badges[index].display.name.toLowerCase() === value) {
+          $scope.badges[index].cssPopover = 'cc-' + $scope.badges[index].display.name + '-popover-status';
           angular.extend($scope.badges[index], raw_data[value]);
         }
       });
