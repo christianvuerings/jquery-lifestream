@@ -8,5 +8,12 @@ cd $( dirname "${BASH_SOURCE[0]}" )/..
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 source .rvmrc
 
+GEMSET="$1"
+if [ -z "$1" ]; then
+  GEMSET="calcentral"
+fi
+
+rvm gemset use $GEMSET
+
 bundle install --local || { echo "WARNING: bundle install --local failed, running bundle package"; bundle package --all || { echo "ERROR: bundle package failed"; exit 1; } }
 
