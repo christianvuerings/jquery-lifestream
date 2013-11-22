@@ -4,5 +4,9 @@
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
+# Enable rvm and use the correct Ruby version and gem set.
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+source .rvmrc
+
 bundle install --local || { echo "WARNING: bundle install --local failed, running bundle package"; bundle package --all || { echo "ERROR: bundle package failed"; exit 1; } }
 
