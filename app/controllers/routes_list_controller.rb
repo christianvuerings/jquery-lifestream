@@ -33,6 +33,7 @@ class RoutesListController < ApplicationController
         /api/academics/rosters/canvas/:canvas_course_id
         /api/academics/canvas/course_provision_as/:instructor_id
         /api/academics/canvas/course_provision/create
+        /api/academics/canvas/course_provision/status
       )
     test_routes.reject {|x| x.empty? || blacklist.include?(x)}
   end
