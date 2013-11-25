@@ -165,7 +165,7 @@ cache:
   log_level: <%= Logger::ERROR %>
   expiration:
     default: <%= 35.minutes %>
-    HotPlate: <%= 2.minutes %>
+    LiveUpdatesWarmer: <%= 2.minutes %>
     MyAcademics::Merged: 0
     MyActivities: 0
     MyBadges::Merged: 0
