@@ -25,15 +25,8 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     end
   end
 
-  def self.warmup_request(uid)
-    Rails.cache.fetch("HotPlate/WarmupRequestRateLimiter-#{uid}", :expires_in => self.expires_in) do
-      Calcentral::Messaging.publish('/queues/warmup_request', uid)
-      true
-    end
-  end
-
   def on_message(body)
-    warmup_merged_feeds body unless body.blank?
+    expire_then_complete_warmup body unless body.blank?
   end
 
   def on_error(exception)
@@ -53,7 +46,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            self.class.warmup_request visit.uid
+            Calcentral::Messaging.publish('/queues/hot_plate', visit.uid)
           end
         end
 
@@ -77,18 +70,9 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def expire_then_complete_warmup(uid)
-    Calcentral::USER_CACHE_EXPIRATION.notify uid
-    begin
-      UserCacheWarmer.do_warm uid
-    rescue Exception => e
-      logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
-    end
-  end
-
-  def warmup_merged_feeds(uid)
     start_time = Time.now.to_i
-    logger.warn "Processing warmup_request message for uid #{uid}"
-    Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
+    logger.warn "Doing complete feed warmup for uid #{uid}"
+    Calcentral::USER_CACHE_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
     rescue Exception => e
