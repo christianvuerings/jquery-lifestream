@@ -88,6 +88,7 @@ describe CanvasProvideCourseSite do
       canvas_provide_course_site.stub(:import_users).and_return(true)
       canvas_provide_course_site.stub(:import_enrollments).and_return(true)
       canvas_provide_course_site.stub(:retrieve_course_site_details).and_return(true)
+      canvas_provide_course_site.stub(:expire_instructor_sites_cache).and_return(true)
     end
 
     it "intercepts raised exceptions and updates status" do
@@ -111,6 +112,7 @@ describe CanvasProvideCourseSite do
       canvas_provide_course_site.should_receive(:import_users).ordered.and_return(true)
       canvas_provide_course_site.should_receive(:import_enrollments).ordered.and_return(true)
       canvas_provide_course_site.should_receive(:retrieve_course_site_details).ordered.and_return(true)
+      canvas_provide_course_site.should_receive(:expire_instructor_sites_cache).ordered.and_return(true)
       canvas_provide_course_site.create_course_site("fall-2013", ["1136", "1204"])
     end
 
@@ -556,6 +558,18 @@ describe CanvasProvideCourseSite do
     it "updates completed steps list" do
       canvas_provide_course_site.retrieve_course_site_details
       canvas_provide_course_site.instance_eval { @completed_steps }.should == ["Retrieved new course site details"]
+    end
+  end
+
+  describe "#expire_instructor_sites_cache" do
+    it "clears canvas course site cache for user/instructor" do
+      CanvasUserSites.should_receive(:expire).with(canvas_provide_course_site.uid).and_return(nil)
+      canvas_provide_course_site.expire_instructor_sites_cache
+    end
+
+    it "updates completed steps list" do
+      canvas_provide_course_site.expire_instructor_sites_cache
+      canvas_provide_course_site.instance_eval { @completed_steps }.should == ["Clearing bCourses course site cache"]
     end
   end
 
@@ -1024,7 +1038,7 @@ describe CanvasProvideCourseSite do
       json_result['job_id'].should == 'canvas.courseprovision.1234.1383330151057'
       json_result['completed_steps'][0].should == 'step1 description'
       json_result['completed_steps'][1].should == 'step2 description'
-      json_result['percent_complete'].should == 0.18
+      json_result['percent_complete'].should == 0.17
       json_result['course_site'].should_not be
       json_result['error'].should_not be
     end
