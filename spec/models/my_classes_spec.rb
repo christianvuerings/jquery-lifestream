@@ -83,16 +83,12 @@ describe MyClasses do
   it "should clear user and pseudo user cache" do
     my_classes = MyClasses.new(user_id)
     user_cache_key = MyClasses.cache_key(user_id)
-    pseudo_user_cache_key = my_classes.pseudo_cache_key
+    pseudo_user_cache_key = MyClasses.cache_key(Calcentral::PSEUDO_USER_PREFIX + user_id)
     Rails.cache.write(user_cache_key, 'myclasses cached user value')
     Rails.cache.write(pseudo_user_cache_key, 'myclasses cached pseudo user value')
     MyClasses.new(user_id).expire_cache
     expect(Rails.cache.fetch(user_cache_key)).to eq nil
     expect(Rails.cache.fetch(pseudo_user_cache_key)).to eq nil
-  end
-
-  it "should provide cache key for pseudo user" do
-    expect(subject.pseudo_cache_key).to eq "user/pseudo_#{user_id}/MyClasses"
   end
 
 end
