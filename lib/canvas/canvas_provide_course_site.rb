@@ -299,12 +299,10 @@ class CanvasProvideCourseSite < CanvasCsv
   end
 
   def generate_course_site_definition(term_yr, term_cd, subaccount, campus_course_data)
-    first_section = campus_course_data[:sections][0]
-    course_name_short = "#{campus_course_data[:course_number]} #{first_section[:section_label]}"
     if (sis_id = generate_unique_sis_course_id(CanvasExistenceCheckProxy.new, campus_course_data[:slug], term_yr, term_cd))
       {
         'course_id' => sis_id,
-        'short_name' => course_name_short,
+        'short_name' => campus_course_data[:course_number],
         'long_name' => campus_course_data[:title],
         'account_id' => subaccount,
         'term_id' => CanvasProxy.term_to_sis_id(term_yr, term_cd),
