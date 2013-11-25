@@ -37,6 +37,7 @@ Spork.prefork do
   if ENV["SIMPLE_COV_ENABLED"] == "true"
     require 'simplecov'
     SimpleCov.add_filter 'app/views'
+    SimpleCov.add_filter 'vendor/cache'
     SimpleCov.start 'rails'
   end
 
