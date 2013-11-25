@@ -4,8 +4,13 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   include ActiveRecordHelper, ClassLogger
   attr_reader :total_warmups
 
-  TOTAL_WARMUPS_REQUESTED = "Total Warmups Requested"
-  TOTAL_WARMUP_TIME = "Total Warmup Time"
+  def self.total_warmups_requested
+    "#{self.name} Total Warmups Requested"
+  end
+
+  def self.total_warmup_time
+    "#{self.name} Total Warmup Time"
+  end
 
   def run
     if Settings.hot_plate.enabled
@@ -16,8 +21,8 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def self.ping
-    warmup_count = self.report TOTAL_WARMUPS_REQUESTED
-    time = self.report TOTAL_WARMUP_TIME
+    warmup_count = self.report self.total_warmups_requested
+    time = self.report self.total_warmup_time
     if warmup_count || time
       "#{self.name} #{warmup_count} #{time}"
     else
@@ -83,8 +88,8 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     end
     end_time = Time.now.to_i
     time = end_time - start_time
-    self.class.increment(TOTAL_WARMUP_TIME, time)
-    self.class.increment(TOTAL_WARMUPS_REQUESTED, 1)
+    self.class.increment(self.class.total_warmup_time, time)
+    self.class.increment(self.class.total_warmups_requested, 1)
   end
 
 end
