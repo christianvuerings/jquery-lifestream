@@ -43,10 +43,10 @@
     };
 
     /**
-     * We need to convert this back to a float so it gets sorted correctly
+     * We need to convert this back to a float so it gets sorted correctly & so we can do comparisons
      */
-    var parseTransBalanceAmountFloat = function(element) {
-      element.transBalanceAmountFloat = parseFloat(element.transBalanceAmount);
+    var parseToFloat = function(element, j) {
+      element[j + 'Float'] = parseFloat(element[j]);
     };
 
     var parseDueDate = function(obj, i) {
@@ -92,6 +92,10 @@
         if (finances.summary.hasOwnProperty(i)){
           parseDate(finances.summary, i);
           parseAmount(finances.summary, i);
+
+          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount' || i === 'anticipatedAid') {
+            parseToFloat(finances.summary, i);
+          }
         }
       }
 
@@ -107,7 +111,7 @@
               parseDueDate(element, j);
             }
             if (j === 'transBalanceAmount') {
-              parseTransBalanceAmountFloat(element, j);
+              parseToFloat(element, j);
             }
           }
         }
@@ -221,19 +225,6 @@
     };
 
     /**
-     * Check whether all amounts in the summary are 0
-     */
-    var checkAllZero = function() {
-      var summary = $scope.myfinances.summary;
-      $scope.isAllZero = (summary.anticipatedAid === '0.00' &&
-        summary.lastStatementBalance === '0.00' &&
-        summary.unbilledActivity === '0.00' &&
-        summary.futureActivity === '0.00' &&
-        summary.totalPastDueAmount === '0.00' &&
-        summary.minimumAmountDue === '0.00');
-    };
-
-    /**
      * Get the student's financial information
      */
     var getStudentInfo = function() {
@@ -249,8 +240,6 @@
           createTerms();
 
           createCounts();
-
-          checkAllZero();
         }
 
         apiService.util.setTitle('My Finances');
