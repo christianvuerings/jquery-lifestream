@@ -749,7 +749,7 @@ describe CanvasProvideCourseSite do
       canvas_course = worker.generate_course_site_definition(@term_yr, @term_cd, subaccount, @course_data)
       canvas_course['course_id'].present?.should be_true
       canvas_course['course_id'].should == "CRS:ENGIN-7-2013-D"
-      canvas_course['short_name'].should == 'ENGIN 7 DIS 102'
+      canvas_course['short_name'].should == 'ENGIN 7'
       canvas_course['long_name'].should == 'Introduction to Computer Programming for Scientists and Engineers'
       canvas_course['account_id'].should == 'ACCT:ENGIN'
       canvas_course['term_id'].should == 'TERM:2013-D'
