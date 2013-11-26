@@ -309,7 +309,7 @@ class CanvasProvideCourseSite < CanvasCsv
         'status' => 'active'
       }
     else
-      logger.error("Unable to generate unique Canvas course SIS ID for '#{course_name_short}'; will NOT create site")
+      logger.error("Unable to generate unique Canvas course SIS ID for '#{campus_course_data[:course_number]}'; will NOT create site")
       raise RuntimeError, "Could not define new course site!"
     end
   end
