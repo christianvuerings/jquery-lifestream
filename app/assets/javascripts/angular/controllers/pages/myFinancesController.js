@@ -42,6 +42,13 @@
       }
     };
 
+    /**
+     * We need to convert this back to a float so it gets sorted correctly
+     */
+    var parseTransBalanceAmountFloat = function(element) {
+      element.transBalanceAmountFloat = parseFloat(element.transBalanceAmount);
+    };
+
     var parseDueDate = function(obj, i) {
       var item = obj[i];
       var test = Object.prototype.toString.call(item) === '[object Date]';
@@ -98,6 +105,9 @@
             parseAmount(element, j);
             if (j === 'transDueDate') {
               parseDueDate(element, j);
+            }
+            if (j === 'transBalanceAmount') {
+              parseTransBalanceAmountFloat(element, j);
             }
           }
         }
