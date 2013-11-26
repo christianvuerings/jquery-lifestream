@@ -4,14 +4,14 @@ module Calcentral
 
     include ClassLogger
 
-    def self.publish(queue_name, message = {})
-      if $rails_rake_task || ! Settings.messaging.enabled
+    def self.publish(queue_name, message = {}, options = {ttl: 30000, persistent: false})
+      if $rails_rake_task || !Settings.messaging.enabled
         logger.warn "#{queue_name} disabled, not really sending message: #{message}"
         return
       end
       queue = self.get_queue queue_name
       logger.warn "#{queue_name} sending message: #{message}"
-      queue.publish(message, {ttl: 10000, persistent: false})
+      queue.publish(message, options)
     end
 
     private

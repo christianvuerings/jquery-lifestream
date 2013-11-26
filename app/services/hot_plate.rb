@@ -4,6 +4,10 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   include ActiveRecordHelper, ClassLogger
   attr_reader :total_warmups
 
+  def self.total_warmups_processed
+    "#{self.name} Total Warmups Processed"
+  end
+
   def self.total_warmups_requested
     "#{self.name} Total Warmups Requested"
   end
@@ -21,10 +25,11 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def self.ping
-    warmup_count = self.report self.total_warmups_requested
+    request_count = self.report self.total_warmups_requested
+    processed_count = self.report self.total_warmups_processed
     time = self.report self.total_warmup_time
-    if warmup_count || time
-      "#{self.name} #{warmup_count} #{time}"
+    if request_count || processed_count || time
+      "#{self.name}: #{request_count}; #{processed_count}; #{time}"
     else
       "#{self.name} Stats are not available, HotPlate may not have run yet"
     end
@@ -48,10 +53,11 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
         visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
         logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
+        self.class.increment(self.class.total_warmups_requested, visits.size)
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            Calcentral::Messaging.publish('/queues/hot_plate', visit.uid)
+            Calcentral::Messaging.publish('/queues/hot_plate', visit.uid, {persistent: false})
           end
         end
 
@@ -77,6 +83,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   def expire_then_complete_warmup(uid)
     start_time = Time.now.to_i
     logger.warn "Doing complete feed warmup for uid #{uid}"
+    self.class.increment(self.class.total_warmups_processed, 1)
     Calcentral::USER_CACHE_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
@@ -89,7 +96,6 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     end_time = Time.now.to_i
     time = end_time - start_time
     self.class.increment(self.class.total_warmup_time, time)
-    self.class.increment(self.class.total_warmups_requested, 1)
   end
 
 end
