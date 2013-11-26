@@ -190,7 +190,7 @@
     };
 
     var statuses = {
-      'open': ['Current','Past due','Future', 'Error', 'Unapplied', 'Installment', 'Open'],
+      'open': ['Current','Past due','Future', 'Error', 'Installment', 'Open'],
       'minimumamountdue': ['Current','Past due'],
       'all': ['Current','Past due','Future', 'Closed', 'Error', 'Unapplied', 'Installment', 'Open']
     };
