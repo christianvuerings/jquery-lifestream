@@ -42,9 +42,9 @@
           });
 
           /**
-           * Show/hide depending on the value of the _picker_shown variable.
+           * Show/hide depending on the value of the picker_shown variable.
            */
-          var watchshown = scope.$watch('_picker_shown', function(showPicker) {
+          var watchshown = scope.$watch('picker_shown', function(showPicker) {
             if (showPicker) {
               picker.show();
             } else {
