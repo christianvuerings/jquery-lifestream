@@ -13,4 +13,3 @@ class UserCacheInvalidator
   end
 
 end
-

@@ -48,4 +48,3 @@ cp -Rvf public/assets /var/www/html/calcentral/ | $LOGIT
 
 echo "Deleting old assets from /var/www/html/calcentral/assets" | $LOGIT
 find /var/www/html/calcentral/assets -type f -mtime +$MAX_ASSET_AGE_IN_DAYS -delete | $LOGIT
-

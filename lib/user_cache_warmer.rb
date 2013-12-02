@@ -22,4 +22,3 @@ class UserCacheWarmer
   end
 
 end
-
