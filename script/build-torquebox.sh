@@ -39,5 +39,3 @@ echo "`date`: Getting external driver files..." | $LOGIT
 # build the knob
 echo "`date`: Building calcentral.knob..." | $LOGIT
 bundle exec rake torquebox:archive NAME=calcentral || { echo "ERROR: torquebox archive failed" ; exit 1 ; }
-
-

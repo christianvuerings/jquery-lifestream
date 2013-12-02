@@ -12,4 +12,3 @@ cd $IP_ADDR\:3000
 grep "server_alive" api/ping > /dev/null || { echo "WARNING: Calcentral is dead or seriously malfunctioning!" ; exit 1 ; }
 
 echo "Server is alive"
-
