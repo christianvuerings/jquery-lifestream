@@ -303,45 +303,9 @@ Logging behavior and destination can be controlled from the command line or shel
 
 1. We support **source maps** for SASS in development mode. There is a [great blog post](http://fonicmonkey.net/2013/03/25/native-sass-scss-source-map-support-in-chrome-and-rails/) explaining how to set it up and use it.
 
-### Best Practices
-
-In some places, we echo unescaped script tags back to the browser, so we need to be very careful not to expose those in any places where they could get executed.
-
-* Never use ngBindHtmlUnsafe.
-* Never use innerHTML unless displaying completely static data.
-
 ### Styleguide
 
-* Use an editor that supports [.editorconfig](http://editorconfig.org/#overview). Feel free to have a look at the [editor plug-ins](http://editorconfig.org/#download)
-* Use 2 spaces for indentation
-* List items/properties alphabetically
-* Remove `console.log()` messages when committing your code.
-* Only use anchor tags `<a>` for actual links, otherwise use `<button>` instead. _This is especially important for IE9_.
-* Use single quotes when possible
-
-:-1:
-```javascript
-var name="Christian Vuerings";
-```
-:+1:
-```javascript
-var name='Christian Vuerings';
-```
-
-* Use `data-ng-` instead of `ng-` or `ng:` and add `data-` for directives
-
-:-1:
-```html
-<ng:view>
-<span ng-bind="name"></span>
-<input mmddyyvalidator />
-```
-:+1:
-```html
-<div data-ng-view></div>
-<span data-ng-bind="name"></span>
-<input data-mmddyyvalidator />
-```
+See [docs/styleguide.md](docs/styleguide.md)
 
 ## Recording fake data feeds and timeshifting them
 

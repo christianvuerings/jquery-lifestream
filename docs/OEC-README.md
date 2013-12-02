@@ -3,7 +3,6 @@
 ## Configuration
 
 * Settings.oec has the list of terms and departments to restrict the export.
-
 * Make sure your campusdb points at production oracle (bspprod) and that you have access to it.
 
 ## Rake tasks
