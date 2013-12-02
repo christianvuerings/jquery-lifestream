@@ -6,87 +6,79 @@
 /* Note: Canvas files need to referenced with a full URL because the origin for this file is the CalCentral server */
 
 /* Canvas Header */
-
 #header {
-  background: #003262 url(/canvas/bcourses-background.png) no-repeat;
+  background: #003262 url(/canvas/bcourses_background_2628x72.png) no-repeat;
   top: 0;
   left: 0;
 }
-
 #header-inner {
-    height: 45px;
+  height: 45px;
 }
-
 #identity {
   box-shadow: none;
 }
-
 #header-logo, #header.no-user #header-logo {
-    background: url(/canvas/bcourses-logotype-header.png) no-repeat;
-    bottom: 20px;
-    left: 19px;
-    top: auto;
-    width: 150px;
-    height: 33px;
+  background: url(/canvas/bcourses_logotype_header_150x33.png) no-repeat;
+  bottom: 20px;
+  height: 33px;
+  left: 19px;
+  top: auto;
+  width: 150px;
 }
-
 #main {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 /* Canvas Footer */
-
 .with-left-side #footer {
-    margin-left: 56px;
+  margin-left: 56px;
 }
-
 #footer {
-    background: url(/canvas/ucberkeley-logo.png) center left no-repeat;
-    height: 50px;
-    padding: 0 0 0 120px;
+  background: url(/canvas/ucberkeley_logo_110x34.png) center left no-repeat;
+  height: 50px;
+  padding: 0 0 0 120px;
 }
-
 #footer div {
-    background: transparent url(/canvas/canvas-logo-footer.png) no-repeat right center;
-    border-left: 1px solid #AAA;
-    height: 100%;
-    margin-right: 286px;
-    padding-left: 10px;
-    padding-right: 137px;
-    width: 470px;
+  background: transparent url(/canvas/canvas_logo_footer_137x33.png) no-repeat right center;
+  border-left: 1px solid #AAA;
+  height: 100%;
+  margin-right: 286px;
+  padding-left: 10px;
+  padding-right: 137px;
+  width: 470px;
 }
 
 #footer img {
-    display: none;
+  display: none;
 }
 
 #footer-links, #bCourses-footer-links {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 #footer-links a, #bCourses-footer-links a {
-    border-left: 1px solid #5c5c5c;
-    color: #5c5c5c;
-    padding-right: 2px;
-    padding-left: 5px;
+  border-left: 1px solid #5c5c5c;
+  color: #5c5c5c;
+  padding-left: 5px;
+  padding-right: 2px;
 }
 
 #footer-links a:first-child, #bCourses-footer-links a:first-child  {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 #footer-links a[class=icon-twitter]:before, #footer-links a[class=icon-facebook-boxed]:before {
-    font-size: 14px !important;
+  font-size: 14px !important;
 }
 
 #footer p {
-    font-size: 12px;
-    line-height: 12px;
-    margin: 0;
-    padding: 10px 0 2px;
+  font-size: 12px;
+  line-height: 12px;
+  margin: 0;
+  padding: 10px 0 2px;
 }
 
 #footer p span {
-    font-size: 14px;
-    font-weight: bold;
+  font-size: 14px;
+  font-weight: bold;
 }
