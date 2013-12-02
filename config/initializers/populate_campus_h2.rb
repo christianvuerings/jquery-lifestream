@@ -495,7 +495,7 @@
         connection.execute sql
 
         # Insert binary data for the test student photo.
-        raw_data = File.open('public/dummy/sample-student-72x96.jpg', 'rb') {|file| file.read}
+        raw_data = File.open('public/dummy/images/sample_student_72x96.jpg', 'rb') {|file| file.read}
         column_def = Object.new
         column_def.define_singleton_method(:name) {'PHOTO'}
         column_def.define_singleton_method(:type) {:binary}

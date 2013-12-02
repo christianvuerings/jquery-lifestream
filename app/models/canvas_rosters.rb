@@ -2,7 +2,7 @@ class CanvasRosters
   include ActiveAttr::Model, ClassLogger
   extend Calcentral::Cacheable
 
-  PHOTO_UNAVAILABLE_FILENAME = 'officialPhotoUnavailable.jpg'
+  PHOTO_UNAVAILABLE_FILENAME = 'photo_unavailable_official_72x96.jpg'
 
   def self.cache_key(canvas_course_id)
     "global/#{self.name}/#{canvas_course_id}"
