@@ -44,7 +44,10 @@ class MyMergedModel
     if old_hash != last_modified[:hash]
       last_modified[:timestamp] = format_date(Time.now.to_datetime)
       Rails.cache.write(self.class.last_modified_cache_key(uid), last_modified, :expires_in => 28.days)
-      Calcentral::Messaging.publish('/queues/feed_changed', uid)
+      Rails.cache.fetch(self.class.feed_changed_rate_limiter(uid), :expires_in => 10.seconds) do
+        Calcentral::Messaging.publish('/queues/feed_changed', uid)
+        true
+      end
     end
     last_modified
   end
@@ -60,6 +63,10 @@ class MyMergedModel
 
   def self.last_modified_cache_key(uid)
     "user/#{uid}/#{self.name}/LastModified"
+  end
+
+  def self.feed_changed_rate_limiter(uid)
+    "user/#{uid}/FeedChangedRateLimiter"
   end
 
   def self.caches_json?
