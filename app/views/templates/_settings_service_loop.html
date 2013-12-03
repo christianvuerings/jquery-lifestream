@@ -18,7 +18,7 @@
     <div class="large-2 small-4 columns">
       <button data-ng-show="api.user.profile['has_' + service + '_access_token']"
         data-ng-disabled="api.user.profile['acting_as_uid']"
-        class="cc-button" data-ng-click="api.user.removeOAuth('{{service}}')">
+        class="cc-button" data-ng-click="api.user.removeOAuth(service)">
         Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
       </button>
     </div>
