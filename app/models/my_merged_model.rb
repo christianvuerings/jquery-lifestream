@@ -46,6 +46,7 @@ class MyMergedModel
       Rails.cache.write(self.class.last_modified_cache_key(uid), last_modified, :expires_in => 28.days)
       Rails.cache.fetch(self.class.feed_changed_rate_limiter(uid), :expires_in => 10.seconds) do
         Calcentral::Messaging.publish('/queues/feed_changed', uid)
+        true
       end
     end
     last_modified
