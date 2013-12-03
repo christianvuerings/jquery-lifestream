@@ -335,7 +335,7 @@
               }
             },
             {
-              "type": "grading",
+              "type": "submitting",
               "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803327/grading?permanent=1",
               "course_id": 767330,
               "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803327/grading?permanent=0",
@@ -356,6 +356,30 @@
                 ],
                 "name": "Unscheduled Assignment",
                 "id": 2803327
+              }
+            },
+            {
+              "type": "grading",
+              "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803329/grading?permanent=1",
+              "course_id": 767332,
+              "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803329/grading?permanent=0",
+              "html_url": "https://ucberkeley.instructure.com/courses/767332/assignments/2803329#submit",
+              "context_type": "Course",
+              "assignment": {
+                "course_id": 767334,
+                "points_possible": null,
+                "due_at": null,
+                "description": null,
+                "muted": false,
+                "html_url": "https://ucberkeley.instructure.com/courses/767332/assignments/2803329",
+                "submission_types": [
+                  "online_upload",
+                  "online_text_entry",
+                  "online_url",
+                  "media_recording"
+                ],
+                "name": "Unscheduled Assignment",
+                "id": 2803329
               }
             }
           ]
