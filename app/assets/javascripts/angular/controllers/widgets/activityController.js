@@ -1,21 +1,10 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * Activity controller
    */
-  calcentral.controller('ActivityController', [
-    'apiService',
-    'dateService',
-    'taskAdderService',
-    '$http',
-    '$scope',
-    function(
-      apiService,
-      dateService,
-      taskAdderService,
-      $http,
-      $scope) {
+  calcentral.controller('ActivityController', ['apiService', 'dateService', 'taskAdderService', '$http', '$scope', function(apiService, dateService, taskAdderService, $http, $scope) {
 
     var activitiesModel = function(activityResponse) {
       var activities = activityResponse.activities;
@@ -200,4 +189,4 @@
 
   }]);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);

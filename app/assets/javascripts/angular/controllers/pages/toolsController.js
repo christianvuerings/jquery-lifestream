@@ -1,4 +1,4 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
@@ -6,4 +6,4 @@
    */
   calcentral.controller('ToolsController', angular.noop);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);

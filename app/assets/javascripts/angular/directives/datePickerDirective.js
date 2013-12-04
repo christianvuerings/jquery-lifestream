@@ -6,7 +6,7 @@
 
       // Restrict the directive to attributes
       restrict: 'A',
-      link: function(scope, elm, attrs, ctrl) {
+      link: function(scope, elm, attrs) {
 
         // Keep track on whether the picker has been initialized before or not
         scope.picker_initialized = false;
@@ -64,7 +64,6 @@
           };
 
           $document.bind('click', closeAll);
-
         };
 
         // Bind the click event handler on the button

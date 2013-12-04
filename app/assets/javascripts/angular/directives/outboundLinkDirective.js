@@ -36,10 +36,10 @@
       port: parseInt(match[5], 10) || DEFAULT_PORTS[match[1]] || null
     };
 
-    return (domain1.protocol == domain2.protocol || domain1.relativeProtocol) &&
-           domain1.host == domain2.host &&
-           (domain1.port == domain2.port || (domain1.relativeProtocol &&
-               domain2.port == DEFAULT_PORTS[domain2.protocol]));
+    return (domain1.protocol === domain2.protocol || domain1.relativeProtocol) &&
+           domain1.host === domain2.host &&
+           (domain1.port === domain2.port || (domain1.relativeProtocol &&
+               domain2.port === DEFAULT_PORTS[domain2.protocol]));
   };
 
   /**

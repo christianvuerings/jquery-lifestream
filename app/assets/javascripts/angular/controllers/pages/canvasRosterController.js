@@ -1,4 +1,4 @@
-(function (calcentral) {
+(function (angular, calcentral) {
   'use strict';
 
   /**
@@ -38,4 +38,4 @@
     getRoster();
   }]);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);

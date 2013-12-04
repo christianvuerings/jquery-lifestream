@@ -1,4 +1,4 @@
-# CalCentral Styleguide
+# CalCentral JavaScript Styleguide
 
 * **Indentation**: 2 spaces
 * List items/properties **alphabetically**

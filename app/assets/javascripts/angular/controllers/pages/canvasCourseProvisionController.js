@@ -1,4 +1,4 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
@@ -145,7 +145,7 @@
           section.selected = true;
         });
         new_selected_courses.push(course);
-      })
+      });
       $scope.selected_courses = new_selected_courses;
     };
 
@@ -180,4 +180,4 @@
     $scope.fetchFeed();
   }]);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);
