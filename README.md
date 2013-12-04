@@ -93,10 +93,8 @@ Do this by creating `ENVIRONMENT.local.yml` files in your `~/.calcentral_config`
 You can also create Ruby configuration files like "settings.local.rb" and "development.local.rb" to amend the standard `config/environments/*.rb` files.
 
 1. Install JDBC driver (for Oracle connection)
-You may already have an Oracle driver from MyBerkeley-OAE development, in which case you just need to copy it to your project ./lib directory:
-```cp ~/.m2/repository/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar ./lib/```
-  * Otherwise, download [ojdbc6.jar](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
-  * Copy ojdbc6.jar to your project's lib folder```
+  * Download [ojdbc7.jar](http://svn.media.berkeley.edu/nexus/content/repositories/myberkeley/com/oracle/ojdbc7/12.1.0.1/ojdbc7-12.1.0.1.jar)
+  * Copy ojdbc7.jar to your project's ./lib folder```
 
 1. Initialize PostgreSQL database tables
 ```bash
