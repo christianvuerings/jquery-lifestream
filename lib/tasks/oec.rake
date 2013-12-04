@@ -8,7 +8,7 @@ namespace :oec do
   end
 
   desc 'Generate instructor files based on courses.csv input'
-  task :people => :environment do
+  task :instructors => :environment do
     timestamp = DateTime.now.strftime('%FT%T.%L%z')
     reader = CourseFileReader.new("tmp/oec/courses.csv")
     [Instructors, CourseInstructors].each do |klass|
