@@ -24,30 +24,32 @@
 * Log in to prod-03 and become app_calcentral user
 
 * Update code:
-`
+```
 cd ~/oec-export
 git pull
 bundle install
-`
+```
 
 * Generate courses file:
-`
+```
 RAILS_ENV=production rake oec:courses
 cp tmp/oec/courses-{timestamp}.csv tmp/oec/courses.csv
-`
+```
 
 * Now securely transfer courses.csv and attach to JIRA
 * Justin will modify courses.csv and attach updated file to JIRA
 * Then overwrite tmp/oec/courses.csv with the version from Justin
 
-* Generating instructor files:
-`RAILS_ENV=production rake oec:instructors
+* Generating instructor files (only if Justin doesn't want to use his manually-curated ones):
+```
+RAILS_ENV=production rake oec:instructors
 cp tmp/oec/instructors-{timestamp}.csv tmp/oec/instructors.csv
 cp tmp/oec/course_instructors-{timestamp}.csv tmp/oec/course_instructors.csv
-`
+```
 
 * Generating student files
-`RAILS_ENV=production rake oec:students
+```
+RAILS_ENV=production rake oec:students
 cp tmp/oec/students-{timestamp}.csv tmp/oec/students.csv
 cp tmp/oec/course_students-{timestamp}.csv tmp/oec/course_students.csv
-`
+```
