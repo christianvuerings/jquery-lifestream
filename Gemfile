@@ -3,7 +3,7 @@ source 'http://torquebox.org/rubygems'
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.15"
+gem "rails", "3.2.16"
 
 gem "activerecord-jdbc-adapter", "~> 1.2.9"
 
@@ -58,7 +58,7 @@ gem "addressable", "~> 2.3.4"
 gem "celluloid", "~> 0.14.1"
 
 # for parsing formatted html
-gem 'nokogiri', "~> 1.5.9"
+gem 'nokogiri', "~> 1.5.9", :platforms => :jruby
 
 # for parsing paged feeds
 gem 'link_header', "~> 0.0.7"
@@ -74,6 +74,9 @@ gem "torquebox-messaging", "~> 2.3.2"
 
 # for trying, and trying again, and then giving up.
 gem "retriable", "~> 1.3.3.1"
+
+# to fix zip/zip not found errors
+gem "zip-zip", "~> 0.2"
 
 # Gems used only for assets and not required
 # in production environments by default.
