@@ -5,7 +5,7 @@
   angular.module('calcentral.services').factory('$exceptionHandler', ['$log', 'errorService', function($log, errorService) {
 
     // Return the function
-    return function(exception, cause) {
+    return function(exception) {
 
       // Output to the angular log
       // This is the standard angular behavior

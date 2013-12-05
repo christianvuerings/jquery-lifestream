@@ -1,22 +1,11 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * Badges controller
    */
 
-  calcentral.controller('BadgesController', [
-    'apiService',
-    'dateService',
-    'errorService',
-    '$http',
-    '$scope',
-    function(
-      apiService,
-      dateService,
-      errorService,
-      $http,
-      $scope) {
+  calcentral.controller('BadgesController', ['apiService', 'dateService', 'errorService', '$http', '$scope', function(apiService, dateService, errorService, $http, $scope) {
 
     var defaults = {
       'bcal': {
@@ -57,8 +46,8 @@
     };
 
     var processDisplayRange = function(epoch, is_all_day, is_start_range) {
-      var now_date = moment().format('YYYYMMDD');
-      var item_moment = moment(epoch * 1000);
+      var now_date = dateService.moment().format('YYYYMMDD');
+      var item_moment = dateService.moment(epoch * 1000);
       var item_date = item_moment.format('YYYYMMDD');
 
       // not all day event, happening today.
@@ -159,4 +148,4 @@
 
   }]);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);

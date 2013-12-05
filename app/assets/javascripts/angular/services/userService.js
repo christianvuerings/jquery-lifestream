@@ -2,18 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('userService', [
-    '$http',
-    '$location',
-    '$route',
-    'analyticsService',
-    'utilService',
-    function(
-      $http,
-      $location,
-      $route,
-      analyticsService,
-      utilService) {
+  angular.module('calcentral.services').service('userService', ['$http', '$location', '$route', 'analyticsService', 'utilService', function($http, $location, $route, analyticsService, utilService) {
 
     var profile = {};
     var events = {
@@ -142,7 +131,7 @@
       }).error(function(data, response_code) {
         if (response_code && response_code === 401) {
           // user is already logged out
-          window.location = "/";
+          window.location = '/';
         }
       });
     };

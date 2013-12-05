@@ -5,18 +5,7 @@
    * Campus controller
    */
 
-  calcentral.controller('MyFinancesController', [
-    '$filter',
-    '$http',
-    '$routeParams',
-    '$scope',
-    'apiService',
-    function(
-      $filter,
-      $http,
-      $routeParams,
-      $scope,
-      apiService) {
+  calcentral.controller('MyFinancesController', ['$filter', '$http', '$routeParams', '$scope', 'apiService', function($filter, $http, $routeParams, $scope, apiService) {
 
     var sortTermsIndex = {
       'Fall': 0,
@@ -257,7 +246,7 @@
      */
     $scope.getSortClass = function(column) {
       var sortUpDown = $scope.sort.descending ? 'down' : 'up';
-      return column == $scope.sort.column && 'fa fa-chevron-' + sortUpDown;
+      return $scope.sort.column.indexOf(column) !== -1 && 'fa fa-chevron-' + sortUpDown;
     };
 
     /**

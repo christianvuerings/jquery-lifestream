@@ -1,4 +1,4 @@
-(function(angular) {
+(function(angular, win) {
 
   'use strict';
 
@@ -12,7 +12,7 @@
 
       response: function(response) {
         // We make sure to only scroll when the user hasn't scrolled before
-        if (!pageYOffset) {
+        if (!win.pageYOffset) {
           $window.scrollTo(0, 1);
         }
         return response;
@@ -22,4 +22,4 @@
 
   }]);
 
-}(window.angular));
+}(window.angular, window));

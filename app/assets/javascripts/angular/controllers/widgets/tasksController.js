@@ -1,19 +1,10 @@
-(function(calcentral, angular) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * Tasks controller
    */
-  calcentral.controller('TasksController', [
-    'apiService',
-    '$filter',
-    '$http',
-    '$scope',
-    function(
-      apiService,
-      $filter,
-      $http,
-      $scope) {
+  calcentral.controller('TasksController', ['apiService', '$filter', '$http', '$scope', function(apiService, $filter, $http, $scope) {
 
     // Initial mode for Tasks view
     $scope.current_task_mode = 'scheduled';
@@ -110,8 +101,6 @@
       }).success(function(data) {
         if (data.tasks_cleared) {
           $scope.getTasks();
-        } else {
-          // Again, some error handling?
         }
       }).error(function() {
         apiService.analytics.trackEvent(['Error', 'Clear completed tasks failure', 'Clear completed tasks failure']);
@@ -178,4 +167,4 @@
 
   }]);
 
-})(window.calcentral, window.angular);
+})(window.angular, window.calcentral);

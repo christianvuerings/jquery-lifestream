@@ -1,4 +1,4 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
@@ -85,4 +85,4 @@
     });
 
   }]);
-})(window.calcentral);
+})(window. angular, window.calcentral);

@@ -1,4 +1,4 @@
-(function(calcentral) {
+(function(angular, calcentral) {
 
   'use strict';
 
@@ -66,10 +66,9 @@
       }
 
       apiService.analytics.trackEvent(['Tasks', 'Task edited', 'edited: ' + !!changedTask.title]);
-      $http.post('/api/my/tasks', changedTask).success($scope.editTaskCompleted)
-        .error(function() {
-          apiService.analytics.trackEvent(['Error', 'Task editing failure', 'edited: ' + !!changedTask.title]);
-          //Some error notification would be helpful.
+      $http.post('/api/my/tasks', changedTask).success($scope.editTaskCompleted).error(function() {
+        apiService.analytics.trackEvent(['Error', 'Task editing failure', 'edited: ' + !!changedTask.title]);
+        //Some error notification would be helpful.
       });
 
       $scope.disableEditor();
@@ -77,4 +76,4 @@
     };
   }]);
 
-})(window.calcentral, window.angular);
+})(window.angular, window.calcentral);
