@@ -1,23 +1,27 @@
-describe('Footer controller', function() {
+(function() {
 
-  'use strict';
+  describe('Footer controller', function() {
 
-  var $controller;
-  var $scope;
+    'use strict';
 
-  var footerController;
+    var $controller;
+    var $scope;
 
-  beforeEach(inject(function($injector) {
-    $controller = $injector.get('$controller');
-    $scope = $injector.get('$rootScope').$new();
+    var footerController;
 
-    footerController = $controller('FooterController', {
-      $scope: $scope
+    beforeEach(inject(function($injector) {
+      $controller = $injector.get('$controller');
+      $scope = $injector.get('$rootScope').$new();
+
+      footerController = $controller('FooterController', {
+        $scope: $scope
+      });
+    }));
+
+    it('should have a defined footer controller', function() {
+      expect(footerController).toBeDefined();
     });
-  }));
 
-  it('should have a defined footer controller', function() {
-    expect(footerController).toBeDefined();
   });
 
-});
+})();

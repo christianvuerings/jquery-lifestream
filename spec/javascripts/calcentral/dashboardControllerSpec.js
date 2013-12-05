@@ -1,27 +1,31 @@
-describe('Dashboard controller', function() {
+(function() {
 
-  'use strict';
+  describe('Dashboard controller', function() {
 
-  var $controller;
-  var $rootScope;
+    'use strict';
 
-  var dashboardController;
+    var $controller;
+    var $rootScope;
 
-  beforeEach(inject(function($injector) {
-    $controller = $injector.get('$controller');
-    $rootScope = $injector.get('$rootScope').$new();
+    var dashboardController;
 
-    dashboardController = $controller('DashboardController', {
-      $rootScope: $rootScope
+    beforeEach(inject(function($injector) {
+      $controller = $injector.get('$controller');
+      $rootScope = $injector.get('$rootScope').$new();
+
+      dashboardController = $controller('DashboardController', {
+        $rootScope: $rootScope
+      });
+    }));
+
+    it('should have a defined dashboard controller', function() {
+      expect(dashboardController).toBeDefined();
     });
-  }));
 
-  it('should have a defined dashboard controller', function() {
-    expect(dashboardController).toBeDefined();
+    it('should set the page title', function() {
+      expect($rootScope.title).toBe('Dashboard | CalCentral');
+    });
+
   });
 
-  it('should set the page title', function() {
-    expect($rootScope.title).toBe('Dashboard | CalCentral');
-  });
-
-});
+})();

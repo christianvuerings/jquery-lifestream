@@ -1,24 +1,27 @@
-describe('Canvas Course Provision controller', function() {
+(function() {
 
-  'use strict';
+  describe('Canvas Course Provision controller', function() {
 
-  var $controller;
-  var $scope;
+    'use strict';
 
-  var canvasCourseProvisionController;
+    var $controller;
+    var $scope;
 
-  beforeEach(inject(function($injector) {
-    $controller = $injector.get('$controller');
-    $scope = $injector.get('$rootScope').$new();
+    var canvasCourseProvisionController;
 
-    canvasCourseProvisionController = $controller('CanvasCourseProvisionController', {
-      $scope: $scope
+    beforeEach(inject(function($injector) {
+      $controller = $injector.get('$controller');
+      $scope = $injector.get('$rootScope').$new();
+
+      canvasCourseProvisionController = $controller('CanvasCourseProvisionController', {
+        $scope: $scope
+      });
+    }));
+
+    it('should have a defined canvas course provision controller', function() {
+      expect(canvasCourseProvisionController).toBeDefined();
     });
-  }));
 
-  it('should have a defined canvas course provision controller', function() {
-    expect(canvasCourseProvisionController).toBeDefined();
   });
 
-});
-
+})();
