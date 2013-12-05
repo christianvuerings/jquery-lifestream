@@ -1,47 +1,51 @@
-describe('User service', function() {
+(function(angular) {
 
-  'use strict';
+  describe('User service', function() {
 
-  var userService;
-  var $httpBackend;
-  var $route;
-  var $scope;
+    'use strict';
 
-  beforeEach(module('calcentral.services'));
+    var userService;
+    var $httpBackend;
+    var $route;
+    var $scope;
 
-  beforeEach(inject(function($injector) {
-    $httpBackend = $injector.get('$httpBackend');
-    $route = $injector.get('$route');
-    $scope = $injector.get('$rootScope').$new();
+    beforeEach(angular.mock.module('calcentral.services'));
 
-    $route.current = {
-      isPublic: true
-    };
+    beforeEach(inject(function($injector) {
+      $httpBackend = $injector.get('$httpBackend');
+      $route = $injector.get('$route');
+      $scope = $injector.get('$rootScope').$new();
 
-    userService = $injector.get('userService');
+      $route.current = {
+        isPublic: true
+      };
 
-  }));
+      userService = $injector.get('userService');
 
-  it('should have a defined user service', function() {
-    expect(userService).toBeDefined();
+    }));
+
+    it('should have a defined user service', function() {
+      expect(userService).toBeDefined();
+    });
+
+    it('should set the anonymous userdata correctly', function() {
+      userService.handleUserLoaded(getJSONFixture('status_loggedout.json'));
+      expect(userService.isAuthenticated).toBeFalsy();
+    });
+
+    it('should set the signed in userdata correctly', function() {
+      $httpBackend.when('POST', '/api/my/record_first_login').respond({});
+      var status = getJSONFixture('status_first_login.json');
+      userService.handleUserLoaded(status);
+
+      expect(userService.events.isAuthenticated).toBeTruthy();
+      expect(userService.profile.uid).toBeDefined();
+      expect(userService.profile.first_name).toBeDefined();
+      expect(userService.profile.last_name).toBeDefined();
+      expect(userService.profile.full_name).toBeDefined();
+      expect(userService.profile.preferred_name).toBeDefined();
+    });
+
   });
 
-  it('should set the anonymous userdata correctly', function() {
-    userService.handleUserLoaded(getJSONFixture('status_loggedout.json'));
-    expect(userService.isAuthenticated).toBeFalsy();
-  });
-
-  it('should set the signed in userdata correctly', function() {
-    $httpBackend.when('POST', '/api/my/record_first_login').respond({});
-    var status = getJSONFixture('status_first_login.json');
-    userService.handleUserLoaded(status);
-
-    expect(userService.events.isAuthenticated).toBeTruthy();
-    expect(userService.profile.uid).toBeDefined();
-    expect(userService.profile.first_name).toBeDefined();
-    expect(userService.profile.last_name).toBeDefined();
-    expect(userService.profile.full_name).toBeDefined();
-    expect(userService.profile.preferred_name).toBeDefined();
-  });
-
-});
+})(window.angular);

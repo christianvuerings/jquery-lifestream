@@ -1,31 +1,35 @@
-describe('CalCentral controller', function() {
+(function() {
 
-  'use strict';
+  describe('CalCentral controller', function() {
 
-  var $controller;
-  var $httpBackend;
-  var $scope;
+    'use strict';
 
-  var calcentralController;
+    var $controller;
+    var $httpBackend;
+    var $scope;
 
-  beforeEach(inject(function($injector) {
-    $controller = $injector.get('$controller');
-    $httpBackend = $injector.get('$httpBackend');
-    $scope = $injector.get('$rootScope').$new();
+    var calcentralController;
 
-    // We need to stub out the route, otherwise a redirect will happen
-    var route = jasmine.createSpyObj('$route', ['current']);
-    route.current.isPublic = true;
+    beforeEach(inject(function($injector) {
+      $controller = $injector.get('$controller');
+      $httpBackend = $injector.get('$httpBackend');
+      $scope = $injector.get('$rootScope').$new();
 
-    calcentralController = $controller('CalcentralController', {
-      $scope: $scope,
-      $route: route
+      // We need to stub out the route, otherwise a redirect will happen
+      var route = jasmine.createSpyObj('$route', ['current']);
+      route.current.isPublic = true;
+
+      calcentralController = $controller('CalcentralController', {
+        $scope: $scope,
+        $route: route
+      });
+
+    }));
+
+    it('should have a defined calcentral controller', function() {
+      expect(calcentralController).toBeDefined();
     });
 
-  }));
-
-  it('should have a defined calcentral controller', function() {
-    expect(calcentralController).toBeDefined();
   });
 
-});
+})();
