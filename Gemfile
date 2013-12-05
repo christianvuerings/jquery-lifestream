@@ -3,7 +3,7 @@ source 'http://torquebox.org/rubygems'
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.15"
+gem "rails", "3.2.16"
 
 gem "activerecord-jdbc-adapter", "~> 1.2.9"
 
@@ -58,14 +58,17 @@ gem "addressable", "~> 2.3.4"
 gem "celluloid", "~> 0.14.1"
 
 # for parsing formatted html
-gem 'nokogiri', "~> 1.5.9"
+gem 'nokogiri', "~> 1.5.9", :platforms => :jruby
 
 # for parsing paged feeds
 gem 'link_header', "~> 0.0.7"
 
 # for simplified relational data management. rails_admin requires devise.
-gem 'rails_admin', "~> 0.4.8"
+gem 'rails_admin', "0.4.9"
 gem "devise", "~> 2.2.5"
+# rails_admin requires bootstrap_sass but isn't very picky about the version it uses.
+# lock bootstrap-sass at 2.3.2.0 because later version introduce an "invalid character" error during assets:precompile
+gem "bootstrap-sass", "2.3.2.0"
 
 # TorqueBox app server
 gem "torquebox", "~> 2.3.2"
