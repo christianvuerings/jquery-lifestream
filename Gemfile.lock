@@ -430,7 +430,7 @@ DEPENDENCIES
   activerecord-jdbch2-adapter (~> 1.2.9)
   activerecord-jdbcpostgresql-adapter (~> 1.2.9)
   activerecord-jdbcsqlite3-adapter (~> 1.2.9)
-  activerecord-oracle_enhanced-adapter (~> 1.4.1)
+  activerecord-oracle_enhanced-adapter (= 1.4.2)
   addressable (~> 2.3.4)
   angular-gem (= 1.2.1)
   capistrano (~> 2.15.4)
