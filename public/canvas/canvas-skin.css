@@ -7,9 +7,10 @@
 
 /* Canvas Header */
 #header {
-  background: #003262 url(/canvas/bcourses_background_2628x72.png) no-repeat;
-  top: 0;
-  left: 0;
+  background: #003262 url(/canvas/bcourses_background_2628x72.png) no-repeat 0 0;
+}
+#header.no-user {
+  background-position: 0 0;
 }
 #header-inner {
   height: 45px;
