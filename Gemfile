@@ -116,7 +116,7 @@ end
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :testext, :production do
-  gem "activerecord-oracle_enhanced-adapter", "~> 1.4.1"
+  gem "activerecord-oracle_enhanced-adapter", "1.4.2"
   gem "rvm-capistrano", "~> 1.3.1"
   gem "capistrano", "~> 2.15.4"
 end

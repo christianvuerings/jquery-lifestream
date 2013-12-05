@@ -27,6 +27,6 @@ end
 
 puts "Installing Oracle jar from #{ENV['MAVEN_REPO']}"
 puts "  to #{ENV['MY_RUBY_HOME']}/lib"
-`wget "#{ENV['MAVEN_REPO']}/com/oracle/ojdbc7/12.1.0.1/ojdbc7-12.1.0.1.jar" -P "#{ENV['MY_RUBY_HOME']}/lib"`
+`wget "#{ENV['MAVEN_REPO']}/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar" -P "#{ENV['MY_RUBY_HOME']}/lib"`
 puts "Copying Oracle jar into ./lib"
-`cp -f "#{ENV['MY_RUBY_HOME']}/lib/ojdbc7-12.1.0.1.jar" "#{File.expand_path(File.dirname(__FILE__))}/../lib/"`
+`cp -f "#{ENV['MY_RUBY_HOME']}/lib/ojdbc6-11.2.0.3.jar" "#{File.expand_path(File.dirname(__FILE__))}/../lib/"`
