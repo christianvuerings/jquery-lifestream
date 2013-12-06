@@ -29,7 +29,7 @@ class AuthController < ApplicationController
 
   def handle_callback
     client = get_client
-    Rails.logger.debug "Handling Oauth2 authorization callback for user #{session[:user_id]}, fetching token from #{client.token_credential_uri}"
+    Rails.logger.debug "Handling Oauth2 authorization callback for user #{session[:user_id]}"
     if params[:code] && params[:error].blank?
       client.code = params[:code]
       client.fetch_access_token!
