@@ -39,9 +39,6 @@ cp ~/.calcentral_config/standalone-ha.xml $JBOSS_HOME/standalone/configuration/
 nohup bundle exec torquebox run -b $IP_ADDR -p=3000 --jvm-options="$JVM_OPTS" --clustered --max-threads=$MAX_THREADS < /dev/null > $TORQUEBOX_LOG 2>> $LOG  &
 cd ..
 
-# wait a bit to let server start up
-sleep 120
-
 # now check if the app is alive (which will also warm up caches)
 ./script/check-alive.sh || exit 1
 
