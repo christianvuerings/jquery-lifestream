@@ -22,6 +22,7 @@
   margin: 0;
   overflow-x: hidden;
   padding: 0 10px;
+  margin-left: 3px;
 
   > li {
     border-bottom: 1px solid $cc-color-widget-background;
@@ -31,9 +32,6 @@
     > a {
       display: block;
     }
-  }
-  .cc-icon {
-    margin-left: 10px;
   }
 }
 .cc-widget-list-subtitle {
@@ -46,7 +44,8 @@
   float: left;
   margin-right: 5px;
   min-height: 20px;
-  width: 30px;
+  width: 20px;
+  margin-left: 4px;
 }
 .cc-widget-list-selected {
   background: $cc-color-widget-more-background;
@@ -54,7 +53,7 @@
 .cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link, .cc-widget-list-hover, .cc-widget-table-hover {
   overflow: hidden;
   position: relative;
-  padding: 10px 15px;
+  padding: 10px 0px;
   &:hover, &:focus {
     background: $cc-color-blue-hover;
     cursor: pointer;
@@ -82,9 +81,7 @@
 }
 .cc-widget-list-hover-opened:not(tr):not(.cc-widget-list-hover-notriangle) {
   &:hover, &:focus {
-    &:before {
-      border-left: 4px solid transparent;
-      border-right: 4px solid transparent;
+    &:before {;
       border-top: 4px solid $body-font-color;
       content: "";
       height: 0;
@@ -109,7 +106,7 @@
     padding: 5px 0 0 0;
     .cc-icon {
       float: left;
-      margin: 0 10px 0 0;
+      margin: 0;
     }
   }
 }
@@ -125,7 +122,8 @@
     font-size: 12px;
     font-weight: normal;
     margin: 0;
-    padding: 2px 16px;
+    padding: 2px 10px;
+    margin-left: 3px;
   }
 }
 
@@ -142,6 +140,7 @@
     font-size: 18px;
     margin: 2px 0px;
     padding: 5px 10px;
+    margin-left: 3px;
   }
 }
 .cc-widget-title-sub {

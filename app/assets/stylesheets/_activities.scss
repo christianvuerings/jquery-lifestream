@@ -12,7 +12,7 @@
   .cc-widget-activities-list {
     font-size: 12px;
     margin: 0;
-    padding: 0 10px;
+    padding: 0 15px;
 
     > li {
       border-bottom: 1px solid $cc-color-widget-background;
@@ -96,6 +96,9 @@
       font-size: 20px;
       margin-top: 6px;
       color: #afc5d2;
+    }
+    .fa-usd{
+      margin-left: 2px;
     }
   }
   .cc-widget-activities-text-margin {
