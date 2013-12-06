@@ -4,7 +4,7 @@ $cc-color-splash-blue-light: #0073C3;
 .cc-page-splash {
   .cc-container-main {
     padding: 0 35px;
-    background: #fff asset-data-url('calcentral_bubble_background.png') no-repeat right 5px;
+    background: #fff asset-data-url('calcentral_bubble_background_466x408.png') no-repeat right 5px;
   }
 
   > header, .cc-navigation-bar {
@@ -46,7 +46,7 @@ $cc-color-splash-blue-light: #0073C3;
     padding-top: 10px;
   }
   .cc-page-splash-status {
-    background: asset-data-url('splash_status.png') no-repeat 0 0;
+    background: asset-data-url('splash_status_555x300.png') no-repeat 0 0;
     background-position: center;
     @include background-size(cover);
     border: 1px solid #666;

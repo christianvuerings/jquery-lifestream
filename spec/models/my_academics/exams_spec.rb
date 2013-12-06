@@ -51,7 +51,7 @@ describe "MyAcademics::Exams" do
 
     feed = {}
     MyAcademics::Exams.new("865826").merge(feed)
-    
+
     feed[:exam_schedule].should be_nil
   end
 

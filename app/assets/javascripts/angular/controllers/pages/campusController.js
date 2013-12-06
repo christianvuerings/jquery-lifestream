@@ -5,8 +5,7 @@
    * Campus controller
    */
 
-  calcentral.controller('CampusController', [
-    '$http', '$routeParams', '$scope', 'apiService', function($http, $routeParams, $scope, apiService) {
+  calcentral.controller('CampusController', ['$http', '$routeParams', '$scope', 'apiService', function($http, $routeParams, $scope, apiService) {
 
     /**
      * Add to the subcategories list if it doesn't exist yet

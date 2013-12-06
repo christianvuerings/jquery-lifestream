@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/canvas_embedded/roster.html">
-  <div class="cc-page-roster" data-cc-spinner-directive>
+  <div data-ng-class="{'cc-page-roster': !is_loading}" data-cc-spinner-directive>
 
     <form class="cc-roster-search" data-ng-hide="error_status">
       <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
@@ -21,7 +21,7 @@
         </div>
         <div data-ng-hide="student.photo">
           <a data-ng-href="{{student.profile_url}}">
-            <%= image_tag "officialPhotoUnavailable.jpg", :size => "75x75", :alt => "Photo unavailable" %>
+            <%= image_tag "photo_unavailable_official_72x96.jpg", :size => "75x75", :alt => "Photo unavailable" %>
           </a>
         </div>
         <div class="cc-ellipsis" data-ng-bind="student.first_name"></div>

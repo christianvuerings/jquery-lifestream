@@ -6,13 +6,13 @@
 
       // Restrict the directive to attributes
       restrict: 'A',
-      link: function(scope, elm, attrs, ctrl) {
+      link: function(scope, elm, attrs) {
 
         // Keep track on whether the picker has been initialized before or not
-        scope._picker_initialized = false;
+        scope.picker_initialized = false;
 
         var initializePicker = function () {
-          scope._picker_initialized = true;
+          scope.picker_initialized = true;
 
           var inputElement = $document[0].querySelector('#' + attrs.ccDatepickerDirective);
           var angularInputElement = angular.element(inputElement);
@@ -42,9 +42,9 @@
           });
 
           /**
-           * Show/hide depending on the value of the _picker_shown variable.
+           * Show/hide depending on the value of the picker_shown variable.
            */
-          var watchshown = scope.$watch('_picker_shown', function(showPicker) {
+          var watchshown = scope.$watch('picker_shown', function(showPicker) {
             if (showPicker) {
               picker.show();
             } else {
@@ -56,22 +56,21 @@
            * Close the picker and unset all the events that were bound to it.
            */
           var closeAll = function() {
-            scope._picker_shown = false;
-            scope._picker_initialized = false;
+            scope.picker_shown = false;
+            scope.picker_initialized = false;
             watchshown();
             picker.destroy();
             $document.unbind('click', closeAll);
           };
 
           $document.bind('click', closeAll);
-
         };
 
         // Bind the click event handler on the button
         elm.bind('click', function() {
-          scope._picker_shown = !scope._picker_shown;
+          scope.picker_shown = !scope.picker_shown;
 
-          if (scope._picker_initialized) {
+          if (scope.picker_initialized) {
 
             // We need this extra $apply since otherwise the watchshown() method won't be actived
             scope.$apply();

@@ -7,7 +7,8 @@ class RegStatusEventProcessor < AbstractEventProcessor
 
   def process_internal(event, timestamp)
     response = []
-    uids = event['payload']['uid'] || []
+    # The payload might not have packaged a single UID as an array, or the UID might even be nil.
+    uids = Array(event['payload']['uid'])
     uids.each do |uid|
       next if uid == 0
       singular_event = {

@@ -1,0 +1,2 @@
+spec/javascripts/lib/angular-mocks.js
+coverage/**

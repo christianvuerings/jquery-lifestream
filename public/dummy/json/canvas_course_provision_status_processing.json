@@ -1,0 +1,13 @@
+{
+  "job_id": "canvas.courseprovision.12345.1383330151057",
+  "status": "Processing",
+  "completed_steps": [
+    "Prepared courses list",
+    "Identified department sub-account",
+    "Prepared course site definition",
+    "Prepared section definitions",
+    "Prepared user definitions",
+    "Prepared course site memberships"
+  ],
+  "percent_complete": 0.55
+}

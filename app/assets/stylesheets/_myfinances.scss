@@ -40,24 +40,23 @@
     font-size: 11px;
     margin-top: 5px;
   }
+  .cc-page-myfinances-footer {
+    border-top: 2px solid $cc-color-widget-background;
+    padding: 10px 15px;
+    ul li {
+      float: left;
+      margin-right: 10px;
+    }
+    .cc-page-myfinances-footer-updated {
+      color: $cc-color-lighter-medium-grey;
+      float: right;
+      font-size: 10px;
+      margin-top: 3px;
+    }
+  }
   .cc-page-myfinances-green {
     &, & td {
       color: $cc-color-green;
-    }
-  }
-  .cc-page-myfinances-legend {
-    margin-bottom: 30px;
-    overflow: hidden;
-    li {
-      clear: both;
-      .cc-page-myfinances-legend-text {
-        float: left;
-        font-size: 14px;
-        margin: 5px 0 0 10px;
-      }
-      img {
-        float: left;
-      }
     }
   }
   .cc-page-myfinances-light {

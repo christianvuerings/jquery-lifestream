@@ -1,10 +1,10 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * My Classes controller
    */
-  calcentral.controller('MyClassesController', ['$http', '$scope', function($http, $scope) {
+  calcentral.controller('MyClassesController', ['apiService', '$http', '$scope', function(apiService, $http, $scope) {
 
     var addSubclasses = function(classesHash) {
       for (var j = 0; j < classesHash.otherClasses.length; j++) {
@@ -39,22 +39,22 @@
       $scope.allClassesPresent = (studentLength || instructorLength || otherLength);
       $scope.allClasses = [
         {
-          "categoryId": "student",
-          "categoryTitle": "Enrollments",
-          "data": categorizedClasses.student,
-          "length": studentLength
+          'categoryId': 'student',
+          'categoryTitle': 'Enrollments',
+          'data': categorizedClasses.student,
+          'length': studentLength
         },
         {
-          "categoryId": "instructor",
-          "categoryTitle": "Teaching",
-          "data": categorizedClasses.instructor,
-          "length": instructorLength
+          'categoryId': 'instructor',
+          'categoryTitle': 'Teaching',
+          'data': categorizedClasses.instructor,
+          'length': instructorLength
         },
         {
-          "categoryId": "other",
-          "categoryTitle": "Other Site Memberships",
-          "data": categorizedClasses.other.sort(sortOther),
-          "length": otherLength
+          'categoryId': 'other',
+          'categoryTitle': 'Other Site Memberships',
+          'data': categorizedClasses.other.sort(sortOther),
+          'length': otherLength
         }
       ];
     };
@@ -87,6 +87,7 @@
     var getMyClasses = function() {
       //$http.get('/dummy/json/classes.json').success(function(data) {
       $http.get('/api/my/classes').success(function(data) {
+        apiService.updatedFeeds.feedLoaded(data);
         if (data.classes) {
           bindScopes(parseClasses(data.classes));
           angular.extend($scope, data);
@@ -125,4 +126,4 @@
     getMyClasses();
   }]);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);

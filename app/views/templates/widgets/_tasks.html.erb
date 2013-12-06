@@ -16,8 +16,8 @@
       <div data-ng-include src="'templates/dashboard_task_editor.html'"></div>
     </div>
   </div>
-  <div data-cc-spinner-directive class="cc-widget-tasks-container">
-    <div data-ng-switch data-on="current_task_mode">
+  <div data-cc-spinner-directive>
+    <div class="cc-widget-tasks-container" data-ng-switch data-on="current_task_mode">
 
       <div class="row collapse">
         <div class="large-10 large-centered columns">
@@ -43,7 +43,7 @@
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
               <li
                 data-ng-repeat="task in overdueTasks"
-                data-ng-class="{'cc-widget-list-selected': task._show}">
+                data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
             </ul>
@@ -57,7 +57,7 @@
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
               <li
                 data-ng-repeat="task in dueTodayTasks"
-                data-ng-class="{'cc-widget-list-selected': task._show}">
+                data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
             </ul>
@@ -71,7 +71,7 @@
             <ul class="cc-widget-tasks-list">
               <li
                 data-ng-repeat="task in futureTasks"
-                data-ng-class="{'cc-widget-list-selected': task._show}">
+                data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
             </ul>
@@ -89,7 +89,7 @@
           <ul class="cc-widget-tasks-list">
             <li
               data-ng-repeat="task in unscheduledTasks"
-              data-ng-class="{'cc-widget-list-selected': task._show}">
+              data-ng-class="{'cc-widget-list-selected': task.show}">
               <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
             </li>
           </ul>
@@ -102,7 +102,7 @@
         <ul class="cc-widget-tasks-list">
           <li
             data-ng-repeat="task in completedTasks"
-            data-ng-class="{'cc-widget-list-selected': task._show}">
+            data-ng-class="{'cc-widget-list-selected': task.show}">
             <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
           </li>
         </ul>

@@ -1,6 +1,16 @@
 {
   "is_admin": true,
-  "acting_as": "238382",
+  "admin_acting_as": "238382",
+  "admin_semesters": [
+    {
+      "name": "Fall 2013",
+      "slug": "fall-2013"
+    },
+    {
+      "name": "Spring 2014",
+      "slug": "spring-2014"
+    }
+  ],
   "teaching_semesters": [
     {
       "name": "Fall 2013",

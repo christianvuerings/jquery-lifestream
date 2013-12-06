@@ -15,7 +15,7 @@ class CanvasCsv < CsvExport
   end
 
   def accumulate_user_data(user_ids, users_csv)
-    user_array = user_ids.to_a
+    user_array = user_ids.to_a.dup
     while !user_array.empty?
       slice_length = [user_array.length, 1000].min
       working_slice = user_array.slice!(0, slice_length)

@@ -9,7 +9,7 @@ describe CanvasRefreshFromCampus do
   it "should extract SIS-integrated sections from CSV" do
     CanvasSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
     worker = CanvasRefreshFromCampus.new
-    test_term_id = CanvasProxy.current_sis_term_ids[0]
+    test_term_id = CanvasProxy.current_sis_term_ids[1]
     canvas_sections = worker.get_all_sis_sections_for_term(test_term_id)
     canvas_sections.nil?.should be_false
     canvas_sections.each do |cs|
@@ -22,7 +22,7 @@ describe CanvasRefreshFromCampus do
   it "should accumulate section enrollments and users for known sections", :if => SakaiData.test_data? do
     CanvasSectionsReportProxy.stub(:new).and_return(@fake_sections_report_proxy)
     worker = CanvasRefreshFromCampus.new
-    test_term_id = CanvasProxy.current_sis_term_ids[0]
+    test_term_id = CanvasProxy.current_sis_term_ids[1]
     canvas_sections = worker.get_all_sis_sections_for_term(test_term_id)
     user_ids = Set.new
     enrollments = []
@@ -60,7 +60,7 @@ describe CanvasRefreshFromCampus do
     CanvasSisImportProxy.stub(:new).and_return(fake_import_proxy)
     fake_import_proxy.should_receive(:generate_course_sis_id).with('1093165').and_call_original
     worker = CanvasRepairSections.new
-    worker.repair_sis_ids_for_term(CanvasProxy.current_sis_term_ids[0])
+    worker.repair_sis_ids_for_term(CanvasProxy.current_sis_term_ids[1])
   end
 
   it "should distinguish waitlisted students" do

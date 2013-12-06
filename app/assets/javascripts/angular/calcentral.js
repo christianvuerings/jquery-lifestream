@@ -1,4 +1,4 @@
-(function(window, angular) {
+(function(win, angular) {
 
   'use strict';
 
@@ -16,10 +16,11 @@
     'calcentral.directives',
     'calcentral.filters',
     'calcentral.services',
+    'ngRoute',
     'ngSanitize'
   ]);
 
   // Bind calcentral to the window object so it's globally accessible
-  window.calcentral = calcentral;
+  win.calcentral = calcentral;
 
 })(window, window.angular);

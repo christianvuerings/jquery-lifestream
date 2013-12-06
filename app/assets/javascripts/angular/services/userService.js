@@ -2,18 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('userService', [
-    '$http',
-    '$location',
-    '$route',
-    'analyticsService',
-    'utilService',
-    function(
-      $http,
-      $location,
-      $route,
-      analyticsService,
-      utilService) {
+  angular.module('calcentral.services').service('userService', ['$http', '$location', '$route', 'analyticsService', 'utilService', function($http, $location, $route, analyticsService, utilService) {
 
     var profile = {};
     var events = {
@@ -28,7 +17,7 @@
     /**
      * Set the user first_login_at attribute and redirect to the settings page
      */
-    var _setFirstLogin = function() {
+    var setFirstLogin = function() {
       profile.first_login_at = (new Date()).getTime();
     };
 
@@ -38,7 +27,7 @@
      *   - whether they are logged in or not
      *   - whether the page is public
      */
-    var _handleAccessToPage = function() {
+    var handleAccessToPage = function() {
       // Redirect to the login page when the page is private and you aren't authenticated
       if (!$route.current.isPublic && !events.isAuthenticated) {
         analyticsService.trackEvent(['Authentication', 'Sign in - redirect to login']);
@@ -46,7 +35,7 @@
       // Record that you've already visited the calcentral once and redirect to the settings page on the first login
       } else if (events.isAuthenticated && !profile.first_login_at) {
         analyticsService.trackEvent(['Authentication', 'First login']);
-        $http.post('/api/my/record_first_login').success(_setFirstLogin);
+        $http.post('/api/my/record_first_login').success(setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
       } else if (events.isAuthenticated && $location.path() === '/') {
         analyticsService.trackEvent(['Authentication', 'Redirect to dashboard']);
@@ -57,7 +46,7 @@
     /**
      * Set the current user information
      */
-    var _handleUserLoaded = function(data) {
+    var handleUserLoaded = function(data) {
       angular.extend(profile, data);
 
       events.isLoaded = true;
@@ -68,14 +57,14 @@
       // Expose the profile into events
       events.profile = profile;
 
-      _handleAccessToPage();
+      handleAccessToPage();
     };
 
     /**
      * Get the actual user information
      */
-    var _fetch = function(){
-      $http.get('/api/my/status').success(_handleUserLoaded);
+    var fetch = function(){
+      $http.get('/api/my/status').success(handleUserLoaded);
     };
 
     var enableOAuth = function(authorizationService) {
@@ -93,9 +82,9 @@
       }
 
       if(!profile.features) {
-        _fetch();
+        fetch();
       } else {
-        _handleAccessToPage();
+        handleAccessToPage();
       }
     };
 
@@ -142,23 +131,23 @@
       }).error(function(data, response_code) {
         if (response_code && response_code === 401) {
           // user is already logged out
-          window.location = "/";
+          window.location = '/';
         }
       });
     };
 
     // Expose methods
     return {
-      _setFirstLogin: _setFirstLogin,
-      _handleAccessToPage: _handleAccessToPage,
-      _handleUserLoaded: _handleUserLoaded,
-      _fetch: _fetch,
       enableOAuth: enableOAuth,
       events: events,
+      fetch: fetch,
+      handleAccessToPage: handleAccessToPage,
       handleRouteChange: handleRouteChange,
+      handleUserLoaded: handleUserLoaded,
       optOut: optOut,
       profile: profile,
       removeOAuth: removeOAuth,
+      setFirstLogin: setFirstLogin,
       signIn: signIn,
       signOut: signOut
     };

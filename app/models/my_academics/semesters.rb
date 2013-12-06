@@ -11,12 +11,10 @@ class MyAcademics::Semesters
   end
 
   def self.build_semester(term_yr, term_cd)
-    {
-      name: TermCodes.to_english(term_yr, term_cd),
-      slug: TermCodes.to_slug(term_yr, term_cd),
+    MyAcademics::AcademicsModule.semester_info(term_yr, term_cd).merge({
       time_bucket: self.time_bucket(term_yr, term_cd),
       classes: []
-    }
+    })
   end
 
   def merge(data)
@@ -49,17 +47,12 @@ class MyAcademics::Semesters
           grade_option = ''
         end
 
-        class_info = {
-            course_number: course[:course_code],
-            dept: course[:dept],
-            grade: transcript[:grade],
-            grade_option: grade_option,
-            slug: course_to_slug(course[:dept], course[:catid]),
-            title: course[:name],
-            units: units,
-            sections: course[:sections]
-        }
-        semester[:classes] << class_info
+        class_item = class_info(course).merge!({
+          grade: transcript[:grade],
+          grade_option: grade_option,
+          units: units
+        })
+        semester[:classes] << class_item
       end
       semesters << semester unless semester[:classes].empty?
     end

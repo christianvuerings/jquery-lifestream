@@ -156,7 +156,7 @@
             classes.push(semesters[i].classes[j]);
           }
         }
-      }      
+      }
 
       return classes;
     };
@@ -169,7 +169,7 @@
             classes.push(semesters[i].classes[j]);
           }
         }
-      }      
+      }
 
       return classes;
     };
@@ -225,6 +225,29 @@
       return count;
     };
 
+    /**
+     * Get Textbooks for the selected course
+     * @param  {Object} selected_course Selected Course Object
+     */
+    var getTextbooks  = function(selected_course) {
+      var ccns = [];
+
+      for (var i = 0; i < selected_course.sections.length; i++) {
+        ccns[i] = selected_course.sections[i].ccn;
+      }
+
+      var course_info = {
+        'ccns[]': ccns,
+        'slug': $scope.selected_semester.slug
+      };
+
+      $http.get('api/my/textbooks_details', {params: course_info}).success(function(books) {
+        if (books) {
+          $scope.books = books;
+        }
+      });
+    };
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
@@ -277,6 +300,10 @@
         }
         $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
         $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
+
+        if ($scope.api.user.profile.features.textbooks) {
+          getTextbooks($scope.selected_course);
+        }
       }
 
       if (data.exam_schedule) {
@@ -306,9 +333,9 @@
         apiService.analytics.trackEvent(['Telebears', 'Add Appointment', 'Phase: ' + payload.summary]);
         phases.push($http.post('/api/my/event', payload));
       }
-      $q.all(phases).then(function(results) {
+      $q.all(phases).then(function() {
         $scope.telebears_appointment_loading = 'Success';
-      }, function(error_results) {
+      }, function() {
         $scope.telebears_appointment_loading = 'Error';
       });
     };
@@ -355,7 +382,7 @@
       // Update course object on scope and recalculate overall GPA
       course.estimated_grade = estimated_grade;
       gpaCalculate();
-      cumulativeGpaCalculate($scope.all_courses, "estimated")
+      cumulativeGpaCalculate($scope.all_courses, 'estimated');
     };
 
     $scope.gpaInit = function() {
@@ -364,8 +391,8 @@
         course.estimated_grade = 4;
       });
       gpaCalculate();
-      cumulativeGpaCalculate($scope.previous_courses, "current")
-      cumulativeGpaCalculate($scope.all_courses, "estimated")
+      cumulativeGpaCalculate($scope.previous_courses, 'current');
+      cumulativeGpaCalculate($scope.all_courses, 'estimated');
     };
 
     var cumulativeGpaCalculate = function(courses, gpa_type) {
@@ -379,7 +406,7 @@
           if (course.grade && findWeight(course.grade)) {
             grade = findWeight(course.grade).weight;
           } else {
-            if (gpa_type === "estimated") {
+            if (gpa_type === 'estimated') {
               grade = course.estimated_grade;
             }
           }
@@ -390,7 +417,7 @@
           }
         }
       });
-      if (gpa_type === "estimated") {
+      if (gpa_type === 'estimated') {
         $scope.estimated_cumulative_gpa = total_score / total_units;
       }
       else {

@@ -1,5 +1,15 @@
 {
-  "created_course_site_short_name": "ETH STD 135 LEC 001",
-  "created_status": "ERROR",
-  "created_message": "Unexpected error creating course site!"
+  "job_id": "canvas.courseprovision.12345.1383330151057",
+  "status": "Error",
+  "completed_steps": [
+    "Prepared courses list",
+    "Identified department sub-account",
+    "Prepared course site definition",
+    "Prepared section definitions",
+    "Prepared user definitions",
+    "Prepared course site memberships",
+    "Imported course"
+  ],
+  "percent_complete": 0.64,
+  "error": "Course site was created without any sections or members!"
 }

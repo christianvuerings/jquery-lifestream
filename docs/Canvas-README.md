@@ -23,10 +23,21 @@ When on a Torquebox-enabled shared servers, be sure to `cd deploy` before runnin
 
 ## Canvas maintenance shell scripts
 
+* `script/reconfigure-canvas-external-apps.sh`
+
+    Checks bCourses test/beta for overwritten external app configurations, and resets them if needed.
+    Before running, two environment variables must be set:
+    * `CALCENTRAL_XML_HOST` : URL root of a CalCentral server which is accessible from the bCourses machines.
+
+        Example:
+        `CALCENTRAL_XML_HOST='https://calcentral.example.com'`
+    * `CANVAS_HOSTS_TO_CALCENTRALS` : Mapping from the bCourses test/beta servers to their assigned CalCentral app hosts.
+
+        Example:
+        `CANVAS_HOSTS_TO_CALCENTRALS='https://ucb.beta.example.com=cc-dev.example.com,https://ucb.test.example.com=cc-qa.example.com'`
 * `script/refresh-canvas-enrollments.sh`
-    1. Set RAILS_ENV to 'production'.
-    2. `cd deploy`
-    2. Run `rake canvas:full_refresh`.
+
+    Runs `rake canvas:full_refresh` with `RAILS_ENV=production`.
 
 ## Canvas embedded tools
 

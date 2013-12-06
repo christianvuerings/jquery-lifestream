@@ -1,5 +1,9 @@
 (function (window, document, $) {
   'use strict';
+
+  /**
+   * bCourses customizations
+   */
   $(document).ready(function () {
     $('#footer a.footer-logo').remove();
     $('#footer span').wrap('<div class="bcourses-footer"></div>');
@@ -9,9 +13,16 @@
     $('#footer span#footer-links').replaceWith($bcourses_links);
   });
 
+  /**
+   * We use this functionality to do dynamic height for iframes in bCourses
+   * The CalCentral iframe is sending over an event to the parent window in bCourses.
+   * That event contains the height of the iframe
+   * @param {Object} e Event that is sent over from the iframe
+   */
   window.onmessage = function(e) {
     if (e && e.data && e.data.height) {
       document.getElementById('tool_content').style.height = e.data.height + 'px';
     }
   };
+
 })(window, window.document, window.$);

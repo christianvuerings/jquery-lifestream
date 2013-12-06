@@ -143,7 +143,7 @@
                   </thead>
                   <tbody data-ng-repeat="block in regblocks.active_blocks | orderBy:'blocked_date.epoch':true">
                     <tr class="cc-widget-table-hover"
-                       data-ng-class="{'cc-widget-table-hover-opened':(block._show)}"
+                       data-ng-class="{'cc-widget-table-hover-opened':(block.show)}"
                        data-cc-accessible-focus-directive
                        data-ng-click="api.widget.toggleShow($event, regblocks.active_blocks, block, 'Active Blocks')">
                       <td><i class="fa fa-exclamation-circle"></i><span data-ng-bind="block.type"></span></td>
@@ -151,18 +151,18 @@
                       <td data-ng-bind="block.office || '&nbsp;'"></td>
                       <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></td>
                     </tr>
-                    <tr data-ng-show="block._show">
-                      <td data-ng-bind-html-unsafe="block.message" colspan="4"></td>
+                    <tr data-ng-show="block.show">
+                      <td data-ng-bind-html="block.message" colspan="4"></td>
                     </tr>
-                    <tr data-ng-show="block._show">
+                    <tr data-ng-show="block.show">
                       <td colspan="4">
                         <button class="cc-button-link cc-academics-what-is-registration-block"
-                                data-ng-click="api.util.preventBubble($event);block._show_regblock_definition=!block._show_regblock_definition">
+                                data-ng-click="api.util.preventBubble($event);block.show_regblock_definition=!block.show_regblock_definition">
                           <i class="fa fa-question-circle text-info"></i>What is a registration block?
                         </button>
                       </td>
                     </tr>
-                    <tr data-ng-show="block._show_regblock_definition && block._show">
+                    <tr data-ng-show="block.show_regblock_definition && block.show">
                       <td colspan="4">
                         <p>
                           A registration block prevents you from being "officially registered" as a student who is attending U.C. Berkeley. You must have both enrolled in classes and paid your fees to be an "officially registered" student.

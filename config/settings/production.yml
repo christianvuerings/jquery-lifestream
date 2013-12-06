@@ -1,10 +1,12 @@
 logger:
   level: <%= ENV['LOGGER_LEVEL'] || WARN %>
+secret_token: some 128 char random hex string
 application:
   # Set if running behind Apache/Nginx + https
   protocol: "https://"
   layer: "production"
   fake_proxies_enabled: false
+  serve_static_assets: true
 campusdb:
   adapter: jdbc
   driver: oracle.jdbc.OracleDriver
@@ -13,6 +15,122 @@ campusdb:
   password: <yer_password>
   pool: 95
   timeout: 5000
-secret_token: some 128 char random hex string
 canvas_proxy:
   export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
+sakai_proxy:
+  academic_terms:
+    student: [
+        {
+        term_yr: "2014",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2013",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2013",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2013",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2012",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2012",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2012",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2011",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2011",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2011",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2010",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2010",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2010",
+        term_cd: "B"
+        }]
+
+    instructor: [
+        {
+        term_yr: "2014",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2013",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2013",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2013",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2012",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2012",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2012",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2011",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2011",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2011",
+        term_cd: "B"
+        },
+        {
+        term_yr: "2010",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2010",
+        term_cd: "C"
+        },
+        {
+        term_yr: "2010",
+        term_cd: "B"
+        }]
+features:
+  live_campus_links_data: true
+  user_whitelist: true
+  academic_status: true
+  telebears: true
+  financials: true
+messaging:
+  enabled: true

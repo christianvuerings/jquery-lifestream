@@ -1,10 +1,47 @@
 <script type="text/ng-template" id="templates/canvas_embedded/course_provision.html">
   <div class="cc-page-course-provision">
 
-    <form data-ng-show="is_admin" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
-      <input class="cc-left" placeholder="Instructor UID" data-ng-model="acting_as" type="text" />
-      <button class="cc-button cc-button-blue" type="submit">As instructor</button>
-    </form>
+    <div data-ng-show="is_admin">
+
+      <div class="cc-widget">
+        <button class="cc-button"
+                data-ng-click="toggleAdminMode()">
+          <span data-ng-show="admin_mode !== 'by_ccn'">Switch to CCN input</span>
+          <span data-ng-show="admin_mode === 'by_ccn'">Switch to acting as instructor</span>
+        </button>
+      </div>
+
+      <form data-ng-show="admin_mode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
+        <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" />
+        <button class="cc-button cc-button-blue" type="submit">As instructor</button>
+      </form>
+
+      <div data-ng-show="admin_mode === 'by_ccn'">
+        <div data-ng-show="admin_semesters && admin_semesters.length > 0">
+          <div class="row collapse">
+            <div class="large-5 columns">
+              <ul class="cc-button-group cc-even-{{admin_semesters.length}} cc-page-provision-margin" role="tablist">
+                <li data-ng-repeat="semester in admin_semesters">
+                  <button class="cc-button"
+                          data-ng-click="switchAdminSemester(semester)"
+                          data-ng-class="{'cc-button-selected':(current_admin_semester==semester.slug)}"
+                          aria-selected="{{current_admin_semester==semester.slug}}"
+                          role="tab"
+                          data-ng-bind="semester.name">
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <form data-ng-submit="fetchFeed()">
+          <textarea data-ng-model="admin_by_ccns" data-ng-list="/[- |\,\s\n\r\t]/"
+            placeholder="Paste your list of CCNs here, separated by commas or spaces">
+          </textarea>
+          <button class="cc-button cc-button-blue" type="submit">Review matching CCNs</button>
+        </form>
+      </div>
+    </div>
 
     <div class="cc-widget cc-widget-last">
       <div class="cc-widget-title">
@@ -34,7 +71,7 @@
                   </ul>
                 </div>
               </div>
-              <form data-ng-submit="createCourseSite(selected_courses)">
+              <form data-ng-submit="createCourseSiteJob(selected_courses)">
                 <div>
                   <ul class="cc-page-provision-margin">
                     <li data-ng-repeat="course in selected_courses">
@@ -62,67 +99,62 @@
           </div>
         </div>
 
-        <div data-ng-show="current_workflow_step === 'created'">
-          <div data-ng-hide="created_status">
-            <p>Generating new course site for selected sections....</p>
+        <div data-ng-show="current_workflow_step === 'monitoring_job'">
+          <div data-ng-hide="status">
+            <i class="fa fa-spinner fa-spin"></i>
+            Sending course provisioning request....
           </div>
-          <div data-cc-spinner-directive>
-            <div data-ng-show="created_status === 'Success'">
+          <div data-ng-show="status === 'New'">
+            <i class="fa fa-spinner fa-spin"></i>
+            Course provisioning request sent. Awaiting processing....
+          </div>
+          <div data-ng-show="status">
+            <ul>
+              <li data-ng-repeat="step in completed_steps">
+                <i class="fa fa-check-circle cc-icon-green"></i>
+                <span data-ng-bind="step"></span>
+              </li>
+            </ul>
+            <div data-ng-show="status === 'Error'">
               <div class="cc-page-provision-feedback">
-                {{created_status}} : "{{created_course_site_short_name}}" site created
-                <i class="cc-left fa fa-check-circle cc-icon-green"></i>
-                <div data-ng-show="created_message">{{created_message}}</div>
-              </div>
-              <strong>
-                You may now:
-              </strong>
-              <ul class="cc-page-provision-choices">
-                <li>
-                  Go to <a data-ng-href="{{created_course_site_url}}" data-ng-bind="created_course_site_short_name"></a> to finish setting up your site.
-                </li>
-                <li>
-                  Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a>
-                </li>
-              </ul>
-              <div>
-                <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()">Create another Course Site</button>
-              </div>
-            </div>
-            <div data-ng-show="created_status === 'WARNING'">
-              <div class="cc-page-provision-feedback">
-                {{created_status}} : "{{created_course_site_short_name}}" site creation was incomplete
                 <i class="cc-left fa fa-exclamation-circle"></i>
-                <div data-ng-show="created_message">{{created_message}}</div>
-              </div>
-              <strong>
-                You may now:
-              </strong>
-              <ul class="cc-page-provision-choices">
-                <li>
-                  Try to go to <a data-ng-href="{{created_course_site_url}}" data-ng-bind="created_course_site_short_name"></a> to finish setting up your site.
-                </li>
-                <li>
-                  Report this issue to <a href="http://ets.berkeley.edu/calcentral-feedback">CalCentral support</a>
-                </li>
-              </ul>
-              <div>
-                <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()">Create another Course Site</button>
-              </div>
-            </div>
-            <div data-ng-show="created_status === 'ERROR'">
-              <div class="cc-page-provision-feedback">
-                {{created_status}} : {{created_message}}
-                <i class="cc-left fa fa-exclamation-circle"></i>
-                <div data-ng-show="created_message">
+                <p><span data-ng-bind="error"></span></p>
+                <div data-ng-show="error">
                   <strong>
-                    Report this issue to <a href="http://ets.berkeley.edu/calcentral-feedback">CalCentral support</a>
+                    Please report this issue to <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a>
                   </strong>
                 </div>
               </div>
+            </div>
+
+            <div data-ng-show="percent_complete_rounded">
+              <div data-ng-show="status === 'Processing'">
+                <i class="fa fa-spinner fa-spin"></i>
+                <strong><span data-ng-bind="percent_complete_rounded"></span>&#37; Completed</strong>
+              </div>
+              <div data-ng-show="error">
+                <i class="fa fa-spinner"></i>
+                <strong><span data-ng-bind="percent_complete_rounded"></span>&#37; completed, yet failed.</strong>
+              </div>
+            </div>
+
+            <div data-ng-show="status === 'Completed'">
+              <div class="cc-page-provision-feedback">
+                Success : <span data-ng-bind="course_site.short_name"></span> site created
+                <i class="cc-left fa fa-check-circle cc-icon-green"></i>
+              </div>
+              <strong>
+                You may now:
+              </strong>
+              <ul class="cc-page-provision-choices">
+                <li>Go to <a data-ng-href="{{course_site.url}}" data-ng-bind="course_site.short_name"></a> to finish setting up your site.</li>
+                <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>
+              </ul>
               <div>
                 <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()">Create another Course Site</button>
               </div>
             </div>
+
           </div>
         </div>
 

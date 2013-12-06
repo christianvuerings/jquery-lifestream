@@ -129,15 +129,18 @@ class CampusData < OracleDatabase
     result
   end
 
-  def self.get_courses_from_sections(term_yr, term_cd, ccns)
+  def self.get_sections_from_ccns(term_yr, term_cd, ccns)
     result = {}
     use_pooled_connection {
       sql = <<-SQL
-      select distinct course_title, dept_name, catalog_id, term_yr, term_cd
+      select course_title, dept_name, catalog_id, term_yr, term_cd, course_cntl_num, primary_secondary_cd, section_num, instruction_format,
+        catalog_root, catalog_prefix, catalog_suffix_1, catalog_suffix_2
       from calcentral_course_info_vw
       where term_yr = #{term_yr.to_i}
         and term_cd = #{connection.quote(term_cd)}
         and course_cntl_num in (#{ccns.collect{|id| id.to_i}.join(', ')})
+      order by dept_name, catalog_root, catalog_prefix nulls first, catalog_suffix_1 nulls first, catalog_suffix_2 nulls first,
+        primary_secondary_cd, instruction_format, section_num
       SQL
       result = connection.select_all(sql)
     }

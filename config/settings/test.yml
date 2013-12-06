@@ -11,6 +11,8 @@ google_proxy:
   fake: true
 financials_proxy:
   fake: true
+textbooks_proxy:
+  fake: true
 sakai_proxy:
   fake: false
   # Keyed to H2 test data
@@ -28,6 +30,7 @@ features:
   bearfacts: true
   financials: true
   telebears: true
+  textbooks: true
 
 cache:
   store: "memory"

@@ -1,10 +1,10 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * Activity controller
    */
-  calcentral.controller('ActivityController', ['$http', '$scope', 'dateService', 'taskAdderService', function($http, $scope, dateService, taskAdderService) {
+  calcentral.controller('ActivityController', ['apiService', 'dateService', 'taskAdderService', '$http', '$scope', function(apiService, dateService, taskAdderService, $http, $scope) {
 
     var activitiesModel = function(activityResponse) {
       var activities = activityResponse.activities;
@@ -162,6 +162,7 @@
     var getMyActivity = function() {
       $http.get('/api/my/activities').success(function(data) {
       //$http.get('/dummy/json/activities.json').success(function(data) {
+        apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
         activitiesModel(data);
       });
@@ -188,4 +189,4 @@
 
   }]);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);

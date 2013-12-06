@@ -131,6 +131,20 @@ describe RegStatusEventProcessor do
     saved_notifications.length.should == 2
   end
 
+  it "parses an event for a single UID as well as an array" do
+    event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":300846}}')
+    timestamp = Time.now.to_datetime
+    CampusData.stub(:get_reg_status).with(300846).and_return(
+      {
+        "ldap_uid" => "300846",
+        "reg_status_cd" => "C"
+      })
+    UserData.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
+    @processor.process(event, timestamp).should == true
+    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification.should_not be_nil
+    saved_notification.data.should_not be_nil
+  end
 
   class MockUserData
     def exists?

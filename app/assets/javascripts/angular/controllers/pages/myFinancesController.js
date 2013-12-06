@@ -5,18 +5,7 @@
    * Campus controller
    */
 
-  calcentral.controller('MyFinancesController', [
-    '$filter',
-    '$http',
-    '$routeParams',
-    '$scope',
-    'apiService',
-    function(
-      $filter,
-      $http,
-      $routeParams,
-      $scope,
-      apiService) {
+  calcentral.controller('MyFinancesController', ['$filter', '$http', '$routeParams', '$scope', 'apiService', function($filter, $http, $routeParams, $scope, apiService) {
 
     var sortTermsIndex = {
       'Fall': 0,
@@ -42,20 +31,29 @@
       }
     };
 
+    /**
+     * We need to convert this back to a float so it gets sorted correctly & so we can do comparisons
+     */
+    var parseToFloat = function(element, j) {
+      element[j + 'Float'] = parseFloat(element[j]);
+    };
+
     var parseDueDate = function(obj, i) {
       var item = obj[i];
       var test = Object.prototype.toString.call(item) === '[object Date]';
       if (test) {
         obj.transDueDateShow = $filter('date')(item, 'MM/dd/yy');
         if (obj.transStatus === 'Past due') {
-          obj._isPastDueDate = true;
-          obj._isDueNow = '1_past_due'; // Past due
+          obj.isPastDueDate = true;
+          obj.isDueNow = '1_past_due';
         } else if (obj.transStatus === 'Current' || obj.transStatus === 'Installment') {
-          obj._isDueNow = '2_current_due'; // Current due
+          obj.isDueNow = '2_current_due';
+        } else if (obj.transStatus === 'Future') {
+          obj.isDueNow = '3_future_due';
         }
       }
-      if (!obj._isDueNow) {
-        obj._isDueNow = '3_closed'; // Closed
+      if (!obj.isDueNow) {
+        obj.isDueNow = '4_closed';
       }
     };
 
@@ -72,8 +70,8 @@
 
     var parseTransStatus = function(element, summary) {
       if (element && element.transStatus && element.transStatus === 'Installment') {
-        element._isDPP = true;
-        summary._hasDPPTransactions = true;
+        element.isDPP = true;
+        summary.hasDPPTransactions = true;
       }
     };
 
@@ -83,6 +81,10 @@
         if (finances.summary.hasOwnProperty(i)){
           parseDate(finances.summary, i);
           parseAmount(finances.summary, i);
+
+          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount' || i === 'anticipatedAid') {
+            parseToFloat(finances.summary, i);
+          }
         }
       }
 
@@ -97,6 +99,9 @@
             if (j === 'transDueDate') {
               parseDueDate(element, j);
             }
+            if (j === 'transBalanceAmount') {
+              parseToFloat(element, j);
+            }
           }
         }
       });
@@ -105,7 +110,7 @@
 
     /**
      * Sort the terms
-     * First "Payments" then "All" and then the terms in descending order
+     * First "All" and then the terms in descending order
      */
     var sortTerms = function(a, b) {
       if (a.transTermYr !== b.transTermYr) {
@@ -133,8 +138,8 @@
         // When the current term actually exists in the list, we select it
         to_select_term = $scope.myfinances.current_term;
       } else {
-        // Otherwise we select the 2nd item in the list
-        to_select_term = terms[1] ? terms[1].value : terms[0].value;
+        // Otherwise we select the first item in the list
+        to_select_term = terms[0].value;
       }
 
       $scope.search = {
@@ -152,21 +157,12 @@
         if (addedTerms.indexOf(item.transTerm) === -1) {
           addedTerms.push(item.transTerm);
 
-          if (item.transTermCd === 'Payments') {
-            item.transTerm = 'Payments';
-            // A payment doesn't have a year associate to it so we add a bogus one
-            item.transTermYr = 9999;
-          }
           terms.push({
             'transTermYr': item.transTermYr,
             'transTermCd': item.transTermCd,
             'label': item.transTerm,
             'value': item.transTerm
           });
-        }
-
-        if (item.transTermCd === 'Payments') {
-          item.transTerm = 'Payments';
         }
       }
       terms.push({
@@ -183,7 +179,7 @@
     };
 
     var statuses = {
-      'open': ['Current','Past due','Future', 'Error', 'Unapplied', 'Installment', 'Open'],
+      'open': ['Current','Past due','Future', 'Error', 'Installment', 'Open'],
       'minimumamountdue': ['Current','Past due'],
       'all': ['Current','Past due','Future', 'Closed', 'Error', 'Unapplied', 'Installment', 'Open']
     };
@@ -218,19 +214,6 @@
     };
 
     /**
-     * Check whether all amounts in the summary are 0
-     */
-    var checkAllZero = function() {
-      var summary = $scope.myfinances.summary;
-      $scope.isAllZero = (summary.anticipatedAid === '0.00' &&
-        summary.lastStatementBalance === '0.00' &&
-        summary.unbilledActivity === '0.00' &&
-        summary.futureActivity === '0.00' &&
-        summary.totalPastDueAmount === '0.00' &&
-        summary.minimumAmountDue === '0.00');
-    };
-
-    /**
      * Get the student's financial information
      */
     var getStudentInfo = function() {
@@ -246,8 +229,6 @@
           createTerms();
 
           createCounts();
-
-          checkAllZero();
         }
 
         apiService.util.setTitle('My Finances');
@@ -265,7 +246,7 @@
      */
     $scope.getSortClass = function(column) {
       var sortUpDown = $scope.sort.descending ? 'down' : 'up';
-      return column == $scope.sort.column && 'fa fa-chevron-' + sortUpDown;
+      return $scope.sort.column.indexOf(column) !== -1 && 'fa fa-chevron-' + sortUpDown;
     };
 
     /**

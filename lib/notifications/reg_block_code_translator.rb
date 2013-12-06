@@ -38,9 +38,10 @@ class RegBlockCodeTranslator
     EOS
 
     cars_text = <<-EOS
-      <p>Your registration as an official Berkeley student is blocked by Billing and Payment Services due to an unpaid CARS bill.
-      Until this block is cleared, you <strong>cannot</strong> register for classes, use certain campus services (e.g. libraries, health services,
-      recreational sports facilities, Class Pass bus travel, Career Center), or obtain official campus transcripts.</p>
+      <p>A block has been placed on your record due to a past due CARS account balance. Blocks are placed on accounts that are
+      more than 60 days past due and owing more than $100. While the block will not prevent you from enrolling in classes through
+      Tele-BEARS, it will prevent grades from posting to your transcript and prevent official registration for upcoming semesters.
+      A hold is placed on your transcript and diploma.</p>
       <p>To clear this block, please submit a payment. For a complete listing of CARS payment options visit
       <a href="http://studentcentral.berkeley.edu/payments">studentcentral.berkeley.edu/payments</a>. If you have questions, visit
       Cal Student Central at <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?sproulhall">120 Sproul Hall</a> or call

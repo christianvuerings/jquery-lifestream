@@ -19,4 +19,4 @@ echo "------------------------------------------" | $LOGIT
 echo "`date`: Redeploying CalCentral on app nodes..." | $LOGIT
 
 echo "`date`: cap calcentral_dev:update..." | $LOGIT
-cap -l STDOUT calcentral_dev:update | $LOGIT
+cap -l STDOUT calcentral_dev:update | $LOGIT || { echo "ERROR: capistrano deploy failed" ; exit 1 ; }

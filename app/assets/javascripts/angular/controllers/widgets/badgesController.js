@@ -1,11 +1,11 @@
-(function(calcentral) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * Badges controller
    */
 
-  calcentral.controller('BadgesController', ['$http', '$scope', 'dateService', 'errorService', function($http, $scope, dateService, errorService) {
+  calcentral.controller('BadgesController', ['apiService', 'dateService', 'errorService', '$http', '$scope', function(apiService, dateService, errorService, $http, $scope) {
 
     var defaults = {
       'bcal': {
@@ -46,8 +46,8 @@
     };
 
     var processDisplayRange = function(epoch, is_all_day, is_start_range) {
-      var now_date = moment().format('YYYYMMDD');
-      var item_moment = moment(epoch * 1000);
+      var now_date = dateService.moment().format('YYYYMMDD');
+      var item_moment = dateService.moment(epoch * 1000);
       var item_date = item_moment.format('YYYYMMDD');
 
       // not all day event, happening today.
@@ -77,6 +77,7 @@
       default_order.forEach(function(value, index) {
         if ($scope.badges.length > index &&
           $scope.badges[index].display.name.toLowerCase() === value) {
+          $scope.badges[index].cssPopover = 'cc-' + $scope.badges[index].display.name + '-popover-status';
           angular.extend($scope.badges[index], raw_data[value]);
         }
       });
@@ -120,6 +121,7 @@
 
     var fetch = function() {
       $http.get('/api/my/badges').success(function(data) {
+        apiService.updatedFeeds.feedLoaded(data);
         decorateBadges(processCalendarEvents(data.badges || {}));
       });
     };
@@ -146,4 +148,4 @@
 
   }]);
 
-})(window.calcentral);
+})(window.angular, window.calcentral);

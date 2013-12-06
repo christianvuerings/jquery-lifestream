@@ -76,16 +76,19 @@ describe CampusData do
     end
   end
 
-  it "should find courses from sections" do
-    courses = CampusData.get_courses_from_sections("2013", "D", ["7309", "7366", "7372", "16171"])
+  it "should find sections from CCNs" do
+    courses = CampusData.get_sections_from_ccns("2013", "D", ["7309", "7366", "919191", "16171"])
     pp courses
     courses.should_not be_nil
     if CampusData.test_data?
-      courses.length.should == 2
+      courses.length.should == 3
       courses.index{|c|
         c['dept_name'] == "BIOLOGY" &&
         c['catalog_id'] == "1A" &&
-        c['course_title'] == "General Biology Lecture"
+        c['course_title'] == "General Biology Lecture" &&
+        c['primary_secondary_cd'] == 'P' &&
+        c['instruction_format'] == 'LEC' &&
+        c['section_num'] == '003'
       }.should_not be_nil
     end
   end

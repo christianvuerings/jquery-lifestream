@@ -1,4 +1,4 @@
-(function(calcentral) {
+(function(angular, calcentral) {
 
   'use strict';
 
@@ -11,7 +11,7 @@
 
     $scope.enableEditor = function() {
       $scope.editorEnabled = true;
-      $scope.task._show = false; // Otherwise the form is on blue "show" background.
+      $scope.task.show = false; // Otherwise the form is on blue "show" background.
       // Shift the scope to match scope of the add_task form
       $scope.add_edit_task = {
         'title': $scope.task.title,
@@ -27,7 +27,7 @@
         var yyyy = d.getFullYear();
         $scope.add_edit_task.due_date = mm + '/' + dd + '/' + yyyy;
       }
-      $scope.add_edit_task._focusInput = true;
+      $scope.add_edit_task.focusInput = true;
     };
 
     $scope.disableEditor = function() {
@@ -66,10 +66,9 @@
       }
 
       apiService.analytics.trackEvent(['Tasks', 'Task edited', 'edited: ' + !!changedTask.title]);
-      $http.post('/api/my/tasks', changedTask).success($scope.editTaskCompleted)
-        .error(function() {
-          apiService.analytics.trackEvent(['Error', 'Task editing failure', 'edited: ' + !!changedTask.title]);
-          //Some error notification would be helpful.
+      $http.post('/api/my/tasks', changedTask).success($scope.editTaskCompleted).error(function() {
+        apiService.analytics.trackEvent(['Error', 'Task editing failure', 'edited: ' + !!changedTask.title]);
+        //Some error notification would be helpful.
       });
 
       $scope.disableEditor();
@@ -77,4 +76,4 @@
     };
   }]);
 
-})(window.calcentral, window.angular);
+})(window.angular, window.calcentral);
