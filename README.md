@@ -98,7 +98,7 @@ You can also create Ruby configuration files like "settings.local.rb" and "devel
 
 1. Initialize PostgreSQL database tables
 ```bash
-rake db:schema:load
+rake db:schema:load db:seed
 ```
 
 1. Start the server
@@ -181,7 +181,7 @@ google_proxy: and canvas_proxy: [copy from development.local.yml]
 
 1. Populate the production db by invoking your production settings:
 ```
-rake db:schema:load RAILS_ENV="production"
+RAILS_ENV="production" rake db:schema:load db:seed
 ```
 
 1. Precompile the assets: [(more info)](http://stackoverflow.com/questions/7275636/rails-3-1-0-actionviewtemplateerrror-application-css-isnt-precompiled)
@@ -366,3 +366,18 @@ or, depending on the feature, it may make more sense to disable it in erb (so th
   <%= render 'templates/widgets/notifications' %>
 <% end %>
 ```
+
+## Keeping developer seed data updated
+
+seeds.rb is intended for use only on developer machines, so they have a semi-realistic copy of production lists of
+superusers, links, etc. ./db/developer-seed-data.sql has the data used by rake db:seed. Occasionally we'll want to
+update it from production. To do that, log into a prod node and do:
+```
+pg_dump calcentral --inserts --clean -f developer-seed-data.sql -t link_categories \
+-t link_categories_link_sections -t link_sections -t link_sections_links -t links \
+-t links_user_roles -t user_auths -t user_roles -t user_whitelists \
+-h postgres-hostname -p postgres-port-number -U calcentral
+```
+
+Take that file, developer-seed-data.sql, and edit it to remove the "REVOKE" and "GRANT" statements at the bottom,
+since those will conflict with local permissions. Copy that file into your source tree and get it merged into master.
