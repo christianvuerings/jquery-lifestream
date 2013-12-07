@@ -53,8 +53,6 @@ canvas_proxy:
   admin_access_token: "someMumboJumbo"
   url_root: "http://localhost:12345"
   fake: false
-  client_id: 2
-  client_secret: "someMumboJumbo"
   account_id: '90242'
   export_directory: 'tmp/canvas'
   lti_key: 'someMumboJumbo'
