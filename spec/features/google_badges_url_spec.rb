@@ -67,7 +67,7 @@ feature 'MyBadges urls:' do
     Oauth2Data.stub(:get_google_email).and_return("oski.the.creepy.bear@berkeley.edu")
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleEventsListProxy.stub(:new).and_return(@fake_calendar_events)
-    raw_feed = GoogleEventsListProxy.new(@uid).recently_updated_items.first.data["items"]
+    raw_feed = GoogleEventsListProxy.new(@uid).recent_items.first.data["items"]
     munged_feed = MyBadges::GoogleCalendar.new(@user_id).fetch_counts
     # find something where title is == summary
     found_matching_item = false
