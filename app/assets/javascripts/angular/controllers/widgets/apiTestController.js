@@ -85,4 +85,4 @@
     });
 
   }]);
-})(window. angular, window.calcentral);
+})(window.angular, window.calcentral);
