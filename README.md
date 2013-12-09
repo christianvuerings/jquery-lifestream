@@ -101,6 +101,11 @@ You can also create Ruby configuration files like "settings.local.rb" and "devel
 rake db:schema:load db:seed
 ```
 
+1. Make yourself powerful
+```bash
+rake superuser:create UID={your numeric CalNet UID}
+```
+
 1. Start the server
 ```bash
 rails s
