@@ -186,3 +186,7 @@ group :test, :testext do
 
   gem "webmock", "~> 1.11.0"
 end
+
+group :development, :assets do
+  gem "turbo-sprockets-rails3", "~> 0.3.10"
+end
