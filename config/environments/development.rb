@@ -35,7 +35,11 @@ Calcentral::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Do not compress assets
+  # Set this to true if you want to compress the assets.
   config.assets.compress = false
+
+  # Don't fallback to assets pipeline if a precompiled asset is missed
+  # config.assets.compile = false
 
   # Expands the lines which load the assets
   config.assets.debug = true

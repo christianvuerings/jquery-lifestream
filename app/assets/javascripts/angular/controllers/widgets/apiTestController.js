@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * API Test controller
    */
-  calcentral.controller('ApiTestController', ['$http', '$scope', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('ApiTestController', function($http, $scope) {
 
     // Crude way of testing against the http.success responses due to insufficient status codes.
     var response_dictionary = {
@@ -84,5 +84,5 @@
       }
     });
 
-  }]);
-})(window.angular, window.calcentral);
+  });
+})(window.angular);

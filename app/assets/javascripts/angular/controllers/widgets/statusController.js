@@ -1,10 +1,10 @@
-(function(calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Status controller
    */
-  calcentral.controller('StatusController', ['$scope', function($scope) {
+  angular.module('calcentral.controllers').controller('StatusController', function($scope) {
 
     var showStatusError = function() {
       $scope.showStatusError =
@@ -20,6 +20,6 @@
       }
     });
 
-  }]);
+  });
 
-})(window.calcentral);
+})(window.angular);

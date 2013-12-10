@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', ['$compile', function($compile) {
+  angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function($compile) {
 
     return {
       restrict: 'A',
@@ -39,6 +39,6 @@
         elm.append(element);
       }
     };
-  }]);
+  });
 
 })(window.angular);

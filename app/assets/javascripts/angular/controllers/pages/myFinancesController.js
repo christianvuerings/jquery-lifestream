@@ -1,11 +1,11 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Campus controller
    */
 
-  calcentral.controller('MyFinancesController', ['$filter', '$http', '$routeParams', '$scope', 'apiService', function($filter, $http, $routeParams, $scope, apiService) {
+  angular.module('calcentral.controllers').controller('MyFinancesController', function($filter, $http, $routeParams, $scope, apiService) {
 
     var sortTermsIndex = {
       'Fall': 0,
@@ -286,6 +286,6 @@
       }
     });
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

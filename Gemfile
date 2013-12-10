@@ -114,6 +114,10 @@ group :assets do
   # Raven.js - library for JS error logging
   gem "ravenjs-gem", "~> 1.0.7.0"
 
+  # ngmin-rails
+  # https://github.com/jasonm/ngmin-rails
+  gem "ngmin-rails", "~> 0.4.0"
+
 end
 
 # Oracle adapter

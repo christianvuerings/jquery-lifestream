@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Updated Feeds controller
    */
-  calcentral.controller('UpdatedFeedsController', ['$scope', 'apiService', function($scope, apiService) {
+  angular.module('calcentral.controllers').controller('UpdatedFeedsController', function($scope, apiService) {
 
     $scope.has_updates = false;
     $scope.$on('calcentral.api.updatedFeeds.services_with_updates', function() {
@@ -18,6 +18,6 @@
 
     $scope.refreshFeeds = apiService.updatedFeeds.refreshFeeds;
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

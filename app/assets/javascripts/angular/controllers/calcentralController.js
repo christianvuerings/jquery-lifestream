@@ -1,10 +1,10 @@
-(function(window, calcentral) {
+(function(window, angular) {
   'use strict';
 
   /**
    * CalCentral main controller
    */
-  calcentral.controller('CalcentralController', ['$rootScope', 'apiService', function($rootScope, apiService) {
+  angular.module('calcentral.controllers').controller('CalcentralController', function($rootScope, apiService) {
 
     // Expose the API service
     $rootScope.api = apiService;
@@ -27,6 +27,6 @@
       }
     });
 
-  }]);
+  });
 
-})(window, window.calcentral);
+})(window, window.angular);
