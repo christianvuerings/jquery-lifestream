@@ -60,7 +60,7 @@ class TextbooksProxy < BaseProxy
   end
 
   def request(vcr_cassette, params = {})
-    self.class.fetch_from_cache(@ccn) do
+    self.class.fetch_from_cache("#{@ccn}-#{@slug}") do
       required_books = []
       recommended_books = []
       optional_books = []

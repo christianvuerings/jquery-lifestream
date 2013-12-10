@@ -8,7 +8,7 @@ class MyTextbooks < MyMergedModel
   end
 
   def get_feed(*opts)
-    self.class.fetch_from_cache @ccn do
+    self.class.fetch_from_cache "#{@ccn}-#{@slug}" do
       init
       feed = get_feed_internal(*opts)
       notify_if_feed_changed(feed, @ccn)
@@ -17,7 +17,7 @@ class MyTextbooks < MyMergedModel
   end
 
   def get_feed_as_json(*opts)
-    self.class.fetch_from_cache "json-#{@ccn}" do
+    self.class.fetch_from_cache "json-#{@ccn}-#{@slug}" do
       feed = get_feed(*opts)
       feed.to_json
     end
