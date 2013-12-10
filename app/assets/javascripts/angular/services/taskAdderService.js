@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('taskAdderService', ['$http', '$q', 'apiService', function($http, $q, apiService) {
+  angular.module('calcentral.services').service('taskAdderService', function($http, $q, apiService) {
 
     var _taskPanelState = {
       'isProcessing': false,
@@ -84,6 +84,6 @@
       toggleAddTask: toggleAddTask
     };
 
-  }]);
+  });
 
 }(window.angular));

@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('utilService', ['$location', '$rootScope', function($location, $rootScope) {
+  angular.module('calcentral.services').service('utilService', function($location, $rootScope) {
 
     /**
      * Pass in controller name so we can set active location in menu
@@ -61,6 +61,6 @@
       setTitle: setTitle
     };
 
-  }]);
+  });
 
 }(window.angular));

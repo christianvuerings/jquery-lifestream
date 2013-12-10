@@ -1,7 +1,7 @@
 (function(angular, Pikaday) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccDatepickerDirective', ['$document', function($document) {
+  angular.module('calcentral.directives').directive('ccDatepickerDirective', function($document) {
     return {
 
       // Restrict the directive to attributes
@@ -84,6 +84,6 @@
 
       }
     };
-  }]);
+  });
 
 })(window.angular, window.Pikaday);

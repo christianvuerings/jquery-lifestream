@@ -6,7 +6,7 @@
    * We make sure to hide the location bar on mobile devices.
    * NOTE: This will only happen when the actual content is high enough.
    */
-  angular.module('calcentral.services').factory('locationbarInterceptorService', ['$window' , function($window) {
+  angular.module('calcentral.services').factory('locationbarInterceptorService', function($window) {
 
     return {
 
@@ -20,6 +20,6 @@
 
     };
 
-  }]);
+  });
 
 }(window.angular, window));

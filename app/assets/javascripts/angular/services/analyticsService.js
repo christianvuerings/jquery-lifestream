@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('analyticsService', ['$rootScope', '$window', '$location', function($rootScope, $window, $location) {
+  angular.module('calcentral.services').service('analyticsService', function($rootScope, $window, $location) {
 
     /**
      * Adding a track property to the analytics object
@@ -53,6 +53,6 @@
       trackExternalLink: trackExternalLink
     };
 
-  }]);
+  });
 
 }(window.angular));

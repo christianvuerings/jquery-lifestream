@@ -1,10 +1,10 @@
-(function(window, calcentral) {
+(function(window, angular) {
   'use strict';
 
   /**
    * Admin controller
    */
-  calcentral.controller('AdminController', ['$http', '$scope', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('AdminController', ['$http', '$scope', function($http, $scope) {
 
     $scope.admin = {};
 
@@ -35,4 +35,4 @@
 
   }]);
 
-})(window, window.calcentral);
+})(window, window.angular);

@@ -5,7 +5,7 @@
 
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccScrollToDirective', ['$rootScope', '$timeout', '$window', function($rootScope, $timeout, $window) {
+  angular.module('calcentral.directives').directive('ccScrollToDirective', function($rootScope, $timeout, $window) {
 
     return {
       restrict: 'AC',
@@ -49,6 +49,6 @@
         };
       }
     };
-  }]);
+  });
 
 })(window.angular);

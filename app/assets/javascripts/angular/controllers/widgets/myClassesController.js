@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * My Classes controller
    */
-  calcentral.controller('MyClassesController', ['apiService', '$http', '$scope', function(apiService, $http, $scope) {
+  angular.module('calcentral.controllers').controller('MyClassesController', function(apiService, $http, $scope) {
 
     var addSubclasses = function(classesHash) {
       for (var j = 0; j < classesHash.otherClasses.length; j++) {
@@ -124,6 +124,6 @@
       }
     });
     getMyClasses();
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

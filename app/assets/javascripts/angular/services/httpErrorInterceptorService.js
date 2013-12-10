@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').factory('httpErrorInterceptorService', ['$q' , 'errorService', function($q, errorService) {
+  angular.module('calcentral.services').factory('httpErrorInterceptorService', function($q, errorService) {
 
     return {
 
@@ -32,6 +32,6 @@
 
     };
 
-  }]);
+  });
 
 }(window.angular));
