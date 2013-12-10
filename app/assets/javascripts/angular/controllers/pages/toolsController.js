@@ -1,9 +1,9 @@
-(function(angular) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * Tools controller
    */
-  angular.module('calcentral.controllers').controller('ToolsController', angular.noop);
+  calcentral.controller('ToolsController', angular.noop);
 
-})(window.angular);
+})(window.angular, window.calcentral);

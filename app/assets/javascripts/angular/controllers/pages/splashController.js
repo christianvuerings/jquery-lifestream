@@ -1,10 +1,10 @@
-(function(angular) {
+(function(calcentral) {
   'use strict';
 
   /**
    * Splash controller
    */
-  angular.module('calcentral.controllers').controller('SplashController', function($http, $scope, apiService) {
+  calcentral.controller('SplashController', ['$http', '$scope', 'apiService', function($http, $scope, apiService) {
 
     apiService.util.setTitle('Home');
 
@@ -12,6 +12,6 @@
       $scope.latest_release_note = data.entries[0];
     });
 
-  });
+  }]);
 
-})(window.angular);
+})(window.calcentral);

@@ -1,10 +1,10 @@
-(function(angular) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * Canvas user provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasUserProvisionController', function (apiService, $http, $scope) {
+  calcentral.controller('CanvasUserProvisionController', ['apiService', '$http', '$scope', function (apiService, $http, $scope) {
 
     apiService.util.setTitle('bCourses User Provision');
 
@@ -65,6 +65,6 @@
 
     };
 
-  });
+  }]);
 
-})(window.angular);
+})(window.angular, window.calcentral);

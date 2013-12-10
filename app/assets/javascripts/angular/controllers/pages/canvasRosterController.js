@@ -1,10 +1,10 @@
-(function (angular) {
+(function (angular, calcentral) {
   'use strict';
 
   /**
    * Canvas roster photos LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasRosterController', function (apiService, $http, $routeParams, $scope, $window) {
+  calcentral.controller('CanvasRosterController', ['apiService', '$http', '$routeParams', '$scope', '$window', function (apiService, $http, $routeParams, $scope, $window) {
 
     apiService.util.setTitle('bCourses Roster Photos');
 
@@ -36,6 +36,6 @@
     };
 
     getRoster();
-  });
+  }]);
 
-})(window.angular);
+})(window.angular, window.calcentral);

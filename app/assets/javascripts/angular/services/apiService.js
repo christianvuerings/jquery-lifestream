@@ -2,7 +2,19 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('apiService', function(
+  angular.module('calcentral.services').service('apiService', [
+    'analyticsService',
+    'authService',
+    'apiEventService',
+    'dateService',
+    'errorService',
+    'popoverService',
+    'refreshService',
+    'updatedFeedsService',
+    'userService',
+    'utilService',
+    'widgetService',
+    function(
       analyticsService,
       authService,
       apiEventService,
@@ -33,6 +45,6 @@
       return api;
 
     }
-  );
+  ]);
 
 }(window.angular));

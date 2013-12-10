@@ -1,12 +1,12 @@
 /**
  * Set the security configuration for CalCentral
  */
-(function(angular, document) {
+(function(calcentral, document) {
 
   'use strict';
 
   // Set the configuration
-  angular.module('calcentral.config').config(function($httpProvider) {
+  calcentral.config(['$httpProvider', function($httpProvider) {
 
     // Setting up CSRF tokens for POST, PUT and DELETE requests
     var tokenElement = document.querySelector('meta[name=csrf-token]');
@@ -15,6 +15,6 @@
       $httpProvider.defaults.headers.put['X-CSRF-Token'] = tokenElement.content;
     }
 
-  });
+  }]);
 
-})(window.angular, window.document);
+})(window.calcentral, window.document);
