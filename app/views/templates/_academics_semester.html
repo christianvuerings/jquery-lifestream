@@ -178,7 +178,7 @@
                 <tbody>
                   <tr data-ng-repeat="course in selected_courses">
                     <td data-ng-bind="course.course_number"></td>
-                    <td class="cc-table-right cc-table-right-spacing" data-ng-bind="course.units | number:1" data-ng-show="course.units"></td>
+                    <td class="cc-table-right cc-table-right-spacing" data-ng-bind="course.units | number:1"></td>
                     <td data-ng-show="!course.units">--</td>
                     <td>
                       <select
