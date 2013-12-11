@@ -22,6 +22,10 @@ describe "MyAcademics::Regblocks" do
       block[:status].should == "Released"
       block[:type].should_not be_nil
     end
+
+    # Make sure the date epoch matches the expected date.
+    Time.at(oski_blocks[:inactive_blocks][1][:blocked_date][:epoch]).to_s.start_with?('2012-03-20').should be_true
+
   end
 
   context "Offline BearfactsApi for regblocks" do
