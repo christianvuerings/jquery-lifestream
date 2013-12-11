@@ -462,7 +462,7 @@
           "units": "5.0",
           "sections": [
             {
-              "ccn": "7309",
+              "ccn": "07309",
               "enroll_limit": "105",
               "instruction_format": "LEC",
               "instructors": [],
@@ -473,7 +473,7 @@
               "waitlist_position": "29"
             },
             {
-              "ccn": "7311",
+              "ccn": "07311",
               "enroll_limit": "35",
               "instruction_format": "DIS",
               "instructors": [],
@@ -484,7 +484,7 @@
               "waitlist_position": "3"
             },
             {
-              "ccn": "7310",
+              "ccn": "07310",
               "instruction_format": "LEC",
               "instructors": [],
               "is_primary_section": false,
@@ -511,7 +511,7 @@
           "units": "5.0",
           "sections": [
             {
-              "ccn": "7309",
+              "ccn": "07309",
               "instruction_format": "LEC",
               "is_primary_section": true,
               "section_label": "LEC 003",
@@ -535,7 +535,7 @@
               ]
             },
             {
-              "ccn": "7310",
+              "ccn": "07310",
               "instruction_format": "DIS",
               "is_primary_section": false,
               "section_label": "DIS 201",
@@ -610,7 +610,7 @@
           "units": "5.0",
           "sections": [
             {
-              "ccn": "7366",
+              "ccn": "07366",
               "instruction_format": "DIS",
               "section_label": "DIS 201",
               "section_number": "201",
