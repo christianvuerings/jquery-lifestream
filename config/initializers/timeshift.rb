@@ -15,6 +15,9 @@ Rails.application.config.after_initialize do
     next_week_utc = end_of_week_utc.advance(days: 2)
     far_future_utc = next_week_utc.advance(days: 7)
 
+    # Bearfacts XML often specifies dates as midnight with no timezone
+    yesterday_no_tz = today.advance(:days => -1).to_date.to_datetime
+
     substitutions = {
         ":::SEVEN_MONTHS_AGO:::" => today.advance(:months => -7).rfc3339,
         ":::FIVE_MONTHS_AGO:::" => today.advance(:months => -5).rfc3339,
@@ -48,6 +51,8 @@ Rails.application.config.after_initialize do
         ":::TOMORROW:::" => today.advance(days: 1).rfc3339,
         ":::TOMORROW_NO_TIME:::" => today.advance(days: 1).strftime("%Y-%m-%d"),
         ":::DAY_AFTER_TOMORROW:::" => today.advance(days: 2).rfc3339,
+        ":::NO_TZ_DAY_BEFORE_YESTERDAY:::" => yesterday_no_tz.advance(:days => -1).strftime('%F %T.0'),
+        ":::NO_TZ_YESTERDAY:::" => yesterday_no_tz.strftime('%F %T.0')
     }
 
     Rails.logger.debug "Timeshifter: Today = #{today}; epoch = #{today.to_i}"

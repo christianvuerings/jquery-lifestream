@@ -23,7 +23,7 @@ class MyAcademics::Exams
     doc.css("studentFinalExamSchedule").each do |exam|
       exam_data = exam.css("studentFinalExamScheduleKey")
       begin
-        exam_datetime = DateTime.parse(to_text(exam_data.css("examDate")))
+        exam_datetime = Date.parse(to_text(exam_data.css("examDate"))).to_time_in_current_zone.to_datetime
       rescue ArgumentError => e
         # skip this exam if it has no parseable date
         Rails.logger.warn "#{self.class.name} Error parsing date in final exams feed for user #{@uid}: #{e.message}. Exam data is #{exam_data.to_s}"
