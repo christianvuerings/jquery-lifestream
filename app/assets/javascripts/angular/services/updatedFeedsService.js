@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('updatedFeedsService', function($http, $timeout, userService) {
+  angular.module('calcentral.services').service('updatedFeedsService', ['$http', '$timeout', 'userService', function($http, $timeout, userService) {
 
     var events = {
       is_loading: false,
@@ -146,6 +146,6 @@
       startPolling: startPolling
     };
 
-  });
+  }]);
 
 })(window.angular);

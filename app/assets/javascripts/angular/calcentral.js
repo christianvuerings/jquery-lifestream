@@ -5,8 +5,6 @@
   /**
    * Initialize all of the submodules
    */
-  angular.module('calcentral.config', ['ngRoute']);
-  angular.module('calcentral.controllers', []);
   angular.module('calcentral.directives', []);
   angular.module('calcentral.filters', []);
   angular.module('calcentral.services', ['ng']);
@@ -15,8 +13,6 @@
    * CalCentral module
    */
   var calcentral = angular.module('calcentral', [
-    'calcentral.config',
-    'calcentral.controllers',
     'calcentral.directives',
     'calcentral.filters',
     'calcentral.services',

@@ -1,13 +1,13 @@
-(function(angular) {
+(function(calcentral) {
   'use strict';
 
   /**
    * UID Error controller
    */
-  angular.module('calcentral.controllers').controller('uidErrorController', function(apiService) {
+  calcentral.controller('uidErrorController', ['apiService', function(apiService) {
 
     apiService.util.setTitle('Unrecognized Log-in');
 
-  });
+  }]);
 
-})(window.angular);
+})(window.calcentral);

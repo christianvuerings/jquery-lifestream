@@ -1,13 +1,13 @@
-(function(angular) {
+(function(calcentral) {
   'use strict';
 
   /**
    * Error controller
    */
-  angular.module('calcentral.controllers').controller('SorryController', function(apiService) {
+  calcentral.controller('SorryController', ['apiService', function(apiService) {
 
     apiService.util.setTitle('Sorry');
 
-  });
+  }]);
 
-})(window.angular);
+})(window.calcentral);

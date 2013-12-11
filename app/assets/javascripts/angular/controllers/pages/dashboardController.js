@@ -1,13 +1,13 @@
-(function(angular) {
+(function(calcentral) {
   'use strict';
 
   /**
    * Dashboard controller
    */
-  angular.module('calcentral.controllers').controller('DashboardController', function(apiService) {
+  calcentral.controller('DashboardController', ['apiService', function(apiService) {
 
     apiService.util.setTitle('Dashboard');
 
-  });
+  }]);
 
-})(window.angular);
+})(window.calcentral);

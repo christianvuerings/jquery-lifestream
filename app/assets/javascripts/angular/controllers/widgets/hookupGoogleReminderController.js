@@ -1,10 +1,10 @@
-(function(angular) {
+(function(calcentral) {
   'use strict';
 
   /**
    * Hookup Google Reminder controller
    */
-  angular.module('calcentral.controllers').controller('HookupGoogleReminderController', function($http, $scope, apiService) {
+  calcentral.controller('HookupGoogleReminderController', ['$http', '$scope', 'apiService', function($http, $scope, apiService) {
 
     $scope.dismissReminder = function() {
       $http.post('/api/google/dismiss_reminder').success(function() {
@@ -24,6 +24,6 @@
       }
     });
 
-  });
+  }]);
 
-})(window.angular);
+})(window.calcentral);

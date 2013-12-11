@@ -1,10 +1,10 @@
-(function(angular) {
+(function(angular, calcentral) {
   'use strict';
 
   /**
    * My Groups controller
    */
-  angular.module('calcentral.controllers').controller('MyGroupsController', function(apiService, $http, $scope) {
+  calcentral.controller('MyGroupsController', ['apiService', '$http', '$scope', function(apiService, $http, $scope) {
 
     var getMyGroups = function() {
       $http.get('/api/my/groups').success(function(data) {
@@ -19,6 +19,6 @@
       }
     });
     getMyGroups();
-  });
+  }]);
 
-})(window.angular);
+})(window.angular, window.calcentral);

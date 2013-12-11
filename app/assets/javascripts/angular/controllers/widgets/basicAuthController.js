@@ -1,10 +1,10 @@
-(function(angular) {
+(function(calcentral) {
   'use strict';
 
   /**
    * Basic Authentication controller
    */
-  angular.module('calcentral.controllers').controller('BasicAuthController', function($http, $scope) {
+  calcentral.controller('BasicAuthController', ['$http', '$scope', function($http, $scope) {
 
     $scope.basicauth = {
       user: null
@@ -30,6 +30,6 @@
       }
     });
 
-  });
+  }]);
 
-})(window.angular);
+})(window.calcentral);
