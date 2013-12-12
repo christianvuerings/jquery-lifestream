@@ -78,7 +78,7 @@ class CanvasUserSites
           (coffering[:role] == 'Student' || coffering[:role] == 'Instructor') &&
               coffering[:term_yr].to_s == campus_section[:term_yr] &&
               coffering[:term_cd] == campus_section[:term_cd] &&
-              coffering[:sections].index{ |csect| csect[:ccn] == campus_section[:ccn].to_i }
+              coffering[:sections].index{ |csect| csect[:ccn].to_i == campus_section[:ccn].to_i }
         end
         if matched_course_idx
           linked_course_ids.add(campus_user_courses[matched_course_idx][:id])
