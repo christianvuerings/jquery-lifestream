@@ -15,10 +15,11 @@ describe "MyAcademics::Exams" do
     feed[:exam_schedule][0][:location][:raw_location].should == "390 HEARST MIN"
     feed[:exam_schedule][0][:location]["room_number"].should == "390"
     feed[:exam_schedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
+    # Make sure the date epoch matches the expected date.
+    Time.at(feed[:exam_schedule][0][:date][:epoch]).to_s.start_with?('2013-05-14').should be_true
     # making sure sorting works in right order
-    feed[:exam_schedule][0][:date][:epoch].should == 1368489600
-    feed[:exam_schedule][1][:date][:epoch].should == 1368576000
-    feed[:exam_schedule][2][:date][:epoch].should == 1368662400
+    feed[:exam_schedule][0][:date][:epoch].should < feed[:exam_schedule][1][:date][:epoch]
+    feed[:exam_schedule][1][:date][:epoch].should < feed[:exam_schedule][2][:date][:epoch]
   end
 
   it "should properly handle a student with an exam in an unparseable room" do

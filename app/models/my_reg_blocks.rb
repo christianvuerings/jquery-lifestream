@@ -26,11 +26,11 @@ class MyRegBlocks < MyMergedModel
     doc.css("studentRegistrationBlock").each do |block|
       blocked_date = cleared_date = nil
       begin
-        blocked_date = DateTime.parse(block.css("blockedDate").text)
+        blocked_date = Date.parse(block.css("blockedDate").text).to_time_in_current_zone.to_datetime
       rescue ArgumentError # no date
       end
       begin
-        cleared_date = DateTime.parse(block.css("clearedDate").text)
+        cleared_date = Date.parse(block.css("clearedDate").text).to_time_in_current_zone.to_datetime
       rescue ArgumentError # no date
       end
 
