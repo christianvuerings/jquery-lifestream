@@ -28,7 +28,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       it { subject[0][:classes][0][:grade_option].should eq "P/NP" }
       it { subject[0][:classes][0][:dept].should eq "BIOLOGY" }
       it { subject[0][:classes][0][:sections].length.should eq 1 }
-      it { subject[0][:classes][0][:sections][0][:ccn].should eq "7309" }
+      it { subject[0][:classes][0][:sections][0][:ccn].should eq "07309" }
       it { subject[0][:classes][0][:sections][0][:waitlist_position].should eq "42" }
       it { subject[0][:classes][0][:sections][0][:enroll_limit].should eq "5000" }
       it { subject[1][:name].should eq "Spring 2014" }
@@ -41,7 +41,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       it { subject[2][:classes][0][:course_number].should eq "BIOLOGY 1A" }
       it { subject[2][:classes][0][:dept].should eq "BIOLOGY" }
       it { subject[2][:classes][0][:sections].length.should eq 2 }
-      it { subject[2][:classes][0][:sections][0][:ccn].should eq "7309" }
+      it { subject[2][:classes][0][:sections][0][:ccn].should eq "07309" }
       it { subject[2][:classes][0][:sections][0][:schedules][0][:schedule].should eq "M 4:00P-5:00P" }
       it { subject[2][:classes][0][:slug].should eq "biology-1a" }
       it { subject[2][:classes][0][:grade].should be_nil }

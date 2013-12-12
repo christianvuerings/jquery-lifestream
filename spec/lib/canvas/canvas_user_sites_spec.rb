@@ -86,8 +86,8 @@ describe CanvasUserSites do
             color_class: "campus-class",
             role: 'Student',
             sections: [
-                { ccn: 7366 },
-                { ccn: 7309 }
+                { ccn: '07366' },
+                { ccn: '07309' }
             ]
         }
     ])
@@ -175,7 +175,7 @@ describe CanvasUserSites do
             color_class: "campus-class",
             role: 'Instructor',
             sections: [
-                { ccn: 7309 }
+                { ccn: '07309' }
             ]
         }
     ])
@@ -265,7 +265,7 @@ describe CanvasUserSites do
             color_class: "campus-class",
             role: 'Student',
             sections: [
-                { ccn: 7309 }
+                { ccn: '07309' }
             ]
         }
     ])

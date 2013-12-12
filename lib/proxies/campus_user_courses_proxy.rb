@@ -66,6 +66,7 @@ class CampusUserCoursesProxy < BaseProxy
       campus_classes.values.each do |semester|
         semester.each do |course|
           course[:sections].each do |section|
+            section[:ccn] = get_ccn section[:ccn]
             proxy = CampusCourseSectionsProxy.new({term_yr: course[:term_yr],
                                                    term_cd: course[:term_cd],
                                                    ccn: section[:ccn]})
@@ -189,6 +190,11 @@ class CampusUserCoursesProxy < BaseProxy
       section_data[:enroll_limit] = row['enroll_limit']
     end
     section_data
+  end
+
+  def get_ccn(ccn)
+    return ccn unless ccn.length < 5
+    "0" * (5 - ccn.length) + ccn
   end
 
 end
