@@ -31,7 +31,7 @@ describe MyActivitiesController do
     json_response = JSON.parse(response.body)
     json_response["activities"].instance_of?(Array).should == true
     json_response["activities"].each do | activity |
-      %w(type source emitter color_class).each do | req_field |
+      %w(type source emitter).each do | req_field |
         activity[req_field].blank?.should_not == true
       end
     end

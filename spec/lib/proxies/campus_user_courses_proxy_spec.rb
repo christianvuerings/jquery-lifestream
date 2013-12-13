@@ -17,7 +17,6 @@ describe CampusUserCoursesProxy do
       course[:id].blank?.should be_false
       course[:emitter].should == 'Campus'
       course[:name].blank?.should be_false
-      course[:color_class].should == 'campus-class'
       ['Student', 'Instructor'].include?(course[:role]).should be_true
       sections = course[:sections]
       sections.length.should be > 0
@@ -46,7 +45,6 @@ describe CampusUserCoursesProxy do
       course[:id].blank?.should be_false
       course[:emitter].should == 'Campus'
       course[:name].blank?.should be_false
-      course[:color_class].should == 'campus-class'
       course.should be_has_key(:cred_cd)
       ['Student', 'Instructor'].include?(course[:role]).should be_true
       sections = course[:sections]

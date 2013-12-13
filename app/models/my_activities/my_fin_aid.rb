@@ -53,8 +53,7 @@ class MyActivities::MyFinAid
         date: date,
         summary: summary,
         source_url: url,
-        emitter: "Financial Aid",
-        color_class: "myfinaid-class"
+        emitter: "Financial Aid"
       }
 
       if (status.values.none?)
@@ -91,8 +90,7 @@ class MyActivities::MyFinAid
         type: "alert",
         date: "",
         source_url: url,
-        emitter: "Financial Aid",
-        color_class: "myfinaid-class"
+        emitter: "Financial Aid"
       }
     end
   end

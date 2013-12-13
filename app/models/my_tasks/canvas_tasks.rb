@@ -41,7 +41,6 @@ module MyTasks
                   "emitter" => CanvasProxy::APP_NAME,
                   "link_url" => result["assignment"]["html_url"],
                   "source_url" => result["assignment"]["html_url"],
-                  "color_class" => "canvas-class",
                   "status" => "inprogress"
                 }
                 if result["assignment"]["description"] != ""
@@ -93,7 +92,6 @@ module MyTasks
                   "emitter" => CanvasProxy::APP_NAME,
                   "link_url" => result["html_url"],
                   "source_url" => result["html_url"],
-                  "color_class" => "canvas-class",
                   "status" => "inprogress"
                 }
                 due_date = convert_date(result["start_at"])

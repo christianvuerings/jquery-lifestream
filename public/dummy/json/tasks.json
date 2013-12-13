@@ -15,8 +15,7 @@
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDow/tasks/MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "emitter": "bCourses",
       "bucket": "Overdue",
-      "notes": "Everyone needs to bring something to read aloud, and a snack to share.",
-      "color_class": "canvas-class"
+      "notes": "Everyone needs to bring something to read aloud, and a snack to share."
     },
     {
       "type": "task",
@@ -27,7 +26,6 @@
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
       "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMDQxODM3NTEx",
-      "color_class": "google-task",
       "status": "Overdue",
       "due_date": {
         "epoch": 1354320000,
@@ -49,8 +47,7 @@
       "bucket": "Today",
       "notes": "This is a test of the emergency broadcast system",
       "source": "Biology",
-      "status": "needs_action",
-      "color_class": "canvas-assignment"
+      "status": "needs_action"
     },
     {
       "type": "assignment",
@@ -65,8 +62,7 @@
       "emitter": "bCourses",
       "bucket": "Future",
       "source": "Biology",
-      "status": "inprogress",
-      "color_class": "canvas-class"
+      "status": "inprogress"
     },
     {
       "type": "assignment",
@@ -82,8 +78,7 @@
       "bucket": "Future",
       "notes": "Adieu, adieu, adieu",
       "source": "Biology",
-      "status": "completed",
-      "color_class": "canvas-class"
+      "status": "completed"
     },
     {
       "type": "assignment",
@@ -98,8 +93,7 @@
       "emitter": "bCourses",
       "bucket": "Future",
       "source": "Biology",
-      "status": "completed",
-      "color_class": "canvas-class"
+      "status": "completed"
     },
     {
       "type": "assignment",
@@ -114,8 +108,7 @@
       "emitter": "bCourses",
       "bucket": "Today",
       "source": "Biology",
-      "status": "completed",
-      "color_class": "canvas-class"
+      "status": "completed"
     },
     {
       "type": "task",
@@ -126,7 +119,6 @@
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
       "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoxNjYzMjE0NDg0",
-      "color_class": "google-task",
       "status": "needs_action"
     },
     {
@@ -137,7 +129,6 @@
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
       "id": "MTIyMzQ3NTIyMjUzODMyMTI2NTI6MDoxNzUxNjI4NTMw",
       "source_url": "https://www.googleapis.com/tasks/v1/lists/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDow/tasks/MDY0OTA0MjU4MDkyNTI0Mzc0OTI6MDoyMTExODI3NTU1",
-      "color_class": "google-task",
       "status": "needs_action"
     }
   ],

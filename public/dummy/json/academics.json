@@ -670,7 +670,6 @@
               "short_description": "Confessions of a Biotician",
               "name": "BIO 123A Everyone",
               "emitter": "bCourses",
-              "color_class": "canvas-class",
               "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397",
               "sections": [
                 {
@@ -689,7 +688,6 @@
               "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
               "emitter": "bSpace",
               "name": "Bio 123A DIS 008 Su13",
-              "color_class": "bspace-class",
               "sections": [
                 {
                   "ccn": "49713"

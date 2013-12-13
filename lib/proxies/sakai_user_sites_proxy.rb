@@ -47,13 +47,11 @@ class SakaiUserSitesProxy < SakaiProxy
           case row['type']
             when 'project'
               site[:name] = row['title'] || ''
-              site[:color_class] = 'bspace-group'
               categories[:groups] << site
             when 'course'
               linked_enrollments = get_courses_from_provider(campus_user_courses, row['provider_id']) || []
               site[:courses] = linked_enrollments
               site[:name] = row['title']
-              site[:color_class] = 'bspace-class'
               categories[:classes] << site
           end
         end
