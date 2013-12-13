@@ -156,19 +156,16 @@ class CanvasUserActivities
       if idx
         site = canvas_sites[idx]
         source = site[:source] || site[:name]
-        color_class = site[:color_class]
       end
     elsif entry['context_type'] == 'Course'
       idx = canvas_sites.index {|site| site[:id] == entry['course_id'].to_s && site[:site_type] == 'course'}
       if idx
         site = canvas_sites[idx]
         source = site[:name]
-        color_class = site[:color_class]
       end
     end
     source ||= 'bCourses'
-    color_class ||= 'canvas-group'
-    {source: source, color_class: color_class}
+    {source: source}
   end
 
 end

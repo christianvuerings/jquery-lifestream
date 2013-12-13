@@ -70,7 +70,6 @@ describe "MyGroups" do
           group[:name].blank?.should be_false
           group[:site_url].blank?.should be_false
           group[:emitter].should == "CalLink"
-          group[:color_class].should == "callink-group"
         end
       end
     end

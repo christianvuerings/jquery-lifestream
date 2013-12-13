@@ -91,7 +91,6 @@ class CampusUserCoursesProxy < BaseProxy
   #    "course_code": "COG SCI C102",
   #    "emitter": "Campus",
   #    "name": "Scientific Approaches to Consciousness",
-  #    "color_class": "campus-class",
   #    "term_yr": "2013",
   #    "term_cd": "B",
   #    "dept": "COG SCI",
@@ -168,7 +167,6 @@ class CampusUserCoursesProxy < BaseProxy
           course_code: "#{row['dept_name']} #{row['catalog_id']}",
           emitter: 'Campus',
           name: row['course_title'],
-          color_class: "campus-class",
           sections: [
             row_to_section_data(row)
           ]

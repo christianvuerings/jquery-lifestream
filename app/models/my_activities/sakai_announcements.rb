@@ -18,8 +18,7 @@ class MyActivities::SakaiAnnouncements
               date: format_date(sakai_ann['message_date']),
               source_url: sakai_ann['source_url'],
               source: site[:name],
-              emitter: site[:emitter],
-              color_class: site[:color_class]
+              emitter: site[:emitter]
             }
             activities << announcement
           end

@@ -5,8 +5,7 @@
       "name": "Canvas/ETS Collaboration",
       "site_url": "https://some.instructure.com/groups/49957",
       "emitter": "bCourses",
-      "site_type": "group",
-      "color_class": "canvas-group"
+      "site_type": "group"
     },
     {
       "name": "OE IT Design Initiative",
@@ -14,8 +13,7 @@
       "id": "7ea7d89c-b87c-4221-a2ea-16aee252b967",
       "site_url": "https://sakai-dev.berkeley.edu/portal/site/7ea7d89c-b87c-4221-a2ea-16aee252b967",
       "emitter": "bSpace",
-      "site_type": "course",
-      "color_class": "bspace-group"
+      "site_type": "course"
     },
     {
       "name": "UIE Seminars & UCD Group Resources",
@@ -23,8 +21,7 @@
       "id": "b1df3076-88c5-43cc-00d2-632b196f8497",
       "site_url": "https://sakai-dev.berkeley.edu/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
       "emitter": "bSpace",
-      "site_type": "project",
-      "color_class": "bspace-group"
+      "site_type": "project"
     },
     {
       "name": "A course where I teach",
@@ -33,8 +30,7 @@
       "site_url": "https://some.instructure.com/courses/4398539",
       "emitter": "bCourses",
       "site_type": "course",
-      "role": "teacher",
-      "color_class": "canvas-group"
+      "role": "teacher"
     }
   ],
   "last_modified": {

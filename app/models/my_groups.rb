@@ -48,7 +48,6 @@ class MyGroups < MyMergedModel
             name: group["organizationName"],
             id: group["organizationId"].to_s,
             emitter: CalLinkProxy::APP_ID,
-            color_class: "callink-group",
             site_url: site_url
           })
         end

@@ -17,7 +17,6 @@ describe CanvasUserActivities do
       activity[:id].blank?.should_not == true
       activity[:user_id].should == @user_id
       activity[:date][:epoch].is_a?(Integer).should == true
-      ['canvas-class', 'canvas-group'].include?(activity[:color_class]).should be_true
       activity[:source].blank?.should_not be_true
       activity[:emitter].should == "bCourses"
       activity[:type].blank?.should_not == true
@@ -69,22 +68,19 @@ describe CanvasUserActivities do
                 id: '1',
                 name: 'Course Code 1',
                 short_description: 'Course site name 1',
-                site_type: 'course',
-                color_class: 'canvas-class'
+                site_type: 'course'
             }
         ],
         groups: [
             {
                 id: '3',
                 name: 'Group title 3',
-                site_type: 'group',
-                color_class: 'canvas-group'
+                site_type: 'group'
             },
             {
                 id: '2',
                 name: 'Course-as-group title',
-                site_type: 'course',
-                color_class: 'canvas-group'
+                site_type: 'course'
             }
         ]
     }
@@ -97,16 +93,12 @@ describe CanvasUserActivities do
       activity[:type].blank?.should_not == true
     end
     enrolled_activity = activities.select{|item| item[:id] == 'canvas_1999'}[0]
-    enrolled_activity[:color_class].should == 'canvas-class'
     enrolled_activity[:source].should == 'Course Code 1'
     unofficial_activity = activities.select{|item| item[:id] == 'canvas_2999'}[0]
-    unofficial_activity[:color_class].should == 'canvas-group'
     unofficial_activity[:source].should == 'Course-as-group title'
     group_activity = activities.select{|item| item[:id] == 'canvas_3999'}[0]
-    group_activity[:color_class].should == 'canvas-group'
     group_activity[:source].should == 'Group title 3'
     siteless_activity = activities.select{|item| item[:id] == 'canvas_4999'}[0]
-    siteless_activity[:color_class].should == 'canvas-group'
     siteless_activity[:source].should == 'bCourses'
     siteless_activity[:title].should == 'New/Updated Conversation'
     siteless_activity[:type].should == 'discussion'
