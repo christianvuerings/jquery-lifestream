@@ -8,6 +8,11 @@ LOGIT="tee -a $LOG"
 VERSION=$1
 if [ -z $1 ]; then
   # default db version is the latest one in our code tree
+  if [ ! -d "deploy/db/migrate" ]
+  then
+    echo "`date`: ERROR: No database version specified!" | $LOGIT
+    exit 1
+  fi
   VERSION=`/bin/ls deploy/db/migrate/ | awk -F _ '{print $1}' | sort | tail -1`
 fi
 

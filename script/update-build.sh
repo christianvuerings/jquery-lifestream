@@ -31,6 +31,12 @@ curl -k -s $WAR_URL > calcentral.knob
 
 echo "Unzipping knob..." | $LOGIT
 jar xf calcentral.knob
+
+if [ ! -d "versions" ]
+then
+  echo "`date`: ERROR: Missing or malformed calcentral.knob file!" | $LOGIT
+  exit 1
+fi
 echo "Last commit in calcentral.knob:" | $LOGIT
 cat versions/git.txt | $LOGIT
 
