@@ -12,8 +12,9 @@ class CanvasLtiController < ApplicationController
   end
 
   def authenticate_by_lti(lti)
-    login_user_id = lti.get_custom_param('canvas_user_login_id')
-    session[:user_id] = login_user_id
+    session[:user_id] = lti.get_custom_param('canvas_user_login_id')
+    session[:canvas_user_id] = lti.get_custom_param('canvas_user_id')
+    session[:canvas_course_id] = lti.get_custom_param('canvas_course_id')
     session[:canvas_lti_params] = lti.to_params
   end
 
@@ -50,6 +51,10 @@ class CanvasLtiController < ApplicationController
   end
 
   def  lti_user_provision
+    respond_to :xml
+  end
+
+  def lti_course_add_user
     respond_to :xml
   end
 

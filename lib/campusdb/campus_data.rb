@@ -63,15 +63,90 @@ class CampusData < OracleDatabase
 
   def self.get_basic_people_attributes(up_to_1000_ldap_uids)
     result = []
+      use_pooled_connection {
+        sql = <<-SQL
+        select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+        from calcentral_person_info_vw pi
+        where pi.ldap_uid in (#{up_to_1000_ldap_uids.collect{|id| id.to_i}.join(', ')})
+        SQL
+        result = connection.select_all(sql)
+      }
+    result
+  end
+
+  def self.find_people_by_name(name_search_string, limit = 0)
+    raise ArgumentError, "Search text argument must be a string" if name_search_string.class != String
+    raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
+    limit_clause = (limit > 0) ? "and rownum <= #{limit}" : ""
+    search_text_array = name_search_string.split(',')
+    search_text_array.collect! {|e| e.strip }
+    clean_search_string = connection.quote_string(search_text_array.join(','))
+    result = []
     use_pooled_connection {
       sql = <<-SQL
       select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
       from calcentral_person_info_vw pi
-      where pi.ldap_uid in (#{up_to_1000_ldap_uids.collect{|id| id.to_i}.join(', ')})
+      where lower( concat(concat(pi.last_name, ','), pi.first_name) ) like '#{clean_search_string.downcase}%'
+      #{limit_clause}
       SQL
       result = connection.select_all(sql)
     }
     result
+  end
+
+  def self.find_people_by_email(email_search_string, limit = 0)
+    raise ArgumentError, "Search text argument must be a string" if email_search_string.class != String
+    raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
+    limit_clause = (limit > 0) ? "and rownum <= #{limit}" : ""
+    clean_search_string = connection.quote_string(email_search_string)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+      from calcentral_person_info_vw pi
+      where lower(pi.email_address) like '%#{clean_search_string.downcase}%'
+      #{limit_clause}
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.find_people_by_student_id(student_id_string)
+    raise ArgumentError, "Argument must be a string" if student_id_string.class != String
+    raise ArgumentError, "Argument is not an integer string" unless is_integer_string?(student_id_string)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+      from calcentral_person_info_vw pi
+      where pi.student_id = #{student_id_string}
+      and rownum <= 1
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.find_people_by_uid(user_id_string)
+    raise ArgumentError, "Argument must be a string" if user_id_string.class != String
+    raise ArgumentError, "Argument is not an integer string" unless is_integer_string?(user_id_string)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+      from calcentral_person_info_vw pi
+      where pi.ldap_uid = #{user_id_string}
+      and rownum <= 1
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.is_integer_string?(string)
+    raise ArgumentError, "Argument must be a string" if string.class != String
+    string.to_i.to_s == string
   end
 
   def self.get_reg_status(person_id)

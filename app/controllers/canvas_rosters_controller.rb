@@ -1,6 +1,7 @@
 class CanvasRostersController < ApplicationController
   include ClassLogger
 
+  # GET /api/academics/rosters/canvas/:canvas_course_id
   def get_feed
     if (model = valid_model(params[:canvas_course_id]))
       if (feed = model.get_feed)
@@ -13,6 +14,7 @@ class CanvasRostersController < ApplicationController
     end
   end
 
+  # GET /canvas/:canvas_course_id/photo/:person_id
   def photo
     if (model = valid_model(params[:canvas_course_id]))
       canvas_user_id = Integer(params[:person_id], 10)

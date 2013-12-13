@@ -6,7 +6,8 @@ module CanvasReconfigureExternalApps
     {
       'course_provision' => 'lti_course_provision',
       'rosters' => 'lti_roster_photos',
-      'user_provision' => 'lti_user_provision'
+      'user_provision' => 'lti_user_provision',
+      'course_add_user' => 'lti_course_add_user'
     }
   end
 

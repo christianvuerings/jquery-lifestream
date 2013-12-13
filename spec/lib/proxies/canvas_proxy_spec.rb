@@ -124,8 +124,6 @@ describe CanvasProxy do
   end
 
   it "should get Sections for any known Course" do
-    puts Rails.env
-    puts Rails.logger
     client = CanvasUserCoursesProxy.new(user_id: @user_id)
     response = client.courses
     courses = JSON.parse(response.body)

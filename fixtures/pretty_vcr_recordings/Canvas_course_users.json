@@ -1,0 +1,294 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/courses/1164764/users?include%5B%5D=enrollments&per_page=30",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Fri, 06 Dec 2013 02:09:34 GMT"
+          ],
+          "etag": [
+            "\"16dfc1fa24e2f523d3c3377406136812\""
+          ],
+          "link": [
+            "<https://ucberkeley.beta.instructure.com/api/v1/courses/1164764/users?include%5B%5D=enrollments&page=1&per_page=30>; rel=\"current\",<https://ucberkeley.beta.instructure.com/api/v1/courses/1164764/users?include%5B%5D=enrollments&page=1&per_page=30>; rel=\"first\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=ljafH59osuicriqOQRME8w.HtiZaMCj-l0gZ0BgO1Z6xTwJKlgh9sBUZZhT0xtzzDp8FEeBtH7hdM1hrf-0fu1UiP_rheNneK2kFk1KnH__s-pmSWnJw8_9IpS84ZQrUCC4gbkaWzJo8NFnFalyhn2Ne_cUYSHr9c1P8Ex1T762jO008xozyuAcMX8iWFhP4t8--nvoX8zKIDLqn5XjK1cd.zr5_KnfJQcwuzuzCw5P005Q9iBM.UqEx3w; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;s=19;c=cluster19;z=us-east-1b;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "600ca260-4049-0131-ac58-02f88540aa71"
+          ],
+          "x-runtime": [
+            "511"
+          ],
+          "x-session-id": [
+            "8f92ac4818e640acf4a28a02d5eb9859"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "21365"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "id": 4862319,
+              "name": "Ted Andrew Greenwald",
+              "sortable_name": "Greenwald, Ted Andrew",
+              "short_name": "Ted Andrew Greenwald",
+              "sis_user_id": "UID:4000123",
+              "sis_login_id": "4000123",
+              "login_id": "4000123",
+              "enrollments": [
+                {
+                  "associated_user_id": null,
+                  "course_id": 1164764,
+                  "course_section_id": 1312012,
+                  "id": 20187382,
+                  "limit_privileges_to_course_section": false,
+                  "root_account_id": 90242,
+                  "type": "StudentEnrollment",
+                  "updated_at": "2013-09-24T21:27:23Z",
+                  "user_id": 4862319,
+                  "enrollment_state": "active",
+                  "role": "StudentEnrollment",
+                  "last_activity_at": "2013-11-22T00:40:29Z",
+                  "grades": {
+                    "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/grades/4862319",
+                    "current_score": null,
+                    "final_score": null,
+                    "current_grade": null,
+                    "final_grade": null
+                  },
+                  "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/users/4862319"
+                }
+              ],
+              "analytics_url": "/courses/1164764/analytics/users/4862319"
+            },
+            {
+              "id": 4861899,
+              "name": "Harold Arnold DACUS",
+              "sortable_name": "DACUS, Harold",
+              "short_name": "Harold DACUS",
+              "sis_user_id": "UID:4000169",
+              "sis_login_id": "4000169",
+              "login_id": "4000169",
+              "enrollments": [
+                {
+                  "associated_user_id": null,
+                  "course_id": 1164764,
+                  "course_section_id": 1312012,
+                  "id": 20185948,
+                  "limit_privileges_to_course_section": false,
+                  "root_account_id": 90242,
+                  "type": "TeacherEnrollment",
+                  "updated_at": "2013-09-24T21:27:23Z",
+                  "user_id": 4861899,
+                  "enrollment_state": "active",
+                  "role": "TeacherEnrollment",
+                  "last_activity_at": "2013-12-01T06:19:08Z",
+                  "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/users/4861899"
+                }
+              ]
+            },
+            {
+              "id": 4862320,
+              "name": "Michael David Ward",
+              "sortable_name": "Ward, Michael David",
+              "short_name": "Michael Ward",
+              "sis_user_id": "UID:4000309",
+              "sis_login_id": "4000309",
+              "login_id": "4000309",
+              "enrollments": [
+                {
+                  "associated_user_id": null,
+                  "course_id": 1164764,
+                  "course_section_id": 1312012,
+                  "id": 20187380,
+                  "limit_privileges_to_course_section": false,
+                  "root_account_id": 90242,
+                  "type": "StudentEnrollment",
+                  "updated_at": "2013-09-24T21:27:23Z",
+                  "user_id": 4862320,
+                  "enrollment_state": "active",
+                  "role": "StudentEnrollment",
+                  "last_activity_at": "2013-11-20T19:48:54Z",
+                  "grades": {
+                    "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/grades/4862320",
+                    "current_score": null,
+                    "final_score": null,
+                    "current_grade": null,
+                    "final_grade": null
+                  },
+                  "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/users/4862320"
+                }
+              ],
+              "analytics_url": "/courses/1164764/analytics/users/4862320"
+            },
+            {
+              "id": 4872048,
+              "name": "Melissa W. Gafford",
+              "sortable_name": "Gafford, Melissa W.",
+              "short_name": "Melissa Gafford",
+              "sis_user_id": "UID:4000189",
+              "sis_login_id": "4000189",
+              "login_id": "4000189",
+              "enrollments": [
+                {
+                  "associated_user_id": null,
+                  "course_id": 1164764,
+                  "course_section_id": 1312468,
+                  "id": 20241907,
+                  "limit_privileges_to_course_section": false,
+                  "root_account_id": 90242,
+                  "type": "StudentEnrollment",
+                  "updated_at": "2013-10-22T00:38:23Z",
+                  "user_id": 4872048,
+                  "enrollment_state": "active",
+                  "role": "StudentEnrollment",
+                  "last_activity_at": "2013-11-20T16:33:24Z",
+                  "grades": {
+                    "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/grades/4872048",
+                    "current_score": null,
+                    "final_score": null,
+                    "current_grade": null,
+                    "final_grade": null
+                  },
+                  "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/users/4872048"
+                }
+              ],
+              "analytics_url": "/courses/1164764/analytics/users/4872048"
+            },
+            {
+              "id": 4862328,
+              "name": "Robert Vannatta",
+              "sortable_name": "Vannatta, Robert",
+              "short_name": "Robert Vannatta",
+              "sis_user_id": "UID:4000199",
+              "sis_login_id": "4000199",
+              "login_id": "4000199",
+              "enrollments": [
+                {
+                  "associated_user_id": null,
+                  "course_id": 1164764,
+                  "course_section_id": 1312012,
+                  "id": 20187388,
+                  "limit_privileges_to_course_section": false,
+                  "root_account_id": 90242,
+                  "type": "StudentEnrollment",
+                  "updated_at": "2013-09-24T21:27:23Z",
+                  "user_id": 4862328,
+                  "enrollment_state": "active",
+                  "role": "StudentEnrollment",
+                  "last_activity_at": "2013-11-13T18:08:08Z",
+                  "grades": {
+                    "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/grades/4862328",
+                    "current_score": null,
+                    "final_score": null,
+                    "current_grade": null,
+                    "final_grade": null
+                  },
+                  "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/users/4862328"
+                }
+              ],
+              "analytics_url": "/courses/1164764/analytics/users/4862328"
+            },
+            {
+              "id": 4869114,
+              "name": "LAURA CLARICE EISENBERG",
+              "sortable_name": "EISENBERG, LAURA CLARICE",
+              "short_name": "LAURA CLARICE EISENBERG",
+              "sis_user_id": "20629333",
+              "sis_login_id": "4000272",
+              "login_id": "4000272",
+              "enrollments": [
+                {
+                  "associated_user_id": null,
+                  "course_id": 1164764,
+                  "course_section_id": 1312012,
+                  "id": 20227199,
+                  "limit_privileges_to_course_section": false,
+                  "root_account_id": 90242,
+                  "type": "StudentEnrollment",
+                  "updated_at": "2013-10-05T16:49:19Z",
+                  "user_id": 4869114,
+                  "enrollment_state": "active",
+                  "role": "StudentEnrollment",
+                  "last_activity_at": "2013-11-21T20:38:42Z",
+                  "grades": {
+                    "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/grades/4869114",
+                    "current_score": null,
+                    "final_score": null,
+                    "current_grade": null,
+                    "final_grade": null
+                  },
+                  "html_url": "https://ucberkeley.beta.instructure.com/courses/1164764/users/4869114"
+                }
+              ],
+              "analytics_url": "/courses/1164764/analytics/users/4869114"
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 06 Dec 2013 02:09:35 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}
