@@ -81,7 +81,9 @@
 }
 .cc-widget-list-hover-opened:not(tr):not(.cc-widget-list-hover-notriangle) {
   &:hover, &:focus {
-    &:before {;
+    &:before {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
       border-top: 4px solid $body-font-color;
       content: "";
       height: 0;
