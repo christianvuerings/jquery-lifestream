@@ -1,0 +1,136 @@
+<script type="text/ng-template" id="templates/canvas_embedded/course_add_user.html">
+	<div class="cc-page-course-add-user">
+
+    <h2>Add User To Course</h2>
+
+    <div data-ng-hide="show_error">
+
+      <div id="alerts-wrapper" class="row" data-ng-show="show_alerts">
+        <div data-cc-spinner-directive>
+          <div data-ng-show="success_message" class="alert-box success radius">
+            <span data-ng-bind="user_added.full_name"></span> was added to the
+            &ldquo;<span data-ng-bind="user_added.section_name"></span>&rdquo; section of this course as a <span data-ng-bind="user_added.role_name"></span>.
+            <button data-ng-click="success_message=''" class="button small">X</button>
+          </div>
+
+          <div data-ng-show="failure_message" class="alert-box alert radius">
+            <i class="fa fa-exclamation-triangle"></i>
+            <span data-ng-bind="error_status"></span>
+            <button data-ng-click="failure_message=''" class="button small">X</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="search-form-wrapper" class="row" data-ng-show="show_search_form">
+
+        <div class="large-6 small-8 columns">
+          <form data-ng-submit="searchUsers()">
+
+            <div id="search-form-row" class="row">
+              <div class="small-4 columns">
+                <label for="search-text" class="cc-visuallyhidden">Search users</label>
+                <input id="search-text" type="text" placeholder="Search users" data-ng-model="search_text">
+              </div>
+
+              <div class="small-6 columns">
+                <div class="row">
+                  <div class="small-4 columns">
+                    <label for="search-type" class="inline">Search by:</label>
+                  </div>
+                  <div class="small-8 columns">
+                    <select id="search-type" data-ng-model="search_type">
+                      <option value="name">Name</option>
+                      <option value="email">Email</option>
+                      <option value="student_id">Student ID</option>
+                      <option value="ldap_user_id">CalNet UID</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="small-2 columns">
+                <button id="submit-search" type="submit" class="button tiny">Go</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+      <div id="user-results-table-wrapper" class="row" data-ng-show="show_users_area">
+        <div data-cc-spinner-directive>
+
+          <div data-ng-show="user_search_results.length === 0" class="large-12 columns">
+            <p><strong>No users found.</strong></p>
+          </div>
+
+          <div data-ng-show="user_search_results.length > 0">
+            <form data-ng-submit="addUser()">
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th>Name</th>
+                    <th>Student ID</th>
+                    <th>Calnet UID</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="user in user_search_results">
+                    <td>
+                      <input type="radio" name="selected_user" data-ng-model="$parent.selected_user" data-ng-value="user">
+                    </td>
+                    <td data-ng-bind="user.first_name + ' ' + user.last_name"></td>
+                    <td data-ng-bind="user.student_id"></td>
+                    <td data-ng-bind="user.ldap_uid"></td>
+                    <td data-ng-bind="user.email_address"></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="large-5 small-12 columns">
+
+                <div class="row collapse">
+                  <div class="small-2 columns">
+                    <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
+                  </div>
+                  <div class="small-10 columns">
+                    <select id="user-role" data-ng-model="selected_role" data-ng-options="role as role.name for role in user_roles"></select>
+                  </div>
+                </div>
+
+                <div class="row collapse">
+                  <div class="small-2 columns">
+                    <label for="course-section"><strong><span class="cc-required-field-indicator">*</span> Section</strong>:</label>
+                  </div>
+                  <div class="small-10 columns">
+                    <select id="course-section" data-ng-model="selected_section" data-ng-options="section as section.name for section in course_sections">
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row collapse">
+                  <div class="small-10 small-offset-2 columns">
+                    <button id="submit-user" type="submit" class="button tiny">Add User</button>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <p data-ng-show="show_error">
+      <i class="fa fa-exclamation-triangle"></i>
+      <span data-ng-bind="error_status"></span>
+    </p>
+
+	</div>
+</script>

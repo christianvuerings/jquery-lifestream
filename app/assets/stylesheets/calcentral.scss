@@ -374,9 +374,10 @@ http://stackoverflow.com/questions/6269420
 @import "campus";
 
 /* Canvas external apps */
-@import "course_provision";
-@import "user_provision";
-@import "roster";
+@import "canvas_course_add_user";
+@import "canvas_course_provision";
+@import "canvas_user_provision";
+@import "canvas_roster";
 
 /* My Finances */
 @import "myfinances";

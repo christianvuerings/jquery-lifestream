@@ -83,6 +83,10 @@
       templateUrl: 'templates/canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
     }).
+    when('/canvas/embedded/course_add_user', {
+      templateUrl: 'templates/canvas_embedded/course_add_user.html',
+      controller: 'CanvasCourseAddUserController'
+    }).
     when('/canvas/rosters/:canvas_course_id', {
       templateUrl: 'templates/canvas_embedded/roster.html',
       controller: 'CanvasRosterController'
@@ -94,6 +98,10 @@
     when('/canvas/user_provision', {
       templateUrl: 'templates/canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
+    }).
+    when('/canvas/course_add_user/:canvas_course_id', {
+      templateUrl: 'templates/canvas_embedded/course_add_user.html',
+      controller: 'CanvasCourseAddUserController'
     }).
     // Redirect to a 404 page
     otherwise({

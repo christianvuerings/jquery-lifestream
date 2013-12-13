@@ -1,0 +1,126 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/courses/767330/users/4321321?include%5B%5D=enrollments",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Sat, 07 Dec 2013 00:46:41 GMT"
+          ],
+          "etag": [
+            "\"000cda21f30ed6159644bf025bc89284\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=abcdefg0L-rOasM0pvVLJguHslYHqIrH6m1DpqzwNfVWcfjGu1f40978D-rZr128lesw2PjC-IJ1IZyVn08Dc9UyJRL4mP8RtnVNG16TVptsY6T4ikHKraQA-oh0U8fkMXUJrKIvW8vcZ-RGVtUeHP2e9qu-06NiYVzG14By_9dbewYvaR9bah7BTrFd7XS2NiMSIZ_.TCJxxvlg1pVXOlIAlo6aMxElS2o.UqJv8Q; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;s=19;c=cluster19;z=us-east-1c;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "f60f6680-4106-0131-07d8-02f8856d54b5"
+          ],
+          "x-runtime": [
+            "272"
+          ],
+          "x-session-id": [
+            "4a166cd2d93a2fb140e29bf96a20e57a"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "782"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "id": 4321321,
+            "name": "Michael Steven OWEN",
+            "sortable_name": "OWEN, Michael S.",
+            "short_name": "Michael S. OWEN",
+            "sis_user_id": "UID:105431",
+            "sis_login_id": "105431",
+            "login_id": "105431",
+            "enrollments": [
+              {
+                "associated_user_id": null,
+                "course_id": 767330,
+                "course_section_id": 1312468,
+                "id": 20241907,
+                "limit_privileges_to_course_section": false,
+                "root_account_id": 90242,
+                "type": "StudentEnrollment",
+                "updated_at": "2013-10-22T00:38:23Z",
+                "user_id": 4321321,
+                "enrollment_state": "active",
+                "role": "StudentEnrollment",
+                "last_activity_at": "2013-11-20T16:33:24Z",
+                "grades": {
+                  "html_url": "https://ucberkeley.beta.instructure.com/courses/767330/grades/4321321",
+                  "current_score": null,
+                  "final_score": null,
+                  "current_grade": null,
+                  "final_grade": null
+                },
+                "html_url": "https://ucberkeley.beta.instructure.com/courses/767330/users/4321321"
+              }
+            ]
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Sat, 07 Dec 2013 00:46:41 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

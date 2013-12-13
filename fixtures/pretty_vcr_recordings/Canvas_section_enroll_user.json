@@ -1,0 +1,108 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "post",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/sections/1311313/enrollments",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "enrollment%5Buser_id%5D=1234567&enrollment%5Btype%5D=TaEnrollment&enrollment%5Benrollment_state%5D=active&enrollment%5Bcourse_section_id%5D=1311313&enrollment%5Bnotify%5D=false"
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Fri, 06 Dec 2013 18:07:13 GMT"
+          ],
+          "etag": [
+            "\"631fd077c2ba035eb72796344f308850\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=n9A-TlDCdt2W49a9WJNZSg.7RPl6KguW2dGXl8n9ey9B-CjwqBLac-7_TTCUXKVZtMiplP8EUIeRA3dxFwNGNSrDikPqUun5f0watYZwBWcsfQevNmicnAMKt6x6MGZupP4cVfjTGLf5gx8Wix5nZ1dMfNVNWbXvOYHJZCsrD8a77u_3uKeRCi8HZyb80DnBqN9oWyiYnYK10TSHbSVpsNA.L-HswazWSncmoDBUs0PonPiKbj8.UqISUQ; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;s=19;c=cluster19;z=us-east-1b;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "281f4150-40cf-0131-d7fb-02f88540aa71"
+          ],
+          "x-runtime": [
+            "366"
+          ],
+          "x-session-id": [
+            "4da125622c429d29ec5bc10a77fa5acc"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "389"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "associated_user_id": null,
+            "course_id": 1161161,
+            "course_section_id": 1311313,
+            "id": 20618200,
+            "limit_privileges_to_course_section": false,
+            "root_account_id": 90242,
+            "type": "TaEnrollment",
+            "updated_at": "2013-12-06T18:07:13Z",
+            "user_id": 1234567,
+            "enrollment_state": "active",
+            "role": "TaEnrollment",
+            "last_activity_at": null,
+            "html_url": "https://ucberkeley.beta.instructure.com/courses/1161161/users/1234567"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 06 Dec 2013 18:07:15 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}
