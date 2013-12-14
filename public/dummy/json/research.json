@@ -1,0 +1,29 @@
+[
+   {
+      "url":"\/alfresco\/service\/api\/sites\/may16",
+      "sitePreset":"site-dashboard",
+      "shortName":"may16",
+      "title":"Dummy Json Used",
+      "description":"Just a test site, created on May 16th (but I'm not sure which year!)",
+      "isPublic":false,
+      "visibility":"PRIVATE"
+   },
+   {
+      "url":"\/alfresco\/service\/api\/sites\/june7",
+      "sitePreset":"site-dashboard",
+      "shortName":"june7",
+      "title":"June 7 test",
+      "description":"We do do a lot of testing on QA, so this is another test site!",
+      "isPublic":false,
+      "visibility":"PRIVATE"
+   },
+   {
+      "url":"\/alfresco\/service\/api\/sites\/noahtest",
+      "sitePreset":"site-dashboard",
+      "shortName":"noahtest",
+      "title":"Big Project Site",
+      "description":"",
+      "isPublic":true,
+      "visibility":"PUBLIC"
+   }
+]

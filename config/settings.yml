@@ -120,6 +120,12 @@ bearfacts_proxy:
   app_key: ''
   base_url: "https://apis-dev.berkeley.edu/bearfacts-apis"
 
+research_user_proxy:
+  fake: false
+  base_url: "https://hub-qa.berkeley.edu/alfresco/service/api/ucb/person"
+  test_user: "secret"
+  password: "secret"
+
 myfinaid_proxy:
   fake: false
   token: secret set per deployment layer
@@ -248,6 +254,7 @@ features:
   activity_to_task: false
   financials: false
   telebears: false
+  research: false
   textbooks: false
 
 messaging:
