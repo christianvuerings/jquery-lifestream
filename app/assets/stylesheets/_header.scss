@@ -247,20 +247,19 @@ body {
   }
   .cc-icon-status-person-layover {
     cursor: pointer;
-    font-size: 14px;
+    height: auto;
     left: 23px;
+    line-height: 1em;
     position: absolute;
-    top: 3px;
+    top: 2px;
+    width: auto;
     z-index: 1;
-    &:before {
-      position: absolute;
-    }
-    &:after {
-      content: "\f111";
-      color: $cc-color-white;
-      font-size: 12px;
-      margin-left: 1px;
-    }
+  }
+  .cc-icon-status-person-layover i {
+    font-size: 14px !important;
+    left: 0;
+    position: absolute;
+    top: 1px;
   }
   .cc-popover-gear {
     .cc-header-icon {
