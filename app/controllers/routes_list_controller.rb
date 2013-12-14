@@ -26,14 +26,18 @@ class RoutesListController < ApplicationController
     end
     blacklist = %w(
         /api/my/campuslinks/expire
+        /api/my/textbooks_details
         /api/clear_cache
         /api/canvas/request_authorization
         /api/google/request_authorization
         /api/google/handle_callback
         /api/academics/rosters/canvas/:canvas_course_id
+        /api/academics/canvas/course_add_user/course_sections
+        /api/academics/canvas/course_add_user/search_users
         /api/academics/canvas/course_provision_as/:instructor_id
         /api/academics/canvas/course_provision/create
         /api/academics/canvas/course_provision/status
+        /api/academics/canvas/course_user_profile
       )
     test_routes.reject {|x| x.empty? || blacklist.include?(x)}
   end
