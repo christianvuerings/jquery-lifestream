@@ -36,10 +36,12 @@ describe "MyTasks" do
 
       # Counts for task types in VCR recording
       overdue_counter = 5
-      # On Sundays, no "Future" tasks can escape the "Today" bucket.
+      # Some "Future" tasks are normally discarded to limit the size of the feed.
+      # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
+      # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
       if Time.zone.today.sunday?
         today_counter = 7
-        future_counter = 7
+        future_counter = 8
       else
         today_counter = 2
         future_counter = 10
