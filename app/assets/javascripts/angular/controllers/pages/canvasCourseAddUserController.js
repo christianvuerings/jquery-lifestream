@@ -59,8 +59,9 @@
     };
 
     var postHeight = function() {
+      var docHeight = document.body.scrollHeight;
       postMessage({
-        height: document.body.scrollHeight
+        height: docHeight
       });
     };
 
@@ -81,7 +82,6 @@
         method: 'GET',
         params: feed_params
       }).success(function(data) {
-        window.setInterval(postHeight, 250);
         $scope.user_search_results = data.users;
         $scope.is_loading = false;
       }).error(function(data) {
@@ -185,6 +185,7 @@
       return false;
     };
 
+    window.setInterval(postHeight, 250);
     checkAuthorization();
   }]);
 

@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div id="search-form-wrapper" class="row" data-ng-show="show_search_form">
+      <div id="search-form-wrapper" class="row collapse" data-ng-show="show_search_form">
 
         <div class="large-6 small-8 columns">
           <form data-ng-submit="searchUsers()">
@@ -58,7 +58,7 @@
 
       </div>
 
-      <div id="user-results-table-wrapper" class="row" data-ng-show="show_users_area">
+      <div id="user-results-table-wrapper" class="row collapse" data-ng-show="show_users_area">
         <div data-cc-spinner-directive>
 
           <div data-ng-show="user_search_results.length === 0" class="large-12 columns">
@@ -66,7 +66,7 @@
           </div>
 
           <div data-ng-show="user_search_results.length > 0">
-            <form data-ng-submit="addUser()">
+            <form data-ng-submit="addUser()" class="canvas-form">
 
               <table>
                 <thead>
