@@ -289,7 +289,7 @@
                   </thead>
                   <tbody>
                     <tr data-ng-repeat="class in semester.classes">
-                      <td class="cc-ellipsis"><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{class.slug}}" data-ng-bind="class.course_number"></a></td>
+                      <td><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{class.slug}}" data-ng-bind="class.course_number"></a></td>
                       <td data-ng-bind="class.title"></td>
                       <td data-ng-bind="class.units | number:1" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket != 'current')}"></td>
                       <td data-ng-bind="class.grade" data-ng-show="{{semester.time_bucket == 'past'}}">Gr.</td>
