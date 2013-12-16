@@ -8,6 +8,7 @@ class TextbooksProxy < BaseProxy
     books = []
     amazon_url = "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords="
     chegg_url = "http://www.chegg.com/search/"
+    oskicat_url = "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg="
 
     if ul.length > 0
       book_list = ul.xpath('./li')
@@ -23,7 +24,8 @@ class TextbooksProxy < BaseProxy
           :edition => bl.xpath('.//span[@id="materialEdition"]').text.split(":")[1],
           :publisher => bl.xpath('.//span[@id="materialPublisher"]').text.split(":")[1],
           :amazon_link => amazon_url + isbn,
-          :chegg_link => chegg_url + isbn
+          :chegg_link => chegg_url + isbn,
+          :oskicat_link => oskicat_url + isbn
         }
         books.push(book_detail)
       end
