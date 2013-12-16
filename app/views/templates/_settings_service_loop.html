@@ -1,10 +1,10 @@
 <script type="text/ng-template" id="templates/settings_service_loop.html">
   <!-- Dont show the icon column on small screens -->
-  <div class="large-1 columns hide-for-small">
+  <div class="medium-1 columns hide-for-small">
     <%= image_tag "icon_bconnected_32x32.png", :size => "32x32", :alt => "", :data => { :ng_show => "service=='google'" } %>
   </div>
 
-  <div class="large-9 small-8 columns cc-settings-service-description-block">
+  <div class="medium-9 small-8 columns cc-settings-service-description-block">
     <div data-ng-show="service=='google'">
       <strong>bConnected</strong><br />
       <span class="cc-settings-service-description" data-ng-show="!api.user.profile.google_email || !api.user.profile.has_google_access_token">
@@ -14,23 +14,19 @@
     </div>
   </div>
 
-  <div data-ng-show="loopname=='connected'">
-    <div class="large-2 small-4 columns">
-      <button data-ng-show="api.user.profile['has_' + service + '_access_token']"
-        data-ng-disabled="api.user.profile['acting_as_uid']"
-        class="cc-button" data-ng-click="api.user.removeOAuth(service)">
-        Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
-      </button>
-    </div>
+  <div class="medium-2 small-4 columns" data-ng-show="loopname=='connected'">
+    <button data-ng-show="api.user.profile['has_' + service + '_access_token']"
+      data-ng-disabled="api.user.profile['acting_as_uid']"
+      class="cc-button" data-ng-click="api.user.removeOAuth(service)">
+      Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
+    </button>
   </div>
 
-  <div data-ng-show="loopname=='unconnected'">
-    <div class="large-2 small-4 columns">
-      <button data-ng-show="service=='google'"
-        data-ng-disabled="api.user.profile['acting_as_uid']"
-        class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth('google')">
-        Connect <span class="cc-visuallyhidden">Google Access</span>
-      </button>
-    </div>
+  <div class="medium-2 small-4 columns" data-ng-show="loopname=='unconnected'">
+    <button data-ng-show="service=='google'"
+      data-ng-disabled="api.user.profile['acting_as_uid']"
+      class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth('google')">
+      Connect <span class="cc-visuallyhidden">Google Access</span>
+    </button>
   </div>
 </script>

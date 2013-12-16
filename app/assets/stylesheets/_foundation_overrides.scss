@@ -2,18 +2,26 @@
 $base-font-size: 13px;
 $block-grid-default-spacing: 100px;
 $body-font-color: #474747;
-$button-margin-bottom: 2px;
 $body-font-family: Arial, sans-serif;
-$column-gutter: 2.2em;
-$em-base: 13px;
-$form-spacing: emCalc(7px);
+$button-font-weight: bold;
+$button-margin-bottom: 2px;
+$form-spacing: 0.5rem;
+$header-font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
 $header-font-weight: 500;
 $primary-color: #2683bc;
+$rem-base: 13px;
 $row-width: 1200px;
-$small-screen: 767px;
+$table-head-font-size: 13px;
+$table-row-font-size: 13px;
 
-// This includes all of the foundation global elements that are needed to work with any of the other files.
-@import "foundation/variables";
+// Responsive
+$small-breakpoint: (767px);
+$medium-breakpoint: (768px);
+$screen: "only screen";
+$small-up: $screen;
+$small-only: "#{$screen} and (max-width: #{$small-breakpoint})";
+$medium-up: "#{$screen} and (min-width:#{$medium-breakpoint})";
+$medium-only: "#{$screen} and (min-width:#{$medium-breakpoint})";
 
 // Foundation Components
 @import

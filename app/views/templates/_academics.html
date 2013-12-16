@@ -7,7 +7,7 @@
         <h1 class="cc-heading-page-title">My Academics</h1>
       </div>
 
-      <div class="large-8 columns cc-academics-page-left" data-ng-show="api.user.profile.student_info.has_student_history">
+      <div class="medium-8 columns cc-academics-page-left" data-ng-show="api.user.profile.student_info.has_student_history">
         <div class="cc-widget">
           <div class="cc-widget-title">
             <h2>Records</h2>
@@ -175,12 +175,12 @@
               </div>
               <div data-ng-show="!regblocks.active_blocks.length && regblocks.available">
                 <div class="row collapse">
-                  <div class="large-6 columns end">You have no active blocks at this time.</div>
+                  <div class="medium-6 columns end">You have no active blocks at this time.</div>
                 </div>
               </div>
               <div data-ng-show="!regblocks.available">
                 <div class="row collapse">
-                  <div class="large-6 columns end"><i class="fa fa-exclamation-triangle cc-unavailable"></i>Block message is currently unavailable.</div>
+                  <div class="medium-6 columns end"><i class="fa fa-exclamation-triangle cc-unavailable"></i>Block message is currently unavailable.</div>
                 </div>
               </div>
               <div class="cc-academics-showhide-block-history" data-ng-show="regblocks.available">
@@ -244,7 +244,7 @@
           </div>
         </div>
       </div>
-      <div class="large-4 columns" data-ng-class="{'pull-8':(!api.user.profile.student_info.has_student_history)}">
+      <div class="medium-4 columns" data-ng-class="{'pull-8':(!api.user.profile.student_info.has_student_history)}">
         <div class="cc-widget cc-widget-last" data-ng-show="teaching_length">
           <div class="cc-widget-title">
             <h2>Teaching</h2>
@@ -324,7 +324,7 @@
     </div>
   </div>
   <div class="cc-page-academics" data-ng-hide="can_view_academics" data-ng-cloak>
-    <div class="large-12 small-12 columns">
+    <div class="small-12 columns">
       <h2>Data not available</h2>
       <p>
         This page displays academic status information for UC Berkeley students and faculty, and is not available to staff.

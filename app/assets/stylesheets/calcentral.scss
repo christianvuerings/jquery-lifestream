@@ -26,7 +26,7 @@ h1 {
   margin-bottom: 0;
   margin-left: 10px;
   margin-top: 10px;
-  @media only screen and (max-width: 767px) {
+  @media #{$small-only} {
     margin-bottom: 15px;
   }
 }
@@ -284,6 +284,7 @@ button {
     border: 0;
     color: $cc-color-medium-grey;
     cursor: pointer;
+    font-size: 11px;
     margin: 0;
     padding: 3px 45% 3px 10px;
     width: 130%;

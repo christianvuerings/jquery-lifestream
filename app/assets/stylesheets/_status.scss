@@ -30,7 +30,7 @@
     width: 350px;
   }
 
-  @media only screen and (max-width: 767px) {
+  @media #{$small-only} {
     img {
       display: none;
     }
