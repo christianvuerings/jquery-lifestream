@@ -1,4 +1,9 @@
-@media only screen and (max-width: 767px) {
+@media #{$small-up} {
+  .cc-offcanvas-icon {
+    display: none;
+  }
+}
+@media #{$small-only} {
   /* Fixes a background color bug on small screens in the header */
   body {
     background-color: $cc-color-header;
@@ -43,6 +48,7 @@
     }
   }
   .cc-offcanvas-icon {
+    display: block;
     button {
       background: $cc-color-green-dark;
       border: none;
@@ -53,10 +59,5 @@
         text-decoration: none;
       }
     }
-  }
-}
-@media only screen and (min-width: 768px) {
-  .cc-offcanvas-icon {
-    display: none;
   }
 }

@@ -114,7 +114,7 @@ $cc-color-splash-blue-light: #0073C3;
   }
 
   /* Mobile only */
-  @media only screen and (max-width: 767px) {
+  @media #{$small-only} {
     .cc-container-main {
       background-position: center 225px;
       background-size: contain;

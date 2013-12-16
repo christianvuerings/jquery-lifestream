@@ -282,7 +282,7 @@ body {
     }
     button {
       color: $body-font-color;
-      font-weight: normal;
+      font-weight: normal !important;
       padding-left: 10px;
       text-align: left;
       width: 100%;
@@ -314,7 +314,7 @@ body {
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media #{$small-only} {
 
   @mixin cc-badges-small-screen($cc-badge-difference) {
     .cc-badgepopover-bcal {

@@ -3,10 +3,10 @@
     data-ng-submit="!editorEnabled && addTask() || editorEnabled && editTask(task)"
     data-ng-show="addTaskPanelState.showAddTask || editorEnabled" novalidate >
     <div class="row collapse">
-      <div class="large-3 small-3 columns">
+      <div class="medium-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-title-{{$parent.$id}}"><strong><span class="cc-required-field-indicator">*</span> Task</strong>:</label>
       </div>
-      <div class="large-9 small-9 columns">
+      <div class="medium-9 small-9 columns">
         <input
           data-cc-focus-directive="add_edit_task.focusInput"
           data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title-{{$parent.$id}}"
@@ -14,10 +14,10 @@
       </div>
     </div>
     <div class="row collapse">
-      <div class="large-3 small-3 columns">
+      <div class="medium-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-date-{{$parent.$id}}">Due:</label>
       </div>
-      <div class="large-7 small-7 columns cc-widget-tasks-date-input">
+      <div class="medium-7 small-7 columns cc-widget-tasks-date-input">
         <input type="text"
           data-ng-model="add_edit_task.due_date"
           name="add_task_due_date"
@@ -28,32 +28,32 @@
           Please use mm/dd/yyyy date format
         </p>
       </div>
-      <div class="large-2 small-2 columns">
+      <div class="medium-2 small-2 columns">
         <button class="cc-button-transparent cc-widget-tasks-addtask-calendar-icon" data-ng-click="api.util.preventBubble($event)" tabindex="-1" data-cc-datepicker-directive="cc-widget-tasks-addtask-date-{{$parent.$id}}">
           <i class="fa fa-calendar"></i>
         </button>
       </div>
     </div>
     <div class="row collapse">
-      <div class="large-3 small-3 columns">
+      <div class="medium-3 small-3 columns">
         <label for="cc-widget-tasks-addtask-note-{{$parent.$id}}">Notes:</label>
       </div>
-      <div class="large-9 small-9 columns">
+      <div class="medium-9 small-9 columns">
         <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$parent.$id}}" rows="2" /></textarea>
       </div>
     </div>
     <div class="row collapse" data-ng-show="!editorEnabled && addTaskPanelState.isProcessing">
-      <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
+      <div class="medium-9 medium-offset-3 small-offset-3 small-9 columns">
         Task is being added...
       </div>
     </div>
     <div class="row collapse" data-ng-show="editorEnabled && task.editor_is_processing">
-      <div class="large-9 large-offset-3 small-offset-3 small-9 columns">
+      <div class="medium-9 medium-offset-3 small-offset-3 small-9 columns">
         Task is being updated...
       </div>
     </div>
     <div class="row collapse" data-ng-show="!addTaskPanelState.isProcessing || !task.editor_is_processing">
-      <div class="large-9 large-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
+      <div class="medium-9 medium-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
         <button type="submit"
           data-ng-disabled="cc_widget_tasks_form.$invalid || addTaskPanelState.isProcessing"
           class="cc-button"

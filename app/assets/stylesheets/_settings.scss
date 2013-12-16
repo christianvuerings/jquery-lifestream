@@ -44,7 +44,7 @@
     padding-top: 10px;
   }
 
-  @media only screen and (max-width: 767px) {
+  @media #{$small-only} {
     .cc-settings-service {
       font-size: 13px;
     }

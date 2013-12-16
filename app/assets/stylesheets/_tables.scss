@@ -50,7 +50,7 @@
   .cc-table-right-spacing {
     padding-right: 5% !important;
   }
-  @media only screen and (max-width: 767px) {
+  @media #{$small-only} {
     overflow: auto;
   }
 }

@@ -17,7 +17,7 @@
       <span class="cc-academics-next cc-academics-prev-next-disabled" data-ng-hide="next_semester.slug">Next semester</span>
     </div>
 
-    <div class="large-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="!selected_courses.length && selected_semester.time_bucket === 'future'">
+    <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="!selected_courses.length && selected_semester.time_bucket === 'future'">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Enrollment</h2>
@@ -96,12 +96,12 @@
         <div class="cc-widget-padding" data-ng-show="exam_schedule_length">
           <div data-ng-repeat="(day, day_data) in exam_schedule" class="cc-academics-exam-block">
             <div class="row collapse">
-              <div class="large-12 small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
+              <div class="medium-12 small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
             </div>
             <div class="row collapse" data-ng-repeat="exam in day_data">
-              <div class="large-2 small-2 columns" data-ng-bind="exam.time"></div>
-              <div class="large-4 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_number"></div>
-              <div class="large-6 small-4 columns end">
+              <div class="medium-2 small-2 columns" data-ng-bind="exam.time"></div>
+              <div class="medium-4 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_number"></div>
+              <div class="medium-6 small-4 columns end">
                 <div data-cc-map-link-builder-directive></div>
               </div>
             </div>
@@ -111,7 +111,7 @@
       </div>
     </div>
 
-    <div class="large-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selected_courses.length && selected_semester.time_bucket === 'future')}">
+    <div class="medium-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selected_courses.length && selected_semester.time_bucket === 'future')}">
       <div class="cc-academics-telebears cc-widget cc-widget-last" data-ng-if="telebears.slug === selected_semester.slug">
         <div class="cc-widget-title">
           <h2>Appointments</h2>
@@ -131,12 +131,12 @@
               <h4 data-ng-bind-template="Tele-BEARS Phase {{phase.period}}"></h4>
               <ul>
                 <li>
-                  <div class="columns large-2 small-3"><strong class="cc-telebears-time-tag">Start</strong></div>
-                  <div class="columns large-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d | h:mm a'"></div>
+                  <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">Start</strong></div>
+                  <div class="columns medium-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d | h:mm a'"></div>
                 </li>
                 <li>
-                  <div class="columns large-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
-                  <div class="columns large-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | date:'EEE MMM d | h:mm a'"></div>
+                  <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
+                  <div class="columns medium-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | date:'EEE MMM d | h:mm a'"></div>
                 </li>
               </ul>
             </div>
@@ -206,7 +206,7 @@
               </table>
             </div>
             <div class="row collapse cc-academics-calculator-disclaimer" data-ng-show="selected_courses.length">
-              <div class="large-12 small-12 columns">
+              <div class="medium-12 small-12 columns">
                 <p>This calculator provides a "best guess" calculation of your GPA based on available data<span data-ng-show="hideDisclaimer">...</span>
                   <span data-ng-show="!hideDisclaimer">and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />When grades are available, your actual grade will replace the popup menu for that class. Once a semester is over, if any grades are still not available a popup menu will remain that will allow you to enter your estimated grade.<br /><br />The estimated cumulative GPA calculation does not consider repeated courses.</span>
 

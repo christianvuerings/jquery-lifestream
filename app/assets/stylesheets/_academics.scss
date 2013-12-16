@@ -139,8 +139,11 @@
       font-size: 14px;
       margin: 0;
     }
-    table {
-      font-size: 10px;
+    table tr {
+      th, td {
+        line-height: 1.4;
+        font-size: 11px !important;
+      }
     }
   }
   .cc-academics-semester-current {
@@ -151,8 +154,10 @@
     h3 {
       font-size: 18px;
     }
-    table {
-      font-size: 12px;
+    table tr {
+      th, td {
+        font-size: 12px !important;
+      }
     }
   }
   .cc-academics-semester-future {

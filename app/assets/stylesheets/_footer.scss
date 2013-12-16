@@ -47,7 +47,7 @@ body {
       }
     }
 
-    @media only screen and (max-width: 767px) {
+    @media #{$small-only} {
       background: $cc-color-footer-dark-background;
       color: $cc-color-light-grey;
       a {

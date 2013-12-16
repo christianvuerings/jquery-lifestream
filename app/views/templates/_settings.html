@@ -1,25 +1,25 @@
 <script type="text/ng-template" id="templates/settings.html">
-  <div class="large-12 columns cc-settings">
+  <div class="medium-12 columns cc-settings">
     <h1>Settings for {{api.user.profile.full_name}}</h1>
 
     <section data-ng-show='connected_services.length' class="cc-settings-section">
-      <div class="large-10 large-centered columns">
+      <div class="medium-10 medium-centered columns">
 
         <h2>Connected Services</h2>
-        <div class="row cc-settings-service-row" data-ng-repeat="service in connected_services">
-          <div data-ng-init="loopname='connected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
+        <div data-ng-repeat="service in connected_services">
+          <div class="row cc-settings-service-row" data-ng-init="loopname='connected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
         </div>
 
       </div>
     </section>
 
     <section data-ng-show='non_connected_services.length' class="cc-settings-section">
-      <div class="large-10 large-centered columns">
+      <div class="medium-10 medium-centered columns">
 
         <h2>Services to Connect</h2>
 
-        <div class="row cc-settings-service-row" data-ng-repeat="service in non_connected_services">
-          <div data-ng-init="loopname='unconnected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
+        <div data-ng-repeat="service in non_connected_services">
+          <div class="row cc-settings-service-row" data-ng-init="loopname='unconnected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
         </div>
 
       </div>

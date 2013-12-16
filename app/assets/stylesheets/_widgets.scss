@@ -190,7 +190,7 @@
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media #{$small-only} {
   .cc-widget-title h2 {
     padding: 7px 10px;
   }
