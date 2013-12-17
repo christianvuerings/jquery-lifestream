@@ -63,7 +63,7 @@ cd calcentral
 1. Install jruby
 ```bash
 rvm get head
-rvm install jruby-1.7.3
+rvm install jruby-1.7.8
 cd ..
 cd calcentral
 # Answer "yes" again if it asks you to trust a new .rvmrc file.
