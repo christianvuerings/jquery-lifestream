@@ -1,7 +1,9 @@
 .cc-page-myfinances {
   .cc-page-myfinances-account-activity-search {
-    font-size: 12px;
     margin: 6px 10px 0 5px;
+    input {
+      font-size: 12px;
+    }
   }
   .cc-page-myfinances-account-activity-selection {
     margin: 20px 10px;
