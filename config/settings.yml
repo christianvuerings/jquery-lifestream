@@ -200,9 +200,6 @@ cache:
     CalLinkMembershipsProxy: <%= 4.hours %>
     CalLinkOrganizationProxy: <%= 4.hours %>
 
-    GoogleTasksListProxy: <%= 10.minutes %>
-    GoogleEventsListProxy: <%= 2.minutes %>
-
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads
