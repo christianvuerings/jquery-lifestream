@@ -17,6 +17,24 @@
         </a>
       </li>
     </ul>
+    <div data-ng-if="api.user.profile.features.research">
+      <div class ="cc-widget-subtitle">
+        <h3>Research Groups</h3>
+      </div>
+      <ul class="cc-widget-list">
+        <li data-ng-repeat="group in research">
+          <a data-ng-href="https://hub-qa.berkeley.edu/page/site/{{group.shortName}}/dashboard">
+            <div class="cc-widget-list-column-left">
+              <div
+              class="cc-icon"
+              data-ng-class="'cc-icon-researchhub'">
+              </div>
+            </div>
+            <strong class="cc-ellipsis" data-ng-bind="group.title"></strong>
+          </a>
+        </li>
+      </ul>
+    </div>
     <div data-ng-show="!groups.length" class="cc-widget-text">
       There are currently no groups available.
     </div>
