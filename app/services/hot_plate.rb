@@ -57,7 +57,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            Calcentral::Messaging.publish('/queues/hot_plate', visit.uid, {persistent: false})
+            Calcentral::Messaging.publish('/queues/hot_plate', visit.uid, {ttl: 86400000, persistent: false})
           end
         end
 

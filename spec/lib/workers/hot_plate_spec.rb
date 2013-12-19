@@ -10,8 +10,8 @@ describe "HotPlate" do
   it "should warm the cache of some users who have visited recently" do
     UserVisit.record "1234"
     UserVisit.record "5678"
-    Calcentral::Messaging.should_receive(:publish).with('/queues/hot_plate', "1234", {persistent: false}).exactly(1).times
-    Calcentral::Messaging.should_receive(:publish).with('/queues/hot_plate', "5678", {persistent: false}).exactly(1).times
+    Calcentral::Messaging.should_receive(:publish).with('/queues/hot_plate', "1234", {ttl: 86400000, persistent: false}).exactly(1).times
+    Calcentral::Messaging.should_receive(:publish).with('/queues/hot_plate', "5678", {ttl: 86400000, persistent: false}).exactly(1).times
     @plate.warm
   end
 
