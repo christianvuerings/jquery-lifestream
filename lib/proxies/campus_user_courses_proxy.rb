@@ -163,8 +163,10 @@ class CampusUserCoursesProxy < BaseProxy
           term_yr: row['term_yr'],
           term_cd: row['term_cd'],
           dept: row['dept_name'],
+          dept_desc: row['dept_description'],
           catid: row['catalog_id'],
           course_code: "#{row['dept_name']} #{row['catalog_id']}",
+          course_catalog: row['catalog_id'],
           emitter: 'Campus',
           name: row['course_title'],
           sections: [

@@ -24,6 +24,7 @@ features:
   financials: true
   telebears: true
   textbooks: true
+  videos: true
 
 cache:
   store: "memory"
