@@ -14,6 +14,7 @@ Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu
 * [Rails 3.2.x](http://rubyonrails.org/download)
 * [Rubygems](http://rubyforge.org/frs/?group_id=126)
 * [Rvm](https://rvm.io/rvm/install/) - Ruby version managers
+* [xvfb](XQuartz: http://xquartz.macosforge.org/landing/) - xvfb headless browser, included for Macs with XQuartz
 
 ## Installation
 
@@ -78,6 +79,8 @@ export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C -J-Xms900m -J-Xmx90
      * ```rvm gemset delete calcentral```
      * (set your JRUBY_OPTS)
      * ```bundle install```
+
+1. Download and install xvfb. On a Mac, you get xvfb by [installing XQuartz](XQuartz: http://xquartz.macosforge.org/landing/)
 
 1. Download the appropriate gems with [Bundler](http://gembundler.com/rails3.html)
 ```bash
