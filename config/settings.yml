@@ -199,9 +199,9 @@ cache:
     SakaiUserSitesProxy: <%= 30.minutes %>
     SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
 
-    MyBadges::GoogleCalendar: <%= 2.minutes %>
+    MyBadges::GoogleCalendar: <%= 4.minutes %>
     MyBadges::GoogleDrive: <%= 10.minutes %>
-    MyBadges::GoogleMail: <%= 2.minutes %>
+    MyBadges::GoogleMail: <%= 4.minutes %>
 
     CalLinkMembershipsProxy: <%= 4.hours %>
     CalLinkOrganizationProxy: <%= 4.hours %>
