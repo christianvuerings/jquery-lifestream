@@ -69,10 +69,11 @@ cd calcentral
 # Answer "yes" again if it asks you to trust a new .rvmrc file.
 ```
 
-1. (Optional for development) Make JRuby faster & enable C extensions by running this or put in your .bashrc:
+1. Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
 ```bash
-export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C"
+export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C -J-Xms900m -J-Xmx900m -J-XX:MaxPermSize=500m"
 ```
+  * __WARNING__: The -J-d32 setting is optional (32-bit mode starts up a tiny bit quicker in some JVMs).
   * __WARNING__: Do not switch between 32-bit and 64-bit JRuby after your gemset has been initialized (your bundle library will have serious issues). If you do need to change settings, make sure to reinitialize your gemset:
      * ```rvm gemset delete calcentral```
      * (set your JRUBY_OPTS)
@@ -204,21 +205,6 @@ rails s -e production
 1. After testing, remove the static assets and generated pages
 ```bash
 bundle exec rake assets:clean
-```
-
-### Java Out of Memory exception
-
-If you're getting something like the following error:
-
-```
-Java::JavaLang::OutOfMemoryError: Java heap space
-```
-
-Make sure that you're memory settings for Java are high enough.
-Add the following to your `JRUBY_OPTS`:
-
-```
-JRUBY_OPTS="-J-Xmx900m -J-XX:MaxPermSize=500m"
 ```
 
 ### Start the server with TorqueBox
