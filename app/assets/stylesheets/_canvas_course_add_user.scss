@@ -28,10 +28,9 @@
     }
 
     .bc-button {
-      background-color: #2683bc;
-      border-color: #2274a7;
-      border: none;
-      color: white;
+      background-color: $bc-color-medium-blue;
+      border-color: $bc-color-dark-blue;
+      color: $bc-color-white;
       cursor: pointer;
       display: inline-block;
       float: center;
