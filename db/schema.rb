@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013120614540101) do
+ActiveRecord::Schema.define(:version => 2013121913050404) do
 
   create_table "link_categories", :force => true do |t|
     t.string   "name",                          :null => false
@@ -70,7 +70,8 @@ ActiveRecord::Schema.define(:version => 2013120614540101) do
     t.string  "app_id"
     t.text    "access_token"
     t.text    "refresh_token"
-    t.integer "expiration_time", :limit => 8
+    t.integer "expiration_time",          :limit => 8
+    t.text    "app_data_201322221382900"
     t.text    "app_data"
   end
 
