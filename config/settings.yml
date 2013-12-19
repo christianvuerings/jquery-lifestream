@@ -138,6 +138,17 @@ textbooks_proxy:
   fake: false
   base_url: "https://www.bkstr.com"
 
+playlists_proxy:
+  fake: false
+  base_url: 'http://webcast.berkeley.edu/itunesu_podcasts.js'
+
+youtube_proxy:
+  fake: false
+  base_url: 'http://gdata.youtube.com/feeds/api/playlists/'
+  params: {
+    alt: 'json'
+  }
+
 blog_latest_release_notes_feed_proxy:
   fake: false
   feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
@@ -246,6 +257,7 @@ features:
   financials: false
   telebears: false
   textbooks: false
+  videos: false
 
 messaging:
   enabled: true

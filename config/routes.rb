@@ -30,6 +30,14 @@ Calcentral::Application.routes.draw do
   match '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
   match '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }
 
+  # Youtube class videos endpoints
+  ## Get the playlist_id of the title given, or list all playlists if no title given.
+  match '/api/my/playlists(/:playlist_title)' => 'my_playlists#get_playlists', :defaults => { :format => 'json' }
+  ## Get a list of youtube videos given a playlist_id.
+  match '/api/my/youtube/:playlist_id' => 'my_youtube#get_videos', :defaults => { :format => 'json' }
+  ## Get a list of youtube videos given a playlist_title.
+  match '/api/my/videos/:playlist_title' => 'my_videos#get_videos', :defaults => { :format => 'json' }
+
   # Canvas embedded application support.
   match '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
   match '/canvas/lti_roster_photos' => 'canvas_lti#lti_roster_photos', :defaults => { :format => 'xml' }

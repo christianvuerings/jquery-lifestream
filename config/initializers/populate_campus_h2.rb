@@ -394,6 +394,7 @@
         -- Department records
         Insert into CALCENTRAL_DEPT_VW (DEPT_NAME,DEPT_DESCRIPTION,CHNG_DATE,DEPT_END_TERM_YR,DEPT_END_TERM_CD,DEPT_START_TERM_YR,DEPT_START_TERM_CD) values ('BIOLOGY','Biology',parsedatetime('23-OCT-07','dd-MMM-yy'),0,null,83,'D');
         Insert into CALCENTRAL_DEPT_VW (DEPT_NAME,DEPT_DESCRIPTION,CHNG_DATE,DEPT_END_TERM_YR,DEPT_END_TERM_CD,DEPT_START_TERM_YR,DEPT_START_TERM_CD) values ('PSYCH','Psychology',parsedatetime('05-JAN-12','dd-MMM-yy'),0,null,94,'D');
+        Insert into CALCENTRAL_DEPT_VW (DEPT_NAME,DEPT_DESCRIPTION,CHNG_DATE,DEPT_END_TERM_YR,DEPT_END_TERM_CD,DEPT_START_TERM_YR,DEPT_START_TERM_CD) values ('COG SCI','Cognitive Science',parsedatetime('05-JAN-12','dd-MMM-yy'),0,null,94,'D');
 
         -- Registration info
 

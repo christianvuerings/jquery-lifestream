@@ -50,6 +50,8 @@ module MyAcademics::AcademicsModule
     {
       course_number: campus_course[:course_code],
       dept: campus_course[:dept],
+      course_catalog: campus_course[:course_catalog],
+      dept_desc: campus_course[:dept_desc],
       slug: course_to_slug(campus_course[:dept], campus_course[:catid]),
       title: campus_course[:name],
       sections: campus_course[:sections]
