@@ -1,11 +1,59 @@
-.cc-page-course-add-user {
+.bc-page-course-add-user {
+
   background: $cc-color-white;
   padding: 10px;
 
-  .canvas-form {
+  .bc-column-align-center {
+    text-align: center;
+  }
+
+  .bc-form {
     background: transparent;
     border: none;
     padding: 10px 0;
+  }
+
+  .bc-horizontal-form {
+    .bc-label {
+      white-space: nowrap;
+    }
+
+    .bc-form-entity {
+      border: 1px solid $cc-color-shadow-color;
+      font-family: Arial;
+      font-size: 12px;
+      height: 25px;
+      margin: 3px 0;
+      padding: 5px;
+    }
+
+    .bc-button {
+      background-color: $bc-color-medium-blue;
+      border-color: $bc-color-dark-blue;
+      color: $bc-color-white;
+      cursor: pointer;
+      display: inline-block;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: normal;
+      position: relative;
+      text-decoration: none;
+      text-align: center;
+    }
+
+  }
+
+  @media #{$small-only} {
+    .bc-full-wide {
+      width: 100%;
+    }
+
+    .bc-horizontal-form {
+      .columns {
+        margin-bottom: 3px;
+      }
+    }
   }
 
 }

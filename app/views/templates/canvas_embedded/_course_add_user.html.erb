@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/canvas_embedded/course_add_user.html">
-	<div class="cc-page-course-add-user">
+	<div class="bc-page-course-add-user">
 
     <h2>Add User To Course</h2>
 
@@ -21,24 +21,24 @@
         </div>
       </div>
 
-      <div id="search-form-wrapper" class="row collapse" data-ng-show="show_search_form">
+      <div class="row collapse" data-ng-show="show_search_form">
 
-        <div class="medium-6 small-8 columns">
+        <div class="medium-6 columns">
           <form data-ng-submit="searchUsers()">
 
-            <div id="search-form-row" class="row">
-              <div class="small-4 columns">
+            <div class="row bc-horizontal-form">
+              <div class="medium-5 small-12 columns">
                 <label for="search-text" class="cc-visuallyhidden">Search users</label>
-                <input id="search-text" type="text" placeholder="Search users" data-ng-model="search_text">
+                <input id="search-text" class="bc-form-entity" type="text" placeholder="Search users" data-ng-model="search_text">
               </div>
 
-              <div class="small-6 columns">
-                <div class="row">
-                  <div class="small-4 columns">
-                    <label for="search-type" class="inline">Search by:</label>
+              <div class="medium-6 small-12 columns">
+                <div class="row collapse">
+                  <div class="medium-4 columns hide-for-small">
+                    <label for="search-type" class="bc-label bc-form-entities">Search by:</label>
                   </div>
-                  <div class="small-8 columns">
-                    <select id="search-type" data-ng-model="search_type">
+                  <div class="medium-8 small-12 columns">
+                    <select id="search-type" data-ng-model="search_type" class="bc-form-entity">
                       <option value="name">Last Name, First Name</option>
                       <option value="email">Email</option>
                       <option value="student_id">Student ID</option>
@@ -48,8 +48,8 @@
                 </div>
               </div>
 
-              <div class="small-2 columns">
-                <button id="submit-search" type="submit" class="button tiny">Go</button>
+              <div class="medium-1 columns bc-column-align-center">
+                <button id="submit-search" type="submit" class="bc-form-entity bc-button bc-full-wide">Go</button>
               </div>
             </div>
 
@@ -58,7 +58,7 @@
 
       </div>
 
-      <div id="user-results-table-wrapper" class="row collapse" data-ng-show="show_users_area">
+      <div class="row collapse" data-ng-show="show_users_area">
         <div data-cc-spinner-directive>
 
           <div data-ng-show="user_search_results.length === 0">
@@ -66,7 +66,7 @@
           </div>
 
           <div data-ng-show="user_search_results.length > 0">
-            <form data-ng-submit="addUser()" class="canvas-form">
+            <form data-ng-submit="addUser()" class="bc-form">
 
               <table>
                 <thead>
