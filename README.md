@@ -70,15 +70,14 @@ cd calcentral
 # Answer "yes" again if it asks you to trust a new .rvmrc file.
 ```
 
-1. (For 32-bit JVMs) Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
-```bash
-On a 32-bit JVM:
-export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C -J-Xms900m -J-Xmx900m -J-XX:MaxPermSize=500m --headless"
-```
-
-1. (For 64-bit JVMs)
+1. (For 64-bit JVMs) Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
 ``` bash
 export JRUBY_OPTS="-Xcext.enabled=true -X-C -J-Xms900m -J-Xmx900m -J-XX:MaxPermSize=500m --headless -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xcompile.invokedynamic=false"
+```
+
+1. (For 32-bit JVMs) Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
+```bash
+export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C -J-Xms900m -J-Xmx900m -J-XX:MaxPermSize=500m --headless"
 ```
 
   * __WARNING__: The -J-d32 setting is optional (32-bit mode starts up a tiny bit quicker in some JVMs).
