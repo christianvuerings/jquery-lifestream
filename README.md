@@ -70,14 +70,17 @@ cd calcentral
 # Answer "yes" again if it asks you to trust a new .rvmrc file.
 ```
 
-1. Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
+1. (For 32-bit JVMs) Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
 ```bash
 On a 32-bit JVM:
 export JRUBY_OPTS="-Xcext.enabled=true -J-d32 -J-client -X-C -J-Xms900m -J-Xmx900m -J-XX:MaxPermSize=500m --headless"
+```
 
-On a 64-bit JVM, which won't respond to -J-client, this may work better:
+1. (For 64-bit JVMs)
+``` bash
 export JRUBY_OPTS="-Xcext.enabled=true -X-C -J-Xms900m -J-Xmx900m -J-XX:MaxPermSize=500m --headless -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xcompile.invokedynamic=false"
 ```
+
   * __WARNING__: The -J-d32 setting is optional (32-bit mode starts up a tiny bit quicker in some JVMs).
   * __WARNING__: Do not switch between 32-bit and 64-bit JRuby after your gemset has been initialized (your bundle library will have serious issues). If you do need to change settings, make sure to reinitialize your gemset:
      * ```rvm gemset delete calcentral```
