@@ -1,3 +1,2 @@
 coverage/**
 public/dummy/js/videos.js
-spec/javascripts/lib/angular-mocks.js
