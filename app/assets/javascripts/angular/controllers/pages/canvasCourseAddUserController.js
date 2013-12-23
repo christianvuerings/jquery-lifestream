@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Canvas Add User to Course LTI app controller
    */
-  calcentral.controller('CanvasCourseAddUserController', ['apiService', '$http', '$scope', '$window', function (apiService, $http, $scope, $window) {
+  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function (apiService, $http, $scope, $window) {
 
     apiService.util.setTitle('Add User to Course');
 
@@ -187,6 +187,6 @@
 
     window.setInterval(postHeight, 250);
     checkAuthorization();
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

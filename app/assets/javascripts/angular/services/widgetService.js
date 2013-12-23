@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('widgetService', ['analyticsService', '$timeout', function(analyticsService, $timeout) {
+  angular.module('calcentral.services').service('widgetService', function(analyticsService, $timeout) {
 
     /**
      * Toggle whether an item for a widget should be shown or not
@@ -52,6 +52,6 @@
       toggleShow: toggleShow
     };
 
-  }]);
+  });
 
 }(window.angular));

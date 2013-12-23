@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('userService', ['$http', '$location', '$route', 'analyticsService', 'utilService', function($http, $location, $route, analyticsService, utilService) {
+  angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, utilService) {
 
     var profile = {};
     var events = {
@@ -152,6 +152,6 @@
       signOut: signOut
     };
 
-  }]);
+  });
 
 }(window.angular));

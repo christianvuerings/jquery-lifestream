@@ -1,11 +1,11 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Badges controller
    */
 
-  calcentral.controller('BadgesController', ['apiService', 'dateService', 'errorService', '$http', '$scope', function(apiService, dateService, errorService, $http, $scope) {
+  angular.module('calcentral.controllers').controller('BadgesController', function(apiService, dateService, errorService, $http, $scope) {
 
     var defaults = {
       'bcal': {
@@ -146,6 +146,6 @@
       }
     });
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

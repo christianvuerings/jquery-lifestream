@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Video controller
    */
-  calcentral.controller('VideoController', ['$http', '$scope', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('VideoController', function($http, $scope) {
 
     var getVideos = function(courseDepartment, courseCategory, courseSection, courseSemester) {
       var title = courseDepartment + ' ' + courseCategory + ', ' + courseSection + ' - ' + courseSemester;
@@ -27,6 +27,6 @@
       }
     });
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

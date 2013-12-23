@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Tasks controller
    */
-  calcentral.controller('TasksController', ['apiService', '$filter', '$http', '$scope', function(apiService, $filter, $http, $scope) {
+  angular.module('calcentral.controllers').controller('TasksController', function(apiService, $filter, $http, $scope) {
 
     // Initial mode for Tasks view
     $scope.current_task_mode = 'scheduled';
@@ -165,6 +165,6 @@
       return (task.status === 'completed');
     };
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

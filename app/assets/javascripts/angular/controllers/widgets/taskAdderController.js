@@ -1,11 +1,11 @@
-(function(calcentral) {
+(function(angular) {
 
   'use strict';
 
   /**
    * Task adder controller
    */
-  calcentral.controller('TaskAdderController', ['$scope', 'errorService', 'taskAdderService',  function($scope, errorService, taskAdderService) {
+  angular.module('calcentral.controllers').controller('TaskAdderController', function($scope, errorService, taskAdderService) {
     $scope.add_edit_task = taskAdderService.getTaskState();
     $scope.addTaskPanelState = taskAdderService.getState();
 
@@ -38,6 +38,6 @@
       }
     }, true);
 
-  }]);
+  });
 
-})(window.calcentral, window.angular);
+})(window.angular);

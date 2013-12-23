@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccFocusDirective', ['$timeout', function($timeout) {
+  angular.module('calcentral.directives').directive('ccFocusDirective', function($timeout) {
     return {
       link: function(scope, elm, attrs) {
         scope.$watch(attrs.ccFocusDirective, function(value) {
@@ -13,6 +13,6 @@
         });
       }
     };
-  }]);
+  });
 
 })(window.angular);

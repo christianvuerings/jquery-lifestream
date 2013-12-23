@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.filters').filter('cc.dateInYear', ['dateService', '$filter', function(dateService, $filter) {
+  angular.module('calcentral.filters').filter('cc.dateInYear', function(dateService, $filter) {
     return function(millisec_epoch, currentYearFormat, otherYearFormat) {
       var isCurrentYear = dateService.moment().format('YYYY') === dateService.moment(millisec_epoch).format('YYYY');
       var standardDateFilter = $filter('date');
@@ -14,5 +14,5 @@
         return standardDateFilter(millisec_epoch, otherYearFormat);
       }
     };
-  }]);
+  });
 }(window.angular));

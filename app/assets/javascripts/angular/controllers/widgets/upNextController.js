@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * My Up Next controller
    */
-  calcentral.controller('UpNextController', ['apiService', '$http', '$scope', function(apiService, $http, $scope) {
+  angular.module('calcentral.controllers').controller('UpNextController', function(apiService, $http, $scope) {
 
     /**
      * Make sure that we're not showing wrong date information to the user.
@@ -31,6 +31,6 @@
     });
     getUpNext();
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

@@ -1,10 +1,10 @@
-(function(calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Settings controller
    */
-  calcentral.controller('SettingsController', ['$scope', 'apiService', function($scope, apiService) {
+  angular.module('calcentral.controllers').controller('SettingsController', function($scope, apiService) {
 
     apiService.util.setTitle('Settings');
 
@@ -31,6 +31,6 @@
     // 3) Now we need to update the user status
     $scope.api.user.fetch();
 
-  }]);
+  });
 
-})(window.calcentral);
+})(window.angular);

@@ -113,6 +113,10 @@ group :assets do
   # Raven.js - library for JS error logging
   gem "ravenjs-gem", "~> 1.0.7.0"
 
+  # ngmin-rails
+  # https://github.com/jasonm/ngmin-rails
+  gem "ngmin-rails", "~> 0.4.0"
+
 end
 
 # Oracle adapter
@@ -137,7 +141,7 @@ group :development, :test , :testext do
   gem "jasmine-jquery-rails", "~> 1.4.2"
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem "selenium-webdriver", "~> 2.32.1"
+  gem "selenium-webdriver", "~> 2.39.0"
 
   gem "therubyrhino", "~> 2.0.1"
 
@@ -187,5 +191,5 @@ group :test, :testext do
 end
 
 group :development, :assets do
-  gem "turbo-sprockets-rails3", "~> 0.3.10"
+  gem "turbo-sprockets-rails3", "~> 0.3.11"
 end

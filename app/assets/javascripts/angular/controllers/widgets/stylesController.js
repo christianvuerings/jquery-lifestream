@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Styles controller
    */
-  calcentral.controller('StylesController', ['$scope', '$http', '$location', '$anchorScroll', function($scope, $http, $location, $anchorScroll) {
+  angular.module('calcentral.controllers').controller('StylesController', function($scope, $http, $location, $anchorScroll) {
 
     // Handle in-page links, via http://stackoverflow.com/a/14717011/8438
     $scope.scrollTo = function(id) {
@@ -44,6 +44,6 @@
       });
     });
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Academics controller
    */
-  calcentral.controller('AcademicsController', ['apiService', '$http', '$routeParams', '$scope', '$q', function(apiService, $http, $routeParams, $scope, $q) {
+  angular.module('calcentral.controllers').controller('AcademicsController', function(apiService, $http, $routeParams, $scope, $q) {
 
     apiService.util.setTitle('My Academics');
 
@@ -434,5 +434,5 @@
       }
     });
 
-  }]);
-})(window.angular, window.calcentral);
+  });
+})(window.angular);

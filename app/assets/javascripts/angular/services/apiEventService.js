@@ -5,7 +5,7 @@
   /**
    * API event service - broadcasts API events
    */
-  angular.module('calcentral.services').service('apiEventService', ['$rootScope', function($rootScope) {
+  angular.module('calcentral.services').service('apiEventService', function($rootScope) {
 
     /**
      * Broadcast an API event
@@ -51,6 +51,6 @@
       fireApiEvents: fireApiEvents
     };
 
-  }]);
+  });
 
 }(window.angular));

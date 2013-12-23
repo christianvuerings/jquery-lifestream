@@ -1,11 +1,11 @@
-(function(angular, calcentral) {
+(function(angular) {
 
   'use strict';
 
   /**
    * Task editor controller
    */
-  calcentral.controller('TaskEditorController', ['$http', '$scope', 'apiService', function($http, $scope, apiService) {
+  angular.module('calcentral.controllers').controller('TaskEditorController', function($http, $scope, apiService) {
 
     $scope.editorEnabled = false;
 
@@ -74,6 +74,6 @@
       $scope.disableEditor();
 
     };
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

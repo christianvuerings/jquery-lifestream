@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').factory('$exceptionHandler', ['$log', 'errorService', function($log, errorService) {
+  angular.module('calcentral.services').factory('$exceptionHandler', function($log, errorService) {
 
     // Return the function
     return function(exception) {
@@ -15,6 +15,6 @@
       errorService.send(exception);
     };
 
-  }]);
+  });
 
 }(window.angular));
