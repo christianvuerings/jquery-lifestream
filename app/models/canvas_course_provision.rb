@@ -35,6 +35,7 @@ class CanvasCourseProvision
     return nil unless user_authorized?
     working_uid = @admin_acting_as || @uid
     cpcs = CanvasProvideCourseSite.new(working_uid)
+    cpcs.save
     cpcs.background.create_course_site(term_slug, ccns, @admin_by_ccns.present?)
     cpcs.job_id
   end
