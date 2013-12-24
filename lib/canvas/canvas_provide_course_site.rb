@@ -29,7 +29,6 @@ class CanvasProvideCourseSite < CanvasCsv
     @completed_steps = []
     @import_data = {}
     @cache_key = "canvas.courseprovision.#{@uid}.#{CanvasProvideCourseSite.unique_job_id}"
-    save
   end
 
   def create_course_site(term_slug, ccns, is_admin_by_ccns = false)

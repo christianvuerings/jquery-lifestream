@@ -65,14 +65,6 @@ describe CanvasProvideCourseSite do
       CanvasProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
       expect(canvas_provide_course_site.cache_key).to eq "canvas.courseprovision.#{uid}.1383330151057"
     end
-
-    it "saves the state to cache" do
-      retrieved_job = CanvasProvideCourseSite.find(canvas_provide_course_site.job_id)
-      expect(retrieved_job).to be_an_instance_of CanvasProvideCourseSite
-      expect(retrieved_job.uid).to eq canvas_provide_course_site.instance_eval { @uid }
-      expect(retrieved_job.status).to eq 'New'
-      expect(retrieved_job.job_id).to eq canvas_provide_course_site.job_id
-    end
   end
 
   describe "#create_course_site" do
