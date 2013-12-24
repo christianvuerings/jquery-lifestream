@@ -7,16 +7,22 @@
 
       <div id="alerts-wrapper" class="row" data-ng-show="show_alerts">
         <div data-cc-spinner-directive>
-          <div data-ng-show="success_message" class="alert-box success radius">
-            <span data-ng-bind="user_added.full_name"></span> was added to the
-            &ldquo;<span data-ng-bind="user_added.section_name"></span>&rdquo; section of this course as a <span data-ng-bind="user_added.role_name"></span>.
-            <button data-ng-click="success_message=''" class="button small">X</button>
+          <div data-ng-show="user_search_result_count > user_search_results.length" class="alert-box success radius">
+            Your search returned <span data-ng-bind="user_search_result_count"></span> results, but only the first
+            <span data-ng-bind="user_search_results.length"></span> are shown.
+            Please refine your search to limit the number of results.
           </div>
 
-          <div data-ng-show="failure_message" class="alert-box alert radius">
+          <div data-ng-show="addition_success_message" class="alert-box success radius">
+            <span data-ng-bind="user_added.full_name"></span> was added to the
+            &ldquo;<span data-ng-bind="user_added.section_name"></span>&rdquo; section of this course as a <span data-ng-bind="user_added.role_name"></span>.
+            <button data-ng-click="addition_success_message=''" class="button small">X</button>
+          </div>
+
+          <div data-ng-show="addition_failure_message" class="alert-box alert radius">
             <i class="fa fa-exclamation-triangle"></i>
             <span data-ng-bind="error_status"></span>
-            <button data-ng-click="failure_message=''" class="button small">X</button>
+            <button data-ng-click="addition_failure_message=''" class="button small">X</button>
           </div>
         </div>
       </div>

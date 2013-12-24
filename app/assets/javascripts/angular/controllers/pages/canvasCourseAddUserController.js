@@ -15,8 +15,8 @@
     var resetImportState = function() {
       $scope.user_added = false;
       $scope.show_alerts = false;
-      $scope.success_message = false;
-      $scope.failure_message = false;
+      $scope.addition_success_message = false;
+      $scope.addition_failure_message = false;
     };
 
     // Initialize upon load
@@ -66,6 +66,7 @@
     };
 
     $scope.searchUsers = function() {
+      resetSearchState();
       resetImportState();
 
       $scope.show_users_area = true;
@@ -83,7 +84,9 @@
         params: feed_params
       }).success(function(data) {
         $scope.user_search_results = data.users;
+        $scope.user_search_result_count = data.users[0].result_count;
         $scope.is_loading = false;
+        $scope.show_alerts = true;
       }).error(function(data) {
         $scope.show_error = true;
         if (data.error) {
@@ -92,6 +95,8 @@
           $scope.error_status = 'User search failed.';
         }
         $scope.is_loading = false;
+        $scope.search_failure_message = true;
+        $scope.show_alerts = true;
       });
     };
 
@@ -117,7 +122,7 @@
         $scope.user_added.full_name = submitted_user.first_name + ' ' + submitted_user.last_name;
         $scope.user_added.role_name = submitted_role.name;
         $scope.user_added.section_name = submitted_section.name;
-        $scope.success_message = true;
+        $scope.addition_success_message = true;
         $scope.is_loading = false;
       }).error(function(data) {
         if (data.error) {
@@ -125,7 +130,7 @@
         } else {
           $scope.error_status = 'Request to add user failed';
         }
-        $scope.failure_message = true;
+        $scope.addition_failure_message = true;
         $scope.is_loading = false;
       });
 
