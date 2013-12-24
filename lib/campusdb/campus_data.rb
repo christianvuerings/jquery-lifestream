@@ -77,17 +77,27 @@ class CampusData < OracleDatabase
   def self.find_people_by_name(name_search_string, limit = 0)
     raise ArgumentError, "Search text argument must be a string" if name_search_string.class != String
     raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
-    limit_clause = (limit > 0) ? "and rownum <= #{limit}" : ""
+    limit_clause = (limit > 0) ? "where rownum <= #{limit}" : ""
     search_text_array = name_search_string.split(',')
     search_text_array.collect! {|e| e.strip }
     clean_search_string = connection.quote_string(search_text_array.join(','))
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
-      from calcentral_person_info_vw pi
-      where lower( concat(concat(pi.last_name, ','), pi.first_name) ) like '#{clean_search_string.downcase}%'
-      #{limit_clause}
+        select outr.*
+        from (
+          select  pi.ldap_uid,
+                  pi.first_name,
+                  pi.last_name,
+                  pi.email_address,
+                  pi.student_id,
+                  pi.affiliations,
+                  row_number() over(order by 1) row_number,
+                  count(*) over() result_count
+          from calcentral_person_info_vw pi
+          where lower( concat(concat(pi.last_name, ','), pi.first_name) ) like '#{clean_search_string.downcase}%'
+          order by pi.last_name
+        ) outr #{limit_clause}
       SQL
       result = connection.select_all(sql)
     }
@@ -97,15 +107,25 @@ class CampusData < OracleDatabase
   def self.find_people_by_email(email_search_string, limit = 0)
     raise ArgumentError, "Search text argument must be a string" if email_search_string.class != String
     raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
-    limit_clause = (limit > 0) ? "and rownum <= #{limit}" : ""
+    limit_clause = (limit > 0) ? "where rownum <= #{limit}" : ""
     clean_search_string = connection.quote_string(email_search_string)
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
-      from calcentral_person_info_vw pi
-      where lower(pi.email_address) like '%#{clean_search_string.downcase}%'
-      #{limit_clause}
+        select outr.*
+        from (
+          select  pi.ldap_uid,
+                  pi.first_name,
+                  pi.last_name,
+                  pi.email_address,
+                  pi.student_id,
+                  pi.affiliations,
+                  row_number() over(order by 1) row_number,
+                  count(*) over() result_count
+          from calcentral_person_info_vw pi
+          where lower(pi.email_address) like '%#{clean_search_string.downcase}%'
+          order by pi.last_name
+        ) outr #{limit_clause}
       SQL
       result = connection.select_all(sql)
     }
@@ -118,7 +138,7 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1 row_number, 1 result_count
       from calcentral_person_info_vw pi
       where pi.student_id = #{student_id_string}
       and rownum <= 1
@@ -134,7 +154,7 @@ class CampusData < OracleDatabase
     result = []
     use_pooled_connection {
       sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1 row_number, 1 result_count
       from calcentral_person_info_vw pi
       where pi.ldap_uid = #{user_id_string}
       and rownum <= 1

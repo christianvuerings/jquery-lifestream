@@ -270,45 +270,35 @@ describe CampusData do
       expect { CampusData.find_people_by_name("TEST-", "15") }.to raise_error(ArgumentError, "Limit argument must be a Fixnum")
     end
 
-    it "should escape user input to avoid SQL injection", if: CampusData.test_data? do
+    it "should escape user input to avoid SQL injection", :testext => true do
       CampusData.connection.should_receive(:quote_string).with("anything' OR 'x'='x").and_return("anything'' OR ''x''=''x")
       user_data = CampusData.find_people_by_name("anything' OR 'x'='x")
     end
 
-    it "should be able to find users by last name separated by a comma and space", if: CampusData.test_data? do
-      user_data = CampusData.find_people_by_name("Davis, R")
+    it "should be able to find users by last name separated by a comma and space", :testext => true do
+      user_data = CampusData.find_people_by_name("smith, j", 10)
       expect(user_data).to be_an_instance_of Array
-      expect(user_data.count).to eq 1
-      expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['first_name']).to eq "Ray"
-      expect(user_data[0]['last_name']).to eq "Davis"
-      expect(user_data[0]['email_address']).to eq "211159@example.edu"
-      expect(user_data[0]['student_id']).to be_nil
-      expect(user_data[0]['affiliations']).to eq "EMPLOYEE-TYPE-STAFF"
+      if user_data.count > 0
+        expect(user_data[0]).to be_an_instance_of Hash
+        expect(user_data[0]['first_name']).to be_an_instance_of String
+        expect(user_data[0]['last_name']).to be_an_instance_of String
+      end
     end
 
-    it "should be able to find users using a case insensitive search string", if: CampusData.test_data? do
-      user_data = CampusData.find_people_by_name("davis, r")
+    it "should provide row number and count column", :testext => true do
+      user_data = CampusData.find_people_by_name("smith, j", 10)
       expect(user_data).to be_an_instance_of Array
-      expect(user_data.count).to eq 1
-      expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['first_name']).to eq "Ray"
-      expect(user_data[0]['last_name']).to eq "Davis"
+      if user_data.count > 0
+        expect(user_data[0]).to be_an_instance_of Hash
+        expect(user_data[0]['row_number']).to be_an_instance_of String
+        expect(user_data[0]['result_count']).to be_an_instance_of String
+      end
     end
 
-    it "should be able to find users by last name only", if: CampusData.test_data? do
-      user_data = CampusData.find_people_by_name("Davis")
+    it "should be able to limit the number of results", :testext => true do
+      user_data = CampusData.find_people_by_name("smith", 2)
       expect(user_data).to be_an_instance_of Array
-      expect(user_data.count).to eq 1
-      expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['first_name']).to eq "Ray"
-      expect(user_data[0]['last_name']).to eq "Davis"
-    end
-
-    it "should be able to limit the number of results", if: CampusData.test_data? do
-      user_data = CampusData.find_people_by_name("TEST-", 15)
-      expect(user_data).to be_an_instance_of Array
-      expect(user_data.count).to eq 15
+      expect(user_data.count).to eq 2
     end
   end
 
@@ -321,24 +311,35 @@ describe CampusData do
       expect { CampusData.find_people_by_email("test-", "15") }.to raise_error(ArgumentError, "Limit argument must be a Fixnum")
     end
 
-    it "should escape user input to avoid SQL injection", if: CampusData.test_data? do
+    it "should escape user input to avoid SQL injection", :testext => true do
       CampusData.connection.should_receive(:quote_string).with("anything' OR 'x'='x").and_return("anything'' OR ''x''=''x")
       user_data = CampusData.find_people_by_email("anything' OR 'x'='x")
     end
 
-    it "should be able to find users by partial email", if: CampusData.test_data? do
-      user_data = CampusData.find_people_by_email("208861")
+    it "should be able to find users by partial email", :testext => true do
+      user_data = CampusData.find_people_by_email("johnson")
       expect(user_data).to be_an_instance_of Array
-      expect(user_data.count).to eq 1
-      expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['first_name']).to eq "Allison"
-      expect(user_data[0]['last_name']).to eq "BLOODWORTH"
+      if user_data.count > 0
+        expect(user_data[0]).to be_an_instance_of Hash
+        expect(user_data[0]['first_name']).to be_an_instance_of String
+        expect(user_data[0]['last_name']).to be_an_instance_of String
+      end
     end
 
-    it "should be able to limit the number of results", if: CampusData.test_data? do
-      user_data = CampusData.find_people_by_email("test-", 15)
+    it "should provide row number and count column", :testext => true do
+      user_data = CampusData.find_people_by_email("john", 1)
       expect(user_data).to be_an_instance_of Array
-      expect(user_data.count).to eq 15
+      if user_data.count > 0
+        expect(user_data[0]).to be_an_instance_of Hash
+        expect(user_data[0]['row_number']).to be_an_instance_of String
+        expect(user_data[0]['result_count']).to be_an_instance_of String
+      end
+    end
+
+    it "should be able to limit the number of results", :testext => true do
+      user_data = CampusData.find_people_by_email("john", 5)
+      expect(user_data).to be_an_instance_of Array
+      expect(user_data.count).to eq 5
     end
   end
 
@@ -365,6 +366,14 @@ describe CampusData do
       expect(user_data[0]['first_name']).to eq "FAISAL KARIM"
       expect(user_data[0]['last_name']).to eq "MERCHANT"
     end
+
+    it "should include row number and count as 1", if: CampusData.test_data? do
+      user_data = CampusData.find_people_by_student_id("863980")
+      expect(user_data).to be_an_instance_of Array
+      expect(user_data[0]).to be_an_instance_of Hash
+      expect(user_data[0]['row_number']).to eq 1
+      expect(user_data[0]['result_count']).to eq 1
+    end
   end
 
   context "when searching for users by LDAP user id" do
@@ -389,6 +398,14 @@ describe CampusData do
       expect(user_data[0]).to be_an_instance_of Hash
       expect(user_data[0]['first_name']).to eq "STUDENT"
       expect(user_data[0]['last_name']).to eq "TEST-300847"
+    end
+
+    it "should include row number and count as 1", if: CampusData.test_data? do
+      user_data = CampusData.find_people_by_uid("300847")
+      expect(user_data).to be_an_instance_of Array
+      expect(user_data[0]).to be_an_instance_of Hash
+      expect(user_data[0]['row_number']).to eq 1
+      expect(user_data[0]['result_count']).to eq 1
     end
   end
 
