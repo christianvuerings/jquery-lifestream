@@ -15,6 +15,7 @@ Calcentral::Application.configure do
   config.serve_static_assets = Settings.application.serve_static_assets
 
   # Compress JavaScripts and CSS
+  config.assets.js_compressor = :closure
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed

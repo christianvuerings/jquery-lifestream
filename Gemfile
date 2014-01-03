@@ -94,9 +94,9 @@ group :assets do
   gem "compass-rails", "~> 1.0.3"
   gem "foundation-rails", "~> 5.0.2.0"
 
-  # Ruby wrapper for UglifyJS JavaScript compressor
-  # https://github.com/lautis/uglifier
-  gem "uglifier", "~> 2.2.1"
+  # Closure Compiler Gem for JS compression
+  # https://github.com/documentcloud/closure-compiler
+  gem "closure-compiler", "~> 1.1.10"
 
   # Font awesome - an icon font
   # https://github.com/bokmann/font-awesome-rails
