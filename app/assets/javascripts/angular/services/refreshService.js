@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('refreshService', ['$http', function($http) {
+  angular.module('calcentral.services').service('refreshService', function($http) {
 
     var events = {
       refreshed: 0
@@ -34,6 +34,6 @@
       startRefresh: startRefresh
     };
 
-  }]);
+  });
 
 }(window.angular));

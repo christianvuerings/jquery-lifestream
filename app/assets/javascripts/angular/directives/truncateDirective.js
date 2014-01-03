@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccTruncateDirective',  ['$filter', '$sanitize', function($filter, $sanitize) {
+  angular.module('calcentral.directives').directive('ccTruncateDirective',  function($filter, $sanitize) {
 
     // Set the default options
     var default_options = {
@@ -128,6 +128,6 @@
         });
       }
     };
-  }]);
+  });
 
 })(window.angular);

@@ -3,12 +3,8 @@
 
   angular.module('calcentral.directives').directive('ccAmountDirective', [function() {
 
-    var isNumber = function(number) {
-      return !isNaN(parseFloat(number)) && isFinite(number);
-    };
-
-    var numberWithCommas = function(number) {
-      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    var isNumber = function(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
     };
 
     return {
@@ -24,9 +20,9 @@
 
           var text = '';
           if (value >= 0) {
-            text = '  $ ' + numberWithCommas(value);
+            text = '  $ ' + value;
           } else {
-            text = '- $ ' + numberWithCommas(value).replace('-', '');
+            text = '- $ ' + value.replace('-', '');
             element.addClass('cc-page-myfinances-green');
           }
 

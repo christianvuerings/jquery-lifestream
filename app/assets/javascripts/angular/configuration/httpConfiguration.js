@@ -1,12 +1,12 @@
 /**
  * Set the HTTP Error configuration for CalCentral
  */
-(function(calcentral) {
+(function(angular) {
 
   'use strict';
 
   // Set the configuration
-  calcentral.config(['$httpProvider', function($httpProvider) {
+  angular.module('calcentral.config').config(function($httpProvider) {
 
     // Add the HTTP error service
     $httpProvider.interceptors.push('httpErrorInterceptorService');
@@ -17,6 +17,6 @@
     // Add the location bar service
     $httpProvider.interceptors.push('locationbarInterceptorService');
 
-  }]);
+  });
 
-})(window.calcentral);
+})(window.angular);

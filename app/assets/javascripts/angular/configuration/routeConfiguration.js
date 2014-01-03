@@ -1,12 +1,12 @@
 /**
  * Configure the routes for CalCentral
  */
-(function(calcentral) {
+(function(angular) {
 
   'use strict';
 
   // Set the configuration
-  calcentral.config(['$routeProvider', function($routeProvider) {
+  angular.module('calcentral.config').config(function($routeProvider) {
 
     // List all the routes
     $routeProvider.when('/', {
@@ -110,6 +110,6 @@
       isPublic: true
     });
 
-  }]);
+  });
 
-})(window.calcentral);
+})(window.angular);

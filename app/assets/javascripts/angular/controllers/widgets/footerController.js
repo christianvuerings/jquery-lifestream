@@ -1,10 +1,10 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Footer controller
    */
-  calcentral.controller('FooterController', ['$http', '$scope', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('FooterController', function($http, $scope) {
 
     $scope.footer = {
       showInfo: false
@@ -22,6 +22,6 @@
       }
     });
 
-  }]);
+  });
 
-})(window.angular, window.calcentral);
+})(window.angular);

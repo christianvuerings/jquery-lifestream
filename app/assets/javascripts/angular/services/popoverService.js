@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('popoverService', ['$document', '$rootScope', function($document, $scope) {
+  angular.module('calcentral.services').service('popoverService', function($document, $rootScope) {
 
     var popovers = {};
 
@@ -19,7 +19,7 @@
      */
     var closeAllClick = function() {
       closeAll();
-      $scope.$apply();
+      $rootScope.$apply();
     };
 
     /**
@@ -69,6 +69,6 @@
       toggle: toggle
     };
 
-  }]);
+  });
 
 }(window.angular));

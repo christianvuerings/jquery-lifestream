@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccCompileDirective', ['$compile', function($compile) {
+  angular.module('calcentral.directives').directive('ccCompileDirective', function($compile) {
     return {
       restrict: 'A',
       link: function(scope, element, attrs) {
@@ -21,5 +21,5 @@
         );
       }
     };
-  }]);
+  });
 })(window.angular);

@@ -1,11 +1,11 @@
-(function(angular, calcentral) {
+(function(angular) {
   'use strict';
 
   /**
    * Campus controller
    */
 
-  calcentral.controller('CampusController', ['$http', '$routeParams', '$scope', 'apiService', function($http, $routeParams, $scope, apiService) {
+  angular.module('calcentral.controllers').controller('CampusController', function($http, $routeParams, $scope, apiService) {
 
     /**
      * Add to the subcategories list if it doesn't exist yet
@@ -129,7 +129,7 @@
       }
     });
 
-  }])
+  })
 
   // There is no way to pass in a parameter to a filter, so we need to create our own
   // http://stackoverflow.com/questions/11753321
@@ -150,4 +150,4 @@
     };
   });
 
-})(window.angular, window.calcentral);
+})(window.angular);

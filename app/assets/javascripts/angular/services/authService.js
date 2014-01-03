@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('authService', ['$http', '$route', '$timeout', function($http, $route, $timeout) {
+  angular.module('calcentral.services').service('authService', function($http, $route, $timeout) {
 
     /**
      * Check whether the current user is logged in or not
@@ -27,6 +27,6 @@
       isLoggedInRedirect: isLoggedInRedirect
     };
 
-  }]);
+  });
 
 }(window.angular));
