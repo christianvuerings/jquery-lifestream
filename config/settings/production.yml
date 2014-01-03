@@ -18,6 +18,11 @@ campusdb:
 canvas_proxy:
   export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
 sakai_proxy:
+  current_terms: ["Spring 2014"]
+  current_terms_codes: [{
+    term_yr: "2014",
+    term_cd: "B"
+  }]
   academic_terms:
     student: [
         {
@@ -71,8 +76,8 @@ sakai_proxy:
         {
         term_yr: "2010",
         term_cd: "B"
-        }]
-
+        }
+    ]
     instructor: [
         {
         term_yr: "2014",
@@ -125,7 +130,8 @@ sakai_proxy:
         {
         term_yr: "2010",
         term_cd: "B"
-        }]
+        }
+    ]
 features:
   live_campus_links_data: true
   academic_status: true
