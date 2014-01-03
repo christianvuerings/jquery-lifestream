@@ -27,7 +27,8 @@
                 <strong>{{activity.title}}</strong>
                 <div>
                   {{activity.source}}
-                  <span data-ng-show="activity.date">, {{activity.date.epoch * 1000 | cc.dateInYear:'MMM d':'MMM d yyyy'}}</span>
+                  <span data-ng-if="activity.source && activity.date">, </span>
+                  <span data-ng-if="activity.date">{{activity.date.epoch * 1000 | cc.dateInYear:'MMM d':'MMM d yyyy'}}</span>
                 </div>
               </div>
             </div>
