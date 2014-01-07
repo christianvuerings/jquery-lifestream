@@ -130,9 +130,27 @@
     var feedLoaded = function(data) {
       if (isValidFeed(data)) {
         addFeedData(data);
-      } else {
-        throw 'updatedFeedsService - the feed doesn\'t have the right properties';
       }
+    };
+
+    /**
+     * Initiate the updated feeds service
+     * This will check whether the current route should poll or not
+     */
+    var initiate = function(route, scope) {
+
+      var isLoggedIn = scope.$watch('api.user.profile.is_logged_in', function(is_logged_in) {
+        if (is_logged_in) {
+          // Refresh the services, we only want to do this on certain pages
+          if (route && route.fireUpdatedFeeds) {
+            startPolling();
+          }
+
+          // This will unwatch the watcher (performance reasons)
+          isLoggedIn();
+        }
+      });
+
     };
 
     /**
@@ -142,6 +160,7 @@
       events: events,
       feedLoaded: feedLoaded,
       hasUpdates: hasUpdates,
+      initiate: initiate,
       refreshFeeds: refreshFeeds,
       startPolling: startPolling
     };
