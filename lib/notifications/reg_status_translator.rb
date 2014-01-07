@@ -26,7 +26,7 @@ class RegStatusTranslator
         :id => notification.id,
         :title => title,
         :summary => summary,
-        :source => event["topic"],
+        :source => 'Bear Facts',
         :type => "alert",
         :date => format_date(timestamp),
         :url => "https://bearfacts.berkeley.edu/bearfacts/",
