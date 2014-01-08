@@ -158,14 +158,16 @@ rspec --drb spec/lib/my_spec.rb
 
 You can even run Spork right inside [IntelliJ RubyMine or IDEA](http://www.jetbrains.com/ruby/webhelp/using-drb-server.html).
 
-## Front-end Testing
+## Front-end Linting
 
-Front-end [jasmine](http://pivotal.github.com/jasmine/) tests live in spec/javascripts/calcentral/*.
+Front-end linting can be done by running the following command:
 
-To run the tests headless on firefox run `rake jasmine:ci`.
+```
+jshint .
+```
 
-To view results of front-end tests, run `rake jasmine` in a separate terminal,
-then visit [localhost:8888](http://localhost:8888).
+This will check for any potential JavaScript issues and whether you formatted the code correctly.
+
 
 ## Role-Aware Testing
 

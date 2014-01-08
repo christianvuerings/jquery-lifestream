@@ -132,18 +132,8 @@ group :development, :test , :testext do
   gem "rspec-mocks", "~> 2.13.1"
   gem "minitest-reporters", "~> 0.14.20"
 
-  # Test our JavaScript code.
-  # https://github.com/pivotal/jasmine-gem
-  gem "jasmine", "~> 1.3.1"
-
-  # Don't update the following gem without doing a precompile
-  gem "jquery-rails", "~> 2.2.1"
-  gem "jasmine-jquery-rails", "~> 1.4.2"
-
   # We need to specify the latest webdriver here, to support the latest firefox
   gem "selenium-webdriver", "~> 2.39.0"
-
-  gem "therubyrhino", "~> 2.0.1"
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov

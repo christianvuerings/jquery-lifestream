@@ -11,5 +11,4 @@ env:
   - JRUBY_OPTS="--client -Xcext.enabled=false -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN
 
 before_install:
-  - sh -e /etc/init.d/xvfb start
   - "npm -g install jshint"
