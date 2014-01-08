@@ -124,7 +124,7 @@
                           data-ng-class="{'fa-check-circle cc-icon-green':(api.user.profile.student_info.california_residency!='needsAction'), 'fa-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
                         <span data-ng-bind="api.user.profile.student_info.california_residency.summary"></span>
                       </td>
-                      <td data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></td>
+                      <td data-cc-compile-directive="api.user.profile.student_info.california_residency.explanation"></td>
                     </tr>
                   </tbody>
                 </table>
