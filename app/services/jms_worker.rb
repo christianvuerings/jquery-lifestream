@@ -7,7 +7,7 @@ class JmsWorker
   RECEIVED_MESSAGES = "Received Messages"
   LAST_MESSAGE_RECEIVED_TIME = "Last Message Received Time"
 
-  def initialize
+  def initialize(opts = {})
     @jms = nil
     @handler = JmsMessageHandler.new
     @stopped = false
