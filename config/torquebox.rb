@@ -31,32 +31,3 @@ TorqueBox.configure do
   end
 end
 
-#
-#jobs:
-#    hot.plate:
-#    job: HotPlate
-#cron: '0 1 8 * * ? *'
-#singleton: true
-#
-#queues:
-#    /queues/hot_plate:
-#    durable: false
-#/queues/warmup_request:
-#    durable: false
-#/queues/feed_changed:
-#    durable: false
-#
-#messaging:
-#    /queues/hot_plate:
-#    HotPlate:
-#    concurrency: 1
-#/queues/warmup_request:
-#    LiveUpdatesWarmer:
-#    concurrency: 1
-#/queues/feed_changed:
-#    FeedUpdateWhiteboard:
-#    singleton: false
-
-
-
-
