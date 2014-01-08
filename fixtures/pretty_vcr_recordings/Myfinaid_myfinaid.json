@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://apis-dev.berkeley.edu/myfinaid?sid=11667051",
+        "uri": "https://apis-dev.berkeley.edu/myfinaid/11667051/finaid",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
