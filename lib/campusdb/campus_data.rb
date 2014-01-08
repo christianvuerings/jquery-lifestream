@@ -32,11 +32,9 @@ class CampusData < OracleDatabase
         reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.cal_residency_flag
       from calcentral_person_info_vw pi
       left outer join calcentral_student_term_vw reg on
-        ( reg.ldap_uid = pi.ldap_uid
-          and reg.term_yr = #{current_year.to_i}
-          and reg.term_cd = #{connection.quote(current_term)}
-        )
+        reg.ldap_uid = pi.ldap_uid
       where pi.ldap_uid = #{person_id.to_i}
+      order by reg.term_yr desc, reg.term_cd desc
       SQL
       result = connection.select_one(sql)
     }
@@ -171,16 +169,16 @@ class CampusData < OracleDatabase
 
   def self.get_reg_status(person_id)
     result = nil
-      use_pooled_connection {
+    use_pooled_connection {
+      # To date, the student academic status view has always contained data for only one term.
+      # The "order by" clause is included in case that changes without warning.
       sql = <<-SQL
       select pi.ldap_uid, pi.student_id, reg.reg_status_cd
       from calcentral_person_info_vw pi
       left outer join calcentral_student_term_vw reg on
-        ( reg.ldap_uid = pi.ldap_uid
-          and reg.term_yr = #{current_year.to_i}
-          and reg.term_cd = #{connection.quote(current_term)}
-        )
+        reg.ldap_uid = pi.ldap_uid
       where pi.ldap_uid = #{person_id.to_i}
+      order by reg.term_yr desc, reg.term_cd desc
       SQL
       result = connection.select_one(sql)
     }
