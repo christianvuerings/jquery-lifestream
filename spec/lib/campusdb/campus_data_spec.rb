@@ -33,7 +33,25 @@ describe CampusData do
     end
   end
 
+  it "should find the most currently available student data between terms" do
+    CampusData.stub(:current_year).and_return(2525)
+    data = CampusData.get_person_attributes(300846)
+    if CampusData.test_data?
+      data['reg_status_cd'].should == "C"
+    end
+  end
+
   it "should find Stu TestB's registration status" do
+    data = CampusData.get_reg_status(300846)
+    if CampusData.test_data?
+      data['ldap_uid'].should == "300846"
+      # we will only have predictable reg_status_cd values in our fake Oracle db.
+      data['reg_status_cd'].should == "C"
+    end
+  end
+
+  it "should find the most currently available registration status between terms" do
+    CampusData.stub(:current_year).and_return(2525)
     data = CampusData.get_reg_status(300846)
     if CampusData.test_data?
       data['ldap_uid'].should == "300846"
@@ -78,7 +96,6 @@ describe CampusData do
 
   it "should find sections from CCNs" do
     courses = CampusData.get_sections_from_ccns("2013", "D", ["7309", "07366", "919191", "16171"])
-    pp courses
     courses.should_not be_nil
     if CampusData.test_data?
       courses.length.should == 3
