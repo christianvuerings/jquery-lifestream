@@ -20,11 +20,7 @@
       apiService.user.handleRouteChange();
       apiService.util.changeControllerName(current.controller);
       apiService.auth.isLoggedInRedirect();
-
-      // Refresh the services, we only want to do this on certain pages
-      if (current.$$route && current.$$route.fireUpdatedFeeds) {
-        apiService.updatedFeeds.startPolling();
-      }
+      apiService.updatedFeeds.initiate(current.$$route, $rootScope);
     });
 
   });
