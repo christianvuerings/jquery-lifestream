@@ -78,11 +78,11 @@ git push -f origin <branch name>
 ```
 
 
-## Front-end Testing
-Front-end testing can be done by running jasmine tests:
+## Front-end Linting
+Front-end linting (checking for errors / code styles)
 
 ```bash
-rake jasmine
+jshint .
 ```
 
 
