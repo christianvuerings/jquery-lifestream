@@ -41,7 +41,7 @@
               <div class="medium-6 columns">
                 <div class="row collapse">
                   <div class="medium-4 columns hide-for-small">
-                    <label for="search-type" class="bc-label bc-form-entities">Search by:</label>
+                    <label for="search-type" class="bc-label bc-label-horizontal bc-form-entities">Search by:</label>
                   </div>
                   <div class="medium-8 columns">
                     <select id="search-type" data-ng-model="search_type" class="bc-form-entity">
@@ -118,9 +118,10 @@
                   </div>
                 </div>
 
-                <div class="row collapse">
+                <div class="row collapse bc-form-options">
                   <div class="small-10 small-offset-2 columns">
                     <button id="submit-user" type="submit" class="button tiny">Add User</button>
+                    <button id="reset-form" type="button" class="button tiny bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
                   </div>
                 </div>
 

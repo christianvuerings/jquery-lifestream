@@ -19,9 +19,14 @@
       $scope.addition_failure_message = false;
     };
 
+    $scope.resetForm = function() {
+      $scope.search_text = '';
+      resetSearchState();
+      resetImportState();
+    };
+
     // Initialize upon load
-    resetImportState();
-    resetSearchState();
+    $scope.resetForm();
 
     $scope.search_type = 'name';
     $scope.user_roles = [

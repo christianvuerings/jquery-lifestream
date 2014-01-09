@@ -11,11 +11,24 @@
     background: transparent;
     border: none;
     padding: 10px 0;
+
+    .bc-form-options {
+      margin-top: 5px;
+
+      .bc-start-over-button {
+        background-color: $bc-color-grey;
+      }
+    }
+
   }
 
   .bc-horizontal-form {
     .bc-label {
       white-space: nowrap;
+    }
+
+    .bc-label-horizontal {
+      margin-top:9px;
     }
 
     .bc-form-entity {
