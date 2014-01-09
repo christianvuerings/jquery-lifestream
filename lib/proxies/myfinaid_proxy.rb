@@ -9,27 +9,26 @@ class MyfinaidProxy < BaseProxy
   end
 
   def get
-    request("", "myfinaid")
+    request("myfinaid")
   end
 
-  def request(path, vcr_cassette, params = {})
+  def request(vcr_cassette, params = {})
     self.class.fetch_from_cache(@uid) do
       student_id = lookup_student_id
       if student_id.nil?
-        logger.info "Lookup of student_id for uid #@uid failed, cannot call Myfinaid API path #{path}"
+        logger.info "Lookup of student_id for uid #@uid failed, cannot call Myfinaid API"
         {
           :body => "Lookup of student_id for uid #@uid failed, cannot call Myfinaid API",
           :status_code => 400
         }
       else
-        url = URI.join(Settings.myfinaid_proxy.base_url, path)
+        url = "#{Settings.myfinaid_proxy.base_url}/#{student_id}/finaid"
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
         begin
           response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
             query_params = {
-              sid: student_id,
               token: Settings.myfinaid_proxy.token,
-              year: Settings.myfinaid_proxy.term_year,
+              aidYear: Settings.myfinaid_proxy.term_year,
             }
             if (Settings.myfinaid_proxy.app_id.present? && Settings.myfinaid_proxy.app_key.present?)
               query_params.merge!({app_id: Settings.myfinaid_proxy.app_id,
