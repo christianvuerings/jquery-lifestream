@@ -15,7 +15,7 @@ describe "BearfactsScheduleProxy" do
     response[:status_code].should == 400
   end
 
-  it "should get Oski Bear's schedule from a real server", :testext => true, :ignore => true do
+  it "should get Oski Bear's schedule from a real server", :testext => true do
     client = BearfactsScheduleProxy.new({:user_id => "61889", :fake => false})
     xml = client.get
     xml.should_not be_nil
