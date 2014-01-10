@@ -5,7 +5,7 @@ class MyPlaylists < MyMergedModel
   def initialize(options={})
     @playlist_title = options[:playlist_title] ? options[:playlist_title] : false
     @fetch_error_message = 'There was a problem fetching the videos.'
-    @no_videos_error_message = 'There are no videos.'
+    @no_videos_error_message = 'There are no videos available.'
     @my_playlist = {
       :error_message => '',
       :playlist_id => ''

@@ -100,7 +100,9 @@ class TextbooksProxy < BaseProxy
 
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
         {
-          body: book_response,
+          body: {
+            books: book_response
+          },
           status_code: status_code
         }
       rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e

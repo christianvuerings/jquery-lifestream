@@ -140,42 +140,49 @@
         </div>
       </div>
 
-      <div class="cc-widget cc-widget-last" data-ng-if="api.user.profile.features.textbooks && books.has_books">
+      <div class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
         <div class="cc-widget-title">
           <h2>Textbooks</h2>
         </div>
-        <div class="cc-widget-padding">
-          <div data-ng-repeat="books_category in books" class="cc-clearfix-container">
-            <h3 data-ng-if="books_category.books" data-ng-bind="books_category.type"></h3>
-            <div data-ng-if="books_category.books">
-              <div data-ng-repeat="book in books_category.books" class="cc-textbooks-list">
-                <div class="small-4 columns rows" data-ng-if="book.image">
-                  <img class="cc-textbooks-image" data-ng-attr-alt="Textbook cover for {{book.title}}" data-ng-src="{{book.image}}" width="110" height="160"></img>
-                </div>
-                <div class="small-8 columns rows">
-                  <h4 data-ng-bind="book.title"></h4>
-                  <ul>
-                    <li data-ng-if="book.author"><strong>Author: </strong><span data-ng-bind="book.author"></span></li>
-                    <li data-ng-if="book.isbn"><strong>ISBN: </strong><span data-ng-bind="book.isbn"></li>
-                    <li data-ng-if="book.edition"><strong>Edition: </strong><span data-ng-bind="book.edition"></li>
-                    <li data-ng-if="book.publisher"><strong>Publisher: </strong><span data-ng-bind="book.publisher"></li>
-                    <li data-ng-if="book.amazon_link">
-                      <strong>Buy Book:</strong>
-                      <a data-ng-href="{{book.amazon_link}}" class="cc-icon cc-icon-amazon"></a>
-                    </li>
-                    <li data-ng-if="book.chegg_link">
-                      <strong>Rent Book:</strong>
-                      <a data-ng-href="{{book.chegg_link}}" class="cc-icon cc-icon-chegg">
-                      </a>
-                    </li>
-                    <li data-ng-if="book.oskicat_link">
-                      <strong>OskiCat Link:</strong>
-                      <a data-ng-href="{{book.oskicat_link}}" class="cc-icon cc-icon-oskicat">
-                      </a>
-                    </li>
-                  </ul>
+        <div data-cc-spinner-directive>
+          <div class="cc-widget-padding">
+            <div data-ng-if="books.has_books">
+              <div data-ng-repeat="books_category in books" class="cc-clearfix-container">
+                <h3 data-ng-if="books_category.books" data-ng-bind="books_category.type"></h3>
+                <div data-ng-if="books_category.books">
+                  <div data-ng-repeat="book in books_category.books" class="cc-textbooks-list">
+                    <div class="small-4 columns rows" data-ng-if="book.image">
+                      <img class="cc-textbooks-image" data-ng-attr-alt="Textbook cover for {{book.title}}" data-ng-src="{{book.image}}" width="110" height="160"></img>
+                    </div>
+                    <div class="small-8 columns rows">
+                      <h4 data-ng-bind="book.title"></h4>
+                      <ul>
+                        <li data-ng-if="book.author"><strong>Author: </strong><span data-ng-bind="book.author"></span></li>
+                        <li data-ng-if="book.isbn"><strong>ISBN: </strong><span data-ng-bind="book.isbn"></li>
+                        <li data-ng-if="book.edition"><strong>Edition: </strong><span data-ng-bind="book.edition"></li>
+                        <li data-ng-if="book.publisher"><strong>Publisher: </strong><span data-ng-bind="book.publisher"></li>
+                        <li data-ng-if="book.amazon_link">
+                          <strong>Buy Book:</strong>
+                          <a data-ng-href="{{book.amazon_link}}" class="cc-icon cc-icon-amazon"></a>
+                        </li>
+                        <li data-ng-if="book.chegg_link">
+                          <strong>Rent Book:</strong>
+                          <a data-ng-href="{{book.chegg_link}}" class="cc-icon cc-icon-chegg">
+                          </a>
+                        </li>
+                        <li data-ng-if="book.oskicat_link">
+                          <strong>OskiCat Link:</strong>
+                          <a data-ng-href="{{book.oskicat_link}}" class="cc-icon cc-icon-oskicat">
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div data-ng-if="books.has_books === false">
+              There are no books available.
             </div>
           </div>
         </div>
