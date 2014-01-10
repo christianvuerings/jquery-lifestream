@@ -183,3 +183,7 @@ end
 group :development, :assets do
   gem "turbo-sprockets-rails3", "~> 0.3.11"
 end
+
+group :shell_debug do
+  gem 'ruby-debug', '>= 0.10.5.rc9'
+end
