@@ -17,6 +17,12 @@ campusdb:
   timeout: 5000
 canvas_proxy:
   export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
+  current_terms_codes: [
+    {
+      term_yr: "2014",
+      term_cd: "B"
+    }
+  ]
 sakai_proxy:
   current_terms: ["Spring 2014"]
   current_terms_codes: [{
