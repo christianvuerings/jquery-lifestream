@@ -1,92 +1,38 @@
 <script type="text/ng-template" id="templates/splash.html">
-  <div class="row">
-    <div class="medium-6 columns">
+  <div class="row cc-page-splash-container">
+    <div class="medium-6 columns cc-page-splash-container-left">
       <div class="cc-page-splash-logo-container">
-        <%= image_tag "calcentral_logo_big_396x41.png", :size => "372x40", :alt => "", :class => "cc-page-splash-logo cc-left" %>
-        <div class="cc-page-splash-beta">Beta</div>
+        <div class="cc-page-splash-center">
+          <%= image_tag "svg/calcentral_logo_beta_405x55.svg", :size => "405x55", :alt => "
+          CalCentral Logo", :class => "cc-page-splash-logo" %>
+        </div>
       </div>
-      <h1 class="cc-clearfix">Welcome to CalCentral.</h1>
-      <div class="cc-page-splash-subtitle">Unify, Personalize, Discover</div>
-      <button class="radius button cc-page-splash-signin" data-ng-click="api.user.signIn()">Sign in with your CalNet ID</button>
-    </div>
-
-    <div class="medium-6 columns">
-      <div class="cc-page-splash-status">
-        <h2>CalCentral Releases</h2>
-        <a href="https://ets.berkeley.edu/calcentral">Tell me more<span class="cc-visuallyhidden"> about the CalCentral releases</span></a>
+      <div class="cc-page-splash-buttons">
+        <button class="radius cc-button cc-button-blue cc-button-large" data-ng-click="api.user.signIn()">Sign In</button>
+        <a class="radius cc-button cc-button-large" href="https://ets.berkeley.edu/calcentral">Learn More<span class="cc-visuallyhidden"> about the CalCentral releases</span></a>
       </div>
-    </div>
-  </div>
 
-  <div class="row" data-ng-show="latest_release_note.title">
-    <div class="medium-12 columns small-12">
-      <div class="row panel radius cc-page-splash-blog-panel">
-        <div class="medium-1 columns hide-for-small cc-page-splash-blog-date">
+      <div class="row collapse cc-page-splash-blog-panel" data-ng-show="latest_release_note.title">
+        <div class="medium-2 columns hide-for-small cc-page-splash-blog-date">
           <p>{{latest_release_note.date}}</p>
         </div>
-        <div class="medium-11 columns small-12">
-          <p class="cc-splash-blog-title">
+        <div class="medium-10 columns small-12">
+          <p class="cc-page-splash-blog-title">
             <a data-ng-href="{{latest_release_note.link}}">{{latest_release_note.title}}</a>
           </p>
-          <p class="cc-splash-blog-summary" data-ng-bind-html="latest_release_note.snippet"></p>
+          <p class="cc-page-splash-blog-summary" data-ng-bind-html="latest_release_note.snippet"></p>
         </div>
       </div>
     </div>
+
+    <div class="medium-6 columns">
+      <div class="cc-page-splash-info">
+        <%= image_tag "splash_cfv_625×415.png", :size => "625×415", :alt => "", :class => "cc-page-splash-info-image" %>
+        <p class="cc-page-splash-info-text">
+          <strong>My Finances</strong>: The new consolidated financial view (CFV) in My Finances provides a student with detailed transaction information on his/her CARS billing account (ex: charges, payments and disbursements). My Finances shows recent activity since the last monthly CARS e-Bill statement.
+        </p>
+      </div>
+    </div>
   </div>
 
-  <div class="row">
-    <div class="columns small-12 medium-12">
-      <h1 class="cc-page-splash-features-title">
-        CalCentral keeps you informed
-      </h1>
-    </div>
-  </div>
-
-  <div class="cc-page-splash-features">
-    <div class="row">
-      <div class="medium-7 columns">
-        <h2>Up Next</h2>
-        <p>CalCentral is integrated with Berkeley&#39;s <a href="http://bconnected.berkeley.edu/">bConnected</a> implementation of Google Apps, so you can see at a glance what&apos;s <strong>Up Next</strong> on your bCal schedule.</p>
-      </div>
-      <div class="medium-5 columns">
-        <%= image_tag "splash_up_next_241x140.png", :size => "241x140", :alt => "" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="medium-7 columns">
-        <h2>To Do</h2>
-        <p>CalCentral displays to-do items that have been assigned to you in the <a href="https://ets.berkeley.edu/article/what-canvas">bCourses</a> learning management system (which will eventually replace bSpace). <strong>To Do</strong> also lets you add personal to-do list items, and syncs them back to your bCal tasks list.</p>
-      </div>
-      <div class="medium-5 columns">
-        <%= image_tag "splash_todo_241x184.png", :size => "241x184", :alt => "" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="medium-7 columns">
-        <h2>Recent Activity</h2>
-        <p>Displays relevant updates from campus systems. Displayed activities currently come from <a href="http://bspace.berkeley.edu">bSpace</a>, bCourses and BearFacts.</p>
-      </div>
-      <div class="medium-5 columns">
-        <%= image_tag "splash_notifications_241x157.png", :size => "241x157", :alt => "" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="medium-7 columns">
-        <h2>My Classes</h2>
-        <p>Gives you easy access to your current bSpace and bCourses course sites.</p>
-      </div>
-      <div class="medium-5 columns">
-        <%= image_tag "splash_my_classes_241x200.png", :size => "241x200", :alt => "" %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="medium-7 columns">
-        <h2>My Groups</h2>
-        <p>Gives you access to your online group collaborations. Currently, CalCentral supports bSpace project sites and groups participating in bCourses.</p>
-      </div>
-      <div class="medium-5 columns">
-        <%= image_tag "splash_my_groups_241x121.png", :size => "241x121", :alt => "" %>
-      </div>
-    </div>
-  </div>
 </script>
