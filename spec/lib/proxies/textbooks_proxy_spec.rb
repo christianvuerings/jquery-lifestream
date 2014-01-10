@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe "TextbooksProxy" do
 
-  it "should get real textbook feed for valid ccns and slug", :testext => true do
+  it "should get real textbook feed for valid ccns and slug", :testext => true, :ignore => true do
     @ccns = ["41623"]
     @slug = "fall-2013"
     feed = {}
