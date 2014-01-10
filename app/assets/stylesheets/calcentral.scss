@@ -142,7 +142,7 @@ button {
   display: inline;
   font-size: 11px;
   font-weight: bold;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 10px;
   &:focus, &:hover {
     background: $cc-color-button-hover;
     @include background(linear-gradient($cc-color-white, $cc-color-button-hover));
@@ -181,6 +181,11 @@ button {
     background: $cc-color-button-disabled-background !important;
     color: $cc-color-button-disabled !important;
   }
+}
+.cc-button-large {
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px 10px;
 }
 .cc-button-selected {
   background: $cc-color-button-selected;

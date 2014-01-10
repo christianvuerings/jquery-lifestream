@@ -1,98 +1,31 @@
 $cc-color-splash-blue-dark: #004677;
-$cc-color-splash-blue-light: #0073C3;
 
 .cc-page-splash {
-  .cc-container-main {
-    padding: 0 35px;
-    background: #fff asset-data-url('calcentral_bubble_background_466x408.png') no-repeat right 5px;
-  }
 
-  > header, .cc-navigation-bar {
-    display: none;
-  }
-
-  .cc-page-splash-beta {
-    color: $cc-color-red;
-    font-size: 22px;
-    margin-top: 52px;
-    text-transform: uppercase;
-  }
-  .cc-page-splash-logo {
-    margin-top: 60px;
-  }
-  .cc-page-splash-logo-container {
-    overflow: hidden;
-  }
-  h1 {
-    color: $cc-color-splash-blue-dark;
-    font-size: 24px;
-    margin: 15px 0 5px;
-  }
   h2 {
     color: $cc-color-splash-blue-dark;
     font-size: 18px;
     margin: 0 0 10px;
   }
-  .cc-page-splash-subtitle {
-    font-size: 18px;
-    margin-bottom: 30px;
+  p {
+    line-height: 1.3;
   }
-  .cc-page-splash-signin {
-    background: $cc-color-splash-blue-dark;
-    @include background(linear-gradient($cc-color-splash-blue-light, $cc-color-splash-blue-dark));
-    box-shadow: none;
-    font-size: 13px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+  > header, .cc-navigation-bar {
+    display: none;
   }
-  .cc-page-splash-status {
-    background: asset-data-url('splash_status_555x300.png') no-repeat 0 0;
-    background-position: center;
-    @include background-size(cover);
-    border: 1px solid #666;
-    margin-top: 60px;
-    padding-bottom: 48.56%;
-    position: relative;
-    a {
-      bottom: 10px;
-      float: right;
-      right: 10px;
-      position: absolute;
-    }
-    h2 {
-      color: #666;
-      font-size: 14px;
-      left: 10px;
-      position: absolute;
-      top: 5px;
-    }
+  .cc-container-main {
+    background: $cc-color-white;
+    padding: 30px;
   }
-
-  .cc-page-splash-features {
-    padding: 0 30px 110px;
-    p {
-      font-size: 14px;
-    }
-    img {
-      @include box-shadow(0 4px 8px #888);
-      float: right;
-    }
-    .row {
-      margin-bottom: 10px;
-      margin-top: 40px;
-    }
+  .cc-page-splash-beta {
+    color: $cc-color-red;
+    font-size: 22px;
+    margin-top: 13px;
+    text-transform: uppercase;
   }
-  .cc-page-splash-features-title {
-    background: $cc-color-widget-background;
-    color: $body-font-color;
-    font-size: 25px;
-    font-weight: normal;
-    margin-top: 40px;
-    padding: 10px 15px;
-  }
-
   .cc-page-splash-blog-panel {
-    margin: 150px 0 0 0;
+    background: $cc-color-main-background;
+    margin: 135px 0 0 0 !important ;
     padding: 10px;
     .cc-page-splash-blog-date {
       padding: 0;
@@ -102,35 +35,63 @@ $cc-color-splash-blue-light: #0073C3;
         font-weight: bold;
       }
     }
-    .cc-splash-blog-title {
+    .cc-page-splash-blog-title {
       font-size: 18px;
       font-weight: bold;
       line-height: 1.4;
       margin-bottom: 0;
     }
-    .cc-splash-blog-summary {
+    .cc-page-splash-blog-summary {
       margin-bottom: 0;
     }
+  }
+  .cc-page-splash-buttons .cc-button {
+    display: block;
+    margin: 10px auto 0;
+    text-align: center;
+    width: 200px;
+  }
+  .cc-page-splash-center {
+    text-align: center;
+  }
+  .cc-page-splash-container {
+    overflow: hidden;
+    > .columns {
+      @include cc-column-sameheight;
+    }
+  }
+  .cc-page-splash-container-left {
+    border-right: 2px solid $cc-color-widget-background;
+  }
+  .cc-page-splash-info {
+    margin: 20px 10px 0;
+  }
+  .cc-page-splash-info-image {
+    border: 1px solid $cc-color-button-border;
+    @include box-shadow(3px 3px 5px $cc-color-placeholder);
+    margin-bottom: 20px;
+  }
+  .cc-page-splash-info-text {
+    margin-bottom: 0;
+  }
+  .cc-page-splash-logo {
+    margin: 20px auto 35px;
+  }
+  .cc-page-splash-logo-container {
+    margin: 0 auto;
+    overflow: hidden;
   }
 
   /* Mobile only */
   @media #{$small-only} {
     .cc-container-main {
-      background-position: center 225px;
-      background-size: contain;
       padding: 0 10px;
     }
     .cc-page-splash-blog-panel {
-      margin-top: 25px;
+      margin-top: 80px !important;
     }
-    .cc-page-splash-features {
-      padding: 0 0 30px;
-    }
-    .cc-page-splash-features-title {
-      margin: 25px 0 0;
-    }
-    .cc-page-splash-features img {
-      float: none;
+    .cc-page-splash-info-text {
+      margin-bottom: 20px;
     }
   }
 
