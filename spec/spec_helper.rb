@@ -108,11 +108,6 @@ Spork.prefork do
       VCR.eject_cassette
     end
 
-    # Suppress celluloid terminated workers after entire test suite finishes
-    config.after :suite do
-      Celluloid.logger = nil
-    end
-
     # Include some helper functions for the specs.
     config.include SpecHelperModule
   end

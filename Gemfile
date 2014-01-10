@@ -53,9 +53,6 @@ gem "jruby-activemq", "~> 5.5.1"
 # https://github.com/sporkmonger/addressable
 gem "addressable", "~> 2.3.4"
 
-# for concurrency management
-gem "celluloid", "~> 0.14.1"
-
 # for parsing formatted html
 gem 'nokogiri', "~> 1.5.9", :platforms => :jruby
 

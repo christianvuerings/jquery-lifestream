@@ -17,14 +17,6 @@ def knows_class?(classname)
   end
 end
 
-if knows_class?("SunJvmstatMonitor::MonitoredHost")
-  puts "JDK tools.jar is already installed"
-else
-  puts "No JDK tools.jar; will try to install it from #{ENV['MAVEN_REPO']}"
-  puts "  to #{ENV['MY_RUBY_HOME']}/lib"
-  `wget "#{ENV['MAVEN_REPO']}/com/oracle/openjdk/tools/1.6.0.0.x86_64/tools-1.6.0.0.x86_64.jar" -P "#{ENV['MY_RUBY_HOME']}/lib"`
-end
-
 puts "Installing Oracle jar from #{ENV['MAVEN_REPO']}"
 puts "  to #{ENV['MY_RUBY_HOME']}/lib"
 `wget "#{ENV['MAVEN_REPO']}/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar" -P "#{ENV['MY_RUBY_HOME']}/lib"`
