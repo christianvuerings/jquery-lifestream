@@ -14,15 +14,15 @@ class TextbooksProxy < BaseProxy
       book_list = ul.xpath('./li')
 
       book_list.each do |bl|
-        isbn = bl.xpath('.//span[@id="materialISBN"]').text.split(":")[1].strip
+        isbn = bl.xpath('.//span[@id="materialISBN"]')[0].text.split(":")[1].strip
 
         book_detail = {
-          :title => bl.xpath('.//h3[@class="material-group-title"]').text.split("\n")[0],
-          :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src').text,
+          :title => bl.xpath('.//h3[@class="material-group-title"]')[0].text.split("\n")[0],
+          :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src')[0].text,
           :isbn => isbn,
-          :author => bl.xpath('.//span[@id="materialAuthor"]').text.split(":")[1],
-          :edition => bl.xpath('.//span[@id="materialEdition"]').text.split(":")[1],
-          :publisher => bl.xpath('.//span[@id="materialPublisher"]').text.split(":")[1],
+          :author => bl.xpath('.//span[@id="materialAuthor"]')[0].text.split(":")[1],
+          :edition => bl.xpath('.//span[@id="materialEdition"]')[0].text.split(":")[1],
+          :publisher => bl.xpath('.//span[@id="materialPublisher"]')[0].text.split(":")[1],
           :amazon_link => amazon_url + isbn,
           :chegg_link => chegg_url + isbn,
           :oskicat_link => oskicat_url + isbn
