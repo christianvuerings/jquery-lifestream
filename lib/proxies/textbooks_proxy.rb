@@ -66,6 +66,7 @@ class TextbooksProxy < BaseProxy
       required_books = []
       recommended_books = []
       optional_books = []
+      bookstore_links = []
       status_code = ''
       begin
         @ccns.each do |ccn|
@@ -79,14 +80,23 @@ class TextbooksProxy < BaseProxy
           status_code = response.code
           text_books = Nokogiri::HTML(response.body)
           logger.debug "Remote server status #{response.code}; url = #{url}"
-          text_books = text_books.xpath('//h2 | //ul')
+          text_books_items = text_books.xpath('//h2 | //ul')
 
-          required_text_list = text_books.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
-          recommended_text_list = text_books.xpath('//h2[contains(text(), "Recommended")]/following::ul[1]')
-          optional_text_list = text_books.xpath('//h2[contains(text(), "Optional")]/following::ul[1]')
+          required_text_list = text_books_items.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
+          recommended_text_list = text_books_items.xpath('//h2[contains(text(), "Recommended")]/following::ul[1]')
+          optional_text_list = text_books_items.xpath('//h2[contains(text(), "Optional")]/following::ul[1]')
           required_books.push(ul_to_dict(required_text_list))
           recommended_books.push(ul_to_dict(recommended_text_list))
           optional_books.push(ul_to_dict(optional_text_list))
+
+          bookstore_link = text_books.xpath('//a[@name="blwin1"]/@href').text
+
+          if !bookstore_link.blank?
+            bookstore_links.push({
+              ccn: ccn,
+              link: "#{Settings.textbooks_proxy.base_url}#{bookstore_link}"
+            })
+          end
         end
 
         book_response = {
@@ -99,6 +109,7 @@ class TextbooksProxy < BaseProxy
         }
 
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
+        book_response[:bookstore_links] = bookstore_links
         {
           body: {
             books: book_response
