@@ -32,7 +32,7 @@ bundle exec rake assets:precompile || { echo "ERROR: asset compilation failed" ;
 # Stamp version number
 git log --pretty=format:'%H' -n 1 > versions/git.txt || { echo "ERROR: git log command failed" ; exit 1 ; }
 
-# copy Oracle jar and tools.jar into ./lib
+# copy Oracle jar into ./lib
 echo "`date`: Getting external driver files..." | $LOGIT
 ./script/install-jars.rb 2>&1 | $LOGIT
 

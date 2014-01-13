@@ -2,14 +2,7 @@ require "spec_helper"
 
 feature "act_as_user" do
   before do
-    #The switching back and forth before users makes the cache warmer go crazy
-    @default_logger = Celluloid.logger
-    Celluloid.logger = nil
     @fake_events_list = GoogleEventsListProxy.new(fake: true)
-  end
-
-  after do
-    Celluloid.logger = @default_logger
   end
 
   scenario "switch to another user and back while using a super-user" do

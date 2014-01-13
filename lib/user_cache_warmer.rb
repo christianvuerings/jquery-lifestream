@@ -1,5 +1,3 @@
-require 'celluloid'
-
 class UserCacheWarmer
 
   def self.do_warm(uid)
