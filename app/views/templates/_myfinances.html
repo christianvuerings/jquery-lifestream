@@ -136,7 +136,7 @@
             <div class="row">
               <div class="small-7 columns">
                 <ul class="cc-button-group cc-even-{{countButtons}}" data-ng-init="transStatusSearch=''">
-                  <li data-ng-show="counts.open!=0">
+                  <li data-ng-if="counts.open !== 0">
                     <button class="cc-button" data-ng-click="transStatusSearch='open';search.transTerm='';search.transType=''" data-ng-class="{'cc-button-selected':(transStatusSearch=='open')}">Balance
                     </button>
                   </li>
