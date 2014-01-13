@@ -1,3 +1,6 @@
+# disable restrictions on Java cryptography strength as early as possible.
+java.lang.Class.for_name('javax.crypto.JceSecurity').get_declared_field('isRestricted').tap{|f| f.accessible = true; f.set nil, false}
+
 begin
   require 'fcntl'
 rescue LoadError
