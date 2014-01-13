@@ -43,23 +43,18 @@ class CanvasMaintainUsers < CanvasCsv
       if campus_row.present?
         known_uids << login_id
         new_account_data = canvas_user_from_campus_row(campus_row)
+        if old_account_data['user_id'] != new_account_data['user_id']
+          sis_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
+        end
         unless provisioned_account_eq_sis_account?(old_account_data, new_account_data)
-          if old_account_data['user_id'] != new_account_data['user_id']
-            sis_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
-            # Will any other account properties need to be updated?
-            old_account_data['user_id'] = new_account_data['user_id']
-            account_changes << new_account_data unless provisioned_account_eq_sis_account?(old_account_data, new_account_data)
-          else
-            account_changes << new_account_data
-          end
+          account_changes << new_account_data
         end
       end
     end
   end
 
   def provisioned_account_eq_sis_account?(provisioned_account, sis_account)
-    matched = provisioned_account['user_id'] == sis_account['user_id'] &&
-      provisioned_account['login_id'] == sis_account['login_id'] &&
+    matched = provisioned_account['login_id'] == sis_account['login_id'] &&
       provisioned_account['first_name'] == sis_account['first_name'] &&
       provisioned_account['last_name'] == sis_account['last_name'] &&
       provisioned_account['email'] == sis_account['email']
@@ -92,7 +87,7 @@ class CanvasMaintainUsers < CanvasCsv
         end
       end
       if user_logins.length > 1
-        logger.warn("Multiple numeric logins found for Canvas user #{canvas_user_id}; will skip")
+        logger.error("Multiple numeric logins found for Canvas user #{canvas_user_id}; will skip")
       elsif user_logins.empty?
         logger.warn("No LDAP UID login found for Canvas user #{canvas_user_id}; will skip")
       else
