@@ -29,10 +29,11 @@ class FinancialsProxy < BaseProxy
             )
           }
           if response.code >= 400
-            unless response.code == 404
-              logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
-            end
-            return nil
+            logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
+            return {
+              body: "My Finances is currently unavailable. Please try again later.",
+              status_code: 503
+            }
           end
 
           logger.debug "Remote server status #{response.code}; url = #{url}"
@@ -43,7 +44,7 @@ class FinancialsProxy < BaseProxy
         rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
           logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
           {
-            body: "Remote server unreachable",
+            body: "My Finances is currently unavailable. Please try again later.",
             status_code: 503
           }
         end

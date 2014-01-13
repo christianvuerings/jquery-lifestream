@@ -27,7 +27,8 @@ describe FinancialsProxy do
 
   context "tammi is missing financials" do
     subject { fake_tammi_financials }
-    it { should be_nil }
+    its([:body]) { should eq("My Finances is currently unavailable. Please try again later.") }
+    its([:status_code]) { should eq(503) }
   end
 
   context "non-student should not get any financials" do
@@ -46,7 +47,7 @@ describe FinancialsProxy do
     after(:each) { WebMock.reset! }
     subject { live_oski_financials }
 
-    its([:body]) { should eq("Remote server unreachable") }
+    its([:body]) { should eq("My Finances is currently unavailable. Please try again later.") }
     its([:status_code]) { should eq(503) }
   end
 
@@ -55,6 +56,7 @@ describe FinancialsProxy do
     after(:each) { WebMock.reset! }
 
     subject { live_oski_financials }
-    it { should be_nil }
+    its([:body]) { should eq("My Finances is currently unavailable. Please try again later.") }
+    its([:status_code]) { should eq(503) }
   end
 end
