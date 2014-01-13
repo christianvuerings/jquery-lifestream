@@ -147,6 +147,15 @@
         <div data-cc-spinner-directive>
           <div class="cc-widget-padding">
             <div data-ng-if="books.has_books">
+              <div data-ng-if="books.bookstore_links">
+                <h4>Cal Student Store Book List</h4>
+                <div class="cc-textbooks-store-ccns">
+                  CCN(s):
+                  <span ng-repeat="link in books.bookstore_links">
+                    <a data-ng-href="{{link.link}}" data-ng-bind="link.ccn"></a><span data-ng-if=" ! $last ">, </span>
+                  </span>
+                </div>
+              </div>
               <div data-ng-repeat="books_category in books" class="cc-clearfix-container">
                 <h3 data-ng-if="books_category.books" data-ng-bind="books_category.type"></h3>
                 <div data-ng-if="books_category.books">
