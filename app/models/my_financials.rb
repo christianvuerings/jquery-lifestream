@@ -9,6 +9,8 @@ class MyFinancials < MyMergedModel
         if student = body["student"]
           feed.merge!(student)
           feed.merge!({"current_term" => Settings.sakai_proxy.current_terms.first})
+        else
+          feed.merge!(proxy_response)
         end
       end
     end

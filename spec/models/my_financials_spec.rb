@@ -6,10 +6,6 @@ describe "MyFinancials" do
   let!(:fake_financials_proxy) { FinancialsProxy.new({user_id: oski_uid, fake: true}) }
   before(:each) { FinancialsProxy.stub(:new).and_return(fake_financials_proxy) }
 
-  shared_examples "blank feed" do
-    it { subject.length.should == 2 }
-  end
-
   context "happy path" do
     subject { MyFinancials.new(oski_uid).get_feed }
     it { should_not be_nil }
@@ -25,13 +21,15 @@ describe "MyFinancials" do
       }
     ) }
     subject { MyFinancials.new(oski_uid).get_feed }
-    it_behaves_like "blank feed"
+    it { subject.length.should == 4 }
+    its([:body]) { should == "an error message"}
+    its([:status_code]) { should == 500 }
   end
 
   context "it should not explode on a null proxy response" do
     before(:each) { fake_financials_proxy.stub(:get).and_return(nil) }
     subject { MyFinancials.new(oski_uid).get_feed }
-    it_behaves_like "blank feed"
+    it { subject.length.should == 2 }
   end
 
 end

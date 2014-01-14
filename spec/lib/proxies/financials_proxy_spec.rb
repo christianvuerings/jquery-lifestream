@@ -27,8 +27,8 @@ describe FinancialsProxy do
 
   context "tammi is missing financials" do
     subject { fake_tammi_financials }
-    its([:body]) { should eq("My Finances is currently unavailable. Please try again later.") }
-    its([:status_code]) { should eq(503) }
+    its([:body]) { should eq("My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem.") }
+    its([:status_code]) { should eq(404) }
   end
 
   context "non-student should not get any financials" do
@@ -57,6 +57,6 @@ describe FinancialsProxy do
 
     subject { live_oski_financials }
     its([:body]) { should eq("My Finances is currently unavailable. Please try again later.") }
-    its([:status_code]) { should eq(503) }
+    its([:status_code]) { should eq(403) }
   end
 end
