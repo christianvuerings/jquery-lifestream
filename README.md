@@ -222,6 +222,7 @@ Stuff that isn't implemented yet, but would be nice to have:
 Places on the web where this plug-in got mentioned:
 
 * [Andref.it](http://andref.it/blog/2011/aggrega-la-tua-attivita-online-con-jquery-lifestream/) - Italian
+* [Bitconfig](http://bitconfig.com/lifestream/bitconfig_lifestream.html)
 * [BlogUpstairs](http://blogupstairs.com/framework/javascript-framework/jquery/jquery-lifestream-show-a-stream-of-your-online-activity-with-jquery/)
 * [Codevisually](http://codevisually.com/jquery-lifestream-create-a-stream-of-your-online-activity/)
 * [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
