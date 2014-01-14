@@ -11,6 +11,7 @@ describe CampusData do
     data['first_name'].should == "Oliver"
     if CampusData.test_data?
       data[:roles][:student].should == false
+      data[:roles][:ex_student].should == true
       data[:roles][:faculty].should == false
       data[:roles][:staff].should == true
     end
@@ -28,6 +29,7 @@ describe CampusData do
       data['tot_enroll_unit'].should == "1"
       data['cal_residency_flag'].should == "N"
       data[:roles][:student].should == true
+      data[:roles][:ex_student].should == false
       data[:roles][:faculty].should == false
       data[:roles][:staff].should == true
     end
@@ -189,6 +191,11 @@ describe CampusData do
     data[:roles].each do |role_name, role_value|
       role_value.should be_false
     end
+  end
+
+  it "should include an ex_student role for a person with a STUDENT-STATUS-EXPIRED affiliation" do
+    result = CampusData.get_person_attributes( 238382 ) # Bernie!!
+    result[:roles][:ex_student].should be_true
   end
 
   it "should return class schedule data" do

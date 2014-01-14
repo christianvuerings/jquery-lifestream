@@ -9,6 +9,7 @@ describe "UserApi" do
         'person_name' => @default_name,
         :roles => {
           :student => true,
+          :ex_student => false,
           :faculty => false,
           :staff => false
         }
@@ -151,6 +152,36 @@ describe "UserApi" do
     user_data[:student_info][:has_academics_tab].should be_false
   end
 
+  context "my finances tab" do
+    before do
+      @student_roles = {
+        :active   => { :student => true,  :ex_student => false, :faculty => false, :staff => false },
+        :expired  => { :student => false, :ex_student => true,  :faculty => false, :staff => false },
+        :non      => { :student => false, :ex_student => false, :faculty => false, :staff => true },
+      }
+    end
+    it "should be toggled based on a :has_finances_tab attribute in student info" do
+      data = UserApi.new(@random_id).get_feed
+      data[:student_info][:has_financials_tab].should_not be_nil
+    end
+    it "should be true for an active student"  do  #check
+      CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:active] })
+      data = UserApi.new(@random_id).get_feed
+      data[:student_info][:has_financials_tab].should == true
+    end
+    it "should be false for a non-student", if: CampusData.test_data?  do   #check
+      CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:non] })
+      data = UserApi.new(@random_id).get_feed
+      data[:student_info][:has_financials_tab].should == false
+    end
+    it "should be true for Bernie as an ex-student", if: CampusData.test_data?  do
+      CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:expired] })
+      data = UserApi.new(@random_id).get_feed
+      data[:student_info][:has_financials_tab].should be_true
+    end
+  end
+
+
   it "should not explode when CampusData returns empty" do
     CampusData.stub(:get_person_attributes).and_return({})
     fake_courses_proxy = CampusUserCoursesProxy.new({:fake => true})
@@ -159,7 +190,7 @@ describe "UserApi" do
     CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
 
     user_data = UserApi.new("904715").get_feed
-    user_data[:student_info][:has_academics_tab].should be_nil
+    user_data[:student_info][:has_academics_tab].should_not be_true
   end
 
   context "proper cache handling" do

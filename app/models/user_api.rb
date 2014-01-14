@@ -88,6 +88,7 @@ class UserApi < MyMergedModel
     campus_courses_proxy = CampusUserCoursesProxy.new({:user_id => @uid})
     has_student_history = campus_courses_proxy.has_student_history?
     has_instructor_history = campus_courses_proxy.has_instructor_history?
+    roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
     {
       :is_admin => UserAuth.is_superuser?(@uid),
       :first_login_at => @first_login_at,
@@ -107,11 +108,11 @@ class UserApi < MyMergedModel
         :reg_block => get_reg_blocks,
         :has_student_history => has_student_history,
         :has_instructor_history => has_instructor_history,
-        :has_academics_tab => @campus_attributes && @campus_attributes[:roles] && (@campus_attributes[:roles][:student] ||
-          @campus_attributes[:roles][:faculty] ||
-          has_instructor_history ||
-          has_student_history
-        )
+        :has_academics_tab =>  (
+          roles[:student] || roles[:faculty] ||
+          has_instructor_history || has_student_history
+        ),
+        :has_financials_tab => Settings.features.financials && ( roles[:student] || roles[:ex_student] )
       },
       :uid => @uid
     }

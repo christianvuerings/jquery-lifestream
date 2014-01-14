@@ -50,9 +50,10 @@ class CampusData < OracleDatabase
       result[:california_residency] = self.cal_residency_translator.translate(result["cal_residency_flag"])
       result['affiliations'] ||= ""
       result[:roles] = {
-          :student => result['affiliations'].include?("STUDENT-TYPE-"),
-          :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
-          :staff => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF")
+          :student    => result['affiliations'].include?("STUDENT-TYPE-"),
+          :ex_student => result['affiliations'].include?("STUDENT-STATUS-EXPIRED"),
+          :faculty    => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
+          :staff      => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF")
       }
 
     end
