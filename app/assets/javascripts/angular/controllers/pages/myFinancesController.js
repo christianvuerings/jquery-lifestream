@@ -234,7 +234,12 @@
           createCounts();
         }
 
-        apiService.util.setTitle('My Finances');
+        if (data.status_code && data.status_code >= 400) {
+          $scope.myfinances_error = data;
+        }
+
+      }).error(function(data) {
+        angular.extend($scope, data);
       });
     };
 
