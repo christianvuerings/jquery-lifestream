@@ -6,7 +6,7 @@ class MyFinancials < MyMergedModel
       proxy = FinancialsProxy.new({user_id: @uid})
       proxy_response = proxy.get
       if proxy_response && body = proxy_response[:body]
-        if student = body["student"]
+        if body.is_a?(Hash) && student = body["student"]
           feed.merge!(student)
           feed.merge!({"current_term" => Settings.sakai_proxy.current_terms.first})
         else
