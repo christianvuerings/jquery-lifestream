@@ -241,6 +241,8 @@
       }).error(function(data) {
         angular.extend($scope, data);
       });
+
+      apiService.util.setTitle('My Finances');
     };
 
     //http://jsfiddle.net/vojtajina/js64b/14/
