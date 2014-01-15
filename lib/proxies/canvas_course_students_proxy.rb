@@ -1,4 +1,7 @@
 class CanvasCourseStudentsProxy < CanvasProxy
+
+  include SafeJsonParser
+
   def initialize(options = {})
     super(options)
     @course_id = options[:course_id]
@@ -17,8 +20,7 @@ class CanvasCourseStudentsProxy < CanvasProxy
             "courses/#{@course_id}/users?#{params}",
             "_course_students"
         )
-        break unless response && response.status == 200
-        students_list = JSON.parse(response.body)
+        break unless (response && response.status == 200 && students_list = safe_json(response.body))
         all_students.concat(students_list)
         params = next_page_params(response)
       end

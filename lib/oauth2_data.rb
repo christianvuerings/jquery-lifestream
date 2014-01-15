@@ -1,5 +1,5 @@
 class Oauth2Data < ActiveRecord::Base
-  include ActiveRecordHelper
+  include ActiveRecordHelper, SafeJsonParser
   after_initialize :log_access, :log_threads
 
   attr_accessible :uid, :app_id, :access_token, :expiration_time, :refresh_token, :app_data
@@ -63,13 +63,8 @@ class Oauth2Data < ActiveRecord::Base
       return unless authenticated_entry
       userinfo = CanvasUserProfileProxy.new(user_id: user_id).user_profile
       return unless userinfo && userinfo.status == 200
-      login_info = {}
-      begin
-        login_info = JSON.parse userinfo.body
-      rescue JSON::ParserError
-        Rails.logger.warn "#{self.class.name} Unable to parse #{userinfo.body}"
-      end
-      if login_info["primary_email"]
+      login_info = safe_json userinfo.body
+      if login_info && login_info["primary_email"]
         authenticated_entry.app_data["email"] = login_info["primary_email"]
         authenticated_entry.save
       end

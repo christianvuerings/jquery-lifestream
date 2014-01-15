@@ -2,6 +2,8 @@ require 'json'
 
 class MyPlaylists < MyMergedModel
 
+  include SafeJsonParser
+
   def initialize(options={})
     @playlist_title = options[:playlist_title] ? options[:playlist_title] : false
     @fetch_error_message = 'There was a problem fetching the videos.'
@@ -56,7 +58,7 @@ class MyPlaylists < MyMergedModel
       js.slice!(js.rindex(','))
     end
     json = '{' + js + '}'
-    result = JSON.parse(json)
+    safe_json(json)
   rescue => e
     puts "There was an issue parsing the data: #{e.message}"
     return false

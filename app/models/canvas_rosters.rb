@@ -1,5 +1,5 @@
 class CanvasRosters
-  include ActiveAttr::Model, ClassLogger
+  include ActiveAttr::Model, ClassLogger, SafeJsonParser
   extend Calcentral::Cacheable
 
   PHOTO_UNAVAILABLE_FILENAME = 'photo_unavailable_official_72x96.jpg'
@@ -35,8 +35,7 @@ class CanvasRosters
     campus_enrollment_map = {}
     # Fill in the Canvas course sections (not to be confused with official campus sections).
     response = CanvasCourseSectionsProxy.new(course_id: @canvas_course_id).sections_list
-    return feed unless response && response.status == 200
-    canvas_sections = JSON.parse(response.body)
+    return feed unless (response && response.status == 200 && canvas_sections = safe_json(response.body))
     canvas_sections.each do |canvas_section|
       canvas_section_id = canvas_section['id']
       sis_id = canvas_section['sis_section_id']

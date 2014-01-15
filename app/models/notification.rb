@@ -1,11 +1,11 @@
 class Notification < ActiveRecord::Base
-  include ActiveRecordHelper
+  include ActiveRecordHelper, SafeJsonParser
 
   after_initialize :log_access
   attr_accessible :uid, :data, :translator, :occurred_at
 
   def data
-    JSON.parse(read_attribute(:data))
+    safe_json(read_attribute(:data))
   end
 
   def data=(obj)

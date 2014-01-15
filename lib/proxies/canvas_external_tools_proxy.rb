@@ -1,5 +1,7 @@
 class CanvasExternalToolsProxy < CanvasProxy
 
+  include SafeJsonParser
+
   # Unlike other Canvas proxies, this can make requests to multiple Canvas servers.
   def initialize(options = {})
     super(options)
@@ -17,8 +19,7 @@ class CanvasExternalToolsProxy < CanvasProxy
         "accounts/#{settings.account_id}/external_tools?#{params}",
         "_external_tools"
       )
-      break unless response && response.status == 200
-      list = JSON.parse(response.body)
+      break unless (response && response.status == 200 && list = safe_json(response.body))
       all_tools.concat(list)
       params = next_page_params(response)
     end

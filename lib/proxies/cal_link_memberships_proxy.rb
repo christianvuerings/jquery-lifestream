@@ -1,5 +1,7 @@
 class CalLinkMembershipsProxy < CalLinkProxy
 
+  include SafeJsonParser
+
   def get_memberships
     self.class.fetch_from_cache @uid do
       url = "#{Settings.cal_link_proxy.base_url}/api/memberships"
@@ -21,7 +23,7 @@ class CalLinkMembershipsProxy < CalLinkProxy
         end
         Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
         {
-            :body => JSON.parse(response.body),
+            :body => safe_json(response.body),
             :status_code => response.status
         }
       rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError  => e

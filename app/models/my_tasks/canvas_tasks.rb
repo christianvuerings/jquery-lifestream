@@ -1,6 +1,6 @@
 module MyTasks
   class CanvasTasks
-    include MyTasks::TasksModule
+    include MyTasks::TasksModule, SafeJsonParser
     attr_accessor :future_count
 
     def initialize(uid, starting_date)
@@ -24,11 +24,7 @@ module MyTasks
     def fetch_canvas_todo!(canvas_proxy, tasks, assignments)
       response = canvas_proxy.todo
       if response && (response.status == 200)
-        begin
-          results = JSON.parse response.body
-        rescue JSON::ParserError
-          Rails.logger.error "#{self.class.name} Got invalid json in todo feed: #{response.body}"
-        end
+        results = safe_json response.body
         if results
           Rails.logger.info "#{self.class.name} Sorting Canvas todo feed into buckets with starting_date #{@starting_date}; #{results}"
           results.each do |result|
@@ -72,11 +68,7 @@ module MyTasks
     def fetch_canvas_upcoming_events!(canvas_proxy, tasks, assignments)
       response = canvas_proxy.upcoming_events
       if response && (response.status == 200)
-        begin
-          results = JSON.parse response.body
-        rescue JSON::ParserError
-          Rails.logger.error "#{self.class.name} Got invalid json in events feed: #{response.body}"
-        end
+        results = safe_json response.body
         if results
           Rails.logger.info "#{self.class.name} Sorting Canvas upcoming_events feed into buckets with starting_date #{@starting_date}"
           results.each do |result|

@@ -18,7 +18,7 @@
 # that it be cached efficiently.
 
 class CanvasUserSites
-  include ClassLogger
+  include ClassLogger, SafeJsonParser
   extend Calcentral::Cacheable
 
   def initialize(uid)
@@ -42,8 +42,7 @@ class CanvasUserSites
     campus_user_courses = CampusUserCoursesProxy.new(user_id: @uid).get_campus_courses
 
     response = CanvasUserCoursesProxy.new(user_id: @uid).courses
-    return merged_sites unless (response && response.status == 200)
-    course_sites = JSON.parse(response.body)
+    return merged_sites unless (response && response.status == 200 && course_sites = safe_json(response.body))
     course_sites.each do |site|
       merge_course_site(site, merged_sites, campus_user_courses)
     end
@@ -52,8 +51,7 @@ class CanvasUserSites
     # and so we need to send the list of already-categorized Course sites to the
     # Group site handler.
     response = CanvasGroupsProxy.new(user_id: @uid).groups
-    return merged_sites unless (response && response.status == 200)
-    group_sites = JSON.parse(response.body)
+    return merged_sites unless (response && response.status == 200 && group_sites = safe_json(response.body))
     group_sites.each do |site|
       merge_group_site(site, merged_sites)
     end
@@ -67,8 +65,7 @@ class CanvasUserSites
     course_id = site['id']
     role = site['enrollments'][0]['type']
     response = CanvasCourseSectionsProxy.new(course_id: course_id).sections_list
-    return merged_sites unless (response && response.status == 200)
-    canvas_sections = JSON.parse(response.body)
+    return merged_sites unless (response && response.status == 200 && canvas_sections = safe_json(response.body))
     linked_course_ids = Set.new
     canvas_sections.each do |canvas_section|
       sis_id = canvas_section['sis_section_id']

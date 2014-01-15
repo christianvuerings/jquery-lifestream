@@ -1,6 +1,6 @@
 # Transforms raw Canvas users/self/activity_stream for My Activities feed.
 class CanvasUserActivities
-  include DatedFeed
+  include DatedFeed, SafeJsonParser
 
   def initialize(uid)
     @uid = uid
@@ -9,8 +9,7 @@ class CanvasUserActivities
   def get_feed
     activities = []
     response = CanvasUserActivityStreamProxy.new(user_id: @uid).user_activity
-    return activities unless (response && response.status == 200)
-    raw_feed = JSON.parse(response.body)
+    return activities unless (response && response.status == 200 && raw_feed = safe_json(response.body))
     canvas_sites = CanvasUserSites.new(@uid).get_feed
     # Flatten the site list.
     canvas_sites = canvas_sites[:classes].concat(canvas_sites[:groups])
