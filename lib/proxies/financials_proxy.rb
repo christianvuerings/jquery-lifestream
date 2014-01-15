@@ -28,7 +28,8 @@ class FinancialsProxy < BaseProxy
           response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
             HTTParty.get(
               url,
-              digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password}
+              digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password},
+              timeout: Settings.application.outgoing_http_timeout
             )
           }
           if response.code >= 400

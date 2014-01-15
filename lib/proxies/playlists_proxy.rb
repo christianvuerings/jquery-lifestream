@@ -19,7 +19,10 @@ class PlaylistsProxy < BaseProxy
         response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
           Faraday::Connection.new(
             :url => @url,
-            :params => params
+            :params => params,
+            :request => {
+              :timeout => Settings.application.outgoing_http_timeout
+            }
           ).get
         }
         if response.status >= 400
