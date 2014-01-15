@@ -144,6 +144,9 @@
     padding: 5px 10px;
     margin-left: 3px;
   }
+  .cc-widget-title-link {
+    margin: 13px 10px 0 0;
+  }
 }
 .cc-widget-title-sub {
   color: $cc-color-lighter-medium-grey;
@@ -158,6 +161,9 @@
     background: $cc-color-dark-blue;
     h2 {
       color: $cc-color-white;
+    }
+    .cc-widget-title-link {
+      color: $cc-color-popover-icon;
     }
   }
 }
@@ -191,9 +197,6 @@
 }
 
 @media #{$small-only} {
-  .cc-widget-title h2 {
-    padding: 7px 10px;
-  }
   .cc-widget-title-sub {
     margin-top: 0;
   }
