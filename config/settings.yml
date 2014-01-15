@@ -219,6 +219,8 @@ cache:
     CalLinkMembershipsProxy: <%= 4.hours %>
     CalLinkOrganizationProxy: <%= 4.hours %>
 
+    MyTextbooks: <%= 24.hours %>
+
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads
