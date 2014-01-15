@@ -35,7 +35,10 @@ class BearfactsProxy < BaseProxy
             Faraday::Connection.new(
               :url => url,
               :params => params.merge(token_params),
-              :ssl => {:verify => false}
+              :ssl => {:verify => false},
+              :request => {
+                :timeout => Settings.application.outgoing_http_timeout
+              }
             ).get
           }
           if response.status >= 400

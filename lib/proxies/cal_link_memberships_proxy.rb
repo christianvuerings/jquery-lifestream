@@ -9,11 +9,14 @@ class CalLinkMembershipsProxy < CalLinkProxy
         response = FakeableProxy.wrap_request(APP_ID + "_memberships", @fake, {:match_requests_on => [:method, :path, :body]}) {
           Faraday::Connection.new(
               :url => url,
-              :params => params
+              :params => params,
+              :request => {
+                :timeout => Settings.application.outgoing_http_timeout
+              }
           ).get
         }
         if response.status >= 400
-          Rails.logger.warn "#{self.class.name}: Connection failed: #{response.status} #{response.body}"
+          Rails.logger.error "#{self.class.name}: Connection failed: #{response.status} #{response.body}"
           return nil
         end
         Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
@@ -22,7 +25,7 @@ class CalLinkMembershipsProxy < CalLinkProxy
             :status_code => response.status
         }
       rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError  => e
-        Rails.logger.warn "#{self.class.name}: Connection failed: #{e.class} #{e.message}"
+        Rails.logger.error "#{self.class.name}: Connection failed: #{e.class} #{e.message}"
         {
             :body => "Remote server unreachable",
             :status_code => 503
