@@ -66,7 +66,6 @@ class TextbooksProxy < BaseProxy
       required_books = []
       recommended_books = []
       optional_books = []
-      bookstore_links = []
       status_code = ''
       begin
         @ccns.each do |ccn|
@@ -88,15 +87,6 @@ class TextbooksProxy < BaseProxy
           required_books.push(ul_to_dict(required_text_list))
           recommended_books.push(ul_to_dict(recommended_text_list))
           optional_books.push(ul_to_dict(optional_text_list))
-
-          bookstore_link = text_books.xpath('//a[@name="blwin1"]/@href').text
-
-          if !bookstore_link.blank?
-            bookstore_links.push({
-              ccn: ccn,
-              link: "#{Settings.textbooks_proxy.base_url}#{bookstore_link}"
-            })
-          end
         end
 
         book_response = {
@@ -109,7 +99,6 @@ class TextbooksProxy < BaseProxy
         }
 
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
-        book_response[:bookstore_links] = bookstore_links
         {
           body: {
             books: book_response
