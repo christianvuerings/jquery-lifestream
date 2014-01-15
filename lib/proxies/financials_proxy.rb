@@ -17,7 +17,10 @@ class FinancialsProxy < BaseProxy
       student_id = lookup_student_id
       if student_id.nil?
         logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API path #{path}"
-        return nil
+        return {
+          body: "CalCentral's My Finances tab is only available for current or recent UC Berkeley students. If you are seeing this message, it is because CalCentral did not receive any CARS data for your account. If you believe that you have received this message in error, please use the Feedback link below to tell us about the problem.",
+          status_code: 400
+        }
       else
         url = "#{Settings.financials_proxy.base_url}#{path}"
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
