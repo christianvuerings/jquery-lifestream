@@ -102,9 +102,14 @@
   }
   .cc-widget-activities-text-margin {
     margin-left: 30px;
+    .cc-widget-activities-info-link {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+    .cc-widget-activities-status-line {
+      margin-top: 4px;
+    }
   }
 
-  .cc-activities-button-margin {
-    margin-right: 3px;
-  }
 }
