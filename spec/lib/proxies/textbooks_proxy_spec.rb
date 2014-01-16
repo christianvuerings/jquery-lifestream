@@ -10,7 +10,7 @@ describe "TextbooksProxy" do
     proxy_response = proxy.get
     proxy_response[:status_code].should_not be_nil
     if proxy_response[:status_code] == 200
-      feed = proxy_response[:body][:books]
+      feed = proxy_response[:books]
       feed.should_not be_nil
       feed[:has_books].should be_true
       feed[:required_books][:books][0][:title] === 'Observing the User Experience'
@@ -25,7 +25,7 @@ describe "TextbooksProxy" do
     proxy_response = proxy.get
     proxy_response[:status_code].should_not be_nil
     if proxy_response[:status_code] == 200
-      feed = proxy_response[:body]
+      feed = proxy_response
       feed.should_not be_nil
       feed[:has_books].should be_false
     end
