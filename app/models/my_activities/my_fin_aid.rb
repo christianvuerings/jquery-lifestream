@@ -58,13 +58,13 @@ class MyActivities::MyFinAid
 
       if (status.values.none?)
         result[:type] = "alert"
-        result[:title].concat " - action required, missing document"
+        result[:status] = "Action required, missing document"
       elsif (status[:received] && !status[:reviewed])
         result[:type] = "financial"
-        result[:title].concat " - no action required, document received not yet reviewed"
+        result[:status] = "No action required, document received not yet reviewed"
       elsif(status.values.all?)
         result[:type] = "message"
-        result[:title].concat " -  no action required, document reviewed and processed"
+        result[:status] = "No action required, document reviewed and processed"
       end
 
       activities << result

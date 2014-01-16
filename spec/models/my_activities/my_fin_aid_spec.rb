@@ -81,6 +81,41 @@ describe MyActivities::MyFinAid do
       it { subject.each { |entry| entry[:title].should be_present } }
     end
 
+    context "finaid activities" do
+      it "should no longer have status messages appended to the title" do
+        subject.each{ |entry|
+          entry[:title].should_not =~ /[\s\-]+.*action required/
+        }
+      end
+
+      context "should have the appropriate status messages" do
+
+        subject do
+          MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+          @activities.select { |entry| !entry[:status].nil? }
+        end
+
+        it "in at least one faked activity" do
+          subject.length.should > 0
+        end
+
+        it "for alert types" do
+          activity = subject.find{ |entry| entry[:type]=='alert' }
+          activity[:status].should == 'Action required, missing document'
+        end
+
+        it "for financial types" do
+          activity = subject.find{ |entry| entry[:type]=='financial' }
+          activity[:status].should == 'No action required, document received not yet reviewed'
+        end
+
+        it "for message types" do
+          activity = subject.find{ |entry| entry[:type]=='message' }
+          activity[:status].should == 'No action required, document reviewed and processed'
+        end
+
+      end
+    end
   end
 
 end
