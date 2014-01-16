@@ -67,6 +67,7 @@ class TextbooksProxy < BaseProxy
       recommended_books = []
       optional_books = []
       status_code = ''
+      url = ''
       begin
         @ccns.each do |ccn|
           path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
@@ -102,15 +103,12 @@ class TextbooksProxy < BaseProxy
 
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
         {
-          body: {
-            books: book_response
-          },
-          status_code: status_code
+          books: book_response
         }
-      rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+      rescue SocketError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
         logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
         {
-          body: "Remote server unreachable",
+          body: "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.",
           status_code: 503
         }
       end
