@@ -2,6 +2,8 @@ require 'json'
 
 class MyYoutube < MyMergedModel
 
+  include SafeJsonParser
+
   def initialize(options={})
     @playlist_id = options[:playlist_id] ? options[:playlist_id] : false
     @my_videos = {
@@ -24,7 +26,8 @@ class MyYoutube < MyMergedModel
   end
 
   def filter_videos(response)
-    data = JSON.parse(response[:body])
+    data = safe_json(response[:body])
+    return unless data && data['feed'] && data['feed']['entry']
     entries = data['feed']['entry']
     entries.each do |entry|
       title = entry['media$group']['media$title']['$t']

@@ -1,5 +1,7 @@
 class CanvasCourseUserProxy < CanvasProxy
 
+  include SafeJsonParser
+
   ADMIN_ROLES = ["TeacherEnrollment","TaEnrollment","DesignerEnrollment"]
 
   def initialize(options = {})
@@ -40,7 +42,7 @@ class CanvasCourseUserProxy < CanvasProxy
       "courses/#{@course_id}/users/#{@user_id}?include[]=enrollments",
       "_course_user"
     )
-    return response ? JSON.parse(response.body) : nil
+    return response ? safe_json(response.body) : nil
   end
 
 end

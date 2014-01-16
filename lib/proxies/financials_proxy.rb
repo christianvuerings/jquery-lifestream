@@ -1,6 +1,6 @@
 class FinancialsProxy < BaseProxy
 
-  include ClassLogger
+  include ClassLogger, SafeJsonParser
 
   APP_ID = "CFV"
 
@@ -47,7 +47,7 @@ class FinancialsProxy < BaseProxy
 
           logger.debug "Remote server status #{response.code}; url = #{url}"
           {
-            body: JSON.parse(response.body),
+            body: safe_json(response.body),
             status_code: response.code
           }
         rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e

@@ -1,5 +1,7 @@
 class CanvasAdminsProxy < CanvasProxy
 
+  include SafeJsonParser
+
   def admins_list
     self.class.fetch_from_cache do
       all_admins = []
@@ -9,8 +11,7 @@ class CanvasAdminsProxy < CanvasProxy
             "accounts/#{settings.account_id}/admins?#{params}",
             "_admins"
         )
-        break unless response && response.status == 200
-        admins_list = JSON.parse(response.body)
+        break unless (response && response.status == 200 && admins_list = safe_json(response.body))
         all_admins.concat(admins_list)
         params = next_page_params(response)
       end
