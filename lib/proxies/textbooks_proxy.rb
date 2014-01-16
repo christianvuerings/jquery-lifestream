@@ -103,7 +103,8 @@ class TextbooksProxy < BaseProxy
 
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
         {
-          books: book_response
+          books: book_response,
+          status_code: status_code
         }
       rescue SocketError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
         logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
