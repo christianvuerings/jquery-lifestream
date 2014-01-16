@@ -144,7 +144,7 @@ financials_proxy:
 
 textbooks_proxy:
   fake: false
-  base_url: "https://www.bkstr.com"
+  base_url: "http://www.bkstr.com"
 
 playlists_proxy:
   fake: false
