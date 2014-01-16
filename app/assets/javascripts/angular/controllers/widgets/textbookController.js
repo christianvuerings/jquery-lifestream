@@ -24,8 +24,12 @@
 
       $http.get('api/my/textbooks_details', {
         params: course_info
-      }).success(function(books) {
-        angular.extend($scope, books);
+      }).success(function(data) {
+        angular.extend($scope, data);
+
+        if (data.status_code && data.status_code >= 400) {
+          $scope.textbook_error = data;
+        }
       });
     };
 

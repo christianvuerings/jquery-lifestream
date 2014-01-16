@@ -279,6 +279,11 @@ button {
   }
 }
 
+/* Error */
+.cc-error-message {
+  line-height: 1.6;
+}
+
 /* Select */
 /* We need to wrap a select in a <div> to have consistent styling */
 .cc-select {

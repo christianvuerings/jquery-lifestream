@@ -20,7 +20,7 @@ class MyTextbooks < MyMergedModel
     if Settings.features.textbooks
       proxy = TextbooksProxy.new({user_id: @uid, ccns: @ccns, slug: @slug})
       proxy_response = proxy.get
-      feed = proxy_response[:body]
+      feed = proxy_response
     end
     feed
   end
