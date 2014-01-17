@@ -17,6 +17,7 @@ class TextbooksProxy < BaseProxy
         isbn = bl.xpath('.//span[@id="materialISBN"]')[0].text.split(":")[1].strip
 
         book_detail = {
+          :has_choices => bl.xpath('.//h3[@class="material-group-title choice-title"]').length > 0 || bl.xpath('.//div[@class="choice-list-heading-sub"]').length > 0,
           :title => bl.xpath('.//h3[@class="material-group-title"]')[0].text.split("\n")[0],
           :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src')[0].text,
           :isbn => isbn,
@@ -31,6 +32,10 @@ class TextbooksProxy < BaseProxy
       end
     end
     books
+  end
+
+  def has_choices(category_books)
+    category_books.any? {|i| i[:has_choices] == true}
   end
 
   def get_term(slug)
@@ -94,11 +99,14 @@ class TextbooksProxy < BaseProxy
 
         book_response = {
           :required_books => {:type => "Required",
-                              :books => required_books.flatten},
+                              :books => required_books.flatten,
+                              :has_choices => has_choices(required_books.flatten)},
           :recommended_books => {:type => "Recommended",
-                              :books => recommended_books.flatten},
+                              :books => recommended_books.flatten,
+                              :has_choices => has_choices(recommended_books.flatten)},
           :optional_books => {:type => "Optional",
-                              :books => optional_books.flatten},
+                              :books => optional_books.flatten,
+                              :has_choices => has_choices(optional_books.flatten)},
         }
 
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
