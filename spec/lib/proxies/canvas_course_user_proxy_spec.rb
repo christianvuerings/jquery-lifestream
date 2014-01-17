@@ -12,8 +12,8 @@ describe CanvasCourseUserProxy do
       'sis_login_id' => '105431',
       'login_id' => '105431',
       'enrollments' => [
-        {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241907, 'type' => "TeacherEnrollment", 'role' => "StudentEnrollment"},
-        {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241908, 'type' => "TeacherEnrollment", 'role' => "ObserverEnrollment"},
+        {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241907, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment"},
+        {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241908, 'type' => "ObserverEnrollment", 'role' => "ObserverEnrollment"},
       ],
     }
   end

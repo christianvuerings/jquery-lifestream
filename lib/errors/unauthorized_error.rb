@@ -1,0 +1,2 @@
+class UnauthorizedError < ClientError
+end

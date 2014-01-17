@@ -1,0 +1,2 @@
+class ForbiddenError < ClientError
+end

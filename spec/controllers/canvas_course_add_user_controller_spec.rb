@@ -1,13 +1,12 @@
 require "spec_helper"
+require "lib/canvas/canvas_authorization_helpers_spec"
 
 describe CanvasCourseAddUserController do
 
   let(:course_user_hash) do
     {
       'id' => 4321321, 'name' => "Michael Steven OWEN", 'sis_user_id' => "UID:105431", 'sis_login_id' => "105431", 'login_id' => "105431",
-      'enrollments' => [
-        {'id' => 20241907, 'course_id' => 767330, 'course_section_id' => 1312468, 'type' => 'TeacherEnrollment', 'role' => 'TeacherEnrollment'}
-      ]
+      'enrollments' => [{'id' => 20241907, 'course_id' => 767330, 'course_section_id' => 1312468, 'type' => 'TeacherEnrollment', 'role' => 'TeacherEnrollment'}]
     }
   end
 
@@ -35,53 +34,30 @@ describe CanvasCourseAddUserController do
   end
 
   context "when performing user search" do
-    before { CanvasCourseUserProxy.any_instance.stub(:course_user).and_return(course_user_hash) }
-
-    context "when no user session present" do
-      before { session[:user_id] = nil }
-      it "returns 401 error" do
-        get :search_users, search_text: "John Doe", search_type: "name"
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    before do
+      CanvasCourseAddUser.stub(:search_users).with('John Doe', 'name').and_return(users_found)
     end
 
-    context "when no canvas user id present" do
-      before { session[:canvas_user_id] = nil }
-      it "returns 401 error" do
-        get :search_users, search_text: "John Doe", search_type: "name"
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "an api endpoint" do
+      before { subject.stub(:search_users).and_raise(RuntimeError, "Something went wrong") }
+      let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
-    context "when no canvas course id present" do
-      before { session[:canvas_course_id] = nil }
-      it "returns 401 error" do
-        get :search_users, search_text: "John Doe", search_type: "name"
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a user authenticated controller" do
+      let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
-    context "when canvas course user is not an admin" do
-      before { CanvasCourseUserProxy.should_receive(:is_course_admin?).and_return(false) }
-      it "returns 401 error" do
-        get :search_users, search_text: "John Doe", search_type: "name"
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a canvas user authenticated controller" do
+      let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
-    context "when a standard exception raised during execution" do
-      before { CanvasCourseAddUser.should_receive(:search_users).and_raise(RuntimeError, "Something went wrong") }
-      it "returns 500 with error" do
-        get :search_users
-        expect(response.status).to eq(500)
-        json_response = JSON.parse(response.body)
-        expect(json_response['error']).to be_an_instance_of String
-        expect(json_response['error']).to eq "Something went wrong"
-      end
+    it_should_behave_like "a canvas course user authenticated controller" do
+      let(:make_request)                { get :search_users, search_text: "John Doe", search_type: "name" }
+      let(:make_request_with_course_id) { get :search_users, search_text: "John Doe", search_type: "name", canvas_course_id: "4123456" }
+    end
+
+    it_should_behave_like "a canvas course admin authorized controller" do
+      let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
     it "returns user search results" do
@@ -98,51 +74,27 @@ describe CanvasCourseAddUserController do
   end
 
   context "when obtaining list of course sections" do
-    context "when no user session present" do
-      before { session[:user_id] = nil }
-      it "returns 401 error" do
-        get :course_sections
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+
+    it_should_behave_like "an api endpoint" do
+      before { subject.stub(:course_sections).and_raise(RuntimeError, "Something went wrong") }
+      let(:make_request) { get :course_sections }
     end
 
-    context "when no canvas user id present" do
-      before { session[:canvas_user_id] = nil }
-      it "returns 401 error" do
-        get :course_sections
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a user authenticated controller" do
+      let(:make_request) { get :course_sections }
     end
 
-    context "when no canvas course id present" do
-      before { session[:canvas_course_id] = nil }
-      it "returns 401 error" do
-        get :course_sections
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a canvas user authenticated controller" do
+      let(:make_request) { get :course_sections }
     end
 
-    context "when canvas course user is not an admin" do
-      before { CanvasCourseUserProxy.should_receive(:is_course_admin?).and_return(false) }
-      it "returns 401 error" do
-        get :course_sections
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a canvas course user authenticated controller" do
+      let(:make_request)                { get :course_sections }
+      let(:make_request_with_course_id) { get :course_sections, canvas_course_id: "4123456" }
     end
 
-    context "when a standard exception raised during execution" do
-      before { CanvasCourseAddUser.should_receive(:course_sections_list).and_raise(RuntimeError, "Something went wrong") }
-      it "returns 500 with error" do
-        get :course_sections
-        expect(response.status).to eq(500)
-        json_response = JSON.parse(response.body)
-        expect(json_response['error']).to be_an_instance_of String
-        expect(json_response['error']).to eq "Something went wrong"
-      end
+    it_should_behave_like "a canvas course admin authorized controller" do
+      let(:make_request) { get :course_sections }
     end
 
     it "returns sections for search" do
@@ -161,55 +113,31 @@ describe CanvasCourseAddUserController do
   end
 
   context "when adding user to course" do
-    context "when no user session present" do
-      before { session[:user_id] = nil }
-      it "returns 401 error" do
-        post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    before { CanvasCourseAddUser.stub(:add_user_to_course_section).and_return(true) }
+
+    it_should_behave_like "an api endpoint" do
+      before { subject.stub(:add_user).and_raise(RuntimeError, "Something went wrong") }
+      let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
-    context "when no canvas user id present" do
-      before { session[:canvas_user_id] = nil }
-      it "returns 401 error" do
-        post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a user authenticated controller" do
+      let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
-    context "when no canvas course id present" do
-      before { session[:canvas_course_id] = nil }
-      it "returns 401 error" do
-        post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a canvas user authenticated controller" do
+      let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
-    context "when canvas course user is not an admin" do
-      before { CanvasCourseUserProxy.should_receive(:is_course_admin?).and_return(false) }
-      it "returns 401 error" do
-        post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
-      end
+    it_should_behave_like "a canvas course user authenticated controller" do
+      let(:make_request)                { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
+      let(:make_request_with_course_id) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215, canvas_course_id: "4123456" }
     end
 
-    context "when a standard exception raised during execution" do
-      before { CanvasCourseAddUser.should_receive(:add_user_to_course_section).and_raise(RuntimeError, "Something went wrong") }
-      it "returns 500 with error" do
-        post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215
-        expect(response.status).to eq(500)
-        json_response = JSON.parse(response.body)
-        expect(json_response['error']).to be_an_instance_of String
-        expect(json_response['error']).to eq "Something went wrong"
-      end
+    it_should_behave_like "a canvas course admin authorized controller" do
+      let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
     it "adds user to course section" do
-      CanvasCourseAddUser.should_receive(:add_user_to_course_section).and_return(true)
       post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: "864215"
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
