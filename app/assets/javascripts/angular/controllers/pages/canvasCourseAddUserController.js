@@ -4,7 +4,7 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function (apiService, $http, $scope, $window) {
+  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function (apiService, $http, $routeParams, $scope, $window) {
 
     apiService.util.setTitle('Add User to Course');
 
@@ -142,7 +142,16 @@
     };
 
     var checkAuthorization = function() {
-      $http.get('/api/academics/canvas/course_user_profile').success(function(data) {
+      var check_authorization_uri = '/api/academics/canvas/course_user_profile';
+      var check_authorization_params = {};
+      if ($routeParams.canvas_course_id) {
+        check_authorization_params.canvas_course_id = $routeParams.canvas_course_id;
+      }
+      $http({
+        url: check_authorization_uri,
+        method: 'GET',
+        params: check_authorization_params
+      }).success(function(data) {
         $scope.course_user_profile = data.course_user_profile;
         $scope.is_course_admin = user_is_admin($scope.course_user_profile);
         if ($scope.is_course_admin) {
