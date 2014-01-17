@@ -14,6 +14,7 @@ describe "TextbooksProxy" do
       feed.should_not be_nil
       feed[:has_books].should be_true
       feed[:required_books][:books][0][:title] === 'Observing the User Experience'
+      feed[:required_books][:has_choices].should be_false
     end
   end
 
@@ -28,6 +29,21 @@ describe "TextbooksProxy" do
       feed = proxy_response
       feed.should_not be_nil
       feed[:has_books].should be_false
+    end
+  end
+
+  it "should return true for has_choices when there are choices for a book", :testext => true do
+    @ccns = ['73899']
+    @slug = 'spring-2014'
+    feed = {}
+    proxy = TextbooksProxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
+    proxy_response = proxy.get
+    proxy_response[:status_code].should_not be_nil
+    if proxy_response[:status_code] == 200
+      feed = proxy_response[:books]
+      feed.should_not be_nil
+      feed[:has_books].should be_true
+      feed[:required_books][:has_choices].should be_true
     end
   end
 

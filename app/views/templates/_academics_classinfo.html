@@ -152,7 +152,10 @@
               </div>
               <div data-ng-repeat="books_category in books" class="cc-clearfix-container">
                 <h3 data-ng-if="books_category.books" data-ng-bind="books_category.type"></h3>
-                <div data-ng-if="books_category.books">
+                <p data-ng-if="books_category.has_choices">
+                  This section has a choice of titles. Please visit the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a> to see them all.
+                </p>
+                <div data-ng-if="books_category.books && !books_category.has_choices">
                   <div data-ng-repeat="book in books_category.books" class="cc-textbooks-list">
                     <div class="small-4 columns rows" data-ng-if="book.image">
                       <img class="cc-textbooks-image" data-ng-attr-alt="Textbook cover for {{book.title}}" data-ng-src="{{book.image}}" width="110" height="160"></img>
