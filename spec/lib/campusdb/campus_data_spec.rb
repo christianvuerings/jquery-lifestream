@@ -198,6 +198,11 @@ describe CampusData do
     result[:roles][:ex_student].should be_true
   end
 
+  it "should include a guest role", if: CampusData.test_data? do
+    result = CampusData.get_person_attributes(19999969)
+    result[:roles][:guest].should be_true
+  end
+
   it "should return class schedule data" do
     data = CampusData.get_section_schedules("2013", "D", "16171")
     data.should_not be_nil
