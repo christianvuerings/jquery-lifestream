@@ -185,7 +185,7 @@ cache:
     FeedUpdateWhiteboard: <%= 5.minutes %>
     LiveUpdatesWarmer: <%= 2.minutes %>
     MyAcademics::Merged: 0
-    MyActivities: 0
+    MyActivities::Merged: 0
     MyBadges::Merged: 0
     MyCampusLinksController: 0
     MyClasses: 0
