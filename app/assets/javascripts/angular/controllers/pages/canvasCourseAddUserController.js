@@ -6,7 +6,7 @@
    */
   angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function (apiService, $http, $routeParams, $scope, $window) {
 
-    apiService.util.setTitle('Add User to Course');
+    apiService.util.setTitle('Add People');
 
     var resetSearchState = function() {
       $scope.show_users_area = false;
@@ -89,7 +89,7 @@
         params: feed_params
       }).success(function(data) {
         $scope.user_search_results = data.users;
-        $scope.user_search_result_count = data.users[0].result_count;
+        $scope.user_search_result_count = data.users.length;
         $scope.is_loading = false;
         $scope.show_alerts = true;
       }).error(function(data) {
