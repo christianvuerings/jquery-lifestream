@@ -13,8 +13,8 @@ describe "TextbooksProxy" do
       feed = proxy_response[:books]
       feed.should_not be_nil
       feed[:has_books].should be_true
-      feed[:required_books][:books][0][:title] === 'Observing the User Experience'
-      feed[:required_books][:has_choices].should be_false
+      feed[:book_details][0][:books][0][:title] === 'Observing the User Experience'
+      feed[:book_details][0][:has_choices].should be_false
     end
   end
 
@@ -43,7 +43,7 @@ describe "TextbooksProxy" do
       feed = proxy_response[:books]
       feed.should_not be_nil
       feed[:has_books].should be_true
-      feed[:required_books][:has_choices].should be_true
+      feed[:book_details][0][:has_choices].should be_true
     end
   end
 
