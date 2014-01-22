@@ -98,17 +98,32 @@ class TextbooksProxy < BaseProxy
         end
 
         book_response = {
-          :book_details =>
-          [{:type => "Required",
+          :book_details => []
+        }
+
+        if !required_books.flatten.blank?
+          book_response[:book_details].push({
+            :type => "Required",
             :books => required_books.flatten,
-            :has_choices => has_choices(required_books.flatten)},
-           {:type => "Recommended",
+            :has_choices => has_choices(required_books.flatten)
+          })
+        end
+
+        if !recommended_books.flatten.blank?
+          book_response[:book_details].push({
+            :type => "Recommended",
             :books => recommended_books.flatten,
-            :has_choices => has_choices(recommended_books.flatten)},
-           {:type => "Optional",
+            :has_choices => has_choices(recommended_books.flatten)
+          })
+        end
+
+        if !optional_books.flatten.blank?
+          book_response[:book_details].push({
+            :type => "Optional",
             :books => optional_books.flatten,
-            :has_choices => has_choices(optional_books.flatten)},
-          ]}
+            :has_choices => has_choices(optional_books.flatten)
+          })
+        end
 
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
         {
