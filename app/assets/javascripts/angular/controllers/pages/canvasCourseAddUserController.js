@@ -10,6 +10,7 @@
 
     var resetSearchState = function() {
       $scope.show_users_area = false;
+      $scope.user_search_results_count = 0;
     };
 
     var resetImportState = function() {
@@ -89,7 +90,9 @@
         params: feed_params
       }).success(function(data) {
         $scope.user_search_results = data.users;
-        $scope.user_search_result_count = data.users.length;
+        if (data.users.length > 0) {
+          $scope.user_search_results_count = data.users[0].result_count;
+        }
         $scope.is_loading = false;
         $scope.show_alerts = true;
       }).error(function(data) {

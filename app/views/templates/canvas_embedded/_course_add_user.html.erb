@@ -7,8 +7,8 @@
 
       <div id="alerts-wrapper" class="row" data-ng-show="show_alerts">
         <div data-cc-spinner-directive>
-          <div data-ng-show="user_search_result_count > user_search_results.length" class="alert-box success radius">
-            Your search returned <span data-ng-bind="user_search_result_count"></span> results, but only the first
+          <div data-ng-show="user_search_results_count > user_search_results.length" class="alert-box success radius">
+            Your search returned <span data-ng-bind="user_search_results_count"></span> results, but only the first
             <span data-ng-bind="user_search_results.length"></span> are shown.
             Please refine your search to limit the number of results.
           </div>
@@ -67,7 +67,7 @@
       <div class="row collapse" data-ng-show="show_users_area">
         <div data-cc-spinner-directive>
 
-          <div class="bc-form" data-ng-show="user_search_result_count === 0">
+          <div class="bc-form" data-ng-show="user_search_results_count === 0">
             <p><strong>No users found.</strong></p>
           </div>
 
