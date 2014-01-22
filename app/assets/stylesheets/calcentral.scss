@@ -163,12 +163,19 @@ button {
   }
 }
 .cc-button-blue {
-  background: $cc-color-action-button;
+  background: $cc-color-button-action;
   border: 1px solid transparent;
   color: $cc-color-white;
   &:focus, &:hover {
-    background: $cc-color-action-button-hover;
+    background: $cc-color-button-action-hover;
     color: $cc-color-white;
+  }
+  &.cc-button-large {
+    background: $cc-color-button-action-large-bottom;
+    @include background(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-bottom));
+    &:focus, &:hover {
+      @include background(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-hover));
+    }
   }
 }
 .cc-button-disabled {

@@ -1,10 +1,11 @@
-$cc-color-splash-blue-dark: #004677;
+$cc-color-splash-blue-dark: #025A86;
 
 .cc-page-splash {
-
-  h2 {
+  h1 {
     color: $cc-color-splash-blue-dark;
-    font-size: 18px;
+    font-family: Arial;
+    font-size: 23px;
+    font-weight: bold;
     margin: 0 0 10px;
   }
   p {
@@ -75,7 +76,7 @@ $cc-color-splash-blue-dark: #004677;
     margin-bottom: 0;
   }
   .cc-page-splash-logo {
-    margin: 20px auto 35px;
+    margin: 20px auto;
   }
   .cc-page-splash-logo-container {
     margin: 0 auto;
@@ -84,6 +85,9 @@ $cc-color-splash-blue-dark: #004677;
 
   /* Mobile only */
   @media #{$small-only} {
+    h1 {
+      font-size: 20px;
+    }
     .cc-container-main {
       padding: 0 10px;
     }
