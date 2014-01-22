@@ -62,6 +62,17 @@ describe CampusUserCoursesProxy do
     end
   end
 
+  it "should find waitlisted status in test enrollments", :if => SakaiData.test_data? do
+    Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
+    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
+    client = CampusUserCoursesProxy.new({user_id: '300939'})
+    courses = client.get_all_campus_courses
+    courses["2015-B"].length.should == 1
+    course = courses["2015-B"][0]
+    course[:waitlist_position].should == '42'
+    course[:enroll_limit].should == '5000'
+  end
+
   it "should say that Tammi has student history", :if => SakaiData.test_data? do
     client = CampusUserCoursesProxy.new({user_id: '300939'})
     client.has_student_history?.should be_true
