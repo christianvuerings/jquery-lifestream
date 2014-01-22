@@ -150,7 +150,7 @@
               <div class="cc-textbooks-bookstore">
                 Buy all the books for this class at <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a>.
               </div>
-              <div data-ng-repeat="books_category in books" class="cc-clearfix-container">
+              <div data-ng-repeat="books_category in books.book_details" class="cc-clearfix-container">
                 <h3 data-ng-if="books_category.books" data-ng-bind="books_category.type"></h3>
                 <p data-ng-if="books_category.has_choices">
                   This section has a choice of titles. Please visit the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a> to see them all.
