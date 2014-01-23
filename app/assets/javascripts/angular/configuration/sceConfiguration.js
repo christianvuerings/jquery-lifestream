@@ -10,6 +10,7 @@
 
     $sceDelegateProvider.resourceUrlWhitelist([
       'self',
+      'https://www.youtube.com/**',
       'http://www.youtube.com/**'
     ]);
 

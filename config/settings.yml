@@ -152,7 +152,7 @@ playlists_proxy:
 
 youtube_proxy:
   fake: false
-  base_url: 'http://gdata.youtube.com/feeds/api/playlists/'
+  base_url: 'https://gdata.youtube.com/feeds/api/playlists/'
   params: {
     alt: 'json'
   }
