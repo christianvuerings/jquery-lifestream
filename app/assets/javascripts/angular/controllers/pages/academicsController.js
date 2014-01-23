@@ -383,11 +383,9 @@
               grade = course.estimated_grade;
             }
           }
-          if (grade) {
-            course.score = parseFloat(grade, 10) * course.units;
-            total_units += parseFloat(course.units, 10);
-            total_score += course.score;
-          }
+          course.score = parseFloat(grade, 10) * course.units;
+          total_units += parseFloat(course.units, 10);
+          total_score += course.score;
         }
       });
       if (gpa_type === 'estimated') {
