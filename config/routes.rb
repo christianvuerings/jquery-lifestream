@@ -37,7 +37,7 @@ Calcentral::Application.routes.draw do
   ## Get a list of youtube videos given a playlist_id.
   match '/api/my/youtube/:playlist_id' => 'my_youtube#get_videos', :defaults => { :format => 'json' }
   ## Get a list of youtube videos given a playlist_title.
-  match '/api/my/videos/:playlist_title' => 'my_videos#get_videos', :defaults => { :format => 'json' }
+  match '/api/my/videos/:playlist_title' => 'my_videos#get_videos', :constraints => { :playlist_title => /[^\/]+/ }, :defaults => { :format => 'json' }
 
   # Canvas embedded application support.
   match '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }

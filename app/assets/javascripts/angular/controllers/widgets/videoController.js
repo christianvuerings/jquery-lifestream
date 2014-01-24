@@ -8,7 +8,7 @@
 
     var getVideos = function(courseDepartment, courseCategory, courseSection, courseSemester) {
       var title = courseDepartment + ' ' + courseCategory + ', ' + courseSection + ' - ' + courseSemester;
-      $http.get('/api/my/videos/' + title).success(function(data) {
+      $http.get('/api/my/videos/' + encodeURIComponent(title)).success(function(data) {
         angular.extend($scope, data);
       });
     };
