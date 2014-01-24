@@ -76,30 +76,38 @@ class CanvasSisImportProxy < CanvasProxy
 
   # import may not be completed the first time we ask for it, so loop until it is ready.
   def import_status(import_id)
+    start_time = Time.now.to_i
     url = "accounts/#{settings.account_id}/sis_imports/#{import_id}"
     status = nil
     sleep 2
-    # Large batch user and enrollment imports can be slow.
-    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 100, :interval => 20) do
-      response = request_uncached(url, '_sis_import_status', {
-        method: :get
-      })
-      unless response.present? && response.body.present?
-        logger.error "Import ID #{import_id} Status Report missing or errored; will retry later"
-        raise CanvasSisImportProxy::ReportNotReadyException
+    begin
+      retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 150, :interval => 20) do
+        response = request_uncached(url, '_sis_import_status', {
+          method: :get
+        })
+        unless response.present? && response.body.present?
+          logger.error "Import ID #{import_id} Status Report missing or errored; will retry later"
+          raise CanvasSisImportProxy::ReportNotReadyException
+        end
+        json = JSON.parse response.body
+        if ["initializing", "created", "importing"].include?(json["workflow_state"])
+          logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
+          raise CanvasSisImportProxy::ReportNotReadyException
+        else
+          status = json
+        end
       end
-      json = JSON.parse response.body
-      if ["initializing", "created", "importing"].include?(json["workflow_state"])
-        logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
-        raise CanvasSisImportProxy::ReportNotReadyException
+    rescue CanvasSisImportProxy::ReportNotReadyException => e
+      logger.error "Import ID #{import_id} Status Report not available after #{Time.now.to_i - start_time} secs, giving up"
+    else
+      elapsed_time = Time.now.to_i - start_time
+      msg = "Import ID #{import_id} finished after #{elapsed_time} secs"
+      if elapsed_time > 180
+        logger.warn(msg)
       else
-        status = json
+        logger.info(msg)
       end
     end
-    if status.nil?
-      logger.error "Import ID #{import_id} Status Report not available after 5 tries, giving up"
-    end
-    logger.debug "Import ID #{import_id} Status Report = #{status}"
     status
   end
 

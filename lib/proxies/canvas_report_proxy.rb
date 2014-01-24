@@ -63,23 +63,24 @@ class CanvasReportProxy < CanvasProxy
     status = nil
     sleep 5
     tries = 40
-    retriable(on: CanvasReportProxy::ReportNotReadyException, tries: tries, interval: 20) do
-      response = request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
+    begin
+      retriable(on: CanvasReportProxy::ReportNotReadyException, tries: tries, interval: 20) do
+        response = request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
           method: :get
-      })
-      unless response.present? && response.body.present?
-        logger.error "Report ID #{report_id} status missing or errored; will retry later"
-        raise CanvasReportProxy::ReportNotReadyException
+        })
+        unless response.present? && response.body.present?
+          logger.error "Report ID #{report_id} status missing or errored; will retry later"
+          raise CanvasReportProxy::ReportNotReadyException
+        end
+        json = JSON.parse response.body
+        if ['created', 'running'].include?(json["status"])
+          logger.info "Report ID #{report_id} exists but is not yet ready; will retry later"
+          raise CanvasReportProxy::ReportNotReadyException
+        else
+          status = json
+        end
       end
-      json = JSON.parse response.body
-      if ['created', 'running'].include?(json["status"])
-        logger.info "Report ID #{report_id} exists but is not yet ready; will retry later"
-        raise CanvasReportProxy::ReportNotReadyException
-      else
-        status = json
-      end
-    end
-    if status.nil?
+    rescue CanvasReportProxy::ReportNotReadyException => e
       logger.error "Report ID #{report_id} not available after #{tries} tries, giving up"
     end
     logger.debug "Report ID #{report_id} status = #{status}"
