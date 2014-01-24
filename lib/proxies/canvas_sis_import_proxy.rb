@@ -1,6 +1,6 @@
 class CanvasSisImportProxy < CanvasProxy
   require 'csv'
-  include ClassLogger
+  include ClassLogger, SafeJsonParser
 
   def initialize(options = {})
     super(options)
@@ -51,19 +51,9 @@ class CanvasSisImportProxy < CanvasProxy
   end
 
   def import_successful?(response)
-    if response && response.status == 200
-      json = JSON.parse(response.body)
-      import_status = import_status(json["id"])
-      if import_was_successful?(import_status)
-        logger.debug("SIS import succeeded; status: #{import_status}")
-        true
-      else
-        logger.error("SIS import failed or incompletely processed; status: #{import_status}")
-        false
-      end
-    else
-      false
-    end
+    return false unless (response && response.status == 200 && json = safe_json(response.body))
+    import_status = import_status(json["id"])
+    import_was_successful?(import_status)
   end
 
   def generate_course_sis_id(canvas_course_id)
@@ -76,35 +66,56 @@ class CanvasSisImportProxy < CanvasProxy
 
   # import may not be completed the first time we ask for it, so loop until it is ready.
   def import_status(import_id)
+    start_time = Time.now.to_i
     url = "accounts/#{settings.account_id}/sis_imports/#{import_id}"
     status = nil
     sleep 2
-    # Large batch user and enrollment imports can be slow.
-    retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 100, :interval => 20) do
-      response = request_uncached(url, '_sis_import_status', {
-        method: :get
-      })
-      unless response.present? && response.body.present?
-        logger.error "Import ID #{import_id} Status Report missing or errored; will retry later"
-        raise CanvasSisImportProxy::ReportNotReadyException
+    begin
+      retriable(:on => CanvasSisImportProxy::ReportNotReadyException, :tries => 150, :interval => 20) do
+        response = request_uncached(url, '_sis_import_status', {
+          method: :get
+        })
+        return false unless (response && response.status == 200 && json = safe_json(response.body))
+
+        unless (response && response.status == 200 && json = safe_json(response.body))
+          logger.error "Import ID #{import_id} Status Report missing or errored; will retry later"
+          raise CanvasSisImportProxy::ReportNotReadyException
+        end
+        if ["initializing", "created", "importing"].include?(json["workflow_state"])
+          logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
+          raise CanvasSisImportProxy::ReportNotReadyException
+        else
+          status = json
+        end
       end
-      json = JSON.parse response.body
-      if ["initializing", "created", "importing"].include?(json["workflow_state"])
-        logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
-        raise CanvasSisImportProxy::ReportNotReadyException
+    rescue CanvasSisImportProxy::ReportNotReadyException => e
+      logger.error "Import ID #{import_id} Status Report not available after #{Time.now.to_i - start_time} secs, giving up"
+    else
+      elapsed_time = Time.now.to_i - start_time
+      msg = "Import ID #{import_id} finished after #{elapsed_time} secs"
+      if elapsed_time > 180
+        logger.warn(msg)
       else
-        status = json
+        logger.info(msg)
       end
     end
-    if status.nil?
-      logger.error "Import ID #{import_id} Status Report not available after 5 tries, giving up"
-    end
-    logger.debug "Import ID #{import_id} Status Report = #{status}"
     status
   end
 
   def import_was_successful?(json)
-    json.present? && json["progress"] == 100 && (json["workflow_state"] == "imported" || json ["workflow_state"] == "imported_with_messages")
+    if json.present? && json["progress"] == 100
+      if json["workflow_state"] == "imported"
+        logger.debug("SIS import succeeded; status: #{json}")
+        return true
+      else
+        if json["workflow_state"] == "imported_with_messages"
+          logger.warn("SIS import partially succeeded; status: #{json}")
+          return true
+        end
+      end
+    end
+    logger.error("SIS import failed or incompletely processed; status: #{import_status}")
+    false
   end
 
   class ReportNotReadyException < Exception
