@@ -1,10 +1,47 @@
 .cc-textbooks-list {
   overflow: hidden;
   padding-bottom: 10px;
+  li {
+    color: $cc-color-textbooks-details;
+    font-family: Arial;
+    font-size: 11px;
+    line-height: 15px;
+    a {
+      vertical-align: text-bottom;
+    }
+  }
+  ul {
+    margin-bottom: 10px;
+  }
 }
 .cc-textbooks-image {
   padding: 7px 10px 0 0;
 }
 .cc-textbooks-bookstore {
   margin-bottom: 10px;
+}
+.cc-textbooks-category {
+  h3 {
+    color: $cc-color-textbooks-section;
+    font-family: Arial;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  h4 {
+    color: $cc-color-textbooks-title;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 15px;
+  }
+  hr {
+    margin: 0;
+  }
+}
+.cc-textbooks-last-section {
+  .cc-textbooks-last {
+    hr {
+      display: none;
+    }
+  }
 }
