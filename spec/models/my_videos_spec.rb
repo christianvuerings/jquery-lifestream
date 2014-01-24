@@ -13,7 +13,7 @@ describe MyVideos do
   context "when serving videos" do
 
     context "when error message is not blank" do
-      before { subject.should_receive(:get_playlist_id).twice.and_return(error_hash) }
+      before { subject.should_receive(:get_playlist).twice.and_return(error_hash) }
       it "should return the error message" do
         expect(subject.get_videos_as_json).to be_an_instance_of Hash
         expect(subject.get_videos_as_json[:error_message]).to eq "Error"
@@ -21,7 +21,7 @@ describe MyVideos do
     end
 
     context "when error message is blank" do
-      before { subject.should_receive(:get_playlist_id).and_return(empty_error_hash) }
+      before { subject.should_receive(:get_playlist).and_return(empty_error_hash) }
       before { subject.should_receive(:get_youtube_videos).and_return(true) }
       it "should return the videos" do
         expect(subject.get_videos_as_json).to be_true

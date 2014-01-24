@@ -16,22 +16,24 @@ class MyPlaylists < MyMergedModel
 
   def get_playlists_as_json
     return {} unless Settings.features.videos
-    response = request
-    if response.blank?
-      @my_playlist[:error_message] = @fetch_error_message
-      return @my_playlist
+    self.class.fetch_from_cache("json-#{@playlist_title}") do
+      response = request
+      if response.blank?
+        @my_playlist[:error_message] = @fetch_error_message
+        return @my_playlist
+      end
+      data = convert_to_json(response)
+      if !data
+        @my_playlist[:error_message] = @fetch_error_message
+        return @my_playlist
+      end
+      # If no playlist title is supplied, return full list of playlists
+      if !@playlist_title
+        return data
+      end
+      get_playlist_id(data)
+      @my_playlist
     end
-    data = convert_to_json(response)
-    if !data
-      @my_playlist[:error_message] = @fetch_error_message
-      return @my_playlist
-    end
-    # If no playlist title is supplied, return full list of playlists
-    if !@playlist_title
-      return data
-    end
-    get_playlist_id(data)
-    @my_playlist
   end
 
   def request
