@@ -53,14 +53,16 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
       var output = [];
 
       // check for likes & parse
-      if ( response.query.results.videos[0].video.length > 0 ) {
+      if ( response.query.results.videos[0] != null &&
+           response.query.results.videos[0].video.length > 0 ) {
         output = output.concat(parseVimeo(
           response.query.results.videos[0].video
         ));
       }
 
       // check for uploads & parse
-      if ( response.query.results.videos[1].video.length > 0 ) {
+      if ( response.query.results.videos[1] != null &&
+           response.query.results.videos[1].video.length > 0 ) {
         output = output.concat(
           parseVimeo(response.query.results.videos[1].video, 'posted')
         );
