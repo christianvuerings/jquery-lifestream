@@ -147,7 +147,7 @@
         <div data-cc-spinner-directive>
           <div class="cc-widget-padding">
             <div data-ng-if="books.has_books">
-              <div class="cc-textbooks-bookstore">
+              <div class="cc-textbooks-bookstore" data-ng-if="!((books.book_details.length === 1 && books.book_details[0].has_choices) || (books.book_details.length === 2 && books.book_details[0].has_choices && books.book_details[1].has_choices) || (books.book_details.length === 3 && books.book_details[0].has_choices && books.book_details[1].has_choices && books.book_details[2].has_choices))">
                 You can buy textbooks at the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a>.
               </div>
               <div data-ng-repeat="books_category in books.book_details" ng-class="{'cc-textbooks-last-section':$last}" class="cc-clearfix-container cc-textbooks-category">
