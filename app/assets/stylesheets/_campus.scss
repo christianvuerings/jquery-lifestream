@@ -33,13 +33,6 @@
   .cc-page-campus-content-explanation {
     max-width: 400px;
   }
-  .cc-page-campus-content-subcontainer {
-    padding: 0 10px;
-    h3 {
-      font-size: 14px;
-      margin: 10px 0;
-    }
-  }
   .cc-page-campus-navigation, .cc-page-campus-content {
     @include cc-column-sameheight;
   }
