@@ -140,7 +140,7 @@
         </div>
       </div>
 
-      <div class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
+      <div data-ng-if="selected_semester.time_bucket === 'current' || selected_semester.time_bucket === 'future'" class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
         <div class="cc-widget-title">
           <h2>Textbooks</h2>
         </div>
