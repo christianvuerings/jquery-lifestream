@@ -13,12 +13,14 @@ class MyYoutube < MyMergedModel
 
   def get_videos_as_json
     return {} unless Settings.features.videos
-    response = request
-    if !response
-      return @my_videos
+    self.class.fetch_from_cache "json-#{@playlist_id}" do
+      response = request
+      if !response
+        return @my_videos
+      end
+      filter_videos(response)
+      @my_videos
     end
-    filter_videos(response)
-    @my_videos
   end
 
   def request()
