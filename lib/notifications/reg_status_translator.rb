@@ -31,7 +31,7 @@ class RegStatusTranslator
         :date => format_date(timestamp),
         :url => "https://bearfacts.berkeley.edu/bearfacts/",
         :source_url => "https://bearfacts.berkeley.edu/bearfacts/",
-        :emitter => "BearFacts"
+        :emitter => "Bear Facts"
     }
   end
 
