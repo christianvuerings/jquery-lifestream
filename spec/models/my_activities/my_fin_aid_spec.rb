@@ -79,6 +79,15 @@ describe MyActivities::MyFinAid do
 
       it { subject.length.should eq(2) }
       it { subject.each { |entry| entry[:title].should be_present } }
+      it "should format dates with the correct default timezone offset configuration" do
+        a_dated_entry   = subject.find{ |entry| entry[:date].present? }
+        # If the epoch is doesn't match up to the returned date_time string,
+        # then server-side code must be providing the wrong epoch.
+        # We expect the epoch for midnight according to the server's time zone, not midnight GMT
+        DateTime.parse(a_dated_entry[:date][:date_time]).zone.should_not == '+00:00'
+        Time.at(a_dated_entry[:date][:epoch]).to_datetime.rfc3339.should == a_dated_entry[:date][:date_time]
+      end
+
     end
 
     context "finaid activities" do

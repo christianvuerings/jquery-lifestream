@@ -29,7 +29,7 @@ class MyActivities::MyFinAid
     documents.each do |document|
       title = document.css("Name").text.strip
 
-      date = DateTime.parse(document.css("Date").text.strip) rescue ""
+      date = Date.parse(document.css("Date").text.strip).to_time_in_current_zone.to_datetime rescue ""
       if (date.present? && cutoff_date.present? && date < cutoff_date)
         logger.info "Document is too old to be shown: #{date.inspect} < #{cutoff_date}"
         next
