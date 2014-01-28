@@ -130,7 +130,7 @@ class TextbooksProxy < BaseProxy
           books: book_response,
           status_code: status_code
         }
-      rescue SocketError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+      rescue SocketError, Timeout::Error, EOFError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
         logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
         {
           body: "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.",
