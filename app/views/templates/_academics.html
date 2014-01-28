@@ -121,7 +121,7 @@
                       <th class="cc-table-subheader" scope="row">California Residency</td>
                       <td>
                         <i class="cc-icon fa"
-                          data-ng-class="{'fa-check-circle cc-icon-green':(api.user.profile.student_info.california_residency!='needsAction'), 'fa-stop':(api.user.profile.student_info.california_residency=='needsAction')}"></i>
+                          data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[api.user.profile.student_info.california_residency.needsAction]"></i>
                         <span data-ng-bind="api.user.profile.student_info.california_residency.summary"></span>
                       </td>
                       <td data-cc-compile-directive="api.user.profile.student_info.california_residency.explanation"></td>
