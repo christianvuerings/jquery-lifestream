@@ -2,7 +2,7 @@
 # Script to update and build a shared deployment of CalCentral.
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
-WAR_URL=${WAR_URL:="https://bamboo.media.berkeley.edu/bamboo/browse/MYB-MVPWAR/latest/artifact/JOB1/warfile/calcentral.knob"}
+WAR_URL=${WAR_URL:="https://bamboo.ets.berkeley.edu/bamboo/browse/MYB-MVPWAR/latest/artifact/JOB1/warfile/calcentral.knob"}
 MAX_ASSET_AGE_IN_DAYS=${MAX_ASSET_AGE_IN_DAYS:="45"}
 
 LOG=`date +"$PWD/log/update-build_%Y-%m-%d.log"`
