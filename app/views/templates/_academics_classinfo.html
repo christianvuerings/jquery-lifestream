@@ -113,11 +113,16 @@
         <div class="cc-widget-padding">
           <div data-cc-spinner-directive>
             <div data-ng-bind="error_message"></div>
-            <div class="cc-youtube-video" data-ng-repeat="video in videos">
-              <h3 data-ng-bind="video.title"></h3>
-              <iframe type="text/html" width="100%" height="100%"
-              data-ng-attr-src="{{video.link}}"
-              frameborder="0"></iframe>
+            <div data-ng-show="videos">
+              <div class="cc-select">
+                <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
+              </div>
+              <div class="cc-youtube-video">
+                <!-- <h3 data-ng-bind="selectedVideo.title"></h3> -->
+                <iframe type="text/html" width="100%" height="100%"
+                data-ng-attr-src="{{selectedVideo.link}}"
+                frameborder="0"></iframe>
+              </div>
             </div>
           </div>
         </div>
