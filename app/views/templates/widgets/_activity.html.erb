@@ -38,7 +38,7 @@
           </div>
           <div class="cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show && !activity.elements">
             <div data-ng-switch="activity.emitter">
-              <p data-ng-switch-when="BearFacts" data-cc-compile-directive="activity.summary" class="cc-widget-activities-summary"></p>
+              <p data-ng-switch-when="Bear Facts" data-cc-compile-directive="activity.summary" class="cc-widget-activities-summary"></p>
               <p data-ng-switch-default data-ng-bind-html="activity.summary | linky" class="cc-widget-activities-summary"></p>
             </div>
             <a class="cc-widget-activities-info-link" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activity.source, activity.source_url)" data-ng-if="activity.source_url" data-ng-href="{{activity.source_url}}">
