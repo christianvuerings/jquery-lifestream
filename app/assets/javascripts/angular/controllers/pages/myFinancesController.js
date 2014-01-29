@@ -41,15 +41,15 @@
       element[j + 'Float'] = parseFloat(element[j]);
     };
 
-    var parseDueDate = function(obj, i) {
+    var parseDueDate = function(summary, obj, i) {
       var item = obj[i];
       var test = Object.prototype.toString.call(item) === '[object Date]';
       if (test) {
         obj.transDueDateShow = $filter('date')(item, 'MM/dd/yy');
-        if (obj.transStatus === 'Past due') {
+        if (obj.transStatus === 'Past due' || (obj.transStatus === 'Installment' && summary.isDppPastDue)) {
           obj.isPastDueDate = true;
           obj.isDueNow = '1_past_due';
-        } else if (obj.transStatus === 'Current' || obj.transStatus === 'Installment') {
+        } else if (obj.transStatus === 'Current' || (obj.transStatus === 'Installment' && !summary.isDppPastDue)) {
           obj.isDueNow = '2_current_due';
         } else if (obj.transStatus === 'Future') {
           obj.isDueNow = '3_future_due';
@@ -100,7 +100,7 @@
             parseDate(element, j);
             parseAmount(element, j);
             if (j === 'transDueDate') {
-              parseDueDate(element, j);
+              parseDueDate(finances.summary, element, j);
             }
             if (j === 'transBalanceAmount') {
               parseToFloat(element, j);
