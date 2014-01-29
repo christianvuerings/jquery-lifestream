@@ -2359,7 +2359,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
         return t.replace(
           /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
           function( m, m1, m2 ) {
-            return m1 + '<a href="http://search.twitter.com/search?q=%23' +
+            return m1 + '<a href="http://www.twitter.com/search?q=%23' +
             m2 + '">#' + m2 + '</a>';
           }
         );
