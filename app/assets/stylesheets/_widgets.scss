@@ -138,6 +138,9 @@
     font-size: 18px;
     margin: 2px 0px;
     padding: 5px 15px;
+    @media print {
+      padding: 5px 10px;
+    }
   }
   .cc-widget-title-link {
     margin: 13px 15px 0 0;
