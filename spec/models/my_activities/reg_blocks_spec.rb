@@ -22,8 +22,8 @@ describe MyActivities::RegBlocks do
       it { should_not be_empty }
       it "should have valid entries" do
         subject.each do |act|
-          act[:emitter].should == "BearFacts"
-          act[:source].should_not == "Bearfacts"
+          act[:emitter].should == "Bear Facts"
+          act[:source].to_s.downcase.should_not == "bearfacts"
           documented_types.include?(act[:type]).should be_true
         end
       end
@@ -50,7 +50,7 @@ describe MyActivities::RegBlocks do
       it { should_not be_empty }
       it "feed should have recently cleared, very old blocks" do
         cleared_blocks = subject.select do |act|
-          act[:emitter]== "BearFacts" && act[:type] == "message" && act[:title].include?("Block Cleared")
+          act[:emitter]== "Bear Facts" && act[:type] == "message" && act[:title].include?("Block Cleared")
         end
         cleared_blocks.length.should eq(oski_blocks.get_feed[:inactive_blocks].length)
       end

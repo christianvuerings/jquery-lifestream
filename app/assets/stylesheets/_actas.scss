@@ -13,4 +13,10 @@
     overflow: hidden;
     padding: 10px 15px;
   }
+  @media print {
+    position: relative;
+    p {
+      border-top: 2px solid $cc-color-black;
+    }
+  }
 }

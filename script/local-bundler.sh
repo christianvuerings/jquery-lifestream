@@ -15,6 +15,6 @@ fi
 
 rvm gemset use $GEMSET
 
-bundle install --local || { echo "WARNING: bundle install --local failed, running bundle install"; bundle install || { echo "ERROR: bundle install failed"; exit 1; } }
+bundle install --local --retry 3 || { echo "WARNING: bundle install --local failed, running bundle install"; bundle install --retry 3 || { echo "ERROR: bundle install failed"; exit 1; } }
 
 bundle package --all || { echo "WARNING: bundle package failed"; exit 1; }

@@ -19,7 +19,7 @@ class Buildings
 
   def self.buildings
 
-    # Building data sourced from BearFacts and
+    # Building data sourced from Bear Facts and
     # http://registrar.berkeley.edu/Default.aspx?PageID=bldgabb.html
     # TEMPxx buildings at end of hash are known campus locations with good coords
     # but no official db entries, to be integrated in future if useful.

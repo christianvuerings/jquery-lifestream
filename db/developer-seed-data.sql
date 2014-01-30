@@ -46,7 +46,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: link_categories; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: link_categories; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE link_categories (
@@ -83,7 +83,7 @@ ALTER SEQUENCE link_categories_id_seq OWNED BY link_categories.id;
 
 
 --
--- Name: link_categories_link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: link_categories_link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE link_categories_link_sections (
@@ -95,7 +95,7 @@ CREATE TABLE link_categories_link_sections (
 ALTER TABLE public.link_categories_link_sections OWNER TO calcentral;
 
 --
--- Name: link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE link_sections (
@@ -132,7 +132,7 @@ ALTER SEQUENCE link_sections_id_seq OWNED BY link_sections.id;
 
 
 --
--- Name: link_sections_links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: link_sections_links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE link_sections_links (
@@ -144,7 +144,7 @@ CREATE TABLE link_sections_links (
 ALTER TABLE public.link_sections_links OWNER TO calcentral;
 
 --
--- Name: links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE links (
@@ -182,7 +182,7 @@ ALTER SEQUENCE links_id_seq OWNED BY links.id;
 
 
 --
--- Name: links_user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: links_user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE links_user_roles (
@@ -194,7 +194,7 @@ CREATE TABLE links_user_roles (
 ALTER TABLE public.links_user_roles OWNER TO calcentral;
 
 --
--- Name: user_auths; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: user_auths; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE user_auths (
@@ -232,7 +232,7 @@ ALTER SEQUENCE user_auths_id_seq OWNED BY user_auths.id;
 
 
 --
--- Name: user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE user_roles (
@@ -266,7 +266,7 @@ ALTER SEQUENCE user_roles_id_seq OWNED BY user_roles.id;
 
 
 --
--- Name: user_whitelists; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: user_whitelists; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE TABLE user_whitelists (
@@ -770,7 +770,7 @@ INSERT INTO links VALUES (550, 'Organizational & Workforce Effectiveness', 'http
 INSERT INTO links VALUES (551, 'Undergrad Loans', 'http://students.berkeley.edu/finaid/undergraduates/types_loans.htm', 'Overview of undergraduate loans', true, '2013-08-15 23:09:38.99', '2013-08-15 23:09:38.99');
 INSERT INTO links VALUES (552, 'Policies & procedures A-Z', 'http://campuspol.chance.berkeley.edu/Home/AtoZPolicies.cfm?long_page=yes', 'A-Z of campuswide policies and procedures', true, '2013-08-15 23:09:39.027', '2013-08-15 23:09:39.027');
 INSERT INTO links VALUES (553, 'Safety', 'http://police.berkeley.edu/index.html', 'Safety information and programs', true, '2013-08-15 23:09:39.075', '2013-08-15 23:09:39.075');
-INSERT INTO links VALUES (554, 'BearFacts', 'https://bearfacts.berkeley.edu', 'Academic record, grades & transcript, bill, degree audit, loans, SLR & personal info', true, '2013-08-15 23:09:39.125', '2013-08-15 23:09:39.125');
+INSERT INTO links VALUES (554, 'Bear Facts', 'https://bearfacts.berkeley.edu', 'Academic record, grades & transcript, bill, degree audit, loans, SLR & personal info', true, '2013-08-15 23:09:39.125', '2013-08-15 23:09:39.125');
 INSERT INTO links VALUES (555, 'Office of the Registrar', 'http://registrar.berkeley.edu/', '', true, '2013-08-15 23:09:39.16', '2013-08-15 23:09:39.16');
 INSERT INTO links VALUES (556, 'Academic Calendar', 'http://registrar.berkeley.edu/CalendarDisp.aspx?terms=current', 'Academic Calendars Future Campus Calendars', true, '2013-08-15 23:09:39.207', '2013-08-15 23:09:39.207');
 INSERT INTO links VALUES (557, 'Undergraduate Student Calendar & Deadlines', 'http://registrar.berkeley.edu/current_students/registration_enrollment/stucal.html', '', true, '2013-08-15 23:09:39.239', '2013-08-15 23:09:39.239');
@@ -1808,7 +1808,7 @@ SELECT pg_catalog.setval('user_whitelists_id_seq', 311, true);
 
 
 --
--- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
 --
 
 ALTER TABLE ONLY link_categories
@@ -1816,7 +1816,7 @@ ALTER TABLE ONLY link_categories
 
 
 --
--- Name: link_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: link_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
 --
 
 ALTER TABLE ONLY link_sections
@@ -1824,7 +1824,7 @@ ALTER TABLE ONLY link_sections
 
 
 --
--- Name: links_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: links_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
 --
 
 ALTER TABLE ONLY links
@@ -1832,7 +1832,7 @@ ALTER TABLE ONLY links
 
 
 --
--- Name: user_auths_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: user_auths_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
 --
 
 ALTER TABLE ONLY user_auths
@@ -1840,7 +1840,7 @@ ALTER TABLE ONLY user_auths
 
 
 --
--- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
 --
 
 ALTER TABLE ONLY user_roles
@@ -1848,7 +1848,7 @@ ALTER TABLE ONLY user_roles
 
 
 --
--- Name: user_whitelists_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: user_whitelists_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
 --
 
 ALTER TABLE ONLY user_whitelists
@@ -1856,14 +1856,14 @@ ALTER TABLE ONLY user_whitelists
 
 
 --
--- Name: index_user_auths_on_uid; Type: INDEX; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: index_user_auths_on_uid; Type: INDEX; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_user_auths_on_uid ON user_auths USING btree (uid);
 
 
 --
--- Name: index_user_whitelists_on_uid; Type: INDEX; Schema: public; Owner: calcentral; Tablespace: 
+-- Name: index_user_whitelists_on_uid; Type: INDEX; Schema: public; Owner: calcentral; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_user_whitelists_on_uid ON user_whitelists USING btree (uid);

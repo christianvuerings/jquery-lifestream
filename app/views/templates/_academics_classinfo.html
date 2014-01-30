@@ -108,16 +108,20 @@
     <div class="medium-4 columns">
       <div class="cc-widget cc-widget-last" data-ng-controller="VideoController" data-ng-if="api.user.profile.features.videos">
         <div class="cc-widget-title">
-          <h2>Videos</h2>
+          <h2>Webcasts</h2>
         </div>
         <div class="cc-widget-padding">
           <div data-cc-spinner-directive>
             <div data-ng-bind="error_message"></div>
-            <div class="cc-youtube-video" data-ng-repeat="video in videos">
-              <h3 data-ng-bind="video.title"></h3>
-              <iframe type="text/html" width="100%" height="100%"
-              data-ng-attr-src="{{video.link}}"
-              frameborder="0"></iframe>
+            <div data-ng-if="videos">
+              <div class="cc-select">
+                <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
+              </div>
+              <div class="cc-youtube-video">
+                <iframe type="text/html" width="100%" height="100%"
+                data-ng-attr-src="{{selectedVideo.link}}"
+                frameborder="0"></iframe>
+              </div>
             </div>
           </div>
         </div>
@@ -147,7 +151,7 @@
         <div data-cc-spinner-directive>
           <div class="cc-widget-padding">
             <div data-ng-if="books.has_books">
-              <div class="cc-textbooks-bookstore">
+              <div class="cc-textbooks-bookstore" data-ng-if="!all_sections_have_choices">
                 You can buy textbooks at the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a>.
               </div>
               <div data-ng-repeat="books_category in books.book_details" ng-class="{'cc-textbooks-last-section':$last}" class="cc-clearfix-container cc-textbooks-category">

@@ -27,6 +27,18 @@
       }).success(function(data) {
         angular.extend($scope, data);
 
+        if (data.books && data.books.has_books) {
+          $scope.all_sections_have_choices = true;
+          var book_details = data.books.book_details;
+
+          for (var i = 0; i < book_details.length; i++) {
+            if (!book_details[i].has_choices) {
+              $scope.all_sections_have_choices = false;
+              break;
+            }
+          }
+        }
+
         if (data.status_code && data.status_code >= 400) {
           $scope.textbook_error = data;
         }

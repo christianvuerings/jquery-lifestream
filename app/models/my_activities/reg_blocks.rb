@@ -25,7 +25,7 @@ class MyActivities::RegBlocks
           source: block[:short_description] || '',
           source_url: "https://bearfacts.berkeley.edu/bearfacts/",
           url: "https://bearfacts.berkeley.edu/bearfacts/",
-          emitter: "BearFacts"
+          emitter: "Bear Facts"
         })
       if cleared_date
         process_cleared_block!(block)
