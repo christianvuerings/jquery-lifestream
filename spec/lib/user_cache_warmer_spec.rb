@@ -7,12 +7,13 @@ describe UserCacheWarmer do
   end
 
   it "should warm the cache when told" do
+    force_cache_write = true
     model_classes = [ UserApi, MyClasses, MyFinancials, MyGroups, MyTasks::Merged, MyActivities::Merged, MyUpNext, MyBadges::Merged ]
     model_classes.each do |klass|
       model = klass.new @user_id
       klass.stub(:new).and_return(model)
       klass.stub(:get_feed).and_return({})
-      model.should_receive(:get_feed)
+      model.should_receive(:get_feed).with(force_cache_write)
     end
 
     UserCacheWarmer.do_warm @user_id

@@ -15,11 +15,11 @@ class MyMergedModel
     # If you do expensive work from initialize, it will happen even when this object is cached -- not desirable!
   end
 
-  def get_feed(*opts)
+  def get_feed(force_cache_write=false)
     uid = effective_uid
-    self.class.fetch_from_cache uid do
+    self.class.fetch_from_cache(uid, force_cache_write) do
       init
-      feed = get_feed_internal(*opts)
+      feed = get_feed_internal
       last_modified = notify_if_feed_changed(feed, uid)
       feed[:last_modified] = last_modified
       feed[:feed_name] = self.class.name
@@ -27,10 +27,10 @@ class MyMergedModel
     end
   end
 
-  def get_feed_as_json(*opts)
+  def get_feed_as_json
     # cache the JSONified feed for maximum efficiency when we're called by a controller.
     self.class.fetch_from_cache "json-#{effective_uid}" do
-      feed = get_feed(*opts)
+      feed = get_feed
       feed.to_json
     end
   end
