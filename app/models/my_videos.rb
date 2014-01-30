@@ -7,11 +7,11 @@ class MyVideos < MyMergedModel
   def get_videos_as_json
     return {} unless Settings.features.videos
     self.class.fetch_from_cache "json-#{@playlist_title}" do
-      id = get_playlist
-      if !id[:error_message].blank?
-        return id
+      playlist = get_playlist
+      if !playlist[:error_message].blank?
+        return playlist
       end
-      get_youtube_videos(id[:playlist_id])
+      get_youtube_videos(playlist[:playlist_id])
     end
   end
 

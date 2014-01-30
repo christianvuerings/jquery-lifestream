@@ -154,7 +154,9 @@ youtube_proxy:
   fake: false
   base_url: 'https://gdata.youtube.com/feeds/api/playlists/'
   params: {
-    alt: 'json'
+    alt: 'json',
+    orderby: 'reversedPosition',
+    max-results: '50' # This is the max youtube allows
   }
 
 blog_latest_release_notes_feed_proxy:

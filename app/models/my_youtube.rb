@@ -36,8 +36,18 @@ class MyYoutube < MyMergedModel
       url = entry['media$group']['media$content'][0]['url']
       url.gsub!('/v/', '/embed/')
       link = url + '&showinfo=0&theme=light&modestbranding=1'
+      # Extract "Lecture x" from the title
+      start1 = title.downcase.index('lecture')
+      # Or extract date from title
+      start2 = title.index(' - ')
+      if start1
+        lecture = title.slice(start1, title.length)
+      elsif start2
+        lecture = title.slice(start2 + 3, title.length)
+      end
       @my_videos[:videos].push({
         :title => title,
+        :lecture => lecture || title,
         :link => link
       })
     end
