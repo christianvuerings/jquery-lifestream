@@ -1,0 +1,61 @@
+/* Print Stylesheet */
+@media print {
+  * {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: $cc-color-black !important;
+    text-shadow: none !important;
+  }
+  a {
+    &:visited {
+      text-decoration: underline;
+    }
+    &[href]:after {
+      content: " (" attr(href) ")";
+    }
+  }
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  /*
+   * Don't show links for images, or javascript/internal links
+   */
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+  button, input[type="button"] {
+    display: none !important;
+  }
+  pre, blockquote {
+    border: 1px solid $cc-color-lighter-medium-grey;
+    page-break-inside: avoid;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tr, img {
+    page-break-inside: avoid;
+  }
+  img {
+    max-width: 100% !important;
+  }
+  p, h2, h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2, h3 {
+    page-break-after: avoid;
+  }
+
+  /* Fontawesome icons */
+  .cc-icon-green, .cc-unavailable, .fa-stop, .fa-exclamation-circle, .fa-exclamation-triangle {
+    color: $cc-color-black !important;
+  }
+  .cc-print-hide {
+    display: none !important;
+  }
+  .cc-print-show {
+    display: block !important;
+  }
+}

@@ -45,6 +45,15 @@ body {
       a {
         padding-left: 21px;
       }
+      @media print {
+        clear: both;
+        float: left;
+        text-align: left;
+        a {
+          display: block;
+          padding-left: 0;
+        }
+      }
     }
 
     @media #{$small-only} {

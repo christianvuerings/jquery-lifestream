@@ -62,7 +62,7 @@
           // Since this gets executed a couple of times, we add a class to the screenreader message & check for it
           if (!isSameDomain(url, location.href) && !element[0].querySelector('.cc-outbound-link')) {
             var screenReadMessage = document.createElement('span');
-            screenReadMessage.className = 'cc-outbound-link cc-visuallyhidden';
+            screenReadMessage.className = 'cc-outbound-link cc-visuallyhidden cc-print-hide';
             screenReadMessage.innerHTML = ' - opens in new window';
             element.append(screenReadMessage);
             element.addClass('cc-outbound-link');
