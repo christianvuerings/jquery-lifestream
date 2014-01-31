@@ -1,6 +1,6 @@
-
 class BaseProxy
   extend Calcentral::Cacheable
+  include ClassLogger
 
   attr_accessor :fake, :settings
 
@@ -8,6 +8,25 @@ class BaseProxy
     @settings = settings
     @fake = (options[:fake] != nil) ? options[:fake] : @settings.fake
     @uid = options[:user_id]
+  end
+
+  def instance_cache_key
+    self.class.key @uid
+  end
+
+  def safe_request
+    begin
+      yield
+    rescue Calcentral::ProxyException => e
+      log_message = e.log_message
+      if e.wrapped_exception
+        log_message += " #{e.wrapped_exception.class} #{e.wrapped_exception.message}."
+      end
+      log_message += " Associated cache key: #{e.cache_key}"
+      logger.error log_message
+      # TODO schedule a job to asynchronously delete cache_key 1000ms from now (tunable).
+      return e.response
+    end
   end
 
   # by default, all merged models will prevent act as users to read their

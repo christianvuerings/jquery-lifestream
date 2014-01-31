@@ -9,7 +9,9 @@ class FinancialsProxy < BaseProxy
   end
 
   def get
-    request("/student/#{lookup_student_id}", "financials")
+    safe_request do
+      request("/student/#{lookup_student_id}", "financials")
+    end
   end
 
   def request(path, vcr_cassette, params = {})
@@ -33,16 +35,15 @@ class FinancialsProxy < BaseProxy
             )
           }
           if response.code >= 400
-            logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
             if response.code == 404
               body = "My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem."
             else
               body = "My Finances is currently unavailable. Please try again later."
             end
-            return {
+            raise Calcentral::ProxyException.new("Connection failed: #{response.code} #{response.body}; url = #{url}", instance_cache_key, {
               body: body,
               status_code: response.code
-            }
+            })
           end
 
           logger.debug "Remote server status #{response.code}; url = #{url}"
@@ -50,12 +51,11 @@ class FinancialsProxy < BaseProxy
             body: safe_json(response.body),
             status_code: response.code
           }
-        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
-          logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
-          {
+        rescue Timeout::Error, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+          raise Calcentral::ProxyException.new("Connection to url #{url} failed", instance_cache_key, {
             body: "My Finances is currently unavailable. Please try again later.",
             status_code: 503
-          }
+          }, e)
         end
       end
     end
