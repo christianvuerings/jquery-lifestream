@@ -2,12 +2,13 @@ module Calcentral
 
   module Cacheable
 
-    def fetch_from_cache(id = nil)
+    def fetch_from_cache(id=nil, force_write=false)
       key = key id
-      Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
+      Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}, forced: #{force_write}"
       Rails.cache.fetch(
           key,
-          :expires_in => self.expires_in
+          :expires_in => self.expires_in,
+          :force => force_write
       ) do
         if block_given?
           yield

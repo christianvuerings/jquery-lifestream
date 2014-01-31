@@ -8,7 +8,7 @@ class MyUpNext < MyMergedModel
     @next_day = begin_today.advance(:days => 1)
   end
 
-  def get_feed_internal(opts={})
+  def get_feed_internal
     up_next = {
       :items => []
     }
@@ -17,7 +17,7 @@ class MyUpNext < MyMergedModel
     return up_next if (is_acting_as_nonfake_user?) && !GoogleProxy.allow_pseudo_user?
     return up_next if !GoogleProxy.access_granted?(@uid)
 
-    results = fetch_events(@uid, opts)
+    results = fetch_events(@uid)
     up_next[:items] = process_events(results)
 
     Rails.logger.debug "#{self.class.name}::get_feed: #{up_next.inspect}"
@@ -34,13 +34,15 @@ class MyUpNext < MyMergedModel
     end
   end
 
-  def fetch_events(uid, opts)
+  def fetch_events(uid)
     google_proxy = GoogleEventsListProxy.new(user_id: uid)
-
     # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
-    opts.reverse_merge!({"singleEvents" => true, "orderBy" => "startTime",
-                         "timeMin" => begin_today.to_formatted_s, "timeMax" => next_day.to_formatted_s})
-    google_proxy.events_list(opts)
+    google_proxy.events_list({
+      "singleEvents" => true,
+      "orderBy" => "startTime",
+      "timeMin" => begin_today.to_formatted_s,
+      "timeMax" => next_day.to_formatted_s
+    })
   end
 
   def is_current_all_day_event?(start)

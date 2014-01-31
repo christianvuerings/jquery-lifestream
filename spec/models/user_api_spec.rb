@@ -194,10 +194,6 @@ describe "UserApi" do
   end
 
   context "proper cache handling" do
-    it "should cache the feed" do
-      UserApi.should_receive(:fetch_from_cache).with(@random_id)
-      UserApi.new(@random_id).get_feed
-    end
 
     it "should update the last modified hash when content changes" do
       user_api = UserApi.new(@random_id)

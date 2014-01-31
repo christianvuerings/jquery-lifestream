@@ -1,6 +1,7 @@
 class UserCacheWarmer
 
   def self.do_warm(uid)
+    force_cache_write = true
     Rails.logger.debug "#{self.name} Warming the user cache for #{uid}"
     [
       UserApi.new(uid),
@@ -14,7 +15,7 @@ class UserCacheWarmer
       MyAcademics::Merged.new(uid),
       MyRegBlocks.new(uid)
     ].each do |model|
-      model.get_feed
+      model.get_feed force_cache_write
     end
     Rails.logger.debug "#{self.name} Finished warming the user cache for #{uid}"
   end
