@@ -7,11 +7,11 @@ describe MyGroups::Callink do
     let!(:fake_cal_link_proxy) do
       CalLinkMembershipsProxy.new({fake: true})
     end
+    before {Settings.cal_link_proxy.stub(:fake).and_return(true)}
     before {CalLinkMembershipsProxy.stub(:new).with(user_id: user_id).and_return(fake_cal_link_proxy)}
     subject {MyGroups::Callink.new(user_id).fetch}
     its(:size) {should be > 0}
     it 'contains CalLink groups' do
-      pp subject
       subject.each do |group|
         expect(group[:id]).to be_present
         expect(group[:name]).to be_present

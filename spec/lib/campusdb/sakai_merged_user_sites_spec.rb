@@ -5,8 +5,8 @@ describe SakaiMergedUserSites do
   subject {SakaiMergedUserSites.new(user_id: uid).get_feed}
 
   context 'when potentially testing against live data' do
-    its([:courses]) {should be_present}
-    its([:groups]) {should be_present}
+    its([:courses]) {should_not be_nil}
+    its([:groups]) {should_not be_nil}
     it 'contains properly formatted course items' do
       subject[:courses].each do |site|
         expect(site[:id]).to be_present
