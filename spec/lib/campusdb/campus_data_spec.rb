@@ -112,17 +112,6 @@ describe CampusData do
     end
   end
 
-  it "should find sections from course" do
-    sections = CampusData.get_sections_from_course('BIOLOGY', '1A', 2013, 'D')
-    sections.empty?.should be_false
-    if CampusData.test_data?
-      # Should not include canceled section
-      sections.length.should == 3
-      # Should include at least one lecture section
-      sections.index{|s| s['instruction_format'] == 'LEC'}.should_not be_nil
-    end
-  end
-
   it "should find where a person is enrolled, with grades where available" do
     sections = CampusData.get_enrolled_sections('300939')
     sections.should_not be_nil

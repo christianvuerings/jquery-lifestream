@@ -7,7 +7,7 @@
       "date_string": "11/19"
     }
   },
-  "MyClasses": {
+  "MyClasses::Merged": {
     "hash": "70abd657ffd84ef9af1705680d9bbf7f3b853571",
     "timestamp": {
       "epoch": 1384887167,
@@ -23,7 +23,7 @@
       "date_string": "11/19"
     }
   },
-  "MyGroups": {
+  "MyGroups::Merged": {
     "hash": "e47bf2c7a9cc81a868f83751ce957d74234eec8d",
     "timestamp": {
       "epoch": 1384887169,

@@ -5,9 +5,9 @@ class UserCacheWarmer
     Rails.logger.debug "#{self.name} Warming the user cache for #{uid}"
     [
       UserApi.new(uid),
-      MyClasses.new(uid),
+      MyClasses::Merged.new(uid),
       MyFinancials.new(uid),
-      MyGroups.new(uid),
+      MyGroups::Merged.new(uid),
       MyTasks::Merged.new(uid),
       MyBadges::Merged.new(uid),
       MyUpNext.new(uid),

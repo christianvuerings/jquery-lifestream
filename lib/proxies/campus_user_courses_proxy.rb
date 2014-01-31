@@ -16,10 +16,6 @@ class CampusUserCoursesProxy < BaseProxy
     !uid.blank?
   end
 
-  def current_terms
-    @settings.current_terms_codes
-  end
-
   def academic_terms
     @settings.academic_terms
   end
@@ -63,6 +59,8 @@ class CampusUserCoursesProxy < BaseProxy
         end
       end
 
+      # Merge each section's schedule, location, and instructor list.
+      # TODO Is this information useful for non-current terms?
       campus_classes.values.each do |semester|
         semester.each do |course|
           course[:sections].each do |section|
@@ -82,42 +80,6 @@ class CampusUserCoursesProxy < BaseProxy
   def get_all_transcripts
     self.class.fetch_from_cache "all-transcripts-#{@uid}" do
       CampusData.get_transcript_grades(@uid, academic_terms.student)
-    end
-  end
-
-  # Example:
-  # {
-  #    "id": "COG_SCI-C102-2013-B",
-  #    "course_code": "COG SCI C102",
-  #    "emitter": "Campus",
-  #    "name": "Scientific Approaches to Consciousness",
-  #    "term_yr": "2013",
-  #    "term_cd": "B",
-  #    "dept": "COG SCI",
-  #    "catid": "C102",
-  #    "sections": [
-  #      {"ccn": "12345", "instruction_format": "LEC", "section_number": "001",
-  #        "schedules": [], "instructors": [{"name": "Dr. X", "uid": "999"}]},
-  #      {"ccn": "12346", "instruction_format": "DIS", "section_number": "101",
-  #        "schedules": [], "instructors": [{"name": "Gee Esai", "uid": "1111"}]}
-  #    ]
-  #    "role": "Student", (or "Instructor")
-  #    "waitlist_pos": 2
-  # },
-  def get_campus_courses
-    self.class.fetch_from_cache @uid do
-      all_courses = get_all_campus_courses
-      campus_classes = []
-
-      current_terms.each do |term|
-        semester_key = "#{term.term_yr}-#{term.term_cd}"
-        if all_courses[semester_key]
-          all_courses[semester_key].each do |course|
-            campus_classes << course
-          end
-        end
-      end
-      campus_classes
     end
   end
 

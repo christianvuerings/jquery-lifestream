@@ -81,7 +81,13 @@ class CanvasProxy < BaseProxy
   end
 
   def self.sis_section_id_to_ccn_and_term(sis_term_id)
-    parsed = /SEC:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])-(?<ccn>\d+).*/.match(sis_term_id)
+    if (parsed = /SEC:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])-(?<ccn>\d+).*/.match(sis_term_id))
+      {
+          term_yr: parsed[:term_yr],
+          term_cd: parsed[:term_cd],
+          ccn: parsed[:ccn]
+      }
+    end
   end
 
   def self.term_to_sis_id(term_yr, term_cd)

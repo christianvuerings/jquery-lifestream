@@ -17,8 +17,8 @@
     var to_update_services = [
       'MyActivities::Merged',
       'MyBadges::Merged',
-      'MyClasses',
-      'MyGroups',
+      'MyClasses::Merged',
+      'MyGroups::Merged',
       'MyTasks::Merged',
       'MyUpNext'
     ];

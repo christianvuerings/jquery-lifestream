@@ -4,7 +4,6 @@ describe MyActivities::Merged do
   let!(:user_id) { rand(99999).to_s }
   let(:array_inserter) do
     class ArrayInserter
-
       def self.append!(uid, activities)
         activities << ["#{self.name} #{uid}"]
       end
@@ -14,17 +13,18 @@ describe MyActivities::Merged do
 
   let(:hash_inserter) do
     class HashInserter
-
       def self.append!(uid, activities)
         activities << Hash[*[self.name, uid]]
       end
     end
     HashInserter
   end
+  before {MyActivities::DashboardSites.stub(:fetch).and_return([])}
 
   context "should successfully call append! on all proxies and return a merged result" do
     before(:each) do
       @mangled_activities = described_class.new(user_id)
+      @mangled_activities.site_proxies = []
       @mangled_activities.proxies = [array_inserter, hash_inserter]
     end
 
