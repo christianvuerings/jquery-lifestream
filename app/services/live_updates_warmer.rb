@@ -41,7 +41,6 @@ class LiveUpdatesWarmer < TorqueBox::Messaging::MessageProcessor
   def warmup_merged_feeds(uid)
     start_time = Time.now.to_i
     logger.warn "Processing warmup_request message for uid #{uid}"
-    Calcentral::MERGED_FEEDS_EXPIRATION.notify uid
     begin
       UserCacheWarmer.do_warm uid
     rescue Exception => e

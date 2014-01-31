@@ -8,7 +8,6 @@ module Calcentral
     USER_CACHE_WARMER = UserCacheWarmer.new
 
     USER_CACHE_EXPIRATION = UserCacheInvalidator.new
-    MERGED_FEEDS_EXPIRATION = UserCacheInvalidator.new
 
     {
       MyFinancials => :expire,
@@ -51,7 +50,6 @@ module Calcentral
     MERGED_FEEDS = {}
     merged_feeds_array.each do |feed|
       USER_CACHE_EXPIRATION.add_observer(feed, :expire)
-      MERGED_FEEDS_EXPIRATION.add_observer(feed, :expire)
       MERGED_FEEDS[feed.name] = feed
     end
 
