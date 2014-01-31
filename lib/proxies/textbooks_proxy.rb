@@ -84,6 +84,16 @@ class TextbooksProxy < BaseProxy
               timeout: Settings.application.outgoing_http_timeout
             )
           }
+
+          if response.code >= 400
+            logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
+            body = "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly."
+            return {
+              body: body,
+              status_code: response.code
+            }
+          end
+
           status_code = response.code
           text_books = Nokogiri::HTML(response.body)
           logger.debug "Remote server status #{response.code}; url = #{url}"
@@ -130,7 +140,7 @@ class TextbooksProxy < BaseProxy
           books: book_response,
           status_code: status_code
         }
-      rescue SocketError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
+      rescue SocketError, Timeout::Error, EOFError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
         logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
         {
           body: "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.",

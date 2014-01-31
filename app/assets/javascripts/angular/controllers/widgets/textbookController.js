@@ -27,7 +27,7 @@
       }).success(function(data) {
         angular.extend($scope, data);
 
-        if ($scope.books.has_books) {
+        if (data.books && data.books.has_books) {
           $scope.all_sections_have_choices = true;
           var book_details = data.books.book_details;
 
