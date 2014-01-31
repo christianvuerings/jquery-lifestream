@@ -555,7 +555,7 @@ describe CanvasProvideCourseSite do
 
   describe "#expire_instructor_sites_cache" do
     it "clears canvas course site cache for user/instructor" do
-      CanvasUserSites.should_receive(:expire).with(canvas_provide_course_site.uid).and_return(nil)
+      CanvasMergedUserSites.should_receive(:expire).with(canvas_provide_course_site.uid).and_return(nil)
       canvas_provide_course_site.expire_instructor_sites_cache
     end
 

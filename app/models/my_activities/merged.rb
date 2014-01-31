@@ -1,15 +1,17 @@
 module MyActivities
   class Merged < MyMergedModel
 
+    attr_accessor :site_proxies
     attr_accessor :proxies
 
     def initialize(uid, options={})
       super(uid, options)
-
-      @proxies = [
+      @site_proxies = [
         MyActivities::Canvas,
+        MyActivities::SakaiAnnouncements
+      ]
+      @proxies = [
         MyActivities::Notifications,
-        MyActivities::SakaiAnnouncements,
         MyActivities::RegBlocks,
       ]
       @proxies << MyActivities::MyFinAid if Settings.features.my_fin_aid
@@ -19,8 +21,11 @@ module MyActivities
       @cutoff_date ||= Time.zone.today.to_time_in_current_zone.to_datetime.advance(:days => -10).to_i
     end
 
+    # Note that MyActivities feed processing has a direct dependency on MyClasses and MyGroups.
     def get_feed_internal
       activities = []
+      dashboard_sites = MyActivities::DashboardSites.fetch(@uid, @options)
+      self.site_proxies.each { |proxy| proxy.append!(@uid, dashboard_sites, activities) }
       self.proxies.each { |proxy| proxy.append!(@uid, activities) }
       { :activities => activities }
     end

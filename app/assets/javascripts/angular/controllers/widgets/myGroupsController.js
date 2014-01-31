@@ -27,7 +27,7 @@
     });
 
     $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
-      if (services && services.MyGroups) {
+      if (services && services['MyGroups::Merged']) {
         getMyGroups();
       }
     });

@@ -190,9 +190,9 @@ cache:
     MyActivities::Merged: 0
     MyBadges::Merged: 0
     MyCampusLinksController: 0
-    MyClasses: 0
+    MyClasses::Merged: 0
     MyFinancials: 0
-    MyGroups: 0
+    MyGroups::Merged: 0
     MyTasks::Merged: 0
     MyUpNext: 0
     MyRefreshController: <%= 30.seconds %>
@@ -204,14 +204,14 @@ cache:
     CanvasCourseProvisioningJobs: <%= 24.hours %>
     MyRegBlocks: 0
 
-    CanvasUserSites: <%= 15.minutes %>
+    CanvasMergedUserSites: <%= 15.minutes %>
     CanvasUserCoursesProxy: <%= 30.minutes %>
     CanvasGroupsProxy: <%= 30.minutes %>
     CanvasUserActivityStreamProxy: <%= 10.minutes %>
     CanvasTodoProxy: <%= 20.minutes %>
     CanvasUpcomingEventsProxy: <%= 20.minutes %>
 
-    SakaiUserSitesProxy: <%= 30.minutes %>
+    SakaiMergedUserSites: <%= 30.minutes %>
     SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
 
     MyBadges::GoogleCalendar: <%= 4.minutes %>

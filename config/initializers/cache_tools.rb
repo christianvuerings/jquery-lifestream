@@ -24,7 +24,7 @@ module Calcentral
       CanvasUpcomingEventsProxy => :expire,
       CanvasUserActivityStreamProxy => :expire,
       CanvasUserProfileProxy => :expire,
-      CanvasUserSites => :expire,
+      CanvasMergedUserSites => :expire,
 
       MyBadges::GoogleCalendar => :expire,
       MyBadges::GoogleDrive => :expire,
@@ -32,16 +32,16 @@ module Calcentral
       MyTasks::GoogleTasks => :expire,
 
       SakaiProxy => :expire,
-      SakaiUserSitesProxy => :expire
+      SakaiMergedUserSites => :expire
     }.each do |key, value|
       USER_CACHE_EXPIRATION.add_observer(key, value)
     end
 
     merged_feeds_array = [
       UserApi,
-      MyClasses,
+      MyClasses::Merged,
       MyFinancials,
-      MyGroups,
+      MyGroups::Merged,
       MyActivities::Merged,
       MyTasks::Merged,
       MyBadges::Merged,

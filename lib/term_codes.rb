@@ -36,6 +36,17 @@ class TermCodes
     name
   end
 
+  def self.from_english(str)
+    if (parsed = /(?<term_name>[[:alpha:]]+) (?<term_yr>\d+)/.match(str)) && (term_cd = to_code(parsed[:term_name]))
+      {
+        term_yr: parsed[:term_yr],
+        term_cd: term_cd
+      }
+    else
+      nil
+    end
+  end
+
   private
 
   def self.init_names
