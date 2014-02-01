@@ -1,6 +1,6 @@
 class BootstrapController < ApplicationController
   include ActiveRecordHelper
-  before_filter :check_databases_alive
+  before_filter :check_databases_alive, :warmup_live_updates
   layout 'application'
   caches_action :index, :layout => false
 
@@ -19,6 +19,10 @@ class BootstrapController < ApplicationController
     if !CampusData.database_alive?
       raise "Campus database is currently unavailable"
     end
+  end
+
+  def warmup_live_updates
+    LiveUpdatesWarmer.warmup_request session[:user_id] if session[:user_id]
   end
 
 end
