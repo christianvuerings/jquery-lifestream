@@ -26,6 +26,10 @@ class MyUpNext < MyMergedModel
 
   private
 
+  def self.expires_in
+    Time.zone.today.to_time_in_current_zone.advance(:days=>1).at_midnight.to_i
+  end
+
   def parse_date(hash)
     if hash["date"]
       date = Date.parse(hash["date"].to_s).to_time_in_current_zone.to_datetime

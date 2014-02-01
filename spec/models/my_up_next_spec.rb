@@ -70,4 +70,15 @@ describe "MyUpNext" do
     dead_feed.get_feed[:items].should == []
   end
 
+  context "cache expiration" do
+    before(:each){ @instance = MyUpNext.new(@user_id) }
+    it "should not use the configured expiration value" do
+      @instance.class.expires_in.should_not == Settings.cache.expiration.MyUpNext
+    end
+    it "should expire tomorrow at midnight" do
+      midnight_tomorrow = Time.zone.today.to_time_in_current_zone.advance(:days=>1).at_midnight.to_i
+      @instance.class.expires_in.should == midnight_tomorrow
+    end
+  end
+
 end
