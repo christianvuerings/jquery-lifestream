@@ -3,7 +3,7 @@ require "spec_helper"
 describe CanvasCourseUserProxy do
 
   let(:user_id)         { 4321321 }
-  let(:course_id)    	  { 767330 }
+  let(:course_id)       { 767330 }
   let(:canvas_course_user) do
     {
       'id' => 4321321,

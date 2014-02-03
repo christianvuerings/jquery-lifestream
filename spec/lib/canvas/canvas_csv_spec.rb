@@ -5,7 +5,7 @@ describe CanvasCsv do
   let(:canvas_csv)  { CanvasCsv.new }
   let(:user_ids)  { ["1234","1235"] }
 
-	describe "#accumulate_user_data" do
+  describe "#accumulate_user_data" do
 
     context 'when all users known' do
       before do
