@@ -2,11 +2,64 @@ module CourseOptions
   extend self
 
   # An official instructor of a primary section will generally assume implicit
-  # instructor-level access for some of the course's secondary sections.
-  # There are two main types of nested authorization:
-  # A) Include all secondary sections (given a proper section type).
-  # B) Include based on one or two digits in the section code (e.g., "001" nests
-  #    "101" and "102", but "002" nests "201" and "202").
+  # instructor-level access for some of the course's secondary sections. The
+  # class's 'course_option' determines which secondary sections are included.
+  #
+  # We need to support a maddening variety of course options and rules. Here
+  # are the main types.
+  #
+  # A) Include all secondary sections (given a proper section format code).
+  #
+  #    Example:
+  #      'A1' => [{formats: ['DIS']}]
+  #
+  #    Rule: Any 'A1' primary section will give access to any secondary section whose
+  #    format code is 'DIS'. But secondary sections whose format code is 'VOL' will
+  #    not be included.
+  #
+  # B) Include secondary sections (with the proper section format codes) whose section number
+  #    matches one digit of the primary section number.
+  #
+  #    Example:
+  #      'E1' => [{formats: ['DIS'], primary: 2, secondary: 0}]
+  #
+  #    Rule: The third digit of the primary section number ('2' in '002') needs to match the first
+  #    digit of the secondary section number ('2' in '233').
+  #
+  # C) Include secondary sections whose section number matches a substring of digits
+  #    in the primary section number.
+  #
+  #    Example:
+  #      'T1' => [{formats: ['DIS'], primary: 1..2, secondary: 0..1}]
+  #
+  #    Rule: The last two digits of the primary section number ('02' in '102') need to match
+  #    the first two digits of the secondary section number ('02' in '026').
+  #
+  # D) Include secondary sections whose section number matches a reversed substring
+  #    of digits in the primary section number.
+  #
+  #    Example:
+  #      'U2' => [{formats: ['DIS'], primary: 1..2, secondary: 0..1, reverse:true}],
+  #
+  #    Rule: The third and second digits of the primary section number ('10' in '310') need
+  #    to match the first and second digits of the secondary section number ('01' in '018').
+  #
+  # E) And sometimes different format codes need different substring checks.
+  #
+  #    Example:
+  #     'I1' => [{formats: ['DIS'], primary: 2, secondary: 1},
+  #              {formats: ['LAB'], primary: 2, secondary: 0}]
+  #
+  #    Rule: A 'DIS' secondary section needs to match on the second digit ('3' in '132')
+  #    but a 'LAB' secondary section needs to match on the first digit ('3' in '302').
+
+  # Since there are about 80 of these course options, we'd like to describe them
+  # compactly for (relatively) easier maintenance.
+  # The mapping structure below has the following parts.
+  #   key = the course option code
+  #   'formats' = the secondary section format codes which might be included.
+  #   'primary' = the character position or range of interest in the primary section number.
+  #   'secondary' = the character position or range of interest in the secondary section number.
   MAPPING = {
     'A1' => [{formats: ['DIS']}],
     'A2' => [{formats: ['CLC']}],
