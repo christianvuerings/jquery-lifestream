@@ -378,7 +378,6 @@
         INSERT INTO CALCENTRAL_CLASS_SCHEDULE_VW (TERM_YR, TERM_CD, COURSE_CNTL_NUM, MULTI_ENTRY_CD, BUILDING_NAME, ROOM_NUMBER, MEETING_DAYS, MEETING_START_TIME, MEETING_START_TIME_AMPM_FLAG, MEETING_END_TIME, MEETING_END_TIME_AMPM_FLAG, PRINT_CD) VALUES (2015, 'B', 7309, ' ', 'VALLEY LSB', '2030', ' M', '0400', 'P', '0500', 'P', 'H');
 
         -- Course Instructor records
-        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7366, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 16171, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 904715, ' ', '2', '4');

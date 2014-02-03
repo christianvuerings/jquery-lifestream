@@ -151,13 +151,25 @@ describe CampusData do
   it "should find where a person is teaching" do
     sections = CampusData.get_instructing_sections('238382')
     sections.should_not be_nil
-    sections.length.should == 5 if CampusData.test_data?
+    sections.length.should == 4 if CampusData.test_data?
   end
 
   it "should be able to limit teaching assignment queries" do
+    # These are only the explicitly assigned sections and do not include implicit nesting.
     sections = CampusData.get_instructing_sections('238382', @current_terms)
     sections.should_not be_nil
-    sections.length.should == 3 if CampusData.test_data?
+    sections.length.should == 2 if CampusData.test_data?
+  end
+
+  it 'finds all active secondary sections for the course' do
+    sections = CampusData.get_course_secondary_sections(2013, 'D', 'BIOLOGY', '1A')
+    # This is a real course offering and should show up in live DBs.
+    expect(sections.empty?).to be_false
+    if CampusData.test_data?
+      expect(sections.size).to eq(2)
+      # Should not include canceled section.
+      expect(sections.select{|s| s['course_cntl_num'] == 7312}).to be_empty
+    end
   end
 
   it "should check whether the db is alive" do

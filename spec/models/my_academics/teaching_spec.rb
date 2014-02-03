@@ -20,9 +20,10 @@ describe 'MyAcademics::Teaching' do
     bio1a[:dept].should eq "BIOLOGY"
     bio1a[:title].should == "General Biology Lecture"
     bio1a[:role].should == "Instructor"
-    bio1a[:sections].length.should == 2
+    bio1a[:sections].length.should == 3
     bio1a[:sections][0][:is_primary_section].should be_true
     bio1a[:sections][1][:is_primary_section].should be_false
+    bio1a[:sections][2][:is_primary_section].should be_false
 
     cogsci = teaching[0][:classes].select {|course| course[:course_number] == 'COG SCI C147'}[0]
     cogsci.empty?.should be_false
