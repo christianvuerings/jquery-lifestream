@@ -11,21 +11,34 @@ class BaseProxy
   end
 
   def instance_cache_key
+    # returns the full cache key (incl user or global prefix) used by this proxy instance.
     self.class.key @uid
   end
 
-  def safe_request
+  def safe_request(user_message_on_exception = "An unknown server error occurred.")
     begin
       yield
-    rescue Calcentral::ProxyException => e
-      log_message = e.log_message
-      if e.wrapped_exception
-        log_message += " #{e.wrapped_exception.class} #{e.wrapped_exception.message}."
+    rescue Exception => e
+      if e.is_a?(Calcentral::ProxyException)
+        log_message = e.log_message
+        response = e.response
+        if e.wrapped_exception
+          log_message += " #{e.wrapped_exception.class} #{e.wrapped_exception.message}."
+        end
+      else
+        log_message = " #{e.class} #{e.message}"
+        response = {
+          :body => user_message_on_exception,
+          :status_code => 503
+        }
+
       end
-      log_message += " Associated cache key: #{e.cache_key}"
+      log_message += " Associated cache key: #{instance_cache_key}"
       logger.error log_message
+
       # TODO schedule a job to asynchronously delete cache_key 1000ms from now (tunable).
-      return e.response
+
+      return response
     end
   end
 
