@@ -15,10 +15,10 @@ module MyClasses::ClassesModule
     if (term_yr = course_site[:term_yr]) && (term_cd = course_site[:term_cd]) && current_term?(term_yr, term_cd)
       linked_campus = []
       if (sections = course_site[:sections])
-        candidate_ccns = sections.collect {|s| s[:ccn]}
+        candidate_ccns = sections.collect {|s| s[:ccn].to_i}
         campus_courses.each do |campus|
           if campus[:term_yr] == term_yr && campus[:term_cd]
-            if campus[:sections].index {|s| candidate_ccns.include?(s[:ccn].to_s)}.present?
+            if campus[:sections].index {|s| candidate_ccns.include?(s[:ccn].to_i)}.present?
               linked_campus << {id: campus[:id]}
             end
           end
