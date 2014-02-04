@@ -13,7 +13,8 @@ describe UserCacheWarmer do
       model = klass.new @user_id
       klass.stub(:new).and_return(model)
       klass.stub(:get_feed).and_return({})
-      model.should_receive(:get_feed).with(force_cache_write)
+      model.should_receive(:get_feed).with(force_cache_write).once
+      model.should_receive(:get_feed_as_json).with(force_cache_write).once
     end
 
     UserCacheWarmer.do_warm @user_id
