@@ -10,8 +10,8 @@
       services_with_updates: {}
     };
     var feedsLoadedData = {};
-    var initial_polling_time = 10; // Initial polling time in seconds
-    var polling_time = 60; // Polling time in seconds
+    // Polling time in seconds
+    var poll_intervals = [2, 3, 10, 45, 60];
 
     // In the first iteration, we only update the services on the dashboard page.
     var to_update_services = [
@@ -81,9 +81,7 @@
       //$http.get('/dummy/json/updated_feeds.json').success(function(data) {
         events.is_loading = false;
         parseUpdatedFeeds(data, auto_refresh);
-
-        // Now we poll every 60 seconds
-        $timeout(polling, polling_time * 1000);
+        $timeout(polling, getPollInterval() * 1000);
       }).error(function(data, response_code) {
         if (response_code && response_code === 401) {
           userService.signOut();
@@ -95,14 +93,20 @@
      * Initiate the polling to the back-end to check whether there are any updates
      */
     var startPolling = function() {
-
       // Show the loading spinning indicator
       events.is_loading = true;
-
-      // First time we poll at 10 seconds
       $timeout(function() {
         polling(true);
-      }, initial_polling_time * 1000);
+      }, getPollInterval() * 1000);
+    };
+
+    /**
+     * Increment though the defined poll_intervals and return the last one
+     * when the end has been reached.
+     * @return {Integer}
+     */
+    var getPollInterval = function() {
+      return (poll_intervals.length > 1) ? poll_intervals.shift() : poll_intervals[0];
     };
 
     /**
