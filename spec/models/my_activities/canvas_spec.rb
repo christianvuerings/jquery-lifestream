@@ -110,8 +110,7 @@ describe MyActivities::Canvas do
     CanvasUserActivityStreamProxy.stub(:new).and_return(stub_proxy(:user_activity, flawed_activity_stream))
     activities = MyActivities::Canvas.get_feed(@user_id, [])
     activities.instance_of?(Array).should == true
-    # The fake activity stream includes one entry which is filtered out by age.
-    activities.size.should == @fake_activity_stream.size - 1
+    activities.size.should == @fake_activity_stream.size
   end
 
   it "should sometimes have score and instructor message appended to the summary field" do
