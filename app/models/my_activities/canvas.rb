@@ -24,9 +24,6 @@ class MyActivities::Canvas
   def self.format_entry(uid, entry, canvas_sites)
     begin
       date = ([entry["created_at"], entry["updated_at"]].map! {|e| Time.zone.parse(e)}).max
-      if date <= Time.zone.today.advance(days: -10)
-        return nil
-      end
       date = date.to_datetime
     rescue
       return nil
