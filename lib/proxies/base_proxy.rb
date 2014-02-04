@@ -36,7 +36,7 @@ class BaseProxy
       log_message += " Associated cache key: #{instance_cache_key}"
       logger.error log_message
 
-      # TODO schedule a job to asynchronously delete cache_key 1000ms from now (tunable).
+      DelayedCacheCleaner.queue instance_cache_key
 
       return response
     end
