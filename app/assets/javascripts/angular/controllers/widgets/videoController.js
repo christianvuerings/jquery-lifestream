@@ -21,12 +21,8 @@
       var courseSection = $scope.selected_course.sections[0].section_number;
       var courseSemester = $scope.selected_semester.name;
       var title = courseDepartment + ' ' + courseCategory + ', ' + courseSection + ' - ' + courseSemester;
-      if (title.indexOf('/') !== -1) {
-        var encodedTitle = title.replace(/\//g, '_slash_');
-        getVideos(encodedTitle);
-      } else {
-        getVideos(title);
-      }
+      var encodedTitle = title.replace(/\//g, '_slash_');
+      getVideos(encodedTitle);
     };
 
     $scope.$watchCollection('[$parent.selected_course.sections, api.user.profile.features.videos]', function(returnValues) {
