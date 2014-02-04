@@ -5,7 +5,6 @@
   angular.module('calcentral.services').service('updatedFeedsService', function($http, $timeout, userService) {
 
     var events = {
-      is_loading: false,
       update_services: {},
       services_with_updates: {}
     };
@@ -79,7 +78,6 @@
     var polling = function(auto_refresh) {
       $http.get('/api/my/updated_feeds').success(function(data) {
       //$http.get('/dummy/json/updated_feeds.json').success(function(data) {
-        events.is_loading = false;
         parseUpdatedFeeds(data, auto_refresh);
         $timeout(polling, getPollInterval() * 1000);
       }).error(function(data, response_code) {
@@ -94,7 +92,6 @@
      */
     var startPolling = function() {
       // Show the loading spinning indicator
-      events.is_loading = true;
       $timeout(function() {
         polling(true);
       }, getPollInterval() * 1000);
