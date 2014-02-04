@@ -27,10 +27,10 @@ class MyMergedModel
     end
   end
 
-  def get_feed_as_json
+  def get_feed_as_json(force_cache_write=false)
     # cache the JSONified feed for maximum efficiency when we're called by a controller.
-    self.class.fetch_from_cache "json-#{effective_uid}" do
-      feed = get_feed
+    self.class.fetch_from_cache("json-#{effective_uid}", force_cache_write) do
+      feed = get_feed(force_cache_write)
       feed.to_json
     end
   end

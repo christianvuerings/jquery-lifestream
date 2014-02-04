@@ -16,6 +16,7 @@ class UserCacheWarmer
       MyRegBlocks.new(uid)
     ].each do |model|
       model.get_feed force_cache_write
+      model.get_feed_as_json force_cache_write
     end
     Rails.logger.debug "#{self.name} Finished warming the user cache for #{uid}"
   end
