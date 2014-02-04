@@ -22,7 +22,7 @@
         'slug': $scope.selected_semester.slug
       };
 
-      $http.get('api/my/textbooks_details', {
+      $http.get('/api/my/textbooks_details', {
         params: course_info
       }).success(function(data) {
         angular.extend($scope, data);
