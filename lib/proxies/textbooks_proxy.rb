@@ -73,6 +73,7 @@ class TextbooksProxy < BaseProxy
       optional_books = []
       status_code = ''
       url = ''
+      book_unavailable_error = ''
       begin
         @ccns.each do |ccn|
           path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
@@ -105,6 +106,10 @@ class TextbooksProxy < BaseProxy
           required_books.push(ul_to_dict(required_text_list))
           recommended_books.push(ul_to_dict(recommended_text_list))
           optional_books.push(ul_to_dict(optional_text_list))
+          bookstore_error_section = text_books.xpath('//div[@id="efCourseErrorSection"]/h2')
+          if bookstore_error_section.length > 0
+            book_unavailable_error = bookstore_error_section[0].text.gsub('*', '').strip
+          end
         end
 
         book_response = {
@@ -135,6 +140,7 @@ class TextbooksProxy < BaseProxy
           })
         end
 
+        book_response[:book_unavailable_error] = book_unavailable_error
         book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
         {
           books: book_response,

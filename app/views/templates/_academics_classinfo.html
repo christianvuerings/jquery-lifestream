@@ -192,9 +192,7 @@
                 </div>
               </div>
             </div>
-            <div class="cc-error-message" data-ng-if="books.has_books === false">
-              Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.
-            </div>
+            <div class="cc-error-message" data-ng-if="books.has_books === false" data-ng-bind="books.book_unavailable_error"></div>
             <div class="cc-error-message" data-ng-if="textbook_error.body" data-ng-bind="textbook_error.body">
             </div>
           </div>
