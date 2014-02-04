@@ -3,17 +3,20 @@ require "spec_helper"
 describe MyClasses::Canvas do
   let(:uid) {rand(99999).to_s}
   let(:sites) {[]}
-  let(:ccn) {rand(9999)}
+  let(:ccn) {rand(99999)}
   let(:course_id) {"econ-#{rand(999)}B"}
-  let(:campus_courses) do
-    [{
+  let(:campus_course_base) do
+    {
       id: course_id,
       term_yr: CampusData.current_year,
       term_cd: CampusData.current_term,
       sections: [{
-        ccn: ccn
+        ccn: ccn.to_s
       }]
-    }]
+    }
+  end
+  let(:campus_courses) do
+    [campus_course_base]
   end
 
   context 'when no Canvas account' do
@@ -53,11 +56,29 @@ describe MyClasses::Canvas do
       MyClasses::Canvas.new(uid).merge_sites(campus_courses, sites)
       sites
     end
+
     context 'when Canvas course is within a current term' do
       let(:term_yr) {CampusData.current_year}
       let(:term_cd) {CampusData.current_term}
       context 'when Canvas course site matches a campus section' do
         let(:canvas_site) {canvas_site_base.merge({sections: [{ccn: ccn.to_s}]})}
+        let(:canvas_sites) {{courses: [canvas_site], groups: []}}
+        its(:size) {should eq 1}
+        it 'points back to campus course' do
+          site = subject.first
+          expect(site[:id]).to eq canvas_site_id
+          expect(site[:emitter]).to eq CanvasProxy::APP_NAME
+          expect(site[:courses]).to eq [{id: course_id}]
+          expect(site[:sections]).to be_nil
+          expect(site[:site_type]).to eq 'course'
+        end
+      end
+      # By default, CCN strings are filled out to five digits by prefixing zeroes.
+      # However, shorter strings should still match.
+      context 'when Canvas section CCN does not prefix zero' do
+        let(:ccn_int) {rand(999)}
+        let(:ccn) {"00#{ccn_int}"}
+        let(:canvas_site) {canvas_site_base.merge({sections: [{ccn: ccn_int.to_s}]})}
         let(:canvas_sites) {{courses: [canvas_site], groups: []}}
         its(:size) {should eq 1}
         it 'points back to campus course' do
