@@ -38,6 +38,15 @@ describe CampusUserCoursesProxy do
     end
   end
 
+  it 'includes nested sections for instructors', :if => SakaiData.test_data? do
+    client = CampusUserCoursesProxy.new({user_id: '238382'})
+    courses = client.get_all_campus_courses
+    sections = courses['2013-D'].select {|c| c[:dept] == 'BIOLOGY' && c[:catid] == '1A'}.first[:sections]
+    expect(sections.size).to eq 3
+    # One primary and two nested secondaries.
+    expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
+  end
+
   it "should find waitlisted status in test enrollments", :if => SakaiData.test_data? do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)

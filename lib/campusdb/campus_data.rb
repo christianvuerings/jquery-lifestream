@@ -293,7 +293,7 @@ class CampusData < OracleDatabase
     terms_clause = terms_query_clause('i', terms)
     use_pooled_connection {
       sql = <<-SQL
-      select d.dept_description, c.term_yr, c.term_cd, c.course_cntl_num,
+      select d.dept_description, c.term_yr, c.term_cd, c.course_cntl_num, c.course_option,
         c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
         c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
       from calcentral_course_instr_vw i
@@ -306,6 +306,25 @@ class CampusData < OracleDatabase
       order by c.term_yr desc, c.term_cd desc, c.dept_name,
         c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
         c.primary_secondary_cd, c.instruction_format, c.section_num
+      SQL
+      result = connection.select_all(sql)
+    }
+    result
+  end
+
+  def self.get_course_secondary_sections(term_yr, term_cd, department, catalog_id)
+    result = []
+    use_pooled_connection {
+      sql = <<-SQL
+      select c.term_yr, c.term_cd, c.course_cntl_num,
+        c.dept_name, c.catalog_id, c.section_num, c.instruction_format,
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
+      from calcentral_course_info_vw c where c.term_yr = #{term_yr.to_i} and c.term_cd = #{connection.quote(term_cd)} and
+        c.dept_name = #{connection.quote(department)} and c.catalog_id = #{connection.quote(catalog_id)} and
+        c.section_cancel_flag is null and c.primary_secondary_cd != 'P'
+      order by c.term_yr desc, c.term_cd desc, c.dept_name,
+        c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
+        c.instruction_format, c.section_num
       SQL
       result = connection.select_all(sql)
     }
