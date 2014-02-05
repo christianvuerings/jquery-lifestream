@@ -13,7 +13,7 @@ describe "TextbooksProxy" do
       feed = proxy_response[:books]
       feed.should_not be_nil
       feed[:has_books].should be_true
-      feed[:book_details][0][:books][0][:title] === 'Observing the User Experience'
+      expect(feed[:book_details][0][:books][0][:title]).to eq 'Observing the User Experience'
       feed[:book_details][0][:has_choices].should be_false
     end
   end
@@ -47,4 +47,17 @@ describe "TextbooksProxy" do
     end
   end
 
+  it "should return the actual error message returned by the bookstore when textbook information is unavailable", :testext => true do
+    @ccns = ["09259"]
+    @slug = "spring-2014"
+    feed = {}
+    proxy = TextbooksProxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
+    proxy_response = proxy.get
+    proxy_response[:status_code].should_not be_nil
+    if proxy_response[:status_code] == 200
+      feed = proxy_response[:books]
+      feed.should_not be_nil
+      expect(feed[:book_unavailable_error]).to eq 'We are unable to find the specified course.'
+    end
+  end
 end
