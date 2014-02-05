@@ -67,7 +67,7 @@
           "date": new Date(status.created_at * 1000), // unix time
           "config": config,
           "html": $.tmpl( template.posted, {
-            "tweet": linkify(status.text),
+            "tweet": linkify($('<div/>').html(status.text).text()),
             "complete_url": 'http://twitter.com/' + config.user +
               "/status/" + status.id_str
           } ),
