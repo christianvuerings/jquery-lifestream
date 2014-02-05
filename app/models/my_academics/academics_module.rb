@@ -58,4 +58,15 @@ module MyAcademics::AcademicsModule
     }
   end
 
+  def course_site_entry(course_site)
+    {
+      emitter: course_site[:emitter],
+      id: course_site[:id],
+      name: course_site[:name],
+      short_description: course_site[:short_description],
+      site_type: 'course',
+      site_url: course_site[:site_url]
+    }
+  end
+
 end

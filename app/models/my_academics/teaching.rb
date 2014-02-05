@@ -24,7 +24,15 @@ class MyAcademics::Teaching
       teaching_semesters << teaching_semester unless teaching_semester[:classes].empty?
     end
 
-    data[:teaching_semesters] = teaching_semesters unless teaching_semesters.empty?
+    if teaching_semesters.present?
+      [
+        MyAcademics::TeachingCanvas,
+        MyAcademics::TeachingSakai,
+      ].each do |site_provider|
+        site_provider.new(@uid).merge_sites(teaching_semesters)
+      end
+      data[:teaching_semesters] = teaching_semesters
+    end
   end
 
 end
