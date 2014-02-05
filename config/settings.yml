@@ -272,9 +272,6 @@ features:
   textbooks: false
   videos: false
 
-messaging:
-  enabled: true
-
 oec:
   export_directory: 'tmp/oec'
   current_terms_codes: [{
