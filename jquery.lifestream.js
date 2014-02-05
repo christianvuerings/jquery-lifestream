@@ -1,9 +1,9 @@
 /*!
  * jQuery Lifestream Plug-in
  * Show a stream of your online activity
- * @version   0.4.2
+ * @version   0.4.3
  * @author    Christian Vuerings et al.
- * @copyright Copyright 2011, Christian Vuerings - http://denbuzze.com
+ * @copyright Copyright 2014, Christian Vuerings - http://denbuzze.com
  * @license   https://github.com/christianv/jquery-lifestream/blob/master/LICENSE MIT
  */
 /*global jQuery */
@@ -193,6 +193,55 @@
   }
 
 }( jQuery ));
+(function($) {
+$.fn.lifestream.feeds.atom = function( config, callback ) {
+
+  var template = $.extend({},
+    {
+      posted: 'posted <a href="${link.href}">${title.content}</a>'
+    },
+    config.template),
+
+  /**
+   * Parse the input from atom feed
+   */
+  parseAtom = function( input ) {
+    var output = [], list = [], i = 0, j = 0, url = '';
+    if(input.query && input.query.count && input.query.count > 0) {
+      list = input.query.results.feed.entry;
+      j = list.length;
+
+      for( ; i<j; i++) {
+        var item = list[i];
+
+        output.push({
+          url: item.link.href,
+          date: new Date( item.updated ),
+          config: config,
+          html: $.tmpl( template.posted, item )
+        });
+      }
+    }
+    return output;
+  };
+
+  $.ajax({
+    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
+      config.user + '"'),
+    dataType: 'jsonp',
+    success: function( data ) {
+      callback(parseAtom(data));
+    }
+  });
+
+  // Expose the template.
+  // We use this to check which templates are available
+  return {
+    "template" : template
+  };
+
+};
+})(jQuery);
 (function($) {
 $.fn.lifestream.feeds.bitbucket = function( config, callback ) {
 
@@ -2146,7 +2195,7 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://api.stackoverflow.com/1.1/users/" + config.user +
+    url: "https://api.stackoverflow.com/1.1/users/" + config.user +
       "/timeline?jsonp",
     dataType: "jsonp",
     jsonp: 'jsonp',
@@ -2176,7 +2225,8 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
   var template = $.extend({},
@@ -2338,7 +2388,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
       var link = function( t ) {
         return t.replace(
-          /[a-z]+:\/\/[a-z0-9\-_]+\.[a-z0-9\-_:~%&\?\/.=]+[^:\.,\)\s*$]/ig,
+          /([a-z]+:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,
           function( m ) {
             return '<a href="' + m + '">' +
               ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m ) +
@@ -2359,7 +2409,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
         return t.replace(
           /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
           function( m, m1, m2 ) {
-            return m1 + '<a href="http://www.twitter.com/search?q=%23' +
+            return m1 + '<a href="http://search.twitter.com/search?q=%23' +
             m2 + '">#' + m2 + '</a>';
           }
         );
@@ -2384,7 +2434,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
           "date": new Date(status.created_at * 1000), // unix time
           "config": config,
           "html": $.tmpl( template.posted, {
-            "tweet": linkify(status.text),
+            "tweet": linkify($('<div/>').html(status.text).text()),
             "complete_url": 'http://twitter.com/' + config.user +
               "/status/" + status.id_str
           } ),
@@ -2483,14 +2533,16 @@ $.fn.lifestream.feeds.vimeo = function( config, callback ) {
       var output = [];
 
       // check for likes & parse
-      if ( response.query.results.videos[0].video.length > 0 ) {
+      if ( response.query.results.videos[0] != null &&
+           response.query.results.videos[0].video.length > 0 ) {
         output = output.concat(parseVimeo(
           response.query.results.videos[0].video
         ));
       }
 
       // check for uploads & parse
-      if ( response.query.results.videos[1].video.length > 0 ) {
+      if ( response.query.results.videos[1] != null &&
+           response.query.results.videos[1].video.length > 0 ) {
         output = output.concat(
           parseVimeo(response.query.results.videos[1].video, 'posted')
         );
