@@ -41,7 +41,7 @@ $.fn.lifestream.feeds.stackoverflow = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://api.stackoverflow.com/1.1/users/" + config.user +
+    url: "https://api.stackoverflow.com/1.1/users/" + config.user +
       "/timeline?jsonp",
     dataType: "jsonp",
     jsonp: 'jsonp',
