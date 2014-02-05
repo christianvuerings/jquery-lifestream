@@ -153,8 +153,9 @@
         <div class="cc-widget cc-page-myfinances-account-activity cc-widget-last">
           <div class="cc-widget-title">
             <h2 class="cc-left">Activity</h2>
-            <div class="cc-right cc-page-myfinances-account-activity-search">
-              <input type="text" placeholder="Search..." data-ng-model="search.$">
+            <div class="cc-right cc-print-clear cc-print-left cc-page-myfinances-account-activity-search" data-ng-class="{'cc-print-hide':(!search.$)}">
+              <div class="cc-hidden cc-page-myfinances-print-label cc-print-show cc-left">Search:</div>
+              <input type="text" placeholder="Search..." data-ng-model="search.$" />
             </div>
           </div>
 
@@ -173,7 +174,8 @@
                 </ul>
               </div>
               <div class="small-5 columns">
-                <div class="cc-select cc-right" data-ng-show="transStatusSearch==''">
+                <div class="cc-hidden cc-print-show cc-page-myfinances-print-label cc-print-left">Term: </div>
+                <div class="cc-select cc-right cc-print-left" data-ng-show="transStatusSearch==''">
                   <select data-ng-model="search.transTerm" id="cc-page-myfinances-select-term" data-ng-options="t.value as t.label for t in myfinances.terms" data-ng-change="search_term = search.transTerm">
                   </select>
                 </div>

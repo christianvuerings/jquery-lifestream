@@ -111,4 +111,18 @@
     border-top: 2px solid $cc-color-widget-background;
     font-style: italic;
   }
+  @media print {
+    .cc-page-myfinances-account-activity-search input {
+      border: none;
+    }
+    .cc-page-myfinances-print-label {
+      margin: 4px;
+    }
+    .cc-select {
+      border: none;
+      select {
+        padding-left: 0;
+      }
+    }
+  }
 }

@@ -52,8 +52,18 @@
   .cc-icon-green, .cc-unavailable, .fa-stop, .fa-exclamation-circle, .fa-exclamation-triangle {
     color: $cc-color-black !important;
   }
+
+  .cc-print-clear {
+    clear: both !important;
+  }
   .cc-print-hide {
     display: none !important;
+  }
+  .cc-print-left {
+    float: left !important;
+  }
+  .cc-print-right {
+    float: right !important;
   }
   .cc-print-show {
     display: block !important;
