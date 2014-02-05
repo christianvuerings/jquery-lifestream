@@ -31,10 +31,14 @@ class BaseProxy
           :body => user_message_on_exception,
           :status_code => 503
         }
-
       end
       log_message += " Associated cache key: #{instance_cache_key}"
-      logger.error log_message
+
+      if e.is_a?(Calcentral::ProxyError)
+        logger.error log_message
+      else
+        logger.debug log_message
+      end
 
       DelayedCacheCleaner.queue instance_cache_key
 
