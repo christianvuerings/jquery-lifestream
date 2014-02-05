@@ -46,9 +46,6 @@ logger:
   stdout: <%= ENV['LOGGER_STDOUT'] || true %>
   slow_query_threshold_in_ms: 2000
 
-messaging:
-  enabled: false
-
 myfinaid_proxy:
   fake: true
 
