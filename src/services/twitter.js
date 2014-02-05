@@ -21,7 +21,7 @@
 
       var link = function( t ) {
         return t.replace(
-          /[a-z]+:\/\/[a-z0-9\-_]+\.[a-z0-9\-_:~%&\?\/.=]+[^:\.,\)\s*$]/ig,
+          /([a-z]+:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,
           function( m ) {
             return '<a href="' + m + '">' +
               ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m ) +
