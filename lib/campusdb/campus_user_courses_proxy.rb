@@ -36,7 +36,6 @@ class CampusUserCoursesProxy < BaseProxy
       campus_classes.values.each do |semester|
         semester.each do |course|
           course[:sections].each do |section|
-            section[:ccn] = get_ccn section[:ccn]
             proxy = CampusCourseSectionsProxy.new({term_yr: course[:term_yr],
                                                    term_cd: course[:term_cd],
                                                    ccn: section[:ccn]})
@@ -190,7 +189,7 @@ class CampusUserCoursesProxy < BaseProxy
 
   def row_to_section_data(row)
     section_data = {
-        ccn: row['course_cntl_num'],
+        ccn: get_ccn(row['course_cntl_num'].to_s),
         instruction_format: row['instruction_format'],
         is_primary_section: (row['primary_secondary_cd'] == 'P'),
         section_label: "#{row['instruction_format']} #{row['section_num']}",

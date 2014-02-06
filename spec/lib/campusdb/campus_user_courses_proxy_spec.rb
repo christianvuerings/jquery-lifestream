@@ -47,6 +47,14 @@ describe CampusUserCoursesProxy do
     expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
   end
 
+  it 'prefixes short CCNs with zeroes', :if => SakaiData.test_data? do
+    client = CampusUserCoursesProxy.new({user_id: '238382'})
+    courses = client.get_selected_sections(2013, 'D', [7309])
+    sections = courses['2013-D'].first[:sections]
+    expect(sections.size).to eq 1
+    expect(sections.first[:ccn]).to eq '07309'
+  end
+
   it "should find waitlisted status in test enrollments", :if => SakaiData.test_data? do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
