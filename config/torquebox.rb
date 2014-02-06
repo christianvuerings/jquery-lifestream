@@ -34,5 +34,10 @@ TorqueBox.configure do
     durable false
     processor FeedUpdateWhiteboard
   end
+  queue '/queues/delayed_cache_cleaner' do
+    durable false
+    processor DelayedCacheCleaner
+  end
+
 end
 
