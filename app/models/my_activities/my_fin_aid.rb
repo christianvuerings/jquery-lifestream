@@ -74,9 +74,8 @@ class MyActivities::MyFinAid
   def self.append_diagnostics!(diagnostics, activities)
     diagnostics.each do |diagnostic|
       next unless diagnostic.css("Categories Category[Name='CAT01']").text.try(:strip) == 'W'
-
       title = diagnostic.css("Message").text.strip
-      url = diagnostic.css("URL").text.strip
+      url = diagnostic.css("Supplemental Usage Content[Type='URL']").text.strip
       url = "https://myfinaid.berkeley.edu" if url.blank?
       summary = diagnostic.css("Usage Content[Type='TXT']").text.strip
 
