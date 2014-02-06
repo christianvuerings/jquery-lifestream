@@ -19,7 +19,6 @@ class CanvasProvideCourseSite < CanvasCsv
   # Instance Methods
 
   # Currently this depends on an instructor's point of view.
-  # TODO Also support admin/superuser provisioning for sections which do not yet have an instructor assigned to them.
   def initialize(uid, options = {})
     super()
     raise ArgumentError, "uid must be a String" if uid.class != String
@@ -125,7 +124,6 @@ class CanvasProvideCourseSite < CanvasCsv
   def prepare_user_definitions
     raise RuntimeError, "Unable to prepare user definition. User ID is not present." if @uid.blank?
     # Add current instructor so that link to course site will work.
-    # TODO Need to skip this when we support direct administrative creation of course sites based on sections.
     # TODO Can eliminate this step if we import all official instructors for the sections.
     @import_data['user_definitions'] = accumulate_user_data([@uid], [])
     complete_step("Prepared user definitions")
@@ -228,8 +226,6 @@ class CanvasProvideCourseSite < CanvasCsv
     terms_filter = current_terms
 
     # Get all sections for which this user is an instructor, sorted in a useful fashion.
-    # TODO Add nested sections.
-    # TODO Add pointers to existing bCourses sites.
     # Since this happens to match what's shown by MyAcademics::Teaching for a given semester,
     # we can simply re-use the academics feed (so long as course site provisioning is restricted to
     # semesters supported by My Academics). Ideally, MyAcademics::Teaching would be efficiently cached
