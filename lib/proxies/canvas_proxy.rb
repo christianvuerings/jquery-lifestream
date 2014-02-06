@@ -30,32 +30,29 @@ class CanvasProxy < BaseProxy
   end
 
   def request_uncached(api_path, vcr_id = "", fetch_options = {})
+    safe_request("Remote server unreachable", true) do
+      internal_request_uncached(api_path, vcr_id, fetch_options)
+    end
+  end
+
+  def internal_request_uncached(api_path, vcr_id = "", fetch_options = {})
     fetch_options.reverse_merge!(
         :method => :get,
         :uri => "#{@settings.url_root}/api/v1/#{api_path}"
     )
     logger.info "Making request with @fake = #{@fake}, options = #{fetch_options}, cache expiration #{self.class.expires_in}"
     FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) do
-      begin
-        if (nonstandard_connection = fetch_options[:non_oauth_connection])
-          response = nonstandard_connection.get(fetch_options[:uri])
-        else
-          response = @client.fetch_protected_resource(fetch_options)
-        end
-        # Canvas proxy returns nil for error response.
-        if response.status >= 400
-          log_error(fetch_options, response)
-          nil
-        else
-          response
-        end
-      rescue Signet::AuthorizationError => e
-        #fetch_protected_resource throws exceptions on 401s,
-        logger.error "Authorization error: #{e.class} #{e.message} #{e.response}"
-        e.response
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
-        logger.error "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{e.class} #{e.message}"
-        nil
+      if (nonstandard_connection = fetch_options[:non_oauth_connection])
+        response = nonstandard_connection.get(fetch_options[:uri])
+      else
+        response = @client.fetch_protected_resource(fetch_options)
+      end
+      # Canvas proxy returns nil for error response.
+      if response.status >= 400
+        raise Calcentral::ProxyError.new(
+                "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}")
+      else
+        response
       end
     end
   end

@@ -74,7 +74,7 @@ class TextbooksProxy < BaseProxy
       status_code = ''
       url = ''
       book_unavailable_error = ''
-      begin
+      safe_request("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.") do
         @ccns.each do |ccn|
           path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
           url = "#{Settings.textbooks_proxy.base_url}#{path}"
@@ -87,12 +87,7 @@ class TextbooksProxy < BaseProxy
           }
 
           if response.code >= 400
-            logger.error "Connection failed: #{response.code} #{response.body}; url = #{url}"
-            body = "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly."
-            return {
-              body: body,
-              status_code: response.code
-            }
+            raise Calcentral::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
           end
 
           status_code = response.code
@@ -145,12 +140,6 @@ class TextbooksProxy < BaseProxy
         {
           books: book_response,
           status_code: status_code
-        }
-      rescue SocketError, Timeout::Error, EOFError, Errno::ECONNREFUSED, Errno::EHOSTUNREACH => e
-        logger.error "Connection to url #{url} failed: #{e.class} #{e.message}"
-        {
-          body: "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.",
-          status_code: 503
         }
       end
     end

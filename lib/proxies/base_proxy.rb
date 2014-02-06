@@ -15,7 +15,7 @@ class BaseProxy
     self.class.key @uid
   end
 
-  def safe_request(user_message_on_exception = "An unknown server error occurred.")
+  def safe_request(user_message_on_exception = "An unknown server error occurred.", return_nil_on_generic_error = false)
     begin
       yield
     rescue Exception => e
@@ -27,10 +27,14 @@ class BaseProxy
         end
       else
         log_message = " #{e.class} #{e.message}"
-        response = {
-          :body => user_message_on_exception,
-          :status_code => 503
-        }
+        if return_nil_on_generic_error
+          response = nil
+        else
+          response = {
+            :body => user_message_on_exception,
+            :status_code => 503
+          }
+        end
       end
       log_message += " Associated cache key: #{instance_cache_key}"
 
