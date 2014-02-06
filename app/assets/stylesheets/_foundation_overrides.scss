@@ -6,7 +6,7 @@ $body-font-family: Arial, sans-serif;
 $button-font-weight: bold;
 $button-margin-bottom: 2px;
 $form-spacing: 0.5rem;
-$header-font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+$header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $header-font-weight: 500;
 $primary-color: #2683bc;
 $rem-base: 13px;
@@ -16,6 +16,7 @@ $table-row-font-size: 13px;
 
 // Includes
 $include-html-form-classes: false;
+$include-open-sans: false;
 
 // Responsive
 $small-breakpoint: (767px);
