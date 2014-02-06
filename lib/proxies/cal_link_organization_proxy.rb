@@ -11,37 +11,40 @@ class CalLinkOrganizationProxy < CalLinkProxy
     "global/#{self.name}/#{org_id}"
   end
 
+  def instance_cache_key
+    # returns the full cache key (incl user or global prefix) used by this proxy instance.
+    self.class.key @org_id
+  end
+
   def get_organization
+    safe_request("Remote server unreachable") do
+      internal_get_organization
+    end
+  end
+
+  def internal_get_organization
     self.class.fetch_from_cache @org_id do
       url = "#{Settings.cal_link_proxy.base_url}/api/organizations"
       params = build_params
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url}; params = #{params}, cache expiration #{self.class.expires_in}"
-      begin
-        response = FakeableProxy.wrap_request(APP_ID + "_organization", @fake, {:match_requests_on => [:method, :path, self.method(:custom_query_matcher).to_proc, :body]}) {
-          Faraday::Connection.new(
-              :url => url,
-              :params => params,
-              :request => {
-                :timeout => Settings.application.outgoing_http_timeout
-              }
-          ).get
-        }
-        if response.status >= 400
-          Rails.logger.error "#{self.class.name}: Connection failed: #{response.status} #{response.body}"
-          return nil
-        end
-        Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
-        {
-            :body => safe_json(response.body),
-            :status_code => response.status
-        }
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError => e
-        Rails.logger.error "#{self.class.name}: Connection failed: #{e.class} #{e.message}"
-        {
-            :body => "Remote server unreachable",
-            :status_code => 503
-        }
+
+      response = FakeableProxy.wrap_request(APP_ID + "_organization", @fake, {:match_requests_on => [:method, :path, self.method(:custom_query_matcher).to_proc, :body]}) {
+        Faraday::Connection.new(
+          :url => url,
+          :params => params,
+          :request => {
+            :timeout => Settings.application.outgoing_http_timeout
+          }
+        ).get
+      }
+      if response.status >= 400
+        raise Calcentral::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}")
       end
+      Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
+      {
+        :body => safe_json(response.body),
+        :status_code => response.status
+      }
     end
   end
 
@@ -62,9 +65,9 @@ class CalLinkOrganizationProxy < CalLinkProxy
   def build_params
     params = super
     params.merge(
-        {
-            :organizationId => @org_id
-        })
+      {
+        :organizationId => @org_id
+      })
   end
 
 

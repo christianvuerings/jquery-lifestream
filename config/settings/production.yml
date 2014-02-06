@@ -143,5 +143,3 @@ features:
   academic_status: true
   telebears: true
   financials: true
-messaging:
-  enabled: true

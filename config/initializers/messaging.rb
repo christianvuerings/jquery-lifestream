@@ -3,4 +3,5 @@ Rails.application.config.after_initialize do
   Calcentral::Messaging.publish('/queues/hot_plate')
   Calcentral::Messaging.publish('/queues/warmup_request')
   Calcentral::Messaging.publish('/queues/feed_changed')
+  Calcentral::Messaging.publish('/queues/delayed_cache_cleaner')
 end

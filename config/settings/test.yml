@@ -48,6 +48,3 @@ cache:
     MyTasks::Merged: <%= 1.day %>
     MyUpNext: <%= 1.day %>
     UserApi: <%= 1.day %>
-
-messaging:
-  enabled: false
