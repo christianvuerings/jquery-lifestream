@@ -125,6 +125,7 @@
         params: feed_params
       }).success(function(data) {
         angular.extend($scope, data);
+        fillCourseSites($scope.teaching_semesters);
         window.setInterval(postHeight, 250);
         if ($scope.teaching_semesters && $scope.teaching_semesters.length > 0) {
           $scope.switchSemester($scope.teaching_semesters[0]);
@@ -135,6 +136,37 @@
         if ($scope.admin_mode === 'by_ccn' && $scope.admin_by_ccns) {
           selectAllSections();
         }
+      });
+    };
+
+    var fillCourseSites = function(semesters_feed) {
+      angular.forEach(semesters_feed, function(semester) {
+        angular.forEach(semester.classes, function(course) {
+          var has_sites = false;
+          var ccn_to_sites = {};
+          angular.forEach(course.class_sites, function(site) {
+            if (site.emitter === 'bCourses') {
+              angular.forEach(site.sections, function(site_section) {
+                has_sites = true;
+                if (!ccn_to_sites[site_section.ccn]) {
+                  ccn_to_sites[site_section.ccn] = [site];
+                } else {
+                  ccn_to_sites[site_section.ccn].push(site);
+                }
+              });
+            }
+          });
+          if (has_sites) {
+            course.has_sites = has_sites;
+            angular.forEach(course.sections, function(section) {
+              var ccn = section.ccn;
+              console.log(section)
+              if (ccn_to_sites[ccn]) {
+                section.sites = ccn_to_sites[ccn];
+              }
+            });
+          }
+        });
       });
     };
 
