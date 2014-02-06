@@ -149,10 +149,9 @@
               angular.forEach(site.sections, function(site_section) {
                 has_sites = true;
                 if (!ccn_to_sites[site_section.ccn]) {
-                  ccn_to_sites[site_section.ccn] = [site];
-                } else {
-                  ccn_to_sites[site_section.ccn].push(site);
+                  ccn_to_sites[site_section.ccn] = [];
                 }
+                ccn_to_sites[site_section.ccn].push(site);
               });
             }
           });
@@ -160,7 +159,6 @@
             course.has_sites = has_sites;
             angular.forEach(course.sections, function(section) {
               var ccn = section.ccn;
-              console.log(section)
               if (ccn_to_sites[ccn]) {
                 section.sites = ccn_to_sites[ccn];
               }
