@@ -78,34 +78,36 @@
                       <strong>{{course.title}} ({{course.course_number}})</strong>
                       <ul>
                         <li data-ng-repeat="section in course.sections">
-                          <div data-ng-hide="section.sites">
+                          <div data-ng-if="!(section.sites)">
                             <input type="checkbox"
                                    id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
                                    data-ng-model="section.selected">
-                            <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}" class="cc-page-provision-section-label">
-                              {{course.course_number}} {{section.section_label}} ({{section.ccn}})
+                            <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
+                              class="cc-page-provision-section-label"
+                              data-ng-bind-template="{{course.course_number}} {{section.section_label}} ({{section.ccn}})">
                             </label>
                           </div>
                         </li>
                       </ul>
-                      <div data-ng-show="course.has_sites">
+                      <div data-ng-if="course.has_sites">
                         The following sections are in use in other course sites:
-                          <ul>
-                            <li data-ng-repeat="section in course.sections">
-                              <div data-ng-show="section.sites">
-                                <input type="checkbox"
-                                       id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                       data-ng-model="section.selected">
-                                <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}" class="cc-page-provision-section-label cc-page-provision-section-sited-label">
-                                  {{course.course_number}} {{section.section_label}} ({{section.ccn}})
-                                </label>
-                                <div data-ng-repeat="site in section.sites" class="cc-page-provision-section-sites">
-                                <i class="fa fa-cogs cc-page-provision-section-sited-icon"></i>
-                                Used in <strong><a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a></strong>
-                                </div>
+                        <ul>
+                          <li data-ng-repeat="section in course.sections">
+                            <div data-ng-if="section.sites">
+                              <input type="checkbox"
+                                     id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
+                                     data-ng-model="section.selected">
+                              <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
+                                class="cc-page-provision-section-label cc-page-provision-section-sited-label"
+                                data-ng-bind-template="{{course.course_number}} {{section.section_label}} ({{section.ccn}})">
+                              </label>
+                              <div data-ng-repeat="site in section.sites" class="cc-page-provision-section-sites">
+                              <i class="fa fa-cogs cc-page-provision-section-sited-icon"></i>
+                              Used in <strong><a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a></strong>
                               </div>
-                            </li>
-                          </ul>
+                            </div>
+                          </li>
+                        </ul>
                       </div>
                     </li>
                   </ul>
