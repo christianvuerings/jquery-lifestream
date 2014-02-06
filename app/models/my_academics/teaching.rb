@@ -15,10 +15,7 @@ class MyAcademics::Teaching
       feed[term_key].each do |course|
         next unless course[:role] == 'Instructor'
         teaching_semester[:classes] << class_info(course).merge({
-            # TODO Settle role logic ("Instructor" vs. "GSI"), especially for non-grad-students who taught secondary sections.
             role: course[:role]
-            # TODO Inject nested sections (if instructor in primary) or nesting section (if GSI in secondary).
-            # TODO Add class sites with section linkages.
         })
       end
       teaching_semesters << teaching_semester unless teaching_semester[:classes].empty?
