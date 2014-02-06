@@ -10,39 +10,32 @@ class PlaylistsProxy < BaseProxy
   end
 
   def get
-    request(@url, 'playlists')
+    safe_request do
+      request(@url, 'playlists')
+    end
   end
 
   def request(path, vcr_cassette, params = {})
-      #logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expirat
-      self.class.fetch_from_cache do
-        begin
-          response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
-            Faraday::Connection.new(
-              :url => @url,
-              :params => params,
-              :request => {
-                :timeout => Settings.application.outgoing_http_timeout
-              }
-            ).get
+    #logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expirat
+    self.class.fetch_from_cache do
+      response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
+        Faraday::Connection.new(
+          :url => @url,
+          :params => params,
+          :request => {
+            :timeout => Settings.application.outgoing_http_timeout
           }
-          if response.status >= 400
-            logger.error "Connection failed: #{response.status} #{response.body}"
-            return nil
-          end
+        ).get
+      }
+      if response.status >= 400
+        raise Calcentral::ProxyError.new("Connection failed: #{response.status} #{response.body}")
+      end
 
-          logger.debug "Remote server status #{response.status}, Body = #{response.body}"
-          {
-            :body => response.body,
-            :status_code => response.status
-          }
-        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError, Errno::EHOSTUNREACH => e
-          logger.error "Connection failed: #{e.class} #{e.message}"
-          {
-            :body => "Remote server unreachable",
-            :status_code => 503
-          }
-        end
+      logger.debug "Remote server status #{response.status}, Body = #{response.body}"
+      {
+        :body => response.body,
+        :status_code => response.status
+      }
     end
   end
 
