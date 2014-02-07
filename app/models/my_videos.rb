@@ -1,7 +1,14 @@
 class MyVideos < MyMergedModel
 
   def initialize(options={})
-    @playlist_title = options[:playlist_title] ? options[:playlist_title] : false
+    if options[:playlist_title]
+      @playlist_title = options[:playlist_title]
+      # Replace _slash_ with / since the front-end custom encodes slashes
+      # We can remove this once Apache is updated and allows 'AllowEncodedSlashes NoDecode'
+      if @playlist_title.include? '_slash_'
+        @playlist_title.gsub!('_slash_', '/')
+      end
+    end
   end
 
   def get_videos_as_json
