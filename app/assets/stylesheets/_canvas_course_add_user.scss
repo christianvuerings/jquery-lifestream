@@ -18,8 +18,9 @@
     margin: 0 0 10px 0;
   }
 
-  .bc-alert-box {
-    background-color: $bc-color-alert-red;
+  .bc-notice-box {
+    color: $bc-color-white;
+    background-color: $bc-color-notice-default;
     border: none;
     display: block;
     padding: 10px;
@@ -34,8 +35,8 @@
       font-size: 20px;
       background-color: transparent;
     }
-    .bc-alert-button-right {
-      .button.button.small {
+    .bc-notice-close-button {
+      .small {
         margin: 0;
         padding: 0;
       }
@@ -48,10 +49,12 @@
     border-radius: 3px;
   }
 
-  .bc-alert {
-    background-color: $bc-color-alert-red;
-    border-color: $bc-color-alert-red;
-    color: $bc-color-white;
+  .bc-notice-success {
+    background-color: $bc-color-notice-success;
+  }
+
+  .bc-notice-error {
+    background-color: $bc-color-notice-error;
   }
 
   .bc-fa-black {
