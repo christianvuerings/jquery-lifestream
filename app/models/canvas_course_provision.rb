@@ -15,20 +15,26 @@ class CanvasCourseProvision
   # Must be protected by a call to "user_authorized?"!
   def get_feed
     return nil unless user_authorized?
-    if @admin_term_slug && @admin_by_ccns
-      self.class.fetch_from_cache "#{@admin_term_slug}-#{@admin_by_ccns.join(',')}" do
+    self.class.fetch_from_cache instance_key do
+      if @admin_term_slug && @admin_by_ccns
         get_feed_by_ccns_internal
-      end
-    else
-      # Since admin state is part of the feed, the cache needs to distinguish an acting-as feed
-      # from the instructor's own feed.
-      cache_key = @admin_acting_as ?
-        "#{@admin_acting_as}_#{@uid}" :
-        @uid
-      self.class.fetch_from_cache cache_key do
+      else
         get_feed_internal
       end
     end
+  end
+
+  def instance_key
+    if @admin_term_slug && @admin_by_ccns
+      instance_key = "#{@admin_term_slug}-#{@admin_by_ccns.join(',')}"
+    elsif @admin_acting_as
+      # Since admin state is part of the feed, the cache needs to distinguish an acting-as feed
+      # from the instructor's own feed.
+      instance_key = "#{@admin_acting_as}_#{@uid}"
+    else
+      instance_key = @uid
+    end
+    instance_key
   end
 
   def create_course_site(term_slug, ccns)
@@ -37,6 +43,7 @@ class CanvasCourseProvision
     cpcs = CanvasProvideCourseSite.new(working_uid)
     cpcs.save
     cpcs.background.create_course_site(term_slug, ccns, @admin_by_ccns.present?)
+    self.class.expire instance_key unless @admin_by_ccns
     cpcs.job_id
   end
 
