@@ -83,3 +83,8 @@
   font-size: 14px;
   font-weight: bold;
 }
+
+/* Hide 'Add People' button in Course People section */
+a#addUsers.btn.btn-primary {
+  display: none;
+}

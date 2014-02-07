@@ -1,7 +1,112 @@
 .bc-page-course-add-user {
 
+  font-family: $header-font-family;
+  font-weight: normal;
   background: $cc-color-white;
   padding: 10px;
+
+  h2 {
+    color: $bc-color-off-black;
+    font-size: 24px;
+    line-height: 40px;
+    margin: 8px 0;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0 0 10px 0;
+  }
+
+  .bc-alert-box {
+    background-color: $bc-color-alert-red;
+    border: none;
+    display: block;
+    padding: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    .bc-close-button {
+      &:hover {
+        text-decoration: none;
+      }
+      font-size: 20px;
+      background-color: transparent;
+    }
+    .bc-alert-button-right {
+      .button.button.small {
+        margin: 0;
+        padding: 0;
+      }
+      display: inline-block;
+      float: right;
+    }
+  }
+
+  .bc-radius {
+    border-radius: 3px;
+  }
+
+  .bc-alert {
+    background-color: $bc-color-alert-red;
+    border-color: $bc-color-alert-red;
+    color: $bc-color-white;
+  }
+
+  .bc-fa-black {
+    color: $bc-color-off-black !important;
+  }
+
+  .bc-fa-blue {
+    color: $bc-color-help-link-blue;
+  }
+
+  .bc-user-search-notice-container {
+    margin: 4px 1px;
+    min-height: 15px;
+    .bc-user-search-notice-button {
+      color: $bc-color-help-link-blue;
+      font-size: 12px;
+    }
+    .bc-notice-left-margin {
+      margin-left: 16px;
+    }
+    .bc-user-search-notice {
+      font-size: 14px;
+      margin: 0 0 20px 0;
+      .bc-help-tip {
+        margin-top: 20px;
+        p {
+          margin: 0;
+          padding: 0;
+        }
+        p.bc-help-tip-emphasize {
+          font-style: italic;
+          margin: 2px 0 0 30px;
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .bc-visibility-notice {
+    color: $bc-color-off-black;
+    font-size: 13px;
+    margin: 8px 6px;
+    min-height: 20px;
+
+    .fa-lg {
+      color: $bc-color-off-black;
+      font-size: 16px;
+      line-height: 16px;
+    }
+
+    .bc-notice-left-margin {
+      margin-left: 22px;
+    }
+
+  }
 
   .bc-column-align-center {
     text-align: center;
@@ -10,7 +115,7 @@
   .bc-form {
     background: transparent;
     border: none;
-    padding: 10px 0;
+    padding: 2px 0;
 
     .bc-form-options {
       margin-top: 5px;
@@ -64,7 +169,7 @@
 
     .bc-horizontal-form {
       .columns {
-        margin-bottom: 3px;
+        margin-bottom: 0;
       }
     }
   }

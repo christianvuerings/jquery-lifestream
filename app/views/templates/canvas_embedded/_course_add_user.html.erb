@@ -1,28 +1,54 @@
 <script type="text/ng-template" id="templates/canvas_embedded/course_add_user.html">
   <div class="bc-page-course-add-user">
 
+    <div class="bc-visibility-notice">
+      <i class="fa fa-exclamation-triangle fa-lg cc-left bc-fa-black"></i>
+      <div class="bc-notice-left-margin">
+        This tool is <strong>ONLY</strong> visible to teachers, TAs &amp; designers.
+      </div>
+    </div>
+
     <h2>Add People</h2>
 
     <div data-ng-hide="show_error">
 
-      <div id="alerts-wrapper" class="row" data-ng-show="show_alerts">
+      <div id="alerts-wrapper" class="row collapse" data-ng-show="show_alerts">
         <div data-cc-spinner-directive>
-          <div data-ng-show="user_search_results_count > user_search_results.length" class="alert-box success radius">
+
+          <div data-ng-show="no_search_text_alert" class="bc-alert-box bc-alert bc-radius">
+            You did not enter any search terms. Please try again.
+            <div class="bc-alert-button-right">
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="no_search_text_alert=''"></button>
+            </div>
+          </div>
+
+          <div data-ng-show="no_search_results_notice" class="bc-alert-box bc-alert bc-radius">
+            Your search did not match any users with a CalNet ID.
+            <div class="bc-alert-button-right">
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="no_search_results_notice=''"></button>
+            </div>
+          </div>
+
+          <div data-ng-show="user_search_results_count > user_search_results.length" class="bc-alert-box success radius">
             Your search returned <span data-ng-bind="user_search_results_count"></span> results, but only the first
             <span data-ng-bind="user_search_results.length"></span> are shown.
             Please refine your search to limit the number of results.
           </div>
 
-          <div data-ng-show="addition_success_message" class="alert-box success radius">
+          <div data-ng-show="addition_success_message" class="bc-alert-box success radius">
             <span data-ng-bind="user_added.full_name"></span> was added to the
             &ldquo;<span data-ng-bind="user_added.section_name"></span>&rdquo; section of this course as a <span data-ng-bind="user_added.role_name"></span>.
-            <button data-ng-click="addition_success_message=''" class="button small">X</button>
+            <div class="bc-alert-button-right">
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="addition_success_message=''"></button>
+            </div>
           </div>
 
-          <div data-ng-show="addition_failure_message" class="alert-box alert radius">
+          <div data-ng-show="addition_failure_message" class="bc-alert-box bc-alert radius">
             <i class="fa fa-exclamation-triangle"></i>
             <span data-ng-bind="error_status"></span>
-            <button data-ng-click="addition_failure_message=''" class="button small">X</button>
+            <div class="bc-alert-button-right">
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="addition_failure_message=''"></button>
+            </div>
           </div>
         </div>
       </div>
@@ -30,20 +56,20 @@
       <div class="row collapse" data-ng-show="show_search_form">
 
         <div class="medium-6 columns">
-          <form data-ng-submit="searchUsers()">
+          <form data-ng-submit="searchUsers()" class="bc-form">
 
             <div class="row bc-horizontal-form">
               <div class="medium-5 columns">
                 <label for="search-text" class="cc-visuallyhidden">Search users</label>
-                <input id="search-text" class="bc-form-entity" type="text" placeholder="Search users" data-ng-model="search_text">
+                <input id="search-text" class="bc-form-entity bc-input" type="text" placeholder="Find a person to add" data-ng-model="search_text">
               </div>
 
               <div class="medium-6 columns">
                 <div class="row collapse">
-                  <div class="medium-4 columns hide-for-small">
-                    <label for="search-type" class="bc-label bc-label-horizontal bc-form-entities">Search by:</label>
+                  <div class="medium-2 columns hide-for-small">
+                    <label for="search-type" class="bc-label bc-label-horizontal bc-form-entities">By:</label>
                   </div>
-                  <div class="medium-8 columns">
+                  <div class="medium-10 columns">
                     <select id="search-type" data-ng-model="search_type" class="bc-form-entity">
                       <option value="name">Last Name, First Name</option>
                       <option value="email">Email</option>
@@ -64,12 +90,43 @@
 
       </div>
 
+      <div class="bc-user-search-notice-container">
+        <i class="fa fa-question-circle cc-left bc-fa-blue"></i>
+        <div class="bc-notice-left-margin">
+          <button class="cc-button-link bc-user-search-notice-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">Need help finding someone?</button>
+          <div class="bc-user-search-notice" data-ng-show="toggle.displayHelp">
+            <div class="bc-help-tip">
+              <p>
+                Use this search to find all users with CalNet IDs.
+              </p>
+              <p class="bc-help-tip-emphasize">
+                Any regularly enrolled student, concurrent enrollment student, faculty or
+                staff member at Berkeley has a <a href="https://calnet.berkeley.edu/">CalNet ID</a>.
+              </p>
+            </div>
+
+            <div class="bc-help-tip">
+              <p>
+                Anyone else you wish to add to your site must be sponsored as a
+                <a href="https://wikihub.berkeley.edu/display/calnet/CalNet+Guest+Accounts">CalNet Guest</a>.
+              </p>
+              <p class="bc-help-tip-emphasize">
+                For example, when you want to add someone from the community or a peer from another institution.
+              </p>
+            </div>
+
+            <div class="bc-help-tip">
+              <p>
+                Learn more in the
+                <a href="https://bcourses.berkeley.edu/courses/1048627/wiki/adding-a-user-manually-to-your-course">&ldquo;Adding a User Manually to your Course&rdquo;</a> help topic &gt;&gt;
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row collapse" data-ng-show="show_users_area">
         <div data-cc-spinner-directive>
-
-          <div class="bc-form" data-ng-show="user_search_results_count === 0">
-            <p><strong>No users found.</strong></p>
-          </div>
 
           <div data-ng-show="user_search_results.length > 0">
             <form data-ng-submit="addUser()" class="bc-form">

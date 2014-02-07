@@ -11,6 +11,8 @@
     var resetSearchState = function() {
       $scope.show_users_area = false;
       $scope.user_search_results_count = 0;
+      $scope.no_search_text_alert = false;
+      $scope.no_search_results_notice = false;
     };
 
     var resetImportState = function() {
@@ -22,6 +24,7 @@
 
     $scope.resetForm = function() {
       $scope.search_text = '';
+      $scope.show_alerts = false;
       resetSearchState();
       resetImportState();
     };
@@ -75,6 +78,14 @@
       resetSearchState();
       resetImportState();
 
+      // require search text
+      if ($scope.search_text === '') {
+        $scope.show_alerts = true;
+        $scope.no_search_text_alert = true;
+        $scope.is_loading = false;
+        return false;
+      }
+
       $scope.show_users_area = true;
       $scope.is_loading = true;
 
@@ -92,6 +103,9 @@
         $scope.user_search_results = data.users;
         if (data.users.length > 0) {
           $scope.user_search_results_count = data.users[0].result_count;
+        } else {
+          $scope.user_search_results_count = 0;
+          $scope.no_search_results_notice = true;
         }
         $scope.is_loading = false;
         $scope.show_alerts = true;

@@ -8,19 +8,23 @@
   var replace_add_people_button = function() {
     var $add_people_button_orig = $('a#addUsers.btn.btn-primary');
     if ($add_people_button_orig.length) {
-
       // Obtain URL for 'Add People' external tool page
       var add_people_exact_match = function() {
         return $.trim($(this).text()) === 'Add People';
       };
       var add_people_nav_href = $('div#left-side nav ul li a:contains("Add People")').filter(add_people_exact_match).attr('href');
 
-      // Replace button if present, otherwise only remove button
-      if (add_people_nav_href.length) {
+      // Replace button with link if 'Add People' tool present
+      if (typeof add_people_nav_href !== 'undefined') {
+
         var $add_people_link = $('<p class="pull-right" style="margin-top:7px;">Need to add a user? Go to <a href="' + add_people_nav_href + '">Add People</a>.</p>');
-        $add_people_button_orig.after($add_people_link).remove();
+        $add_people_button_orig.after($add_people_link);
+      // Otherwise replace with link to enable 'Add People' tool
       } else {
-        $add_people_button_orig.remove();
+        if (window.ENV.COURSE_ROOT_URL) {
+          var $enable_add_people_link = $('<p class="pull-right" style="margin-top:7px;">Need to add a user? Unhide "Add People" in <a href="' + window.ENV.COURSE_ROOT_URL + '/settings#tab-navigation' + '">Navigation Settings</a>.</p>');
+          $add_people_button_orig.after($enable_add_people_link);
+        }
       }
     }
   };
