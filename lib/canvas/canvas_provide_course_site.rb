@@ -190,6 +190,7 @@ class CanvasProvideCourseSite < CanvasCsv
     CanvasUserCoursesProxy.expire(@uid)
     CanvasMergedUserSites.expire(@uid)
     MyClasses::Merged.new(@uid).expire_cache
+    MyAcademics::Merged.new(@uid).expire_cache
     complete_step("Clearing bCourses course site cache")
   end
 
