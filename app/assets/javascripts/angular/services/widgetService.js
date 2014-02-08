@@ -2,20 +2,16 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('widgetService', function(analyticsService, $timeout) {
+  angular.module('calcentral.services').service('widgetService', function(analyticsService) {
 
     /**
      * Toggle whether an item for a widget should be shown or not
      */
-    var toggleShow = function(event, items, item, widget, scroll_to_element) {
+    var toggleShow = function(event, items, item, widget) {
       // Ignore toggling on Anchor events
       if (event && event.toElement && event.toElement.tagName === 'A') {
         return;
       }
-
-      // Whether to scroll to an element, the default is true
-      scroll_to_element = scroll_to_element === false ? false : true;
-
       // Toggle the current item
       item.show = !item.show;
 
@@ -36,14 +32,6 @@
           }
         }
       }
-
-      // Scroll to element so it is in the browsers viewport
-      if (event && event.toElement && item.show && scroll_to_element) {
-        $timeout(function() {
-          event.toElement.scrollIntoView();
-        }, 1);
-      }
-
       analyticsService.trackEvent(['Detailed view', item.show ? 'Open' : 'Close', widget]);
     };
 
