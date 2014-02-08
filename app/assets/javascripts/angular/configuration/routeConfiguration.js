@@ -26,6 +26,10 @@
       templateUrl: 'templates/academics_classinfo.html',
       controller: 'AcademicsController'
     }).
+    when('/academics/booklist', {
+      templateUrl: 'templates/academics_booklist.html',
+      controller: 'AcademicsController'
+    }).
     when('/academics/teaching-semester/:teaching_semester_slug/class/:class_slug', {
       templateUrl: 'templates/academics_classinfo.html',
       controller: 'AcademicsController'
