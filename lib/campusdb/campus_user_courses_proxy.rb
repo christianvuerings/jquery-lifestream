@@ -31,6 +31,9 @@ class CampusUserCoursesProxy < BaseProxy
       end
       merge_enrollments(campus_classes)
 
+      # Sort the hash in descending order of semester.
+      campus_classes = Hash[campus_classes.sort.reverse]
+
       # Merge each section's schedule, location, and instructor list.
       # TODO Is this information useful for non-current terms?
       campus_classes.values.each do |semester|
