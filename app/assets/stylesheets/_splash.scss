@@ -8,6 +8,12 @@ $cc-color-splash-blue-dark: #025A86;
     font-weight: bold;
     margin: 0 0 10px;
   }
+  h2 {
+    color: $cc-color-splash-blue-dark;
+    font-family: Arial;
+    font-size: 30px;
+    letter-spacing: 2px;
+  }
   p {
     line-height: 1.3;
   }
@@ -56,13 +62,20 @@ $cc-color-splash-blue-dark: #025A86;
     text-align: center;
   }
   .cc-page-splash-container {
+    margin: 0 auto;
     overflow: hidden;
+    padding: 20px 0 40px 0;
     > .columns {
       @include cc-column-sameheight;
     }
   }
   .cc-page-splash-container-left {
     border-right: 2px solid $cc-color-widget-background;
+    height: 100%;
+  }
+  .cc-page-splash-container-right {
+    height: 700px;
+    overflow-y: scroll;
   }
   .cc-page-splash-info {
     margin: 20px 10px 0;
@@ -97,6 +110,10 @@ $cc-color-splash-blue-dark: #025A86;
     .cc-page-splash-info-text {
       margin-bottom: 20px;
     }
+    .cc-page-splash-container-right {
+      height: 100%;
+      overflow: none;
+  }
   }
 
 }
