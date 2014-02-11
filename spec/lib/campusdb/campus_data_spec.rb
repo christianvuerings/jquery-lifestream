@@ -83,7 +83,7 @@ describe CampusData do
       expect(students[0]['enroll_status']).to eq "E"
       expect(students[0]['first_name']).to eq "STUDENT"
       expect(students[0]['last_name']).to eq "TEST-300939"
-      expect(students[0]['email_address']).to eq "test-300939@berkeley.edu"
+      expect(students[0]['student_email_address']).to eq "test-300939@berkeley.edu"
       expect(students[0]['student_id']).to eq "22300939"
       expect(students[0]['affiliations']).to eq "STUDENT-TYPE-REGISTERED"
     end
