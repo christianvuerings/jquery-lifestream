@@ -1,7 +1,7 @@
 require 'signet/oauth_2/client'
 
 class CanvasProxy < BaseProxy
-  include ClassLogger
+  include ClassLogger, SafeJsonParser
   extend Proxies::EnableForActAs
 
   attr_accessor :client
