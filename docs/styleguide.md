@@ -11,6 +11,7 @@
 * Specify **colors** in `hex` format and create a variable for them.
 * Write `0` instead of `0px`.
 * Use `data-ng-if` instead of `data-ng-show` or `data-ng-hide` when possible.
+* When you're adding / updating images, make sure to optimize them. (e.g. [imageOptim](http://imageoptim.com/))
 * Use multiple lines for `var` statements and specify `var` on each line:
 
     :-1:
