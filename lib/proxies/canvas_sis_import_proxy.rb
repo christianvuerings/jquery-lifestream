@@ -16,7 +16,7 @@ class CanvasSisImportProxy < CanvasProxy
   end
 
   def import_all_term_enrollments(term_id, csv_file_path)
-    import_with_check(csv_file_path, '_sis_import_enrollments', "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
+    import_with_check(csv_file_path, '_sis_import_enrollments')
   end
 
   def import_courses(csv_file_path)

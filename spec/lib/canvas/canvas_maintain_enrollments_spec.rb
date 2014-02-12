@@ -29,6 +29,9 @@ describe CanvasMaintainEnrollments do
       {'id' => 1005435, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000029, 'name' => "Franklin Rosenberg", 'sortable_name' => "Rosenberg, Franklin", 'short_name' => 'Franklin Rosenberg', 'sis_user_id' => "21563993", 'sis_login_id' => "754324", 'login_id' => "754324" }},
       {'id' => 1005436, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Stephen K. Whalen", 'sortable_name' => "Whalen, Stephen", 'short_name' => 'Stephen K. Whalen', 'sis_user_id' => "UID:754325", 'sis_login_id' => "754325", 'login_id' => "754325" }},
       {'id' => 1005437, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Ross Wagoner", 'sortable_name' => "Wagoner, Ross", 'short_name' => 'Ross Wagoner', 'sis_user_id' => "UID:754313", 'sis_login_id' => "754313", 'login_id' => "754313" }},
+      {'id' => 1005438, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000028, 'name' => "William Corgan", 'sortable_name' => "Corgan, William", 'short_name' => 'William Corgan', 'login_id' => "wcorgan@example.com" }},
+      {'id' => 1005439, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000029, 'name' => "Marcy Wretsky", 'sortable_name' => "Wretsky, Marcy", 'short_name' => 'Marcy Wretsky'}},
+      {'id' => 1005440, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Jim Iha", 'sortable_name' => "Iha, Jim", 'short_name' => 'Jim Iha', 'login_id' => "jiha@example.com" }},
     ]
   end
 
@@ -71,6 +74,23 @@ describe CanvasMaintainEnrollments do
       expect(result[:students]['754324']['id']).to eq 1005435
       expect(result[:instructors]['754322']['id']).to eq 1005433
       expect(result[:instructors]['754325']['id']).to eq 1005436
+    end
+
+    it "returns section enrollments without non-sis users" do
+      result = CanvasMaintainEnrollments.canvas_section_enrollments(123456)
+      expect(result).to be_an_instance_of Hash
+      expect(result[:students]).to be_an_instance_of Hash
+      result[:students].each do |login_id, student|
+        expect(student['user']['sis_user_id']).to be_an_instance_of String
+        expect(student['user']['sis_user_id'].length > 0).to be_true
+      end
+    end
+
+    it "logs existence of non-sis user enrollments" do
+      logger = double
+      CanvasMaintainEnrollments.stub(:logger).and_return(logger)
+      logger.should_receive(:warn).with("Canvas User IDs - 4000028, 4000029, 4000030 - enrolled in Canvas Section ID # 123456 without SIS User ID present").and_return(nil)
+      result = CanvasMaintainEnrollments.canvas_section_enrollments(123456)
     end
   end
 
@@ -193,13 +213,13 @@ describe CanvasMaintainEnrollments do
       expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754314"}.count).to eq 1
     end
 
-    it "updates student enrollments with modified SIS User ID" do
+    it "updates instructor enrollments with modified SIS User ID" do
       # LDAP UID 754313 - Ross Wagoner, should be updated with new SIS USER ID "21564892"
       expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21564892"}.count).to eq 1
     end
 
-    it "deletes students not detected in campus enrollments list" do
+    it "deletes instructors not detected in campus enrollments list" do
       # LDAP UID 754325 - Stephen K Whalen, should be dropped
       expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}.count).to eq 1
