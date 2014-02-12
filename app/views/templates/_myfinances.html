@@ -239,7 +239,7 @@
                 data-ng-class="{'cc-widget-table-hover-opened cc-widget-list-selected':(item.show)}"
                 data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
                  data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | filter:dateFilter | orderBy:sort.column:sort.descending">
-                <tr data-ng-class="{'cc-page-myfinances-red':(item.isPastDueDate === true), 'cc-page-myfinances-green':(item.transBalanceAmountFloat < 0), 'cc-page-myfinances-unapplied': (item.transStatus === 'Unapplied' && item.transType === 'Award')}">
+                <tr data-ng-class="{'cc-page-myfinances-red':(item.isPastDueDate === true), 'cc-page-myfinances-green':(item.transBalanceAmountFloat < 0), 'cc-page-myfinances-unapplied': (item.transStatus === 'Unapplied'), 'cc-page-myfinances-unapplied-award': (item.transStatus === 'Unapplied' && item.transType === 'Award')}">
                   <td class="cc-widget-table-hover-notriangle">
                     <span data-ng-bind="item.transDate | date:'MM/dd/yy'" class="hide-for-small"></span>
                     <span data-ng-bind="item.transDate | date:'MM/dd'" class="hide-for-medium-up"></span>
