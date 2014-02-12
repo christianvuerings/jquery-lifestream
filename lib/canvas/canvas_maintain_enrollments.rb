@@ -25,6 +25,15 @@ class CanvasMaintainEnrollments < CanvasCsv
   def self.canvas_section_enrollments(canvas_section_id)
     raise ArgumentError, "canvas_section_id must be a Fixnum" if canvas_section_id.class != Fixnum
     canvas_section_enrollments = CanvasSectionEnrollmentsProxy.new(:section_id => canvas_section_id).list_enrollments
+
+    # Filter out non-SIS user enrollments
+    sis_user_filter = lambda {|e| !e['user'].has_key?('sis_user_id') }
+    if (non_sis_enrollments = canvas_section_enrollments.select(&sis_user_filter))
+      canvas_section_enrollments.reject!(&sis_user_filter)
+      user_ids = non_sis_enrollments.collect {|e| e['user']['id']}.join(', ')
+      logger.warn("Canvas User IDs - #{user_ids} - enrolled in Canvas Section ID # #{canvas_section_id} without SIS User ID present")
+    end
+
     canvas_student_enrollments_array = canvas_section_enrollments.select {|e| e['type'] == 'StudentEnrollment' }
     canvas_instructor_enrollments_array = canvas_section_enrollments.select {|e| e['type'] == 'TeacherEnrollment' }
     canvas_student_enrollments_hash = Hash[ canvas_student_enrollments_array.map {|u| [u['user']['login_id'], u]} ]
