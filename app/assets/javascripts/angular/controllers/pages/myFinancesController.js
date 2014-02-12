@@ -103,7 +103,7 @@
           parseDate(finances.summary, i);
           parseAmount(finances.summary, i);
 
-          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount' || i === 'anticipatedAid') {
+          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount') {
             parseToFloat(finances.summary, i);
           }
         }
