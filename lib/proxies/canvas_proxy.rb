@@ -49,6 +49,10 @@ class CanvasProxy < BaseProxy
       end
       # Canvas proxy returns nil for error response.
       if response.status >= 400
+        if existence_check && response.status == 404
+          logger.debug("404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}")
+          return nil
+        end
         raise Calcentral::ProxyError.new(
                 "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}")
       else
@@ -101,8 +105,8 @@ class CanvasProxy < BaseProxy
     end
   end
 
-  def log_error(fetch_options, response)
-    logger.error "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}"
+  def existence_check
+    false
   end
 
 end
