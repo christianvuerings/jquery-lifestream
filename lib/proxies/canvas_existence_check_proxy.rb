@@ -15,11 +15,8 @@ class CanvasExistenceCheckProxy < CanvasProxy
     response.present?
   end
 
-  def log_error(fetch_options, response)
-    # 404 is an expected response, so don't bother logging.
-    if response.status != 404
-      super
-    end
+  def existence_check
+    true
   end
 
 end

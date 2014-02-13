@@ -52,8 +52,8 @@ class CanvasSisImportProxy < CanvasProxy
 
   def import_successful?(response)
     return false unless (response && response.status == 200 && json = safe_json(response.body))
-    import_status = import_status(json["id"])
-    import_was_successful?(import_status)
+    attempted_import_status = import_status(json["id"])
+    import_was_successful?(attempted_import_status)
   end
 
   def generate_course_sis_id(canvas_course_id)
@@ -114,7 +114,7 @@ class CanvasSisImportProxy < CanvasProxy
         end
       end
     end
-    logger.error("SIS import failed or incompletely processed; status: #{import_status}")
+    logger.error("SIS import failed or incompletely processed; status: #{json}")
     false
   end
 

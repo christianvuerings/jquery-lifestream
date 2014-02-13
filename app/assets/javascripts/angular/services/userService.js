@@ -105,7 +105,7 @@
       analyticsService.trackEvent(['Authentication', 'Redirect to login']);
       // smart_path: the non-public path the unauthenticated user wishes to access after login
       //window.location = '/login?smart_path='+encodeURIComponent($location.path());
-      window.location = '/login'
+      window.location = '/login';
     };
 
     /**
