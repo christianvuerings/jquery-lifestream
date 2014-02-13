@@ -89,12 +89,8 @@ class CanvasMaintainEnrollments < CanvasCsv
     campus_data_rows = CampusData.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
     campus_data_rows.each do |campus_data_row|
       enrollee_uid = campus_data_row['ldap_uid'].to_s
-      # Append instructor for update if found. Remove from Canvas enrollment list
+      # Remove instructor from Canvas enrollment list if already present
       if canvas_instructor_enrollments.has_key?(enrollee_uid)
-        if canvas_instructor_enrollment_needs_update?(campus_data_row, canvas_instructor_enrollments[enrollee_uid])
-          append_enrollment_and_user('instructor', course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
-        end
-        # Remove from Canvas enrollment list
         canvas_instructor_enrollments.delete(enrollee_uid)
       # Otherwise add new enrollment
       else
@@ -149,14 +145,8 @@ class CanvasMaintainEnrollments < CanvasCsv
 
   # Returns true if canvas student enrollment differs from campus enrollment state
   def canvas_student_enrollment_needs_update?(campus_student_enrollment, canvas_student_enrollment)
-    return true if canvas_student_enrollment['user']['sis_user_id'] != derive_sis_user_id(campus_student_enrollment)
     return true if canvas_student_enrollment['role'] != ENROLL_STATUS_TO_CANVAS_ROLE[campus_student_enrollment['enroll_status']]
     return false
   end
 
-  # Returns true if canvas instructor enrollment differs from campus enrollment state
-  def canvas_instructor_enrollment_needs_update?(campus_instructor_enrollment, canvas_instructor_enrollment)
-    return true if canvas_instructor_enrollment['user']['sis_user_id'] != derive_sis_user_id(campus_instructor_enrollment)
-    return false
-  end
 end

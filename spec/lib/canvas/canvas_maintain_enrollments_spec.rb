@@ -140,35 +140,29 @@ describe CanvasMaintainEnrollments do
       subject.refresh_students_in_section(campus_section, course_id, section_id, canvas_student_enrollments, enrollments_csv, known_users, users_csv)
     end
 
-    it "leaves makes no modifications to existing enrollments" do
+    it "makes no modifications to existing enrollments" do
       # UID 754320 is supposed to be left alone - Student ID: 21563987
-      expect(enrollments_csv.length).to eq(5)
+      expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563987"}.count).to eq 0
     end
 
     it "adds new student enrollments not detected in canvas enrollments list" do
       # UID 754322 is supposed to be new - Student ID: 23270877
       # UID 754325 is supposed to be new - Student ID: 21563378
-      expect(enrollments_csv.length).to eq(5)
+      expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "23270877"}.count).to eq 1
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563378"}.count).to eq 1
     end
 
-    it "updates student enrollments with modified SIS User ID" do
-      # UID 754321 is supposed to be updated due to SIS ID format change - Student ID: 21563990
-      expect(enrollments_csv.length).to eq(5)
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "21563990"}.count).to eq 1
-    end
-
     it "updates student enrollments with modified role" do
       # UID 754323 is supposed to be updated due to enrollment status change - Student ID: 21563992
-      expect(enrollments_csv.length).to eq(5)
+      expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563992"}.count).to eq 1
     end
 
     it "deletes students not detected in campus enrollments list" do
       # UID 754324 is supposed to be dropped - Student ID: 21563993
-      expect(enrollments_csv.length).to eq(5)
+      expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563993"}.count).to eq 1
       deleted_entry = enrollments_csv.select {|entry| entry["user_id"] == "21563993"}
       expect(deleted_entry[0]['status']).to eq "deleted"
@@ -201,37 +195,30 @@ describe CanvasMaintainEnrollments do
 
     it "leaves makes no modifications to existing enrollments" do
       # LDAP UID 754322 - Roy Becerra, should be left alone
-      expect(enrollments_csv.length).to eq(4)
+      expect(enrollments_csv.length).to eq(3)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754322"}.count).to eq 0
     end
 
     it "adds new instructor enrollments not detected in canvas enrollments list" do
       # LDAP UID 754311 - Bryan Wagner, should be added
       # LDAP UID 754314 - Do Quang Hoa, should be added
-      expect(enrollments_csv.length).to eq(4)
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754311"}.count).to eq 1
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754314"}.count).to eq 1
-    end
-
-    it "updates instructor enrollments with modified SIS User ID" do
-      # LDAP UID 754313 - Ross Wagoner, should be updated with new SIS USER ID "21564892"
-      expect(enrollments_csv.length).to eq(4)
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "21564892"}.count).to eq 1
+      expect(enrollments_csv.length).to eq(3)
+      expected_enrollment_1 = enrollments_csv.select {|entry| entry["user_id"] == "UID:754311"}
+      expected_enrollment_2 = enrollments_csv.select {|entry| entry["user_id"] == "UID:754314"}
+      expect(expected_enrollment_1[0]).to be_an_instance_of Hash
+      expect(expected_enrollment_2[0]).to be_an_instance_of Hash
+      expect(expected_enrollment_1[0]['role']).to eq "teacher"
+      expect(expected_enrollment_2[0]['role']).to eq "teacher"
     end
 
     it "deletes instructors not detected in campus enrollments list" do
       # LDAP UID 754325 - Stephen K Whalen, should be dropped
-      expect(enrollments_csv.length).to eq(4)
+      expect(enrollments_csv.length).to eq(3)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}.count).to eq 1
       deleted_entry = enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}
       expect(deleted_entry[0]['status']).to eq "deleted"
     end
 
-    it "updates all enrollments with sis teacher role" do
-      enrollments_csv.each do |entry|
-        expect(entry['role']).to eq "teacher"
-      end
-    end
   end
 
   describe '#append_enrollment_and_user' do
@@ -312,64 +299,6 @@ describe CanvasMaintainEnrollments do
     end
   end
 
-  # context 'when student is waitlisted' do
-  #   let(:enrollment_row) { invariable_campus_row.merge('enroll_status' => 'W') }
-  #   it 'notes the waitlist status' do
-  #     expect(enrollments_csv.length).to eq(1)
-  #     expect(enrollments_csv[0]).to eq(invariable_enrollment_data.merge('role' => 'Waitlist Student'))
-  #   end
-  # end
-
-  # context 'when normally enrolled' do
-  #   let(:enrollment_row) { invariable_campus_row.merge('enroll_status' => 'E') }
-  #   context 'when user has already been added' do
-  #     let(:known_users)  { [uid] }
-  #     it 'leaves user records alone' do
-  #       expect(enrollments_csv.length).to eq(1)
-  #       expect(enrollments_csv[0]).to eq(invariable_enrollment_data.merge('role' => 'student'))
-  #       expect(known_users.length).to eq(1)
-  #       expect(users_csv.length).to eq(0)
-  #     end
-  #   end
-  # end
-
-  #  context 'when user exists within Canvas section' do
-  #     context 'when enrollment is the same' do
-  #       it 'does not update enrollment data via csv' do
-  #         pending
-  #       end
-  #     end
-  #     context 'when enrollment has changed' do
-  #       it 'updates enrollment data via csv' do
-  #         pending
-  #       end
-  #     end
-  #   end
-  #
-
-  # describe '#append_teaching_and_user' do
-  #   let(:campus_data_row) { invariable_campus_row.merge('instructor_func' => 1) }
-  #   before { subject.append_teaching_and_user(course_id, section_id, campus_data_row, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv) }
-  #   context 'when user has already been added' do
-  #     let(:known_users)  { [uid] }
-  #     it 'leaves user records alone' do
-  #       expect(enrollments_csv.length).to eq(1)
-  #       expect(enrollments_csv[0]).to eq(invariable_enrollment_data.merge('role' => 'teacher'))
-  #       expect(known_users.length).to eq(1)
-  #       expect(users_csv.length).to eq(0)
-  #     end
-  #   end
-  #   context 'when user is new to Canvas' do
-  #     let(:known_users)  { [rand(999999).to_s] }
-  #     it 'adds user data' do
-  #       expect(enrollments_csv.length).to eq(1)
-  #       expect(enrollments_csv[0]).to eq(invariable_enrollment_data.merge('role' => 'teacher'))
-  #       expect(known_users.length).to eq(2)
-  #       expect(users_csv.length).to eq(1)
-  #     end
-  #   end
-  # end
-
   describe "#canvas_student_enrollment_needs_update?" do
     before { subject.stub(:derive_sis_user_id).and_return("2320123") }
     let(:invariable_campus_student_enrollment) do
@@ -386,42 +315,10 @@ describe CanvasMaintainEnrollments do
       end
     end
 
-    context "when sis user id has changed" do
-      before { subject.stub(:derive_sis_user_id).and_return("UID:123234") }
-      it "returns true" do
-        expect(subject.canvas_student_enrollment_needs_update?(campus_student_enrollment, canvas_student_enrollment)).to be_true
-      end
-    end
-
     context "when users role has changed" do
       let(:campus_student_enrollment) { invariable_campus_student_enrollment.merge('enroll_status' => 'W') }
       it "returns true" do
         expect(subject.canvas_student_enrollment_needs_update?(campus_student_enrollment, canvas_student_enrollment)).to be_true
-      end
-    end
-  end
-
-  describe "#canvas_instructor_enrollment_needs_update?" do
-    before { subject.stub(:derive_sis_user_id).and_return("UID:210799") }
-    let(:invariable_campus_instructor_enrollment) do
-      # {"ldap_uid"=>"123234", "enroll_status"=>"E", "first_name"=>"John", "last_name"=>"Doe", "email_address"=>"jdoe@example.com", "student_id"=>"2320123", "affiliations"=>"STUDENT-TYPE-REGISTERED"}
-      {"person_name"=>"Maria Montessori", "ldap_uid"=>"210799", "instructor_func"=>"1", "first_name"=>"Maria", "last_name"=>"Montessori", "email_address"=>"mmontessori@berkeley.edu", "student_id"=>nil, "affiliations"=>"EMPLOYEE-TYPE-ACADEMIC"}
-    end
-    let(:canvas_instructor_enrollment) do
-      {'id' => 1005448, 'course_id' => 1050124, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000027, 'name' => "Maria Montessori", 'sortable_name' => "Montessori, Maria", 'short_name' => 'Maria Montessori', 'sis_user_id' => "UID:210799", 'sis_login_id' => "210799", 'login_id' => "210799" }}
-    end
-    let(:campus_instructor_enrollment) { invariable_campus_instructor_enrollment }
-
-    context "when enrollment is identical" do
-      it "returns false" do
-        expect(subject.canvas_instructor_enrollment_needs_update?(campus_instructor_enrollment, canvas_instructor_enrollment)).to be_false
-      end
-    end
-
-    context "when sis user id has changed" do
-      before { subject.stub(:derive_sis_user_id).and_return("7891223") }
-      it "returns true" do
-        expect(subject.canvas_instructor_enrollment_needs_update?(campus_instructor_enrollment, canvas_instructor_enrollment)).to be_true
       end
     end
   end
