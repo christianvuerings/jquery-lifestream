@@ -59,7 +59,8 @@ class SessionsController < ApplicationController
     # authentication completes.
     # The smart_path parameter is used for unauthenticated users to
     # reach a non-public route after a successful CAS login.
-    redirect_to "/auth/cas?smart_path=#{params[:smart_path]}"
+    # redirect_to "/auth/cas?smart_path=#{params[:smart_path]}"
+    redirect_to "/auth/cas"
   end
 
   def failure
@@ -72,7 +73,8 @@ class SessionsController < ApplicationController
 
   # use the smart_path value we pass to omniauth if returned
   def smart_success_path
-    (params[:smart_path].present?) ? params[:smart_path] : '/dashboard'
+    #(params[:smart_path].present?) ? params[:smart_path] : '/dashboard'
+    '/dashboard'
   end
 
   def continue_login_success(uid)
