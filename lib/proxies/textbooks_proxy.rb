@@ -109,6 +109,19 @@ class TextbooksProxy < BaseProxy
           end
         end
 
+        book_unavailable_error = case book_unavailable_error
+        when 'No Information Received For This Course.'
+          'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
+        when 'We are unable to find the specified course.'
+          'Textbook information for this course could not be found.'
+        when 'No Store Supplied Material/See instructor for any custom material.'
+          'No materials for this course are supplied by the Cal Student Store. Contact the instructor regarding any custom materials.'
+        when 'No Books Required For This Course.'
+          'There are no required books for this course.'
+        else
+          book_unavailable_error
+        end
+
         book_response = {
           :book_details => []
         }

@@ -57,7 +57,7 @@ describe "TextbooksProxy" do
     if proxy_response[:status_code] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
-      expect(feed[:book_unavailable_error]).to eq 'We are unable to find the specified course.'
+      expect(feed[:book_unavailable_error]).to eq 'Textbook information for this course could not be found.'
     end
   end
 end
