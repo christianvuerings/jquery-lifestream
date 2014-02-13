@@ -79,7 +79,7 @@ gem "retriable", "~> 1.3.3.1"
 group :assets do
 
   # Our very own library for angular dependency!
-  gem "angular-gem", "1.2.9"
+  gem "angular-gem", "1.2.12"
 
   # Datepicker
   gem "pikaday-gem", "~> 1.1.0.0"

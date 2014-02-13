@@ -13,6 +13,24 @@
       'Spring': 2
     };
 
+    $scope.choices = [{
+      value: 'balance',
+      label: 'Balance'
+    }, {
+      value: 'transactions',
+      label: 'All Transactions'
+    }, {
+      value: 'daterange',
+      label: 'Date Range'
+    }, {
+      value: 'term',
+      label: 'Term'
+    }];
+    $scope.choice = $scope.choices[0].value;
+
+    var startDate = '';
+    var endDate = '';
+
     var parseDate = function(obj, i) {
       var regex = /^(\d{4})[\-](0?[1-9]|1[012])[\-](0?[1-9]|[12][0-9]|3[01])$/;
       var item = obj[i] + '';
@@ -85,7 +103,7 @@
           parseDate(finances.summary, i);
           parseAmount(finances.summary, i);
 
-          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount' || i === 'anticipatedAid') {
+          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount') {
             parseToFloat(finances.summary, i);
           }
         }
@@ -179,41 +197,14 @@
       $scope.myfinances.terms = terms;
 
       selectCurrentTerm(addedTerms, terms);
+
+      $scope.choiceChange();
     };
 
     var statuses = {
       'open': ['Current','Past due','Future', 'Error', 'Installment', 'Open'],
       'minimumamountdue': ['Current','Past due'],
       'all': ['Current','Past due','Future', 'Closed', 'Error', 'Unapplied', 'Installment', 'Open']
-    };
-
-    /**
-     * Create a count for a certain item
-     */
-    var createCount = function(statusArray) {
-      var count = 0;
-      for (var i = 0; i < $scope.myfinances.activity.length; i++){
-        var item = $scope.myfinances.activity[i];
-
-        if (statusArray.indexOf(item.transStatus) !== -1) {
-          count++;
-        }
-      }
-      if (count !== 0) {
-        $scope.countButtons++;
-      }
-      return count;
-    };
-
-    /**
-     * Create the right counts. This is used for hiding / showing buttons
-     */
-    var createCounts = function() {
-      $scope.countButtons = 0;
-      $scope.counts = {
-        'open': createCount(statuses.open),
-        'all': createCount(statuses.all)
-      };
     };
 
     /**
@@ -230,8 +221,6 @@
           parseData(data);
 
           createTerms();
-
-          createCounts();
         }
 
         if (data.status_code && data.status_code >= 400) {
@@ -287,6 +276,60 @@
 
     $scope.statusFilter = function(item) {
       return ($scope.searchStatuses.indexOf(item.transStatus) !== -1);
+    };
+
+    var resetSearch = function() {
+      $scope.search.transTerm = '';
+      $scope.search.transType = '';
+      $scope.transStatusSearch = '';
+      $scope.startDate = '';
+      $scope.endDate = '';
+    };
+
+    $scope.choiceChange = function() {
+      var choice = $scope.choice;
+      resetSearch();
+      if (choice === 'balance') {
+        $scope.transStatusSearch = 'open';
+      } else if (choice === 'transactions') {
+        $scope.transStatusSearch = '';
+      } else if (choice === 'term') {
+        $scope.search.transTerm = $scope.search_term;
+      }
+    };
+
+    /**
+     * Create JavaScript date object based on the input from the datepicker
+     * @param  {String} date Date as a string input
+     * @return {Object | String} Empty string when no date & date object when there is a date
+     */
+    var createDateValues = function(date) {
+      var mmddyy_regex = /^(0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])[\/]((19|20)\d\d)$/;
+
+      if (date) {
+        var dateValues = date.match(mmddyy_regex);
+        return new Date(dateValues[3], parseInt(dateValues[1], 10) - 1, dateValues[2]);
+      }
+
+      return '';
+    };
+
+    $scope.$watch('startDate + endDate', function() {
+      startDate = createDateValues($scope.startDate);
+      endDate = createDateValues($scope.endDate);
+    });
+
+    $scope.dateFilter = function(item) {
+      if (startDate && endDate) {
+        return item.transDate >= startDate  && item.transDate <= endDate;
+      }
+      if (startDate) {
+        return item.transDate >= startDate;
+      }
+      if (endDate) {
+        return item.transDate <= endDate;
+      }
+      return true;
     };
 
     // We need to wait until the user is loaded

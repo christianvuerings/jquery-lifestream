@@ -75,9 +75,17 @@ describe CampusData do
   it "should find some students in Biology 1a" do
     students = CampusData.get_enrolled_students("7309", "2013", "D")
     students.should_not be_nil
+    students.should be_an_instance_of Array
     if CampusData.test_data?
       # we will only have predictable enrollments in our fake Oracle db.
       students.empty?.should be_false
+      expect(students[0]['ldap_uid']).to eq "300939"
+      expect(students[0]['enroll_status']).to eq "E"
+      expect(students[0]['first_name']).to eq "STUDENT"
+      expect(students[0]['last_name']).to eq "TEST-300939"
+      expect(students[0]['student_email_address']).to eq "test-300939@berkeley.edu"
+      expect(students[0]['student_id']).to eq "22300939"
+      expect(students[0]['affiliations']).to eq "STUDENT-TYPE-REGISTERED"
     end
     students.each do |student_row|
       student_row["enroll_status"].blank?.should be_false
@@ -217,11 +225,16 @@ describe CampusData do
     data = CampusData.get_section_instructors("2013", "D", "7309")
     data.should_not be_nil
     if CampusData.test_data?
-      data.length.should == 2
-      data[0]["person_name"].present?.should be_true
-      data[0]["instructor_func"].should == "1"
-      data[1]["person_name"].should == "Chris Tweney"
-      data[1]["instructor_func"].should == "4"
+      expect(data[0]["ldap_uid"]).to eq "238382"
+      expect(data[0]["student_id"]).to eq "238382" # student id is typically nil for instructors
+      expect(data[0]["first_name"]).to eq "BERNADETTE ANNE"
+      expect(data[0]["last_name"]).to eq "GEUY"
+      expect(data[0]["person_name"]).to eq "GEUY,BERNADETTE ANNE"
+      expect(data[0]["email_address"]).to eq "238382@example.edu"
+      expect(data[0]["affiliations"]).to eq "EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED"
+
+      expect(data[1]["person_name"]).to eq "Chris Tweney"
+      expect(data[1]["instructor_func"]).to eq "4"
     end
   end
 

@@ -54,7 +54,13 @@ class SessionsController < ApplicationController
   end
 
   def new
-    redirect_to '/auth/cas'
+    # Any parameters appended here to the OmniAuth provider will be
+    # returned as parameters to the OmniAuth callback endpoint when
+    # authentication completes.
+    # The smart_path parameter is used for unauthenticated users to
+    # reach a non-public route after a successful CAS login.
+    # redirect_to "/auth/cas?smart_path=#{params[:smart_path]}"
+    redirect_to "/auth/cas"
   end
 
   def failure
@@ -65,6 +71,12 @@ class SessionsController < ApplicationController
 
   private
 
+  # use the smart_path value we pass to omniauth if returned
+  def smart_success_path
+    #(params[:smart_path].present?) ? params[:smart_path] : '/dashboard'
+    '/dashboard'
+  end
+
   def continue_login_success(uid)
     # Force a new CSRF token to be generated on login.
     # http://homakov.blogspot.com.es/2013/06/cookie-forcing-protection-made-easy.html
@@ -74,7 +86,7 @@ class SessionsController < ApplicationController
       redirect_to '/uid_error'
     elsif UserApi.is_allowed_to_log_in?(uid)
       session[:user_id] = uid
-      redirect_to '/dashboard', :notice => "Signed in!"
+      redirect_to smart_success_path, :notice => "Signed in!"
     else
       redirect_to '/sorry'
     end

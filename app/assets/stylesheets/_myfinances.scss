@@ -1,28 +1,30 @@
 .cc-page-myfinances {
   .cc-page-myfinances-account-activity-search {
-    margin: 6px 10px 0 5px;
     input {
       font-size: 12px;
     }
   }
-  .cc-page-myfinances-account-activity-selection {
-    margin: 20px 10px;
-    .cc-button-group {
-      margin-right: 10px;
-      max-width: 200px;
-    }
+  .cc-page-myfinances-account-filter {
+    background: transparent;
+    border: none;
+    margin: 20px 15px;
+    padding: 0;
     .cc-select {
-      max-width: 120px;
+      margin-right: 10px;
+      max-width: 130px;
+    }
+    i {
+      margin-right: 10px;
     }
   }
   .cc-page-myfinances-account-summary-buttons {
-    margin: 10px 20px 10px 10px;
+    margin: 10px 20px 10px 15px;
   }
   .cc-page-myfinances-account-summary-list {
     font-size: 14px;
     padding: 0;
     .cc-page-myfinances-account-summary-item {
-      padding: 8px 20px 8px 10px;
+      padding: 8px 20px 8px 15px;
     }
     .cc-page-myfinances-account-summary-subtitle {
       font-size: 11px;
@@ -31,6 +33,9 @@
   }
   .cc-page-myfinances-amount {
     text-align: right;
+  }
+  .cc-page-myfinances-date-input {
+    width: auto;
   }
   .cc-page-myfinances-dpp {
     background: $cc-color-widget-background;
@@ -104,19 +109,17 @@
   }
   .cc-page-myfinances-unapplied {
     font-style: italic;
+  }
+  .cc-page-myfinances-unapplied-award {
     font-weight: bold;
     opacity: 0.6;
-  }
-  .cc-page-myfinances-unapplied-awards {
-    border-top: 2px solid $cc-color-widget-background;
-    font-style: italic;
   }
   @media print {
     .cc-page-myfinances-account-activity-search input {
       border: none;
     }
     .cc-page-myfinances-print-label {
-      margin: 4px;
+      margin: 4px 0;
     }
     .cc-select {
       border: none;
