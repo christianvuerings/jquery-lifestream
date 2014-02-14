@@ -1,5 +1,10 @@
 /* Print Stylesheet */
 @media print {
+  @page
+  {
+    margin: 15mm 10mm;
+    size: auto;
+  }
   * {
     background: transparent !important;
     box-shadow: none !important;

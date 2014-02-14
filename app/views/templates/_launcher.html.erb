@@ -1,8 +1,8 @@
-<header class="cc-print-hide">
+<header>
   <div class="cc-offcanvas-icon cc-left" data-ng-show="api.user.events.isAuthenticated">
     <button data-ng-click="off_canvas_menu.show=!off_canvas_menu.show" /><i class="fa fa-reorder"></i></button>
   </div>
-  <div class="cc-header-logo" data-ng-class="{'hide-for-small':(api.user.events.isAuthenticated)}">
+  <div class="cc-header-logo cc-print-show" data-ng-class="{'hide-for-small':(api.user.events.isAuthenticated)}">
     <a href="/dashboard">
       <span class="cc-visuallyhidden">Return to dashboard</span>
       <%= render 'templates/svg/calcentral_logo' %>
