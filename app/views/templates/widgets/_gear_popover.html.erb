@@ -14,12 +14,12 @@
     <ul class="cc-popover-items">
       <li class="cc-popover-item">
         <button class="cc-button-link cc-popover-link"
-          data-ng-click="api.util.redirect('settings')">Settings
+          data-ng-click="api.popover.clickThrough('Gear - Settings');api.util.redirect('settings')">Settings
         </button>
       </li>
       <li class="cc-popover-item">
         <button class="cc-button-link cc-popover-link"
-          data-ng-click="api.user.signOut()">Log out
+          data-ng-click="api.popover.clickThrough('Gear - Logout');api.user.signOut())">Log out
         </button>
       </li>
     </ul>
