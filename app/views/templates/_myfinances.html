@@ -283,7 +283,7 @@
                       </div>
                       <div data-ng-if="item.transPotentialDisbursementDate">
                         <strong>Potential Disbursement Date:</strong>
-                        <span data-ng-bind="item.transPotentialDisbursementDate"></span>
+                        <span data-ng-bind="item.transPotentialDisbursementDate | date:'MM/dd/yy'"></span>
                       </div>
                       <div data-ng-if="item.transDept">
                         <strong>Department:</strong>
