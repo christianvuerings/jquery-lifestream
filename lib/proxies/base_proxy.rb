@@ -10,11 +10,6 @@ class BaseProxy
     @uid = options[:user_id]
   end
 
-  def instance_cache_key
-    # returns the full cache key (incl user or global prefix) used by this proxy instance.
-    self.class.key @uid
-  end
-
   def safe_request(user_message_on_exception = "An unknown server error occurred.", return_nil_on_generic_error = false)
     begin
       yield
