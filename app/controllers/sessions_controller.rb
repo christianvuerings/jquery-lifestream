@@ -54,7 +54,8 @@ class SessionsController < ApplicationController
   end
 
   def new
-    redirect_to "/auth/cas?url=#{params[:url]}"
+    # redirect_to "/auth/cas?url=#{params[:url]}"
+    redirect_to '/auth/cas'
   end
 
   def failure
