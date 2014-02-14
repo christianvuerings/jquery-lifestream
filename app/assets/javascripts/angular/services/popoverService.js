@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('popoverService', function($document, $rootScope) {
+  angular.module('calcentral.services').service('popoverService', function($document, $rootScope, analyticsService) {
 
     var popovers = {};
 
@@ -52,6 +52,10 @@
       }
     };
 
+    var clickThrough = function(popover) {
+      analyticsService.trackEvent(['Popover', 'clickThrough', popover]);
+    };
+
     /**
      * Toggle a certain popover
      * @param {String} popover Popover name
@@ -60,13 +64,17 @@
       closeOthers(popover);
       popovers[popover] = !popovers[popover];
       bindEventHandlers(popovers[popover]);
+      if (popovers[popover]) {
+        analyticsService.trackEvent(['Popover', 'Open', popover]);
+      }
     };
 
     // Expose methods
     return {
       closeAll: closeAll,
       status: status,
-      toggle: toggle
+      toggle: toggle,
+      clickThrough: clickThrough
     };
 
   });

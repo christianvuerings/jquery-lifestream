@@ -28,14 +28,14 @@
         </div>
       </div>
       <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && api.user.profile.has_google_access_token">
-        No items available for your <a data-ng-href="{{badge.display.href}}" data-ng-bind-template="{{badge.display.name}} account"></a>
+        No items available for your <a data-ng-href="{{badge.display.href}}" data-ng-click="api.popover.clickThrough(badge.display.name + ' - No Items')" data-ng-bind-template="{{badge.display.name}} account"></a>
       </div>
       <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && !api.user.profile.has_google_access_token">
         To display your bConnected activity, visit the
-         <button class="cc-button-link cc-popover-link" data-ng-click="api.util.redirect('settings')">settings page</button>
+         <button class="cc-button-link cc-popover-link" data-ng-click="api.popover.clickThrough(badge.display.name + ' - No Google Account');api.util.redirect('settings')">settings page</button>
       </div>
       <!-- Item container -->
-      <ul class="cc-popover-items cc-scroll" data-ng-show="badge.items.length">
+      <ul class="cc-popover-items cc-scroll" data-ng-click="api.popover.clickThrough(badge.display.name)" data-ng-show="badge.items.length">
         <li class="cc-popover-item" data-ng-repeat="item in badge.items">
           <div data-ng-switch on="badge.display.name">
             <div data-ng-switch-when="bMail">
