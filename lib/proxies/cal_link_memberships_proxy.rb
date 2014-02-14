@@ -3,13 +3,7 @@ class CalLinkMembershipsProxy < CalLinkProxy
   include SafeJsonParser
 
   def get_memberships
-    safe_request("Remote server unreachable") do
-      internal_get_memberships
-    end
-  end
-
-  def internal_get_memberships
-    self.class.fetch_from_cache @uid do
+    self.class.smart_fetch_from_cache(@uid, "Remote server unreachable") do
       url = "#{Settings.cal_link_proxy.base_url}/api/memberships"
       params = build_params
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"

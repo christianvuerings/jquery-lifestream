@@ -10,14 +10,12 @@ class PlaylistsProxy < BaseProxy
   end
 
   def get
-    safe_request do
-      request(@url, 'playlists')
-    end
+    request(@url, 'playlists')
   end
 
   def request(path, vcr_cassette, params = {})
     #logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expirat
-    self.class.fetch_from_cache do
+    self.class.smart_fetch_from_cache do
       response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
         Faraday::Connection.new(
           :url => @url,

@@ -38,7 +38,7 @@ class FinancialsProxy < BaseProxy
           else
             body = "My Finances is currently unavailable. Please try again later."
           end
-          raise Calcentral::ProxyException.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
+          raise Calcentral::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
             body: body,
             status_code: response.code
           })

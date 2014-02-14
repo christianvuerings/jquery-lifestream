@@ -12,14 +12,12 @@ class YoutubeProxy < BaseProxy
   end
 
   def get
-    safe_request do
-      request(@url, 'videos', @params)
-    end
+    request(@url, 'videos', @params)
   end
 
   def request(path, vcr_cassette, params = {})
     #logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expirat
-    self.class.fetch_from_cache @playlist_id do
+    self.class.smart_fetch_from_cache(@playlist_id) do
       response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
         Faraday::Connection.new(
           :url => @url,

@@ -11,19 +11,8 @@ class CalLinkOrganizationProxy < CalLinkProxy
     "global/#{self.name}/#{org_id}"
   end
 
-  def instance_cache_key
-    # returns the full cache key (incl user or global prefix) used by this proxy instance.
-    self.class.key @org_id
-  end
-
   def get_organization
-    safe_request("Remote server unreachable") do
-      internal_get_organization
-    end
-  end
-
-  def internal_get_organization
-    self.class.fetch_from_cache @org_id do
+    self.class.smart_fetch_from_cache(@org_id, "Remote server unreachable") do
       url = "#{Settings.cal_link_proxy.base_url}/api/organizations"
       params = build_params
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url}; params = #{params}, cache expiration #{self.class.expires_in}"

@@ -13,17 +13,11 @@ class BearfactsProxy < BaseProxy
   end
 
   def request(path, vcr_cassette, params = {})
-    safe_request("Remote server unreachable") do
-      internal_do_request(path, vcr_cassette, params)
-    end
-  end
-
-  def internal_do_request(path, vcr_cassette, params = {})
-    self.class.fetch_from_cache(@uid) do
+    self.class.smart_fetch_from_cache(@uid, "Remote server unreachable") do
       student_id = lookup_student_id
       if student_id.nil?
         logger.info "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API path #{path}"
-        {
+        result = {
           :body => "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API",
           :status_code => 400
         }
@@ -51,11 +45,12 @@ class BearfactsProxy < BaseProxy
         end
 
         logger.debug "Remote server status #{response.status}, Body = #{response.body}"
-        {
+        result = {
           :body => response.body,
           :status_code => response.status
         }
       end
+      result
     end
   end
 end
