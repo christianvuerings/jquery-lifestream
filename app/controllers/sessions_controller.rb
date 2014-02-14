@@ -54,8 +54,7 @@ class SessionsController < ApplicationController
   end
 
   def new
-    #redirect_to "/auth/cas?service=#{params[:service]}"
-    redirect_to '/auth/cas'
+    redirect_to "/auth/cas?url=#{params[:url]}"
   end
 
   def failure
@@ -66,12 +65,9 @@ class SessionsController < ApplicationController
 
   private
 
-
   def smart_success_path
-    # the :service parameter should be returned by the CAS auth server
-    #Rails.logger.debug("SessionsController::smart_success_path - #{params.inspect}")
-    #(params[:service].present?) ? params[:service] : '/dashboard'
-    '/dashboard'
+    # the :url parameter is returned by the CAS auth server
+    (params[:url].present?) ? params[:url] : '/dashboard'
   end
 
   def continue_login_success(uid)
