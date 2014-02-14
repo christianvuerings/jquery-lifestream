@@ -4,17 +4,18 @@ class MyGroups::Canvas
   def fetch
     sites = []
     return sites unless CanvasProxy.access_granted?(@uid)
-    canvas_sites = CanvasMergedUserSites.new(@uid).get_feed
-    included_course_sites = []
-    canvas_sites[:courses].each do |course_site|
-      if (entry = course_site_entry(course_site))
-        sites << entry
-        included_course_sites << entry[:id]
+    if (canvas_sites = CanvasMergedUserSites.new(@uid).get_feed)
+      included_course_sites = []
+      canvas_sites[:courses].each do |course_site|
+        if (entry = course_site_entry(course_site))
+          sites << entry
+          included_course_sites << entry[:id]
+        end
       end
-    end
-    canvas_sites[:groups].each do |group_site|
-      if (entry = group_site_entry(included_course_sites, group_site))
-        sites << entry
+      canvas_sites[:groups].each do |group_site|
+        if (entry = group_site_entry(included_course_sites, group_site))
+          sites << entry
+        end
       end
     end
     sites

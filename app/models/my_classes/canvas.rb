@@ -3,20 +3,21 @@ class MyClasses::Canvas
 
   def merge_sites(campus_courses, sites)
     return unless CanvasProxy.access_granted?(@uid)
-    canvas_sites = CanvasMergedUserSites.new(@uid).get_feed
-    included_course_sites = {}
-    canvas_sites[:courses].each do |course_site|
-      if (entry = course_site_entry(campus_courses, course_site))
-        sites << entry
-        included_course_sites[entry[:id]] = {
-          source: entry[:name],
-          courses: entry[:courses]
-        }
+    if (canvas_sites = CanvasMergedUserSites.new(@uid).get_feed)
+      included_course_sites = {}
+      canvas_sites[:courses].each do |course_site|
+        if (entry = course_site_entry(campus_courses, course_site))
+          sites << entry
+          included_course_sites[entry[:id]] = {
+            source: entry[:name],
+            courses: entry[:courses]
+          }
+        end
       end
-    end
-    canvas_sites[:groups].each do |group_site|
-      if (entry = group_site_entry(included_course_sites, group_site))
-        sites << entry
+      canvas_sites[:groups].each do |group_site|
+        if (entry = group_site_entry(included_course_sites, group_site))
+          sites << entry
+        end
       end
     end
   end
