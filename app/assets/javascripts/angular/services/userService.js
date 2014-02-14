@@ -103,8 +103,7 @@
      */
     var signIn = function() {
       analyticsService.trackEvent(['Authentication', 'Redirect to login']);
-      // redirect: the non-public path the unauthenticated user wishes to access after login
-      window.location = '/login?url='+encodeURIComponent($location.url());
+      window.location = '/login';
     };
 
     /**
