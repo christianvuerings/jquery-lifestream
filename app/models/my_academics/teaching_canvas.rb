@@ -3,20 +3,21 @@ class MyAcademics::TeachingCanvas
 
   def merge_sites(campus_courses)
     return unless CanvasProxy.access_granted?(@uid)
-    canvas_sites = CanvasMergedUserSites.new(@uid).get_feed
-    included_course_sites = {}
-    canvas_sites[:courses].each do |course_site|
-      if (merged_courses = course_site_merge(campus_courses, course_site))
-        included_course_sites[course_site[:id]] = merged_courses
+    if (canvas_sites = CanvasMergedUserSites.new(@uid).get_feed)
+      included_course_sites = {}
+      canvas_sites[:courses].each do |course_site|
+        if (merged_courses = course_site_merge(campus_courses, course_site))
+          included_course_sites[course_site[:id]] = merged_courses
+        end
       end
-    end
-    canvas_sites[:groups].each do |group_site|
-      if (linked_id = group_site[:course_id]) && (linked_classes = included_course_sites[linked_id])
-        group_entry = group_site_entry(group_site, linked_classes[:source])
-        linked_term = campus_courses[linked_classes[:term_idx]][:classes]
-        linked_classes[:slugs].each do |slug|
-          linked_class = linked_term.select {|c| c[:slug] == slug}.first
-          linked_class[:class_sites] << group_entry
+      canvas_sites[:groups].each do |group_site|
+        if (linked_id = group_site[:course_id]) && (linked_classes = included_course_sites[linked_id])
+          group_entry = group_site_entry(group_site, linked_classes[:source])
+          linked_term = campus_courses[linked_classes[:term_idx]][:classes]
+          linked_classes[:slugs].each do |slug|
+            linked_class = linked_term.select {|c| c[:slug] == slug}.first
+            linked_class[:class_sites] << group_entry
+          end
         end
       end
     end
