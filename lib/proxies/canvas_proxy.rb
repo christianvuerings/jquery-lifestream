@@ -25,19 +25,19 @@ class CanvasProxy < BaseProxy
 
   def request(api_path, vcr_id = "", fetch_options = {})
     self.class.smart_fetch_from_cache(@uid, "Remote server unreachable", true) do
-      internal_request_uncached(api_path, vcr_id, fetch_options)
+      request_internal(api_path, vcr_id, fetch_options)
     end
   end
 
   def request_uncached(api_path, vcr_id = "", fetch_options = {})
     begin
-      internal_request_uncached(api_path, vcr_id, fetch_options)
+      request_internal(api_path, vcr_id, fetch_options)
     rescue Exception => e
       self.class.handle_exception(e, @uid, "Remote server unreachable", true)
     end
   end
 
-  def internal_request_uncached(api_path, vcr_id = "", fetch_options = {})
+  def request_internal(api_path, vcr_id = "", fetch_options = {})
     fetch_options.reverse_merge!(
         :method => :get,
         :uri => "#{@settings.url_root}/api/v1/#{api_path}"
