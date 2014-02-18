@@ -66,11 +66,11 @@ class TextbooksProxy < BaseProxy
   def get
     ccn = @ccns[0]
     self.class.smart_fetch_from_cache("#{@ccn}-#{@slug}", "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.") do
-      request_internal(ccn)
+      request_internal(ccn, 'Textbooks')
     end
   end
 
-  def request_internal(ccn)
+  def request_internal(ccn, vcr_cassette)
     required_books = []
     recommended_books = []
     optional_books = []
