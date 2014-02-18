@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe MyfinaidProxy do
-  let(:live_oski_finaid){ MyfinaidProxy.new({user_id: "61889"}).get }
-  let(:fake_oski_finaid){ MyfinaidProxy.new({user_id: "61889", fake: true}).get }
-  let(:live_non_student){ MyfinaidProxy.new({user_id: '212377'}).get }
+
+  let(:this_year){ Settings.myfinaid_proxy.test_term_year } # start with 2013!
+
+  let(:live_oski_finaid){ MyfinaidProxy.new({user_id: "61889",  term_year: this_year }).get }
+  let(:fake_oski_finaid){ MyfinaidProxy.new({user_id: "61889",  term_year: this_year, fake: true}).get }
+  let(:live_non_student){ MyfinaidProxy.new({user_id: '212377', term_year: this_year}).get }
 
   shared_examples "oski tests" do
     it { subject[:body].should be_present }
