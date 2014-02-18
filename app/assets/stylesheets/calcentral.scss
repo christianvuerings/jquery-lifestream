@@ -198,6 +198,7 @@ button {
   background: $cc-color-button-selected;
   @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
   color: $cc-color-white;
+  z-index: 1;
   &:focus, &:hover {
     background: $cc-color-button-selected;
     @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
