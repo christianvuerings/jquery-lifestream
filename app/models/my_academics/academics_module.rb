@@ -42,6 +42,8 @@ module MyAcademics::AcademicsModule
     {
       name: TermCodes.to_english(term_yr, term_cd),
       slug: TermCodes.to_slug(term_yr, term_cd),
+      term_cd: term_cd,
+      term_yr: term_yr,
       classes: []
     }
   end
