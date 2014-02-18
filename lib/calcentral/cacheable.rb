@@ -2,18 +2,73 @@ module Calcentral
 
   module Cacheable
 
+    # thin wrapper around Rails.cache.fetch. Reads the value of key from cache if it exists, otherwise executes
+    # the passed block and caches the result. Set force_write=true to make it always execute the block and write
+    # to the cache.
     def fetch_from_cache(id=nil, force_write=false)
       key = key id
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}, forced: #{force_write}"
       Rails.cache.fetch(
-          key,
-          :expires_in => self.expires_in,
-          :force => force_write
+        key,
+        :expires_in => self.expires_in,
+        :force => force_write
       ) do
         if block_given?
           yield
         end
       end
+    end
+
+    # reads from cache if possible, otherwise executes the passed block and caches the result.
+    # if the passed block throws an exception, it will be logged, and the result won't be cached.
+    # WARNING: Do not use "return foo" inside the passed block or you will short-circuit the flow
+    # and nothing will be cached.
+    def smart_fetch_from_cache(id=nil,
+      user_message_on_exception = "An unknown server error occurred.",
+      return_nil_on_generic_error = false, &block)
+      key = key id
+      Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
+      entry = Rails.cache.read key
+      if entry
+        Rails.logger.debug "#{self.name} Entry is already in cache: #{key}"
+        return entry
+      end
+      begin
+        entry = block.call
+      rescue Exception => e
+        # don't write to cache if an exception occurs, just log the error and return a body
+        response = handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
+        Rails.logger.debug "#{self.name} Error occurred; NOT Writing entry to cache: #{key}"
+        return response
+      end
+      Rails.logger.debug "#{self.name} Writing entry to cache: #{key}"
+      Rails.cache.write(key, entry)
+      entry
+    end
+
+    def handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
+      key = key id
+      if e.is_a?(Calcentral::ProxyError)
+        log_message = e.log_message
+        response = e.response
+        if e.wrapped_exception
+          log_message += " #{e.wrapped_exception.class} #{e.wrapped_exception.message}."
+        end
+      else
+        log_message = " #{e.class} #{e.message}"
+        if return_nil_on_generic_error
+          response = nil
+        else
+          response = {
+            :body => user_message_on_exception,
+            :status_code => 503
+          }
+        end
+      end
+      log_message += " Associated cache key: #{key}"
+
+      Rails.logger.error log_message
+      response
     end
 
     def in_cache?(id = nil)
