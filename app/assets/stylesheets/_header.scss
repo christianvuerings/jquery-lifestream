@@ -26,6 +26,11 @@ body {
       opacity: 0.9;
     }
   }
+  @media print {
+    a[href]:after {
+      content: "";
+    }
+  }
   svg {
     margin: 0 10px;
   }

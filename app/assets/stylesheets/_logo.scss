@@ -1,0 +1,12 @@
+.cc-svg-calcentral-logo-gold {
+  fill: $cc-color-gold;
+}
+.cc-svg-calcentral-logo-white {
+  fill: $cc-color-white;
+}
+
+@media print {
+  .cc-svg-calcentral-logo-gold, .cc-svg-calcentral-logo-white {
+    fill: $cc-color-black;
+  }
+}
