@@ -36,6 +36,7 @@ module Calcentral
       begin
         entry = block.call
       rescue Exception => e
+        # don't write to cache if an exception occurs, just log the error and return a body
         response = handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
         Rails.logger.debug "#{self.name} Error occurred; NOT Writing entry to cache: #{key}"
         return response
