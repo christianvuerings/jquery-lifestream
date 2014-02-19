@@ -236,7 +236,7 @@
       // Get selected semester from URL params and extract data from semesters array
       var semester_slug = ($routeParams.semester_slug || $routeParams.teaching_semester_slug);
       if (semester_slug) {
-        var is_instructor_gsi = !! $routeParams.teaching_semester_slug;
+        var is_instructor_gsi = !!$routeParams.teaching_semester_slug;
         var selected_student_semester = findSemester(data.semesters, semester_slug, selected_student_semester);
         var selected_teaching_semester = findSemester(data.teaching_semesters, semester_slug, selected_teaching_semester);
         var selected_semester = (selected_student_semester || selected_teaching_semester);
