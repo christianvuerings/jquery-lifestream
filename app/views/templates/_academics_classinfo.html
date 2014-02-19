@@ -7,13 +7,8 @@
     <div>
       <h1 class="cc-heading-page-title">
         <a href="/academics">My Academics</a> &raquo;
-        <span data-ng-show="!is_instructor_gsi">
-          <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
-          <span data-ng-bind="selected_course.course_number"></span>
-        </span>
-        <span data-ng-show="is_instructor_gsi">
-          <span data-ng-bind="selected_course.course_number"></span> | <span data-ng-bind="selected_semester.name"></span>
-        </span>
+        <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
+        <span data-ng-bind="selected_course.course_number"></span>
       </h1>
     </div>
 

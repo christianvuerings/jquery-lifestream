@@ -57,6 +57,9 @@
     color: $cc-color-light-medium-grey;
     font-weight: bold;
   }
+  .cc-academics-course-number {
+    width: 22%;
+  }
   .cc-academics-empasize {
     font-weight: bold;
   }
@@ -74,6 +77,9 @@
   .cc-academics-nolink {
     color: $cc-color-light-medium-grey;
     font-size: 14px;
+  }
+  .cc-academics-even {
+    background: $cc-color-lightest-grey;
   }
   .cc-academics-page-left {
     .row {
@@ -162,9 +168,6 @@
       background: $cc-color-widget-more-background;
     }
   }
-  .cc-academics-semesters {
-    padding: 20px 0 0 15px;
-  }
   .cc-academics-showhide-block-history {
     margin-top: 10px;
     a {
@@ -190,6 +193,29 @@
     }
     .cc-unavailable {
       padding-right: 5px;
+    }
+  }
+  .cc-academics-subtitle {
+    background: $cc-color-lighter-medium-grey;
+    h3 {
+      color: $cc-color-white;
+      font-size: 13px;
+      font-weight: normal;
+      margin: 0;
+      padding: 2px 15px;
+    }
+  }
+  .cc-academics-teaching-class {
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .cc-academics-teaching-course-number {
+    padding-bottom: 5px;
+  }
+  .cc-academics-teaching-semester {
+    margin-bottom: 10px;
+    h3 {
+      margin-bottom: 10px;
     }
   }
   .cc-academics-telebears {
