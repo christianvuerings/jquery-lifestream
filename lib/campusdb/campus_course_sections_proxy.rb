@@ -80,7 +80,7 @@ class CampusCourseSectionsProxy < BaseProxy
 
         if schedule_event.count > 0
           schedules << {:building_name => schedule_event['building_name'],
-                        :room_number => schedule_event['room_number'],
+                        :room_number => strip_leading_zeros(schedule_event['room_number']),
                         :schedule => translate_meeting(schedule_event)
           }
         end
@@ -101,6 +101,10 @@ class CampusCourseSectionsProxy < BaseProxy
       end
     end
     feed.merge!({:instructors => instructors})
+  end
+
+  def strip_leading_zeros(str=nil)
+    (str.nil?) ? nil : "#{str}".gsub!(/^[0]*/, '')
   end
 
   def to_time(str)

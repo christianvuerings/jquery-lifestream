@@ -54,7 +54,20 @@ describe "CampusCourseSectionsProxy" do
       result.should be_an_instance_of Hash
       result.should have_key(:schedules)
       result[:schedules].length.should == 1
+    end
 
+    it "should strip leading zeros from room_number" do
+      stubbed_schedules = [
+        {"building_name"=>"OFF CAMPUS", "room_number"=>nil, "meeting_days"=>"    T", "meeting_start_time"=>"0330", "meeting_start_time_ampm_flag"=>"P", "meeting_end_time"=>"0630", "meeting_end_time_ampm_flag"=>"P"},
+        {"building_name"=>nil, "room_number"=> "0001", "meeting_days"=>nil, "meeting_start_time"=>nil, "meeting_start_time_ampm_flag"=>nil, "meeting_end_time"=>nil, "meeting_end_time_ampm_flag"=>nil},
+      ]
+      client = CampusCourseSectionsProxy.new({term_yr: '2013', term_cd: 'D', ccn: '16171'})
+      # CampusData.get_section_schedules(@term_yr, @term_cd, @ccn)
+      CampusData.should_receive(:get_section_schedules).and_return(stubbed_schedules)
+      #allow(CampusData).to receive(:get_section_schedules).and_return(stubbed_schedules)
+      result = client.get_section_data
+      result[:schedules][0][:room_number].should == nil
+      result[:schedules][1][:room_number].should == "1"
     end
 
   end
