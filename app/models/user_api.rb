@@ -83,6 +83,7 @@ class UserApi < MyMergedModel
   def get_feed_internal
     google_mail = Oauth2Data.get_google_email(@uid)
     canvas_mail = Oauth2Data.get_canvas_email(@uid)
+    policy = UserAuth.get(@uid).policy
     is_google_reminder_dismissed = Oauth2Data.is_google_reminder_dismissed(@uid)
     is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
     campus_courses_proxy = CampusUserCoursesProxy.new({:user_id => @uid})
@@ -90,7 +91,7 @@ class UserApi < MyMergedModel
     has_instructor_history = campus_courses_proxy.has_instructor_history?
     roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
     {
-      :is_admin => UserAuth.is_superuser?(@uid),
+      :is_admin => policy.can_act_as?,
       :first_login_at => @first_login_at,
       :first_name => @first_name,
       :full_name => @first_name + ' ' + @last_name,

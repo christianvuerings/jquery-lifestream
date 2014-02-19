@@ -59,7 +59,12 @@ describe CanvasCourseProvision do
       }
     ]
   }
-  before { UserAuth.stub(:is_superuser?) {|uid| uid == superuser_id} }
+  before {
+    UserAuth.new_or_update_superuser!(superuser_id)
+    [user_id, instructor_id, canvas_admin_id].each do |id|
+      UserAuth.new_or_update_test_user!(id)
+    end
+  }
   before { CanvasAdminsProxy.any_instance.stub(:admin_user?) {|uid| uid == canvas_admin_id} }
   before { CanvasProvideCourseSite.stub(:new) do |uid|
     double(

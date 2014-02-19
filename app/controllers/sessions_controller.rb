@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def act_as
-    return redirect_to '/' unless valid_params?(session[:user_id], params[:uid])
+    return redirect_to '/' unless valid_params?(current_user, params[:uid])
     Rails.logger.warn "ACT-AS: User #{session[:user_id]} acting as #{params[:uid]} begin"
     session[:original_user_id] = session[:user_id] unless session[:original_user_id]
     session[:user_id] = params[:uid]
@@ -86,19 +86,19 @@ class SessionsController < ApplicationController
     end
   end
 
-  def valid_params?(user_uid, act_as_uid)
-    if user_uid.blank? || act_as_uid.blank?
-      Rails.logger.warn "ACT-AS: User #{user_uid} FAILED to login to #{act_as_uid}, either cannot be blank!"
+  def valid_params?(current_user, act_as_uid)
+    if current_user.blank? || act_as_uid.blank?
+      Rails.logger.warn "ACT-AS: User #{current_user.uid} FAILED to login to #{act_as_uid}, either cannot be blank!"
       return false
     end
 
     # Ensure that uids are numeric
     begin
-      [user_uid, act_as_uid].each do |param|
+      [current_user.uid, act_as_uid].each do |param|
         Integer(param, 10)
       end
     rescue ArgumentError
-        Rails.logger.warn "ACT-AS: User #{user_uid} FAILED to login to #{act_as_uid}, values must be integers"
+        Rails.logger.warn "ACT-AS: User #{current_user.uid} FAILED to login to #{act_as_uid}, values must be integers"
         return false
     end
 
@@ -109,17 +109,18 @@ class SessionsController < ApplicationController
       never_logged_in_before = UserData.where(:uid => act_as_uid).first.blank?
     }
     if never_logged_in_before && Settings.application.layer == "production"
-      Rails.logger.warn "ACT-AS: User #{user_uid} FAILS to login to #{act_as_uid}, #{act_as_uid} hasn't logged in before."
+      Rails.logger.warn "ACT-AS: User #{current_user.uid} FAILS to login to #{act_as_uid}, #{act_as_uid} hasn't logged in before."
       return false
     end
 
-    auth_user_id = session[:original_user_id] || user_uid
-    if !UserAuth.is_superuser?(auth_user_id)
-      Rails.logger.warn "ACT-AS: User #{user_uid} FAILS to login to #{act_as_uid}, #{user_uid} isn't a superuser."
-      return false
+    if session[:original_user_id]
+      auth_user_id = session[:original_user_id]
+    else
+      auth_user_id = current_user.uid
     end
 
-    return true
+    policy = UserAuth.get(auth_user_id).policy
+    policy.can_act_as?
   end
 
 end

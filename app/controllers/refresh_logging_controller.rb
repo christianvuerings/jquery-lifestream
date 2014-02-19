@@ -4,11 +4,7 @@ class RefreshLoggingController < ApplicationController
   respond_to :json
 
   def refresh_logging
-    # Only super-users are allowed to change log levels in production.
-    if Rails.env.production? && !UserAuth.is_superuser?(session[:user_id])
-      return render :nothing => true, :status => 401
-    end
-
+    authorize(current_user, :can_refresh_log_settings?)
     response = CalcentralLogging.refresh_logging_level
     if response.blank?
       return render :nothing => true, :status => 304

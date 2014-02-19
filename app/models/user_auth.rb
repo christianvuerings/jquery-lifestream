@@ -2,12 +2,22 @@ class UserAuth < ActiveRecord::Base
   include ActiveRecordHelper
 
   after_initialize :log_access
-  attr_accessible :uid, :is_superuser, :is_test_user, :active
+  attr_accessible :uid, :is_superuser, :is_test_user, :is_author, :is_viewer, :active
 
-  def self.is_superuser?(uid)
-    use_pooled_connection {
-      !(self.where(:uid => uid, :is_superuser => true, :active => true).first).blank?
-    }
+  def self.get(uid)
+    if uid.nil?
+      uid = ''
+    end
+    user_auth = UserAuth.where(:uid => uid.to_s).first
+    if user_auth.blank?
+      # anonymous user is active but has no permissions or uid.
+      user_auth = UserAuth.new(uid: nil, is_superuser: false, is_test_user: false, is_author: false, is_viewer: false, active: true)
+    end
+    user_auth
+  end
+
+  def policy(record=nil)
+    UserAuthPolicy.new(self, record)
   end
 
   def self.new_or_update_superuser!(uid)
@@ -20,13 +30,6 @@ class UserAuth < ActiveRecord::Base
         user.active = true
         user.save
       end
-    }
-  end
-
-
-  def self.is_test_user?(uid)
-    use_pooled_connection {
-      !(self.where(:uid => uid, :is_test_user => true, :active => true).first).blank?
     }
   end
 
