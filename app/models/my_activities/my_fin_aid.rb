@@ -2,30 +2,54 @@ class MyActivities::MyFinAid
   include DatedFeed, ClassLogger
 
   def self.append!(uid, activities)
-    finaid_proxy = MyfinaidProxy.new({ user_id: uid })
+    finaid_proxy_current  = MyfinaidProxy.new({ user_id: uid, term_year: current_term_year })
+    finaid_proxy_next     = MyfinaidProxy.new({ user_id: uid, term_year: next_term_year })
 
-    return unless finaid_proxy.lookup_student_id.present?
-    return unless feed = finaid_proxy.get.try(:[], :body)
-    begin
-      content = Nokogiri::XML(feed, &:strict)
-    rescue Nokogiri::XML::SyntaxError
-      return
+    return unless finaid_proxy_current.lookup_student_id.present?
+
+    [finaid_proxy_current, finaid_proxy_next].each do |proxy|
+      next unless feed = proxy.get.try(:[], :body)
+      begin
+        content = Nokogiri::XML(feed, &:strict)
+      rescue Nokogiri::XML::SyntaxError
+        next
+      end
+
+      term_year = proxy.term_year
+      aid_year  = content.at_css("AidYears AidYear[Default='X']")
+
+      begin
+        cutoff_date = DateTime.new(Integer(aid_year.text, 10)).prev_year
+      rescue
+        logger.error "Unable to parse AidYear from feed: #{aid_year.inspect}"
+        cutoff_date = nil
+      end
+
+      academic_year = term_year_to_s(term_year)
+
+      append_diagnostics!(content.css("DiagnosticData Diagnostic"), academic_year, activities)
+      append_documents!(content.css("TrackDocs Document"), academic_year, cutoff_date, activities)
     end
+  end
 
-    aid_year = content.at_css("AidYears AidYear[Default='X']")
-    begin
-      cutoff_date = DateTime.new(Integer(aid_year.text, 10)).prev_year
-    rescue
-      logger.error "Unable to parse AidYear from feed: #{aid_year.inspect}"
-      cutoff_date = nil
-    end
+  def self.current_term_year
+    # to-do: revise this logic with the team
+    return Settings.myfinaid_proxy.test_term_year if Settings.myfinaid_proxy.fake
+    year      = Time.now.year
+    term_year = (Time.now.month.between?(1, 8)) ? year : year + 1
+    "#{term_year}"
+  end
 
-    append_diagnostics!(content.css("DiagnosticData Diagnostic"), activities)
-    append_documents!(content.css("TrackDocs Document"), cutoff_date, activities)
+  def self.next_term_year
+    "#{current_term_year.to_i + 1}"
+  end
+
+  def self.term_year_to_s(term_year)
+    "#{term_year.to_i-1}-#{term_year}"
   end
 
   private
-  def self.append_documents!(documents, cutoff_date, activities)
+  def self.append_documents!(documents, academic_year, cutoff_date, activities)
     documents.each do |document|
       title = document.css("Name").text.strip
 
@@ -53,7 +77,8 @@ class MyActivities::MyFinAid
         date: date,
         summary: summary,
         source_url: url,
-        emitter: "Financial Aid"
+        emitter: "Financial Aid",
+        term_year: academic_year
       }
 
       if (status.values.none?)
@@ -71,7 +96,7 @@ class MyActivities::MyFinAid
     end
   end
 
-  def self.append_diagnostics!(diagnostics, activities)
+  def self.append_diagnostics!(diagnostics, academic_year, activities)
     diagnostics.each do |diagnostic|
       next unless diagnostic.css("Categories Category[Name='CAT01']").text.try(:strip) == 'W'
       title = diagnostic.css("Message").text.strip
@@ -89,7 +114,8 @@ class MyActivities::MyFinAid
         type: "alert",
         date: "",
         source_url: url,
-        emitter: "Financial Aid"
+        emitter: "Financial Aid",
+        term_year: academic_year
       }
     end
   end

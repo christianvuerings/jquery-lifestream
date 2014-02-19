@@ -2,7 +2,13 @@ require "spec_helper"
 
 describe MyActivities::MyFinAid do
   let!(:oski_uid) { "61889" }
-  let!(:fake_oski_finaid){ MyfinaidProxy.new({user_id: oski_uid, fake: true}) }
+
+  let!(:this_term_year) { Settings.myfinaid_proxy.test_term_year }
+  let!(:next_term_year) { "#{this_term_year.to_i+1}" }
+
+  let!(:fake_oski_finaid_current){ MyfinaidProxy.new({user_id: oski_uid, term_year: this_term_year,  fake: true }) }
+  let!(:fake_oski_finaid_next){    MyfinaidProxy.new({user_id: oski_uid, term_year: next_term_year,  fake: true }) }
+
   let!(:non_student_uid) { '212377' }
   let(:documented_types) { %w(alert financial message) }
 
@@ -37,7 +43,11 @@ describe MyActivities::MyFinAid do
   end
 
   context "2xx states" do
-    before(:each) { MyfinaidProxy.stub(:new).and_return(fake_oski_finaid) }
+    before(:each) {
+      MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
+      MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
+      MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
+    }
 
     subject do
       MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
@@ -45,7 +55,7 @@ describe MyActivities::MyFinAid do
     end
 
     it { should_not be_blank }
-    it { subject.length.should eq(13) }
+    it { subject.length.should eq(26) }
     it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
     it { subject.each { |entry| entry[:title].should be_present } }
     it { subject.each { |entry| entry[:source_url].should be_present } }
@@ -57,7 +67,7 @@ describe MyActivities::MyFinAid do
         @activities.select { |entry| entry[:type] == "alert" }
       end
 
-      it { subject.length.should eq(10) }
+      it { subject.length.should eq(21) }
       it { subject.each { |entry| entry[:date].should be_blank } }
     end
 
@@ -77,7 +87,7 @@ describe MyActivities::MyFinAid do
         @activities.select { |entry| entry[:type] == "message" }
       end
 
-      it { subject.length.should eq(2) }
+      it { subject.length.should eq(4) }
       it { subject.each { |entry| entry[:title].should be_present } }
       it "should format dates with the server's timezone configuration and not GMT" do
         a_dated_entry   = subject.find{ |entry| entry[:date].present? }
