@@ -43,4 +43,21 @@ describe "UserAuth" do
     policy.can_author?.should be_false
   end
 
+  it "a deactivated superuser should have no rights" do
+    UserAuth.new_or_update_superuser!(@user_id)
+    user = UserAuth.get(@user_id)
+    user.is_superuser?.should be_true
+    user.active = false
+    user.save
+
+    policy = UserAuth.get(@user_id).policy
+    policy.can_administrate?.should be_false
+    policy.can_clear_cache?.should be_false
+    policy.can_clear_campus_links_cache?.should be_false
+    policy.can_import_canvas_users?.should be_false
+    policy.can_refresh_log_settings?.should be_false
+    policy.can_act_as?.should be_false
+    policy.can_author?.should be_false
+  end
+
 end

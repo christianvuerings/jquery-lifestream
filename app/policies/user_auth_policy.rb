@@ -7,7 +7,7 @@ class UserAuthPolicy
   end
 
   def can_administrate?
-    user.is_superuser?
+    user.active? && user.is_superuser?
   end
 
   def can_clear_cache?
@@ -29,11 +29,11 @@ class UserAuthPolicy
   end
 
   def can_act_as?
-    can_administrate? || user.is_viewer?
+    can_administrate? || (user.active? && user.is_viewer?)
   end
 
   def can_author?
-    can_administrate? || user.is_author?
+    can_administrate? || (user.active? && user.is_author?)
   end
 
 end
