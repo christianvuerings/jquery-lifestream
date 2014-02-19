@@ -98,7 +98,7 @@
                 </div>
               </div>
             </li>
-            <li data-ng-if="myfinances.summary.accountBalance !== '0.00'">
+            <li data-ng-if="myfinances.summary.accountBalanceFloat !== 0">
               <div class="cc-page-myfinances-account-summary-buttons cc-print-hide">
                 <a class="cc-button cc-button-blue" href="http://studentbilling.berkeley.edu/carsPaymentOptions.htm">Make Payment</a>
               </div>
@@ -206,13 +206,13 @@
               </div>
             </div>
           </form>
-          <div class="cc-widget-padding" data-ng-if="choice === 'balance' && myfinances.summary.accountBalance === 0">
+          <div class="cc-widget-padding" data-ng-if="choice === 'balance' && myfinances.summary.accountBalanceFloat === 0">
             You do not owe anything at this time. Change 'Balance' to 'All Transitions' to see activity detail.
           </div>
-          <div class="cc-widget-padding" data-ng-if="choice === 'balance' && myfinances.summary.accountBalance < 0">
+          <div class="cc-widget-padding" data-ng-if="choice === 'balance' && myfinances.summary.accountBalanceFloat < 0">
             You have an over-payment on your account. You do not owe anything at this time. Change 'Balance' to 'All Transactions' to see activity detail.
           </div>
-          <div class="cc-table cc-table-sortable cc-page-myfinances-table" data-ng-hide="choice === 'balance' && myfinances.summary.accountBalance <= 0">
+          <div class="cc-table cc-table-sortable cc-page-myfinances-table" data-ng-hide="choice === 'balance' && myfinances.summary.accountBalanceFloat <= 0">
             <table>
               <thead>
                 <tr>
