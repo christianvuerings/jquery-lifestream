@@ -103,7 +103,7 @@
           parseDate(finances.summary, i);
           parseAmount(finances.summary, i);
 
-          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount') {
+          if (i === 'minimumAmountDue' || i === 'totalPastDueAmount' || i === 'accountBalance') {
             parseToFloat(finances.summary, i);
           }
         }
