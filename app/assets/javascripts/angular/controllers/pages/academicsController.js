@@ -87,32 +87,27 @@
       }
     };
 
-    var updatePrevNextSemester = function(semesters, selected_semester) {
+    var updatePrevNextSemester = function(semesters_lists, selected_semester) {
       var next_semester = {};
+      var next_semester_cmp = false;
       var previous_semester = {};
-      var selected_semester_index = false;
-
-      var semesters_length = semesters.length;
-      for (var i = 0; i < semesters_length; i++) {
-        var element = semesters[i];
-        if (element.slug === selected_semester.slug) {
-          selected_semester_index = i;
-          continue;
-        }
-        if (element.slug !== selected_semester.slug) {
-          if (selected_semester_index === false) {
-            next_semester = element;
-            continue;
+      var previous_semester_cmp = false;
+      var selected_semester_cmp = selected_semester.term_yr + selected_semester.term_cd;
+      angular.forEach(semesters_lists, function(semester_list) {
+        angular.forEach(semester_list, function(semester) {
+          var cmp = semester.term_yr + semester.term_cd;
+          if ((cmp < selected_semester_cmp) && (!previous_semester_cmp || (cmp > previous_semester_cmp))) {
+            previous_semester_cmp = cmp;
+            previous_semester.slug = semester.slug;
+          } else if ((cmp > selected_semester_cmp) && (!next_semester_cmp || (cmp < next_semester_cmp))) {
+            next_semester_cmp = cmp;
+            next_semester.slug = semester.slug;
           }
-          if (selected_semester_index !== false) {
-            previous_semester = element;
-            break;
-          }
-        }
-      }
+        });
+      });
       $scope.next_semester = next_semester;
       $scope.previous_semester = previous_semester;
-      $scope.prev_next_semester_show = semesters_length > 1;
+      $scope.prev_next_semester_show = (next_semester_cmp || previous_semester_cmp);
     };
 
     var findSemester = function(semesters, slug, selected_semester) {
@@ -239,44 +234,48 @@
       $scope.teaching_length = Object.keys($scope.teaching).length;
 
       // Get selected semester from URL params and extract data from semesters array
-      if ($routeParams.semester_slug || $routeParams.teaching_semester_slug) {
-        var is_instructor_gsi = false;
-        var selected_semester = findSemester(data.semesters, $routeParams.semester_slug, selected_semester);
-        if ($routeParams.teaching_semester_slug) {
-          is_instructor_gsi = true;
-        }
-        selected_semester = findSemester(data.teaching_semesters, $routeParams.teaching_semester_slug, selected_semester);
+      var semester_slug = ($routeParams.semester_slug || $routeParams.teaching_semester_slug);
+      if (semester_slug) {
+        var is_instructor_gsi = !! $routeParams.teaching_semester_slug;
+        var selected_student_semester = findSemester(data.semesters, semester_slug, selected_student_semester);
+        var selected_teaching_semester = findSemester(data.teaching_semesters, semester_slug, selected_teaching_semester);
+        var selected_semester = (selected_student_semester || selected_teaching_semester);
         if (!checkPageExists(selected_semester)) {
           return;
         }
-        updatePrevNextSemester(data.semesters, selected_semester);
+        updatePrevNextSemester([data.semesters, data.teaching_semesters], selected_semester);
 
-        if (selected_semester) {
-          $scope.selected_courses = selected_semester.classes;
-
-          if (!is_instructor_gsi) {
-            $scope.enrolled_courses = getClassesSections(selected_semester.classes, false);
-            $scope.waitlisted_courses = getClassesSections(selected_semester.classes, true);
-          }
-        }
         $scope.selected_semester = selected_semester;
-        $scope.is_instructor_gsi = is_instructor_gsi;
-      }
-
-      // Get selected course from URL params and extract data from selected semester schedule
-      if ($routeParams.class_slug) {
-        for (var i = 0; i< $scope.selected_semester.classes.length; i++) {
-          var course = $scope.selected_semester.classes[i];
-          if (course.slug === $routeParams.class_slug) {
-            $scope.selected_course = course;
-            break;
+        if (selected_student_semester) {
+          $scope.selected_courses = selected_student_semester.classes;
+          if (!is_instructor_gsi) {
+            $scope.enrolled_courses = getClassesSections(selected_student_semester.classes, false);
+            $scope.waitlisted_courses = getClassesSections(selected_student_semester.classes, true);
           }
         }
-        if (!checkPageExists($scope.selected_course)) {
-          return;
+        $scope.selected_student_semester = selected_student_semester;
+        $scope.is_instructor_gsi = is_instructor_gsi;
+        $scope.selected_teaching_semester = selected_teaching_semester;
+
+        // Get selected course from URL params and extract data from selected semester schedule
+        if ($routeParams.class_slug) {
+          var class_semester = selected_student_semester;
+          if (is_instructor_gsi) {
+            class_semester = selected_teaching_semester;
+          }
+          for (var i = 0; i< class_semester.classes.length; i++) {
+            var course = class_semester.classes[i];
+            if (course.slug === $routeParams.class_slug) {
+              $scope.selected_course = course;
+              break;
+            }
+          }
+          if (!checkPageExists($scope.selected_course)) {
+            return;
+          }
+          $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
+          $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
         }
-        $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
-        $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
       }
 
       if (data.exam_schedule) {

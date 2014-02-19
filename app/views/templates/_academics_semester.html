@@ -20,9 +20,12 @@
     <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="!selected_courses.length && selected_semester.time_bucket === 'future'">
       <div class="cc-widget">
         <div class="cc-widget-title">
-          <h2>Enrollment</h2>
+          <h2>Classes</h2>
         </div>
-        <div class="cc-widget-padding">
+        <div data-ng-if="selected_student_semester || ((selected_semester.time_bucket === 'current') && !selected_teaching_semester)" class="cc-widget-subtitle">
+          <h3>Enrollments</h3>
+        </div>
+        <div data-ng-if="selected_student_semester || ((selected_semester.time_bucket === 'current') && !selected_teaching_semester)" class="cc-widget-padding">
           <h3 data-ng-show="selected_semester.time_bucket === 'current'">Current</h3>
           <div class="cc-table">
             <table>
@@ -33,25 +36,21 @@
                 <th class="cc-table-right" scope="col">Units</th>
               </thead>
               <tbody data-ng-show="selected_courses.length" data-ng-repeat="course in enrolled_courses">
-                <tr>
-                  <td class="cc-table-right-spacing">
+                <tr data-ng-class-even="'cc-academics-even'">
+                  <td class="cc-table-right-spacing cc-academics-course-number">
                     <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.slug}}"
                        data-ng-bind="course.course_number">
                     </a>
+                    <div data-ng-repeat="section in course.sections">
+                      <span data-ng-bind="section.section_label"></span>
+                    </div>
                   </td>
                   <td data-ng-bind="course.title"></td>
                   <td data-ng-bind="course.grade_option"></td>
                   <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
-
-                </tr>
-                <tr data-ng-repeat="section in course.sections">
-                  <td data-ng-bind="section.section_label"></td>
-                  <td>&nbsp;</td>
-                  <td></td>
-                  <td></td>
                 </tr>
               </tbody>
-              <tbody data-ng-show="!selected_courses.length">
+              <tbody data-ng-show="(selected_semester.time_bucket === 'current') && !selected_courses.length">
                 <tr>
                   <td>
                     <p>You are not currently enrolled in any courses.</p>
@@ -87,11 +86,42 @@
             </div>
           </div>
         </div>
+        <div data-ng-if="selected_teaching_semester">
+          <div class="cc-widget-subtitle">
+            <h3>Teaching</h3>
+          </div>
+          <div class="cc-widget-padding">
+            <div class="cc-table">
+              <table>
+                <thead>
+                <th scope="col" class="cc-table-right-spacing">Course Number</th>
+                <th scope="col">Title</th>
+                </thead>
+                <tbody data-ng-show="selected_teaching_semester.classes.length" data-ng-repeat="course in selected_teaching_semester.classes">
+                <tr data-ng-class-even="'cc-academics-even'">
+                  <td class="cc-table-right-spacing cc-academics-course-number">
+                    <a data-ng-href="/academics/teaching-semester/{{selected_semester.slug}}/class/{{course.slug}}"
+                       data-ng-bind="course.course_number">
+                    </a>
+                    <div data-ng-repeat="section in course.sections">
+                      <span data-ng-bind="section.section_label"></span>
+                    </div>
+                  </td>
+                  <td data-ng-bind="course.title"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="cc-widget" data-ng-show="selected_semester.time_bucket === 'current'">
         <div class="cc-widget-title">
           <h2>Final Exam Schedule</h2>
+        </div>
+        <div class="cc-widget-subtitle">
+          <h3>Enrollments</h3>
         </div>
         <div class="cc-widget-padding" data-ng-show="exam_schedule_length">
           <div data-ng-repeat="(day, day_data) in exam_schedule" class="cc-academics-exam-block">
@@ -153,7 +183,7 @@
           </div>
         </div>
       </div>
-      <div data-ng-show="selected_semester.time_bucket !== 'future'" class="cc-widget cc-widget-interesting cc-widget-last">
+      <div data-ng-show="selected_student_semester && (selected_semester.time_bucket !== 'future')" class="cc-widget cc-widget-interesting cc-widget-last">
         <div class="cc-widget-title">
           <h2>GPA Calculator</h2>
         </div>
