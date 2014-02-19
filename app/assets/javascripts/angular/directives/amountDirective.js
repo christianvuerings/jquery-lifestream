@@ -29,6 +29,7 @@
             text = '- $ ' + numberWithCommas(value).replace('-', '');
             element.addClass('cc-page-myfinances-green');
           }
+          text = text.replace(/\s/g, '\u00A0');
 
           element.text(text);
         });
