@@ -70,10 +70,8 @@ class CanvasCourseProvision
   end
 
   def user_admin?
-    @uid.present? && (
-        UserAuth.is_superuser?(@uid) ||
-        CanvasAdminsProxy.new.admin_user?(@uid)
-    )
+    policy = UserAuth.get(@uid).policy
+    @uid.present? && policy.can_import_canvas_users?
   end
 
   def user_authorized?

@@ -12,22 +12,18 @@ describe RoutesListController do
 
   it "should not list any routes for not logged in users" do
     get :smoke_test_routes
-    assert_response :success
-    json_response = JSON.parse(response.body)
-    json_response.blank?.should be_true
+    assert_response 401
   end
 
   it "should not list any routes for non-superusers" do
-    UserAuth.stub(:is_superuser?).with(@user_id).and_return(false);
+    UserAuth.stub(:where).and_return([UserAuth.new(uid: @user_id, is_superuser: false)])
     session[:user_id] = @user_id
     get :smoke_test_routes
-    assert_response :success
-    json_response = JSON.parse(response.body)
-    json_response.blank?.should be_true
+    assert_response 401
   end
 
   it "should list some /api/ routes for superusers" do
-    UserAuth.stub(:is_superuser?).with(@user_id).and_return(true);
+    UserAuth.stub(:where).and_return([UserAuth.new(uid: @user_id, is_superuser: true)])
     session[:user_id] = @user_id
     get :smoke_test_routes
     assert_response :success

@@ -4,7 +4,7 @@ class RoutesListController < ApplicationController
   respond_to :json
 
   def smoke_test_routes
-    return respond_with({}) unless session[:user_id] and UserAuth.is_superuser?(session[:user_id])
+    authorize(current_user, :can_administrate?)
     test_routes = self.class.fetch_from_cache do
       get_smoke_test_routes
     end

@@ -3,6 +3,10 @@ require "spec_helper"
 feature "act_as_user" do
   before do
     @fake_events_list = GoogleEventsListProxy.new(fake: true)
+    UserAuth.new_or_update_superuser! "238382"
+    UserAuth.new_or_update_test_user! "2040"
+    UserAuth.new_or_update_test_user! "1234"
+    UserAuth.new_or_update_test_user! "9876"
   end
 
   scenario "switch to another user and back while using a super-user" do
@@ -11,7 +15,6 @@ feature "act_as_user" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
     login_with_cas "238382"
-    UserAuth.stub(:is_superuser?, '238382').and_return(true)
     suppress_rails_logging {
       act_as_user "2040"
     }
@@ -33,11 +36,6 @@ feature "act_as_user" do
     # disabling the cache_warmer while we're switching back and forth between users
     # The switching back triggers a cache invalidation, while the warming thread is still running.
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
-    UserAuth.stub(:is_superuser?).with('238382').and_return(true)
-    UserAuth.stub(:is_superuser?).with('2040').and_return(false)
-    UserAuth.stub(:is_superuser?).with('1234').and_return(false)
-    UserAuth.stub(:is_superuser?).with('9876').and_return(false)
-
     login_with_cas "238382"
     act_as_user "2040"
     visit "/api/my/status"
@@ -67,7 +65,6 @@ feature "act_as_user" do
   scenario "provide faulty param while switching users" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     login_with_cas "238382"
-    UserAuth.stub(:is_superuser?, '238382').and_return(true)
     suppress_rails_logging {
       act_as_user "gobbly-gook"
     }
@@ -81,8 +78,7 @@ feature "act_as_user" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     GoogleProxy.stub(:access_granted?).and_return(true)
     GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
-    UserAuth.stub(:is_superuser?, '238382').and_return(true)
-    UserAuth.stub(:is_superuser?, '2040').and_return(true)
+    UserAuth.new_or_update_superuser! "2040"
     UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
     %w(238382 2040 11002820).each do |user|
       login_with_cas user
@@ -93,14 +89,13 @@ feature "act_as_user" do
     end
     login_with_cas "238382"
     act_as_user "2040"
-    UserAuth.stub(:is_test_user?, '2040').and_return(false)
     UserData.unstub(:where)
     visit "/api/my/up_next"
     response = JSON.parse(page.body)
     response["items"].empty?.should be_true
     UserData.stub(:where, :uid => '11002820').and_return("tricking the first login check")
     act_as_user "11002820"
-    UserAuth.stub(:is_test_user?, '11002820').and_return(true)
+    UserAuth.new_or_update_test_user! "11002820"
     UserData.unstub(:where)
     visit "/api/my/up_next"
     response = JSON.parse(page.body)

@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery
   before_filter :get_settings, :initialize_calcentral_config
   after_filter :access_log
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Disable most of the default headers provided by secure_headers gem, leaving just x-frame for now
   # http://rubydoc.info/gems/secure_headers/0.5.0/frames
@@ -11,6 +13,10 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     redirect_to login_url unless session[:user_id]
+  end
+
+  def current_user
+    @current_user ||= UserAuth.get(session[:user_id])
   end
 
   # override of Rails default behavior:
@@ -33,10 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def clear_cache
-    # Only super-users are allowed to clear caches in production.
-    if Rails.env.production? && !UserAuth.is_superuser?(session[:user_id])
-      return render :nothing => true, :status => 401
-    end
+    authorize(current_user, :can_clear_cache?)
     Rails.logger.info "Clearing all cache entries"
     Rails.cache.clear
     render :nothing => true, :status => 204
@@ -53,6 +56,10 @@ class ApplicationController < ActionController::Base
     else
       render :nothing => true, :status => 503
     end
+  end
+
+  def user_not_authorized
+    render :nothing => true, :status => 401
   end
 
   private

@@ -32,8 +32,8 @@ class MyEventsController < ApplicationController
   #TODO: de-duplicate by pushing MergedModel's method up into ApplicationController
   def is_acting_as_nonfake_user?
     session[:original_user_id] &&
-      session[:user_id] != session[:original_user_id] &&
-      !UserAuth.is_test_user?(session[:user_id])
+      current_user.uid != session[:original_user_id] &&
+      !current_user.is_test_user?
   end
 
   def error_response

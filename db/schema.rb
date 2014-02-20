@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2013121913050404) do
+ActiveRecord::Schema.define(:version => 2014021814020707) do
 
   create_table "link_categories", :force => true do |t|
     t.string   "name",                          :null => false
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(:version => 2013121913050404) do
     t.boolean  "active",       :default => false, :null => false
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
+    t.boolean  "is_author",    :default => false, :null => false
+    t.boolean  "is_viewer",    :default => false, :null => false
   end
 
   add_index "user_auths", ["uid"], :name => "index_user_auths_on_uid", :unique => true

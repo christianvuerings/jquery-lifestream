@@ -14,10 +14,7 @@ class MyCampusLinksController < ApplicationController
   end
 
   def expire
-    # Only super-users are allowed to clear this cache
-    unless UserAuth.is_superuser?(session[:user_id])
-      return render :nothing => true, :status => 401
-    end
+    authorize(current_user, :can_clear_campus_links_cache?)
     Rails.logger.info "Expiring MyCampusLinksController cache"
     self.class.expire
     get_feed
