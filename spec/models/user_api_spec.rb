@@ -270,4 +270,27 @@ describe "UserApi" do
       subject[:reg_block][:needsAction].should be_false
     end
   end
+
+  context "proper handling of superuser permissions" do
+    before { UserAuth.new_or_update_superuser!(@random_id) }
+    subject { UserApi.new(@random_id).get_feed }
+    it "should pass the superuser status" do
+      subject[:is_superuser].should be_true
+      subject[:is_viewer].should be_false
+    end
+  end
+
+  context "proper handling of viewer permissions" do
+    before {
+      user = UserAuth.new(uid: @random_id)
+      user.is_viewer = true
+      user.save
+    }
+    subject { UserApi.new(@random_id).get_feed }
+    it "should pass the viewer status" do
+      subject[:is_superuser].should be_false
+      subject[:is_viewer].should be_true
+    end
+  end
+
 end
