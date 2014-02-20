@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "3.2.16"
+gem "rails", "3.2.17"
 
 gem "activerecord-jdbc-adapter", "~> 1.2.9"
 
