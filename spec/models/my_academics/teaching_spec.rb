@@ -36,4 +36,19 @@ describe 'MyAcademics::Teaching' do
     teaching[1][:classes].length.should == 2
   end
 
+  it "should get correct time buckets for teaching semesters", :if => SakaiData.test_data? do
+    Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
+    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
+
+    feed = {}
+    MyAcademics::Teaching.new("904715").merge(feed)
+    feed.empty?.should be_false
+    teaching = feed[:teaching_semesters]
+    teaching.length.should == 2
+    teaching[0][:name].should == "Spring 2015"
+    teaching[0][:time_bucket].should == "future"
+    teaching[1][:name].should == "Fall 2013"
+    teaching[1][:time_bucket].should == "current"
+  end
+
 end
