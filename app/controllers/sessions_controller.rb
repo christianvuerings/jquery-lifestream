@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def act_as
-    return redirect_to '/' unless valid_params?(current_user, params[:uid])
+    return redirect_to root_path unless valid_params?(current_user, params[:uid])
     Rails.logger.warn "ACT-AS: User #{session[:user_id]} acting as #{params[:uid]} begin"
     session[:original_user_id] = session[:user_id] unless session[:original_user_id]
     session[:user_id] = params[:uid]
@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
   end
 
   def stop_act_as
-    return redirect_to '/' unless session[:user_id] && session[:original_user_id]
+    return redirect_to root_path`` unless session[:user_id] && session[:original_user_id]
 
     #To avoid any potential stale data issues, we might have to be aggressive with cache invalidation.
     pseudo_user = Calcentral::PSEUDO_USER_PREFIX + session[:user_id]
@@ -54,8 +54,7 @@ class SessionsController < ApplicationController
   end
 
   def new
-    # redirect_to "/auth/cas?url=#{params[:url]}"
-    redirect_to '/auth/cas'
+    redirect_to url_for_path('/auth/cas')
   end
 
   def failure
@@ -68,7 +67,7 @@ class SessionsController < ApplicationController
 
   def smart_success_path
     # the :url parameter is returned by the CAS auth server
-    (params[:url].present?) ? params[:url] : '/dashboard'
+    (params[:url].present?) ? params[:url] : url_for_path('/dashboard')
   end
 
   def continue_login_success(uid)
@@ -77,12 +76,12 @@ class SessionsController < ApplicationController
     session.try(:delete, :_csrf_token)
     if (Integer(uid, 10) rescue nil).nil?
       Rails.logger.warn "FAILED login with CAS UID: #{uid}"
-      redirect_to '/uid_error'
+      redirect_to url_for_path('/uid_error')
     elsif UserApi.is_allowed_to_log_in?(uid)
       session[:user_id] = uid
       redirect_to smart_success_path, :notice => "Signed in!"
     else
-      redirect_to '/sorry'
+      redirect_to url_for_path('/sorry')
     end
   end
 
