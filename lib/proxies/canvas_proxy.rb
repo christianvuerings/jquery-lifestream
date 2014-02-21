@@ -56,7 +56,7 @@ class CanvasProxy < BaseProxy
           return nil
         end
         raise Calcentral::ProxyError.new(
-                "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}")
+                "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}", nil, nil)
       else
         response
       end

@@ -53,6 +53,7 @@ describe MyfinaidProxy do
     after(:each) { WebMock.reset! }
 
     subject { live_oski_finaid }
-    it { should be_nil }
+    it { subject[:body].should eq("Connection failed: 403 ") }
+    it { subject[:status_code].should eq(500) }
   end
 end
