@@ -4,7 +4,8 @@
     "bearfacts": true
   },
   "acting_as_uid": false,
-  "is_admin": false,
+  "is_superuser": false,
+  "is_viewer": false,
   "first_login_at": "2013-04-05T13:08:23-07:00",
   "first_name": "Oski",
   "full_name": "Oski Bear",

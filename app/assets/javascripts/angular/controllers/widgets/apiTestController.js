@@ -79,7 +79,7 @@
     };
 
     $scope.$on('calcentral.api.user.profile', function(event, profile) {
-      if (profile.is_admin) {
+      if (profile.is_superuser) {
         initTestRoutes();
       }
     });
