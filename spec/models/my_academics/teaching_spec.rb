@@ -2,9 +2,14 @@ require "spec_helper"
 
 describe 'MyAcademics::Teaching' do
 
-  it "should get properly formatted data from fake Oracle MV", :if => SakaiData.test_data? do
+  before(:each) do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
+    #Use this to tinker with the time buckets
+    Settings.sakai_proxy.stub(:current_terms_codes).and_return([OpenStruct.new(term_yr: "2013", term_cd: "D")])
+  end
+
+  it "should get properly formatted data from fake Oracle MV", :if => SakaiData.test_data? do
 
     feed = {}
     MyAcademics::Teaching.new("238382").merge(feed)
@@ -34,11 +39,10 @@ describe 'MyAcademics::Teaching' do
 
     teaching[1][:name].should == "Spring 2012"
     teaching[1][:classes].length.should == 2
+    teaching[1][:time_bucket].should == "past"
   end
 
   it "should get correct time buckets for teaching semesters", :if => SakaiData.test_data? do
-    Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
-    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
 
     feed = {}
     MyAcademics::Teaching.new("904715").merge(feed)
