@@ -6,13 +6,9 @@ class MyAcademics::Semesters
     super(uid)
   end
 
-  def self.current_term
-    Settings.sakai_proxy.current_terms_codes[0]
-  end
-
   def self.build_semester(term_yr, term_cd)
     MyAcademics::AcademicsModule.semester_info(term_yr, term_cd).merge({
-      time_bucket: self.time_bucket(term_yr, term_cd),
+      time_bucket: MyAcademics::AcademicsModule.time_bucket(term_yr, term_cd),
       classes: []
     })
   end
@@ -73,18 +69,6 @@ class MyAcademics::Semesters
       end
     end
     {}
-  end
-
-
-  def self.time_bucket(term_yr, term_cd)
-    if term_yr < self.current_term.term_yr || (term_yr == self.current_term.term_yr && term_cd < self.current_term.term_cd)
-      bucket = 'past'
-    elsif term_yr > self.current_term.term_yr || (term_yr == self.current_term.term_yr && term_cd > self.current_term.term_cd)
-      bucket = 'future'
-    else
-      bucket = 'current'
-    end
-    bucket
   end
 
 end

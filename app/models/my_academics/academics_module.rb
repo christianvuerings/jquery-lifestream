@@ -71,4 +71,19 @@ module MyAcademics::AcademicsModule
     }
   end
 
+  def current_term
+    Settings.sakai_proxy.current_terms_codes[0]
+  end
+
+  def time_bucket(term_yr, term_cd)
+    if term_yr < current_term.term_yr || (term_yr == current_term.term_yr && term_cd < current_term.term_cd)
+      bucket = 'past'
+    elsif term_yr > current_term.term_yr || (term_yr == current_term.term_yr && term_cd > current_term.term_cd)
+      bucket = 'future'
+    else
+      bucket = 'current'
+    end
+    bucket
+  end
+
 end
