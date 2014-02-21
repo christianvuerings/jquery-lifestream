@@ -63,14 +63,17 @@ class TextbooksProxy < BaseProxy
     super(Settings.textbooks_proxy, options)
   end
 
-  def get
-    ccn = @ccns[0]
+  def get_as_json
     self.class.smart_fetch_from_cache("#{@ccn}-#{@slug}", "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.") do
-      request_internal(ccn, 'Textbooks')
+      get.to_json
     end
   end
 
-  def request_internal(ccn, vcr_cassette)
+  def get
+    request_internal('Textbooks')
+  end
+
+  def request_internal(vcr_cassette)
     required_books = []
     recommended_books = []
     optional_books = []
