@@ -10,7 +10,7 @@
   .cc-page-myfinances-account-filter {
     background: transparent;
     border: none;
-    margin: 20px 15px;
+    margin: 20px 15px 0;
     padding: 0;
     .cc-select {
       margin-right: 10px;
@@ -92,7 +92,7 @@
     }
   }
   .cc-page-myfinances-table {
-    margin: 0 10px 30px;
+    margin: 20px 10px 30px;
     table {
       table-layout: fixed;
     }
