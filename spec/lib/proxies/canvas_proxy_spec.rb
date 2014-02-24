@@ -7,16 +7,6 @@ describe CanvasProxy do
     @client = CanvasProxy.new(:user_id => @user_id)
   end
 
-  context "when converting sis section ids to term and ccn" do
-    it "should return term and ccn" do
-      result = subject.class.sis_section_id_to_ccn_and_term("SEC:2014-B-25573")
-      result.should be_an_instance_of Hash
-      expect(result[:term_yr]).to eq '2014'
-      expect(result[:term_cd]).to eq 'B'
-      expect(result[:ccn]).to eq '25573'
-    end
-  end
-
   it "should see an account list as admin" do
     admin_client = CanvasProxy.new
     response = admin_client.request('accounts', '_admin')
