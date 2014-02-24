@@ -168,6 +168,22 @@
       background: $cc-color-widget-more-background;
     }
   }
+  .cc-academics-semesters {
+    padding: 20px 0 0 15px;
+  }
+  .cc-academics-semesters-telebears {
+    h4 {
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .cc-telebears-date-padding {
+      padding-left: 20px;
+    }
+    .cc-telebears-phase-center {
+      text-align: center;
+    }
+  }
   .cc-academics-showhide-block-history {
     margin-top: 10px;
     a {
@@ -269,19 +285,6 @@
   }
   .cc-widget {
     overflow: hidden;
-  }
-  .cc-academics-semesters-telebears {
-    h4 {
-      font-size: 13px;
-      font-weight: bold;
-      margin-top: 15px;
-    }
-    .cc-telebears-phase-center {
-      text-align: center;
-    }
-    .cc-telebears-date-padding {
-      padding-left: 20px;
-    }
   }
   .cc-academics-semester-books {
     .cc-textbook-category-separator {
