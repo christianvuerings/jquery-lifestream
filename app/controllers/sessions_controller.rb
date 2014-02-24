@@ -53,10 +53,6 @@ class SessionsController < ApplicationController
     }.to_json
   end
 
-  def new
-    redirect_to url_for_path('/auth/cas')
-  end
-
   def failure
     params ||= {}
     params[:message] ||= ''
