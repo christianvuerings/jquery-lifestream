@@ -283,4 +283,15 @@
       padding-left: 20px;
     }
   }
+  .cc-academics-semester-books {
+    .cc-textbook-category-separator {
+      display: none;
+    }
+  }
+
+  @media print {
+    .cc-widget-title {
+      text-align: center;
+    }
+  }
 }
