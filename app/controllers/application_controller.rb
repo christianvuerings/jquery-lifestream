@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   skip_before_filter :set_csp_header, :set_hsts_header, :set_x_content_type_options_header, :set_x_xss_protection_header
 
   def authenticate
-    redirect_to url_for_path('/auth/cas') unless session[:user_id]
+    redirect_to login_url unless session[:user_id]
   end
 
   def current_user
@@ -103,18 +103,6 @@ class ApplicationController < ActionController::Base
     end
     line += " class=#{self.class.name} action=#{params["action"]} view=#{view_runtime}ms db=#{db_runtime}ms"
     logger.warn line
-  end
-
-  # When given a relative path string as its first argument, Rails's redirect_to method ignores
-  # the protocol setting in default_url_options, and instead fills in the URL protocol from the
-  # request referer. Behind nginx or Apache, this causes a double redirect in the browser,
-  # first to "http:" and then to "https:". This method makes relative paths safer to use.
-  def url_for_path(path)
-    if (protocol = default_url_options[:protocol])
-      protocol + request.host_with_port + path
-    else
-      path
-    end
   end
 
 end
