@@ -14,17 +14,6 @@ class CanvasSectionEnrollmentsProxy < CanvasProxy
     "global/#{self.name}/#{section_id}"
   end
 
-  def list_enrollments(options = {})
-    default_options = {:cache => true}
-    options.reverse_merge!(default_options)
-
-    if options[:cache].present?
-      self.class.fetch_from_cache(@section_id) { request_enrollments_list }
-    else
-      request_enrollments_list
-    end
-  end
-
   # Interface to Enroll a User in Canvas
   # See https://canvas.instructure.com/doc/api/enrollments.html#method.enrollments_api.create
   def enroll_user(user_id, enrollment_type, enrollment_state, notify = false)
@@ -50,25 +39,6 @@ class CanvasSectionEnrollmentsProxy < CanvasProxy
     }
     response = request_uncached("sections/#{@section_id}/enrollments", "_section_enroll_user", request_options)
     JSON.parse(response.body)
-  end
-
-  private
-
-  # Returns all of the enrollments in the section
-  # See https://canvas.instructure.com/doc/api/enrollments.html#method.enrollments_api.index
-  def request_enrollments_list
-    all_enrollments = []
-    params = "per_page=30"
-    while params do
-      response = request_uncached(
-        "sections/#{@section_id}/enrollments?#{params}",
-        "_section_enrollments"
-      )
-      break unless (response && response.status == 200 && enrollments_list = safe_json(response.body))
-      all_enrollments.concat(enrollments_list)
-      params = next_page_params(response)
-    end
-    all_enrollments
   end
 
 end
