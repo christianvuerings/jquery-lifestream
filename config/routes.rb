@@ -91,6 +91,8 @@ Calcentral::Application.routes.draw do
     match '/logout' => 'sessions#destroy', :as => :logout, :via => :post
   end
 
+  match '/login' => 'sessions#new', :as => :login
+
   match '/act_as' => 'sessions#act_as', :via => :post
   match '/stop_act_as' => 'sessions#stop_act_as', :via => :post
 

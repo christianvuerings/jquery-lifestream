@@ -9,7 +9,7 @@ module IntegrationSpecHelper
           :uid => user
         })
     end
-    visit "/auth/cas"
+    visit "/login"
   end
 
   def logout_of_cas

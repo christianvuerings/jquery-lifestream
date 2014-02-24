@@ -53,11 +53,9 @@ class AuthController < ApplicationController
 
     expire
 
-    if (final_redirect = params[:state])
-      redirect_to Base64.decode64(final_redirect)
-    else
-      redirect_to url_for_path("/settings")
-    end
+    final_redirect = params[:state] || "/settings"
+    final_redirect = Base64.decode64 final_redirect
+    redirect_to final_redirect
   end
 
   def remove_authorization
