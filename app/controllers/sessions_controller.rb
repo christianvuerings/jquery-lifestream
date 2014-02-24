@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
   end
 
   def stop_act_as
-    return redirect_to root_path`` unless session[:user_id] && session[:original_user_id]
+    return redirect_to root_path unless session[:user_id] && session[:original_user_id]
 
     #To avoid any potential stale data issues, we might have to be aggressive with cache invalidation.
     pseudo_user = Calcentral::PSEUDO_USER_PREFIX + session[:user_id]
@@ -56,7 +56,7 @@ class SessionsController < ApplicationController
   def failure
     params ||= {}
     params[:message] ||= ''
-    redirect_to root_url, :status => 401, :alert => "Authentication error: #{params[:message].humanize}"
+    redirect_to root_path, :status => 401, :alert => "Authentication error: #{params[:message].humanize}"
   end
 
   private
