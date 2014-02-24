@@ -18,7 +18,7 @@ describe MyEventsController do
         it { should_not be_success }
         it { subject.status.should eq(302) }
         it { subject.content_type.symbol.should eq(:html) }
-        its(:location) { should be_include("login") }
+        its(:location) { should be_include("auth/cas") }
       end
 
       context "request type HTML, authenticated" do
