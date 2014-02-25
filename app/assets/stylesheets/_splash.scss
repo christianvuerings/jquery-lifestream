@@ -73,7 +73,9 @@ $cc-color-splash-blue-dark: #025A86;
   .cc-page-splash-container-right-images {
     max-height: 500px;
     overflow-y: auto;
-    padding-bottom: 100px;
+    > div:last-child {
+      padding-bottom: 100px;
+    }
     &::after {
       @include background(linear-gradient($cc-color-white-transparant, $cc-color-white));
       bottom: 0;
@@ -119,7 +121,9 @@ $cc-color-splash-blue-dark: #025A86;
     }
     .cc-page-splash-container-right-images {
       max-height: none;
-      padding-bottom: 0;
+      div:last-child {
+        padding-bottom: 0;
+      }
       &::after {
         content: initial;
       }
