@@ -103,7 +103,7 @@
      */
     var signIn = function() {
       analyticsService.trackEvent(['Authentication', 'Redirect to login']);
-      window.location = '/login';
+      window.location = '/auth/cas';
     };
 
     /**
