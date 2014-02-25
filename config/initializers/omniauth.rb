@@ -7,8 +7,6 @@ OmniAuth.config.logger = Rails.logger
 
 # Ensure https behind Apache.
 OmniAuth.config.full_host = lambda do |env|
-  # TODO Remove this log statement after testing behind Apache.
-  Rails.logger.debug(env)
   if defined?(Settings.application.protocol) && !Settings.application.protocol.blank?
     protocol_host = Settings.application.protocol + env['HTTP_HOST']
   else
