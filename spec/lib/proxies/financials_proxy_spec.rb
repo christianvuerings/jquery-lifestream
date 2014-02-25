@@ -27,7 +27,7 @@ describe FinancialsProxy do
   end
 
   context "tammi is missing financials" do
-    before { Rails.cache.should_not_receive(:write) }
+    before { Rails.cache.should_receive(:write) }
     subject { fake_tammi_financials }
     its([:body]) { should eq("My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem.") }
     its([:status_code]) { should eq(404) }
