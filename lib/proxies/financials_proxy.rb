@@ -33,21 +33,22 @@ class FinancialsProxy < BaseProxy
           timeout: Settings.application.outgoing_http_timeout
         )
       }
-      if response.code >= 400
-        if response.code == 404
-          body = "My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem."
-        else
-          body = "My Finances is currently unavailable. Please try again later."
-        end
+      if response.code == 404
+        logger.debug "Connection failed: #{response.code} #{response.body}; url = #{url}"
+        body = "My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem."
+      elsif response.code >= 400
+        body = "My Finances is currently unavailable. Please try again later."
         raise Calcentral::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
           body: body,
           status_code: response.code
         })
+      else
+        body = safe_json(response.body)
       end
 
       logger.debug "Remote server status #{response.code}; url = #{url}"
       return {
-        body: safe_json(response.body),
+        body: body,
         status_code: response.code
       }
     end
