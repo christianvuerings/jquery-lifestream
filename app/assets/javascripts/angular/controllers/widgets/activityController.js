@@ -27,6 +27,7 @@
         discussion: 'comments',
         financial: 'usd',
         grade_posting: 'trophy',
+        info: 'info-circle',
         message: 'check-circle',
         webconference: 'video-camera'
       };

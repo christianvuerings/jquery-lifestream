@@ -10,7 +10,7 @@ describe MyActivities::MyFinAid do
   let!(:fake_oski_finaid_next){    MyfinaidProxy.new({user_id: oski_uid, term_year: next_term_year,  fake: true }) }
 
   let!(:non_student_uid) { '212377' }
-  let(:documented_types) { %w(alert financial message) }
+  let(:documented_types) { %w(alert financial message info) }
 
   it { described_class.should respond_to(:append!) }
 
@@ -67,10 +67,18 @@ describe MyActivities::MyFinAid do
         @activities.select { |entry| entry[:type] == "alert" }
       end
 
-      it { subject.length.should eq(21) }
+      it { subject.length.should eq(19) }
       it { subject.each { |entry| entry[:date].should be_blank } }
     end
+    context "info types" do
+      subject do
+        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        @activities.select { |entry| entry[:type] == "info" }
+      end
 
+      it { subject.length.should eq(2) }
+      it { subject.each { |entry| entry[:date].should be_blank } }
+    end
     context "financial types" do
       subject do
         MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])

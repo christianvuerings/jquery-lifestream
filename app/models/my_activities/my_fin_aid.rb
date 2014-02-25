@@ -103,6 +103,7 @@ class MyActivities::MyFinAid
       url = diagnostic.css("Supplemental Usage Content[Type='URL']").text.strip
       url = "https://myfinaid.berkeley.edu" if url.blank?
       summary = diagnostic.css("Usage Content[Type='TXT']").text.strip
+      category = diagnostic.attribute('Category').try('value')
 
       next unless (title.present? && summary.present?)
 
@@ -111,12 +112,25 @@ class MyActivities::MyFinAid
         title: title,
         summary: summary,
         source: "Financial Aid",
-        type: "alert",
+        type: diagnostic_type_from_category(category),
         date: "",
         source_url: url,
         emitter: "Financial Aid",
         term_year: academic_year
       }
+    end
+  end
+
+  def self.diagnostic_type_from_category(category)
+    if category == 'PKG'
+      'info'
+    elsif category == 'SUM'
+      'financial'
+    elsif ['MBA', 'DSB', 'SAP'].include? category
+      'alert'
+    else
+      logger.warn("Unexpected diagnostic category: #{category}")
+      'alert'
     end
   end
 
