@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe MyActivities::MyFinAid do
   let!(:oski_uid) { "61889" }
+  let!(:non_student_uid) { '212377' }
 
   let!(:this_term_year) { Settings.myfinaid_proxy.test_term_year }
   let!(:next_term_year) { "#{this_term_year.to_i+1}" }
@@ -9,10 +10,26 @@ describe MyActivities::MyFinAid do
   let!(:fake_oski_finaid_current){ MyfinaidProxy.new({user_id: oski_uid, term_year: this_term_year,  fake: true }) }
   let!(:fake_oski_finaid_next){    MyfinaidProxy.new({user_id: oski_uid, term_year: next_term_year,  fake: true }) }
 
-  let!(:non_student_uid) { '212377' }
   let(:documented_types) { %w(alert financial message info) }
 
   it { described_class.should respond_to(:append!) }
+
+  context "expected feed structure on remote proxy" do
+    it "should have a successful response code and message" do
+      feed = fake_oski_finaid_current.get.try(:[], :body)
+      content = Nokogiri::XML(feed) { |config| config.strict }
+      content.css('Response Code').text.strip.should == '0000'
+      content.css('Response Message').text.strip.should == 'Success'
+    end
+    it "should have a non-successfull response code and message for registered test students" , :testext => true do
+      MyfinaidProxy.any_instance.stub(:lookup_student_id).and_return('97450293475029347520394785')
+      proxy = MyfinaidProxy.new({user_id: '300849', term_year: this_term_year })
+      feed = proxy.get.try(:[], :body)
+      content = Nokogiri::XML(feed, &:strict)
+      content.css('Response Code').text.should == 'B0023'
+      content.css('Response Message').text.strip.should == 'FAILED - BIO record does not exist'
+    end
+  end
 
   context "non 2xx states" do
     before(:each) { @activities = ["some activity"] }
@@ -59,6 +76,7 @@ describe MyActivities::MyFinAid do
     it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
     it { subject.each { |entry| entry[:title].should be_present } }
     it { subject.each { |entry| entry[:source_url].should be_present } }
+    it { subject.each { |entry| entry[:term_year].should be_present } }
     it { subject.each { |entry| entry[:source].should eq("Financial Aid") } }
 
     context "alert types" do
