@@ -21,16 +21,16 @@
                 <strong>Deferred Payment Plan</strong>
               </div>
               <div class="cc-page-myfinances-dpp-amounts">
-                <div class="small-8 columns">
+                <div class="small-8 columns cc-print-width-auto">
                   DPP Balance <sup>1</sup>
                 </div>
-                <div class="small-4 columns">
+                <div class="small-4 columns cc-print-width-auto cc-print-right">
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppBalance"></div>
                 </div>
-                <div class="small-8 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
+                <div class="small-8 columns cc-print-width-auto cc-print-clear" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
                   DPP Normal Installment Amount
                 </div>
-                <div class="small-4 columns" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
+                <div class="small-4 columns cc-print-width-auto cc-print-right" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppNormalInstallmentAmount"></div>
                 </div>
               </div>
@@ -40,7 +40,7 @@
             </li>
 
             <li class="cc-page-myfinances-account-summary-item cc-clearfix-container">
-              <div class="small-8 columns">
+              <div class="small-8 columns cc-print-width-auto">
                 <strong data-ng-if="myfinances.summary.minimumAmountDueFloat >= 0">
                   <span data-ng-if="myfinances.summary.isOnDPP && !myfinances.summary.isDppPastDue">Other</span> Amount Due Now
                 </strong>
@@ -50,17 +50,17 @@
                 <div data-ng-if="myfinances.summary.totalPastDueAmountFloat > 0" class="cc-page-myfinances-red cc-page-myfinances-account-summary-subtitle">Includes Past Due Amount of <span data-cc-amount-directive="myfinances.summary.totalPastDueAmount"></span>
                 </div>
               </div>
-              <div class="small-4 columns">
+              <div class="small-4 columns cc-print-width-auto cc-print-right">
                 <div class="cc-page-myfinances-amount">
                   <strong data-cc-amount-directive="myfinances.summary.minimumAmountDue"></strong>
                 </div>
               </div>
 
               <section class="cc-clearfix-container" data-ng-if="myfinances.summary.futureActivity !== '0.00'">
-                <div class="small-8 columns">
+                <div class="small-8 columns cc-print-width-auto cc-print-clear">
                   Charges Not Yet Due
                 </div>
-                <div class="small-4 columns">
+                <div class="small-4 columns cc-print-width-auto cc-print-right">
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.futureActivity"></div>
                 </div>
               </section>
@@ -78,10 +78,10 @@
                 data-cc-accessible-focus-directive
                 data-ng-click="api.widget.toggleShow($event, null, myfinances, 'My Finances - Summary')">
 
-                <div class="small-8 columns">Account Balance
+                <div class="small-8 columns cc-print-width-auto">Account Balance
                   <div class="cc-page-myfinances-account-summary-subtitle cc-page-myfinances-light">includes charges not yet due</div>
                 </div>
-                <div class="small-4 columns">
+                <div class="small-4 columns cc-print-width-auto cc-print-right">
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.accountBalance"></div>
                 </div>
 
