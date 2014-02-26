@@ -15,6 +15,8 @@ class MyActivities::MyFinAid
         next
       end
 
+      next unless valid_xml_response(uid, content)
+
       term_year = proxy.term_year
       aid_year  = content.at_css("AidYears AidYear[Default='X']")
 
@@ -31,6 +33,7 @@ class MyActivities::MyFinAid
       append_documents!(content.css("TrackDocs Document"), academic_year, cutoff_date, activities)
     end
   end
+
 
   def self.current_term_year
     # to-do: revise this logic with the team
@@ -156,4 +159,15 @@ class MyActivities::MyFinAid
       raise ArgumentError, "Cannot decode date: #{date} status: #{status}"
     end
   end
+
+  def self.valid_xml_response(uid, xmldoc)
+    status = {
+      code:    xmldoc.css('Response Code').text.strip,
+      message: xmldoc.css('Response Message').text.strip
+    }
+    return true if status[:code] == '0000'
+    logger.warn("Feed not available for UID (#{uid}). Code: #{status[:code]}, Message: #{status[:message]}")
+    false
+  end
+
 end
