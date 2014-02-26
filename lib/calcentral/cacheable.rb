@@ -25,13 +25,17 @@ module Calcentral
     # and nothing will be cached.
     def smart_fetch_from_cache(id=nil,
       user_message_on_exception = "An unknown server error occurred.",
-      return_nil_on_generic_error = false, &block)
+      return_nil_on_generic_error = false,
+      force_write=false,
+      &block)
       key = key id
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
-      entry = Rails.cache.read key
-      if entry
-        Rails.logger.debug "#{self.name} Entry is already in cache: #{key}"
-        return entry
+      unless force_write
+        entry = Rails.cache.read key
+        if entry
+          Rails.logger.debug "#{self.name} Entry is already in cache: #{key}"
+          return entry
+        end
       end
       begin
         entry = block.call
@@ -42,7 +46,10 @@ module Calcentral
         return response
       end
       Rails.logger.debug "#{self.name} Writing entry to cache: #{key}"
-      Rails.cache.write(key, entry)
+      Rails.cache.write(key,
+                        entry,
+                        :expires_in => self.expires_in,
+                        :force => true)
       entry
     end
 
