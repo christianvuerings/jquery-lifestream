@@ -367,10 +367,10 @@ features:
   neato: true
 ```
 
-After server restart, these properties will appear in each users' status feed. You can now use `data-ng-show` in Angular to wrap the feature:
+After server restart, these properties will appear in each users' status feed. You can now use `data-ng-if` in Angular to wrap the feature:
 
 ```html
-<div data-ng-show="user.profile.features.neato">
+<div data-ng-if="user.profile.features.neato">
   Some neato feature...
 </div>
 ```

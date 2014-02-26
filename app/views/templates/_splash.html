@@ -15,7 +15,7 @@
         <a class="radius cc-button cc-button-large" href="https://ets.berkeley.edu/calcentral">Learn More<span class="cc-visuallyhidden"> about the CalCentral releases</span></a>
       </div>
 
-      <div class="row collapse cc-page-splash-blog-panel" data-ng-show="latest_release_note.title">
+      <div class="row collapse cc-page-splash-blog-panel" data-ng-if="latest_release_note.title">
         <div class="medium-2 columns hide-for-small cc-page-splash-blog-date">
           <p>{{latest_release_note.date}}</p>
         </div>

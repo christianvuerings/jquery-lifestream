@@ -21,12 +21,12 @@
           <h3>Class Title</h3>
           <div data-ng-bind="selected_course.title"></div>
 
-          <h3 data-ng-show="selected_course.role">My Role</h3>
+          <h3 data-ng-if="selected_course.role">My Role</h3>
           <div data-ng-bind="selected_course.role"></div>
 
-          <h3 data-ng-show="selected_course.sections.length && !is_instructor_gsi">My Enrollment</h3>
+          <h3 data-ng-if="selected_course.sections.length && !is_instructor_gsi">My Enrollment</h3>
 
-          <div class="cc-table" data-ng-show="selected_course.sections.length && !is_instructor_gsi">
+          <div class="cc-table" data-ng-if="selected_course.sections.length && !is_instructor_gsi">
             <table>
               <thead>
                 <tr>
@@ -43,7 +43,7 @@
             </table>
           </div>
 
-          <h3 data-ng-show="selected_course_count_schedules || selected_course.units || selected_course.grade_option">Class Info</h3>
+          <h3 data-ng-if="selected_course_count_schedules || selected_course.units || selected_course.grade_option">Class Info</h3>
 
           <h4 data-ng-hide="is_instructor_gsi">Course Offering</h4>
 
@@ -52,10 +52,10 @@
               <tbody>
                 <tr>
                   <th scope="row" width="25%">Units</th>
-                  <td data-ng-show="selected_course.units" data-ng-bind="selected_course.units  | number:1"></td>
-                  <td data-ng-show="!selected_course.units">--</td>
+                  <td data-ng-if="selected_course.units" data-ng-bind="selected_course.units  | number:1"></td>
+                  <td data-ng-if="!selected_course.units">--</td>
                 </tr>
-                <tr data-ng-show="selected_course.grade_option">
+                <tr data-ng-if="selected_course.grade_option">
                   <th scope="row">Grading</th>
                   <td data-ng-bind="selected_course.grade_option"></td>
                 </tr>
@@ -63,12 +63,12 @@
             </table>
           </div>
 
-          <h4 data-ng-show="selected_course_count_schedules">Section Schedules</h4>
+          <h4 data-ng-if="selected_course_count_schedules">Section Schedules</h4>
 
           <div class="row collapse" data-ng-repeat="section in selected_course.sections">
-            <div class="small-3 columns" data-ng-show="section.schedules" data-ng-bind="section.section_label"></div>
+            <div class="small-3 columns" data-ng-if="section.schedules" data-ng-bind="section.section_label"></div>
             <div class="small-9 columns">
-              <div data-ng-repeat="schedule in section.schedules" data-ng-show="section.schedules" class="cc-academics-schedule-room">
+              <div data-ng-repeat="schedule in section.schedules" data-ng-if="section.schedules" class="cc-academics-schedule-room">
                 <span data-ng-bind="schedule.schedule"></span> |
                 <span data-ng-bind="schedule.room_number"></span> <span data-ng-bind="schedule.building_name"></span> <br />
               </div>
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <div class="medium-4 columns" data-ng-show="selected_course_count_instructors">
+    <div class="medium-4 columns" data-ng-if="selected_course_count_instructors">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2 data-ng-pluralize count="selected_course_count_instructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
@@ -89,7 +89,7 @@
             <ul class="cc-academics-instructors">
               <li data-ng-repeat="instructor in section.instructors">
                 <a data-ng-href="https://calnet.berkeley.edu/directory/details.pl?uid={{instructor.uid}}" data-ng-bind="instructor.name"></a>
-                <a data-ng-show="instructor.email" title="Email {{instructor.name}}" data-ng-href="mailto:{{instructor.email}}">
+                <a data-ng-if="instructor.email" title="Email {{instructor.name}}" data-ng-href="mailto:{{instructor.email}}">
                   <span class="cc-visuallyhidden">Email {{instructor.name}}</span>
                   <i class="cc-icon fa fa-envelope"></i>
                 </a>
