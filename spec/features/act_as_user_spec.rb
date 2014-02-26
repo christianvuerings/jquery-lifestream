@@ -55,6 +55,13 @@ feature "act_as_user" do
     response["is_logged_in"].should be_true
     response["uid"].should == "9876"
 
+    # make sure you can act-as someone with no user_auth record
+    act_as_user "54321"
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response["is_logged_in"].should be_true
+    response["uid"].should == "54321"
+
     stop_act_as_user
     visit "/api/my/status"
     response = JSON.parse(page.body)

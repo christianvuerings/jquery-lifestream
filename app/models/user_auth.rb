@@ -5,13 +5,10 @@ class UserAuth < ActiveRecord::Base
   attr_accessible :uid, :is_superuser, :is_test_user, :is_author, :is_viewer, :active
 
   def self.get(uid)
-    if uid.nil?
-      uid = ''
-    end
-    user_auth = UserAuth.where(:uid => uid.to_s).first
+    user_auth = uid.nil? ? nil : UserAuth.where(:uid => uid.to_s).first
     if user_auth.blank?
-      # anonymous user is active but has no permissions or uid.
-      user_auth = UserAuth.new(uid: nil, is_superuser: false, is_test_user: false, is_author: false, is_viewer: false, active: true)
+      # user's anonymous, or is not in the user_auth table, so give them an active status with zero permissions.
+      user_auth = UserAuth.new(uid: uid, is_superuser: false, is_test_user: false, is_author: false, is_viewer: false, active: true)
     end
     user_auth
   end
