@@ -123,6 +123,16 @@ describe MyActivities::MyFinAid do
 
     end
 
+    context "decoding status for document messages" do
+      it "should ignore documents with a status of W" do
+        lambda {
+          # logger.should_receive(:warn)
+          result = MyActivities::MyFinAid.decode_status('', 'W')
+          result.should be_nil
+        }.should_not raise_error
+      end
+    end
+
     context "finaid activities" do
       it "should no longer have status messages appended to the title" do
         subject.each{ |entry|
