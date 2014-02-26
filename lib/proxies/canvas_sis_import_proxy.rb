@@ -35,6 +35,10 @@ class CanvasSisImportProxy < CanvasProxy
     import_with_check(csv_file_path, '_sis_import_users')
   end
 
+  def import_batch_term_enrollments(term_id, csv_file_path)
+    import_with_check(csv_file_path, '_sis_import_enrollments', "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
+  end
+
   def import_with_check(csv_file_path, vcr_id, extra_params = '')
     response = post_sis_import(csv_file_path, vcr_id, extra_params)
     import_successful?(response)
