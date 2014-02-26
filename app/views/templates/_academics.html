@@ -2,12 +2,12 @@
   <div
     class="cc-page-academics"
     data-cc-spinner-directive>
-    <div data-ng-show="can_view_academics">
+    <div data-ng-if="can_view_academics">
       <div class="column">
         <h1 class="cc-heading-page-title">My Academics</h1>
       </div>
 
-      <div class="medium-8 columns cc-academics-page-left" data-ng-show="api.user.profile.student_info.has_student_history">
+      <div class="medium-8 columns cc-academics-page-left" data-ng-if="api.user.profile.student_info.has_student_history">
         <div class="cc-widget">
           <div class="cc-widget-title">
             <h2>Records</h2>
@@ -22,16 +22,16 @@
                   <tr>
                     <th width="25%">General</th>
                     <th width="25%" class="cc-table-subheader" scope="col">Standing</th>
-                    <th width="25%" class="cc-table-subheader" scope="col" data-ng-show="gpa_units.total_units !== null">Units</th>
-                    <th class="cc-table-subheader" scope="col" data-ng-show="gpa_units.cumulative_gpa !== null">GPA</th>
+                    <th width="25%" class="cc-table-subheader" scope="col" data-ng-if="gpa_units.total_units !== null">Units</th>
+                    <th class="cc-table-subheader" scope="col" data-ng-if="gpa_units.cumulative_gpa !== null">GPA</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td></td>
                     <td><strong data-ng-bind="college_and_level.standing"></strong></td>
-                    <td data-ng-show="gpa_units.total_units !== null"><strong data-ng-bind="gpa_units.total_units"></strong></td>
-                    <td data-ng-show="gpa_units.cumulative_gpa !== null"><strong data-ng-bind="gpa_units.cumulative_gpa"></strong></td>
+                    <td data-ng-if="gpa_units.total_units !== null"><strong data-ng-bind="gpa_units.total_units"></strong></td>
+                    <td data-ng-if="gpa_units.cumulative_gpa !== null"><strong data-ng-bind="gpa_units.cumulative_gpa"></strong></td>
                   </tr>
                 </tbody>
               </table>
@@ -42,16 +42,16 @@
                 <thead>
                   <tr>
                     <th width="25%">
-                      <span data-ng-show="is_undergratuate">College and Major</span>
-                      <span data-ng-show="!is_undergratuate">School and Program</span>
+                      <span data-ng-if="is_undergratuate">College and Major</span>
+                      <span data-ng-if="!is_undergratuate">School and Program</span>
                     </th>
                     <th width="25%" class="cc-table-subheader" scope="col">
-                      <span data-ng-show="is_undergratuate">College</span>
-                      <span data-ng-show="!is_undergratuate">School</span>
+                      <span data-ng-if="is_undergratuate">College</span>
+                      <span data-ng-if="!is_undergratuate">School</span>
                     </th>
                     <th width="50%" class="cc-table-subheader" scope="col">
-                      <span data-ng-show="is_undergratuate">Major</span>
-                      <span data-ng-show="!is_undergratuate">Program</span>
+                      <span data-ng-if="is_undergratuate">Major</span>
+                      <span data-ng-if="!is_undergratuate">Program</span>
                     </th>
                   </tr>
                 </thead>
@@ -71,12 +71,12 @@
                   <tr>
                     <th width="25%">Level</th>
                     <th width="25%" class="cc-table-subheader" scope="col">
-                      <span data-ng-show="is_undergratuate">Including AP</span>
-                      <span data-ng-show="!is_undergratuate">Current</span>
+                      <span data-ng-if="is_undergratuate">Including AP</span>
+                      <span data-ng-if="!is_undergratuate">Current</span>
                     </th>
-                    <th width="25%" data-ng-show="is_undergratuate" class="cc-table-subheader" scope="col">
+                    <th width="25%" data-ng-if="is_undergratuate" class="cc-table-subheader" scope="col">
                       <span>Not Including AP</span>
-                      <span data-ng-show="!is_undergratuate">Current</span>
+                      <span data-ng-if="!is_undergratuate">Current</span>
                     </th>
                     <th width="{{is_undergratuate && '25' || '50'}}%" class="cc-table-subheader" scope="col">Future (Tele-BEARS)
                     </th>
@@ -86,7 +86,7 @@
                   <tr>
                     <td></td>
                     <td><strong data-ng-bind="college_and_level.level"></strong></td>
-                    <td data-ng-show="is_undergratuate"><strong data-ng-bind="college_and_level.non_ap_level"></strong></td>
+                    <td data-ng-if="is_undergratuate"><strong data-ng-bind="college_and_level.non_ap_level"></strong></td>
                     <td><strong data-ng-bind="college_and_level.future_telebears_level"></strong></td>
                   </tr>
                 </tbody>
@@ -94,9 +94,9 @@
             </div>
 
             <div class="cc-academics-status-and-blocks">
-              <h3><span data-ng-show="api.user.profile.student_info.reg_status.code!=null && api.user.profile.features.academic_status">Status and </span>Blocks</h3>
+              <h3><span data-ng-if="api.user.profile.student_info.reg_status.code !== null && api.user.profile.features.academic_status">Status and </span>Blocks</h3>
 
-              <div class="cc-table" data-ng-show="api.user.profile.student_info.reg_status.code!=null && api.user.profile.features.academic_status">
+              <div class="cc-table" data-ng-if="api.user.profile.student_info.reg_status.code !== null && api.user.profile.features.academic_status">
                 <h4>Status Type</h4>
                 <table>
                   <thead>
@@ -131,7 +131,7 @@
               </div>
 
               <h4>Active Blocks</h4>
-              <div class="cc-table" data-ng-show="regblocks.active_blocks.length && regblocks.available">
+              <div class="cc-table" data-ng-if="regblocks.active_blocks.length && regblocks.available">
                 <table>
                   <thead>
                     <tr>
@@ -151,10 +151,10 @@
                       <td data-ng-bind="block.office || '&nbsp;'"></td>
                       <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></td>
                     </tr>
-                    <tr data-ng-show="block.show">
+                    <tr data-ng-if="block.show">
                       <td data-ng-bind-html="block.message" colspan="4"></td>
                     </tr>
-                    <tr data-ng-show="block.show">
+                    <tr data-ng-if="block.show">
                       <td colspan="4">
                         <button class="cc-button-link cc-academics-what-is-registration-block"
                                 data-ng-click="api.util.preventBubble($event);block.show_regblock_definition=!block.show_regblock_definition">
@@ -162,7 +162,7 @@
                         </button>
                       </td>
                     </tr>
-                    <tr data-ng-show="block.show_regblock_definition && block.show">
+                    <tr data-ng-if="block.show_regblock_definition && block.show">
                       <td colspan="4">
                         <p>
                           A registration block prevents you from being "officially registered" as a student who is attending U.C. Berkeley. You must have both enrolled in classes and paid your fees to be an "officially registered" student.
@@ -173,32 +173,32 @@
                   </tbody>
                 </table>
               </div>
-              <div data-ng-show="!regblocks.active_blocks.length && regblocks.available">
+              <div data-ng-if="!regblocks.active_blocks.length && regblocks.available">
                 <div class="row collapse">
                   <div class="medium-6 columns end">You have no active blocks at this time.</div>
                 </div>
               </div>
-              <div data-ng-show="!regblocks.available">
+              <div data-ng-if="!regblocks.available">
                 <div class="row collapse">
                   <div class="medium-6 columns end"><i class="fa fa-exclamation-triangle cc-unavailable"></i>Block message is currently unavailable.</div>
                 </div>
               </div>
-              <div class="cc-academics-showhide-block-history" data-ng-show="regblocks.available">
+              <div class="cc-academics-showhide-block-history" data-ng-if="regblocks.available">
                 <p class="cc-academics-nolink cc-academics-empasize"
-                  data-ng-show="!regblocks.inactive_blocks.length">No block history
+                  data-ng-if="!regblocks.inactive_blocks.length">No block history
                 </p>
-                <div data-ng-show="regblocks.inactive_blocks.length">
+                <div data-ng-if="regblocks.inactive_blocks.length">
                   <button
                     class="cc-button cc-button-blue"
                     data-ng-click="toggleBlockHistory()">
-                      <span data-ng-show="!show_block_history">Show block history</span>
-                      <span data-ng-show="show_block_history">Hide block history</span>
+                      <span data-ng-if="!show_block_history">Show block history</span>
+                      <span data-ng-if="show_block_history">Hide block history</span>
                   </button>
                 </div>
               </div>
 
               <div class="cc-table">
-                <table class="cc-academics-block-history" data-ng-show="show_block_history">
+                <table class="cc-academics-block-history" data-ng-if="show_block_history">
                   <thead>
                     <tr>
                       <th scope="col" width="20%">Type</th>
@@ -221,8 +221,8 @@
               </div>
             </div>
 
-            <h3 data-ng-show="requirements">University Requirements</h3>
-            <div data-ng-show="requirements" class="cc-table">
+            <h3 data-ng-if="requirements">University Requirements</h3>
+            <div data-ng-if="requirements" class="cc-table">
               <table>
                 <thead>
                   <tr>
@@ -245,7 +245,7 @@
         </div>
       </div>
       <div class="medium-4 columns" data-ng-class="{'pull-8':(!api.user.profile.student_info.has_student_history)}">
-        <div class="cc-widget cc-widget-last" data-ng-show="teaching_length">
+        <div class="cc-widget cc-widget-last" data-ng-if="teaching_length">
           <div class="cc-widget-title">
             <h2>Teaching</h2>
           </div>
@@ -262,7 +262,7 @@
           </div>
         </div>
 
-        <div class="cc-widget cc-widget-last" data-ng-show="api.user.profile.student_info.has_student_history && semesters.length">
+        <div class="cc-widget cc-widget-last" data-ng-if="api.user.profile.student_info.has_student_history && semesters.length">
           <div class="cc-widget-title">
             <h2 class="cc-left">Semesters</h2>
             <a href="https://telebears.berkeley.edu/tranreq/" class="cc-right cc-widget-title-link">
@@ -276,16 +276,16 @@
               <div>
                 <h3><a class="cc-left" data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
                 <a class="cc-right" data-ng-href="/academics/booklist" data-ng-show="semester.time_bucket === 'current'">Book List</a>
-                <table data-ng-show="semester.classes">
+                <table data-ng-if="semester.classes">
                   <thead>
                     <tr>
                       <th width="25%" scope="col">Class</th>
                       <th width="60%" scope="col">Title</th>
                       <th width="20%" scope="col" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket != 'current')}">
-                        <span data-ng-show="{{semester.time_bucket == 'current'}}">Units</span>
-                        <span data-ng-show="{{semester.time_bucket != 'current'}}" title="Units">Un.</span>
+                        <span data-ng-if="{{semester.time_bucket == 'current'}}">Units</span>
+                        <span data-ng-if="{{semester.time_bucket != 'current'}}" title="Units">Un.</span>
                       </th>
-                      <th width="25%" scope="col" data-ng-show="{{semester.time_bucket == 'past'}}" title="Grades">Gr.</th>
+                      <th width="25%" scope="col" data-ng-if="{{semester.time_bucket == 'past'}}" title="Grades">Gr.</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -293,11 +293,11 @@
                       <td><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{class.slug}}" data-ng-bind="class.course_number"></a></td>
                       <td data-ng-bind="class.title"></td>
                       <td data-ng-bind="class.units | number:1" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket != 'current')}"></td>
-                      <td data-ng-bind="class.grade" data-ng-show="{{semester.time_bucket == 'past'}}">Gr.</td>
+                      <td data-ng-bind="class.grade" data-ng-if="{{semester.time_bucket == 'past'}}">Gr.</td>
                     </tr>
                   </tbody>
                 </table>
-                <div class="cc-academics-semesters-telebears" data-ng-show="telebears.slug === semester.slug">
+                <div class="cc-academics-semesters-telebears" data-ng-if="telebears.slug === semester.slug">
                   <h4>Tele-BEARS</h4>
                   <table>
                     <thead>
@@ -324,7 +324,7 @@
       </div>
     </div>
   </div>
-  <div class="cc-page-academics" data-ng-hide="can_view_academics" data-ng-cloak>
+  <div class="cc-page-academics" data-ng-if="!can_view_academics" data-ng-cloak>
     <div class="small-12 columns">
       <h2>Data not available</h2>
       <p>
