@@ -15,7 +15,7 @@ class MyActivities::MyFinAid
         next
       end
 
-      next unless valid_xml_response(uid, content)
+      next unless valid_xml_response?(uid, content)
 
       term_year = proxy.term_year
       aid_year  = content.at_css("AidYears AidYear[Default='X']")
@@ -160,13 +160,11 @@ class MyActivities::MyFinAid
     end
   end
 
-  def self.valid_xml_response(uid, xmldoc)
-    status = {
-      code:    xmldoc.css('Response Code').text.strip,
-      message: xmldoc.css('Response Message').text.strip
-    }
-    return true if status[:code] == '0000'
-    logger.warn("Feed not available for UID (#{uid}). Code: #{status[:code]}, Message: #{status[:message]}")
+  def self.valid_xml_response?(uid, xmldoc)
+    code = xmldoc.css('Response Code').text.strip
+    message = xmldoc.css('Response Message').text.strip
+    return true if code == '0000'
+    logger.warn("Feed not available for UID (#{uid}). Code: #{code}, Message: #{message}")
     false
   end
 
