@@ -68,6 +68,7 @@ class MyActivities::MyFinAid
 
       begin
         status = decode_status(date, document.css("Status").text.strip)
+        next if status.nil?
       rescue ArgumentError
         logger.error "Unable to decode finAid status for document: #{document.inspect} date: #{date.inspect}, status: #{status.inspect}"
         next
@@ -138,13 +139,11 @@ class MyActivities::MyFinAid
   end
 
   def self.decode_status(date, status)
-    default = {
-      received: false,
-      reviewed: false,
-    }
-
     if date.blank? && (status.blank? || status == 'Q')
-      default
+      {
+        received: false,
+        reviewed: false,
+      }
     elsif date.present? && status == 'N'
       {
         received: true,
@@ -155,6 +154,9 @@ class MyActivities::MyFinAid
         received: true,
         reviewed: true,
       }
+    elsif ['W'].include? status
+      logger.info("Ignore documents with \"#{status}\" status")
+      nil
     else
       raise ArgumentError, "Cannot decode date: #{date} status: #{status}"
     end
