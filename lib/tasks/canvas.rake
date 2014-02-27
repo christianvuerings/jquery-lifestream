@@ -1,8 +1,14 @@
 namespace :canvas do
 
-  desc 'Get all Canvas users and sections for current terms, refresh user accounts, and overwrite section memberships'
-  task :full_refresh => :environment do
-    canvas_worker = CanvasRefreshAllCampusData.new
+  desc 'Get all Canvas users and sections for current terms, refresh user accounts, and update all section memberships'
+  task :batch_refresh => :environment do
+    canvas_worker = CanvasRefreshAllCampusData.new 'batch'
+    canvas_worker.run
+  end
+
+  desc 'Get all Canvas users and sections for current terms, refresh user accounts, and add new section memberships'
+  task :incremental_refresh => :environment do
+    canvas_worker = CanvasRefreshAllCampusData.new 'incremental'
     canvas_worker.run
   end
 

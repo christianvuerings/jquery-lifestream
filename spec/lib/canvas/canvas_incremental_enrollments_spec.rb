@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CanvasMaintainEnrollments do
+describe CanvasIncrementalEnrollments do
   let(:uid) { rand(999999).to_s }
   let(:course_id) { rand(999999).to_s }
   let(:section_id) { rand(999999).to_s }
@@ -58,11 +58,11 @@ describe CanvasMaintainEnrollments do
 
   describe '.canvas_section_enrollments' do
     it "raises exception if canvas_section_id argument not an integer" do
-      expect { CanvasMaintainEnrollments.canvas_section_enrollments('123456') }.to raise_error(ArgumentError, "canvas_section_id must be a Fixnum")
+      expect { CanvasIncrementalEnrollments.canvas_section_enrollments('123456') }.to raise_error(ArgumentError, "canvas_section_id must be a Fixnum")
     end
 
     it "returns section enrollments with students and instructors segregated" do
-      result = CanvasMaintainEnrollments.canvas_section_enrollments(123456)
+      result = CanvasIncrementalEnrollments.canvas_section_enrollments(123456)
       expect(result).to be_an_instance_of Hash
       expect(result[:students]).to be_an_instance_of Hash
       expect(result[:instructors]).to be_an_instance_of Hash
@@ -77,7 +77,7 @@ describe CanvasMaintainEnrollments do
     end
 
     it "returns section enrollments without non-sis users" do
-      result = CanvasMaintainEnrollments.canvas_section_enrollments(123456)
+      result = CanvasIncrementalEnrollments.canvas_section_enrollments(123456)
       expect(result).to be_an_instance_of Hash
       expect(result[:students]).to be_an_instance_of Hash
       result[:students].each do |login_id, student|
@@ -88,9 +88,9 @@ describe CanvasMaintainEnrollments do
 
     it "logs existence of non-sis user enrollments" do
       logger = double
-      CanvasMaintainEnrollments.stub(:logger).and_return(logger)
+      CanvasIncrementalEnrollments.stub(:logger).and_return(logger)
       logger.should_receive(:warn).with("Canvas User IDs - 4000028, 4000029, 4000030 - enrolled in Canvas Section ID # 123456 without SIS User ID present").and_return(nil)
-      result = CanvasMaintainEnrollments.canvas_section_enrollments(123456)
+      result = CanvasIncrementalEnrollments.canvas_section_enrollments(123456)
     end
   end
 
@@ -108,7 +108,7 @@ describe CanvasMaintainEnrollments do
 
     before do
       CanvasSectionsReportProxy.any_instance.stub(:get_csv).and_return(canvas_term_sections_csv_table)
-      CanvasMaintainEnrollments.stub(:canvas_section_enrollments).and_return({:students => 'student_enrollments_array', :instructors => 'instructor_enrollments_array'})
+      CanvasIncrementalEnrollments.stub(:canvas_section_enrollments).and_return({:students => 'student_enrollments_array', :instructors => 'instructor_enrollments_array'})
     end
 
     it 'triggers updates for student and instructor enrollments for term specified' do
@@ -142,30 +142,28 @@ describe CanvasMaintainEnrollments do
 
     it "makes no modifications to existing enrollments" do
       # UID 754320 is supposed to be left alone - Student ID: 21563987
-      expect(enrollments_csv.length).to eq(4)
+      expect(enrollments_csv.length).to eq(3)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563987"}.count).to eq 0
     end
 
     it "adds new student enrollments not detected in canvas enrollments list" do
       # UID 754322 is supposed to be new - Student ID: 23270877
       # UID 754325 is supposed to be new - Student ID: 21563378
-      expect(enrollments_csv.length).to eq(4)
+      expect(enrollments_csv.length).to eq(3)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "23270877"}.count).to eq 1
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563378"}.count).to eq 1
     end
 
     it "updates student enrollments with modified role" do
       # UID 754323 is supposed to be updated due to enrollment status change - Student ID: 21563992
-      expect(enrollments_csv.length).to eq(4)
+      expect(enrollments_csv.length).to eq(3)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563992"}.count).to eq 1
     end
 
-    it "deletes students not detected in campus enrollments list" do
-      # UID 754324 is supposed to be dropped - Student ID: 21563993
-      expect(enrollments_csv.length).to eq(4)
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "21563993"}.count).to eq 1
-      deleted_entry = enrollments_csv.select {|entry| entry["user_id"] == "21563993"}
-      expect(deleted_entry[0]['status']).to eq "deleted"
+    it "excludes students not detected in campus enrollments list" do
+      # UID 754324 is no longer officially enrolled - Student ID: 21563993
+      expect(enrollments_csv.length).to eq(3)
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "21563993"}.count).to eq 0
     end
 
     it "updates all enrollments with sis student role" do
@@ -195,14 +193,14 @@ describe CanvasMaintainEnrollments do
 
     it "leaves makes no modifications to existing enrollments" do
       # LDAP UID 754322 - Roy Becerra, should be left alone
-      expect(enrollments_csv.length).to eq(3)
+      expect(enrollments_csv.length).to eq(2)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754322"}.count).to eq 0
     end
 
     it "adds new instructor enrollments not detected in canvas enrollments list" do
       # LDAP UID 754311 - Bryan Wagner, should be added
       # LDAP UID 754314 - Do Quang Hoa, should be added
-      expect(enrollments_csv.length).to eq(3)
+      expect(enrollments_csv.length).to eq(2)
       expected_enrollment_1 = enrollments_csv.select {|entry| entry["user_id"] == "UID:754311"}
       expected_enrollment_2 = enrollments_csv.select {|entry| entry["user_id"] == "UID:754314"}
       expect(expected_enrollment_1[0]).to be_an_instance_of Hash
@@ -211,12 +209,10 @@ describe CanvasMaintainEnrollments do
       expect(expected_enrollment_2[0]['role']).to eq "teacher"
     end
 
-    it "deletes instructors not detected in campus enrollments list" do
-      # LDAP UID 754325 - Stephen K Whalen, should be dropped
-      expect(enrollments_csv.length).to eq(3)
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}.count).to eq 1
-      deleted_entry = enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}
-      expect(deleted_entry[0]['status']).to eq "deleted"
+    it "excludes instructors not detected in campus enrollments list" do
+      # LDAP UID 754325 - Stephen K Whalen, is no longer officially assigned
+      expect(enrollments_csv.length).to eq(2)
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}.count).to eq 0
     end
 
   end

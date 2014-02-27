@@ -1,13 +1,5 @@
-class CanvasMaintainEnrollments < CanvasCsv
+class CanvasIncrementalEnrollments < CanvasCsv
   include ClassLogger
-
-  # Roles used with Canvas SIS Import API
-  ENROLL_STATUS_TO_CANVAS_SIS_ROLE = {
-    'E' => 'student',
-    'W' => 'Waitlist Student',
-    # Concurrent enrollment
-    'C' => 'student'
-  }
 
   # Roles indicated by Canvas Enrollments API
   ENROLL_STATUS_TO_CANVAS_ROLE = {
@@ -28,7 +20,7 @@ class CanvasMaintainEnrollments < CanvasCsv
 
     # Filter out non-SIS user enrollments
     sis_user_filter = lambda {|e| !e['user'].has_key?('sis_user_id') }
-    if (non_sis_enrollments = canvas_section_enrollments.select(&sis_user_filter))
+    if (non_sis_enrollments = canvas_section_enrollments.select(&sis_user_filter)) && !non_sis_enrollments.empty?
       canvas_section_enrollments.reject!(&sis_user_filter)
       user_ids = non_sis_enrollments.collect {|e| e['user']['id']}.join(', ')
       logger.warn("Canvas User IDs - #{user_ids} - enrolled in Canvas Section ID # #{canvas_section_id} without SIS User ID present")
@@ -53,7 +45,6 @@ class CanvasMaintainEnrollments < CanvasCsv
             refresh_students_in_section(campus_section, course_id, section_id, canvas_enrollments[:students], enrollments_csv, known_users, users_csv)
             refresh_teachers_in_section(campus_section, course_id, section_id, canvas_enrollments[:instructors], enrollments_csv, known_users, users_csv)
           end
-
         else
           logger.warn("Canvas section has SIS ID but course does not: #{canvas_section}")
         end
@@ -77,12 +68,14 @@ class CanvasMaintainEnrollments < CanvasCsv
         append_enrollment_and_user('student', course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
       end
     end
-    # Remove enrollments remaining in Canvas enrollment list
-    canvas_student_enrollments.each do |uid, remaining_enrollment|
-      canvas_role = CANVAS_ROLE_TO_CANVAS_SIS_ROLE[remaining_enrollment['role']]
-      sis_user_id = remaining_enrollment['user']['sis_user_id']
-      append_enrollment_deletion(course_id, section_id, canvas_role, sis_user_id, enrollments_csv)
-    end
+    # Handle enrollments remaining in Canvas enrollment list
+    canvas_student_enrollments.each {|uid, remaining_enrollment| handle_missing_enrollment(uid, remaining_enrollment)}
+  end
+
+  # Note remaining Canvas enrollments which are not in the current campus data,
+  # but do not delete them now. Instead, let the batch enrollment job take care of that.
+  def handle_missing_enrollment(uid, enrollment)
+    logger.info "No campus record for Canvas enrollment in #{enrollment['course_id']} #{enrollment['section_id']} for user #{uid} with role #{enrollment['role']}"
   end
 
   def refresh_teachers_in_section(campus_section, course_id, section_id, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv)
@@ -97,12 +90,8 @@ class CanvasMaintainEnrollments < CanvasCsv
         append_enrollment_and_user('instructor', course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
       end
     end
-    # Remove enrollments remaining in Canvas enrollment list
-    canvas_instructor_enrollments.each do |uid, remaining_enrollment|
-      canvas_role = CANVAS_ROLE_TO_CANVAS_SIS_ROLE[remaining_enrollment['role']]
-      sis_user_id = remaining_enrollment['user']['sis_user_id']
-      append_enrollment_deletion(course_id, section_id, canvas_role, sis_user_id, enrollments_csv)
-    end
+    # Handle enrollments remaining in Canvas enrollment list
+    canvas_instructor_enrollments.each {|uid, remaining_enrollment| handle_missing_enrollment(uid, remaining_enrollment)}
   end
 
   # Adds/updates enrollments, for both students and teachers
