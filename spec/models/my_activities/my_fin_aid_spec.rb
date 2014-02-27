@@ -125,9 +125,10 @@ describe MyActivities::MyFinAid do
 
     context "decoding status for document messages" do
       it "should ignore documents with a status of W" do
+        status = 'W'
+        Rails.logger.should_receive(:info).once.with(/Ignore documents with \"#{status}\" status/)
         lambda {
-          # logger.should_receive(:warn)
-          result = MyActivities::MyFinAid.decode_status('', 'W')
+          result = MyActivities::MyFinAid.decode_status('', status)
           result.should be_nil
         }.should_not raise_error
       end
