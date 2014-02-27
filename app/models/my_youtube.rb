@@ -1,6 +1,6 @@
 require 'json'
 
-class MyYoutube < MyMergedModel
+class MyYoutube < SingleSourceModel
 
   include SafeJsonParser
 

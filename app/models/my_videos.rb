@@ -1,4 +1,4 @@
-class MyVideos < MyMergedModel
+class MyVideos < SingleSourceModel
 
   def initialize(options={})
     if options[:playlist_title]

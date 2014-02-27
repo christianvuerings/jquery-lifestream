@@ -1,4 +1,4 @@
-class MyFinancials < MyMergedModel
+class MyFinancials < UserSpecificModel
 
   def get_feed_internal
     feed = {}

@@ -1,7 +1,7 @@
 require 'my_tasks/param_validator'
 
 module MyTasks
-  class Merged < MyMergedModel
+  class Merged < UserSpecificModel
     include MyTasks::ParamValidator
 
     attr_reader :enabled_sources

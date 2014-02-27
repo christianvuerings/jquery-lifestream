@@ -4,7 +4,7 @@ class MyTextbooksController < ApplicationController
     ccns = params[:ccns]
     slug = params[:slug]
     if session[:user_id]
-      render json: MyTextbooks.new(session[:user_id], ccns: ccns, slug: slug).get_feed_as_json
+      render json: MyTextbooks.new(ccns: ccns, slug: slug).get_feed_as_json
     else
       render json: {}.to_json
     end

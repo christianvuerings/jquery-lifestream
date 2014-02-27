@@ -1,4 +1,4 @@
-class MyRegBlocks < MyMergedModel
+class MyRegBlocks < UserSpecificModel
   include DatedFeed
 
   def get_feed_internal

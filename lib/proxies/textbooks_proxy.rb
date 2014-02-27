@@ -84,7 +84,7 @@ class TextbooksProxy < BaseProxy
     @ccns.each do |ccn|
       path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
       url = "#{Settings.textbooks_proxy.base_url}#{path}"
-      logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
       response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
         HTTParty.get(
           url,

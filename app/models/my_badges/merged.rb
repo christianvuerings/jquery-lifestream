@@ -1,5 +1,5 @@
 module MyBadges
-  class Merged < MyMergedModel
+  class Merged < UserSpecificModel
 
     def initialize(uid, options={})
       super(uid, options)

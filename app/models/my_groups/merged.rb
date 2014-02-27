@@ -1,4 +1,4 @@
-class MyGroups::Merged  < MyMergedModel
+class MyGroups::Merged  < UserSpecificModel
 
   def get_feed_internal
     groups = []

@@ -1,7 +1,6 @@
-class MyTextbooks < MyMergedModel
+class MyTextbooks < SingleSourceModel
 
-  def initialize(uid, options={})
-    @uid = uid
+  def initialize(options={})
     @ccns = options[:ccns]
     @ccn = @ccns[0]
     @slug = options[:slug]
@@ -14,7 +13,7 @@ class MyTextbooks < MyMergedModel
   def get_feed_internal
     feed = {}
     if Settings.features.textbooks
-      proxy = TextbooksProxy.new({user_id: @uid, ccns: @ccns, slug: @slug})
+      proxy = TextbooksProxy.new({ccns: @ccns, slug: @slug})
       proxy_response = proxy.get_as_json
       feed = proxy_response
     end

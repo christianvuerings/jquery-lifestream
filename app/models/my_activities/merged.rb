@@ -1,5 +1,5 @@
 module MyActivities
-  class Merged < MyMergedModel
+  class Merged < UserSpecificModel
 
     attr_accessor :site_proxies
     attr_accessor :proxies

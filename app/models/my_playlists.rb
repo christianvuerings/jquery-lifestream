@@ -1,6 +1,6 @@
 require 'json'
 
-class MyPlaylists < MyMergedModel
+class MyPlaylists < SingleSourceModel
 
   include SafeJsonParser
 
