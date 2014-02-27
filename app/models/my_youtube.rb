@@ -2,8 +2,6 @@ require 'json'
 
 class MyYoutube < SingleSourceModel
 
-  include SafeJsonParser
-
   def initialize(options={})
     @playlist_id = options[:playlist_id] ? options[:playlist_id] : false
   end

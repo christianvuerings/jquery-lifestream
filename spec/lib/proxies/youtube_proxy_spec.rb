@@ -6,8 +6,6 @@ describe YoutubeProxy do
   it "should get real youtube video data", :textext => true do
     proxy = YoutubeProxy.new({:playlist_id => "ECCF8E59B3C769FB01"})
     proxy_response = proxy.request_internal
-
-    p "proxy_response = #{proxy_response.inspect}"
     proxy_response[:videos][0][:title].should == "Biology 1A - Lecture 36:Circulatory system-cell types and fu"
   end
 

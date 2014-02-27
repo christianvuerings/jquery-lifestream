@@ -2,12 +2,35 @@ require "spec_helper"
 
 describe "PlaylistsProxy" do
 
-  it "should get real courses data", :textext => true do
-    proxy = PlaylistsProxy.new
-    proxy_response = proxy.get
-    expect(proxy_response[:status_code]).to eq 200
-    courses = proxy_response[:body]
-    expect(courses).not_to be_nil
+  subject { PlaylistsProxy.new({:playlist_title => "Biology 1A, 001 - Spring 2012"}) }
+
+  context "normal return of real data", :testext => true do
+    it "should return playlist id" do
+      result = subject.request_internal
+      result[:playlist_id].should == "ECCF8E59B3C769FB01"
+    end
+  end
+
+  context "on remote server errors" do
+    before(:each) {
+      stub_request(:any, /#{Regexp.quote(Settings.playlists_proxy.base_url)}.*/).to_return(status: 500)
+    }
+    after(:each) { WebMock.reset! }
+    it "should return the fetch error message" do
+      response = subject.get
+      response[:error_message].should == "There was a problem fetching the videos."
+    end
+  end
+
+  context "when json formatting fails" do
+    before(:each) {
+      stub_request(:any, /#{Regexp.quote(Settings.playlists_proxy.base_url)}.*/).to_return(status: 200, body: "bogus json")
+    }
+    after(:each) { WebMock.reset! }
+    it "should return the fetch error message" do
+      response = subject.get
+      response[:error_message].should == "There was a problem fetching the videos."
+    end
   end
 
 end

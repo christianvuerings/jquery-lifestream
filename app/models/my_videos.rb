@@ -13,18 +13,16 @@ class MyVideos < SingleSourceModel
 
   def get_videos_as_json
     return {} unless Settings.features.videos
-    self.class.fetch_from_cache "json-#{@playlist_title}" do
-      playlist = get_playlist
-      if !playlist[:error_message].blank?
-        return playlist
-      end
-      get_youtube_videos(playlist[:playlist_id])
+    playlist = get_playlist
+    if !playlist[:error_message].blank?
+      return playlist
     end
+    get_youtube_videos(playlist[:playlist_id])
   end
 
   def get_playlist
     if @playlist_title
-      MyPlaylists.new(:playlist_title => @playlist_title).get_playlists_as_json
+      MyPlaylists.new(:playlist_title => @playlist_title).get
     end
   end
 
