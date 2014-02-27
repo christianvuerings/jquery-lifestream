@@ -134,6 +134,19 @@ describe MyActivities::MyFinAid do
       end
     end
 
+    context "filtering document entries by date" do
+      it "should not include messages that are more than one year old" do
+        activities = []
+        feed = "<SSIDOC><TrackDocs><Document><Name>Selective Service Verification</Name><Date>2013-03-07</Date></Document><Document><Name>Free Application for Federal Student Aid (FAFSA)</Name><Date>2013-01-28</Date></Document></TrackDocs></SSIDOC>"
+        content = Nokogiri::XML(feed, &:strict)
+        documents = content.css("TrackDocs Document")
+        described_class.stub(:cutoff_date).and_return(Time.zone.parse("Wed, 27 Feb 2013 16:50:47 PST -08:00"))
+        Rails.logger.should_receive(:info).once.with(/Document is too old to be shown/)
+        described_class.append_documents!(documents, "2013-2014", activities)
+        activities.length.should == 1
+      end
+    end
+
     context "finaid activities" do
       it "should no longer have status messages appended to the title" do
         subject.each{ |entry|

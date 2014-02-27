@@ -17,51 +17,25 @@ class MyActivities::MyFinAid
 
       next unless valid_xml_response?(uid, content)
 
-      term_year = proxy.term_year
-      aid_year  = content.at_css("AidYears AidYear[Default='X']")
-
-      begin
-        cutoff_date = DateTime.new(Integer(aid_year.text, 10)).prev_year
-      rescue
-        logger.error "Unable to parse AidYear from feed: #{aid_year.inspect}"
-        cutoff_date = nil
-      end
-
-      academic_year = term_year_to_s(term_year)
+      academic_year = term_year_to_s(proxy.term_year)
 
       append_diagnostics!(content.css("DiagnosticData Diagnostic"), academic_year, activities)
-      append_documents!(content.css("TrackDocs Document"), academic_year, cutoff_date, activities)
+      append_documents!(content.css("TrackDocs Document"), academic_year, activities)
     end
   end
 
-
-  def self.current_term_year
-    # to-do: revise this logic with the team
-    return Settings.myfinaid_proxy.test_term_year if Settings.myfinaid_proxy.fake
-    year      = Time.now.year
-    term_year = (Time.now.month.between?(1, 8)) ? year : year + 1
-    "#{term_year}"
-  end
-
-  def self.next_term_year
-    "#{current_term_year.to_i + 1}"
-  end
-
-  def self.term_year_to_s(term_year)
-    "#{term_year.to_i-1}-#{term_year}"
-  end
-
   private
-  def self.append_documents!(documents, academic_year, cutoff_date, activities)
+  def self.append_documents!(documents, academic_year, activities)
     documents.each do |document|
       title = document.css("Name").text.strip
 
-      date = Date.parse(document.css("Date").text.strip).to_time_in_current_zone.to_datetime rescue ""
-      if (date.present? && cutoff_date.present? && date < cutoff_date)
+      date = parsed_date(document.css("Date").text.strip)
+      if date.present? && (date < cutoff_date)
         logger.info "Document is too old to be shown: #{date.inspect} < #{cutoff_date}"
         next
       end
       date = format_date(date) if date.present?
+
       summary = document.css("Supplemental Usage Content[Type='TXT']").text.strip
       url = document.css("Supplemental Usage Content[Type='URL']").text.strip
       url = "https://myfinaid.berkeley.edu" if url.blank?
@@ -160,6 +134,30 @@ class MyActivities::MyFinAid
     else
       raise ArgumentError, "Cannot decode date: #{date} status: #{status}"
     end
+  end
+
+  def self.current_term_year
+    # to-do: revise this logic with the team
+    return Settings.myfinaid_proxy.test_term_year if Settings.myfinaid_proxy.fake
+    year      = Time.now.year
+    term_year = (Time.now.month.between?(1, 8)) ? year : year + 1
+    "#{term_year}"
+  end
+
+  def self.cutoff_date
+    @cutoff_date ||= (Time.zone.now - 1.year)
+  end
+
+  def self.next_term_year
+    "#{current_term_year.to_i + 1}"
+  end
+
+  def self.parsed_date(date_string='')
+    Date.parse(date_string).to_time_in_current_zone.to_datetime rescue ""
+  end
+
+  def self.term_year_to_s(term_year)
+    "#{term_year.to_i-1}-#{term_year}"
   end
 
   def self.valid_xml_response?(uid, xmldoc)
