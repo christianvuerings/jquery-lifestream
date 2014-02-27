@@ -7,8 +7,8 @@ logger:
 application:
   # Set to true if testing production env without Apache/Nginx
   serve_static_assets: false
-  # Set if running behind Apache/Nginx + https
-  # protocol: "https://"
+  # Set to "https://" if running behind Apache/Nginx + https
+  protocol: "http://"
   fake_cas: false
   fake_cas_id: "1" # Change this to the UID you want to fake cas auth with.
   # Neither VCR nor WebMock are thread-safe, and so fake proxy support should
