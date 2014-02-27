@@ -125,7 +125,7 @@ bearfacts_proxy:
 research_user_proxy:
   fake: false
   base_url: "https://hub-qa.berkeley.edu/alfresco/service/api/ucb/person"
-  test_user: "secret"
+  username: "secret"
   password: "secret"
 
 myfinaid_proxy:

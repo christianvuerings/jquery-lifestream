@@ -10,7 +10,7 @@ class MyResearchGroups < UserSpecificModel
     response = {
         :research => []
     }
-    response[:research].concat(process_research_sites) if ResearchUserProxy.access_granted?(@uid)
+    response[:research].concat(process_research_sites) if Settings.features.research && ResearchUserProxy.access_granted?(@uid)
     logger.debug "#{self.class.name} get_feed is #{response.inspect}"
     response
   end
