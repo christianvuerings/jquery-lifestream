@@ -9,7 +9,7 @@ class FinancialsProxy < BaseProxy
   end
 
   def get
-    self.class.smart_fetch_from_cache(@uid, "My Finances is currently unavailable. Please try again later.") do
+    self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "My Finances is currently unavailable. Please try again later."}) do
       request_internal("/student/#{lookup_student_id}", "financials")
     end
   end

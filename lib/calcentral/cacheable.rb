@@ -23,11 +23,12 @@ module Calcentral
     # if the passed block throws an exception, it will be logged, and the result won't be cached.
     # WARNING: Do not use "return foo" inside the passed block or you will short-circuit the flow
     # and nothing will be cached.
-    def smart_fetch_from_cache(id=nil,
-      user_message_on_exception = "An unknown server error occurred.",
-      return_nil_on_generic_error = false,
-      force_write=false,
-      &block)
+    def smart_fetch_from_cache(opts={}, &block)
+      id = opts[:id]
+      user_message_on_exception = opts[:user_message_on_exception] || "An unknown server error occurred"
+      return_nil_on_generic_error = opts[:return_nil_on_generic_error]
+      jsonify = opts[:jsonify]
+      force_write = opts[:force_write]
       key = key id
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
       unless force_write
@@ -39,9 +40,11 @@ module Calcentral
       end
       begin
         entry = block.call
+        entry = entry.to_json if jsonify
       rescue Exception => e
         # don't write to cache if an exception occurs, just log the error and return a body
         response = handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
+        response = response.to_json if jsonify
         Rails.logger.debug "#{self.name} Error occurred; NOT Writing entry to cache: #{key}"
         return response
       end

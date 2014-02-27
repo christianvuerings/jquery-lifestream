@@ -12,7 +12,7 @@ class YoutubeProxy < BaseProxy
   end
 
   def get
-    self.class.smart_fetch_from_cache(@playlist_id) do
+    self.class.smart_fetch_from_cache({id: @playlist_id}) do
       request_internal(@url, 'videos', @params)
     end
   end

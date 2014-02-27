@@ -13,7 +13,7 @@ class BearfactsProxy < BaseProxy
   end
 
   def request(path, vcr_cassette, params = {})
-    self.class.smart_fetch_from_cache(@uid, "Remote server unreachable") do
+    self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
       request_internal(path, vcr_cassette, params)
     end
   end

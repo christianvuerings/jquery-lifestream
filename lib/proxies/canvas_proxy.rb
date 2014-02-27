@@ -24,7 +24,10 @@ class CanvasProxy < BaseProxy
   end
 
   def request(api_path, vcr_id = "", fetch_options = {})
-    self.class.smart_fetch_from_cache(@uid, "Remote server unreachable", true) do
+    self.class.smart_fetch_from_cache(
+      {id: @uid,
+       user_message_on_exception: "Remote server unreachable",
+       return_nil_on_generic_error: true}) do
       request_internal(api_path, vcr_id, fetch_options)
     end
   end

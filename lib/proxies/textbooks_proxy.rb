@@ -64,8 +64,11 @@ class TextbooksProxy < BaseProxy
   end
 
   def get_as_json
-    self.class.smart_fetch_from_cache("#{@ccn}-#{@slug}", "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.") do
-      get.to_json
+    self.class.smart_fetch_from_cache(
+      {id: "#{@ccn}-#{@slug}",
+       user_message_on_exception: "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.",
+       jsonify: true}) do
+      get
     end
   end
 
