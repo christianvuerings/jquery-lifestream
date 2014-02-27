@@ -31,7 +31,9 @@ module Calcentral
       MyTasks::GoogleTasks => :expire,
 
       SakaiProxy => :expire,
-      SakaiMergedUserSites => :expire
+      SakaiMergedUserSites => :expire,
+
+      MyResearchGroups => :expire
     }.each do |key, value|
       USER_CACHE_EXPIRATION.add_observer(key, value)
     end
