@@ -29,7 +29,7 @@ class MyVideos < SingleSourceModel
   end
 
   def get_youtube_videos(id)
-    MyYoutube.new(:playlist_id => id).get_videos_as_json
+    MyYoutube.new(:playlist_id => id).get_feed_as_json
   end
 
 end

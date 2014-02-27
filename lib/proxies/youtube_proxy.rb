@@ -1,6 +1,6 @@
 class YoutubeProxy < BaseProxy
 
-  include ClassLogger
+  include ClassLogger, SafeJsonParser
 
   APP_ID = "Youtube"
 
@@ -12,17 +12,16 @@ class YoutubeProxy < BaseProxy
   end
 
   def get
-    self.class.smart_fetch_from_cache({id: @playlist_id}) do
-      request_internal(@url, 'videos', @params)
+    self.class.smart_fetch_from_cache({id: @playlist_id, jsonify: true}) do
+      request_internal
     end
   end
 
-  def request_internal(path, vcr_cassette, params = {})
-    #logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expirat
-    response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
+  def request_internal(params = {})
+    response = FakeableProxy.wrap_request(APP_ID + "_" + "videos", @fake, {:match_requests_on => [:method, :path]}) {
       Faraday::Connection.new(
         :url => @url,
-        :params => params,
+        :params => @params,
         :request => {
           :timeout => Settings.application.outgoing_http_timeout
         }
@@ -34,9 +33,36 @@ class YoutubeProxy < BaseProxy
 
     logger.debug "Remote server status #{response.status}, Body = #{response.body}"
     {
-      :body => response.body,
-      :status_code => response.status
+      :videos => filter_videos(response)
     }
+  end
+
+  def filter_videos(response)
+    videos = []
+    data = safe_json(response.body)
+    return videos unless data && data['feed'] && data['feed']['entry']
+    entries = data['feed']['entry']
+    entries.each do |entry|
+      title = entry['media$group']['media$title']['$t']
+      url = entry['media$group']['media$content'][0]['url']
+      url.gsub!('/v/', '/embed/')
+      link = url + '&showinfo=0&theme=light&modestbranding=1'
+      # Extract "Lecture x" from the title
+      start1 = title.downcase.index('lecture')
+      # Or extract date from title
+      start2 = title.index(' - ')
+      if start1
+        lecture = title.slice(start1, title.length)
+      elsif start2
+        lecture = title.slice(start2 + 3, title.length)
+      end
+      videos.push({
+                    :title => title,
+                    :lecture => lecture || title,
+                    :link => link
+                  })
+    end
+    videos
   end
 
 end

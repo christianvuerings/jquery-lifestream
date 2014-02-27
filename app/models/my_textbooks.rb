@@ -14,8 +14,7 @@ class MyTextbooks < SingleSourceModel
     feed = {}
     if Settings.features.textbooks
       proxy = TextbooksProxy.new({ccns: @ccns, slug: @slug})
-      proxy_response = proxy.get_as_json
-      feed = proxy_response
+      feed = proxy.get_as_json
     end
     feed
   end

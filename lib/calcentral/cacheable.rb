@@ -77,7 +77,7 @@ module Calcentral
       end
       log_message += " Associated cache key: #{key}"
 
-      Rails.logger.error log_message
+      Rails.logger.error(log_message + "\n" + e.backtrace.join("\n "))
       response
     end
 
