@@ -81,27 +81,27 @@
         var multiElementArray = [];
 
         /**
-         * Split out all the "similar (souce, type, date)" items from the given original_source.
+         * Split out all the "similar (souce, type, date)" items from the given originalSource.
          * Collapse all the similar items into "multiElementArray".
-         * @param {Array} original_source flat array of activities.
+         * @param {Array} originalSource flat array of activities.
          * @return {Array} activities without any "similar" items.
          */
-        var spliceMultiSourceElements = function(original_source) {
-          return original_source.filter(function(value, index, arr) {
+        var spliceMultiSourceElements = function(originalSource) {
+          return originalSource.filter(function(value, index, arr) {
             // the multiElementArray stores arrays of multiElementSource for
             // items captured by the filter below.
             if (!value.date) {
               return false;
             }
-            var multiElementSource = original_source.filter(function(sub_value, sub_index) {
-              return ((sub_index !== index) &&
-                (sub_value.source === value.source) &&
-                (sub_value.type === value.type) &&
-                (sub_value.date.date_string === value.date.date_string));
+            var multiElementSource = originalSource.filter(function(subValue, subIndex) {
+              return ((subIndex !== index) &&
+                (subValue.source === value.source) &&
+                (subValue.type === value.type) &&
+                (subValue.date.date_string === value.date.date_string));
             });
             if (multiElementSource.length > 0) {
-              multiElementSource.forEach(function(multi_value) {
-                arr.splice(arr.indexOf(multi_value), 1);
+              multiElementSource.forEach(function(multiValue) {
+                arr.splice(arr.indexOf(multiValue), 1);
               });
               // The first matching value needs to stay at the front of the list.
               multiElementSource.unshift(value);
@@ -130,26 +130,26 @@
           });
         };
 
-        var undated_results = source.filter(function(value) {
+        var undatedResults = source.filter(function(value) {
           return !value.date;
         }).sort(function(a, b) {
-          var a_title = a.title.toLowerCase();
-          var b_title = b.title.toLowerCase();
-          if (a_title === b_title) {
+          var titleA = a.title.toLowerCase();
+          var titleB = b.title.toLowerCase();
+          if (titleA === titleB) {
             return 0;
           }
-          return (a_title > b_title) ? 1 : -1;
+          return (titleA > titleB) ? 1 : -1;
         });
-        if (undated_results && undated_results.length) {
-          undated_results[undated_results.length - 1].is_last_undated = true;
+        if (undatedResults && undatedResults.length) {
+          undatedResults[undatedResults.length - 1].isLastUndated = true;
         }
 
         var result = spliceMultiSourceElements(source);
         multiElementArray = processMultiElementArray(multiElementArray);
 
-        var dated_results = result.concat(multiElementArray).sort(sortFunction);
+        var datedResults = result.concat(multiElementArray).sort(sortFunction);
 
-        return undated_results.concat(dated_results);
+        return undatedResults.concat(datedResults);
       };
 
       $scope.activities = {
@@ -170,18 +170,18 @@
     };
 
     $scope.addTask = function(activity) {
-      var due_date = activity.date.epoch ? dateService.moment(activity.date.epoch * 1000).format('MM/DD/YYYY') : '';
+      var dueDate = activity.date.epoch ? dateService.moment(activity.date.epoch * 1000).format('MM/DD/YYYY') : '';
 
       taskAdderService.setTaskState({
         'title': activity.title,
         'notes': activity.summary || '',
-        'due_date': due_date
+        'due_date': dueDate
       });
 
       taskAdderService.toggleAddTask(true);
     };
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
+    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyActivities::Merged']) {
         getMyActivity();
       }

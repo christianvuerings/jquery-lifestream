@@ -128,8 +128,8 @@
           analyticsService.trackEvent(['Authentication', 'Redirect to logout']);
           window.location = data.redirect_url;
         }
-      }).error(function(data, response_code) {
-        if (response_code && response_code === 401) {
+      }).error(function(data, responseCode) {
+        if (responseCode && responseCode === 401) {
           // user is already logged out
           window.location = '/';
         }

@@ -106,11 +106,11 @@
      */
     var getLinks = function() {
       // Data contains "links" and "navigation"
-      var link_data_url = '/json/campuslinks_v16.json';
+      var linkDataUrl = '/json/campuslinks_v16.json';
       if ($scope.api.user.profile.features.live_campus_links_data) {
-        link_data_url = '/api/my/campuslinks';
+        linkDataUrl = '/api/my/campuslinks';
       }
-      $http.get(link_data_url).success(function(campusdata) {
+      $http.get(linkDataUrl).success(function(campusdata) {
       //$http.get('/json/campuslinks.json').success(function(campusdata) {
         angular.extend($scope, campusdata);
 

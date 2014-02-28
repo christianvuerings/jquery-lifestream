@@ -7,7 +7,7 @@
     <div data-ng-controller="BooklistController">
       <h1 class="cc-heading-page-title cc-ellipsis cc-left cc-print-hide">
         <a href="/academics">My Academics</a> &raquo;
-        <a data-ng-href="/academics/semester/{{semester_slug}}" data-ng-bind="semester_name"></a> &raquo;
+        <a data-ng-href="/academics/semester/{{semesterSlug}}" data-ng-bind="semester_name"></a> &raquo;
         Book List
       </h1>
 
@@ -18,8 +18,8 @@
           </div>
         </div>
         <div class="cc-academics-semester-books">
-          <div class="cc-widget-padding" data-ng-if="api.user.profile.features.textbooks && semester_books.has_books">
-            <div data-ng-repeat="course_books in semester_books" class="cc-clearfix-container">
+          <div class="cc-widget-padding" data-ng-if="api.user.profile.features.textbooks && semesterBooks.has_books">
+            <div data-ng-repeat="course_books in semesterBooks" class="cc-clearfix-container">
               <h3 class="cc-book-title" data-ng-bind="course_books.course"></h3>
               <div data-ng-repeat="books in course_books">
                 <div ng-include="'templates/textbook.html'"></div>

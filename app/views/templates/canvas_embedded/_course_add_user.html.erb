@@ -10,50 +10,50 @@
 
     <h2>Add People</h2>
 
-    <div data-ng-hide="show_error">
+    <div data-ng-hide="showError">
 
-      <div id="alerts-wrapper" class="row collapse" data-ng-show="show_alerts">
+      <div id="alerts-wrapper" class="row collapse" data-ng-show="showAlerts">
         <div data-cc-spinner-directive>
 
-          <div data-ng-show="no_search_text_alert" class="bc-notice-box bc-notice-error bc-radius">
+          <div data-ng-show="noSearchTextAlert" class="bc-notice-box bc-notice-error bc-radius">
             You did not enter any search terms. Please try again.
             <div class="bc-notice-close-button">
-              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="no_search_text_alert=''"></button>
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="noSearchTextAlert=''"></button>
             </div>
           </div>
 
-          <div data-ng-show="no_search_results_notice" class="bc-notice-box bc-notice-error bc-radius">
+          <div data-ng-show="noSearchResultsNotice" class="bc-notice-box bc-notice-error bc-radius">
             Your search did not match any users with a CalNet ID.
             <div class="bc-notice-close-button">
-              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="no_search_results_notice=''"></button>
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="noSearchResultsNotice=''"></button>
             </div>
           </div>
 
-          <div data-ng-show="user_search_results_count > user_search_results.length" class="bc-notice-box bc-notice-success bc-radius">
-            Your search returned <span data-ng-bind="user_search_results_count"></span> results, but only the first
-            <span data-ng-bind="user_search_results.length"></span> are shown.
+          <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-notice-box bc-notice-success bc-radius">
+            Your search returned <span data-ng-bind="userSearchResultsCount"></span> results, but only the first
+            <span data-ng-bind="userSearchResults.length"></span> are shown.
             Please refine your search to limit the number of results.
           </div>
 
-          <div data-ng-show="addition_success_message" class="bc-notice-box bc-notice-success bc-radius">
+          <div data-ng-show="additionSuccessMessage" class="bc-notice-box bc-notice-success bc-radius">
             <span data-ng-bind="user_added.full_name"></span> was added to the
             &ldquo;<span data-ng-bind="user_added.section_name"></span>&rdquo; section of this course as a <span data-ng-bind="user_added.role_name"></span>.
             <div class="bc-notice-close-button">
-              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="addition_success_message=''"></button>
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="additionSuccessMessage=''"></button>
             </div>
           </div>
 
-          <div data-ng-show="addition_failure_message" class="bc-notice-box bc-notice-error bc-radius">
+          <div data-ng-show="additionFailureMessage" class="bc-notice-box bc-notice-error bc-radius">
             <i class="fa fa-exclamation-triangle"></i>
-            <span data-ng-bind="error_status"></span>
+            <span data-ng-bind="errorStatus"></span>
             <div class="bc-notice-close-button">
-              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="addition_failure_message=''"></button>
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="additionFailureMessage=''"></button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row collapse" data-ng-show="show_search_form">
+      <div class="row collapse" data-ng-show="showSearchForm">
 
         <div class="medium-6 columns">
           <form data-ng-submit="searchUsers()" class="bc-form">
@@ -125,10 +125,10 @@
         </div>
       </div>
 
-      <div class="row collapse" data-ng-show="show_users_area">
+      <div class="row collapse" data-ng-show="showUsersArea">
         <div data-cc-spinner-directive>
 
-          <div data-ng-show="user_search_results.length > 0">
+          <div data-ng-show="userSearchResults.length > 0">
             <form data-ng-submit="addUser()" class="bc-form">
 
               <table>
@@ -142,7 +142,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr data-ng-repeat="user in user_search_results">
+                  <tr data-ng-repeat="user in userSearchResults">
                     <td>
                       <input type="radio" name="selected_user" data-ng-model="$parent.selected_user" data-ng-value="user">
                     </td>
@@ -161,7 +161,7 @@
                     <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
                   </div>
                   <div class="small-10 columns">
-                    <select id="user-role" data-ng-model="selected_role" data-ng-options="role as role.name for role in user_roles"></select>
+                    <select id="user-role" data-ng-model="selectedRole" data-ng-options="role as role.name for role in userRoles"></select>
                   </div>
                 </div>
 
@@ -191,9 +191,9 @@
 
     </div>
 
-    <p data-ng-show="show_error">
+    <p data-ng-show="showError">
       <i class="fa fa-exclamation-triangle"></i>
-      <span data-ng-bind="error_status"></span>
+      <span data-ng-bind="errorStatus"></span>
     </p>
 
   </div>

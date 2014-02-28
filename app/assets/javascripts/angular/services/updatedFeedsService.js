@@ -5,15 +5,15 @@
   angular.module('calcentral.services').service('updatedFeedsService', function($http, $timeout, userService) {
 
     var events = {
-      update_services: {},
-      services_with_updates: {}
+      updateServices: {},
+      servicesWithUpdates: {}
     };
     var feedsLoadedData = {};
     // Polling time in seconds
-    var poll_intervals = [2, 3, 10, 45, 60];
+    var pollIntervals = [2, 3, 10, 45, 60];
 
     // In the first iteration, we only update the services on the dashboard page.
-    var to_update_services = [
+    var toUpdateServices = [
       'MyActivities::Merged',
       'MyBadges::Merged',
       'MyClasses::Merged',
@@ -27,28 +27,28 @@
      * @return {Boolean} True if there are any updates
      */
     var hasUpdates = function() {
-      return !!Object.keys(events.services_with_updates).length;
+      return !!Object.keys(events.servicesWithUpdates).length;
     };
 
     /**
      * Refresh all the feeds that have actual changes.
      */
     var refreshFeeds = function() {
-      events.update_services = events.services_with_updates;
+      events.updateServices = events.servicesWithUpdates;
 
       // We need to wrap this in a timeout to make sure the events actually fire
       $timeout(function() {
-        events.services_with_updates = {};
-        events.update_services = {};
+        events.servicesWithUpdates = {};
+        events.updateServices = {};
       }, 1);
     };
 
     /**
      * Parse the updated feeds
      * @param {Object} data JSON coming back from the server, contains which feeds need an update
-     * @param {Boolean} auto_refresh Whether or not to automatically update the feeds or not
+     * @param {Boolean} autoRefresh Whether or not to automatically update the feeds or not
      */
-    var parseUpdatedFeeds = function(data, auto_refresh) {
+    var parseUpdatedFeeds = function(data, autoRefresh) {
 
       // When there is no data, don't do anything.
       if (!data) {
@@ -56,7 +56,7 @@
       }
 
       for (var service in data) {
-        if (data.hasOwnProperty(service) && to_update_services.indexOf(service) !== -1) {
+        if (data.hasOwnProperty(service) && toUpdateServices.indexOf(service) !== -1) {
 
           // We need to check whether the timestamps are different or not
           if (data[service] &&
@@ -65,23 +65,23 @@
             feedsLoadedData[service].timestamp &&
             data[service].timestamp.epoch > feedsLoadedData[service].timestamp.epoch) {
 
-            events.services_with_updates[service] = data[service];
+            events.servicesWithUpdates[service] = data[service];
           }
         }
       }
 
-      if (auto_refresh) {
+      if (autoRefresh) {
         refreshFeeds();
       }
     };
 
-    var polling = function(auto_refresh) {
+    var polling = function(autoRefresh) {
       $http.get('/api/my/updated_feeds').success(function(data) {
       //$http.get('/dummy/json/updated_feeds.json').success(function(data) {
-        parseUpdatedFeeds(data, auto_refresh);
+        parseUpdatedFeeds(data, autoRefresh);
         $timeout(polling, getPollInterval() * 1000);
-      }).error(function(data, response_code) {
-        if (response_code && response_code === 401) {
+      }).error(function(data, responseCode) {
+        if (responseCode && responseCode === 401) {
           userService.signOut();
         }
       });
@@ -98,12 +98,12 @@
     };
 
     /**
-     * Increment though the defined poll_intervals and return the last one
+     * Increment though the defined pollIntervals and return the last one
      * when the end has been reached.
      * @return {Integer}
      */
     var getPollInterval = function() {
-      return (poll_intervals.length > 1) ? poll_intervals.shift() : poll_intervals[0];
+      return (pollIntervals.length > 1) ? pollIntervals.shift() : pollIntervals[0];
     };
 
     /**
@@ -140,15 +140,15 @@
      */
     var initiate = function(route, scope) {
 
-      var isLoggedIn = scope.$watch('api.user.profile.is_logged_in', function(is_logged_in) {
-        if (is_logged_in) {
+      var isLoggedInWatch = scope.$watch('api.user.profile.is_logged_in', function(isLoggedIn) {
+        if (isLoggedIn) {
           // Refresh the services, we only want to do this on certain pages
           if (route && route.fireUpdatedFeeds) {
             startPolling();
           }
 
           // This will unwatch the watcher (performance reasons)
-          isLoggedIn();
+          isLoggedInWatch();
         }
       });
 

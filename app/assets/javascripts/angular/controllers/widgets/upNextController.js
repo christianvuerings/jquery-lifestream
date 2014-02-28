@@ -24,7 +24,7 @@
       });
     };
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
+    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services.MyUpNext) {
         getUpNext();
       }

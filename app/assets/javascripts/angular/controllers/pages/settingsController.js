@@ -11,10 +11,10 @@
     var services = ['google'];
 
     var refreshServices = function(profile) {
-      $scope.connected_services = services.filter(function(element) {
+      $scope.connectedServices = services.filter(function(element) {
         return profile['has_' + element + '_access_token'];
       });
-      $scope.non_connected_services = services.filter(function(element) {
+      $scope.nonConnectedServices = services.filter(function(element) {
         return !profile['has_' + element + '_access_token'];
       });
     };

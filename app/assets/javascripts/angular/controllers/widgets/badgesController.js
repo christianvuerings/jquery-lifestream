@@ -36,35 +36,35 @@
       }
     };
 
-    var default_order = ['bmail', 'bcal', 'bdrive'];
+    var defaultOrder = ['bmail', 'bcal', 'bdrive'];
 
-    var date_formats = {
+    var dateFormats = {
       today: 'h:mm a',
-      today_all_day: '', //no need for formatting due to the left calendar widget.
-      not_today: '(MM/DD) h:mm a',
-      not_today_all_day: 'MM/DD(ddd)'
+      todayAllDay: '', //no need for formatting due to the left calendar widget.
+      notToday: '(MM/DD) h:mm a',
+      notTodayAllDay: 'MM/DD(ddd)'
     };
 
-    var processDisplayRange = function(epoch, is_all_day, is_start_range) {
-      var now_date = dateService.moment().format('YYYYMMDD');
-      var item_moment = dateService.moment(epoch * 1000);
-      var item_date = item_moment.format('YYYYMMDD');
+    var processDisplayRange = function(epoch, isAllDay, isStartRange) {
+      var nowDate = dateService.moment().format('YYYYMMDD');
+      var itemMoment = dateService.moment(epoch * 1000);
+      var itemDate = itemMoment.format('YYYYMMDD');
 
       // not all day event, happening today.
-      if ((now_date === item_date) && !is_all_day) {
-        return item_moment.format(date_formats.today);
-      } else if ((now_date !== item_date) && !is_all_day) {
+      if ((nowDate === itemDate) && !isAllDay) {
+        return itemMoment.format(dateFormats.today);
+      } else if ((nowDate !== itemDate) && !isAllDay) {
         // not all day event, not happening today.
-        if (is_start_range) {
+        if (isStartRange) {
           // start-range display doesn't need a date display since it's on the left graphic
-          return item_moment.format(date_formats.today);
+          return itemMoment.format(dateFormats.today);
         } else {
-          return item_moment.format(date_formats.not_today);
+          return itemMoment.format(dateFormats.notToday);
         }
-      } else if ((now_date !== item_date) && is_all_day) {
+      } else if ((nowDate !== itemDate) && isAllDay) {
         // all day event, not happening today.
-        return item_moment.format(date_formats.not_today_all_day);
-      } else if ((now_date === item_date) && is_all_day) {
+        return itemMoment.format(dateFormats.notTodayAllDay);
+      } else if ((nowDate === itemDate) && isAllDay) {
         // all day event, happening today. No need for the range since the date's on the left.
         return '';
       } else {
@@ -73,38 +73,38 @@
       }
     };
 
-    var decorateBadges = function(raw_data) {
-      default_order.forEach(function(value, index) {
+    var decorateBadges = function(rawData) {
+      defaultOrder.forEach(function(value, index) {
         if ($scope.badges.length > index &&
           $scope.badges[index].display.name.toLowerCase() === value) {
           $scope.badges[index].cssPopover = 'cc-' + $scope.badges[index].display.name + '-popover-status';
-          angular.extend($scope.badges[index], raw_data[value]);
+          angular.extend($scope.badges[index], rawData[value]);
         }
       });
     };
 
     /**
      * Convert a normal badges hash into an custom ordered array of badges.
-     * @param {Object} badges_hash badges hash keyed by badge name
+     * @param {Object} badgesHash badges hash keyed by badge name
      * @return {Array} array of badges
      */
-    var orderBadges = function(badges_hash) {
+    var orderBadges = function(badgesHash) {
       var returnArray = [];
-      default_order.forEach(function(value) {
-        returnArray.push(badges_hash[value] || {});
+      defaultOrder.forEach(function(value) {
+        returnArray.push(badgesHash[value] || {});
       });
       return returnArray;
     };
 
-    var processCalendarEvents = function(raw_data) {
-      if (raw_data.bcal && raw_data.bcal.items) {
-        raw_data.bcal.items.forEach(function(value) {
+    var processCalendarEvents = function(rawData) {
+      if (rawData.bcal && rawData.bcal.items) {
+        rawData.bcal.items.forEach(function(value) {
           if (value.start_time && value.start_time.epoch) {
-            var momentized_start_time = dateService.moment(value.start_time.epoch * 1000);
+            var momentizedStartTime = dateService.moment(value.start_time.epoch * 1000);
             value.start_time.display = {
-              'month': momentized_start_time.format('MMM'),
-              'day': momentized_start_time.format('DD'),
-              'day_of_week': momentized_start_time.format('ddd'),
+              'month': momentizedStartTime.format('MMM'),
+              'day': momentizedStartTime.format('DD'),
+              'day_of_week': momentizedStartTime.format('ddd'),
               'range_start': processDisplayRange(value.start_time.epoch, value.all_day_event, true)
             };
 
@@ -116,7 +116,7 @@
           }
         });
       }
-      return raw_data;
+      return rawData;
     };
 
     var fetch = function() {
@@ -140,7 +140,7 @@
 
     $scope.badges = orderBadges(defaults);
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
+    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyBadges::Merged']) {
         fetch();
       }

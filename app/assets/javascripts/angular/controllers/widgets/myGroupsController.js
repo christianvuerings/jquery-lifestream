@@ -14,19 +14,19 @@
     };
 
     var getResearch = function() {
-      var link_data_url = '/api/my/research';
-      $http.get(link_data_url).success(function(data) {
+      var linkDataUrl = '/api/my/research';
+      $http.get(linkDataUrl).success(function(data) {
         angular.extend($scope, data);
       });
     };
 
-    $scope.$watch('api.user.profile.features.research', function(research_feature) {
-      if (research_feature === true) {
+    $scope.$watch('api.user.profile.features.research', function(researchFeature) {
+      if (researchFeature === true) {
         getResearch();
       }
     });
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
+    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyGroups::Merged']) {
         getMyGroups();
       }

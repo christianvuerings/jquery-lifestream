@@ -9,22 +9,22 @@
     apiService.util.setTitle('Add People');
 
     var resetSearchState = function() {
-      $scope.show_users_area = false;
-      $scope.user_search_results_count = 0;
-      $scope.no_search_text_alert = false;
-      $scope.no_search_results_notice = false;
+      $scope.showUsersArea = false;
+      $scope.userSearchResultsCount = 0;
+      $scope.noSearchTextAlert = false;
+      $scope.noSearchResultsNotice = false;
     };
 
     var resetImportState = function() {
       $scope.user_added = false;
-      $scope.show_alerts = false;
-      $scope.addition_success_message = false;
-      $scope.addition_failure_message = false;
+      $scope.showAlerts = false;
+      $scope.additionSuccessMessage = false;
+      $scope.additionFailureMessage = false;
     };
 
     $scope.resetForm = function() {
       $scope.search_text = '';
-      $scope.show_alerts = false;
+      $scope.showAlerts = false;
       resetSearchState();
       resetImportState();
     };
@@ -33,7 +33,7 @@
     $scope.resetForm();
 
     $scope.search_type = 'name';
-    $scope.user_roles = [
+    $scope.userRoles = [
       {
         id: 'StudentEnrollment',
         name: 'Student'
@@ -55,7 +55,7 @@
         name: 'Observer'
       }
     ];
-    $scope.selected_role = $scope.user_roles[0];
+    $scope.selectedRole = $scope.userRoles[0];
 
     /**
      * Post a message to the parent
@@ -80,141 +80,140 @@
 
       // require search text
       if ($scope.search_text === '') {
-        $scope.show_alerts = true;
-        $scope.no_search_text_alert = true;
-        $scope.is_loading = false;
+        $scope.showAlerts = true;
+        $scope.noSearchTextAlert = true;
+        $scope.isLoading = false;
         return false;
       }
 
-      $scope.show_users_area = true;
-      $scope.is_loading = true;
+      $scope.showUsersArea = true;
+      $scope.isLoading = true;
 
-      var search_users_uri = '/api/academics/canvas/course_add_user/search_users';
-      var feed_params = {
+      var searchUsersUri = '/api/academics/canvas/course_add_user/search_users';
+      var feedParams = {
         'canvas_course_id': $scope.canvas_course_id,
         'search_text': $scope.search_text,
         'search_type': $scope.search_type
       };
       $http({
-        url: search_users_uri,
+        url: searchUsersUri,
         method: 'GET',
-        params: feed_params
+        params: feedParams
       }).success(function(data) {
-        $scope.user_search_results = data.users;
+        $scope.userSearchResults = data.users;
         if (data.users.length > 0) {
-          $scope.user_search_results_count = data.users[0].result_count;
+          $scope.userSearchResultsCount = data.users[0].result_count;
         } else {
-          $scope.user_search_results_count = 0;
-          $scope.no_search_results_notice = true;
+          $scope.userSearchResultsCount = 0;
+          $scope.noSearchResultsNotice = true;
         }
-        $scope.is_loading = false;
-        $scope.show_alerts = true;
+        $scope.isLoading = false;
+        $scope.showAlerts = true;
       }).error(function(data) {
-        $scope.show_error = true;
+        $scope.showError = true;
         if (data.error) {
-          $scope.error_status = data.error;
+          $scope.errorStatus = data.error;
         } else {
-          $scope.error_status = 'User search failed.';
+          $scope.errorStatus = 'User search failed.';
         }
-        $scope.is_loading = false;
-        $scope.search_failure_message = true;
-        $scope.show_alerts = true;
+        $scope.isLoading = false;
+        $scope.showAlerts = true;
       });
     };
 
     $scope.addUser = function() {
-      $scope.show_users_area = false;
-      $scope.is_loading = true;
-      $scope.show_alerts = true;
-      var submitted_user = $scope.selected_user;
-      var submitted_section = $scope.selected_section;
-      var submitted_role = $scope.selected_role;
-      var add_user_uri = '/api/academics/canvas/course_add_user/add_user';
-      var add_user_params = {
-        ldap_user_id: submitted_user.ldap_uid,
-        section_id: submitted_section.id,
-        role_id: submitted_role.id
+      $scope.showUsersArea = false;
+      $scope.isLoading = true;
+      $scope.showAlerts = true;
+      var submittedUser = $scope.selected_user;
+      var submittedSection = $scope.selected_section;
+      var submittedRole = $scope.selectedRole;
+      var addUserUri = '/api/academics/canvas/course_add_user/add_user';
+      var addUserParams = {
+        ldap_user_id: submittedUser.ldap_uid,
+        section_id: submittedSection.id,
+        role_id: submittedRole.id
       };
       $http({
-        url: add_user_uri,
+        url: addUserUri,
         method: 'POST',
-        params: add_user_params
+        params: addUserParams
       }).success(function(data) {
         $scope.user_added = data.user_added;
-        $scope.user_added.full_name = submitted_user.first_name + ' ' + submitted_user.last_name;
-        $scope.user_added.role_name = submitted_role.name;
-        $scope.user_added.section_name = submitted_section.name;
-        $scope.addition_success_message = true;
-        $scope.is_loading = false;
+        $scope.user_added.full_name = submittedUser.first_name + ' ' + submittedUser.last_name;
+        $scope.user_added.role_name = submittedRole.name;
+        $scope.user_added.section_name = submittedSection.name;
+        $scope.additionSuccessMessage = true;
+        $scope.isLoading = false;
       }).error(function(data) {
         if (data.error) {
-          $scope.error_status = data.error;
+          $scope.errorStatus = data.error;
         } else {
-          $scope.error_status = 'Request to add user failed';
+          $scope.errorStatus = 'Request to add user failed';
         }
-        $scope.addition_failure_message = true;
-        $scope.is_loading = false;
+        $scope.additionFailureMessage = true;
+        $scope.isLoading = false;
       });
 
     };
 
     var checkAuthorization = function() {
-      var check_authorization_uri = '/api/academics/canvas/course_user_profile';
-      var check_authorization_params = {};
+      var checkAuthorizationUri = '/api/academics/canvas/course_user_profile';
+      var checkAuthorizationParams = {};
       if ($routeParams.canvas_course_id) {
-        check_authorization_params.canvas_course_id = $routeParams.canvas_course_id;
+        checkAuthorizationParams.canvas_course_id = $routeParams.canvas_course_id;
       }
       $http({
-        url: check_authorization_uri,
+        url: checkAuthorizationUri,
         method: 'GET',
-        params: check_authorization_params
+        params: checkAuthorizationParams
       }).success(function(data) {
         $scope.course_user_profile = data.course_user_profile;
-        $scope.is_course_admin = user_is_admin($scope.course_user_profile);
+        $scope.is_course_admin = userIsAdmin($scope.course_user_profile);
         if ($scope.is_course_admin) {
           getCourseSections();
           $scope.canvas_course_id = $scope.course_user_profile.enrollments[0].course_id;
-          $scope.show_search_form = true;
+          $scope.showSearchForm = true;
         } else {
-          $scope.show_error = true;
-          $scope.error_status = 'You must be a teacher in this bCourses course to import users.';
+          $scope.showError = true;
+          $scope.errorStatus = 'You must be a teacher in this bCourses course to import users.';
         }
       }).error(function(data) {
         $scope.is_course_admin = false;
-        $scope.show_error = true;
+        $scope.showError = true;
         if (data.error) {
-          $scope.error_status = data.error;
+          $scope.errorStatus = data.error;
         } else {
-          $scope.error_status = 'Authorization Check Failed';
+          $scope.errorStatus = 'Authorization Check Failed';
         }
       });
     };
 
     var getCourseSections = function() {
-      var course_sections_uri = '/api/academics/canvas/course_add_user/course_sections';
+      var courseSectionsUri = '/api/academics/canvas/course_add_user/course_sections';
       $http({
-        url: course_sections_uri,
+        url: courseSectionsUri,
         method: 'GET'
       }).success(function(data) {
         $scope.course_sections = data.course_sections;
         $scope.selected_section = $scope.course_sections[0];
       }).error(function(data) {
-        $scope.show_error = true;
+        $scope.showError = true;
         if (data.error) {
-          $scope.error_status = data.error;
+          $scope.errorStatus = data.error;
         } else {
-          $scope.error_status = 'Course sections failed to load';
+          $scope.errorStatus = 'Course sections failed to load';
         }
       });
     };
 
-    var user_is_admin = function(course_user_profile) {
-      var admin_roles = ['TeacherEnrollment', 'TaEnrollment', 'DesignerEnrollment'];
-      var enrollments = course_user_profile.enrollments;
+    var userIsAdmin = function(courseUserProfile) {
+      var adminRoles = ['TeacherEnrollment', 'TaEnrollment', 'DesignerEnrollment'];
+      var enrollments = courseUserProfile.enrollments;
       for (var i = 0; i < enrollments.length; i++) {
         var role = enrollments[i].role;
-        var is_admin_role = admin_roles.indexOf(role);
-        if (is_admin_role >= 0) {
+        var isAdminRole = adminRoles.indexOf(role);
+        if (isAdminRole >= 0) {
           return true;
         }
       }

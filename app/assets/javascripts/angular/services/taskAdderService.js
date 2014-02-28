@@ -43,24 +43,24 @@
     };
 
     var addTask = function() {
-      var raw_task = getTaskState();
+      var rawTask = getTaskState();
       _taskPanelState.isProcessing = true;
 
-      var trackEvent = 'notes: ' + !!raw_task.notes + ' date: ' + !!raw_task.due_date;
+      var trackEvent = 'notes: ' + !!rawTask.notes + ' date: ' + !!rawTask.due_date;
       apiService.analytics.trackEvent(['Tasks', 'Add', trackEvent]);
       // When the user submits the task, we show a processing message
       // This message will disappear as soon the task has been added.
 
       var newtask = {
         'emitter': 'Google',
-        'notes': raw_task.notes,
-        'title': raw_task.title
+        'notes': rawTask.notes,
+        'title': rawTask.title
       };
 
       // Not all tasks have dates.
       // TODO: you know... we can make the backend handle slashes...
-      if (raw_task.due_date) {
-        var newdatearr = raw_task.due_date.split(/[\/]/);
+      if (rawTask.due_date) {
+        var newdatearr = rawTask.due_date.split(/[\/]/);
         newtask.due_date = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 

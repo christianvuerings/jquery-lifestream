@@ -6,7 +6,7 @@
    * Task adder controller
    */
   angular.module('calcentral.controllers').controller('TaskAdderController', function($scope, errorService, taskAdderService) {
-    $scope.add_edit_task = taskAdderService.getTaskState();
+    $scope.addEditTask = taskAdderService.getTaskState();
     $scope.addTaskPanelState = taskAdderService.getState();
 
     $scope.addTaskCompleted = function(data) {
@@ -34,7 +34,7 @@
 
     $scope.$watch('addTaskPanelState.showAddTask', function(newValue) {
       if (newValue) {
-        $scope.add_edit_task.focusInput = true;
+        $scope.addEditTask.focusInput = true;
       }
     }, true);
 

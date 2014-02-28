@@ -17,7 +17,7 @@
       <span class="cc-academics-next cc-academics-prev-next-disabled" data-ng-hide="next_semester.slug">Next semester</span>
     </div>
 
-    <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="!selected_courses.length && selected_semester.time_bucket === 'future'">
+    <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="!selectedCourses.length && selected_semester.time_bucket === 'future'">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Classes</h2>
@@ -36,7 +36,7 @@
                   <th scope="col">Grade Option</th>
                   <th class="cc-table-right" scope="col">Units</th>
                 </thead>
-                <tbody data-ng-if="selected_courses.length" data-ng-repeat="course in enrolled_courses">
+                <tbody data-ng-if="selectedCourses.length" data-ng-repeat="course in enrolled_courses">
                   <tr data-ng-class-even="'cc-academics-even'">
                     <td class="cc-table-right-spacing cc-academics-course-number">
                       <a data-ng-href="/academics/semester/{{selected_semester.slug}}/class/{{course.slug}}"
@@ -51,7 +51,7 @@
                     <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
                   </tr>
                 </tbody>
-                <tbody data-ng-if="(selected_semester.time_bucket === 'current') && !selected_courses.length">
+                <tbody data-ng-if="(selected_semester.time_bucket === 'current') && !selectedCourses.length">
                   <tr>
                     <td>
                       <p>You are not currently enrolled in any courses.</p>
@@ -125,12 +125,12 @@
         <div class="cc-academics-subtitle">
           <h3>Enrollments</h3>
         </div>
-        <div class="cc-widget-padding" data-ng-if="exam_schedule_length">
-          <div data-ng-repeat="(day, day_data) in exam_schedule" class="cc-academics-exam-block">
+        <div class="cc-widget-padding" data-ng-if="examScheduleLength">
+          <div data-ng-repeat="(day, dayData) in examSchedule" class="cc-academics-exam-block">
             <div class="row collapse">
               <div class="medium-12 small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
             </div>
-            <div class="row collapse" data-ng-repeat="exam in day_data">
+            <div class="row collapse" data-ng-repeat="exam in dayData">
               <div class="medium-2 small-2 columns" data-ng-bind="exam.time"></div>
               <div class="medium-4 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_number"></div>
               <div class="medium-6 small-4 columns end">
@@ -139,11 +139,11 @@
             </div>
           </div>
         </div>
-        <div class="cc-widget-text" data-ng-hide="exam_schedule_length">No exam schedules listed.</div>
+        <div class="cc-widget-text" data-ng-hide="examScheduleLength">No exam schedules listed.</div>
       </div>
     </div>
 
-    <div class="medium-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selected_courses.length && selected_semester.time_bucket === 'future')}">
+    <div class="medium-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selectedCourses.length && selected_semester.time_bucket === 'future')}">
       <div class="cc-academics-telebears cc-widget cc-widget-last" data-ng-if="telebears.slug === selected_semester.slug">
         <div class="cc-widget-title">
           <h2>Appointments</h2>
@@ -193,7 +193,7 @@
         <div class="cc-widget-padding">
           <div>
             <h4>Estimate your grades for <span data-ng-bind="selected_semester.name"></span></h4>
-            <div class="cc-table" data-ng-if="selected_courses.length">
+            <div class="cc-table" data-ng-if="selectedCourses.length">
               <table data-ng-if="selected_semester.time_bucket === 'current'">
                 <tbody>
                     <td><strong>Current GPA: </strong></td>
@@ -208,7 +208,7 @@
                   <th scope="col">Grade</th>
                 </thead>
                 <tbody>
-                  <tr data-ng-repeat="course in selected_courses">
+                  <tr data-ng-repeat="course in selectedCourses">
                     <td data-ng-bind="course.course_number"></td>
                     <td class="cc-table-right cc-table-right-spacing" data-ng-bind="course.units | number:1"></td>
                     <td data-ng-if="!course.units">--</td>
@@ -237,7 +237,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="row collapse cc-academics-calculator-disclaimer" data-ng-if="selected_courses.length">
+            <div class="row collapse cc-academics-calculator-disclaimer" data-ng-if="selectedCourses.length">
               <div class="medium-12 small-12 columns">
                 <p>This calculator provides a "best guess" calculation of your GPA based on available data<span data-ng-show="hideDisclaimer">...</span>
                   <span data-ng-show="!hideDisclaimer">and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />When grades are available, your actual grade will replace the popup menu for that class. Once a semester is over, if any grades are still not available a popup menu will remain that will allow you to enter your estimated grade.<br /><br />The estimated cumulative GPA calculation does not consider repeated courses.</span>
@@ -247,7 +247,7 @@
                 </p>
               </div>
             </div>
-            <div data-ng-show="!selected_courses.length">
+            <div data-ng-show="!selectedCourses.length">
               <p>To calculate your GPA, you must be enrolled in one or more classes for the selected semester.</p>
             </div>
           </div>

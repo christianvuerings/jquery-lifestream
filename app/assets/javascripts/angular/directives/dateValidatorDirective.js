@@ -9,8 +9,8 @@
         ctrl.$parsers.unshift(function(viewValue) {
           // Date regex for mm/dd/yyyy modified from http://www.regular-expressions.info/dates.html
           // Allows spaces, slashes, dots and spaces as delimiters
-          var mmddyy_regex = /^(0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])[\/](19|20)\d\d$/;
-          if (mmddyy_regex.test(viewValue) || viewValue === '') {
+          var mmddyyRegex = /^(0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])[\/](19|20)\d\d$/;
+          if (mmddyyRegex.test(viewValue) || viewValue === '') {
             // Regex is valid
             ctrl.$setValidity('ccDateValidator', true);
             return viewValue;

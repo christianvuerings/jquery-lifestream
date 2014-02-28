@@ -2,23 +2,23 @@
   <div class="medium-12 columns cc-settings">
     <h1>Settings for {{api.user.profile.full_name}}</h1>
 
-    <section data-ng-show='connected_services.length' class="cc-settings-section">
+    <section data-ng-show='connectedServices.length' class="cc-settings-section">
       <div class="medium-10 medium-centered columns">
 
         <h2>Connected Services</h2>
-        <div data-ng-repeat="service in connected_services">
+        <div data-ng-repeat="service in connectedServices">
           <div class="row cc-settings-service-row" data-ng-init="loopname='connected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
         </div>
 
       </div>
     </section>
 
-    <section data-ng-show='non_connected_services.length' class="cc-settings-section">
+    <section data-ng-show='nonConnectedServices.length' class="cc-settings-section">
       <div class="medium-10 medium-centered columns">
 
         <h2>Services to Connect</h2>
 
-        <div data-ng-repeat="service in non_connected_services">
+        <div data-ng-repeat="service in nonConnectedServices">
           <div class="row cc-settings-service-row" data-ng-init="loopname='unconnected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
         </div>
 
@@ -53,14 +53,14 @@
         <button class="cc-button cc-button-blue" type="submit">Stop viewing as</button>
       </form>
 
-      <div data-ng-controller="ApiTestController" data-ng-show="api_test.enabled">
+      <div data-ng-controller="ApiTestController" data-ng-show="apiTest.enabled">
         <h3>Api Test</h3>
         <form class="api-test-form" data-ng-submit="runApiTest()">
-          <button class="cc-button cc-button-blue" id="cc-settings-run-api-test-submit" data-ng-disabled="api_test.running" type="submit">Run test</button>
-          <div class="cc-settings-section" data-ng-show="api_test.show_tests">
+          <button class="cc-button cc-button-blue" id="cc-settings-run-api-test-submit" data-ng-disabled="apiTest.running" type="submit">Run test</button>
+          <div class="cc-settings-section" data-ng-show="apiTest.showTests">
             <ul class="cc-settings-apitest-list">
               <li data-ng-class="{'cc-settings-apitest-failed': (route.status == 'failed'), 'cc-settings-apitest-success': (route.status == 'success')}"
-                  data-ng-repeat="route in api_test.data" data-ng-bind-template="{{route.route}}: {{route.status}}"></li>
+                  data-ng-repeat="route in apiTest.data" data-ng-bind-template="{{route.route}}: {{route.status}}"></li>
             </ul>
           </div>
         </form>

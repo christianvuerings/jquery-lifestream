@@ -5,8 +5,8 @@
     return {
       link: function(scope, elm, attrs) {
 
-        var cc_loading_class = 'cc-loading';
-        var cc_loading_classes = 'cc-loading-error cc-loading-process cc-loading-success';
+        var ccLoadingClass = 'cc-loading';
+        var ccLoadingClasses = 'cc-loading-error cc-loading-process cc-loading-success';
 
         var setHtml = function (html, indicator) {
           html = html || '';
@@ -28,7 +28,7 @@
         };
 
         var setClass = function(indicator) {
-          elm.removeClass(cc_loading_classes);
+          elm.removeClass(ccLoadingClasses);
 
           if (indicator) {
             elm.addClass('cc-loading-' + indicator.toLowerCase());
@@ -46,7 +46,7 @@
           setClass(indicator);
         });
 
-        elm.addClass(cc_loading_class);
+        elm.addClass(ccLoadingClass);
       }
     };
   }]);
