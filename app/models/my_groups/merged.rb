@@ -5,7 +5,8 @@ class MyGroups::Merged  < UserSpecificModel
     [
       MyGroups::Callink,
       MyGroups::Canvas,
-      MyGroups::Sakai
+      MyGroups::Sakai,
+      MyGroups::Research
     ].each do |provider|
       groups.concat(provider.new(@uid).fetch)
     end

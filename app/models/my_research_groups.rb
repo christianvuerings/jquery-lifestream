@@ -2,6 +2,10 @@ class MyResearchGroups < UserSpecificModel
   include ClassLogger
   extend Calcentral::Cacheable
 
+  def initialize(uid)
+    @uid = uid
+  end
+
   def get_feed_internal
     response = {
         :research => []

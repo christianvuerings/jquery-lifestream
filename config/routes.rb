@@ -29,7 +29,6 @@ Calcentral::Application.routes.draw do
   match '/api/my/refresh' => 'my_refresh#refresh', :defaults => { :format => 'json' }
   match '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
   match '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }
-  match '/api/my/research' => 'my_research_groups#get_feed', :as => :research, :defaults => { :format => 'json' }
 
   # Youtube class videos endpoints
   ## Get the playlist_id of the title given, or list all playlists if no title given.
