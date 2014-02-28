@@ -2,7 +2,7 @@ class MyPlaylistsController < ApplicationController
 
   def get_playlists
     if session[:user_id]
-      render :json => MyPlaylists.new(:playlist_title => params[:playlist_title]).get
+      render :json => PlaylistsProxy.new({:playlist_title => params[:playlist_title]}).get
     else
       render :json => {}.to_json
     end

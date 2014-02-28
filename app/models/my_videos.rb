@@ -22,12 +22,12 @@ class MyVideos < SingleSourceModel
 
   def get_playlist
     if @playlist_title
-      MyPlaylists.new(:playlist_title => @playlist_title).get
+      PlaylistsProxy.new({:playlist_title => @playlist_title}).get
     end
   end
 
   def get_youtube_videos(id)
-    MyYoutube.new(:playlist_id => id).get_feed_as_json
+    YoutubeProxy.new({:playlist_id => id}).get
   end
 
 end

@@ -18,6 +18,7 @@ class PlaylistsProxy < BaseProxy
   end
 
   def request_internal
+    return {} unless Settings.features.videos
     response = FakeableProxy.wrap_request(APP_ID + "_" + "playlists", @fake, {:match_requests_on => [:method, :path]}) {
       Faraday::Connection.new(
         :url => @settings.base_url,

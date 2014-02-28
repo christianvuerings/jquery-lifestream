@@ -18,6 +18,7 @@ class YoutubeProxy < BaseProxy
   end
 
   def request_internal(params = {})
+    return {} unless Settings.features.videos
     response = FakeableProxy.wrap_request(APP_ID + "_" + "videos", @fake, {:match_requests_on => [:method, :path]}) {
       Faraday::Connection.new(
         :url => @url,
