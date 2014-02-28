@@ -3,6 +3,14 @@ require 'csv'
 class CanvasCsv < CsvExport
   include ClassLogger
 
+  # Roles used with Canvas SIS Import API
+  ENROLL_STATUS_TO_CANVAS_SIS_ROLE = {
+    'E' => 'student',
+    'W' => 'Waitlist Student',
+    # Concurrent enrollment
+    'C' => 'student'
+  }
+
   def initialize
     super(Settings.canvas_proxy)
   end

@@ -16,7 +16,7 @@ class CanvasSisImportProxy < CanvasProxy
   end
 
   def import_all_term_enrollments(term_id, csv_file_path)
-    import_with_check(csv_file_path, '_sis_import_enrollments', "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
+    import_with_check(csv_file_path, '_sis_import_enrollments')
   end
 
   def import_courses(csv_file_path)
@@ -33,6 +33,10 @@ class CanvasSisImportProxy < CanvasProxy
 
   def import_users(csv_file_path)
     import_with_check(csv_file_path, '_sis_import_users')
+  end
+
+  def import_batch_term_enrollments(term_id, csv_file_path)
+    import_with_check(csv_file_path, '_sis_import_enrollments', "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
   end
 
   def import_with_check(csv_file_path, vcr_id, extra_params = '')
@@ -52,8 +56,8 @@ class CanvasSisImportProxy < CanvasProxy
 
   def import_successful?(response)
     return false unless (response && response.status == 200 && json = safe_json(response.body))
-    import_status = import_status(json["id"])
-    import_was_successful?(import_status)
+    attempted_import_status = import_status(json["id"])
+    import_was_successful?(attempted_import_status)
   end
 
   def generate_course_sis_id(canvas_course_id)
@@ -114,7 +118,7 @@ class CanvasSisImportProxy < CanvasProxy
         end
       end
     end
-    logger.error("SIS import failed or incompletely processed; status: #{import_status}")
+    logger.error("SIS import failed or incompletely processed; status: #{json}")
     false
   end
 

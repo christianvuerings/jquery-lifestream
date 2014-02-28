@@ -1,12 +1,5 @@
-class CanvasMaintainEnrollments < CanvasCsv
+class CanvasBatchEnrollments < CanvasCsv
   include ClassLogger
-
-  ENROLL_STATUS_TO_CANVAS_ROLE = {
-    'E' => 'student',
-    'W' => 'Waitlist Student',
-    # Concurrent enrollment
-    'C' => 'student'
-  }
 
   def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv)
     canvas_sections_csv = CanvasSectionsReportProxy.new.get_csv(term)
@@ -40,7 +33,7 @@ class CanvasMaintainEnrollments < CanvasCsv
   end
 
   def append_enrollment_and_user(course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
-    if (role = ENROLL_STATUS_TO_CANVAS_ROLE[campus_data_row['enroll_status']])
+    if (role = ENROLL_STATUS_TO_CANVAS_SIS_ROLE[campus_data_row['enroll_status']])
       uid = campus_data_row['ldap_uid']
       enrollments_csv << {
         'course_id' => course_id,
