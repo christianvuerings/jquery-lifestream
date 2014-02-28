@@ -23,10 +23,10 @@ class ResearchUserProxy < BaseProxy
         result = safe_json(result)
       rescue OpenURI::HTTPError
         result = []
-        logger.error "Authorization error: UID:#{@uid} doesn't exist for the Hub"
+        logger.debug "Authorization error: UID:#{@uid} doesn't exist for the Hub"
       rescue Timeout::Error
         result = []
-        logger.error "Timeout on resquest to #{Settings.research_user_proxy.base_url}"
+        logger.debug "Timeout on resquest to #{Settings.research_user_proxy.base_url}"
       end
     end
     {
