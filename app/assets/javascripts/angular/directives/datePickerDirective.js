@@ -9,10 +9,10 @@
       link: function(scope, elm, attrs) {
 
         // Keep track on whether the picker has been initialized before or not
-        scope.picker_initialized = false;
+        scope.pickerInitialized = false;
 
         var initializePicker = function () {
-          scope.picker_initialized = true;
+          scope.pickerInitialized = true;
 
           var inputElement = $document[0].querySelector('#' + attrs.ccDatepickerDirective);
           var angularInputElement = angular.element(inputElement);
@@ -42,9 +42,9 @@
           });
 
           /**
-           * Show/hide depending on the value of the picker_shown variable.
+           * Show/hide depending on the value of the pickerShown variable.
            */
-          var watchshown = scope.$watch('picker_shown', function(showPicker) {
+          var watchshown = scope.$watch('pickerShown', function(showPicker) {
             if (showPicker) {
               picker.show();
             } else {
@@ -56,8 +56,8 @@
            * Close the picker and unset all the events that were bound to it.
            */
           var closeAll = function() {
-            scope.picker_shown = false;
-            scope.picker_initialized = false;
+            scope.pickerShown = false;
+            scope.pickerInitialized = false;
             watchshown();
             picker.destroy();
             $document.unbind('click', closeAll);
@@ -68,9 +68,9 @@
 
         // Bind the click event handler on the button
         elm.bind('click', function() {
-          scope.picker_shown = !scope.picker_shown;
+          scope.pickerShown = !scope.pickerShown;
 
-          if (scope.picker_initialized) {
+          if (scope.pickerInitialized) {
 
             // We need this extra $apply since otherwise the watchshown() method won't be actived
             scope.$apply();

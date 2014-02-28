@@ -25,13 +25,13 @@
     };
 
     var getRoster = function() {
-      var canvas_course_id = $routeParams.canvas_course_id || 'embedded';
-      $http.get('/api/academics/rosters/canvas/' + canvas_course_id).success(function(data) {
+      var canvasCourseId = $routeParams.canvas_course_id || 'embedded';
+      $http.get('/api/academics/rosters/canvas/' + canvasCourseId).success(function(data) {
         angular.extend($scope, data);
         window.setInterval(postHeight, 250);
       }).error(function(data, status) {
         angular.extend($scope, data);
-        $scope.error_status = status;
+        $scope.errorStatus = status;
       });
     };
 

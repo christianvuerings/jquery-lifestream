@@ -4,10 +4,10 @@
   angular.module('calcentral.directives').directive('ccTruncateDirective',  function($filter, $sanitize) {
 
     // Set the default options
-    var default_options = {
-      'ccs_button_class': 'cc-button-link',
-      'end': '...',
-      'length': 100
+    var defaultOptions = {
+      cssButtonClass: 'cc-button-link',
+      end: '...',
+      length: 100
     };
 
     /**
@@ -46,7 +46,7 @@
      */
     var buttonTemplate = function(opened, options) {
       var text = opened ? 'Less' : 'More';
-      return '<div><button class="' + options.ccs_button_class + '">Show ' + text + '</button></div>';
+      return '<div><button class="' + options.cssButtonClass + '">Show ' + text + '</button></div>';
     };
 
     /**
@@ -65,7 +65,7 @@
       var value = scope.completeText;
 
       // Overwrite the default options
-      options = angular.extend(options, default_options);
+      options = angular.extend(options, defaultOptions);
 
       var shouldTruncate = needTruncation(value, options.length, options.end);
 

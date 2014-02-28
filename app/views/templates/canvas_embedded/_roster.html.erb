@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="templates/canvas_embedded/roster.html">
-  <div data-ng-class="{'cc-page-roster': !is_loading}" data-cc-spinner-directive>
+  <div data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
 
-    <form class="cc-roster-search" data-ng-hide="error_status">
+    <form class="cc-roster-search" data-ng-hide="errorStatus">
       <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
 
       <div class="cc-select cc-left">
@@ -30,7 +30,7 @@
       </li>
     </ul>
 
-    <p data-ng-show="error_status">
+    <p data-ng-show="errorStatus">
       <i class="fa fa-exclamation-triangle"></i> You must be a teacher in this bCourses course to view official student rosters.
     </p>
 

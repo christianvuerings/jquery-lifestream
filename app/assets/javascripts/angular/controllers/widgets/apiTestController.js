@@ -7,7 +7,7 @@
   angular.module('calcentral.controllers').controller('ApiTestController', function($http, $scope) {
 
     // Crude way of testing against the http.success responses due to insufficient status codes.
-    var response_dictionary = {
+    var responseDictionary = {
       '/api/blog/release_notes/latest': 'entries',
       '/api/my/academics': 'college_and_level',
       '/api/my/activities': 'activities',
@@ -23,25 +23,25 @@
       '/api/tools/styles': 'colors'
     };
 
-    $scope.api_test = {
+    $scope.apiTest = {
       data: [],
       enabled: false,
-      show_tests: false,
+      showTests: false,
       running: false
     };
 
     var hitEndpoint = function(index) {
-      var request = $http.get($scope.api_test.data[index].route);
+      var request = $http.get($scope.apiTest.data[index].route);
       request.success(function(data) {
-        var route = response_dictionary[$scope.api_test.data[index].route];
+        var route = responseDictionary[$scope.apiTest.data[index].route];
         if (route) {
-          $scope.api_test.data[index].status = data[route] ? 'success' : 'failed';
+          $scope.apiTest.data[index].status = data[route] ? 'success' : 'failed';
         } else {
-          $scope.api_test.data[index].status = 'success';
+          $scope.apiTest.data[index].status = 'success';
         }
       });
       request.error(function() {
-        $scope.api_test.data[index].status = 'failed';
+        $scope.apiTest.data[index].status = 'failed';
       });
       request.success(function() {
         runOnLastEndpoint(index);
@@ -59,21 +59,21 @@
             status: 'pending'
           });
         });
-        $scope.api_test.data = output;
-        $scope.api_test.enabled = true;
+        $scope.apiTest.data = output;
+        $scope.apiTest.enabled = true;
       });
     };
 
     var runOnLastEndpoint = function(index) {
-      if (parseInt(index, 10)+1 >= $scope.api_test.data.length) {
-        $scope.api_test.running = false;
+      if (parseInt(index, 10)+1 >= $scope.apiTest.data.length) {
+        $scope.apiTest.running = false;
       }
     };
 
     $scope.runApiTest = function() {
-      $scope.api_test.running = true;
-      $scope.api_test.show_tests = true;
-      angular.forEach($scope.api_test.data, function(value, index) {
+      $scope.apiTest.running = true;
+      $scope.apiTest.showTests = true;
+      angular.forEach($scope.apiTest.data, function(value, index) {
         hitEndpoint(index);
       });
     };

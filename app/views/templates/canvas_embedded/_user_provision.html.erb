@@ -19,14 +19,14 @@
                   <textarea id="cc-page-user-provision-uid-list" name="uids" data-ng-model="raw_uids" data-ng-list="/[- |\,\t\n\.]/"
                     placeholder="Paste your list of UIDs here organized one UID per a line, or separated by spaces or commas."></textarea>
 
-                  <small class="error" data-ng-show="check_performed && userImportForm.uids.$error.required">
+                  <small class="error" data-ng-show="checkPerformed && userImportForm.uids.$error.required">
                     You must provide at least one UID.
                   </small>
                   <small class="error" data-ng-show="userImportForm.uids.$error.ccNumericList">
-                    The following items in your list are not numeric: <span data-ng-bind="invalid_values.join(', ')"></span>
+                    The following items in your list are not numeric: <span data-ng-bind="invalidValues.join(', ')"></span>
                   </small>
                   <small class="error" data-ng-show="userImportForm.uids.$error.ccListLimit">
-                    Maximum IDs: 200. <span data-ng-bind="list_length"></span> IDs found in list.
+                    Maximum IDs: 200. <span data-ng-bind="listLength"></span> IDs found in list.
                   </small>
                 </div>
               </div>

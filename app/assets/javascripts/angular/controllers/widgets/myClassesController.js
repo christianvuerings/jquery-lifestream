@@ -74,10 +74,10 @@
           categorizedClasses.other.push(value);
         }
       });
-      var non_official_classes = allClassesHash.otherClasses.filter(function(value) {
+      var nonOfficialClasses = allClassesHash.otherClasses.filter(function(value) {
         return (value.courses.length === 0);
       });
-      non_official_classes.forEach(function(value) {
+      nonOfficialClasses.forEach(function(value) {
         categorizedClasses.other.push(value);
       });
 
@@ -118,7 +118,7 @@
       };
     };
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
+    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyClasses::Merged']) {
         getMyClasses();
       }

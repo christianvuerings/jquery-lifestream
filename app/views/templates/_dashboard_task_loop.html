@@ -12,7 +12,7 @@
     <div class="cc-widget-tasks-col cc-widget-tasks-col-title">
       <div
         class="cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.editor_is_processing)}">
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
         <strong>{{task.title}}</strong>
       </div>
     </div>
@@ -22,7 +22,7 @@
         id="cc-wdiget-tasks-checkbox-{{$index}}"
         data-ng-click="api.util.preventBubble($event)"
         data-ng-change="changeTaskState(task)"
-        data-ng-disabled="!!task.editor_is_processing"
+        data-ng-disabled="!!task.editorIsProcessing"
         data-ng-false-value="needs_action"
         data-ng-model="task.status"
         data-ng-show="task.emitter=='Google'"
@@ -89,7 +89,7 @@
       <div data-ng-show="task.is_processing">
         <em>Updating task...</em>
       </div>
-      <div data-ng-show="task.is_deleting">
+      <div data-ng-show="task.isDeleting">
         <em>Deleting task...</em>
       </div>
     </div>

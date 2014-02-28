@@ -138,12 +138,12 @@
         return b.transTermYr - a.transTermYr;
       }
 
-      var a_search = sortTermsIndex[a.transTermCd];
-      var b_search = sortTermsIndex[b.transTermCd];
+      var searchA = sortTermsIndex[a.transTermCd];
+      var searchB = sortTermsIndex[b.transTermCd];
 
-      if (a_search > b_search) {
+      if (searchA > searchB) {
         return 1;
-      } else if (a_search < b_search) {
+      } else if (searchA < searchB) {
         return -1;
       }
     };
@@ -153,20 +153,20 @@
      */
     var selectCurrentTerm = function(addedTerms, terms) {
       var current_term = $scope.myfinances.current_term;
-      var to_select_term = '';
+      var toSelectTerm = '';
 
       if (addedTerms.indexOf(current_term) !== -1) {
         // When the current term actually exists in the list, we select it
-        to_select_term = $scope.myfinances.current_term;
+        toSelectTerm = $scope.myfinances.current_term;
       } else {
         // Otherwise we select the first item in the list
-        to_select_term = terms[0].value;
+        toSelectTerm = terms[0].value;
       }
 
       $scope.search = {
-        'transTerm': to_select_term
+        'transTerm': toSelectTerm
       };
-      $scope.search_term = to_select_term;
+      $scope.searchTerm = toSelectTerm;
     };
 
     var createTerms = function() {
@@ -224,7 +224,7 @@
         }
 
         if (data.status_code && data.status_code >= 400) {
-          $scope.myfinances_error = data;
+          $scope.myfinancesError = data;
         }
 
       }).error(function(data) {
@@ -294,7 +294,7 @@
       } else if (choice === 'transactions') {
         $scope.transStatusSearch = '';
       } else if (choice === 'term') {
-        $scope.search.transTerm = $scope.search_term;
+        $scope.search.transTerm = $scope.searchTerm;
       }
     };
 
@@ -304,10 +304,10 @@
      * @return {Object | String} Empty string when no date & date object when there is a date
      */
     var createDateValues = function(date) {
-      var mmddyy_regex = /^(0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])[\/]((19|20)\d\d)$/;
+      var mmddyyRegex = /^(0[1-9]|1[012])[\/](0[1-9]|[12][0-9]|3[01])[\/]((19|20)\d\d)$/;
 
       if (date) {
-        var dateValues = date.match(mmddyy_regex);
+        var dateValues = date.match(mmddyyRegex);
         return new Date(dateValues[3], parseInt(dateValues[1], 10) - 1, dateValues[2]);
       }
 

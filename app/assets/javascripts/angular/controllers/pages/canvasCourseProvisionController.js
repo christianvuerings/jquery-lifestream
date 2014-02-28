@@ -28,14 +28,14 @@
       if ($scope.status === 'Processing' || $scope.status === 'New') {
         courseSiteJobStatusLoader();
       } else {
-        $timeout.cancel(timeout_promise);
+        $timeout.cancel(timeoutPromise);
       }
     };
 
-    var timeout_promise;
+    var timeoutPromise;
     var courseSiteJobStatusLoader = function() {
-      $scope.current_workflow_step = 'monitoring_job';
-      timeout_promise = $timeout(function() {
+      $scope.currentWorkflowStep = 'monitoring_job';
+      timeoutPromise = $timeout(function() {
         fetchStatus(statusProcessor);
       }, 2000);
     };
@@ -53,9 +53,9 @@
       courseSiteJobStatusLoader();
     };
 
-    $scope.createCourseSiteJob = function(selected_courses) {
+    $scope.createCourseSiteJob = function(selectedCourses) {
       var ccns = [];
-      angular.forEach(selected_courses, function(course) {
+      angular.forEach(selectedCourses, function(course) {
         angular.forEach(course.sections, function(section) {
           if (section.selected) {
             ccns.push(section.ccn);
@@ -63,23 +63,23 @@
         });
       });
       if (ccns.length > 0) {
-        var new_course = {
+        var newCourse = {
           'term_slug': $scope.current_semester,
           'ccns': ccns
         };
         if ($scope.is_admin) {
-          if ($scope.admin_mode !== 'by_ccn' && $scope.admin_acting_as) {
-            new_course.admin_acting_as = $scope.admin_acting_as;
-          } else if ($scope.admin_mode === 'by_ccn' && $scope.admin_by_ccns) {
-            new_course.admin_by_ccns = $scope.admin_by_ccns;
-            new_course.admin_term_slug = $scope.current_admin_semester;
+          if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
+            newCourse.admin_acting_as = $scope.admin_acting_as;
+          } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
+            newCourse.admin_by_ccns = $scope.admin_by_ccns;
+            newCourse.admin_term_slug = $scope.currentAdminSemester;
           }
         }
-        $http.post('/api/academics/canvas/course_provision/create', new_course)
+        $http.post('/api/academics/canvas/course_provision/create', newCourse)
           .success(courseSiteJobCreated)
           .error(function() {
             angular.extend($scope, {
-              current_workflow_step: 'monitoring_job',
+              currentWorkflowStep: 'monitoring_job',
               status: 'Error',
               error: 'Failed to create course provisioning job.'
             });
@@ -88,14 +88,16 @@
     };
 
     var fetchStatus = function(callback) {
-      var status_request = {
+      var statusRequest = {
         url: '/api/academics/canvas/course_provision/status.json',
         method: 'GET',
-        params: { 'job_id': $scope.job_id }
+        params: {
+          job_id: $scope.job_id
+        }
       };
-      $http(status_request).success(function(data) {
+      $http(statusRequest).success(function(data) {
         angular.extend($scope, data);
-        $scope.percent_complete_rounded = Math.round($scope.percent_complete * 100);
+        $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
         callback();
       });
     };
@@ -103,26 +105,26 @@
     $scope.fetchFeed = function() {
       clearCourseSiteJob();
       angular.extend($scope, {
-        current_workflow_step: 'selecting',
-        is_loading: true,
+        currentWorkflowStep: 'selecting',
+        isLoading: true,
         created_status: false
       });
-      var feed_url = '/api/academics/canvas/course_provision';
-      var feed_params = {};
+      var feedUrl = '/api/academics/canvas/course_provision';
+      var feedParams = {};
       if ($scope.is_admin) {
-        if ($scope.admin_mode !== 'by_ccn' && $scope.admin_acting_as) {
-          feed_url = '/api/academics/canvas/course_provision_as/' + $scope.admin_acting_as;
-        } else if ($scope.admin_mode === 'by_ccn' && $scope.admin_by_ccns) {
-          feed_params = {
+        if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
+          feedUrl = '/api/academics/canvas/course_provision_as/' + $scope.admin_acting_as;
+        } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
+          feedParams = {
             'admin_by_ccns[]': $scope.admin_by_ccns,
-            'admin_term_slug': $scope.current_admin_semester
+            'admin_term_slug': $scope.currentAdminSemester
           };
         }
       }
       $http({
-        url: feed_url,
+        url: feedUrl,
         method: 'GET',
-        params: feed_params
+        params: feedParams
       }).success(function(data) {
         angular.extend($scope, data);
         fillCourseSites($scope.teaching_semesters);
@@ -130,37 +132,37 @@
         if ($scope.teaching_semesters && $scope.teaching_semesters.length > 0) {
           $scope.switchSemester($scope.teaching_semesters[0]);
         }
-        if (!$scope.current_admin_semester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
+        if (!$scope.currentAdminSemester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
           $scope.switchAdminSemester($scope.admin_semesters[0]);
         }
-        if ($scope.admin_mode === 'by_ccn' && $scope.admin_by_ccns) {
+        if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
           selectAllSections();
         }
       });
     };
 
-    var fillCourseSites = function(semesters_feed) {
-      angular.forEach(semesters_feed, function(semester) {
+    var fillCourseSites = function(semestersFeed) {
+      angular.forEach(semestersFeed, function(semester) {
         angular.forEach(semester.classes, function(course) {
-          var has_sites = false;
-          var ccn_to_sites = {};
+          var hasSites = false;
+          var ccnToSites = {};
           angular.forEach(course.class_sites, function(site) {
             if (site.emitter === 'bCourses') {
-              angular.forEach(site.sections, function(site_section) {
-                has_sites = true;
-                if (!ccn_to_sites[site_section.ccn]) {
-                  ccn_to_sites[site_section.ccn] = [];
+              angular.forEach(site.sections, function(siteSection) {
+                hasSites = true;
+                if (!ccnToSites[siteSection.ccn]) {
+                  ccnToSites[siteSection.ccn] = [];
                 }
-                ccn_to_sites[site_section.ccn].push(site);
+                ccnToSites[siteSection.ccn].push(site);
               });
             }
           });
-          if (has_sites) {
-            course.has_sites = has_sites;
+          if (hasSites) {
+            course.hasSites = hasSites;
             angular.forEach(course.sections, function(section) {
               var ccn = section.ccn;
-              if (ccn_to_sites[ccn]) {
-                section.sites = ccn_to_sites[ccn];
+              if (ccnToSites[ccn]) {
+                section.sites = ccnToSites[ccn];
               }
             });
           }
@@ -169,40 +171,40 @@
     };
 
     var selectAllSections = function() {
-      var new_selected_courses = [];
-      angular.forEach($scope.selected_courses, function(course) {
+      var newSelectedCourses = [];
+      angular.forEach($scope.selectedCourses, function(course) {
         angular.forEach(course.sections, function(section) {
           section.selected = true;
         });
-        new_selected_courses.push(course);
+        newSelectedCourses.push(course);
       });
-      $scope.selected_courses = new_selected_courses;
+      $scope.selectedCourses = newSelectedCourses;
     };
 
     $scope.switchAdminSemester = function(semester) {
       angular.extend($scope, {
-        current_admin_semester: semester.slug
+        currentAdminSemester: semester.slug
       });
     };
 
     $scope.switchSemester = function(semester) {
       angular.extend($scope, {
         current_semester: semester.slug,
-        selected_courses: semester.classes
+        selectedCourses: semester.classes
       });
     };
 
     $scope.toggleAdminMode = function() {
-      var admin_mode;
-      if ($scope.admin_mode === 'by_ccn') {
-        admin_mode = 'act_as';
+      var adminMode;
+      if ($scope.adminMode === 'by_ccn') {
+        adminMode = 'act_as';
       } else {
-        admin_mode = 'by_ccn';
+        adminMode = 'by_ccn';
       }
       clearCourseSiteJob();
       angular.extend($scope, {
-        current_workflow_step: 'selecting',
-        admin_mode: admin_mode,
+        currentWorkflowStep: 'selecting',
+        adminMode: adminMode,
         teaching_semesters: []
       });
     };

@@ -18,11 +18,11 @@
       templateUrl: 'templates/academics.html',
       controller: 'AcademicsController'
     }).
-    when('/academics/semester/:semester_slug', {
+    when('/academics/semester/:semesterSlug', {
       templateUrl: 'templates/academics_semester.html',
       controller: 'AcademicsController'
     }).
-    when('/academics/semester/:semester_slug/class/:class_slug', {
+    when('/academics/semester/:semesterSlug/class/:classSlug', {
       templateUrl: 'templates/academics_classinfo.html',
       controller: 'AcademicsController'
     }).
@@ -30,7 +30,7 @@
       templateUrl: 'templates/academics_booklist.html',
       controller: 'AcademicsController'
     }).
-    when('/academics/teaching-semester/:teaching_semester_slug/class/:class_slug', {
+    when('/academics/teaching-semester/:teachingSemesterSlug/class/:classSlug', {
       templateUrl: 'templates/academics_classinfo.html',
       controller: 'AcademicsController'
     }).

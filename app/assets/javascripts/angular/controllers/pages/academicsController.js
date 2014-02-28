@@ -66,16 +66,21 @@
     /**
      * We're putting the exams in buckets per date
      */
-    var parseExamSchedule = function() {
-      var exam_schedule = {};
-      angular.forEach($scope.exam_schedule, function(element) {
-        if (!exam_schedule[element.date.epoch]) {
-          exam_schedule[element.date.epoch] = [];
+    var parseExamSchedule = function(examSchedule) {
+
+      if (!examSchedule) {
+        return;
+      }
+
+      var response = {};
+      angular.forEach(examSchedule, function(element) {
+        if (!response[element.date.epoch]) {
+          response[element.date.epoch] = [];
         }
-        exam_schedule[element.date.epoch].push(element);
+        response[element.date.epoch].push(element);
       });
-      $scope.exam_schedule = exam_schedule;
-      $scope.exam_schedule_length = Object.keys(exam_schedule).length;
+      $scope.examSchedule = response;
+      $scope.examScheduleLength = Object.keys(response).length;
     };
 
     var checkPageExists = function(page) {
@@ -234,11 +239,11 @@
       $scope.teaching_length = Object.keys($scope.teaching).length;
 
       // Get selected semester from URL params and extract data from semesters array
-      var semester_slug = ($routeParams.semester_slug || $routeParams.teaching_semester_slug);
-      if (semester_slug) {
-        var is_instructor_gsi = !!$routeParams.teaching_semester_slug;
-        var selected_student_semester = findSemester(data.semesters, semester_slug, selected_student_semester);
-        var selected_teaching_semester = findSemester(data.teaching_semesters, semester_slug, selected_teaching_semester);
+      var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
+      if (semesterSlug) {
+        var is_instructor_gsi = !!$routeParams.teachingSemesterSlug;
+        var selected_student_semester = findSemester(data.semesters, semesterSlug, selected_student_semester);
+        var selected_teaching_semester = findSemester(data.teaching_semesters, semesterSlug, selected_teaching_semester);
         var selected_semester = (selected_student_semester || selected_teaching_semester);
         if (!checkPageExists(selected_semester)) {
           return;
@@ -247,7 +252,7 @@
 
         $scope.selected_semester = selected_semester;
         if (selected_student_semester) {
-          $scope.selected_courses = selected_student_semester.classes;
+          $scope.selectedCourses = selected_student_semester.classes;
           if (!is_instructor_gsi) {
             $scope.enrolled_courses = getClassesSections(selected_student_semester.classes, false);
             $scope.waitlisted_courses = getClassesSections(selected_student_semester.classes, true);
@@ -258,14 +263,14 @@
         $scope.selected_teaching_semester = selected_teaching_semester;
 
         // Get selected course from URL params and extract data from selected semester schedule
-        if ($routeParams.class_slug) {
+        if ($routeParams.classSlug) {
           var class_semester = selected_student_semester;
           if (is_instructor_gsi) {
             class_semester = selected_teaching_semester;
           }
           for (var i = 0; i< class_semester.classes.length; i++) {
             var course = class_semester.classes[i];
-            if (course.slug === $routeParams.class_slug) {
+            if (course.slug === $routeParams.classSlug) {
               $scope.selected_course = course;
               break;
             }
@@ -278,10 +283,7 @@
         }
       }
 
-      if (data.exam_schedule) {
-        $scope.exam_schedule = data.exam_schedule;
-        parseExamSchedule();
-      }
+      parseExamSchedule(data.exam_schedule);
 
       $scope.gpaInit(); // Initialize GPA calculator with selected courses
 
@@ -333,7 +335,7 @@
       var total_units = 0;
       var total_score = 0;
 
-      angular.forEach($scope.selected_courses, function(course) {
+      angular.forEach($scope.selectedCourses, function(course) {
         // Don't calculate for pass/no-pass courses!
         if (course.grade_option === 'Letter' && course.units) {
           var grade;
@@ -359,7 +361,7 @@
 
     $scope.gpaInit = function() {
       // On page load, set default values and calculate starter GPA
-      angular.forEach($scope.selected_courses, function(course) {
+      angular.forEach($scope.selectedCourses, function(course) {
         course.estimated_grade = 4;
       });
       gpaCalculate();

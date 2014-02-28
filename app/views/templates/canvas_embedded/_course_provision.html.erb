@@ -6,17 +6,17 @@
       <div class="cc-widget">
         <button class="cc-button"
                 data-ng-click="toggleAdminMode()">
-          <span data-ng-show="admin_mode !== 'by_ccn'">Switch to CCN input</span>
-          <span data-ng-show="admin_mode === 'by_ccn'">Switch to acting as instructor</span>
+          <span data-ng-show="adminMode !== 'by_ccn'">Switch to CCN input</span>
+          <span data-ng-show="adminMode === 'by_ccn'">Switch to acting as instructor</span>
         </button>
       </div>
 
-      <form data-ng-show="admin_mode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
+      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
         <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" />
         <button class="cc-button cc-button-blue" type="submit">As instructor</button>
       </form>
 
-      <div data-ng-show="admin_mode === 'by_ccn'">
+      <div data-ng-show="adminMode === 'by_ccn'">
         <div data-ng-show="admin_semesters && admin_semesters.length > 0">
           <div class="row collapse">
             <div class="medium-5 columns">
@@ -24,8 +24,8 @@
                 <li data-ng-repeat="semester in admin_semesters">
                   <button class="cc-button"
                           data-ng-click="switchAdminSemester(semester)"
-                          data-ng-class="{'cc-button-selected':(current_admin_semester==semester.slug)}"
-                          aria-selected="{{current_admin_semester==semester.slug}}"
+                          data-ng-class="{'cc-button-selected':(currentAdminSemester==semester.slug)}"
+                          aria-selected="{{currentAdminSemester==semester.slug}}"
                           role="tab"
                           data-ng-bind="semester.name">
                   </button>
@@ -50,7 +50,7 @@
 
       <div class="cc-widget-padding">
 
-        <div data-ng-show="current_workflow_step === 'selecting'">
+        <div data-ng-show="currentWorkflowStep === 'selecting'">
           <div data-cc-spinner-directive>
             <div data-ng-hide="teaching_semesters && teaching_semesters.length > 0">
               No courses found.
@@ -71,10 +71,10 @@
                   </ul>
                 </div>
               </div>
-              <form data-ng-submit="createCourseSiteJob(selected_courses)">
+              <form data-ng-submit="createCourseSiteJob(selectedCourses)">
                 <div>
                   <ul class="cc-page-provision-margin">
-                    <li data-ng-repeat="course in selected_courses">
+                    <li data-ng-repeat="course in selectedCourses">
                       <strong>{{course.title}} ({{course.course_number}})</strong>
                       <ul>
                         <li data-ng-repeat="section in course.sections">
@@ -89,7 +89,7 @@
                           </div>
                         </li>
                       </ul>
-                      <div data-ng-if="course.has_sites">
+                      <div data-ng-if="course.hasSites">
                         The following sections are in use in other course sites:
                         <ul>
                           <li data-ng-repeat="section in course.sections">
@@ -120,7 +120,7 @@
           </div>
         </div>
 
-        <div data-ng-show="current_workflow_step === 'monitoring_job'">
+        <div data-ng-show="currentWorkflowStep === 'monitoring_job'">
           <div data-ng-hide="status">
             <i class="fa fa-spinner fa-spin"></i>
             Sending course provisioning request....
@@ -148,14 +148,14 @@
               </div>
             </div>
 
-            <div data-ng-show="percent_complete_rounded">
+            <div data-ng-show="percentCompleteRounded">
               <div data-ng-show="status === 'Processing'">
                 <i class="fa fa-spinner fa-spin"></i>
-                <strong><span data-ng-bind="percent_complete_rounded"></span>&#37; Completed</strong>
+                <strong><span data-ng-bind="percentCompleteRounded"></span>&#37; Completed</strong>
               </div>
               <div data-ng-show="error">
                 <i class="fa fa-spinner"></i>
-                <strong><span data-ng-bind="percent_complete_rounded"></span>&#37; completed, yet failed.</strong>
+                <strong><span data-ng-bind="percentCompleteRounded"></span>&#37; completed, yet failed.</strong>
               </div>
             </div>
 

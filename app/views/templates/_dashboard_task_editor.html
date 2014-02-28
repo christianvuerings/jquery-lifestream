@@ -8,8 +8,8 @@
       </div>
       <div class="medium-9 small-9 columns">
         <input
-          data-cc-focus-directive="add_edit_task.focusInput"
-          data-ng-model="add_edit_task.title" id="cc-widget-tasks-addtask-title-{{$parent.$id}}"
+          data-cc-focus-directive="addEditTask.focusInput"
+          data-ng-model="addEditTask.title" id="cc-widget-tasks-addtask-title-{{$parent.$id}}"
           type="text" placeholder="Enter your task title here" required aria-required="true" />
       </div>
     </div>
@@ -19,7 +19,7 @@
       </div>
       <div class="medium-7 small-7 columns cc-widget-tasks-date-input">
         <input type="text"
-          data-ng-model="add_edit_task.due_date"
+          data-ng-model="addEditTask.due_date"
           name="add_task_due_date"
           id="cc-widget-tasks-addtask-date-{{$parent.$id}}"
           placeholder="mm/dd/yyyy"
@@ -39,7 +39,7 @@
         <label for="cc-widget-tasks-addtask-note-{{$parent.$id}}">Notes:</label>
       </div>
       <div class="medium-9 small-9 columns">
-        <textarea data-ng-model="add_edit_task.notes" id="cc-widget-tasks-addtask-note-{{$parent.$id}}" rows="2" /></textarea>
+        <textarea data-ng-model="addEditTask.notes" id="cc-widget-tasks-addtask-note-{{$parent.$id}}" rows="2" /></textarea>
       </div>
     </div>
     <div class="row collapse" data-ng-show="!editorEnabled && addTaskPanelState.isProcessing">
@@ -47,12 +47,12 @@
         Task is being added...
       </div>
     </div>
-    <div class="row collapse" data-ng-show="editorEnabled && task.editor_is_processing">
+    <div class="row collapse" data-ng-show="editorEnabled && task.editorIsProcessing">
       <div class="medium-9 medium-offset-3 small-offset-3 small-9 columns">
         Task is being updated...
       </div>
     </div>
-    <div class="row collapse" data-ng-show="!addTaskPanelState.isProcessing || !task.editor_is_processing">
+    <div class="row collapse" data-ng-show="!addTaskPanelState.isProcessing || !task.editorIsProcessing">
       <div class="medium-9 medium-offset-3 small-offset-3 small-9 columns cc-widget-tasks-form-buttons">
         <button type="submit"
           data-ng-disabled="cc_widget_tasks_form.$invalid || addTaskPanelState.isProcessing"
@@ -64,7 +64,7 @@
         </button>
         <button class="cc-button" type="reset"
           data-ng-show="!editorEnabled"
-          data-ng-click="add_edit_task.title='';toggleAddTask()" />Cancel
+          data-ng-click="addEditTask.title='';toggleAddTask()" />Cancel
         </button>
         <button class="cc-button" type="button"
           data-ng-show="editorEnabled"

@@ -8,32 +8,32 @@
 
     /**
      * Get Textbooks for the selected course
-     * @param  {Object} selected_course Selected Course Object
+     * @param  {Object} selectedCourse Selected Course Object
      */
-    var getTextbooks = function(selected_course) {
+    var getTextbooks = function(selectedCourse) {
       var ccns = [];
 
-      for (var i = 0; i < selected_course.sections.length; i++) {
-        ccns[i] = selected_course.sections[i].ccn;
+      for (var i = 0; i < selectedCourse.sections.length; i++) {
+        ccns[i] = selectedCourse.sections[i].ccn;
       }
 
-      var course_info = {
+      var courseInfo = {
         'ccns[]': ccns,
         'slug': $scope.selected_semester.slug
       };
 
       $http.get('/api/my/textbooks_details', {
-        params: course_info
+        params: courseInfo
       }).success(function(data) {
         angular.extend($scope, data);
 
         if (data.books && data.books.has_books) {
-          $scope.all_sections_have_choices = true;
-          var book_details = data.books.book_details;
+          $scope.allSectionsHaveChoices = true;
+          var bookDetails = data.books.book_details;
 
-          for (var i = 0; i < book_details.length; i++) {
-            if (!book_details[i].has_choices) {
-              $scope.all_sections_have_choices = false;
+          for (var i = 0; i < bookDetails.length; i++) {
+            if (!bookDetails[i].has_choices) {
+              $scope.allSectionsHaveChoices = false;
               break;
             }
           }

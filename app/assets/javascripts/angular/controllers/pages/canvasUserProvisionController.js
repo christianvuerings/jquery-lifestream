@@ -13,19 +13,21 @@
       if (!$scope.userImportForm.$invalid) {
         $scope.displayImportResult = true;
         $scope.importProcessing = true;
-        $scope.is_loading = true;
+        $scope.isLoading = true;
 
-        var valid_list = list.join();
+        var validList = list.join();
 
         // send uid list to back-end for import
-        var import_request = {
+        var importRequest = {
           url: '/api/academics/canvas/user_provision/user_import.json',
           method: 'POST',
-          params: { user_ids: valid_list }
+          params: {
+            user_ids: validList
+          }
         };
 
-        $http(import_request).success(function(data) {
-          $scope.is_loading = false;
+        $http(importRequest).success(function(data) {
+          $scope.isLoading = false;
           $scope.importProcessing = false;
           angular.extend($scope, data);
         });
@@ -34,7 +36,7 @@
     };
 
     var checkListValidity = function(list) {
-      $scope.check_performed = true;
+      $scope.checkPerformed = true;
 
       // reset custom validationErrorKeys registered as valid
       $scope.userImportForm.uids.$setValidity('required', true);
@@ -46,7 +48,7 @@
         $scope.userImportForm.uids.$setValidity('required', false);
         return false;
       }
-      $scope.list_length = list.length;
+      $scope.listLength = list.length;
 
       // ensure less than 200 elements in list
       if (list.length > 200) {
@@ -54,11 +56,11 @@
       }
 
       // ensure all elements of list are numeric
-      var integer_regexp = /^\-?\d*$/;
-      $scope.invalid_values = [];
+      var integerRegex = /^\-?\d*$/;
+      $scope.invalidValues = [];
       for (var i = 0; i < list.length; i++) {
-        if (!integer_regexp.test(list[i])) {
-          $scope.invalid_values.push(list[i]);
+        if (!integerRegex.test(list[i])) {
+          $scope.invalidValues.push(list[i]);
           $scope.userImportForm.uids.$setValidity('ccNumericList', false);
         }
       }

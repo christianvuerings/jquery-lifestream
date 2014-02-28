@@ -7,8 +7,8 @@
   angular.module('calcentral.controllers').controller('TasksController', function(apiService, $filter, $http, $scope) {
 
     // Initial mode for Tasks view
-    $scope.current_task_mode = 'scheduled';
-    $scope.task_modes = ['scheduled', 'unscheduled', 'completed'];
+    $scope.currentTaskMode = 'scheduled';
+    $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
 
     var calculateCounts = function() {
       $scope.counts = {
@@ -19,7 +19,7 @@
     };
 
     var setCounts = function() {
-      var isScheduled = ($scope.current_task_mode === 'scheduled');
+      var isScheduled = ($scope.currentTaskMode === 'scheduled');
       $scope.counts.current = isScheduled ? $scope.counts.scheduled : $scope.counts.unscheduled;
       $scope.counts.opposite = isScheduled ? $scope.counts.unscheduled : $scope.counts.scheduled;
     };
@@ -43,7 +43,7 @@
       });
     };
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
+    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyTasks::Merged']) {
         $scope.getTasks();
       }
@@ -58,10 +58,6 @@
       }
     };
 
-    $scope.toggleFullTextNote = function(task) {
-      task.show_full_text = !task.show_full_text;
-    };
-
     /**
      * If completed, give task a completed date epoch *after* sending to
      * backend (and successful response) so model can reflect correct changes.
@@ -73,7 +69,7 @@
       toggleStatus(task);
 
       // Disable checkbox while processing.
-      task.editor_is_processing = true;
+      task.editorIsProcessing = true;
 
       if (changedTask.status === 'completed') {
         changedTask.completed_date = {
@@ -85,7 +81,7 @@
 
       apiService.analytics.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completed_date]);
       $http.post('/api/my/tasks', changedTask).success(function(data) {
-        task.editor_is_processing = false;
+        task.editorIsProcessing = false;
         angular.extend(task, data);
         $scope.updateTaskLists();
       }).error(function() {
@@ -112,14 +108,14 @@
     // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasks_mode) {
       apiService.analytics.trackEvent(['Tasks', 'Switch mode', tasks_mode]);
-      $scope.current_task_mode = tasks_mode;
+      $scope.currentTaskMode = tasks_mode;
       setCounts();
     };
 
     // Delete Google tasks
     $scope.deleteTask = function(task) {
-      task.is_deleting = true;
-      task.editor_is_processing = true;
+      task.isDeleting = true;
+      task.editorIsProcessing = true;
 
       // Payload for proxy
       var deltask = {

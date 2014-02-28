@@ -13,7 +13,7 @@
       $scope.editorEnabled = true;
       $scope.task.show = false; // Otherwise the form is on blue "show" background.
       // Shift the scope to match scope of the add_task form
-      $scope.add_edit_task = {
+      $scope.addEditTask = {
         'title': $scope.task.title,
         'due_date': $scope.task.due_date,
         'notes': $scope.task.notes
@@ -25,9 +25,9 @@
         var mm = ('0' + (d.getMonth() + 1)).slice(-2);
         var dd = ('0' + d.getDate()).slice(-2);
         var yyyy = d.getFullYear();
-        $scope.add_edit_task.due_date = mm + '/' + dd + '/' + yyyy;
+        $scope.addEditTask.due_date = mm + '/' + dd + '/' + yyyy;
       }
-      $scope.add_edit_task.focusInput = true;
+      $scope.addEditTask.focusInput = true;
     };
 
     $scope.disableEditor = function() {
@@ -50,18 +50,18 @@
 
     $scope.editTask = function(task) {
       var changedTask = angular.copy(task); // Start with a copy of the task (with ID, etc.) and override these props
-      changedTask.title = $scope.add_edit_task.title;
-      changedTask.notes = $scope.add_edit_task.notes;
+      changedTask.title = $scope.addEditTask.title;
+      changedTask.notes = $scope.addEditTask.notes;
 
       // Not all tasks have dates.
-      if ($scope.add_edit_task.due_date) {
+      if ($scope.addEditTask.due_date) {
         changedTask.due_date = {};
-        var newdatearr = $scope.add_edit_task.due_date.split(/[\/]/);
+        var newdatearr = $scope.addEditTask.due_date.split(/[\/]/);
         changedTask.due_date.date_time = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
       // If no date or date has been removed, also delete due_date sub-object
-      if (!$scope.add_edit_task.due_date) {
+      if (!$scope.addEditTask.due_date) {
         delete changedTask.due_date;
       }
 

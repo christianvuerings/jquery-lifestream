@@ -162,7 +162,7 @@
                   </select>
                 </div>
                 <div class="cc-select cc-left" data-ng-if="choice === 'term'">
-                  <select data-ng-model="search.transTerm" id="cc-page-myfinances-select-term" data-ng-options="t.value as t.label for t in myfinances.terms" data-ng-change="search_term = search.transTerm">
+                  <select data-ng-model="search.transTerm" id="cc-page-myfinances-select-term" data-ng-options="t.value as t.label for t in myfinances.terms" data-ng-change="searchTerm = search.transTerm">
                   </select>
                 </div>
                 <div class="cc-left" data-ng-show="choice === 'daterange'">
@@ -330,8 +330,8 @@
         </div>
       </div>
 
-      <div class="medium-12 columns" data-ng-if="myfinances_error.body" data-ng-cloak>
-        <p class="cc-widget-padding" data-ng-bind="myfinances_error.body"></p>
+      <div class="medium-12 columns" data-ng-if="myfinancesError.body" data-ng-cloak>
+        <p class="cc-widget-padding" data-ng-bind="myfinancesError.body"></p>
       </div>
 
     </div>

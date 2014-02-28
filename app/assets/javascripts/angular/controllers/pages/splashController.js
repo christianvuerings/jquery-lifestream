@@ -9,7 +9,7 @@
     apiService.util.setTitle('Home');
 
     $http.get('/api/blog/release_notes/latest').success(function(data) {
-      $scope.latest_release_note = data.entries[0];
+      $scope.latestReleaseNote = data.entries[0];
     });
 
   });
