@@ -60,4 +60,21 @@ describe "TextbooksProxy" do
       expect(feed[:book_unavailable_error]).to eq 'Textbook information for this course could not be found.'
     end
   end
+
+  it "should get data as json", :testext => true do
+    before { Rails.cache.should_receive(:write) }
+    @ccns = ["41575"]
+    @slug = "spring-2014"
+    feed = {}
+    proxy = TextbooksProxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
+    proxy_response = proxy.get_as_json
+    proxy_response.should_not be_nil
+    parsed_response = JSON.parse(proxy_response)
+    parsed_response.should_not be_nil
+    if proxy_response["status_code"] == 200
+      feed = proxy_response["books"]
+      feed.should_not be_nil
+    end
+  end
+
 end

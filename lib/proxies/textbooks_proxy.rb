@@ -77,6 +77,9 @@ class TextbooksProxy < BaseProxy
   end
 
   def request_internal(vcr_cassette)
+    unless Settings.features.textbooks
+      return {}
+    end
     required_books = []
     recommended_books = []
     optional_books = []

@@ -1,10 +1,11 @@
 class MyTextbooksController < ApplicationController
 
   def get_feed
-    ccns = params[:ccns]
-    slug = params[:slug]
     if session[:user_id]
-      render json: MyTextbooks.new(ccns: ccns, slug: slug).get_feed_as_json
+      ccns = params[:ccns]
+      slug = params[:slug]
+      proxy = TextbooksProxy.new({ccns: ccns, slug: slug})
+      render json: proxy.get_as_json
     else
       render json: {}.to_json
     end
