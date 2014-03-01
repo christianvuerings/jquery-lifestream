@@ -7,14 +7,14 @@ class CanvasRefreshAllCampusData < CanvasCsv
 
   def initialize(batch_or_incremental)
     super()
-    @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users.csv"
+    @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{batch_or_incremental}.csv"
     @term_to_memberships_csv_filename = {}
     @batch_or_incremental = batch_or_incremental
     term_ids = CanvasProxy.current_sis_term_ids
     term_ids.each do |term_id|
       # Prevent collisions between the SIS_ID code and the filesystem.
       sanitized_term_id = term_id.gsub(/[^a-z0-9\-.]+/i, '_')
-      csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{sanitized_term_id}-enrollments.csv"
+      csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{sanitized_term_id}-enrollments-#{batch_or_incremental}.csv"
       @term_to_memberships_csv_filename[term_id] = csv_filename
     end
   end
