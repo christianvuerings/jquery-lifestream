@@ -28,20 +28,7 @@ class MyAcademics::Semesters
         # If we have a transcript unit, it needs to trump the unit.
         transcript = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
         units = transcript[:transcript_unit] ? transcript[:transcript_unit] : course[:unit]
-
-        if (course[:cred_cd].present? && course[:cred_cd].strip == "PF") ||
-          (course[:pnp_flag].present? && course[:pnp_flag].strip == "Y" && course[:cred_cd].blank?)
-          # course specified P/NP option || Student specified P/NP option on a letter grade
-          grade_option = "P/NP"
-        elsif course[:pnp_flag].present? && course[:cred_cd].present? && course[:cred_cd].strip == "SU"
-          grade_option = "S/U"
-        elsif course[:pnp_flag].present? && course[:cred_cd].blank?
-          grade_option = "Letter"
-        else
-          Rails.logger.warn "#{self.class.name} - Course #{course[:course_code]} has unknown grading logic:
-            course[:cred_cd]: #{course[:cred_cd]}, course[:pnp_flag]: #{course[:pnp_flag]}"
-          grade_option = ''
-        end
+        grade_option = GradeOptions.grade_option_for_enrollment(course[:cred_cd], course[:pnp_flag])
 
         class_item = class_info(course).merge!({
           grade: transcript[:grade],

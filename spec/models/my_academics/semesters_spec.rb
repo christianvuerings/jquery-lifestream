@@ -96,8 +96,8 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       before(:each) do
         @oski_campus_courses.values.each do |semester|
           semester.each do |course|
-            course[:pnp_flag] = 'N'
-            course[:cred_cd] = 'PF'
+            course[:pnp_flag] = nil
+            course[:cred_cd] = 'PN'
           end
         end
         CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
@@ -167,7 +167,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
     context "badly formatted p/np fields on roster views" do
       before(:each) do
         @oski_campus_courses.values.each do |semester|
-          semester.each { |course| course[:pnp_flag] = nil }
+          semester.each { |course| course[:pnp_flag] = 'X' }
         end
         CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
       end
