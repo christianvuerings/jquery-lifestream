@@ -3,7 +3,7 @@ class CalLinkMembershipsProxy < CalLinkProxy
   include SafeJsonParser
 
   def get_memberships
-    self.class.smart_fetch_from_cache(@uid, "Remote server unreachable") do
+    self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
       request_internal
     end
   end

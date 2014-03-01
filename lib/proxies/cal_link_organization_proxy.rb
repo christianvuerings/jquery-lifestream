@@ -12,7 +12,7 @@ class CalLinkOrganizationProxy < CalLinkProxy
   end
 
   def get_organization
-    self.class.smart_fetch_from_cache(@org_id, "Remote server unreachable") do
+    self.class.smart_fetch_from_cache({id: @org_id, user_message_on_exception: "Remote server unreachable"}) do
       request_internal
     end
   end

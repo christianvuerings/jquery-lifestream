@@ -1,4 +1,4 @@
-class MyUpNext < MyMergedModel
+class MyUpNext < UserSpecificModel
   include DatedFeed
 
   attr_reader :begin_today, :next_day

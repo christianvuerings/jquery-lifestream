@@ -13,7 +13,7 @@ class MyfinaidProxy < BaseProxy
   end
 
   def get
-    self.class.smart_fetch_from_cache("#{@uid}-#{@term_year}", "Remote server unreachable") do
+    self.class.smart_fetch_from_cache({id: "#{@uid}-#{@term_year}", user_message_on_exception: "Remote server unreachable"}) do
       request_internal("myfinaid")
     end
   end

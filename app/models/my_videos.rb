@@ -1,4 +1,4 @@
-class MyVideos < MyMergedModel
+class MyVideos < AbstractModel
 
   def initialize(options={})
     if options[:playlist_title]
@@ -9,27 +9,26 @@ class MyVideos < MyMergedModel
         @playlist_title.gsub!('_slash_', '/')
       end
     end
+    super(@playlist_title, options)
   end
 
   def get_videos_as_json
     return {} unless Settings.features.videos
-    self.class.fetch_from_cache "json-#{@playlist_title}" do
-      playlist = get_playlist
-      if !playlist[:error_message].blank?
-        return playlist
-      end
-      get_youtube_videos(playlist[:playlist_id])
+    playlist = get_playlist
+    if !playlist[:error_message].blank?
+      return playlist
     end
+    get_youtube_videos(playlist[:playlist_id])
   end
 
   def get_playlist
     if @playlist_title
-      MyPlaylists.new(:playlist_title => @playlist_title).get_playlists_as_json
+      PlaylistsProxy.new({:playlist_title => @playlist_title}).get
     end
   end
 
   def get_youtube_videos(id)
-    MyYoutube.new(:playlist_id => id).get_videos_as_json
+    YoutubeProxy.new({:playlist_id => id}).get
   end
 
 end

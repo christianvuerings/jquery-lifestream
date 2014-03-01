@@ -221,7 +221,9 @@ cache:
     CalLinkMembershipsProxy: <%= 4.hours %>
     CalLinkOrganizationProxy: <%= 4.hours %>
 
-    MyTextbooks: <%= 24.hours %>
+    TextbooksProxy: <%= 24.hours %>
+    YoutubeProxy: <%= 24.hours %>
+    PlaylistsProxy: <%= 24.hours %>
 
 # Cache warmer settings
 cache_warmer:

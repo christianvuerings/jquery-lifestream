@@ -1,4 +1,4 @@
-class MyResearchGroups < MyMergedModel
+class MyResearchGroups < UserSpecificModel
   include ClassLogger
   extend Calcentral::Cacheable
 

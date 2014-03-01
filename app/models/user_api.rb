@@ -1,4 +1,4 @@
-class UserApi < MyMergedModel
+class UserApi < UserSpecificModel
   include ActiveRecordHelper
 
   def initialize(uid)

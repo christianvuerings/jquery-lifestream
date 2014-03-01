@@ -1,4 +1,4 @@
-class MyClasses::Merged  < MyMergedModel
+class MyClasses::Merged  < UserSpecificModel
 
   def get_feed_internal
     sites = []

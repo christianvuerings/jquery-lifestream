@@ -64,8 +64,11 @@ class TextbooksProxy < BaseProxy
   end
 
   def get_as_json
-    self.class.smart_fetch_from_cache("#{@ccn}-#{@slug}", "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.") do
-      get.to_json
+    self.class.smart_fetch_from_cache(
+      {id: "#{@ccn}-#{@slug}",
+       user_message_on_exception: "Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.",
+       jsonify: true}) do
+      get
     end
   end
 
@@ -74,6 +77,7 @@ class TextbooksProxy < BaseProxy
   end
 
   def request_internal(vcr_cassette)
+    return {} unless Settings.features.textbooks
     required_books = []
     recommended_books = []
     optional_books = []
@@ -84,7 +88,7 @@ class TextbooksProxy < BaseProxy
     @ccns.each do |ccn|
       path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
       url = "#{Settings.textbooks_proxy.base_url}#{path}"
-      logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
       response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
         HTTParty.get(
           url,
