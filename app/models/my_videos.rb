@@ -1,4 +1,4 @@
-class MyVideos < SingleSourceModel
+class MyVideos < AbstractModel
 
   def initialize(options={})
     if options[:playlist_title]
@@ -9,6 +9,7 @@ class MyVideos < SingleSourceModel
         @playlist_title.gsub!('_slash_', '/')
       end
     end
+    super(@playlist_title, options)
   end
 
   def get_videos_as_json
