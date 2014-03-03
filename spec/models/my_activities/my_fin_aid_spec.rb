@@ -47,6 +47,9 @@ describe MyActivities::MyFinAid do
       subject { MyActivities::MyFinAid.append!(oski_uid, @activities ||= []); @activities}
 
       it { should eq(["some activity"]) }
+      it "should not write to cache" do
+        Rails.cache.should_not_receive(:write)
+      end
     end
 
     context "4xx errors on remote proxy" do
@@ -56,6 +59,10 @@ describe MyActivities::MyFinAid do
       subject { MyActivities::MyFinAid.append!(oski_uid, @activities ||= []); @activities}
 
       it { should eq(["some activity"]) }
+      it "should not write to cache" do
+        Rails.cache.should_not_receive(:write)
+      end
+
     end
   end
 
@@ -64,6 +71,7 @@ describe MyActivities::MyFinAid do
       MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
       MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
       MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
+      Rails.cache.should_receive(:write).with("user/61889/MyActivities::MyFinAid", [anything])
     }
 
     subject do
@@ -123,30 +131,6 @@ describe MyActivities::MyFinAid do
 
     end
 
-    context "decoding status for document messages" do
-      it "should ignore documents with a status of W" do
-        status = 'W'
-        Rails.logger.should_receive(:info).once.with(/Ignore documents with \"#{status}\" status/)
-        lambda {
-          result = MyActivities::MyFinAid.decode_status('', status)
-          result.should be_nil
-        }.should_not raise_error
-      end
-    end
-
-    context "filtering document entries by date" do
-      it "should not include messages that are more than one year old" do
-        activities = []
-        feed = "<SSIDOC><TrackDocs><Document><Name>Selective Service Verification</Name><Date>2013-03-07</Date></Document><Document><Name>Free Application for Federal Student Aid (FAFSA)</Name><Date>2013-01-28</Date></Document></TrackDocs></SSIDOC>"
-        content = Nokogiri::XML(feed, &:strict)
-        documents = content.css("TrackDocs Document")
-        described_class.stub(:cutoff_date).and_return(Time.zone.parse("Wed, 27 Feb 2013 16:50:47 PST -08:00"))
-        Rails.logger.should_receive(:info).once.with(/Document is too old to be shown/)
-        described_class.append_documents!(documents, "2013-2014", activities)
-        activities.length.should == 1
-      end
-    end
-
     context "finaid activities" do
       it "should no longer have status messages appended to the title" do
         subject.each{ |entry|
@@ -182,6 +166,34 @@ describe MyActivities::MyFinAid do
 
       end
     end
+  end
+
+  context "helper methods" do
+
+    context "decoding status for document messages" do
+      it "should ignore documents with a status of W" do
+        status = 'W'
+        Rails.logger.should_receive(:info).once.with(/Ignore documents with \"#{status}\" status/)
+        lambda {
+          result = MyActivities::MyFinAid.decode_status('', status)
+          result.should be_nil
+        }.should_not raise_error
+      end
+    end
+
+    context "filtering document entries by date" do
+      it "should not include messages that are more than one year old" do
+        activities = []
+        feed = "<SSIDOC><TrackDocs><Document><Name>Selective Service Verification</Name><Date>2013-03-07</Date></Document><Document><Name>Free Application for Federal Student Aid (FAFSA)</Name><Date>2013-01-28</Date></Document></TrackDocs></SSIDOC>"
+        content = Nokogiri::XML(feed, &:strict)
+        documents = content.css("TrackDocs Document")
+        described_class.stub(:cutoff_date).and_return(Time.zone.parse("Wed, 27 Feb 2013 16:50:47 PST -08:00"))
+        Rails.logger.should_receive(:info).once.with(/Document is too old to be shown/)
+        described_class.append_documents!(documents, "2013-2014", activities)
+        activities.length.should == 1
+      end
+    end
+
   end
 
 end
