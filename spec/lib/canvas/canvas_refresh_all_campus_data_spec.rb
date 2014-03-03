@@ -13,10 +13,10 @@ describe CanvasRefreshAllCampusData do
 
 	it "establishes the csv import files" do
     expect(subject.users_csv_filename).to be_an_instance_of String
-    expect(subject.users_csv_filename).to eq "tmp/canvas/canvas-2014-01-01-users.csv"
+    expect(subject.users_csv_filename).to eq "tmp/canvas/canvas-2014-01-01-users-incremental.csv"
     expect(subject.term_to_memberships_csv_filename).to be_an_instance_of Hash
-    expect(subject.term_to_memberships_csv_filename['TERM:2013-D']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2013-D-enrollments.csv"
-    expect(subject.term_to_memberships_csv_filename['TERM:2014-B']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2014-B-enrollments.csv"
+    expect(subject.term_to_memberships_csv_filename['TERM:2013-D']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2013-D-enrollments-incremental.csv"
+    expect(subject.term_to_memberships_csv_filename['TERM:2014-B']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2014-B-enrollments-incremental.csv"
   end
 
   it "makes calls to each step of refresh in proper order" do
