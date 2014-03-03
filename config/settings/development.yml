@@ -1,6 +1,10 @@
 application:
   layer: "development"
 
+app_alerts_proxy:
+  fake: true
+  feed_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
+
 bearfacts_proxy:
   fake: true
 
@@ -75,3 +79,4 @@ features:
   telebears: true
   textbooks: true
   videos: true
+  app_alerts: true

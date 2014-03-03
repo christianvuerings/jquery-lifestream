@@ -18,26 +18,34 @@ class UserApiController < ApplicationController
 
   def mystatus
     ActiveRecordHelper.clear_stale_connections
+    status = {}
+
+    if Settings.features.app_alerts
+      alert_data = AppAlertsProxy.new.get_latest
+      status.merge!(:alert => alert_data) unless alert_data.nil?
+    end
+
     if session[:user_id]
       # wrap UserVisit.record_session inside a cache lookup so that we have to write UserVisit records less often.
       self.class.fetch_from_cache session[:user_id] do
         UserVisit.record session[:user_id]
         true
       end
-      user_data = UserApi.new(session[:user_id]).get_feed
-      render :json => {
-          :is_basic_auth_enabled => Settings.developer_auth.enabled,
-          :is_logged_in => true,
-          :features => Settings.features.marshal_dump,
-          :acting_as_uid => acting_as_uid
-      }.merge!(user_data).to_json
+      status.merge!({
+        :is_basic_auth_enabled => Settings.developer_auth.enabled,
+        :is_logged_in => true,
+        :features => Settings.features.marshal_dump,
+        :acting_as_uid => acting_as_uid
+      })
+      status.merge!(UserApi.new(session[:user_id]).get_feed)
     else
-      render :json => {
-          :is_basic_auth_enabled => Settings.developer_auth.enabled,
-          :is_logged_in => false,
-          :features => Settings.features.marshal_dump
-      }.to_json
+      status.merge!({
+        :is_basic_auth_enabled => Settings.developer_auth.enabled,
+        :is_logged_in => false,
+        :features => Settings.features.marshal_dump
+      })
     end
+    render :json => status.to_json
   end
 
   def record_first_login
