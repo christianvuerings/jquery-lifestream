@@ -71,7 +71,7 @@ describe MyActivities::MyFinAid do
       MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
       MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
       MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
-      Rails.cache.should_receive(:write).with("user/61889/MyActivities::MyFinAid", [anything])
+      Rails.cache.should_receive(:write)
     }
 
     subject do
