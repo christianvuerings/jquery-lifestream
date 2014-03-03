@@ -46,7 +46,7 @@ class BearfactsProxy < BaseProxy
         ).get
       }
       if response.status >= 400
-        raise Calcentral::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}")
+        raise Calcentral::ProxyError.new("Connection failed: #{response.status} #{response.body}; url = #{url}")
       end
 
       logger.debug "Remote server status #{response.status}, Body = #{response.body}"
