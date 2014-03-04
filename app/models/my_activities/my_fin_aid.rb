@@ -1,7 +1,23 @@
 class MyActivities::MyFinAid
   include DatedFeed, ClassLogger
+  extend Calcentral::Cacheable
 
   def self.append!(uid, activities)
+    finaid_activities = get_activities_from_cache(uid)
+    activities.concat(finaid_activities) if finaid_activities
+  end
+
+  private
+
+  def self.get_activities_from_cache(uid)
+    smart_fetch_from_cache({id: uid, user_message_on_exception: "Remote server unreachable", return_nil_on_generic_error: true}) do
+      activities = []
+      append_activities!(uid, activities)
+      activities
+    end
+  end
+
+  def self.append_activities!(uid, activities)
     finaid_proxy_current  = MyfinaidProxy.new({ user_id: uid, term_year: current_term_year })
     finaid_proxy_next     = MyfinaidProxy.new({ user_id: uid, term_year: next_term_year })
 
@@ -24,7 +40,6 @@ class MyActivities::MyFinAid
     end
   end
 
-  private
   def self.append_documents!(documents, academic_year, activities)
     documents.each do |document|
       title = document.css("Name").text.strip

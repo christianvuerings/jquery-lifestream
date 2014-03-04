@@ -39,21 +39,4 @@ describe MyfinaidProxy do
     end
   end
 
-  context "dead remote proxy (5xx errors)" do
-    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed) }
-    after(:each) { WebMock.reset! }
-    subject { live_oski_finaid }
-
-    it { subject[:body].should eq("Remote server unreachable") }
-    it { subject[:status_code].should eq(503) }
-  end
-
-  context "4xx errors on remote proxy" do
-    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_return(:status => 403) }
-    after(:each) { WebMock.reset! }
-
-    subject { live_oski_finaid }
-    it { subject[:body].should eq("Connection failed: 403 ") }
-    it { subject[:status_code].should eq(500) }
-  end
 end

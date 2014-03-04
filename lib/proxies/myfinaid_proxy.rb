@@ -13,9 +13,7 @@ class MyfinaidProxy < BaseProxy
   end
 
   def get
-    self.class.smart_fetch_from_cache({id: "#{@uid}-#{@term_year}", user_message_on_exception: "Remote server unreachable"}) do
-      request_internal("myfinaid")
-    end
+    request_internal("myfinaid")
   end
 
   def request_internal(vcr_cassette, params = {})
@@ -50,7 +48,7 @@ class MyfinaidProxy < BaseProxy
         ).get
       }
       if response.status >= 400
-        raise Calcentral::ProxyError.new("Connection failed: #{response.status} #{response.body}")
+        raise Calcentral::ProxyError.new("Connection failed: #{response.status} #{response.body}", nil)
       end
       logger.debug "Remote server status #{response.status}, Body = #{response.body}"
       return {
