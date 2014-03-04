@@ -1,10 +1,10 @@
-(function(angular, calcentral_config, Raven) {
+(function(angular, calcentralConfig, Raven) {
 
   'use strict';
 
   angular.module('calcentral.services').service('errorService', [function() {
 
-    Raven.config(calcentral_config.sentry_url).install();
+    Raven.config(calcentralConfig.sentryUrl).install();
 
     var findElement = function(id) {
       var element = document.getElementById(id);
@@ -21,13 +21,13 @@
     var send = function(exception) {
       exception = exception.message || exception;
       var uid = findElement('cc-footer-uid');
-      var act_as_uid = findElement('cc-footer-actingas-uid');
+      var actAsUid = findElement('cc-footer-actingas-uid');
 
       Raven.captureMessage(exception, {
         tags: {
-          act_as_uid: act_as_uid,
-          app_version: calcentral_config.application_version,
-          host: calcentral_config.client_hostname,
+          actAsUid: actAsUid,
+          appVersion: calcentralConfig.applicationVersion,
+          host: calcentralConfig.clientHostname,
           uid: uid
         }
       });
@@ -40,4 +40,4 @@
 
   }]);
 
-}(window.angular, window.calcentral_config, window.Raven));
+}(window.angular, window.calcentralConfig, window.Raven));

@@ -85,10 +85,10 @@ class ApplicationController < ActionController::Base
 
   def initialize_calcentral_config
     @calcentral_config = {
-      "application_version" => ServerRuntime.get_settings["versions"]["application"],
-      "client_hostname" => ServerRuntime.get_settings["hostname"],
-      "google_analytics_id" => Settings.google_analytics_id,
-      "sentry_url" => Settings.sentry_url
+      "applicationVersion" => ServerRuntime.get_settings["versions"]["application"],
+      "clientHostname" => ServerRuntime.get_settings["hostname"],
+      "googleAnalyticsId" => Settings.google_analytics_id,
+      "sentryUrl" => Settings.sentry_url
     }.to_json.html_safe
   end
 
