@@ -18,16 +18,35 @@
   "preferred_name": "Mr. Tom Jones",
   "has_google_access_token": false,
   "has_canvas_account": true,
-  "reg_status": {
-    "code": null,
-    "summary": null,
-    "explanation": null
+  "roles": {
+    "student": true,
+    "ex_student": false,
+    "faculty": false,
+    "staff": false,
+    "guest": false
   },
-  "reg_block": {
-    "available": false,
-    "needsAction": "false",
-    "active_blocks": 0
-  }
+  "student_info": {
+    "california_residency": {
+      "summary": "Non-Resident",
+      "explanation": "<a href=\"http://registrar.berkeley.edu/establish.html\">Establishing California residency</a>",
+      "needsAction": false
+    },
+    "reg_status": {
+      "code": "C",
+      "summary": "Registered",
+      "explanation": "You are officially registered for this term and are entitled to access campus services.",
+      "needsAction": false
+    },
+    "reg_block": {
+      "available": true,
+      "needsAction": false,
+      "active_blocks": 0
+    },
+    "has_student_history": true,
+    "has_instructor_history": false,
+    "has_academics_tab": true,
+    "has_financials_tab": true
+  },
   "first_login_at": "2012-12-11T10:52:40-08:00",
   "last_modified": {
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
@@ -36,5 +55,6 @@
       "date_time": "2013-11-08T13:47:20-08:00",
       "date_string": "11/08"
     }
-  }
+  },
+  "feed_name": "UserApi"
 }
