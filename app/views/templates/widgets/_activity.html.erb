@@ -35,7 +35,7 @@
               </div>
             </div>
           </div>
-          <div class="cc-widget-activities-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show && !activity.elements">
+          <div class="cc-widget-activities-text-margin" data-ng-show="activity.show && !activity.elements">
             <div class="cc-widget-activities-term-year" data-ng-if="activity.term_year">
               <strong>Academic Year:</strong> <span data-ng-bind="activity.term_year"></span>
             </div>
@@ -50,7 +50,7 @@
             <button class="cc-button" data-ng-if="api.user.profile.features.activity_to_task && api.user.profile.has_google_access_token"
                     data-ng-click="addTask(activity)">Make task</button>
           </div>
-          <div class="cc-widget-activities-sub-text-margin cc-widget-tasks-activities-more" data-ng-show="activity.show && activity.elements">
+          <div class="cc-widget-activities-sub-text-margin" data-ng-show="activity.show && activity.elements">
             <ul class="cc-widget-activities-sub-activity-list">
               <li data-ng-repeat="sub_activity in activity.elements" class="cc-widget-activities-sub-activity-container">
                 <div class="cc-widget-list-hover cc-widget-list-hover-notriangle"
