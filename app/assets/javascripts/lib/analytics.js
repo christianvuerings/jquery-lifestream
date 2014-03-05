@@ -1,5 +1,5 @@
 var _gaq = _gaq || [];
-_gaq = [['_setAccount', window.calcentral_config.google_analytics_id]];
+_gaq = [['_setAccount', window.calcentralConfig.googleAnalyticsId]];
 (function(d, t) {
   setTimeout(function() {
     var g = d.createElement(t),
