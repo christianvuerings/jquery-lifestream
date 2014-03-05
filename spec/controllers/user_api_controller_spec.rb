@@ -4,6 +4,8 @@ describe UserApiController do
 
   before do
     @user_id = rand(999999).to_s
+    @alert_ok = AppAlertsProxy.new({fake:true}).get_latest;
+    @alert_ko = AppAlertsProxy.new({fake:true}).stub(:get_latest).and_return(nil);
   end
 
   it "should not have a logged-in status" do
@@ -13,6 +15,8 @@ describe UserApiController do
     json_response["is_logged_in"].should == false
     json_response["uid"].should be_nil
     json_response["features"].should_not be_nil
+    json_response["alert"].should_not be_nil if(@alert_ok)
+    json_response["alert"].should be_nil if(@alert_ko)
   end
 
   it "should show status for a logged-in user" do
@@ -23,6 +27,8 @@ describe UserApiController do
     json_response["uid"].should == "238382"
     json_response["preferred_name"].should_not be_nil
     json_response["features"].should_not be_nil
+    json_response["alert"].should_not be_nil if(@alert_ok)
+    json_response["alert"].should be_nil if(@alert_ko)
     visit = UserVisit.where(:uid=>session[:user_id])[0]
     visit.last_visit_at.should_not be_nil
   end

@@ -25,6 +25,11 @@ cal_link_proxy:
 oauth2:
   encryption: "aes-128-cbc"
 
+
+app_alerts_proxy:
+  fake: true
+  feed_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
+
 features:
   act_as: true
   bearfacts: true
@@ -33,6 +38,7 @@ features:
   textbooks: true
   videos: true
   research: true
+  app_alerts: true
 
 cache:
   store: "memory"

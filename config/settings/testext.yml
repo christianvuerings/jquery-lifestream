@@ -26,6 +26,7 @@ features:
   textbooks: true
   videos: true
   research: true
+  app_alerts: true
 
 cache:
   store: "memory"

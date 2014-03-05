@@ -163,6 +163,10 @@ blog_latest_release_notes_feed_proxy:
   fake: false
   feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
 
+app_alerts_proxy:
+  fake: false
+  feed_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
+
 # Analytics settings ID
 # This will need to be different for every server (dev/qa/production)
 google_analytics_id: UA-XXXXXX-X
@@ -224,6 +228,7 @@ cache:
     TextbooksProxy: <%= 24.hours %>
     YoutubeProxy: <%= 24.hours %>
     PlaylistsProxy: <%= 24.hours %>
+    AppAlertsProxy: <%= 2.minutes %>
 
 # Cache warmer settings
 cache_warmer:
@@ -273,6 +278,7 @@ features:
   research: false
   textbooks: false
   videos: false
+  app_alerts: false
 
 oec:
   export_directory: 'tmp/oec'
