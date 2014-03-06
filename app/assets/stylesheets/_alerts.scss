@@ -1,0 +1,24 @@
+.cc-alerts-bar {
+  background: $cc-color-dark-blue;
+  color: $cc-color-white;
+  padding: 10px 15px;
+  width: 100%;
+
+  .cc-alerts-bar-more {
+    color: $cc-color-popover-icon;
+    margin-left: 10px;
+  }
+  .cc-alerts-bar-notification {
+    margin-left: 15px;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  @media #{$small-only} {
+    .cc-alerts-bar-notification {
+      clear: both;
+      display: block;
+      margin: 0;
+    }
+  }
+}

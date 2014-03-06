@@ -13,7 +13,8 @@
     data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
     id="cc-main-content"
     role="main">
-      <div data-ng-view></div>
+      <%= render 'templates/alerts' %>
+      <div class="cc-clearfix-container" data-ng-view></div>
     </div>
     <%= render 'templates/footer' %>
   </div>
