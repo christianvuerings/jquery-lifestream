@@ -39,8 +39,8 @@
     },
     "reg_block": {
       "available": true,
-      "needsAction": false,
-      "active_blocks": 0
+      "needsAction": true,
+      "active_blocks": 2
     },
     "has_student_history": true,
     "has_instructor_history": false,
