@@ -1,4 +1,5 @@
 class AppAlertsProxy < BaseProxy
+
   include DatedFeed
   require 'open-uri'
 
@@ -7,7 +8,11 @@ class AppAlertsProxy < BaseProxy
   end
 
   def get_latest
-    self.class.smart_fetch_from_cache({id: "global-alert", user_message_on_exception: "Remote server unreachable", return_nil_on_generic_error: true}) do
+    self.class.smart_fetch_from_cache({
+      id: "global-alert",
+      user_message_on_exception: "Alert server unreachable",
+      return_nil_on_generic_error: true,
+    }) do
       (get_alerts.nil?) ? nil : get_alerts.first
     end
   end
@@ -15,50 +20,48 @@ class AppAlertsProxy < BaseProxy
   private
 
   def get_alerts
-    result = []
-    begin
-      xml=fetch_xml_content
-      doc = Nokogiri::XML(xml, &:strict)
-      nodes = doc.css('node')
-      nodes.each do |node|
-        timestamp = node.css('PostDate').text.to_i
-        result << {
-          # title and teaser seem to always have the same value
-          title: node.css('Title').text,
-          teaser: node.css('Teaser').text,
-          url: node.css('Link').text,
-          timestamp: format_date(Time.zone.at(timestamp).to_datetime),
-        }
-      end
-    rescue Exception => e  # possible Nokogiri::XML::SyntaxError
-      logger.error("Error parsing XML data: #{e.inspect}")
+    results = []
+    xml = get_raw_xml
+    doc = Nokogiri::XML(xml, &:strict)
+    nodes = doc.css('node')
+    nodes.each do |node|
+      timestamp = node.css('PostDate').text.to_i
+      result = {
+        title: node.css('Title').text,
+        teaser: node.css('Teaser').text,
+        url: node.css('Link').text,
+        timestamp: format_date(Time.zone.at(timestamp).to_datetime),
+      }
+      next unless valid_result?(result)
+      results << result
     end
-    # to-do: sort the results by epoch unless feed can guarantee to sort alerts by PostDate in descending order
-    #result.sort_by { |k| k[:timestamp][:epoch] }.reverse
-    (result.empty?) ? nil : result
+    (results.empty?) ? nil : results
   end
 
-  def fetch_xml_content
+  def get_raw_xml
     logger.info "#{self.class.name} Fetching alerts from blog (fake=#{@fake}, cache expiration #{self.class.expires_in}"
     if @fake == true
-      begin
-        xml = File.read(get_fetch_url)
-      rescue Exception => e # possible exceptions ENOENT
-        logger.error("Unable to read fake data: #{e.inspect}")
-      end
+      xml = File.read(xml_source)
     else
-      begin
-        response = open(get_fetch_url)
-        xml = response.base_uri.read
-      rescue Exception => e  # possible exceptions SocketError
-        logger.error("Http error: #{e.inspect}")
-      end
-      return nil unless xml
+      xml = open(xml_source).base_uri.read
     end
-    xml
   end
 
-  def get_fetch_url
+  def xml_source
     url ||= (@fake) ? Rails.root.join('fixtures', 'xml', 'app_alerts_feed.xml').to_s : @settings.feed_url
+  end
+
+  def valid_result?(r=nil)
+    valid = true
+    valid = false unless r.is_a?(Hash)
+    [:title, :teaser, :url, :timestamp].each {|k|
+      if !r.key?(k) || r[k].empty?
+        valid = false
+        break
+      end
+    }
+    valid = false unless ((r[:timestamp].is_a?(Hash)  && r[:timestamp][:epoch] > 0))
+    logger.error( "Unexpected result - #{r.inspect}" ) unless valid
+    valid
   end
 end

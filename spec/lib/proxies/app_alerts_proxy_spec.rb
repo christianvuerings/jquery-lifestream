@@ -2,56 +2,40 @@ require 'spec_helper'
 
 describe AppAlertsProxy do
 
-  let!(:fake_proxy) { AppAlertsProxy.new({fake: true}) }
+  let(:fake_proxy) { AppAlertsProxy.new({fake: true}) }
+  let(:real_failing_proxy) { AppAlertsProxy.new({fake: false}) }
+  let(:bad_url) { 'http://alsdlksasgflasldsalfjsgj/snjlfdsalsfal/lsadfjfl.xml' }
+  let(:bad_file_path) { '/sajdljfsjaslaslsd/garbage/some.xml' }
+  let(:bad_xml) { '<xml><chicken>' }
+  let(:unexpected_xml) { '<xml><node><chicken>egg</chicken></node></xml>' }
 
   context "failures" do
-    before(:each){
-      @result = []
-    }
-    it "not finding fake xml feed should return nil and log rescued exceptions as errors" do
-      fake_proxy.stub(:get_fetch_url).and_return('/sajdljfsjaslaslsd/garbage/some.xml')
-      Rails.logger.should_receive(:error).once.with(/ENOENT.+No such file or directory/)
-      @result = fake_proxy.get_latest
-      @result.should be_nil
+    it "not finding fake xml feed on disk should return nil" do
+      fake_proxy.stub(:xml_source).and_return(bad_file_path)
+      fake_proxy.get_latest.should be_nil
     end
-    it "not finding real feed urls should return nil and log rescued exceptions as errors" do
-      failing_proxy = AppAlertsProxy.new({fake: false})
-      failing_proxy.stub(:get_fetch_url).and_return('http://alsdlksasgflasldsalfjsgj/snjlfdsalsfal/lsadfjfl.xml')
-      Rails.logger.should_receive(:error).once.with(/Http error/)
-      @result = failing_proxy.get_latest
-      @result.should be_nil
+    it "not finding real feed url should return nil" do
+      real_failing_proxy.stub(:xml_source).and_return(bad_url)
+      real_failing_proxy.get_latest.should be_nil
     end
-    it "parsing invalid xml should return nil and log and rescue exception as error" do
-      AppAlertsProxy.any_instance.stub(:fetch_xml_content).and_return("<xml><chicken>")
-      Rails.logger.should_receive(:error).once.with(/Error parsing XML data/)
-      @result = fake_proxy.get_latest
-      @result.should be_nil
-    end
-    it "parsing unexpected xml data structures should return empty hash values" do
-      AppAlertsProxy.any_instance.stub(:fetch_xml_content).and_return("<xml><node><thing_1>CalCentral Emergency Outage</thing_1><thing_2>1393620301</thing_2></node></xml>")
-      @result = fake_proxy.get_latest
-      [:title, :teaser, :url].each{|p| @result[p].present?.should be_false }
-      @result[:timestamp].class.should == Hash
-      @result[:timestamp][:epoch].should == 0
+    it "that receive unexpected xml data should return nil" do
+      fake_proxy.stub(:get_raw_xml).and_return(unexpected_xml)
+      fake_proxy.get_latest.should be_nil
     end
   end
 
-  context "successful" do
-    before(:each){
-      @result = nil
-    }
-    it "AppAlertsProxy.get_latest should have four fields with values present" do
+  context "successful when" do
+    it "AppAlertsProxy.get_latest returns four fields with values present" do
       alert = fake_proxy.get_latest
-      alert.select{|k,v| v.present? }.count.should == 4
-    end
-    it "AppAlertsProxy.get_latest should format and return the latest single well-formed feed message" do
-      alert = fake_proxy.get_latest
-      alert.class.should == Hash
+      alert.is_a?(Hash)
       alert.count.should == 4
+    end
+    it "AppAlertsProxy.get_latest formats and returns the latest single well-formed feed message" do
+      alert = fake_proxy.get_latest
       alert[:title].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
       alert[:teaser].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
       alert[:url].should == 'http://ets-dev.berkeley.edu/news/calcentral-scheduled-upgrade-test-announce-only'
-      alert[:timestamp].class.should == Hash
+      alert[:timestamp].is_a?(Hash).should be_true
       alert[:timestamp][:epoch].should == 1393257625
     end
   end
@@ -62,10 +46,43 @@ describe AppAlertsProxy do
       Rails.cache.should_receive(:write)
       alert = AppAlertsProxy.new({fake:true}).get_latest
     end
+    it "should not write to cache test" do
+      Rails.cache.clear
+      fake_proxy.stub(:xml_source).and_return(bad_file_path)
+      Rails.cache.should_not_receive(:write)
+      lambda{
+        alert = fake_proxy.get_latest
+      }.should_not raise_exception
+    end
     it "should not write to cache" do
       alert = fake_proxy.get_latest
       Rails.cache.should_not_receive(:write)
     end
   end
 
+  context "error handling" do
+    it "should raise an exception" do
+      fake_proxy.stub(:get_raw_xml).and_return(bad_xml);
+      lambda{
+        result = fake_proxy.get_alerts
+      }.should raise_exception
+    end
+    it "should log a Nokogiri syntax error message" do
+      fake_proxy.stub(:get_raw_xml).and_return(bad_xml);
+      Rails.logger.should_receive(:error).with(/Nokogiri\:\:XML\:\:SyntaxError/)
+      lambda{
+        result = fake_proxy.get_latest
+      }.should_not raise_exception
+    end
+    it "should log a no such file exception" do
+      Rails.logger.should_receive(:error).with(/ENOENT No such file or directory/)
+      fake_proxy.stub(:xml_source).and_return(bad_file_path)
+      fake_proxy.get_latest.should be_nil
+    end
+    it "should log a SocketError exception" do
+      Rails.logger.should_receive(:error).with(/SocketError/)
+      real_failing_proxy.stub(:xml_source).and_return(bad_url)
+      real_failing_proxy.get_latest.should be_nil
+    end
+  end
 end
