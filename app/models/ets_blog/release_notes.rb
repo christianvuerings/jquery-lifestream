@@ -1,4 +1,4 @@
-class BlogFeedProxy < BaseProxy
+class ReleaseNotes < BaseProxy
 
   def initialize(options = {})
     super(Settings.blog_latest_release_notes_feed_proxy, options)
