@@ -1,5 +1,5 @@
 module Bearfacts
-  class Schedule < BearfactsProxy
+  class Schedule < Proxy
 
     def get
       request("/student/#{lookup_student_id}/reg/classschedule", "classschedule")

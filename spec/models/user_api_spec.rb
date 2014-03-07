@@ -230,7 +230,7 @@ describe "UserApi" do
   context "valid regblocks" do
     let! (:oski_blocks_proxy) { Bearfacts::Regblocks.new({:user_id => "61889", :fake => true}) }
     before do
-      Bearfacts::BearfactsProxy.any_instance.stub(:lookup_student_id).and_return(11667051)
+      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
       Bearfacts::Regblocks.stub(:new).and_return(oski_blocks_proxy)
     end
 

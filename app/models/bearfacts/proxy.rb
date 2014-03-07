@@ -1,5 +1,5 @@
 module Bearfacts
-  class BearfactsProxy < BaseProxy
+  class Proxy < BaseProxy
 
     include ClassLogger
 

@@ -1,5 +1,5 @@
 module Bearfacts
-  class Exams < BearfactsProxy
+  class Exams < Proxy
 
     def get
       request("/student/#{lookup_student_id}/reg/finalexams", "finalexams")

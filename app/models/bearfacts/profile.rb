@@ -1,5 +1,5 @@
 module Bearfacts
-  class Profile < BearfactsProxy
+  class Profile < Proxy
 
     def get
       request("/student/#{lookup_student_id}", "profile")
