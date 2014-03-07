@@ -4,7 +4,7 @@ class MyAcademics::Exams
   include DatedFeed
 
   def merge(data = {})
-    proxy = BearfactsExamsProxy.new({:user_id => @uid})
+    proxy = Bearfacts::BearfactsExamsProxy.new({:user_id => @uid})
     feed = proxy.get
 
     #Bearfacts proxy will return nil on >= 400 errors.

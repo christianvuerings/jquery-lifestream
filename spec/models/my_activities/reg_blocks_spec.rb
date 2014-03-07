@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe MyActivities::RegBlocks do
   let!(:oski_uid) { "61889" }
-  let!(:oski_bearfacts_proxy) { BearfactsRegblocksProxy.new({:user_id => oski_uid, :fake => true}) }
+  let!(:oski_bearfacts_proxy) { Bearfacts::BearfactsRegblocksProxy.new({:user_id => oski_uid, :fake => true}) }
 
   let(:documented_types) { %w(alert message) }
 
@@ -10,7 +10,7 @@ describe MyActivities::RegBlocks do
   context "2xx response from bearfacts" do
     let(:oski_blocks) { MyRegBlocks.new(oski_uid) }
 
-    before(:each) { BearfactsRegblocksProxy.stub(:new).and_return(oski_bearfacts_proxy) }
+    before(:each) { Bearfacts::BearfactsRegblocksProxy.stub(:new).and_return(oski_bearfacts_proxy) }
 
     context "should get properly formatted registration blocks from fake Bearfacts" do
       subject do

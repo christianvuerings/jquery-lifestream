@@ -3,8 +3,8 @@ require "spec_helper"
 describe "MyAcademics::Regblocks" do
 
   it "should get properly formatted data from fake Bearfacts" do
-    oski_blocks_proxy = BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true})
-    BearfactsRegblocksProxy.stub(:new).and_return(oski_blocks_proxy)
+    oski_blocks_proxy = Bearfacts::BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true})
+    Bearfacts::BearfactsRegblocksProxy.stub(:new).and_return(oski_blocks_proxy)
 
     feed = {}
     MyAcademics::Regblocks.new("61889").merge(feed)
@@ -29,7 +29,7 @@ describe "MyAcademics::Regblocks" do
   end
 
   context "Offline BearfactsApi for regblocks" do
-    before { BearfactsRegblocksProxy.any_instance.stub(:get).and_return {} }
+    before { Bearfacts::BearfactsRegblocksProxy.any_instance.stub(:get).and_return {} }
 
     subject do
       feed = {}

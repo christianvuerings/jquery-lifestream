@@ -1,7 +1,9 @@
-class BearfactsExamsProxy < BearfactsProxy
+module Bearfacts
+  class BearfactsExamsProxy < BearfactsProxy
 
-  def get
-    request("/student/#{lookup_student_id}/reg/finalexams", "finalexams")
+    def get
+      request("/student/#{lookup_student_id}/reg/finalexams", "finalexams")
+    end
+
   end
-
 end

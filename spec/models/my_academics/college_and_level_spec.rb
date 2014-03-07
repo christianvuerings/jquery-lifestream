@@ -3,8 +3,8 @@ require "spec_helper"
 describe "MyAcademics::CollegeAndLevel" do
 
   it "should get properly formatted data from fake Bearfacts" do
-    oski_profile_proxy = BearfactsProfileProxy.new({:user_id => "61889", :fake => true})
-    BearfactsProfileProxy.stub(:new).and_return(oski_profile_proxy)
+    oski_profile_proxy = Bearfacts::BearfactsProfileProxy.new({:user_id => "61889", :fake => true})
+    Bearfacts::BearfactsProfileProxy.stub(:new).and_return(oski_profile_proxy)
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("61889").merge(feed)
@@ -23,8 +23,8 @@ describe "MyAcademics::CollegeAndLevel" do
   end
 
   it "should get test-300940's multiple college enrollments" do
-    tammi_proxy = BearfactsProfileProxy.new({:user_id => "300940", :fake => true})
-    BearfactsProfileProxy.stub(:new).and_return(tammi_proxy)
+    tammi_proxy = Bearfacts::BearfactsProfileProxy.new({:user_id => "300940", :fake => true})
+    Bearfacts::BearfactsProfileProxy.stub(:new).and_return(tammi_proxy)
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("300940").merge(feed)
@@ -40,8 +40,8 @@ describe "MyAcademics::CollegeAndLevel" do
   end
 
   it "should get get a concurrent enrollment triple major's multiple college enrollments" do
-    triple_proxy = BearfactsProfileProxy.new({:user_id => "212379", :fake => true})
-    BearfactsProfileProxy.stub(:new).and_return(triple_proxy)
+    triple_proxy = Bearfacts::BearfactsProfileProxy.new({:user_id => "212379", :fake => true})
+    Bearfacts::BearfactsProfileProxy.stub(:new).and_return(triple_proxy)
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("212379").merge(feed)
@@ -58,8 +58,8 @@ describe "MyAcademics::CollegeAndLevel" do
   end
 
   it "should get a double Law major correctly" do
-    double_proxy = BearfactsProfileProxy.new({:user_id => "212381", :fake => true})
-    BearfactsProfileProxy.stub(:new).and_return(double_proxy)
+    double_proxy = Bearfacts::BearfactsProfileProxy.new({:user_id => "212381", :fake => true})
+    Bearfacts::BearfactsProfileProxy.stub(:new).and_return(double_proxy)
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("212381").merge(feed)
@@ -76,7 +76,7 @@ describe "MyAcademics::CollegeAndLevel" do
   context "failing bearfacts proxy" do
     before(:each) do
       stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
-      BearfactsProfileProxy.new({:user_id => "212381", :fake => false})
+      Bearfacts::BearfactsProfileProxy.new({:user_id => "212381", :fake => false})
     end
     after(:each) { WebMock.reset! }
 

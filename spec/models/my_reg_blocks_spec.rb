@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe MyRegBlocks do
-  let! (:oski_blocks_proxy) { BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true}) }
+  let! (:oski_blocks_proxy) { Bearfacts::BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true}) }
 
   context "should return some regblocks for oski" do
-    before { BearfactsRegblocksProxy.stub(:new).and_return(oski_blocks_proxy) }
+    before { Bearfacts::BearfactsRegblocksProxy.stub(:new).and_return(oski_blocks_proxy) }
 
     subject { MyRegBlocks.new(61889).get_feed }
 
@@ -28,7 +28,7 @@ describe MyRegBlocks do
   context "failing bearfacts proxy" do
     before(:each) do
       stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
-      BearfactsRegblocksProxy.new({:user_id => "61889", :fake => false})
+      Bearfacts::BearfactsRegblocksProxy.new({:user_id => "61889", :fake => false})
     end
     after(:each) { WebMock.reset! }
 
