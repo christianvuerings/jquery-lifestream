@@ -228,7 +228,7 @@ cache:
     TextbooksProxy: <%= 24.hours %>
     YoutubeProxy: <%= 24.hours %>
     PlaylistsProxy: <%= 24.hours %>
-    AppAlertsProxy: <%= 2.minutes %>
+    EtsBlog::Alerts: <%= 2.minutes %>
 
 # Cache warmer settings
 cache_warmer:

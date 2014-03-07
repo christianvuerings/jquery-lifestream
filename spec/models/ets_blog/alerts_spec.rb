@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Alerts do
+describe EtsBlog::Alerts do
 
-  let(:fake_proxy) { Alerts.new({fake: true}) }
-  let(:real_failing_proxy) { Alerts.new({fake: false}) }
+  let(:fake_proxy) { EtsBlog::Alerts.new({fake: true}) }
+  let(:real_failing_proxy) { EtsBlog::Alerts.new({fake: false}) }
   let(:bad_url) { 'http://alsdlksasgflasldsalfjsgj/snjlfdsalsfal/lsadfjfl.xml' }
   let(:bad_file_path) { '/sajdljfsjaslaslsd/garbage/some.xml' }
   let(:bad_xml) { '<xml><chicken>' }
@@ -25,12 +25,12 @@ describe Alerts do
   end
 
   context "successful when" do
-    it "AppAlertsProxy.get_latest returns four fields with values present" do
+    it "Alerts.get_latest returns four fields with values present" do
       alert = fake_proxy.get_latest
       alert.is_a?(Hash)
       alert.count.should == 4
     end
-    it "AppAlertsProxy.get_latest formats and returns the latest single well-formed feed message" do
+    it "Alerts.get_latest formats and returns the latest single well-formed feed message" do
       alert = fake_proxy.get_latest
       alert[:title].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
       alert[:teaser].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
@@ -44,7 +44,7 @@ describe Alerts do
     it "should write to cache" do
       Rails.cache.clear
       Rails.cache.should_receive(:write)
-      alert = Alerts.new({fake:true}).get_latest
+      alert = EtsBlog::Alerts.new({fake:true}).get_latest
     end
     it "should not write to cache test" do
       Rails.cache.clear
