@@ -1,5 +1,5 @@
 module Bearfacts
-  class BearfactsTelebearsProxy < BearfactsProxy
+  class Telebears < BearfactsProxy
 
     def get
       request("/student/#{lookup_student_id}/reg/appointments", "telebears", {academicTerm: "FT"})

@@ -228,10 +228,10 @@ describe "UserApi" do
   end
 
   context "valid regblocks" do
-    let! (:oski_blocks_proxy) { Bearfacts::BearfactsRegblocksProxy.new({:user_id => "61889", :fake => true}) }
+    let! (:oski_blocks_proxy) { Bearfacts::Regblocks.new({:user_id => "61889", :fake => true}) }
     before do
       Bearfacts::BearfactsProxy.any_instance.stub(:lookup_student_id).and_return(11667051)
-      Bearfacts::BearfactsRegblocksProxy.stub(:new).and_return(oski_blocks_proxy)
+      Bearfacts::Regblocks.stub(:new).and_return(oski_blocks_proxy)
     end
 
     subject { UserApi.new("61889").get_feed[:student_info] }
@@ -253,7 +253,7 @@ describe "UserApi" do
   end
 
   context "invalid/offline regblock" do
-    before { Bearfacts::BearfactsRegblocksProxy.any_instance.stub(:get).and_return {} }
+    before { Bearfacts::Regblocks.any_instance.stub(:get).and_return {} }
 
     subject { UserApi.new("61889").get_feed[:student_info] }
     it "should have no active blocks" do
