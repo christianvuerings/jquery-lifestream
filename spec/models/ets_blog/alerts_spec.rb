@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe AppAlertsProxy do
+describe Alerts do
 
-  let(:fake_proxy) { AppAlertsProxy.new({fake: true}) }
-  let(:real_failing_proxy) { AppAlertsProxy.new({fake: false}) }
+  let(:fake_proxy) { Alerts.new({fake: true}) }
+  let(:real_failing_proxy) { Alerts.new({fake: false}) }
   let(:bad_url) { 'http://alsdlksasgflasldsalfjsgj/snjlfdsalsfal/lsadfjfl.xml' }
   let(:bad_file_path) { '/sajdljfsjaslaslsd/garbage/some.xml' }
   let(:bad_xml) { '<xml><chicken>' }
@@ -44,7 +44,7 @@ describe AppAlertsProxy do
     it "should write to cache" do
       Rails.cache.clear
       Rails.cache.should_receive(:write)
-      alert = AppAlertsProxy.new({fake:true}).get_latest
+      alert = Alerts.new({fake:true}).get_latest
     end
     it "should not write to cache test" do
       Rails.cache.clear

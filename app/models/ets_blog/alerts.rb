@@ -1,4 +1,4 @@
-class AppAlertsProxy < BaseProxy
+class Alerts < BaseProxy
 
   include DatedFeed
   require 'open-uri'
