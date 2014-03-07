@@ -1,12 +1,16 @@
 .cc-alerts-bar {
   background: $cc-color-dark-blue;
   color: $cc-color-white;
+  overflow: hidden;
   padding: 10px 15px;
   width: 100%;
 
   .cc-alerts-bar-more {
     color: $cc-color-popover-icon;
     margin-left: 10px;
+  }
+  .cc-alerts-bar-more-container {
+    text-align: right;
   }
   .cc-alerts-bar-notification {
     margin-left: 15px;

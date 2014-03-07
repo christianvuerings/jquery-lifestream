@@ -1,5 +1,5 @@
 <!-- Alerts -->
-<div class="cc-alerts-bar cc-right ng-cloak" data-ng-if="api.user.events.isAuthenticated && api.user.profile.alert.title">
+<div class="cc-alerts-bar ng-cloak" data-ng-if="api.user.events.isAuthenticated && api.user.profile.alert.title">
   <p class="cc-left">
     <strong>CalCentral Update</strong>
     <span class="cc-alerts-bar-notification">
@@ -7,7 +7,7 @@
       <span data-ng-bind="api.user.profile.alert.title"></span>
     </span>
   </p>
-  <p class="cc-right">
+  <p class="cc-right cc-alerts-bar-more-container">
     <a class="cc-alerts-bar-more" data-ng-href="{{api.user.profile.alert.url}}"><strong>Learn More</strong></a>
   </p>
 </div>
