@@ -1,4 +1,4 @@
-class CalLinkMembershipsProxy < CalLinkProxy
+class Memberships < CalLinkProxy
 
   include SafeJsonParser
 
