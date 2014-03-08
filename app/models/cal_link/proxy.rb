@@ -1,5 +1,5 @@
 module CalLink
-  class CalLinkProxy < BaseProxy
+  class Proxy < BaseProxy
     extend Proxies::EnableForActAs
 
     require 'securerandom'

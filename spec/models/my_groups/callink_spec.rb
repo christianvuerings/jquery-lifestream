@@ -16,7 +16,7 @@ describe MyGroups::Callink do
         expect(group[:id]).to be_present
         expect(group[:name]).to be_present
         expect(group[:site_url]).to be_present
-        expect(group[:emitter]).to eq(CalLink::CalLinkProxy::APP_ID)
+        expect(group[:emitter]).to eq(CalLink::Proxy::APP_ID)
       end
     end
     it 'filters out blacklisted groups' do
