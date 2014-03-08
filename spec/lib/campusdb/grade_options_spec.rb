@@ -3,11 +3,11 @@ require "spec_helper"
 describe GradeOptions do
   subject {GradeOptions.grade_option_for_enrollment(credit_code, pnp_flag)}
 
-  context 'when P/NP flag is null or N' do
-    [nil, 'N'].each do |pnp_cd|
+  [nil, '  ', 'N'].each do |pnp_cd|
+    context "when P/NP flag is '#{pnp_cd}'" do
       let(:pnp_flag) {pnp_cd}
       [nil, 'PF', 'SF', '2T', '3T', 'TT', 'PT', 'ST'].each do |cred_cd|
-        context "when #{cred_cd} credit code and #{pnp_cd.blank? ? 'nil' : pnp_cd} pnp_flag" do
+        context "when #{cred_cd} credit code" do
           let(:credit_code) {cred_cd}
           it {should eq 'Letter'}
         end
