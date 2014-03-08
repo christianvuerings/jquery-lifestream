@@ -1,4 +1,4 @@
-class CalLinkOrganizationProxy < CalLinkProxy
+class Organization < CalLinkProxy
 
   include SafeJsonParser
 

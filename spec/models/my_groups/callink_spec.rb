@@ -5,10 +5,10 @@ describe MyGroups::Callink do
 
   describe '#fetch' do
     let!(:fake_cal_link_proxy) do
-      CalLinkMembershipsProxy.new({fake: true})
+      Memberships.new({fake: true})
     end
     before {Settings.cal_link_proxy.stub(:fake).and_return(true)}
-    before {CalLinkMembershipsProxy.stub(:new).with(user_id: user_id).and_return(fake_cal_link_proxy)}
+    before {Memberships.stub(:new).with(user_id: user_id).and_return(fake_cal_link_proxy)}
     subject {MyGroups::Callink.new(user_id).fetch}
     its(:size) {should be > 0}
     it 'contains CalLink groups' do

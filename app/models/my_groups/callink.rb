@@ -4,7 +4,7 @@ class MyGroups::Callink
   def fetch
     response = []
     return response unless @uid.present?
-    membership_proxy = CalLinkMembershipsProxy.new({:user_id => @uid})
+    membership_proxy = Memberships.new({:user_id => @uid})
     cal_link_groups = membership_proxy.get_memberships
     return response unless cal_link_groups && cal_link_groups[:status_code] == 200
 
@@ -13,7 +13,7 @@ class MyGroups::Callink
       seen_orgs = Set.new
       cal_link_groups[:body]["items"].each do |group|
         if seen_orgs.add? group["organizationId"]
-          org = CalLinkOrganizationProxy.new({:org_id => group["organizationId"]}).get_organization
+          org = Organization.new({:org_id => group["organizationId"]}).get_organization
           next unless org && org[:status_code] == 200
           next unless filter_callink_organization!(org).present?
           organization = org[:body]

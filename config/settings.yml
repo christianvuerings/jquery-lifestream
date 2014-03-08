@@ -222,8 +222,8 @@ cache:
     MyBadges::GoogleDrive: <%= 10.minutes %>
     MyBadges::GoogleMail: <%= 4.minutes %>
 
-    CalLinkMembershipsProxy: <%= 4.hours %>
-    CalLinkOrganizationProxy: <%= 4.hours %>
+    CalLink::Memberships: <%= 4.hours %>
+    CalLink::Organization: <%= 4.hours %>
 
     TextbooksProxy: <%= 24.hours %>
     YoutubeProxy: <%= 24.hours %>
