@@ -1,5 +1,5 @@
 module CalLink
-  class Organization < CalLinkProxy
+  class Organization < Proxy
 
     include SafeJsonParser
 

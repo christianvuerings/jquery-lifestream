@@ -1,5 +1,5 @@
 module CalLink
-  class Memberships < CalLinkProxy
+  class Memberships < Proxy
 
     include SafeJsonParser
 

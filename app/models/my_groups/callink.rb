@@ -24,7 +24,7 @@ class MyGroups::Callink
           response.push({
             name: group["organizationName"],
             id: group["organizationId"].to_s,
-            emitter: CalLink::CalLinkProxy::APP_ID,
+            emitter: CalLink::Proxy::APP_ID,
             site_url: site_url
           })
         end
