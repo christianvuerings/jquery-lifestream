@@ -16,9 +16,9 @@ module GradeOptions
     credit_code.strip! if credit_code
     pnp_flag.strip! if pnp_flag
     case pnp_flag
-      when nil, 'N'
+      when nil, '', 'N'
         case credit_code
-          when nil, 'PF', 'SF', '2T', '3T', 'TT', 'PT', 'ST'
+          when nil, '', 'PF', 'SF', '2T', '3T', 'TT', 'PT', 'ST'
             'Letter'
           when 'PN'
             'P/NP'
@@ -31,7 +31,7 @@ module GradeOptions
         end
       when 'Y'
         case credit_code
-          when nil, 'PF', 'PN'
+          when nil, '', 'PF', 'PN'
             'P/NP'
           when 'SF', 'SU'
             'S/U'
@@ -39,7 +39,7 @@ module GradeOptions
             ''
         end
       else
-        logger.warn("Unknown PNP_FLAG #{credit_code}")
+        logger.warn("Unknown CRED_CD or PNP_FLAG: '#{credit_code}', '#{pnp_flag}' ")
         ''
     end
   end
