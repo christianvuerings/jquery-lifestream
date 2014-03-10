@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyVideos do
+describe Webcasts::MyVideos do
 
   let(:error_hash) do
     {:error_message => "Error"}
@@ -14,7 +14,7 @@ describe MyVideos do
 
     context "when playlist title has a _slash_" do
       it "should decode _slash_ to /" do
-        my_videos = MyVideos.new({:playlist_title => "Eve_slash_Wknd Masters in Bus. Adm. 236G, 11A - Fall 2013"})
+        my_videos = Webcasts::MyVideos.new({:playlist_title => "Eve_slash_Wknd Masters in Bus. Adm. 236G, 11A - Fall 2013"})
         expect(my_videos.instance_eval {@playlist_title}). to eq "Eve/Wknd Masters in Bus. Adm. 236G, 11A - Fall 2013"
       end
     end
@@ -22,7 +22,7 @@ describe MyVideos do
     context "when playlist title has no slash" do
       it "should do nothing to title" do
         title = "Computer Science 61A, 001 - Fall 2013"
-        my_videos = MyVideos.new({:playlist_title => title})
+        my_videos = Webcasts::MyVideos.new({:playlist_title => title})
         expect(my_videos.instance_eval {@playlist_title}). to eq title
       end
     end
