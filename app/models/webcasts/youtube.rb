@@ -1,4 +1,4 @@
-class YoutubeProxy < BaseProxy
+class Youtube < BaseProxy
 
   include ClassLogger, SafeJsonParser
 

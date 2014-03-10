@@ -23,12 +23,12 @@ class MyVideos < AbstractModel
 
   def get_playlist
     if @playlist_title
-      PlaylistsProxy.new({:playlist_title => @playlist_title}).get
+      Playlists.new({:playlist_title => @playlist_title}).get
     end
   end
 
   def get_youtube_videos(id)
-    YoutubeProxy.new({:playlist_id => id}).get
+    Youtube.new({:playlist_id => id}).get
   end
 
 end

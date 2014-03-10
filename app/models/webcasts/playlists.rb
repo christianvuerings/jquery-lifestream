@@ -1,4 +1,4 @@
-class PlaylistsProxy < BaseProxy
+class Playlists < BaseProxy
 
   include ClassLogger, SafeJsonParser
 
