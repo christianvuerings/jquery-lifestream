@@ -1,4 +1,4 @@
-class TextbooksProxy < BaseProxy
+class Proxy < BaseProxy
 
   include ClassLogger
 
