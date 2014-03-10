@@ -298,6 +298,11 @@
       }
     };
 
+    $scope.printPage = function() {
+      apiService.analytics.trackEvent(['Finances', 'Print']);
+      window.print();
+    };
+
     /**
      * Create JavaScript date object based on the input from the datepicker
      * @param  {String} date Date as a string input
