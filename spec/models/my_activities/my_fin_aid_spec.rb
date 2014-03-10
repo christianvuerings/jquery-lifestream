@@ -7,8 +7,8 @@ describe MyActivities::MyFinAid do
   let!(:this_term_year) { Settings.myfinaid_proxy.test_term_year }
   let!(:next_term_year) { "#{this_term_year.to_i+1}" }
 
-  let!(:fake_oski_finaid_current){ Proxy.new({user_id: oski_uid, term_year: this_term_year,  fake: true }) }
-  let!(:fake_oski_finaid_next){    Proxy.new({user_id: oski_uid, term_year: next_term_year,  fake: true }) }
+  let!(:fake_oski_finaid_current){ Finaid::Proxy.new({user_id: oski_uid, term_year: this_term_year,  fake: true }) }
+  let!(:fake_oski_finaid_next){    Finaid::Proxy.new({user_id: oski_uid, term_year: next_term_year,  fake: true }) }
 
   let(:documented_types) { %w(alert financial message info) }
 
@@ -22,8 +22,8 @@ describe MyActivities::MyFinAid do
       content.css('Response Message').text.strip.should == 'Success'
     end
     it "should have a non-successfull response code and message for registered test students" , :testext => true do
-      Proxy.any_instance.stub(:lookup_student_id).and_return('97450293475029347520394785')
-      proxy = Proxy.new({user_id: '300849', term_year: this_term_year })
+      Finaid::Proxy.any_instance.stub(:lookup_student_id).and_return('97450293475029347520394785')
+      proxy = Finaid::Proxy.new({user_id: '300849', term_year: this_term_year })
       feed = proxy.get.try(:[], :body)
       content = Nokogiri::XML(feed, &:strict)
       content.css('Response Code').text.should == 'B0023'
@@ -69,8 +69,8 @@ describe MyActivities::MyFinAid do
   context "2xx states" do
     before(:each) {
       MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
-      Proxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
-      Proxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
+      Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
+      Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
       Rails.cache.should_receive(:write)
     }
 
