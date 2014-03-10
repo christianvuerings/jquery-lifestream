@@ -1,3 +1,4 @@
+# TODO collapse this class into Bearfacts::Telebears
 class MyAcademics::Telebears
   include MyAcademics::AcademicsModule, ClassLogger, DatedFeed
 

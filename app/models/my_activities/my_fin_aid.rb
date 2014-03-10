@@ -1,3 +1,4 @@
+# TODO collapse this class into Finaid::Proxy
 class MyActivities::MyFinAid
   include DatedFeed, ClassLogger
   extend Calcentral::Cacheable
