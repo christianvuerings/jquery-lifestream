@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe "PlaylistsProxy" do
+describe Webcasts::Playlists do
 
-  subject { PlaylistsProxy.new({:playlist_title => "Biology 1A, 001 - Spring 2012"}) }
+  subject { Webcasts::Playlists.new({:playlist_title => "Biology 1A, 001 - Spring 2012"}) }
 
   context "normal return of real data", :testext => true do
     it "should return playlist id" do
