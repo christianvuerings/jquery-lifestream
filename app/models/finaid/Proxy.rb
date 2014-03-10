@@ -9,7 +9,7 @@ module Finaid
 
     def initialize(options = {})
       super(Settings.myfinaid_proxy, options)
-      raise ArgumentError, "MyfinaidProxy requires a term_year" unless options[:term_year].present?
+      raise ArgumentError, "Finaid::Proxy requires a term_year" unless options[:term_year].present?
       @term_year = options[:term_year].to_s
     end
 
