@@ -5,12 +5,26 @@ module Textbooks
 
     APP_ID = "textbooks"
 
+    def google_book(isbn)
+      google_book_url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+      google_response = ""
+      response = HTTParty.get(
+        google_book_url,
+        timeout: Settings.application.outgoing_http_timeout
+      )
+
+      if response["totalItems"] > 0
+        google_response = response["items"][0]["volumeInfo"]["infoLink"]
+      end
+
+      return google_response
+    end
+
     def ul_to_dict(ul)
       books = []
       amazon_url = "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords="
       chegg_url = "http://www.chegg.com/search/"
       oskicat_url = "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg="
-      googleplay_url = "https://play.google.com/store/search?q="
 
       if ul.length > 0
         book_list = ul.xpath('./li')
@@ -29,7 +43,7 @@ module Textbooks
             :amazon_link => amazon_url + isbn,
             :chegg_link => chegg_url + isbn,
             :oskicat_link => oskicat_url + isbn,
-            :googleplay_link => googleplay_url + isbn
+            :googlebook_link => google_book(isbn)
           }
           books.push(book_detail)
         end
