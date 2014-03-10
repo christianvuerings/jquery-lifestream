@@ -15,15 +15,15 @@
         <a class="radius cc-button cc-button-large" href="https://ets.berkeley.edu/calcentral">Learn More<span class="cc-visuallyhidden"> about the CalCentral releases</span></a>
       </div>
 
-      <div class="row collapse cc-page-splash-blog-panel" data-ng-if="latestReleaseNote.title">
+      <div class="row collapse cc-page-splash-blog-panel" data-ng-if="splashNote.title">
         <div class="medium-2 columns hide-for-small cc-page-splash-blog-date">
-          <p>{{latestReleaseNote.date}}</p>
+          <p>{{splashNote.date}}</p>
         </div>
         <div class="medium-10 columns small-12">
           <p class="cc-page-splash-blog-title">
-            <a data-ng-href="{{latestReleaseNote.link}}">{{latestReleaseNote.title}}</a>
+            <a data-ng-href="{{splashNote.link}}">{{splashNote.title}}</a>
           </p>
-          <p class="cc-page-splash-blog-summary" data-ng-bind-html="latestReleaseNote.snippet"></p>
+          <p class="cc-page-splash-blog-summary" data-ng-bind-html="splashNote.snippet"></p>
         </div>
       </div>
     </div>
