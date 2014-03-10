@@ -1,4 +1,4 @@
-class MyfinaidProxy < BaseProxy
+class Proxy < BaseProxy
 
   include ClassLogger
 

@@ -18,8 +18,8 @@ class MyActivities::MyFinAid
   end
 
   def self.append_activities!(uid, activities)
-    finaid_proxy_current  = MyfinaidProxy.new({ user_id: uid, term_year: current_term_year })
-    finaid_proxy_next     = MyfinaidProxy.new({ user_id: uid, term_year: next_term_year })
+    finaid_proxy_current  = Proxy.new({ user_id: uid, term_year: current_term_year })
+    finaid_proxy_next     = Proxy.new({ user_id: uid, term_year: next_term_year })
 
     return unless finaid_proxy_current.lookup_student_id.present?
 
