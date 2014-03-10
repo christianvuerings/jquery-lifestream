@@ -58,7 +58,7 @@ $cc-color-splash-blue-dark: #025A86;
   .cc-page-splash-container {
     margin: 0 auto;
     overflow: hidden;
-    padding-top: 20px;
+    padding-top: 10px;
     > .columns {
       @include cc-column-sameheight;
     }
@@ -66,6 +66,7 @@ $cc-color-splash-blue-dark: #025A86;
   .cc-page-splash-container-left {
     border-right: 2px solid $cc-color-widget-background;
     height: 100%;
+    padding-top: 10px;
   }
   .cc-page-splash-container-right {
     position: relative;
@@ -73,8 +74,18 @@ $cc-color-splash-blue-dark: #025A86;
   .cc-page-splash-container-right-images {
     max-height: 500px;
     overflow-y: auto;
+    padding-top: 15px;
     > div:last-child {
       padding-bottom: 100px;
+    }
+    &::before {
+      @include background(linear-gradient($cc-color-white, $cc-color-white-transparant));
+      top: 0;
+      content: " ";
+      height: 40px;
+      left: 0;
+      position: absolute;
+      width: 100%;
     }
     &::after {
       @include background(linear-gradient($cc-color-white-transparant, $cc-color-white));
