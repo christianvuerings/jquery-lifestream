@@ -12,7 +12,7 @@ module Calcentral
     {
       MyFinancials => :expire,
       MyRegBlocks => :expire,
-      CalLinkMembershipsProxy => :expire,
+      CalLink::Memberships => :expire,
 
       CampusUserCoursesProxy => :expire,
 
