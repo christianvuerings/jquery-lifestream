@@ -3,7 +3,7 @@ class MyAcademics::Requirements
   include MyAcademics::AcademicsModule
 
   def merge(data)
-    profile_proxy = BearfactsProfileProxy.new({:user_id => @uid})
+    profile_proxy = Bearfacts::Profile.new({:user_id => @uid})
     profile_feed = profile_proxy.get
     return data if profile_feed.nil?
 

@@ -3,8 +3,8 @@ require "spec_helper"
 describe "MyAcademics::Requirements" do
 
   it "should get properly formatted data from fake Bearfacts" do
-    oski_profile_proxy = BearfactsProfileProxy.new({:user_id => "61889", :fake => true})
-    BearfactsProfileProxy.stub(:new).and_return(oski_profile_proxy)
+    oski_profile_proxy = Bearfacts::Profile.new({:user_id => "61889", :fake => true})
+    Bearfacts::Profile.stub(:new).and_return(oski_profile_proxy)
 
     feed = {}
     MyAcademics::Requirements.new("61889").merge(feed)
@@ -18,7 +18,7 @@ describe "MyAcademics::Requirements" do
   context "failing bearfacts proxy" do
     before(:each) do
       stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
-      BearfactsProfileProxy.new({:user_id => "61889", :fake => false})
+      Bearfacts::Profile.new({:user_id => "61889", :fake => false})
     end
     after(:each) { WebMock.reset! }
 

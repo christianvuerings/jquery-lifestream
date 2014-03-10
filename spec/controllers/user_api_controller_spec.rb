@@ -4,8 +4,8 @@ describe UserApiController do
 
   before do
     @user_id = rand(999999).to_s
-    @alert_ok = AppAlertsProxy.new({fake:true}).get_latest;
-    @alert_ko = AppAlertsProxy.new({fake:true}).stub(:get_latest).and_return(nil);
+    @alert_ok = EtsBlog::Alerts.new({fake:true}).get_latest;
+    @alert_ko = EtsBlog::Alerts.new({fake:true}).stub(:get_latest).and_return(nil);
   end
 
   it "should not have a logged-in status" do

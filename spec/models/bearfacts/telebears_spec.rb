@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe BearfactsTelebearsProxy do
-  let!(:fake_oski) { BearfactsTelebearsProxy.new({:user_id => "61889", :fake => true}).get }
-  let!(:live_oski) { BearfactsTelebearsProxy.new({:user_id => "61889", :fake => false}).get }
-  let!(:live_non_student){ BearfactsTelebearsProxy.new({user_id: '212377'}).get }
+describe Bearfacts::Telebears do
+  let!(:fake_oski) { Bearfacts::Telebears.new({:user_id => "61889", :fake => true}).get }
+  let!(:live_oski) { Bearfacts::Telebears.new({:user_id => "61889", :fake => false}).get }
+  let!(:live_non_student){ Bearfacts::Telebears.new({user_id: '212377'}).get }
 
   context "fake oski recordings are valid" do
     subject { fake_oski }

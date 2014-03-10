@@ -21,7 +21,7 @@ class UserApiController < ApplicationController
     status = {}
 
     if Settings.features.app_alerts
-      alert_data = AppAlertsProxy.new.get_latest
+      alert_data = EtsBlog::Alerts.new.get_latest
       status.merge!(:alert => alert_data) unless alert_data.nil?
     end
 

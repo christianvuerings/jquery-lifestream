@@ -5,7 +5,7 @@ class MyAcademics::Telebears
     data[:telebears] = {}
 
     return unless Settings.features.telebears
-    profile_feed = BearfactsTelebearsProxy.new({:user_id => @uid}).get
+    profile_feed = Bearfacts::Telebears.new({:user_id => @uid}).get
     return if profile_feed.nil?
 
     begin

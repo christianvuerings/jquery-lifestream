@@ -2,7 +2,7 @@ class MyRegBlocks < UserSpecificModel
   include DatedFeed
 
   def get_feed_internal
-    proxy = BearfactsRegblocksProxy.new({:user_id => @uid})
+    proxy = Bearfacts::Regblocks.new({:user_id => @uid})
     blocks_feed = proxy.get
 
     #Bearfacts proxy will return nil on >= 400 errors.
