@@ -5,7 +5,7 @@ class MyActivities::SakaiAnnouncements
     return activities unless Sakai::Proxy.access_granted?(uid)
     sakai_sites = sites.select {|s| s[:emitter] == Sakai::Proxy::APP_ID}
     sakai_sites.each do |site|
-      announcements = SakaiSiteAnnouncementsProxy.new(site_id: site[:id]).get_announcements(site[:groups])
+      announcements = SiteAnnouncements.new(site_id: site[:id]).get_announcements(site[:groups])
       announcements.each do |sakai_ann|
         announcement = {
           id: sakai_ann['message_id'],

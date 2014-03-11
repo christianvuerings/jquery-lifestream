@@ -1,5 +1,5 @@
 # encoding: utf-8
-class SakaiSiteAnnouncementsProxy < Sakai::Proxy
+class SiteAnnouncements < Sakai::Proxy
 
   def initialize(options = {})
     super(options)
