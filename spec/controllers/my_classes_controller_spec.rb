@@ -17,7 +17,7 @@ describe MyClassesController do
     MyClasses::Merged.any_instance.stub(:get_feed).and_return(
       [{course_code: "PLEO 22",
       id: "750027",
-      emitter: CanvasProxy::APP_NAME}])
+      emitter: Canvas::CanvasProxy::APP_NAME}])
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)

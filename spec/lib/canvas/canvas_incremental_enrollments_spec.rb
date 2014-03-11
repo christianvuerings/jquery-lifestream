@@ -53,7 +53,7 @@ describe CanvasIncrementalEnrollments do
   end
 
   before do
-    CanvasSectionEnrollmentsProxy.any_instance.stub(:list_enrollments).and_return(canvas_section_enrollments)
+    Canvas::CanvasSectionEnrollmentsProxy.any_instance.stub(:list_enrollments).and_return(canvas_section_enrollments)
   end
 
   describe '.canvas_section_enrollments' do
@@ -107,13 +107,13 @@ describe CanvasIncrementalEnrollments do
     let(:canvas_term_sections_csv_table) { CSV.parse(canvas_term_sections_csv_string, {headers: true}) }
 
     before do
-      CanvasSectionsReportProxy.any_instance.stub(:get_csv).and_return(canvas_term_sections_csv_table)
+      Canvas::CanvasSectionsReportProxy.any_instance.stub(:get_csv).and_return(canvas_term_sections_csv_table)
       CanvasIncrementalEnrollments.stub(:canvas_section_enrollments).and_return({:students => 'student_enrollments_array', :instructors => 'instructor_enrollments_array'})
     end
 
     it 'triggers updates for student and instructor enrollments for term specified' do
-      campus_section_1 = CanvasProxy.sis_section_id_to_ccn_and_term('SEC:2014-B-23722')
-      campus_section_2 = CanvasProxy.sis_section_id_to_ccn_and_term('SEC:2014-B-49613')
+      campus_section_1 = Canvas::CanvasProxy.sis_section_id_to_ccn_and_term('SEC:2014-B-23722')
+      campus_section_2 = Canvas::CanvasProxy.sis_section_id_to_ccn_and_term('SEC:2014-B-49613')
       subject.should_receive(:refresh_students_in_section).with(campus_section_1, "CRS:EDUC-140AC-2014-B", "SEC:2014-B-23722", 'student_enrollments_array', 'enrollments_csv', 'known_users', 'users_csv').ordered.and_return(nil)
       subject.should_receive(:refresh_teachers_in_section).with(campus_section_1, "CRS:EDUC-140AC-2014-B", "SEC:2014-B-23722", 'instructor_enrollments_array', 'enrollments_csv', 'known_users', 'users_csv').ordered.and_return(nil)
       subject.should_receive(:refresh_students_in_section).with(campus_section_2, "CRS:LAW-227-2014-B", "SEC:2014-B-49613", 'student_enrollments_array', 'enrollments_csv', 'known_users', 'users_csv').ordered.and_return(nil)
@@ -125,7 +125,7 @@ describe CanvasIncrementalEnrollments do
   describe "#refresh_students_in_section" do
     let(:course_id)       { "CRS:EDUC-140AC-2014-B" }
     let(:section_id)      { "SEC:2014-B-1050123" }
-    let(:campus_section)  { CanvasProxy.sis_section_id_to_ccn_and_term(section_id) }
+    let(:campus_section)  { Canvas::CanvasProxy.sis_section_id_to_ccn_and_term(section_id) }
     let(:campus_data_rows_enrolled_students) do
       [
         {"ldap_uid"=>"754320", "enroll_status"=>"E", "student_id"=>"21563987", "first_name"=>"Jeffrey", "last_name"=>"Pinkerton", "email_address"=>"jeffrey.pinkerton@berkeley.edu", "affiliations"=>"STUDENT-TYPE-REGISTERED"},
@@ -176,7 +176,7 @@ describe CanvasIncrementalEnrollments do
   describe "#refresh_teachers_in_section" do
     let(:course_id)       { "CRS:EDUC-140AC-2014-B" }
     let(:section_id)      { "SEC:2014-B-1050123" }
-    let(:campus_section)  { CanvasProxy.sis_section_id_to_ccn_and_term(section_id) }
+    let(:campus_section)  { Canvas::CanvasProxy.sis_section_id_to_ccn_and_term(section_id) }
     let(:campus_data_rows_enrolled_instructors) do
       [
         {"person_name"=>"Bryan Wagner", "ldap_uid"=>"754311", "instructor_func"=>"1", "first_name"=>"Bryan", "last_name"=>"Wagner", "email_address"=>"bwagner@berkeley.edu", "student_id"=>nil, "affiliations"=>"EMPLOYEE-TYPE-ACADEMIC"},

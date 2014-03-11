@@ -6,7 +6,7 @@ describe CanvasRefreshAllCampusData do
   subject { CanvasRefreshAllCampusData.new('incremental') }
 
   before do
-    CanvasProxy.stub(:current_sis_term_ids).and_return(current_sis_term_ids)
+    Canvas::CanvasProxy.stub(:current_sis_term_ids).and_return(current_sis_term_ids)
     frozen_moment_in_time = Time.at(1388563200).to_datetime
     DateTime.stub(:now).and_return(frozen_moment_in_time)
   end

@@ -209,11 +209,11 @@ cache:
     MyRegBlocks: 0
 
     CanvasMergedUserSites: <%= 15.minutes %>
-    CanvasUserCoursesProxy: <%= 30.minutes %>
-    CanvasGroupsProxy: <%= 30.minutes %>
-    CanvasUserActivityStreamProxy: <%= 10.minutes %>
-    CanvasTodoProxy: <%= 20.minutes %>
-    CanvasUpcomingEventsProxy: <%= 20.minutes %>
+    Canvas::CanvasUserCoursesProxy: <%= 30.minutes %>
+    Canvas::CanvasGroupsProxy: <%= 30.minutes %>
+    Canvas::CanvasUserActivityStreamProxy: <%= 10.minutes %>
+    Canvas::CanvasTodoProxy: <%= 20.minutes %>
+    Canvas::CanvasUpcomingEventsProxy: <%= 20.minutes %>
 
     SakaiMergedUserSites: <%= 30.minutes %>
     Sakai::SiteAnnouncements: <%= 30.minutes %>

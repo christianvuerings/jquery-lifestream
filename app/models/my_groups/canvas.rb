@@ -3,7 +3,7 @@ class MyGroups::Canvas
 
   def fetch
     sites = []
-    return sites unless CanvasProxy.access_granted?(@uid)
+    return sites unless Canvas::CanvasProxy.access_granted?(@uid)
     if (canvas_sites = CanvasMergedUserSites.new(@uid).get_feed)
       included_course_sites = []
       canvas_sites[:courses].each do |course_site|

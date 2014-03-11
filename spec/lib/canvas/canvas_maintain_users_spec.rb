@@ -209,7 +209,7 @@ describe CanvasMaintainUsers do
       fake_logins_proxy.should_receive(:change_sis_user_id).with(matching_login_id, new_sis_id).and_return(
           double().stub(:status).and_return(200)
       )
-      CanvasLoginsProxy.stub(:new).and_return(fake_logins_proxy)
+      Canvas::CanvasLoginsProxy.stub(:new).and_return(fake_logins_proxy)
       subject.change_sis_user_id(canvas_user_id, new_sis_id)
     end
   end

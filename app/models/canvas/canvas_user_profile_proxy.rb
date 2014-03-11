@@ -1,11 +1,13 @@
-class CanvasUserProfileProxy < CanvasProxy
+module Canvas
+  class Canvas::CanvasUserProfileProxy < CanvasProxy
 
-  def user_profile
-    request("users/sis_login_id:#{@uid}/profile", "_user_profile")
+    def user_profile
+      request("users/sis_login_id:#{@uid}/profile", "_user_profile")
+    end
+
+    def existence_check
+      true
+    end
+
   end
-
-  def existence_check
-    true
-  end
-
 end

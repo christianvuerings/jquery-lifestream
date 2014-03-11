@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe CanvasProxy do
+describe Canvas::CanvasProxy do
 
   before do
     @user_id = Settings.canvas_proxy.test_user_id
-    Oauth2Data.new_or_update(@user_id, CanvasProxy::APP_ID,
+    Oauth2Data.new_or_update(@user_id, Canvas::CanvasProxy::APP_ID,
                              Settings.canvas_proxy.test_user_access_token)
-    @client = CanvasProxy.new(:user_id => @user_id)
+    @client = Canvas::CanvasProxy.new(:user_id => @user_id)
   end
 
   after do
@@ -15,7 +15,7 @@ describe CanvasProxy do
   end
 
   it "should get real user activity feed using the Tammi account", :testext => true do
-    proxy = CanvasUserActivityStreamProxy.new(
+    proxy = Canvas::CanvasUserActivityStreamProxy.new(
       :user_id => @user_id
     )
     response = proxy.user_activity

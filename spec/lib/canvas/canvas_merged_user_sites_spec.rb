@@ -17,7 +17,7 @@ describe CanvasMergedUserSites do
     its([:site_url]) {should eq("#{Settings.canvas_proxy.url_root}/courses/#{canvas_course_id}")}
     its([:name]) {should eq(canvas_course['course_code'])}
     its([:short_description]) {should eq(canvas_course['name'])}
-    its([:emitter]) {should eq(CanvasProxy::APP_NAME)}
+    its([:emitter]) {should eq(Canvas::CanvasProxy::APP_NAME)}
   end
 
   describe '#merge_course_with_sections' do
@@ -63,7 +63,7 @@ describe CanvasMergedUserSites do
       its([:id]) {should eq(canvas_group_id.to_s)}
       its([:site_url]) {should eq("#{Settings.canvas_proxy.url_root}/groups/#{canvas_group_id}")}
       its([:name]) {should eq(canvas_group['name'])}
-      its([:emitter]) {should eq(CanvasProxy::APP_NAME)}
+      its([:emitter]) {should eq(Canvas::CanvasProxy::APP_NAME)}
     end
 
     let(:merged_sites) {{

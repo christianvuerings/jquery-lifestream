@@ -12,7 +12,7 @@ class CanvasUserProvision < CanvasCsv
     end
     user_definitions = accumulate_user_data(user_ids, [])
     users_csv_file = make_users_csv("#{csv_filename_prefix}-users.csv", user_definitions)
-    response = CanvasSisImportProxy.new.import_users(users_csv_file)
+    response = Canvas::CanvasSisImportProxy.new.import_users(users_csv_file)
     if response.blank?
       logger.error("Failure importing users from #{users_csv_file}")
       raise RuntimeError, "User import failed"

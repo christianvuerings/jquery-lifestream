@@ -10,7 +10,7 @@ class CanvasRefreshAllCampusData < CanvasCsv
     @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{batch_or_incremental}.csv"
     @term_to_memberships_csv_filename = {}
     @batch_or_incremental = batch_or_incremental
-    term_ids = CanvasProxy.current_sis_term_ids
+    term_ids = Canvas::CanvasProxy.current_sis_term_ids
     term_ids.each do |term_id|
       # Prevent collisions between the SIS_ID code and the filesystem.
       sanitized_term_id = term_id.gsub(/[^a-z0-9\-.]+/i, '_')
@@ -57,7 +57,7 @@ class CanvasRefreshAllCampusData < CanvasCsv
   # However, a batch update can only be done for one term. If we decide to limit Canvas refreshes
   # to a single term, then we should change this code.
   def import_csv_files
-    import_proxy = CanvasSisImportProxy.new
+    import_proxy = Canvas::CanvasSisImportProxy.new
     if @users_csv_filename.blank? || import_proxy.import_users(@users_csv_filename)
       logger.warn("User import succeeded")
       @term_to_memberships_csv_filename.each do |term_id, csv_filename|

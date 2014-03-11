@@ -16,13 +16,13 @@ module Calcentral
 
       CampusUserCoursesProxy => :expire,
 
-      CanvasProxy => :expire,
-      CanvasUserCoursesProxy => :expire,
-      CanvasGroupsProxy => :expire,
-      CanvasTodoProxy => :expire,
-      CanvasUpcomingEventsProxy => :expire,
-      CanvasUserActivityStreamProxy => :expire,
-      CanvasUserProfileProxy => :expire,
+      Canvas::CanvasProxy => :expire,
+      Canvas::CanvasUserCoursesProxy => :expire,
+      Canvas::CanvasGroupsProxy => :expire,
+      Canvas::CanvasTodoProxy => :expire,
+      Canvas::CanvasUpcomingEventsProxy => :expire,
+      Canvas::CanvasUserActivityStreamProxy => :expire,
+      Canvas::CanvasUserProfileProxy => :expire,
       CanvasMergedUserSites => :expire,
 
       MyBadges::GoogleCalendar => :expire,

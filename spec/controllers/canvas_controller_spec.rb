@@ -7,7 +7,7 @@ describe CanvasController do
     session[:user_id] = "12345"
     session[:canvas_user_id] = "4321321"
     session[:canvas_course_id] = "767330"
-    CanvasCourseUserProxy.stub(:is_course_admin?).and_return(true)
+    Canvas::CanvasCourseUserProxy.stub(:is_course_admin?).and_return(true)
   end
 
   context "when serving course user profile information" do

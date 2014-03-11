@@ -2,14 +2,14 @@ class MyActivities::Canvas
   include DatedFeed, SafeJsonParser
 
   def self.append!(uid, sites, activities)
-    return unless CanvasProxy.access_granted?(uid)
+    return unless Canvas::CanvasProxy.access_granted?(uid)
     canvas_results = get_feed(uid, sites)
     activities.concat(canvas_results)
   end
 
   def self.get_feed(uid, canvas_sites)
     activities = []
-    response = CanvasUserActivityStreamProxy.new(user_id: uid).user_activity
+    response = Canvas::CanvasUserActivityStreamProxy.new(user_id: uid).user_activity
     return activities unless (response && response.status == 200 && raw_feed = safe_json(response.body))
     raw_feed.each do |entry|
       if (formatted_entry = format_entry(uid, entry, canvas_sites))
@@ -39,7 +39,7 @@ class MyActivities::Canvas
     formatted_entry[:user_id] = uid
     formatted_entry[:title] = title
     formatted_entry.merge!(process_source(entry, canvas_sites))
-    formatted_entry[:emitter] = CanvasProxy::APP_NAME
+    formatted_entry[:emitter] = Canvas::CanvasProxy::APP_NAME
     formatted_entry[:url] = entry["html_url"]
     formatted_entry[:source_url] = entry["html_url"]
     formatted_entry[:summary] = process_message(entry)
@@ -149,7 +149,7 @@ class MyActivities::Canvas
       idx = canvas_sites.index do |site|
         site[:id] == entry['group_id'].to_s &&
           site[:site_type] == 'group' &&
-          site[:emitter] == CanvasProxy::APP_NAME
+          site[:emitter] == Canvas::CanvasProxy::APP_NAME
       end
       if idx
         site = canvas_sites[idx]
@@ -159,14 +159,14 @@ class MyActivities::Canvas
       idx = canvas_sites.index do |site|
         site[:id] == entry['course_id'].to_s &&
           site[:site_type] == 'course' &&
-          site[:emitter] == CanvasProxy::APP_NAME
+          site[:emitter] == Canvas::CanvasProxy::APP_NAME
       end
       if idx
         site = canvas_sites[idx]
         source = site[:name]
       end
     end
-    source ||= CanvasProxy::APP_NAME
+    source ||= Canvas::CanvasProxy::APP_NAME
     {source: source}
   end
 

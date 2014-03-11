@@ -2,7 +2,7 @@ class MyClasses::Canvas
   include MyClasses::ClassesModule
 
   def merge_sites(campus_courses, sites)
-    return unless CanvasProxy.access_granted?(@uid)
+    return unless Canvas::CanvasProxy.access_granted?(@uid)
     if (canvas_sites = CanvasMergedUserSites.new(@uid).get_feed)
       included_course_sites = {}
       canvas_sites[:courses].each do |course_site|

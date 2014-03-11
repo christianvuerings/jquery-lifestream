@@ -423,19 +423,19 @@ describe CanvasProvideCourseSite do
 
     it "raises exception if course site import fails" do
       @canvas_sis_import_proxy_stub.stub(:import_courses).and_return(nil)
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       expect { canvas_provide_course_site.import_course_site(@course_row) }.to raise_error(RuntimeError, "Course site could not be created.")
     end
 
     it "sets sections csv file path" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_course_site(@course_row)
       filepath = canvas_provide_course_site.instance_eval { @import_data['courses_csv_file'] }
       filepath.should == "/csv/filepath"
     end
 
     it "updates completed steps list" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_course_site(@course_row)
       canvas_provide_course_site.instance_eval { @completed_steps }.should == ["Imported course"]
     end
@@ -454,19 +454,19 @@ describe CanvasProvideCourseSite do
 
     it "raises exception if section imports fails" do
       @canvas_sis_import_proxy_stub.stub(:import_sections).and_return(nil)
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       expect { canvas_provide_course_site.import_sections(@section_rows) }.to raise_error(RuntimeError, "Course site was created without any sections or members! Section import failed.")
     end
 
     it "sets sections csv file path" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_sections(@section_rows)
       filepath = canvas_provide_course_site.instance_eval { @import_data['sections_csv_file'] }
       filepath.should == "/csv/filepath"
     end
 
     it "updates completed steps list" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_sections(@section_rows)
       canvas_provide_course_site.instance_eval { @completed_steps }.should == ["Imported sections"]
     end
@@ -482,19 +482,19 @@ describe CanvasProvideCourseSite do
 
     it "raises exception if user imports fails" do
       @canvas_sis_import_proxy_stub.stub(:import_users).and_return(nil)
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       expect { canvas_provide_course_site.import_users(@user_rows) }.to raise_error(RuntimeError, "Course site was created but members may be missing! User import failed.")
     end
 
     it "sets sections csv file path" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_users(@user_rows)
       filepath = canvas_provide_course_site.instance_eval { @import_data['users_csv_file'] }
       filepath.should == "/csv/filepath"
     end
 
     it "updates completed steps list" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_users(@user_rows)
       canvas_provide_course_site.instance_eval { @completed_steps }.should == ["Imported users"]
     end
@@ -513,19 +513,19 @@ describe CanvasProvideCourseSite do
 
     it "raises exception if enrollment imports fails" do
       @canvas_sis_import_proxy_stub.stub(:import_enrollments).and_return(nil)
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       expect { canvas_provide_course_site.import_enrollments(@enrollment_rows) }.to raise_error(RuntimeError, "Course site was created but members may not be enrolled! Enrollment import failed.")
     end
 
     it "sets sections csv file path" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_enrollments(@enrollment_rows)
       filepath = canvas_provide_course_site.instance_eval { @import_data['enrollments_csv_file'] }
       filepath.should == "/csv/filepath"
     end
 
     it "updates completed steps list" do
-      CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      Canvas::CanvasSisImportProxy.stub(:new).and_return(@canvas_sis_import_proxy_stub)
       canvas_provide_course_site.import_enrollments(@enrollment_rows)
       canvas_provide_course_site.instance_eval { @completed_steps }.should == ["Imported instructor enrollment"]
     end
@@ -736,8 +736,8 @@ describe CanvasProvideCourseSite do
     end
 
     it "should generate a Course import CSV row for the selected courses" do
-      CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
-      CanvasExistenceCheckProxy.any_instance.stub(:course_defined?).and_return(false)
+      Canvas::CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
+      Canvas::CanvasExistenceCheckProxy.any_instance.stub(:course_defined?).and_return(false)
       subaccount = worker.subaccount_for_department(@course_data[:dept])
       canvas_course = worker.generate_course_site_definition(@term_yr, @term_cd, subaccount, @course_data)
       canvas_course['course_id'].present?.should be_true
@@ -754,7 +754,7 @@ describe CanvasProvideCourseSite do
       stub_existence_check = double
       stub_existence_check.should_receive(:account_defined?).and_return(true)
       stub_existence_check.should_receive(:course_defined?).and_return(false)
-      CanvasExistenceCheckProxy.stub(:new).and_return(stub_existence_check)
+      Canvas::CanvasExistenceCheckProxy.stub(:new).and_return(stub_existence_check)
 
       subaccount = worker.subaccount_for_department(@course_data[:dept])
       first_canvas_course = worker.generate_course_site_definition(@term_yr, @term_cd, subaccount, @course_data)
@@ -857,13 +857,13 @@ describe CanvasProvideCourseSite do
                  :section_number => "015"}]}
       ]
       sis_course_id = 'CRS:ENGIN-7-2013-D-8383'
-      CanvasExistenceCheckProxy.any_instance.stub(:section_defined?).and_return(false)
+      Canvas::CanvasExistenceCheckProxy.any_instance.stub(:section_defined?).and_return(false)
       canvas_sections_list = worker.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
       canvas_sections_list.length.should == 3
       canvas_sections_list.each do |row|
         row['course_id'].should == sis_course_id
         row['status'].should == 'active'
-        campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(row['section_id'])
+        campus_section = Canvas::CanvasProxy.sis_section_id_to_ccn_and_term(row['section_id'])
         campus_section[:term_yr].should == term_yr
         campus_section[:term_cd].should == term_cd
         ccns.include?(campus_section[:ccn]).should be_true
@@ -896,7 +896,7 @@ describe CanvasProvideCourseSite do
       # RSpec does not currently redefine any_instance class stubs: http://stackoverflow.com/questions/18092601/rspec-any-instance-stub-does-not-restub-old-instances
       stub_existence_check = double
       stub_existence_check.should_receive(:section_defined?).and_return(false)
-      CanvasExistenceCheckProxy.stub(:new).and_return(stub_existence_check)
+      Canvas::CanvasExistenceCheckProxy.stub(:new).and_return(stub_existence_check)
 
       first_canvas_section = worker.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)[0]
       first_canvas_section_id = first_canvas_section['section_id']
@@ -909,7 +909,7 @@ describe CanvasProvideCourseSite do
       second_canvas_section_id = second_canvas_section['section_id']
       second_canvas_section_id.present?.should be_true
       second_canvas_section_id.should_not == first_canvas_section_id
-      campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(second_canvas_section_id)
+      campus_section = Canvas::CanvasProxy.sis_section_id_to_ccn_and_term(second_canvas_section_id)
       campus_section[:term_yr].should == term_yr
       campus_section[:term_cd].should == term_cd
       campus_section[:ccn].should == ccn
@@ -918,13 +918,13 @@ describe CanvasProvideCourseSite do
 
   describe "#subaccount_for_department" do
     it "should return the subaccount if it exists in Canvas" do
-      CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
+      Canvas::CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(true)
       result = canvas_provide_course_site.subaccount_for_department('COMPSCI')
       result.should == "ACCT:COMPSCI"
     end
 
     it "should raise exception if the subaccount does not exist in Canvas" do
-      CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(false)
+      Canvas::CanvasExistenceCheckProxy.any_instance.stub(:account_defined?).and_return(false)
       expect { canvas_provide_course_site.subaccount_for_department('COMPSCI') }.to raise_error(RuntimeError, 'Could not find bCourses account for department COMPSCI')
     end
   end

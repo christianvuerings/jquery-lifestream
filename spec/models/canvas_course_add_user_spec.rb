@@ -38,7 +38,7 @@ describe CanvasCourseAddUser do
   end
 
   before do
-    CanvasUserProfileProxy.any_instance.stub(:user_profile).and_return(canvas_user_profile_response)
+    Canvas::CanvasUserProfileProxy.any_instance.stub(:user_profile).and_return(canvas_user_profile_response)
     Canvas::CanvasCourseSectionsProxy.any_instance.stub(:sections_list).and_return(canvas_course_sections_list_response)
   end
 
@@ -103,7 +103,7 @@ describe CanvasCourseAddUser do
   context "when adding user to a course section" do
     before do
       CanvasUserProvision.any_instance.stub(:import_users).with(["260506"]).and_return(true)
-      CanvasSectionEnrollmentsProxy.any_instance.stub(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
+      Canvas::CanvasSectionEnrollmentsProxy.any_instance.stub(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
     end
 
     it "raises exception when ldap_user_id is not a string" do
@@ -125,7 +125,7 @@ describe CanvasCourseAddUser do
     end
 
     it "adds user to canvas course section using canvas user id" do
-      CanvasSectionEnrollmentsProxy.any_instance.should_receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
+      Canvas::CanvasSectionEnrollmentsProxy.any_instance.should_receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
       result = CanvasCourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
       expect(result).to be_true
     end

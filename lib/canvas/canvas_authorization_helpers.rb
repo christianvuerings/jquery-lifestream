@@ -12,7 +12,7 @@
 #   end
 #
 # The before_filter callbacks need to be defined in the correct order, so that they are added to the filter chain in the right order.
-# Filter methods such as #authenticate_canvas_course_user! set the @canvas_course_user variable in the controller with details provided by CanvasCourseUserProxy,
+# Filter methods such as #authenticate_canvas_course_user! set the @canvas_course_user variable in the controller with details provided by Canvas::CanvasCourseUserProxy,
 # which are used by #authorize_canvas_course_admin! to verify the admin status of the user within the Canvas course site.
 #
 # The filter methods provided raise subclasses of ClientError, such as when authentication or authorization fails. These are meant to be
@@ -29,7 +29,7 @@ module CanvasAuthorizationHelpers
   def authenticate_canvas_user!
     if session[:canvas_user_id].blank?
       ldap_user_id = session[:user_id]
-      canvas_user_profile_response = CanvasUserProfileProxy.new(user_id: ldap_user_id).user_profile
+      canvas_user_profile_response = Canvas::CanvasUserProfileProxy.new(user_id: ldap_user_id).user_profile
       if canvas_user_profile_response.status == 200
         canvas_user_profile = JSON.parse(canvas_user_profile_response.body)
         session[:canvas_user_id] = canvas_user_profile['id'].to_s
@@ -44,14 +44,14 @@ module CanvasAuthorizationHelpers
     raise UnauthorizedError, "No canvas course id" if session[:canvas_course_id].blank?
     @canvas_user_id = Integer(session[:canvas_user_id], 10)
     @canvas_course_id = Integer(session[:canvas_course_id], 10)
-    canvas_course_user_proxy = CanvasCourseUserProxy.new(:user_id => @canvas_user_id, :course_id => @canvas_course_id)
+    canvas_course_user_proxy = Canvas::CanvasCourseUserProxy.new(:user_id => @canvas_user_id, :course_id => @canvas_course_id)
     unless @canvas_course_user = canvas_course_user_proxy.course_user
       raise ForbiddenError, "Canvas user #{@canvas_user_id} is not a member of Course ID #{@canvas_course_id}"
     end
   end
 
   def authorize_canvas_course_admin!
-    raise ForbiddenError, "User is not a canvas course admin" unless CanvasCourseUserProxy.is_course_admin?(@canvas_course_user)
+    raise ForbiddenError, "User is not a canvas course admin" unless Canvas::CanvasCourseUserProxy.is_course_admin?(@canvas_course_user)
   end
 
   def handle_client_error(error)

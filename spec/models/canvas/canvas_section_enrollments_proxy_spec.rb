@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CanvasSectionEnrollmentsProxy do
+describe Canvas::CanvasSectionEnrollmentsProxy do
 
   let(:user_id)                       { 1234567 }
   let(:canvas_section_id)             { 1004321 }
@@ -21,15 +21,15 @@ describe CanvasSectionEnrollmentsProxy do
       "updated_at":"2014-02-03T21:34:38Z"
     }'
   }
-  subject                         { CanvasSectionEnrollmentsProxy.new(:section_id => canvas_section_id) }
+  subject                         { Canvas::CanvasSectionEnrollmentsProxy.new(:section_id => canvas_section_id) }
 
   context "when initializing" do
     it "raises exception if section id option not present" do
-      expect { CanvasSectionEnrollmentsProxy.new(:user_id => user_id) }.to raise_error(ArgumentError, "Section ID option required")
+      expect { Canvas::CanvasSectionEnrollmentsProxy.new(:user_id => user_id) }.to raise_error(ArgumentError, "Section ID option required")
     end
 
     it "raises exception if section id option is not an integer" do
-      expect { CanvasSectionEnrollmentsProxy.new(:user_id => user_id, :section_id => "#{canvas_section_id}") }.to raise_error(ArgumentError, "Section ID option must be a Fixnum")
+      expect { Canvas::CanvasSectionEnrollmentsProxy.new(:user_id => user_id, :section_id => "#{canvas_section_id}") }.to raise_error(ArgumentError, "Section ID option must be a Fixnum")
     end
   end
 
@@ -103,14 +103,14 @@ describe CanvasSectionEnrollmentsProxy do
     end
 
     it "uses cache by default" do
-      CanvasSectionEnrollmentsProxy.should_receive(:fetch_from_cache).and_return([])
+      Canvas::CanvasSectionEnrollmentsProxy.should_receive(:fetch_from_cache).and_return([])
       enrollments = subject.list_enrollments
       expect(enrollments).to be_an_instance_of Array
       expect(enrollments.count).to eq 0
     end
 
     it "bypasses cache when cache option is false" do
-      CanvasSectionEnrollmentsProxy.should_not_receive(:fetch_from_cache)
+      Canvas::CanvasSectionEnrollmentsProxy.should_not_receive(:fetch_from_cache)
       enrollments = subject.list_enrollments(:cache => false)
       expect(enrollments).to be_an_instance_of Array
       expect(enrollments.count).to eq 20
