@@ -27,12 +27,12 @@
       }).success(function(data) {
         angular.extend($scope, data);
 
-        if (data.books && data.books.has_books) {
+        if (data.books && data.books.hasBooks) {
           $scope.allSectionsHaveChoices = true;
-          var bookDetails = data.books.book_details;
+          var bookDetails = data.books.bookDetails;
 
           for (var i = 0; i < bookDetails.length; i++) {
-            if (!bookDetails[i].has_choices) {
+            if (!bookDetails[i].hasChoices) {
               $scope.allSectionsHaveChoices = false;
               break;
             }
@@ -40,7 +40,7 @@
         }
 
         if (data.status_code && data.status_code >= 400) {
-          $scope.textbook_error = data;
+          $scope.textbookError = data;
         }
       });
     };
