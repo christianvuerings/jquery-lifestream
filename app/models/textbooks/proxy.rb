@@ -33,17 +33,17 @@ module Textbooks
           isbn = bl.xpath('.//span[@id="materialISBN"]')[0].text.split(":")[1].strip
 
           book_detail = {
-            :has_choices => bl.xpath('.//h3[@class="material-group-title choice-title"]').length > 0 || bl.xpath('.//div[@class="choice-list-heading-sub"]').length > 0,
+            :hasChoices => bl.xpath('.//h3[@class="material-group-title choice-title"]').length > 0 || bl.xpath('.//div[@class="choice-list-heading-sub"]').length > 0,
             :title => bl.xpath('.//h3[@class="material-group-title"]')[0].text.split("\n")[0],
             :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src')[0].text,
             :isbn => isbn,
             :author => bl.xpath('.//span[@id="materialAuthor"]')[0].text.split(":")[1],
             :edition => bl.xpath('.//span[@id="materialEdition"]')[0].text.split(":")[1],
             :publisher => bl.xpath('.//span[@id="materialPublisher"]')[0].text.split(":")[1],
-            :amazon_link => amazon_url + isbn,
-            :chegg_link => chegg_url + isbn,
-            :oskicat_link => oskicat_url + isbn,
-            :googlebook_link => google_book(isbn)
+            :amazonLink => amazon_url + isbn,
+            :cheggLink => chegg_url + isbn,
+            :oskicatLink => oskicat_url + isbn,
+            :googlebookLink => google_book(isbn)
           }
           books.push(book_detail)
         end
@@ -52,7 +52,7 @@ module Textbooks
     end
 
     def has_choices(category_books)
-      category_books.any? { |i| i[:has_choices] == true }
+      category_books.any? { |i| i[:hasChoices] == true }
     end
 
     def get_term(slug)
@@ -98,7 +98,7 @@ module Textbooks
       optional_books = []
       status_code = ''
       url = ''
-      book_unavailable_error = ''
+      bookUnavailableError = ''
 
       @ccns.each do |ccn|
         path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
@@ -128,12 +128,12 @@ module Textbooks
         optional_books.push(ul_to_dict(optional_text_list))
         bookstore_error_section = text_books.xpath('//div[@id="efCourseErrorSection"]/h2')
         if bookstore_error_section.length > 0
-          book_unavailable_error = bookstore_error_section[0].text.gsub('*', '').strip
+          bookUnavailableError = bookstore_error_section[0].text.gsub('*', '').strip
         end
       end
 
-      book_unavailable_error =
-        case book_unavailable_error
+      bookUnavailableError =
+        case bookUnavailableError
           when 'No Information Received For This Course.'
             'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
           when 'We are unable to find the specified course.'
@@ -143,39 +143,39 @@ module Textbooks
           when 'No Books Required For This Course.'
             'There are no required books for this course.'
           else
-            book_unavailable_error
+            bookUnavailableError
         end
 
       book_response = {
-        :book_details => []
+        :bookDetails => []
       }
 
       if !required_books.flatten.blank?
-        book_response[:book_details].push({
+        book_response[:bookDetails].push({
                                             :type => "Required",
                                             :books => required_books.flatten,
-                                            :has_choices => has_choices(required_books.flatten)
+                                            :hasChoices => has_choices(required_books.flatten)
                                           })
       end
 
       if !recommended_books.flatten.blank?
-        book_response[:book_details].push({
+        book_response[:bookDetails].push({
                                             :type => "Recommended",
                                             :books => recommended_books.flatten,
-                                            :has_choices => has_choices(recommended_books.flatten)
+                                            :hasChoices => has_choices(recommended_books.flatten)
                                           })
       end
 
       if !optional_books.flatten.blank?
-        book_response[:book_details].push({
+        book_response[:bookDetails].push({
                                             :type => "Optional",
                                             :books => optional_books.flatten,
-                                            :has_choices => has_choices(optional_books.flatten)
+                                            :hasChoices => has_choices(optional_books.flatten)
                                           })
       end
 
-      book_response[:book_unavailable_error] = book_unavailable_error
-      book_response[:has_books] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
+      book_response[:bookUnavailableError] = bookUnavailableError
+      book_response[:hasBooks] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
       {
         books: book_response,
         status_code: status_code

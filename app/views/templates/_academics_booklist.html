@@ -18,12 +18,12 @@
           </div>
         </div>
         <div class="cc-academics-semester-books">
-          <div class="cc-widget-padding" data-ng-if="api.user.profile.features.textbooks && semesterBooks.has_books">
+          <div class="cc-widget-padding" data-ng-if="api.user.profile.features.textbooks && semesterBooks.hasBooks">
             <div data-ng-repeat="course_books in semesterBooks" class="cc-clearfix-container">
               <h3 class="cc-book-title" data-ng-bind="course_books.course"></h3>
               <div data-ng-repeat="books in course_books">
                 <div ng-include="'templates/textbook.html'"></div>
-                <div data-ng-if="books.has_books === false">
+                <div data-ng-if="books.hasBooks === false">
                   Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.
                 </div>
               </div>

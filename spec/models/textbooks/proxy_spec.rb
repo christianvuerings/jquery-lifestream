@@ -11,13 +11,13 @@ describe Textbooks::Proxy do
     if proxy_response[:status_code] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
-      feed[:has_books].should be_true
-      expect(feed[:book_details][0][:books][0][:title]).to eq 'Observing the User Experience'
-      feed[:book_details][0][:has_choices].should be_false
+      feed[:hasBooks].should be_true
+      expect(feed[:bookDetails][0][:books][0][:title]).to eq 'Observing the User Experience'
+      feed[:bookDetails][0][:hasChoices].should be_false
     end
   end
 
-  it "should return false for has_books when either ccn or slug is invalid", :testext => true do
+  it "should return false for hasBooks when either ccn or slug is invalid", :testext => true do
     @ccns = ['20764']
     @slug = 'fall-2011'
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
@@ -26,11 +26,11 @@ describe Textbooks::Proxy do
     if proxy_response[:status_code] == 200
       feed = proxy_response
       feed.should_not be_nil
-      feed[:has_books].should be_false
+      feed[:hasBooks].should be_false
     end
   end
 
-  it "should return true for has_choices when there are choices for a book", :testext => true do
+  it "should return true for hasChoices when there are choices for a book", :testext => true do
     @ccns = ['73899']
     @slug = 'spring-2014'
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
@@ -39,8 +39,8 @@ describe Textbooks::Proxy do
     if proxy_response[:status_code] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
-      feed[:has_books].should be_true
-      feed[:book_details][0][:has_choices].should be_true
+      feed[:hasBooks].should be_true
+      feed[:bookDetails][0][:hasChoices].should be_true
     end
   end
 
@@ -53,7 +53,7 @@ describe Textbooks::Proxy do
     if proxy_response[:status_code] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
-      expect(feed[:book_unavailable_error]).to eq 'Textbook information for this course could not be found.'
+      expect(feed[:bookUnavailableError]).to eq 'Textbook information for this course could not be found.'
     end
   end
 
