@@ -35,24 +35,24 @@ module MyTasks
                   "type" => "assignment",
                   "title" => result["assignment"]["name"],
                   "emitter" => CanvasProxy::APP_NAME,
-                  "link_url" => result["assignment"]["html_url"],
-                  "source_url" => result["assignment"]["html_url"],
+                  "linkUrl" => result["assignment"]["html_url"],
+                  "sourceUrl" => result["assignment"]["html_url"],
                   "status" => "inprogress"
                 }
                 if result["assignment"]["description"] != ""
                   formatted_entry["notes"] = ActionView::Base.full_sanitizer.sanitize(result["assignment"]["description"])
                 end
                 due_date = convert_date(result["assignment"]["due_at"])
-                format_date_into_entry!(due_date, formatted_entry, "due_date")
+                format_date_into_entry!(due_date, formatted_entry, "dueDate")
                 bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
                 formatted_entry["bucket"] = bucket
 
                 # All scheduled assignments come back from Canvas with a timestamp, even if none selected. Ferret out untimed assignments.
                 if due_date
                   if due_date.hour == 0 && due_date.minute == 0 && due_date.second == 0
-                    formatted_entry["due_date"]["has_time"] = false
+                    formatted_entry["dueDate"]["hasTime"] = false
                   else
-                    formatted_entry["due_date"]["has_time"] = true
+                    formatted_entry["dueDate"]["hasTime"] = true
                   end
                 end
 
@@ -82,15 +82,15 @@ module MyTasks
                   "type" => type,
                   "title" => result["title"],
                   "emitter" => CanvasProxy::APP_NAME,
-                  "link_url" => result["html_url"],
-                  "source_url" => result["html_url"],
+                  "linkUrl" => result["html_url"],
+                  "sourceUrl" => result["html_url"],
                   "status" => "inprogress"
                 }
                 due_date = convert_date(result["start_at"])
-                format_date_into_entry!(due_date, formatted_entry, "due_date")
+                format_date_into_entry!(due_date, formatted_entry, "dueDate")
                 bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
                 formatted_entry["bucket"] = bucket
-                Rails.logger.debug "#{self.class.name} Putting Canvas upcoming_events event with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
+                Rails.logger.debug "#{self.class.name} Putting Canvas upcoming_events event with dueDate #{formatted_entry["dueDate"]} in #{bucket} bucket: #{formatted_entry}"
                 @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
               end
             end

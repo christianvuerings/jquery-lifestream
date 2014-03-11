@@ -67,10 +67,10 @@ module MyTasks
 
     def clear_completed_tasks(params, task_list_id="@default")
       init
-      return {tasks_cleared: false} if @enabled_sources[params["emitter"]].blank?
+      return {tasksCleared: false} if @enabled_sources[params["emitter"]].blank?
       source = @enabled_sources[params["emitter"]][:source]
       response = source.clear_completed_tasks(task_list_id)
-      if response[:tasks_cleared] != false
+      if response[:tasksCleared] != false
         expire_cache
         source.expire_cache @uid
       end
@@ -99,7 +99,7 @@ module MyTasks
       filters = {
           "type" => Proc.new { |arg| !arg.blank? && arg.is_a?(String) },
           "emitter" => includes_whitelist_values?(@enabled_sources.keys),
-          "status" => includes_whitelist_values?(%w(needs_action completed))
+          "status" => includes_whitelist_values?(%w(needsAction completed))
       }
       validate_params(params, filters)
     end

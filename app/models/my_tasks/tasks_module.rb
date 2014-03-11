@@ -20,7 +20,7 @@ module MyTasks
     end
 
     def clear_completed_tasks(task_list_id="@default")
-      {tasks_cleared: false}
+      {tasksCleared: false}
     end
 
     def delete_task(task_list_id, task_id)

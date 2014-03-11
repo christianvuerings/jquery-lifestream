@@ -16,7 +16,7 @@
       $scope.updateTaskLists();
 
       // Go the the right tab when adding a task
-      if (data.due_date) {
+      if (data.dueDate) {
         $scope.switchTasksMode('scheduled');
       } else {
         $scope.switchTasksMode('unscheduled');

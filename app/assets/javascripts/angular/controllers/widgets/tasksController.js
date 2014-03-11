@@ -25,11 +25,11 @@
     };
 
     $scope.updateTaskLists = function() {
-      $scope.overdueTasks = $filter('orderBy')($scope.tasks.filter(filterOverdue), 'due_date.epoch');
-      $scope.dueTodayTasks = $filter('orderBy')($scope.tasks.filter(filterDueToday), 'due_date.epoch');
-      $scope.futureTasks = $filter('orderBy')($scope.tasks.filter(filterFuture), 'due_date.epoch');
-      $scope.unscheduledTasks = $filter('orderBy')($scope.tasks.filter(filterUnScheduled), 'updated_date.epoch', true);
-      $scope.completedTasks = $filter('orderBy')($scope.tasks.filter(filterCompleted), 'completed_date.epoch', true);
+      $scope.overdueTasks = $filter('orderBy')($scope.tasks.filter(filterOverdue), 'dueDate.epoch');
+      $scope.dueTodayTasks = $filter('orderBy')($scope.tasks.filter(filterDueToday), 'dueDate.epoch');
+      $scope.futureTasks = $filter('orderBy')($scope.tasks.filter(filterFuture), 'dueDate.epoch');
+      $scope.unscheduledTasks = $filter('orderBy')($scope.tasks.filter(filterUnScheduled), 'updatedDate.epoch', true);
+      $scope.completedTasks = $filter('orderBy')($scope.tasks.filter(filterCompleted), 'completedDate.epoch', true);
       calculateCounts();
     };
 
@@ -52,7 +52,7 @@
 
     var toggleStatus = function(task) {
       if (task.status === 'completed') {
-        task.status = 'needs_action';
+        task.status = 'needsAction';
       } else {
         task.status = 'completed';
       }
@@ -61,7 +61,7 @@
     /**
      * If completed, give task a completed date epoch *after* sending to
      * backend (and successful response) so model can reflect correct changes.
-     * Otherwise, remove completed_date prop after backend response.
+     * Otherwise, remove completedDate prop after backend response.
      */
     $scope.changeTaskState = function(task) {
       var changedTask = angular.copy(task);
@@ -72,20 +72,20 @@
       task.editorIsProcessing = true;
 
       if (changedTask.status === 'completed') {
-        changedTask.completed_date = {
+        changedTask.completedDate = {
           'epoch': (new Date()).getTime() / 1000
         };
       } else {
-        delete changedTask.completed_date;
+        delete changedTask.completedDate;
       }
 
-      apiService.analytics.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completed_date]);
+      apiService.analytics.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completedDate]);
       $http.post('/api/my/tasks', changedTask).success(function(data) {
         task.editorIsProcessing = false;
         angular.extend(task, data);
         $scope.updateTaskLists();
       }).error(function() {
-        apiService.analytics.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completed_date]);
+        apiService.analytics.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completedDate]);
         //Some error notification would be helpful.
       });
     };
@@ -95,7 +95,7 @@
       $http.post('/api/my/tasks/clear_completed', {
         emitter: 'Google'
       }).success(function(data) {
-        if (data.tasks_cleared) {
+        if (data.tasksCleared) {
           $scope.getTasks();
         }
       }).error(function() {
@@ -106,9 +106,9 @@
 
 
     // Switch mode for scheduled/unscheduled/completed tasks
-    $scope.switchTasksMode = function(tasks_mode) {
-      apiService.analytics.trackEvent(['Tasks', 'Switch mode', tasks_mode]);
-      $scope.currentTaskMode = tasks_mode;
+    $scope.switchTasksMode = function(tasksMode) {
+      apiService.analytics.trackEvent(['Tasks', 'Switch mode', tasksMode]);
+      $scope.currentTaskMode = tasksMode;
       setCounts();
     };
 
@@ -154,7 +154,7 @@
     };
 
     var filterUnScheduled = function(task) {
-      return (!task.due_date && task.status !== 'completed');
+      return (!task.dueDate && task.status !== 'completed');
     };
 
     var filterCompleted = function(task) {
