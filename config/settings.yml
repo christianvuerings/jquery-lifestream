@@ -216,7 +216,7 @@ cache:
     CanvasUpcomingEventsProxy: <%= 20.minutes %>
 
     SakaiMergedUserSites: <%= 30.minutes %>
-    SakaiSiteAnnouncementsProxy: <%= 30.minutes %>
+    Sakai::SiteAnnouncements: <%= 30.minutes %>
 
     MyBadges::GoogleCalendar: <%= 4.minutes %>
     MyBadges::GoogleDrive: <%= 10.minutes %>
