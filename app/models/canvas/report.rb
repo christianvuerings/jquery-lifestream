@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasReportProxy < CanvasProxy
+  class Report < Proxy
     require 'csv'
     include ClassLogger, SafeJsonParser
 
@@ -74,22 +74,22 @@ module Canvas
       sleep 5
       tries = 40
       begin
-        retriable(on: Canvas::CanvasReportProxy::ReportNotReadyException, tries: tries, interval: 20) do
+        retriable(on: Canvas::Report::ReportNotReadyException, tries: tries, interval: 20) do
           response = request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
             method: :get
           })
           unless (response && response.status == 200 && json = safe_json(response.body))
             logger.error "Report ID #{report_id} status missing or errored; will retry later"
-            raise Canvas::CanvasReportProxy::ReportNotReadyException
+            raise Canvas::Report::ReportNotReadyException
           end
           if ['created', 'running'].include?(json["status"])
             logger.info "Report ID #{report_id} exists but is not yet ready; will retry later"
-            raise Canvas::CanvasReportProxy::ReportNotReadyException
+            raise Canvas::Report::ReportNotReadyException
           else
             status = json
           end
         end
-      rescue Canvas::CanvasReportProxy::ReportNotReadyException => e
+      rescue Canvas::Report::ReportNotReadyException => e
         logger.error "Report ID #{report_id} not available after #{tries} tries, giving up"
       end
       logger.debug "Report ID #{report_id} status = #{status}"

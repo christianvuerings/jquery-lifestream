@@ -14,8 +14,8 @@ module MyTasks
       # Track assignment IDs to filter duplicates.
       tasks = []
       assignments = Set.new
-      fetch_canvas_todo!(Canvas::CanvasTodoProxy.new(:user_id => @uid), tasks, assignments)
-      fetch_canvas_upcoming_events!(Canvas::CanvasUpcomingEventsProxy.new(:user_id => @uid), tasks, assignments)
+      fetch_canvas_todo!(Canvas::Todo.new(:user_id => @uid), tasks, assignments)
+      fetch_canvas_upcoming_events!(Canvas::UpcomingEvents.new(:user_id => @uid), tasks, assignments)
       tasks
     end
 
@@ -34,7 +34,7 @@ module MyTasks
                 formatted_entry = {
                   "type" => "assignment",
                   "title" => result["assignment"]["name"],
-                  "emitter" => Canvas::CanvasProxy::APP_NAME,
+                  "emitter" => Canvas::Proxy::APP_NAME,
                   "linkUrl" => result["assignment"]["html_url"],
                   "sourceUrl" => result["assignment"]["html_url"],
                   "status" => "inprogress"
@@ -81,7 +81,7 @@ module MyTasks
                 formatted_entry = {
                   "type" => type,
                   "title" => result["title"],
-                  "emitter" => Canvas::CanvasProxy::APP_NAME,
+                  "emitter" => Canvas::Proxy::APP_NAME,
                   "linkUrl" => result["html_url"],
                   "sourceUrl" => result["html_url"],
                   "status" => "inprogress"

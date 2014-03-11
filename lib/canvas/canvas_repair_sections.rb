@@ -6,10 +6,10 @@ class CanvasRepairSections < CanvasCsv
   end
 
   def repair_sis_ids_for_term(term_id)
-    report_proxy = Canvas::CanvasSectionsReportProxy.new
+    report_proxy = Canvas::SectionsReport.new
     csv = report_proxy.get_csv(term_id)
     if (csv)
-      update_proxy = Canvas::CanvasSisImportProxy.new
+      update_proxy = Canvas::SisImport.new
       csv.each do |row|
         if (sis_section_id = row['section_id'])
           sis_course_id = row['course_id']

@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe Canvas::CanvasCourseSectionsProxy do
+describe Canvas::CourseSections do
 
   let(:canvas_course_id)    { 767330 }
-  subject                   { Canvas::CanvasCourseSectionsProxy.new(:course_id => canvas_course_id) }
+  subject                   { Canvas::CourseSections.new(:course_id => canvas_course_id) }
 
   it "provides sections list" do
     response = subject.sections_list

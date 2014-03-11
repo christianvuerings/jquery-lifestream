@@ -65,7 +65,7 @@ describe CanvasCourseProvision do
       UserAuth.new_or_update_test_user!(id)
     end
   }
-  before { Canvas::CanvasAdminsProxy.any_instance.stub(:admin_user?) {|uid| uid == canvas_admin_id} }
+  before { Canvas::Admins.any_instance.stub(:admin_user?) {|uid| uid == canvas_admin_id} }
   before { CanvasProvideCourseSite.stub(:new) do |uid|
     double(
       candidate_courses_list: (uid == instructor_id) ? teaching_semesters : [],

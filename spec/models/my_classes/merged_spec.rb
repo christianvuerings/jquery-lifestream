@@ -6,7 +6,7 @@ describe MyClasses::Merged do
   describe '#get_feed_internal' do
     context 'when no campus course associations or LMS access' do
       subject { MyClasses::Merged.new(user_id).get_feed }
-      before {Canvas::CanvasProxy.stub(:access_granted?).with(user_id).and_return(false)}
+      before {Canvas::Proxy.stub(:access_granted?).with(user_id).and_return(false)}
       before {Sakai::Proxy.stub(:access_granted?).with(user_id).and_return(false)}
       before {CampusUserCoursesProxy.stub(:new).and_return(double({get_all_campus_courses: {}}) )}
       its([:classes]) {should eq []}

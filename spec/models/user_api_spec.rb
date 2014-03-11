@@ -44,7 +44,7 @@ describe "UserApi" do
     user_data[:has_canvas_account].should_not be_nil
   end
   it "should return whether the user is registered with Canvas" do
-    Canvas::CanvasProxy.stub(:has_account?).and_return(true, false)
+    Canvas::Proxy.stub(:has_account?).and_return(true, false)
     user_data = UserApi.new(@random_id).get_feed
     user_data[:has_canvas_account].should be_true
     Rails.cache.clear
@@ -91,17 +91,17 @@ describe "UserApi" do
   end
   it "should say a user with a canvas account is ok to log in" do
     Settings.features.user_whitelist = true
-    Canvas::CanvasProxy.stub(:has_account?).and_return(true)
+    Canvas::Proxy.stub(:has_account?).and_return(true)
     UserApi.is_allowed_to_log_in?(@random_id).should == true
   end
   it "should say a user who hasn't logged in, has no canvas acct, and isn't in the whitelist cannot log in" do
     Settings.features.user_whitelist = true
-    Canvas::CanvasProxy.stub(:has_account?).and_return(false)
+    Canvas::Proxy.stub(:has_account?).and_return(false)
     UserApi.is_allowed_to_log_in?("0").should == false
   end
   it "should say a freshman undergrad can log in" do
     Settings.features.user_whitelist = true
-    Canvas::CanvasProxy.stub(:has_account?).and_return(false)
+    Canvas::Proxy.stub(:has_account?).and_return(false)
     CampusData.stub(:get_student_info).and_return(
       {
         "first_reg_term_cd" => "D",
@@ -111,7 +111,7 @@ describe "UserApi" do
   end
   it "should say a junior undergrad cannot log in" do
     Settings.features.user_whitelist = true
-    Canvas::CanvasProxy.stub(:has_account?).and_return(false)
+    Canvas::Proxy.stub(:has_account?).and_return(false)
     CampusData.stub(:get_student_info).and_return(
       {
         "first_reg_term_cd" => "D",
@@ -122,7 +122,7 @@ describe "UserApi" do
 
   it "grad students who used to be undergrads can log in", if: CampusData.test_data? do
     Settings.features.user_whitelist = true
-    Canvas::CanvasProxy.stub(:has_account?).and_return(false)
+    Canvas::Proxy.stub(:has_account?).and_return(false)
     UserApi.is_allowed_to_log_in?("212388").should be_true
     UserApi.is_allowed_to_log_in?("212389").should be_false
     UserApi.is_allowed_to_log_in?("212390").should be_false

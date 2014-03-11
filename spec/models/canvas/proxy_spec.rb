@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe Canvas::CanvasProxy do
+describe Canvas::Proxy do
 
   before do
     @user_id = Settings.canvas_proxy.test_user_id
-    @client = Canvas::CanvasProxy.new(:user_id => @user_id)
+    @client = Canvas::Proxy.new(:user_id => @user_id)
   end
 
   context "when converting sis section ids to term and ccn" do
@@ -18,14 +18,14 @@ describe Canvas::CanvasProxy do
   end
 
   it "should see an account list as admin" do
-    admin_client = Canvas::CanvasProxy.new
+    admin_client = Canvas::Proxy.new
     response = admin_client.request('accounts', '_admin')
     accounts = JSON.parse(response.body)
     accounts.size.should > 0
   end
 
-  it "should see the same account list as admin, initiating Canvas::CanvasProxy with a passed in token" do
-    admin_client = Canvas::CanvasProxy.new(:access_token => Settings.canvas_proxy.admin_access_token)
+  it "should see the same account list as admin, initiating Canvas::Proxy with a passed in token" do
+    admin_client = Canvas::Proxy.new(:access_token => Settings.canvas_proxy.admin_access_token)
     response = admin_client.request('accounts', '_admin')
     accounts = JSON.parse(response.body)
     accounts.size.should > 0
@@ -38,7 +38,7 @@ describe Canvas::CanvasProxy do
   end
 
   it "should get courses as known student", :testext => true do
-    client = Canvas::CanvasUserCoursesProxy.new(:user_id => @user_id)
+    client = Canvas::UserCourses.new(:user_id => @user_id)
     response = client.courses
     courses = JSON.parse(response.body)
     courses.size.should > 0
@@ -48,7 +48,7 @@ describe Canvas::CanvasProxy do
   end
 
   it "should get the upcoming_events feed for a known user", :testext => true do
-    client = Canvas::CanvasUpcomingEventsProxy.new(:user_id => @user_id)
+    client = Canvas::UpcomingEvents.new(:user_id => @user_id)
     response = client.upcoming_events
     events = JSON.parse(response.body)
     events.should_not be_nil
@@ -59,7 +59,7 @@ describe Canvas::CanvasProxy do
   end
 
   it "should get the todo feed for a known user", :testext => true do
-    client = Canvas::CanvasTodoProxy.new(:user_id => @user_id)
+    client = Canvas::Todo.new(:user_id => @user_id)
     response = client.todo
     tasks = JSON.parse(response.body)
     tasks[0]["assignment"]["name"].should_not be_nil
@@ -67,7 +67,7 @@ describe Canvas::CanvasProxy do
   end
 
   it "should get groups as known member", :testext => true do
-    client = Canvas::CanvasGroupsProxy.new(:user_id => @user_id)
+    client = Canvas::Groups.new(:user_id => @user_id)
     response = client.groups
     groups = JSON.parse(response.body)
     groups.size.should > 0
@@ -76,7 +76,7 @@ describe Canvas::CanvasProxy do
 
   it "should get user activity feed using the Tammi account" do
     begin
-      proxy = Canvas::CanvasUserActivityStreamProxy.new(:fake => true)
+      proxy = Canvas::UserActivityStream.new(:fake => true)
       response = proxy.user_activity
       user_activity = JSON.parse(response.body)
       user_activity.kind_of?(Array).should be_true
@@ -99,13 +99,13 @@ describe Canvas::CanvasProxy do
 
   it "should fetch all course students even if the Canvas feed is paged" do
     # The VCR recording has been edited to have four pages of results, only one student per page.
-    proxy = Canvas::CanvasCourseStudentsProxy.new(course_id: 767330, fake: true)
+    proxy = Canvas::CourseStudents.new(course_id: 767330, fake: true)
     students = proxy.full_students_list
     students.length.should == 4
   end
 
   it "should return nil if server is not available" do
-    client = Canvas::CanvasUserCoursesProxy.new(user_id: @user_id, fake: false)
+    client = Canvas::UserCourses.new(user_id: @user_id, fake: false)
     stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
     suppress_rails_logging {
       response = client.courses
@@ -115,7 +115,7 @@ describe Canvas::CanvasProxy do
   end
 
   it "should return nil if server returns error status" do
-    client = Canvas::CanvasUserCoursesProxy.new(user_id: @user_id, fake: false)
+    client = Canvas::UserCourses.new(user_id: @user_id, fake: false)
     stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_return(
         status: 503,
         body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
@@ -128,17 +128,17 @@ describe Canvas::CanvasProxy do
   end
 
   it "should find a registered user's profile" do
-    client = Canvas::CanvasUserProfileProxy.new(:user_id => @user_id)
+    client = Canvas::UserProfile.new(:user_id => @user_id)
     response = client.user_profile
     response.should_not be_nil
   end
 
   it "should get Sections for any known Course" do
-    client = Canvas::CanvasUserCoursesProxy.new(user_id: @user_id)
+    client = Canvas::UserCourses.new(user_id: @user_id)
     response = client.courses
     courses = JSON.parse(response.body)
     courses.each do |course|
-      sections_proxy = Canvas::CanvasCourseSectionsProxy.new(course_id: course['id'])
+      sections_proxy = Canvas::CourseSections.new(course_id: course['id'])
       sections_response = sections_proxy.sections_list
       sections = JSON.parse(sections_response.body)
       sections.should_not be_nil

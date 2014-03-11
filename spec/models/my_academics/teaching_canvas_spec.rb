@@ -28,7 +28,7 @@ describe MyAcademics::TeachingCanvas do
   end
 
   context 'when no Canvas account' do
-    before {Canvas::CanvasProxy.stub(:access_granted?).with(uid).and_return(false)}
+    before {Canvas::Proxy.stub(:access_granted?).with(uid).and_return(false)}
     it {should eq []}
   end
 
@@ -42,7 +42,7 @@ describe MyAcademics::TeachingCanvas do
         short_description: "A barrel of #{ccn} monkeys",
         term_yr: term_yr,
         term_cd: term_cd,
-        emitter: Canvas::CanvasProxy::APP_NAME
+        emitter: Canvas::Proxy::APP_NAME
       }
     end
     let(:group_id) {rand(99999).to_s}
@@ -51,10 +51,10 @@ describe MyAcademics::TeachingCanvas do
         id: group_id,
         name: "Group #{group_id}",
         site_url: "somewhere/#{group_id}",
-        emitter: Canvas::CanvasProxy::APP_NAME
+        emitter: Canvas::Proxy::APP_NAME
       }
     end
-    before {Canvas::CanvasProxy.stub(:access_granted?).with(uid).and_return(true)}
+    before {Canvas::Proxy.stub(:access_granted?).with(uid).and_return(true)}
     before {CanvasMergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
 
     context 'when Canvas course has an academic term' do
@@ -67,7 +67,7 @@ describe MyAcademics::TeachingCanvas do
         it 'points back to campus course' do
           site = subject.first
           expect(site[:id]).to eq canvas_site_id
-          expect(site[:emitter]).to eq Canvas::CanvasProxy::APP_NAME
+          expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq canvas_site_base[:name]
           expect(site[:sections].first[:ccn]).to eq ccn.to_s
           expect(site[:site_type]).to eq 'course'
@@ -84,7 +84,7 @@ describe MyAcademics::TeachingCanvas do
         it 'points back to campus course' do
           site = subject.first
           expect(site[:id]).to eq canvas_site_id
-          expect(site[:emitter]).to eq Canvas::CanvasProxy::APP_NAME
+          expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq canvas_site_base[:name]
           expect(site[:sections].first[:ccn]).to eq ccn
           expect(site[:site_type]).to eq 'course'
@@ -98,7 +98,7 @@ describe MyAcademics::TeachingCanvas do
         it 'is included with campus course' do
           site = subject.select{|s| s[:site_type] == 'group'}.first
           expect(site[:id]).to eq group_id
-          expect(site[:emitter]).to eq Canvas::CanvasProxy::APP_NAME
+          expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq group_base[:name]
           expect(site[:site_type]).to eq 'group'
           expect(site[:source]).to eq canvas_site_base[:name]

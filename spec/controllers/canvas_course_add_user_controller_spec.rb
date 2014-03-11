@@ -29,7 +29,7 @@ describe CanvasCourseAddUserController do
     session[:user_id] = "12345"
     session[:canvas_user_id] = "4321321"
     session[:canvas_course_id] = "767330"
-    Canvas::CanvasCourseUserProxy.stub(:is_course_admin?).and_return(true)
+    Canvas::CourseUser.stub(:is_course_admin?).and_return(true)
     CanvasCourseAddUser.stub(:course_sections_list).and_return(course_sections_list)
   end
 

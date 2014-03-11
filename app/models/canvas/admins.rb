@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasAdminsProxy < CanvasProxy
+  class Admins < Proxy
 
     include SafeJsonParser
 

@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe Canvas::CanvasCourseUsersProxy do
+describe Canvas::CourseUsers do
 
   let(:user_id)             { 4868640 }
   let(:canvas_course_id)    { 1164764 }
-  subject                   { Canvas::CanvasCourseUsersProxy.new(:user_id => user_id, :course_id => canvas_course_id) }
+  subject                   { Canvas::CourseUsers.new(:user_id => user_id, :course_id => canvas_course_id) }
 
   it "provides course users" do
     users = subject.course_users
@@ -25,14 +25,14 @@ describe Canvas::CanvasCourseUsersProxy do
   end
 
   it "uses cache by default" do
-    Canvas::CanvasCourseUsersProxy.should_receive(:fetch_from_cache).and_return([])
+    Canvas::CourseUsers.should_receive(:fetch_from_cache).and_return([])
     users = subject.course_users
     expect(users).to be_an_instance_of Array
     expect(users.count).to eq 0
   end
 
   it "bypasses cache when cache option is false" do
-    Canvas::CanvasCourseUsersProxy.should_not_receive(:fetch_from_cache)
+    Canvas::CourseUsers.should_not_receive(:fetch_from_cache)
     users = subject.course_users(:cache => false)
     expect(users).to be_an_instance_of Array
     expect(users.count).to eq 6

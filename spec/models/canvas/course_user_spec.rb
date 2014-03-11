@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Canvas::CanvasCourseUserProxy do
+describe Canvas::CourseUser do
 
   let(:user_id)         { 4321321 }
   let(:course_id)       { 767330 }
@@ -18,23 +18,23 @@ describe Canvas::CanvasCourseUserProxy do
     }
   end
 
-  subject               { Canvas::CanvasCourseUserProxy.new(:user_id => user_id, :course_id => course_id) }
+  subject               { Canvas::CourseUser.new(:user_id => user_id, :course_id => course_id) }
 
   context "when initializing" do
     it "raises exception if user id option not present" do
-      expect { Canvas::CanvasCourseUserProxy.new(:course_id => course_id) }.to raise_error(ArgumentError, "User ID option required")
+      expect { Canvas::CourseUser.new(:course_id => course_id) }.to raise_error(ArgumentError, "User ID option required")
     end
 
     it "raises exception if user id option is not an integer" do
-      expect { Canvas::CanvasCourseUserProxy.new(:user_id => "#{user_id}", :course_id => course_id) }.to raise_error(ArgumentError, "User ID option must be a Fixnum")
+      expect { Canvas::CourseUser.new(:user_id => "#{user_id}", :course_id => course_id) }.to raise_error(ArgumentError, "User ID option must be a Fixnum")
     end
 
     it "raises exception if course id option not present" do
-      expect { Canvas::CanvasCourseUserProxy.new(:user_id => user_id) }.to raise_error(ArgumentError, "Course ID option required")
+      expect { Canvas::CourseUser.new(:user_id => user_id) }.to raise_error(ArgumentError, "Course ID option required")
     end
 
     it "raises exception if course id option is not an integer" do
-      expect { Canvas::CanvasCourseUserProxy.new(:user_id => user_id, :course_id => "#{course_id}") }.to raise_error(ArgumentError, "Course ID option must be a Fixnum")
+      expect { Canvas::CourseUser.new(:user_id => user_id, :course_id => "#{course_id}") }.to raise_error(ArgumentError, "Course ID option must be a Fixnum")
     end
   end
 
@@ -58,13 +58,13 @@ describe Canvas::CanvasCourseUserProxy do
       end
 
       it "uses cache by default" do
-        Canvas::CanvasCourseUserProxy.should_receive(:fetch_from_cache).and_return({})
+        Canvas::CourseUser.should_receive(:fetch_from_cache).and_return({})
         user = subject.course_user
         expect(user).to be_an_instance_of Hash
       end
 
       it "bypasses cache when cache option is false" do
-        Canvas::CanvasCourseUserProxy.should_not_receive(:fetch_from_cache)
+        Canvas::CourseUser.should_not_receive(:fetch_from_cache)
         user = subject.course_user(:cache => false)
         expect(user).to be_an_instance_of Hash
         expect(user['id']).to eq 4321321
@@ -72,7 +72,7 @@ describe Canvas::CanvasCourseUserProxy do
     end
 
     context "if course user does not exist in canvas" do
-      before { Canvas::CanvasCourseUserProxy.any_instance.should_receive(:request_uncached).and_return(nil) }
+      before { Canvas::CourseUser.any_instance.should_receive(:request_uncached).and_return(nil) }
       it "returns nil" do
         user = subject.course_user
         expect(user).to be_nil

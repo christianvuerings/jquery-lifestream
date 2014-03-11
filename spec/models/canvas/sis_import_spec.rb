@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe Canvas::CanvasSisImportProxy do
+describe Canvas::SisImport do
 
-  let(:fake_proxy) { Canvas::CanvasSisImportProxy.new({fake: true}) }
+  let(:fake_proxy) { Canvas::SisImport.new({fake: true}) }
 
   it "should get the status of an existing import" do
     status = fake_proxy.import_status("5842657")
@@ -65,7 +65,7 @@ describe Canvas::CanvasSisImportProxy do
           expected_log_message = "SIS import partially succeeded; status: #{sis_import_status_json}"
           logger_double = double
           logger_double.should_receive(:warn).with(expected_log_message).and_return(nil)
-          Canvas::CanvasSisImportProxy.stub(:logger).and_return(logger_double)
+          Canvas::SisImport.stub(:logger).and_return(logger_double)
           result = fake_proxy.import_was_successful?(sis_import_status_json)
         end
 
@@ -85,7 +85,7 @@ describe Canvas::CanvasSisImportProxy do
         expected_log_message = "SIS import failed or incompletely processed; status: #{sis_import_status_json}"
         logger_double = double
         logger_double.should_receive(:error).with(expected_log_message).and_return(nil)
-        Canvas::CanvasSisImportProxy.stub(:logger).and_return(logger_double)
+        Canvas::SisImport.stub(:logger).and_return(logger_double)
         result = fake_proxy.import_was_successful?(sis_import_status_json)
       end
       it "returns false" do

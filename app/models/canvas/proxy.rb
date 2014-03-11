@@ -1,7 +1,7 @@
 module Canvas
   require 'signet/oauth_2/client'
 
-  class Canvas::CanvasProxy < BaseProxy
+  class Proxy < BaseProxy
     include ClassLogger, SafeJsonParser
     extend Proxies::EnableForActAs
 
@@ -76,7 +76,7 @@ module Canvas
     end
 
     def self.has_account?(user_id)
-      Settings.canvas_proxy.fake || (Canvas::CanvasUserProfileProxy.new(user_id: user_id).user_profile != nil)
+      Settings.canvas_proxy.fake || (Canvas::UserProfile.new(user_id: user_id).user_profile != nil)
     end
 
     def self.current_sis_term_ids

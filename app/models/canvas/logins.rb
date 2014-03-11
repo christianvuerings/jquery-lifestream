@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasLoginsProxy < CanvasProxy
+  class Logins < Proxy
     include ClassLogger
 
     # Get the account's Logins and find the appropriate one to change.

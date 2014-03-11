@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasCourseStudentsProxy < CanvasProxy
+  class CourseTeachers < Proxy
 
     include SafeJsonParser
 
@@ -12,20 +12,20 @@ module Canvas
       "global/#{self.name}/#{course_id}"
     end
 
-    def full_students_list
+    def full_teachers_list
       self.class.fetch_from_cache @course_id do
-        all_students = []
-        params = "enrollment_type=student&include[]=enrollments&per_page=30"
+        all_teachers = []
+        params = "enrollment_type=teacher&include[]=enrollments&per_page=30"
         while params do
           response = request_uncached(
             "courses/#{@course_id}/users?#{params}",
-            "_course_students"
+            "_course_teachers"
           )
-          break unless (response && response.status == 200 && students_list = safe_json(response.body))
-          all_students.concat(students_list)
+          break unless (response && response.status == 200 && teachers_list = safe_json(response.body))
+          all_teachers.concat(teachers_list)
           params = next_page_params(response)
         end
-        all_students
+        all_teachers
       end
     end
 

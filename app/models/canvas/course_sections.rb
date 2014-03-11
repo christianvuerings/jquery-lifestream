@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasCourseProxy < CanvasProxy
+  class CourseSections < Proxy
     def initialize(options = {})
       super(options)
       @course_id = options[:course_id]
@@ -9,9 +9,12 @@ module Canvas
       "global/#{self.name}/#{course_id}"
     end
 
-    def course
-      request_uncached("courses/sis_course_id:#{@course_id}?include[]=term", "_course")
+    def sections_list
+      self.class.fetch_from_cache @course_id do
+        request_uncached("courses/#{@course_id}/sections", "_course_sections")
+      end
     end
 
   end
 end
+

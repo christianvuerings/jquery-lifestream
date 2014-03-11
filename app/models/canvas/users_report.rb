@@ -1,5 +1,5 @@
 module Canvas
-  class Canvas::CanvasUsersReportProxy < Canvas::CanvasReportProxy
+  class UsersReport < Canvas::Report
     require 'csv'
 
     def get_csv

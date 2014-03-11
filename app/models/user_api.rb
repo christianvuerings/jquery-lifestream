@@ -97,7 +97,7 @@ class UserApi < UserSpecificModel
       :first_name => @first_name,
       :full_name => @first_name + ' ' + @last_name,
       :is_google_reminder_dismissed => is_google_reminder_dismissed,
-      :has_canvas_account => Canvas::CanvasProxy.has_account?(@uid),
+      :has_canvas_account => Canvas::Proxy.has_account?(@uid),
       :has_google_access_token => GoogleProxy.access_granted?(@uid),
       :google_email => google_mail,
       :canvas_email => canvas_mail,
@@ -137,7 +137,7 @@ class UserApi < UserSpecificModel
         end
       end
     end
-    if Canvas::CanvasProxy.has_account?(uid)
+    if Canvas::Proxy.has_account?(uid)
       return true
     end
     if (info.try(:[], "ug_grad_flag") == "G" &&

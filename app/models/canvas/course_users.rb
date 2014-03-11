@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasCourseUsersProxy < CanvasProxy
+  class CourseUsers < Proxy
 
     include SafeJsonParser
 

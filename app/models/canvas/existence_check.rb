@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasExistenceCheckProxy < CanvasProxy
+  class ExistenceCheck < Proxy
 
     def account_defined?(sis_account_id)
       response = request_uncached("accounts/sis_account_id:#{sis_account_id}", '_account')

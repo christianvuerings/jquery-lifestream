@@ -16,9 +16,9 @@ describe "MyTasks" do
     @real_google_clear_completed_tasks_proxy = GoogleClearTaskListProxy.new(:access_token => Settings.google_proxy.test_user_access_token,
                                                                             :refresh_token => Settings.google_proxy.test_user_refresh_token,
                                                                             :expiration_time => 0)
-    @fake_canvas_proxy = Canvas::CanvasProxy.new({fake: true})
-    @fake_canvas_upcoming_events_proxy = Canvas::CanvasUpcomingEventsProxy.new({fake: true})
-    @fake_canvas_todo_proxy = Canvas::CanvasTodoProxy.new({fake: true})
+    @fake_canvas_proxy = Canvas::Proxy.new({fake: true})
+    @fake_canvas_upcoming_events_proxy = Canvas::UpcomingEvents.new({fake: true})
+    @fake_canvas_todo_proxy = Canvas::Todo.new({fake: true})
 
   end
 
@@ -27,10 +27,10 @@ describe "MyTasks" do
     begin
       Time.zone = 'America/Los_Angeles'
       GoogleProxy.stub(:access_granted?).and_return(true)
-      Canvas::CanvasProxy.stub(:access_granted?).and_return(true)
+      Canvas::Proxy.stub(:access_granted?).and_return(true)
       GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
-      Canvas::CanvasUpcomingEventsProxy.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
-      Canvas::CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
+      Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
+      Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
       my_tasks_model = MyTasks::Merged.new(@user_id)
       valid_feed = my_tasks_model.get_feed
 
@@ -74,7 +74,7 @@ describe "MyTasks" do
             task["dueDate"]["epoch"].should >= 1351641600
           end
         end
-        if task["emitter"] == Canvas::CanvasProxy::APP_NAME
+        if task["emitter"] == Canvas::Proxy::APP_NAME
           task["linkUrl"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
           task["linkUrl"].should == task["sourceUrl"]
           if task["dueDate"]
@@ -94,10 +94,10 @@ describe "MyTasks" do
   end
 
   it "should fail general update_tasks param validation, missing required parameters" do
-    Canvas::CanvasProxy.stub(:access_granted?).and_return(true)
+    Canvas::Proxy.stub(:access_granted?).and_return(true)
     my_tasks = MyTasks::Merged.new @user_id
     expect {
-      my_tasks.update_task({"emitter" => Canvas::CanvasProxy::APP_NAME, "foo" => "badly formatted entry"})
+      my_tasks.update_task({"emitter" => Canvas::Proxy::APP_NAME, "foo" => "badly formatted entry"})
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       (error.message =~ (/Missing parameter\(s\). Required: \[/)).nil?.should_not == true
@@ -105,7 +105,7 @@ describe "MyTasks" do
   end
 
   it "should fail general update_tasks param validation, invalid parameter(s)" do
-    Canvas::CanvasProxy.stub(:access_granted?).and_return(true)
+    Canvas::Proxy.stub(:access_granted?).and_return(true)
     my_tasks = MyTasks::Merged.new @user_id
     expect {
       my_tasks.update_task({"type" => "sometype", "emitter" => "bCourses", "status" => "half-baked" })
@@ -175,9 +175,9 @@ describe "MyTasks" do
 
   it "should return Google tasks when Canvas service is unavailable" do
     GoogleProxy.stub(:access_granted?).and_return(true)
-    Canvas::CanvasProxy.stub(:access_granted?).and_return(true)
+    Canvas::Proxy.stub(:access_granted?).and_return(true)
     GoogleTasksListProxy.stub(:new).and_return(@fake_google_tasks_list_proxy)
-    Canvas::CanvasProxy.any_instance.stub(:request).and_return(nil)
+    Canvas::Proxy.any_instance.stub(:request).and_return(nil)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     tasks = my_tasks_model.get_feed["tasks"]
     tasks.size.should be > 0
@@ -195,7 +195,7 @@ describe "MyTasks" do
   end
 
   it "should do nothing to Canvas Tasks" do
-    Canvas::CanvasProxy.stub(:access_granted?).and_return(true)
+    Canvas::Proxy.stub(:access_granted?).and_return(true)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     response = my_tasks_model.clear_completed_tasks params={"emitter" => "bCourses"}
     response.should == {:tasksCleared => false}
@@ -219,12 +219,12 @@ describe "MyTasks" do
 
   it "should not explode on Canvas feeds that have invalid json" do
     GoogleProxy.stub(:access_granted?).and_return(false)
-    Canvas::CanvasProxy.stub(:access_granted?).and_return(true)
-    Canvas::CanvasUpcomingEventsProxy.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
-    Canvas::CanvasTodoProxy.stub(:new).and_return(@fake_canvas_todo_proxy)
+    Canvas::Proxy.stub(:access_granted?).and_return(true)
+    Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
+    Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
     unparseable = OpenStruct.new(:status => 200, :body => "unparseable")
-    Canvas::CanvasUpcomingEventsProxy.any_instance.stub(:upcoming_events).and_return(unparseable)
-    Canvas::CanvasTodoProxy.any_instance.stub(:todo).and_return(unparseable)
+    Canvas::UpcomingEvents.any_instance.stub(:upcoming_events).and_return(unparseable)
+    Canvas::Todo.any_instance.stub(:todo).and_return(unparseable)
 
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed

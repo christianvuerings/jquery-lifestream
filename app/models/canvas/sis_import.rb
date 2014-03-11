@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasSisImportProxy < CanvasProxy
+  class SisImport < Proxy
     require 'csv'
     include ClassLogger, SafeJsonParser
 
@@ -76,7 +76,7 @@ module Canvas
       status = nil
       sleep 2
       begin
-        retriable(:on => Canvas::CanvasSisImportProxy::ReportNotReadyException, :tries => 150, :interval => 20) do
+        retriable(:on => Canvas::SisImport::ReportNotReadyException, :tries => 150, :interval => 20) do
           response = request_uncached(url, '_sis_import_status', {
             method: :get
           })
@@ -84,16 +84,16 @@ module Canvas
 
           unless (response && response.status == 200 && json = safe_json(response.body))
             logger.error "Import ID #{import_id} Status Report missing or errored; will retry later"
-            raise Canvas::CanvasSisImportProxy::ReportNotReadyException
+            raise Canvas::SisImport::ReportNotReadyException
           end
           if ["initializing", "created", "importing"].include?(json["workflow_state"])
             logger.info "Import ID #{import_id} Status Report exists but is not yet ready; will retry later"
-            raise Canvas::CanvasSisImportProxy::ReportNotReadyException
+            raise Canvas::SisImport::ReportNotReadyException
           else
             status = json
           end
         end
-      rescue Canvas::CanvasSisImportProxy::ReportNotReadyException => e
+      rescue Canvas::SisImport::ReportNotReadyException => e
         logger.error "Import ID #{import_id} Status Report not available after #{Time.now.to_i - start_time} secs, giving up"
       else
         elapsed_time = Time.now.to_i - start_time

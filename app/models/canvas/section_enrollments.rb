@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasSectionEnrollmentsProxy < CanvasProxy
+  class SectionEnrollments < Proxy
 
     ENROLLMENT_STATES = ['active', 'invited']
     ENROLLMENT_TYPES = ["StudentEnrollment", "TeacherEnrollment", "TaEnrollment", "ObserverEnrollment", "DesignerEnrollment"]

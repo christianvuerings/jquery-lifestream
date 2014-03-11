@@ -1,5 +1,5 @@
 module Canvas
-  class Canvas::CanvasExternalToolsProxy < CanvasProxy
+  class ExternalTools < Proxy
 
     include SafeJsonParser
 

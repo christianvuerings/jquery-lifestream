@@ -23,7 +23,7 @@ class CanvasCourseAddUser
 
   def self.course_sections_list(course_id)
     raise ArgumentError, "Course ID must be a Fixnum" if course_id.class != Fixnum
-    canvas_course_sections_proxy = Canvas::CanvasCourseSectionsProxy.new(course_id: course_id)
+    canvas_course_sections_proxy = Canvas::CourseSections.new(course_id: course_id)
     sections_response = canvas_course_sections_proxy.sections_list
     sections = JSON.parse(sections_response.body)
     sections.collect {|section| {'id' => section['id'].to_s, 'name' => section['name']} }
@@ -35,9 +35,9 @@ class CanvasCourseAddUser
     raise ArgumentError, "canvas_course_section_id must be a String" if canvas_course_section_id.class != String
     CanvasUserProvision.new.import_users([ldap_user_id])
     section_id_num = Integer(canvas_course_section_id, 10)
-    canvas_user_profile_response = Canvas::CanvasUserProfileProxy.new(user_id: ldap_user_id).user_profile
+    canvas_user_profile_response = Canvas::UserProfile.new(user_id: ldap_user_id).user_profile
     canvas_user_profile = JSON.parse(canvas_user_profile_response.body)
-    canvas_section_enrolmments_proxy = Canvas::CanvasSectionEnrollmentsProxy.new(:section_id => section_id_num)
+    canvas_section_enrolmments_proxy = Canvas::SectionEnrollments.new(:section_id => section_id_num)
     canvas_section_enrolmments_proxy.enroll_user(canvas_user_profile['id'], role, 'active', false)
     true
   end
