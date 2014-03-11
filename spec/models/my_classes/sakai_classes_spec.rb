@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyClasses::Sakai do
+describe MyClasses::SakaiClasses do
   let(:uid) {rand(99999).to_s}
   let(:sites) {[]}
   let(:ccn) {rand(9999)}
@@ -29,7 +29,7 @@ describe MyClasses::Sakai do
   end
   before {SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
   subject do
-    MyClasses::Sakai.new(uid).merge_sites(campus_courses, sites)
+    MyClasses::SakaiClasses.new(uid).merge_sites(campus_courses, sites)
     sites
   end
   context 'when Sakai course is within a current term' do
