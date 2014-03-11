@@ -3,7 +3,7 @@ class MyFinancials < UserSpecificModel
   def get_feed_internal
     feed = {}
     if Settings.features.financials
-      proxy = FinancialsProxy.new({user_id: @uid})
+      proxy = Proxy.new({user_id: @uid})
       proxy_response = proxy.get
       if proxy_response && body = proxy_response[:body]
         if body.is_a?(Hash) && student = body["student"]

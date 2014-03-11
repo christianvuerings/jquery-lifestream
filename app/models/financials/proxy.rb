@@ -1,4 +1,4 @@
-class FinancialsProxy < BaseProxy
+class Proxy < BaseProxy
 
   include ClassLogger, SafeJsonParser
 
