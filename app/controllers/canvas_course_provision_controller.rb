@@ -49,7 +49,7 @@ class CanvasCourseProvisionController < ApplicationController
       logger.warn("Conflicting request parameters sent to Canvas Course Provision: session user = #{user_id}, options = #{options}")
       raise ArgumentError, "Conflicting request parameters sent to Canvas Course Provision"
     end
-    Canvas::CanvasCourseProvision.new(user_id, options)
+    Canvas::CourseProvision.new(user_id, options)
   end
 
   def options_from_params

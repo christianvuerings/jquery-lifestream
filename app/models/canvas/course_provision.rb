@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasCourseProvision
+  class CourseProvision
     include ActiveAttr::Model, ClassLogger
     extend Calcentral::Cacheable
 

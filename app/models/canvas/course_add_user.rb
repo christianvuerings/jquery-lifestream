@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasCourseAddUser
+  class CourseAddUser
 
     SEARCH_TYPES = ['name', 'email', 'student_id', 'ldap_user_id']
 

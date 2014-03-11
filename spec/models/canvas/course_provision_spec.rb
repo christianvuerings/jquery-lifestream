@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Canvas::CanvasCourseProvision do
+describe Canvas::CourseProvision do
   let(:instructor_id) { rand(99999).to_s }
   let(:user_id) { rand(99999).to_s }
   let(:canvas_admin_id) { rand(99999).to_s }
@@ -75,7 +75,7 @@ describe Canvas::CanvasCourseProvision do
   end }
 
   context 'when delegating' do
-    subject {Canvas::CanvasCourseProvision.new(uid, admin_acting_as: instructor_id)}
+    subject {Canvas::CourseProvision.new(uid, admin_acting_as: instructor_id)}
     context 'when a mischiefmaker' do
       let(:uid) {user_id}
       its(:user_authorized?) { should be_false }
@@ -98,7 +98,7 @@ describe Canvas::CanvasCourseProvision do
   end
 
   context 'when not delegating' do
-    subject {Canvas::CanvasCourseProvision.new(uid)}
+    subject {Canvas::CourseProvision.new(uid)}
     context 'when a normal user' do
       let(:uid) {user_id}
       its(:user_authorized?) { should be_true }
@@ -132,7 +132,7 @@ describe Canvas::CanvasCourseProvision do
   end
 
   context 'when directly specifying CCNs' do
-    subject {Canvas::CanvasCourseProvision.new(uid, {
+    subject {Canvas::CourseProvision.new(uid, {
       admin_by_ccns: by_ccns,
       admin_term_slug: by_ccns_semester
     })}
@@ -159,7 +159,7 @@ describe Canvas::CanvasCourseProvision do
   end
 
   describe "#create_course_site" do
-    subject     { Canvas::CanvasCourseProvision.new(instructor_id) }
+    subject     { Canvas::CourseProvision.new(instructor_id) }
     let(:cpcs)  { double() }
     before do
       cpcs.stub(:background).and_return(cpcs)

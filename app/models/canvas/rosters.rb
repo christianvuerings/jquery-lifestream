@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasRosters
+  class Rosters
     include ActiveAttr::Model, ClassLogger, SafeJsonParser
     extend Calcentral::Cacheable
 

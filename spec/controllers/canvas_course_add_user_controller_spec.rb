@@ -30,12 +30,12 @@ describe CanvasCourseAddUserController do
     session[:canvas_user_id] = "4321321"
     session[:canvas_course_id] = "767330"
     Canvas::CourseUser.stub(:is_course_admin?).and_return(true)
-    Canvas::CanvasCourseAddUser.stub(:course_sections_list).and_return(course_sections_list)
+    Canvas::CourseAddUser.stub(:course_sections_list).and_return(course_sections_list)
   end
 
   context "when performing user search" do
     before do
-      Canvas::CanvasCourseAddUser.stub(:search_users).with('John Doe', 'name').and_return(users_found)
+      Canvas::CourseAddUser.stub(:search_users).with('John Doe', 'name').and_return(users_found)
     end
 
     it_should_behave_like "an api endpoint" do
@@ -61,7 +61,7 @@ describe CanvasCourseAddUserController do
     end
 
     it "returns user search results" do
-      Canvas::CanvasCourseAddUser.should_receive(:search_users).with('John Doe', 'name').and_return(users_found)
+      Canvas::CourseAddUser.should_receive(:search_users).with('John Doe', 'name').and_return(users_found)
       get :search_users, search_text: "John Doe", search_type: "name"
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -113,7 +113,7 @@ describe CanvasCourseAddUserController do
   end
 
   context "when adding user to course" do
-    before { Canvas::CanvasCourseAddUser.stub(:add_user_to_course_section).and_return(true) }
+    before { Canvas::CourseAddUser.stub(:add_user_to_course_section).and_return(true) }
 
     it_should_behave_like "an api endpoint" do
       before { subject.stub(:add_user).and_raise(RuntimeError, "Something went wrong") }
