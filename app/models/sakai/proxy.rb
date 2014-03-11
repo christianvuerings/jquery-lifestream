@@ -1,4 +1,4 @@
-class SakaiProxy < BaseProxy
+class Proxy < BaseProxy
   extend Proxies::EnableForActAs
 
   APP_ID = "bSpace"
@@ -17,7 +17,7 @@ class SakaiProxy < BaseProxy
   end
 
   def get_sakai_user_id
-    SakaiProxy.fetch_from_cache @uid do
+    Proxy.fetch_from_cache @uid do
       SakaiData.get_sakai_user_id(@uid)
     end
   end

@@ -2,8 +2,8 @@ class MyActivities::SakaiAnnouncements
   include DatedFeed
 
   def self.append!(uid, sites, activities)
-    return activities unless SakaiProxy.access_granted?(uid)
-    sakai_sites = sites.select {|s| s[:emitter] == SakaiProxy::APP_ID}
+    return activities unless Proxy.access_granted?(uid)
+    sakai_sites = sites.select {|s| s[:emitter] == Proxy::APP_ID}
     sakai_sites.each do |site|
       announcements = SakaiSiteAnnouncementsProxy.new(site_id: site[:id]).get_announcements(site[:groups])
       announcements.each do |sakai_ann|

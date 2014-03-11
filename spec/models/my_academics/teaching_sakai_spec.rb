@@ -31,7 +31,7 @@ describe MyAcademics::TeachingSakai do
       short_description: "A barrel of #{ccn} monkeys",
       term_yr: term_yr,
       term_cd: term_cd,
-      emitter: SakaiProxy::APP_ID
+      emitter: Proxy::APP_ID
     }
   end
   before {SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
@@ -50,7 +50,7 @@ describe MyAcademics::TeachingSakai do
       it 'points back to campus course' do
         site = subject.first
         expect(site[:id]).to eq sakai_site_id
-        expect(site[:emitter]).to eq SakaiProxy::APP_ID
+        expect(site[:emitter]).to eq Proxy::APP_ID
         expect(site[:name]).to eq sakai_site_base[:name]
         expect(site[:sections].first[:ccn]).to eq ccn.to_s
       end

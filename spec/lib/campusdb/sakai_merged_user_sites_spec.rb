@@ -12,7 +12,7 @@ describe SakaiMergedUserSites do
         expect(site[:id]).to be_present
         expect(site[:site_url]).to be_present
         expect(site[:name]).to be_present
-        expect(site[:emitter]).to eq SakaiProxy::APP_ID
+        expect(site[:emitter]).to eq Proxy::APP_ID
         expect(site[:term_yr]).to be_present
         expect(site[:term_cd]).to be_present
       end
@@ -22,7 +22,7 @@ describe SakaiMergedUserSites do
         expect(site[:id]).to be_present
         expect(site[:site_url]).to be_present
         expect(site[:name]).to be_present
-        expect(site[:emitter]).to eq SakaiProxy::APP_ID
+        expect(site[:emitter]).to eq Proxy::APP_ID
         expect(site[:term_yr]).to be_nil
         expect(site[:term_cd]).to be_nil
       end
