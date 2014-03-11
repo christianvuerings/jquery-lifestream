@@ -20,7 +20,7 @@ class UserAuthPolicy
   end
 
   def can_import_canvas_users?
-    can_administrate? || CanvasAdminsProxy.new.admin_user?(user.uid)
+    can_administrate? || Canvas::CanvasAdminsProxy.new.admin_user?(user.uid)
   end
 
   def can_refresh_log_settings?

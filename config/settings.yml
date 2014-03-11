@@ -203,8 +203,8 @@ cache:
     UserApi: 0
     UserApiController: <%= 4.hours %>
     CanvasLti: <%= 5.minutes %>
-    CanvasCourseStudentsProxy: <%= 15.minutes %>
-    CanvasCourseTeachersProxy: <%= 5.minutes %>
+    Canvas::CanvasCourseStudentsProxy: <%= 15.minutes %>
+    Canvas::CanvasCourseTeachersProxy: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
     MyRegBlocks: 0
 

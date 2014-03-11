@@ -99,7 +99,7 @@ describe CanvasProxy do
 
   it "should fetch all course students even if the Canvas feed is paged" do
     # The VCR recording has been edited to have four pages of results, only one student per page.
-    proxy = CanvasCourseStudentsProxy.new(course_id: 767330, fake: true)
+    proxy = Canvas::CanvasCourseStudentsProxy.new(course_id: 767330, fake: true)
     students = proxy.full_students_list
     students.length.should == 4
   end
@@ -138,7 +138,7 @@ describe CanvasProxy do
     response = client.courses
     courses = JSON.parse(response.body)
     courses.each do |course|
-      sections_proxy = CanvasCourseSectionsProxy.new(course_id: course['id'])
+      sections_proxy = Canvas::CanvasCourseSectionsProxy.new(course_id: course['id'])
       sections_response = sections_proxy.sections_list
       sections = JSON.parse(sections_response.body)
       sections.should_not be_nil

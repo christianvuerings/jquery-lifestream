@@ -199,7 +199,7 @@ class CanvasProvideCourseSite < CanvasCsv
   end
 
   def course_site_url(sis_id)
-    response = CanvasCourseProxy.new(course_id: sis_id).course
+    response = Canvas::CanvasCourseProxy.new(course_id: sis_id).course
     raise RuntimeError, "Unexpected error obtaining course site URL for #{sis_id}!" if response.blank?
     course_data = JSON.parse(response.body)
     "#{Settings.canvas_proxy.url_root}/courses/#{course_data['id']}"

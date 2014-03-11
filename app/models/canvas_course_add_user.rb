@@ -23,7 +23,7 @@ class CanvasCourseAddUser
 
   def self.course_sections_list(course_id)
     raise ArgumentError, "Course ID must be a Fixnum" if course_id.class != Fixnum
-    canvas_course_sections_proxy = CanvasCourseSectionsProxy.new(course_id: course_id)
+    canvas_course_sections_proxy = Canvas::CanvasCourseSectionsProxy.new(course_id: course_id)
     sections_response = canvas_course_sections_proxy.sections_list
     sections = JSON.parse(sections_response.body)
     sections.collect {|section| {'id' => section['id'].to_s, 'name' => section['name']} }

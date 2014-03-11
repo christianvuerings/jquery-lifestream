@@ -16,7 +16,7 @@ describe "CanvasRosters" do
     unofficial_student_in_canvas_login_id = rand(99999).to_s
     official_student_not_in_canvas_login_id = rand(99999).to_s
     official_student_not_in_canvas_student_id = rand(99999)
-    CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
+    Canvas::CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
         [
             {
                 'id' => official_student_in_canvas_id,
@@ -50,7 +50,7 @@ describe "CanvasRosters" do
             }
         ]
     )
-    CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
+    Canvas::CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
         stub_proxy(:sections_list, [
             {
                 course_id: course_id,
@@ -106,7 +106,7 @@ describe "CanvasRosters" do
     course_id = rand(99999)
     stub_teacher_status(teacher_login_id, course_id)
     section_id = rand(99999)
-    CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
+    Canvas::CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
         [
             {
                 'id' => 1234,
@@ -122,7 +122,7 @@ describe "CanvasRosters" do
 
         ]
     )
-    CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
+    Canvas::CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
         stub_proxy(:sections_list, [
             {
                 course_id: course_id,
@@ -155,7 +155,7 @@ describe "CanvasRosters" do
             }
         ]
     )
-    CanvasCourseTeachersProxy.stub(:new).with(course_id: student_site_id).and_return(student_proxy)
+    Canvas::CanvasCourseTeachersProxy.stub(:new).with(course_id: student_site_id).and_return(student_proxy)
     model = CanvasRosters.new(user_id, canvas_course_id: teaching_site_id)
     model.user_authorized?.should be_true
     model = CanvasRosters.new(user_id, canvas_course_id: student_site_id)
@@ -178,7 +178,7 @@ describe "CanvasRosters" do
     waitlisted_student_canvas_id = rand(99999)
     waitlisted_student_login_id = rand(99999).to_s
     waitlisted_student_student_id = rand(99999).to_s
-    CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
+    Canvas::CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
         [
             {
                 'id' => enrolled_student_canvas_id,
@@ -204,7 +204,7 @@ describe "CanvasRosters" do
             }
         ]
     )
-    CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
+    Canvas::CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
         stub_proxy(:sections_list, [
             {
                 course_id: course_id,
@@ -276,7 +276,7 @@ describe "CanvasRosters" do
     waitlisted_student_student_id = rand(99999).to_s
     unofficial_student_canvas_id = rand(99999)
     unofficial_student_login_id = rand(99999).to_s
-    CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
+    Canvas::CanvasCourseStudentsProxy.any_instance.stub(:full_students_list).and_return(
         [
             {
                 'id' => enrolled_student_canvas_id,
@@ -313,7 +313,7 @@ describe "CanvasRosters" do
             }
         ]
     )
-    CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
+    Canvas::CanvasCourseSectionsProxy.stub(:new).with({course_id: course_id}).and_return(
         stub_proxy(:sections_list, [
             {
                 course_id: course_id,
@@ -367,7 +367,7 @@ describe "CanvasRosters" do
             }
         ]
     )
-    CanvasCourseTeachersProxy.stub(:new).with(course_id: canvas_course_id).and_return(teaching_proxy)
+    Canvas::CanvasCourseTeachersProxy.stub(:new).with(course_id: canvas_course_id).and_return(teaching_proxy)
   end
 
 end

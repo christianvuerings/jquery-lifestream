@@ -25,7 +25,7 @@ class CanvasMergedUserSites
       course_id = course['id']
       # We collect sections and CCNs as an admin, not as the user. Most site members
       # do not have access to that information.
-      response = CanvasCourseSectionsProxy.new(course_id: course_id).sections_list
+      response = Canvas::CanvasCourseSectionsProxy.new(course_id: course_id).sections_list
       return nil unless (response && response.status == 200)
       merged_sites[:courses] << merge_course_with_sections(course, JSON.parse(response.body))
     end

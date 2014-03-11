@@ -39,7 +39,7 @@ describe CanvasCourseAddUser do
 
   before do
     CanvasUserProfileProxy.any_instance.stub(:user_profile).and_return(canvas_user_profile_response)
-    CanvasCourseSectionsProxy.any_instance.stub(:sections_list).and_return(canvas_course_sections_list_response)
+    Canvas::CanvasCourseSectionsProxy.any_instance.stub(:sections_list).and_return(canvas_course_sections_list_response)
   end
 
   context "when searching for users" do
