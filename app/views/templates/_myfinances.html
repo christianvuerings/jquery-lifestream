@@ -86,10 +86,10 @@
                 </div>
 
                 <div class="cc-page-myfinances-light" data-ng-if="myfinances.show">
-                  <div class="small-8 columns">
+                  <div class="small-8 columns cc-print-clear cc-print-width-auto">
                     Last Statement Balance <span class="cc-page-myfinances-lighter">({{myfinances.summary.lastStatementDate | date:'MM/dd/yy'}})</span>
                   </div>
-                  <div class="small-4 columns">
+                  <div class="small-4 columns cc-print-width-auto cc-print-right">
                     <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.lastStatementBalance"></div>
                   </div>
                 </div>
