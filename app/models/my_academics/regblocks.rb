@@ -1,3 +1,4 @@
+# TODO collapse this class into Bearfacts::Regblocks
 class MyAcademics::Regblocks
 
   include MyAcademics::AcademicsModule

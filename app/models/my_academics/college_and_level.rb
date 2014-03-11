@@ -1,3 +1,4 @@
+# TODO collapse this class into Bearfacts::Profile
 class MyAcademics::CollegeAndLevel
 
   include MyAcademics::AcademicsModule

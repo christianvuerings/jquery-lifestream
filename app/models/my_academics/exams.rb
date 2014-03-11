@@ -1,3 +1,4 @@
+# TODO collapse this class into Bearfacts::Exams
 class MyAcademics::Exams
 
   include MyAcademics::AcademicsModule

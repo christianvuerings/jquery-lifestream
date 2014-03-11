@@ -1,3 +1,4 @@
+# TODO collapse this class into Bearfacts::Regblocks
 class MyRegBlocks < UserSpecificModel
   include DatedFeed
 
