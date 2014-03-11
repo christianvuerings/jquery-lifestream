@@ -9,7 +9,7 @@ describe MyGroups::Sakai do
       site_url: "something/#{sakai_site_id}",
       name: "CODE #{rand(999)}",
       short_description: "A barrel of #{rand(99)} monkeys",
-      emitter: Proxy::APP_ID
+      emitter: Sakai::Proxy::APP_ID
     }
   end
   before {SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
@@ -20,7 +20,7 @@ describe MyGroups::Sakai do
     it 'includes the site' do
       site = subject.first
       expect(site[:id]).to eq sakai_site_id
-      expect(site[:emitter]).to eq Proxy::APP_ID
+      expect(site[:emitter]).to eq Sakai::Proxy::APP_ID
       expect(site[:name]).to eq sakai_site_base[:name]
       expect(site[:site_url]).to eq sakai_site_base[:site_url]
     end
