@@ -44,7 +44,7 @@ describe MyTasksController do
     post :clear_completed_tasks, user_payload
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
-    json_response.should == {"tasks_cleared" => true}
+    json_response.should == {"tasksCleared" => true}
   end
 
   it "should successfully delete a google task" do

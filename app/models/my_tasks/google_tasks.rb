@@ -26,7 +26,7 @@ module MyTasks
             all_tasks.push formatted_entry
           end
         end
-        all_tasks.sort! { |a, b| (a["due_date"].nil? ? 0 : a["due_date"]["epoch"]) <=> (b["due_date"].nil? ? 0 : b["due_date"]["epoch"]) }
+        all_tasks.sort! { |a, b| (a["dueDate"].nil? ? 0 : a["dueDate"]["epoch"]) <=> (b["dueDate"].nil? ? 0 : b["dueDate"]["epoch"]) }
         all_tasks.each do |formatted_entry|
           @future_count += push_if_feed_has_room!(formatted_entry, filtered_tasks, @future_count)
         end
@@ -65,7 +65,7 @@ module MyTasks
       Rails.logger.debug "#{self.class.name} clearing task list, sending to Google (task_list_id):
             {#{task_list_id}}"
       result = google_proxy.clear_task_list(task_list_id)
-      {tasks_cleared: result}
+      {tasksCleared: result}
     end
 
     def delete_task(params, task_list_id="@default")
@@ -81,8 +81,8 @@ module MyTasks
     def format_google_insert_task_request(entry)
       formatted_entry = {}
       formatted_entry["title"] = entry["title"]
-      if entry["due_date"] && !entry["due_date"].blank?
-        formatted_entry["due"] = Date.strptime(entry["due_date"]).to_time_in_current_zone.to_datetime
+      if entry["dueDate"] && !entry["dueDate"].blank?
+        formatted_entry["due"] = Date.strptime(entry["dueDate"]).to_time_in_current_zone.to_datetime
       end
       formatted_entry["notes"] = entry["notes"] if entry["notes"]
       Rails.logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
@@ -99,12 +99,12 @@ module MyTasks
     def format_google_update_task_request(entry)
       validate_google_params entry
       formatted_entry = {"id" => entry["id"]}
-      formatted_entry["status"] = "needsAction" if entry["status"] == "needs_action"
+      formatted_entry["status"] = "needsAction" if entry["status"] == "needsAction"
       formatted_entry["status"] ||= "completed"
       formatted_entry["title"] = entry["title"] unless entry["title"].blank?
       formatted_entry["notes"] = entry["notes"] unless entry["notes"].nil?
-      if entry["due_date"] && entry["due_date"]["date_time"]
-        formatted_entry["due"] = Date.strptime(entry["due_date"]["date_time"]).to_time_in_current_zone.to_datetime
+      if entry["dueDate"] && entry["dueDate"]["date_time"]
+        formatted_entry["due"] = Date.strptime(entry["dueDate"]["date_time"]).to_time_in_current_zone.to_datetime
       end
       Rails.logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
       formatted_entry
@@ -115,19 +115,19 @@ module MyTasks
         "type" => "task",
         "title" => entry["title"] || "",
         "emitter" => GoogleProxy::APP_ID,
-        "link_url" => "https://mail.google.com/tasks/canvas?pli=1",
+        "linkUrl" => "https://mail.google.com/tasks/canvas?pli=1",
         "id" => entry["id"],
-        "source_url" => entry["selfLink"] || ""
+        "sourceUrl" => entry["selfLink"] || ""
       }
 
       # Some fields may or may not be present in Google feed
       formatted_entry["notes"] = entry["notes"] if entry["notes"]
 
       if entry["completed"]
-        format_date_into_entry!(convert_date(entry["completed"]), formatted_entry, "completed_date")
+        format_date_into_entry!(convert_date(entry["completed"]), formatted_entry, "completedDate")
       end
 
-      status = "needs_action" if entry["status"] == "needsAction"
+      status = "needsAction" if entry["status"] == "needsAction"
       status ||= "completed"
       formatted_entry["status"] = status
       due_date = entry["due"]
@@ -142,11 +142,11 @@ module MyTasks
       formatted_entry["bucket"] = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
 
       if formatted_entry["bucket"] == "Unscheduled"
-        format_date_into_entry!(convert_date(entry["updated"]), formatted_entry, "updated_date")
+        format_date_into_entry!(convert_date(entry["updated"]), formatted_entry, "updatedDate")
       end
 
-      Rails.logger.debug "#{self.class.name} Putting Google task with due_date #{formatted_entry["due_date"]} in #{formatted_entry["bucket"]} bucket: #{formatted_entry}"
-      format_date_into_entry!(due_date, formatted_entry, "due_date")
+      Rails.logger.debug "#{self.class.name} Putting Google task with dueDate #{formatted_entry["due_date"]} in #{formatted_entry["bucket"]} bucket: #{formatted_entry}"
+      format_date_into_entry!(due_date, formatted_entry, "dueDate")
       Rails.logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
       formatted_entry
     end

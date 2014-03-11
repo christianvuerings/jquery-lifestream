@@ -12,7 +12,7 @@
     <div class="cc-widget-tasks-col cc-widget-tasks-col-title">
       <div
         class="cc-widget-tasks-status-{{task.status}}"
-        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket=='Overdue' && tasks_mode!='completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket == 'Overdue' && tasksMode != 'completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
         <strong>{{task.title}}</strong>
       </div>
     </div>
@@ -23,7 +23,7 @@
         data-ng-click="api.util.preventBubble($event)"
         data-ng-change="changeTaskState(task)"
         data-ng-disabled="!!task.editorIsProcessing"
-        data-ng-false-value="needs_action"
+        data-ng-false-value="needsAction"
         data-ng-model="task.status"
         data-ng-show="task.emitter=='Google'"
         data-ng-true-value="completed"
@@ -43,37 +43,37 @@
     <div
       class="cc-widget-tasks-col cc-widget-tasks-col-date">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
-      <span data-ng-show="task.due_date && task.bucket != 'Due Today' && tasks_mode != 'completed'">
-        {{task.due_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}
+      <span data-ng-show="task.dueDate && task.bucket != 'Due Today' && tasksMode != 'completed'">
+        {{task.dueDate.epoch * 1000 | cc.dateInYear:'MM/dd'}}
       </span>
       <div
-        data-ng-show="task.emitter=='bCourses' && task.due_date.has_time"
+        data-ng-show="task.emitter=='bCourses' && task.dueDate.hasTime"
         class="cc-widget-tasks-timestamp">
-          {{task.due_date.epoch * 1000 | date:'h a'}}
+          {{task.dueDate.epoch * 1000 | date:'h a'}}
       </div>
-      <span data-ng-show="tasks_mode=='completed'">{{task.completed_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}</span>
+      <span data-ng-show="tasksMode=='completed'">{{task.completedDate.epoch * 1000 | cc.dateInYear:'MM/dd'}}</span>
     </div>
     <div
       class="cc-widget-tasks-col cc-widget-tasks-col-date"
-      data-ng-show="task.updated_date">
+      data-ng-show="task.updatedDate">
       <span>
-        {{task.updated_date.epoch * 1000 | cc.dateInYear:'MM/dd'}}
+        {{task.updatedDate.epoch * 1000 | cc.dateInYear:'MM/dd'}}
       </span>
     </div>
   </div>
 
   <div data-ng-show="task.show">
     <div class="cc-widget-tasks-more" data-ng-hide="editorEnabled">
-      <div class="cc-clearfix" data-ng-show="task.completed_date && task.due_date">Due Date:
-        <span data-ng-bind="task.due_date.epoch * 1000 | cc.dateInYear:'MM/dd'"></span>
+      <div class="cc-clearfix" data-ng-show="task.completedDate && task.dueDate">Due Date:
+        <span data-ng-bind="task.dueDate.epoch * 1000 | cc.dateInYear:'MM/dd'"></span>
       </div>
       <div data-ng-bind-html="task.notes | linky" class="cc-break-word cc-clearfix"></div>
 
       <div class="cc-clearfix">
         <a class="cc-button"
         data-ng-show="task.emitter=='bCourses'"
-        data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.link_url)"
-        data-ng-href="{{task.link_url}}">
+        data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.linkUrl)"
+        data-ng-href="{{task.linkUrl}}">
           View in {{task.emitter}}
           <span class="cc-visuallyhidden" data-ng-bind-template="- {{ task.title }}"></span>
         </a>
@@ -86,7 +86,7 @@
         data-ng-show="task.emitter=='Google'"
         data-ng-click="deleteTask(task)">Delete</button>
       </div>
-      <div data-ng-show="task.is_processing">
+      <div data-ng-show="task.isProcessing">
         <em>Updating task...</em>
       </div>
       <div data-ng-show="task.isDeleting">

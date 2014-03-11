@@ -15,17 +15,17 @@
       // Shift the scope to match scope of the add_task form
       $scope.addEditTask = {
         'title': $scope.task.title,
-        'due_date': $scope.task.due_date,
+        'dueDate': $scope.task.dueDate,
         'notes': $scope.task.notes
       };
 
       // We don't store the exact date format they entered originally, so reconstruct from epoch
-      if ($scope.task.due_date) {
-        var d = new Date($scope.task.due_date.epoch * 1000);
+      if ($scope.task.dueDate) {
+        var d = new Date($scope.task.dueDate.epoch * 1000);
         var mm = ('0' + (d.getMonth() + 1)).slice(-2);
         var dd = ('0' + d.getDate()).slice(-2);
         var yyyy = d.getFullYear();
-        $scope.addEditTask.due_date = mm + '/' + dd + '/' + yyyy;
+        $scope.addEditTask.dueDate = mm + '/' + dd + '/' + yyyy;
       }
       $scope.addEditTask.focusInput = true;
     };
@@ -38,9 +38,9 @@
       angular.extend($scope.task, data);
 
       // Extend won't remove already existing sub-objects. If we've returned from Google
-      // AND there is no due_date or notes on the returned object, remove those props from $scope.task
-      if (!data.due_date) {
-        delete $scope.task.due_date;
+      // AND there is no dueDate or notes on the returned object, remove those props from $scope.task
+      if (!data.dueDate) {
+        delete $scope.task.dueDate;
       }
       if (!data.notes) {
         delete $scope.task.notes;
@@ -54,15 +54,15 @@
       changedTask.notes = $scope.addEditTask.notes;
 
       // Not all tasks have dates.
-      if ($scope.addEditTask.due_date) {
-        changedTask.due_date = {};
-        var newdatearr = $scope.addEditTask.due_date.split(/[\/]/);
-        changedTask.due_date.date_time = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+      if ($scope.addEditTask.dueDate) {
+        changedTask.dueDate = {};
+        var newdatearr = $scope.addEditTask.dueDate.split(/[\/]/);
+        changedTask.dueDate.date_time = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
-      // If no date or date has been removed, also delete due_date sub-object
-      if (!$scope.addEditTask.due_date) {
-        delete changedTask.due_date;
+      // If no date or date has been removed, also delete dueDate sub-object
+      if (!$scope.addEditTask.dueDate) {
+        delete changedTask.dueDate;
       }
 
       apiService.analytics.trackEvent(['Tasks', 'Task edited', 'edited: ' + !!changedTask.title]);

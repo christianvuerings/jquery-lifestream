@@ -21,7 +21,7 @@
     var setTaskState = function(task) {
       _taskPanelState.newTask.title = task.title;
       _taskPanelState.newTask.notes = task.notes;
-      _taskPanelState.newTask.due_date = task.due_date;
+      _taskPanelState.newTask.dueDate = task.dueDate;
     };
 
     var resetState = function() {
@@ -29,7 +29,7 @@
       _taskPanelState.showAddTask = false;
       _taskPanelState.newTask.title = '';
       _taskPanelState.newTask.notes = '';
-      _taskPanelState.newTask.due_date = '';
+      _taskPanelState.newTask.dueDate = '';
       _taskPanelState.newTask.focusInput = false;
     };
 
@@ -46,7 +46,7 @@
       var rawTask = getTaskState();
       _taskPanelState.isProcessing = true;
 
-      var trackEvent = 'notes: ' + !!rawTask.notes + ' date: ' + !!rawTask.due_date;
+      var trackEvent = 'notes: ' + !!rawTask.notes + ' date: ' + !!rawTask.dueDate;
       apiService.analytics.trackEvent(['Tasks', 'Add', trackEvent]);
       // When the user submits the task, we show a processing message
       // This message will disappear as soon the task has been added.
@@ -59,9 +59,9 @@
 
       // Not all tasks have dates.
       // TODO: you know... we can make the backend handle slashes...
-      if (rawTask.due_date) {
-        var newdatearr = rawTask.due_date.split(/[\/]/);
-        newtask.due_date = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
+      if (rawTask.dueDate) {
+        var newdatearr = rawTask.dueDate.split(/[\/]/);
+        newtask.dueDate = newdatearr[2] + '-' + newdatearr[0] + '-' + newdatearr[1];
       }
 
       var deferred = $q.defer();

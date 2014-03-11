@@ -50,7 +50,7 @@ describe "MyTasks" do
 
       valid_feed["tasks"].each do |task|
         task["title"].blank?.should == false
-        task["source_url"].blank?.should == false
+        task["sourceUrl"].blank?.should == false
 
         # Whitelist allowed property strings
         whitelist = task["bucket"] =~ (/(Overdue|Today|Future|Unscheduled)$/i)
@@ -68,18 +68,18 @@ describe "MyTasks" do
         end
 
         if task["emitter"] == GoogleProxy::APP_ID
-          task["link_url"].should == "https://mail.google.com/tasks/canvas?pli=1"
-          if task["due_date"]
-            task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-            task["due_date"]["epoch"].should >= 1351641600
+          task["linkUrl"].should == "https://mail.google.com/tasks/canvas?pli=1"
+          if task["dueDate"]
+            task["dueDate"]["date_string"] =~ /\d\d\/\d\d/
+            task["dueDate"]["epoch"].should >= 1351641600
           end
         end
         if task["emitter"] == CanvasProxy::APP_NAME
-          task["link_url"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
-          task["link_url"].should == task["source_url"]
-          if task["due_date"]
-            task["due_date"]["date_string"] =~ /\d\d\/\d\d/
-            task["due_date"]["epoch"].should >= 1351641600
+          task["linkUrl"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
+          task["linkUrl"].should == task["sourceUrl"]
+          if task["dueDate"]
+            task["dueDate"]["date_string"] =~ /\d\d\/\d\d/
+            task["dueDate"]["epoch"].should >= 1351641600
           end
         end
       end
@@ -191,14 +191,14 @@ describe "MyTasks" do
     GoogleClearTaskListProxy.stub(:new).and_return(@fake_google_clear_completed_tasks_proxy)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     response = my_tasks_model.clear_completed_tasks params={"emitter" => "Google"}
-    response.should == {:tasks_cleared => true}
+    response.should == {:tasksCleared => true}
   end
 
   it "should do nothing to Canvas Tasks" do
     CanvasProxy.stub(:access_granted?).and_return(true)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     response = my_tasks_model.clear_completed_tasks params={"emitter" => "bCourses"}
-    response.should == {:tasks_cleared => false}
+    response.should == {:tasksCleared => false}
   end
 
   it "should simulate a non-responsive google", :testext => true do
@@ -210,7 +210,7 @@ describe "MyTasks" do
     GoogleClearTaskListProxy.stub(:new).and_return(@real_google_clear_completed_tasks_proxy)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     response = my_tasks_model.clear_completed_tasks params={"emitter" => "Google"}
-    response.should == {:tasks_cleared => false}
+    response.should == {:tasksCleared => false}
     response = my_tasks_model.update_task({"type" => "sometype", "emitter" => GoogleProxy::APP_ID, "status" => "completed", "id" => "1"}, "1")
     response.should == {}
     valid_feed = my_tasks_model.get_feed
