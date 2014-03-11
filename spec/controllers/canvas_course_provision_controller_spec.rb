@@ -73,12 +73,12 @@ describe CanvasCourseProvisionController do
       expect { subject.valid_model({}) }.to raise_error(SecurityError, "Bad request made to Canvas Course Provision: No session user")
     end
 
-    it "returns CanvasCourseProvision object initialized using actual user and act_as id" do
+    it "returns Canvas::CanvasCourseProvision object initialized using actual user and act_as id" do
       user_id = "1044777"
       as_instructor_id = "1234"
       session.stub!(:[]).with(:user_id).and_return(user_id)
       result = subject.valid_model({ admin_acting_as: as_instructor_id })
-      result.should be_an_instance_of CanvasCourseProvision
+      result.should be_an_instance_of Canvas::CanvasCourseProvision
       result.instance_eval { @uid }.should == "1044777"
       result.instance_eval { @admin_acting_as }.should == "1234"
     end

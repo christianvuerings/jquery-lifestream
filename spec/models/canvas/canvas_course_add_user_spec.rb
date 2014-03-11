@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CanvasCourseAddUser do
+describe Canvas::CanvasCourseAddUser do
 
   let(:canvas_user_profile) {
     {
@@ -44,49 +44,49 @@ describe CanvasCourseAddUser do
 
   context "when searching for users" do
     it "raises exception if search text is not a string" do
-      expect { CanvasCourseAddUser.search_users({:not => 'a string'}, 'name') }.to raise_error(ArgumentError, "Search text must of type String")
+      expect { Canvas::CanvasCourseAddUser.search_users({:not => 'a string'}, 'name') }.to raise_error(ArgumentError, "Search text must of type String")
     end
 
     it "raises exception if search type is not a string" do
-      expect { CanvasCourseAddUser.search_users('John Doe', {:not => 'a string'}) }.to raise_error(ArgumentError, "Search type must of type String")
+      expect { Canvas::CanvasCourseAddUser.search_users('John Doe', {:not => 'a string'}) }.to raise_error(ArgumentError, "Search type must of type String")
     end
 
     it "raises exception if search type is not supported" do
-      expect { CanvasCourseAddUser.search_users('John Doe', 'phone_number') }.to raise_error(ArgumentError, "Search type argument 'phone_number' invalid. Must be name, email, student_id, or ldap_user_id")
+      expect { Canvas::CanvasCourseAddUser.search_users('John Doe', 'phone_number') }.to raise_error(ArgumentError, "Search type argument 'phone_number' invalid. Must be name, email, student_id, or ldap_user_id")
     end
 
     it "searches users by name" do
-      CampusData.should_receive(:find_people_by_name).with('John Doe', CanvasCourseAddUser::SEARCH_LIMIT).and_return([])
-      result = CanvasCourseAddUser.search_users('John Doe', 'name')
+      CampusData.should_receive(:find_people_by_name).with('John Doe', Canvas::CanvasCourseAddUser::SEARCH_LIMIT).and_return([])
+      result = Canvas::CanvasCourseAddUser.search_users('John Doe', 'name')
       expect(result).to be_an_instance_of Array
     end
 
     it "searches users by email" do
-      CampusData.should_receive(:find_people_by_email).with('johndoe@ber', CanvasCourseAddUser::SEARCH_LIMIT).and_return([])
-      result = CanvasCourseAddUser.search_users('johndoe@ber', 'email')
+      CampusData.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CanvasCourseAddUser::SEARCH_LIMIT).and_return([])
+      result = Canvas::CanvasCourseAddUser.search_users('johndoe@ber', 'email')
       expect(result).to be_an_instance_of Array
     end
 
     it "searches users by student id" do
       CampusData.should_receive(:find_people_by_student_id).with('105070').and_return([])
-      result = CanvasCourseAddUser.search_users('105070', 'student_id')
+      result = Canvas::CanvasCourseAddUser.search_users('105070', 'student_id')
       expect(result).to be_an_instance_of Array
     end
 
     it "searches users by LDAP user id" do
       CampusData.should_receive(:find_people_by_uid).with('100374').and_return([])
-      result = CanvasCourseAddUser.search_users('100374', 'ldap_user_id')
+      result = Canvas::CanvasCourseAddUser.search_users('100374', 'ldap_user_id')
       expect(result).to be_an_instance_of Array
     end
   end
 
   context "when obtaining course sections list" do
     it "raises exception if course id is not an integer" do
-      expect { CanvasCourseAddUser.course_sections_list('not an integer') }.to raise_error(ArgumentError, "Course ID must be a Fixnum")
+      expect { Canvas::CanvasCourseAddUser.course_sections_list('not an integer') }.to raise_error(ArgumentError, "Course ID must be a Fixnum")
     end
 
     it "returns list of section ids and names" do
-      result = CanvasCourseAddUser.course_sections_list(767330)
+      result = Canvas::CanvasCourseAddUser.course_sections_list(767330)
       expect(result).to be_an_instance_of Array
       expect(result.count).to eq 2
       expect(result[0]['id']).to eq "202184"
@@ -107,26 +107,26 @@ describe CanvasCourseAddUser do
     end
 
     it "raises exception when ldap_user_id is not a string" do
-      expect { CanvasCourseAddUser.add_user_to_course_section(260506, "StudentEnrollment", "864215") }.to raise_error(ArgumentError, "ldap_user_id must be a String")
+      expect { Canvas::CanvasCourseAddUser.add_user_to_course_section(260506, "StudentEnrollment", "864215") }.to raise_error(ArgumentError, "ldap_user_id must be a String")
     end
 
     it "raises exception when role is not a string" do
-      expect { CanvasCourseAddUser.add_user_to_course_section("260506", 1, "864215") }.to raise_error(ArgumentError, "role must be a String")
+      expect { Canvas::CanvasCourseAddUser.add_user_to_course_section("260506", 1, "864215") }.to raise_error(ArgumentError, "role must be a String")
     end
 
     it "raises exception when canvas_course_section_id is not a string" do
-      expect { CanvasCourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", 864215) }.to raise_error(ArgumentError, "canvas_course_section_id must be a String")
+      expect { Canvas::CanvasCourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", 864215) }.to raise_error(ArgumentError, "canvas_course_section_id must be a String")
     end
 
     it "adds user to canvas" do
       CanvasUserProvision.any_instance.should_receive(:import_users).with(["260506"]).and_return(true)
-      result = CanvasCourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
+      result = Canvas::CanvasCourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
       expect(result).to be_true
     end
 
     it "adds user to canvas course section using canvas user id" do
       Canvas::SectionEnrollments.any_instance.should_receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
-      result = CanvasCourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
+      result = Canvas::CanvasCourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
       expect(result).to be_true
     end
   end
