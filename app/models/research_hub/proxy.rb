@@ -1,4 +1,4 @@
-class ResearchUserProxy < BaseProxy
+class Proxy < BaseProxy
   include ClassLogger, SafeJsonParser
   extend Proxies::EnableForActAs
 
