@@ -202,13 +202,13 @@ cache:
     MyRefreshController: <%= 30.seconds %>
     UserApi: 0
     UserApiController: <%= 4.hours %>
-    CanvasLti: <%= 5.minutes %>
+    Canvas::CanvasLti: <%= 5.minutes %>
     Canvas::CanvasCourseStudentsProxy: <%= 15.minutes %>
     Canvas::CanvasCourseTeachersProxy: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
     MyRegBlocks: 0
 
-    CanvasMergedUserSites: <%= 15.minutes %>
+    Canvas::CanvasMergedUserSites: <%= 15.minutes %>
     Canvas::CanvasUserCoursesProxy: <%= 30.minutes %>
     Canvas::CanvasGroupsProxy: <%= 30.minutes %>
     Canvas::CanvasUserActivityStreamProxy: <%= 10.minutes %>

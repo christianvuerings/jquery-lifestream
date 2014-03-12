@@ -51,7 +51,7 @@ describe MyClasses::Canvas do
       }
     end
     before {Canvas::Proxy.stub(:access_granted?).with(uid).and_return(true)}
-    before {CanvasMergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
+    before {Canvas::MergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
     subject do
       MyClasses::Canvas.new(uid).merge_sites(campus_courses, sites)
       sites

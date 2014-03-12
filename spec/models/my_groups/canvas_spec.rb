@@ -20,7 +20,7 @@ describe MyGroups::Canvas do
       }
     end
     before {Canvas::Proxy.stub(:access_granted?).with(uid).and_return(true)}
-    before {CanvasMergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
+    before {Canvas::MergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
     context 'when a Canvas course site' do
       let(:canvas_sites) {{courses: [site_base.merge({term_yr: term_yr, term_cd: term_yr})], groups: []}}
       context 'when in a campus term' do

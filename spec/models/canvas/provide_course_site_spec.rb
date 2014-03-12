@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe CanvasProvideCourseSite do
+describe Canvas::ProvideCourseSite do
 
   let(:uid)                           { rand(99999).to_s }
-  let(:canvas_provide_course_site)    { CanvasProvideCourseSite.new(uid) }
+  let(:canvas_provide_course_site)    { Canvas::ProvideCourseSite.new(uid) }
   let(:worker)                        { canvas_provide_course_site }
 
   #####################################
@@ -13,7 +13,7 @@ describe CanvasProvideCourseSite do
     it "returns unique job id based on current time" do
       current_time = Time.at(1383330151.057)
       Time.should_receive(:now).and_return(current_time)
-      result = CanvasProvideCourseSite.unique_job_id
+      result = Canvas::ProvideCourseSite.unique_job_id
       result.should == "1383330151057"
     end
   end
@@ -22,12 +22,12 @@ describe CanvasProvideCourseSite do
     it "returns the current job object from global storage" do
       job_state = { status: 'Completed' }
       Rails.cache.write('canvas.courseprovision.1234.123456789', job_state, expires_in: 5.seconds.to_i, raw: true)
-      result = CanvasProvideCourseSite.find('canvas.courseprovision.1234.123456789')
+      result = Canvas::ProvideCourseSite.find('canvas.courseprovision.1234.123456789')
       result.should == job_state
     end
 
     it "returns nil if job state not found" do
-      result = CanvasProvideCourseSite.find('canvas.courseprovision.1234.123456789')
+      result = Canvas::ProvideCourseSite.find('canvas.courseprovision.1234.123456789')
       result.should be_nil
     end
   end
@@ -37,7 +37,7 @@ describe CanvasProvideCourseSite do
 
   describe "#initialize" do
     it "raises exception if uid is not a String" do
-      expect { CanvasProvideCourseSite.new(1234) }.to raise_error(ArgumentError, "uid must be a String")
+      expect { Canvas::ProvideCourseSite.new(1234) }.to raise_error(ArgumentError, "uid must be a String")
     end
 
     it "has the users id" do
@@ -62,7 +62,7 @@ describe CanvasProvideCourseSite do
     end
 
     it "initializes with unique cache key" do
-      CanvasProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
+      Canvas::ProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
       expect(canvas_provide_course_site.cache_key).to eq "canvas.courseprovision.#{uid}.1383330151057"
     end
   end
@@ -118,7 +118,7 @@ describe CanvasProvideCourseSite do
 
     it "sets status as completed and saves" do
       canvas_provide_course_site.create_course_site("fall-2013", ["1136", "1204"])
-      cached_object = CanvasProvideCourseSite.find(canvas_provide_course_site.job_id)
+      cached_object = Canvas::ProvideCourseSite.find(canvas_provide_course_site.job_id)
       cached_object.status.should == "Completed"
     end
   end
@@ -555,7 +555,7 @@ describe CanvasProvideCourseSite do
 
   describe "#expire_instructor_sites_cache" do
     it "clears canvas course site cache for user/instructor" do
-      CanvasMergedUserSites.should_receive(:expire).with(canvas_provide_course_site.uid).and_return(nil)
+      Canvas::MergedUserSites.should_receive(:expire).with(canvas_provide_course_site.uid).and_return(nil)
       canvas_provide_course_site.expire_instructor_sites_cache
     end
 
@@ -609,7 +609,7 @@ describe CanvasProvideCourseSite do
 
     it "should get properly formatted candidate course list from fake Oracle MV", :if => SakaiData.test_data? do
       Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
-      terms_feed = CanvasProvideCourseSite.new("238382").candidate_courses_list
+      terms_feed = Canvas::ProvideCourseSite.new("238382").candidate_courses_list
       terms_feed.length.should == 1
       terms_feed[0][:name].should == "Fall 2013"
       feed = terms_feed[0][:classes]
@@ -809,7 +809,7 @@ describe CanvasProvideCourseSite do
       stub_existence_proxy.stub(:course_defined?).and_return(course_defined_responses)
       expect do
         canvas_provide_course_site.generate_unique_sis_course_id(stub_existence_proxy, "eth_std-c73abc", "2015", "F")
-      end.to raise_error(CanvasProvideCourseSite::IdNotUniqueException)
+      end.to raise_error(Canvas::ProvideCourseSite::IdNotUniqueException)
     end
   end
 
@@ -994,10 +994,10 @@ describe CanvasProvideCourseSite do
     end
 
     it "saves current state of job to global storage" do
-      CanvasProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
+      Canvas::ProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
       canvas_provide_course_site.save
-      retrieved_job = CanvasProvideCourseSite.find(canvas_provide_course_site.job_id)
-      retrieved_job.class.should == CanvasProvideCourseSite
+      retrieved_job = Canvas::ProvideCourseSite.find(canvas_provide_course_site.job_id)
+      retrieved_job.class.should == Canvas::ProvideCourseSite
       retrieved_job.uid.should == uid
       retrieved_job.status.should == 'New'
       retrieved_job.job_id.should == "canvas.courseprovision.#{uid}.1383330151057"

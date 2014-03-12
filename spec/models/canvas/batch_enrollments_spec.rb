@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CanvasBatchEnrollments do
+describe Canvas::BatchEnrollments do
   let(:uid) { rand(999999).to_s }
   let(:course_id) { rand(999999).to_s }
   let(:section_id) { rand(999999).to_s }

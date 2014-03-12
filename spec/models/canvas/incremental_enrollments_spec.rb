@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CanvasIncrementalEnrollments do
+describe Canvas::IncrementalEnrollments do
   let(:uid) { rand(999999).to_s }
   let(:course_id) { rand(999999).to_s }
   let(:section_id) { rand(999999).to_s }
@@ -58,11 +58,11 @@ describe CanvasIncrementalEnrollments do
 
   describe '.canvas_section_enrollments' do
     it "raises exception if canvas_section_id argument not an integer" do
-      expect { CanvasIncrementalEnrollments.canvas_section_enrollments('123456') }.to raise_error(ArgumentError, "canvas_section_id must be a Fixnum")
+      expect { Canvas::IncrementalEnrollments.canvas_section_enrollments('123456') }.to raise_error(ArgumentError, "canvas_section_id must be a Fixnum")
     end
 
     it "returns section enrollments with students and instructors segregated" do
-      result = CanvasIncrementalEnrollments.canvas_section_enrollments(123456)
+      result = Canvas::IncrementalEnrollments.canvas_section_enrollments(123456)
       expect(result).to be_an_instance_of Hash
       expect(result[:students]).to be_an_instance_of Hash
       expect(result[:instructors]).to be_an_instance_of Hash
@@ -77,7 +77,7 @@ describe CanvasIncrementalEnrollments do
     end
 
     it "returns section enrollments without non-sis users" do
-      result = CanvasIncrementalEnrollments.canvas_section_enrollments(123456)
+      result = Canvas::IncrementalEnrollments.canvas_section_enrollments(123456)
       expect(result).to be_an_instance_of Hash
       expect(result[:students]).to be_an_instance_of Hash
       result[:students].each do |login_id, student|
@@ -88,9 +88,9 @@ describe CanvasIncrementalEnrollments do
 
     it "logs existence of non-sis user enrollments" do
       logger = double
-      CanvasIncrementalEnrollments.stub(:logger).and_return(logger)
+      Canvas::IncrementalEnrollments.stub(:logger).and_return(logger)
       logger.should_receive(:warn).with("Canvas User IDs - 4000028, 4000029, 4000030 - enrolled in Canvas Section ID # 123456 without SIS User ID present").and_return(nil)
-      result = CanvasIncrementalEnrollments.canvas_section_enrollments(123456)
+      result = Canvas::IncrementalEnrollments.canvas_section_enrollments(123456)
     end
   end
 
@@ -108,7 +108,7 @@ describe CanvasIncrementalEnrollments do
 
     before do
       Canvas::SectionsReport.any_instance.stub(:get_csv).and_return(canvas_term_sections_csv_table)
-      CanvasIncrementalEnrollments.stub(:canvas_section_enrollments).and_return({:students => 'student_enrollments_array', :instructors => 'instructor_enrollments_array'})
+      Canvas::IncrementalEnrollments.stub(:canvas_section_enrollments).and_return({:students => 'student_enrollments_array', :instructors => 'instructor_enrollments_array'})
     end
 
     it 'triggers updates for student and instructor enrollments for term specified' do

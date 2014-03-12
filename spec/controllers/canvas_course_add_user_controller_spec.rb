@@ -1,5 +1,5 @@
 require "spec_helper"
-require "lib/canvas/canvas_authorization_helpers_spec"
+require "models/canvas/authorization_helpers_spec"
 
 describe CanvasCourseAddUserController do
 

@@ -3,7 +3,7 @@ class MyAcademics::TeachingCanvas
 
   def merge_sites(campus_courses)
     return unless Canvas::Proxy.access_granted?(@uid)
-    if (canvas_sites = CanvasMergedUserSites.new(@uid).get_feed)
+    if (canvas_sites = Canvas::MergedUserSites.new(@uid).get_feed)
       included_course_sites = {}
       canvas_sites[:courses].each do |course_site|
         if (merged_courses = course_site_merge(campus_courses, course_site))

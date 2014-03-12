@@ -52,7 +52,7 @@ describe CanvasCourseProvisionController do
     end
 
     it "returns status of canvas course provisioning job" do
-      cpcs = CanvasProvideCourseSite.new('1234')
+      cpcs = Canvas::ProvideCourseSite.new('1234')
       cpcs.instance_eval { @status = 'Processing'; @completed_steps = ["Prepared courses list", "Identified department sub-account"] }
       cpcs.save
 

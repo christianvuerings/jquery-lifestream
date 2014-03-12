@@ -34,8 +34,8 @@ class CanvasCourseProvisionController < ApplicationController
 
   # GET /api/academics/canvas/course_provision/status.json
   def job_status
-    course_provision_job = CanvasProvideCourseSite.find(params[:job_id])
-    render json: course_provision_job.to_json and return if course_provision_job.class == CanvasProvideCourseSite
+    course_provision_job = Canvas::ProvideCourseSite.find(params[:job_id])
+    render json: course_provision_job.to_json and return if course_provision_job.class == Canvas::ProvideCourseSite
     render json: { job_id: params[:job_id], status: "Error", error: "Unable to find course provisioning job" }.to_json
   end
 

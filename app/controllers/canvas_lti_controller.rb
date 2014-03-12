@@ -19,7 +19,7 @@ class CanvasLtiController < ApplicationController
   end
 
   def embedded
-    lti = CanvasLti.new.validate_tool_provider(request)
+    lti = Canvas::Lti.new.validate_tool_provider(request)
     if lti
       authenticate_by_lti(lti)
       logger.warn("Session authenticated by LTI; user = #{session[:user_id]}")
