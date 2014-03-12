@@ -8,7 +8,7 @@
 
     $scope.dismissReminder = function() {
       $http.post('/api/google/dismiss_reminder').success(function() {
-        apiService.analytics.trackEvent(['Preferences', 'Dismiss bConnected reminder card']);
+        apiService.analytics.sendEvent('Preferences', 'Dismiss bConnected reminder card');
         $scope.showReminderCard = false;
         //force the user.profile to refresh since status has changed.
         $scope.api.user.fetch();

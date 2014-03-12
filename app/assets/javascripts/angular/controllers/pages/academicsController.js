@@ -304,7 +304,7 @@
             'epoch': phasesArray[i].endTime.epoch
           }
         };
-        apiService.analytics.trackEvent(['Telebears', 'Add Appointment', 'Phase: ' + payload.summary]);
+        apiService.analytics.sendEvent('Telebears', 'Add Appointment', 'Phase: ' + payload.summary);
         phases.push($http.post('/api/my/event', payload));
       }
       $q.all(phases).then(function() {
@@ -318,7 +318,7 @@
 
     $scope.toggleBlockHistory = function() {
       $scope.show_block_history = !$scope.show_block_history;
-      apiService.analytics.trackEvent(['Block history', 'Show history panel - ' + $scope.show_block_history ? 'Show' : 'Hide']);
+      apiService.analytics.sendEvent('Block history', 'Show history panel - ' + $scope.show_block_history ? 'Show' : 'Hide');
     };
 
     $scope.gradeopts = gradeopts;

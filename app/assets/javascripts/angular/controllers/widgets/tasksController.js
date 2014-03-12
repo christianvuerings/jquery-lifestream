@@ -79,19 +79,19 @@
         delete changedTask.completedDate;
       }
 
-      apiService.analytics.trackEvent(['Tasks', 'Set completed', 'completed: ' + !!changedTask.completedDate]);
+      apiService.analytics.sendEvent('Tasks', 'Set completed', 'completed: ' + !!changedTask.completedDate);
       $http.post('/api/my/tasks', changedTask).success(function(data) {
         task.editorIsProcessing = false;
         angular.extend(task, data);
         $scope.updateTaskLists();
       }).error(function() {
-        apiService.analytics.trackEvent(['Error', 'Set completed failure', 'completed: ' + !!changedTask.completedDate]);
+        apiService.analytics.sendEvent('Error', 'Set completed failure', 'completed: ' + !!changedTask.completedDate);
         //Some error notification would be helpful.
       });
     };
 
     $scope.clearCompletedTasks = function() {
-      apiService.analytics.trackEvent(['Tasks', 'Clear completed tasks', 'Clear completed tasks']);
+      apiService.analytics.sendEvent('Tasks', 'Clear completed tasks', 'Clear completed tasks');
       $http.post('/api/my/tasks/clear_completed', {
         emitter: 'Google'
       }).success(function(data) {
@@ -99,7 +99,7 @@
           $scope.getTasks();
         }
       }).error(function() {
-        apiService.analytics.trackEvent(['Error', 'Clear completed tasks failure', 'Clear completed tasks failure']);
+        apiService.analytics.sendEvent('Error', 'Clear completed tasks failure', 'Clear completed tasks failure');
         //Some error notification would be helpful.
       });
     };
@@ -107,7 +107,7 @@
 
     // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasksMode) {
-      apiService.analytics.trackEvent(['Tasks', 'Switch mode', tasksMode]);
+      apiService.analytics.sendEvent('Tasks', 'Switch mode', tasksMode);
       $scope.currentTaskMode = tasksMode;
       setCounts();
     };
@@ -133,9 +133,9 @@
           }
         }
         $scope.updateTaskLists();
-        apiService.analytics.trackEvent(['Tasks', 'Delete', task]);
+        apiService.analytics.sendEvent('Tasks', 'Delete', task);
       }).error(function() {
-        apiService.analytics.trackEvent(['Error', 'Delete task failure']);
+        apiService.analytics.sendEvent('Error', 'Delete task failure');
         //Some error notification would be helpful.
       });
 

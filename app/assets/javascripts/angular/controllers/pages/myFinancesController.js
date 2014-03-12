@@ -299,7 +299,7 @@
     };
 
     $scope.printPage = function() {
-      apiService.analytics.trackEvent(['Finances', 'Print']);
+      apiService.analytics.sendEvent('Finances', 'Print');
       window.print();
     };
 
