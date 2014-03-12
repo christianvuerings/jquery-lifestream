@@ -30,15 +30,15 @@
     var handleAccessToPage = function() {
       // Redirect to the login page when the page is private and you aren't authenticated
       if (!$route.current.isPublic && !events.isAuthenticated) {
-        analyticsService.trackEvent(['Authentication', 'Sign in - redirect to login']);
+        analyticsService.sendEvent('Authentication', 'Sign in - redirect to login');
         signIn();
       // Record that you've already visited the calcentral once and redirect to the settings page on the first login
       } else if (events.isAuthenticated && !profile.first_login_at) {
-        analyticsService.trackEvent(['Authentication', 'First login']);
+        analyticsService.sendEvent('Authentication', 'First login');
         $http.post('/api/my/record_first_login').success(setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
       } else if (events.isAuthenticated && $location.path() === '/') {
-        analyticsService.trackEvent(['Authentication', 'Redirect to dashboard']);
+        analyticsService.sendEvent('Authentication', 'Redirect to dashboard');
         utilService.redirect('dashboard');
       }
     };
@@ -68,7 +68,7 @@
     };
 
     var enableOAuth = function(authorizationService) {
-      analyticsService.trackEvent(['OAuth', 'Enable', 'service: ' + authorizationService]);
+      analyticsService.sendEvent('OAuth', 'Enable', 'service: ' + authorizationService);
       window.location = '/api/' + authorizationService + '/request_authorization';
     };
 
@@ -93,7 +93,7 @@
      */
     var optOut = function() {
       $http.post('/api/my/opt_out').success(function() {
-        analyticsService.trackEvent(['Settings', 'User opt-out']);
+        analyticsService.sendEvent('Settings', 'User opt-out');
         signOut();
       });
     };
@@ -102,7 +102,7 @@
      * Sign the current user in.
      */
     var signIn = function() {
-      analyticsService.trackEvent(['Authentication', 'Redirect to login']);
+      analyticsService.sendEvent('Authentication', 'Redirect to login');
       window.location = '/auth/cas';
     };
 
@@ -114,7 +114,7 @@
       // Send the request to remove the authorization for the specific OAuth service
       // Only when the request was successful, we update the UI
       $http.post('/api/' + authorizationService + '/remove_authorization').success(function(){
-        analyticsService.trackEvent(['OAuth', 'Remove', 'service: ' + authorizationService]);
+        analyticsService.sendEvent('OAuth', 'Remove', 'service: ' + authorizationService);
         profile['has_' + authorizationService + '_access_token'] = false;
       });
     };
@@ -125,7 +125,7 @@
     var signOut = function() {
       $http.post('/logout').success(function(data) {
         if (data && data.redirect_url) {
-          analyticsService.trackEvent(['Authentication', 'Redirect to logout']);
+          analyticsService.sendEvent('Authentication', 'Redirect to logout');
           window.location = data.redirect_url;
         }
       }).error(function(data, responseCode) {

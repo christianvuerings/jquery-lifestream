@@ -32,7 +32,7 @@
           }
         }
       }
-      analyticsService.trackEvent(['Detailed view', item.show ? 'Open' : 'Close', widget]);
+      analyticsService.sendEvent('Detailed view', item.show ? 'Open' : 'Close', widget);
     };
 
     // Expose the methods

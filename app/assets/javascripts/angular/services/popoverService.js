@@ -53,7 +53,7 @@
     };
 
     var clickThrough = function(popover) {
-      analyticsService.trackEvent(['Popover', 'clickThrough', popover]);
+      analyticsService.sendEvent('Popover', 'clickThrough', popover);
     };
 
     /**
@@ -65,7 +65,7 @@
       popovers[popover] = !popovers[popover];
       bindEventHandlers(popovers[popover]);
       if (popovers[popover]) {
-        analyticsService.trackEvent(['Popover', 'Open', popover]);
+        analyticsService.sendEvent('Popover', 'Open', popover);
       }
     };
 

@@ -5,25 +5,16 @@
   angular.module('calcentral.services').service('analyticsService', function($rootScope, $window, $location) {
 
     /**
-     * Adding a track property to the analytics object
-     * @param {Array} property Array of the property you want to add
+     * Send an analytics event
+     * @param {String} category e.g. Video
+     * @param {String} action e.g. Play
+     * @param {String} label e.g. Flying to Belgium
+     * More info on https://developers.google.com/analytics/devguides/collection/analyticsjs/events
      */
-    var addTrackProperty = function(property) {
-      // We should check whether the Google Analytics script has been loaded
-      if ($window._gaq) {
-        $window._gaq.push(property);
+    var sendEvent = function(category, action, label) {
+      if ($window && $window.ga) {
+        $window.ga('send', category, action, label);
       }
-    };
-
-    /**
-     * Track an event on the page
-     * @param {Array} eventtrack An array of what you want to track.
-     * In this order: category - action - label - value and non-interaction
-     * e.g. ['Videos', 'Play', 'Flying to Belgium']
-     * More info on https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide
-     */
-    var trackEvent = function(eventtrack) {
-      addTrackProperty(['_trackEvent'].concat(eventtrack));
     };
 
     /**
@@ -33,7 +24,7 @@
      * @param {String} url The URL you're accessing
      */
     var trackExternalLink = function(section, website, url) {
-      trackEvent(['External link', url , 'section: ' + section + ' - website: ' + website]);
+      sendEvent('External link', url, 'section: ' + section + ' - website: ' + website);
     };
 
     /**
@@ -41,7 +32,7 @@
      * e.g. /, /dashboard, /settings
      */
     var trackPageview = function() {
-      addTrackProperty(['_trackPageview', $location.path()]);
+      sendEvent('pageview', $location.path());
     };
 
     // Whenever we're changing the content loaded, we need to track which page we're viewing.
@@ -49,7 +40,7 @@
 
     // Expose methods
     return {
-      trackEvent: trackEvent,
+      sendEvent: sendEvent,
       trackExternalLink: trackExternalLink
     };
 

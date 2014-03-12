@@ -39,7 +39,7 @@
       } else {
         _taskPanelState.showAddTask = !_taskPanelState.showAddTask;
       }
-      apiService.analytics.trackEvent(['Tasks', 'Add panel - ' + _taskPanelState.showAddTask ? 'Show' : 'Hide']);
+      apiService.analytics.sendEvent('Tasks', 'Add panel - ' + _taskPanelState.showAddTask ? 'Show' : 'Hide');
     };
 
     var addTask = function() {
@@ -47,7 +47,7 @@
       _taskPanelState.isProcessing = true;
 
       var trackEvent = 'notes: ' + !!rawTask.notes + ' date: ' + !!rawTask.dueDate;
-      apiService.analytics.trackEvent(['Tasks', 'Add', trackEvent]);
+      apiService.analytics.sendEvent('Tasks', 'Add', trackEvent);
       // When the user submits the task, we show a processing message
       // This message will disappear as soon the task has been added.
 
