@@ -1,4 +1,4 @@
-class SakaiMergedUserSites < SakaiProxy
+class SakaiMergedUserSites < Sakai::Proxy
   include ClassLogger
 
   def get_feed

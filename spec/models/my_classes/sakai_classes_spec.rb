@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyClasses::Sakai do
+describe MyClasses::SakaiClasses do
   let(:uid) {rand(99999).to_s}
   let(:sites) {[]}
   let(:ccn) {rand(9999)}
@@ -24,12 +24,12 @@ describe MyClasses::Sakai do
       short_description: "A barrel of #{ccn} monkeys",
       term_yr: term_yr,
       term_cd: term_cd,
-      emitter: SakaiProxy::APP_ID
+      emitter: Sakai::Proxy::APP_ID
     }
   end
   before {SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
   subject do
-    MyClasses::Sakai.new(uid).merge_sites(campus_courses, sites)
+    MyClasses::SakaiClasses.new(uid).merge_sites(campus_courses, sites)
     sites
   end
   context 'when Sakai course is within a current term' do
@@ -42,7 +42,7 @@ describe MyClasses::Sakai do
       it 'points back to campus course' do
         site = subject.first
         expect(site[:id]).to eq sakai_site_id
-        expect(site[:emitter]).to eq SakaiProxy::APP_ID
+        expect(site[:emitter]).to eq Sakai::Proxy::APP_ID
         expect(site[:courses]).to eq [{id: course_id}]
         expect(site[:sections]).to be_nil
       end
@@ -54,7 +54,7 @@ describe MyClasses::Sakai do
       it 'does not point back to campus course' do
         site = subject.first
         expect(site[:id]).to eq sakai_site_id
-        expect(site[:emitter]).to eq SakaiProxy::APP_ID
+        expect(site[:emitter]).to eq Sakai::Proxy::APP_ID
         expect(site[:courses]).to be_empty
         expect(site[:sections]).to be_nil
       end

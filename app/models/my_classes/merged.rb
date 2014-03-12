@@ -5,7 +5,7 @@ class MyClasses::Merged  < UserSpecificModel
     campus_courses = MyClasses::Campus.new(@uid).fetch
     sites.concat(campus_courses)
     MyClasses::Canvas.new(@uid).merge_sites(campus_courses, sites)
-    MyClasses::Sakai.new(@uid).merge_sites(campus_courses, sites)
+    MyClasses::SakaiClasses.new(@uid).merge_sites(campus_courses, sites)
     {
       classes: sites,
       current_term: Settings.sakai_proxy.current_terms.first

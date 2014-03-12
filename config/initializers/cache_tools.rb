@@ -30,7 +30,7 @@ module Calcentral
       MyBadges::GoogleMail => :expire,
       MyTasks::GoogleTasks => :expire,
 
-      SakaiProxy => :expire,
+      Sakai::Proxy => :expire,
       SakaiMergedUserSites => :expire
     }.each do |key, value|
       USER_CACHE_EXPIRATION.add_observer(key, value)

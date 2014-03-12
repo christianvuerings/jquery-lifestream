@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe "MyFinancials" do
+describe MyFinancials do
 
   let!(:oski_uid) { "61889" }
-  let!(:fake_financials_proxy) { FinancialsProxy.new({user_id: oski_uid, fake: true}) }
-  before(:each) { FinancialsProxy.stub(:new).and_return(fake_financials_proxy) }
+  let!(:fake_financials_proxy) { Financials::Proxy.new({user_id: oski_uid, fake: true}) }
+  before(:each) { Financials::Proxy.stub(:new).and_return(fake_financials_proxy) }
 
   context "happy path" do
     subject { MyFinancials.new(oski_uid).get_feed }
