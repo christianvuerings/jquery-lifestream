@@ -14,7 +14,7 @@ describe "GoogleUserinfo" do
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
       :expiration_time => 0
     }
-    userinfo_proxy = GoogleUserinfoProxy.new proxy_opts
+    userinfo_proxy = Google::GoogleUserinfoProxy.new proxy_opts
     response = userinfo_proxy.user_info
     %w(email verified_email name id).each do |key|
       response.data[key].blank?.should_not be_true

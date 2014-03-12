@@ -98,7 +98,7 @@ class UserApi < UserSpecificModel
       :full_name => @first_name + ' ' + @last_name,
       :is_google_reminder_dismissed => is_google_reminder_dismissed,
       :has_canvas_account => Canvas::Proxy.has_account?(@uid),
-      :has_google_access_token => GoogleProxy.access_granted?(@uid),
+      :has_google_access_token => Google::GoogleProxy.access_granted?(@uid),
       :google_email => google_mail,
       :canvas_email => canvas_mail,
       :last_name => @last_name,

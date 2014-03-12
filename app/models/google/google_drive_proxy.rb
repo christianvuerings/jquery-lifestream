@@ -1,7 +1,9 @@
-class GoogleDriveProxy < GoogleProxy
+module Google
+  class GoogleDriveProxy < GoogleProxy
 
-  def self.api
-    "drive"
+    def self.api
+      "drive"
+    end
+
   end
-
 end

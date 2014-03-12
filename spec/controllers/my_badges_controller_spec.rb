@@ -4,8 +4,8 @@ describe MyBadgesController do
 
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_drive_list = GoogleDriveListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
-    @fake_events_list = GoogleEventsListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
+    @fake_drive_list = Google::GoogleDriveListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
+    @fake_events_list = Google::GoogleEventsListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
   end
 
   it "should be an empty badges feed on non-authenticated user" do
@@ -16,9 +16,9 @@ describe MyBadgesController do
   end
 
   it "should be an non-empty badges feed on authenticated user" do
-    GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
-    GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
+    Google::GoogleProxy.stub(:access_granted?).and_return(true)
+    Google::GoogleDriveListProxy.stub(:new).and_return(@fake_drive_list)
+    Google::GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)

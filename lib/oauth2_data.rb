@@ -33,7 +33,7 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.get_google_email(user_id)
-    get_appdata_field(GoogleProxy::APP_ID, user_id, 'email')
+    get_appdata_field(Google::GoogleProxy::APP_ID, user_id, 'email')
   end
 
   def self.get_canvas_email(user_id)
@@ -41,15 +41,15 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.is_google_reminder_dismissed(user_id)
-    get_appdata_field(GoogleProxy::APP_ID, user_id, 'is_reminder_dismissed')
+    get_appdata_field(Google::GoogleProxy::APP_ID, user_id, 'is_reminder_dismissed')
   end
 
   def self.update_google_email!(user_id)
     #will be a noop if user hasn't granted google access
     use_pooled_connection {
-      authenticated_entry = self.where(uid: user_id, app_id: GoogleProxy::APP_ID).first
+      authenticated_entry = self.where(uid: user_id, app_id: Google::GoogleProxy::APP_ID).first
       return unless authenticated_entry
-      userinfo = GoogleUserinfoProxy.new(user_id: user_id).user_info
+      userinfo = Google::GoogleUserinfoProxy.new(user_id: user_id).user_info
       return unless userinfo && userinfo.response.status == 200
       authenticated_entry.app_data["email"] = userinfo.data["email"]
       authenticated_entry.save
@@ -93,7 +93,7 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.dismiss_google_reminder(user_id)
-    new_or_update(user_id, GoogleProxy::APP_ID, '', '', 0, {
+    new_or_update(user_id, Google::GoogleProxy::APP_ID, '', '', 0, {
       app_data: {
         'is_reminder_dismissed' => true
       }

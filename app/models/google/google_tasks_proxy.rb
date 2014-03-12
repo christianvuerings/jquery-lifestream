@@ -1,7 +1,9 @@
-class GoogleTasksProxy < GoogleProxy
+module Google
+  class GoogleTasksProxy < GoogleProxy
 
-  def self.api
-    "tasks"
+    def self.api
+      "tasks"
+    end
+
   end
-
 end

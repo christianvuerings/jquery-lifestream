@@ -80,8 +80,8 @@ describe MyEventsController do
       before(:each) do
         session[:user_id] = random_id
         described_class.any_instance.stub(:check_google_access).and_return(true)
-        fake_proxy = GoogleEventsInsertProxy.new(fake: true, fake_options: { match_requests_on: [:method, :path, :body] })
-        GoogleEventsInsertProxy.stub(:new).and_return(fake_proxy)
+        fake_proxy = Google::GoogleEventsInsertProxy.new(fake: true, fake_options: { match_requests_on: [:method, :path, :body] })
+        Google::GoogleEventsInsertProxy.stub(:new).and_return(fake_proxy)
       end
 
       subject do

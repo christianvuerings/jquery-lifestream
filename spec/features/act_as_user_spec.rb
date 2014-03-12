@@ -2,7 +2,7 @@ require "spec_helper"
 
 feature "act_as_user" do
   before do
-    @fake_events_list = GoogleEventsListProxy.new(fake: true)
+    @fake_events_list = Google::GoogleEventsListProxy.new(fake: true)
     UserAuth.new_or_update_superuser! "238382"
     UserAuth.new_or_update_test_user! "2040"
     UserAuth.new_or_update_test_user! "1234"
@@ -83,8 +83,8 @@ feature "act_as_user" do
 
   scenario "making sure act_as doesn't expose google data for non-fake users", :testext => true do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
-    GoogleProxy.stub(:access_granted?).and_return(true)
-    GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
+    Google::GoogleProxy.stub(:access_granted?).and_return(true)
+    Google::GoogleEventsListProxy.stub(:new).and_return(@fake_events_list)
     UserAuth.new_or_update_superuser! "2040"
     UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
     %w(238382 2040 11002820).each do |user|

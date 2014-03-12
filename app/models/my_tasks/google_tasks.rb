@@ -15,7 +15,7 @@ module MyTasks
       self.class.fetch_from_cache(@uid) {
         all_tasks = []
         filtered_tasks = []
-        google_proxy = GoogleTasksListProxy.new(user_id: @uid)
+        google_proxy = Google::GoogleTasksListProxy.new(user_id: @uid)
 
         Rails.logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
         google_proxy.tasks_list.each do |response_page|
@@ -46,7 +46,7 @@ module MyTasks
 
     def update_task(params, task_list_id="@default")
       body = format_google_update_task_request params
-      google_proxy = GoogleUpdateTaskProxy.new(user_id: @uid)
+      google_proxy = Google::GoogleUpdateTaskProxy.new(user_id: @uid)
       Rails.logger.debug "#{self.class.name} update_task, sending to Google (task_list_id, task_id, body):
           {#{task_list_id}, #{params["id"]}, #{body.inspect}}"
       return_response google_proxy.update_task(task_list_id, params["id"], body)
@@ -54,14 +54,14 @@ module MyTasks
 
     def insert_task(params, task_list_id="@default")
       body = format_google_insert_task_request params
-      google_proxy = GoogleInsertTaskProxy.new(user_id: @uid)
+      google_proxy = Google::GoogleInsertTaskProxy.new(user_id: @uid)
       Rails.logger.debug "#{self.class.name} insert_task, sending to Google (task_list_id, body):
             {#{task_list_id}, #{body.inspect}}"
       return_response google_proxy.insert_task(task_list_id, body)
     end
 
     def clear_completed_tasks(task_list_id="@default")
-      google_proxy = GoogleClearTaskListProxy.new(user_id: @uid)
+      google_proxy = Google::GoogleClearTaskListProxy.new(user_id: @uid)
       Rails.logger.debug "#{self.class.name} clearing task list, sending to Google (task_list_id):
             {#{task_list_id}}"
       result = google_proxy.clear_task_list(task_list_id)
@@ -69,7 +69,7 @@ module MyTasks
     end
 
     def delete_task(params, task_list_id="@default")
-      google_proxy = GoogleDeleteTaskProxy.new(user_id: @uid)
+      google_proxy = Google::GoogleDeleteTaskProxy.new(user_id: @uid)
       Rails.logger.debug "#{self.class.name} delete_task, sending to Google (task_list_id, params):
             {#{task_list_id}, #{params.inspect}}"
       response  = google_proxy.delete_task(task_list_id, params[:task_id])
@@ -114,7 +114,7 @@ module MyTasks
       formatted_entry = {
         "type" => "task",
         "title" => entry["title"] || "",
-        "emitter" => GoogleProxy::APP_ID,
+        "emitter" => Google::GoogleProxy::APP_ID,
         "linkUrl" => "https://mail.google.com/tasks/canvas?pli=1",
         "id" => entry["id"],
         "sourceUrl" => entry["selfLink"] || ""
