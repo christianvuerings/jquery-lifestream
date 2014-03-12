@@ -5,7 +5,7 @@ class CanvasUserProvisionController < ApplicationController
   def user_import
     authorize(current_user, :can_import_canvas_users?)
     user_ids = params[:user_ids].split(',')
-    CanvasUserProvision.new.import_users(user_ids)
+    Canvas::CanvasUserProvision.new.import_users(user_ids)
     render json: { status: 'success', user_ids: user_ids }.to_json
   rescue Pundit::NotAuthorizedError
     return user_not_authorized

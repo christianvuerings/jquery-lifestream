@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe CanvasRefreshAllCampusData do
+describe Canvas::CanvasRefreshAllCampusData do
 
   let(:current_sis_term_ids)                    { ["TERM:2013-D", "TERM:2014-B"] }
-  subject { CanvasRefreshAllCampusData.new('incremental') }
+  subject { Canvas::CanvasRefreshAllCampusData.new('incremental') }
 
   before do
     Canvas::Proxy.stub(:current_sis_term_ids).and_return(current_sis_term_ids)
@@ -27,17 +27,17 @@ describe CanvasRefreshAllCampusData do
 
   context "when making csv files" do
     before do
-      CanvasMaintainUsers.any_instance.stub(:refresh_existing_user_accounts).and_return(nil)
-      CanvasIncrementalEnrollments.any_instance.stub(:refresh_existing_term_sections).and_return(nil)
+      Canvas::CanvasMaintainUsers.any_instance.stub(:refresh_existing_user_accounts).and_return(nil)
+      Canvas::CanvasIncrementalEnrollments.any_instance.stub(:refresh_existing_term_sections).and_return(nil)
     end
 
     it "should send call to populate incremental update csv for users" do
-      CanvasMaintainUsers.any_instance.should_receive(:refresh_existing_user_accounts).once.and_return(nil)
+      Canvas::CanvasMaintainUsers.any_instance.should_receive(:refresh_existing_user_accounts).once.and_return(nil)
       subject.make_csv_files
     end
 
     it "should send call to populate each terms incremental update csv for enrollments" do
-      CanvasIncrementalEnrollments.any_instance.should_receive(:refresh_existing_term_sections).twice.and_return(nil)
+      Canvas::CanvasIncrementalEnrollments.any_instance.should_receive(:refresh_existing_term_sections).twice.and_return(nil)
       subject.make_csv_files
     end
   end

@@ -1,4 +1,4 @@
-# The methods provided by the CanvasAuthorizationHelpers module are applied to Canvas controllers
+# The methods provided by the Canvas::CanvasAuthorizationHelpers module are applied to Canvas controllers
 # in unique configurations to provide desired behavior. Because of this, the shared examples below
 # are intended to be applied to the spec for controllers in a way that verifies the same configuration
 # of unique behaviors.

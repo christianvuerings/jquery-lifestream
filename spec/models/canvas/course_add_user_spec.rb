@@ -102,7 +102,7 @@ describe Canvas::CourseAddUser do
 
   context "when adding user to a course section" do
     before do
-      CanvasUserProvision.any_instance.stub(:import_users).with(["260506"]).and_return(true)
+      Canvas::CanvasUserProvision.any_instance.stub(:import_users).with(["260506"]).and_return(true)
       Canvas::SectionEnrollments.any_instance.stub(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
     end
 
@@ -119,7 +119,7 @@ describe Canvas::CourseAddUser do
     end
 
     it "adds user to canvas" do
-      CanvasUserProvision.any_instance.should_receive(:import_users).with(["260506"]).and_return(true)
+      Canvas::CanvasUserProvision.any_instance.should_receive(:import_users).with(["260506"]).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
       expect(result).to be_true
     end

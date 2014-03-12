@@ -55,7 +55,7 @@ describe MyAcademics::TeachingCanvas do
       }
     end
     before {Canvas::Proxy.stub(:access_granted?).with(uid).and_return(true)}
-    before {CanvasMergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
+    before {Canvas::CanvasMergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
 
     context 'when Canvas course has an academic term' do
       let(:term_yr) {CampusData.current_year}

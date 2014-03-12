@@ -66,7 +66,7 @@ describe Canvas::CourseProvision do
     end
   }
   before { Canvas::Admins.any_instance.stub(:admin_user?) {|uid| uid == canvas_admin_id} }
-  before { CanvasProvideCourseSite.stub(:new) do |uid|
+  before { Canvas::CanvasProvideCourseSite.stub(:new) do |uid|
     double(
       candidate_courses_list: (uid == instructor_id) ? teaching_semesters : [],
       current_terms: current_terms,
@@ -166,7 +166,7 @@ describe Canvas::CourseProvision do
       cpcs.stub(:save).and_return(true)
       cpcs.stub(:create_course_site).and_return(true)
       cpcs.stub(:job_id).and_return('canvas.courseprovision.1234.1383330151057')
-      CanvasProvideCourseSite.stub(:new).and_return(cpcs)
+      Canvas::CanvasProvideCourseSite.stub(:new).and_return(cpcs)
     end
 
     it "returns nil if instructor does not have access to CCNs" do
