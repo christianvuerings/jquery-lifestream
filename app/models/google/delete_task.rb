@@ -1,5 +1,5 @@
 module Google
-  class GoogleDeleteTaskProxy < GoogleTasksProxy
+  class DeleteTask < Tasks
 
     def delete_task(task_list_id, task_id)
       proxy_response = request(:api => "tasks", :resource => "tasks", :method => "delete",

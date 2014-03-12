@@ -1,5 +1,5 @@
 module Google
-  class GoogleTasksListProxy < GoogleTasksProxy
+  class TasksList < Tasks
 
     def tasks_list(optional_params={})
       optional_params.reverse_merge!(:tasklist => '@default', :maxResults => 100)

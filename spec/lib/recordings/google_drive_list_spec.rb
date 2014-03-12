@@ -15,7 +15,7 @@ describe "GoogleDriveList" do
       :expiration_time => 0
     }
 
-    drive_list_proxy = Google::GoogleDriveListProxy.new proxy_opts
+    drive_list_proxy = Google::DriveList.new proxy_opts
     response = drive_list_proxy.drive_list
     response.kind_of?(Enumerable).should be_true
     # Should help raise concerns if recordings goes wrong

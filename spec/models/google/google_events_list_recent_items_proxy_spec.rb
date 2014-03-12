@@ -7,7 +7,7 @@ describe 'GoogleEventsList (Recent Items)' do
   end
 
   it "should return a fake calendar list response for processing badges info on calendar feed" do
-    proxy = Google::GoogleEventsListProxy.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
+    proxy = Google::EventsList.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
     response_array = [
       proxy.recent_items.first
     ]

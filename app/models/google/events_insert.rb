@@ -1,5 +1,5 @@
 module Google
-  class GoogleEventsInsertProxy < GoogleEventsProxy
+  class EventsInsert < Events
     def insert_event(body)
       request(api: self.class.api,
               params: {"calendarId" => "primary"},

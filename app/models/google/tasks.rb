@@ -1,5 +1,5 @@
 module Google
-  class GoogleTasksProxy < GoogleProxy
+  class Tasks < Proxy
 
     def self.api
       "tasks"

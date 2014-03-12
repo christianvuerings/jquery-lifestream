@@ -1,5 +1,5 @@
 module Google
-  class GoogleDriveProxy < GoogleProxy
+  class Drive < Proxy
 
     def self.api
       "drive"

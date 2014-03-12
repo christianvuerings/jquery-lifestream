@@ -1,5 +1,5 @@
 module Google
-  class GoogleEventsListProxy < GoogleEventsProxy
+  class EventsList < Events
 
     def events_list(optional_params={})
       optional_params.reverse_merge!(:calendarId => 'primary', :maxResults => 1000)

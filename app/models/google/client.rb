@@ -1,7 +1,7 @@
 module Google
   require 'google/api_client'
 
-  class GoogleProxyClient
+  class Client
     class << self
       def client
         @client ||= Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1", :auto_refresh_token => true})
@@ -33,7 +33,7 @@ module Google
         request_hash[:headers] = page_params[:headers] unless page_params[:headers].blank?
         request_hash[:authorization] = @authorization
 
-        client = Google::GoogleProxyClient.client.dup
+        client = Google::Client.client.dup
         request = client.generate_request(options=request_hash)
         client.authorization = authorization
 

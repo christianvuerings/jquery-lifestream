@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe Google::GoogleUserinfoProxy do
+describe Google::Userinfo do
 
   begin
     @random_id = rand(99999).to_s
   end
 
   it "Should return a valid list of drive files" do
-    userinfo_proxy = Google::GoogleUserinfoProxy.new :fake => true
+    userinfo_proxy = Google::Userinfo.new :fake => true
     userinfo_proxy.class.api.should == "userinfo"
     response = userinfo_proxy.user_info
     %w(email verified_email name id).each do |key|

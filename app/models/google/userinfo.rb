@@ -1,5 +1,5 @@
 module Google
-  class GoogleUserinfoProxy < GoogleProxy
+  class Userinfo < Proxy
 
     def self.api
       "userinfo"

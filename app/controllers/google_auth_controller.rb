@@ -5,7 +5,7 @@ class GoogleAuthController < AuthController
   respond_to :json
 
   def app_id
-    Google::GoogleProxy::APP_ID
+    Google::Proxy::APP_ID
   end
 
   def get_client(final_redirect = '', force_domain = true)
@@ -36,7 +36,7 @@ class GoogleAuthController < AuthController
 
   def dismiss_reminder
     result = false
-    if (!Google::GoogleProxy.access_granted? session[:user_id])
+    if (!Google::Proxy.access_granted? session[:user_id])
       result = Oauth2Data.dismiss_google_reminder(session[:user_id])
     end
     UserApi.expire(session[:user_id])

@@ -3,8 +3,8 @@ require "spec_helper"
 describe "MyUpNext" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_google_proxy = Google::GoogleEventsListProxy.new({fake: true})
-    @real_events_list = Google::GoogleEventsListProxy.new(
+    @fake_google_proxy = Google::EventsList.new({fake: true})
+    @real_events_list = Google::EventsList.new(
       :access_token => Settings.google_proxy.test_user_access_token,
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
       :expiration_time => 0
@@ -12,10 +12,10 @@ describe "MyUpNext" do
   end
 
   it "should load nicely with the pre-recorded fake Google proxy feed for event#list" do
-    Google::GoogleProxy.stub(:access_granted?).and_return(true)
-    Google::GoogleEventsListProxy.stub(:new).and_return(@fake_google_proxy)
+    Google::Proxy.stub(:access_granted?).and_return(true)
+    Google::EventsList.stub(:new).and_return(@fake_google_proxy)
     fake_google_events_array = @fake_google_proxy.events_list({:maxResults => 10})
-    Google::GoogleEventsListProxy.any_instance.stub(:events_list).and_return(fake_google_events_array)
+    Google::EventsList.any_instance.stub(:events_list).and_return(fake_google_events_array)
     valid_feed = MyUpNext.new(@user_id).get_feed
     valid_feed[:items].size.should == 13
     valid_feed[:items].each do |entry|
@@ -32,15 +32,15 @@ describe "MyUpNext" do
   end
 
   it "should return an empty feed for non-authorized users" do
-    Google::GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    Google::GoogleProxy.stub(:access_granted?).and_return(false)
+    Google::Proxy.stub(:new).and_return(@fake_google_proxy)
+    Google::Proxy.stub(:access_granted?).and_return(false)
     empty_feed = MyUpNext.new(@user_id).get_feed
     empty_feed[:items].empty?.should be_true
   end
 
   it "should return an empty feed for act-as users" do
-    Google::GoogleProxy.stub(:new).and_return(@fake_google_proxy)
-    Google::GoogleProxy.stub(:access_granted?).and_return(true)
+    Google::Proxy.stub(:new).and_return(@fake_google_proxy)
+    Google::Proxy.stub(:access_granted?).and_return(true)
     another_user = @user_id
     while (another_user == @user_id)
       another_user = rand(99999).to_s
@@ -51,8 +51,8 @@ describe "MyUpNext" do
 
   it "should not include all-day events for tomorrow" do
     too_late = Time.zone.today.to_time_in_current_zone.to_datetime.end_of_day
-    Google::GoogleProxy.stub(:access_granted?).and_return(true)
-    Google::GoogleProxy.stub(:new).and_return(@fake_google_proxy)
+    Google::Proxy.stub(:access_granted?).and_return(true)
+    Google::Proxy.stub(:new).and_return(@fake_google_proxy)
     valid_feed = MyUpNext.new(@user_id).get_feed
     valid_feed[:items].size.should be > 0
     out_of_scope_items = valid_feed[:items].select { |entry|
@@ -62,10 +62,10 @@ describe "MyUpNext" do
   end
 
   it "should simulate a non-responsive google", :testext => true do
-    Google::GoogleProxy.stub(:access_granted?).and_return(true)
+    Google::Proxy.stub(:access_granted?).and_return(true)
     Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
     Google::APIClient.stub(:execute).and_raise(StandardError)
-    Google::GoogleEventsListProxy.stub(:new).and_return(@real_events_list)
+    Google::EventsList.stub(:new).and_return(@real_events_list)
     dead_feed = MyUpNext.new @user_id
     dead_feed.get_feed[:items].should == []
   end

@@ -1,5 +1,5 @@
 module Google
-  class GoogleUpdateTaskProxy < GoogleTasksProxy
+  class UpdateTask < Tasks
 
     def update_task(task_list_id, task_id, body)
       parsed_body = stringify_body(body)

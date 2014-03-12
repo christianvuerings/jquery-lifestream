@@ -1,5 +1,5 @@
 module Google
-  class GoogleEventsProxy < GoogleProxy
+  class Events < Proxy
 
     def self.api
       "calendar"

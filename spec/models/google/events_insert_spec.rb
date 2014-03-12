@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Google::GoogleEventsInsertProxy do
+describe Google::EventsInsert do
   let(:user_id) { rand(999999).to_s }
   # be careful about modifying payloads, the proxies are matching vcr recordings
   # also by body since these are POSTs
@@ -43,17 +43,17 @@ describe Google::GoogleEventsInsertProxy do
 
   context "fake insert event test", if: Rails.env.test? do
     before(:each) do
-      fake_proxy = Google::GoogleEventsInsertProxy.new(fake: true, fake_options: { match_requests_on: [:method, :path, :body] })
-      Google::GoogleEventsInsertProxy.stub(:new).and_return(fake_proxy)
+      fake_proxy = Google::EventsInsert.new(fake: true, fake_options: { match_requests_on: [:method, :path, :body] })
+      Google::EventsInsert.stub(:new).and_return(fake_proxy)
     end
 
     context "valid payload" do
-      subject { Google::GoogleEventsInsertProxy.new(user_id).insert_event(valid_payload) }
+      subject { Google::EventsInsert.new(user_id).insert_event(valid_payload) }
       it_behaves_like "200 insert event task"
     end
 
     context "invalid payload" do
-      subject { Google::GoogleEventsInsertProxy.new(user_id).insert_event(invalid_payload) }
+      subject { Google::EventsInsert.new(user_id).insert_event(invalid_payload) }
       it_behaves_like "4xx insert event task"
     end
   end
@@ -65,20 +65,20 @@ describe Google::GoogleEventsInsertProxy do
         refresh_token: Settings.google_proxy.test_user_refresh_token,
         expiration_time: 0
       }
-      real_insert_proxy = Google::GoogleEventsInsertProxy.new(token_info)
-      real_delete_proxy = Google::GoogleEventsDeleteProxy.new(token_info)
-      Google::GoogleEventsInsertProxy.stub(:new).and_return(real_insert_proxy)
-      Google::GoogleEventsDeleteProxy.stub(:new).and_return(real_delete_proxy)
+      real_insert_proxy = Google::EventsInsert.new(token_info)
+      real_delete_proxy = Google::EventsDelete.new(token_info)
+      Google::EventsInsert.stub(:new).and_return(real_insert_proxy)
+      Google::EventsDelete.stub(:new).and_return(real_delete_proxy)
     end
 
     context "invalid payload" do
-      subject { Google::GoogleEventsInsertProxy.new(user_id).insert_event(invalid_payload) }
+      subject { Google::EventsInsert.new(user_id).insert_event(invalid_payload) }
       it_behaves_like "4xx insert event task"
     end
 
     context "valid payload" do
-      let(:delete_proxy) { Google::GoogleEventsDeleteProxy.new(user_id) }
-      subject { @insert_response = Google::GoogleEventsInsertProxy.new(user_id).insert_event(valid_payload) }
+      let(:delete_proxy) { Google::EventsDelete.new(user_id) }
+      subject { @insert_response = Google::EventsInsert.new(user_id).insert_event(valid_payload) }
       after(:each) do
         insert_id = @insert_response.data["id"]
         delete_proxy.delete_event(insert_id)

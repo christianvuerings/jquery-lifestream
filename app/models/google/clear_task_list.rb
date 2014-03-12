@@ -1,5 +1,5 @@
 module Google
-  class GoogleClearTaskListProxy < GoogleTasksProxy
+  class ClearTaskList < Tasks
 
     def clear_task_list(task_list_id)
       proxy_response = request(:api => "tasks", :resource => "tasks", :method => "clear",

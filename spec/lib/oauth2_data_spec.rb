@@ -4,8 +4,8 @@ describe Oauth2Data do
 
   before do
     @random_id = rand(999999).to_s
-    @fake_google_userinfo = Google::GoogleUserinfoProxy.new(:fake => true).user_info
-    @real_google_userinfo = Google::GoogleUserinfoProxy.new(
+    @fake_google_userinfo = Google::Userinfo.new(:fake => true).user_info
+    @real_google_userinfo = Google::Userinfo.new(
       :access_token => Settings.google_proxy.test_user_access_token,
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
       :expiration_time => 0
@@ -67,10 +67,10 @@ describe Oauth2Data do
   end
 
   it "should be able to get and update google email for authenticated users" do
-    Oauth2Data.new_or_update(@random_id, Google::GoogleProxy::APP_ID, "new-token",
+    Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID, "new-token",
                              "some-token", 1)
     Oauth2Data.get_google_email(@random_id).blank?.should be_true
-    Google::GoogleUserinfoProxy.any_instance.stub(:user_info).and_return(@fake_google_userinfo)
+    Google::Userinfo.any_instance.stub(:user_info).and_return(@fake_google_userinfo)
     Oauth2Data.update_google_email!(@random_id)
     Oauth2Data.get_google_email(@random_id).should == "tammi.chang.clc@gmail.com"
   end
@@ -96,8 +96,8 @@ describe Oauth2Data do
   it "should simulate a non-responsive google", :testext => true do
     Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
     Google::APIClient.stub(:execute).and_raise(StandardError)
-    Google::GoogleUserinfoProxy.stub(:new).and_return(@real_google_userinfo)
-    Oauth2Data.new_or_update(@random_id, Google::GoogleProxy::APP_ID, "new-token",
+    Google::Userinfo.stub(:new).and_return(@real_google_userinfo)
+    Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID, "new-token",
                              "some-token", 1)
     Oauth2Data.any_instance.should_not_receive(:save)
     Oauth2Data.update_google_email!(@random_id)
@@ -115,16 +115,16 @@ describe Oauth2Data do
   it "should remove dismiss_reminder app_data when a new google token is stored" do
     Oauth2Data.dismiss_google_reminder(@random_id).should be_true
     Oauth2Data.is_google_reminder_dismissed(@random_id).should be_true
-    Oauth2Data.new_or_update(@random_id, Google::GoogleProxy::APP_ID, 'top', 'secret')
+    Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID, 'top', 'secret')
     Oauth2Data.is_google_reminder_dismissed(@random_id).should be_empty
   end
 
   it "new_or_update should merge new app_data into existing app_data" do
-    Oauth2Data.new_or_update(@random_id, Google::GoogleProxy::APP_ID, 'top', 'secret', 0, {app_data:{'foo' => 'foo?'}})
-    Oauth2Data.send(:get_appdata_field, Google::GoogleProxy::APP_ID, @random_id, 'foo' ).should == 'foo?'
-    Oauth2Data.new_or_update(@random_id, Google::GoogleProxy::APP_ID, 'top', 'secret', 0, {app_data:{'baz' => 'baz!'}})
-    Oauth2Data.send(:get_appdata_field, Google::GoogleProxy::APP_ID, @random_id, 'baz' ).should == 'baz!'
-    Oauth2Data.send(:get_appdata_field, Google::GoogleProxy::APP_ID, @random_id, 'foo' ).should == 'foo?'
+    Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID, 'top', 'secret', 0, {app_data:{'foo' => 'foo?'}})
+    Oauth2Data.send(:get_appdata_field, Google::Proxy::APP_ID, @random_id, 'foo' ).should == 'foo?'
+    Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID, 'top', 'secret', 0, {app_data:{'baz' => 'baz!'}})
+    Oauth2Data.send(:get_appdata_field, Google::Proxy::APP_ID, @random_id, 'baz' ).should == 'baz!'
+    Oauth2Data.send(:get_appdata_field, Google::Proxy::APP_ID, @random_id, 'foo' ).should == 'foo?'
   end
 
 end
