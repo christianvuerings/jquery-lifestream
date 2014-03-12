@@ -45,7 +45,7 @@ module Notifications
 
       entry = nil
       use_pooled_connection {
-        entry = Notification.new(
+        entry = Notifications::Notification.new(
           {
             :uid => uid,
             :data => {

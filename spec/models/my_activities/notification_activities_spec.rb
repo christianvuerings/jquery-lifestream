@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyActivities::Notifications do
+describe MyActivities::NotificationActivities do
   let!(:oski_uid) { "61889" }
   let(:documented_types) { %w(alert) }
   before(:each) do
@@ -46,7 +46,7 @@ describe MyActivities::Notifications do
     end
 
     it {
-      Notification.find_by_uid(oski_uid).should_not be_blank
+      Notifications::Notification.find_by_uid(oski_uid).should_not be_blank
       should be_empty
     }
   end

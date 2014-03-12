@@ -15,7 +15,7 @@ describe Notifications::RegStatusTranslator do
       })
     processor.process(event, timestamp).should == true
 
-    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification = Notifications::Notification.where(:uid => "300846").first
 
     translator = Notifications::RegStatusTranslator.new
     translated = translator.translate saved_notification

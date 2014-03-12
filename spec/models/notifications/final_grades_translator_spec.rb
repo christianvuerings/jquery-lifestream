@@ -22,7 +22,7 @@ describe Notifications::FinalGradesTranslator do
     processor = Notifications::FinalGradesEventProcessor.new
     processor.process(event, timestamp)
 
-    notification = Notification.where(:uid => "123456").first
+    notification = Notifications::Notification.where(:uid => "123456").first
     translator = Notifications::FinalGradesTranslator.new
     translated = translator.translate notification
     Rails.logger.info "Translated notification = #{translated}"

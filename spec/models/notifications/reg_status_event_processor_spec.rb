@@ -34,7 +34,7 @@ describe Notifications::RegStatusEventProcessor do
 
     @processor.process(event, timestamp).should == true
 
-    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification = Notifications::Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil
     saved_notification.data.should_not be_nil
     saved_notification.translator.should == "RegStatusTranslator"
@@ -103,7 +103,7 @@ describe Notifications::RegStatusEventProcessor do
         })
     UserData.stub(:where).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
-    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification = Notifications::Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil
 
     second_event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
@@ -120,14 +120,14 @@ describe Notifications::RegStatusEventProcessor do
         })
     UserData.stub(:where).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
-    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification = Notifications::Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil
-    Notification.where(:uid => "300847").first.should_not be_nil
+    Notifications::Notification.where(:uid => "300847").first.should_not be_nil
 
     second_event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-31T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     tomorrow = Time.now.to_datetime.advance(:days=>1)
     @processor.process(second_event, tomorrow).should == true
-    saved_notifications = Notification.where(:uid => "300846")
+    saved_notifications = Notifications::Notification.where(:uid => "300846")
     saved_notifications.length.should == 2
   end
 
@@ -141,7 +141,7 @@ describe Notifications::RegStatusEventProcessor do
       })
     UserData.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
-    saved_notification = Notification.where(:uid => "300846").first
+    saved_notification = Notifications::Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil
     saved_notification.data.should_not be_nil
   end

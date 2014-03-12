@@ -30,7 +30,7 @@ module Notifications
         unless is_dupe?(student["ldap_uid"], event, timestamp, "FinalGradesTranslator")
           entry = nil
           use_pooled_connection {
-            entry = Notification.new(
+            entry = Notifications::Notification.new(
               {
                 :uid => student["ldap_uid"],
                 :data => {

@@ -3,7 +3,7 @@ class NotificationTimestamps < ActiveRecord::Migration
   def up
     add_column "notifications", :occurred_at, :datetime
 
-    Notification.find_each do |notification|
+    Notifications::Notification.find_each do |notification|
       begin
         timestamp = Time.parse(notification.data["timestamp"]).to_datetime
       rescue

@@ -36,7 +36,7 @@ module Notifications
       end_date = start_date.advance(:days => 1)
       dupe = []
       use_pooled_connection {
-        dupe = Notification.where(:uid => uid.to_s, :translator => type, :occurred_at => start_date...end_date)
+        dupe = Notifications::Notification.where(:uid => uid.to_s, :translator => type, :occurred_at => start_date...end_date)
       }
       if dupe.empty?
         false

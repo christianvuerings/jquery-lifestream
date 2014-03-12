@@ -43,7 +43,7 @@ class UserApi < UserSpecificModel
       # The nice way to do this is to also revoke their tokens by sending revoke request to the remote services
       use_pooled_connection {
         Oauth2Data.destroy_all(:uid => uid)
-        Notification.destroy_all(:uid => uid)
+        Notifications::Notification.destroy_all(:uid => uid)
       }
     end
 
