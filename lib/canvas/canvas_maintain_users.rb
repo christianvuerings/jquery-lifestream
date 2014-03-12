@@ -13,7 +13,7 @@ class CanvasMaintainUsers < CanvasCsv
   def check_all_user_accounts(known_uids, sis_id_changes, account_changes)
     # As the size of the CSV grows, it will become more efficient to use CSV.foreach.
     # For now, however, we ingest the entire download.
-    users_csv = CanvasUsersReportProxy.new.get_csv
+    users_csv = Canvas::UsersReport.new.get_csv
     if users_csv.present?
       accounts_batch = []
       users_csv.each do |account_row|
@@ -73,7 +73,7 @@ class CanvasMaintainUsers < CanvasCsv
   # Because there is no way to do a bulk download of user login objects, two Canvas requests are required to
   # set each user's SIS user ID.
   def change_sis_user_id(canvas_user_id, new_sis_user_id)
-    logins_proxy = CanvasLoginsProxy.new
+    logins_proxy = Canvas::Logins.new
     response = logins_proxy.user_logins(canvas_user_id)
     if response && response.status == 200
       user_logins = JSON.parse(response.body)

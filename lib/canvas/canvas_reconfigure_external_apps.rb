@@ -18,7 +18,7 @@ module CanvasReconfigureExternalApps
     canvas_hosts_to_calcentrals.each do |mapping|
       canvas_host = mapping[:host]
       calcentral_host = mapping[:calcentral]
-      proxy = CanvasExternalToolsProxy.new({url_root: canvas_host})
+      proxy = Canvas::ExternalTools.new({url_root: canvas_host})
       external_tools_list = proxy.external_tools_list
       external_tools_list.each do |tool_config|
         tool_url = tool_config['url']

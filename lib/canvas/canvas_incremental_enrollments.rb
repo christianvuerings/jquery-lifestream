@@ -16,7 +16,7 @@ class CanvasIncrementalEnrollments < CanvasCsv
 
   def self.canvas_section_enrollments(canvas_section_id)
     raise ArgumentError, "canvas_section_id must be a Fixnum" if canvas_section_id.class != Fixnum
-    canvas_section_enrollments = CanvasSectionEnrollmentsProxy.new(:section_id => canvas_section_id).list_enrollments
+    canvas_section_enrollments = Canvas::SectionEnrollments.new(:section_id => canvas_section_id).list_enrollments
 
     # Filter out non-SIS user enrollments
     sis_user_filter = lambda {|e| !e['user'].has_key?('sis_user_id') }
@@ -34,14 +34,14 @@ class CanvasIncrementalEnrollments < CanvasCsv
   end
 
   def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv)
-    canvas_sections_csv = CanvasSectionsReportProxy.new.get_csv(term)
+    canvas_sections_csv = Canvas::SectionsReport.new.get_csv(term)
     return if canvas_sections_csv.empty?
     canvas_sections_csv.each do |canvas_section|
       if (section_id = canvas_section['section_id'])
         if (course_id = canvas_section['course_id'])
           canvas_section_id = Integer(canvas_section['canvas_section_id'], 10)
           canvas_enrollments = self.class.canvas_section_enrollments(canvas_section_id)
-          if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(section_id))
+          if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id))
             refresh_students_in_section(campus_section, course_id, section_id, canvas_enrollments[:students], enrollments_csv, known_users, users_csv)
             refresh_teachers_in_section(campus_section, course_id, section_id, canvas_enrollments[:instructors], enrollments_csv, known_users, users_csv)
           end

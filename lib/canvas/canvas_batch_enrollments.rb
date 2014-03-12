@@ -2,12 +2,12 @@ class CanvasBatchEnrollments < CanvasCsv
   include ClassLogger
 
   def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv)
-    canvas_sections_csv = CanvasSectionsReportProxy.new.get_csv(term)
+    canvas_sections_csv = Canvas::SectionsReport.new.get_csv(term)
     return if canvas_sections_csv.empty?
     canvas_sections_csv.each do |canvas_section|
       if (section_id = canvas_section['section_id'])
         if (course_id = canvas_section['course_id'])
-          if (campus_section = CanvasProxy.sis_section_id_to_ccn_and_term(section_id))
+          if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id))
             refresh_students_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
             refresh_teachers_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
           end

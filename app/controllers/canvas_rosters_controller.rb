@@ -53,7 +53,7 @@ class CanvasRostersController < ApplicationController
         end
       end
       canvas_course_id = Integer(canvas_course_id, 10)
-      CanvasRosters.new(user_id, canvas_course_id: canvas_course_id)
+      Canvas::Rosters.new(user_id, canvas_course_id: canvas_course_id)
     end
   end
 

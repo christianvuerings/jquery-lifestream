@@ -138,7 +138,7 @@ class CanvasProvideCourseSite < CanvasCsv
 
   def import_course_site(canvas_course_row)
     @import_data['courses_csv_file'] = make_courses_csv("#{csv_filename_prefix}-course.csv", [canvas_course_row])
-    response = CanvasSisImportProxy.new.import_courses(@import_data['courses_csv_file'])
+    response = Canvas::SisImport.new.import_courses(@import_data['courses_csv_file'])
     raise RuntimeError, 'Course site could not be created.' if response.blank?
     logger.warn("Successfully imported course from: #{@import_data['courses_csv_file']}")
     complete_step("Imported course")
@@ -146,7 +146,7 @@ class CanvasProvideCourseSite < CanvasCsv
 
   def import_sections(canvas_section_rows)
     @import_data['sections_csv_file'] = make_sections_csv("#{csv_filename_prefix}-sections.csv", canvas_section_rows)
-    response = CanvasSisImportProxy.new.import_sections(@import_data['sections_csv_file'])
+    response = Canvas::SisImport.new.import_sections(@import_data['sections_csv_file'])
     if response.blank?
       logger.error("Imported course from #{@import_data['courses_csv_file']} but sections did not import from #{@import_data['sections_csv_file']}")
       raise RuntimeError, "Course site was created without any sections or members! Section import failed."
@@ -158,7 +158,7 @@ class CanvasProvideCourseSite < CanvasCsv
 
   def import_users(canvas_user_rows)
     @import_data['users_csv_file'] = make_users_csv("#{csv_filename_prefix}-users.csv", canvas_user_rows)
-    response = CanvasSisImportProxy.new.import_users(@import_data['users_csv_file'])
+    response = Canvas::SisImport.new.import_users(@import_data['users_csv_file'])
     if response.blank?
       logger.error("Imported course and sections from #{@import_data['courses_csv_file']}, #{@import_data['sections_csv_file']} but users did not import from #{@import_data['users_csv_file']}")
       raise RuntimeError, "Course site was created but members may be missing! User import failed."
@@ -170,7 +170,7 @@ class CanvasProvideCourseSite < CanvasCsv
 
   def import_enrollments(canvas_enrollment_rows)
     @import_data['enrollments_csv_file'] = make_enrollments_csv("#{csv_filename_prefix}-enrollments.csv", canvas_enrollment_rows)
-    response = CanvasSisImportProxy.new.import_enrollments(@import_data['enrollments_csv_file'])
+    response = Canvas::SisImport.new.import_enrollments(@import_data['enrollments_csv_file'])
     if response.blank?
       logger.error("Imported course, sections, and users from #{@import_data['courses_csv_file']}, #{@import_data['sections_csv_file']}, #{@import_data['users_csv_file']} but memberships did not import from #{@import_data['enrollments_csv_file']}")
       raise RuntimeError, "Course site was created but members may not be enrolled! Enrollment import failed."
@@ -187,7 +187,7 @@ class CanvasProvideCourseSite < CanvasCsv
   end
 
   def expire_instructor_sites_cache
-    CanvasUserCoursesProxy.expire(@uid)
+    Canvas::UserCourses.expire(@uid)
     CanvasMergedUserSites.expire(@uid)
     MyClasses::Merged.new(@uid).expire_cache
     MyAcademics::Merged.new(@uid).expire_cache
@@ -199,7 +199,7 @@ class CanvasProvideCourseSite < CanvasCsv
   end
 
   def course_site_url(sis_id)
-    response = CanvasCourseProxy.new(course_id: sis_id).course
+    response = Canvas::Course.new(course_id: sis_id).course
     raise RuntimeError, "Unexpected error obtaining course site URL for #{sis_id}!" if response.blank?
     course_data = JSON.parse(response.body)
     "#{Settings.canvas_proxy.url_root}/courses/#{course_data['id']}"
@@ -303,13 +303,13 @@ class CanvasProvideCourseSite < CanvasCsv
   end
 
   def generate_course_site_definition(term_yr, term_cd, subaccount, campus_course_data)
-    if (sis_id = generate_unique_sis_course_id(CanvasExistenceCheckProxy.new, campus_course_data[:slug], term_yr, term_cd))
+    if (sis_id = generate_unique_sis_course_id(Canvas::ExistenceCheck.new, campus_course_data[:slug], term_yr, term_cd))
       {
         'course_id' => sis_id,
         'short_name' => campus_course_data[:course_number],
         'long_name' => campus_course_data[:title],
         'account_id' => subaccount,
-        'term_id' => CanvasProxy.term_to_sis_id(term_yr, term_cd),
+        'term_id' => Canvas::Proxy.term_to_sis_id(term_yr, term_cd),
         'status' => 'active'
       }
     else
@@ -321,7 +321,7 @@ class CanvasProvideCourseSite < CanvasCsv
   def generate_section_definitions(term_yr, term_cd, sis_course_id, campus_section_data)
     raise ArgumentError, "'campus_section_data' argument is empty" if campus_section_data.empty?
     sections = []
-    existence_proxy = CanvasExistenceCheckProxy.new
+    existence_proxy = Canvas::ExistenceCheck.new
     campus_section_data.each do |course|
       course[:sections].each do |section|
         if (sis_section_id = generate_unique_sis_section_id(existence_proxy, section[:ccn], term_yr, term_cd))
@@ -375,7 +375,7 @@ class CanvasProvideCourseSite < CanvasCsv
 
   def subaccount_for_department(department)
     subaccount = "ACCT:#{department}"
-    if !CanvasExistenceCheckProxy.new.account_defined?(subaccount)
+    if !Canvas::ExistenceCheck.new.account_defined?(subaccount)
       # There is no programmatic way to create a subaccount in Canvas.
       logger.error("Cannot provision course site; bCourses account #{subaccount} does not exist!")
       raise RuntimeError, "Could not find bCourses account for department #{department}"

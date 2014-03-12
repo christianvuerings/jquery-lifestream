@@ -42,14 +42,14 @@ describe CanvasUserProvision do
       expect { subject.import_users(['12344', '123abc', '12346']) }.to raise_error(ArgumentError, "User ID list contains value that is not numeric - '123abc'")
     end
 
-    it "passes transformed UID list to CanvasSisImportProxy#import_users as CSV definitions" do
-      CanvasSisImportProxy.any_instance.should_receive(:import_users).with("tmp/canvas/user_provision-2013-11-05-f76d1b860dcc152c-users.csv").and_return(true)
+    it "passes transformed UID list to Canvas::SisImport#import_users as CSV definitions" do
+      Canvas::SisImport.any_instance.should_receive(:import_users).with("tmp/canvas/user_provision-2013-11-05-f76d1b860dcc152c-users.csv").and_return(true)
       result = subject.import_users(['1234','1235'])
       expect(result).to be_true
     end
 
     it "raises exception if user import failed" do
-      CanvasSisImportProxy.any_instance.should_receive(:import_users).with("tmp/canvas/user_provision-2013-11-05-f76d1b860dcc152c-users.csv").and_return(nil)
+      Canvas::SisImport.any_instance.should_receive(:import_users).with("tmp/canvas/user_provision-2013-11-05-f76d1b860dcc152c-users.csv").and_return(nil)
       expect { subject.import_users(['1234', '1235']) }.to raise_error(RuntimeError, "User import failed")
     end
   end

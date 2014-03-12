@@ -5,7 +5,7 @@ describe MyActivities::Canvas do
 
   before do
     @user_id = Settings.canvas_proxy.test_user_id
-    @fake_activity_stream_proxy = CanvasUserActivityStreamProxy.new({fake: true})
+    @fake_activity_stream_proxy = Canvas::UserActivityStream.new({fake: true})
     @fake_activity_stream = JSON.parse(@fake_activity_stream_proxy.user_activity.body)
     @fake_time = Time.zone.today.to_time_in_current_zone.to_datetime
   end
@@ -18,7 +18,7 @@ describe MyActivities::Canvas do
       activity[:user_id].should == @user_id
       activity[:date][:epoch].is_a?(Integer).should == true
       activity[:source].blank?.should_not be_true
-      activity[:emitter].should == CanvasProxy::APP_NAME
+      activity[:emitter].should == Canvas::Proxy::APP_NAME
       activity[:type].blank?.should_not == true
       documented_types.include?(activity[:type]).should be_true
     end
@@ -62,27 +62,27 @@ describe MyActivities::Canvas do
         created_at: @fake_time
       }
     ]
-    CanvasUserActivityStreamProxy.stub(:new).and_return(stub_proxy(:user_activity, active_stream_feed))
+    Canvas::UserActivityStream.stub(:new).and_return(stub_proxy(:user_activity, active_stream_feed))
     canvas_sites = [
       {
         id: '1',
         name: 'Course Code 1',
         short_description: 'Course site name 1',
         site_type: 'course',
-        emitter: CanvasProxy::APP_NAME
+        emitter: Canvas::Proxy::APP_NAME
       },
       {
         id: '3',
         name: 'Group title 3',
         site_type: 'group',
-        emitter: CanvasProxy::APP_NAME
+        emitter: Canvas::Proxy::APP_NAME
       },
       {
         id: '2',
         source: 'Course Code 2',
         name: 'Course-linked group title',
         site_type: 'group',
-        emitter: CanvasProxy::APP_NAME
+        emitter: Canvas::Proxy::APP_NAME
       }
     ]
     activities = MyActivities::Canvas.get_feed(@user_id, canvas_sites)
@@ -107,7 +107,7 @@ describe MyActivities::Canvas do
   it "should be able to ignore malformed entries from the canvas feed" do
     bad_date_entry = { "id" => @user_id, "user_id" => @user_id, "created_at" => "stone-age"}
     flawed_activity_stream = @fake_activity_stream + [bad_date_entry]
-    CanvasUserActivityStreamProxy.stub(:new).and_return(stub_proxy(:user_activity, flawed_activity_stream))
+    Canvas::UserActivityStream.stub(:new).and_return(stub_proxy(:user_activity, flawed_activity_stream))
     activities = MyActivities::Canvas.get_feed(@user_id, [])
     activities.instance_of?(Array).should == true
     activities.size.should == @fake_activity_stream.size
@@ -115,7 +115,7 @@ describe MyActivities::Canvas do
 
   it "should sometimes have score and instructor message appended to the summary field" do
     # Search for a particular entry in the cassette and make sure it's appended to properly
-    CanvasUserActivityStreamProxy.stub(:new).and_return(@fake_activity_stream_proxy)
+    Canvas::UserActivityStream.stub(:new).and_return(@fake_activity_stream_proxy)
     activities = MyActivities::Canvas.get_feed(@user_id, [])
     activity = activities.select {|entry| entry[:id] == "canvas_40544495"}.first
     activity[:summary].should eq("Please write more neatly next time. 87 out of 100 - Good work!")
@@ -123,7 +123,7 @@ describe MyActivities::Canvas do
 
   it "should strip system generated 'click here' URLs from the summary field" do
     # But should not over-strip by removing instructor-added 'click here' URLs
-    CanvasUserActivityStreamProxy.stub(:new).and_return(@fake_activity_stream_proxy)
+    Canvas::UserActivityStream.stub(:new).and_return(@fake_activity_stream_proxy)
     activities = MyActivities::Canvas.get_feed(@user_id, [])
 
     activity = activities.select {|entry| entry[:id] == "canvas_43225861"}.first

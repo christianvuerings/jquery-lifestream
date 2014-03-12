@@ -71,7 +71,7 @@ shared_examples "a canvas user authenticated controller" do
 
     context "when canvas user id exists" do
       before do
-        CanvasUserProfileProxy.any_instance.stub(:user_profile).and_return(successful_canvas_user_profile_response)
+        Canvas::UserProfile.any_instance.stub(:user_profile).and_return(successful_canvas_user_profile_response)
       end
 
       it "sets canvas user id in session" do
@@ -82,7 +82,7 @@ shared_examples "a canvas user authenticated controller" do
     end
 
     context "when canvas user does not exist" do
-      before { CanvasUserProfileProxy.any_instance.stub(:user_profile).and_return(failed_canvas_user_profile_response) }
+      before { Canvas::UserProfile.any_instance.stub(:user_profile).and_return(failed_canvas_user_profile_response) }
       it "returns 401 error" do
         make_request
         expect(session[:user_id]).to eq("12345")
@@ -123,7 +123,7 @@ end
 
 shared_examples "a canvas course admin authorized controller" do
   context "when canvas user is not an admin in canvas course" do
-    before { CanvasCourseUserProxy.stub(:is_course_admin?).and_return(false) }
+    before { Canvas::CourseUser.stub(:is_course_admin?).and_return(false) }
     it "returns 403 error" do
       make_request
       expect(response.status).to eq(403)

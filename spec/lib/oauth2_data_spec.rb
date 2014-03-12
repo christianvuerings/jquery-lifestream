@@ -15,7 +15,7 @@ describe Oauth2Data do
         status: 404,
         body: 'while(1);{"status":"not_found","error_report_id":44351040,"message":"Thespecifiedresourcedoesnotexist."}'
       })
-    @fake_canvas_user_profile = CanvasUserProfileProxy.new(fake: true, user_id: 300846)
+    @fake_canvas_user_profile = Canvas::UserProfile.new(fake: true, user_id: 300846)
   end
 
   it "should not store plaintext access tokens" do
@@ -76,8 +76,8 @@ describe Oauth2Data do
   end
 
   it "should fail updating canvas email on a non-existant Canvas account" do
-    CanvasUserProfileProxy.any_instance.stub(:user_profile).and_return(@canvas_404)
-    Oauth2Data.new_or_update(@random_id, CanvasProxy::APP_ID, "new-token",
+    Canvas::UserProfile.any_instance.stub(:user_profile).and_return(@canvas_404)
+    Oauth2Data.new_or_update(@random_id, Canvas::Proxy::APP_ID, "new-token",
                              "some-token", 1)
     Oauth2Data.get_canvas_email(@random_id).blank?.should be_true
     Oauth2Data.update_canvas_email!(@random_id)
@@ -85,8 +85,8 @@ describe Oauth2Data do
   end
 
   it "should successfully update a canvas email " do
-    CanvasUserProfileProxy.stub(:new).and_return(@fake_canvas_user_profile)
-    Oauth2Data.new_or_update(@random_id, CanvasProxy::APP_ID, "new-token",
+    Canvas::UserProfile.stub(:new).and_return(@fake_canvas_user_profile)
+    Oauth2Data.new_or_update(@random_id, Canvas::Proxy::APP_ID, "new-token",
                              "some-token", 1)
     Oauth2Data.get_canvas_email(@random_id).blank?.should be_true
     Oauth2Data.update_canvas_email!(@random_id)

@@ -37,7 +37,7 @@ class Oauth2Data < ActiveRecord::Base
   end
 
   def self.get_canvas_email(user_id)
-    get_appdata_field(CanvasProxy::APP_ID, user_id, 'email')
+    get_appdata_field(Canvas::Proxy::APP_ID, user_id, 'email')
   end
 
   def self.is_google_reminder_dismissed(user_id)
@@ -59,9 +59,9 @@ class Oauth2Data < ActiveRecord::Base
   def self.update_canvas_email!(user_id)
     #will be a noop if user hasn't granted canvas access
     use_pooled_connection {
-      authenticated_entry = self.where(uid: user_id, app_id: CanvasProxy::APP_ID).first
+      authenticated_entry = self.where(uid: user_id, app_id: Canvas::Proxy::APP_ID).first
       return unless authenticated_entry
-      userinfo = CanvasUserProfileProxy.new(user_id: user_id).user_profile
+      userinfo = Canvas::UserProfile.new(user_id: user_id).user_profile
       return unless userinfo && userinfo.status == 200
       login_info = safe_json userinfo.body
       if login_info && login_info["primary_email"]
