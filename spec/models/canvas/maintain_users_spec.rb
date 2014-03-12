@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Canvas::CanvasMaintainUsers do
+describe Canvas::MaintainUsers do
 
   describe "#categorize_user_accounts" do
     let(:known_uids) { [] }

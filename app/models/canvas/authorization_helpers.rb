@@ -3,7 +3,7 @@
 # Usage:
 #
 #   class MyCanvasCourseToolController < ApplicationController
-#     include Canvas::CanvasAuthorizationHelpers
+#     include Canvas::AuthorizationHelpers
 #     before_filter :authenticate_cas_user!
 #     before_filter :authenticate_canvas_user!
 #     before_filter :authenticate_canvas_course_user!
@@ -19,7 +19,7 @@
 # caught and used by #handle_client_error to respond in the manner intended.
 #
 module Canvas
-  module CanvasAuthorizationHelpers
+  module AuthorizationHelpers
 
     def authenticate_cas_user!
       if session[:user_id].blank?

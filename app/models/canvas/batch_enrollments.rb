@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasBatchEnrollments < CanvasCsv
+  class BatchEnrollments < Csv
     include ClassLogger
 
     def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv)

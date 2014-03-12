@@ -1,7 +1,7 @@
 module Canvas
   require 'csv'
 
-  class CanvasCsv < CsvExport
+  class Csv < CsvExport
     include ClassLogger
 
     # Roles used with Canvas SIS Import API

@@ -1,5 +1,5 @@
 module Canvas
-  module CanvasReconfigureExternalApps
+  module ReconfigureExternalApps
     extend self
     include ClassLogger
 

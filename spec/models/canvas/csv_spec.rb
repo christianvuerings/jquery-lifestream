@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe Canvas::CanvasCsv do
+describe Canvas::Csv do
 
-  let(:canvas_csv)  { Canvas::CanvasCsv.new }
+  let(:canvas_csv)  { Canvas::Csv.new }
   let(:user_ids)  { ["1234","1235"] }
 
   describe "#accumulate_user_data" do

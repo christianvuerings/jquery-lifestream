@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Canvas::CanvasReconfigureExternalApps do
+describe Canvas::ReconfigureExternalApps do
   let(:fake_canvas_host) {'https://ucberkeley.beta.instructure.com'}
   let(:fake_calcentral_host) {'cc-dev.example.com'}
   let(:reachable_xml_host) {'http://example.com'}
@@ -15,7 +15,7 @@ describe Canvas::CanvasReconfigureExternalApps do
       external_tools_proxy.should_receive(:external_tools_list).and_return(fake_external_tools_list)
       external_tools_proxy.should_receive(:reset_external_tool).exactly(3).times.and_return(fake_reset_response)
       Canvas::ExternalTools.stub(:new).with({url_root: fake_canvas_host}).and_return(external_tools_proxy)
-      Canvas::CanvasReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, [
+      Canvas::ReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, [
         {host: fake_canvas_host, calcentral: new_calcentral_host}
       ])
     end
@@ -28,7 +28,7 @@ describe Canvas::CanvasReconfigureExternalApps do
       external_tools_proxy.should_receive(:external_tools_list).and_return(fake_external_tools_list)
       external_tools_proxy.should_not_receive(:reset_external_tool)
       Canvas::ExternalTools.stub(:new).with({url_root: fake_canvas_host}).and_return(external_tools_proxy)
-      Canvas::CanvasReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, [
+      Canvas::ReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, [
         {host: fake_canvas_host, calcentral: fake_calcentral_host}
       ])
     end

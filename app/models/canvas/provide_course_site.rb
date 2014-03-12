@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasProvideCourseSite < CanvasCsv
+  class ProvideCourseSite < Csv
     include TorqueBox::Messaging::Backgroundable
     include ClassLogger
 
@@ -28,7 +28,7 @@ module Canvas
       @errors = []
       @completed_steps = []
       @import_data = {}
-      @cache_key = "canvas.courseprovision.#{@uid}.#{Canvas::CanvasProvideCourseSite.unique_job_id}"
+      @cache_key = "canvas.courseprovision.#{@uid}.#{Canvas::ProvideCourseSite.unique_job_id}"
     end
 
     def create_course_site(term_slug, ccns, is_admin_by_ccns = false)
@@ -189,7 +189,7 @@ module Canvas
 
     def expire_instructor_sites_cache
       Canvas::UserCourses.expire(@uid)
-      Canvas::CanvasMergedUserSites.expire(@uid)
+      Canvas::MergedUserSites.expire(@uid)
       MyClasses::Merged.new(@uid).expire_cache
       MyAcademics::Merged.new(@uid).expire_cache
       complete_step("Clearing bCourses course site cache")
@@ -344,12 +344,12 @@ module Canvas
       sis_id_root = "#{slug}-#{term_yr}-#{term_cd}"
       sis_id_suffix = ''
       sis_id = nil
-      retriable(on: Canvas::CanvasProvideCourseSite::IdNotUniqueException, tries: 20) do
+      retriable(on: Canvas::ProvideCourseSite::IdNotUniqueException, tries: 20) do
         candidate = "CRS:#{sis_id_root}#{sis_id_suffix}".upcase
         if existence_proxy.course_defined?(candidate)
           logger.info("Already have Canvas course with SIS ID #{candidate}")
           sis_id_suffix = "-#{SecureRandom.hex(4)}"
-          raise Canvas::CanvasProvideCourseSite::IdNotUniqueException
+          raise Canvas::ProvideCourseSite::IdNotUniqueException
         else
           sis_id = candidate
         end
@@ -361,12 +361,12 @@ module Canvas
       sis_id_root = "#{term_yr}-#{term_cd}-#{ccn}"
       sis_id_suffix = ''
       sis_id = nil
-      retriable(on: Canvas::CanvasProvideCourseSite::IdNotUniqueException, tries: 20) do
+      retriable(on: Canvas::ProvideCourseSite::IdNotUniqueException, tries: 20) do
         candidate = "SEC:#{sis_id_root}#{sis_id_suffix}".upcase
         if existence_proxy.section_defined?(candidate)
           logger.info("Already have Canvas section with SIS ID #{candidate}")
           sis_id_suffix = "-#{SecureRandom.hex(4)}"
-          raise Canvas::CanvasProvideCourseSite::IdNotUniqueException
+          raise Canvas::ProvideCourseSite::IdNotUniqueException
         else
           sis_id = candidate
         end

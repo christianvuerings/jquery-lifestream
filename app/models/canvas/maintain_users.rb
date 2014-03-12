@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasMaintainUsers < CanvasCsv
+  class MaintainUsers < Csv
     include ClassLogger
 
     # Appends account changes to the given CSV.

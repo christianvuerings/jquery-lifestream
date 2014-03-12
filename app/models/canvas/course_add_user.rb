@@ -34,7 +34,7 @@ module Canvas
       raise ArgumentError, "ldap_user_id must be a String" if ldap_user_id.class != String
       raise ArgumentError, "role must be a String" if role.class != String
       raise ArgumentError, "canvas_course_section_id must be a String" if canvas_course_section_id.class != String
-      Canvas::CanvasUserProvision.new.import_users([ldap_user_id])
+      Canvas::UserProvision.new.import_users([ldap_user_id])
       section_id_num = Integer(canvas_course_section_id, 10)
       canvas_user_profile_response = Canvas::UserProfile.new(user_id: ldap_user_id).user_profile
       canvas_user_profile = JSON.parse(canvas_user_profile_response.body)

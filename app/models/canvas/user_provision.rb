@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasUserProvision < CanvasCsv
+  class UserProvision < Csv
 
     def csv_filename_prefix
       @export_filename_prefix ||= "#{@export_dir}/user_provision-#{DateTime.now.strftime('%F')}-#{SecureRandom.hex(8)}"

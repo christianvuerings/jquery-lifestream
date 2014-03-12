@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasIncrementalEnrollments < CanvasCsv
+  class IncrementalEnrollments < Csv
     include ClassLogger
 
     # Roles indicated by Canvas Enrollments API

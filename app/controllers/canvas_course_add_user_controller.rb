@@ -1,6 +1,6 @@
 class CanvasCourseAddUserController < ApplicationController
 
-  include Canvas::CanvasAuthorizationHelpers
+  include Canvas::AuthorizationHelpers
   before_filter :authenticate_cas_user!
   before_filter :authenticate_canvas_user!
   before_filter :authenticate_canvas_course_user!

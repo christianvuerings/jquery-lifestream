@@ -23,7 +23,7 @@ module Calcentral
       Canvas::UpcomingEvents => :expire,
       Canvas::UserActivityStream => :expire,
       Canvas::UserProfile => :expire,
-      Canvas::CanvasMergedUserSites => :expire,
+      Canvas::MergedUserSites => :expire,
 
       MyBadges::GoogleCalendar => :expire,
       MyBadges::GoogleDrive => :expire,

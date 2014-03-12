@@ -3,7 +3,7 @@ module Canvas
   require 'ims/lti/extensions'
   require 'oauth/request_proxy/rack_request'
 
-  class CanvasLti
+  class Lti
     extend Calcentral::Cacheable
     include ClassLogger
 

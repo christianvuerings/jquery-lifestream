@@ -2,13 +2,13 @@ namespace :canvas do
 
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and update all section memberships'
   task :batch_refresh => :environment do
-    canvas_worker = Canvas::CanvasRefreshAllCampusData.new 'batch'
+    canvas_worker = Canvas::RefreshAllCampusData.new 'batch'
     canvas_worker.run
   end
 
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and add new section memberships'
   task :incremental_refresh => :environment do
-    canvas_worker = Canvas::CanvasRefreshAllCampusData.new 'incremental'
+    canvas_worker = Canvas::RefreshAllCampusData.new 'incremental'
     canvas_worker.run
   end
 
@@ -25,7 +25,7 @@ namespace :canvas do
       canvas_hosts_to_calcentrals_string.split(/=|,/).each_slice(2) {|pair|
         canvas_hosts_to_calcentrals.push({host: pair[0], calcentral: pair[1]})
       }
-      Canvas::CanvasReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, canvas_hosts_to_calcentrals)
+      Canvas::ReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, canvas_hosts_to_calcentrals)
       Rails.logger.info("Reconfigured external apps from #{reachable_xml_host} for #{canvas_hosts_to_calcentrals_string}")
     end
   end
@@ -36,7 +36,7 @@ namespace :canvas do
     if (term_id.blank?)
       Rails.logger.error("Must specify TERM_ID=YourSisTermId")
     else
-      canvas_worker = Canvas::CanvasRepairSections.new
+      canvas_worker = Canvas::RepairSections.new
       canvas_worker.repair_sis_ids_for_term(term_id)
     end
   end

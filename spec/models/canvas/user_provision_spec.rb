@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Canvas::CanvasUserProvision do
+describe Canvas::UserProvision do
 
   describe "#csv_filename_prefix" do
     before do

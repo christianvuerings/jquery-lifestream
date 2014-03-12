@@ -1,7 +1,7 @@
 module Canvas
   require 'csv'
 
-  class CanvasRefreshAllCampusData < CanvasCsv
+  class RefreshAllCampusData < Csv
     include ClassLogger
     attr_accessor :users_csv_filename
     attr_accessor :term_to_memberships_csv_filename
@@ -28,13 +28,13 @@ module Canvas
     def make_csv_files
       users_csv = make_users_csv(@users_csv_filename)
       known_uids = []
-      Canvas::CanvasMaintainUsers.new.refresh_existing_user_accounts(known_uids, users_csv)
+      Canvas::MaintainUsers.new.refresh_existing_user_accounts(known_uids, users_csv)
       original_user_count = known_uids.length
       case @batch_or_incremental
         when 'batch'
-          enrollments_maintainer = Canvas::CanvasBatchEnrollments.new
+          enrollments_maintainer = Canvas::BatchEnrollments.new
         when 'incremental'
-          enrollments_maintainer = Canvas::CanvasIncrementalEnrollments.new
+          enrollments_maintainer = Canvas::IncrementalEnrollments.new
         else
           raise ArgumentError, "Unknown refresh type #{@batch_or_incremental} - will skip enrollments"
       end

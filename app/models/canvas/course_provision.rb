@@ -41,7 +41,7 @@ module Canvas
     def create_course_site(term_slug, ccns)
       return nil unless user_authorized?
       working_uid = @admin_acting_as || @uid
-      cpcs = Canvas::CanvasProvideCourseSite.new(working_uid)
+      cpcs = Canvas::ProvideCourseSite.new(working_uid)
       cpcs.save
       cpcs.background.create_course_site(term_slug, ccns, @admin_by_ccns.present?)
       self.class.expire instance_key unless @admin_by_ccns
@@ -50,7 +50,7 @@ module Canvas
 
     def get_feed_internal
       working_uid = @admin_acting_as || @uid
-      worker = Canvas::CanvasProvideCourseSite.new(working_uid)
+      worker = Canvas::ProvideCourseSite.new(working_uid)
       feed = {
         is_admin: user_admin?,
         admin_acting_as: @admin_acting_as,
@@ -61,7 +61,7 @@ module Canvas
     end
 
     def get_feed_by_ccns_internal
-      worker = Canvas::CanvasProvideCourseSite.new(@uid)
+      worker = Canvas::ProvideCourseSite.new(@uid)
       feed = {
         is_admin: user_admin?,
         admin_semesters: worker.current_terms,

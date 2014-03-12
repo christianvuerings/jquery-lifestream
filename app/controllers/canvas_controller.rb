@@ -1,7 +1,7 @@
 class CanvasController < ApplicationController
   include ClassLogger
 
-  include Canvas::CanvasAuthorizationHelpers
+  include Canvas::AuthorizationHelpers
   before_filter :authenticate_cas_user!, :only => [:course_user_profile]
   before_filter :authenticate_canvas_user!, :only => [:course_user_profile]
   before_filter :authenticate_canvas_course_user!, :only => [:course_user_profile]

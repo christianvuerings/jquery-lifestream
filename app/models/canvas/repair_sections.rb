@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasRepairSections < CanvasCsv
+  class RepairSections < Csv
     include ClassLogger
 
     def initialize

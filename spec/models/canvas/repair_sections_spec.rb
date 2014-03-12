@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Canvas::CanvasRepairSections do
+describe Canvas::RepairSections do
   let! (:fake_sections_report_proxy) { Canvas::SectionsReport.new(fake: true) }
   let! (:fake_import_proxy) { Canvas::SisImport.new(fake: true) }
 

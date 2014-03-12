@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasMergedUserSites
+  class MergedUserSites
     include ClassLogger
     extend Calcentral::Cacheable
 
