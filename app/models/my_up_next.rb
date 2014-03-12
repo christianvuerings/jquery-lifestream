@@ -14,8 +14,8 @@ class MyUpNext < UserSpecificModel
     }
 
     # act-as block for non-fake users.
-    return up_next if (is_acting_as_nonfake_user?) && !GoogleProxy.allow_pseudo_user?
-    return up_next if !GoogleProxy.access_granted?(@uid)
+    return up_next if (is_acting_as_nonfake_user?) && !Google::Proxy.allow_pseudo_user?
+    return up_next if !Google::Proxy.access_granted?(@uid)
 
     results = fetch_events(@uid)
     up_next[:items] = process_events(results)
@@ -39,7 +39,7 @@ class MyUpNext < UserSpecificModel
   end
 
   def fetch_events(uid)
-    google_proxy = GoogleEventsListProxy.new(user_id: uid)
+    google_proxy = Google::EventsList.new(user_id: uid)
     # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
     google_proxy.events_list({
       "singleEvents" => true,

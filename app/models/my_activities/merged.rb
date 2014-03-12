@@ -11,7 +11,7 @@ module MyActivities
         MyActivities::SakaiAnnouncements
       ]
       @proxies = [
-        MyActivities::Notifications,
+        MyActivities::NotificationActivities,
         MyActivities::RegBlocks,
       ]
       @proxies << MyActivities::MyFinAid if Settings.features.my_fin_aid

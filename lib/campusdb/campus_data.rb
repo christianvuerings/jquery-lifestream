@@ -2,15 +2,15 @@ class CampusData < OracleDatabase
   include ActiveRecordHelper
 
   def self.reg_status_translator
-    @reg_status_translator ||= RegStatusTranslator.new
+    @reg_status_translator ||= Notifications::RegStatusTranslator.new
   end
 
   def self.educ_level_translator
-    @educ_level_translator ||= EducLevelTranslator.new
+    @educ_level_translator ||= Notifications::EducLevelTranslator.new
   end
 
   def self.cal_residency_translator
-    @cal_residency_translator ||= CalResidencyTranslator.new
+    @cal_residency_translator ||= Notifications::CalResidencyTranslator.new
   end
 
   def self.current_year
