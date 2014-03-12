@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe RegStatusEventProcessor do
+describe Notifications::RegStatusEventProcessor do
 
   before do
-    @processor = RegStatusEventProcessor.new
+    @processor = Notifications::RegStatusEventProcessor.new
   end
 
   let(:empty_payload) { JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":""}') }
@@ -40,7 +40,7 @@ describe RegStatusEventProcessor do
     saved_notification.translator.should == "RegStatusTranslator"
     saved_notification.occurred_at.to_i.should == timestamp.to_i
     Rails.logger.info "Saved notification's json is #{saved_notification.data}"
-    translator_instance = saved_notification.translator.constantize.new
+    translator_instance = "Notifications::#{saved_notification.translator}".constantize.new
     translator_instance.should_not be_nil
     Rails.logger.info "Translated notification: #{translator_instance.translate saved_notification}"
 

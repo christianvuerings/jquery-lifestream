@@ -1,11 +1,11 @@
 require "spec_helper"
 
-describe RegStatusTranslator do
+describe Notifications::RegStatusTranslator do
 
   it "should translate a reg-status event properly" do
     user = UserApi.new "300846"
     user.record_first_login
-    processor = RegStatusEventProcessor.new
+    processor = Notifications::RegStatusEventProcessor.new
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
     CampusData.stub(:get_reg_status).and_return(
@@ -17,7 +17,7 @@ describe RegStatusTranslator do
 
     saved_notification = Notification.where(:uid => "300846").first
 
-    translator = RegStatusTranslator.new
+    translator = Notifications::RegStatusTranslator.new
     translated = translator.translate saved_notification
 
     translated[:date][:epoch].should == timestamp.to_i

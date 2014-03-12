@@ -16,7 +16,7 @@ describe MyActivities::Notifications do
   def bootstrap_notification
     UserApi.new(oski_uid).record_first_login
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[61889,300847]}}')
-    raise RuntimeError, 'process should be true' unless RegStatusEventProcessor.new().process(event, Time.now.to_datetime)
+    raise RuntimeError, 'process should be true' unless Notifications::RegStatusEventProcessor.new().process(event, Time.now.to_datetime)
   end
 
   it { described_class.should respond_to(:append!) }
@@ -37,7 +37,7 @@ describe MyActivities::Notifications do
   end
 
   context "should successfully handle badly translated responses from notifications" do
-    before(:each) { RegStatusTranslator.any_instance.stub(:translate).and_return false }
+    before(:each) { Notifications::RegStatusTranslator.any_instance.stub(:translate).and_return false }
 
     subject do
       activities = []

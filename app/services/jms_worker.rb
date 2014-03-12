@@ -9,7 +9,7 @@ class JmsWorker
 
   def initialize(opts = {})
     @jms = nil
-    @handler = JmsMessageHandler.new
+    @handler = Notifications::JmsMessageHandler.new
     @stopped = false
   end
 

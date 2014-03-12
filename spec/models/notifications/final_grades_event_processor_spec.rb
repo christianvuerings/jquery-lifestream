@@ -1,9 +1,9 @@
 require "spec_helper"
 
-describe FinalGradesEventProcessor do
+describe Notifications::FinalGradesEventProcessor do
 
   before do
-    @processor = FinalGradesEventProcessor.new
+    @processor = Notifications::FinalGradesEventProcessor.new
   end
 
   it "should not handle an event type it doesn't know how to handle" do
@@ -50,7 +50,7 @@ describe FinalGradesEventProcessor do
     Notification.where(:uid => "323487").first.data.should_not be_nil
     Notification.where(:uid => "300846").first.data.should_not be_nil
     Notification.where(:uid => "300846").size.should == 2
-    translator_instance = saved_notification.translator.constantize.new
+    translator_instance = "Notifications::#{saved_notification.translator}".constantize.new
     translator_instance.should_not be_nil
     Rails.logger.info "Translated notification: #{translator_instance.translate saved_notification}"
 

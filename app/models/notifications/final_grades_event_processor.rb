@@ -1,23 +1,24 @@
-class FinalGradesEventProcessor < AbstractEventProcessor
-  include ActiveRecordHelper
+module Notifications
+  class FinalGradesEventProcessor < AbstractEventProcessor
+    include ActiveRecordHelper
 
-  def accept?(event)
-    return false unless super event
-    event["topic"] == "Bearfacts:EndOfTermGrades"
-  end
-
-  def process_internal(event, timestamp)
-    return [] unless event["payload"] && courses = event["payload"]["course"]
-
-    notifications = {}
-    courses.each do |course|
-      next unless (ccn = course["ccn"]) && (course["term"]) && (year = course['term']["year"]) && (term = course['term']["name"])
-      process_course(notifications, ccn, year, term, timestamp, event["topic"])
+    def accept?(event)
+      return false unless super event
+      event["topic"] == "Bearfacts:EndOfTermGrades"
     end
-    notifications.values
-  end
 
-  private
+    def process_internal(event, timestamp)
+      return [] unless event["payload"] && courses = event["payload"]["course"]
+
+      notifications = {}
+      courses.each do |course|
+        next unless (ccn = course["ccn"]) && (course["term"]) && (year = course['term']["year"]) && (term = course['term']["name"])
+        process_course(notifications, ccn, year, term, timestamp, event["topic"])
+      end
+      notifications.values
+    end
+
+    private
     def process_course(notifications, ccn, term_yr, term_cd, timestamp, topic)
       students = CampusData.get_enrolled_students(ccn, term_yr, term_cd)
 
@@ -26,7 +27,7 @@ class FinalGradesEventProcessor < AbstractEventProcessor
 
       students.each do |student|
         event = {ccn: ccn, year: term_yr, term: term_cd, topic: topic}
-        unless is_dupe?(student["ldap_uid"], event , timestamp, "FinalGradesTranslator")
+        unless is_dupe?(student["ldap_uid"], event, timestamp, "FinalGradesTranslator")
           entry = nil
           use_pooled_connection {
             entry = Notification.new(
@@ -46,4 +47,5 @@ class FinalGradesEventProcessor < AbstractEventProcessor
         end
       end
     end
+  end
 end

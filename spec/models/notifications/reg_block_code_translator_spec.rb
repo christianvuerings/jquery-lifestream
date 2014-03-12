@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe RegBlockCodeTranslator do
+describe Notifications::RegBlockCodeTranslator do
   it "should be able to handle unknown reason_code and/or office_code during translation" do
-    result = RegBlockCodeTranslator.new().translate_bearfacts_proxy("foo", "baz")
+    result = Notifications::RegBlockCodeTranslator.new().translate_bearfacts_proxy("foo", "baz")
     result[:office].should == "Bearfacts"
     result[:reason].should == "Unknown"
     result[:type].should == "Unknown"
   end
 
   it "should be able to handle known reason_codes and/or office_code during translation" do
-    translator = RegBlockCodeTranslator.new()
+    translator = Notifications::RegBlockCodeTranslator.new()
     result = translator.translate_bearfacts_proxy("60", "BUSADM  ")
     result[:office].should == "Business Administration"
     result[:reason].should == "Academic"

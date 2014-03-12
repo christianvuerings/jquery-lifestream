@@ -11,7 +11,7 @@ class MyActivities::Notifications
       result = Notification.where(:uid => uid, :occurred_at => Time.at(MyActivities::Merged.cutoff_date)..Time.now) || []
     }
     result.each do |notification|
-      translator = (self.translators[notification.translator] ||= notification.translator.constantize.new)
+      translator = (self.translators[notification.translator] ||= "Notifications::#{notification.translator}".constantize.new)
       event = translator.translate(notification)
       #basic validation before inserting into notifications array.
       if event.present? && event.kind_of?(Hash)

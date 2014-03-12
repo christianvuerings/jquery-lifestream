@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe FinalGradesTranslator do
+describe Notifications::FinalGradesTranslator do
 
   it "should translate a final-grades event properly" do
     user = UserApi.new "123456"
@@ -19,11 +19,11 @@ describe FinalGradesTranslator do
        "dept_name" => "ENGL",
        "catalog_id" => "1"})
 
-    processor = FinalGradesEventProcessor.new
+    processor = Notifications::FinalGradesEventProcessor.new
     processor.process(event, timestamp)
 
     notification = Notification.where(:uid => "123456").first
-    translator = FinalGradesTranslator.new
+    translator = Notifications::FinalGradesTranslator.new
     translated = translator.translate notification
     Rails.logger.info "Translated notification = #{translated}"
     translated[:title].should == "Final grades posted for PSYCH 101"
