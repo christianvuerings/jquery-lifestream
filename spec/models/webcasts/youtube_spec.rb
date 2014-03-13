@@ -21,7 +21,7 @@ describe Webcasts::Youtube do
 
   context "proper caching behavior", :textext => true do
     before { Rails.cache.should_receive(:write) }
-    it "should get and cache json on a successful request" do # , :testext => true do
+    it "should get and cache json on a successful request", :testext => true do
       proxy = Webcasts::Youtube.new({:playlist_id => "-XXv-cvA_iCIEwJhyDVdyLMCiimv6Tup"})
       json_response = proxy.get
       json_response.should_not be_nil
