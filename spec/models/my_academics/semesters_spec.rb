@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "MyAcademics::Semesters", :if => CampusOracle::SakaiData.test_data? do
+describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
   let!(:oski_schedule_proxy) { CampusOracle::UserCourses.new({:fake => true}) }
 
   context "should get properly formatted data from fake Oracle MV" do

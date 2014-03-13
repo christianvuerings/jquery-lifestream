@@ -1,5 +1,5 @@
-module CampusOracle
-  class SakaiMergedUserSites < Sakai::Proxy
+module Sakai
+  class SakaiMergedUserSites < Proxy
     include ClassLogger
 
     def get_feed
@@ -43,14 +43,14 @@ module CampusOracle
     end
 
     def get_filtered_users_sites(sakai_user_id)
-      all_sites = CampusOracle::SakaiData.get_users_sites(sakai_user_id)
-      hidden_site_ids = CampusOracle::SakaiData.get_hidden_site_ids(sakai_user_id)
+      all_sites = Sakai::SakaiData.get_users_sites(sakai_user_id)
+      hidden_site_ids = Sakai::SakaiData.get_hidden_site_ids(sakai_user_id)
       all_sites.select { |site| !hidden_site_ids.include?(site['site_id']) }
     end
 
     def get_site_to_groups_hash(sakai_user_id)
       site_to_groups = {}
-      CampusOracle::SakaiData.get_users_site_groups(sakai_user_id).each do |result|
+      Sakai::SakaiData.get_users_site_groups(sakai_user_id).each do |result|
         site_and_group = %r{/site/(.+)/group/(.+)}.match(result['realm_id'])
         if (site_id = site_and_group[1]) && (group_id = site_and_group[2])
           (site_to_groups[site_id] ||= []) << group_id

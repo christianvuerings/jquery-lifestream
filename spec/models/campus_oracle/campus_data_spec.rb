@@ -149,7 +149,7 @@ describe CampusOracle::CampusData do
     sections.length.should == 3 if CampusOracle::CampusData.test_data?
   end
 
-  context "#get_enrolled_sections", if: CampusOracle::SakaiData.test_data? do
+  context "#get_enrolled_sections", if: Sakai::SakaiData.test_data? do
     subject { CampusOracle::CampusData.get_enrolled_sections('300939') }
 
     it { should_not be_blank }

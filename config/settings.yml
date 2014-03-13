@@ -215,7 +215,7 @@ cache:
     Canvas::CanvasTodoProxy: <%= 20.minutes %>
     Canvas::CanvasUpcomingEventsProxy: <%= 20.minutes %>
 
-    CampusOracle::SakaiMergedUserSites: <%= 30.minutes %>
+    Sakai::SakaiMergedUserSites: <%= 30.minutes %>
     Sakai::SiteAnnouncements: <%= 30.minutes %>
 
     MyBadges::GoogleCalendar: <%= 4.minutes %>

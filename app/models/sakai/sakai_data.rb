@@ -1,5 +1,5 @@
-module CampusOracle
-  class SakaiData < Connection
+module Sakai
+  class SakaiData < CampusOracle::Connection
     include ActiveRecordHelper
 
     def self.table_prefix

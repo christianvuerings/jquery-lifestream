@@ -27,7 +27,7 @@ describe MyClasses::SakaiClasses do
       emitter: Sakai::Proxy::APP_ID
     }
   end
-  before {CampusOracle::SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
+  before {Sakai::SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
   subject do
     MyClasses::SakaiClasses.new(uid).merge_sites(campus_courses, sites)
     sites

@@ -1,4 +1,5 @@
 module Sakai
+  # TODO collapse this class into SakaiData (probably).
   class Proxy < BaseProxy
     extend Proxies::EnableForActAs
 
@@ -19,7 +20,7 @@ module Sakai
 
     def get_sakai_user_id
       self.class.fetch_from_cache @uid do
-        CampusOracle::SakaiData.get_sakai_user_id(@uid)
+        Sakai::SakaiData.get_sakai_user_id(@uid)
       end
     end
 

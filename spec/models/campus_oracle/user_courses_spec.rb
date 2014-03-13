@@ -9,7 +9,7 @@ describe CampusOracle::UserCourses do
     client.get_all_campus_courses.should_not be_nil
   end
 
-  it "should return pre-populated test enrollments for all semesters", :if => CampusOracle::SakaiData.test_data? do
+  it "should return pre-populated test enrollments for all semesters", :if => Sakai::SakaiData.test_data? do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
     client = CampusOracle::UserCourses.new({user_id: '300939'})
@@ -38,7 +38,7 @@ describe CampusOracle::UserCourses do
     end
   end
 
-  it 'includes nested sections for instructors', :if => CampusOracle::SakaiData.test_data? do
+  it 'includes nested sections for instructors', :if => Sakai::SakaiData.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '238382'})
     courses = client.get_all_campus_courses
     sections = courses['2013-D'].select {|c| c[:dept] == 'BIOLOGY' && c[:catid] == '1A'}.first[:sections]
@@ -47,7 +47,7 @@ describe CampusOracle::UserCourses do
     expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
   end
 
-  it 'prefixes short CCNs with zeroes', :if => CampusOracle::SakaiData.test_data? do
+  it 'prefixes short CCNs with zeroes', :if => Sakai::SakaiData.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '238382'})
     courses = client.get_selected_sections(2013, 'D', [7309])
     sections = courses['2013-D'].first[:sections]
@@ -55,7 +55,7 @@ describe CampusOracle::UserCourses do
     expect(sections.first[:ccn]).to eq '07309'
   end
 
-  it "should find waitlisted status in test enrollments", :if => CampusOracle::SakaiData.test_data? do
+  it "should find waitlisted status in test enrollments", :if => Sakai::SakaiData.test_data? do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
     client = CampusOracle::UserCourses.new({user_id: '300939'})
@@ -66,12 +66,12 @@ describe CampusOracle::UserCourses do
     course[:enroll_limit].should == '5000'
   end
 
-  it "should say that Tammi has student history", :if => CampusOracle::SakaiData.test_data? do
+  it "should say that Tammi has student history", :if => Sakai::SakaiData.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '300939'})
     client.has_student_history?.should be_true
   end
 
-  it "should say that our fake teacher has instructor history", :if => CampusOracle::SakaiData.test_data? do
+  it "should say that our fake teacher has instructor history", :if => Sakai::SakaiData.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '238382'})
     client.has_instructor_history?.should be_true
   end

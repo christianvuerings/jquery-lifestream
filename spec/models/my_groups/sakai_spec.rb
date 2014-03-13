@@ -12,7 +12,7 @@ describe MyGroups::Sakai do
       emitter: Sakai::Proxy::APP_ID
     }
   end
-  before {CampusOracle::SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
+  before {Sakai::SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
   subject {MyGroups::Sakai.new(uid).fetch}
   context 'when a Sakai project site' do
     let(:sakai_sites) {{courses: [], groups: [sakai_site_base]}}
