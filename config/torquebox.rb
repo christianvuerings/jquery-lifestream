@@ -32,7 +32,7 @@ TorqueBox.configure do
   end
   queue '/queues/feed_changed' do
     durable false
-    processor FeedUpdateWhiteboard
+    processor Cache::FeedUpdateWhiteboard
   end
 
 end

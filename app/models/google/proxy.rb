@@ -13,7 +13,7 @@ module Google
       if @fake
         @authorization = Google::Client.new_fake_auth
       elsif options[:user_id]
-        token_settings = Oauth2Data.get(@uid, APP_ID)
+        token_settings = User::Oauth2Data.get(@uid, APP_ID)
         @authorization = Google::Client.new_client_auth token_settings || {"access_token" => ''}
       else
         auth_related_entries = [:access_token, :refresh_token, :expiration_time]
@@ -114,7 +114,7 @@ module Google
     def revoke_invalid_token!(request_response)
       if @uid && request_response.response.status == 401 && request_response.error_message == "Invalid Credentials"
         Rails.logger.info "Google::Proxy - Will delete access token for #{@uid} due to 401 Unauthorized from Google"
-        Oauth2Data.remove(@uid, APP_ID)
+        User::Oauth2Data.remove(@uid, APP_ID)
       end
     end
 
@@ -133,7 +133,7 @@ module Google
     end
 
     def self.access_granted?(user_id)
-      Settings.google_proxy.fake || (Oauth2Data.get(user_id, APP_ID)["access_token"].present?)
+      Settings.google_proxy.fake || (User::Oauth2Data.get(user_id, APP_ID)["access_token"].present?)
     end
 
     private
@@ -141,7 +141,7 @@ module Google
     def update_access_tokens!
       if @current_token && @uid && @authorization.access_token != @current_token
         Rails.logger.info "Google::Proxy - Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
-        Oauth2Data.new_or_update(@uid, APP_ID, @authorization.access_token,
+        User::Oauth2Data.new_or_update(@uid, APP_ID, @authorization.access_token,
                                  @authorization.refresh_token, @authorization.expires_at.to_i)
       end
     end

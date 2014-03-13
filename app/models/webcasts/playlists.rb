@@ -30,7 +30,7 @@ module Webcasts
         ).get
       }
       if response.status >= 400
-        raise Calcentral::ProxyError.new(
+        raise Errors::ProxyError.new(
                 "Connection failed: #{response.status} #{response.body}",
                 {
                   :error_message => 'There was a problem fetching the videos.'
@@ -41,7 +41,7 @@ module Webcasts
 
       data = convert_to_json(response)
       if !data
-        raise Calcentral::ProxyError.new(
+        raise Errors::ProxyError.new(
                 "Error occurred converting response to json: #{response.body}",
                 {
                   :error_message => 'There was a problem fetching the videos.'

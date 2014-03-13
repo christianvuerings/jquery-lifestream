@@ -1,6 +1,6 @@
 class CampusRosters < RostersCommon
   include ActiveAttr::Model, ClassLogger, SafeJsonParser
-  extend Calcentral::Cacheable
+  extend Cache::Cacheable
 
   def get_feed_internal
     feed = {

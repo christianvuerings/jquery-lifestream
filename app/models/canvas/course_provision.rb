@@ -1,7 +1,7 @@
 module Canvas
   class CourseProvision
     include ActiveAttr::Model, ClassLogger
-    extend Calcentral::Cacheable
+    extend Cache::Cacheable
 
     # Admins cannot rely on CalCentral "Act As" in production because the instructor may not yet have logged into Calcentral.
     # Nor can we rely on Canvas "Masquerade" because the instructor may not yet have a bCourses account.

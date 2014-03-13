@@ -8,7 +8,7 @@ module MyBadges
     end
 
     def fetch_counts(params = {})
-      @google_mail ||= Oauth2Data.get_google_email(@uid)
+      @google_mail ||= User::Oauth2Data.get_google_email(@uid)
       @rewrite_url ||= !(Mail::Address.new(@google_mail).domain =~ /berkeley.edu/).nil?
       self.class.fetch_from_cache(@uid) do
         internal_fetch_counts params

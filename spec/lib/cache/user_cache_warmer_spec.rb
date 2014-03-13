@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe UserCacheWarmer do
+describe Cache::UserCacheWarmer do
 
   before(:each) do
     @user_id = rand(99999).to_s
@@ -17,7 +17,7 @@ describe UserCacheWarmer do
       model.should_receive(:get_feed_as_json).with(force_cache_write).once
     end
 
-    UserCacheWarmer.do_warm @user_id
+    Cache::UserCacheWarmer.do_warm @user_id
   end
 
 end

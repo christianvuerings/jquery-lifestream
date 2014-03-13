@@ -42,7 +42,7 @@ class UserApi < UserSpecificModel
     if !user.blank?
       # The nice way to do this is to also revoke their tokens by sending revoke request to the remote services
       use_pooled_connection {
-        Oauth2Data.destroy_all(:uid => uid)
+        User::Oauth2Data.destroy_all(:uid => uid)
         Notifications::Notification.destroy_all(:uid => uid)
       }
     end
@@ -81,10 +81,10 @@ class UserApi < UserSpecificModel
   end
 
   def get_feed_internal
-    google_mail = Oauth2Data.get_google_email(@uid)
-    canvas_mail = Oauth2Data.get_canvas_email(@uid)
+    google_mail = User::Oauth2Data.get_google_email(@uid)
+    canvas_mail = User::Oauth2Data.get_canvas_email(@uid)
     current_user = User::Auth.get(@uid)
-    is_google_reminder_dismissed = Oauth2Data.is_google_reminder_dismissed(@uid)
+    is_google_reminder_dismissed = User::Oauth2Data.is_google_reminder_dismissed(@uid)
     is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
     campus_courses_proxy = CampusOracle::UserCourses.new({:user_id => @uid})
     has_student_history = campus_courses_proxy.has_student_history?

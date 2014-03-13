@@ -112,7 +112,7 @@ module Textbooks
         }
 
         if response.code >= 400
-          raise Calcentral::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
+          raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
         end
 
         status_code = response.code

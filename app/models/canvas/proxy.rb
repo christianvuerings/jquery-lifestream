@@ -59,7 +59,7 @@ module Canvas
             logger.debug("404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}")
             return nil
           end
-          raise Calcentral::ProxyError.new(
+          raise Errors::ProxyError.new(
                   "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}", nil, nil)
         else
           response

@@ -1,6 +1,6 @@
 class MyCampusLinksController < ApplicationController
 
-  extend Calcentral::Cacheable
+  extend Cache::Cacheable
 
   def get_feed
     if session[:user_id]

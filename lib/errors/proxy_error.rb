@@ -1,4 +1,4 @@
-module Calcentral
+module Errors
   class ProxyError < Exception
     attr_accessor :wrapped_exception, :log_message, :response
 

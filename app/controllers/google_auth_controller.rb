@@ -31,13 +31,13 @@ class GoogleAuthController < AuthController
   end
 
   def connected_token_callback(uid)
-    Oauth2Data.update_google_email! uid
+    User::Oauth2Data.update_google_email! uid
   end
 
   def dismiss_reminder
     result = false
     if (!Google::Proxy.access_granted? session[:user_id])
-      result = Oauth2Data.dismiss_google_reminder(session[:user_id])
+      result = User::Oauth2Data.dismiss_google_reminder(session[:user_id])
     end
     UserApi.expire(session[:user_id])
     render json: {:result => result}

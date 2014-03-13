@@ -64,7 +64,7 @@ feature 'MyBadges urls:' do
   end
 
   scenario 'see if mungled ruls from google_calendar badges != passed through urls for berkeley.edu tokens' do
-    Oauth2Data.stub(:get_google_email).and_return("oski.the.creepy.bear@berkeley.edu")
+    User::Oauth2Data.stub(:get_google_email).and_return("oski.the.creepy.bear@berkeley.edu")
     Google::Proxy.stub(:access_granted?).and_return(true)
     Google::EventsList.stub(:new).and_return(@fake_calendar_events)
     raw_feed = Google::EventsList.new(@uid).recent_items.first.data["items"]

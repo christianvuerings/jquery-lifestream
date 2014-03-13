@@ -34,7 +34,7 @@ class AuthController < ApplicationController
       client.code = params[:code]
       client.fetch_access_token!
       Rails.logger.debug "Saving #{app_id} token for user #{session[:user_id]}"
-      Oauth2Data.new_or_update(
+      User::Oauth2Data.new_or_update(
           session[:user_id],
           app_id,
           client.access_token.to_s,
@@ -48,7 +48,7 @@ class AuthController < ApplicationController
       connected_token_callback session[:user_id]
     else
       Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
-      Oauth2Data.remove(session[:user_id], app_id)
+      User::Oauth2Data.remove(session[:user_id], app_id)
     end
 
     expire
@@ -62,7 +62,7 @@ class AuthController < ApplicationController
 
   def remove_authorization
     Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
-    Oauth2Data.remove(session[:user_id], app_id)
+    User::Oauth2Data.remove(session[:user_id], app_id)
     expire
     render :nothing => true, :status => 204
   end

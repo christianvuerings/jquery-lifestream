@@ -1,6 +1,6 @@
 class HotPlate < TorqueBox::Messaging::MessageProcessor
 
-  extend Calcentral::Cacheable, Calcentral::StatAccumulator
+  extend Cache::Cacheable, Cache::StatAccumulator
   include ActiveRecordHelper, ClassLogger
   attr_reader :total_warmups
 
@@ -57,7 +57,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            Calcentral::Messaging.publish('/queues/hot_plate', visit.uid, {ttl: 86400000, persistent: false})
+            Messaging.publish('/queues/hot_plate', visit.uid, {ttl: 86400000, persistent: false})
           end
         end
 
@@ -86,7 +86,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     self.class.increment(self.class.total_warmups_processed, 1)
     Calcentral::USER_CACHE_EXPIRATION.notify uid
     begin
-      UserCacheWarmer.do_warm uid
+      Cache::UserCacheWarmer.do_warm uid
     rescue Exception => e
       logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
     ensure

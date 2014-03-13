@@ -30,7 +30,7 @@ module Webcasts
         ).get
       }
       if response.status >= 400
-        raise Calcentral::ProxyError.new("Connection failed: #{response.status} #{response.body}")
+        raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}")
       end
 
       logger.debug "Remote server status #{response.status}, Body = #{response.body}"

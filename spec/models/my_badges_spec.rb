@@ -17,7 +17,7 @@ describe "MyBadges" do
     Google::Proxy.stub(:access_granted?).and_return(true)
     Google::DriveList.stub(:new).and_return(@fake_drive_list)
     Google::EventsList.stub(:new).and_return(@fake_events_list)
-    Oauth2Data.stub(:get_google_email).and_return("tammi.chang.clc@gmail.com")
+    User::Oauth2Data.stub(:get_google_email).and_return("tammi.chang.clc@gmail.com")
     badges = MyBadges::Merged.new @user_id
     filtered_feed = badges.get_feed
     filtered_feed[:badges].empty?.should_not be_true

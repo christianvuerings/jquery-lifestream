@@ -5,9 +5,9 @@ module Calcentral
 
   Rails.application.config.after_initialize do
 
-    USER_CACHE_WARMER = UserCacheWarmer.new
+    USER_CACHE_WARMER = Cache::UserCacheWarmer.new
 
-    USER_CACHE_EXPIRATION = UserCacheInvalidator.new
+    USER_CACHE_EXPIRATION = Cache::UserCacheInvalidator.new
 
     {
       MyFinancials => :expire,

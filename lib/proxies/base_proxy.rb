@@ -1,5 +1,5 @@
 class BaseProxy
-  extend Calcentral::Cacheable
+  extend Cache::Cacheable
   include ClassLogger
 
   attr_accessor :fake, :settings

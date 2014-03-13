@@ -1,4 +1,4 @@
-module Calcentral
+module Cache
 
   module Cacheable
 
@@ -58,7 +58,7 @@ module Calcentral
 
     def handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
       key = key id
-      if e.is_a?(Calcentral::ProxyError)
+      if e.is_a?(Errors::ProxyError)
         log_message = e.log_message
         response = e.response
         if e.wrapped_exception

@@ -41,6 +41,6 @@ Calcentral::Application.configure do
   # Turn off all page, action, fragment caching
   config.action_controller.perform_caching = false
 
-  CalcentralCaching.setup_cache_store config
+  Cache::Config.setup_cache_store config
 
 end

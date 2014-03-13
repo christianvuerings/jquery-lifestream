@@ -1,4 +1,4 @@
-module Calcentral
+module Cache
 
   module StatAccumulator
 

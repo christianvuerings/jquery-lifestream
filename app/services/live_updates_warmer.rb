@@ -1,6 +1,6 @@
 class LiveUpdatesWarmer < TorqueBox::Messaging::MessageProcessor
 
-  extend Calcentral::Cacheable, Calcentral::StatAccumulator
+  extend Cache::Cacheable, Cache::StatAccumulator
   include ActiveRecordHelper, ClassLogger
   attr_reader :total_warmups
 
@@ -24,7 +24,7 @@ class LiveUpdatesWarmer < TorqueBox::Messaging::MessageProcessor
 
   def self.warmup_request(uid)
     Rails.cache.fetch("LiveUpdatesWarmer/WarmupRequestRateLimiter-#{uid}", :expires_in => self.expires_in) do
-      Calcentral::Messaging.publish('/queues/warmup_request', uid)
+      Messaging.publish('/queues/warmup_request', uid)
       true
     end
   end
@@ -42,7 +42,7 @@ class LiveUpdatesWarmer < TorqueBox::Messaging::MessageProcessor
     start_time = Time.now.to_i
     logger.warn "Processing warmup_request message for uid #{uid}"
     begin
-      UserCacheWarmer.do_warm uid
+      Cache::UserCacheWarmer.do_warm uid
     rescue Exception => e
       logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
     ensure
