@@ -34,7 +34,7 @@ describe UserApiController do
   end
 
   it "should record first login for a new user" do
-    CampusOracle::CampusData.stub(:get_person_attributes) do |uid|
+    CampusOracle::Queries.stub(:get_person_attributes) do |uid|
       {
         'person_name' => "Joe Test",
         :roles => {

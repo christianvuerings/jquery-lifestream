@@ -34,7 +34,7 @@ class CampusRosters < RostersCommon
         name: "#{dept_name} #{catid} #{section[:section_label]}"
       }
 
-      section_enrollments = CampusOracle::CampusData.get_enrolled_students(section[:ccn], term_yr, term_cd)
+      section_enrollments = CampusOracle::Queries.get_enrolled_students(section[:ccn], term_yr, term_cd)
       section_enrollments.each do |enr|
         if (existing_entry = campus_enrollment_map[enr['ldap_uid']])
           # We include waitlisted students in the roster. However, we do not show the official photo if the student

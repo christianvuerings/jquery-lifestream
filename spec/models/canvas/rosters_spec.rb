@@ -65,7 +65,7 @@ describe Canvas::Rosters do
             }
         ])
     )
-    CampusOracle::CampusData.stub(:get_enrolled_students).with(linked_section_ccn, '2013', 'C').and_return(
+    CampusOracle::Queries.stub(:get_enrolled_students).with(linked_section_ccn, '2013', 'C').and_return(
         [
             {
                 'ldap_uid' => official_student_in_canvas_login_id,
@@ -221,7 +221,7 @@ describe Canvas::Rosters do
         ])
     )
     # A student may be waitlisted in a secondary section but enrolled in a primary section.
-    CampusOracle::CampusData.stub(:get_enrolled_students).with(a_section_ccn, '2013', 'C').and_return(
+    CampusOracle::Queries.stub(:get_enrolled_students).with(a_section_ccn, '2013', 'C').and_return(
         [
             {
                 'ldap_uid' => enrolled_student_login_id,
@@ -235,7 +235,7 @@ describe Canvas::Rosters do
             }
         ]
     )
-    CampusOracle::CampusData.stub(:get_enrolled_students).with(b_section_ccn, '2013', 'C').and_return(
+    CampusOracle::Queries.stub(:get_enrolled_students).with(b_section_ccn, '2013', 'C').and_return(
         [
             {
                 'ldap_uid' => enrolled_student_login_id,
@@ -323,7 +323,7 @@ describe Canvas::Rosters do
             }
         ])
     )
-    CampusOracle::CampusData.stub(:get_enrolled_students).with(a_section_ccn, '2013', 'C').and_return(
+    CampusOracle::Queries.stub(:get_enrolled_students).with(a_section_ccn, '2013', 'C').and_return(
         [
             {
                 'ldap_uid' => enrolled_student_login_id,
@@ -338,7 +338,7 @@ describe Canvas::Rosters do
         ]
     )
     photo_data = rand(99999999)
-    CampusOracle::CampusData.stub(:get_photo).with(enrolled_student_login_id).and_return(
+    CampusOracle::Queries.stub(:get_photo).with(enrolled_student_login_id).and_return(
         {
             'bytes' => 42,
             'photo' => photo_data

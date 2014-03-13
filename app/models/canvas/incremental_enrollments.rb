@@ -54,7 +54,7 @@ module Canvas
     end
 
     def refresh_students_in_section(campus_section, course_id, section_id, canvas_student_enrollments, enrollments_csv, known_users, users_csv)
-      campus_data_rows = CampusOracle::CampusData.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
+      campus_data_rows = CampusOracle::Queries.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
       campus_data_rows.each do |campus_data_row|
         enrollee_uid = campus_data_row['ldap_uid'].to_s
         # Append student for update if found. Remove from Canvas enrollment list
@@ -80,7 +80,7 @@ module Canvas
     end
 
     def refresh_teachers_in_section(campus_section, course_id, section_id, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv)
-      campus_data_rows = CampusOracle::CampusData.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
+      campus_data_rows = CampusOracle::Queries.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
       campus_data_rows.each do |campus_data_row|
         enrollee_uid = campus_data_row['ldap_uid'].to_s
         # Remove instructor from Canvas enrollment list if already present

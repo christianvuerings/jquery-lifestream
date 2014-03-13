@@ -73,7 +73,7 @@ module CampusOracle
 
     def add_schedules_to_feed!(feed)
       schedules = []
-      found_schedules = CampusOracle::CampusData.get_section_schedules(@term_yr, @term_cd, @ccn)
+      found_schedules = CampusOracle::Queries.get_section_schedules(@term_yr, @term_cd, @ccn)
       if found_schedules
         # TODO add building map data if available
         found_schedules.each do |schedule_event|
@@ -92,7 +92,7 @@ module CampusOracle
 
     def add_instructors_to_feed!(feed)
       instructors = []
-      found_instructors = CampusOracle::CampusData.get_section_instructors(@term_yr, @term_cd, @ccn)
+      found_instructors = CampusOracle::Queries.get_section_instructors(@term_yr, @term_cd, @ccn)
       if found_instructors
         found_instructors.each do |instructor|
           instructors << {

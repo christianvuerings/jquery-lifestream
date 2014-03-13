@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CampusOracle::CampusData do
+describe CampusOracle::Queries do
 
   context "looking up students" do
     subject { CampusOracle::OecData.get_all_students(["11684"]) }

@@ -1,5 +1,5 @@
 module CampusOracle
-  class CampusData < Connection
+  class Queries < Connection
     include ActiveRecordHelper
 
     def self.reg_status_translator

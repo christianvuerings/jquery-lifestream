@@ -26,7 +26,7 @@ module Notifications
     private
 
     def process_individual_uids(uid, timestamp, event)
-      reg_status = CampusOracle::CampusData.get_reg_status uid
+      reg_status = CampusOracle::Queries.get_reg_status uid
 
       if reg_status == nil
         Rails.logger.info "#{self.class.name} Registration status for #{uid} could not be determined, skipping event."

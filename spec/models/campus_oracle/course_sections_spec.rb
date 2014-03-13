@@ -46,9 +46,9 @@ describe "CampusOracle::CourseSections" do
         {"building_name"=>nil, "room_number"=>nil, "meeting_days"=>nil, "meeting_start_time"=>nil, "meeting_start_time_ampm_flag"=>nil, "meeting_end_time"=>nil, "meeting_end_time_ampm_flag"=>nil},
       ]
       client = CampusOracle::CourseSections.new({term_yr: '2013', term_cd: 'D', ccn: '16171'})
-      # CampusOracle::CampusData.get_section_schedules(@term_yr, @term_cd, @ccn)
-      CampusOracle::CampusData.should_receive(:get_section_schedules).and_return(stubbed_schedules)
-      #allow(CampusOracle::CampusData).to receive(:get_section_schedules).and_return(stubbed_schedules)
+      # CampusOracle::Queries.get_section_schedules(@term_yr, @term_cd, @ccn)
+      CampusOracle::Queries.should_receive(:get_section_schedules).and_return(stubbed_schedules)
+      #allow(CampusOracle::Queries).to receive(:get_section_schedules).and_return(stubbed_schedules)
       result = client.get_section_data
 
       result.should be_an_instance_of Hash
@@ -62,9 +62,9 @@ describe "CampusOracle::CourseSections" do
         {"building_name"=>nil, "room_number"=> "0001", "meeting_days"=>nil, "meeting_start_time"=>nil, "meeting_start_time_ampm_flag"=>nil, "meeting_end_time"=>nil, "meeting_end_time_ampm_flag"=>nil},
       ]
       client = CampusOracle::CourseSections.new({term_yr: '2013', term_cd: 'D', ccn: '16171'})
-      # CampusOracle::CampusData.get_section_schedules(@term_yr, @term_cd, @ccn)
-      CampusOracle::CampusData.should_receive(:get_section_schedules).and_return(stubbed_schedules)
-      #allow(CampusOracle::CampusData).to receive(:get_section_schedules).and_return(stubbed_schedules)
+      # CampusOracle::Queries.get_section_schedules(@term_yr, @term_cd, @ccn)
+      CampusOracle::Queries.should_receive(:get_section_schedules).and_return(stubbed_schedules)
+      #allow(CampusOracle::Queries).to receive(:get_section_schedules).and_return(stubbed_schedules)
       result = client.get_section_data
       result[:schedules][0][:room_number].should == nil
       result[:schedules][1][:room_number].should == "1"

@@ -28,8 +28,8 @@ describe MyClasses::Campus do
     before {CampusOracle::UserCourses.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))}
     subject { MyClasses::Campus.new(user_id).fetch }
     context 'when enrolled in a current class' do
-      let(:term_yr) {CampusOracle::CampusData.current_year}
-      let(:term_cd) {CampusOracle::CampusData.current_term}
+      let(:term_yr) {CampusOracle::Queries.current_year}
+      let(:term_cd) {CampusOracle::Queries.current_term}
       its(:size) {should eq 1}
       it 'includes class info' do
         class_info = subject[0]
@@ -41,7 +41,7 @@ describe MyClasses::Campus do
     end
     context 'when enrolled in a non-current term' do
       let(:term_yr) {2012}
-      let(:term_cd) {CampusOracle::CampusData.current_term}
+      let(:term_cd) {CampusOracle::Queries.current_term}
       its(:size) {should eq 0}
     end
   end

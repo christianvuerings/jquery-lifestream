@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
       if !User::Data.database_alive?
         raise "CalCentral database is currently unavailable"
       end
-      if !CampusOracle::CampusData.database_alive?
+      if !CampusOracle::Queries.database_alive?
         raise "Campus database is currently unavailable"
       end
       true

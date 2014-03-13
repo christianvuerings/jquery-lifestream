@@ -21,7 +21,7 @@ module Canvas
       while !user_array.empty?
         slice_length = [user_array.length, 1000].min
         working_slice = user_array.slice!(0, slice_length)
-        results = CampusOracle::CampusData.get_basic_people_attributes(working_slice)
+        results = CampusOracle::Queries.get_basic_people_attributes(working_slice)
         results.each do |row|
           users_csv << canvas_user_from_campus_row(row)
         end
@@ -43,7 +43,7 @@ module Canvas
 
     def derive_sis_user_id(campus_user)
       if Settings.canvas_proxy.mixed_sis_user_id
-        if CampusOracle::CampusData.is_student?(campus_user)
+        if CampusOracle::Queries.is_student?(campus_user)
           campus_user['student_id'].to_s
         else
           "UID:#{campus_user['ldap_uid']}"

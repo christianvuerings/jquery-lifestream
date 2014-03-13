@@ -12,7 +12,7 @@ describe MyClasses::Merged do
       its([:classes]) {should eq []}
       its([:current_term]) {should be_present}
     end
-    context 'when an instructor in the test data', :if => CampusOracle::CampusData.test_data? do
+    context 'when an instructor in the test data', :if => CampusOracle::Queries.test_data? do
       let(:user_id) {'238382'}
       subject { MyClasses::Merged.new(user_id).get_feed[:classes] }
       it 'contains at least one class for the instructor' do

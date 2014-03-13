@@ -3,7 +3,7 @@ class MyAcademics::GpaUnits
   include MyAcademics::AcademicsModule
 
   def merge(data)
-    student_info = CampusOracle::CampusData.get_student_info(@uid) || {}
+    student_info = CampusOracle::Queries.get_student_info(@uid) || {}
     return data if student_info.nil?
 
     data[:gpa_units] = {

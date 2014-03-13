@@ -79,8 +79,8 @@ describe "CampusRosters" do
   before do
     CampusOracle::UserCourses.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))
     CampusOracle::UserCourses.stub(:new).with(user_id: student_user_id).and_return(double(get_all_campus_courses: fake_campus_student))
-    CampusOracle::CampusData.stub(:get_enrolled_students).with(ccn1, term_yr, term_cd).and_return(fake_students)
-    CampusOracle::CampusData.stub(:get_enrolled_students).with(ccn2, term_yr, term_cd).and_return(fake_students)
+    CampusOracle::Queries.stub(:get_enrolled_students).with(ccn1, term_yr, term_cd).and_return(fake_students)
+    CampusOracle::Queries.stub(:get_enrolled_students).with(ccn2, term_yr, term_cd).and_return(fake_students)
   end
 
   it "should return a list of officially enrolled students for a course ccn" do

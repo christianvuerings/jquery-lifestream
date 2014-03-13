@@ -9,7 +9,7 @@ class UserApi < UserSpecificModel
     use_pooled_connection {
       @calcentral_user_data ||= User::Data.where(:uid => @uid).first
     }
-    @campus_attributes ||= CampusOracle::CampusData.get_person_attributes(@uid) || {}
+    @campus_attributes ||= CampusOracle::Queries.get_person_attributes(@uid) || {}
     @default_name ||= @campus_attributes['person_name']
     @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
     @first_name ||= @campus_attributes['first_name'] || ""
@@ -130,7 +130,7 @@ class UserApi < UserSpecificModel
     if UserWhitelist.where(uid: uid).first.present?
       return true
     end
-    if (info = CampusOracle::CampusData.get_student_info(uid))
+    if (info = CampusOracle::Queries.get_student_info(uid))
       Settings.user_whitelist.first_year_codes.each do |code|
         if code.term_yr == info["first_reg_term_yr"] && code.term_cd == info["first_reg_term_cd"]
           return true
@@ -142,7 +142,7 @@ class UserApi < UserSpecificModel
     end
     if (info.try(:[], "ug_grad_flag") == "G" &&
       /STUDENT-STATUS-EXPIRED/.match(info["affiliations"]).nil? &&
-      CampusOracle::CampusData.is_previous_ugrad?(uid))
+      CampusOracle::Queries.is_previous_ugrad?(uid))
       return true
     end
 

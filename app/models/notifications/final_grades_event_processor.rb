@@ -20,7 +20,7 @@ module Notifications
 
     private
     def process_course(notifications, ccn, term_yr, term_cd, timestamp, topic)
-      students = CampusOracle::CampusData.get_enrolled_students(ccn, term_yr, term_cd)
+      students = CampusOracle::Queries.get_enrolled_students(ccn, term_yr, term_cd)
 
       return [] unless students
       Rails.logger.debug "#{self.class.name} Found students enrolled in #{term_yr}-#{term_cd}-#{ccn}: #{students}"

@@ -54,7 +54,7 @@ module CampusOracle
 
     def merge_enrollments(campus_classes)
       previous_item = {}
-      enrollments = CampusOracle::CampusData.get_enrolled_sections(@uid, academic_terms.student)
+      enrollments = CampusOracle::Queries.get_enrolled_sections(@uid, academic_terms.student)
       enrollments.each do |row|
         if (item = row_to_feed_item(row, previous_item))
           item[:role] = 'Student'
@@ -77,7 +77,7 @@ module CampusOracle
 
     def merge_explicit_instructing(campus_classes)
       previous_item = {}
-      assigneds = CampusOracle::CampusData.get_instructing_sections(@uid, academic_terms.instructor)
+      assigneds = CampusOracle::Queries.get_instructing_sections(@uid, academic_terms.instructor)
       is_instructing = assigneds.present?
       assigneds.each do |row|
         if (item = row_to_feed_item(row, previous_item))
@@ -120,33 +120,33 @@ module CampusOracle
 
     def get_all_secondary_sections(course)
       self.class.fetch_from_cache "secondaries-#{course[:term_yr]}-#{course[:term_cd]}-#{course[:dept]}-#{course[:catid]}" do
-        CampusOracle::CampusData.get_course_secondary_sections(course[:term_yr], course[:term_cd],
+        CampusOracle::Queries.get_course_secondary_sections(course[:term_yr], course[:term_cd],
                                                  course[:dept], course[:catid])
       end
     end
 
     def get_all_transcripts
       self.class.fetch_from_cache "all-transcripts-#{@uid}" do
-        CampusOracle::CampusData.get_transcript_grades(@uid, academic_terms.student)
+        CampusOracle::Queries.get_transcript_grades(@uid, academic_terms.student)
       end
     end
 
     def has_student_history?
       self.class.fetch_from_cache "has_student_history-#{@uid}" do
-        CampusOracle::CampusData.has_student_history?(@uid, academic_terms.student)
+        CampusOracle::Queries.has_student_history?(@uid, academic_terms.student)
       end
     end
 
     def has_instructor_history?
       self.class.fetch_from_cache "has_instructor_history-#{@uid}" do
-        CampusOracle::CampusData.has_instructor_history?(@uid, academic_terms.instructor)
+        CampusOracle::Queries.has_instructor_history?(@uid, academic_terms.instructor)
       end
     end
 
     def get_selected_sections(term_yr, term_cd, ccns)
       self.class.fetch_from_cache "selected_sections-#{term_yr}-#{term_cd}-#{ccns.join(',')}" do
         campus_classes = {}
-        sections = CampusOracle::CampusData.get_sections_from_ccns(term_yr, term_cd, ccns)
+        sections = CampusOracle::Queries.get_sections_from_ccns(term_yr, term_cd, ccns)
         previous_item = {}
         sections.each do |row|
           if (item = row_to_feed_item(row, previous_item))
