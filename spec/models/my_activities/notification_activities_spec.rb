@@ -4,7 +4,7 @@ describe MyActivities::NotificationActivities do
   let!(:oski_uid) { "61889" }
   let(:documented_types) { %w(alert) }
   before(:each) do
-    CampusData.stub(:get_reg_status).and_return({
+    CampusOracle::Queries.stub(:get_reg_status).and_return({
       "ldap_uid" => oski_uid,
       "reg_status_cd" => "C"
     })

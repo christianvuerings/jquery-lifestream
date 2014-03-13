@@ -15,8 +15,8 @@ describe MyAcademics::TeachingCanvas do
   end
   let(:campus_courses) do
     [{
-      name: TermCodes.to_english(CampusData.current_year, CampusData.current_term),
-      slug: TermCodes.to_slug(CampusData.current_year, CampusData.current_term),
+      name: TermCodes.to_english(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
+      slug: TermCodes.to_slug(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
       classes: [
         campus_course_base
       ]
@@ -58,8 +58,8 @@ describe MyAcademics::TeachingCanvas do
     before {Canvas::MergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
 
     context 'when Canvas course has an academic term' do
-      let(:term_yr) {CampusData.current_year}
-      let(:term_cd) {CampusData.current_term}
+      let(:term_yr) {CampusOracle::Queries.current_year}
+      let(:term_cd) {CampusOracle::Queries.current_term}
       context 'when Canvas course site matches a campus section' do
         let(:canvas_site) {canvas_site_base.merge({sections: [{ccn: ccn.to_s}]})}
         let(:canvas_sites) {{courses: [canvas_site], groups: []}}

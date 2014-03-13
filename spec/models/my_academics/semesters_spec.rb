@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
-  let!(:oski_schedule_proxy) { CampusUserCoursesProxy.new({:fake => true}) }
+describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
+  let!(:oski_schedule_proxy) { CampusOracle::UserCourses.new({:fake => true}) }
 
   context "should get properly formatted data from fake Oracle MV" do
     before(:each) do
@@ -9,7 +9,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
       Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
       #Use this to tinker with the time buckets
       Settings.sakai_proxy.stub(:current_terms_codes).and_return([OpenStruct.new(term_yr: "2013", term_cd: "D")])
-      CampusUserCoursesProxy.stub(:new).and_return(oski_schedule_proxy)
+      CampusOracle::UserCourses.stub(:new).and_return(oski_schedule_proxy)
     end
 
     subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
@@ -66,7 +66,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
     before(:each) do
       Settings.sakai_proxy.academic_terms.stub(:student).and_return(terms_constraint)
       Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(terms_constraint)
-      CampusUserCoursesProxy.stub(:new).and_return(oski_schedule_proxy)
+      CampusOracle::UserCourses.stub(:new).and_return(oski_schedule_proxy)
     end
 
     let(:terms_constraint) { Settings.sakai_proxy.current_terms_codes }
@@ -89,7 +89,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
     before(:each) do
       Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
       Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
-      @oski_campus_courses = CampusUserCoursesProxy.new({:fake => true}).get_all_campus_courses
+      @oski_campus_courses = CampusOracle::UserCourses.new({:fake => true}).get_all_campus_courses
     end
 
     context "P/NP grading option (course default)" do
@@ -100,7 +100,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
             course[:cred_cd] = 'PN'
           end
         end
-        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+        CampusOracle::UserCourses.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
       end
 
       subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
@@ -118,7 +118,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
             course[:cred_cd] = nil
           end
         end
-        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+        CampusOracle::UserCourses.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
       end
 
       subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
@@ -136,7 +136,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
             course[:cred_cd] = 'SU'
           end
         end
-        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+        CampusOracle::UserCourses.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
       end
 
       subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
@@ -154,7 +154,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
             course[:cred_cd] = nil
           end
         end
-        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+        CampusOracle::UserCourses.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
       end
 
       subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }
@@ -169,7 +169,7 @@ describe "MyAcademics::Semesters", :if => SakaiData.test_data? do
         @oski_campus_courses.values.each do |semester|
           semester.each { |course| course[:pnp_flag] = 'X' }
         end
-        CampusUserCoursesProxy.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
+        CampusOracle::UserCourses.any_instance.stub(:get_all_campus_courses).and_return(@oski_campus_courses)
       end
 
       subject { MyAcademics::Semesters.new("300939").merge(@feed ||= {}); @feed }

@@ -14,7 +14,7 @@ class MyAcademics::Semesters
   end
 
   def merge(data)
-    proxy = CampusUserCoursesProxy.new({:user_id => @uid})
+    proxy = CampusOracle::UserCourses.new({:user_id => @uid})
     feed = proxy.get_all_campus_courses
     transcripts = proxy.get_all_transcripts
     semesters = []

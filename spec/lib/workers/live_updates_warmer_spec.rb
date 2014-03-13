@@ -8,7 +8,7 @@ describe "LiveUpdatesWarmer" do
   end
 
   it "should not explode if an error gets thrown during the warming" do
-    UserVisit.record "1234"
+    User::Visit.record "1234"
     UserCacheWarmer.stub(:do_warm).and_raise(TypeError)
 
     @warmer.warmup_merged_feeds "1234"

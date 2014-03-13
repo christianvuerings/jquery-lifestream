@@ -8,8 +8,8 @@ describe MyClasses::Canvas do
   let(:campus_course_base) do
     {
       id: course_id,
-      term_yr: CampusData.current_year,
-      term_cd: CampusData.current_term,
+      term_yr: CampusOracle::Queries.current_year,
+      term_cd: CampusOracle::Queries.current_term,
       sections: [{
         ccn: ccn.to_s
       }]
@@ -58,8 +58,8 @@ describe MyClasses::Canvas do
     end
 
     context 'when Canvas course is within a current term' do
-      let(:term_yr) {CampusData.current_year}
-      let(:term_cd) {CampusData.current_term}
+      let(:term_yr) {CampusOracle::Queries.current_year}
+      let(:term_cd) {CampusOracle::Queries.current_term}
       context 'when Canvas course site matches a campus section' do
         let(:canvas_site) {canvas_site_base.merge({sections: [{ccn: ccn.to_s}]})}
         let(:canvas_sites) {{courses: [canvas_site], groups: []}}
@@ -126,7 +126,7 @@ describe MyClasses::Canvas do
     end
     context 'when Canvas course site is for a non-current term' do
       let(:term_yr) {2012}
-      let(:term_cd) {CampusData.current_term}
+      let(:term_cd) {CampusOracle::Queries.current_term}
       let(:canvas_site) {canvas_site_base.merge({sections: [{ccn: ccn.to_s}]})}
       let(:canvas_sites) {{courses: [canvas_site], groups: []}}
       its(:size) {should eq 0}

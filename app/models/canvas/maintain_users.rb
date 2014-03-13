@@ -29,7 +29,7 @@ module Canvas
     end
 
     def compare_to_campus(accounts_batch, known_uids, sis_id_changes, account_changes)
-      campus_user_rows = CampusData.get_basic_people_attributes(accounts_batch.collect { |r| r['login_id'] })
+      campus_user_rows = CampusOracle::Queries.get_basic_people_attributes(accounts_batch.collect { |r| r['login_id'] })
       accounts_batch.each do |existing_account|
         categorize_user_account(existing_account, campus_user_rows, known_uids, sis_id_changes, account_changes)
       end

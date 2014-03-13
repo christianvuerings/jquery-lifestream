@@ -30,7 +30,7 @@ class RostersCommon < AbstractModel
     if (match)
       student = roster[:students][match]
       if student[:enroll_status] == 'E'
-        if (photo_row = CampusData.get_photo(student[:login_id]))
+        if (photo_row = CampusOracle::Queries.get_photo(student[:login_id]))
           return {
               size: photo_row['bytes'],
               data: photo_row['photo']

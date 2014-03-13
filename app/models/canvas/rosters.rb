@@ -25,7 +25,7 @@ module Canvas
         }
         # Get the official campus section enrollments (if any) which are associated with these Canvas course sections.
         if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_id))
-          section_enrollments = CampusData.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
+          section_enrollments = CampusOracle::Queries.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
           section_enrollments.each do |enr|
             if (existing_entry = campus_enrollment_map[enr['ldap_uid']])
               # We include waitlisted students in the roster. However, we do not show the official photo if the student

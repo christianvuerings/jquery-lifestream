@@ -12,7 +12,7 @@ class CampusRosters < RostersCommon
     }
     campus_enrollment_map = {}
 
-    all_courses = CampusUserCoursesProxy.new({user_id: @uid}).get_all_campus_courses
+    all_courses = CampusOracle::UserCourses.new({user_id: @uid}).get_all_campus_courses
     selected_course = {}
 
     all_courses.keys.each do |term|
@@ -34,7 +34,7 @@ class CampusRosters < RostersCommon
         name: "#{dept_name} #{catid} #{section[:section_label]}"
       }
 
-      section_enrollments = CampusData.get_enrolled_students(section[:ccn], term_yr, term_cd)
+      section_enrollments = CampusOracle::Queries.get_enrolled_students(section[:ccn], term_yr, term_cd)
       section_enrollments.each do |enr|
         if (existing_entry = campus_enrollment_map[enr['ldap_uid']])
           # We include waitlisted students in the roster. However, we do not show the official photo if the student
@@ -74,7 +74,7 @@ class CampusRosters < RostersCommon
   end
 
   def user_authorized?
-    all_courses = CampusUserCoursesProxy.new({user_id: @uid}).get_all_campus_courses
+    all_courses = CampusOracle::UserCourses.new({user_id: @uid}).get_all_campus_courses
     flag = false
     all_courses.keys.each do |term|
       semester_courses = all_courses[term]

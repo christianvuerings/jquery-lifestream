@@ -1,7 +1,7 @@
 # RailsAdmin config file.
 # See github.com/sferik/rails_admin for more informations
 
-# simple adapter class from our UserAuthPolicy (which is pundit-based) to CanCan, which is greatly preferred by rails_admin.
+# simple adapter class from our User::UserAuthPolicy (which is pundit-based) to CanCan, which is greatly preferred by rails_admin.
 class Ability
   include CanCan::Ability
 
@@ -10,10 +10,10 @@ class Ability
       can :access, :all
       can :dashboard, :all
       if user.policy.can_administrate?
-        can :manage, [UserAuth, UserWhitelist]
+        can :manage, [User::Auth, UserWhitelist]
       end
       if user.policy.can_author?
-        can :manage, [Link, LinkCategory, LinkSection]
+        can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection]
       end
     end
   end
@@ -30,12 +30,12 @@ RailsAdmin.config do |config|
 
   # We're not using Devise or Warden for RailsAdmin authentication; check for superuser in authorize_with instead.
   config.authenticate_with {
-    policy = UserAuth.get(session[:user_id]).policy
+    policy = User::Auth.get(session[:user_id]).policy
     redirect_to main_app.root_path unless policy.can_author?
   }
 
   config.current_user_method {
-    UserAuth.get(session[:user_id])
+    User::Auth.get(session[:user_id])
   }
 
   config.authorize_with :cancan
@@ -56,12 +56,12 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Link', 'LinkCategory', 'LinkSection', 'UserAuth', 'UserRole', 'UserWhitelist']
+  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole', 'UserWhitelist']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
 
-  # config.model Link do
+  # config.model Links::Link do
   # end
 
 
@@ -76,7 +76,7 @@ RailsAdmin.config do |config|
   #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
   #
 
-  config.model 'LinkSection' do
+  config.model 'Links::LinkSection' do
     label "Section"
 
     object_label_method do
@@ -103,16 +103,16 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model 'LinkCategory' do
+  config.model 'Links::LinkCategory' do
     label "Category"
   end
 
-# UserRole needs to be available so we can set perms on Links, but should not be in left nav
-  config.model 'UserRole' do
+  # Links::UserRole needs to be available so we can set perms on Links, but should not be in left nav
+  config.model 'Links::UserRole' do
     visible false
   end
 
-  config.model 'Link' do
+  config.model 'Links::Link' do
     label "Link"
   end
 
@@ -120,7 +120,7 @@ RailsAdmin.config do |config|
     label "Whitelisted User"
   end
 
-  config.model 'UserAuth' do
+  config.model 'User::Auth' do
     label "User Authorizations"
   end
 

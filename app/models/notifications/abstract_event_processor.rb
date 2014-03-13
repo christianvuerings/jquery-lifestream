@@ -18,7 +18,7 @@ module Notifications
       # Using one connection for all the notification saves.
       use_pooled_connection {
         notifications.each do |notification|
-          if UserData.where(:uid => "#{notification.uid}").exists?
+          if User::Data.where(:uid => "#{notification.uid}").exists?
             notification.save
             Calcentral::USER_CACHE_EXPIRATION.notify notification.uid
           else

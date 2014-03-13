@@ -51,7 +51,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
         cutoff = today.advance(:seconds => -1 * Settings.hot_plate.last_visit_cutoff)
         purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
 
-        visits = UserVisit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
+        visits = User::Visit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
         logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
         self.class.increment(self.class.total_warmups_requested, visits.size)
 
@@ -61,7 +61,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
           end
         end
 
-        visits = UserVisit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
+        visits = User::Visit.where("last_visit_at < :cutoff", :cutoff => purge_cutoff.to_date)
         deleted_count = 0
         visits.find_in_batches do |batch|
           batch.each do |visit|

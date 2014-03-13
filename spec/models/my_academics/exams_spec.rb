@@ -34,8 +34,8 @@ describe "MyAcademics::Exams" do
   end
 
   it "should not return any exam schedules for exam information not matching current_year and term" do
-    CampusData.stub(:current_term).and_return("B")
-    CampusData.stub(:current_year).and_return("1984")
+    CampusOracle::Queries.stub(:current_term).and_return("B")
+    CampusOracle::Queries.stub(:current_year).and_return("1984")
     proxy = Bearfacts::Exams.new({:user_id => "865826", :fake => true})
     Bearfacts::Exams.stub(:new).and_return(proxy)
 

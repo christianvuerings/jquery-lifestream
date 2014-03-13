@@ -24,7 +24,7 @@ describe "Courses" do
           }
         end
       end
-      OecData.stub(:get_all_courses).and_return(all_courses_query)
+      CampusOracle::OecData.stub(:get_all_courses).and_return(all_courses_query)
     }
 
     let!(:export) { Courses.new.export(random_time) }
@@ -38,7 +38,7 @@ describe "Courses" do
 
   context "special mangling of cross-listed course names" do
     before(:each) {
-      OecData.stub(:get_all_courses).and_return(
+      CampusOracle::OecData.stub(:get_all_courses).and_return(
         [
           {
             "course_id" => "abcdef",

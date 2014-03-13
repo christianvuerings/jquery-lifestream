@@ -17,7 +17,7 @@ describe "CourseStudents" do
           }
         end
       end
-      OecData.stub(:get_all_course_students).with(ccns).and_return(all_course_students_query)
+      CampusOracle::OecData.stub(:get_all_course_students).with(ccns).and_return(all_course_students_query)
     }
 
     let!(:export) { CourseStudents.new(ccns, []).export(random_time) }

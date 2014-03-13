@@ -16,14 +16,14 @@ describe RoutesListController do
   end
 
   it "should not list any routes for non-superusers" do
-    UserAuth.stub(:where).and_return([UserAuth.new(uid: @user_id, is_superuser: false, active: true)])
+    User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: false, active: true)])
     session[:user_id] = @user_id
     get :smoke_test_routes
     assert_response 401
   end
 
   it "should list some /api/ routes for superusers" do
-    UserAuth.stub(:where).and_return([UserAuth.new(uid: @user_id, is_superuser: true, active: true)])
+    User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: true, active: true)])
     session[:user_id] = @user_id
     get :smoke_test_routes
     assert_response :success

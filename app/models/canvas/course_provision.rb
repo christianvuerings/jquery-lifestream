@@ -71,7 +71,7 @@ module Canvas
     end
 
     def user_admin?
-      policy = UserAuth.get(@uid).policy
+      policy = User::Auth.get(@uid).policy
       @uid.present? && policy.can_import_canvas_users?
     end
 

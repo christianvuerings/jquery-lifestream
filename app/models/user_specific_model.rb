@@ -17,7 +17,7 @@ class UserSpecificModel < AbstractModel
   end
 
   def is_acting_as_nonfake_user?
-    current_user = UserAuth.get(@uid)
+    current_user = User::Auth.get(@uid)
     @original_uid && @uid != @original_uid && !current_user.is_test_user
   end
 

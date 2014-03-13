@@ -8,7 +8,7 @@ describe Notifications::RegStatusTranslator do
     processor = Notifications::RegStatusEventProcessor.new
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).and_return(
+    CampusOracle::Queries.stub(:get_reg_status).and_return(
       {
         "ldap_uid" => "300846",
         "reg_status_cd" => "C"

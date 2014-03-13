@@ -19,7 +19,7 @@ describe "CourseInstructors" do
           }
         end
       end
-      OecData.stub(:get_all_course_instructors).with(ccns).and_return(all_course_instructors_query)
+      CampusOracle::OecData.stub(:get_all_course_instructors).with(ccns).and_return(all_course_instructors_query)
     }
 
     let!(:export) { CourseInstructors.new(ccns).export(random_time) }
