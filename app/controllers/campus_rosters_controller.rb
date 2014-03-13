@@ -1,9 +1,9 @@
-class CanvasRostersController < RostersController
+class CampusRostersController < RostersController
   include ClassLogger
 
-  # GET /api/academics/rosters/canvas/:canvas_course_id
+  # GET /api/academics/rosters/campus/:campus_course_id
   def get_feed
-    if (model = valid_model(params[:canvas_course_id], "Canvas"))
+    if (model = valid_model(params[:campus_course_id], "Campus"))
       if (feed = model.get_feed)
         render :json => feed.to_json
       else

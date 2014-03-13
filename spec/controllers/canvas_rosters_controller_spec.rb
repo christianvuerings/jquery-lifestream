@@ -22,7 +22,7 @@ describe CanvasRostersController do
         "custom_canvas_course_id" => canvas_course_id.to_s
     }
     stub_model = double
-    Canvas::Rosters.should_receive(:new).with(user_id, {canvas_course_id: canvas_course_id}).and_return(stub_model)
+    Canvas::Rosters.should_receive(:new).with(user_id, {course_id: canvas_course_id}).and_return(stub_model)
     stub_model.should_receive(:get_feed).and_return(
         {
             sections: [],

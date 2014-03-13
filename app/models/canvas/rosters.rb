@@ -1,29 +1,7 @@
 module Canvas
-  class Rosters
+  class Rosters < RostersCommon
     include ActiveAttr::Model, ClassLogger, SafeJsonParser
     extend Calcentral::Cacheable
-
-    PHOTO_UNAVAILABLE_FILENAME = 'photo_unavailable_official_72x96.jpg'
-
-    def self.cache_key(canvas_course_id)
-      "global/#{self.name}/#{canvas_course_id}"
-    end
-
-    def initialize(uid, options={})
-      @uid = uid
-      @canvas_course_id = options[:canvas_course_id]
-    end
-
-    # Must be protected by a call to "user_authorized?"!
-    def get_feed
-      if user_authorized?
-        self.class.fetch_from_cache @canvas_course_id do
-          get_feed_internal
-        end
-      else
-        nil
-      end
-    end
 
     def get_feed_internal
       feed = {
@@ -88,27 +66,6 @@ module Canvas
         end
       end
       feed
-    end
-
-    # TODO Pre-fetch and cache the student images at a key incorporating the current user's ID.
-    # E.g., "user/#{instructor_uid}/CanvasRosters/#{canvas_course_id}/photo/#{student_id}".
-    def photo_data_or_file(student_canvas_id)
-      roster = get_feed
-      return nil if roster.nil?
-      if (match = roster[:students].index { |stu| stu[:id] == student_canvas_id })
-        student = roster[:students][match]
-        if student[:enroll_status] == 'E'
-          if (photo_row = CampusData.get_photo(student[:login_id]))
-            return {
-              size: photo_row['bytes'],
-              data: photo_row['photo']
-            }
-          end
-        end
-      end
-      {
-        filename: File.join(Rails.root, 'app/assets/images', PHOTO_UNAVAILABLE_FILENAME)
-      }
     end
 
     def user_authorized?
