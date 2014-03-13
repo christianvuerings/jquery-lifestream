@@ -60,9 +60,9 @@ describe Canvas::CourseProvision do
     ]
   }
   before {
-    UserAuth.new_or_update_superuser!(superuser_id)
+    User::UserAuth.new_or_update_superuser!(superuser_id)
     [user_id, instructor_id, canvas_admin_id].each do |id|
-      UserAuth.new_or_update_test_user!(id)
+      User::UserAuth.new_or_update_test_user!(id)
     end
   }
   before { Canvas::Admins.any_instance.stub(:admin_user?) {|uid| uid == canvas_admin_id} }

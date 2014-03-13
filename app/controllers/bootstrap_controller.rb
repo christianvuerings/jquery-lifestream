@@ -12,7 +12,7 @@ class BootstrapController < ApplicationController
 
   def check_databases_alive
     # so that an error gets thrown if postgres is dead.
-    if !UserData.database_alive?
+    if !User::UserData.database_alive?
       raise "CalCentral database is currently unavailable"
     end
     # so an error gets thrown if Oracle is dead.

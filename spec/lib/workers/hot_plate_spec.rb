@@ -8,15 +8,15 @@ describe "HotPlate" do
   end
 
   it "should warm the cache of some users who have visited recently" do
-    UserVisit.record "1234"
-    UserVisit.record "5678"
+    User::UserVisit.record "1234"
+    User::UserVisit.record "5678"
     Calcentral::Messaging.should_receive(:publish).with('/queues/hot_plate', "1234", {ttl: 86400000, persistent: false}).exactly(1).times
     Calcentral::Messaging.should_receive(:publish).with('/queues/hot_plate', "5678", {ttl: 86400000, persistent: false}).exactly(1).times
     @plate.warm
   end
 
   it "should not explode if an error gets thrown during the warming" do
-    UserVisit.record "1234"
+    User::UserVisit.record "1234"
     UserCacheWarmer.stub(:do_warm).and_raise(TypeError)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
 

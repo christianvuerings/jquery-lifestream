@@ -30,7 +30,7 @@ describe Notifications::RegStatusEventProcessor do
     CampusData.stub(:get_reg_status).with(300847).and_return(nil)
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
-    UserData.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
+    User::UserData.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
 
     @processor.process(event, timestamp).should == true
 
@@ -89,7 +89,7 @@ describe Notifications::RegStatusEventProcessor do
         })
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
-    UserData.stub(:where).and_return(NonexistentUserData.new)
+    User::UserData.stub(:where).and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true
   end
 
@@ -101,7 +101,7 @@ describe Notifications::RegStatusEventProcessor do
             "ldap_uid" => "300846",
             "reg_status_cd" => "C"
         })
-    UserData.stub(:where).and_return(MockUserData.new)
+    User::UserData.stub(:where).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
     saved_notification = Notifications::Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil
@@ -118,7 +118,7 @@ describe Notifications::RegStatusEventProcessor do
             "ldap_uid" => "300846",
             "reg_status_cd" => "C"
         })
-    UserData.stub(:where).and_return(MockUserData.new)
+    User::UserData.stub(:where).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
     saved_notification = Notifications::Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil
@@ -139,7 +139,7 @@ describe Notifications::RegStatusEventProcessor do
         "ldap_uid" => "300846",
         "reg_status_cd" => "C"
       })
-    UserData.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
+    User::UserData.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
     saved_notification = Notifications::Notification.where(:uid => "300846").first
     saved_notification.should_not be_nil

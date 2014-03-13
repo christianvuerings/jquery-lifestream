@@ -1,7 +1,7 @@
 class RemoveYhlAuth < ActiveRecord::Migration
   def up
     Rails.logger.info "Removing (#{uid}) as a superuser"
-    UserAuth.where(:uid => uid).delete_all
+    User::UserAuth.where(:uid => uid).delete_all
   end
 
   def down

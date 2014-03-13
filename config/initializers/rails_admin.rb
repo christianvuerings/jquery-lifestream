@@ -1,7 +1,7 @@
 # RailsAdmin config file.
 # See github.com/sferik/rails_admin for more informations
 
-# simple adapter class from our UserAuthPolicy (which is pundit-based) to CanCan, which is greatly preferred by rails_admin.
+# simple adapter class from our User::UserAuthPolicy (which is pundit-based) to CanCan, which is greatly preferred by rails_admin.
 class Ability
   include CanCan::Ability
 
@@ -10,7 +10,7 @@ class Ability
       can :access, :all
       can :dashboard, :all
       if user.policy.can_administrate?
-        can :manage, [UserAuth, UserWhitelist]
+        can :manage, [User::UserAuth, UserWhitelist]
       end
       if user.policy.can_author?
         can :manage, [Link, LinkCategory, LinkSection]
@@ -30,12 +30,12 @@ RailsAdmin.config do |config|
 
   # We're not using Devise or Warden for RailsAdmin authentication; check for superuser in authorize_with instead.
   config.authenticate_with {
-    policy = UserAuth.get(session[:user_id]).policy
+    policy = User::UserAuth.get(session[:user_id]).policy
     redirect_to main_app.root_path unless policy.can_author?
   }
 
   config.current_user_method {
-    UserAuth.get(session[:user_id])
+    User::UserAuth.get(session[:user_id])
   }
 
   config.authorize_with :cancan
@@ -56,7 +56,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Link', 'LinkCategory', 'LinkSection', 'UserAuth', 'UserRole', 'UserWhitelist']
+  config.included_models = ['Link', 'LinkCategory', 'LinkSection', 'User::UserAuth', 'UserRole', 'UserWhitelist']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -120,7 +120,7 @@ RailsAdmin.config do |config|
     label "Whitelisted User"
   end
 
-  config.model 'UserAuth' do
+  config.model 'User::UserAuth' do
     label "User Authorizations"
   end
 

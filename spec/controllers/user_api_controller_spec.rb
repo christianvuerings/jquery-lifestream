@@ -29,7 +29,7 @@ describe UserApiController do
     json_response["features"].should_not be_nil
     json_response["alert"].should_not be_nil if(@alert_ok)
     json_response["alert"].should be_nil if(@alert_ko)
-    visit = UserVisit.where(:uid=>session[:user_id])[0]
+    visit = User::UserVisit.where(:uid=>session[:user_id])[0]
     visit.last_visit_at.should_not be_nil
   end
 

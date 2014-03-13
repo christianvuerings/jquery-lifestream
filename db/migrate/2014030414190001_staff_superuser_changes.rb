@@ -4,13 +4,13 @@ class StaffSuperuserChanges < ActiveRecord::Migration
 
   def up
     logger.warn "Demoting superusers who aren't part of CalCentral Dev or Ops teams"
-    UserAuth.update_all(
+    User::UserAuth.update_all(
       "is_viewer = true, is_superuser = false",
       "is_superuser = true AND uid NOT IN ( #{staff_uids} )"
     )
 
     logger.warn "Adding Paul Farestveit as superuser"
-    UserAuth.new_or_update_superuser!(paul)
+    User::UserAuth.new_or_update_superuser!(paul)
   end
 
   def down
