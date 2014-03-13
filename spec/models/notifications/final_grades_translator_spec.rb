@@ -7,14 +7,14 @@ describe Notifications::FinalGradesTranslator do
     user.record_first_login
     event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":[{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":7366,"term":{"year":2013,"name":"C"}}]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
-    CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
-    CampusData.stub(:get_course_from_section).and_return(
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
+    CampusOracle::CampusData.stub(:get_course_from_section).and_return(
       {"course_title" => "Research and Data Analysis in Psychology",
        "dept_name" => "PSYCH",
        "catalog_id" => "101"
       })
-    CampusData.stub(:get_course_from_section).with(7366, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_course_from_section).with(7366, 2013, 'C').and_return(
       {"course_title" => "Intro to Nuclear English",
        "dept_name" => "ENGL",
        "catalog_id" => "1"})

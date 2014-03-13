@@ -8,8 +8,8 @@ describe MyClasses::SakaiClasses do
   let(:campus_courses) do
     [{
       id: course_id,
-      term_yr: CampusData.current_year,
-      term_cd: CampusData.current_term,
+      term_yr: CampusOracle::CampusData.current_year,
+      term_cd: CampusOracle::CampusData.current_term,
       sections: [{
         ccn: ccn
       }]
@@ -27,14 +27,14 @@ describe MyClasses::SakaiClasses do
       emitter: Sakai::Proxy::APP_ID
     }
   end
-  before {SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
+  before {CampusOracle::SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
   subject do
     MyClasses::SakaiClasses.new(uid).merge_sites(campus_courses, sites)
     sites
   end
   context 'when Sakai course is within a current term' do
-    let(:term_yr) {CampusData.current_year}
-    let(:term_cd) {CampusData.current_term}
+    let(:term_yr) {CampusOracle::CampusData.current_year}
+    let(:term_cd) {CampusOracle::CampusData.current_term}
     context 'when Sakai course site matches a campus section' do
       let(:sakai_site) {sakai_site_base.merge({sections: [{ccn: ccn.to_s}]})}
       let(:sakai_sites) {{courses: [sakai_site], groups: []}}
@@ -62,7 +62,7 @@ describe MyClasses::SakaiClasses do
   end
   context 'when Sakai course site is for a non-current term' do
     let(:term_yr) {2012}
-    let(:term_cd) {CampusData.current_term}
+    let(:term_cd) {CampusOracle::CampusData.current_term}
     let(:sakai_site) {sakai_site_base.merge({sections: [{ccn: ccn.to_s}]})}
     let(:sakai_sites) {{courses: [sakai_site], groups: []}}
     its(:size) {should eq 0}

@@ -22,12 +22,12 @@ describe Notifications::RegStatusEventProcessor do
   it "should handle an event given to it and save a notification with corresponding data" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).with(300846).and_return(
+    CampusOracle::CampusData.stub(:get_reg_status).with(300846).and_return(
         {
             "ldap_uid" => "300846",
             "reg_status_cd" => "C"
         })
-    CampusData.stub(:get_reg_status).with(300847).and_return(nil)
+    CampusOracle::CampusData.stub(:get_reg_status).with(300847).and_return(nil)
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
     User::Data.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
@@ -49,7 +49,7 @@ describe Notifications::RegStatusEventProcessor do
   it "should skip an event and do nothing if the reg_status can't be found" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).and_return(nil)
+    CampusOracle::CampusData.stub(:get_reg_status).and_return(nil)
     @processor.process(event, timestamp).should == false
   end
 
@@ -64,12 +64,12 @@ describe Notifications::RegStatusEventProcessor do
 
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).with(300846).and_return(
+    CampusOracle::CampusData.stub(:get_reg_status).with(300846).and_return(
         {
             "ldap_uid" => "300846",
             "reg_status_cd" => "Z"
         })
-    CampusData.stub(:get_reg_status).with(300847).and_return(
+    CampusOracle::CampusData.stub(:get_reg_status).with(300847).and_return(
       {
         "ldap_uid" => "300847",
         "reg_status_cd" => "C"
@@ -81,7 +81,7 @@ describe Notifications::RegStatusEventProcessor do
   it "should gracefully skip over a user that can't be found" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).and_return(
+    CampusOracle::CampusData.stub(:get_reg_status).and_return(
         {
             "ldap_uid" => "300846",
             "reg_status_cd" => "C",
@@ -96,7 +96,7 @@ describe Notifications::RegStatusEventProcessor do
   it "should not record multiple events on the same day" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).and_return(
+    CampusOracle::CampusData.stub(:get_reg_status).and_return(
         {
             "ldap_uid" => "300846",
             "reg_status_cd" => "C"
@@ -113,7 +113,7 @@ describe Notifications::RegStatusEventProcessor do
   it "should record multiple events on different days" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).and_return(
+    CampusOracle::CampusData.stub(:get_reg_status).and_return(
         {
             "ldap_uid" => "300846",
             "reg_status_cd" => "C"
@@ -134,7 +134,7 @@ describe Notifications::RegStatusEventProcessor do
   it "parses an event for a single UID as well as an array" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":300846}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_reg_status).with(300846).and_return(
+    CampusOracle::CampusData.stub(:get_reg_status).with(300846).and_return(
       {
         "ldap_uid" => "300846",
         "reg_status_cd" => "C"

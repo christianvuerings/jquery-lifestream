@@ -29,7 +29,7 @@ describe Sakai::SiteAnnouncements do
     end
   end
 
-  it "should find seeded attachments", :if => SakaiData.test_data? do
+  it "should find seeded attachments", :if => CampusOracle::SakaiData.test_data? do
     client = Sakai::SiteAnnouncements.new({site_id: @site_with_ten_current})
     announcements = client.get_announcements
     attachments = []
@@ -39,7 +39,7 @@ describe Sakai::SiteAnnouncements do
     attachments.size.should == 2
   end
 
-  it "should return only site-wide announcements by default", :if => SakaiData.test_data? do
+  it "should return only site-wide announcements by default", :if => CampusOracle::SakaiData.test_data? do
     client = Sakai::SiteAnnouncements.new({site_id: @site_with_ten_current})
     all_announcements = client.get_all_announcements
     all_announcements.size.should == 10
@@ -49,7 +49,7 @@ describe Sakai::SiteAnnouncements do
     filtered_announcements.size.should == 9
   end
 
-  it "should not receive draft, lapsed, or unreleased announcements", :if => SakaiData.test_data? do
+  it "should not receive draft, lapsed, or unreleased announcements", :if => CampusOracle::SakaiData.test_data? do
     client = Sakai::SiteAnnouncements.new({site_id: @site_with_one_current})
     announcements = client.get_announcements
     announcements.size.should == 1

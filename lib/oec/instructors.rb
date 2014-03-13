@@ -14,7 +14,7 @@ class Instructors < OecExport
   end
 
   def append_records(output)
-    OecData.get_all_instructors(@ccns).each do |instructor|
+    CampusOracle::OecData.get_all_instructors(@ccns).each do |instructor|
       output << record_to_csv_row(instructor)
     end
   end

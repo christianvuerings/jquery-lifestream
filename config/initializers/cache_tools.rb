@@ -14,7 +14,7 @@ module Calcentral
       MyRegBlocks => :expire,
       CalLink::Memberships => :expire,
 
-      CampusUserCoursesProxy => :expire,
+      CampusOracle::CampusUserCoursesProxy => :expire,
 
       Canvas::Proxy => :expire,
       Canvas::UserCourses => :expire,
@@ -31,7 +31,7 @@ module Calcentral
       MyTasks::GoogleTasks => :expire,
 
       Sakai::Proxy => :expire,
-      SakaiMergedUserSites => :expire
+      CampusOracle::SakaiMergedUserSites => :expire
     }.each do |key, value|
       USER_CACHE_EXPIRATION.add_observer(key, value)
     end

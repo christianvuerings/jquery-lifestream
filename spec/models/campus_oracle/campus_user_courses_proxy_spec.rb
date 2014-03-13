@@ -1,18 +1,18 @@
 require "spec_helper"
 
-describe CampusUserCoursesProxy do
+describe CampusOracle::CampusUserCoursesProxy do
 
   it "should be accessible if non-null user" do
-    CampusUserCoursesProxy.access_granted?(nil).should be_false
-    CampusUserCoursesProxy.access_granted?('211159').should be_true
-    client = CampusUserCoursesProxy.new({user_id: '211159'})
+    CampusOracle::CampusUserCoursesProxy.access_granted?(nil).should be_false
+    CampusOracle::CampusUserCoursesProxy.access_granted?('211159').should be_true
+    client = CampusOracle::CampusUserCoursesProxy.new({user_id: '211159'})
     client.get_all_campus_courses.should_not be_nil
   end
 
-  it "should return pre-populated test enrollments for all semesters", :if => SakaiData.test_data? do
+  it "should return pre-populated test enrollments for all semesters", :if => CampusOracle::SakaiData.test_data? do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
-    client = CampusUserCoursesProxy.new({user_id: '300939'})
+    client = CampusOracle::CampusUserCoursesProxy.new({user_id: '300939'})
     courses = client.get_all_campus_courses
     courses.empty?.should be_false
     courses["2012-B"].length.should == 2
@@ -38,8 +38,8 @@ describe CampusUserCoursesProxy do
     end
   end
 
-  it 'includes nested sections for instructors', :if => SakaiData.test_data? do
-    client = CampusUserCoursesProxy.new({user_id: '238382'})
+  it 'includes nested sections for instructors', :if => CampusOracle::SakaiData.test_data? do
+    client = CampusOracle::CampusUserCoursesProxy.new({user_id: '238382'})
     courses = client.get_all_campus_courses
     sections = courses['2013-D'].select {|c| c[:dept] == 'BIOLOGY' && c[:catid] == '1A'}.first[:sections]
     expect(sections.size).to eq 3
@@ -47,18 +47,18 @@ describe CampusUserCoursesProxy do
     expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
   end
 
-  it 'prefixes short CCNs with zeroes', :if => SakaiData.test_data? do
-    client = CampusUserCoursesProxy.new({user_id: '238382'})
+  it 'prefixes short CCNs with zeroes', :if => CampusOracle::SakaiData.test_data? do
+    client = CampusOracle::CampusUserCoursesProxy.new({user_id: '238382'})
     courses = client.get_selected_sections(2013, 'D', [7309])
     sections = courses['2013-D'].first[:sections]
     expect(sections.size).to eq 1
     expect(sections.first[:ccn]).to eq '07309'
   end
 
-  it "should find waitlisted status in test enrollments", :if => SakaiData.test_data? do
+  it "should find waitlisted status in test enrollments", :if => CampusOracle::SakaiData.test_data? do
     Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
     Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
-    client = CampusUserCoursesProxy.new({user_id: '300939'})
+    client = CampusOracle::CampusUserCoursesProxy.new({user_id: '300939'})
     courses = client.get_all_campus_courses
     courses["2015-B"].length.should == 1
     course = courses["2015-B"][0]
@@ -66,13 +66,13 @@ describe CampusUserCoursesProxy do
     course[:enroll_limit].should == '5000'
   end
 
-  it "should say that Tammi has student history", :if => SakaiData.test_data? do
-    client = CampusUserCoursesProxy.new({user_id: '300939'})
+  it "should say that Tammi has student history", :if => CampusOracle::SakaiData.test_data? do
+    client = CampusOracle::CampusUserCoursesProxy.new({user_id: '300939'})
     client.has_student_history?.should be_true
   end
 
-  it "should say that our fake teacher has instructor history", :if => SakaiData.test_data? do
-    client = CampusUserCoursesProxy.new({user_id: '238382'})
+  it "should say that our fake teacher has instructor history", :if => CampusOracle::SakaiData.test_data? do
+    client = CampusOracle::CampusUserCoursesProxy.new({user_id: '238382'})
     client.has_instructor_history?.should be_true
   end
 

@@ -1,10 +1,11 @@
-class OecData < OracleDatabase
-  include ActiveRecordHelper
+module CampusOracle
+  class OecData < OracleDatabase
+    include ActiveRecordHelper
 
-  def self.get_all_students(course_cntl_nums=[])
-    result = []
-    use_pooled_connection {
-      sql = <<-SQL
+    def self.get_all_students(course_cntl_nums=[])
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
         select distinct person.first_name, person.last_name,
           person.email_address, person.ldap_uid
         from calcentral_person_info_vw person, calcentral_class_roster_vw r, calcentral_course_info_vw c
@@ -18,16 +19,16 @@ class OecData < OracleDatabase
           and r.course_cntl_num = c.course_cntl_num
           and r.student_ldap_uid = person.ldap_uid
         order by ldap_uid
-      SQL
-      result = connection.select_all(sql)
-    }
-    result
-  end
+        SQL
+        result = connection.select_all(sql)
+      }
+      result
+    end
 
-  def self.get_all_instructors(course_cntl_nums=[])
-    result = []
-    use_pooled_connection {
-      sql = <<-SQL
+    def self.get_all_instructors(course_cntl_nums=[])
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
         select distinct person.first_name, person.last_name,
           person.email_address, person.ldap_uid, '23' AS blue_role
         from calcentral_person_info_vw person, calcentral_course_instr_vw bci, calcentral_course_info_vw c, calcentral_class_roster_vw r
@@ -44,23 +45,23 @@ class OecData < OracleDatabase
           and bci.course_cntl_num = c.course_cntl_num
           and person.ldap_uid = bci.instructor_ldap_uid
         order by ldap_uid
-      SQL
-      result = connection.select_all(sql)
-    }
-    result
-  end
-
-  def self.get_all_courses(course_cntl_nums = nil)
-    result = []
-    course_cntl_nums_clause = ''
-    this_depts_clause = depts_clause
-    if course_cntl_nums.present?
-      course_cntl_nums_clause = " and c.course_cntl_num IN ( #{course_cntl_nums} )"
-      this_depts_clause = ''
+        SQL
+        result = connection.select_all(sql)
+      }
+      result
     end
 
-    use_pooled_connection {
-      sql = <<-SQL
+    def self.get_all_courses(course_cntl_nums = nil)
+      result = []
+      course_cntl_nums_clause = ''
+      this_depts_clause = depts_clause
+      if course_cntl_nums.present?
+        course_cntl_nums_clause = " and c.course_cntl_num IN ( #{course_cntl_nums} )"
+        this_depts_clause = ''
+      end
+
+      use_pooled_connection {
+        sql = <<-SQL
       select
         c.term_yr || '-' || c.term_cd || '-' || c.course_cntl_num AS course_id,
         c.dept_name || ' ' || c.catalog_id || ' ' || c.instruction_format || ' ' || c.section_num || ' ' || c.course_title_short AS course_name,
@@ -89,16 +90,16 @@ class OecData < OracleDatabase
             and rownum < 2
           )
       order by c.course_cntl_num
-      SQL
-      result = connection.select_all(sql)
-    }
-    result
-  end
+        SQL
+        result = connection.select_all(sql)
+      }
+      result
+    end
 
-  def self.get_all_course_instructors(course_cntl_nums=[])
-    result = []
-    use_pooled_connection {
-      sql = <<-SQL
+    def self.get_all_course_instructors(course_cntl_nums=[])
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
       select distinct bci.term_yr || '-' || bci.term_cd || '-' || bci.course_cntl_num AS course_id,
         bci.instructor_ldap_uid AS ldap_uid, bci.instructor_func
       from calcentral_course_instr_vw bci, calcentral_course_info_vw c, calcentral_class_roster_vw r
@@ -114,16 +115,16 @@ class OecData < OracleDatabase
           and bci.term_cd = c.term_cd
           and bci.course_cntl_num = c.course_cntl_num
       order by ldap_uid
-      SQL
-      result = connection.select_all(sql)
-    }
-    result
-  end
+        SQL
+        result = connection.select_all(sql)
+      }
+      result
+    end
 
-  def self.get_all_course_students(course_cntl_nums=[])
-    result = []
-    use_pooled_connection {
-      sql = <<-SQL
+    def self.get_all_course_students(course_cntl_nums=[])
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
       select distinct r.term_yr || '-' || r.term_cd || '-' || r.course_cntl_num AS course_id,
         r.student_ldap_uid AS ldap_uid
       from calcentral_course_info_vw c, calcentral_class_roster_vw r
@@ -136,27 +137,28 @@ class OecData < OracleDatabase
           and r.term_cd = c.term_cd
           and r.course_cntl_num = c.course_cntl_num
       order by ldap_uid
-      SQL
-      result = connection.select_all(sql)
-    }
-    result
+        SQL
+        result = connection.select_all(sql)
+      }
+      result
+    end
+
+    private
+
+    def self.depts_clause
+      string = if Settings.oec.departments.blank?
+                 ''
+               else
+                 clause = 'and c.dept_name IN ('
+                 Settings.oec.departments.each_with_index do |dept, index|
+                   clause.concat("'#{dept}'")
+                   clause.concat(",") unless index == Settings.oec.departments.length - 1
+                 end
+                 clause.concat(')')
+                 clause
+               end
+      string
+    end
+
   end
-
-  private
-
-  def self.depts_clause
-    string = if Settings.oec.departments.blank?
-                ''
-              else
-                clause = 'and c.dept_name IN ('
-                Settings.oec.departments.each_with_index do |dept, index|
-                  clause.concat("'#{dept}'")
-                  clause.concat(",") unless index == Settings.oec.departments.length - 1
-                end
-                clause.concat(')')
-                clause
-              end
-    string
-  end
-
 end

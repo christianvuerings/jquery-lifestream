@@ -17,7 +17,7 @@ module Notifications
       return false unless accept?(event) && timestamp && uid
 
       Rails.logger.debug "#{self.class.name} event = #{event}"
-      course = CampusData.get_course_from_section(event["ccn"], event["year"], event["term"])
+      course = CampusOracle::CampusData.get_course_from_section(event["ccn"], event["year"], event["term"])
 
       return false unless course && course["dept_name"] && course["catalog_id"]
 

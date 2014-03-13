@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe SakaiMergedUserSites do
+describe CampusOracle::SakaiMergedUserSites do
   let(:uid) {'300939'}
-  subject {SakaiMergedUserSites.new(user_id: uid).get_feed}
+  subject {CampusOracle::SakaiMergedUserSites.new(user_id: uid).get_feed}
 
   context 'when potentially testing against live data' do
     its([:courses]) {should_not be_nil}
@@ -29,7 +29,7 @@ describe SakaiMergedUserSites do
     end
   end
 
-  context 'when running against test data', :if => SakaiData.test_data? do
+  context 'when running against test data', :if => CampusOracle::SakaiData.test_data? do
     it 'includes linked sections and group memberships' do
       site = subject[:courses].select {|site| site[:id] == '29fc31ae-ff14-419f-a132-5576cae2474e'}.first
       expect(site[:groups].length).to eq(1)

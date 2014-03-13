@@ -24,9 +24,9 @@ module Sakai
       # Cache all announcements site-wide, and filter out group-specific announcements as needed.
       self.class.fetch_from_cache @site_id do
         announcements = []
-        @tool_id = SakaiData.get_announcement_tool_id(@site_id)
+        @tool_id = CampusOracle::SakaiData.get_announcement_tool_id(@site_id)
         if (@tool_id)
-          ann_rows = SakaiData.get_announcements(@site_id, start_time, end_time)
+          ann_rows = CampusOracle::SakaiData.get_announcements(@site_id, start_time, end_time)
           ann_rows.each do |row|
             announcement = parse_announcement(row)
             if announcement

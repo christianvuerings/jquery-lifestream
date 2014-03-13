@@ -4,7 +4,7 @@ module MyClasses
 
     def merge_sites(campus_courses, sites)
       return unless Sakai::Proxy.access_granted?(@uid)
-      sakai_sites = SakaiMergedUserSites.new(user_id: @uid).get_feed
+      sakai_sites = CampusOracle::SakaiMergedUserSites.new(user_id: @uid).get_feed
       sakai_sites[:courses].each do |course_site|
         if (entry = course_site_entry(campus_courses, course_site))
           sites << entry

@@ -15,7 +15,7 @@ describe Notifications::FinalGradesEventProcessor do
   it "should handle an event given to it and save a notification with corresponding data" do
     event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":[{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":7366,"term":{"year":2013,"name":"C"}}]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return(
         [
             {"ldap_uid" => "123456"},
             {"ldap_uid" => "323487"},
@@ -24,12 +24,12 @@ describe Notifications::FinalGradesEventProcessor do
             {"ldap_uid" => "904715"},
             {"ldap_uid" => "978966"},
             {"ldap_uid" => "300846"}])
-    CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([{"ldap_uid" => "300846"}])
-    CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([{"ldap_uid" => "300846"}])
+    CampusOracle::CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
         {"course_title" => "Research and Data Analysis in Psychology",
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})
-    CampusData.stub(:get_course_from_section).with(7366, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_course_from_section).with(7366, 2013, 'C').and_return(
       {"course_title" => "Intro to Nuclear English",
        "dept_name" => "ENGL",
        "catalog_id" => "1"})
@@ -59,7 +59,7 @@ describe Notifications::FinalGradesEventProcessor do
   it "should gracefully skip over a user that can't be found" do
     event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":[{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":7366,"term":{"year":2013,"name":"C"}}]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return(
         [
             {"ldap_uid" => "123456"},
             {"ldap_uid" => "323487"},
@@ -68,7 +68,7 @@ describe Notifications::FinalGradesEventProcessor do
             {"ldap_uid" => "904715"},
             {"ldap_uid" => "300846"},
             {"ldap_uid" => "978966"}])
-    CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
     User::Data.stub(:where, "300846").and_return(NonexistentUserData.new)
@@ -78,9 +78,9 @@ describe Notifications::FinalGradesEventProcessor do
   it "should not save a duplicate event on the same day" do
     event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":[{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":7366,"term":{"year":2013,"name":"C"}}]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
-    CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
-    CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
+    CampusOracle::CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
         {"course_title" => "Research and Data Analysis in Psychology",
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})
@@ -97,8 +97,8 @@ describe Notifications::FinalGradesEventProcessor do
   it "should not duplicate an event that's duplicated thrice in the same message" do
     event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":[{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":73974,"term":{"year":2013,"name":"C"}}]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
-    CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
+    CampusOracle::CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
       {"course_title" => "Research and Data Analysis in Psychology",
        "dept_name" => "PSYCH",
        "catalog_id" => "101"})
@@ -114,9 +114,9 @@ describe Notifications::FinalGradesEventProcessor do
   it "should save multiple events on different days" do
     event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":[{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":7366,"term":{"year":2013,"name":"C"}}]}}')
     timestamp = Time.now.to_datetime
-    CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
-    CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
-    CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
+    CampusOracle::CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
+    CampusOracle::CampusData.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
         {"course_title" => "Research and Data Analysis in Psychology",
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})

@@ -32,7 +32,7 @@ postgres:
 campusdb:
   adapter: h2
   driver: org.h2.Driver
-  url: jdbc:h2:mem:h2CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
+  url: jdbc:h2:mem:h2CampusOracle::CampusDataSource;DB_CLOSE_DELAY=-1;MODE=Oracle
   username: sa
   password: sa
   pool: 95
@@ -215,7 +215,7 @@ cache:
     Canvas::CanvasTodoProxy: <%= 20.minutes %>
     Canvas::CanvasUpcomingEventsProxy: <%= 20.minutes %>
 
-    SakaiMergedUserSites: <%= 30.minutes %>
+    CampusOracle::SakaiMergedUserSites: <%= 30.minutes %>
     Sakai::SiteAnnouncements: <%= 30.minutes %>
 
     MyBadges::GoogleCalendar: <%= 4.minutes %>

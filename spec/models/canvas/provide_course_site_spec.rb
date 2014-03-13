@@ -607,7 +607,7 @@ describe Canvas::ProvideCourseSite do
       expect { worker.candidate_courses_list }.to raise_error(RuntimeError, "User ID not found for candidate")
     end
 
-    it "should get properly formatted candidate course list from fake Oracle MV", :if => SakaiData.test_data? do
+    it "should get properly formatted candidate course list from fake Oracle MV", :if => CampusOracle::SakaiData.test_data? do
       Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
       terms_feed = Canvas::ProvideCourseSite.new("238382").candidate_courses_list
       terms_feed.length.should == 1
@@ -954,7 +954,7 @@ describe Canvas::ProvideCourseSite do
   describe "#courses_list_from_ccns" do
     # Lock down to a known set of sections, either in the test DB or in real campus data.
     let(:term_codes_array) {
-      SakaiData.test_data? ?
+      CampusOracle::SakaiData.test_data? ?
           [{yr: '2013', cd: 'D', slug: "fall-2013"}] :
           [{yr: '2013', cd: 'B', slug: "spring-2013"}]
     }

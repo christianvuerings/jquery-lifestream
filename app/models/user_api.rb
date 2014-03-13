@@ -9,7 +9,7 @@ class UserApi < UserSpecificModel
     use_pooled_connection {
       @calcentral_user_data ||= User::Data.where(:uid => @uid).first
     }
-    @campus_attributes ||= CampusData.get_person_attributes(@uid) || {}
+    @campus_attributes ||= CampusOracle::CampusData.get_person_attributes(@uid) || {}
     @default_name ||= @campus_attributes['person_name']
     @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
     @first_name ||= @campus_attributes['first_name'] || ""
@@ -86,7 +86,7 @@ class UserApi < UserSpecificModel
     current_user = User::Auth.get(@uid)
     is_google_reminder_dismissed = Oauth2Data.is_google_reminder_dismissed(@uid)
     is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
-    campus_courses_proxy = CampusUserCoursesProxy.new({:user_id => @uid})
+    campus_courses_proxy = CampusOracle::CampusUserCoursesProxy.new({:user_id => @uid})
     has_student_history = campus_courses_proxy.has_student_history?
     has_instructor_history = campus_courses_proxy.has_instructor_history?
     roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
@@ -130,7 +130,7 @@ class UserApi < UserSpecificModel
     if UserWhitelist.where(uid: uid).first.present?
       return true
     end
-    if (info = CampusData.get_student_info(uid))
+    if (info = CampusOracle::CampusData.get_student_info(uid))
       Settings.user_whitelist.first_year_codes.each do |code|
         if code.term_yr == info["first_reg_term_yr"] && code.term_cd == info["first_reg_term_cd"]
           return true
@@ -142,7 +142,7 @@ class UserApi < UserSpecificModel
     end
     if (info.try(:[], "ug_grad_flag") == "G" &&
       /STUDENT-STATUS-EXPIRED/.match(info["affiliations"]).nil? &&
-      CampusData.is_previous_ugrad?(uid))
+      CampusOracle::CampusData.is_previous_ugrad?(uid))
       return true
     end
 

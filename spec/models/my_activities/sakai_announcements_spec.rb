@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe MyActivities::SakaiAnnouncements, :if => SakaiData.test_data? do
+describe MyActivities::SakaiAnnouncements, :if => CampusOracle::SakaiData.test_data? do
   let!(:fake_uid) { Settings.sakai_proxy.fake_user_id }
   let!(:fake_sites) { MyActivities::DashboardSites.fetch(fake_uid, {fake: true}) }
   let(:documented_types) { %w(announcement) }

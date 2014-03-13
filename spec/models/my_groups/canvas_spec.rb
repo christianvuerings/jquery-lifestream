@@ -24,8 +24,8 @@ describe MyGroups::Canvas do
     context 'when a Canvas course site' do
       let(:canvas_sites) {{courses: [site_base.merge({term_yr: term_yr, term_cd: term_yr})], groups: []}}
       context 'when in a campus term' do
-        let(:term_yr) {CampusData.current_year}
-        let(:term_cd) {CampusData.current_term}
+        let(:term_yr) {CampusOracle::CampusData.current_year}
+        let(:term_cd) {CampusOracle::CampusData.current_term}
         it {should eq []}
       end
       context 'when outside any campus term' do
@@ -67,8 +67,8 @@ describe MyGroups::Canvas do
         let(:group) {group_base.merge(course_id: site_id)}
         let(:canvas_sites) {{courses: [site_base.merge({term_yr: term_yr, term_cd: term_yr})], groups: [group]}}
         context 'when in a campus term' do
-          let(:term_yr) {CampusData.current_year}
-          let(:term_cd) {CampusData.current_term}
+          let(:term_yr) {CampusOracle::CampusData.current_year}
+          let(:term_cd) {CampusOracle::CampusData.current_term}
           it {should eq []}
         end
         context 'when outside any campus term' do

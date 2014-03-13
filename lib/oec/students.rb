@@ -15,7 +15,7 @@ class Students < OecExport
   end
 
   def append_records(output)
-    OecData.get_all_students(@ccns).each do |student|
+    CampusOracle::OecData.get_all_students(@ccns).each do |student|
       output << record_to_csv_row(student)
     end
   end

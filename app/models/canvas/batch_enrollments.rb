@@ -20,14 +20,14 @@ module Canvas
     end
 
     def refresh_students_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
-      campus_data_rows = CampusData.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
+      campus_data_rows = CampusOracle::CampusData.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
       campus_data_rows.each do |campus_data_row|
         append_enrollment_and_user(course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
       end
     end
 
     def refresh_teachers_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
-      campus_data_rows = CampusData.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
+      campus_data_rows = CampusOracle::CampusData.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
       campus_data_rows.each do |campus_data_row|
         append_teaching_and_user(course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
       end

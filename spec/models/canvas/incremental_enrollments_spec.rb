@@ -136,7 +136,7 @@ describe Canvas::IncrementalEnrollments do
       ]
     end
     before do
-      CampusData.stub(:get_enrolled_students).and_return(campus_data_rows_enrolled_students)
+      CampusOracle::CampusData.stub(:get_enrolled_students).and_return(campus_data_rows_enrolled_students)
       subject.refresh_students_in_section(campus_section, course_id, section_id, canvas_student_enrollments, enrollments_csv, known_users, users_csv)
     end
 
@@ -187,7 +187,7 @@ describe Canvas::IncrementalEnrollments do
     end
 
     before do
-      CampusData.stub(:get_section_instructors).and_return(campus_data_rows_enrolled_instructors)
+      CampusOracle::CampusData.stub(:get_section_instructors).and_return(campus_data_rows_enrolled_instructors)
       subject.refresh_teachers_in_section(campus_section, course_id, section_id, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv)
     end
 

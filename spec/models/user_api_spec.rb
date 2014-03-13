@@ -4,7 +4,7 @@ describe "UserApi" do
   before(:each) do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     @default_name = "Joe Default"
-    CampusData.stub(:get_person_attributes) do |uid|
+    CampusOracle::CampusData.stub(:get_person_attributes) do |uid|
       {
         'person_name' => @default_name,
         :roles => {
@@ -102,7 +102,7 @@ describe "UserApi" do
   it "should say a freshman undergrad can log in" do
     Settings.features.user_whitelist = true
     Canvas::Proxy.stub(:has_account?).and_return(false)
-    CampusData.stub(:get_student_info).and_return(
+    CampusOracle::CampusData.stub(:get_student_info).and_return(
       {
         "first_reg_term_cd" => "D",
         "first_reg_term_yr" => "2013"
@@ -112,7 +112,7 @@ describe "UserApi" do
   it "should say a junior undergrad cannot log in" do
     Settings.features.user_whitelist = true
     Canvas::Proxy.stub(:has_account?).and_return(false)
-    CampusData.stub(:get_student_info).and_return(
+    CampusOracle::CampusData.stub(:get_student_info).and_return(
       {
         "first_reg_term_cd" => "D",
         "first_reg_term_yr" => "2011"
@@ -120,7 +120,7 @@ describe "UserApi" do
     UserApi.is_allowed_to_log_in?(@random_id).should == false
   end
 
-  it "grad students who used to be undergrads can log in", if: CampusData.test_data? do
+  it "grad students who used to be undergrads can log in", if: CampusOracle::CampusData.test_data? do
     Settings.features.user_whitelist = true
     Canvas::Proxy.stub(:has_account?).and_return(false)
     UserApi.is_allowed_to_log_in?("212388").should be_true
@@ -128,13 +128,13 @@ describe "UserApi" do
     UserApi.is_allowed_to_log_in?("212390").should be_false
   end
 
-  it "should say random student gets the academics tab", if: CampusData.test_data? do
+  it "should say random student gets the academics tab", if: CampusOracle::CampusData.test_data? do
     user_data = UserApi.new(@random_id).get_feed
     user_data[:student_info][:has_academics_tab].should be_true
   end
 
-  it "should say Chris does not get the academics tab", if: CampusData.test_data? do
-    CampusData.stub(:get_person_attributes).and_return(
+  it "should say Chris does not get the academics tab", if: CampusOracle::CampusData.test_data? do
+    CampusOracle::CampusData.stub(:get_person_attributes).and_return(
       {
         'person_name' => @default_name,
         :roles => {
@@ -143,10 +143,10 @@ describe "UserApi" do
           :staff => true
         }
       })
-    fake_courses_proxy = CampusUserCoursesProxy.new({:fake => true})
+    fake_courses_proxy = CampusOracle::CampusUserCoursesProxy.new({:fake => true})
     fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
     fake_courses_proxy.stub(:has_student_history?).and_return(false)
-    CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
+    CampusOracle::CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
 
     user_data = UserApi.new("904715").get_feed
     user_data[:student_info][:has_academics_tab].should be_false
@@ -165,29 +165,29 @@ describe "UserApi" do
       data[:student_info][:has_financials_tab].should_not be_nil
     end
     it "should be true for an active student"  do  #check
-      CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:active] })
+      CampusOracle::CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:active] })
       data = UserApi.new(@random_id).get_feed
       data[:student_info][:has_financials_tab].should == true
     end
-    it "should be false for a non-student", if: CampusData.test_data?  do   #check
-      CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:non] })
+    it "should be false for a non-student", if: CampusOracle::CampusData.test_data?  do   #check
+      CampusOracle::CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:non] })
       data = UserApi.new(@random_id).get_feed
       data[:student_info][:has_financials_tab].should == false
     end
-    it "should be true for Bernie as an ex-student", if: CampusData.test_data?  do
-      CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:expired] })
+    it "should be true for Bernie as an ex-student", if: CampusOracle::CampusData.test_data?  do
+      CampusOracle::CampusData.stub(:get_person_attributes).and_return({ :roles => @student_roles[:expired] })
       data = UserApi.new(@random_id).get_feed
       data[:student_info][:has_financials_tab].should be_true
     end
   end
 
 
-  it "should not explode when CampusData returns empty" do
-    CampusData.stub(:get_person_attributes).and_return({})
-    fake_courses_proxy = CampusUserCoursesProxy.new({:fake => true})
+  it "should not explode when CampusOracle::CampusData returns empty" do
+    CampusOracle::CampusData.stub(:get_person_attributes).and_return({})
+    fake_courses_proxy = CampusOracle::CampusUserCoursesProxy.new({:fake => true})
     fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
     fake_courses_proxy.stub(:has_student_history?).and_return(false)
-    CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
+    CampusOracle::CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
 
     user_data = UserApi.new("904715").get_feed
     user_data[:student_info][:has_academics_tab].should_not be_true

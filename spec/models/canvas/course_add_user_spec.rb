@@ -56,25 +56,25 @@ describe Canvas::CourseAddUser do
     end
 
     it "searches users by name" do
-      CampusData.should_receive(:find_people_by_name).with('John Doe', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
+      CampusOracle::CampusData.should_receive(:find_people_by_name).with('John Doe', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
       result = Canvas::CourseAddUser.search_users('John Doe', 'name')
       expect(result).to be_an_instance_of Array
     end
 
     it "searches users by email" do
-      CampusData.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
+      CampusOracle::CampusData.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
       result = Canvas::CourseAddUser.search_users('johndoe@ber', 'email')
       expect(result).to be_an_instance_of Array
     end
 
     it "searches users by student id" do
-      CampusData.should_receive(:find_people_by_student_id).with('105070').and_return([])
+      CampusOracle::CampusData.should_receive(:find_people_by_student_id).with('105070').and_return([])
       result = Canvas::CourseAddUser.search_users('105070', 'student_id')
       expect(result).to be_an_instance_of Array
     end
 
     it "searches users by LDAP user id" do
-      CampusData.should_receive(:find_people_by_uid).with('100374').and_return([])
+      CampusOracle::CampusData.should_receive(:find_people_by_uid).with('100374').and_return([])
       result = Canvas::CourseAddUser.search_users('100374', 'ldap_user_id')
       expect(result).to be_an_instance_of Array
     end

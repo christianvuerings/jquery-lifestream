@@ -19,7 +19,7 @@ module Sakai
 
     def get_sakai_user_id
       self.class.fetch_from_cache @uid do
-        SakaiData.get_sakai_user_id(@uid)
+        CampusOracle::SakaiData.get_sakai_user_id(@uid)
       end
     end
 
