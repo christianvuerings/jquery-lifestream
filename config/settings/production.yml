@@ -20,6 +20,14 @@ canvas_proxy:
   current_terms_codes: [
     {
       term_yr: "2014",
+      term_cd: "D"
+    },
+    {
+      term_yr: "2014",
+      term_cd: "C"
+    },
+    {
+      term_yr: "2014",
       term_cd: "B"
     }
   ]
@@ -31,6 +39,14 @@ sakai_proxy:
   }]
   academic_terms:
     student: [
+        {
+        term_yr: "2014",
+        term_cd: "D"
+        },
+        {
+        term_yr: "2014",
+        term_cd: "C"
+        },
         {
         term_yr: "2014",
         term_cd: "B"
@@ -85,6 +101,14 @@ sakai_proxy:
         }
     ]
     instructor: [
+        {
+          term_yr: "2014",
+          term_cd: "D"
+        },
+        {
+          term_yr: "2014",
+          term_cd: "C"
+        },
         {
         term_yr: "2014",
         term_cd: "B"
