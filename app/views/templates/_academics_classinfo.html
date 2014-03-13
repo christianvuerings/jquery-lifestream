@@ -3,159 +3,186 @@
     class="cc-page-academics"
     data-cc-spinner-directive
     data-ng-show="can_view_academics"
+    data-ng-switch data-on="current_selection"
   >
     <div>
       <h1 class="cc-heading-page-title">
         <a href="/academics">My Academics</a> &raquo;
         <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
         <span data-ng-bind="selected_course.course_number"></span>
+        <span class="cc-academics-teaching-button-group" data-ng-if="is_instructor_gsi">
+          <ul class="cc-button-group cc-even-{{select_options.length}}" role="tablist">
+            <li data-ng-repeat="select_option in select_options">
+              <button class="cc-button"
+                data-ng-click="switchSelectedOption(select_option)"
+                data-ng-class="{'cc-button-selected cc-button-selected-roster':(current_selection === select_option)}"
+                aria-selected="{{current_selection === select_option}}"
+                role="tab"
+                data-ng-bind="select_option">
+              </button>
+            </li>
+          </ul>
+        </span>
       </h1>
     </div>
 
-    <div class="medium-4 columns cc-academics-page-left">
-      <div class="cc-widget">
-        <div class="cc-widget-title">
-          <h2>Class information</h2>
-        </div>
-        <div class="cc-widget-padding">
-          <h3>Class Title</h3>
-          <div data-ng-bind="selected_course.title"></div>
+    <div data-ng-switch-when="Class Info" role="tabpanel" aria-live="polite">
 
-          <h3 data-ng-if="selected_course.role">My Role</h3>
-          <div data-ng-bind="selected_course.role"></div>
-
-          <h3 data-ng-if="selected_course.sections.length && !is_instructor_gsi">My Enrollment</h3>
-
-          <div class="cc-table" data-ng-if="selected_course.sections.length && !is_instructor_gsi">
-            <table>
-              <thead>
-                <tr>
-                  <th width="25%">Section</th>
-                  <th>CCN</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ng-repeat="sec in selected_course.sections">
-                  <td data-ng-bind="sec.section_label"></td>
-                  <td data-ng-bind="sec.ccn"></td>
-                </tr>
-              </tbody>
-            </table>
+      <div class="medium-4 columns cc-academics-page-left">
+        <div class="cc-widget">
+          <div class="cc-widget-title">
+            <h2>Class information</h2>
           </div>
+          <div class="cc-widget-padding">
+            <h3>Class Title</h3>
+            <div data-ng-bind="selected_course.title"></div>
 
-          <h3 data-ng-if="selected_course_count_schedules || selected_course.units || selected_course.grade_option">Class Info</h3>
+            <h3 data-ng-if="selected_course.role">My Role</h3>
+            <div data-ng-bind="selected_course.role"></div>
 
-          <h4 data-ng-hide="is_instructor_gsi">Course Offering</h4>
+            <h3 data-ng-if="selected_course.sections.length && !is_instructor_gsi">My Enrollment</h3>
 
-          <div data-ng-hide="is_instructor_gsi" class="cc-table">
-            <table>
-              <tbody>
-                <tr>
-                  <th scope="row" width="25%">Units</th>
-                  <td data-ng-if="selected_course.units" data-ng-bind="selected_course.units  | number:1"></td>
-                  <td data-ng-if="!selected_course.units">--</td>
-                </tr>
-                <tr data-ng-if="selected_course.grade_option">
-                  <th scope="row">Grading</th>
-                  <td data-ng-bind="selected_course.grade_option"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div class="cc-table" data-ng-if="selected_course.sections.length && !is_instructor_gsi">
+              <table>
+                <thead>
+                  <tr>
+                    <th width="25%">Section</th>
+                    <th>CCN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="sec in selected_course.sections">
+                    <td data-ng-bind="sec.section_label"></td>
+                    <td data-ng-bind="sec.ccn"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-          <h4 data-ng-if="selected_course_count_schedules">Section Schedules</h4>
+            <h3 data-ng-if="selected_course_count_schedules || selected_course.units || selected_course.grade_option">Class Info</h3>
 
-          <div class="row collapse" data-ng-repeat="section in selected_course.sections">
-            <div class="small-3 columns" data-ng-if="section.schedules" data-ng-bind="section.section_label"></div>
-            <div class="small-9 columns">
-              <div data-ng-repeat="schedule in section.schedules" data-ng-if="section.schedules" class="cc-academics-schedule-room">
-                <span data-ng-bind="schedule.schedule"></span> |
-                <span data-ng-bind="schedule.room_number"></span> <span data-ng-bind="schedule.building_name"></span> <br />
+            <h4 data-ng-hide="is_instructor_gsi">Course Offering</h4>
+
+            <div data-ng-hide="is_instructor_gsi" class="cc-table">
+              <table>
+                <tbody>
+                  <tr>
+                    <th scope="row" width="25%">Units</th>
+                    <td data-ng-if="selected_course.units" data-ng-bind="selected_course.units  | number:1"></td>
+                    <td data-ng-if="!selected_course.units">--</td>
+                  </tr>
+                  <tr data-ng-if="selected_course.grade_option">
+                    <th scope="row">Grading</th>
+                    <td data-ng-bind="selected_course.grade_option"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h4 data-ng-if="selected_course_count_schedules">Section Schedules</h4>
+
+            <div class="row collapse" data-ng-repeat="section in selected_course.sections">
+              <div class="small-3 columns" data-ng-if="section.schedules" data-ng-bind="section.section_label"></div>
+              <div class="small-9 columns">
+                <div data-ng-repeat="schedule in section.schedules" data-ng-if="section.schedules" class="cc-academics-schedule-room">
+                  <span data-ng-bind="schedule.schedule"></span> |
+                  <span data-ng-bind="schedule.room_number"></span> <span data-ng-bind="schedule.building_name"></span> <br />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="medium-4 columns" data-ng-if="selected_course_count_instructors">
-      <div class="cc-widget">
-        <div class="cc-widget-title">
-          <h2 data-ng-pluralize count="selected_course_count_instructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
+      <div class="medium-4 columns" data-ng-if="selected_course_count_instructors">
+        <div class="cc-widget">
+          <div class="cc-widget-title">
+            <h2 data-ng-pluralize count="selected_course_count_instructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
+          </div>
+          <div class="cc-widget-padding">
+            <div data-ng-repeat="section in selected_course.sections">
+              <h3 data-ng-bind="section.section_label"></h3>
+              <ul class="cc-academics-instructors">
+                <li data-ng-repeat="instructor in section.instructors">
+                  <a data-ng-href="https://calnet.berkeley.edu/directory/details.pl?uid={{instructor.uid}}" data-ng-bind="instructor.name"></a>
+                  <a data-ng-if="instructor.email" title="Email {{instructor.name}}" data-ng-href="mailto:{{instructor.email}}">
+                    <span class="cc-visuallyhidden">Email {{instructor.name}}</span>
+                    <i class="cc-icon fa fa-envelope"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="cc-widget-padding">
-          <div data-ng-repeat="section in selected_course.sections">
-            <h3 data-ng-bind="section.section_label"></h3>
-            <ul class="cc-academics-instructors">
-              <li data-ng-repeat="instructor in section.instructors">
-                <a data-ng-href="https://calnet.berkeley.edu/directory/details.pl?uid={{instructor.uid}}" data-ng-bind="instructor.name"></a>
-                <a data-ng-if="instructor.email" title="Email {{instructor.name}}" data-ng-href="mailto:{{instructor.email}}">
-                  <span class="cc-visuallyhidden">Email {{instructor.name}}</span>
-                  <i class="cc-icon fa fa-envelope"></i>
+      </div>
+
+      <div class="medium-4 columns">
+        <div class="cc-widget cc-widget-last" data-ng-controller="VideoController" data-ng-if="api.user.profile.features.videos">
+          <div class="cc-widget-title">
+            <h2>Webcasts</h2>
+          </div>
+          <div class="cc-widget-padding">
+            <div data-cc-spinner-directive>
+              <div data-ng-bind="error_message"></div>
+              <div data-ng-if="videos">
+                <div class="cc-select cc-academics-webcast-select">
+                  <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
+                </div>
+                <div class="cc-youtube-video">
+                  <iframe type="text/html" width="100%" height="100%"
+                  data-ng-attr-src="{{selectedVideo.link}}"
+                  frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cc-widget cc-widget-last" data-ng-if="selected_course.class_sites.length">
+          <div class="cc-widget-title">
+            <h2>Class Sites</h2>
+          </div>
+          <div class="cc-widget-padding">
+            <ul class="cc-academics-class-sites-list">
+              <li data-ng-repeat="site in selected_course.class_sites">
+                <a data-ng-href="{{site.site_url}}"
+                   data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
+                  <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
+                  <strong class="cc-ellipsis" data-ng-bind="site.name"></strong>
                 </a>
               </li>
             </ul>
           </div>
         </div>
+
+        <div data-ng-if="selected_semester.time_bucket === 'current' || selected_semester.time_bucket === 'future'" class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
+          <div class="cc-widget-title">
+            <h2>Textbooks</h2>
+          </div>
+          <div data-cc-spinner-directive>
+            <div class="cc-widget-padding">
+              <div data-ng-if="books.hasBooks">
+                <div class="cc-textbooks-bookstore" data-ng-if="!allSectionsHaveChoices">
+                  You can buy textbooks at the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a>.
+                </div>
+                <div ng-include="'templates/textbook.html'"></div>
+              </div>
+              <div class="cc-error-message" data-ng-if="books.hasBooks === false" data-ng-bind="books.bookUnavailableError"></div>
+              <div class="cc-error-message" data-ng-if="textbookError.body" data-ng-bind="textbookError.body">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
 
-    <div class="medium-4 columns">
-      <div class="cc-widget cc-widget-last" data-ng-controller="VideoController" data-ng-if="api.user.profile.features.videos">
+    <div data-ng-switch-when="Class Roster" role="tabpanel" aria-live="polite">
+      <div class="cc-widget">
         <div class="cc-widget-title">
-          <h2>Webcasts</h2>
+          <h2>Class Roster</h2>
         </div>
-        <div class="cc-widget-padding">
-          <div data-cc-spinner-directive>
-            <div data-ng-bind="error_message"></div>
-            <div data-ng-if="videos">
-              <div class="cc-select cc-academics-webcast-select">
-                <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
-              </div>
-              <div class="cc-youtube-video">
-                <iframe type="text/html" width="100%" height="100%"
-                data-ng-attr-src="{{selectedVideo.link}}"
-                frameborder="0" allowfullscreen></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cc-widget cc-widget-last" data-ng-if="selected_course.class_sites.length">
-        <div class="cc-widget-title">
-          <h2>Class Sites</h2>
-        </div>
-        <div class="cc-widget-padding">
-          <ul class="cc-academics-class-sites-list">
-            <li data-ng-repeat="site in selected_course.class_sites">
-              <a data-ng-href="{{site.site_url}}"
-                 data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
-                <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
-                <strong class="cc-ellipsis" data-ng-bind="site.name"></strong>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div data-ng-if="selected_semester.time_bucket === 'current' || selected_semester.time_bucket === 'future'" class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
-        <div class="cc-widget-title">
-          <h2>Textbooks</h2>
-        </div>
-        <div data-cc-spinner-directive>
-          <div class="cc-widget-padding">
-            <div data-ng-if="books.hasBooks">
-              <div class="cc-textbooks-bookstore" data-ng-if="!allSectionsHaveChoices">
-                You can buy textbooks at the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a>.
-              </div>
-              <div ng-include="'templates/textbook.html'"></div>
-            </div>
-            <div class="cc-error-message" data-ng-if="books.hasBooks === false" data-ng-bind="books.bookUnavailableError"></div>
-            <div class="cc-error-message" data-ng-if="textbookError.body" data-ng-bind="textbookError.body">
-            </div>
-          </div>
-        </div>
+        <div data-ng-include src="'templates/canvas_embedded/roster.html'"></div>
       </div>
     </div>
   </div>

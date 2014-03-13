@@ -4,9 +4,11 @@
   /**
    * Canvas roster photos LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasRosterController', function (apiService, $http, $routeParams, $scope, $window) {
+  angular.module('calcentral.controllers').controller('RosterController', function (apiService, $http, $routeParams, $scope, $window) {
 
-    apiService.util.setTitle('bCourses Roster Photos');
+    if ($routeParams.canvas_course_id) {
+      apiService.util.setTitle('Roster Photos');
+    }
 
     /**
      * Post a message to the parent
@@ -25,6 +27,18 @@
     };
 
     var getRoster = function() {
+      if ($scope.campusCourseId) {
+        var campusCourseId = $scope.campusCourseId;
+        $http.get('/api/academics/rosters/campus/' + campusCourseId).success(function(data) {
+          angular.extend($scope, data);
+          window.setInterval(postHeight, 250);
+        }).error(function(data, status) {
+          angular.extend($scope, data);
+          $scope.errorStatus = status;
+        });
+        return;
+      }
+
       var canvasCourseId = $routeParams.canvas_course_id || 'embedded';
       $http.get('/api/academics/rosters/canvas/' + canvasCourseId).success(function(data) {
         angular.extend($scope, data);

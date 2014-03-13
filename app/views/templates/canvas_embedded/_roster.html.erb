@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/canvas_embedded/roster.html">
-  <div data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
+  <div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
 
     <form class="cc-roster-search" data-ng-hide="errorStatus">
       <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />

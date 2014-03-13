@@ -77,7 +77,7 @@
     }).
     when('/canvas/embedded/rosters', {
       templateUrl: 'templates/canvas_embedded/roster.html',
-      controller: 'CanvasRosterController'
+      controller: 'RosterController'
     }).
     when('/canvas/embedded/course_provision', {
       templateUrl: 'templates/canvas_embedded/course_provision.html',
@@ -92,8 +92,7 @@
       controller: 'CanvasCourseAddUserController'
     }).
     when('/canvas/rosters/:canvas_course_id', {
-      templateUrl: 'templates/canvas_embedded/roster.html',
-      controller: 'CanvasRosterController'
+      templateUrl: 'templates/canvas_embedded/roster.html'
     }).
     when('/canvas/course_provision', {
       templateUrl: 'templates/canvas_embedded/course_provision.html',
