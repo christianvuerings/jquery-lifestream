@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Courses" do
+describe Oec::Courses do
 
   let!(:random_time) { Time.now.to_f.to_s.gsub(".", "") }
 
@@ -24,10 +24,10 @@ describe "Courses" do
           }
         end
       end
-      CampusOracle::OecData.stub(:get_all_courses).and_return(all_courses_query)
+      Oec::OecData.stub(:get_all_courses).and_return(all_courses_query)
     }
 
-    let!(:export) { Courses.new.export(random_time) }
+    let!(:export) { Oec::Courses.new.export(random_time) }
 
     subject { CSV.read(export[:filename]) }
     it {
@@ -38,7 +38,7 @@ describe "Courses" do
 
   context "special mangling of cross-listed course names" do
     before(:each) {
-      CampusOracle::OecData.stub(:get_all_courses).and_return(
+      Oec::OecData.stub(:get_all_courses).and_return(
         [
           {
             "course_id" => "abcdef",
@@ -54,7 +54,7 @@ describe "Courses" do
           }])
     }
 
-    let!(:export) { Courses.new.export(random_time) }
+    let!(:export) { Oec::Courses.new.export(random_time) }
 
     subject { CSV.read(export[:filename]) }
     it {

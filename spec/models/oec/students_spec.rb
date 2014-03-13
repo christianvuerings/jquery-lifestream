@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Students" do
+describe Oec::Students do
 
   let!(:random_time) { Time.now.to_f.to_s.gsub(".", "") }
 
@@ -20,10 +20,10 @@ describe "Students" do
           }
         end
       end
-      CampusOracle::OecData.stub(:get_all_students).with(ccns).and_return(all_students_query)
+      Oec::OecData.stub(:get_all_students).with(ccns).and_return(all_students_query)
     }
 
-    let!(:export) { Students.new(ccns, []).export(random_time) }
+    let!(:export) { Oec::Students.new(ccns, []).export(random_time) }
 
     subject { CSV.read(export[:filename]) }
     it {

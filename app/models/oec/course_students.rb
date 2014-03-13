@@ -1,34 +1,36 @@
-class CourseStudents < OecExport
+module Oec
+  class CourseStudents < OecExport
 
-  def initialize(ccns, gsi_ccns)
-    super()
-    @ccns = ccns
-    @gsi_ccns = gsi_ccns
-  end
-
-  def base_file_name
-    "course_students"
-  end
-
-  def headers
-    'COURSE_ID,LDAP_UID'
-  end
-
-  def append_records(output)
-    CampusOracle::OecData.get_all_course_students(@ccns).each do |record|
-      row = record_to_csv_row(record)
-      output << row
+    def initialize(ccns, gsi_ccns)
+      super()
+      @ccns = ccns
+      @gsi_ccns = gsi_ccns
     end
 
-    # now add in courses with _GSI suffix (might duplicate some of the ones already in the file, but that's ok.)
-    if @gsi_ccns.length > 0
-      CampusOracle::OecData.get_all_course_students(@gsi_ccns).each do |record|
+    def base_file_name
+      "course_students"
+    end
+
+    def headers
+      'COURSE_ID,LDAP_UID'
+    end
+
+    def append_records(output)
+      Oec::OecData.get_all_course_students(@ccns).each do |record|
         row = record_to_csv_row(record)
-        row["COURSE_ID"] = "#{row["COURSE_ID"]}_GSI"
         output << row
       end
+
+      # now add in courses with _GSI suffix (might duplicate some of the ones already in the file, but that's ok.)
+      if @gsi_ccns.length > 0
+        Oec::OecData.get_all_course_students(@gsi_ccns).each do |record|
+          row = record_to_csv_row(record)
+          row["COURSE_ID"] = "#{row["COURSE_ID"]}_GSI"
+          output << row
+        end
+      end
+
     end
 
   end
-
 end

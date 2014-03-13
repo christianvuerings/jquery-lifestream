@@ -1,5 +1,5 @@
-module CampusOracle
-  class OecData < Connection
+module Oec
+  class OecData < CampusOracle::Connection
     include ActiveRecordHelper
 
     def self.get_all_students(course_cntl_nums=[])
