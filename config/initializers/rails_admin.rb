@@ -13,7 +13,7 @@ class Ability
         can :manage, [User::Auth, UserWhitelist]
       end
       if user.policy.can_author?
-        can :manage, [Link, LinkCategory, LinkSection]
+        can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection]
       end
     end
   end
@@ -56,12 +56,12 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Link', 'LinkCategory', 'LinkSection', 'User::Auth', 'UserRole', 'UserWhitelist']
+  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole', 'UserWhitelist']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
 
-  # config.model Link do
+  # config.model Links::Link do
   # end
 
 
@@ -76,7 +76,7 @@ RailsAdmin.config do |config|
   #   - Models are reloaded at each request in development mode (when modified), which may smooth your RailsAdmin development workflow.
   #
 
-  config.model 'LinkSection' do
+  config.model 'Links::LinkSection' do
     label "Section"
 
     object_label_method do
@@ -103,16 +103,16 @@ RailsAdmin.config do |config|
     end
   end
 
-  config.model 'LinkCategory' do
+  config.model 'Links::LinkCategory' do
     label "Category"
   end
 
-# UserRole needs to be available so we can set perms on Links, but should not be in left nav
-  config.model 'UserRole' do
+  # Links::UserRole needs to be available so we can set perms on Links, but should not be in left nav
+  config.model 'Links::UserRole' do
     visible false
   end
 
-  config.model 'Link' do
+  config.model 'Links::Link' do
     label "Link"
   end
 

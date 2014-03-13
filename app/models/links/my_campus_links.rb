@@ -1,4 +1,5 @@
-class MyCampusLinks
+module Links
+  class MyCampusLinks
 
 =begin
 
@@ -14,71 +15,72 @@ class MyCampusLinks
 
 =end
 
-  def get_feed
-    # Feed consists of two primary sections: Navigation and Links
-    links = []
-    navigation = []
+    def get_feed
+      # Feed consists of two primary sections: Navigation and Links
+      links = []
+      navigation = []
 
-    @maincats = LinkCategory.where("root_level = ?", true)
-    @maincats.each do |cat|
-      @section = {
-        "label" => cat.name,
-        "categories" => get_subsections_for_nav(cat)
-      }
-    navigation.push(@section)
+      @maincats = Links::LinkCategory.where("root_level = ?", true)
+      @maincats.each do |cat|
+        @section = {
+          "label" => cat.name,
+          "categories" => get_subsections_for_nav(cat)
+        }
+        navigation.push(@section)
 
+      end
+
+      # End Navigation section
+
+      # Begin Links section
+      @all_links = Links::Link.where("published = ?", true)
+      @all_links.each do |link|
+        links.push({
+                     "name" => link.name,
+                     "description" => link.description,
+                     "url" => link.url,
+                     "roles" => get_roles_for_link(link),
+                     "categories" => get_cats_for_link(link)
+                   })
+      end
+      data = {"links" => links, "navigation" => navigation}
+
+      # End Links section
     end
 
-    # End Navigation section
-
-    # Begin Links section
-    @all_links = Link.where("published = ?", true)
-    @all_links.each do |link|
-      links.push({
-        "name" => link.name,
-        "description" => link.description,
-        "url" => link.url,
-        "roles" => get_roles_for_link(link),
-        "categories" => get_cats_for_link(link)
-      })
+    # Given a top-level category, get names and slugs of subcats for navigation
+    def get_subsections_for_nav(cat)
+      categories = []
+      # Find the unique subsections associated with this main category
+      subsects = Links::LinkSection.where("link_root_cat_id = ?", cat.id).select(:link_top_cat_id).uniq
+      subsects.each do |subsection|
+        categories.push({"id" => subsection.link_top_cat.slug, "name" => subsection.link_top_cat.name})
+      end
+      categories = categories.sort_by { |n| n["name"] } # Alphabetize left-nav subsections
+      categories
     end
-    data = {"links" => links, "navigation" => navigation}
 
-    # End Links section
+    # Given a link, return an array of the categories it lives in by examining its host sections
+    def get_cats_for_link(link)
+      categories = []
+      sections = link.link_sections
+      sections.each do |section|
+        catlist = {"topcategory" => section.link_top_cat.name, "subcategory" => section.link_sub_cat.name}
+        categories.push(catlist)
+      end
+      categories
+    end
+
+    # Given a link, return a dict of the user_roles allowed to view it
+    def get_roles_for_link(link)
+      roles = {"student" => false, "staff" => false, "faculty" => false}
+      link.user_roles.each do |linkrole|
+        roles["student"] = true if linkrole.slug == "student"
+        roles["staff"] = true if linkrole.slug == "staff"
+        roles["faculty"] = true if linkrole.slug == "faculty"
+      end
+      roles
+    end
+
   end
-
-  # Given a top-level category, get names and slugs of subcats for navigation
-  def get_subsections_for_nav(cat)
-    categories = []
-    # Find the unique subsections associated with this main category
-    subsects = LinkSection.where("link_root_cat_id = ?", cat.id).select(:link_top_cat_id).uniq
-    subsects.each do |subsection|
-      categories.push({"id" => subsection.link_top_cat.slug, "name" => subsection.link_top_cat.name})
-    end
-    categories = categories.sort_by { |n| n["name"] } # Alphabetize left-nav subsections
-    categories
-  end
-
-  # Given a link, return an array of the categories it lives in by examining its host sections
-  def get_cats_for_link(link)
-    categories = []
-    sections = link.link_sections
-    sections.each do |section|
-      catlist = {"topcategory" => section.link_top_cat.name, "subcategory" => section.link_sub_cat.name}
-      categories.push(catlist)
-    end
-    categories
-  end
-
-  # Given a link, return a dict of the user_roles allowed to view it
-  def get_roles_for_link(link)
-    roles = {"student" => false, "staff" => false, "faculty" => false}
-    link.user_roles.each do |linkrole|
-      roles["student"] = true if linkrole.slug == "student"
-      roles["staff"] = true if linkrole.slug == "staff"
-      roles["faculty"] = true if linkrole.slug == "faculty"
-    end
-    roles
-  end
-
 end
