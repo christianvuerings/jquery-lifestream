@@ -1,14 +1,14 @@
 require "spec_helper"
 
-describe "Colleges" do
+describe Berkeley::Colleges do
 
   it "should look up Grad Div" do
-    Colleges.get("grad div").should == "Graduate School"
-    Colleges.get("engr").should == "College of Engineering"
+    Berkeley::Colleges.get("grad div").should == "Graduate School"
+    Berkeley::Colleges.get("engr").should == "College of Engineering"
   end
 
   it "should return the abbreviation on a nonexistent college abbv" do
-    Colleges.get("Zazzle zotz").should == "Zazzle zotz"
+    Berkeley::Colleges.get("Zazzle zotz").should == "Zazzle zotz"
   end
 
 end

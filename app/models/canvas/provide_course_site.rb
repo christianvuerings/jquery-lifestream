@@ -211,8 +211,8 @@ module Canvas
         {
           yr: term.term_yr,
           cd: term.term_cd,
-          slug: TermCodes.to_slug(term.term_yr, term.term_cd),
-          name: TermCodes.to_english(term.term_yr, term.term_cd)
+          slug: Berkeley::TermCodes.to_slug(term.term_yr, term.term_cd),
+          name: Berkeley::TermCodes.to_english(term.term_yr, term.term_cd)
         }
       end
     end

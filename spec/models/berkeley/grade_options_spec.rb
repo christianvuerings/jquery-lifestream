@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe GradeOptions do
-  subject {GradeOptions.grade_option_for_enrollment(credit_code, pnp_flag)}
+describe Berkeley::GradeOptions do
+  subject {Berkeley::GradeOptions.grade_option_for_enrollment(credit_code, pnp_flag)}
 
   [nil, '  ', 'N'].each do |pnp_cd|
     context "when P/NP flag is '#{pnp_cd}'" do

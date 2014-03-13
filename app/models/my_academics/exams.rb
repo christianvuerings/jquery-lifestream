@@ -35,7 +35,7 @@ class MyAcademics::Exams
       location = {
         :raw_location => raw_location
       }
-      location_data = Buildings.get(raw_location)
+      location_data = Berkeley::Buildings.get(raw_location)
       unless location_data.nil?
         location = location.merge(location_data)
       end

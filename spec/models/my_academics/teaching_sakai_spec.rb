@@ -15,8 +15,8 @@ describe MyAcademics::TeachingSakai do
   end
   let(:campus_courses) do
     [{
-      name: TermCodes.to_english(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
-      slug: TermCodes.to_slug(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
+      name: Berkeley::TermCodes.to_english(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
+      slug: Berkeley::TermCodes.to_slug(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
       classes: [
         campus_course_base
       ]

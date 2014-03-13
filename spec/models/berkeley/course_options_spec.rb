@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe CourseOptions do
-  subject { CourseOptions.nested?(primary['course_option'], primary['section_num'], secondary) }
+describe Berkeley::CourseOptions do
+  subject { Berkeley::CourseOptions.nested?(primary['course_option'], primary['section_num'], secondary) }
 
   context 'when no nesting defined' do
     let(:primary) { {'course_option' => 'UNKN', 'section_num' => '001'} }

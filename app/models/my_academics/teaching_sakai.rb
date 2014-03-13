@@ -6,7 +6,7 @@ class MyAcademics::TeachingSakai
     sakai_sites = Sakai::SakaiMergedUserSites.new(user_id: @uid).get_feed
     sakai_sites[:courses].each do |course_site|
       if (term_yr = course_site[:term_yr]) && (term_cd = course_site[:term_cd]) &&
-        (term_slug = TermCodes.to_slug(term_yr, term_cd)) && (site_sections = course_site[:sections])
+        (term_slug = Berkeley::TermCodes.to_slug(term_yr, term_cd)) && (site_sections = course_site[:sections])
         if (matching_term_idx = campus_terms.index {|t| t[:slug] == term_slug})
           # Compare CCNs as parsed integers to avoid mismatches on prefixed zeroes.
           site_ccns = site_sections.collect {|s| s[:ccn].to_i}
