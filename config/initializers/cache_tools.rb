@@ -14,7 +14,7 @@ module Calcentral
       MyRegBlocks => :expire,
       CalLink::Memberships => :expire,
 
-      CampusOracle::CampusUserCoursesProxy => :expire,
+      CampusOracle::UserCourses => :expire,
 
       Canvas::Proxy => :expire,
       Canvas::UserCourses => :expire,

@@ -1,5 +1,5 @@
 module CampusOracle
-  class CampusCourseSectionsProxy < BaseProxy
+  class CourseSections < BaseProxy
     extend Proxies::EnableForActAs
 
     def initialize(options = {})

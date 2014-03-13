@@ -143,10 +143,10 @@ describe "UserApi" do
           :staff => true
         }
       })
-    fake_courses_proxy = CampusOracle::CampusUserCoursesProxy.new({:fake => true})
+    fake_courses_proxy = CampusOracle::UserCourses.new({:fake => true})
     fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
     fake_courses_proxy.stub(:has_student_history?).and_return(false)
-    CampusOracle::CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
+    CampusOracle::UserCourses.stub(:new).and_return(fake_courses_proxy)
 
     user_data = UserApi.new("904715").get_feed
     user_data[:student_info][:has_academics_tab].should be_false
@@ -184,10 +184,10 @@ describe "UserApi" do
 
   it "should not explode when CampusOracle::CampusData returns empty" do
     CampusOracle::CampusData.stub(:get_person_attributes).and_return({})
-    fake_courses_proxy = CampusOracle::CampusUserCoursesProxy.new({:fake => true})
+    fake_courses_proxy = CampusOracle::UserCourses.new({:fake => true})
     fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
     fake_courses_proxy.stub(:has_student_history?).and_return(false)
-    CampusOracle::CampusUserCoursesProxy.stub(:new).and_return(fake_courses_proxy)
+    CampusOracle::UserCourses.stub(:new).and_return(fake_courses_proxy)
 
     user_data = UserApi.new("904715").get_feed
     user_data[:student_info][:has_academics_tab].should_not be_true

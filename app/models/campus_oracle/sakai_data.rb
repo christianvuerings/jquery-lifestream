@@ -1,5 +1,5 @@
 module CampusOracle
-  class SakaiData < OracleDatabase
+  class SakaiData < Connection
     include ActiveRecordHelper
 
     def self.table_prefix

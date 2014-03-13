@@ -1,5 +1,5 @@
 module CampusOracle
-  class CampusUserCoursesProxy < BaseProxy
+  class UserCourses < BaseProxy
     extend Proxies::EnableForActAs
 
     APP_ID = "Campus"
@@ -40,7 +40,7 @@ module CampusOracle
         campus_classes.values.each do |semester|
           semester.each do |course|
             course[:sections].each do |section|
-              proxy = CampusOracle::CampusCourseSectionsProxy.new({term_yr: course[:term_yr],
+              proxy = CampusOracle::CourseSections.new({term_yr: course[:term_yr],
                                                      term_cd: course[:term_cd],
                                                      ccn: section[:ccn]})
               section.merge!(proxy.get_section_data)

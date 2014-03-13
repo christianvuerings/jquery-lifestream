@@ -12,7 +12,7 @@ class CampusRosters < RostersCommon
     }
     campus_enrollment_map = {}
 
-    all_courses = CampusOracle::CampusUserCoursesProxy.new({user_id: @uid}).get_all_campus_courses
+    all_courses = CampusOracle::UserCourses.new({user_id: @uid}).get_all_campus_courses
     selected_course = {}
 
     all_courses.keys.each do |term|
@@ -74,7 +74,7 @@ class CampusRosters < RostersCommon
   end
 
   def user_authorized?
-    all_courses = CampusOracle::CampusUserCoursesProxy.new({user_id: @uid}).get_all_campus_courses
+    all_courses = CampusOracle::UserCourses.new({user_id: @uid}).get_all_campus_courses
     flag = false
     all_courses.keys.each do |term|
       semester_courses = all_courses[term]

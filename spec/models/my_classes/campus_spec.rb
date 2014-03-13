@@ -25,7 +25,7 @@ describe MyClasses::Campus do
   end
 
   describe '#fetch' do
-    before {CampusOracle::CampusUserCoursesProxy.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))}
+    before {CampusOracle::UserCourses.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))}
     subject { MyClasses::Campus.new(user_id).fetch }
     context 'when enrolled in a current class' do
       let(:term_yr) {CampusOracle::CampusData.current_year}
@@ -33,7 +33,7 @@ describe MyClasses::Campus do
       its(:size) {should eq 1}
       it 'includes class info' do
         class_info = subject[0]
-        expect(class_info[:emitter]).to eq CampusOracle::CampusUserCoursesProxy::APP_ID
+        expect(class_info[:emitter]).to eq CampusOracle::UserCourses::APP_ID
         expect(class_info[:course_code]).to eq "ECON #{catid}"
         expect(class_info[:site_url].blank?).to be_false
         expect(class_info[:sections].first[:ccn]).to eq ccn
