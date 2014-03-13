@@ -19,7 +19,7 @@ describe Oec::CourseInstructors do
           }
         end
       end
-      Oec::OecData.stub(:get_all_course_instructors).with(ccns).and_return(all_course_instructors_query)
+      Oec::Queries.stub(:get_all_course_instructors).with(ccns).and_return(all_course_instructors_query)
     }
 
     let!(:export) { Oec::CourseInstructors.new(ccns).export(random_time) }

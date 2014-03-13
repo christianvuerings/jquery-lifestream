@@ -24,7 +24,7 @@ describe Oec::Courses do
           }
         end
       end
-      Oec::OecData.stub(:get_all_courses).and_return(all_courses_query)
+      Oec::Queries.stub(:get_all_courses).and_return(all_courses_query)
     }
 
     let!(:export) { Oec::Courses.new.export(random_time) }
@@ -38,7 +38,7 @@ describe Oec::Courses do
 
   context "special mangling of cross-listed course names" do
     before(:each) {
-      Oec::OecData.stub(:get_all_courses).and_return(
+      Oec::Queries.stub(:get_all_courses).and_return(
         [
           {
             "course_id" => "abcdef",

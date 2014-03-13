@@ -1,5 +1,5 @@
 module Oec
-  class CourseFileReader
+  class FileReader
 
     attr_reader :ccns, :gsi_ccns
 

@@ -21,7 +21,7 @@ describe Oec::Instructors do
           }
         end
       end
-      Oec::OecData.stub(:get_all_instructors).with(ccns).and_return(all_instructors_query)
+      Oec::Queries.stub(:get_all_instructors).with(ccns).and_return(all_instructors_query)
     }
 
     let!(:export) { Oec::Instructors.new(ccns).export(random_time) }

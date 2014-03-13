@@ -1,5 +1,5 @@
 module Oec
-  class Students < OecExport
+  class Students < Export
 
     def initialize(ccns, gsi_ccns)
       super()
@@ -16,7 +16,7 @@ module Oec
     end
 
     def append_records(output)
-      Oec::OecData.get_all_students(@ccns).each do |student|
+      Oec::Queries.get_all_students(@ccns).each do |student|
         output << record_to_csv_row(student)
       end
     end

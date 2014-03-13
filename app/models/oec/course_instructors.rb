@@ -1,5 +1,5 @@
 module Oec
-  class CourseInstructors < OecExport
+  class CourseInstructors < Export
 
     def initialize(ccns)
       super()
@@ -15,7 +15,7 @@ module Oec
     end
 
     def append_records(output)
-      Oec::OecData.get_all_course_instructors(@ccns).each do |record|
+      Oec::Queries.get_all_course_instructors(@ccns).each do |record|
         output << record_to_csv_row(record)
       end
     end

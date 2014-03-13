@@ -1,5 +1,5 @@
 module Oec
-  class CourseStudents < OecExport
+  class CourseStudents < Export
 
     def initialize(ccns, gsi_ccns)
       super()
@@ -16,14 +16,14 @@ module Oec
     end
 
     def append_records(output)
-      Oec::OecData.get_all_course_students(@ccns).each do |record|
+      Oec::Queries.get_all_course_students(@ccns).each do |record|
         row = record_to_csv_row(record)
         output << row
       end
 
       # now add in courses with _GSI suffix (might duplicate some of the ones already in the file, but that's ok.)
       if @gsi_ccns.length > 0
-        Oec::OecData.get_all_course_students(@gsi_ccns).each do |record|
+        Oec::Queries.get_all_course_students(@gsi_ccns).each do |record|
           row = record_to_csv_row(record)
           row["COURSE_ID"] = "#{row["COURSE_ID"]}_GSI"
           output << row

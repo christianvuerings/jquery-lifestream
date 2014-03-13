@@ -20,7 +20,7 @@ describe Oec::Students do
           }
         end
       end
-      Oec::OecData.stub(:get_all_students).with(ccns).and_return(all_students_query)
+      Oec::Queries.stub(:get_all_students).with(ccns).and_return(all_students_query)
     }
 
     let!(:export) { Oec::Students.new(ccns, []).export(random_time) }

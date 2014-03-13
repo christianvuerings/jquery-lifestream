@@ -17,7 +17,7 @@ describe Oec::CourseStudents do
           }
         end
       end
-      Oec::OecData.stub(:get_all_course_students).with(ccns).and_return(all_course_students_query)
+      Oec::Queries.stub(:get_all_course_students).with(ccns).and_return(all_course_students_query)
     }
 
     let!(:export) { Oec::CourseStudents.new(ccns, []).export(random_time) }

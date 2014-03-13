@@ -1,5 +1,5 @@
 module Oec
-  class OecExport < CsvExport
+  class Export < CsvExport
 
     def initialize
       super(Settings.oec)

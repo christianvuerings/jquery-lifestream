@@ -10,7 +10,7 @@ namespace :oec do
   desc 'Generate instructor files based on courses.csv input'
   task :instructors => :environment do
     timestamp = DateTime.now.strftime('%FT%T.%L%z')
-    reader = Oec::CourseFileReader.new("tmp/oec/courses.csv")
+    reader = Oec::FileReader.new("tmp/oec/courses.csv")
     [Oec::Instructors, Oec::CourseInstructors].each do |klass|
       klass.new(reader.ccns).export(timestamp)
     end
@@ -20,7 +20,7 @@ namespace :oec do
   desc 'Generate student files based on courses.csv input'
   task :students => :environment do
     timestamp = DateTime.now.strftime('%FT%T.%L%z')
-    reader = Oec::CourseFileReader.new("tmp/oec/courses.csv")
+    reader = Oec::FileReader.new("tmp/oec/courses.csv")
     [Oec::Students, Oec::CourseStudents].each do |klass|
       klass.new(reader.ccns, reader.gsi_ccns).export(timestamp)
     end
