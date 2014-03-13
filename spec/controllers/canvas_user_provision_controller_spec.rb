@@ -17,7 +17,7 @@ describe CanvasUserProvisionController do
     context "if session user is not an admin" do
       before do
         session[:user_id] = "2050"
-        User::UserAuth.stub(:where).and_return([User::UserAuth.new(uid: "2050", is_superuser: false, active: true)])
+        User::Auth.stub(:where).and_return([User::Auth.new(uid: "2050", is_superuser: false, active: true)])
       end
 
       it "returns 401 error" do
@@ -30,7 +30,7 @@ describe CanvasUserProvisionController do
     context "if admin user authenticated" do
       before do
         session[:user_id] = "2050"
-        User::UserAuth.stub(:where).and_return([User::UserAuth.new(uid: "2050", is_superuser: true, active: true)])
+        User::Auth.stub(:where).and_return([User::Auth.new(uid: "2050", is_superuser: true, active: true)])
         Canvas::UserProvision.any_instance.stub(:import_users).and_return(true)
       end
 

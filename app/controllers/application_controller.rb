@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User::UserAuth.get(session[:user_id])
+    @current_user ||= User::Auth.get(session[:user_id])
   end
 
   # override of Rails default behavior:
@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
     Rails.cache.fetch(
       "server_ping_#{ServerRuntime.get_settings["hostname"]}",
       :expires_in => 30.seconds) {
-      if !User::UserData.database_alive?
+      if !User::Data.database_alive?
         raise "CalCentral database is currently unavailable"
       end
       if !CampusData.database_alive?

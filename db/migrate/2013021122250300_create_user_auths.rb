@@ -16,7 +16,7 @@ class CreateUserAuths < ActiveRecord::Migration
     super_users = %w(192517 323487 191779 238382 208861 675750 3222279 2040 904715 211159 978966 1044957)
     super_users.each do |uid|
       Rails.logger.info "Flagging #{uid} as a superuser"
-      User::UserAuth.new_or_update_superuser! uid
+      User::Auth.new_or_update_superuser! uid
     end
 
     # Flagging test users.
@@ -36,7 +36,7 @@ class CreateUserAuths < ActiveRecord::Migration
 
     test_user_ids.each do |uid|
       Rails.logger.info "Flagging #{uid} as a test user"
-      User::UserAuth.new_or_update_test_user! uid
+      User::Auth.new_or_update_test_user! uid
     end
 
   end

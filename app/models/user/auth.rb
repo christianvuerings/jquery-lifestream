@@ -1,21 +1,23 @@
 module User
-  class UserAuth < ActiveRecord::Base
+  class Auth < ActiveRecord::Base
     include ActiveRecordHelper
+
+    self.table_name = 'user_auths'
 
     after_initialize :log_access
     attr_accessible :uid, :is_superuser, :is_test_user, :is_author, :is_viewer, :active
 
     def self.get(uid)
-      user_auth = uid.nil? ? nil : User::UserAuth.where(:uid => uid.to_s).first
+      user_auth = uid.nil? ? nil : User::Auth.where(:uid => uid.to_s).first
       if user_auth.blank?
         # user's anonymous, or is not in the user_auth table, so give them an active status with zero permissions.
-        user_auth = User::UserAuth.new(uid: uid, is_superuser: false, is_test_user: false, is_author: false, is_viewer: false, active: true)
+        user_auth = User::Auth.new(uid: uid, is_superuser: false, is_test_user: false, is_author: false, is_viewer: false, active: true)
       end
       user_auth
     end
 
     def policy(record=nil)
-      User::UserAuthPolicy.new(self, record)
+      User::AuthPolicy.new(self, record)
     end
 
     def self.new_or_update_superuser!(uid)

@@ -34,7 +34,7 @@ describe Notifications::FinalGradesEventProcessor do
        "dept_name" => "ENGL",
        "catalog_id" => "1"})
 
-    User::UserData.stub(:where).and_return(MockUserData.new)
+    User::Data.stub(:where).and_return(MockUserData.new)
 
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).exactly(8).times
 
@@ -71,7 +71,7 @@ describe Notifications::FinalGradesEventProcessor do
     CampusData.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
     UserApi.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
-    User::UserData.stub(:where, "300846").and_return(NonexistentUserData.new)
+    User::Data.stub(:where, "300846").and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true
   end
 
@@ -85,7 +85,7 @@ describe Notifications::FinalGradesEventProcessor do
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})
 
-    User::UserData.stub(:where).with({uid: "123456"}).and_return(MockUserData.new)
+    User::Data.stub(:where).with({uid: "123456"}).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
 
     saved_notification = Notifications::Notification.where(:uid => "123456").first
@@ -103,7 +103,7 @@ describe Notifications::FinalGradesEventProcessor do
        "dept_name" => "PSYCH",
        "catalog_id" => "101"})
 
-    User::UserData.stub(:where).with({uid: "123456"}).and_return(MockUserData.new)
+    User::Data.stub(:where).with({uid: "123456"}).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
 
     saved_notifications = Notifications::Notification.where(:uid => "123456")
@@ -120,7 +120,7 @@ describe Notifications::FinalGradesEventProcessor do
         {"course_title" => "Research and Data Analysis in Psychology",
          "dept_name" => "PSYCH",
          "catalog_id" => "101"})
-    User::UserData.stub(:where).with({uid: "123456"}).and_return(MockUserData.new)
+    User::Data.stub(:where).with({uid: "123456"}).and_return(MockUserData.new)
     @processor.process(event, timestamp).should == true
 
     saved_notification = Notifications::Notification.where(:uid => "123456").first

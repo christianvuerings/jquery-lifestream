@@ -1,6 +1,8 @@
 module User
-  class UserData < ActiveRecord::Base
+  class Data < ActiveRecord::Base
     include ActiveRecordHelper
+
+    self.table_name = 'user_data'
 
     after_initialize :log_access
     attr_accessible :preferred_name, :uid, :first_login_at

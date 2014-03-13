@@ -1,19 +1,19 @@
 require "spec_helper"
 
-describe "User::UserAuth" do
+describe "User::Auth" do
   before do
     Rails.env.stub(:production?).and_return(true)
     @user_id = rand(99999).to_s
   end
 
   it "should not be a superuser by default" do
-    User::UserAuth.get(@user_id).is_superuser.should be_false
+    User::Auth.get(@user_id).is_superuser.should be_false
   end
 
   it "should have superuser when given permission" do
-    User::UserAuth.new_or_update_superuser!(@user_id)
-    User::UserAuth.get(@user_id).is_superuser.should be_true
-    policy = User::UserAuth.get(@user_id).policy
+    User::Auth.new_or_update_superuser!(@user_id)
+    User::Auth.get(@user_id).is_superuser.should be_true
+    policy = User::Auth.get(@user_id).policy
     policy.can_administrate?.should be_true
     policy.can_clear_cache?.should be_true
     policy.can_clear_campus_links_cache?.should be_true
@@ -24,7 +24,7 @@ describe "User::UserAuth" do
   end
 
   it "anonymous user should have no permissions but still be active" do
-    anon = User::UserAuth.get nil
+    anon = User::Auth.get nil
     anon.is_superuser?.should be_false
     anon.is_test_user?.should be_false
     anon.is_author?.should be_false
@@ -33,7 +33,7 @@ describe "User::UserAuth" do
   end
 
   it "anonymous user should have a very restrictive policy" do
-    anon = User::UserAuth.get 0
+    anon = User::Auth.get 0
     policy = anon.policy
     policy.can_clear_cache?.should be_false
     policy.can_clear_campus_links_cache?.should be_false
@@ -44,13 +44,13 @@ describe "User::UserAuth" do
   end
 
   it "a deactivated superuser should have no rights" do
-    User::UserAuth.new_or_update_superuser!(@user_id)
-    user = User::UserAuth.get(@user_id)
+    User::Auth.new_or_update_superuser!(@user_id)
+    user = User::Auth.get(@user_id)
     user.is_superuser?.should be_true
     user.active = false
     user.save
 
-    policy = User::UserAuth.get(@user_id).policy
+    policy = User::Auth.get(@user_id).policy
     policy.can_administrate?.should be_false
     policy.can_clear_cache?.should be_false
     policy.can_clear_campus_links_cache?.should be_false

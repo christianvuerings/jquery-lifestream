@@ -73,7 +73,7 @@ describe "UserApi" do
 
     UserApi.delete @random_id
 
-    User::UserData.where(:uid => @random_id).should == []
+    User::Data.where(:uid => @random_id).should == []
   end
   it "should say everyone is allowed to log in if the whitelist is disabled" do
     UserApi.is_allowed_to_log_in?("0").should == true
@@ -272,7 +272,7 @@ describe "UserApi" do
   end
 
   context "proper handling of superuser permissions" do
-    before { User::UserAuth.new_or_update_superuser!(@random_id) }
+    before { User::Auth.new_or_update_superuser!(@random_id) }
     subject { UserApi.new(@random_id).get_feed }
     it "should pass the superuser status" do
       subject[:is_superuser].should be_true
@@ -282,7 +282,7 @@ describe "UserApi" do
 
   context "proper handling of viewer permissions" do
     before {
-      user = User::UserAuth.new(uid: @random_id)
+      user = User::Auth.new(uid: @random_id)
       user.is_viewer = true
       user.save
     }

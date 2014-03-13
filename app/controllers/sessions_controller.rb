@@ -101,7 +101,7 @@ class SessionsController < ApplicationController
     # Also useful to enforce in the testing scenario due to the redirect to the settings page.
     never_logged_in_before = true
     use_pooled_connection {
-      never_logged_in_before = User::UserData.where(:uid => act_as_uid).first.blank?
+      never_logged_in_before = User::Data.where(:uid => act_as_uid).first.blank?
     }
     if never_logged_in_before && Settings.application.layer == "production"
       Rails.logger.warn "ACT-AS: User #{current_user.uid} FAILS to login to #{act_as_uid}, #{act_as_uid} hasn't logged in before."
@@ -114,7 +114,7 @@ class SessionsController < ApplicationController
       auth_user_id = current_user.uid
     end
 
-    policy = User::UserAuth.get(auth_user_id).policy
+    policy = User::Auth.get(auth_user_id).policy
     policy.can_act_as?
   end
 

@@ -1,5 +1,5 @@
 module User
-  class UserAuthPolicy
+  class AuthPolicy
     attr_reader :user, :record
 
     def initialize(user, record=nil)

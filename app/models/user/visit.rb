@@ -1,7 +1,9 @@
 module User
-  class UserVisit < ActiveRecord::Base
+  class Visit < ActiveRecord::Base
 
     include ActiveRecordHelper
+
+    self.table_name = 'user_visits'
 
     after_initialize :log_access
     attr_accessible :uid, :last_visit_at

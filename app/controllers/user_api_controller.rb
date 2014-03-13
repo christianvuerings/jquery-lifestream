@@ -3,7 +3,7 @@ class UserApiController < ApplicationController
   extend Calcentral::Cacheable
 
   def self.expire(id = nil)
-    # no-op; this class uses the cache only to reduce the number of writes to User::UserVisit. We want to just expire
+    # no-op; this class uses the cache only to reduce the number of writes to User::Visit. We want to just expire
     # with time, not when the cache is forcibly cleared.
   end
 
@@ -26,9 +26,9 @@ class UserApiController < ApplicationController
     end
 
     if session[:user_id]
-      # wrap User::UserVisit.record_session inside a cache lookup so that we have to write User::UserVisit records less often.
+      # wrap User::Visit.record_session inside a cache lookup so that we have to write User::Visit records less often.
       self.class.fetch_from_cache session[:user_id] do
-        User::UserVisit.record session[:user_id]
+        User::Visit.record session[:user_id]
         true
       end
       status.merge!({

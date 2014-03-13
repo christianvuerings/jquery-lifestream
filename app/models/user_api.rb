@@ -7,7 +7,7 @@ class UserApi < UserSpecificModel
 
   def init
     use_pooled_connection {
-      @calcentral_user_data ||= User::UserData.where(:uid => @uid).first
+      @calcentral_user_data ||= User::Data.where(:uid => @uid).first
     }
     @campus_attributes ||= CampusData.get_person_attributes(@uid) || {}
     @default_name ||= @campus_attributes['person_name']
@@ -31,10 +31,10 @@ class UserApi < UserSpecificModel
   end
 
   def self.delete(uid)
-    logger.info "#{self.class.name} removing user #{uid} from User::UserData"
+    logger.info "#{self.class.name} removing user #{uid} from User::Data"
     user = nil
     use_pooled_connection {
-      user = User::UserData.where(:uid => uid).first
+      user = User::Data.where(:uid => uid).first
       if !user.blank?
         user.delete
       end
@@ -53,7 +53,7 @@ class UserApi < UserSpecificModel
   def save
     use_pooled_connection {
       retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
-        @calcentral_user_data = User::UserData.where(uid: @uid).first_or_create do |record|
+        @calcentral_user_data = User::Data.where(uid: @uid).first_or_create do |record|
           Rails.logger.debug "#{self.class.name} recording first login for #{@uid}"
           record.preferred_name = @override_name
           record.first_login_at = @first_login_at
@@ -83,7 +83,7 @@ class UserApi < UserSpecificModel
   def get_feed_internal
     google_mail = Oauth2Data.get_google_email(@uid)
     canvas_mail = Oauth2Data.get_canvas_email(@uid)
-    current_user = User::UserAuth.get(@uid)
+    current_user = User::Auth.get(@uid)
     is_google_reminder_dismissed = Oauth2Data.is_google_reminder_dismissed(@uid)
     is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
     campus_courses_proxy = CampusUserCoursesProxy.new({:user_id => @uid})
@@ -124,7 +124,7 @@ class UserApi < UserSpecificModel
     unless Settings.features.user_whitelist
       return true
     end
-    if User::UserData.where(uid: uid).first.present?
+    if User::Data.where(uid: uid).first.present?
       return true
     end
     if UserWhitelist.where(uid: uid).first.present?

@@ -3,22 +3,22 @@ require "spec_helper"
 feature "act_as_user" do
   before do
     @fake_events_list = Google::EventsList.new(fake: true)
-    User::UserAuth.new_or_update_superuser! "238382"
-    User::UserAuth.new_or_update_test_user! "2040"
-    User::UserAuth.new_or_update_test_user! "1234"
-    User::UserAuth.new_or_update_test_user! "9876"
+    User::Auth.new_or_update_superuser! "238382"
+    User::Auth.new_or_update_test_user! "2040"
+    User::Auth.new_or_update_test_user! "1234"
+    User::Auth.new_or_update_test_user! "9876"
   end
 
   scenario "switch to another user and back while using a super-user" do
     # disabling the cache_warmer while we're switching back and forth between users
     # The switching back triggers a cache invalidation, while the warming thread is still running.
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
-    User::UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
+    User::Data.stub(:where, :uid => '2040').and_return("tricking the first login check")
     login_with_cas "238382"
     suppress_rails_logging {
       act_as_user "2040"
     }
-    User::UserData.unstub(:where)
+    User::Data.unstub(:where)
     visit "/api/my/status"
     response = JSON.parse(page.body)
     response["is_logged_in"].should be_true
@@ -85,8 +85,8 @@ feature "act_as_user" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     Google::Proxy.stub(:access_granted?).and_return(true)
     Google::EventsList.stub(:new).and_return(@fake_events_list)
-    User::UserAuth.new_or_update_superuser! "2040"
-    User::UserData.stub(:where, :uid => '2040').and_return("tricking the first login check")
+    User::Auth.new_or_update_superuser! "2040"
+    User::Data.stub(:where, :uid => '2040').and_return("tricking the first login check")
     %w(238382 2040 11002820).each do |user|
       login_with_cas user
       visit "/api/my/up_next"
@@ -96,14 +96,14 @@ feature "act_as_user" do
     end
     login_with_cas "238382"
     act_as_user "2040"
-    User::UserData.unstub(:where)
+    User::Data.unstub(:where)
     visit "/api/my/up_next"
     response = JSON.parse(page.body)
     response["items"].empty?.should be_true
-    User::UserData.stub(:where, :uid => '11002820').and_return("tricking the first login check")
+    User::Data.stub(:where, :uid => '11002820').and_return("tricking the first login check")
     act_as_user "11002820"
-    User::UserAuth.new_or_update_test_user! "11002820"
-    User::UserData.unstub(:where)
+    User::Auth.new_or_update_test_user! "11002820"
+    User::Data.unstub(:where)
     visit "/api/my/up_next"
     response = JSON.parse(page.body)
     response["items"].empty?.should be_false

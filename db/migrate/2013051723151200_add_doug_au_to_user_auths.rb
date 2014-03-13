@@ -1,11 +1,11 @@
 class AddDougAuToUserAuths < ActiveRecord::Migration
   def up
     Rails.logger.info "Flagging Doug Au(#{uid}) as a superuser"
-    User::UserAuth.new_or_update_superuser! uid
+    User::Auth.new_or_update_superuser! uid
   end
 
   def down
-    User::UserAuth.where(:uid => uid).delete_all
+    User::Auth.where(:uid => uid).delete_all
   end
 
   private
