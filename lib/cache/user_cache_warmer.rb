@@ -14,7 +14,7 @@ module Cache
         UpNext::MyUpNext.new(uid),
         MyActivities::Merged.new(uid),
         MyAcademics::Merged.new(uid),
-        MyRegBlocks.new(uid)
+        Bearfacts::MyRegBlocks.new(uid)
       ].each do |model|
         model.get_feed force_cache_write
         model.get_feed_as_json force_cache_write

@@ -206,7 +206,7 @@ cache:
     Canvas::CanvasCourseStudentsProxy: <%= 15.minutes %>
     Canvas::CanvasCourseTeachersProxy: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
-    MyRegBlocks: 0
+    Bearfacts::MyRegBlocks: 0
 
     Canvas::CanvasMergedUserSites: <%= 15.minutes %>
     Canvas::CanvasUserCoursesProxy: <%= 30.minutes %>

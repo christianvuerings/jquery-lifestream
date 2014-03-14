@@ -150,7 +150,7 @@ class UserApi < UserSpecificModel
   end
 
   def get_reg_blocks
-    blocks_feed = MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
+    blocks_feed = Bearfacts::MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
     response = {
       available: blocks_feed.present? && blocks_feed[:available],
       needsAction: blocks_feed[:active_blocks].present?,

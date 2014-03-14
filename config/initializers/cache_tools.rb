@@ -11,7 +11,7 @@ module Calcentral
 
     {
       Financials::MyFinancials => :expire,
-      MyRegBlocks => :expire,
+      Bearfacts::MyRegBlocks => :expire,
       CalLink::Memberships => :expire,
 
       CampusOracle::UserCourses => :expire,
@@ -45,7 +45,7 @@ module Calcentral
       MyTasks::Merged,
       MyBadges::Merged,
       UpNext::MyUpNext,
-      MyRegBlocks
+      Bearfacts::MyRegBlocks
     ]
     MERGED_FEEDS = {}
     merged_feeds_array.each do |feed|

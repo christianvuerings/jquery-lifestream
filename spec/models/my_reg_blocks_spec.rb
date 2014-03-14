@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe MyRegBlocks do
+describe Bearfacts::MyRegBlocks do
   let! (:oski_blocks_proxy) { Bearfacts::Regblocks.new({:user_id => "61889", :fake => true}) }
 
   context "should return some regblocks for oski" do
     before { Bearfacts::Regblocks.stub(:new).and_return(oski_blocks_proxy) }
 
-    subject { MyRegBlocks.new(61889).get_feed }
+    subject { Bearfacts::MyRegBlocks.new(61889).get_feed }
 
     its([:active_blocks]) { should_not be_empty }
     its([:inactive_blocks]) { should_not be_empty }
@@ -32,7 +32,7 @@ describe MyRegBlocks do
     end
     after(:each) { WebMock.reset! }
 
-    subject { MyRegBlocks.new(61889).get_feed }
+    subject { Bearfacts::MyRegBlocks.new(61889).get_feed }
 
     its([:available]) { should be_false }
 

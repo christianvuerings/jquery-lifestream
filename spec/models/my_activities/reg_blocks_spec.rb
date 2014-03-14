@@ -8,7 +8,7 @@ describe MyActivities::RegBlocks do
 
   it { described_class.should respond_to(:append!) }
   context "2xx response from bearfacts" do
-    let(:oski_blocks) { MyRegBlocks.new(oski_uid) }
+    let(:oski_blocks) { Bearfacts::MyRegBlocks.new(oski_uid) }
 
     before(:each) { Bearfacts::Regblocks.stub(:new).and_return(oski_bearfacts_proxy) }
 
@@ -38,7 +38,7 @@ describe MyActivities::RegBlocks do
           }.reverse_merge(block)
         end
         mangled_oski_blocks = oski_blocks.get_feed.merge({ inactive_blocks: mangled_inactive })
-        MyRegBlocks.any_instance.stub(:get_feed).and_return(mangled_oski_blocks)
+        Bearfacts::MyRegBlocks.any_instance.stub(:get_feed).and_return(mangled_oski_blocks)
       end
 
       subject do
@@ -59,7 +59,7 @@ describe MyActivities::RegBlocks do
   end
 
   context "4xx response from bearfacts proxy" do
-    before(:each) { MyRegBlocks.any_instance.stub(:get_feed).and_return({ available: false }) }
+    before(:each) { Bearfacts::MyRegBlocks.any_instance.stub(:get_feed).and_return({ available: false }) }
 
     it "should not malform the activities passed into append_reg_blocks" do
       my_activities = MyActivities::RegBlocks

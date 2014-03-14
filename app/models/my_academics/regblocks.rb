@@ -5,7 +5,7 @@ class MyAcademics::Regblocks
   include DatedFeed
 
   def merge(data)
-    blocks = MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
+    blocks = Bearfacts::MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
 
     data[:regblocks] = {
       available: blocks[:available],
