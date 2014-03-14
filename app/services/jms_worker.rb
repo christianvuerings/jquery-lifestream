@@ -1,6 +1,6 @@
 class JmsWorker
 
-  extend Calcentral::StatAccumulator
+  extend Cache::StatAccumulator
 
   JMS_RECORDING = "#{Rails.root}/fixtures/jms_recordings/ist_jms.txt"
 

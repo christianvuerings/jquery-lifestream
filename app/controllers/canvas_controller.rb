@@ -5,7 +5,7 @@ class CanvasController < ApplicationController
   before_filter :authenticate_cas_user!, :only => [:course_user_profile]
   before_filter :authenticate_canvas_user!, :only => [:course_user_profile]
   before_filter :authenticate_canvas_course_user!, :only => [:course_user_profile]
-  rescue_from ClientError, with: :handle_client_error
+  rescue_from Errors::ClientError, with: :handle_client_error
   rescue_from StandardError, with: :handle_api_exception
 
   # Used to obtain LTI user in context of course embedded apps

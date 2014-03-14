@@ -19,7 +19,7 @@
       'MyClasses::Merged',
       'MyGroups::Merged',
       'MyTasks::Merged',
-      'MyUpNext'
+      'UpNext::MyUpNext'
     ];
 
     /**

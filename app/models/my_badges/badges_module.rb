@@ -1,7 +1,7 @@
 module MyBadges
   module BadgesModule
     def self.included(klass)
-      klass.extend Calcentral::Cacheable
+      klass.extend Cache::Cacheable
     end
 
     def fetch_counts

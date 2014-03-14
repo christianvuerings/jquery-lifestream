@@ -52,7 +52,7 @@ class RostersController < ApplicationController
         Canvas::Rosters.new(user_id, course_id: course_id)
       else
         if request_type == 'Campus'
-          CampusRosters.new(user_id, course_id: course_id)
+          Rosters::Campus.new(user_id, course_id: course_id)
         end
       end
     end

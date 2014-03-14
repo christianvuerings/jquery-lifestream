@@ -21,10 +21,10 @@ cache:
     MyBadges::Merged: <%= 1.day %>
     MyCampusLinksController: <%= 1.day %>
     MyClasses::Merged: <%= 1.day %>
-    MyFinancials: <%= 1.day %>
+    Financials::MyFinancials: <%= 1.day %>
     MyGroups::Merged: <%= 1.day %>
     MyTasks::Merged: <%= 1.day %>
-    MyUpNext: <%= 1.day %>
+    UpNext::MyUpNext: <%= 1.day %>
     UserApi: <%= 1.day %>
 
 cal_link_proxy:

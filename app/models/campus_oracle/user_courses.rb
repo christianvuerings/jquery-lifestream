@@ -98,14 +98,14 @@ module CampusOracle
         semester.each do |course|
           if course[:role] == 'Instructor'
             primaries = course[:sections].select { |s| s[:is_primary_section] }
-            if primaries.present? && CourseOptions::MAPPING[course[:course_option]]
+            if primaries.present? && Berkeley::CourseOptions::MAPPING[course[:course_option]]
               secondaries = get_all_secondary_sections(course)
               if secondaries.present?
                 # Use a hash to avoid duplicates when an instructor is assigned more than one primary.
                 nested_secondaries = {}
                 primaries.each do |prim|
                   secondaries.each do |sec|
-                    if CourseOptions.nested?(course[:course_option], prim[:section_number], sec)
+                    if Berkeley::CourseOptions.nested?(course[:course_option], prim[:section_number], sec)
                       nested_secondaries[sec['course_cntl_num']] = row_to_section_data(sec)
                     end
                   end

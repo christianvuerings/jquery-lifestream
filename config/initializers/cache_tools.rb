@@ -5,13 +5,13 @@ module Calcentral
 
   Rails.application.config.after_initialize do
 
-    USER_CACHE_WARMER = UserCacheWarmer.new
+    USER_CACHE_WARMER = Cache::UserCacheWarmer.new
 
-    USER_CACHE_EXPIRATION = UserCacheInvalidator.new
+    USER_CACHE_EXPIRATION = Cache::UserCacheInvalidator.new
 
     {
-      MyFinancials => :expire,
-      MyRegBlocks => :expire,
+      Financials::MyFinancials => :expire,
+      Bearfacts::MyRegBlocks => :expire,
       CalLink::Memberships => :expire,
 
       CampusOracle::UserCourses => :expire,
@@ -39,13 +39,13 @@ module Calcentral
     merged_feeds_array = [
       UserApi,
       MyClasses::Merged,
-      MyFinancials,
+      Financials::MyFinancials,
       MyGroups::Merged,
       MyActivities::Merged,
       MyTasks::Merged,
       MyBadges::Merged,
-      MyUpNext,
-      MyRegBlocks
+      UpNext::MyUpNext,
+      Bearfacts::MyRegBlocks
     ]
     MERGED_FEEDS = {}
     merged_feeds_array.each do |feed|

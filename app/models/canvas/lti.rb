@@ -4,7 +4,7 @@ module Canvas
   require 'oauth/request_proxy/rack_request'
 
   class Lti
-    extend Calcentral::Cacheable
+    extend Cache::Cacheable
     include ClassLogger
 
     LTI_SELECTION_DIRECTIVES = {

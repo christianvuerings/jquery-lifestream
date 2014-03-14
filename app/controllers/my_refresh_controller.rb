@@ -1,5 +1,5 @@
 class MyRefreshController < ApplicationController
-  extend Calcentral::Cacheable
+  extend Cache::Cacheable
 
   respond_to :json
 
@@ -18,7 +18,7 @@ class MyRefreshController < ApplicationController
         self.class.fetch_from_cache session[:user_id] do
           sleep 2
           Calcentral::USER_CACHE_EXPIRATION.notify session[:user_id]
-          UserCacheWarmer.do_warm session[:user_id]
+          Cache::UserCacheWarmer.do_warm session[:user_id]
           true
         end
         render :json => {:refreshed => Time.now.to_i}, :status => 200

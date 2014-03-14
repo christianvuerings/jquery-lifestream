@@ -67,7 +67,7 @@ describe "UserApi" do
     user_api.record_first_login
     user_api.get_feed
 
-    Oauth2Data.should_receive(:destroy_all)
+    User::Oauth2Data.should_receive(:destroy_all)
     Notifications::Notification.should_receive(:destroy_all)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify)
 

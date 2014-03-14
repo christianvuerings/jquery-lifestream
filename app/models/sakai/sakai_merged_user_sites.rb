@@ -25,7 +25,7 @@ module Sakai
             site_type: row['type'],
             site_url: "#{url_root}/#{site_id}",
           }
-          if row['type'] == 'course' && (term_name = row['term']) && (term = TermCodes.from_english(term_name))
+          if row['type'] == 'course' && (term_name = row['term']) && (term = Berkeley::TermCodes.from_english(term_name))
             site[:term_name] = term_name
             site[:term_yr] = term[:term_yr]
             site[:term_cd] = term[:term_cd]

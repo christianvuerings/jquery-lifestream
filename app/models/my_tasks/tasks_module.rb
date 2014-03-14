@@ -4,7 +4,7 @@ module MyTasks
     include MyTasks::ParamValidator
 
     def self.included(klass)
-      klass.extend Calcentral::Cacheable
+      klass.extend Cache::Cacheable
     end
 
     def fetch_tasks

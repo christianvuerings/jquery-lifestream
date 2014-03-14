@@ -1,5 +1,5 @@
 class RoutesListController < ApplicationController
-  extend Calcentral::Cacheable
+  extend Cache::Cacheable
 
   respond_to :json
 

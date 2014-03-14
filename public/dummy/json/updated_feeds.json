@@ -15,7 +15,7 @@
       "date_string": "11/19"
     }
   },
-  "MyFinancials": {
+  "Financials::MyFinancials": {
     "hash": "bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f",
     "timestamp": {
       "epoch": 1384887169,
@@ -55,7 +55,7 @@
       "date_string": "11/19"
     }
   },
-  "MyUpNext": {
+  "UpNext::MyUpNext": {
     "hash": "e640de77d940a7a1dd95561a900c5c4349fd57b9",
     "timestamp": {
       "epoch": 1384887171,
@@ -63,7 +63,7 @@
       "date_string": "11/19"
     }
   },
-  "MyRegBlocks": {
+  "Bearfacts::MyRegBlocks": {
     "hash": "bdc0a25364c9c3f116b78ab39647021ddb966934",
     "timestamp": {
       "epoch": 1384887169,

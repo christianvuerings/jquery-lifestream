@@ -188,17 +188,17 @@ cache:
   log_level: <%= Logger::ERROR %>
   expiration:
     default: <%= 35.minutes %>
-    FeedUpdateWhiteboard: <%= 5.minutes %>
+    Cache::FeedUpdateWhiteboard: <%= 5.minutes %>
     LiveUpdatesWarmer: <%= 2.minutes %>
     MyAcademics::Merged: 0
     MyActivities::Merged: 0
     MyBadges::Merged: 0
     MyCampusLinksController: 0
     MyClasses::Merged: 0
-    MyFinancials: 0
+    Financials::MyFinancials: 0
     MyGroups::Merged: 0
     MyTasks::Merged: 0
-    MyUpNext: 0
+    UpNext::MyUpNext: 0
     MyRefreshController: <%= 30.seconds %>
     UserApi: 0
     UserApiController: <%= 4.hours %>
@@ -206,7 +206,7 @@ cache:
     Canvas::CanvasCourseStudentsProxy: <%= 15.minutes %>
     Canvas::CanvasCourseTeachersProxy: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
-    MyRegBlocks: 0
+    Bearfacts::MyRegBlocks: 0
 
     Canvas::CanvasMergedUserSites: <%= 15.minutes %>
     Canvas::CanvasUserCoursesProxy: <%= 30.minutes %>

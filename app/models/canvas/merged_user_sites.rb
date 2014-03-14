@@ -1,7 +1,7 @@
 module Canvas
   class MergedUserSites
     include ClassLogger
-    extend Calcentral::Cacheable
+    extend Cache::Cacheable
 
     def initialize(uid)
       @uid = uid
@@ -44,13 +44,13 @@ module Canvas
     def merge_course_with_sections(course, canvas_sections)
       course_id = course['id']
       term_name = course['term']['name']
-      term_hash = TermCodes.from_english(term_name) || {}
+      term_hash = Berkeley::TermCodes.from_english(term_name) || {}
       sis_sections = []
       canvas_sections.each do |canvas_section|
         sis_id = canvas_section['sis_section_id']
         if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_id))
           # Check our assumption that Canvas and campus semesters are aligned.
-          if TermCodes.to_english(campus_section[:term_yr], campus_section[:term_cd]) == term_name
+          if Berkeley::TermCodes.to_english(campus_section[:term_yr], campus_section[:term_cd]) == term_name
             sis_sections << {ccn: campus_section[:ccn]}
           else
             logger.error("Canvas course #{course_id} is in term #{term_name} but links to section #{campus_section}")

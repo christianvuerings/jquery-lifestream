@@ -7,7 +7,7 @@ describe CampusRostersController do
     session[:user_id] = user_id
     campus_course_id = "mec_eng-132-2014-b"
 
-    CampusRosters.any_instance.stub(:get_feed).and_return(nil)
+    Rosters::Campus.any_instance.stub(:get_feed).and_return(nil)
     get :get_feed, campus_course_id: campus_course_id
     assert_response(401)
     student_id = rand(99999)

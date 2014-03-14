@@ -1,7 +1,7 @@
 class MyActivities::RegBlocks
 
   def self.append!(uid, activities)
-    blocks_feed = MyRegBlocks.new(uid).get_feed
+    blocks_feed = Bearfacts::MyRegBlocks.new(uid).get_feed
     if blocks_feed.empty? || blocks_feed[:available] == false
       return activities
     end

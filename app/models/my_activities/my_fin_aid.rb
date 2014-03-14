@@ -1,7 +1,7 @@
 # TODO collapse this class into Finaid::Proxy
 class MyActivities::MyFinAid
   include DatedFeed, ClassLogger
-  extend Calcentral::Cacheable
+  extend Cache::Cacheable
 
   def self.append!(uid, activities)
     finaid_activities = get_activities_from_cache(uid)

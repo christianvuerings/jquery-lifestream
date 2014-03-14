@@ -25,24 +25,24 @@ class MyAcademics::CollegeAndLevel
       futureTBLevel = to_text(general_profile.css("futureTBLevel")).titleize
       colleges = []
       primary_college_abbv = to_text(general_profile.css("collegePrimary"))
-      primary_college = Colleges.get(primary_college_abbv)
-      primary_major = Majors.get(to_text(general_profile.css("majorPrimary")))
+      primary_college = Berkeley::Colleges.get(primary_college_abbv)
+      primary_major = Berkeley::Majors.get(to_text(general_profile.css("majorPrimary")))
 
       # this code block is not very DRY, but that makes it easier to understand the wacky requirements. See CLC-2017 for background.
       if primary_college_abbv.in?(["GRAD DIV", "LAW", "CONCURNT"])
         if primary_major == "Double" || primary_major == "Triple"
           colleges << {
-            :college => (general_profile.css("collegeSecond").blank? ? primary_college : Colleges.get(to_text(general_profile.css("collegeSecond")))),
-            :major => Majors.get(to_text(general_profile.css("majorSecond")))
+            :college => (general_profile.css("collegeSecond").blank? ? primary_college : Berkeley::Colleges.get(to_text(general_profile.css("collegeSecond")))),
+            :major => Berkeley::Majors.get(to_text(general_profile.css("majorSecond")))
           }
           colleges << {
-            :college => Colleges.get(to_text(general_profile.css("collegeThird"))),
-            :major => Majors.get(to_text(general_profile.css("majorThird")))
+            :college => Berkeley::Colleges.get(to_text(general_profile.css("collegeThird"))),
+            :major => Berkeley::Majors.get(to_text(general_profile.css("majorThird")))
           }
           if primary_major == "Triple"
             colleges << {
-              :college => Colleges.get(to_text(general_profile.css("collegeFourth"))),
-              :major => Majors.get(to_text(general_profile.css("majorFourth")))
+              :college => Berkeley::Colleges.get(to_text(general_profile.css("collegeFourth"))),
+              :major => Berkeley::Majors.get(to_text(general_profile.css("majorFourth")))
             }
           end
         else
@@ -55,16 +55,16 @@ class MyAcademics::CollegeAndLevel
         if primary_major == "Double" || primary_major == "Triple"
           colleges << {
             :college => primary_college,
-            :major => Majors.get(to_text(general_profile.css("majorSecond")))
+            :major => Berkeley::Majors.get(to_text(general_profile.css("majorSecond")))
           }
           colleges << {
             :college => "",
-            :major => Majors.get(to_text(general_profile.css("majorThird")))
+            :major => Berkeley::Majors.get(to_text(general_profile.css("majorThird")))
           }
           if primary_major == "Triple"
             colleges << {
               :college => "",
-              :major => Majors.get(to_text(general_profile.css("majorFourth")))
+              :major => Berkeley::Majors.get(to_text(general_profile.css("majorFourth")))
             }
           end
         else

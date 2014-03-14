@@ -1,7 +1,7 @@
 class AbstractModel
 
   include ActiveAttr::Model, ClassLogger, DatedFeed
-  extend Calcentral::Cacheable
+  extend Cache::Cacheable
 
   def initialize(id, options={})
     @id = id
@@ -43,7 +43,7 @@ class AbstractModel
       last_modified[:timestamp] = format_date(Time.now.to_datetime)
       Rails.cache.write(self.class.last_modified_cache_key(key), last_modified, :expires_in => 28.days)
       Rails.cache.fetch(self.class.feed_changed_rate_limiter(key), :expires_in => 10.seconds) do
-        Calcentral::Messaging.publish('/queues/feed_changed', key)
+        Messaging.publish('/queues/feed_changed', key)
         true
       end
     end

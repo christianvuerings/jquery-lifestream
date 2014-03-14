@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe ForbiddenError do
+describe Errors::ForbiddenError do
   it "should exist" do
-    expect { defined?(ForbiddenError) }.to be_true
+    expect { defined?(Errors::ForbiddenError) }.to be_true
   end
   it "should be a subclass of CalcentralError" do
-    expect(ForbiddenError.superclass).to eq ClientError
+    expect(Errors::ForbiddenError.superclass).to eq Errors::ClientError
   end
 end

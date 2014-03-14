@@ -49,7 +49,7 @@ module Finaid
           ).get
         }
         if response.status >= 400
-          raise Calcentral::ProxyError.new("Connection failed: #{response.status} #{response.body}", nil)
+          raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}", nil)
         end
         logger.debug "Remote server status #{response.status}, Body = #{response.body}"
         return {

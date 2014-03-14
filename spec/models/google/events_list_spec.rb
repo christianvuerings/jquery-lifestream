@@ -36,7 +36,7 @@ describe 'Events(events_list)' do
 
   it "should simulate a token update before a real request using the Tammi account", :testext => true do
     # by the time the fake access token is used below, it probably has well expired
-    Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID,
+    User::Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID,
                              Settings.google_proxy.test_user_access_token, Settings.google_proxy.test_user_refresh_token, 0)
     proxy = Google::EventsList.new(:user_id => @random_id)
     Google::Proxy.access_granted?(@random_id).should be_true
@@ -47,7 +47,7 @@ describe 'Events(events_list)' do
   end
 
   it "should simulate revoking a token after a 401 response", :testext => true do
-    Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID,
+    User::Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID,
                              "bogus_token", "bogus_refresh_token", 0)
     suppress_rails_logging do
       proxy = Google::EventsList.new(:user_id => @random_id)
