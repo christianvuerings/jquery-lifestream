@@ -10,7 +10,7 @@ describe "MyAcademics::Exams" do
     MyAcademics::Exams.new("61889").merge(feed)
 
     feed[:exam_schedule].should_not be_nil
-    feed[:exam_schedule][0][:course_number].should == "Psychology C120"
+    feed[:exam_schedule][0][:course_code].should == "Psychology C120"
     feed[:exam_schedule][0][:time].should == "8:00A"
     feed[:exam_schedule][0][:location][:raw_location].should == "390 HEARST MIN"
     feed[:exam_schedule][0][:location]["room_number"].should == "390"

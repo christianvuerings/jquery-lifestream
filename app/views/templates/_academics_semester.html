@@ -40,7 +40,7 @@
                   <tr data-ng-class-even="'cc-academics-even'">
                     <td class="cc-table-right-spacing cc-academics-course-number">
                       <a data-ng-href="/academics/semester/{{selectedSemester.slug}}/class/{{course.slug}}"
-                         data-ng-bind="course.course_number">
+                         data-ng-bind="course.course_code">
                       </a>
                       <div data-ng-repeat="section in course.sections">
                         <span data-ng-bind="section.section_label"></span>
@@ -73,7 +73,7 @@
                   <tr data-ng-repeat="section in course.sections">
                     <td>
                       <a data-ng-href="/academics/semester/{{selectedSemester.slug}}/class/{{course.slug}}"
-                         data-ng-bind="course.course_number">
+                         data-ng-bind="course.course_code">
                       </a>
                       <span data-ng-bind="section.section_label"></span>
                     </td>
@@ -103,7 +103,7 @@
                   <tr data-ng-class-even="'cc-academics-even'">
                     <td class="cc-table-right-spacing cc-academics-course-number">
                       <a data-ng-href="/academics/teaching-semester/{{selectedSemester.slug}}/class/{{course.slug}}"
-                         data-ng-bind="course.course_number">
+                         data-ng-bind="course.course_code">
                       </a>
                       <div data-ng-repeat="section in course.sections">
                         <span data-ng-bind="section.section_label"></span>
@@ -132,7 +132,7 @@
             </div>
             <div class="row collapse" data-ng-repeat="exam in dayData">
               <div class="medium-2 small-2 columns" data-ng-bind="exam.time"></div>
-              <div class="medium-4 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_number"></div>
+              <div class="medium-4 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_code"></div>
               <div class="medium-6 small-4 columns end">
                 <div data-cc-map-link-builder-directive></div>
               </div>
@@ -209,7 +209,7 @@
                 </thead>
                 <tbody>
                   <tr data-ng-repeat="course in selectedCourses">
-                    <td data-ng-bind="course.course_number"></td>
+                    <td data-ng-bind="course.course_code"></td>
                     <td class="cc-table-right cc-table-right-spacing" data-ng-bind="course.units | number:1"></td>
                     <td data-ng-if="!course.units">--</td>
                     <td>

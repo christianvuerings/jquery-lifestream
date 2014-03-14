@@ -17,7 +17,7 @@
       "slug": "fall-2013",
       "classes": [
         {
-          "course_number": "BIO 123A",
+          "course_code": "BIO 123A",
           "dept": "BIO",
           "role": "Instructor",
           "slug": "bio-123a",

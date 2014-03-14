@@ -39,7 +39,7 @@
           'slug': semester.slug
         };
 
-        getTextbook(courseInfo, semester.classes[c].course_number);
+        getTextbook(courseInfo, semester.classes[c].course_code);
       }
       $scope.semester_name = semester.name;
       $scope.semesterSlug = semester.slug;

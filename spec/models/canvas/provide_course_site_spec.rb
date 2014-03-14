@@ -131,7 +131,7 @@ describe Canvas::ProvideCourseSite do
       end
       @filtered_courses_list = [
         {
-          :course_number=>"COMPSCI 10",
+          :course_code=>"COMPSCI 10",
           :dept=>"COMPSCI",
           :slug=>"compsci-10",
           :title=>"The Beauty and Joy of Computing",
@@ -162,7 +162,7 @@ describe Canvas::ProvideCourseSite do
       assigned_courses.should be_an_instance_of Array
       assigned_courses.count.should == 1
       assigned_courses[0].should be_an_instance_of Hash
-      assigned_courses[0][:course_number].should == "COMPSCI 10"
+      assigned_courses[0][:course_code].should == "COMPSCI 10"
     end
 
     it "lets admins specify CCNs directly" do
@@ -184,7 +184,7 @@ describe Canvas::ProvideCourseSite do
   describe "#identify_department_subaccount" do
     before do
       canvas_provide_course_site.stub(:subaccount_for_department).and_return('ACCT:COMPSCI')
-      canvas_provide_course_site.instance_eval { @import_data['courses'] = [{:course_number => 'ENGIN 7', :dept => 'COMPSCI', :sections => []}] }
+      canvas_provide_course_site.instance_eval { @import_data['courses'] = [{:course_code => 'ENGIN 7', :dept => 'COMPSCI', :sections => []}] }
     end
 
     it "raises exception if import courses not present" do
@@ -210,7 +210,7 @@ describe Canvas::ProvideCourseSite do
         @import_data['subaccount'] = "ACCT:COMPSCI"
         @import_data['courses'] = [
           {
-            :course_number => "MEC ENG 98",
+            :course_code => "MEC ENG 98",
             :slug => "mec_eng-98",
             :dept => 'MEC ENG',
             :title => "Supervised Independent Group Studies",
@@ -284,7 +284,7 @@ describe Canvas::ProvideCourseSite do
         @import_data['sis_course_id'] = "CRS:MEC_ENG-98-2013-D"
         @import_data['courses'] = [
           {
-            :course_number => "MEC ENG 98",
+            :course_code => "MEC ENG 98",
             :slug => "mec_eng-98",
             :dept => 'MEC ENG',
             :title => "Supervised Independent Group Studies",
@@ -614,7 +614,7 @@ describe Canvas::ProvideCourseSite do
       terms_feed[0][:name].should == "Fall 2013"
       feed = terms_feed[0][:classes]
       feed.length.should == 2
-      bio1a = feed.select {|course| course[:course_number] == 'BIOLOGY 1A'}[0]
+      bio1a = feed.select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]
       bio1a.empty?.should be_false
       bio1a[:title].should == "General Biology Lecture"
       bio1a[:role].should == "Instructor"
@@ -623,7 +623,7 @@ describe Canvas::ProvideCourseSite do
       bio1a[:sections][1][:is_primary_section].should be_false
       bio1a[:sections][2][:is_primary_section].should be_false
 
-      cogsci = feed.select {|course| course[:course_number] == 'COG SCI C147'}[0]
+      cogsci = feed.select {|course| course[:course_code] == 'COG SCI C147'}[0]
       cogsci.empty?.should be_false
       cogsci[:title].should == "Language Disorders"
     end
@@ -637,7 +637,7 @@ describe Canvas::ProvideCourseSite do
       ]
       @candidate_courses_list = [
         {
-          :course_number => "ENGIN 7",
+          :course_code => "ENGIN 7",
           :slug => "engin-7",
           :dept => 'COMPSCI',
           :title => "Introduction to Computer Programming for Scientists and Engineers",
@@ -648,7 +648,7 @@ describe Canvas::ProvideCourseSite do
           ]
         },
         {
-          :course_number => "MEC ENG 98",
+          :course_code => "MEC ENG 98",
           :slug => "mec_eng-98",
           :dept => 'MEC ENG',
           :title => "Supervised Independent Group Studies",
@@ -658,7 +658,7 @@ describe Canvas::ProvideCourseSite do
           ]
         },
         {
-          :course_number => "MEC ENG H194",
+          :course_code => "MEC ENG H194",
           :slug => "mec_eng-h194",
           :dept => 'MEC ENG',
           :title => "Honors Undergraduate Research",
@@ -668,7 +668,7 @@ describe Canvas::ProvideCourseSite do
           ]
         },
         {
-          :course_number => "MEC ENG 297",
+          :course_code => "MEC ENG 297",
           :slug => "mec_eng-297",
           :dept => 'MEC ENG',
           :title => "Engineering Field Studies",
@@ -697,11 +697,11 @@ describe Canvas::ProvideCourseSite do
     it "should filter courses data by POSTed CCN selection" do
       filtered = worker.filter_courses_by_ccns(@candidate_terms_list, @term_slug, @selected_cnns)
       filtered.length.should == 2
-      filtered[0][:course_number].should == 'ENGIN 7'
+      filtered[0][:course_code].should == 'ENGIN 7'
       filtered[0][:dept].should == 'COMPSCI'
       filtered[0][:sections].length.should == 1
       filtered[0][:sections][0][:section_label].should == "DIS 102"
-      filtered[1][:course_number].should == 'MEC ENG H194'
+      filtered[1][:course_code].should == 'MEC ENG H194'
       filtered[1][:dept].should == 'MEC ENG'
       filtered[1][:sections].length.should == 1
       filtered[1][:sections][0][:section_label].should == "IND 015"
@@ -711,7 +711,7 @@ describe Canvas::ProvideCourseSite do
   describe "#generate_course_site_definition" do
     before do
       @course_data = {
-          :course_number => "ENGIN 7",
+          :course_code => "ENGIN 7",
            :dept => "ENGIN",
            :slug => "engin-7",
            :title =>
@@ -829,7 +829,7 @@ describe Canvas::ProvideCourseSite do
           rand(99999).to_s
       ]
       courses_list = [
-          {:course_number => "ENGIN 7",
+          {:course_code => "ENGIN 7",
            :slug => "engin-7",
            :title =>
                "Introduction to Computer Programming for Scientists and Engineers",
@@ -845,7 +845,7 @@ describe Canvas::ProvideCourseSite do
                  :is_primary_section => false,
                  :section_label => "DIS 102",
                  :section_number => "102"}]},
-          {:course_number => "MEC ENG 98",
+          {:course_code => "MEC ENG 98",
            :slug => "mec_eng-98",
            :title => "Supervised Independent Group Studies",
            :role => "Instructor",
@@ -878,7 +878,7 @@ describe Canvas::ProvideCourseSite do
       term_cd = 'D'
       ccn = rand(99999).to_s
       courses_list = [
-          {:course_number => "ENGIN 7",
+          {:course_code => "ENGIN 7",
            :dept => "ENGIN",
            :slug => "engin-7",
            :title =>
@@ -967,7 +967,7 @@ describe Canvas::ProvideCourseSite do
       classes_list = semesters_list[0][:classes]
       expect(classes_list.length).to eq 2
       bio_class = classes_list[0]
-      expect(bio_class[:course_number]).to eq 'BIOLOGY 1A'
+      expect(bio_class[:course_code]).to eq 'BIOLOGY 1A'
       sections = bio_class[:sections]
       expect(sections.length).to eq 2
       expect(sections[0][:ccn].to_i).to eq 7309

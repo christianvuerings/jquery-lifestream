@@ -22,7 +22,7 @@ describe 'MyAcademics::Teaching' do
     teaching[0][:term_yr].should == "2013"
 
     teaching[0][:classes].length.should == 2
-    bio1a = teaching[0][:classes].select {|course| course[:course_number] == 'BIOLOGY 1A'}[0]
+    bio1a = teaching[0][:classes].select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]
     bio1a.empty?.should be_false
     bio1a[:dept].should eq "BIOLOGY"
     bio1a[:title].should == "General Biology Lecture"
@@ -32,7 +32,7 @@ describe 'MyAcademics::Teaching' do
     bio1a[:sections][1][:is_primary_section].should be_false
     bio1a[:sections][2][:is_primary_section].should be_false
 
-    cogsci = teaching[0][:classes].select {|course| course[:course_number] == 'COG SCI C147'}[0]
+    cogsci = teaching[0][:classes].select {|course| course[:course_code] == 'COG SCI C147'}[0]
     cogsci.empty?.should be_false
     cogsci[:dept].should == "COG SCI"
     cogsci[:title].should == "Language Disorders"

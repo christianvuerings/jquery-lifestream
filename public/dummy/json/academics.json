@@ -455,7 +455,7 @@
       "time_bucket": "future",
       "classes": [
         {
-          "course_number": "BIOLOGY 1A",
+          "course_code": "BIOLOGY 1A",
           "dept": "BIOLOGY",
           "grade": null,
           "grade_option": "Letter",
@@ -506,7 +506,7 @@
       "time_bucket": "current",
       "classes": [
         {
-          "course_number": "BIOLOGY 1A",
+          "course_code": "BIOLOGY 1A",
           "dept": "BIOLOGY",
           "grade": null,
           "grade_option": "Letter",
@@ -562,7 +562,7 @@
           ]
         },
         {
-          "course_number": "COG SCI C147",
+          "course_code": "COG SCI C147",
           "dept": "COG SCI",
           "grade": null,
           "grade_option": "Letter",
@@ -607,7 +607,7 @@
       "time_bucket": "past",
       "classes": [
         {
-          "course_number": "BIOLOGY 1A",
+          "course_code": "BIOLOGY 1A",
           "dept": "BIOLOGY",
           "grade": "B",
           "grade_option": "Letter",
@@ -632,7 +632,7 @@
           ]
         },
         {
-          "course_number": "COG SCI C147",
+          "course_code": "COG SCI C147",
           "dept": "COG SCI",
           "grade": "C+",
           "grade_option": "Letter",
@@ -667,7 +667,7 @@
       "term_yr": "2013",
       "classes": [
         {
-          "course_number": "BIO 123A",
+          "course_code": "BIO 123A",
           "dept": "BIO",
           "role": "GSI",
           "slug": "bio-123a",
@@ -777,7 +777,7 @@
       "term_yr": "2013",
       "classes": [
         {
-          "course_number": "BIO 123A",
+          "course_code": "BIO 123A",
           "dept": "BIO",
           "role": "Instructor",
           "slug": "bio-123a",
@@ -824,7 +824,7 @@
         "lon": "-122.25727000000001",
         "room_number": "390"
       },
-      "course_number": "Psychology C120"
+      "course_code": "Psychology C120"
     },
     {
       "date": {
@@ -840,7 +840,7 @@
         "lon": "-122.26473",
         "room_number": "100"
       },
-      "course_number": "Psychology 133"
+      "course_code": "Psychology 133"
     },
     {
       "date": {
@@ -856,7 +856,7 @@
         "lon": "-122.26211000000001",
         "room_number": "2060"
       },
-      "course_number": "Education 140"
+      "course_code": "Education 140"
     }
   ],
   "telebears": {

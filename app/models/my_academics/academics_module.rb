@@ -50,7 +50,7 @@ module MyAcademics::AcademicsModule
 
   def class_info(campus_course)
     {
-      course_number: campus_course[:course_code],
+      course_code: campus_course[:course_code],
       dept: campus_course[:dept],
       course_catalog: campus_course[:course_catalog],
       dept_desc: campus_course[:dept_desc],
