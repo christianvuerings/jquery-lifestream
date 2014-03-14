@@ -195,7 +195,7 @@ cache:
     MyBadges::Merged: 0
     MyCampusLinksController: 0
     MyClasses::Merged: 0
-    MyFinancials: 0
+    Financials::MyFinancials: 0
     MyGroups::Merged: 0
     MyTasks::Merged: 0
     MyUpNext: 0

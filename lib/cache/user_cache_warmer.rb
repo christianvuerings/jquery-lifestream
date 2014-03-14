@@ -7,7 +7,7 @@ module Cache
       [
         UserApi.new(uid),
         MyClasses::Merged.new(uid),
-        MyFinancials.new(uid),
+        Financials::MyFinancials.new(uid),
         MyGroups::Merged.new(uid),
         MyTasks::Merged.new(uid),
         MyBadges::Merged.new(uid),

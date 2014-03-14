@@ -10,7 +10,7 @@ module Calcentral
     USER_CACHE_EXPIRATION = Cache::UserCacheInvalidator.new
 
     {
-      MyFinancials => :expire,
+      Financials::MyFinancials => :expire,
       MyRegBlocks => :expire,
       CalLink::Memberships => :expire,
 
@@ -39,7 +39,7 @@ module Calcentral
     merged_feeds_array = [
       UserApi,
       MyClasses::Merged,
-      MyFinancials,
+      Financials::MyFinancials,
       MyGroups::Merged,
       MyActivities::Merged,
       MyTasks::Merged,

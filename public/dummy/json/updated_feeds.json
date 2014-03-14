@@ -15,7 +15,7 @@
       "date_string": "11/19"
     }
   },
-  "MyFinancials": {
+  "Financials::MyFinancials": {
     "hash": "bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f",
     "timestamp": {
       "epoch": 1384887169,

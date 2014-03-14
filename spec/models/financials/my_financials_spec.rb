@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe MyFinancials do
+describe Financials::MyFinancials do
 
   let!(:oski_uid) { "61889" }
   let!(:fake_financials_proxy) { Financials::Proxy.new({user_id: oski_uid, fake: true}) }
   before(:each) { Financials::Proxy.stub(:new).and_return(fake_financials_proxy) }
 
   context "happy path" do
-    subject { MyFinancials.new(oski_uid).get_feed }
+    subject { Financials::MyFinancials.new(oski_uid).get_feed }
     it { should_not be_nil }
     its(["summary"]) { should_not be_nil }
     its(["current_term"]) { should == Settings.sakai_proxy.current_terms.first }
@@ -20,7 +20,7 @@ describe MyFinancials do
         status_code: 500
       }
     ) }
-    subject { MyFinancials.new(oski_uid).get_feed }
+    subject { Financials::MyFinancials.new(oski_uid).get_feed }
     it { subject.length.should == 4 }
     its([:body]) { should == "an error message"}
     its([:status_code]) { should == 500 }
@@ -28,7 +28,7 @@ describe MyFinancials do
 
   context "it should not explode on a null proxy response" do
     before(:each) { fake_financials_proxy.stub(:get).and_return(nil) }
-    subject { MyFinancials.new(oski_uid).get_feed }
+    subject { Financials::MyFinancials.new(oski_uid).get_feed }
     it { subject.length.should == 2 }
   end
 
