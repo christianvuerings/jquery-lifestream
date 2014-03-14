@@ -1,5 +1,5 @@
 module Rosters
-  class CampusRosters < RostersCommon
+  class Campus < Common
     include ActiveAttr::Model, ClassLogger, SafeJsonParser
     extend Cache::Cacheable
 

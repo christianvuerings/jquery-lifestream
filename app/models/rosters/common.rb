@@ -1,5 +1,5 @@
 module Rosters
-  class RostersCommon < AbstractModel
+  class Common < AbstractModel
 
     PHOTO_UNAVAILABLE_FILENAME = 'photo_unavailable_official_72x96.jpg'
 
