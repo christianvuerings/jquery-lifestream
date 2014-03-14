@@ -196,7 +196,7 @@
           var course = semester.classes[j];
           if (!teaching[course.slug]) {
             teaching[course.slug] = {
-              course_number: course.course_number,
+              course_code: course.course_code,
               title: course.title,
               slug: course.slug,
               semesters: []

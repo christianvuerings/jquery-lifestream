@@ -75,7 +75,7 @@
                 <div>
                   <ul class="cc-page-provision-margin">
                     <li data-ng-repeat="course in selectedCourses">
-                      <strong>{{course.title}} ({{course.course_number}})</strong>
+                      <strong>{{course.title}} ({{course.course_code}})</strong>
                       <ul>
                         <li data-ng-repeat="section in course.sections">
                           <div data-ng-if="!(section.sites)">
@@ -84,7 +84,7 @@
                                    data-ng-model="section.selected">
                             <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
                               class="cc-page-provision-section-label"
-                              data-ng-bind-template="{{course.course_number}} {{section.section_label}} ({{section.ccn}})">
+                              data-ng-bind-template="{{course.course_code}} {{section.section_label}} ({{section.ccn}})">
                             </label>
                           </div>
                         </li>
@@ -99,7 +99,7 @@
                                      data-ng-model="section.selected">
                               <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
                                 class="cc-page-provision-section-label cc-page-provision-section-sited-label"
-                                data-ng-bind-template="{{course.course_number}} {{section.section_label}} ({{section.ccn}})">
+                                data-ng-bind-template="{{course.course_code}} {{section.section_label}} ({{section.ccn}})">
                               </label>
                               <div data-ng-repeat="site in section.sites" class="cc-page-provision-section-sites">
                               <i class="fa fa-cogs cc-page-provision-section-sited-icon"></i>

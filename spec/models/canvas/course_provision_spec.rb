@@ -12,7 +12,7 @@ describe Canvas::CourseProvision do
         :slug => 'fall-2013',
         :classes => [
           {
-            :course_number => "ENGIN 7",
+            :course_code => "ENGIN 7",
             :dept => "ENGIN",
             :slug => "engin-7",
             :title => "Introduction to Computer Programming for Scientists and Engineers",
@@ -46,7 +46,7 @@ describe Canvas::CourseProvision do
         :slug => 'spring-2014',
         :classes => [
           {
-            :course_number => "ENGIN 7",
+            :course_code => "ENGIN 7",
             :dept => "ENGIN",
             :slug => "engin-7",
             :title => "Introduction to Computer Programming for Scientists and Engineers",

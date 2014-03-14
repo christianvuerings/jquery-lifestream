@@ -39,12 +39,12 @@ class MyAcademics::Exams
       unless location_data.nil?
         location = location.merge(location_data)
       end
-      course_number = "#{to_text(exam_data.css("deptName"))} #{to_text(exam_data.css("coursePrefixNum"))}#{to_text(exam_data.css("courseRootNum"))}"
+      course_code = "#{to_text(exam_data.css("deptName"))} #{to_text(exam_data.css("coursePrefixNum"))}#{to_text(exam_data.css("courseRootNum"))}"
       exams << {
         :date => format_date(exam_datetime, "%a %B %-d"),
         :time => time,
         :location => location,
-        :course_number => course_number
+        :course_code => course_code
       }
     end
     exams.sort! { |a, b| a[:date][:epoch] <=> b[:date][:epoch] }

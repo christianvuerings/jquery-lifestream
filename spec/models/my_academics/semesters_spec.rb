@@ -26,7 +26,7 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
       it { subject[0][:term_yr].should eq "2015" }
       it { subject[0][:time_bucket].should eq 'future'}
       it { subject[0][:classes].length.should eq 1 }
-      it { subject[0][:classes][0][:course_number].should eq "BIOLOGY 1A" }
+      it { subject[0][:classes][0][:course_code].should eq "BIOLOGY 1A" }
       it { subject[0][:classes][0][:grade_option].should eq "P/NP" }
       it { subject[0][:classes][0][:dept].should eq "BIOLOGY" }
       it { subject[0][:classes][0][:sections].length.should eq 1 }
@@ -40,7 +40,7 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
       it { subject[3][:name].should eq "Spring 2012" }
       it { subject[3][:time_bucket].should eq 'past' }
       it { subject[2][:classes].length.should eq 2 }
-      it { subject[2][:classes][0][:course_number].should eq "BIOLOGY 1A" }
+      it { subject[2][:classes][0][:course_code].should eq "BIOLOGY 1A" }
       it { subject[2][:classes][0][:dept].should eq "BIOLOGY" }
       it { subject[2][:classes][0][:sections].length.should eq 2 }
       it { subject[2][:classes][0][:sections][0][:ccn].should eq "07309" }
