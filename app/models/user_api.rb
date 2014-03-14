@@ -120,35 +120,6 @@ class UserApi < UserSpecificModel
     }
   end
 
-  def self.is_allowed_to_log_in?(uid)
-    unless Settings.features.user_whitelist
-      return true
-    end
-    if User::Data.where(uid: uid).first.present?
-      return true
-    end
-    if UserWhitelist.where(uid: uid).first.present?
-      return true
-    end
-    if (info = CampusOracle::Queries.get_student_info(uid))
-      Settings.user_whitelist.first_year_codes.each do |code|
-        if code.term_yr == info["first_reg_term_yr"] && code.term_cd == info["first_reg_term_cd"]
-          return true
-        end
-      end
-    end
-    if Canvas::Proxy.has_account?(uid)
-      return true
-    end
-    if (info.try(:[], "ug_grad_flag") == "G" &&
-      /STUDENT-STATUS-EXPIRED/.match(info["affiliations"]).nil? &&
-      CampusOracle::Queries.is_previous_ugrad?(uid))
-      return true
-    end
-
-    false
-  end
-
   def get_reg_blocks
     blocks_feed = Bearfacts::MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
     response = {
