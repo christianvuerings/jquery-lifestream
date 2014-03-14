@@ -16,6 +16,10 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     "#{self.name} Total Warmup Time"
   end
 
+  def self.last_batch_size
+    "#{self.name} Last Batch Size"
+  end
+
   def run
     if Settings.hot_plate.enabled
       warm
@@ -25,11 +29,17 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   end
 
   def self.ping
-    request_count = self.report self.total_warmups_requested
-    processed_count = self.report self.total_warmups_processed
-    time = self.report self.total_warmup_time
-    if request_count || processed_count || time
-      "#{self.name}: #{request_count}; #{processed_count}; #{time}"
+    last_batch_size = self.get_value(self.last_batch_size)
+    request_count = self.get_value(self.total_warmups_requested)
+    processed_count = self.get_value(self.total_warmups_processed)
+    time = self.get_value(self.total_warmup_time)
+    if last_batch_size || request_count || processed_count || time
+      {
+        last_batch_size: self.get_value(self.last_batch_size),
+        total_warmups_requested: self.get_value(self.total_warmups_requested),
+        total_warmups_processed: self.get_value(self.total_warmups_processed),
+        total_warmup_time: self.get_value(self.total_warmup_time)
+      }
     else
       "#{self.name} Stats are not available, HotPlate may not have run yet"
     end
@@ -53,6 +63,8 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
         visits = User::Visit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
         logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
+        self.class.zero(self.class.last_batch_size)
+        self.class.increment(self.class.last_batch_size, visits.size)
         self.class.increment(self.class.total_warmups_requested, visits.size)
 
         visits.find_in_batches do |batch|
