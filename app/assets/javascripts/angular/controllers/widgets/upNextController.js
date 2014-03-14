@@ -25,7 +25,7 @@
     };
 
     $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
-      if (services && services.MyUpNext) {
+      if (services && services['UpNext::MyUpNext']) {
         getUpNext();
       }
     });

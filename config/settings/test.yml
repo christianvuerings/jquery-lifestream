@@ -53,5 +53,5 @@ cache:
     Financials::MyFinancials: <%= 1.day %>
     MyGroups::Merged: <%= 1.day %>
     MyTasks::Merged: <%= 1.day %>
-    MyUpNext: <%= 1.day %>
+    UpNext::MyUpNext: <%= 1.day %>
     UserApi: <%= 1.day %>

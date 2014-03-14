@@ -44,7 +44,7 @@ module Calcentral
       MyActivities::Merged,
       MyTasks::Merged,
       MyBadges::Merged,
-      MyUpNext,
+      UpNext::MyUpNext,
       MyRegBlocks
     ]
     MERGED_FEEDS = {}

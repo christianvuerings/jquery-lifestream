@@ -198,7 +198,7 @@ cache:
     Financials::MyFinancials: 0
     MyGroups::Merged: 0
     MyTasks::Merged: 0
-    MyUpNext: 0
+    UpNext::MyUpNext: 0
     MyRefreshController: <%= 30.seconds %>
     UserApi: 0
     UserApiController: <%= 4.hours %>

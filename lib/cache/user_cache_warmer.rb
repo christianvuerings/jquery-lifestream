@@ -11,7 +11,7 @@ module Cache
         MyGroups::Merged.new(uid),
         MyTasks::Merged.new(uid),
         MyBadges::Merged.new(uid),
-        MyUpNext.new(uid),
+        UpNext::MyUpNext.new(uid),
         MyActivities::Merged.new(uid),
         MyAcademics::Merged.new(uid),
         MyRegBlocks.new(uid)
