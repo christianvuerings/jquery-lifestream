@@ -2,21 +2,21 @@
   <div
     class="cc-page-academics"
     data-cc-spinner-directive
-    data-ng-show="can_view_academics"
-    data-ng-switch data-on="current_selection"
+    data-ng-show="canViewAcademics"
+    data-ng-switch data-on="currentSelection"
   >
     <div>
       <h1 class="cc-heading-page-title">
         <a href="/academics">My Academics</a> &raquo;
-        <a data-ng-href="/academics/semester/{{selected_semester.slug}}"><span data-ng-bind="selected_semester.name"></span></a> &raquo;
+        <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
         <span data-ng-bind="selected_course.course_number"></span>
-        <span class="cc-academics-teaching-button-group" data-ng-if="is_instructor_gsi">
-          <ul class="cc-button-group cc-even-{{select_options.length}}" role="tablist">
-            <li data-ng-repeat="select_option in select_options">
+        <span class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
+          <ul class="cc-button-group cc-even-{{selectOptions.length}}" role="tablist">
+            <li data-ng-repeat="select_option in selectOptions">
               <button class="cc-button"
                 data-ng-click="switchSelectedOption(select_option)"
-                data-ng-class="{'cc-button-selected cc-button-selected-roster':(current_selection === select_option)}"
-                aria-selected="{{current_selection === select_option}}"
+                data-ng-class="{'cc-button-selected cc-button-selected-roster':(currentSelection === select_option)}"
+                aria-selected="{{currentSelection === select_option}}"
                 role="tab"
                 data-ng-bind="select_option">
               </button>
@@ -40,9 +40,9 @@
             <h3 data-ng-if="selected_course.role">My Role</h3>
             <div data-ng-bind="selected_course.role"></div>
 
-            <h3 data-ng-if="selected_course.sections.length && !is_instructor_gsi">My Enrollment</h3>
+            <h3 data-ng-if="selected_course.sections.length && !isInstructorOrGsi">My Enrollment</h3>
 
-            <div class="cc-table" data-ng-if="selected_course.sections.length && !is_instructor_gsi">
+            <div class="cc-table" data-ng-if="selected_course.sections.length && !isInstructorOrGsi">
               <table>
                 <thead>
                   <tr>
@@ -59,11 +59,11 @@
               </table>
             </div>
 
-            <h3 data-ng-if="selected_course_count_schedules || selected_course.units || selected_course.grade_option">Class Info</h3>
+            <h3 data-ng-if="selectedCourseCountSchedules || selected_course.units || selected_course.grade_option">Class Info</h3>
 
-            <h4 data-ng-hide="is_instructor_gsi">Course Offering</h4>
+            <h4 data-ng-hide="isInstructorOrGsi">Course Offering</h4>
 
-            <div data-ng-hide="is_instructor_gsi" class="cc-table">
+            <div data-ng-hide="isInstructorOrGsi" class="cc-table">
               <table>
                 <tbody>
                   <tr>
@@ -79,7 +79,7 @@
               </table>
             </div>
 
-            <h4 data-ng-if="selected_course_count_schedules">Section Schedules</h4>
+            <h4 data-ng-if="selectedCourseCountSchedules">Section Schedules</h4>
 
             <div class="row collapse" data-ng-repeat="section in selected_course.sections">
               <div class="small-3 columns" data-ng-if="section.schedules" data-ng-bind="section.section_label"></div>
@@ -94,10 +94,10 @@
         </div>
       </div>
 
-      <div class="medium-4 columns" data-ng-if="selected_course_count_instructors">
+      <div class="medium-4 columns" data-ng-if="selectedCourseCountInstructors">
         <div class="cc-widget">
           <div class="cc-widget-title">
-            <h2 data-ng-pluralize count="selected_course_count_instructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
+            <h2 data-ng-pluralize count="selectedCourseCountInstructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
           </div>
           <div class="cc-widget-padding">
             <div data-ng-repeat="section in selected_course.sections">
@@ -155,7 +155,7 @@
           </div>
         </div>
 
-        <div data-ng-if="selected_semester.time_bucket === 'current' || selected_semester.time_bucket === 'future'" class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
+        <div data-ng-if="selectedSemester.time_bucket === 'current' || selectedSemester.time_bucket === 'future'" class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
           <div class="cc-widget-title">
             <h2>Textbooks</h2>
           </div>

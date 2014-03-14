@@ -19,7 +19,7 @@
 
       var courseInfo = {
         'ccns[]': ccns,
-        'slug': $scope.selected_semester.slug
+        'slug': $scope.selectedSemester.slug
       };
 
       $http.get('/api/my/textbooks_details', {
