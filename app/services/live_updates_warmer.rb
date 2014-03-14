@@ -13,10 +13,13 @@ class LiveUpdatesWarmer < TorqueBox::Messaging::MessageProcessor
   end
 
   def self.ping
-    warmup_count = self.report self.total_warmups_requested
-    time = self.report self.total_warmup_time
+    warmup_count = self.get_value(self.total_warmups_requested)
+    time = self.get_value(self.total_warmup_time)
     if warmup_count || time
-      "#{warmup_count} #{time}"
+      {
+        total_warmups_requested: warmup_count,
+        total_warmup_time: time
+      }
     else
       "#{self.name} Stats are not available, LiveUpdatesWarmer may not have run yet"
     end

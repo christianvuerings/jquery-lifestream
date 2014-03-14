@@ -75,11 +75,15 @@ class JmsWorker
   end
 
   def self.ping
-    received_messages = self.report RECEIVED_MESSAGES
-    last_received_message_time = self.report LAST_MESSAGE_RECEIVED_TIME
+    received_messages = self.get_value(RECEIVED_MESSAGES)
+    last_received_message_time = self.get_value(LAST_MESSAGE_RECEIVED_TIME)
     server = ServerRuntime.get_settings["hostname"]
-    if received_messages
-      "#{self.name} Running on #{server}; #{received_messages}; #{last_received_message_time}"
+    if received_messages || last_received_message_time
+      {
+        server: server,
+        received_messages: received_messages,
+        last_received_message_time: last_received_message_time
+      }
     else
       "#{self.name} Running on #{server}; Stats are not available"
     end

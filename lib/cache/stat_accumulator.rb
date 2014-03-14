@@ -23,9 +23,12 @@ module Cache
 
     def report(stat_id)
       value = Rails.cache.read(stats_cache_key(stat_id))
-      "#{stat_id} = #{value}"
+      "#{stat_id} = #{get_value(stat_id)}"
     end
 
+    def get_value(stat_id)
+      Rails.cache.read(stats_cache_key(stat_id))
+    end
   end
 
 end
