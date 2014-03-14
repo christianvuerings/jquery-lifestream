@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "CampusRosters" do
+describe "Rosters::CampusRosters" do
   let(:term_yr) {'2014'}
   let(:term_cd) {'B'}
   let(:user_id) {rand(99999).to_s}
@@ -85,7 +85,7 @@ describe "CampusRosters" do
 
   it "should return a list of officially enrolled students for a course ccn" do
 
-    model = CampusRosters.new(user_id, course_id: campus_course_id)
+    model = Rosters::CampusRosters.new(user_id, course_id: campus_course_id)
     feed = model.get_feed
     feed[:campus_course][:id].should == campus_course_id
     feed[:sections].length.should == 2
@@ -103,12 +103,12 @@ describe "CampusRosters" do
 
   it "should show official photo links for students who are not waitlisted in all sections" do
 
-    model = CampusRosters.new(user_id, course_id: campus_course_id)
+    model = Rosters::CampusRosters.new(user_id, course_id: campus_course_id)
     feed = model.get_feed
     feed[:sections].length.should == 2
     feed[:students].length.should == 2
     feed[:students].index {|student| student[:id] == enrolled_student_login_id &&
-        !student[:photo].end_with?(CampusRosters::PHOTO_UNAVAILABLE_FILENAME)
+        !student[:photo].end_with?(Rosters::CampusRosters::PHOTO_UNAVAILABLE_FILENAME)
     }.should_not be_nil
     feed[:students].index {|student| student[:id] == waitlisted_student_login_id &&
         student[:photo].nil?
@@ -116,9 +116,9 @@ describe "CampusRosters" do
   end
 
   it "should give access to only to course instructors" do
-    model = CampusRosters.new(user_id, course_id: campus_course_id)
+    model = Rosters::CampusRosters.new(user_id, course_id: campus_course_id)
     model.user_authorized?.should be_true
-    model = CampusRosters.new(student_user_id, course_id: campus_course_id)
+    model = Rosters::CampusRosters.new(student_user_id, course_id: campus_course_id)
     model.user_authorized?.should be_false
   end
 

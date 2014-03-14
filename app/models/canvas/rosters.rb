@@ -1,5 +1,5 @@
 module Canvas
-  class Rosters < RostersCommon
+  class Rosters < Rosters::RostersCommon
     include ActiveAttr::Model, ClassLogger, SafeJsonParser
     extend Cache::Cacheable
 
