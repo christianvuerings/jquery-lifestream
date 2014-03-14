@@ -17,7 +17,7 @@
       <span class="cc-academics-next cc-academics-prev-next-disabled" data-ng-hide="next_semester.slug">Next semester</span>
     </div>
 
-    <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="!selectedCourses.length && selected_semester.time_bucket === 'future'">
+    <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="selected_student_semester && !selectedCourses.length && selected_semester.time_bucket === 'future'">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Classes</h2>
