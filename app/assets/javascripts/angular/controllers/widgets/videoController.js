@@ -19,7 +19,7 @@
       var courseDepartment = $scope.selected_course.dept_desc;
       var courseCategory = $scope.selected_course.course_catalog;
       var courseSection = $scope.selected_course.sections[0].section_number;
-      var courseSemester = $scope.selected_semester.name;
+      var courseSemester = $scope.selectedSemester.name;
       var title = courseDepartment + ' ' + courseCategory + ', ' + courseSection + ' - ' + courseSemester;
       var encodedTitle = title.replace(/\//g, '_slash_');
       getVideos(encodedTitle);

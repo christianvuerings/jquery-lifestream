@@ -8,7 +8,7 @@
 
     apiService.util.setTitle('My Academics');
 
-    var gradeopts = [
+    var gradeOptions = [
       {
         grade: 'A+',
         weight: 4
@@ -92,32 +92,32 @@
       }
     };
 
-    var updatePrevNextSemester = function(semesters_lists, selected_semester) {
-      var next_semester = {};
-      var next_semester_cmp = false;
-      var previous_semester = {};
-      var previous_semester_cmp = false;
-      var selected_semester_cmp = selected_semester.term_yr + selected_semester.term_cd;
-      angular.forEach(semesters_lists, function(semester_list) {
-        angular.forEach(semester_list, function(semester) {
+    var updatePrevNextSemester = function(semestersLists, selectedSemester) {
+      var nextSemester = {};
+      var nextSemesterCompare = false;
+      var previousSemester = {};
+      var previousSemesterCompare = false;
+      var selectedSemesterCompare = selectedSemester.term_yr + selectedSemester.term_cd;
+      angular.forEach(semestersLists, function(semesterList) {
+        angular.forEach(semesterList, function(semester) {
           var cmp = semester.term_yr + semester.term_cd;
-          if ((cmp < selected_semester_cmp) && (!previous_semester_cmp || (cmp > previous_semester_cmp))) {
-            previous_semester_cmp = cmp;
-            previous_semester.slug = semester.slug;
-          } else if ((cmp > selected_semester_cmp) && (!next_semester_cmp || (cmp < next_semester_cmp))) {
-            next_semester_cmp = cmp;
-            next_semester.slug = semester.slug;
+          if ((cmp < selectedSemesterCompare) && (!previousSemesterCompare || (cmp > previousSemesterCompare))) {
+            previousSemesterCompare = cmp;
+            previousSemester.slug = semester.slug;
+          } else if ((cmp > selectedSemesterCompare) && (!nextSemesterCompare || (cmp < nextSemesterCompare))) {
+            nextSemesterCompare = cmp;
+            nextSemester.slug = semester.slug;
           }
         });
       });
-      $scope.next_semester = next_semester;
-      $scope.previous_semester = previous_semester;
-      $scope.prev_next_semester_show = (next_semester_cmp || previous_semester_cmp);
+      $scope.nextSemester = nextSemester;
+      $scope.previousSemester = previousSemester;
+      $scope.previousNextSemesterShow = (nextSemesterCompare || previousSemesterCompare);
     };
 
-    var findSemester = function(semesters, slug, selected_semester) {
-      if (selected_semester || !semesters) {
-        return selected_semester;
+    var findSemester = function(semesters, slug, selectedSemester) {
+      if (selectedSemester || !semesters) {
+        return selectedSemester;
       }
 
       for (var i = 0; i < semesters.length; i++) {
@@ -127,7 +127,7 @@
       }
     };
 
-    var getClassesSections = function(courses, find_waitlisted) {
+    var getClassesSections = function(courses, findWaitlisted) {
       var classes = [];
 
       for (var i = 0; i < courses.length; i++) {
@@ -135,7 +135,7 @@
         var sections = [];
         for (var j = 0; j < course.sections.length; j++) {
           var section = course.sections[j];
-          if ((find_waitlisted && section.waitlist_position) || (!find_waitlisted && !section.waitlist_position)) {
+          if ((findWaitlisted && section.waitlist_position) || (!findWaitlisted && !section.waitlist_position)) {
             sections.push(section);
           }
         }
@@ -202,12 +202,12 @@
               semesters: []
             };
           }
-          var semester_obj = {
+          var semesterItem = {
             name: semester.name,
             slug: semester.slug
           };
-          if (!findTeachingSemester(teaching[course.slug].semesters, semester_obj)) {
-            teaching[course.slug].semesters.push(semester_obj);
+          if (!findTeachingSemester(teaching[course.slug].semesters, semesterItem)) {
+            teaching[course.slug].semesters.push(semesterItem);
           }
         }
       }
@@ -215,11 +215,11 @@
 
     };
 
-    var countSectionItem = function(selected_course, section_item) {
+    var countSectionItem = function(selected_course, sectionItem) {
       var count = 0;
       for (var i = 0; i < selected_course.sections.length; i++) {
-        if (selected_course.sections[i][section_item] && selected_course.sections[i][section_item].length) {
-          count += selected_course.sections[i][section_item].length;
+        if (selected_course.sections[i][sectionItem] && selected_course.sections[i][sectionItem].length) {
+          count += selected_course.sections[i][sectionItem].length;
         }
       }
       return count;
@@ -230,49 +230,49 @@
 
       $scope.semesters = data.semesters;
 
-      $scope.all_courses = getAllClasses(data.semesters);
-      $scope.previous_courses = getPreviousClasses(data.semesters);
+      $scope.allCourses = getAllClasses(data.semesters);
+      $scope.previousCourses = getPreviousClasses(data.semesters);
 
-      $scope.is_undergratuate = ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
+      $scope.isUndergraduate = ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teaching_semesters);
-      $scope.teaching_length = Object.keys($scope.teaching).length;
+      $scope.teachingLength = Object.keys($scope.teaching).length;
 
       // Get selected semester from URL params and extract data from semesters array
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
       if (semesterSlug) {
-        var is_instructor_gsi = !!$routeParams.teachingSemesterSlug;
-        var selected_student_semester = findSemester(data.semesters, semesterSlug, selected_student_semester);
-        var selected_teaching_semester = findSemester(data.teaching_semesters, semesterSlug, selected_teaching_semester);
-        var selected_semester = (selected_student_semester || selected_teaching_semester);
-        if (!checkPageExists(selected_semester)) {
+        var isInstructorOrGsi = !!$routeParams.teachingSemesterSlug;
+        var selectedStudentSemester = findSemester(data.semesters, semesterSlug, selectedStudentSemester);
+        var selectedTeachingSemester = findSemester(data.teaching_semesters, semesterSlug, selectedTeachingSemester);
+        var selectedSemester = (selectedStudentSemester || selectedTeachingSemester);
+        if (!checkPageExists(selectedSemester)) {
           return;
         }
-        updatePrevNextSemester([data.semesters, data.teaching_semesters], selected_semester);
+        updatePrevNextSemester([data.semesters, data.teaching_semesters], selectedSemester);
 
-        $scope.selected_semester = selected_semester;
-        if (selected_student_semester) {
-          $scope.selectedCourses = selected_student_semester.classes;
-          if (!is_instructor_gsi) {
-            $scope.enrolled_courses = getClassesSections(selected_student_semester.classes, false);
-            $scope.waitlisted_courses = getClassesSections(selected_student_semester.classes, true);
+        $scope.selectedSemester = selectedSemester;
+        if (selectedStudentSemester) {
+          $scope.selectedCourses = selectedStudentSemester.classes;
+          if (!isInstructorOrGsi) {
+            $scope.enrolledCourses = getClassesSections(selectedStudentSemester.classes, false);
+            $scope.waitlistedCourses = getClassesSections(selectedStudentSemester.classes, true);
           }
         }
-        $scope.selected_student_semester = selected_student_semester;
-        $scope.is_instructor_gsi = is_instructor_gsi;
-        $scope.selected_teaching_semester = selected_teaching_semester;
+        $scope.selectedStudentSemester = selectedStudentSemester;
+        $scope.isInstructorOrGsi = isInstructorOrGsi;
+        $scope.selectedTeachingSemester = selectedTeachingSemester;
 
         // Get selected course from URL params and extract data from selected semester schedule
         if ($routeParams.classSlug) {
-          var class_semester = selected_student_semester;
-          if (is_instructor_gsi) {
-            class_semester = selected_teaching_semester;
+          var classSemester = selectedStudentSemester;
+          if (isInstructorOrGsi) {
+            classSemester = selectedTeachingSemester;
           }
-          for (var i = 0; i< class_semester.classes.length; i++) {
-            var course = class_semester.classes[i];
+          for (var i = 0; i< classSemester.classes.length; i++) {
+            var course = classSemester.classes[i];
             if (course.slug === $routeParams.classSlug) {
               $scope.selected_course = course;
-              if (is_instructor_gsi) {
+              if (isInstructorOrGsi) {
                 $scope.campusCourseId = course.course_id;
               }
               break;
@@ -281,8 +281,8 @@
           if (!checkPageExists($scope.selected_course)) {
             return;
           }
-          $scope.selected_course_count_instructors = countSectionItem($scope.selected_course, 'instructors');
-          $scope.selected_course_count_schedules = countSectionItem($scope.selected_course, 'schedules');
+          $scope.selectedCourseCountInstructors = countSectionItem($scope.selected_course, 'instructors');
+          $scope.selectedCourseCountSchedules = countSectionItem($scope.selected_course, 'schedules');
         }
       }
 
@@ -294,16 +294,16 @@
 
     };
 
-    $scope.current_selection = 'Class Info';
-    $scope.select_options = ['Class Info', 'Class Roster'];
+    $scope.currentSelection = 'Class Info';
+    $scope.selectOptions = ['Class Info', 'Class Roster'];
 
-    $scope.switchSelectedOption = function(selected_option) {
-      $scope.current_selection = selected_option;
+    $scope.switchSelectedOption = function(selectedOption) {
+      $scope.currentSelection = selectedOption;
     };
 
     $scope.addTelebearsAppointment = function(phasesArray) {
       var phases = [];
-      $scope.telebears_appointment_loading = 'Process';
+      $scope.telebearsAppointmentLoading = 'Process';
       for (var i = 0; i < phasesArray.length; i++) {
         var payload = {
           'summary': phasesArray[i].period,
@@ -318,23 +318,23 @@
         phases.push($http.post('/api/my/event', payload));
       }
       $q.all(phases).then(function() {
-        $scope.telebears_appointment_loading = 'Success';
+        $scope.telebearsAppointmentLoading = 'Success';
       }, function() {
-        $scope.telebears_appointment_loading = 'Error';
+        $scope.telebearsAppointmentLoading = 'Error';
       });
     };
 
     $scope.hideDisclaimer = true;
 
     $scope.toggleBlockHistory = function() {
-      $scope.show_block_history = !$scope.show_block_history;
-      apiService.analytics.sendEvent('Block history', 'Show history panel - ' + $scope.show_block_history ? 'Show' : 'Hide');
+      $scope.showBlockHistory = !$scope.showBlockHistory;
+      apiService.analytics.sendEvent('Block history', 'Show history panel - ' + $scope.showBlockHistory ? 'Show' : 'Hide');
     };
 
-    $scope.gradeopts = gradeopts;
+    $scope.gradeOptions = gradeOptions;
 
     var findWeight = function(grade) {
-      var weight = gradeopts.filter(function(element) {
+      var weight = gradeOptions.filter(function(element) {
         return element.grade === grade;
       });
       return weight[0];
@@ -342,8 +342,8 @@
 
     var gpaCalculate = function() {
       // Recalculate GPA on every dropdown change.
-      var total_units = 0;
-      var total_score = 0;
+      var totalUnits = 0;
+      var totalScore = 0;
 
       angular.forEach($scope.selectedCourses, function(course) {
         // Don't calculate for pass/no-pass courses!
@@ -352,37 +352,37 @@
           if (course.grade && findWeight(course.grade)) {
             grade = findWeight(course.grade).weight;
           } else {
-            grade = course.estimated_grade;
+            grade = course.estimatedGrade;
           }
           course.score = parseFloat(grade, 10) * course.units;
-          total_units += parseFloat(course.units, 10);
-          total_score += course.score;
+          totalUnits += parseFloat(course.units, 10);
+          totalScore += course.score;
         }
       });
-      $scope.estimated_gpa = total_score / total_units;
+      $scope.estimatedGpa = totalScore / totalUnits;
     };
 
-    $scope.gpaUpdateCourse = function(course, estimated_grade) {
+    $scope.gpaUpdateCourse = function(course, estimatedGrade) {
       // Update course object on scope and recalculate overall GPA
-      course.estimated_grade = estimated_grade;
+      course.estimatedGrade = estimatedGrade;
       gpaCalculate();
-      cumulativeGpaCalculate($scope.all_courses, 'estimated');
+      cumulativeGpaCalculate($scope.allCourses, 'estimated');
     };
 
     $scope.gpaInit = function() {
       // On page load, set default values and calculate starter GPA
       angular.forEach($scope.selectedCourses, function(course) {
-        course.estimated_grade = 4;
+        course.estimatedGrade = 4;
       });
       gpaCalculate();
-      cumulativeGpaCalculate($scope.previous_courses, 'current');
-      cumulativeGpaCalculate($scope.all_courses, 'estimated');
+      cumulativeGpaCalculate($scope.previousCourses, 'current');
+      cumulativeGpaCalculate($scope.allCourses, 'estimated');
     };
 
-    var cumulativeGpaCalculate = function(courses, gpa_type) {
+    var cumulativeGpaCalculate = function(courses, gpaType) {
       // Recalculate GPA on every dropdown change.
-      var total_units = 0;
-      var total_score = 0;
+      var totalUnits = 0;
+      var totalScore = 0;
       angular.forEach(courses, function(course) {
         // Don't calculate for pass/no-pass courses!
         if (course.grade_option === 'Letter' && course.units) {
@@ -390,29 +390,29 @@
           if (course.grade && findWeight(course.grade)) {
             grade = findWeight(course.grade).weight;
           } else {
-            if (gpa_type === 'estimated') {
-              grade = course.estimated_grade;
+            if (gpaType === 'estimated') {
+              grade = course.estimatedGrade;
             }
           }
           if (grade || grade === 0) {
             course.score = parseFloat(grade, 10) * course.units;
-            total_units += parseFloat(course.units, 10);
-            total_score += course.score;
+            totalUnits += parseFloat(course.units, 10);
+            totalScore += course.score;
           }
         }
       });
-      if (gpa_type === 'estimated') {
-        $scope.estimated_cumulative_gpa = total_score / total_units;
+      if (gpaType === 'estimated') {
+        $scope.estimatedCumulativeGpa = totalScore / totalUnits;
       }
       else {
-        $scope.current_cumulative_gpa = total_score / total_units;
+        $scope.currentCumulativeGpa = totalScore / totalUnits;
       }
     };
 
     // Wait until user profile is fully loaded before hitting academics data
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
-        $scope.can_view_academics = $scope.api.user.profile.student_info.has_academics_tab;
+        $scope.canViewAcademics = $scope.api.user.profile.student_info.has_academics_tab;
         $http.get('/api/my/academics').success(parseAcademics);
         //$http.get('/dummy/json/academics.json').success(parseAcademics);
       }
