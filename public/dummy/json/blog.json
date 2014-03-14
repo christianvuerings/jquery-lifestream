@@ -1,0 +1,19 @@
+{
+  "alert": {
+    "title": "CalCentral Emergency Outage",
+    "teaser": "CalCentral will be undergoing an unscheduled outage on Tuesday, March 4, 2014. &nbsp;We apologize for any inconvenience this may cause.",
+    "url": "http://ets-dev.berkeley.edu/calcentral-emergency-outage",
+    "timestamp": {
+      "epoch": 1393620301,
+      "date_time": "2014-02-28T12:45:01-08:00",
+      "date_string": "2/28"
+    }
+  },
+  "entries":[
+    {
+      "title":"CalCentral v.31 Release Notes: 3/3/14",
+      "link":"https://ets.berkeley.edu/article/calcentral-v31-release-notes-3314",
+      "date":"Mar 03",
+      "snippet":"Version 31 of CalCentral includes a Print button and more advanced searching and filtering in My Finances as well as other enhancements and bug fixes.\u00a0"}
+  ]
+}

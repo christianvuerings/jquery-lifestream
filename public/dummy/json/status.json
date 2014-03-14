@@ -1,23 +1,37 @@
+
 {
-  "alert": {
-    "title": "CalCentral Scheduled Maintenance 3/17",
-    "teaser": "CalCentral v32 release at 6 - 7am",
-    "url": "http://ets-dev.berkeley.edu/calcentral-scheduled-maintenance-317",
-    "timestamp": {
-      "epoch": 1393495946,
-      "date_time": "2014-02-27T02:12:26-08:00",
-      "date_string": "2/27"
-    }
-  },
+  "is_basic_auth_enabled": false,
   "is_logged_in": true,
   "features": {
-    "notifications": true,
-    "act_as": false
+    "live_campus_links_data": true,
+    "user_whitelist": false,
+    "academic_status": true,
+    "my_fin_aid": true,
+    "activity_to_task": true,
+    "financials": true,
+    "telebears": true,
+    "research": false,
+    "textbooks": true,
+    "videos": true,
+    "app_alerts": true
   },
-  "uid": "191779",
-  "preferred_name": "Mr. Tom Jones",
-  "has_google_access_token": false,
+  "acting_as_uid": "1051203",
+  "is_superuser": false,
+  "is_viewer": false,
+  "first_login_at": "2014-02-05T05:37:02-08:00",
+  "first_name": "IWQROE",
+  "full_name": "IWQROE BABTREW",
+  "is_google_reminder_dismissed": false,
   "has_canvas_account": true,
+  "has_google_access_token": false,
+  "has_student_history": false,
+  "has_instructor_history": false,
+  "has_academics_tab": true,
+  "has_financials_tab": true,
+  "google_email": "",
+  "canvas_email": "",
+  "last_name": "BABTREW",
+  "preferred_name": "BABTREW,IWQROE",
   "roles": {
     "student": true,
     "ex_student": false,
@@ -25,36 +39,15 @@
     "staff": false,
     "guest": false
   },
-  "student_info": {
-    "california_residency": {
-      "summary": "Non-Resident",
-      "explanation": "<a href=\"http://registrar.berkeley.edu/establish.html\">Establishing California residency</a>",
-      "needsAction": false
-    },
-    "reg_status": {
-      "code": "C",
-      "summary": "Registered",
-      "explanation": "You are officially registered for this term and are entitled to access campus services.",
-      "needsAction": false
-    },
-    "reg_block": {
-      "available": true,
-      "needsAction": true,
-      "active_blocks": 2
-    },
-    "has_student_history": true,
-    "has_instructor_history": false,
-    "has_academics_tab": true,
-    "has_financials_tab": true
-  },
-  "first_login_at": "2012-12-11T10:52:40-08:00",
+  "uid": "61889",
   "last_modified": {
-    "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
+    "hash": "c7e1f3df2ddb1dbf46b0d285185b1af03d20089e",
     "timestamp": {
-      "epoch": 1383947240,
-      "date_time": "2013-11-08T13:47:20-08:00",
-      "date_string": "11/08"
+      "epoch": 1394747903,
+      "date_time": "2014-03-13T22:58:23+01:00",
+      "date_string": "3/13"
     }
   },
   "feed_name": "UserApi"
 }
+

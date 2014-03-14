@@ -20,11 +20,6 @@ class UserApiController < ApplicationController
     ActiveRecordHelper.clear_stale_connections
     status = {}
 
-    if Settings.features.app_alerts
-      alert_data = EtsBlog::Alerts.new.get_latest
-      status.merge!(:alert => alert_data) unless alert_data.nil?
-    end
-
     if session[:user_id]
       # wrap User::Visit.record_session inside a cache lookup so that we have to write User::Visit records less often.
       self.class.fetch_from_cache session[:user_id] do

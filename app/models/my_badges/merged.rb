@@ -20,6 +20,8 @@ module MyBadges
       }
       @service_list ||= @enabled_sources.keys.to_a
       @enabled_sources.select!{|k,v| v[:access_granted] == true}
+      @student_info_instance = MyBadges::StudentInfo.new(@uid)
+      @alert_instance = EtsBlog::Alerts.new if Settings.features.app_alerts
     end
 
     def get_feed_internal
@@ -38,9 +40,13 @@ module MyBadges
           items: []
         }
       end
-
       logger.debug "#{self.class.name} get_feed is #{badges.inspect}"
-      {:badges => badges}
+
+      result = {}
+      result.merge!(:alert => @alert_instance.get_latest) unless @alert_instance.nil?
+      result.merge!(:badges => badges)
+      result.merge!(:studentInfo => @student_info_instance.get)
     end
+
   end
 end

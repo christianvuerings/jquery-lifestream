@@ -78,7 +78,7 @@ describe "UserApi" do
 
   it "should say random student gets the academics tab", if: CampusOracle::Queries.test_data? do
     user_data = UserApi.new(@random_id).get_feed
-    user_data[:student_info][:has_academics_tab].should be_true
+    user_data[:has_academics_tab].should be_true
   end
 
   it "should say Chris does not get the academics tab", if: CampusOracle::Queries.test_data? do
@@ -97,7 +97,7 @@ describe "UserApi" do
     CampusOracle::UserCourses.stub(:new).and_return(fake_courses_proxy)
 
     user_data = UserApi.new("904715").get_feed
-    user_data[:student_info][:has_academics_tab].should be_false
+    user_data[:has_academics_tab].should be_false
   end
 
   context "my finances tab" do
@@ -110,22 +110,22 @@ describe "UserApi" do
     end
     it "should be toggled based on a :has_finances_tab attribute in student info" do
       data = UserApi.new(@random_id).get_feed
-      data[:student_info][:has_financials_tab].should_not be_nil
+      data[:has_financials_tab].should_not be_nil
     end
     it "should be true for an active student"  do  #check
       CampusOracle::Queries.stub(:get_person_attributes).and_return({ :roles => @student_roles[:active] })
       data = UserApi.new(@random_id).get_feed
-      data[:student_info][:has_financials_tab].should == true
+      data[:has_financials_tab].should == true
     end
     it "should be false for a non-student", if: CampusOracle::Queries.test_data?  do   #check
       CampusOracle::Queries.stub(:get_person_attributes).and_return({ :roles => @student_roles[:non] })
       data = UserApi.new(@random_id).get_feed
-      data[:student_info][:has_financials_tab].should == false
+      data[:has_financials_tab].should == false
     end
     it "should be true for Bernie as an ex-student", if: CampusOracle::Queries.test_data?  do
       CampusOracle::Queries.stub(:get_person_attributes).and_return({ :roles => @student_roles[:expired] })
       data = UserApi.new(@random_id).get_feed
-      data[:student_info][:has_financials_tab].should be_true
+      data[:has_financials_tab].should be_true
     end
   end
 
@@ -138,7 +138,7 @@ describe "UserApi" do
     CampusOracle::UserCourses.stub(:new).and_return(fake_courses_proxy)
 
     user_data = UserApi.new("904715").get_feed
-    user_data[:student_info][:has_academics_tab].should_not be_true
+    user_data[:has_academics_tab].should_not be_true
   end
 
   context "proper cache handling" do
@@ -175,50 +175,6 @@ describe "UserApi" do
 
   end
 
-  context "valid regblocks" do
-    let! (:oski_blocks_proxy) { Bearfacts::Regblocks.new({:user_id => "61889", :fake => true}) }
-    before do
-      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
-      Bearfacts::Regblocks.stub(:new).and_return(oski_blocks_proxy)
-    end
-
-    subject { UserApi.new("61889").get_feed[:student_info] }
-
-    it "should return some active_blocks" do
-      subject[:reg_block].should be_present
-      subject[:reg_block][:active_blocks].should be_present
-      subject[:reg_block][:active_blocks].should > 0
-    end
-
-    it "bearfacts API should be online" do
-      subject[:reg_block][:available].should be_true
-    end
-
-    it "needsAction should be true" do
-      subject[:reg_block][:needsAction].should be_true
-    end
-
-  end
-
-  context "invalid/offline regblock" do
-    before { Bearfacts::Regblocks.any_instance.stub(:get).and_return {} }
-
-    subject { UserApi.new("61889").get_feed[:student_info] }
-    it "should have no active blocks" do
-      subject[:reg_block].should be_present
-      subject[:reg_block][:active_blocks].should be_present
-      subject[:reg_block][:active_blocks].should eq(0)
-    end
-
-    it "bearfacts API should be offline" do
-      subject[:reg_block][:available].should be_false
-    end
-
-    it "needsAction should be false" do
-      subject[:reg_block][:needsAction].should be_false
-    end
-  end
-
   context "proper handling of superuser permissions" do
     before { User::Auth.new_or_update_superuser!(@random_id) }
     subject { UserApi.new(@random_id).get_feed }
@@ -242,3 +198,4 @@ describe "UserApi" do
   end
 
 end
+
