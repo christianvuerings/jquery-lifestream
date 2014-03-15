@@ -75,58 +75,6 @@ describe "UserApi" do
 
     User::Data.where(:uid => @random_id).should == []
   end
-  it "should say everyone is allowed to log in if the whitelist is disabled" do
-    UserApi.is_allowed_to_log_in?("0").should == true
-  end
-  it "should say a user who's already logged in is ok to log in" do
-    Settings.features.user_whitelist = true
-    user_api = UserApi.new @random_id
-    user_api.record_first_login
-    UserApi.is_allowed_to_log_in?(@random_id).should == true
-  end
-  it "should say a user in the explicit whitelist is ok to log in" do
-    Settings.features.user_whitelist = true
-    UserWhitelist.where(uid: @random_id).first_or_create
-    UserApi.is_allowed_to_log_in?(@random_id).should == true
-  end
-  it "should say a user with a canvas account is ok to log in" do
-    Settings.features.user_whitelist = true
-    Canvas::Proxy.stub(:has_account?).and_return(true)
-    UserApi.is_allowed_to_log_in?(@random_id).should == true
-  end
-  it "should say a user who hasn't logged in, has no canvas acct, and isn't in the whitelist cannot log in" do
-    Settings.features.user_whitelist = true
-    Canvas::Proxy.stub(:has_account?).and_return(false)
-    UserApi.is_allowed_to_log_in?("0").should == false
-  end
-  it "should say a freshman undergrad can log in" do
-    Settings.features.user_whitelist = true
-    Canvas::Proxy.stub(:has_account?).and_return(false)
-    CampusOracle::Queries.stub(:get_student_info).and_return(
-      {
-        "first_reg_term_cd" => "D",
-        "first_reg_term_yr" => "2013"
-      })
-    UserApi.is_allowed_to_log_in?(@random_id).should == true
-  end
-  it "should say a junior undergrad cannot log in" do
-    Settings.features.user_whitelist = true
-    Canvas::Proxy.stub(:has_account?).and_return(false)
-    CampusOracle::Queries.stub(:get_student_info).and_return(
-      {
-        "first_reg_term_cd" => "D",
-        "first_reg_term_yr" => "2011"
-      })
-    UserApi.is_allowed_to_log_in?(@random_id).should == false
-  end
-
-  it "grad students who used to be undergrads can log in", if: CampusOracle::Queries.test_data? do
-    Settings.features.user_whitelist = true
-    Canvas::Proxy.stub(:has_account?).and_return(false)
-    UserApi.is_allowed_to_log_in?("212388").should be_true
-    UserApi.is_allowed_to_log_in?("212389").should be_false
-    UserApi.is_allowed_to_log_in?("212390").should be_false
-  end
 
   it "should say random student gets the academics tab", if: CampusOracle::Queries.test_data? do
     user_data = UserApi.new(@random_id).get_feed

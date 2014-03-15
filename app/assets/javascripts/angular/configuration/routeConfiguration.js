@@ -65,11 +65,6 @@
       templateUrl: 'templates/tools_styles.html',
       controller: 'StylesController'
     }).
-    when('/sorry', {
-      templateUrl: 'templates/sorry.html',
-      controller: 'SorryController',
-      isPublic: true
-    }).
     when('/uid_error', {
       templateUrl: 'templates/uid_error.html',
       controller: 'uidErrorController',

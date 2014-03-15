@@ -10,7 +10,7 @@ class Ability
       can :access, :all
       can :dashboard, :all
       if user.policy.can_administrate?
-        can :manage, [User::Auth, UserWhitelist]
+        can :manage, [User::Auth]
       end
       if user.policy.can_author?
         can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection]
@@ -56,7 +56,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole', 'UserWhitelist']
+  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -114,10 +114,6 @@ RailsAdmin.config do |config|
 
   config.model 'Links::Link' do
     label "Link"
-  end
-
-  config.model 'UserWhitelist' do
-    label "Whitelisted User"
   end
 
   config.model 'User::Auth' do

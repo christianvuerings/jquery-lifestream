@@ -392,7 +392,7 @@ update it from production. To do that, log into a prod node and do:
 ```bash
 pg_dump calcentral --inserts --clean -f developer-seed-data.sql -t link_categories \
 -t link_categories_link_sections -t link_sections -t link_sections_links -t links \
--t links_user_roles -t user_auths -t user_roles -t user_whitelists \
+-t links_user_roles -t user_auths -t user_roles \
 -h postgres-hostname -p postgres-port-number -U calcentral
 ```
 
