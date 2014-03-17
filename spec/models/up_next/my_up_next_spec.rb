@@ -29,6 +29,8 @@ describe UpNext::MyUpNext do
         entry[:end][:epoch].should > Time.new(1970, 1, 1).to_i
       end
     end
+    valid_feed[:date].should be_present
+    valid_feed[:date][:epoch].should > Time.new(1970, 1, 1).to_i
   end
 
   it "should return an empty feed for non-authorized users" do
@@ -47,6 +49,8 @@ describe UpNext::MyUpNext do
     end
     empty_feed = UpNext::MyUpNext.new(@user_id, :original_user_id => another_user).get_feed
     empty_feed[:items].empty?.should be_true
+    empty_feed[:date].should be_present
+    empty_feed[:date][:epoch].should > Time.new(1970, 1, 1).to_i
   end
 
   it "should not include all-day events for tomorrow" do
@@ -66,8 +70,10 @@ describe UpNext::MyUpNext do
     Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
     Google::APIClient.stub(:execute).and_raise(StandardError)
     Google::EventsList.stub(:new).and_return(@real_events_list)
-    dead_feed = UpNext::MyUpNext.new @user_id
-    dead_feed.get_feed[:items].should == []
+    dead_feed = UpNext::MyUpNext.new(@user_id).get_feed
+    dead_feed[:items].should == []
+    dead_feed[:date].should be_present
+    dead_feed[:date][:epoch].should > Time.new(1970, 1, 1).to_i
   end
 
   context "cache expiration" do

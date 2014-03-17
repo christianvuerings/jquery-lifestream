@@ -11,7 +11,8 @@ module UpNext
 
     def get_feed_internal
       up_next = {
-        :items => []
+        date: format_date(@begin_today),
+        items: []
       }
 
       # act-as block for non-fake users.
