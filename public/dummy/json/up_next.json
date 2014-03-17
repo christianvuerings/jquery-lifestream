@@ -1,4 +1,9 @@
 {
+  "date": {
+    "epoch": 1352073600,
+    "date_time": "2012-11-16T00:00:00-08:00",
+    "date_string": "11/16"
+  },
   "items": [
     {
       "status": "confirmed",
