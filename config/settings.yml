@@ -223,6 +223,8 @@ cache:
     MyBadges::GoogleDrive: <%= 10.minutes %>
     MyBadges::GoogleMail: <%= 4.minutes %>
 
+    MyTasks::GoogleTasks: <%= 4.minutes %>
+
     CalLink::Memberships: <%= 4.hours %>
     CalLink::Organization: <%= 4.hours %>
 
