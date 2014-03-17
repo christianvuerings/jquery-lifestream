@@ -3,7 +3,7 @@ require "spec_helper"
 describe Notifications::RegStatusTranslator do
 
   it "should translate a reg-status event properly" do
-    user = UserApi.new "300846"
+    user = User::UserApi.new "300846"
     user.record_first_login
     processor = Notifications::RegStatusEventProcessor.new
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')

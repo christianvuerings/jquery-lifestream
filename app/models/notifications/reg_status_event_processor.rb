@@ -36,7 +36,7 @@ module Notifications
 
       if reg_status["reg_status_cd"].upcase == "Z"
         # code Z, student deceased, remove from our system
-        UserApi.delete "#{uid}"
+        User::UserApi.delete "#{uid}"
         Rails.logger.info "#{self.class.name} Got a code Z indicating deceased student; removing #{uid} from system"
         return
       end
