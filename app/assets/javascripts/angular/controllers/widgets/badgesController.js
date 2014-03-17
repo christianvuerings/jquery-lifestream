@@ -5,7 +5,7 @@
    * Badges controller
    */
 
-  angular.module('calcentral.controllers').controller('BadgesController', function(apiService, dateService, errorService, $http, $scope) {
+  angular.module('calcentral.controllers').controller('BadgesController', function(apiService, dateService, errorService, $http, $rootScope, $scope) {
 
     var defaults = {
       'bcal': {
@@ -123,6 +123,9 @@
       $http.get('/api/my/badges').success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         decorateBadges(processCalendarEvents(data.badges || {}));
+        if (data.alert && data.alert.title) {
+          $rootScope.$broadcast('calcentral.controller.badges.alert', data.alert);
+        }
       });
     };
 

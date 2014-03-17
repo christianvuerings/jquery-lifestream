@@ -22,12 +22,24 @@ describe MyBadgesController do
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
-    json_response.size.should == 3
-    json_response["badges"].empty?.should_not be_true
+
+    if json_response["alert"].present?
+      json_response["alert"].is_a?(Hash).should be_true
+      json_response["alert"].keys.count.should == 4
+    end
+
+    json_response["badges"].present?.should be_true
+    json_response["badges"].is_a?(Hash).should be_true
+    json_response["badges"].keys.count.should == 3
+
     existing_badges = %w(bcal bdrive bmail)
     existing_badges.each do |badge|
       json_response["badges"][badge]["count"].should_not be_nil
     end
+
+    json_response["studentInfo"].present?.should be_true
+    json_response["studentInfo"].is_a?(Hash).should be_true
+    json_response["studentInfo"].keys.count.should == 3
 
   end
 

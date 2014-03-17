@@ -1,4 +1,14 @@
 {
+  "alert": {
+    "title": "CalCentral Scheduled Maintenance 3/17",
+    "teaser": "CalCentral v32 release at 6 - 7am",
+    "url": "http://ets-dev.berkeley.edu/calcentral-scheduled-maintenance-317",
+    "timestamp": {
+      "epoch": 1393495946,
+      "date_time": "2014-02-27T02:12:26-08:00",
+      "date_string": "2/27"
+    }
+  },
   "badges": {
     "bcal": {
       "items": [
@@ -518,6 +528,24 @@
           "editor": "Instructure Canvas"
         }
       ]
+    }
+  },
+  "studentInfo": {
+    "californiaResidency": {
+      "summary": "Non-Resident",
+      "explanation": "<a href=\"http://registrar.berkeley.edu/establish.html\">Establishing California residency</a>",
+      "needsAction": false
+    },
+    "regStatus": {
+      "code": "C",
+      "summary": "Registered",
+      "explanation": "You are officially registered for this term and are entitled to access campus services.",
+      "needsAction": false
+    },
+    "regBlock": {
+      "available": true,
+      "needsAction": true,
+      "activeBlocks": 2
     }
   },
   "last_modified": {

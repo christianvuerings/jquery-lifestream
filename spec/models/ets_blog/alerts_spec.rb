@@ -8,6 +8,7 @@ describe EtsBlog::Alerts do
   let(:bad_file_path) { '/sajdljfsjaslaslsd/garbage/some.xml' }
   let(:bad_xml) { '<xml><chicken>' }
   let(:unexpected_xml) { '<xml><node><chicken>egg</chicken></node></xml>' }
+  let(:empty_xml) { '<xml></xml>' }
 
   context "failures" do
     it "not finding fake xml feed on disk should return nil" do
@@ -20,6 +21,14 @@ describe EtsBlog::Alerts do
     end
     it "that receive unexpected xml data should return nil" do
       fake_proxy.stub(:get_raw_xml).and_return(unexpected_xml)
+      fake_proxy.get_latest.should be_nil
+    end
+    it "that receive empty xml data should return nil" do
+      fake_proxy.stub(:get_raw_xml).and_return(empty_xml)
+      fake_proxy.get_latest.should be_nil
+      fake_proxy.stub(:get_raw_xml).and_return(nil)
+      fake_proxy.get_latest.should be_nil
+      fake_proxy.stub(:get_raw_xml).and_return('')
       fake_proxy.get_latest.should be_nil
     end
   end

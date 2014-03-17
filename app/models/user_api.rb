@@ -99,23 +99,18 @@ class UserApi < UserSpecificModel
       :is_google_reminder_dismissed => is_google_reminder_dismissed,
       :has_canvas_account => Canvas::Proxy.has_account?(@uid),
       :has_google_access_token => Google::Proxy.access_granted?(@uid),
+      :has_student_history => has_student_history,
+      :has_instructor_history => has_instructor_history,
+      :has_academics_tab =>  (
+        roles[:student] || roles[:faculty] ||
+        has_instructor_history || has_student_history
+      ),
+      :has_financials_tab => Settings.features.financials && ( roles[:student] || roles[:ex_student] ),
       :google_email => google_mail,
       :canvas_email => canvas_mail,
       :last_name => @last_name,
       :preferred_name => self.preferred_name,
       :roles => @campus_attributes[:roles],
-      :student_info => {
-        :california_residency => @campus_attributes[:california_residency],
-        :reg_status => @campus_attributes[:reg_status],
-        :reg_block => get_reg_blocks,
-        :has_student_history => has_student_history,
-        :has_instructor_history => has_instructor_history,
-        :has_academics_tab =>  (
-          roles[:student] || roles[:faculty] ||
-          has_instructor_history || has_student_history
-        ),
-        :has_financials_tab => Settings.features.financials && ( roles[:student] || roles[:ex_student] )
-      },
       :uid => @uid
     }
   end
