@@ -8,23 +8,17 @@
 
     apiService.util.setTitle('Home');
 
-    $http.get('/api/blog/release_notes/latest').success(function(data) {
-      if ($scope.splashNote) {
-        return;
+    $http.get('/api/blog').success(function(data) {
+      if (data.alert && data.alert.title) {
+        $scope.splashNote = {
+          date: $filter('date')(data.alert.timestamp.epoch * 1000, 'MMM dd'),
+          link: data.alert.url,
+          snippet: data.alert.teaser,
+          title: data.alert.title
+        };
+      } else {
+        $scope.splashNote = data.entries[0];
       }
-      $scope.splashNote = data.entries[0];
-    });
-
-    $scope.$watch('api.user.profile.alert', function watchAlert(alert) {
-      if (!alert) {
-        return;
-      }
-      $scope.splashNote = {
-        date: $filter('date')(alert.timestamp.epoch * 1000, 'MMM dd'),
-        link: alert.url,
-        snippet: alert.teaser,
-        title: alert.title
-      };
     });
 
   });

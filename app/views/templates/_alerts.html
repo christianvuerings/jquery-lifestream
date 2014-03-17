@@ -1,13 +1,13 @@
 <!-- Alerts -->
-<div class="cc-alerts-bar ng-cloak cc-print-hide" data-ng-if="api.user.events.isAuthenticated && api.user.profile.alert.title">
+<div class="cc-alerts-bar ng-cloak cc-print-hide" data-ng-controller="AlertsController" data-ng-if="api.user.events.isAuthenticated" data-ng-show="alert.title">
   <p class="cc-left">
     <strong>CalCentral Update</strong>
     <span class="cc-alerts-bar-notification">
       <i class="fa fa-warning"></i>
-      <span data-ng-bind="api.user.profile.alert.title"></span>
+      <span data-ng-bind="alert.title"></span>
     </span>
   </p>
   <p class="cc-right cc-alerts-bar-more-container">
-    <a class="cc-alerts-bar-more" data-ng-href="{{api.user.profile.alert.url}}"><strong>Learn More</strong></a>
+    <a class="cc-alerts-bar-more" data-ng-href="{{alert.url}}"><strong>Learn More</strong></a>
   </p>
 </div>
