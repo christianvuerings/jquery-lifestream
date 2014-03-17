@@ -21,6 +21,7 @@
           if (books) {
             books.course = courseNumber;
             $scope.semesterBooks.push(books);
+            $scope.semesterBooks.sort();
             $scope.semesterBooks.hasBooks = true;
           }
         });
