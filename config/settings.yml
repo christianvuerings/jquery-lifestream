@@ -203,18 +203,18 @@ cache:
     MyRefreshController: <%= 30.seconds %>
     UserApi: 0
     UserApiController: <%= 4.hours %>
-    Canvas::CanvasLti: <%= 5.minutes %>
-    Canvas::CanvasCourseStudentsProxy: <%= 15.minutes %>
-    Canvas::CanvasCourseTeachersProxy: <%= 5.minutes %>
+    Canvas::Lti: <%= 5.minutes %>
+    Canvas::CourseStudents: <%= 15.minutes %>
+    Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
     Bearfacts::MyRegBlocks: 0
 
-    Canvas::CanvasMergedUserSites: <%= 15.minutes %>
-    Canvas::CanvasUserCoursesProxy: <%= 30.minutes %>
-    Canvas::CanvasGroupsProxy: <%= 30.minutes %>
-    Canvas::CanvasUserActivityStreamProxy: <%= 10.minutes %>
-    Canvas::CanvasTodoProxy: <%= 20.minutes %>
-    Canvas::CanvasUpcomingEventsProxy: <%= 20.minutes %>
+    Canvas::MergedUserSites: <%= 15.minutes %>
+    Canvas::UserCourses: <%= 30.minutes %>
+    Canvas::Groups: <%= 30.minutes %>
+    Canvas::UserActivityStream: <%= 10.minutes %>
+    Canvas::Todo: <%= 20.minutes %>
+    Canvas::UpcomingEvents: <%= 20.minutes %>
 
     Sakai::SakaiMergedUserSites: <%= 30.minutes %>
     Sakai::SiteAnnouncements: <%= 30.minutes %>
