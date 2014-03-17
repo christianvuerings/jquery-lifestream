@@ -5,7 +5,7 @@ module Cache
       force_cache_write = true
       Rails.logger.debug "#{self.name} Warming the user cache for #{uid}"
       [
-        User::UserApi.new(uid),
+        User::Api.new(uid),
         MyClasses::Merged.new(uid),
         Financials::MyFinancials.new(uid),
         MyGroups::Merged.new(uid),

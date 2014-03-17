@@ -14,7 +14,7 @@ describe MyActivities::NotificationActivities do
 
   # Should just stub out Notification.where instead of this roundabout way of doing things...
   def bootstrap_notification
-    User::UserApi.new(oski_uid).record_first_login
+    User::Api.new(oski_uid).record_first_login
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[61889,300847]}}')
     raise RuntimeError, 'process should be true' unless Notifications::RegStatusEventProcessor.new().process(event, Time.now.to_datetime)
   end

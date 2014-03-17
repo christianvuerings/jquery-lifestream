@@ -42,4 +42,4 @@ cache:
     MyGroups::Merged: <%= 1.day %>
     MyTasks::Merged: <%= 1.day %>
     UpNext::MyUpNext: <%= 1.day %>
-    User::UserApi: <%= 1.day %>
+    User::Api: <%= 1.day %>

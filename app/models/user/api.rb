@@ -1,5 +1,5 @@
 module User
-  class UserApi < UserSpecificModel
+  class Api < UserSpecificModel
     include ActiveRecordHelper
 
     def initialize(uid)
