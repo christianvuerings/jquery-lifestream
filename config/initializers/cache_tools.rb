@@ -37,7 +37,7 @@ module Calcentral
     end
 
     merged_feeds_array = [
-      UserApi,
+      User::Api,
       MyClasses::Merged,
       Financials::MyFinancials,
       MyGroups::Merged,

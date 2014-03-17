@@ -3,7 +3,7 @@ require "spec_helper"
 describe Notifications::FinalGradesTranslator do
 
   it "should translate a final-grades event properly" do
-    user = UserApi.new "123456"
+    user = User::Api.new "123456"
     user.record_first_login
     event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":[{"ccn":73974,"term":{"year":2013,"name":"C"}},{"ccn":7366,"term":{"year":2013,"name":"C"}}]}}')
     timestamp = Time.now.to_datetime

@@ -28,7 +28,7 @@ describe Notifications::RegStatusEventProcessor do
             "reg_status_cd" => "C"
         })
     CampusOracle::Queries.stub(:get_reg_status).with(300847).and_return(nil)
-    UserApi.should_not_receive(:delete)
+    User::Api.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
     User::Data.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
 
@@ -60,7 +60,7 @@ describe Notifications::RegStatusEventProcessor do
   end
 
   it "should remove a deceased student from the system" do
-    UserApi.should_receive(:delete)
+    User::Api.should_receive(:delete)
 
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
@@ -87,7 +87,7 @@ describe Notifications::RegStatusEventProcessor do
             "reg_status_cd" => "C",
             "on_probation_flag" => "N"
         })
-    UserApi.should_not_receive(:delete)
+    User::Api.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
     User::Data.stub(:where).and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true

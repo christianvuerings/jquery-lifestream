@@ -9,7 +9,7 @@ describe Cache::FeedUpdateWhiteboard do
   it "should save the status of a mock UserAPI update event" do
     @board.on_message("1234")
     saved = Cache::FeedUpdateWhiteboard.get_whiteboard("1234")
-    saved["UserApi"].should_not be_nil
+    saved["User::Api"].should_not be_nil
   end
 
   it "should not explode on an empty message" do

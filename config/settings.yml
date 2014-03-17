@@ -201,7 +201,7 @@ cache:
     MyTasks::Merged: 0
     UpNext::MyUpNext: 0
     MyRefreshController: <%= 30.seconds %>
-    UserApi: 0
+    User::Api: 0
     UserApiController: <%= 4.hours %>
     Canvas::Lti: <%= 5.minutes %>
     Canvas::CourseStudents: <%= 15.minutes %>

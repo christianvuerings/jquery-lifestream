@@ -32,7 +32,7 @@ class UserApiController < ApplicationController
         :features => Settings.features.marshal_dump,
         :acting_as_uid => acting_as_uid
       })
-      status.merge!(UserApi.new(session[:user_id]).get_feed)
+      status.merge!(User::Api.new(session[:user_id]).get_feed)
     else
       status.merge!({
         :is_basic_auth_enabled => Settings.developer_auth.enabled,
@@ -44,13 +44,13 @@ class UserApiController < ApplicationController
   end
 
   def record_first_login
-    UserApi.new(session[:user_id]).record_first_login
+    User::Api.new(session[:user_id]).record_first_login
     render :nothing => true, :status => 204
   end
 
   def delete
     if session[:user_id]
-      UserApi.delete(session[:user_id])
+      User::Api.delete(session[:user_id])
     end
     render :nothing => true, :status => 204
   end
