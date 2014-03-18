@@ -136,6 +136,7 @@ myfinaid_proxy:
   app_key: ''
   base_url: "https://apis-dev.berkeley.edu/myfinaid"
   test_term_year: "2013"
+  include_next_year: false
 
 financials_proxy:
   fake: false
