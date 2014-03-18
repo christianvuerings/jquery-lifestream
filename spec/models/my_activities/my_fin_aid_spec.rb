@@ -69,14 +69,9 @@ describe MyActivities::MyFinAid do
   context "2xx states" do
     before(:each) {
       MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
-<<<<<<< HEAD
       Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
       Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
-=======
-      MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
-      MyfinaidProxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
       Settings.myfinaid_proxy.include_next_year = true
->>>>>>> 9bb95fd... CLC-3465 Make inclusion of next year in FinAid configurable, and disabled by default
       Rails.cache.should_receive(:write)
     }
 
@@ -205,8 +200,8 @@ describe MyActivities::MyFinAid do
   context "2xx states when proxy is configured to exclude next year" do
     before(:each) {
       MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
-      MyfinaidProxy.stub(:new).with({user_id: oski_uid, term_year: this_term_year}).and_return(fake_oski_finaid_current)
-      MyfinaidProxy.stub(:new).with({user_id: oski_uid, term_year: next_term_year}).and_return(fake_oski_finaid_next)
+      Finaid::Proxy.stub(:new).with({user_id: oski_uid, term_year: this_term_year}).and_return(fake_oski_finaid_current)
+      Finaid::Proxy.stub(:new).with({user_id: oski_uid, term_year: next_term_year}).and_return(fake_oski_finaid_next)
       Settings.myfinaid_proxy.include_next_year = false
       Rails.cache.should_receive(:write)
     }
