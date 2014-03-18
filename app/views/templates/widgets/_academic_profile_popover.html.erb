@@ -1,7 +1,7 @@
 <div
   data-ng-controller="StatusController"
   class="cc-popover-container cc-popover-status cc-left"
-  data-ng-show="api.user.profile.student_info.reg_status.code!=null && api.user.profile.features.academic_status && api.user.profile.roles.student">
+  data-ng-show="studentInfo.regStatus.code!=null && api.user.profile.features.academic_status && api.user.profile.roles.student">
   <button class="cc-header-icon cc-header-icon-font cc-icon-status-person"
     data-ng-class="{'cc-icon-status-person-haslayover':(showStatusError),'cc-header-icon-selected':(api.popover.status('cc-popover-academic-status'))}"
     data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-academic-status')" title="Show your academic profile">
@@ -20,9 +20,9 @@
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[api.user.profile.student_info.reg_status.needsAction]"></i>
-            <strong>Registration Status:</strong> <span data-ng-bind="api.user.profile.student_info.reg_status.summary"><br />
-            <span data-ng-bind-html="api.user.profile.student_info.reg_status.explanation"></span>
+            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[studentInfo.regStatus.needsAction]"></i>
+            <strong>Registration Status:</strong> <span data-ng-bind="studentInfo.regStatus.summary"><br />
+            <span data-ng-bind-html="studentInfo.regStatus.explanation"></span>
           </div>
         </a>
       </li>
@@ -30,20 +30,20 @@
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
             <i class="cc-left fa"
-               data-ng-class="{'fa-exclamation-circle': api.user.profile.student_info.reg_block.needsAction,
-               'fa-exclamation-triangle cc-unavailable': !api.user.profile.student_info.reg_block.available,
-               'fa-check-circle cc-icon-green': !api.user.profile.student_info.reg_block.needsAction && api.user.profile.student_info.reg_block.available}"></i>
-            <strong>Registration Blocks:</strong> <span data-ng-show="api.user.profile.student_info.reg_block.available" data-ng-bind="api.user.profile.student_info.reg_block.active_blocks"></span>
-            <span data-ng-hide="api.user.profile.student_info.reg_block.available">Currently Unavailable</span>
+               data-ng-class="{'fa-exclamation-circle': studentInfo.regBlock.needsAction,
+               'fa-exclamation-triangle cc-unavailable': !studentInfo.regBlock.available,
+               'fa-check-circle cc-icon-green': !studentInfo.regBlock.needsAction && studentInfo.regBlock.available}"></i>
+            <strong>Registration Blocks:</strong> <span data-ng-show="studentInfo.regBlock.available" data-ng-bind="studentInfo.regBlock.active_blocks"></span>
+            <span data-ng-hide="studentInfo.regBlock.available">Currently Unavailable</span>
           </div>
         </a>
       </li>
       <li class="cc-popover-item">
         <a class="cc-popover-item-details" href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[api.user.profile.student_info.california_residency.needsAction]"></i>
-            <strong>California Residency:</strong> <span data-ng-bind="api.user.profile.student_info.california_residency.summary"><br />
-            <span data-ng-bind-html="api.user.profile.student_info.california_residency.explanation"></span>
+            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[studentInfo.californiaResidency.needsAction]"></i>
+            <strong>California Residency:</strong> <span data-ng-bind="studentInfo.californiaResidency.summary"><br />
+            <span data-ng-bind-html="studentInfo.californiaResidency.explanation"></span>
           </div>
         </a>
       </li>

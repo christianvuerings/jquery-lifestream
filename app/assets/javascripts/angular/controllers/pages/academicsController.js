@@ -412,7 +412,7 @@
     // Wait until user profile is fully loaded before hitting academics data
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
-        $scope.canViewAcademics = $scope.api.user.profile.student_info.has_academics_tab;
+        $scope.canViewAcademics = $scope.api.user.profile.has_academics_tab;
         $http.get('/api/my/academics').success(parseAcademics);
         //$http.get('/dummy/json/academics.json').success(parseAcademics);
       }
