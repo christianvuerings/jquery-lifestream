@@ -123,6 +123,7 @@
       $http.get('/api/my/badges').success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         decorateBadges(processCalendarEvents(data.badges || {}));
+        $rootScope.studentInfo = data.studentInfo;
         if (data.alert && data.alert.title) {
           $rootScope.$broadcast('calcentral.controller.badges.alert', data.alert);
         }
