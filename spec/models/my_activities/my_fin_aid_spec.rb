@@ -71,6 +71,7 @@ describe MyActivities::MyFinAid do
       MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
       Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
       Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
+      Settings.myfinaid_proxy.include_next_year = true
       Rails.cache.should_receive(:write)
     }
 
@@ -194,6 +195,24 @@ describe MyActivities::MyFinAid do
       end
     end
 
+  end
+
+  context "2xx states when proxy is configured to exclude next year" do
+    before(:each) {
+      MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
+      Finaid::Proxy.stub(:new).with({user_id: oski_uid, term_year: this_term_year}).and_return(fake_oski_finaid_current)
+      Finaid::Proxy.stub(:new).with({user_id: oski_uid, term_year: next_term_year}).and_return(fake_oski_finaid_next)
+      Settings.myfinaid_proxy.include_next_year = false
+      Rails.cache.should_receive(:write)
+    }
+
+    subject do
+      MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+      @activities
+    end
+
+    it { should_not be_blank }
+    it { subject.length.should eq(13) }
   end
 
 end
