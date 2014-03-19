@@ -116,16 +116,5 @@ module User
       }
     end
 
-    def get_reg_blocks
-      blocks_feed = Bearfacts::MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
-      response = {
-        available: blocks_feed.present? && blocks_feed[:available],
-        needsAction: blocks_feed[:active_blocks].present?,
-        active_blocks: blocks_feed[:active_blocks] ? blocks_feed[:active_blocks].length : 0
-      }
-
-      response
-    end
-
   end
 end

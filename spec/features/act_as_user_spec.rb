@@ -32,6 +32,41 @@ feature "act_as_user" do
     response["uid"].should == "238382"
   end
 
+
+
+  scenario "make sure admin users don't modify database records of the users they view" do
+    Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
+
+    # you don't want the admin user to record a first log for a "viewed as" user that does not exist in the database
+    impossible_uid = '78903478484358033984502345858034583043548034580'
+    User::Data.where(:uid=>impossible_uid).should be_empty
+    login_with_cas "238382" # super user
+    suppress_rails_logging {
+      act_as_user impossible_uid
+    }
+    page.driver.post '/api/my/record_first_login'
+    page.status_code.should == 204
+    User::Data.where(:uid=>impossible_uid).should be_empty
+
+    # you don't want the admin user to record a visit that's wasn't really made by the "viewed as" user
+    visit '/api/my/status'
+    page.status_code.should == 200
+    User::Visit.where(:uid=>'4').should be_empty
+
+    # you don't want the admin user to delete an existing "viewed as" user's data row
+    viewed_user_uid = "2040"
+    fake_user = User::Data.create(:uid=>viewed_user_uid)
+    User::Data.where(:uid=>viewed_user_uid).should_not be_empty
+    suppress_rails_logging {
+      act_as_user "2040"
+    }
+    page.driver.post '/api/my/opt_out'
+    page.status_code.should == 204
+    viewed_user = User::Data.where(:uid=>viewed_user_uid).first
+    viewed_user.should_not be_nil
+    viewed_user.uid.should == viewed_user_uid
+  end
+
   scenario "switch to another user without clicking stop acting as" do
     # disabling the cache_warmer while we're switching back and forth between users
     # The switching back triggers a cache invalidation, while the warming thread is still running.

@@ -23,7 +23,7 @@ class UserApiController < ApplicationController
     if session[:user_id]
       # wrap User::Visit.record_session inside a cache lookup so that we have to write User::Visit records less often.
       self.class.fetch_from_cache session[:user_id] do
-        User::Visit.record session[:user_id]
+        User::Visit.record session[:user_id] unless acting_as?
         true
       end
       status.merge!({
@@ -44,18 +44,22 @@ class UserApiController < ApplicationController
   end
 
   def record_first_login
-    User::Api.new(session[:user_id]).record_first_login
+    User::Api.new(session[:user_id]).record_first_login unless acting_as?
     render :nothing => true, :status => 204
   end
 
   def delete
     if session[:user_id]
-      User::Api.delete(session[:user_id])
+      User::Api.delete(session[:user_id]) unless acting_as?
     end
     render :nothing => true, :status => 204
   end
 
   private
+
+  def acting_as?
+    session[:original_user_id] && (session[:user_id] != session[:original_user_id])
+  end
 
   def acting_as_uid
     if session[:original_user_id] && session[:user_id]
