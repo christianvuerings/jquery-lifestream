@@ -65,7 +65,7 @@
     };
 
     var runOnLastEndpoint = function(index) {
-      if (parseInt(index, 10)+1 >= $scope.apiTest.data.length) {
+      if (parseInt(index, 10) + 1 >= $scope.apiTest.data.length) {
         $scope.apiTest.running = false;
       }
     };

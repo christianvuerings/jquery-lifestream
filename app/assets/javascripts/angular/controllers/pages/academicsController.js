@@ -268,7 +268,7 @@
           if (isInstructorOrGsi) {
             classSemester = selectedTeachingSemester;
           }
-          for (var i = 0; i< classSemester.classes.length; i++) {
+          for (var i = 0; i < classSemester.classes.length; i++) {
             var course = classSemester.classes[i];
             if (course.slug === $routeParams.classSlug) {
               $scope.selected_course = course;
@@ -403,8 +403,7 @@
       });
       if (gpaType === 'estimated') {
         $scope.estimatedCumulativeGpa = totalScore / totalUnits;
-      }
-      else {
+      } else {
         $scope.currentCumulativeGpa = totalScore / totalUnits;
       }
     };

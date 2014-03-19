@@ -1,4 +1,4 @@
-(function (window, document, $) {
+(function(window, document, $) {
   'use strict';
 
   /**
@@ -32,7 +32,7 @@
   /**
    * bCourses customizations
    */
-  $(document).ready(function () {
+  $(document).ready(function() {
     $('#footer a.footer-logo').remove();
     $('#footer span').wrap('<div class="bcourses-footer"></div>');
     var $bcoursesFooter = $('<p><span>bCourses, powered by <a href="http://www.instructure.com/higher-education" target="_blank">canvas</a></span>, part of the <a href="http://ets.berkeley.edu/bcourses" target="_blank">bSpace Replacement Project</a></p>');

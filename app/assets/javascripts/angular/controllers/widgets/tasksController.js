@@ -104,7 +104,6 @@
       });
     };
 
-
     // Switch mode for scheduled/unscheduled/completed tasks
     $scope.switchTasksMode = function(tasksMode) {
       apiService.analytics.sendEvent('Tasks', 'Switch mode', tasksMode);

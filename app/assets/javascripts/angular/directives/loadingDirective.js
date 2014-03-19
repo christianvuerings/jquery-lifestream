@@ -8,7 +8,7 @@
         var ccLoadingClass = 'cc-loading';
         var ccLoadingClasses = 'cc-loading-error cc-loading-process cc-loading-success';
 
-        var setHtml = function (html, indicator) {
+        var setHtml = function(html, indicator) {
           html = html || '';
           var icon = '';
 
