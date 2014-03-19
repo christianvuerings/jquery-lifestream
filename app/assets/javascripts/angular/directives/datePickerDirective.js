@@ -11,7 +11,7 @@
         // Keep track on whether the picker has been initialized before or not
         scope.pickerInitialized = false;
 
-        var initializePicker = function () {
+        var initializePicker = function() {
           scope.pickerInitialized = true;
 
           var inputElement = $document[0].querySelector('#' + attrs.ccDatepickerDirective);
@@ -31,7 +31,7 @@
               angularInputElement.controller('ngModel').$setViewValue(inputElement.value);
 
               // We need to call an extra digest call, otherwise the $watch isn't executed
-              if(!scope.$$phase) {
+              if (!scope.$$phase) {
                 scope.$digest();
               }
 

@@ -28,7 +28,7 @@
             // If we find an element on the page, then show the accessibiltiy link for it
             if (el) {
               element.css('display', 'block');
-              element.bind('click', function(){
+              element.bind('click', function() {
                 el.scrollIntoView();
                 el.setAttribute('tabindex', -1);
                 el.focus();

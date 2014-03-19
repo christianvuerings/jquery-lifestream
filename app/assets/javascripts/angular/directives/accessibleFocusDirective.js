@@ -17,7 +17,7 @@
             // Check whether you've hit the ENTER key
             // and whether the element itself is actually focussed
             if(event.which === 13 && document.activeElement === elm[0]) {
-              scope.$apply(function(){
+              scope.$apply(function() {
 
                 // Execute the click function
                 scope.$eval(attrs.ngClick);

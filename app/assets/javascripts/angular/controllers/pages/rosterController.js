@@ -1,10 +1,10 @@
-(function (angular) {
+(function(angular) {
   'use strict';
 
   /**
    * Canvas roster photos LTI app controller
    */
-  angular.module('calcentral.controllers').controller('RosterController', function (apiService, $http, $routeParams, $scope, $window) {
+  angular.module('calcentral.controllers').controller('RosterController', function(apiService, $http, $routeParams, $scope, $window) {
 
     if ($routeParams.canvas_course_id) {
       apiService.util.setTitle('Roster Photos');

@@ -83,6 +83,7 @@ Front-end linting (checking for errors / code styles)
 
 ```bash
 jshint .
+jscs .
 ```
 
 

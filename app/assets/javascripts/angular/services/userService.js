@@ -63,7 +63,7 @@
     /**
      * Get the actual user information
      */
-    var fetch = function(){
+    var fetch = function() {
       $http.get('/api/my/status').success(handleUserLoaded);
     };
 
@@ -81,7 +81,7 @@
         return;
       }
 
-      if(!profile.features) {
+      if (!profile.features) {
         fetch();
       } else {
         handleAccessToPage();
@@ -113,7 +113,7 @@
     var removeOAuth = function(authorizationService) {
       // Send the request to remove the authorization for the specific OAuth service
       // Only when the request was successful, we update the UI
-      $http.post('/api/' + authorizationService + '/remove_authorization').success(function(){
+      $http.post('/api/' + authorizationService + '/remove_authorization').success(function() {
         analyticsService.sendEvent('OAuth', 'Remove', 'service: ' + authorizationService);
         profile['has_' + authorizationService + '_access_token'] = false;
       });

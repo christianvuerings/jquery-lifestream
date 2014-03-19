@@ -22,7 +22,7 @@
       if (shouldTruncate) {
         // Convert to a string
         text = text + '';
-        return text.substring(0, length-end.length) + end;
+        return text.substring(0, length - end.length) + end;
       } else {
         return text;
       }
@@ -119,7 +119,7 @@
         var options = scope.$eval('{' + attr.ccTruncateDirective + '}');
 
         // Watch for changes on the thing it is bound to
-        scope.$watch(attr.ngBindHtml, function(value){
+        scope.$watch(attr.ngBindHtml, function(value) {
           scope.completeText = value;
 
           //Set the opened variable - default to false

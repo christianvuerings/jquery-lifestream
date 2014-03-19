@@ -4,7 +4,7 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function (apiService, $http, $routeParams, $scope, $window) {
+  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, $http, $routeParams, $scope, $window) {
 
     apiService.util.setTitle('Add People');
 

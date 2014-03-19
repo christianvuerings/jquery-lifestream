@@ -4,7 +4,7 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function (apiService, $http, $scope, $timeout, $window) {
+  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, $http, $scope, $timeout, $window) {
 
     apiService.util.setTitle('bCourses Course Provision');
 
