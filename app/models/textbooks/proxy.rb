@@ -98,7 +98,7 @@ module Textbooks
       optional_books = []
       status_code = ''
       url = ''
-      bookUnavailableError = ''
+      bookstore_error_text = ''
 
       @ccns.each do |ccn|
         path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
@@ -128,23 +128,31 @@ module Textbooks
         optional_books.push(ul_to_dict(optional_text_list))
         bookstore_error_section = text_books.xpath('//div[@id="efCourseErrorSection"]/h2')
         if bookstore_error_section.length > 0
-          bookUnavailableError = bookstore_error_section[0].text.gsub('*', '').strip
+          bookstore_error_text = bookstore_error_section[0].text.gsub('*', '').strip
         end
       end
 
-      bookUnavailableError =
-        case bookUnavailableError
-          when 'No Information Received For This Course.'
-            'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
-          when 'We are unable to find the specified course.'
-            'Textbook information for this course could not be found.'
-          when 'No Store Supplied Material/See instructor for any custom material.'
-            'No materials for this course are supplied by the Cal Student Store. Contact the instructor regarding any custom materials.'
-          when 'No Books Required For This Course.'
-            'There are no required books for this course.'
-          else
-            bookUnavailableError
-        end
+      book_unavailable_error = bookstore_error_text
+
+      if bookstore_error_text =~ /No Information Received For This Course./
+        book_unavailable_error = 'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
+      end
+
+      if bookstore_error_text =~ /We are unable to find the specified course./
+        book_unavailable_error = 'Textbook information for this course could not be found.'
+      end
+
+      if bookstore_error_text =~ /No Store Supplied Material/
+        book_unavailable_error = 'No materials for this course are supplied by the Cal Student Store. Contact the instructor regarding any custom materials.'
+      end
+
+      if bookstore_error_text =~ /No Books Required For This Course./
+        book_unavailable_error = 'There are no required books for this course.'
+      end
+
+      if bookstore_error_text =~ /We are unable to find the requested term/
+        book_unavailable_error = 'Textbook information for this term could not be found.'
+      end
 
       book_response = {
         :bookDetails => []
@@ -174,7 +182,7 @@ module Textbooks
                                           })
       end
 
-      book_response[:bookUnavailableError] = bookUnavailableError
+      book_response[:bookUnavailableError] = book_unavailable_error
       book_response[:hasBooks] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
       {
         books: book_response,

@@ -44,7 +44,7 @@ describe Textbooks::Proxy do
     end
   end
 
-  it "should return the actual error message returned by the bookstore when textbook information is unavailable", :testext => true do
+  it "should return a friendly error message when a course can't be found", :testext => true do
     @ccns = ["09259"]
     @slug = "spring-2014"
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
@@ -69,6 +69,19 @@ describe Textbooks::Proxy do
     if proxy_response["status_code"] == 200
       feed = proxy_response["books"]
       feed.should_not be_nil
+    end
+  end
+
+  it "should return a friendlier error message when a future term can't be found", :testext => true do
+    @ccns = ["09259"]
+    @slug = "spring-2074"
+    proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
+    proxy_response = proxy.get
+    proxy_response[:status_code].should_not be_nil
+    if proxy_response[:status_code] == 200
+      feed = proxy_response[:books]
+      feed.should_not be_nil
+      expect(feed[:bookUnavailableError]).to eq 'Textbook information for this term could not be found.'
     end
   end
 
