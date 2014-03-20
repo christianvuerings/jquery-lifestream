@@ -16,6 +16,22 @@
       margin-top: 20px;
     }
   }
+  .cc-academics-adviser-message {
+    color: $cc-color-black;
+    font-size: 13px;
+    margin-left: 10px;
+    overflow: hidden;
+    padding-bottom: 2px;
+    padding-left: 10px;
+  }
+  .cc-academics-adviser-message-container {
+    padding: 0 0 10px;
+  }
+  .cc-academics-adviser-more-info {
+    float: right;
+    font-size: 12px;
+    padding: 2px;
+  }
   .cc-academics-block-history {
     margin-top: 15px;
   }
@@ -175,7 +191,12 @@
     h4 {
       font-size: 13px;
       font-weight: bold;
-      margin-top: 15px;
+    }
+    .cc-academics-adviser-more-info {
+      padding-top: 7px;
+    }
+    .cc-academics-semesters-telebears-header {
+      margin-top: 25px;
     }
     .cc-telebears-date-padding {
       padding-left: 20px;
@@ -252,22 +273,6 @@
     }
     .cc-academics-telebears-indicator {
       margin: 7px 5px 0;
-    }
-    .cc-adviser-message {
-      color: $cc-color-black;
-      font-size: 13px;
-      margin-left: 10px;
-      overflow: hidden;
-      padding-left: 10px;
-      padding-bottom: 2px;
-    }
-    .cc-adviser-message-container {
-      padding: 10px 0;
-    }
-    .cc-more-info {
-      float: right;
-      font-size: 12px;
-      padding: 2px;
     }
     .cc-telebears-title {
       width: 100%;
