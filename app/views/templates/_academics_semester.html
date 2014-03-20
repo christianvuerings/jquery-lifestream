@@ -151,13 +151,9 @@
         <div class="cc-widget-padding cc-clearfix-container">
           <div>
             <h3 class="cc-left cc-telebears-title">Tele-BEARS for {{ telebears.term }} {{ telebears.year }}
-            <strong class="cc-more-info"><a data-ng-href="{{telebears.url}}">More Info</a></strong></h3>
+            <strong class="cc-academics-adviser-more-info"><a data-ng-href="{{telebears.url}}">More Info</a></strong></h3>
           </div>
-          <div class="cc-clearfix cc-adviser-message-container">
-            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[telebears.adviser_code_required.required]">
-            </i>
-            <div class="cc-adviser-message" data-ng-bind="telebears.adviser_code_required.message"></div>
-          </div>
+          <div data-ng-include src="'templates/adviser_message.html'"></div>
           <div>
             <div class="cc-telebears-phases" data-ng-repeat="phase in telebears.phases">
               <h4 data-ng-bind-template="Tele-BEARS Phase {{phase.period}}"></h4>

@@ -298,7 +298,11 @@
                   </tbody>
                 </table>
                 <div class="cc-academics-semesters-telebears cc-clearfix" data-ng-if="telebears.slug === semester.slug">
-                  <h4>Tele-BEARS</h4>
+                  <div class="cc-academics-semesters-telebears-header">
+                    <h4 class="cc-left">Tele-BEARS</h4>
+                    <strong class="cc-academics-adviser-more-info"><a data-ng-href="{{telebears.url}}">More Info</a></strong></h3>
+                  </div>
+                  <div data-ng-include src="'templates/adviser_message.html'"></div>
                   <table>
                     <thead>
                       <tr>
