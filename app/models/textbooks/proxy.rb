@@ -132,27 +132,21 @@ module Textbooks
         end
       end
 
-      book_unavailable_error = bookstore_error_text
-
-      if bookstore_error_text =~ /No Information Received For This Course./
-        book_unavailable_error = 'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
-      end
-
-      if bookstore_error_text =~ /We are unable to find the specified course./
-        book_unavailable_error = 'Textbook information for this course could not be found.'
-      end
-
-      if bookstore_error_text =~ /No Store Supplied Material/
-        book_unavailable_error = 'No materials for this course are supplied by the Cal Student Store. Contact the instructor regarding any custom materials.'
-      end
-
-      if bookstore_error_text =~ /No Books Required For This Course./
-        book_unavailable_error = 'There are no required books for this course.'
-      end
-
-      if bookstore_error_text =~ /We are unable to find the requested term/
-        book_unavailable_error = 'Textbook information for this term could not be found.'
-      end
+      book_unavailable_error =
+        case bookstore_error_text
+          when /No Information Received For This Course./
+            'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
+          when /We are unable to find the specified course./
+            'Textbook information for this course could not be found.'
+          when /No Store Supplied Material/
+            'No materials for this course are supplied by the Cal Student Store. Contact the instructor regarding any custom materials.'
+          when /No Books Required For This Course./
+            'There are no required books for this course.'
+          when /We are unable to find the requested term/
+            'Textbook information for this term could not be found.'
+          else
+            bookstore_error_text
+        end
 
       book_response = {
         :bookDetails => []
