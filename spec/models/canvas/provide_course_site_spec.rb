@@ -709,64 +709,80 @@ describe Canvas::ProvideCourseSite do
   end
 
   describe "#generate_course_site_definition" do
-    before do
-      @course_data = {
-          :course_code => "ENGIN 7",
-           :dept => "ENGIN",
-           :slug => "engin-7",
-           :title =>
-               "Introduction to Computer Programming for Scientists and Engineers",
-           :role => "Instructor",
-           :sections =>
-               [{:ccn => "#{rand(99999)}",
-                 :instruction_format => "DIS",
-                 :is_primary_section => false,
-                 :section_label => "DIS 102",
-                 :section_number => "102"}]
+    let(:term_yr)     { '2013' }
+    let(:term_cd)     { 'D' }
+    let(:subaccount)  { 'ACCT:ENGIN' }
+    let(:course_data) do
+      {
+        :course_code => "ENGIN 7",
+        :dept => "ENGIN",
+        :slug => "engin-7",
+        :title => "Introduction to Computer Programming for Scientists and Engineers",
+        :role => "Instructor",
+        :sections => [
+          {
+            :ccn => "#{rand(99999)}",
+            :instruction_format => "DIS",
+            :is_primary_section => false,
+            :section_label => "DIS 102",
+            :section_number => "102"
+          }
+        ]
       }
-      @term_yr = '2013'
-      @term_cd = 'D'
     end
 
     it "should raise exception when sis course id fails to generate" do
       canvas_provide_course_site.stub(:generate_unique_sis_course_id).and_return(nil)
       expect do
-        canvas_provide_course_site.generate_course_site_definition(@term_yr, @term_cd, @subaccount, @course_data)
+        canvas_provide_course_site.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
       end.to raise_error(RuntimeError, "Could not define new course site!")
     end
 
     it "should generate a Course import CSV row for the selected courses" do
-      Canvas::ExistenceCheck.any_instance.stub(:account_defined?).and_return(true)
       Canvas::ExistenceCheck.any_instance.stub(:course_defined?).and_return(false)
-      subaccount = worker.subaccount_for_department(@course_data[:dept])
-      canvas_course = worker.generate_course_site_definition(@term_yr, @term_cd, subaccount, @course_data)
-      canvas_course['course_id'].present?.should be_true
-      canvas_course['course_id'].should == "CRS:ENGIN-7-2013-D"
-      canvas_course['short_name'].should == 'ENGIN 7'
-      canvas_course['long_name'].should == 'Introduction to Computer Programming for Scientists and Engineers'
-      canvas_course['account_id'].should == 'ACCT:ENGIN'
-      canvas_course['term_id'].should == 'TERM:2013-D'
-      canvas_course['status'].should == 'active'
+      canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
+      expect(canvas_course['course_id'].present?).to be_true
+      expect(canvas_course['course_id']).to eq "CRS:ENGIN-7-2013-D"
+      expect(canvas_course['short_name']).to eq 'ENGIN 7'
+      expect(canvas_course['long_name']).to eq 'Introduction to Computer Programming for Scientists and Engineers'
+      expect(canvas_course['account_id']).to eq 'ACCT:ENGIN'
+      expect(canvas_course['term_id']).to eq 'TERM:2013-D'
+      expect(canvas_course['status']).to eq 'active'
     end
 
     it "should generate a unique Course SIS ID for the selected courses" do
       # RSpec does not currently redefine any_instance class stubs: http://stackoverflow.com/questions/18092601/rspec-any-instance-stub-does-not-restub-old-instances
       stub_existence_check = double
-      stub_existence_check.should_receive(:account_defined?).and_return(true)
       stub_existence_check.should_receive(:course_defined?).and_return(false)
       Canvas::ExistenceCheck.stub(:new).and_return(stub_existence_check)
 
-      subaccount = worker.subaccount_for_department(@course_data[:dept])
-      first_canvas_course = worker.generate_course_site_definition(@term_yr, @term_cd, subaccount, @course_data)
+      first_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
       first_course_sis_id = first_canvas_course['course_id']
       stub_existence_check.should_receive(:course_defined?).twice do |id|
         id == first_course_sis_id
       end
-      second_canvas_course = worker.generate_course_site_definition(@term_yr, @term_cd, subaccount, @course_data)
+      second_canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
       second_course_sis_id = second_canvas_course['course_id']
-      second_course_sis_id.present?.should be_true
-      second_course_sis_id.should_not == first_course_sis_id
+      expect(second_course_sis_id.present?).to be_true
+      expect(second_course_sis_id).to_not eq first_course_sis_id
     end
+
+    context "when course title is not present" do
+      before { course_data[:title] = nil }
+
+      it "should use the short title if the long title is not present" do
+        Canvas::ExistenceCheck.any_instance.stub(:course_defined?).and_return(false)
+        canvas_course = worker.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
+        expect(canvas_course['course_id'].present?).to be_true
+        expect(canvas_course['course_id']).to eq "CRS:ENGIN-7-2013-D"
+        expect(canvas_course['short_name']).to eq 'ENGIN 7'
+        expect(canvas_course['long_name']).to eq 'ENGIN 7'
+        expect(canvas_course['account_id']).to eq 'ACCT:ENGIN'
+        expect(canvas_course['term_id']).to eq 'TERM:2013-D'
+        expect(canvas_course['status']).to eq 'active'
+      end
+    end
+
   end
 
   describe "#generate_course_memberships" do
