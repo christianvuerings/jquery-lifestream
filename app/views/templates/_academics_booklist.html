@@ -17,7 +17,7 @@
             <h2>My Book List &raquo; <span data-ng-bind="semester_name"></span></h2>
           </div>
         </div>
-        <div class="cc-academics-semester-books">
+        <div data-cc-spinner-directive class="cc-academics-semester-books">
           <div class="cc-widget-padding" data-ng-if="api.user.profile.features.textbooks && semesterBooks.hasBooks">
             <div data-ng-repeat="course_books in semesterBooks" class="cc-clearfix-container">
               <h3 class="cc-book-title" data-ng-bind="course_books.course"></h3>
