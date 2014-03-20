@@ -98,7 +98,7 @@ module Textbooks
       optional_books = []
       status_code = ''
       url = ''
-      bookUnavailableError = ''
+      bookstore_error_text = ''
 
       @ccns.each do |ccn|
         path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
@@ -128,22 +128,24 @@ module Textbooks
         optional_books.push(ul_to_dict(optional_text_list))
         bookstore_error_section = text_books.xpath('//div[@id="efCourseErrorSection"]/h2')
         if bookstore_error_section.length > 0
-          bookUnavailableError = bookstore_error_section[0].text.gsub('*', '').strip
+          bookstore_error_text = bookstore_error_section[0].text.gsub('*', '').strip
         end
       end
 
-      bookUnavailableError =
-        case bookUnavailableError
-          when 'No Information Received For This Course.'
+      book_unavailable_error =
+        case bookstore_error_text
+          when /No Information Received For This Course./
             'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
-          when 'We are unable to find the specified course.'
+          when /We are unable to find the specified course./
             'Textbook information for this course could not be found.'
-          when 'No Store Supplied Material/See instructor for any custom material.'
+          when /No Store Supplied Material/
             'No materials for this course are supplied by the Cal Student Store. Contact the instructor regarding any custom materials.'
-          when 'No Books Required For This Course.'
+          when /No Books Required For This Course./
             'There are no required books for this course.'
+          when /We are unable to find the requested term/
+            'Textbook information for this term could not be found.'
           else
-            bookUnavailableError
+            bookstore_error_text
         end
 
       book_response = {
@@ -174,7 +176,7 @@ module Textbooks
                                           })
       end
 
-      book_response[:bookUnavailableError] = bookUnavailableError
+      book_response[:bookUnavailableError] = book_unavailable_error
       book_response[:hasBooks] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
       {
         books: book_response,
