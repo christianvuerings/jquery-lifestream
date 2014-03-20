@@ -19,6 +19,10 @@ Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu
 
 ## Installation
 
+1. Install Java 7:
+
+http://www.oracle.com/technetwork/java/javase/downloads/index.html
+
 1. Install postgres:
 
     ```bash
@@ -76,6 +80,9 @@ Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu
     cd ..
     cd calcentral
     # Answer "yes" again if it asks you to trust a new .rvmrc file.
+    rvm list
+    # Make sure that everything looks fine
+    # If it mentions "broken", you'll need to reinstall
     ```
 
 1. Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
@@ -105,7 +112,8 @@ Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu
 
 1. Install JDBC driver (for Oracle connection)
   * Download [ojdbc6.jar](http://svn.media.berkeley.edu/nexus/content/repositories/myberkeley/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar)
-  * Copy ojdbc6.jar to `calcentral/lib`
+  * Rename the file to `ojdbc6.jar`
+  * Copy `ojdbc6.jar` to `calcentral/lib`
 
 1. Initialize PostgreSQL database tables:
 
@@ -128,6 +136,8 @@ Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu
 
 1. Access your development server at [localhost:3000](http://localhost:3000/).
 Do not use 127.0.0.1:3000, as you will not be able to grant access to bApps.
+
+**Note**: Usually you won't have to do any of the following steps when you're developing on CalCentral.
 
 ## Enable live updates
 
