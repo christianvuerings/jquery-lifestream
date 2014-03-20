@@ -39,21 +39,24 @@ module ResearchHub
     def get_feed
       name = @settings.username
       password = @settings.password
+      result = []
       if @fake
         result = safe_json(File.read(Rails.root.join('public', 'dummy', 'json', 'research.json')))
       else
         begin
-          result = open("#{@settings.base_url}/#{@uid}/favorite-sites-or-sites?size=200&favoritesOnly=false/", :http_basic_authentication => [name, password]).read()
-          result = safe_json(result)
-        rescue OpenURI::HTTPError
+          response = open("#{@settings.base_url}/#{@uid}/favorite-sites-or-sites?size=200&favoritesOnly=false/", :http_basic_authentication => [name, password]).read()
+          if (response = safe_json(response))
+            result = response
+          end
+        rescue OpenURI::HTTPError => e
           # TODO make the proxy handle errs in the standard way (like other proxies)
           # TODO distinguish the expected 404s (user doesn't use research hub) which should be logged at debug level,
           # from abnormal errors, which should be logged at error level.
-          result = []
-          logger.debug "Authorization error: UID:#{@uid} doesn't exist for the Hub"
+          logger.debug "Authorization error: UID:#{@uid} doesn't exist for the Hub; exception #{e.inspect}"
         rescue Timeout::Error
-          result = []
-          logger.debug "Timeout on resquest to #{@settings.base_url}"
+          logger.debug "Timeout on request to #{@settings.base_url}"
+        rescue StandardError => e
+          logger.error("#{self.class.name} unexpected exception: #{e.inspect}")
         end
       end
       result
