@@ -11,9 +11,10 @@ describe Canvas::ReconfigureExternalApps do
     let(:new_calcentral_host) {'jabberwock.example.com'}
     it "resets all hosted apps" do
       fake_external_tools_list = fake_external_tools_proxy.external_tools_list
+      puts "fake_external_tools_list: #{fake_external_tools_list.inspect}"
       external_tools_proxy = double()
       external_tools_proxy.should_receive(:external_tools_list).and_return(fake_external_tools_list)
-      external_tools_proxy.should_receive(:reset_external_tool).exactly(3).times.and_return(fake_reset_response)
+      external_tools_proxy.should_receive(:reset_external_tool).exactly(4).times.and_return(fake_reset_response)
       Canvas::ExternalTools.stub(:new).with({url_root: fake_canvas_host}).and_return(external_tools_proxy)
       Canvas::ReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, [
         {host: fake_canvas_host, calcentral: new_calcentral_host}

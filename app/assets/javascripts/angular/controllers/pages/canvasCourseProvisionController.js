@@ -41,6 +41,7 @@
     };
 
     var clearCourseSiteJob = function() {
+      delete $scope.feedFetched;
       delete $scope.job_id;
       delete $scope.job_request_status;
       delete $scope.status;
@@ -51,40 +52,6 @@
     var courseSiteJobCreated = function(data) {
       angular.extend($scope, data);
       courseSiteJobStatusLoader();
-    };
-
-    $scope.createCourseSiteJob = function(selectedCourses) {
-      var ccns = [];
-      angular.forEach(selectedCourses, function(course) {
-        angular.forEach(course.sections, function(section) {
-          if (section.selected) {
-            ccns.push(section.ccn);
-          }
-        });
-      });
-      if (ccns.length > 0) {
-        var newCourse = {
-          'term_slug': $scope.current_semester,
-          'ccns': ccns
-        };
-        if ($scope.is_admin) {
-          if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
-            newCourse.admin_acting_as = $scope.admin_acting_as;
-          } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
-            newCourse.admin_by_ccns = $scope.admin_by_ccns;
-            newCourse.admin_term_slug = $scope.currentAdminSemester;
-          }
-        }
-        $http.post('/api/academics/canvas/course_provision/create', newCourse)
-          .success(courseSiteJobCreated)
-          .error(function() {
-            angular.extend($scope, {
-              currentWorkflowStep: 'monitoring_job',
-              status: 'Error',
-              error: 'Failed to create course provisioning job.'
-            });
-          });
-      }
     };
 
     var fetchStatus = function(callback) {
@@ -99,45 +66,6 @@
         angular.extend($scope, data);
         $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
         callback();
-      });
-    };
-
-    $scope.fetchFeed = function() {
-      clearCourseSiteJob();
-      angular.extend($scope, {
-        currentWorkflowStep: 'selecting',
-        isLoading: true,
-        created_status: false
-      });
-      var feedUrl = '/api/academics/canvas/course_provision';
-      var feedParams = {};
-      if ($scope.is_admin) {
-        if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
-          feedUrl = '/api/academics/canvas/course_provision_as/' + $scope.admin_acting_as;
-        } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
-          feedParams = {
-            'admin_by_ccns[]': $scope.admin_by_ccns,
-            'admin_term_slug': $scope.currentAdminSemester
-          };
-        }
-      }
-      $http({
-        url: feedUrl,
-        method: 'GET',
-        params: feedParams
-      }).success(function(data) {
-        angular.extend($scope, data);
-        fillCourseSites($scope.teaching_semesters);
-        window.setInterval(postHeight, 250);
-        if ($scope.teaching_semesters && $scope.teaching_semesters.length > 0) {
-          $scope.switchSemester($scope.teaching_semesters[0]);
-        }
-        if (!$scope.currentAdminSemester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
-          $scope.switchAdminSemester($scope.admin_semesters[0]);
-        }
-        if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
-          selectAllSections();
-        }
       });
     };
 
@@ -181,6 +109,81 @@
       $scope.selectedCourses = newSelectedCourses;
     };
 
+    $scope.createCourseSiteJob = function(selectedCourses) {
+      var ccns = [];
+      angular.forEach(selectedCourses, function(course) {
+        angular.forEach(course.sections, function(section) {
+          if (section.selected) {
+            ccns.push(section.ccn);
+          }
+        });
+      });
+      if (ccns.length > 0) {
+        var newCourse = {
+          'term_slug': $scope.current_semester,
+          'ccns': ccns
+        };
+        if ($scope.is_admin) {
+          if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
+            newCourse.admin_acting_as = $scope.admin_acting_as;
+          } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
+            newCourse.admin_by_ccns = $scope.admin_by_ccns;
+            newCourse.admin_term_slug = $scope.currentAdminSemester;
+          }
+        }
+        $http.post('/api/academics/canvas/course_provision/create', newCourse)
+          .success(courseSiteJobCreated)
+          .error(function() {
+            angular.extend($scope, {
+              currentWorkflowStep: 'monitoring_job',
+              status: 'Error',
+              error: 'Failed to create course provisioning job.'
+            });
+          });
+      }
+    };
+
+    $scope.fetchFeed = function() {
+      clearCourseSiteJob();
+      angular.extend($scope, {
+        currentWorkflowStep: 'selecting',
+        isLoading: true,
+        created_status: false
+      });
+      var feedUrl = '/api/academics/canvas/course_provision';
+      var feedParams = {};
+      if ($scope.is_admin) {
+        if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
+          feedUrl = '/api/academics/canvas/course_provision_as/' + $scope.admin_acting_as;
+        } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
+          feedParams = {
+            'admin_by_ccns[]': $scope.admin_by_ccns,
+            'admin_term_slug': $scope.currentAdminSemester
+          };
+        }
+      }
+      $http({
+        url: feedUrl,
+        method: 'GET',
+        params: feedParams
+      }).success(function(data) {
+        angular.extend($scope, data);
+        fillCourseSites($scope.teaching_semesters);
+        window.setInterval(postHeight, 250);
+        if ($scope.teaching_semesters && $scope.teaching_semesters.length > 0) {
+          $scope.switchSemester($scope.teaching_semesters[0]);
+        }
+        if (!$scope.currentAdminSemester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
+          $scope.switchAdminSemester($scope.admin_semesters[0]);
+        }
+        if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
+          selectAllSections();
+        }
+        $scope.isCourseCreator = $scope.is_admin || apiService.user.profile.roles.faculty;
+        $scope.feedFetched = true;
+      });
+    };
+
     $scope.switchAdminSemester = function(semester) {
       angular.extend($scope, {
         currentAdminSemester: semester.slug
@@ -209,7 +212,13 @@
       });
     };
 
-    $scope.fetchFeed();
+    // Wait until user profile is fully loaded before fetching section feed
+    $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
+      if (isAuthenticated) {
+        $scope.fetchFeed();
+      }
+    });
+
   });
 
 })(window.angular);
