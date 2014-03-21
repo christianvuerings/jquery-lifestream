@@ -1,4 +1,4 @@
-+class UserSpecificModel < AbstractModel
+class UserSpecificModel < AbstractModel
 
   def initialize(uid, options={})
     super(uid, options)
