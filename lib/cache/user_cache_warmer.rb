@@ -8,10 +8,10 @@ module Cache
         User::Api.new(uid),
         MyClasses::Merged.new(uid),
         MyGroups::Merged.new(uid),
-        MyActivities::Merged.new(uid),
         MyTasks::Merged.new(uid),
         MyBadges::Merged.new(uid),
         UpNext::MyUpNext.new(uid),
+        MyActivities::Merged.new(uid),
         MyAcademics::Merged.new(uid),
         Financials::MyFinancials.new(uid)
       ].each do |model|
