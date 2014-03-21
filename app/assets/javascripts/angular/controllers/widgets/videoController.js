@@ -7,7 +7,7 @@
   angular.module('calcentral.controllers').controller('VideoController', function($http, $scope) {
 
     var getVideos = function(title) {
-      $http.get('/api/my/videos/' + encodeURIComponent(title)).success(function(data) {
+      $http.get('/api/my/media/' + encodeURIComponent(title)).success(function(data) {
         angular.extend($scope, data);
         if ($scope.videos) {
           $scope.selectedVideo = $scope.videos[0];

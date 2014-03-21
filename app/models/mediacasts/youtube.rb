@@ -1,4 +1,4 @@
-module Webcasts
+module Mediacasts
   class Youtube < BaseProxy
 
     include ClassLogger, SafeJsonParser
@@ -13,7 +13,7 @@ module Webcasts
     end
 
     def get
-      self.class.smart_fetch_from_cache({id: @playlist_id, jsonify: true}) do
+      self.class.smart_fetch_from_cache({id: @playlist_id}) do
         request_internal
       end
     end
