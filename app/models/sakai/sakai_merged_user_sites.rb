@@ -11,7 +11,7 @@ module Sakai
     def get_feed_internal
       courses = []
       groups = []
-      if (sakai_user_id = get_sakai_user_id)
+      if (sakai_user_id = Sakai::SakaiData.get_sakai_user_id(@uid))
         url_root = "#{Settings.sakai_proxy.host}/portal/site"
         site_to_groups = get_site_to_groups_hash(sakai_user_id)
         get_filtered_users_sites(sakai_user_id).each do |row|

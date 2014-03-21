@@ -75,9 +75,8 @@ module Sakai
       sites
     end
 
-    # TODO This query can be cached forever, more or less.
     def self.get_sakai_user_id(person_id)
-      user_id = {}
+      user_id = nil
       use_pooled_connection {
         sql = <<-SQL
       select user_id from #{table_prefix}sakai_user_id_map
