@@ -18,11 +18,5 @@ module Sakai
       Settings.sakai_proxy.current_terms
     end
 
-    def get_sakai_user_id
-      self.class.fetch_from_cache @uid do
-        Sakai::SakaiData.get_sakai_user_id(@uid)
-      end
-    end
-
   end
 end
