@@ -1,13 +1,14 @@
 require "spec_helper"
 
-describe Webcasts::Playlists do
+describe Mediacasts::Playlists do
 
-  subject { Webcasts::Playlists.new({:playlist_title => "Biology 1A, 001 - Spring 2012"}) }
+  subject { Mediacasts::Playlists.new({:playlist_title => "Biology 1A, 001 - Spring 2012"}) }
 
   context "normal return of real data", :testext => true do
     it "should return playlist id" do
       result = subject.request_internal
       result[:playlist_id].should == "ECCF8E59B3C769FB01"
+      result[:podcast_id].should == "496300137"
     end
   end
 
@@ -18,7 +19,7 @@ describe Webcasts::Playlists do
     after(:each) { WebMock.reset! }
     it "should return the fetch error message" do
       response = subject.get
-      response[:error_message].should == "There was a problem fetching the videos."
+      response[:proxy_error_message].should == "There was a problem fetching the videos and podcasts."
     end
   end
 
@@ -29,7 +30,7 @@ describe Webcasts::Playlists do
     after(:each) { WebMock.reset! }
     it "should return the fetch error message" do
       response = subject.get
-      response[:error_message].should == "There was a problem fetching the videos."
+      response[:proxy_error_message].should == "There was a problem fetching the videos and podcasts."
     end
   end
 

@@ -1,4 +1,4 @@
-module Webcasts
+module Mediacasts
   class Playlists < BaseProxy
 
     include ClassLogger, SafeJsonParser
@@ -8,18 +8,25 @@ module Webcasts
     def initialize(options = {})
       super(Settings.playlists_proxy, options)
       @playlist_title = options[:playlist_title] ? options[:playlist_title] : false
+      @errors = {
+        :video_error_message => "There are no webcasts available. Please check again later.",
+        :podcast_error_message => "There are no podcasts available. Please check again later."
+      }
+      @proxy_error = {
+        :proxy_error_message => "There was a problem fetching the webcasts and podcasts."
+      }
     end
 
     def get
       self.class.smart_fetch_from_cache(
         {id: @playlist_title,
-         user_message_on_exception: "There was a problem fetching the videos."}) do
+         user_message_on_exception: @proxy_error[:proxy_error_message]}) do
         request_internal
       end
     end
 
     def request_internal
-      return {} unless Settings.features.videos
+      return {} unless Settings.features.videos || Settings.features.podcasts
       response = FakeableProxy.wrap_request(APP_ID + "_" + "playlists", @fake, {:match_requests_on => [:method, :path]}) {
         Faraday::Connection.new(
           :url => @settings.base_url,
@@ -32,9 +39,7 @@ module Webcasts
       if response.status >= 400
         raise Errors::ProxyError.new(
                 "Connection failed: #{response.status} #{response.body}",
-                {
-                  :error_message => 'There was a problem fetching the videos.'
-                })
+                @proxy_error)
       end
 
       logger.debug "Remote server status #{response.status}, Body = #{response.body}"
@@ -43,9 +48,7 @@ module Webcasts
       if !data
         raise Errors::ProxyError.new(
                 "Error occurred converting response to json: #{response.body}",
-                {
-                  :error_message => 'There was a problem fetching the videos.'
-                })
+                @proxy_error)
       end
 
       # If no playlist title is supplied, return full list of playlists
@@ -53,7 +56,7 @@ module Webcasts
         return data
       end
 
-      get_playlist_id(data)
+      get_playlist_info(data)
     end
 
     def convert_to_json(response)
@@ -82,20 +85,27 @@ module Webcasts
       return false
     end
 
-    def get_playlist_id(data)
+    def get_playlist_info(data)
       title = @playlist_title
       courses = data['itu_courses']
       courses.each do |course|
         # Make sure the titles match and the playlist_id exists
-        if course['title'].downcase == title.downcase && !course['youTube'].blank?
-          return {
-            :playlist_id => course['youTube']
-          }
+        if course['title'].downcase == title.downcase
+          playlist = {}
+          if !course['youTube'].blank?
+            playlist[:playlist_id] = course['youTube']
+          else
+            playlist[:video_error_message] = @errors[:video_error_message]
+          end
+          if !course['audioId'].blank?
+            playlist[:podcast_id] = course['audioId']
+          else
+            playlist[:podcast_error_message] = @errors[:podcast_error_message]
+          end
+          return playlist
         end
       end
-      {
-        :error_message => "There are no videos available."
-      }
+      @errors
     end
 
   end
