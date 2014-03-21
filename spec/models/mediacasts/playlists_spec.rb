@@ -19,7 +19,7 @@ describe Mediacasts::Playlists do
     after(:each) { WebMock.reset! }
     it "should return the fetch error message" do
       response = subject.get
-      response[:proxy_error_message].should == "There was a problem fetching the videos and podcasts."
+      response[:proxy_error_message].should == "There was a problem fetching the webcasts and podcasts."
     end
   end
 
@@ -30,7 +30,7 @@ describe Mediacasts::Playlists do
     after(:each) { WebMock.reset! }
     it "should return the fetch error message" do
       response = subject.get
-      response[:proxy_error_message].should == "There was a problem fetching the videos and podcasts."
+      response[:proxy_error_message].should == "There was a problem fetching the webcasts and podcasts."
     end
   end
 
