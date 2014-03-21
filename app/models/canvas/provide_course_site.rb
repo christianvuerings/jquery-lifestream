@@ -308,7 +308,7 @@ module Canvas
         {
           'course_id' => sis_id,
           'short_name' => campus_course_data[:course_code],
-          'long_name' => campus_course_data[:title],
+          'long_name' => campus_course_data[:title] || campus_course_data[:course_code],
           'account_id' => subaccount,
           'term_id' => Canvas::Proxy.term_to_sis_id(term_yr, term_cd),
           'status' => 'active'
