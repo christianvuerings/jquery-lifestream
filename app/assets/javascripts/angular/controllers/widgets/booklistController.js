@@ -4,7 +4,7 @@
   /**
    * Textbook controller
    */
-  angular.module('calcentral.controllers').controller('BooklistController', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('BooklistController', function($http, $scope, $q) {
     $scope.semesterBooks = [];
 
     var getSemesterTextbooks = function(semesters) {
@@ -15,13 +15,16 @@
           break;
         }
       }
+      var requests = [];
 
       function getTextbook(courseInfo, courseNumber) {
-        $http.get('/api/my/textbooks_details', {params: courseInfo}).success(function(books) {
+        return $http.get('/api/my/textbooks_details', {params: courseInfo}).success(function(books) {
           if (books) {
             books.course = courseNumber;
             $scope.semesterBooks.push(books);
-            $scope.semesterBooks.sort();
+            $scope.semesterBooks.sort(function(a, b) {
+              return a.course.localeCompare(b.course);
+            });
             $scope.semesterBooks.hasBooks = true;
           }
         });
@@ -40,10 +43,13 @@
           'slug': semester.slug
         };
 
-        getTextbook(courseInfo, semester.classes[c].course_code);
+        requests.push(getTextbook(courseInfo, semester.classes[c].course_code));
       }
       $scope.semester_name = semester.name;
       $scope.semesterSlug = semester.slug;
+      $q.all(requests).then(function() {
+        $scope.isLoading = false;
+      });
     };
 
     $scope.$watchCollection('[$parent.semesters, api.user.profile.features.textbooks]', function(returnValues) {
