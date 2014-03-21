@@ -4,10 +4,10 @@
   /**
    * Alerts controller
    */
-  angular.module('calcentral.controllers').controller('AlertsController', function($rootScope, $scope) {
+  angular.module('calcentral.controllers').controller('AlertsController', function(badgesFactory, $scope) {
 
-    $rootScope.$on('calcentral.controller.badges.alert', function(event, alert) {
-      $scope.alert = alert;
+    badgesFactory.getBadges().success(function(data) {
+      $scope.alert = data.alert;
     });
 
   });

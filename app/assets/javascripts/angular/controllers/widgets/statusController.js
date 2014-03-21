@@ -4,18 +4,21 @@
   /**
    * Status controller
    */
-  angular.module('calcentral.controllers').controller('StatusController', function($scope) {
+  angular.module('calcentral.controllers').controller('StatusController', function(badgesFactory, $scope) {
 
-    var showStatusError = function() {
-      $scope.showStatusError = $scope.studentInfo &&
-        $scope.studentInfo.californiaResidency &&
-        ($scope.studentInfo.californiaResidency.needsAction ||
-        $scope.studentInfo.regBlock.needsAction);
+    var loadStudentInfo = function(studentInfo) {
+      $scope.studentInfo = studentInfo;
+      $scope.showStatusError = studentInfo &&
+        studentInfo.californiaResidency &&
+        (studentInfo.californiaResidency.needsAction ||
+        studentInfo.regBlock.needsAction);
     };
 
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
-        showStatusError();
+        badgesFactory.getBadges().success(function(data) {
+          loadStudentInfo(data.studentInfo);
+        });
       }
     });
 

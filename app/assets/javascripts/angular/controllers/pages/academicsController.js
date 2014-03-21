@@ -4,7 +4,7 @@
   /**
    * Academics controller
    */
-  angular.module('calcentral.controllers').controller('AcademicsController', function(apiService, $http, $routeParams, $scope, $q) {
+  angular.module('calcentral.controllers').controller('AcademicsController', function(apiService, badgesFactory, $http, $routeParams, $scope, $q) {
 
     apiService.util.setTitle('My Academics');
 
@@ -413,6 +413,9 @@
       if (isAuthenticated) {
         $scope.canViewAcademics = $scope.api.user.profile.has_academics_tab;
         $http.get('/api/my/academics').success(parseAcademics);
+        badgesFactory.getBadges().success(function(data) {
+          $scope.studentInfo = data.studentInfo;
+        });
         //$http.get('/dummy/json/academics.json').success(parseAcademics);
       }
     });
