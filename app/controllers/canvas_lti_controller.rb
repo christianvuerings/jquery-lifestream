@@ -46,11 +46,11 @@ class CanvasLtiController < ApplicationController
     respond_to :xml
   end
 
-  def lti_course_provision_acct_nav
+  def lti_course_provision_account_navigation
     respond_to :xml
   end
 
-  def lti_course_provision_user_nav
+  def lti_course_provision_user_navigation
     respond_to :xml
   end
 
