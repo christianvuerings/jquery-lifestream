@@ -74,11 +74,11 @@
       templateUrl: 'templates/canvas_embedded/roster.html',
       controller: 'RosterController'
     }).
-    when('/canvas/embedded/course_provision_acct_nav', {
+    when('/canvas/embedded/course_provision_account_navigation', {
       templateUrl: 'templates/canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
-    when('/canvas/embedded/course_provision_user_nav', {
+    when('/canvas/embedded/course_provision_user_navigation', {
       templateUrl: 'templates/canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).

@@ -160,7 +160,7 @@
               "id": 27150,
               "name": "Course Provisioning",
               "updated_at": "2013-11-25T18:37:38Z",
-              "url": "https://cc-dev.example.com/canvas/embedded/course_provision_acct_nav",
+              "url": "https://cc-dev.example.com/canvas/embedded/course_provision_account_navigation",
               "privacy_level": "public",
               "custom_fields": {
 
@@ -170,7 +170,7 @@
               "user_navigation": null,
               "course_navigation": null,
               "account_navigation": {
-                "url": "https://cc-dev.example.com/canvas/embedded/course_provision_acct_nav",
+                "url": "https://cc-dev.example.com/canvas/embedded/course_provision_account_navigation",
                 "text": "Course Provisioning",
                 "visibility": "admins",
                 "default": "enabled",
@@ -193,7 +193,7 @@
               "id": 27150,
               "name": "Course Provisioning",
               "updated_at": "2013-11-25T18:37:38Z",
-              "url": "https://cc-dev.example.com/canvas/embedded/course_provision_user_nav",
+              "url": "https://cc-dev.example.com/canvas/embedded/course_provision_user_navigation",
               "privacy_level": "public",
               "custom_fields": {
 
@@ -203,7 +203,7 @@
               "user_navigation": null,
               "course_navigation": null,
               "account_navigation": {
-                "url": "https://cc-dev.example.com/canvas/embedded/course_provision_user_nav",
+                "url": "https://cc-dev.example.com/canvas/embedded/course_provision_user_navigation",
                 "text": "Course Provisioning",
                 "visibility": "admins",
                 "default": "enabled",
