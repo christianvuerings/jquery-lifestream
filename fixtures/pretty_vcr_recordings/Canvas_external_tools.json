@@ -155,12 +155,12 @@
             {
               "consumer_key": "xxx",
               "created_at": "2013-11-25T18:37:38Z",
-              "description": "Automated course provisioning",
+              "description": "Course Provisioning for Account Navigation",
               "domain": null,
               "id": 27150,
               "name": "Course Provisioning",
               "updated_at": "2013-11-25T18:37:38Z",
-              "url": "https://cc-dev.example.com/canvas/embedded/course_provision",
+              "url": "https://cc-dev.example.com/canvas/embedded/course_provision_acct_nav",
               "privacy_level": "public",
               "custom_fields": {
 
@@ -170,7 +170,40 @@
               "user_navigation": null,
               "course_navigation": null,
               "account_navigation": {
-                "url": "https://cc-dev.example.com/canvas/embedded/course_provision",
+                "url": "https://cc-dev.example.com/canvas/embedded/course_provision_acct_nav",
+                "text": "Course Provisioning",
+                "visibility": "admins",
+                "default": "enabled",
+                "enabled": "true",
+                "label": "Course Provisioning",
+                "selection_width": 800,
+                "selection_height": 400,
+                "icon_url": "NO ICO"
+              },
+              "resource_selection": null,
+              "editor_button": null,
+              "homework_submission": null,
+              "icon_url": "NO ICO"
+            },
+            {
+              "consumer_key": "xxx",
+              "created_at": "2013-11-25T18:37:38Z",
+              "description": "Course Provisioning for User Navigation",
+              "domain": null,
+              "id": 27150,
+              "name": "Course Provisioning",
+              "updated_at": "2013-11-25T18:37:38Z",
+              "url": "https://cc-dev.example.com/canvas/embedded/course_provision_user_nav",
+              "privacy_level": "public",
+              "custom_fields": {
+
+              },
+              "workflow_state": "public",
+              "vendor_help_link": null,
+              "user_navigation": null,
+              "course_navigation": null,
+              "account_navigation": {
+                "url": "https://cc-dev.example.com/canvas/embedded/course_provision_user_nav",
                 "text": "Course Provisioning",
                 "visibility": "admins",
                 "default": "enabled",

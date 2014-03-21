@@ -1,6 +1,10 @@
 .cc-page-course-provision {
   padding: 10px 20px;
 
+  .cc-page-provision-student-warning {
+    margin: 10px 0;
+  }
+
   .cc-page-provision-actas-form {
     background: $cc-color-white;
     input[type="text"] {

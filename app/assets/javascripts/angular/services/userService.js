@@ -73,14 +73,6 @@
     };
 
     var handleRouteChange = function() {
-
-      // When we are in an iframe, we don't load fetch the user api
-      // This will mean that isAuthenticated is still false so the refresh API will also not be called
-      if (utilService.isInIframe()) {
-        events.isLoaded = true;
-        return;
-      }
-
       if (!profile.features) {
         fetch();
       } else {
