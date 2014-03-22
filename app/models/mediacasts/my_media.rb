@@ -36,7 +36,7 @@ module Mediacasts
     end
 
     def get_podcasts_as_json(playlist)
-      # return {} unless Settings.features.podcasts
+      return {} unless Settings.features.podcasts
       if !playlist[:podcast_error_message].blank?
         return {
           :podcastErrorMessage => playlist[:podcast_error_message]
