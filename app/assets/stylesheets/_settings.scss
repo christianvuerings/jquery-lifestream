@@ -43,6 +43,17 @@
     margin-bottom: 20px;
     padding-top: 10px;
   }
+  .cc-settings-table {
+    margin: 20px 10px 30px;
+    table {
+      table-layout: fixed;
+    }
+    td, th {
+      border-bottom: 1px solid $cc-color-widget-background;
+      font-size: 12px;
+      padding: 4px;
+    }
+  }
 
   @media #{$small-only} {
     .cc-settings-service {

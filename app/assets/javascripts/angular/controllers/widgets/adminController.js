@@ -33,6 +33,30 @@
       $http.post('/stop_act_as').success(redirectToSettings);
     };
 
+    var resetUserSearch = function() {
+      $scope.admin.users = [];
+      $scope.admin.errorStatus = '';
+      $scope.admin.id = '';
+    };
+
+    $scope.admin.uidToSidLookup = function() {
+      var searchUsersUri = 'api/search_users/' + $scope.admin.id;
+      resetUserSearch();
+      $http.get(searchUsersUri).success(function(data) {
+        if (data.users.length > 0) {
+          $scope.admin.users = data.users;
+        } else {
+          $scope.admin.errorStatus = 'That does not appear to be a valid UID or SID';
+        }
+      }).error(function(data) {
+        if (data.error) {
+          $scope.admin.errorStatus = data.error;
+        } else {
+          $scope.admin.errorStatus = 'User search failed.';
+        }
+      });
+    };
+
   }]);
 
 })(window, window.angular);
