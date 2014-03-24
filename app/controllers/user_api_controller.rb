@@ -55,11 +55,6 @@ class UserApiController < ApplicationController
     render :nothing => true, :status => 204
   end
 
-  def search_users
-    users_found = User::SearchUsers.search_users(params['id'])
-    render json: { users: users_found }.to_json
-  end
-
   private
 
   def acting_as?

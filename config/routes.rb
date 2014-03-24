@@ -96,7 +96,7 @@ Calcentral::Application.routes.draw do
   match '/act_as' => 'sessions#act_as', :via => :post
   match '/stop_act_as' => 'sessions#stop_act_as', :via => :post
 
-  match 'api/search_users/:id' => 'user_api#search_users', :via => :get, :defaults => { :format => 'json' }
+  match '/api/search_users/:id' => 'search_users#search_users', :via => :get, :defaults => { :format => 'json' }
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
