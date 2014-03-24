@@ -32,6 +32,24 @@ feature "act_as_user" do
     response["uid"].should == "238382"
   end
 
+  scenario "make sure admin users can act as a user who has never signed in before" do
+    Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
+    super_user_uid = "238382"
+    act_as_uid = "2040"
+    # super user can act as
+    User::Auth.where(:uid=>super_user_uid).first.policy.can_act_as? == true
+    # act_as user has never logged in
+    User::Data.where(:uid=>act_as_uid).first.should be_nil
+    # log into CAS with the super user
+    login_with_cas super_user_uid
+    # stub out the environment, faking as production
+    Settings.application.stub(:layer).and_return("production")
+    # make the act_as request
+    page.driver.post '/act_as', {:uid=>act_as_uid}
+    # failing attempts will redirect to the root_path, giving a 302 status_code
+    # successful attempts don't redirect and return nothing but a 204 status code
+    page.status_code.should == 204
+  end
 
 
   scenario "make sure admin users don't modify database records of the users they view" do
