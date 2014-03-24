@@ -147,8 +147,7 @@
       clearCourseSiteJob();
       angular.extend($scope, {
         currentWorkflowStep: 'selecting',
-        isLoading: true,
-        created_status: false
+        isLoading: true
       });
       var feedUrl = '/api/academics/canvas/course_provision';
       var feedParams = {};
