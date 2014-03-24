@@ -19,9 +19,7 @@ module Canvas
         courses: [],
         groups: []
       }
-      response = Canvas::UserCourses.new(user_id: @uid).courses
-      return merged_sites unless (response && response.status == 200)
-      courses = JSON.parse(response.body)
+      courses = Canvas::UserCourses.new(user_id: @uid).courses
       courses.each do |course|
         course_id = course['id']
         # We collect sections and CCNs as an admin, not as the user. Most site members
@@ -31,9 +29,7 @@ module Canvas
         merged_sites[:courses] << merge_course_with_sections(course, JSON.parse(response.body))
       end
 
-      response = Canvas::Groups.new(user_id: @uid).groups
-      return merged_sites unless (response && response.status == 200)
-      group_sites = JSON.parse(response.body)
+      group_sites = Canvas::Groups.new(user_id: @uid).groups
       group_sites.each do |group|
         merged_sites[:groups] << get_group_data(group)
       end
