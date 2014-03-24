@@ -1,5 +1,5 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :cas, url: "https://#{Settings.cas_server}"
+  provider :cas, url: Settings.cas_server
 end
 
 # More configurable logging.

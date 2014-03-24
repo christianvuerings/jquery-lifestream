@@ -17,8 +17,8 @@ application:
   # timeout (in seconds) for outgoing http request establishment
   outgoing_http_timeout: 30
 
-cas_server: 'localhost:1234/cas'
-cas_logout_url: 'https://localhost:4321/cas/logout'
+cas_server: 'https://auth.berkeley.edu/cas'
+cas_logout_url: 'https://auth.berkeley.edu/cas/logout'
 
 # Database settings
 postgres:
