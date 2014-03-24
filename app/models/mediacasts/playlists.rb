@@ -4,23 +4,23 @@ module Mediacasts
     include ClassLogger, SafeJsonParser
 
     APP_ID = "Playlists"
+    ERRORS = {
+      :video_error_message => "There are no webcasts available. Please check again later.",
+      :podcast_error_message => "There are no podcasts available. Please check again later."
+    }
+    PROXY_ERROR = {
+      :proxy_error_message => "There was a problem fetching the webcasts and podcasts."
+    }
 
     def initialize(options = {})
       super(Settings.playlists_proxy, options)
       @playlist_title = options[:playlist_title] ? options[:playlist_title] : false
-      @errors = {
-        :video_error_message => "There are no webcasts available. Please check again later.",
-        :podcast_error_message => "There are no podcasts available. Please check again later."
-      }
-      @proxy_error = {
-        :proxy_error_message => "There was a problem fetching the webcasts and podcasts."
-      }
     end
 
     def get
       self.class.smart_fetch_from_cache(
         {id: @playlist_title,
-         user_message_on_exception: @proxy_error[:proxy_error_message]}) do
+         user_message_on_exception: PROXY_ERROR[:proxy_error_message]}) do
         request_internal
       end
     end
@@ -39,7 +39,7 @@ module Mediacasts
       if response.status >= 400
         raise Errors::ProxyError.new(
                 "Connection failed: #{response.status} #{response.body}",
-                @proxy_error)
+                PROXY_ERROR)
       end
 
       logger.debug "Remote server status #{response.status}, Body = #{response.body}"
@@ -48,7 +48,7 @@ module Mediacasts
       if !data
         raise Errors::ProxyError.new(
                 "Error occurred converting response to json: #{response.body}",
-                @proxy_error)
+                PROXY_ERROR)
       end
 
       # If no playlist title is supplied, return full list of playlists
@@ -95,17 +95,17 @@ module Mediacasts
           if !course['youTube'].blank?
             playlist[:playlist_id] = course['youTube']
           else
-            playlist[:video_error_message] = @errors[:video_error_message]
+            playlist[:video_error_message] = ERRORS[:video_error_message]
           end
           if !course['audioId'].blank?
             playlist[:podcast_id] = course['audioId']
           else
-            playlist[:podcast_error_message] = @errors[:podcast_error_message]
+            playlist[:podcast_error_message] = ERRORS[:podcast_error_message]
           end
           return playlist
         end
       end
-      @errors
+      ERRORS
     end
 
   end
