@@ -40,7 +40,7 @@
     };
 
     $scope.admin.uidToSidLookup = function() {
-      var searchUsersUri = 'api/search_users/' + $scope.admin.id;
+      var searchUsersUri = '/api/search_users/' + $scope.admin.id;
       resetUserSearch();
       $http.get(searchUsersUri).success(function(data) {
         if (data.users.length > 0) {
