@@ -15,10 +15,21 @@
     // Private methods that are only exposed for testing but shouldn't be used within the views
 
     /**
-     * Set the user first_login_at attribute and redirect to the settings page
+     * Redirect user to the dashboard when you're on the splash page
+     */
+    var redirectToDashboard = function() {
+      if ($location.path() === '/') {
+        analyticsService.sendEvent('Authentication', 'Redirect to dashboard');
+        utilService.redirect('dashboard');
+      }
+    };
+
+    /**
+     * Set the user first_login_at attribute
      */
     var setFirstLogin = function() {
       profile.first_login_at = (new Date()).getTime();
+      redirectToDashboard();
     };
 
     /**
@@ -32,14 +43,13 @@
       if (!$route.current.isPublic && !events.isAuthenticated) {
         analyticsService.sendEvent('Authentication', 'Sign in - redirect to login');
         signIn();
-      // Record that you've already visited the calcentral once and redirect to the settings page on the first login
+      // Record that the user visited calcentral
       } else if (events.isAuthenticated && !profile.first_login_at) {
         analyticsService.sendEvent('Authentication', 'First login');
         $http.post('/api/my/record_first_login').success(setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
-      } else if (events.isAuthenticated && $location.path() === '/') {
-        analyticsService.sendEvent('Authentication', 'Redirect to dashboard');
-        utilService.redirect('dashboard');
+      } else if (events.isAuthenticated) {
+        redirectToDashboard();
       }
     };
 
