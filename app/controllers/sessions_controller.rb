@@ -49,7 +49,7 @@ class SessionsController < ApplicationController
       ActiveRecord::Base.clear_active_connections!
     end
     render :json => {
-      :redirect_url => "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
+      :redirectUrl => "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
     }.to_json
   end
 

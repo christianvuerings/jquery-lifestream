@@ -11,7 +11,7 @@ describe CampusOracle::Queries do
     data['first_name'].should == "Oliver"
     if CampusOracle::Queries.test_data?
       data[:roles][:student].should == false
-      data[:roles][:ex_student].should == true
+      data[:roles][:exStudent].should == true
       data[:roles][:faculty].should == false
       data[:roles][:staff].should == true
     end
@@ -29,7 +29,7 @@ describe CampusOracle::Queries do
       data['tot_enroll_unit'].should == "1"
       data['cal_residency_flag'].should == "N"
       data[:roles][:student].should == true
-      data[:roles][:ex_student].should == false
+      data[:roles][:exStudent].should == false
       data[:roles][:faculty].should == false
       data[:roles][:staff].should == true
     end
@@ -202,9 +202,9 @@ describe CampusOracle::Queries do
     end
   end
 
-  it "should include an ex_student role for a person with a STUDENT-STATUS-EXPIRED affiliation" do
+  it "should include an exStudent role for a person with a STUDENT-STATUS-EXPIRED affiliation" do
     result = CampusOracle::Queries.get_person_attributes( 238382 ) # Bernie!!
-    result[:roles][:ex_student].should be_true
+    result[:roles][:exStudent].should be_true
   end
 
   it "should include a guest role", if: CampusOracle::Queries.test_data? do

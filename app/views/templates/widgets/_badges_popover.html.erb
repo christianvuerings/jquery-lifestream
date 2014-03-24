@@ -12,7 +12,7 @@
     </button>
     <div class="cc-popover cc-popover-arrow cc-badgepopover cc-badgepopover-{{badge.display.name|lowercase}}" data-ng-show="api.popover.status(badge.cssPopover)">
       <!-- Title -->
-      <div class="cc-popover-title" data-ng-switch on="api.user.profile.has_google_access_token && badge.display.name">
+      <div class="cc-popover-title" data-ng-switch on="api.user.profile.hasGoogleAccessToken && badge.display.name">
         <a class="cc-popover-title-link cc-right" data-ng-href="{{badge.display.href}}"><i class="fa fa-external-link"></i>
           <span class="cc-visuallyhidden" data-ng-bind-template="Go to {{badge.display.name}}"></span>
         </a>
@@ -22,15 +22,15 @@
         data-ng-bind-template="Unaccepted {{badge.display.name}} Invitations"></h4>
         <div data-ng-switch-default>
           <h4 data-ng-bind-template="{{badge.display.name}} (Not connected)"
-          data-ng-show="!api.user.profile.has_google_access_token"></h4>
+          data-ng-show="!api.user.profile.hasGoogleAccessToken"></h4>
           <h4 data-ng-bind-template="{{badge.display.name}} Updates"
-          data-ng-show="api.user.profile.has_google_access_token"></h4>
+          data-ng-show="api.user.profile.hasGoogleAccessToken"></h4>
         </div>
       </div>
-      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && api.user.profile.has_google_access_token">
+      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && api.user.profile.hasGoogleAccessToken">
         No items available for your <a data-ng-href="{{badge.display.href}}" data-ng-click="api.popover.clickThrough(badge.display.name + ' - No Items')" data-ng-bind-template="{{badge.display.name}} account"></a>
       </div>
-      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && !api.user.profile.has_google_access_token">
+      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && !api.user.profile.hasGoogleAccessToken">
         To display your bConnected activity, visit the
          <button class="cc-button-link cc-popover-link" data-ng-click="api.popover.clickThrough(badge.display.name + ' - No Google Account');api.util.redirect('settings')">settings page</button>
       </div>

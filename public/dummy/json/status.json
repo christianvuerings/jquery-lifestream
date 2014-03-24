@@ -1,7 +1,7 @@
 
 {
-  "is_basic_auth_enabled": false,
-  "is_logged_in": true,
+  "isBasicAuthEnabled": false,
+  "isLoggedIn": true,
   "features": {
     "live_campus_links_data": true,
     "user_whitelist": false,
@@ -15,32 +15,32 @@
     "videos": true,
     "app_alerts": true
   },
-  "acting_as_uid": "1051203",
+  "actingAsUid": "1051203",
   "is_superuser": false,
   "is_viewer": false,
   "first_login_at": "2014-02-05T05:37:02-08:00",
   "first_name": "IWQROE",
   "full_name": "IWQROE BABTREW",
-  "is_google_reminder_dismissed": false,
-  "has_canvas_account": true,
-  "has_google_access_token": false,
-  "has_student_history": false,
-  "has_instructor_history": false,
-  "has_academics_tab": true,
-  "has_financials_tab": true,
-  "google_email": "",
-  "canvas_email": "",
+  "isGoogleReminderDismissed": false,
+  "hasCanvasAccount": true,
+  "hasGoogleAccessToken": false,
+  "hasStudentHistory": false,
+  "hasInstructorHistory": false,
+  "hasAcademicsTab": true,
+  "hasFinancialsTab": true,
+  "googleEmail": "",
+  "canvasEmail": "",
   "last_name": "BABTREW",
   "preferred_name": "BABTREW,IWQROE",
   "roles": {
     "student": true,
-    "ex_student": false,
+    "exStudent": false,
     "faculty": false,
     "staff": false,
     "guest": false
   },
   "uid": "61889",
-  "last_modified": {
+  "lastModified": {
     "hash": "c7e1f3df2ddb1dbf46b0d285185b1af03d20089e",
     "timestamp": {
       "epoch": 1394747903,
@@ -48,6 +48,6 @@
       "date_string": "3/13"
     }
   },
-  "feed_name": "User::Api"
+  "feedName": "User::Api"
 }
 

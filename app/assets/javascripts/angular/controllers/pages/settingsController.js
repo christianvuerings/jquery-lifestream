@@ -8,14 +8,14 @@
 
     apiService.util.setTitle('Settings');
 
-    var services = ['google'];
+    var services = ['Google'];
 
     var refreshServices = function(profile) {
       $scope.connectedServices = services.filter(function(element) {
-        return profile['has_' + element + '_access_token'];
+        return profile['has' + element + 'AccessToken'];
       });
       $scope.nonConnectedServices = services.filter(function(element) {
-        return !profile['has_' + element + '_access_token'];
+        return !profile['has' + element + 'AccessToken'];
       });
     };
 

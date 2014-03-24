@@ -453,7 +453,7 @@
       "status": "No action required, document reviewed and processed"
     }
   ],
-  "last_modified": {
+  "lastModified": {
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
     "timestamp": {
       "epoch": 1383947240,

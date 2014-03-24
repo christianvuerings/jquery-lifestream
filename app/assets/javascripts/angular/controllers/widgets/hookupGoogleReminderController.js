@@ -17,7 +17,7 @@
 
     $scope.showReminderCard = true;
 
-    $scope.$watch('api.user.profile.has_google_access_token + \',\' + api.user.profile.is_google_reminder_dismissed', function(newTokenTuple) {
+    $scope.$watch('api.user.profile.hasGoogleAccessToken + \',\' + api.user.profile.isGoogleReminderDismissed', function(newTokenTuple) {
       var dismissReminderFields = newTokenTuple.split(',');
       if (dismissReminderFields[0] === 'true' || dismissReminderFields[1] === 'true') {
         $scope.showReminderCard = false;

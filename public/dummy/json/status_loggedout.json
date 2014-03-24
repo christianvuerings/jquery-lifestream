@@ -1,6 +1,6 @@
 {
-  "is_basic_auth_enabled": true,
-  "is_logged_in": false,
+  "isBasicAuthEnabled": true,
+  "isLoggedIn": false,
   "features": {
     "academic_status": true,
     "financials": true

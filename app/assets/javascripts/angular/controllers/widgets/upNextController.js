@@ -20,7 +20,7 @@
       $http.get('/api/my/up_next').success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
-        setLastModifiedDate(data.last_modified.timestamp.epoch);
+        setLastModifiedDate(data.lastModified.timestamp.epoch);
       });
     };
 

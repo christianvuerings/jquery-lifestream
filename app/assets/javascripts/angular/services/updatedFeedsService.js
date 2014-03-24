@@ -112,7 +112,7 @@
      * @return {Boolean} True when it's valid
      */
     var isValidFeed = function(data) {
-      return !!(data && data.feed_name && data.last_modified);
+      return !!(data && data.feedName && data.lastModified);
     };
 
     /**
@@ -121,7 +121,7 @@
      * @param {Object} data Feed data
      */
     var addFeedData = function(data) {
-      feedsLoadedData[data.feed_name] = data.last_modified;
+      feedsLoadedData[data.feedName] = data.lastModified;
     };
 
     /**
@@ -140,7 +140,7 @@
      */
     var initiate = function(route, scope) {
 
-      var isLoggedInWatch = scope.$watch('api.user.profile.is_logged_in', function(isLoggedIn) {
+      var isLoggedInWatch = scope.$watch('api.user.profile.isLoggedIn', function(isLoggedIn) {
         if (isLoggedIn) {
           // Refresh the services, we only want to do this on certain pages
           if (route && route.fireUpdatedFeeds) {
