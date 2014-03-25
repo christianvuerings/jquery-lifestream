@@ -41,7 +41,6 @@
     };
 
     var clearCourseSiteJob = function() {
-      delete $scope.feedFetched;
       delete $scope.job_id;
       delete $scope.job_request_status;
       delete $scope.status;
