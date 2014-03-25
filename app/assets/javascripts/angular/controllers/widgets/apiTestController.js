@@ -15,7 +15,7 @@
       '/api/my/campuslinks': 'links',
       '/api/my/classes': 'classes',
       '/api/my/groups': 'groups',
-      '/api/my/status': 'is_logged_in',
+      '/api/my/status': 'isLoggedIn',
       '/api/my/tasks': 'tasks',
       '/api/my/up_next': 'items',
       '/api/server_info': 'first_visited',

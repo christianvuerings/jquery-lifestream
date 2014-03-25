@@ -1,5 +1,5 @@
 <script type="text/ng-template" id="templates/dashboard_task_noitems.html">
-  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0 && api.user.profile.has_google_access_token">
+  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0 && api.user.profile.hasGoogleAccessToken">
     <h3 class="cc-widget-tasks-section-label"><span data-ng-bind="tasksMode" class="cc-capitalize"></span></h3>
     <div data-ng-show="counts.opposite !== 0">
       <p class="cc-widget-tasks-no-items-first">You currently have <strong>0</strong> <span data-ng-bind="tasksMode"></span> tasks or assignments and <strong data-ng-bind="counts.opposite"></strong> <span data-ng-bind="tasksModeOpposite"></span> tasks and assignments.</p>
@@ -10,7 +10,7 @@
     </div>
     <p>To <strong>create a task</strong>, click the <em>New Task</em> button.</p>
   </div>
-  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0 && counts.opposite === 0 && !api.user.profile.has_google_access_token">
+  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0 && counts.opposite === 0 && !api.user.profile.hasGoogleAccessToken">
     <p class="cc-widget-tasks-no-items-first">You don't have anything in your To Do list. To manage your personal tasks, connect CalCentral to your bConnected account on the <a href="/settings">Settings</a> page.</p>
   </div>
 </script>

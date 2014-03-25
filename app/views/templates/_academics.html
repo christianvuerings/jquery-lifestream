@@ -7,7 +7,7 @@
         <h1 class="cc-heading-page-title">My Academics</h1>
       </div>
 
-      <div class="medium-8 columns cc-academics-page-left" data-ng-if="api.user.profile.has_student_history">
+      <div class="medium-8 columns cc-academics-page-left" data-ng-if="api.user.profile.hasStudentHistory">
         <div class="cc-widget">
           <div class="cc-widget-title">
             <h2>Records</h2>
@@ -244,7 +244,7 @@
           </div>
         </div>
       </div>
-      <div class="medium-4 columns" data-ng-class="{'pull-8':(!api.user.profile.has_student_history)}">
+      <div class="medium-4 columns" data-ng-class="{'pull-8':(!api.user.profile.hasStudentHistory)}">
         <div class="cc-widget cc-widget-last" data-ng-if="teachingLength">
           <div class="cc-widget-title">
             <h2>Teaching</h2>
@@ -262,7 +262,7 @@
           </div>
         </div>
 
-        <div class="cc-widget cc-widget-last" data-ng-if="api.user.profile.has_student_history && semesters.length">
+        <div class="cc-widget cc-widget-last" data-ng-if="api.user.profile.hasStudentHistory && semesters.length">
           <div class="cc-widget-title">
             <h2 class="cc-left">Semesters</h2>
             <a href="https://telebears.berkeley.edu/tranreq/" class="cc-right cc-widget-title-link">

@@ -21,14 +21,14 @@ feature "act_as_user" do
     User::Data.unstub(:where)
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "2040"
     suppress_rails_logging {
      stop_act_as_user
     }
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "238382"
   end
 
@@ -75,32 +75,32 @@ feature "act_as_user" do
     act_as_user "2040"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "2040"
 
     act_as_user "1234"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "1234"
 
     act_as_user "9876"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "9876"
 
     # make sure you can act-as someone with no user_auth record
     act_as_user "54321"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "54321"
 
     stop_act_as_user
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "238382"
   end
 
@@ -112,7 +112,7 @@ feature "act_as_user" do
     }
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["is_logged_in"].should be_true
+    response["isLoggedIn"].should be_true
     response["uid"].should == "238382"
   end
 

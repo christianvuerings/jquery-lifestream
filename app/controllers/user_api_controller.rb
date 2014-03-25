@@ -27,16 +27,16 @@ class UserApiController < ApplicationController
         true
       end
       status.merge!({
-        :is_basic_auth_enabled => Settings.developer_auth.enabled,
-        :is_logged_in => true,
+        :isBasicAuthEnabled => Settings.developer_auth.enabled,
+        :isLoggedIn => true,
         :features => Settings.features.marshal_dump,
-        :acting_as_uid => acting_as_uid
+        :actingAsUid => acting_as_uid
       })
       status.merge!(User::Api.new(session[:user_id]).get_feed)
     else
       status.merge!({
-        :is_basic_auth_enabled => Settings.developer_auth.enabled,
-        :is_logged_in => false,
+        :isBasicAuthEnabled => Settings.developer_auth.enabled,
+        :isLoggedIn => false,
         :features => Settings.features.marshal_dump
       })
     end

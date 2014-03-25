@@ -52,7 +52,7 @@ module CampusOracle
         result['affiliations'] ||= ""
         result[:roles] = {
           :student => result['affiliations'].include?("STUDENT-TYPE-"),
-          :ex_student => result['affiliations'].include?("STUDENT-STATUS-EXPIRED"),
+          :exStudent => result['affiliations'].include?("STUDENT-STATUS-EXPIRED"),
           :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
           :staff => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF"),
           :guest => result['affiliations'].include?("GUEST-TYPE-COLLABORATOR")

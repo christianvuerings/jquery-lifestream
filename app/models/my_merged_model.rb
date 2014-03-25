@@ -21,8 +21,8 @@ class MyMergedModel
       init
       feed = get_feed_internal
       last_modified = notify_if_feed_changed(feed, uid)
-      feed[:last_modified] = last_modified
-      feed[:feed_name] = self.class.name
+      feed[:lastModified] = last_modified
+      feed[:feedName] = self.class.name
       feed
     end
   end

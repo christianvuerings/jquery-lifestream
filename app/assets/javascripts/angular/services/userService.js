@@ -25,10 +25,10 @@
     };
 
     /**
-     * Set the user first_login_at attribute
+     * Set the user firstLoginAt attribute
      */
     var setFirstLogin = function() {
-      profile.first_login_at = (new Date()).getTime();
+      profile.firstLoginAt = (new Date()).getTime();
       redirectToDashboard();
     };
 
@@ -44,7 +44,7 @@
         analyticsService.sendEvent('Authentication', 'Sign in - redirect to login');
         signIn();
       // Record that the user visited calcentral
-      } else if (events.isAuthenticated && !profile.first_login_at) {
+      } else if (events.isAuthenticated && !profile.firstLoginAt) {
         analyticsService.sendEvent('Authentication', 'First login');
         $http.post('/api/my/record_first_login').success(setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
@@ -61,9 +61,9 @@
 
       events.isLoaded = true;
       // Check whether the current user is authenticated or not
-      events.isAuthenticated = profile && profile.is_logged_in;
+      events.isAuthenticated = profile && profile.isLoggedIn;
       // Check whether the current user is authenticated and has a google access token
-      events.isAuthenticatedAndHasGoogle = profile.is_logged_in && profile.has_google_access_token;
+      events.isAuthenticatedAndHasGoogle = profile.isLoggedIn && profile.hasGoogleAccessToken;
       // Expose the profile into events
       events.profile = profile;
 
@@ -79,7 +79,7 @@
 
     var enableOAuth = function(authorizationService) {
       analyticsService.sendEvent('OAuth', 'Enable', 'service: ' + authorizationService);
-      window.location = '/api/' + authorizationService + '/request_authorization';
+      window.location = '/api/' + authorizationService.toLowerCase() + '/request_authorization';
     };
 
     var handleRouteChange = function() {
@@ -115,9 +115,9 @@
     var removeOAuth = function(authorizationService) {
       // Send the request to remove the authorization for the specific OAuth service
       // Only when the request was successful, we update the UI
-      $http.post('/api/' + authorizationService + '/remove_authorization').success(function() {
+      $http.post('/api/' + authorizationService.toLowerCase() + '/remove_authorization').success(function() {
         analyticsService.sendEvent('OAuth', 'Remove', 'service: ' + authorizationService);
-        profile['has_' + authorizationService + '_access_token'] = false;
+        profile['has' + authorizationService + 'AccessToken'] = false;
       });
     };
 
@@ -126,9 +126,9 @@
      */
     var signOut = function() {
       $http.post('/logout').success(function(data) {
-        if (data && data.redirect_url) {
+        if (data && data.redirectUrl) {
           analyticsService.sendEvent('Authentication', 'Redirect to logout');
-          window.location = data.redirect_url;
+          window.location = data.redirectUrl;
         }
       }).error(function(data, responseCode) {
         if (responseCode && responseCode === 401) {

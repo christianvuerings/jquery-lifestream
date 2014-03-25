@@ -13,7 +13,7 @@ describe "MyBadges::StudentInfo" do
         'person_name' => default_name,
         :roles => {
           :student => true,
-          :ex_student => false,
+          :exStudent => false,
           :faculty => false,
           :staff => false
         }
