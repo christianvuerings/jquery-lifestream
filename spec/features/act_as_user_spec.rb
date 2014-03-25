@@ -2,6 +2,7 @@ require "spec_helper"
 
 feature "act_as_user" do
   before do
+    @random_id = Time.now.to_f.to_s.gsub(".", "")
     @fake_events_list = Google::EventsList.new(fake: true)
     User::Auth.new_or_update_superuser! "238382"
     User::Auth.new_or_update_test_user! "2040"
@@ -35,7 +36,7 @@ feature "act_as_user" do
   scenario "make sure admin users can act as a user who has never signed in before" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     super_user_uid = "238382"
-    act_as_uid = "2040"
+    act_as_uid = @random_id
     # act_as user has never logged in
     User::Data.where(:uid=>act_as_uid).first.should be_nil
     # log into CAS with the super user
