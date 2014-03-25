@@ -65,8 +65,10 @@ module Links
       categories = []
       sections = link.link_sections
       sections.each do |section|
-        catlist = {"topcategory" => section.link_top_cat.name, "subcategory" => section.link_sub_cat.name}
-        categories.push(catlist)
+        if section.link_top_cat.present? && section.link_sub_cat.present?
+          catlist = {"topcategory" => section.link_top_cat.name, "subcategory" => section.link_sub_cat.name}
+          categories.push(catlist)
+        end
       end
       categories
     end
