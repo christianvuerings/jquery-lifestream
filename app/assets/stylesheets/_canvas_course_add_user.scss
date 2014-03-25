@@ -50,11 +50,21 @@
   }
 
   .bc-notice-success {
-    background-color: $bc-color-notice-success;
+    color: $bc-color-success-foreground;
+    background-color: $bc-color-success-background;
+    border: 2px solid $bc-color-success-border;
+  }
+
+  .bc-notice-warning {
+    color: $bc-color-warning-foreground;
+    background-color: $bc-color-warning-background;
+    border: 2px solid $bc-color-warning-border;
   }
 
   .bc-notice-error {
-    background-color: $bc-color-notice-error;
+    color: $bc-color-error-foreground;
+    background-color: $bc-color-error-background;
+    border: 2px solid $bc-color-error-border;
   }
 
   .bc-fa-black {

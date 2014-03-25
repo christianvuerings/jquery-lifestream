@@ -5,13 +5,20 @@ $bc-color-help-link-blue: #2274A7;
 $bc-color-light-blue: #37c9ff;
 $bc-color-medium-blue: #028ed6;
 $bc-color-notice-default: #888888;
-$bc-color-notice-error: #b94a48;
 $bc-color-notice-info: #3a87ad;
 $bc-color-notice-success: #468847;
 $bc-color-notice-warning: #f9a42b;
 $bc-color-off-black: #333333;
 $bc-color-white: #ffffff;
-$bc-color-success-green: #43ac6a;
+$bc-color-error-border: #bb5757;
+$bc-color-error-background: #f2e4e4;
+$bc-color-error-foreground: #030303;
+$bc-color-success-border: #e9f4e3;
+$bc-color-success-background: #e4f2e0;
+$bc-color-success-foreground: #5a9d63;
+$bc-color-warning-border: #fcf0dd;
+$bc-color-warning-background: #fcf8e8;
+$bc-color-warning-foreground: #977a44;
 
 /* Global Styles for Canvas Embedded Applications */
 .cc-canvas-embedded {
