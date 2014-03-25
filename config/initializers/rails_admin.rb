@@ -13,7 +13,7 @@ class Ability
         can :manage, [User::Auth]
       end
       if user.policy.can_author?
-        can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection]
+        can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection, Links::UserRole]
       end
     end
   end
@@ -99,7 +99,7 @@ RailsAdmin.config do |config|
 # Represent instances of the Linksection model as:
   def link_section_label_method
     if self.id
-      "#{self.link_root_cat.name}/#{self.link_top_cat.name}/#{self.link_sub_cat.name}"
+      "#{self.link_root_cat.try(:name)}/#{self.link_top_cat.try(:name)}/#{self.link_sub_cat.try(:name)}"
     end
   end
 
