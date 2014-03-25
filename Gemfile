@@ -84,7 +84,7 @@ gem "cancan", "~> 1.6.10"
 group :assets do
 
   # Our very own library for angular dependency!
-  gem "angular-gem", "1.2.14"
+  gem "angular-gem", "1.2.15"
 
   # Datepicker
   gem "pikaday-gem", "~> 1.1.0.0"
