@@ -9,6 +9,7 @@
     apiService.util.setTitle('Add People');
 
     var resetSearchState = function() {
+      $scope.selectedUser = null;
       $scope.showUsersArea = false;
       $scope.userSearchResultsCount = 0;
       $scope.noSearchTextAlert = false;
@@ -103,6 +104,9 @@
         $scope.userSearchResults = data.users;
         if (data.users.length > 0) {
           $scope.userSearchResultsCount = data.users[0].result_count;
+          if (data.users.length === 1) {
+            $scope.selectedUser = data.users[0];
+          }
         } else {
           $scope.userSearchResultsCount = 0;
           $scope.noSearchResultsNotice = true;
@@ -125,7 +129,7 @@
       $scope.showUsersArea = false;
       $scope.isLoading = true;
       $scope.showAlerts = true;
-      var submittedUser = $scope.selected_user;
+      var submittedUser = $scope.selectedUser;
       var submittedSection = $scope.selected_section;
       var submittedRole = $scope.selectedRole;
       var addUserUri = '/api/academics/canvas/course_add_user/add_user';
