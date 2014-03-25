@@ -13,7 +13,7 @@
      */
     var sendEvent = function(category, action, label) {
       if ($window && $window.ga) {
-        $window.ga('send', category, action, label);
+        $window.ga('send', 'event', category, action, label);
       }
     };
 
