@@ -60,6 +60,10 @@
       {
         grade: 'F',
         weight: 0
+      },
+      {
+        grade: 'P/NP',
+        weight: -1
       }
     ];
 
@@ -346,17 +350,18 @@
       var totalScore = 0;
 
       angular.forEach($scope.selectedCourses, function(course) {
-        // Don't calculate for pass/no-pass courses!
-        if (course.grade_option === 'Letter' && course.units) {
+        if (course.units) {
           var grade;
           if (course.grade && findWeight(course.grade)) {
             grade = findWeight(course.grade).weight;
           } else {
             grade = course.estimatedGrade;
           }
-          course.score = parseFloat(grade, 10) * course.units;
-          totalUnits += parseFloat(course.units, 10);
-          totalScore += course.score;
+          if (grade && grade !== -1) {
+            course.score = parseFloat(grade, 10) * course.units;
+            totalUnits += parseFloat(course.units, 10);
+            totalScore += course.score;
+          }
         }
       });
       $scope.estimatedGpa = totalScore / totalUnits;
@@ -372,7 +377,11 @@
     $scope.gpaInit = function() {
       // On page load, set default values and calculate starter GPA
       angular.forEach($scope.selectedCourses, function(course) {
-        course.estimatedGrade = 4;
+        if (course.grade_option === 'Letter') {
+          course.estimatedGrade = 4;
+        } else if (course.grade_option === 'P/NP' || course.grade_option === 'S/U') {
+          course.estimatedGrade = -1;
+        }
       });
       gpaCalculate();
       cumulativeGpaCalculate($scope.previousCourses, 'current');
@@ -384,8 +393,7 @@
       var totalUnits = 0;
       var totalScore = 0;
       angular.forEach(courses, function(course) {
-        // Don't calculate for pass/no-pass courses!
-        if (course.grade_option === 'Letter' && course.units) {
+        if (course.units) {
           var grade;
           if (course.grade && findWeight(course.grade)) {
             grade = findWeight(course.grade).weight;
@@ -394,7 +402,7 @@
               grade = course.estimatedGrade;
             }
           }
-          if (grade || grade === 0) {
+          if ((grade || grade === 0) && grade !== -1) {
             course.score = parseFloat(grade, 10) * course.units;
             totalUnits += parseFloat(course.units, 10);
             totalScore += course.score;
