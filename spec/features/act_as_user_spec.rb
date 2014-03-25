@@ -36,8 +36,6 @@ feature "act_as_user" do
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
     super_user_uid = "238382"
     act_as_uid = "2040"
-    # super user can act as
-    User::Auth.where(:uid=>super_user_uid).first.policy.can_act_as? == true
     # act_as user has never logged in
     User::Data.where(:uid=>act_as_uid).first.should be_nil
     # log into CAS with the super user
