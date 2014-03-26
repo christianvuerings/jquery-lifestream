@@ -209,15 +209,15 @@
                     <td class="cc-table-right cc-table-right-spacing" data-ng-bind="course.units | number:1"></td>
                     <td data-ng-if="!course.units">--</td>
                     <td>
+                      <span data-ng-if="course.units === '0' && selectedSemester.time_bucket === 'current'" data-ng-bind="course.grade_option"></span>
                       <select
-                        data-ng-if="course.grade_option=='Letter' && course.units && !course.grade"
+                        data-ng-if="course.units && !course.grade && course.units !== '0'"
                         data-ng-model="course.estimatedGrade"
                         data-ng-change="gpaUpdateCourse(course, course.estimatedGrade)"
                         data-ng-options="g.weight as g.grade for g in gradeOptions"
                       >
                       </select>
                       <span data-ng-if="course.grade" data-ng-bind="course.grade"></span>
-                      <span data-ng-if="course.grade_option!=='Letter' && selectedSemester.time_bucket === 'current'" data-ng-bind="course.grade_option"></span>
                     </td>
                   </tr>
                 </tbody>
