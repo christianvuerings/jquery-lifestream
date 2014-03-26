@@ -53,45 +53,47 @@
         <button class="cc-button cc-button-blue" type="submit">Stop viewing as</button>
       </form>
 
-      <h3>UID/SID Lookup</h3>
-      <form data-ng-submit="admin.uidToSidLookup()">
-        <div class="row">
-          <div class="small-2 small-offset-3 columns">
-            <input id="cc-settings-id" placeholder="Enter UID or SID here" data-ng-model="admin.id" type="number"/>
+      <div data-ng-if="!api.user.profile.actingAsUid">
+        <h3>UID/SID Lookup</h3>
+        <form data-ng-submit="admin.uidToSidLookup()">
+          <div class="row">
+            <div class="small-2 small-offset-3 columns">
+              <input id="cc-settings-id" placeholder="Enter UID or SID here" data-ng-model="admin.id" type="number"/>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="small-2 small-offset-3 columns">
-            <button
-              class="cc-button cc-button-blue"
-              data-ng-disabled="!admin.id"
-              type="submit">Look Up</button>
+          <div class="row">
+            <div class="small-2 small-offset-3 columns">
+              <button
+                class="cc-button cc-button-blue"
+                data-ng-disabled="!admin.id"
+                type="submit">Look Up</button>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="small-4 small-offset-3 columns">
-            <span data-ng-bind="admin.errorStatus"></span>
+          <div class="row">
+            <div class="small-4 small-offset-3 columns">
+              <span data-ng-bind="admin.errorStatus"></span>
+            </div>
           </div>
-        </div>
-        <div data-ng-if="admin.users" class="row">
-          <div class="small-4 small-offset-3 columns cc-table">
-            <table class="cc-settings-table">
-              <thead>
-                <tr>
-                  <th width="50%" scope="col">UID</th>
-                  <th width="50%" scope="col">SID</th>
-                </tr>
-              </thead>
-              <tbody data-ng-repeat="user in admin.users">
-                <tr>
-                  <td data-ng-bind="user.ldap_uid"></td>
-                  <td data-ng-bind="user.student_id"></td>
-                </tr>
-              </tbody>
-            </table>
+          <div data-ng-if="admin.users" class="row">
+            <div class="small-4 small-offset-3 columns cc-table">
+              <table class="cc-settings-table">
+                <thead>
+                  <tr>
+                    <th width="50%" scope="col">UID</th>
+                    <th width="50%" scope="col">SID</th>
+                  </tr>
+                </thead>
+                <tbody data-ng-repeat="user in admin.users">
+                  <tr>
+                    <td data-ng-bind="user.ldap_uid"></td>
+                    <td data-ng-bind="user.student_id"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
 
       <div data-ng-controller="ApiTestController" data-ng-show="apiTest.enabled">
         <h3>Api Test</h3>
