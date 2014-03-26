@@ -35,7 +35,7 @@ describe CanvasCourseAddUserController do
 
   context "when performing user search" do
     before do
-      Canvas::CourseAddUser.stub(:search_users).with('John Doe', 'name').and_return(users_found)
+      Canvas::CourseAddUser.stub(:search_users).and_return(users_found)
     end
 
     it_should_behave_like "an api endpoint" do
@@ -58,6 +58,18 @@ describe CanvasCourseAddUserController do
 
     it_should_behave_like "a canvas course admin authorized controller" do
       let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
+    end
+
+    it "returns error if search_text parameter is blank" do
+      get :search_users, search_text: "", search_type: "name"
+      expect(response.status).to eq(400)
+      expect(response.body).to eq "Parameter 'search_text' is blank"
+    end
+
+    it "returns error if search_type parameter is not valid" do
+      get :search_users, search_text: "John Doe", search_type: "weight"
+      expect(response.status).to eq(400)
+      expect(response.body).to eq "Parameter 'search_type' is invalid"
     end
 
     it "returns user search results" do

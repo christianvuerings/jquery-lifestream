@@ -10,6 +10,8 @@ class CanvasCourseAddUserController < ApplicationController
 
   # GET /api/academics/canvas/course_add_user/search_users.json
   def search_users
+    raise Errors::BadRequestError, "Parameter 'search_text' is blank" if params['search_text'].blank?
+    raise Errors::BadRequestError, "Parameter 'search_type' is invalid" unless Canvas::CourseAddUser::SEARCH_TYPES.include?(params['search_type'])
     users_found = Canvas::CourseAddUser.search_users(params['search_text'], params['search_type'])
     render json: { users: users_found }.to_json
   end
