@@ -37,16 +37,6 @@ describe Canvas::Proxy do
     profile['login_id'].should == @user_id.to_s
   end
 
-  it "should get courses as known student", :testext => true do
-    client = Canvas::UserCourses.new(:user_id => @user_id)
-    response = client.courses
-    courses = JSON.parse(response.body)
-    courses.size.should > 0
-    courses[0]['course_code'].should_not be_nil
-    courses[0]['term'].should_not be_nil
-    courses[0]['term']['name'].should_not be_nil
-  end
-
   it "should get the upcoming_events feed for a known user", :testext => true do
     client = Canvas::UpcomingEvents.new(:user_id => @user_id)
     response = client.upcoming_events
@@ -64,14 +54,6 @@ describe Canvas::Proxy do
     tasks = JSON.parse(response.body)
     tasks[0]["assignment"]["name"].should_not be_nil
     tasks[0]["assignment"]["course_id"].should_not be_nil
-  end
-
-  it "should get groups as known member", :testext => true do
-    client = Canvas::Groups.new(:user_id => @user_id)
-    response = client.groups
-    groups = JSON.parse(response.body)
-    groups.size.should > 0
-    groups[0]['name'].should_not be_nil
   end
 
   it "should get user activity feed using the Tammi account" do
@@ -104,29 +86,6 @@ describe Canvas::Proxy do
     students.length.should == 4
   end
 
-  it "should return nil if server is not available" do
-    client = Canvas::UserCourses.new(user_id: @user_id, fake: false)
-    stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
-    suppress_rails_logging {
-      response = client.courses
-      response.should be_nil
-    }
-    WebMock.reset!
-  end
-
-  it "should return nil if server returns error status" do
-    client = Canvas::UserCourses.new(user_id: @user_id, fake: false)
-    stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_return(
-        status: 503,
-        body: '<?xml version="1.0" encoding="ISO-8859-1"?>'
-    )
-    suppress_rails_logging {
-      response = client.courses
-      response.should be_nil
-    }
-    WebMock.reset!
-  end
-
   it "should find a registered user's profile" do
     client = Canvas::UserProfile.new(:user_id => @user_id)
     response = client.user_profile
@@ -135,8 +94,7 @@ describe Canvas::Proxy do
 
   it "should get Sections for any known Course" do
     client = Canvas::UserCourses.new(user_id: @user_id)
-    response = client.courses
-    courses = JSON.parse(response.body)
+    courses = client.courses
     courses.each do |course|
       sections_proxy = Canvas::CourseSections.new(course_id: course['id'])
       sections_response = sections_proxy.sections_list

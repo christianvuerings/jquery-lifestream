@@ -4,7 +4,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/courses?include%5B%5D=term&as_user_id=sis_login_id%3A300846",
+        "uri": "https://ucberkeley.instructure.com/api/v1/courses?include%5B%5D=term&as_user_id=sis_login_id%3A300846&per_page=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -41,6 +41,9 @@
           ],
           "etag": [
             "\"4b680dc594f297e0f884ebd575ee5fd9\""
+          ],
+          "link": [
+            "<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=1&per_page=100>; rel=\"current\",<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=2&per_page=100>; rel=\"next\",<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=1&per_page=100>; rel=\"first\",<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=2&per_page=100>; rel=\"last\""
           ],
           "p3p": [
             "CP=\"None, see http://www.instructure.com/privacy-policy\""
@@ -106,7 +109,103 @@
               },
               "default_view": "feed",
               "id": 767330
-            },
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 13 Dec 2012 23:55:22 GMT"
+    },
+        {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=2&per_page=100",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Mon, 24 Mar 2014 17:20:10 GMT"
+          ],
+          "etag": [
+            "\"f03a9e74478bd43479f62437f381d6a1\""
+          ],
+          "link": [
+            "<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=2&per_page=100>; rel=\"current\",<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=1&per_page=100>; rel=\"prev\",<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=1&per_page=100>; rel=\"first\",<https://ucberkeley.instructure.com/api/v1/courses?as_user_id=sis_login_id%3A300846&include%5B%5D=term&page=2&per_page=100>; rel=\"last\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=PDjv8s0sH7Ttk2LUnpm1Wg.LCvr0KfgV0rBLjnK7oGrXXFQW2HKYqo2QxRSAStrH2urnL38JyHHVcZDkRzAs0y90ATQZRUbPeWGdOFRkB-nzwe2iVPkALf3EwYQfkpdyDc.LehPp2QH3c16A10-JlYk3PgRkqM.UzBpTA; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;s=19;c=cluster19;z=us-east-1c;"
+          ],
+          "x-canvas-real-user-id": [
+            "190000003057506"
+          ],
+          "x-canvas-user-id": [
+            "190000003075912"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "7a1a1760-95a6-0131-1530-02f8856d54b5"
+          ],
+          "x-runtime": [
+            "2363"
+          ],
+          "x-session-id": [
+            "b1672dff1fd4ac9fecfb10c42c197ceb"
+          ],
+          "x-ua-compatible": [
+            "IE=Edge,chrome=1"
+          ],
+          "content-length": [
+            "5035"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
             {
               "course_code": "EE 20N",
               "enrollments": [
@@ -135,7 +234,7 @@
         },
         "http_version": null
       },
-      "recorded_at": "Thu, 13 Dec 2012 23:55:22 GMT"
+      "recorded_at": "Mon, 24 Mar 2014 17:20:12 GMT"
     }
   ],
   "recorded_with": "VCR 2.3.0"
