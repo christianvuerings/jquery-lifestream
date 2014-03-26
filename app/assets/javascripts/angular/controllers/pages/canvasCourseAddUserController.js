@@ -24,6 +24,7 @@
     };
 
     $scope.resetForm = function() {
+      $scope.searchTextType = 'text';
       $scope.search_text = '';
       $scope.showAlerts = false;
       resetSearchState();
@@ -73,6 +74,10 @@
       postMessage({
         height: docHeight
       });
+    };
+
+    $scope.updateSearchTextType = function() {
+      $scope.searchTextType = (['student_id', 'ldap_user_id'].indexOf($scope.search_type) === -1) ? 'text' : 'number';
     };
 
     $scope.searchUsers = function() {

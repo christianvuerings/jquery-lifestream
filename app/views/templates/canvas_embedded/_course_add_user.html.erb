@@ -61,7 +61,7 @@
             <div class="row bc-horizontal-form">
               <div class="medium-5 columns">
                 <label for="search-text" class="cc-visuallyhidden">Search users</label>
-                <input id="search-text" class="bc-form-entity bc-input" type="text" placeholder="Find a person to add" data-ng-model="search_text">
+                <input id="search-text" class="bc-form-entity bc-input" type="{{searchTextType}}" placeholder="Find a person to add" data-ng-model="search_text">
               </div>
 
               <div class="medium-6 columns">
@@ -70,7 +70,7 @@
                     <label for="search-type" class="bc-label bc-label-horizontal bc-form-entities">By:</label>
                   </div>
                   <div class="medium-10 columns">
-                    <select id="search-type" data-ng-model="search_type" class="bc-form-entity">
+                    <select id="search-type" data-ng-model="search_type" data-ng-change="updateSearchTextType()" class="bc-form-entity">
                       <option value="name">Last Name, First Name</option>
                       <option value="email">Email</option>
                       <option value="student_id">Student ID</option>

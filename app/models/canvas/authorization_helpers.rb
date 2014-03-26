@@ -57,6 +57,9 @@ module Canvas
 
     def handle_client_error(error)
       case error.class.to_s
+        when 'Errors::BadRequestError'
+          logger.warn "Request made to #{controller_name}\##{action_name} unauthorized: #{error.message}"
+          render text: error.message, status: 400 and return
         when 'Errors::UnauthorizedError'
           logger.warn "Request made to #{controller_name}\##{action_name} unauthorized: #{error.message}"
           render nothing: true, status: 401 and return
