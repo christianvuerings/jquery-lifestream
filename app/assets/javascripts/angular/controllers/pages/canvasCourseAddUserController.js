@@ -26,14 +26,24 @@
     $scope.resetForm = function() {
       $scope.searchTextType = 'text';
       $scope.search_text = '';
+      $scope.searchTypeNotice = '';
       $scope.showAlerts = false;
       resetSearchState();
       resetImportState();
     };
 
+    var setSearchTypeNotice = function() {
+      if ($scope.search_type === 'student_id') {
+        $scope.searchTypeNotice = 'Student IDs must be an exact match.';
+      } else if ($scope.search_type === 'ldap_user_id') {
+        $scope.searchTypeNotice = 'CalNet UIDs must be an exact match.';
+      } else {
+        $scope.searchTypeNotice = '';
+      }
+    };
+
     // Initialize upon load
     $scope.resetForm();
-
     $scope.search_type = 'name';
     $scope.userRoles = [
       {
@@ -113,6 +123,7 @@
             $scope.selectedUser = data.users[0];
           }
         } else {
+          setSearchTypeNotice();
           $scope.userSearchResultsCount = 0;
           $scope.noSearchResultsNotice = true;
         }
