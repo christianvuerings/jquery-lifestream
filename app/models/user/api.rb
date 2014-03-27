@@ -93,7 +93,7 @@ module User
       roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
       {
         :isSuperuser => current_user.is_superuser?,
-        :is_viewer => current_user.is_viewer?,
+        :isViewer => current_user.is_viewer?,
         :firstLoginAt => @first_login_at,
         :first_name => @first_name,
         :full_name => @first_name + ' ' + @last_name,
