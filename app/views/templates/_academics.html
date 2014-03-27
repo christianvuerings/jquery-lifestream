@@ -281,7 +281,7 @@
                     <tr>
                       <th width="25%" scope="col">Class</th>
                       <th width="60%" scope="col">Title</th>
-                      <th width="20%" scope="col" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket != 'current')}">
+                      <th width="20%" scope="col" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket === 'past')}">
                         <span data-ng-if="semester.time_bucket !== 'past'">Units</span>
                         <span data-ng-if="semester.time_bucket === 'past'" title="Units">Un.</span>
                       </th>
@@ -292,7 +292,7 @@
                     <tr data-ng-repeat="class in semester.classes">
                       <td><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{class.slug}}" data-ng-bind="class.course_code"></a></td>
                       <td data-ng-bind="class.title"></td>
-                      <td data-ng-bind="class.units | number:1" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket != 'current')}"></td>
+                      <td data-ng-bind="class.units | number:1" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket === 'past')}"></td>
                       <td data-ng-bind="class.grade" data-ng-if="semester.time_bucket === 'past'">Gr.</td>
                     </tr>
                   </tbody>
