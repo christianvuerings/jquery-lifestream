@@ -33,7 +33,7 @@ class MyAcademics::Exams
       time = "#{to_time(exam_data.css("startTime"))}#{to_text(exam_data.css("startTimeAmPmFlag"))}"
       raw_location = to_text exam.css("location")
       location = {
-        :raw_location => raw_location
+        :rawLocation => raw_location
       }
       location_data = Berkeley::Buildings.get(raw_location)
       unless location_data.nil?

@@ -12,7 +12,7 @@ describe "MyAcademics::Exams" do
     feed[:exam_schedule].should_not be_nil
     feed[:exam_schedule][0][:course_code].should == "Psychology C120"
     feed[:exam_schedule][0][:time].should == "8:00A"
-    feed[:exam_schedule][0][:location][:raw_location].should == "390 HEARST MIN"
+    feed[:exam_schedule][0][:location][:rawLocation].should == "390 HEARST MIN"
     feed[:exam_schedule][0][:location]["room_number"].should == "390"
     feed[:exam_schedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
     # Make sure the date epoch matches the expected date.
@@ -30,7 +30,7 @@ describe "MyAcademics::Exams" do
     MyAcademics::Exams.new("865826").merge(feed)
 
     feed[:exam_schedule].should_not be_nil
-    feed[:exam_schedule][0][:location][:raw_location].should == "F295 HAAS"
+    feed[:exam_schedule][0][:location][:rawLocation].should == "F295 HAAS"
   end
 
   it "should not return any exam schedules for exam information not matching current_year and term" do

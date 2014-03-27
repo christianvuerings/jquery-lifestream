@@ -818,7 +818,7 @@
       },
       "time": "8:00A",
       "location": {
-        "raw_location": "390 HEARST MIN",
+        "rawLocation": "390 HEARST MIN",
         "display": "Hearst Memorial Mining Building",
         "lat": "37.874459999999999",
         "lon": "-122.25727000000001",
@@ -834,7 +834,7 @@
       },
       "time": "3:00P",
       "location": {
-        "raw_location": "100 GPB",
+        "rawLocation": "100 GPB",
         "display": "Genetics & Plant Biology Building",
         "lat": "37.873429999999999",
         "lon": "-122.26473",
@@ -850,7 +850,7 @@
       },
       "time": "3:00P",
       "location": {
-        "raw_location": "2060 VALLEY LSB",
+        "rawLocation": "2060 VALLEY LSB",
         "display": "Valley Life Sciences Building",
         "lat": "37.871479999999998",
         "lon": "-122.26211000000001",
