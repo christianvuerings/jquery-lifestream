@@ -16,7 +16,7 @@
     "app_alerts": true
   },
   "actingAsUid": "1051203",
-  "is_superuser": false,
+  "isSuperuser": false,
   "is_viewer": false,
   "first_login_at": "2014-02-05T05:37:02-08:00",
   "first_name": "IWQROE",

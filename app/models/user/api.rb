@@ -92,7 +92,7 @@ module User
       has_instructor_history = campus_courses_proxy.has_instructor_history?
       roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
       {
-        :is_superuser => current_user.is_superuser?,
+        :isSuperuser => current_user.is_superuser?,
         :is_viewer => current_user.is_viewer?,
         :firstLoginAt => @first_login_at,
         :first_name => @first_name,
