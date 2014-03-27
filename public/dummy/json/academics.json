@@ -532,7 +532,7 @@
               ],
               "schedules": [
                 {
-                  "building_name": "VALLEY LSB",
+                  "buildingName": "VALLEY LSB",
                   "room_number": "2030",
                   "schedule": "M 4:00P-5:00P"
                 }
@@ -553,7 +553,7 @@
               ],
               "schedules": [
                 {
-                  "building_name": "PIMENTAL",
+                  "buildingName": "PIMENTAL",
                   "room_number": "1",
                   "schedule": "M 2:00P-3:00P"
                 }
@@ -584,12 +584,12 @@
               ],
               "schedules": [
                 {
-                  "building_name": "WHEELER",
+                  "buildingName": "WHEELER",
                   "room_number": "0210",
                   "schedule": "TuTh 2:00P-3:30P"
                 },
                 {
-                  "building_name": "DWINELLE",
+                  "buildingName": "DWINELLE",
                   "room_number": "117",
                   "schedule": "W 4:00P-5:30P"
                 }
@@ -712,7 +712,7 @@
               "is_primary_section": true,
               "schedules": [
                 {
-                  "building_name": "PIMENTAL",
+                  "buildingName": "PIMENTAL",
                   "room_number": "1",
                   "schedule": "MWF 8:00A-9:00A"
                 }
@@ -740,7 +740,7 @@
               ],
               "schedules": [
                 {
-                  "building_name": "LECONTE",
+                  "buildingName": "LECONTE",
                   "room_number": "0004",
                   "schedule": "F 12:00P-1:00P"
                 }
@@ -798,7 +798,7 @@
               ],
               "schedules": [
                 {
-                  "building_name": "PIMENTAL",
+                  "buildingName": "PIMENTAL",
                   "room_number": "12",
                   "schedule": "MWF 11:00A-12:00P"
                 }

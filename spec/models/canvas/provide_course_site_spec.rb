@@ -137,8 +137,8 @@ describe Canvas::ProvideCourseSite do
           :title=>"The Beauty and Joy of Computing",
           :role=>"Instructor",
           :sections=>[
-            {:ccn=>"1136", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 102", :section_number=>"102", :schedules=>[{:building_name=>"SODA", :room_number=>"0320", :schedule=>"M 8:00A-9:00A"}], :instructors=>[{:name=>"Seth Mark Beckley", :uid=>"937403"}]},
-            {:ccn=>"1204", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 109", :section_number=>"109", :schedules=>[{:building_name=>"SODA", :room_number=>"0320", :schedule=>"M 12:00P-1:00P"}], :instructors=>[{:name=>"Seth Mark Beckley", :uid=>"937403"}]}
+            {:ccn=>"1136", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 102", :section_number=>"102", :schedules=>[{:buildingName=>"SODA", :room_number=>"0320", :schedule=>"M 8:00A-9:00A"}], :instructors=>[{:name=>"Seth Mark Beckley", :uid=>"937403"}]},
+            {:ccn=>"1204", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 109", :section_number=>"109", :schedules=>[{:buildingName=>"SODA", :room_number=>"0320", :schedule=>"M 12:00P-1:00P"}], :instructors=>[{:name=>"Seth Mark Beckley", :uid=>"937403"}]}
           ]
         }
       ]

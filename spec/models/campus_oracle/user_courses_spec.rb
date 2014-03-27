@@ -32,7 +32,7 @@ describe CampusOracle::UserCourses do
           section[:instructors].length.should == 1
           section[:instructors][0][:name].present?.should be_true
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
-          section[:schedules][0][:building_name].should == "WHEELER"
+          section[:schedules][0][:buildingName].should == "WHEELER"
         end
       end
     end
