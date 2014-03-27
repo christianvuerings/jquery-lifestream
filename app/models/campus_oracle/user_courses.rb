@@ -64,7 +64,7 @@ module CampusOracle
           item[:cred_cd] = row["cred_cd"]
           item[:transcript_unit] = row["transcript_unit"]
           if row['enroll_status'] == 'W'
-            item[:waitlist_position] = row['wait_list_seq_num']
+            item[:waitlistPosition] = row['wait_list_seq_num']
             item[:enroll_limit] = row['enroll_limit']
           end
           semester_key = "#{item[:term_yr]}-#{item[:term_cd]}"
@@ -201,7 +201,7 @@ module CampusOracle
       }
       # This only applies to enrollment records and will be skipped for instructors.
       if row['enroll_status'] == 'W'
-        section_data[:waitlist_position] = row['wait_list_seq_num']
+        section_data[:waitlistPosition] = row['wait_list_seq_num']
         section_data[:enroll_limit] = row['enroll_limit']
       end
       section_data

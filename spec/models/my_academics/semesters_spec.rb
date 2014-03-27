@@ -31,7 +31,7 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
       it { subject[0][:classes][0][:dept].should eq "BIOLOGY" }
       it { subject[0][:classes][0][:sections].length.should eq 1 }
       it { subject[0][:classes][0][:sections][0][:ccn].should eq "07309" }
-      it { subject[0][:classes][0][:sections][0][:waitlist_position].should eq "42" }
+      it { subject[0][:classes][0][:sections][0][:waitlistPosition].should eq "42" }
       it { subject[0][:classes][0][:sections][0][:enroll_limit].should eq "5000" }
       it { subject[1][:name].should eq "Spring 2014" }
       it { subject[1][:time_bucket].should eq 'future'}

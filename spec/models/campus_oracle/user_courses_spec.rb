@@ -62,7 +62,7 @@ describe CampusOracle::UserCourses do
     courses = client.get_all_campus_courses
     courses["2015-B"].length.should == 1
     course = courses["2015-B"][0]
-    course[:waitlist_position].should == '42'
+    course[:waitlistPosition].should == '42'
     course[:enroll_limit].should == '5000'
   end
 

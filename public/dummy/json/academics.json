@@ -472,7 +472,7 @@
               "schedules": [],
               "section_label": "LEC 003",
               "section_number": "003",
-              "waitlist_position": "29"
+              "waitlistPosition": "29"
             },
             {
               "ccn": "07311",
@@ -483,7 +483,7 @@
               "schedules": [],
               "section_label": "DIS 005",
               "section_number": "005",
-              "waitlist_position": "3"
+              "waitlistPosition": "3"
             },
             {
               "ccn": "07310",
