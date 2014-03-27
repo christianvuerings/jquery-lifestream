@@ -3,11 +3,11 @@ require "spec_helper"
 describe "MyTasks" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_google_tasks_list_proxy = GoogleApps::Tasks.new({fake: true})
+    @fake_google_tasks_list_proxy = GoogleApps::TasksList.new({fake: true})
     @fake_google_update_task_proxy = GoogleApps::UpdateTask.new({fake: true})
     @fake_google_clear_completed_tasks_proxy = GoogleApps::ClearTaskList.new({fake: true})
     @fake_google_tasks_array = @fake_google_tasks_list_proxy.tasks_list
-    @real_google_tasks_list_proxy = GoogleApps::Tasks.new(:access_token => Settings.google_proxy.test_user_access_token,
+    @real_google_tasks_list_proxy = GoogleApps::TasksList.new(:access_token => Settings.google_proxy.test_user_access_token,
                                                              :refresh_token => Settings.google_proxy.test_user_refresh_token,
                                                              :expiration_time => 0)
     @real_google_update_task_proxy = GoogleApps::UpdateTask.new(:access_token => Settings.google_proxy.test_user_access_token,
@@ -28,7 +28,7 @@ describe "MyTasks" do
       Time.zone = 'America/Los_Angeles'
       GoogleApps::Proxy.stub(:access_granted?).and_return(true)
       Canvas::Proxy.stub(:access_granted?).and_return(true)
-      GoogleApps::Tasks.stub(:new).and_return(@fake_google_tasks_list_proxy)
+      GoogleApps::TasksList.stub(:new).and_return(@fake_google_tasks_list_proxy)
       Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
       Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
       my_tasks_model = MyTasks::Merged.new(@user_id)
@@ -176,7 +176,7 @@ describe "MyTasks" do
   it "should return Google tasks when Canvas service is unavailable" do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     Canvas::Proxy.stub(:access_granted?).and_return(true)
-    GoogleApps::Tasks.stub(:new).and_return(@fake_google_tasks_list_proxy)
+    GoogleApps::TasksList.stub(:new).and_return(@fake_google_tasks_list_proxy)
     Canvas::Proxy.any_instance.stub(:request).and_return(nil)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     tasks = my_tasks_model.get_feed["tasks"]
@@ -205,7 +205,7 @@ describe "MyTasks" do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
     Google::APIClient.stub(:execute).and_raise(StandardError)
-    GoogleApps::Tasks.stub(:new).and_return(@real_google_tasks_list_proxy)
+    GoogleApps::TasksList.stub(:new).and_return(@real_google_tasks_list_proxy)
     GoogleApps::UpdateTask.stub(:new).and_return(@real_google_update_task_proxy)
     GoogleApps::ClearTaskList.stub(:new).and_return(@real_google_clear_completed_tasks_proxy)
     my_tasks_model = MyTasks::Merged.new(@user_id)

@@ -68,7 +68,7 @@ describe "GoogleTaskList" do
     clear_completed_tasklist_proxy = GoogleApps::ClearTaskList.new proxy_opts
     clear_completed_response = clear_completed_tasklist_proxy.clear_task_list test_task_list_id
     clear_completed_response.should be_true
-    get_tasks_proxy = GoogleApps::Tasks.new proxy_opts
+    get_tasks_proxy = GoogleApps::TasksList.new proxy_opts
     response = get_tasks_proxy.tasks_list(optional_params={:tasklist => test_task_list_id}).first
     response.data["kind"].should == "tasks#tasks"
     response.data["items"].each do |entry|

@@ -15,7 +15,7 @@ module MyTasks
       self.class.fetch_from_cache(@uid) {
         all_tasks = []
         filtered_tasks = []
-        google_proxy = GoogleApps::Tasks.new(user_id: @uid)
+        google_proxy = GoogleApps::TasksList.new(user_id: @uid)
 
         Rails.logger.info "#{self.class.name} Sorting Google tasks into buckets with starting_date #{@starting_date}"
         google_proxy.tasks_list.each do |response_page|
