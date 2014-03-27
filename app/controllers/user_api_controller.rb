@@ -12,7 +12,7 @@ class UserApiController < ApplicationController
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "-1"
     render :json => {
-      :am_i_logged_in => !!session[:user_id]
+      :amILoggedIn => !!session[:user_id]
     }.to_json
   end
 
