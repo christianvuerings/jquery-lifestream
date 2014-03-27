@@ -15,7 +15,7 @@
         assignment: ' Assignments',
         announcement: ' Announcements',
         discussion: ' Discussions',
-        grade_posting: ' Grades Posted',
+        gradePosting: ' Grades Posted',
         message: ' Status Changes',
         webconference: ' Webconferences'
       };
@@ -26,7 +26,7 @@
         assignment: 'book',
         discussion: 'comments',
         financial: 'usd',
-        grade_posting: 'trophy',
+        gradePosting: 'trophy',
         info: 'info-circle',
         message: 'check-circle',
         webconference: 'video-camera'

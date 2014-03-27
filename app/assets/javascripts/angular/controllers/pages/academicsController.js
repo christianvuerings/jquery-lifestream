@@ -139,7 +139,7 @@
         var sections = [];
         for (var j = 0; j < course.sections.length; j++) {
           var section = course.sections[j];
-          if ((findWaitlisted && section.waitlist_position) || (!findWaitlisted && !section.waitlist_position)) {
+          if ((findWaitlisted && section.waitlistPosition) || (!findWaitlisted && !section.waitlistPosition)) {
             sections.push(section);
           }
         }

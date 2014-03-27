@@ -32,7 +32,7 @@ describe CampusOracle::UserCourses do
           section[:instructors].length.should == 1
           section[:instructors][0][:name].present?.should be_true
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
-          section[:schedules][0][:building_name].should == "WHEELER"
+          section[:schedules][0][:buildingName].should == "WHEELER"
         end
       end
     end
@@ -62,7 +62,7 @@ describe CampusOracle::UserCourses do
     courses = client.get_all_campus_courses
     courses["2015-B"].length.should == 1
     course = courses["2015-B"][0]
-    course[:waitlist_position].should == '42'
+    course[:waitlistPosition].should == '42'
     course[:enroll_limit].should == '5000'
   end
 

@@ -35,9 +35,9 @@ describe "CampusOracle::CourseSections" do
       data[:instructors][0][:uid].should == "238382"
       data[:schedules].length.should == 2
       data[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
-      data[:schedules][0][:building_name].should == "WHEELER"
+      data[:schedules][0][:buildingName].should == "WHEELER"
       data[:schedules][1][:schedule].should == "W 4:00P-5:30P"
-      data[:schedules][1][:building_name].should == "DWINELLE"
+      data[:schedules][1][:buildingName].should == "DWINELLE"
     end
 
     it "should filter out the empty schedules" do
@@ -66,8 +66,8 @@ describe "CampusOracle::CourseSections" do
       CampusOracle::Queries.should_receive(:get_section_schedules).and_return(stubbed_schedules)
       #allow(CampusOracle::Queries).to receive(:get_section_schedules).and_return(stubbed_schedules)
       result = client.get_section_data
-      result[:schedules][0][:room_number].should == nil
-      result[:schedules][1][:room_number].should == "1"
+      result[:schedules][0][:roomNumber].should == nil
+      result[:schedules][1][:roomNumber].should == "1"
     end
 
   end

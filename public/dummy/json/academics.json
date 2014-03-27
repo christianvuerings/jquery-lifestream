@@ -472,7 +472,7 @@
               "schedules": [],
               "section_label": "LEC 003",
               "section_number": "003",
-              "waitlist_position": "29"
+              "waitlistPosition": "29"
             },
             {
               "ccn": "07311",
@@ -483,7 +483,7 @@
               "schedules": [],
               "section_label": "DIS 005",
               "section_number": "005",
-              "waitlist_position": "3"
+              "waitlistPosition": "3"
             },
             {
               "ccn": "07310",
@@ -532,8 +532,8 @@
               ],
               "schedules": [
                 {
-                  "building_name": "VALLEY LSB",
-                  "room_number": "2030",
+                  "buildingName": "VALLEY LSB",
+                  "roomNumber": "2030",
                   "schedule": "M 4:00P-5:00P"
                 }
               ]
@@ -553,8 +553,8 @@
               ],
               "schedules": [
                 {
-                  "building_name": "PIMENTAL",
-                  "room_number": "1",
+                  "buildingName": "PIMENTAL",
+                  "roomNumber": "1",
                   "schedule": "M 2:00P-3:00P"
                 }
               ]
@@ -584,13 +584,13 @@
               ],
               "schedules": [
                 {
-                  "building_name": "WHEELER",
-                  "room_number": "0210",
+                  "buildingName": "WHEELER",
+                  "roomNumber": "0210",
                   "schedule": "TuTh 2:00P-3:30P"
                 },
                 {
-                  "building_name": "DWINELLE",
-                  "room_number": "117",
+                  "buildingName": "DWINELLE",
+                  "roomNumber": "117",
                   "schedule": "W 4:00P-5:30P"
                 }
               ]
@@ -712,8 +712,8 @@
               "is_primary_section": true,
               "schedules": [
                 {
-                  "building_name": "PIMENTAL",
-                  "room_number": "1",
+                  "buildingName": "PIMENTAL",
+                  "roomNumber": "1",
                   "schedule": "MWF 8:00A-9:00A"
                 }
               ],
@@ -740,8 +740,8 @@
               ],
               "schedules": [
                 {
-                  "building_name": "LECONTE",
-                  "room_number": "0004",
+                  "buildingName": "LECONTE",
+                  "roomNumber": "0004",
                   "schedule": "F 12:00P-1:00P"
                 }
               ]
@@ -798,8 +798,8 @@
               ],
               "schedules": [
                 {
-                  "building_name": "PIMENTAL",
-                  "room_number": "12",
+                  "buildingName": "PIMENTAL",
+                  "roomNumber": "12",
                   "schedule": "MWF 11:00A-12:00P"
                 }
               ]
@@ -818,11 +818,11 @@
       },
       "time": "8:00A",
       "location": {
-        "raw_location": "390 HEARST MIN",
+        "rawLocation": "390 HEARST MIN",
         "display": "Hearst Memorial Mining Building",
         "lat": "37.874459999999999",
         "lon": "-122.25727000000001",
-        "room_number": "390"
+        "roomNumber": "390"
       },
       "course_code": "Psychology C120"
     },
@@ -834,11 +834,11 @@
       },
       "time": "3:00P",
       "location": {
-        "raw_location": "100 GPB",
+        "rawLocation": "100 GPB",
         "display": "Genetics & Plant Biology Building",
         "lat": "37.873429999999999",
         "lon": "-122.26473",
-        "room_number": "100"
+        "roomNumber": "100"
       },
       "course_code": "Psychology 133"
     },
@@ -850,11 +850,11 @@
       },
       "time": "3:00P",
       "location": {
-        "raw_location": "2060 VALLEY LSB",
+        "rawLocation": "2060 VALLEY LSB",
         "display": "Valley Life Sciences Building",
         "lat": "37.871479999999998",
         "lon": "-122.26211000000001",
-        "room_number": "2060"
+        "roomNumber": "2060"
       },
       "course_code": "Education 140"
     }

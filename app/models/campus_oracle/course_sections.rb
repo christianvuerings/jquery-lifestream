@@ -80,8 +80,8 @@ module CampusOracle
           schedule_event.reject! { |k, v| v.nil? }
 
           if schedule_event.count > 0
-            schedules << {:building_name => schedule_event['building_name'],
-                          :room_number => strip_leading_zeros(schedule_event['room_number']),
+            schedules << {:buildingName => schedule_event['building_name'],
+                          :roomNumber => strip_leading_zeros(schedule_event['room_number']),
                           :schedule => translate_meeting(schedule_event)
             }
           end

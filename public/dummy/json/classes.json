@@ -15,14 +15,14 @@
           "instruction_format": "LEC",
           "section_number": "001",
           "schedules": [
-            {"building_name": "DOE LIBRARY", "room_number": "0425", "schedule": "MTuWTh 12:00P-2:00P"}
+            {"buildingName": "DOE LIBRARY", "roomNumber": "0425", "schedule": "MTuWTh 12:00P-2:00P"}
           ],
           "instructors": [{"name": "Dr. X", "uid": "999"}]},
         {"ccn": "12346", "instruction_format": "DIS", "section_number": "101",
           "schedules": [], "instructors": [{"name": "Gee Esai", "uid": "1111"}]}
       ],
       "role": "Student",
-      "waitlist_position": "2",
+      "waitlistPosition": "2",
       "enroll_limit": "50",
       "emitter": "Campus"
     },
