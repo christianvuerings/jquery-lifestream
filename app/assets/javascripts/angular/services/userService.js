@@ -44,7 +44,7 @@
         analyticsService.sendEvent('Authentication', 'Sign in - redirect to login');
         signIn();
       // Record that the user visited calcentral
-      } else if (events.isAuthenticated && !profile.firstLoginAt) {
+      } else if (events.isAuthenticated && !profile.firstLoginAt && !profile.actingAsUid) {
         analyticsService.sendEvent('Authentication', 'First login');
         $http.post('/api/my/record_first_login').success(setFirstLogin);
       // Redirect to the dashboard when you're accessing the root page and are authenticated
