@@ -7,7 +7,7 @@ describe GoogleAuthController do
 
   it "should store a dismiss_reminder key-value when there's no token for a user" do
     session[:user_id] = @user_id
-    Google::Proxy.stub(:access_granted?).with(@user_id).and_return(false)
+    GoogleApps::Proxy.stub(:access_granted?).with(@user_id).and_return(false)
     post :dismiss_reminder, { :format => 'json' }
     response.status.should eq(200)
     json_response = JSON.parse(response.body)
@@ -16,7 +16,7 @@ describe GoogleAuthController do
 
   it "should not store a dismiss_reminder key-value when there's an existing token" do
     session[:user_id] = @user_id
-    Google::Proxy.stub(:access_granted?).with(@user_id).and_return(true)
+    GoogleApps::Proxy.stub(:access_granted?).with(@user_id).and_return(true)
     post :dismiss_reminder, { :format => 'json' }
     response.status.should eq(200)
     json_response = JSON.parse(response.body)

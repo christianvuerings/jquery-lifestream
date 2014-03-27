@@ -26,7 +26,7 @@ module MyBadges
       last_viewed_change ||= @one_month_ago.iso8601
       query = "modifiedDate >= '#{last_viewed_change}' and trashed = false"
 
-      google_proxy = Google::DriveList.new(user_id: @uid)
+      google_proxy = GoogleApps::DriveList.new(user_id: @uid)
       google_drive_results = google_proxy.drive_list(optional_params={q: query}, page_limiter=@page_limiter)
 
       response = {

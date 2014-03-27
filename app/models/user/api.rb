@@ -99,7 +99,7 @@ module User
         :full_name => @first_name + ' ' + @last_name,
         :isGoogleReminderDismissed => is_google_reminder_dismissed,
         :hasCanvasAccount => Canvas::Proxy.has_account?(@uid),
-        :hasGoogleAccessToken => Google::Proxy.access_granted?(@uid),
+        :hasGoogleAccessToken => GoogleApps::Proxy.access_granted?(@uid),
         :hasStudentHistory => has_student_history,
         :hasInstructorHistory => has_instructor_history,
         :hasAcademicsTab => (
