@@ -7,14 +7,14 @@
     <div data-ng-controller="BooklistController">
       <h1 class="cc-heading-page-title cc-ellipsis cc-left cc-print-hide">
         <a href="/academics">My Academics</a> &raquo;
-        <a data-ng-href="/academics/semester/{{semesterSlug}}" data-ng-bind="semester_name"></a> &raquo;
+        <a data-ng-href="/academics/semester/{{semesterSlug}}" data-ng-bind="semesterName"></a> &raquo;
         Book List
       </h1>
 
       <div class="cc-widget medium-8 columns cc-academics-page-left cc-clearfix">
         <div class="cc-widget-title">
           <div class="cc-left">
-            <h2>My Book List &raquo; <span data-ng-bind="semester_name"></span></h2>
+            <h2>My Book List &raquo; <span data-ng-bind="semesterName"></span></h2>
           </div>
         </div>
         <div data-cc-spinner-directive class="cc-academics-semester-books">
