@@ -6,7 +6,7 @@ require 'pp'
 namespace :memcached do
 
   desc 'Fetch memcached stats from all cluster nodes'
-  task :get_stats do
+  task :get_stats => :environment do
     hosts = ENV['hosts']
     if hosts.blank?
       config = CalcentralConfig.load_settings
@@ -62,7 +62,7 @@ namespace :memcached do
   end
 
   desc 'Reset memcached stats from all cluster nodes'
-  task :clear_stats do
+  task :clear_stats => :environment do
     hosts = ENV['hosts']
     if hosts.blank?
       config = CalcentralConfig.load_settings
@@ -90,7 +90,7 @@ namespace :memcached do
   end
 
   desc 'Invalidate all memcached keys from all cluster nodes'
-  task :empty do
+  task :empty  => :environment do
     hosts = ENV['hosts']
     if hosts.blank?
       config = CalcentralConfig.load_settings
