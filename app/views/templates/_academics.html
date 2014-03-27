@@ -282,8 +282,8 @@
                       <th width="25%" scope="col">Class</th>
                       <th width="60%" scope="col">Title</th>
                       <th width="20%" scope="col" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket != 'current')}">
-                        <span data-ng-if="semester.time_bucket === 'current'">Units</span>
-                        <span data-ng-if="semester.time_bucket !== 'current'" title="Units">Un.</span>
+                        <span data-ng-if="semester.time_bucket !== 'past'">Units</span>
+                        <span data-ng-if="semester.time_bucket === 'past'" title="Units">Un.</span>
                       </th>
                       <th width="25%" scope="col" data-ng-if="semester.time_bucket === 'past'" title="Grades">Gr.</th>
                     </tr>
