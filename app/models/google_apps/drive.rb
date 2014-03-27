@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class Drive < Proxy
 
     def self.api

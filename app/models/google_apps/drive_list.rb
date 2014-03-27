@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class DriveList < Drive
 
     def drive_list(optional_params={}, page_limiter=nil)

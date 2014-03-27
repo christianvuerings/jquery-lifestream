@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class EventsInsert < Events
     def insert_event(body)
       request(api: self.class.api,

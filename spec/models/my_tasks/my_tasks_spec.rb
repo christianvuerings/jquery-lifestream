@@ -3,17 +3,17 @@ require "spec_helper"
 describe "MyTasks" do
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_google_tasks_list_proxy = Google::TasksList.new({fake: true})
-    @fake_google_update_task_proxy = Google::UpdateTask.new({fake: true})
-    @fake_google_clear_completed_tasks_proxy = Google::ClearTaskList.new({fake: true})
+    @fake_google_tasks_list_proxy = GoogleApps::Tasks.new({fake: true})
+    @fake_google_update_task_proxy = GoogleApps::UpdateTask.new({fake: true})
+    @fake_google_clear_completed_tasks_proxy = GoogleApps::ClearTaskList.new({fake: true})
     @fake_google_tasks_array = @fake_google_tasks_list_proxy.tasks_list
-    @real_google_tasks_list_proxy = Google::TasksList.new(:access_token => Settings.google_proxy.test_user_access_token,
+    @real_google_tasks_list_proxy = GoogleApps::Tasks.new(:access_token => Settings.google_proxy.test_user_access_token,
                                                              :refresh_token => Settings.google_proxy.test_user_refresh_token,
                                                              :expiration_time => 0)
-    @real_google_update_task_proxy = Google::UpdateTask.new(:access_token => Settings.google_proxy.test_user_access_token,
+    @real_google_update_task_proxy = GoogleApps::UpdateTask.new(:access_token => Settings.google_proxy.test_user_access_token,
                                                                :refresh_token => Settings.google_proxy.test_user_refresh_token,
                                                                :expiration_time => 0)
-    @real_google_clear_completed_tasks_proxy = Google::ClearTaskList.new(:access_token => Settings.google_proxy.test_user_access_token,
+    @real_google_clear_completed_tasks_proxy = GoogleApps::ClearTaskList.new(:access_token => Settings.google_proxy.test_user_access_token,
                                                                             :refresh_token => Settings.google_proxy.test_user_refresh_token,
                                                                             :expiration_time => 0)
     @fake_canvas_proxy = Canvas::Proxy.new({fake: true})
@@ -26,9 +26,9 @@ describe "MyTasks" do
     original_time_zone = Time.zone
     begin
       Time.zone = 'America/Los_Angeles'
-      Google::Proxy.stub(:access_granted?).and_return(true)
+      GoogleApps::Proxy.stub(:access_granted?).and_return(true)
       Canvas::Proxy.stub(:access_granted?).and_return(true)
-      Google::TasksList.stub(:new).and_return(@fake_google_tasks_list_proxy)
+      GoogleApps::Tasks.stub(:new).and_return(@fake_google_tasks_list_proxy)
       Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
       Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
       my_tasks_model = MyTasks::Merged.new(@user_id)
@@ -67,7 +67,7 @@ describe "MyTasks" do
             unscheduled_counter -= 1
         end
 
-        if task["emitter"] == Google::Proxy::APP_ID
+        if task["emitter"] == GoogleApps::Proxy::APP_ID
           task["linkUrl"].should == "https://mail.google.com/tasks/canvas?pli=1"
           if task["dueDate"]
             task["dueDate"]["date_string"] =~ /\d\d\/\d\d/
@@ -116,10 +116,10 @@ describe "MyTasks" do
   end
 
   it "should fail google update_tasks param validation, invalid parameter(s)" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     my_tasks = MyTasks::Merged.new @user_id
     expect {
-      my_tasks.update_task({"type" => "sometype", "emitter" => Google::Proxy::APP_ID, "status" => "completed" })
+      my_tasks.update_task({"type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed" })
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       error.message.should == "Missing parameter(s). Required: [\"id\"]"
@@ -127,40 +127,40 @@ describe "MyTasks" do
   end
 
   it "should fail google update_tasks with unauthorized access" do
-    Google::Proxy.stub(:access_granted?).and_return(false)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(false)
     my_tasks = MyTasks::Merged.new @user_id
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => Google::Proxy::APP_ID, "status" => "completed", "id" => "foo"})
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed", "id" => "foo"})
     response.should == {}
   end
 
   # Will fail in this case since the task_list_id won't match what's recorded in vcr, nor is a valid "remote" task id.
   it "should fail google update_tasks with a remote proxy error" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)
     my_tasks = MyTasks::Merged.new @user_id
     suppress_rails_logging {
-      response = my_tasks.update_task({"type" => "sometype", "emitter" => Google::Proxy::APP_ID, "status" => "completed", "id" => "foo"})
+      response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed", "id" => "foo"})
       response.should == {}
     }
   end
 
   it "should succeed google update_tasks with a properly formatted params" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)
     my_tasks = MyTasks::Merged.new @user_id
     task_list_id, task_id = get_task_list_id_and_task_id
-    response = my_tasks.update_task({"title" => "some bogus title", "notes" => "some bogus notes", "type" => "sometype", "emitter" => Google::Proxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
+    response = my_tasks.update_task({"title" => "some bogus title", "notes" => "some bogus notes", "type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
     response["type"].should == "task"
     response["id"].should == task_id
-    response["emitter"].should == Google::Proxy::APP_ID
+    response["emitter"].should == GoogleApps::Proxy::APP_ID
     response["status"].should == "completed"
     response["title"].should == "some bogus title"
     response["notes"].should == "some bogus notes"
   end
 
   it "should invalidate merged cache and google tasks cache on an update_task for google" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)
     my_tasks = MyTasks::Merged.new @user_id
     Rails.cache.should_receive(:fetch).with(MyTasks::Merged.cache_key(@user_id), anything())
     my_tasks.get_feed
@@ -170,25 +170,25 @@ describe "MyTasks" do
     Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key("json-pseudo_#{@user_id}"), anything())
     Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key("pseudo_#{@user_id}"), anything())
     Rails.cache.should_receive(:delete).with(MyTasks::GoogleTasks.cache_key(@user_id), anything())
-    response = my_tasks.update_task({"type" => "sometype", "emitter" => Google::Proxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
+    response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
   end
 
   it "should return Google tasks when Canvas service is unavailable" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     Canvas::Proxy.stub(:access_granted?).and_return(true)
-    Google::TasksList.stub(:new).and_return(@fake_google_tasks_list_proxy)
+    GoogleApps::Tasks.stub(:new).and_return(@fake_google_tasks_list_proxy)
     Canvas::Proxy.any_instance.stub(:request).and_return(nil)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     tasks = my_tasks_model.get_feed["tasks"]
     tasks.size.should be > 0
     tasks.each do |task|
-      task["emitter"].should == Google::Proxy::APP_ID
+      task["emitter"].should == GoogleApps::Proxy::APP_ID
     end
   end
 
   it "should clear completed Google tasks" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::ClearTaskList.stub(:new).and_return(@fake_google_clear_completed_tasks_proxy)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::ClearTaskList.stub(:new).and_return(@fake_google_clear_completed_tasks_proxy)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     response = my_tasks_model.clear_completed_tasks params={"emitter" => "Google"}
     response.should == {:tasksCleared => true}
@@ -202,23 +202,23 @@ describe "MyTasks" do
   end
 
   it "should simulate a non-responsive google", :testext => true do
-    Google::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     Google::APIClient.any_instance.stub(:execute).and_raise(StandardError)
     Google::APIClient.stub(:execute).and_raise(StandardError)
-    Google::TasksList.stub(:new).and_return(@real_google_tasks_list_proxy)
-    Google::UpdateTask.stub(:new).and_return(@real_google_update_task_proxy)
-    Google::ClearTaskList.stub(:new).and_return(@real_google_clear_completed_tasks_proxy)
+    GoogleApps::Tasks.stub(:new).and_return(@real_google_tasks_list_proxy)
+    GoogleApps::UpdateTask.stub(:new).and_return(@real_google_update_task_proxy)
+    GoogleApps::ClearTaskList.stub(:new).and_return(@real_google_clear_completed_tasks_proxy)
     my_tasks_model = MyTasks::Merged.new(@user_id)
     response = my_tasks_model.clear_completed_tasks params={"emitter" => "Google"}
     response.should == {:tasksCleared => false}
-    response = my_tasks_model.update_task({"type" => "sometype", "emitter" => Google::Proxy::APP_ID, "status" => "completed", "id" => "1"}, "1")
+    response = my_tasks_model.update_task({"type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed", "id" => "1"}, "1")
     response.should == {}
     valid_feed = my_tasks_model.get_feed
     valid_feed["tasks"].select {|entry| entry["emitter"] == "Google"}.empty?.should be_true
   end
 
   it "should not explode on Canvas feeds that have invalid json" do
-    Google::Proxy.stub(:access_granted?).and_return(false)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(false)
     Canvas::Proxy.stub(:access_granted?).and_return(true)
     Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
     Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
@@ -235,11 +235,11 @@ end
 
 def get_task_list_id_and_task_id
   #slightly roundabout way to get the task_list_ids and task_ids
-  create_proxy = Google::CreateTaskList.new(:fake => true)
+  create_proxy = GoogleApps::CreateTaskList.new(:fake => true)
   test_task_list = create_proxy.create_task_list '{"title": "test"}'
   test_task_list.response.status.should == 200
   task_list_id = test_task_list.data["id"]
-  insert_proxy = Google::InsertTask.new(:fake => true)
+  insert_proxy = GoogleApps::InsertTask.new(:fake => true)
   new_task = insert_proxy.insert_task(task_list_id=task_list_id, body='{"title": "New Task", "notes": "Please Complete me"}')
   new_task.response.status.should == 200
   task_id = new_task.data["id"]

@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   require 'google/api_client'
 
   class Proxy < BaseProxy
@@ -11,14 +11,14 @@ module Google
       super(Settings.google_proxy, options)
 
       if @fake
-        @authorization = Google::Client.new_fake_auth
+        @authorization = GoogleApps::Client.new_fake_auth
       elsif options[:user_id]
         token_settings = User::Oauth2Data.get(@uid, APP_ID)
-        @authorization = Google::Client.new_client_auth token_settings || {"access_token" => ''}
+        @authorization = GoogleApps::Client.new_client_auth token_settings || {"access_token" => ''}
       else
         auth_related_entries = [:access_token, :refresh_token, :expiration_time]
         token_settings = options.select { |k, v| auth_related_entries.include? k }.stringify_keys!
-        @authorization = Google::Client.new_client_auth token_settings
+        @authorization = GoogleApps::Client.new_client_auth token_settings
       end
 
       @fake_options = options[:fake_options] || {}
@@ -31,7 +31,7 @@ module Google
       page_params = setup_page_params(request_params)
 
       result_pages = Enumerator.new do |yielder|
-        Rails.logger.info "Google::Proxy - Making request with @fake = #{@fake}, params = #{request_params}"
+        Rails.logger.info "GoogleApps::Proxy - Making request with @fake = #{@fake}, params = #{request_params}"
 
         page_token = nil
         under_page_limit_ceiling = true
@@ -40,7 +40,7 @@ module Google
         begin
           if !page_token.blank?
             page_params[:params]["pageToken"] = page_token
-            Rails.logger.debug "Google::Proxy - Making page request with pageToken = #{page_token}"
+            Rails.logger.debug "GoogleApps::Proxy - Making page request with pageToken = #{page_token}"
           end
 
           page_token, under_page_limit_ceiling, result_page = request_transaction(page_params, num_requests)
@@ -49,7 +49,7 @@ module Google
           num_requests += 1
 
           if result_page.nil? || result_page.error?
-            Rails.logger.warn "Google::Proxy request stopped on error: #{result_page ? result_page.response.inspect : "nil"}"
+            Rails.logger.warn "GoogleApps::Proxy request stopped on error: #{result_page ? result_page.response.inspect : "nil"}"
             break
           end
         end while (page_token and under_page_limit_ceiling)
@@ -58,10 +58,10 @@ module Google
     end
 
     def simple_request(request_params, vcr_id)
-      FakeableProxy.wrap_request("#{Google::Proxy::APP_ID}#{vcr_id}", @fake, @fake_options) {
+      FakeableProxy.wrap_request("#{GoogleApps::Proxy::APP_ID}#{vcr_id}", @fake, @fake_options) {
         begin
           Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-          client = Google::Client.client.dup
+          client = GoogleApps::Client.client.dup
           if request_params[:authenticated]
             client.authorization = @authorization
           end
@@ -93,7 +93,7 @@ module Google
     def request_transaction(page_params, num_requests)
       result_page = FakeableProxy.wrap_request("#{APP_ID}#{page_params[:vcr_id]}", @fake, @fake_options) {
         begin
-          Google::Client.request_page(@authorization, page_params)
+          GoogleApps::Client.request_page(@authorization, page_params)
         rescue Exception => e
           Rails.logger.fatal "#{self.class.name}: #{e.to_s} - Unable to send request transaction"
           nil
@@ -113,7 +113,7 @@ module Google
 
     def revoke_invalid_token!(request_response)
       if @uid && request_response.response.status == 401 && request_response.error_message == "Invalid Credentials"
-        Rails.logger.info "Google::Proxy - Will delete access token for #{@uid} due to 401 Unauthorized from Google"
+        Rails.logger.info "GoogleApps::Proxy - Will delete access token for #{@uid} due to 401 Unauthorized from Google"
         User::Oauth2Data.remove(@uid, APP_ID)
       end
     end
@@ -125,7 +125,7 @@ module Google
         body: request_params[:body],
         headers: request_params[:headers],
         vcr_id: request_params[:vcr_id] || "",
-        resource_method: Google::Client.discover_resource_method(request_params[:api],
+        resource_method: GoogleApps::Client.discover_resource_method(request_params[:api],
                                                                     request_params[:resource],
                                                                     request_params[:method]),
         page_limiter: request_params[:page_limiter]
@@ -140,7 +140,7 @@ module Google
 
     def update_access_tokens!
       if @current_token && @uid && @authorization.access_token != @current_token
-        Rails.logger.info "Google::Proxy - Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
+        Rails.logger.info "GoogleApps::Proxy - Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"
         User::Oauth2Data.new_or_update(@uid, APP_ID, @authorization.access_token,
                                  @authorization.refresh_token, @authorization.expires_at.to_i)
       end

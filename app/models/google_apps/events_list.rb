@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class EventsList < Events
 
     def events_list(optional_params={})

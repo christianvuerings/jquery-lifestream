@@ -18,7 +18,7 @@ module MyBadges
     private
 
     def internal_fetch_counts(params = {})
-      google_proxy = Google::MailList.new(user_id: @uid)
+      google_proxy = GoogleApps::MailList.new(user_id: @uid)
       google_mail_results = google_proxy.mail_unread
       Rails.logger.debug "#{self.class.name}: Processing #{google_mail_results} GMail XML results"
       response = {:count => 0, :items => []}
@@ -28,7 +28,7 @@ module MyBadges
         begin
           nokogiri_xml = Nokogiri::XML.parse(google_mail_results.response.body)
         rescue Exception => e
-          Rails.logger.fatal "Error parsing XML output for Google::MailList: #{e}"
+          Rails.logger.fatal "Error parsing XML output for GoogleApps::MailList: #{e}"
           nokogiri_xml = nil
         end
 
@@ -45,7 +45,7 @@ module MyBadges
       begin
         nokogiri_xml.search('fullcount').first.content.to_i
       rescue Exception => e
-        Rails.logger.warn "#{self.class.name}: Error parsing XML output for unread counts from Google::MailList: #{e}"
+        Rails.logger.warn "#{self.class.name}: Error parsing XML output for unread counts from GoogleApps::MailList: #{e}"
         return 0
       end
     end
@@ -87,7 +87,7 @@ module MyBadges
         end
         items
       rescue Exception => e
-        Rails.logger.fatal "#{self.class.name} Error parsing XML output for mail items from Google::MailList: #{e}"
+        Rails.logger.fatal "#{self.class.name} Error parsing XML output for mail items from GoogleApps::MailList: #{e}"
         Rails.logger.debug "Full dump of xml: #{nokogiri_xml}"
       end
       items

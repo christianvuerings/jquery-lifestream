@@ -32,26 +32,26 @@ feature 'MyBadges urls:' do
   before(:each) do
     Capybara.current_driver = :selenium
     @user_id = rand(999999).to_s
-    @real_mail_list = Google::MailList.new(
+    @real_mail_list = GoogleApps::MailList.new(
       :fake => false,
       :access_token => Settings.google_proxy.test_user_access_token,
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
       :expiration_time => 0
     )
-    @real_calendar_events = Google::EventsList.new(
+    @real_calendar_events = GoogleApps::EventsList.new(
       :fake => false,
       :access_token => Settings.google_proxy.test_user_access_token,
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
       :expiration_time => 0
     )
-    @fake_calendar_events = Google::EventsList.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
+    @fake_calendar_events = GoogleApps::EventsList.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
   end
 
   scenario 'see if munged urls from google_calendar badges resolve', :testext => true do
     #This requires an existing event to be exist from the time listed below.
     event_listed_after = "2013-05-09T12:42:02-07:00"
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::EventsList.stub(:new).and_return(@real_calendar_events)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::EventsList.stub(:new).and_return(@real_calendar_events)
     results = MyBadges::GoogleCalendar.new(@user_id).fetch_counts(
       {
         timeMin: event_listed_after,
@@ -65,9 +65,9 @@ feature 'MyBadges urls:' do
 
   scenario 'see if mungled ruls from google_calendar badges != passed through urls for berkeley.edu tokens' do
     User::Oauth2Data.stub(:get_google_email).and_return("oski.the.creepy.bear@berkeley.edu")
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::EventsList.stub(:new).and_return(@fake_calendar_events)
-    raw_feed = Google::EventsList.new(@uid).recent_items.first.data["items"]
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::EventsList.stub(:new).and_return(@fake_calendar_events)
+    raw_feed = GoogleApps::EventsList.new(@uid).recent_items.first.data["items"]
     munged_feed = MyBadges::GoogleCalendar.new(@user_id).fetch_counts
     # find something where title is == summary
     found_matching_item = false

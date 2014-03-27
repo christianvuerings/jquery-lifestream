@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class Userinfo < Proxy
 
     def self.api

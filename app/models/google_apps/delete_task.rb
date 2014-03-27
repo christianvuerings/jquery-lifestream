@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class DeleteTask < Tasks
 
     def delete_task(task_list_id, task_id)

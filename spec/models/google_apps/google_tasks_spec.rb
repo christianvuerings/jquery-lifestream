@@ -25,7 +25,7 @@ describe "GoogleTaskList" do
     end
 
     # Create task list
-    create_proxy = Google::CreateTaskList.new proxy_opts
+    create_proxy = GoogleApps::CreateTaskList.new proxy_opts
     test_task_list = create_proxy.create_task_list '{"title": "test"}'
     test_task_list.response.status.should == 200
     test_task_list.data["kind"].should == "tasks#taskList"
@@ -33,7 +33,7 @@ describe "GoogleTaskList" do
     test_task_list_id.blank?.should_not == true
 
     # Insert task
-    insert_proxy = Google::InsertTask.new proxy_opts
+    insert_proxy = GoogleApps::InsertTask.new proxy_opts
     new_task = insert_proxy.insert_task(task_list_id=test_task_list_id, body='{"title": "New Task", "notes": "Please Complete me"}')
     new_task.response.status.should == 200
     new_task.data["title"].should == "New Task"
@@ -45,7 +45,7 @@ describe "GoogleTaskList" do
     template = {id: new_task_id, status: "needsAction"}
     completed = template.clone
     completed[:status] = "completed"
-    update_proxy = Google::UpdateTask.new proxy_opts
+    update_proxy = GoogleApps::UpdateTask.new proxy_opts
     completed_response = update_proxy.update_task(test_task_list_id, new_task_id, completed)
     completed_response.response.status.should == 200
     completed_response.data["status"].should == "completed"
@@ -65,10 +65,10 @@ describe "GoogleTaskList" do
     completed_response.response.status.should == 200
 
     # Clear completed tasks from tasklist
-    clear_completed_tasklist_proxy = Google::ClearTaskList.new proxy_opts
+    clear_completed_tasklist_proxy = GoogleApps::ClearTaskList.new proxy_opts
     clear_completed_response = clear_completed_tasklist_proxy.clear_task_list test_task_list_id
     clear_completed_response.should be_true
-    get_tasks_proxy = Google::TasksList.new proxy_opts
+    get_tasks_proxy = GoogleApps::Tasks.new proxy_opts
     response = get_tasks_proxy.tasks_list(optional_params={:tasklist => test_task_list_id}).first
     response.data["kind"].should == "tasks#tasks"
     response.data["items"].each do |entry|
@@ -76,12 +76,12 @@ describe "GoogleTaskList" do
     end
 
     #Delete task
-    delete_proxy = Google::DeleteTask.new proxy_opts
+    delete_proxy = GoogleApps::DeleteTask.new proxy_opts
     response = delete_proxy.delete_task(test_task_list_id, new_task_id)
     response.should be_true
 
     # Delete task list
-    delete_proxy = Google::DeleteTaskList.new proxy_opts
+    delete_proxy = GoogleApps::DeleteTaskList.new proxy_opts
     suppress_rails_logging {
       delete_response = delete_proxy.delete_task_list(test_task_list_id)
       delete_response.should == true

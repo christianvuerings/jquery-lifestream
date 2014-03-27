@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe Google::DriveList do
+describe GoogleApps::DriveList do
 
   begin
     @random_id = rand(99999).to_s
   end
 
   it "Should return a valid list of drive files" do
-    drive_list_proxy = Google::DriveList.new :fake => true
+    drive_list_proxy = GoogleApps::DriveList.new :fake => true
     drive_list_proxy.class.api.should == "drive"
     response = drive_list_proxy.drive_list
     response.kind_of?(Enumerable).should be_true

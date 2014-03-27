@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class Tasks < Proxy
 
     def self.api

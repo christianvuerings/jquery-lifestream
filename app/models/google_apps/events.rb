@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class Events < Proxy
 
     def self.api

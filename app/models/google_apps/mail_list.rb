@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class MailList < Proxy
 
     def mail_unread

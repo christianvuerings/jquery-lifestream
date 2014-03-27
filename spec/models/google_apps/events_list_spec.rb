@@ -8,7 +8,7 @@ describe 'Events(events_list)' do
 
   it "should simulate a fake, valid event list response (assuming a valid recorded fixture)" do
     #Pre-recorded response has 14 entries, split into batches of 10.
-    proxy = Google::EventsList.new(:fake => true)
+    proxy = GoogleApps::EventsList.new(:fake => true)
     response_array = proxy.events_list({:maxResults => 10}).first 2
 
     #sample response payload: https://developers.google.com/google-apps/calendar/v3/reference/events/list
@@ -19,7 +19,7 @@ describe 'Events(events_list)' do
 
   it "should return a fake event list response that matches what the UI sends for the up-next widget in fake mode" do
     today = Time.zone.today.to_time_in_current_zone.to_datetime
-    proxy = Google::EventsList.new(:fake => true)
+    proxy = GoogleApps::EventsList.new(:fake => true)
     response_array = [
       proxy.events_list(
         {
@@ -36,10 +36,10 @@ describe 'Events(events_list)' do
 
   it "should simulate a token update before a real request using the Tammi account", :testext => true do
     # by the time the fake access token is used below, it probably has well expired
-    User::Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID,
+    User::Oauth2Data.new_or_update(@random_id, GoogleApps::Proxy::APP_ID,
                              Settings.google_proxy.test_user_access_token, Settings.google_proxy.test_user_refresh_token, 0)
-    proxy = Google::EventsList.new(:user_id => @random_id)
-    Google::Proxy.access_granted?(@random_id).should be_true
+    proxy = GoogleApps::EventsList.new(:user_id => @random_id)
+    GoogleApps::Proxy.access_granted?(@random_id).should be_true
     old_token = proxy.authorization.access_token
     response = proxy.events_list.first
     response.data["kind"].should == "calendar#events"
@@ -47,14 +47,14 @@ describe 'Events(events_list)' do
   end
 
   it "should simulate revoking a token after a 401 response", :testext => true do
-    User::Oauth2Data.new_or_update(@random_id, Google::Proxy::APP_ID,
+    User::Oauth2Data.new_or_update(@random_id, GoogleApps::Proxy::APP_ID,
                              "bogus_token", "bogus_refresh_token", 0)
     suppress_rails_logging do
-      proxy = Google::EventsList.new(:user_id => @random_id)
-      Google::Proxy.access_granted?(@random_id).should be_true
+      proxy = GoogleApps::EventsList.new(:user_id => @random_id)
+      GoogleApps::Proxy.access_granted?(@random_id).should be_true
       proxy.authorization.stub(:expired?).and_return(false)
       response_array = proxy.events_list.first
-      Google::Proxy.access_granted?(@random_id).should be_false
+      GoogleApps::Proxy.access_granted?(@random_id).should be_false
     end
   end
 end

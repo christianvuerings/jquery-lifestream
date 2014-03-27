@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class CreateTaskList < Tasks
 
     def create_task_list(body)

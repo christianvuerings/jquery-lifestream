@@ -3,12 +3,12 @@ require "spec_helper"
 describe "MyBadges::bMail" do
   before(:each) do
     @user_id = rand(999999).to_s
-    @fake_mail_list = Google::MailList.new(:fake => true)
+    @fake_mail_list = GoogleApps::MailList.new(:fake => true)
   end
 
   it "OskiBear should have three unread bMail messages" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::MailList.stub(:new).and_return(@fake_mail_list)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
 
     unread = MyBadges::GoogleMail.new @user_id
     unread.fetch_counts[:count].should == 3
@@ -16,7 +16,7 @@ describe "MyBadges::bMail" do
 
   it "Unauthenticated users should have zero unread bMail messages" do
     # Intentionally not authenticating before asking for MyBadges
-    Google::Proxy.stub(:access_granted?).and_return(false)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(false)
     merged = MyBadges::Merged.new @user_id
     unread = merged.get_feed
     unread[:badges].each do |k,v|
@@ -26,8 +26,8 @@ describe "MyBadges::bMail" do
   end
 
   it "Nokogiri parse failures should raise an exception" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::MailList.stub(:new).and_return(@fake_mail_list)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
     Nokogiri::XML.stub(:parse).and_raise(StandardError)
 
     results = MyBadges::GoogleMail.new(@user_id).fetch_counts
@@ -35,8 +35,8 @@ describe "MyBadges::bMail" do
   end
 
   it "should handle bad data on xml fields" do
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::MailList.stub(:new).and_return(@fake_mail_list)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
     Nokogiri::XML::Document.any_instance.stub(:search).with('fullcount').and_return(%w(potato))
     suppress_rails_logging {
       results = MyBadges::GoogleMail.new(@user_id).fetch_counts

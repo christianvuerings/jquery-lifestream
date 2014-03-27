@@ -16,8 +16,8 @@ module UpNext
       }
 
       # act-as block for non-fake users.
-      return up_next if (is_acting_as_nonfake_user?) && !Google::Proxy.allow_pseudo_user?
-      return up_next if !Google::Proxy.access_granted?(@uid)
+      return up_next if (is_acting_as_nonfake_user?) && !GoogleApps::Proxy.allow_pseudo_user?
+      return up_next if !GoogleApps::Proxy.access_granted?(@uid)
 
       results = fetch_events(@uid)
       up_next[:items] = process_events(results)
@@ -41,7 +41,7 @@ module UpNext
     end
 
     def fetch_events(uid)
-      google_proxy = Google::EventsList.new(user_id: uid)
+      google_proxy = GoogleApps::EventsList.new(user_id: uid)
       # Using the PoC window of beginning of today(midnight, inclusive) - tomorrow(midnight, exclusive)
       google_proxy.events_list({
                                  "singleEvents" => true,

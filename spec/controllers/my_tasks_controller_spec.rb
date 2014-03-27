@@ -4,8 +4,8 @@ describe MyTasksController do
 
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_google_clear_tasks_proxy = Google::ClearTaskList.new(fake: true)
-    @fake_google_delete_tasks_proxy = Google::DeleteTask.new({fake: true})
+    @fake_google_clear_tasks_proxy = GoogleApps::ClearTaskList.new(fake: true)
+    @fake_google_delete_tasks_proxy = GoogleApps::DeleteTask.new({fake: true})
   end
 
   it "should be an empty task feed on non-authenticated user" do
@@ -39,8 +39,8 @@ describe MyTasksController do
   it "should return a valid truthy json object when successfully clearing completed google tasks" do
     session[:user_id] = @user_id
     user_payload = {"emitter" => "Google"}
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::ClearTaskList.stub(:new).and_return(@fake_google_clear_tasks_proxy)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::ClearTaskList.stub(:new).and_return(@fake_google_clear_tasks_proxy)
     post :clear_completed_tasks, user_payload
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
@@ -49,12 +49,12 @@ describe MyTasksController do
 
   it "should successfully delete a google task" do
     session[:user_id] = @user_id
-    Google::Proxy.stub(:access_granted?).and_return(true)
-    Google::DeleteTask.stub(:new).and_return(@fake_google_delete_tasks_proxy)
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::DeleteTask.stub(:new).and_return(@fake_google_delete_tasks_proxy)
     pre_recorded_tasklist_id = "MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA"
     pre_recorded_task_id = "MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg"
     valid_delete_response = @fake_google_delete_tasks_proxy.delete_task(pre_recorded_tasklist_id, pre_recorded_task_id)
-    Google::DeleteTask.any_instance.stub(:delete_task).and_return(valid_delete_response)
+    GoogleApps::DeleteTask.any_instance.stub(:delete_task).and_return(valid_delete_response)
     hash = {"task_id" => pre_recorded_task_id, "emitter" => "Google"}
     post :delete_task, hash
     json_response = JSON.parse(response.body)

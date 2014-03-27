@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class InsertTask < Tasks
 
     def insert_task(task_list_id, body)

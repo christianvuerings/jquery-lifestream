@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class UpdateTask < Tasks
 
     def update_task(task_list_id, task_id, body)

@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class ClearTaskList < Tasks
 
     def clear_task_list(task_list_id)

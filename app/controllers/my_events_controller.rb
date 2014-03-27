@@ -7,11 +7,11 @@ class MyEventsController < ApplicationController
     input = sanitize_input!(params)
     if input.present?
       logger.info "Creating event for user #{session[:user_id]}: #{input}"
-      response = Google::EventsInsert.new(user_id: session[:user_id]).insert_event(input.stringify_keys)
+      response = GoogleApps::EventsInsert.new(user_id: session[:user_id]).insert_event(input.stringify_keys)
 
       result = response.data || {}
       if result.blank?
-        logger.warn "Google::EventsInsert.insert_event response for user #{session[:user_id]} should not be blank.
+        logger.warn "GoogleApps::EventsInsert.insert_event response for user #{session[:user_id]} should not be blank.
           Payload: #{input.inspect}"
       end
       result = result.to_hash.merge({ status:true }) unless result.blank?
@@ -25,8 +25,8 @@ class MyEventsController < ApplicationController
 
   private
   def check_google_access
-    return error_response unless Google::Proxy.access_granted?(session[:user_id])
-    return error_response if (is_acting_as_nonfake_user? && !Google::Proxy.allow_pseudo_user?)
+    return error_response unless GoogleApps::Proxy.access_granted?(session[:user_id])
+    return error_response if (is_acting_as_nonfake_user? && !GoogleApps::Proxy.allow_pseudo_user?)
   end
 
   #TODO: de-duplicate by pushing MergedModel's method up into ApplicationController

@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   class TasksList < Tasks
 
     def tasks_list(optional_params={})

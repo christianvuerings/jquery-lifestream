@@ -19,9 +19,9 @@ module MyTasks
         Canvas::Proxy::APP_NAME => {access_granted: Canvas::Proxy.access_granted?(@uid),
                                 source: MyTasks::CanvasTasks.new(@uid, @starting_date),
                                 pseudo_enabled: Canvas::Proxy.allow_pseudo_user?},
-        Google::Proxy::APP_ID => {access_granted: Google::Proxy.access_granted?(@uid),
+        GoogleApps::Proxy::APP_ID => {access_granted: GoogleApps::Proxy.access_granted?(@uid),
                                 source: MyTasks::GoogleTasks.new(@uid, @starting_date),
-                                pseudo_enabled: Google::Proxy.allow_pseudo_user?}
+                                pseudo_enabled: GoogleApps::Proxy.allow_pseudo_user?}
       }
       @enabled_sources.select!{|k,v| v[:access_granted] == true}
     end

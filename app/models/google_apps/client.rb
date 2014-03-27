@@ -1,4 +1,4 @@
-module Google
+module GoogleApps
   require 'google/api_client'
 
   class Client
@@ -33,7 +33,7 @@ module Google
         request_hash[:headers] = page_params[:headers] unless page_params[:headers].blank?
         request_hash[:authorization] = @authorization
 
-        client = Google::Client.client.dup
+        client = GoogleApps::Client.client.dup
         request = client.generate_request(options=request_hash)
         client.authorization = authorization
 
