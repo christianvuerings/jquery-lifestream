@@ -533,7 +533,7 @@
               "schedules": [
                 {
                   "buildingName": "VALLEY LSB",
-                  "room_number": "2030",
+                  "roomNumber": "2030",
                   "schedule": "M 4:00P-5:00P"
                 }
               ]
@@ -554,7 +554,7 @@
               "schedules": [
                 {
                   "buildingName": "PIMENTAL",
-                  "room_number": "1",
+                  "roomNumber": "1",
                   "schedule": "M 2:00P-3:00P"
                 }
               ]
@@ -585,12 +585,12 @@
               "schedules": [
                 {
                   "buildingName": "WHEELER",
-                  "room_number": "0210",
+                  "roomNumber": "0210",
                   "schedule": "TuTh 2:00P-3:30P"
                 },
                 {
                   "buildingName": "DWINELLE",
-                  "room_number": "117",
+                  "roomNumber": "117",
                   "schedule": "W 4:00P-5:30P"
                 }
               ]
@@ -713,7 +713,7 @@
               "schedules": [
                 {
                   "buildingName": "PIMENTAL",
-                  "room_number": "1",
+                  "roomNumber": "1",
                   "schedule": "MWF 8:00A-9:00A"
                 }
               ],
@@ -741,7 +741,7 @@
               "schedules": [
                 {
                   "buildingName": "LECONTE",
-                  "room_number": "0004",
+                  "roomNumber": "0004",
                   "schedule": "F 12:00P-1:00P"
                 }
               ]
@@ -799,7 +799,7 @@
               "schedules": [
                 {
                   "buildingName": "PIMENTAL",
-                  "room_number": "12",
+                  "roomNumber": "12",
                   "schedule": "MWF 11:00A-12:00P"
                 }
               ]
@@ -822,7 +822,7 @@
         "display": "Hearst Memorial Mining Building",
         "lat": "37.874459999999999",
         "lon": "-122.25727000000001",
-        "room_number": "390"
+        "roomNumber": "390"
       },
       "course_code": "Psychology C120"
     },
@@ -838,7 +838,7 @@
         "display": "Genetics & Plant Biology Building",
         "lat": "37.873429999999999",
         "lon": "-122.26473",
-        "room_number": "100"
+        "roomNumber": "100"
       },
       "course_code": "Psychology 133"
     },
@@ -854,7 +854,7 @@
         "display": "Valley Life Sciences Building",
         "lat": "37.871479999999998",
         "lon": "-122.26211000000001",
-        "room_number": "2060"
+        "roomNumber": "2060"
       },
       "course_code": "Education 140"
     }

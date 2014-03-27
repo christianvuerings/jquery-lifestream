@@ -15,7 +15,7 @@
           "instruction_format": "LEC",
           "section_number": "001",
           "schedules": [
-            {"buildingName": "DOE LIBRARY", "room_number": "0425", "schedule": "MTuWTh 12:00P-2:00P"}
+            {"buildingName": "DOE LIBRARY", "roomNumber": "0425", "schedule": "MTuWTh 12:00P-2:00P"}
           ],
           "instructors": [{"name": "Dr. X", "uid": "999"}]},
         {"ccn": "12346", "instruction_format": "DIS", "section_number": "101",

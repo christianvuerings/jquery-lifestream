@@ -66,8 +66,8 @@ describe "CampusOracle::CourseSections" do
       CampusOracle::Queries.should_receive(:get_section_schedules).and_return(stubbed_schedules)
       #allow(CampusOracle::Queries).to receive(:get_section_schedules).and_return(stubbed_schedules)
       result = client.get_section_data
-      result[:schedules][0][:room_number].should == nil
-      result[:schedules][1][:room_number].should == "1"
+      result[:schedules][0][:roomNumber].should == nil
+      result[:schedules][1][:roomNumber].should == "1"
     end
 
   end

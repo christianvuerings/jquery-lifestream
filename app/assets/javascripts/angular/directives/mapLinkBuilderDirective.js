@@ -21,7 +21,7 @@
         }
 
         // Tooltip title is similar, but without URI encoding and with room number
-        var buildingTooltipName = scope.exam.location.room_number;
+        var buildingTooltipName = scope.exam.location.roomNumber;
         if (scope.exam.location.display) {
           buildingTooltipName += ' ' + scope.exam.location.display;
         } else {

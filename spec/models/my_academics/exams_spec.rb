@@ -13,7 +13,7 @@ describe "MyAcademics::Exams" do
     feed[:exam_schedule][0][:course_code].should == "Psychology C120"
     feed[:exam_schedule][0][:time].should == "8:00A"
     feed[:exam_schedule][0][:location][:rawLocation].should == "390 HEARST MIN"
-    feed[:exam_schedule][0][:location]["room_number"].should == "390"
+    feed[:exam_schedule][0][:location]["roomNumber"].should == "390"
     feed[:exam_schedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
     # Make sure the date epoch matches the expected date.
     Time.at(feed[:exam_schedule][0][:date][:epoch]).to_s.start_with?('2013-05-14').should be_true
