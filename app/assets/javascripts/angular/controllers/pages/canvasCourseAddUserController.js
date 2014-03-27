@@ -14,6 +14,7 @@
       $scope.userSearchResultsCount = 0;
       $scope.noSearchTextAlert = false;
       $scope.noSearchResultsNotice = false;
+      $scope.noUserSelectedAlert = false;
     };
 
     var resetImportState = function() {
@@ -86,6 +87,26 @@
       });
     };
 
+    var invalidSearchForm = function() {
+      if ($scope.search_text === '') {
+        $scope.showAlerts = true;
+        $scope.noSearchTextAlert = true;
+        $scope.isLoading = false;
+        return true;
+      }
+      return false;
+    };
+
+    var invalidAddUserForm = function() {
+      if ($scope.selectedUser === null) {
+        $scope.noUserSelectedAlert = true;
+        $scope.showAlerts = true;
+        return true;
+      }
+      $scope.noUserSelectedAlert = false;
+      return false;
+    };
+
     $scope.updateSearchTextType = function() {
       $scope.searchTextType = (['student_id', 'ldap_user_id'].indexOf($scope.search_type) === -1) ? 'text' : 'number';
     };
@@ -94,11 +115,7 @@
       resetSearchState();
       resetImportState();
 
-      // require search text
-      if ($scope.search_text === '') {
-        $scope.showAlerts = true;
-        $scope.noSearchTextAlert = true;
-        $scope.isLoading = false;
+      if (invalidSearchForm()) {
         return false;
       }
 
@@ -142,6 +159,9 @@
     };
 
     $scope.addUser = function() {
+      if (invalidAddUserForm()) {
+        return false;
+      }
       $scope.showUsersArea = false;
       $scope.isLoading = true;
       $scope.showAlerts = true;

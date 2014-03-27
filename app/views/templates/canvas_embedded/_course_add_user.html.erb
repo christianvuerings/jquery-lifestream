@@ -22,6 +22,13 @@
             </div>
           </div>
 
+          <div data-ng-show="noUserSelectedAlert" class="bc-notice-box bc-notice-error bc-radius">
+            Please select a user.
+            <div class="bc-notice-close-button">
+              <button class="fa fa-times-circle button bc-close-button small" data-ng-click="noUserSelectedAlert=''"></button>
+            </div>
+          </div>
+
           <div data-ng-show="noSearchResultsNotice" class="bc-notice-box bc-notice-error bc-radius">
             Your search did not match any users with a CalNet ID.
             <span data-ng-bind="searchTypeNotice"></span>
@@ -146,7 +153,7 @@
                 <tbody>
                   <tr data-ng-repeat="user in userSearchResults">
                     <td>
-                      <input type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user">
+                      <input type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" required>
                     </td>
                     <td data-ng-bind="user.first_name + ' ' + user.last_name"></td>
                     <td data-ng-bind="user.student_id"></td>
