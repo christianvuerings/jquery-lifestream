@@ -1,8 +1,8 @@
 #CalCentral
 
-Home of CalCentral. [![Dependency Status](https://gemnasium.com/ets-berkeley-edu/calcentral.png)](https://gemnasium.com/ets-berkeley-edu/calcentral) [![Code Climate](https://codeclimate.com/github/ets-berkeley-edu/calcentral.png)](https://codeclimate.com/github/ets-berkeley-edu/calcentral)
-* Master: [![Build Status](https://travis-ci.org/ets-berkeley-edu/calcentral.png?branch=master)](https://travis-ci.org/ets-berkeley-edu/calcentral)
-* QA: [![Build Status](https://travis-ci.org/ets-berkeley-edu/calcentral.png?branch=qa)](https://travis-ci.org/ets-berkeley-edu/calcentral)
+[![Dependency Status](https://img.shields.io/gemnasium/ets-berkeley-edu/calcentral.svg)](https://gemnasium.com/ets-berkeley-edu/calcentral) [![Code Climate](https://img.shields.io/codeclimate/github/ets-berkeley-edu/calcentral.svg)](https://codeclimate.com/github/ets-berkeley-edu/calcentral)
+* Master Build: [![Build Status](https://api.travis-ci.org/ets-berkeley-edu/calcentral.svg?branch=master)](https://travis-ci.org/ets-berkeley-edu/calcentral)
+* QA Build: [![Build Status](https://api.travis-ci.org/ets-berkeley-edu/calcentral.svg?branch=qa)](https://travis-ci.org/ets-berkeley-edu/calcentral)
 
 ## Dependencies
 
