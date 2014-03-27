@@ -59,7 +59,7 @@ class MyActivities::Canvas
       conversation: "discussion",
       message: "assignment",
       discussiontopic: "discussion",
-      submission: "grade_posting",
+      submission: "gradePosting",
       webconference: "webconference"
     }
     # Find the type we need to return in the hash

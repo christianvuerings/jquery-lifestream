@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe MyActivities::Canvas do
-  let!(:documented_types) { %w(alert announcement assignment discussion grade_posting message webconference) }
+  let!(:documented_types) { %w(alert announcement assignment discussion gradePosting message webconference) }
 
   before do
     @user_id = Settings.canvas_proxy.test_user_id
