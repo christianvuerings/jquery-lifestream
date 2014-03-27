@@ -84,7 +84,51 @@ feature "act_as_user" do
     viewed_user.uid.should == viewed_user_uid
   end
 
-  scenario "switch to another user without clicking stop acting as" do
+  scenario "check the footer message for a user that has logged in" do
+    # disabling the cache_warmer while we're switching back and forth between users
+    # The switching back triggers a cache invalidation, while the warming thread is still running.
+    Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
+
+
+    login_with_cas "238382"
+    act_as_user '61889'
+
+    page.driver.post '/api/my/record_first_login'
+    page.status_code.should == 204
+
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response['uid'].should == '61889'
+    response['firstLoginAt'].should be_nil
+
+    visit "/settings"
+    html = page.body
+    page.body.should =~ /You're currently viewing as.+last logged on/m
+    # Note: it's possible to check for hardcoded text with regular expressions on the
+    # rendered html, but there's no apparent way to detect the text rendered by angular
+  end
+
+  scenario "check the footer message for a user that has never logged in" do
+    random_id = Time.now.to_f.to_s.gsub(".", "")
+    login_with_cas "238382"
+    act_as_user random_id
+
+    page.driver.post '/api/my/record_first_login'
+    page.status_code.should == 204
+
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response['uid'].should == random_id
+    response['firstLoginAt'].should be_nil
+
+    visit "/settings"
+    html = page.body
+    page.body.should =~ /You're currently viewing as.+who has never logged in to CalCentral/m
+    # Note: it's possible to check for hardcoded text with regular expressions on the
+    # rendered html, but there's no apparent way to detect the text rendered by angular
+  end
+
+  scenario "check the act-as footer text" do
     # disabling the cache_warmer while we're switching back and forth between users
     # The switching back triggers a cache invalidation, while the warming thread is still running.
     Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
