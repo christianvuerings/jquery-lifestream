@@ -57,12 +57,12 @@
         <h3>UID/SID Lookup</h3>
         <form data-ng-submit="admin.uidToSidLookup()">
           <div class="row">
-            <div class="small-2 small-offset-3 columns">
+            <div class="small-9 small-offset-3 columns">
               <input id="cc-settings-id" placeholder="Enter UID or SID here" data-ng-model="admin.id" type="number"/>
             </div>
           </div>
           <div class="row">
-            <div class="small-2 small-offset-3 columns">
+            <div class="small-9 small-offset-3 columns">
               <button
                 class="cc-button cc-button-blue"
                 data-ng-disabled="!admin.id"
@@ -70,12 +70,12 @@
             </div>
           </div>
           <div class="row">
-            <div class="small-4 small-offset-3 columns">
+            <div class="small-8 small-offset-3 columns">
               <span data-ng-bind="admin.errorStatus"></span>
             </div>
           </div>
           <div data-ng-if="admin.users" class="row">
-            <div class="small-4 small-offset-3 columns cc-table">
+            <div class="small-6 small-offset-3 columns cc-table">
               <table class="cc-settings-table">
                 <thead>
                   <tr>
