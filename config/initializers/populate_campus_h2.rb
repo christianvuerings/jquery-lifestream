@@ -503,10 +503,10 @@
         column_def = Object.new
         column_def.define_singleton_method(:name) {'PHOTO'}
         column_def.define_singleton_method(:type) {:binary}
-        connection.insert(
-            'insert into CALCENTRAL_STUDENT_PHOTO_VW set STUDENT_LDAP_UID=?, BYTES=?, PHOTO=?',
-            nil, nil, nil, nil,
-            [[nil, 300939], [nil, raw_data.length], [column_def, raw_data]])
+        #connection.insert(
+        #    'insert into CALCENTRAL_STUDENT_PHOTO_VW set STUDENT_LDAP_UID=?, BYTES=?, PHOTO=?',
+        #    nil, nil, nil, nil,
+        #    [[nil, 300939], [nil, raw_data.length], [column_def, raw_data]])
       end
     end
   end

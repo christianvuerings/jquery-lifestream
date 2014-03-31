@@ -1,7 +1,6 @@
 module Canvas
-  class Rosters < Rosters::Common
-    include ActiveAttr::Model, ClassLogger, SafeJsonParser
-    extend Cache::Cacheable
+  class CanvasRosters < Rosters::Common
+    include SafeJsonParser
 
     def get_feed_internal
       feed = {
