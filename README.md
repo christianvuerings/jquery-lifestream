@@ -87,7 +87,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 1. Make JRuby faster, give it lots of RAM, & enable C extensions by running this or put in your .bashrc:
 
     ``` bash
-    export JRUBY_OPTS="-Xcext.enabled=true -X-C -J-Xms900m -J-Xmx900m -J-XX:MaxPermSize=500m --headless -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xcompile.invokedynamic=false"
+    export JRUBY_OPTS="-Xcext.enabled=true -X-C -J-Xms900m -J-Xmx1200m -J-XX:MaxPermSize=500m --headless -J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xcompile.invokedynamic=false -J-XX:+UseConcMarkSweepGC"
     ```
 
 1. Download and install xvfb. On a Mac, you get xvfb by [installing XQuartz](http://xquartz.macosforge.org/landing/).
