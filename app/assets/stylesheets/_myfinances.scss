@@ -10,7 +10,7 @@
   .cc-page-myfinances-account-filter {
     background: transparent;
     border: none;
-    margin: 20px 15px 0;
+    margin: 10px 15px 0;
     padding: 0;
     .cc-select {
       margin-right: 10px;
@@ -49,6 +49,25 @@
   .cc-page-myfinances-dpp-note {
     font-size: 11px;
     margin-top: 5px;
+  }
+  .cc-page-myfinances-filter-content {
+    margin-left: 45px;
+  }
+  .cc-page-myfinances-filter-element {
+    margin-top: 10px;
+    input[type="text"]{
+      margin: 0;
+      max-width: 130px;
+    }
+  }
+  .cc-page-myfinances-filter-form {
+    float: right;
+    margin-left: -45px;
+    width: 100%;
+  }
+  .cc-page-myfinances-filter-label {
+    float: left;
+    width: 45px;
   }
   .cc-page-myfinances-footer {
     border-top: 2px solid $cc-color-widget-background;
