@@ -103,7 +103,7 @@ feature "act_as_user" do
 
     visit "/settings"
     html = page.body
-    page.body.should =~ /You're currently viewing as.+last logged on/m
+    page.body.should =~ /You're currently viewing as.+first logged in on/m
     # Note: it's possible to check for hardcoded text with regular expressions on the
     # rendered html, but there's no apparent way to detect the text rendered by angular
   end

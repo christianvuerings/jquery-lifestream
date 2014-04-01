@@ -1,7 +1,7 @@
 <div class="cc-actingas-fixed" data-ng-cloak data-ng-if="api.user.profile.actingAsUid" data-ng-controller="AdminController">
   <p>
     You're currently viewing as <span data-ng-bind="api.user.profile.full_name"></span> (<span data-ng-bind="api.user.profile.uid"></span>),
-    <span data-ng-if="api.user.profile.firstLoginAt">last logged on <span data-ng-bind="api.user.profile.firstLoginAt | date:'MM/dd/yy'"></span></span>
+    <span data-ng-if="api.user.profile.firstLoginAt">first logged in on <span data-ng-bind="api.user.profile.firstLoginAt | date:'MM/dd/yy'"></span></span>
     <span data-ng-if="!api.user.profile.firstLoginAt">who has never logged in to CalCentral</span>
     <button class="cc-button cc-button-blue cc-right" data-ng-click="admin.stopActAs()" type="button">Stop viewing as</button>
   </p>
