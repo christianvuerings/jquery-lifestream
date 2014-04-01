@@ -86,7 +86,7 @@
                 <tbody data-ng-repeat="user in admin.users">
                   <tr>
                     <td data-ng-bind="user.ldap_uid"></td>
-                    <td data-ng-bind="user.student_id"></td>
+                    <td data-ng-bind="user.student_id || 'This user has no SID'"></td>
                   </tr>
                 </tbody>
               </table>
