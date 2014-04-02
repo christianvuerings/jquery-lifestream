@@ -47,10 +47,19 @@ module Financials
           body = safe_json(response.body)
         end
 
+        # VCR mangles the x_cfv_api_version header to x-cfv-api-version when replaying in fake mode.
+        api_version = nil
+        version_header = (@fake ? "x-cfv-api-version" : "x_cfv_api_version")
+        if response.headers && response.headers[version_header]
+          version = response.headers[version_header]
+          api_version = (version.is_a?(Array) ? version[0] : version)
+        end
+
         logger.debug "Remote server status #{response.code}; url = #{url}"
         return {
           body: body,
-          status_code: response.code
+          status_code: response.code,
+          apiVersion: api_version
         }
       end
     end
