@@ -35,6 +35,7 @@
           "X-Cfv-Search-Status": [
             "success"
           ],
+          "x_cfv_api_version": "1.0.6",
           "X-Exec-End-Time": [
             "2013-11-12 12:59:39.078"
           ],
@@ -25853,6 +25854,7 @@
           "X-Cfv-Search-Status": [
             "failure"
           ],
+          "x_cfv_api_version" : "1.0.6",
           "X-Exec-End-Time": [
             "2013-11-12 12:59:56.628"
           ],

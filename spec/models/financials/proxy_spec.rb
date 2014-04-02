@@ -10,6 +10,7 @@ describe Financials::Proxy do
   shared_examples "has some minimal oski data" do
     its([:body]) { should_not be_nil }
     its([:status_code]) { should == 200 }
+    it { subject[:apiVersion].is_a?(String).should be_true}
     it { subject[:body]["student"].should_not be_nil }
     it { subject[:body]["student"]["summary"].should_not be_nil }
     it { subject[:body]["student"]["summary"]["accountBalance"].is_a?(Numeric).should be_true }
@@ -24,6 +25,7 @@ describe Financials::Proxy do
     before { Rails.cache.should_receive(:write) }
     subject { live_oski_financials }
     it_behaves_like "has some minimal oski data"
+    it { subject[:apiVersion].should >= "1.0.6" }
   end
 
   context "tammi is missing financials" do
