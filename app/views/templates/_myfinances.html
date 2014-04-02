@@ -42,7 +42,7 @@
             <li class="cc-page-myfinances-account-summary-item cc-clearfix-container">
               <div class="small-8 columns cc-print-width-auto">
                 <strong data-ng-if="myfinances.summary.minimumAmountDueFloat >= 0">
-                  <span data-ng-if="myfinances.summary.isOnDPP && !myfinances.summary.isDppPastDue">Other</span> Amount Due Now
+                  <span data-ng-if="myfinances.summary.isOnDPP && !myfinances.summary.isDppPastDue && !myfinances.apiVersion">Other</span> Amount Due Now
                 </strong>
                 <strong data-ng-if="myfinances.summary.minimumAmountDueFloat < 0">
                   Credit Balance
@@ -64,7 +64,7 @@
                   <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.futureActivity"></div>
                 </div>
               </section>
-              <section class="cc-clearfix-container cc-page-myfinances-not-amount-due-dpp" data-ng-if="myfinances.summary.isOnDPP && !myfinances.summary.isDppPastDue">
+              <section class="cc-clearfix-container cc-page-myfinances-not-amount-due-dpp" data-ng-if="myfinances.summary.isOnDPP && !myfinances.summary.isDppPastDue && !myfinances.apiVersion">
                 <div class="small-12 columns">
                   These do not include the amount due on DPP.
                 </div>
