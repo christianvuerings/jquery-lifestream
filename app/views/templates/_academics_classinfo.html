@@ -10,7 +10,7 @@
         <a href="/academics">My Academics</a> &raquo;
         <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
         <span data-ng-bind="selected_course.course_code"></span>
-        <span class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
+        <div class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
           <ul class="cc-button-group cc-even-{{selectOptions.length}}" role="tablist">
             <li data-ng-repeat="select_option in selectOptions">
               <button class="cc-button"
@@ -22,7 +22,7 @@
               </button>
             </li>
           </ul>
-        </span>
+        </div>
       </h1>
     </div>
 
@@ -186,7 +186,7 @@
 
     </div>
 
-    <div data-ng-switch-when="Class Roster" role="tabpanel" aria-live="polite">
+    <div data-ng-switch-when="Class Roster" role="tabpanel" aria-live="polite" class="cc-clearfix">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Class Roster</h2>
