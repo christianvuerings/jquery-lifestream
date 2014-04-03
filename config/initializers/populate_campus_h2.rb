@@ -503,6 +503,7 @@
         column_def = Object.new
         column_def.define_singleton_method(:name) {'PHOTO'}
         column_def.define_singleton_method(:type) {:binary}
+        # TODO fix this insert statement, which fails in Rails 4. CLC-3543.
         #connection.insert(
         #    'insert into CALCENTRAL_STUDENT_PHOTO_VW set STUDENT_LDAP_UID=?, BYTES=?, PHOTO=?',
         #    nil, nil, nil, nil,
