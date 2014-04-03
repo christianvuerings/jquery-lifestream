@@ -32,9 +32,12 @@ module CampusOracle
 
     def self.translate_single_row!(row, additional_columns=[])
       return row unless row
-      columns = ["ldap_uid", "student_id"] + additional_columns
+      columns = ["ldap_uid", "student_id", "term_yr", "catalog_root", "course_cntl_num", "student_ldap_uid"] + additional_columns
       columns.each do |column|
-        row[column] = row[column].to_i.to_s
+        if row[column]
+          row[column] = row[column].to_i.to_s
+
+        end
       end
       row
     end

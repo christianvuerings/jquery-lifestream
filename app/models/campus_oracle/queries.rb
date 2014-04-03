@@ -268,7 +268,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      translate_records result
+      translate_records(result, ["enroll_limit", "wait_list_seq_num"])
     end
 
     def self.get_transcript_grades(person_id, terms = nil)
