@@ -256,8 +256,8 @@
                   </td>
                   <td class="cc-widget-table-hover-notriangle cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount"></td>
                   <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type" data-ng-if="!myfinances.summary.hasDPPTransactions">
-                    <span class="hide-for-small" data-ng-bind="item.transType"></span>
-                    <div class="hide-for-medium-up">
+                    <span class="hide-for-small cc-print-show" data-ng-bind="item.transType"></span>
+                    <div class="hide-for-medium-up cc-print-hide">
                       <i class="fa" data-ng-attr-title="{{item.transType}}"
                          data-ng-class="{'fa-usd':(item.transType==='Adjustment'),'fa-plus':(item.transType !== 'Adjustment' && item.transBalanceAmountFloat > 0),'fa-minus':(item.transType !== 'Adjustment' && item.transBalanceAmountFloat < 0)}"></i>
                     </div>
