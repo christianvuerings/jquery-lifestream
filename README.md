@@ -20,7 +20,6 @@
 ## Installation
 
 1. Install Java 7:
-
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 1. Install postgres:
