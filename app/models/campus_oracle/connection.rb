@@ -22,5 +22,21 @@ module CampusOracle
       end
     end
 
+    def self.translate_records(results, additional_columns=[])
+      result_array = results.to_ary
+      result_array.each do |row|
+        translate_single_row!(row, additional_columns)
+      end
+      result_array
+    end
+
+    def self.translate_single_row!(row, additional_columns=[])
+      columns = ["ldap_uid", "student_id"] + additional_columns
+      columns.each do |column|
+        row[column] = row[column].to_i.to_s
+      end
+      row
+    end
+
   end
 end
