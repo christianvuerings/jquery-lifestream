@@ -3,12 +3,11 @@
   class="cc-popover-container cc-popover-status cc-left"
   data-ng-show="studentInfo.regStatus.code!=null && api.user.profile.features.academic_status && api.user.profile.roles.student">
   <button class="cc-header-icon cc-header-icon-font cc-icon-status-person"
-    data-ng-class="{'cc-icon-status-person-haslayover':(showStatusError),'cc-header-icon-selected':(api.popover.status('cc-popover-academic-status'))}"
+    data-ng-class="{'cc-icon-status-person-haslayover':(errorCount > 0),'cc-header-icon-selected':(api.popover.status('cc-popover-academic-status'))}"
     data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-academic-status')" title="Show your academic profile">
     <i class="fa fa-user"></i>
-    <span data-ng-show="showStatusError" class="fa-stack cc-icon-status-person-layover">
-      <i class="cc-icon fa fa-circle"></i>
-      <i class="cc-icon fa fa-exclamation-circle"></i>
+    <span data-ng-if="errorCount > 0" class="cc-icon-status-person-layover">
+      <span data-ng-bind="errorCount"></span><span class="cc-visuallyhidden"> active alerts</span>
     </span>
 
   </button>
@@ -16,33 +15,59 @@
     <div class="cc-popover-title">
       <h4>Academic Profile</h4>
     </div>
+    <div class="cc-popover-noitems" data-ng-if="errorCount === 0 && !statusLoading && studentInfo.regBlock.available && minimumAmountDue === 0">
+      <i class="cc-left fa fa-check-circle cc-icon-green"></i>
+      <strong>No Active Alerts</strong>
+    </div>
     <ul class="cc-popover-items" data-ng-click="api.popover.clickThrough('Academic Profile')">
-      <li class="cc-popover-item">
-        <a class="cc-popover-item-details" href="/academics">
+      <li class="cc-popover-item" data-ng-show="statusLoading">
+        <div
+          class="cc-launcher-status-loading"
+          data-cc-loading-directive="statusLoading"
+          data-cc-loading-process="Loading...">
+        </div>
+      </li>
+      <li class="cc-popover-item" data-ng-if="studentInfo.regStatus.needsAction">
+        <a href="/academics">
           <div class="cc-launcher-status-description">
-            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[studentInfo.regStatus.needsAction]"></i>
+            <i class="cc-left fa fa-exclamation-circle"></i>
             <strong>Registration Status:</strong> <span data-ng-bind="studentInfo.regStatus.summary"><br />
             <span data-ng-bind-html="studentInfo.regStatus.explanation"></span>
           </div>
         </a>
       </li>
-      <li class="cc-popover-item">
-        <a class="cc-popover-item-details" href="/academics">
+      <li class="cc-popover-item" data-ng-if="studentInfo.regBlock.needsAction || !studentInfo.regBlock.available">
+        <a href="/academics">
           <div class="cc-launcher-status-description">
             <i class="cc-left fa"
                data-ng-class="{'fa-exclamation-circle': studentInfo.regBlock.needsAction,
-               'fa-exclamation-triangle cc-unavailable': !studentInfo.regBlock.available,
-               'fa-check-circle cc-icon-green': !studentInfo.regBlock.needsAction && studentInfo.regBlock.available}"></i>
-            <strong>Registration Blocks:</strong> <span data-ng-show="studentInfo.regBlock.available" data-ng-bind="studentInfo.regBlock.activeBlocks"></span>
-            <span data-ng-hide="studentInfo.regBlock.available">Currently Unavailable</span>
+               'fa-exclamation-triangle cc-unavailable': !studentInfo.regBlock.available}"></i>
+            <strong>Blocks:</strong> <span data-ng-if="studentInfo.regBlock.available" data-ng-bind="studentInfo.regBlock.activeBlocks"></span>
+            <span data-ng-if="!studentInfo.regBlock.available">Currently Unavailable</span>
           </div>
         </a>
       </li>
-      <li class="cc-popover-item">
-        <a class="cc-popover-item-details" href="/academics">
+      <li class="cc-popover-item" data-ng-if="minimumAmountDue && minimumAmountDue > 0 && totalPastDueAmount === 0">
+        <a href="/finances">
           <div class="cc-launcher-status-description">
-            <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle',false:'fa-check-circle cc-icon-green'}[studentInfo.californiaResidency.needsAction]"></i>
-            <strong>California Residency:</strong> <span data-ng-bind="studentInfo.californiaResidency.summary"><br />
+            <i class="cc-left fa fa-exclamation-triangle cc-unavailable"></i>
+            <strong>Amount Due Now:</strong> <span data-ng-bind="minimumAmountDue | currency">
+          </div>
+        </a>
+      </li>
+      <li class="cc-popover-item" data-ng-if="totalPastDueAmount && totalPastDueAmount > 0">
+        <a href="/finances">
+          <div class="cc-launcher-status-description">
+            <i class="cc-left fa fa-exclamation-circle"></i>
+            <strong>Past Due Amount:</strong> <span data-ng-bind="totalPastDueAmount | currency">
+          </div>
+        </a>
+      </li>
+      <li class="cc-popover-item" data-ng-if="countUndatedFinaid > 0">
+        <a href="/dashboard">
+          <div class="cc-launcher-status-description">
+            <i class="cc-left fa fa-exclamation-circle"></i>
+            <strong>Financial Aid Alerts:</strong> <span data-ng-bind="countUndatedFinaid"><br />
             <span data-ng-bind-html="studentInfo.californiaResidency.explanation"></span>
           </div>
         </a>

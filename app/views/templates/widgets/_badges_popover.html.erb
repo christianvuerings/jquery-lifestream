@@ -27,10 +27,10 @@
           data-ng-show="api.user.profile.hasGoogleAccessToken"></h4>
         </div>
       </div>
-      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && api.user.profile.hasGoogleAccessToken">
+      <div class="cc-popover-noitems" data-ng-show="!badge.items.length && api.user.profile.hasGoogleAccessToken">
         No items available for your <a data-ng-href="{{badge.display.href}}" data-ng-click="api.popover.clickThrough(badge.display.name + ' - No Items')" data-ng-bind-template="{{badge.display.name}} account"></a>
       </div>
-      <div class="cc-badgepopover-noitems" data-ng-show="!badge.items.length && !api.user.profile.hasGoogleAccessToken">
+      <div class="cc-popover-noitems" data-ng-show="!badge.items.length && !api.user.profile.hasGoogleAccessToken">
         To display your bConnected activity, visit the
          <button class="cc-button-link cc-popover-link" data-ng-click="api.popover.clickThrough(badge.display.name + ' - No Google Account');api.util.redirect('settings')">settings page</button>
       </div>

@@ -4,7 +4,7 @@
   /**
    * Activity controller
    */
-  angular.module('calcentral.controllers').controller('ActivityController', function(apiService, dateService, taskAdderService, $http, $scope) {
+  angular.module('calcentral.controllers').controller('ActivityController', function(activityFactory, apiService, dateService, taskAdderService, $http, $scope) {
 
     var activitiesModel = function(activityResponse) {
       var activities = activityResponse.activities;
@@ -161,8 +161,7 @@
     };
 
     var getMyActivity = function() {
-      $http.get('/api/my/activities').success(function(data) {
-      //$http.get('/dummy/json/activities.json').success(function(data) {
+      activityFactory.getActivity().success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
         activitiesModel(data);

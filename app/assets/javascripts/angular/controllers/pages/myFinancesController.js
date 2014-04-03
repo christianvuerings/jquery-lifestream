@@ -5,7 +5,7 @@
    * Campus controller
    */
 
-  angular.module('calcentral.controllers').controller('MyFinancesController', function($filter, $http, $routeParams, $scope, apiService) {
+  angular.module('calcentral.controllers').controller('MyFinancesController', function(apiService, financesFactory, $filter, $http, $routeParams, $scope) {
 
     var sortTermsIndex = {
       'Fall': 0,
@@ -213,7 +213,7 @@
     var getStudentInfo = function() {
 
       // Data contains all the financial information for the current student
-      $http.get('/api/my/financials').success(function(data) {
+      financesFactory.getFinances().success(function(data) {
 
         angular.extend($scope, data);
 
