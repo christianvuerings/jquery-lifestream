@@ -14,6 +14,9 @@
         class="cc-widget-tasks-status-{{task.status}}"
         data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket == 'Overdue' && tasksMode != 'completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
         <strong>{{task.title}}</strong>
+        <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-bcourses-name">
+          <span data-ng-bind="task.course_code"></span>
+        </div>
       </div>
     </div>
 

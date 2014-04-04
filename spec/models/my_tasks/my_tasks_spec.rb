@@ -19,6 +19,7 @@ describe "MyTasks" do
     @fake_canvas_proxy = Canvas::Proxy.new({fake: true})
     @fake_canvas_upcoming_events_proxy = Canvas::UpcomingEvents.new({fake: true})
     @fake_canvas_todo_proxy = Canvas::Todo.new({fake: true})
+    @fake_canvas_courses = Canvas::UserCourses.new({fake: true}).courses
 
   end
 
@@ -229,6 +230,28 @@ describe "MyTasks" do
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
     valid_feed["tasks"].length.should == 0
+  end
+
+  it "should return valid course code for bCourses assignment tasks" do
+    Canvas::Proxy.stub(:access_granted?).and_return(true)
+    Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
+    Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
+    Canvas::UserCourses.stub(:courses).and_return(@fake_canvas_courses)
+
+    my_tasks_model = MyTasks::Merged.new(@user_id)
+    valid_feed = my_tasks_model.get_feed
+    valid_feed["tasks"].length.should > 0
+    course_codes = []
+    @fake_canvas_courses.each do |canvas_course|
+      course_codes.push(canvas_course["course_code"])
+    end
+
+    valid_feed["tasks"].each do |task|
+      if task["type"] == "assignment" && task["emitter"] == "bCourses"
+        task["course_code"].blank?.should == false
+        course_codes.include?(task["course_code"]).should == true
+      end
+    end
   end
 
 end
