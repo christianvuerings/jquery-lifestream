@@ -29,8 +29,8 @@
 
       if (data.summary.totalPastDueAmount > 0) {
         $scope.errorCount++;
-        $scope.totalPastDueAmount = data.summary.totalPastDueAmount;
       }
+      $scope.totalPastDueAmount = data.summary.totalPastDueAmount;
       $scope.minimumAmountDue = data.summary.minimumAmountDue;
     };
 
