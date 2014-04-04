@@ -275,7 +275,7 @@
             <div class="cc-table cc-academics-semester cc-academics-semester-{{semester.time_bucket}}" data-ng-repeat="semester in semesters">
               <div>
                 <h3><a class="cc-left" data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
-                <a class="cc-right" data-ng-href="/academics/booklist" data-ng-show="semester.time_bucket === 'current'">Book List</a>
+                <a class="cc-right cc-academics-semester-title-link" data-ng-href="/academics/booklist" data-ng-show="semester.time_bucket === 'current'">Book List</a>
                 <table data-ng-if="semester.classes">
                   <thead>
                     <tr>
