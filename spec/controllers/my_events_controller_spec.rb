@@ -21,7 +21,7 @@ describe MyEventsController do
         its(:location) { should be_include("auth/cas") }
       end
 
-      # TODO fixing this test requires rspec 3, see CLC-3565 for details. 
+      # TODO fixing this test requires rspec 3, see CLC-3565 for details.
       #context "request type HTML, authenticated" do
       #  before(:each) { session[:user_id] = random_id }
       #
