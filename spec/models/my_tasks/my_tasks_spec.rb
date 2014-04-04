@@ -85,6 +85,7 @@ describe "MyTasks" do
         end
       end
 
+      p "counters: overdue_counter = #{overdue_counter}; today_counter = #{today_counter}; future_counter = #{future_counter}; unscheduled_counter = #{unscheduled_counter}"
       overdue_counter.should == 0
       today_counter.should == 0
       future_counter.should == 0

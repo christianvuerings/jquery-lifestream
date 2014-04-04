@@ -145,7 +145,7 @@ module MyTasks
         format_date_into_entry!(convert_date(entry["updated"]), formatted_entry, "updatedDate")
       end
 
-      Rails.logger.debug "#{self.class.name} Putting Google task with dueDate #{formatted_entry["due_date"]} in #{formatted_entry["bucket"]} bucket: #{formatted_entry}"
+      Rails.logger.debug "#{self.class.name} Putting Google task with dueDate #{formatted_entry["dueDate"]} in #{formatted_entry["bucket"]} bucket: #{formatted_entry}"
       format_date_into_entry!(due_date, formatted_entry, "dueDate")
       Rails.logger.debug "#{self.class.name}: Formatted body response from google proxy - #{formatted_entry.inspect}"
       formatted_entry

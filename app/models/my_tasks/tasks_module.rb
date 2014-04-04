@@ -31,20 +31,31 @@ module MyTasks
     def determine_bucket(due_date, formatted_entry, now_time, starting_date)
       bucket = "Unscheduled"
       if !due_date.blank?
-        due = due_date.to_i
-        now = now_time.to_i
-        tomorrow = starting_date.advance(:days => 1).to_i
-        end_of_next_week = starting_date.sunday.advance(:weeks => 1).to_i
+        tomorrow = starting_date.advance(:days => 1)
 
-        if due < now
+        # TODO Rails 4 bug? due_date.to_i shows up as one day later than due_date's string representation.
+        Rails.logger.error "--------------------------------------------------"
+        Rails.logger.error "due_date >= now_time: #{due_date >= now_time}"
+        Rails.logger.error "due_date >= tomorrow: #{due_date >= tomorrow}"
+        Rails.logger.error "due data < tomorrow: #{due_date < tomorrow}"
+
+        Rails.logger.error "due_date.to_i >= now_time.to_i: #{due_date.to_i >= now_time.to_i}"
+        Rails.logger.error "due_date.to_i >= tomorrow.to_i: #{due_date.to_i >= tomorrow.to_i}"
+        Rails.logger.error "due data.to_i < tomorrow.to_i: #{due_date.to_i < tomorrow.to_i}"
+
+        Rails.logger.error "--------------------------------------------------"
+
+        if due_date.to_i < now_time.to_i
           bucket = "Overdue"
-        elsif due >= now && due < tomorrow
+        elsif due_date.to_i >= now_time.to_i && due_date.to_i < tomorrow.to_i
           bucket = "Today"
-        elsif due >= tomorrow
+        elsif due_date.to_i >= tomorrow.to_i
           bucket = "Future"
         end
 
-        Rails.logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{starting_date}, now = #{now_time}; formatted entry = #{formatted_entry}"
+        Rails.logger.debug "XXX starting_date = #{starting_date}, to_i = #{starting_date.to_i}; tomorrow = #{tomorrow}, to_i = #{tomorrow.to_i}; due_date = #{due_date}, to_i = #{due_date.to_i}"
+
+        Rails.logger.debug "#{self.class.name} In determine_bucket, bucket = #{bucket}, due_date = #{due_date}, now_time = #{now_time}, tomorrow = #{tomorrow}; formatted entry = #{formatted_entry}"
       end
       bucket
     end
