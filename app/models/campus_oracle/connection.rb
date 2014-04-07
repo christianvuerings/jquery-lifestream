@@ -22,21 +22,24 @@ module CampusOracle
       end
     end
 
-    def self.translate_records(results, additional_columns=[])
-      result_array = results.to_ary
-      result_array.each do |row|
-        translate_single_row!(row, additional_columns)
+    def self.stringify_ints!(results, additional_columns=[])
+      columns = ["ldap_uid", "student_id", "term_yr", "catalog_root", "course_cntl_num", "student_ldap_uid"] + additional_columns
+      if results.respond_to?(:to_ary)
+        result_array = results.to_ary
+        result_array.each do |row|
+          stringify_row!(row, columns)
+        end
+        return result_array
+      else
+        return stringify_row!(results, columns)
       end
-      result_array
     end
 
-    def self.translate_single_row!(row, additional_columns=[])
+    def self.stringify_row!(row, columns)
       return row unless row
-      columns = ["ldap_uid", "student_id", "term_yr", "catalog_root", "course_cntl_num", "student_ldap_uid"] + additional_columns
       columns.each do |column|
         if row[column]
           row[column] = row[column].to_i.to_s
-
         end
       end
       row
