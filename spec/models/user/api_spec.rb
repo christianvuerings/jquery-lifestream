@@ -147,6 +147,8 @@ describe User::Api do
       user_api = User::Api.new(@random_id)
       user_api.get_feed
       original_last_modified = User::Api.get_last_modified(@random_id)
+      old_hash = original_last_modified[:hash]
+      old_timestamp = original_last_modified[:timestamp]
 
       sleep 1
 
@@ -154,8 +156,8 @@ describe User::Api do
       user_api.save
       feed = user_api.get_feed
       new_last_modified = User::Api.get_last_modified(@random_id)
-      new_last_modified[:hash].should_not == original_last_modified[:hash]
-      new_last_modified[:timestamp].should_not == original_last_modified[:timestamp]
+      new_last_modified[:hash].should_not == old_hash
+      new_last_modified[:timestamp].should_not == old_timestamp
       new_last_modified[:timestamp][:epoch].should == feed[:lastModified][:timestamp][:epoch]
     end
 

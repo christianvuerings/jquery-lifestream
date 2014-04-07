@@ -414,8 +414,8 @@ describe CampusOracle::Queries do
       user_data = CampusOracle::Queries.find_people_by_student_id("863980")
       expect(user_data).to be_an_instance_of Array
       expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['row_number']).to eq 1
-      expect(user_data[0]['result_count']).to eq 1
+      expect(user_data[0]['row_number']).to eq "1"
+      expect(user_data[0]['result_count']).to eq "1"
     end
   end
 
@@ -447,8 +447,8 @@ describe CampusOracle::Queries do
       user_data = CampusOracle::Queries.find_people_by_uid("300847")
       expect(user_data).to be_an_instance_of Array
       expect(user_data[0]).to be_an_instance_of Hash
-      expect(user_data[0]['row_number']).to eq 1
-      expect(user_data[0]['result_count']).to eq 1
+      expect(user_data[0]['row_number']).to eq "1"
+      expect(user_data[0]['result_count']).to eq "1"
     end
   end
 
