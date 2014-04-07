@@ -1,8 +1,6 @@
 Calcentral::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # enable threadsafe
-  config.threadsafe!
   config.dependency_loading = true if $rails_rake_task
 
   # Code is not reloaded between requests
