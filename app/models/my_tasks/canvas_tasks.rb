@@ -14,14 +14,19 @@ module MyTasks
       # Track assignment IDs to filter duplicates.
       tasks = []
       assignments = Set.new
-      fetch_canvas_todo!(Canvas::Todo.new(:user_id => @uid), tasks, assignments)
-      fetch_canvas_upcoming_events!(Canvas::UpcomingEvents.new(:user_id => @uid), tasks, assignments)
+      user_courses = Canvas::UserCourses.new(user_id: @uid).courses
+      course_id_to_code_map = {}
+      user_courses.each do |course|
+        course_id_to_code_map[course["id"]] = course["course_code"]
+      end
+      fetch_canvas_todo!(Canvas::Todo.new(:user_id => @uid), tasks, assignments, course_id_to_code_map)
+      fetch_canvas_upcoming_events!(Canvas::UpcomingEvents.new(:user_id => @uid), tasks, assignments, course_id_to_code_map)
       tasks
     end
 
     private
 
-    def fetch_canvas_todo!(canvas_proxy, tasks, assignments)
+    def fetch_canvas_todo!(canvas_proxy, tasks, assignments, course_id_to_code_map)
       response = canvas_proxy.todo
       if response && (response.status == 200)
         results = safe_json response.body
@@ -47,6 +52,10 @@ module MyTasks
                 bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
                 formatted_entry["bucket"] = bucket
 
+                if course_id_to_code_map
+                  formatted_entry["course_code"] = course_id_to_code_map[result["course_id"]]
+                end
+
                 # All scheduled assignments come back from Canvas with a timestamp, even if none selected. Ferret out untimed assignments.
                 if due_date
                   if due_date.hour == 0 && due_date.minute == 0 && due_date.second == 0
@@ -65,7 +74,7 @@ module MyTasks
       end
     end
 
-    def fetch_canvas_upcoming_events!(canvas_proxy, tasks, assignments)
+    def fetch_canvas_upcoming_events!(canvas_proxy, tasks, assignments, course_id_to_code_map)
       response = canvas_proxy.upcoming_events
       if response && (response.status == 200)
         results = safe_json response.body
@@ -90,6 +99,11 @@ module MyTasks
                 format_date_into_entry!(due_date, formatted_entry, "dueDate")
                 bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
                 formatted_entry["bucket"] = bucket
+
+                if course_id_to_code_map
+                  formatted_entry["course_code"] = course_id_to_code_map[result["assignment"]["course_id"]]
+                end
+
                 Rails.logger.debug "#{self.class.name} Putting Canvas upcoming_events event with dueDate #{formatted_entry["dueDate"]} in #{bucket} bucket: #{formatted_entry}"
                 @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
               end
