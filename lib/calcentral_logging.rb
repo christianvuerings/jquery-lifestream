@@ -2,6 +2,12 @@ require 'log4r'
 require 'log4r/outputter/datefileoutputter'
 include Log4r
 
+# monkey-patch Log4r to prevent NoMethodError on startup in rails s.
+class Log4r::Logger
+  def formatter
+  end
+end
+
 module CalcentralLogging
   include ClassLogger
   extend self
