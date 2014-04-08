@@ -17,9 +17,16 @@
       $scope.studentInfo = data.studentInfo;
 
       if (data.studentInfo.regStatus.needsAction) {
-        $scope.errorCount++;
+        $scope.count++;
+        $scope.hasAlerts = true;
       }
-      $scope.errorCount += data.studentInfo.regBlock.activeBlocks;
+      if (data.studentInfo.regBlock.activeBlocks) {
+        $scope.count += data.studentInfo.regBlock.activeBlocks;
+        $scope.hasAlerts = true;
+      } else if (!data.studentInfo.regBlock.available) {
+        $scope.count++;
+        $scope.hasWarnings = true;
+      }
     };
 
     var loadFinances = function(data) {
@@ -28,7 +35,11 @@
       }
 
       if (data.summary.totalPastDueAmount > 0) {
-        $scope.errorCount++;
+        $scope.count++;
+        $scope.hasAlerts = true;
+      } else if (data.summary.minimumAmountDue > 0) {
+        $scope.count++;
+        $scope.hasWarnings = true;
       }
       $scope.totalPastDueAmount = data.summary.totalPastDueAmount;
       $scope.minimumAmountDue = data.summary.minimumAmountDue;
@@ -39,7 +50,10 @@
         $scope.countUndatedFinaid = data.activities.filter(function(element) {
           return element.date === '' && element.emitter === 'Financial Aid' && element.type === 'alert';
         }).length;
-        $scope.errorCount += $scope.countUndatedFinaid;
+        if ($scope.countUndatedFinaid) {
+          $scope.count += $scope.countUndatedFinaid;
+          $scope.hasAlerts = true;
+        }
       }
     };
 
@@ -55,7 +69,9 @@
         hasLoaded = true;
 
         // Set the error count to 0
-        $scope.errorCount = 0;
+        $scope.count = 0;
+        $scope.hasAlerts = false;
+        $scope.hasWarnings = false;
 
         // We use this to show the spinner
         $scope.statusLoading = 'Process';

@@ -48,6 +48,11 @@ body {
   background: $cc-color-header;
   float: right;
 
+  .cc-popover-count {
+    font-size: 13px;
+    padding: 6px;
+  }
+
   .cc-popover-title {
     background: $cc-color-popover-title-background;
     border-bottom: 1px solid $cc-color-popover-border;
@@ -163,11 +168,6 @@ body {
     .cc-popover-link {
       color: $primary-color !important;
     }
-  }
-
-  .cc-badge-count {
-    font-size: 13px;
-    padding: 6px;
   }
 
   .cc-badgepopover {

@@ -8,7 +8,7 @@
       <span class="cc-visuallyhidden" data-ng-hide="api.popover.status(badge.cssPopover)">Show</span>
       <span class="cc-visuallyhidden" data-ng-show="api.popover.status(badge.cssPopover)">Hide</span>
       <span class="cc-visuallyhidden" data-ng-bind-template="your {{badge.display.name}}"></span>
-      <div class="cc-left cc-badge-count" data-ng-hide="badge.display.name==='bDrive'" data-ng-bind="badge.count"></div>
+      <div class="cc-left cc-popover-count" data-ng-hide="badge.display.name==='bDrive'" data-ng-bind="badge.count"></div>
     </button>
     <div class="cc-popover cc-popover-arrow cc-badgepopover cc-badgepopover-{{badge.display.name|lowercase}}" data-ng-show="api.popover.status(badge.cssPopover)">
       <!-- Title -->
