@@ -125,6 +125,9 @@ gem "ravenjs-gem", "~> 1.0.7.0"
 # https://github.com/jasonm/ngmin-rails
 gem "ngmin-rails", "~> 0.4.0"
 
+# so that Javascript minification will work on platforms lacking a JS runtime (Linux)
+gem 'therubyrhino', '~> 2.0.3'
+
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :testext, :production do
