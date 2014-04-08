@@ -59,7 +59,7 @@ module CampusOracle
         }
 
       end
-      result
+      stringify_ints!(result, ["tot_enroll_unit"])
     end
 
     def self.get_basic_people_attributes(up_to_1000_ldap_uids)
@@ -72,7 +72,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.find_people_by_name(name_search_string, limit = 0)
@@ -102,7 +102,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.find_people_by_email(email_search_string, limit = 0)
@@ -130,7 +130,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.find_people_by_student_id(student_id_string)
@@ -146,7 +146,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.find_people_by_uid(user_id_string)
@@ -162,7 +162,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.is_integer_string?(string)
@@ -188,7 +188,7 @@ module CampusOracle
       if result == nil || result["reg_status_cd"] == nil
         nil
       else
-        result
+        stringify_ints! result
       end
     end
 
@@ -207,7 +207,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_course_from_section(ccn, term_yr, term_cd)
@@ -222,7 +222,7 @@ module CampusOracle
         SQL
         result = connection.select_one(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_sections_from_ccns(term_yr, term_cd, ccns)
@@ -240,7 +240,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     # Catalog ID sorting is: "99", "101L", "C103", "C107L", "110", "110L", "C112", "C112L"
@@ -268,7 +268,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints!(result, ["enroll_limit", "wait_list_seq_num"])
     end
 
     def self.get_transcript_grades(person_id, terms = nil)
@@ -286,7 +286,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_instructing_sections(person_id, terms = nil)
@@ -310,7 +310,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_course_secondary_sections(term_yr, term_cd, department, catalog_id)
@@ -329,7 +329,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_section_schedules(term_yr, term_cd, ccn)
@@ -347,7 +347,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_section_instructors(term_yr, term_cd, ccn)
@@ -366,7 +366,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_photo(ldap_uid)
@@ -379,7 +379,7 @@ module CampusOracle
         SQL
         result = connection.select_one(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_student_info(ldap_uid)
@@ -393,7 +393,7 @@ module CampusOracle
         SQL
         result = connection.select_one(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.is_previous_ugrad?(ldap_uid)

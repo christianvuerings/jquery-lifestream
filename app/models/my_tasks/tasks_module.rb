@@ -31,20 +31,17 @@ module MyTasks
     def determine_bucket(due_date, formatted_entry, now_time, starting_date)
       bucket = "Unscheduled"
       if !due_date.blank?
-        due = due_date.to_i
-        now = now_time.to_i
-        tomorrow = starting_date.advance(:days => 1).to_i
-        end_of_next_week = starting_date.sunday.advance(:weeks => 1).to_i
+        tomorrow = starting_date.advance(:days => 1)
 
-        if due < now
+        if due_date.to_time.to_i < now_time.to_time.to_i
           bucket = "Overdue"
-        elsif due >= now && due < tomorrow
+        elsif due_date.to_time.to_i >= now_time.to_time.to_i && due_date.to_time.to_i < tomorrow.to_time.to_i
           bucket = "Today"
-        elsif due >= tomorrow
+        elsif due_date.to_time.to_i >= tomorrow.to_time.to_i
           bucket = "Future"
         end
 
-        Rails.logger.debug "#{self.class.name} In determine_bucket, @starting_date = #{starting_date}, now = #{now_time}; formatted entry = #{formatted_entry}"
+        Rails.logger.debug "#{self.class.name} In determine_bucket, bucket = #{bucket}, due_date = #{due_date}, now_time = #{now_time}, tomorrow = #{tomorrow}; formatted entry = #{formatted_entry}"
       end
       bucket
     end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Canvas::Rosters do
+describe Canvas::CanvasRosters do
   it "should return a list of officially enrolled students for a unlinked Canvas course site" do
     teacher_login_id = rand(99999).to_s
     course_id = rand(99999)
@@ -83,7 +83,7 @@ describe Canvas::Rosters do
             }
         ]
     )
-    model = Canvas::Rosters.new(teacher_login_id, course_id: course_id)
+    model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
     feed = model.get_feed
     feed[:canvas_course][:id].should == course_id
     feed[:sections].length.should == 2
@@ -131,7 +131,7 @@ describe Canvas::Rosters do
             }
         ])
     )
-    model = Canvas::Rosters.new(teacher_login_id, course_id: course_id)
+    model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
     feed = model.get_feed
     feed[:canvas_course][:id].should == course_id
     feed[:sections].length.should == 1
@@ -156,9 +156,9 @@ describe Canvas::Rosters do
         ]
     )
     Canvas::CourseTeachers.stub(:new).with(course_id: student_site_id).and_return(student_proxy)
-    model = Canvas::Rosters.new(user_id, course_id: teaching_site_id)
+    model = Canvas::CanvasRosters.new(user_id, course_id: teaching_site_id)
     model.user_authorized?.should be_true
-    model = Canvas::Rosters.new(user_id, course_id: student_site_id)
+    model = Canvas::CanvasRosters.new(user_id, course_id: student_site_id)
     model.user_authorized?.should be_false
   end
 
@@ -249,12 +249,12 @@ describe Canvas::Rosters do
             }
         ]
     )
-    model = Canvas::Rosters.new(teacher_login_id, course_id: course_id)
+    model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
     feed = model.get_feed
     feed[:sections].length.should == 2
     feed[:students].length.should == 2
     feed[:students].index {|student| student[:id] == enrolled_student_canvas_id &&
-        !student[:photo].end_with?(Canvas::Rosters::PHOTO_UNAVAILABLE_FILENAME)
+        !student[:photo].end_with?(Canvas::CanvasRosters::PHOTO_UNAVAILABLE_FILENAME)
     }.should_not be_nil
     feed[:students].index {|student| student[:id] == waitlisted_student_canvas_id &&
         student[:photo].nil?
@@ -344,17 +344,17 @@ describe Canvas::Rosters do
             'photo' => photo_data
         }
     )
-    model = Canvas::Rosters.new(teacher_login_id, course_id: course_id)
+    model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
     enrolled_photo = model.photo_data_or_file(enrolled_student_canvas_id)
     enrolled_photo[:data].should == photo_data
     enrolled_photo[:size].should == 42
     enrolled_photo[:filename].should be_nil
     waitlisted_photo = model.photo_data_or_file(waitlisted_student_canvas_id)
     waitlisted_photo[:data].should be_nil
-    waitlisted_photo[:filename].end_with?(Canvas::Rosters::PHOTO_UNAVAILABLE_FILENAME).should be_true
+    waitlisted_photo[:filename].end_with?(Canvas::CanvasRosters::PHOTO_UNAVAILABLE_FILENAME).should be_true
     unofficial_photo = model.photo_data_or_file(unofficial_student_canvas_id)
     unofficial_photo[:data].should be_nil
-    unofficial_photo[:filename].end_with?(Canvas::Rosters::PHOTO_UNAVAILABLE_FILENAME).should be_true
+    unofficial_photo[:filename].end_with?(Canvas::CanvasRosters::PHOTO_UNAVAILABLE_FILENAME).should be_true
   end
 
   def stub_teacher_status(teacher_login_id, canvas_course_id)

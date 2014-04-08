@@ -22,7 +22,7 @@ module Oec
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_all_instructors(course_cntl_nums=[])
@@ -48,7 +48,7 @@ module Oec
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_all_courses(course_cntl_nums = nil)
@@ -93,7 +93,7 @@ module Oec
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_all_course_instructors(course_cntl_nums=[])
@@ -118,7 +118,7 @@ module Oec
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     def self.get_all_course_students(course_cntl_nums=[])
@@ -140,7 +140,7 @@ module Oec
         SQL
         result = connection.select_all(sql)
       }
-      result
+      stringify_ints! result
     end
 
     private

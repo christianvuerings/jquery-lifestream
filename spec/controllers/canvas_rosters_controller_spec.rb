@@ -6,7 +6,7 @@ describe CanvasRostersController do
     user_id = rand(99999)
     canvas_course_id = rand(999999).to_s
     session[:user_id] = user_id
-    Canvas::Rosters.any_instance.stub(:get_feed).and_return(nil)
+    Canvas::CanvasRosters.any_instance.stub(:get_feed).and_return(nil)
     get :get_feed, canvas_course_id: canvas_course_id
     assert_response(401)
     student_id = rand(99999)
@@ -22,7 +22,7 @@ describe CanvasRostersController do
         "custom_canvas_course_id" => canvas_course_id.to_s
     }
     stub_model = double
-    Canvas::Rosters.should_receive(:new).with(user_id, {course_id: canvas_course_id}).and_return(stub_model)
+    Canvas::CanvasRosters.should_receive(:new).with(user_id, {course_id: canvas_course_id}).and_return(stub_model)
     stub_model.should_receive(:get_feed).and_return(
         {
             sections: [],

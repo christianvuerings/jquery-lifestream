@@ -48,7 +48,7 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
       it { subject[2][:classes][0][:slug].should eq "biology-1a" }
       it { subject[2][:classes][0][:grade].should be_nil }
       it { subject[2][:classes][0][:title].should eq "General Biology Lecture" }
-      it { subject[2][:classes][0][:units].should eq "5.0" }
+      it { subject[2][:classes][0][:units].to_s.should eq "5.0" }
       it { subject[2][:classes][0][:grade_option].should eq "Letter" }
       it { subject[2][:classes][0][:sections][0][:instruction_format].should eq "LEC" }
       it { subject[2][:classes][0][:sections][0][:section_number].should eq "003" }
@@ -56,9 +56,9 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
       it { subject[2][:classes][0][:sections][0][:instructors][0][:name].present?.should be_true }
       it { subject[2][:classes][0][:sections][0][:is_primary_section].should be_true }
       it { subject[3][:classes][0][:grade].should eq "B" }
-      it { subject[3][:classes][0][:units].should eq "4.0" }
+      it { subject[3][:classes][0][:units].to_s.should eq "4.0" }
       it { subject[3][:classes][1][:grade].should eq "C+" }
-      it { subject[3][:classes][1][:units].should eq "3.0" }
+      it { subject[3][:classes][1][:units].to_s.should eq "3.0" }
     end
   end
 

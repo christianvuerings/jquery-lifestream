@@ -31,7 +31,7 @@ module Sakai
       select tool_id from #{table_prefix}sakai_site_tool
         where site_id = #{connection.quote(site_id)} and registration = 'sakai.announcements'
         SQL
-        announcement = connection.select_one sql
+        announcement = stringify_ints!(connection.select_one(sql))
       }
       if (announcement)
         announcement['tool_id']
@@ -55,7 +55,7 @@ module Sakai
         SQL
         announcements = connection.select_all(sql)
       }
-      announcements
+      stringify_ints! announcements
     end
 
     def self.get_hidden_site_ids(sakai_user_id)
@@ -72,7 +72,7 @@ module Sakai
           end
         end
       }
-      sites
+      stringify_ints! sites
     end
 
     def self.get_sakai_user_id(person_id)
@@ -82,7 +82,7 @@ module Sakai
       select user_id from #{table_prefix}sakai_user_id_map
         where eid = #{connection.quote(person_id)}
         SQL
-        if (user_id = connection.select_one(sql))
+        if (user_id = stringify_ints!(connection.select_one(sql)))
           user_id = user_id['user_id']
         end
       }
@@ -102,7 +102,7 @@ module Sakai
         SQL
         results = connection.select_all(sql)
       }
-      results
+      stringify_ints! results
     end
 
     def self.get_users_site_groups(sakai_user_id)
@@ -115,7 +115,7 @@ module Sakai
         SQL
         results = connection.select_all(sql)
       }
-      results
+      stringify_ints! results
     end
 
   end

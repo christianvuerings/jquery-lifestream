@@ -71,7 +71,7 @@ describe Notifications::FinalGradesEventProcessor do
     CampusOracle::Queries.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
     User::Api.should_not_receive(:delete)
     Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
-    User::Data.stub(:where, "300846").and_return(NonexistentUserData.new)
+    User::Data.stub(:where, {uid: "300846"}).and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true
   end
 
