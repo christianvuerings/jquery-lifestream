@@ -5,7 +5,7 @@ Rails.application.config.after_initialize do
     # the processed files in fixtures/vcr_cassettes for use by FakeableProxy.
 
     # midnight on the current day
-    today = Time.zone.today.to_time_in_current_zone.to_datetime
+    today = Time.zone.today.in_time_zone.to_datetime
     end_of_week = today.sunday
     next_week = end_of_week.advance(days: 2)
     far_future = next_week.advance(days: 7)

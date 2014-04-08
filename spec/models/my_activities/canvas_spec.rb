@@ -7,7 +7,7 @@ describe MyActivities::Canvas do
     @user_id = Settings.canvas_proxy.test_user_id
     @fake_activity_stream_proxy = Canvas::UserActivityStream.new({fake: true})
     @fake_activity_stream = JSON.parse(@fake_activity_stream_proxy.user_activity.body)
-    @fake_time = Time.zone.today.to_time_in_current_zone.to_datetime
+    @fake_time = Time.zone.today.in_time_zone.to_datetime
   end
 
   it "should be able to process a normal canvas feed" do

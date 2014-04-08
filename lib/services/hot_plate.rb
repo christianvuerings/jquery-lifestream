@@ -57,7 +57,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
   def warm
     begin
       use_pooled_connection {
-        today = Time.zone.today.to_time_in_current_zone.to_datetime
+        today = Time.zone.today.in_time_zone.to_datetime
         cutoff = today.advance(:seconds => -1 * Settings.hot_plate.last_visit_cutoff)
         purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
 

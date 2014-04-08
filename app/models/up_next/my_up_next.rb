@@ -5,7 +5,7 @@ module UpNext
     attr_reader :begin_today, :next_day
 
     def init
-      @begin_today = Time.zone.today.to_time_in_current_zone.to_datetime
+      @begin_today = Time.zone.today.in_time_zone.to_datetime
       @next_day = begin_today.advance(:days => 1)
     end
 
@@ -29,12 +29,12 @@ module UpNext
     private
 
     def self.expires_in
-      Time.zone.today.to_time_in_current_zone.advance(:days => 1).at_midnight.to_i
+      Time.zone.today.in_time_zone.advance(:days => 1).at_midnight.to_i
     end
 
     def parse_date(hash)
       if hash["date"]
-        date = Date.parse(hash["date"].to_s).to_time_in_current_zone.to_datetime
+        date = Date.parse(hash["date"].to_s).in_time_zone.to_datetime
       else
         date = DateTime.parse(hash["dateTime"].to_s)
       end
