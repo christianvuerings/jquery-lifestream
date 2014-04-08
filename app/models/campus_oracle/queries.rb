@@ -102,7 +102,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      stringify_ints!(result, ["row_number", "result_count"])
+      stringify_ints! result
     end
 
     def self.find_people_by_email(email_search_string, limit = 0)
@@ -130,7 +130,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      stringify_ints!(result, ["row_number", "result_count"])
+      stringify_ints! result
     end
 
     def self.find_people_by_student_id(student_id_string)
@@ -146,7 +146,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      stringify_ints!(result, ["row_number", "result_count"])
+      stringify_ints! result
     end
 
     def self.find_people_by_uid(user_id_string)
@@ -162,7 +162,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      stringify_ints!(result, ["row_number", "result_count"])
+      stringify_ints! result
     end
 
     def self.is_integer_string?(string)
