@@ -89,6 +89,7 @@ Calcentral::Application.routes.draw do
   if Settings.developer_auth.enabled
     get '/basic_auth_login' => 'sessions#basic_lookup'
     get '/logout' => 'sessions#destroy', :as => :logout
+    post '/logout' => 'sessions#destroy', :as => :logout_post, :via => :post
   else
     post '/logout' => 'sessions#destroy', :as => :logout, :via => :post
   end
