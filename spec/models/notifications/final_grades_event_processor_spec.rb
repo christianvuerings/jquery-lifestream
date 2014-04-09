@@ -44,7 +44,7 @@ describe Notifications::FinalGradesEventProcessor do
     saved_notification.should_not be_nil
     saved_notification.data.should_not be_nil
     saved_notification.translator.should == "FinalGradesTranslator"
-    saved_notification.occurred_at.to_i.should == timestamp.to_i
+    saved_notification.occurred_at.to_time.to_i.should == timestamp.to_time.to_i
     Rails.logger.info "Saved notification's json is #{saved_notification.data}"
 
     Notifications::Notification.where(:uid => "323487").first.data.should_not be_nil
