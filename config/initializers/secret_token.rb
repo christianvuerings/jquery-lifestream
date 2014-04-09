@@ -14,3 +14,7 @@ if Rails.env.production?
 else
   Calcentral::Application.config.secret_token = Settings.secret_token || SecureRandom.hex(128)
 end
+
+# Rails 4 uses secret_key_base
+Calcentral::Application.config.secret_key_base = Calcentral::Application.config.secret_token
+
