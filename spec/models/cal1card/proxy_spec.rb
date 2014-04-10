@@ -57,4 +57,13 @@ describe Cal1card::Proxy do
     its([:body]) { should eq("Cal1Card is currently unavailable. Please try again later.") }
     its([:status_code]) { should eq(506) }
   end
+
+  context "proxy should respect a disabled feature flag" do
+    before(:each) {
+      Settings.features.stub(:cal1card).and_return(false)
+    }
+    subject { real_oski_proxy.get }
+    it { should eq({}) }
+  end
+
 end
