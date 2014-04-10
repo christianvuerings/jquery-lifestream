@@ -53,6 +53,9 @@ logger:
 myfinaid_proxy:
   fake: true
 
+cal1card_proxy:
+  fake: true
+
 postgres:
   database: calcentral_development
   username: calcentral_development
@@ -81,3 +84,4 @@ features:
   videos: true
   podcasts: true
   app_alerts: true
+  cal1card: true

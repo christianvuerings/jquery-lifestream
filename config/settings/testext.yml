@@ -28,6 +28,7 @@ features:
   podcasts: true
   research: true
   app_alerts: true
+  cal1card: true
 
 cache:
   store: "memory"
