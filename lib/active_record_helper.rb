@@ -20,7 +20,7 @@ module ActiveRecordHelper
 
   # Should normally be used when within a subclass instance of ActiveRecord::Base
   def log_access
-    ActiveRecordHelper.shared_log_access(self.connection, self.connection_handler, self.class.name)
+    ActiveRecordHelper.shared_log_access(self.class.connection, self.connection_handler, self.class.name)
   end
 
   def log_threads
@@ -35,7 +35,7 @@ module ActiveRecordHelper
     Rails.cache.fetch(
       "ActiveRecordHelper/flush_stale_connections_#{ServerRuntime.get_settings["hostname"]}",
       :expires_in => Settings.cache.stale_connection_flush_interval) {
-      ActiveRecord::Base.connection_pool.clear_stale_cached_connections!
+      ActiveRecord::Base.connection_pool.reap
       true
     }
   end
@@ -67,9 +67,9 @@ module ActiveRecordHelper
     if Rails.logger.debug?
       connection_id = conn.object_id
       Rails.logger.debug "#{name} using connection_id: #{connection_id}, connected = #{conn.pool.active_connection?}"
-      conn_handler.connection_pools.each do |conn_pool_hash, conn_pool|
+      conn_handler.connection_pool_list.each do |conn_pool|
         live_connections = conn_pool.connections
-        Rails.logger.debug "#{name} current connection pool (#{conn_pool_hash}-#{conn_pool_hash.adapter_method}) count: #{live_connections.size}; thread #{Thread.current.object_id}"
+        Rails.logger.debug "#{name} current connection pool (#{conn_pool.spec}-#{conn_pool.spec.adapter_method}) count: #{live_connections.size}; thread #{Thread.current.object_id}"
       end
     end
   end

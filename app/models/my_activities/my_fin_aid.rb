@@ -172,7 +172,7 @@ class MyActivities::MyFinAid
   end
 
   def self.parsed_date(date_string='')
-    Date.parse(date_string).to_time_in_current_zone.to_datetime rescue ""
+    Date.parse(date_string).in_time_zone.to_datetime rescue ""
   end
 
   def self.term_year_to_s(term_year)

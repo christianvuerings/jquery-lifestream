@@ -18,7 +18,7 @@ module MyActivities
     end
 
     def self.cutoff_date
-      @cutoff_date ||= Time.zone.today.to_time_in_current_zone.to_datetime.advance(:days => -10).to_time.to_i
+      @cutoff_date ||= Time.zone.today.in_time_zone.to_datetime.advance(:days => -10).to_time.to_i
     end
 
     # Note that MyActivities feed processing has a direct dependency on MyClasses and MyGroups.

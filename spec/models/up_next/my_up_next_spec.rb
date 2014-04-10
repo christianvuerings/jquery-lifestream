@@ -54,7 +54,7 @@ describe UpNext::MyUpNext do
   end
 
   it "should not include all-day events for tomorrow" do
-    too_late = Time.zone.today.to_time_in_current_zone.to_datetime.end_of_day
+    too_late = Time.zone.today.in_time_zone.to_datetime.end_of_day
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::Proxy.stub(:new).and_return(@fake_google_proxy)
     valid_feed = UpNext::MyUpNext.new(@user_id).get_feed
@@ -79,7 +79,7 @@ describe UpNext::MyUpNext do
   context "cache expiration" do
     before(:each){ @instance = UpNext::MyUpNext.new(@user_id) }
     it "should expire tomorrow at midnight" do
-      midnight_tomorrow = Time.zone.today.to_time_in_current_zone.advance(:days=>1).at_midnight.to_i
+      midnight_tomorrow = Time.zone.today.in_time_zone.advance(:days=>1).at_midnight.to_i
       @instance.class.expires_in.should == midnight_tomorrow
     end
   end
