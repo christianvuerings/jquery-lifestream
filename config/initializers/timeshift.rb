@@ -55,7 +55,7 @@ Rails.application.config.after_initialize do
         ":::NO_TZ_YESTERDAY:::" => yesterday_no_tz.strftime('%F %T.0')
     }
 
-    Rails.logger.debug "Timeshifter: Today = #{today}; epoch = #{today.to_i}"
+    Rails.logger.debug "Timeshifter: Today = #{today}; epoch = #{today.to_time.to_i}"
     Rails.logger.debug "Timeshifter: Substitutions = #{substitutions.inspect}"
 
     processed_dir = Rails.root.join("fixtures", "vcr_cassettes")

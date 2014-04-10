@@ -98,11 +98,11 @@ module Cache
       # logic may not work on caching systems other than memcached.
       today = Time.zone.today.to_time_in_current_zone.to_datetime.advance(:hours => 8)
       now = Time.zone.now
-      if now.to_i > today.to_i
+      if now.to_i > today.to_time.to_i
         tomorrow = today.advance(:days => 1)
-        tomorrow.to_i
+        tomorrow.to_time.to_i
       else
-        today.to_i
+        today.to_time.to_i
       end
     end
 

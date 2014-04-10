@@ -28,7 +28,7 @@ describe Notifications::FinalGradesTranslator do
     Rails.logger.info "Translated notification = #{translated}"
     translated[:title].should == "Final grades posted for PSYCH 101"
     translated[:date][:date_time].should_not be_nil
-    translated[:date][:epoch].should == timestamp.to_i
+    translated[:date][:epoch].should == timestamp.to_time.to_i
     translated[:source].should == "Bear Facts"
   end
 end

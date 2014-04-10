@@ -17,7 +17,7 @@ module DatedFeed
   protected
   def self.shared_format_date(datetime, date_string_format="%-m/%d")
     {
-      :epoch => datetime.to_i,
+      :epoch => datetime.to_time.to_i,
       :date_time => datetime.rfc3339,
       :date_string => datetime.strftime(date_string_format)
     }

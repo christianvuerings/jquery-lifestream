@@ -20,7 +20,7 @@ describe Notifications::RegStatusTranslator do
     translator = Notifications::RegStatusTranslator.new
     translated = translator.translate saved_notification
 
-    translated[:date][:epoch].should == timestamp.to_i
+    translated[:date][:epoch].should == timestamp.to_time.to_i
     translated[:date][:date_time].should_not be_nil
     translated[:source].should == "Bear Facts"
     translated[:title].should == "Registration status updated to: Registered"
