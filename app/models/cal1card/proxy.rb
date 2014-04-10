@@ -3,15 +3,14 @@ module Cal1card
 
     include ClassLogger
 
+    APP_ID = "Cal1Card"
+
     def initialize(options = {})
       super(Settings.cal1card_proxy, options)
     end
 
     def get
-      self.class.smart_fetch_from_cache(
-        {
-          id: @uid
-        }) do
+      self.class.smart_fetch_from_cache({id: @uid}) do
         internal_get
       end
     end
@@ -19,25 +18,32 @@ module Cal1card
     private
 
     def internal_get
-      json = xml_to_json(get_raw_xml)
-
-      status_code = 200
-      logger.info "Cal1card data: #{json}, remote server status #{status_code}"
-      {
-        body: json,
-        statusCode: status_code
-      }
-    end
-
-    def get_raw_xml
       if @fake
         logger.info "Fake = #@fake, getting data from XML fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
-        File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml').to_s)
+        xml = File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml').to_s)
       else
+        url = "#{@settings.feed_url}?uid=#{@uid}"
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        #TODO implement real HTTP
-        ''
+        response = HTTParty.get(
+          url,
+          basic_auth: {username: @settings.username, password: @settings.password},
+          timeout: Settings.application.outgoing_http_timeout
+        )
+        if response.code >= 400
+          body = "Cal1Card is currently unavailable. Please try again later."
+          raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
+            body: body,
+            status_code: response.code
+          })
+        else
+          xml = response.body
+        end
+        logger.debug "Cal1Card remote response: #{response.inspect}"
       end
+      {
+        body: xml_to_json(xml),
+        status_code: 200
+      }
     end
 
     def xml_to_json(xml)
