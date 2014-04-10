@@ -160,7 +160,8 @@ group :development, :test , :testext do
   #from Ruby code, hiding some low-level action.
   gem "headless", "~> 1.0.1"
 
-  gem "spork", "~> 0.9.2"
+  # Spork can speed up multiple test runs.
+  gem "spork-rails", "~> 4.0.0"
 end
 
 group :development do
