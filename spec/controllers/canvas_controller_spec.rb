@@ -29,7 +29,7 @@ describe CanvasController do
 
     it "should set cross origin access control headers" do
       get :external_tools
-      expect(response.header["Access-Control-Allow-Origin"]).to eq 'http://localhost:12345'
+      expect(response.header["Access-Control-Allow-Origin"]).to eq "#{Settings.canvas_proxy.url_root}"
       expect(response.header["Access-Control-Allow-Methods"]).to eq 'GET, OPTIONS, HEAD'
       expect(response.header["Access-Control-Max-Age"]).to eq '86400'
     end
