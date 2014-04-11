@@ -79,7 +79,7 @@
                       <li data-ng-repeat="course in selectedCourses" class="cc-page-provision-form-course">
                         <strong>{{course.title}} ({{course.course_code}})</strong>
                         <div class="cc-page-provision-form-select-all-option" data-ng-show="course.sections.length > 1">
-                          Select: <a data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></a>
+                          Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
                         </div>
                         <ul>
                           <li data-ng-repeat="section in course.sections">
