@@ -88,3 +88,8 @@
 a#addUsers.btn.btn-primary {
   display: none;
 }
+
+/* Hide 'Start a New Course' button on User Dashboard and Courses index pages */
+button#start_new_course.btn.button-sidebar-wide {
+  display: none;
+}

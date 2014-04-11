@@ -27,6 +27,12 @@ module Canvas
       all_tools
     end
 
+    def public_list
+      external_tools_list.each_with_object({}) do |tool, hash|
+        hash[tool['name']] = tool['id']
+      end
+    end
+
     def reset_external_tool(tool_id, config_url)
       canvas_url = "accounts/#{settings.account_id}/external_tools/#{tool_id}?config_type=by_url&config_url=#{config_url}"
       request_uncached(canvas_url, '_reset_external_tool', {
