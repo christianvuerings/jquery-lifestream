@@ -106,4 +106,4 @@
     }
   };
 
-})(window, window.document, window.$, ENV);
+})(window, window.document, window.$, window.ENV);
