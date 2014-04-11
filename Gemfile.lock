@@ -457,6 +457,7 @@ DEPENDENCIES
   addressable (~> 2.3.4)
   angular-gem (= 1.2.16)
   bootstrap-sass (= 2.3.2.0)
+  bundler (~> 1.6.1)
   cancan (~> 1.6.10)
   capistrano (~> 2.15.4)
   capybara (~> 2.1.0)
