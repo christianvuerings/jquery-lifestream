@@ -72,3 +72,12 @@ Sets the app to show up as a Course site tool, visible to teachers and admins, a
     <cartridge_icon identifierref="BLTI001_Icon"/>
 </cartridge_basiclti_link>
 ```
+
+### Dependencies
+
+Canvas is configured on the account level to include [Javascript](../public/canvas/canvas-customization.js) and [CSS](../public/canvas/canvas-skin.css) from the CalCentral server. Some modifications to the Canvas user interface are being made by the Javascript included within Canvas. Please note the following:
+
+* A modification is made to the 'Add People' button displayed on the 'People' section within a Canvas course site. This button is replaced with a link to the 'Add People' LTI application. This modification [requires](../public/canvas/canvas-customization.js#L13) that the 'Add People' LTI application is [configured to display](../app/views/canvas_lti/lti_course_add_user.xml.erb#L20) with the text 'Add People' in the course navigation menu.
+* A modification is made to the 'Start a New Course' button displayed on the right sidebar of the Canvas dashboard and Canvas courses index page. This button is replaced with the text 'Create a Course Site', and is instead linked to the Course Provisioning LTI application. This modification [requires](../public/canvas/canvas-customization.js#L45) that the LTI application is configured in the Canvas Account Settings with the name 'Course Provisioning for Users'. The name of the LTI application is decided by the Canvas Account Administrator when configuring the LTI application. If the name provided by the [external_tools.json](../config/routes.rb#L51) does not match this, the logic for the button replacement will not work.
+
+

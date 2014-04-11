@@ -1,4 +1,4 @@
-(function(window, document, $) {
+(function(window, document, $, env) {
   'use strict';
 
   /**
@@ -30,6 +30,56 @@
   };
 
   /**
+   * Replaces the 'Start a New Course' button, displayed on the Canvas user dashboard.
+   */
+  var replaceStartANewCourseButton = function() {
+    // only run for dashboard and courses page
+    var replacementPaths = ['/','/courses','/courses.html'];
+    if (replacementPaths.indexOf(window.location.pathname) !== -1) {
+      // check for button and replace
+      var replaceAddCourseButton = function() {
+        var $canvasAddCourseButton = $('button#start_new_course');
+        if ($canvasAddCourseButton.length > 0) {
+          var external_tools_url = calcentral_root_url() + '/api/academics/canvas/external_tools.json';
+          $.get(external_tools_url, function(external_tools_hash) {
+            var createCourseSiteId = external_tools_hash['Course Provisioning for Users'];
+            // replace button if current user id and external application id present
+            if ((typeof createCourseSiteId !== 'undefined') && (typeof env.current_user_id !== 'undefined')) {
+              var link_url = '/users/' + env.current_user_id + '/external_tools/' + createCourseSiteId;
+              var $customAddCourseButton = $('<button/>', {
+                text: 'Create a Course Site',
+                class: 'btn button-sidebar-wide',
+                click: function() {
+                  window.location.href = link_url;
+                }
+              });
+              $canvasAddCourseButton.after($customAddCourseButton);
+            }
+          });
+          stopAddCourseButtonSearch();
+        }
+      };
+      // perform check every 300 milliseconds
+      var findAddCourseButton = window.setInterval(function() {
+        replaceAddCourseButton();
+      }, 300);
+      // halts check once button replaced
+      var stopAddCourseButtonSearch = function() {
+        clearInterval(findAddCourseButton);
+      };
+    }
+  };
+
+  /**
+   * Obtains hostname for this script from embedded script element
+   */
+  var calcentral_root_url = function() {
+    var parser = document.createElement('a');
+    parser.href = $('script[src$="/canvas/canvas-customization.js"]')[0].src;
+    return parser.protocol + '//' + parser.host;
+  };
+
+  /**
    * bCourses customizations
    */
   $(document).ready(function() {
@@ -40,6 +90,7 @@
     $('#footer div.bcourses-footer').prepend($bcoursesFooter);
     $('#footer span#footer-links').replaceWith($bcoursesLinks);
 
+    replaceStartANewCourseButton();
     replaceAddPeopleButton();
   });
 
@@ -55,4 +106,4 @@
     }
   };
 
-})(window, window.document, window.$);
+})(window, window.document, window.$, ENV);
