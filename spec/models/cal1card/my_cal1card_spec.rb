@@ -10,8 +10,8 @@ describe Cal1card::MyCal1card do
     subject { Cal1card::MyCal1card.new(oski_uid).get_feed }
     it {
       should_not be_nil
-      json = JSON.parse(subject[:body])
-      json.should_not be_nil
+      subject[:body].should_not be_nil
+      subject[:body][:cal1card].should_not be_nil
     }
   end
 

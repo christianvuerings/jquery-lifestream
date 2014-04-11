@@ -12,12 +12,12 @@ describe Cal1card::Proxy do
   end
 
   context "checking the fake feed for correct json" do
-    subject { JSON.parse(fake_oski_proxy.get[:body]) }
+    subject { fake_oski_proxy.get[:body] }
     it {
-      subject["cal1card"]["cal1cardStatus"].should == 'OK'
-      subject["cal1card"]["debit"].should == '0.8'
-      subject["cal1card"]["mealpoints"].should == '359.11'
-      subject["cal1card"]["mealpointsPlan"].should == 'Resident Meal Plan Points'
+      subject[:cal1card][:cal1cardStatus].should == 'OK'
+      subject[:cal1card][:debit].should == '0.8'
+      subject[:cal1card][:mealpoints].should == '359.11'
+      subject[:cal1card][:mealpointsPlan].should == 'Resident Meal Plan Points'
     }
   end
 

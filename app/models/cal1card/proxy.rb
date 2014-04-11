@@ -42,15 +42,14 @@ module Cal1card
         logger.debug "Cal1Card remote response: #{response.inspect}"
       end
       {
-        body: xml_to_json(xml),
+        body: convert_xml(xml),
         status_code: 200
       }
     end
 
-    def xml_to_json(xml)
+    def convert_xml(xml)
       hash = Hash.from_xml(xml)
-      camelized = HashConverter.camelize hash
-      camelized.to_json
+      HashConverter.camelize hash
     end
 
   end
