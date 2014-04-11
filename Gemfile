@@ -119,7 +119,7 @@ gem "momentjs-rails", "~> 2.2.1"
 
 # Placeholder.js
 # https://github.com/ets-berkeley-edu/placeholder-gem
-gem "placeholder-gem", "~> 3.0.0.0"
+gem "placeholder-gem", "~> 3.0.2"
 
 # Raven.js - library for JS error logging
 gem "ravenjs-gem", "~> 1.0.7.0"
