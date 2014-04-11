@@ -1,5 +1,6 @@
 module HashConverter
 
+  # Camel-case and symbolize keys across a tree or array of hashes. Values are left unchanged.
   def self.camelize(value)
     case value
       when Array
