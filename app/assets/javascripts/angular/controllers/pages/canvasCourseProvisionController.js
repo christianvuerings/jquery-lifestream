@@ -71,6 +71,8 @@
     var fillCourseSites = function(semestersFeed) {
       angular.forEach(semestersFeed, function(semester) {
         angular.forEach(semester.classes, function(course) {
+          course.allSelected = false;
+          course.selectToggleText = 'All';
           var hasSites = false;
           var ccnToSites = {};
           angular.forEach(course.class_sites, function(site) {
@@ -106,6 +108,14 @@
         newSelectedCourses.push(course);
       });
       $scope.selectedCourses = newSelectedCourses;
+    };
+
+    $scope.toggleCheckboxes = function(selectedCourse) {
+      selectedCourse.allSelected = !selectedCourse.allSelected;
+      selectedCourse.selectToggleText = selectedCourse.allSelected ? 'None' : 'All';
+      angular.forEach(selectedCourse.sections, function(section) {
+        section.selected = selectedCourse.allSelected;
+      });
     };
 
     $scope.createCourseSiteJob = function(selectedCourses) {
