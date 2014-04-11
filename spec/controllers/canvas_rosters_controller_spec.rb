@@ -18,9 +18,7 @@ describe CanvasRostersController do
     user_id = rand(99999)
     canvas_course_id = rand(999999)
     session[:user_id] = user_id
-    session[:canvas_lti_params] = {
-        "custom_canvas_course_id" => canvas_course_id.to_s
-    }
+    session[:canvas_course_id] = canvas_course_id.to_s
     stub_model = double
     Canvas::CanvasRosters.should_receive(:new).with(user_id, {course_id: canvas_course_id}).and_return(stub_model)
     stub_model.should_receive(:get_feed).and_return(

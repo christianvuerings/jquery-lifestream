@@ -15,7 +15,6 @@ class CanvasLtiController < ApplicationController
     session[:user_id] = lti.get_custom_param('canvas_user_login_id')
     session[:canvas_user_id] = lti.get_custom_param('canvas_user_id')
     session[:canvas_course_id] = lti.get_custom_param('canvas_course_id')
-    session[:canvas_lti_params] = lti.to_params
   end
 
   def embedded
