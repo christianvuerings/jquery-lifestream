@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<cal1card>
+  <cal1card_status>OK</cal1card_status>
+  <cal1card_lost></cal1card_lost>
+  <debit>0.8</debit>
+  <debit_message>OK</debit_message>
+  <mealpoints>359.11</mealpoints>
+  <mealpoints_message>OK</mealpoints_message>
+  <mealpoints_plan>Resident Meal Plan Points</mealpoints_plan>
+</cal1card>

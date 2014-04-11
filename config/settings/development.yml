@@ -22,6 +22,7 @@ cache:
     MyCampusLinksController: <%= 1.day %>
     MyClasses::Merged: <%= 1.day %>
     Financials::MyFinancials: <%= 1.day %>
+    Cal1card::MyCal1card: <%= 1.day %>
     MyGroups::Merged: <%= 1.day %>
     MyTasks::Merged: <%= 1.day %>
     UpNext::MyUpNext: <%= 1.day %>
@@ -53,6 +54,9 @@ logger:
 myfinaid_proxy:
   fake: true
 
+cal1card_proxy:
+  fake: true
+
 postgres:
   database: calcentral_development
   username: calcentral_development
@@ -81,3 +85,4 @@ features:
   videos: true
   podcasts: true
   app_alerts: true
+  cal1card: true

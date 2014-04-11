@@ -28,6 +28,7 @@ features:
   podcasts: true
   research: true
   app_alerts: true
+  cal1card: true
 
 cache:
   store: "memory"
@@ -40,6 +41,7 @@ cache:
     MyCampusLinks: <%= 1.day %>
     MyClasses::Merged: <%= 1.day %>
     Financials::MyFinancials: <%= 1.day %>
+    Cal1card::MyCal1card: <%= 1.day %>
     MyGroups::Merged: <%= 1.day %>
     MyTasks::Merged: <%= 1.day %>
     UpNext::MyUpNext: <%= 1.day %>

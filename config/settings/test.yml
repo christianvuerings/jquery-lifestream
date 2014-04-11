@@ -19,6 +19,8 @@ sakai_proxy:
   fake_now: 2013-03-11 04:20:00
 cal_link_proxy:
   fake: true
+cal1card_proxy:
+  fake: true
 
 # To avoid "Illegal key size" errors on systems which we can't modify (e.g., Travis),
 # lower the security of the encryption algorithm.
@@ -40,6 +42,7 @@ features:
   podcasts: true
   research: true
   app_alerts: true
+  cal1card: true
 
 cache:
   store: "memory"
@@ -52,6 +55,7 @@ cache:
     MyCampusLinks: <%= 1.day %>
     MyClasses::Merged: <%= 1.day %>
     Financials::MyFinancials: <%= 1.day %>
+    Cal1card::MyCal1card: <%= 1.day %>
     MyGroups::Merged: <%= 1.day %>
     MyTasks::Merged: <%= 1.day %>
     UpNext::MyUpNext: <%= 1.day %>

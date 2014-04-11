@@ -11,6 +11,7 @@ module Calcentral
 
     {
       Financials::MyFinancials => :expire,
+      Cal1card::MyCal1card => :expire,
       Bearfacts::MyRegBlocks => :expire,
       CalLink::Memberships => :expire,
 
@@ -40,6 +41,7 @@ module Calcentral
       User::Api,
       MyClasses::Merged,
       Financials::MyFinancials,
+      Cal1card::MyCal1card,
       MyGroups::Merged,
       MyActivities::Merged,
       MyTasks::Merged,
