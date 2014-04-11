@@ -39,7 +39,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/media/:playlist_title' => 'my_media#get_media', :constraints => { :playlist_title => /[^\/]+/ }, :defaults => { :format => 'json' }
 
   # Canvas embedded application support.
-  get '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
+  post '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
   get '/canvas/lti_roster_photos' => 'canvas_lti#lti_roster_photos', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_provision_account_navigation' => 'canvas_lti#lti_course_provision_account_navigation', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_provision_user_navigation' => 'canvas_lti#lti_course_provision_user_navigation', :defaults => { :format => 'xml' }

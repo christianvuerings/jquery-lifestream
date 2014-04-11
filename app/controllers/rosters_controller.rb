@@ -42,7 +42,7 @@ class RostersController < ApplicationController
     else
       if request_type == 'Canvas'
         if course_id == 'embedded'
-          course_id = session[:canvas_lti_params] && session[:canvas_lti_params]['custom_canvas_course_id']
+          course_id = session[:canvas_course_id]
           if course_id.blank?
             logger.warn("Bad embedded request made to Canvas Rosters: session user = #{user_id}")
             return nil
