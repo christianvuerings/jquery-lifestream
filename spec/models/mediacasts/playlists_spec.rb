@@ -7,8 +7,8 @@ describe Mediacasts::Playlists do
   context "normal return of real data", :testext => true do
     it "should return playlist id" do
       result = subject.request_internal
-      result[:playlist_id].should == "ECCF8E59B3C769FB01"
-      result[:podcast_id].should == "496300137"
+      expect(result[:playlist_id]).to eq "ECCF8E59B3C769FB01"
+      expect(result[:podcast_id]).to eq "496300137"
     end
   end
 
@@ -19,7 +19,7 @@ describe Mediacasts::Playlists do
     after(:each) { WebMock.reset! }
     it "should return the fetch error message" do
       response = subject.get
-      response[:proxy_error_message].should == "There was a problem fetching the webcasts and podcasts."
+      expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts and podcasts."
     end
   end
 
@@ -30,7 +30,19 @@ describe Mediacasts::Playlists do
     after(:each) { WebMock.reset! }
     it "should return the fetch error message" do
       response = subject.get
-      response[:proxy_error_message].should == "There was a problem fetching the webcasts and podcasts."
+      expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts and podcasts."
+    end
+  end
+
+  context "when videos and podcasts are disabled" do
+    before { Settings.features.podcasts = false }
+    before { Settings.features.videos = false }
+    after { Settings.features.podcasts = true }
+    after { Settings.features.videos = true }
+    it "should return an empty hash" do
+      result = subject.request_internal
+      expect(result).to be_an_instance_of Hash
+      expect(result).to be_empty
     end
   end
 
