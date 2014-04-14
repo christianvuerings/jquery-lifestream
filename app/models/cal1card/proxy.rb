@@ -41,10 +41,9 @@ module Cal1card
         end
         logger.debug "Cal1Card remote response: #{response.inspect}"
       end
-      {
-        body: convert_xml(xml),
+      convert_xml(xml)[:cal1card].merge({
         status_code: 200
-      }
+      })
     end
 
     def convert_xml(xml)

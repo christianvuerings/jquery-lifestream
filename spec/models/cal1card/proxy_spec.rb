@@ -8,16 +8,16 @@ describe Cal1card::Proxy do
 
   context "fetching fake data feed" do
     subject { fake_oski_proxy.get }
-    its([:body]) { should_not be_empty }
+    it { should_not be_empty }
   end
 
   context "checking the fake feed for correct json" do
-    subject { fake_oski_proxy.get[:body] }
+    subject { fake_oski_proxy.get }
     it {
-      subject[:cal1card][:cal1cardStatus].should == 'OK'
-      subject[:cal1card][:debit].should == '0.8'
-      subject[:cal1card][:mealpoints].should == '359.11'
-      subject[:cal1card][:mealpointsPlan].should == 'Resident Meal Plan Points'
+      subject[:cal1cardStatus].should == 'OK'
+      subject[:debit].should == '0.8'
+      subject[:mealpoints].should == '359.11'
+      subject[:mealpointsPlan].should == 'Resident Meal Plan Points'
     }
   end
 
@@ -30,7 +30,7 @@ describe Cal1card::Proxy do
 
   context "getting real data feed", testext: true do
     subject { real_oski_proxy.get }
-    its([:body]) { should_not be_empty }
+    it { should_not be_empty }
     its([:status_code]) { should eq 200 }
   end
 
