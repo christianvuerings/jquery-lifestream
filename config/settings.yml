@@ -280,6 +280,7 @@ features:
   podcasts: false
   app_alerts: false
   cal1card: false
+  reauthentication: false
 
 oec:
   export_directory: 'tmp/oec'

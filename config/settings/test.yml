@@ -43,6 +43,7 @@ features:
   research: true
   app_alerts: true
   cal1card: true
+  reauthentication: true
 
 cache:
   store: "memory"

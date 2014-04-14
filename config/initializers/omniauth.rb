@@ -26,3 +26,17 @@ if Settings.application.fake_cas && Settings.application.fake_cas_id
       :uid => Settings.application.fake_cas_id
     })
 end
+
+module OmniAuth
+  module Strategies
+    class CAS
+      def login_url(service)
+        login_options = { :service => service }
+        if request.params['renew']=='true'
+          login_options.merge!(:renew=>'true')
+        end
+        cas_url + append_params( @options.login_url, login_options)
+      end
+    end
+  end
+end

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
   before_filter :get_settings, :initialize_calcentral_config
+  before_filter :check_reauthentication
   after_filter :access_log
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -22,8 +23,48 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def is_admin?
+    (real_user && real_user.is_superuser==true)
+  end
+
+  def reauthenticate
+    delete_reauth_cookie
+    redirect_to url_for_path("/auth/cas?renew=true")
+  end
+
+  def check_reauthentication
+    unless !!session[:user_id]
+      delete_reauth_cookie
+      return
+    end
+    return unless Settings.features.reauthentication
+    return unless is_admin?
+    reauthenticate if acting_as? && !cookies[:reauthenticated]
+  end
+
+  def delete_reauth_cookie
+    cookies.delete :reauthenticated if cookies[:reauthenticated]
+  end
+
   def current_user
     @current_user ||= User::Auth.get(session[:user_id])
+  end
+
+  def acting_as?
+    !!((session[:original_user_id] && session[:user_id]) && (session[:original_user_id] != session[:user_id]))
+  end
+
+  def real_uid
+    (acting_as?) ? session[:original_user_id] : session[:user_id]
+  end
+
+  def real_user
+    return false unless real_uid
+    @real_user ||= User::Auth.get(real_uid)
+  end
+
+  def act_as_uid
+    return (acting_as?) ? session[:user_id] : nil
   end
 
   # override of Rails default behavior:

@@ -1,8 +1,13 @@
 class SessionsController < ApplicationController
   include ActiveRecordHelper
 
+  skip_before_filter :check_reauthentication, :only => [:lookup, :stop_act_as, :destroy]
+
   def lookup
     auth = request.env["omniauth.auth"]
+    if (acting_as? && params[:renew] == 'true')
+      cookies[:reauthenticated] = { :value => true, :expires => 8.hours.from_now }
+    end
     continue_login_success auth['uid']
   end
 
@@ -44,6 +49,7 @@ class SessionsController < ApplicationController
 
   def destroy
     begin
+      delete_reauth_cookie
       reset_session
     ensure
       ActiveRecord::Base.clear_active_connections!
@@ -74,7 +80,7 @@ class SessionsController < ApplicationController
       Rails.logger.warn "FAILED login with CAS UID: #{uid}"
       redirect_to url_for_path('/uid_error')
     else
-      session[:user_id] = uid
+      session[:user_id] = (acting_as?) ? act_as_uid : uid
       redirect_to smart_success_path, :notice => "Signed in!"
     end
   end

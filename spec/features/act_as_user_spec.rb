@@ -8,6 +8,7 @@ feature "act_as_user" do
     User::Auth.new_or_update_test_user! "2040"
     User::Auth.new_or_update_test_user! "1234"
     User::Auth.new_or_update_test_user! "9876"
+    Settings.features.stub(:reauthentication).and_return(false)
   end
 
   scenario "switch to another user and back while using a super-user" do
