@@ -49,7 +49,6 @@ Spork.prefork do
   require 'capybara/rspec'
   require 'capybara/rails'
   require 'webmock/rspec'
-  require 'support/spec_helper_module'
 
   # create tmp/cache directory if necessary, otherwise the Rails.cache.clear statement before each test may fail
   FileUtils.mkdir_p("tmp/cache") unless File.exists?("tmp/cache")
