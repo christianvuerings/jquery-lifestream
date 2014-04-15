@@ -135,6 +135,21 @@ describe Notifications::FinalGradesEventProcessor do
 
   end
 
+  it "should handle a non-array course in the payload" do
+    event = JSON.parse('{"topic":"Bearfacts:EndOfTermGrades","timestamp":"2013-05-30T07:15:11.871-07:00","payload":{"course":{"ccn":73974,"term":{"year":2013,"name":"C"}}}}')
+    timestamp = Time.now.to_datetime
+    CampusOracle::Queries.stub(:get_enrolled_students).with(73974, 2013, 'C').and_return([{"ldap_uid" => "123456"}])
+    CampusOracle::Queries.stub(:get_course_from_section).with(73974, 2013, 'C').and_return(
+      {"course_title" => "Research and Data Analysis in Psychology",
+        "dept_name" => "PSYCH",
+        "catalog_id" => "101"})
+    User::Data.stub(:where).with({uid: "123456"}).and_return(MockUserData.new)
+    @processor.process(event, timestamp).should == true
+    saved_notifications = Notifications::Notification.where(:uid => "123456")
+    saved_notifications.should_not be_nil
+    saved_notifications.length.should == 1
+  end
+
   class MockUserData
     def exists?
       true

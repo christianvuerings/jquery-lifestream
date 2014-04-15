@@ -10,6 +10,9 @@ module Notifications
     def process_internal(event, timestamp)
       return [] unless event["payload"] && courses = event["payload"]["course"]
 
+      # The payload might not have packaged a single course as an array.
+      courses = [courses] unless Array.try_convert(courses)
+
       notifications = {}
       courses.each do |course|
         next unless (ccn = course["ccn"]) && (course["term"]) && (year = course['term']["year"]) && (term = course['term']["name"])
