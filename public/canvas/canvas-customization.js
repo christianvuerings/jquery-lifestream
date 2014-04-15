@@ -1,4 +1,4 @@
-(function(window, document, $, env) {
+(function(window, document, $) {
   'use strict';
 
   /**
@@ -33,40 +33,48 @@
    * Replaces the 'Start a New Course' button, displayed on the Canvas user dashboard.
    */
   var replaceStartANewCourseButton = function() {
-    // only run for dashboard and courses page
-    var replacementPaths = ['/', '/courses', '/courses.html'];
-    if (replacementPaths.indexOf(window.location.pathname) !== -1) {
-      // check for button and replace
-      var replaceAddCourseButton = function() {
-        var $canvasAddCourseButton = $('button#start_new_course');
-        if ($canvasAddCourseButton.length > 0) {
-          var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
-          $.get(externalToolsUrl, function(externalToolsHash) {
-            var createCourseSiteId = externalToolsHash['Course Provisioning for Users'];
-            // replace button if current user id and external application id present
-            if ((typeof createCourseSiteId !== 'undefined') && (typeof env.current_user_id !== 'undefined')) {
-              var link_url = '/users/' + env.current_user_id + '/external_tools/' + createCourseSiteId;
-              var $customAddCourseButton = $('<button/>', {
-                text: 'Create a Course Site',
-                class: 'btn button-sidebar-wide',
-                click: function() {
-                  window.location.href = link_url;
-                }
-              });
-              $canvasAddCourseButton.after($customAddCourseButton);
+    if (typeof(window.ENV.current_user_roles) !== 'undefined') {
+      if (window.ENV.current_user_roles.indexOf('student') === -1) {
+
+        var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+        $.get(externalToolsUrl, function(externalToolsHash) {
+          var createCourseSiteId = externalToolsHash['Course Provisioning for Users'];
+          var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
+
+          // add create course site link in every courses menu
+          var $viewMenuItem = $('li#courses_menu_item td#menu_enrollments ul li.menu-item-view-all').first();
+          if (typeof($viewMenuItem) !== 'undefined') {
+            var $addCourseSiteLink = $('<a/>', {
+              text: 'Create a Course Site',
+              class: 'pull-left',
+              href: linkUrl,
+            });
+            $viewMenuItem.prepend($addCourseSiteLink);
+          }
+
+          // run only on course index page
+          var courseIndexPaths = ['/courses', '/courses.html'];
+          if (courseIndexPaths.indexOf(window.location.pathname) !== -1) {
+            var $contentArea = $('div#content');
+            if (typeof($contentArea) !== 'undefined') {
+
+              var $headerWithAddCourseSiteButton = $('<div/>', {
+                style: 'float:right;'
+              }).html(
+                $('<button/>', {
+                  text: 'Create a Course Site',
+                  class: 'btn btn-primary',
+                  click: function() {
+                    window.location.href = linkUrl;
+                  }
+                })
+              );
+              $contentArea.prepend($headerWithAddCourseSiteButton);
             }
-          });
-          stopAddCourseButtonSearch();
-        }
-      };
-      // perform check every 300 milliseconds
-      var findAddCourseButton = window.setInterval(function() {
-        replaceAddCourseButton();
-      }, 300);
-      // halts check once button replaced
-      var stopAddCourseButtonSearch = function() {
-        window.clearInterval(findAddCourseButton);
-      };
+          }
+
+        });
+      }
     }
   };
 
@@ -106,4 +114,4 @@
     }
   };
 
-})(window, window.document, window.$, window.ENV);
+})(window, window.document, window.$);
