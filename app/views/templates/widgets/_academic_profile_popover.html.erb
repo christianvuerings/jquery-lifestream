@@ -49,19 +49,13 @@
           </div>
         </a>
       </li>
-      <li class="cc-popover-item" data-ng-if="minimumAmountDue && minimumAmountDue > 0 && totalPastDueAmount === 0">
+      <li class="cc-popover-item" data-ng-if="minimumAmountDue && minimumAmountDue > 0">
         <a href="/finances">
           <div class="cc-launcher-status-description">
-            <i class="cc-left fa fa-exclamation-triangle cc-unavailable"></i>
+            <i class="cc-left fa"
+               data-ng-class="{'fa-exclamation-circle': totalPastDueAmount > 0,
+               'fa-exclamation-triangle cc-unavailable': minimumAmountDue > 0 && totalPastDueAmount <= 0}"></i>
             <strong>Amount Due Now:</strong> <span data-ng-bind="minimumAmountDue | currency">
-          </div>
-        </a>
-      </li>
-      <li class="cc-popover-item" data-ng-if="totalPastDueAmount && totalPastDueAmount > 0">
-        <a href="/finances">
-          <div class="cc-launcher-status-description">
-            <i class="cc-left fa fa-exclamation-circle"></i>
-            <strong>Past Due Amount:</strong> <span data-ng-bind="totalPastDueAmount | currency">
           </div>
         </a>
       </li>
