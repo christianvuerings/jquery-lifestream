@@ -58,15 +58,6 @@ module CampusOracle
       enrollments.each do |row|
         if (item = row_to_feed_item(row, previous_item))
           item[:role] = 'Student'
-          item[:unit] = row['unit']
-          item[:pnp_flag] = row['pnp_flag']
-          item[:grade] = row["grade"]
-          item[:cred_cd] = row["cred_cd"]
-          item[:transcript_unit] = row["transcript_unit"]
-          if row['enroll_status'] == 'W'
-            item[:waitlistPosition] = row['wait_list_seq_num']
-            item[:enroll_limit] = row['enroll_limit']
-          end
           semester_key = "#{item[:term_yr]}-#{item[:term_cd]}"
           campus_classes[semester_key] ||= []
           campus_classes[semester_key] << item
@@ -161,34 +152,53 @@ module CampusOracle
     end
 
     def row_to_feed_item(row, previous_item)
-      course_id = "#{row['dept_name']}-#{row['catalog_id']}-#{row['term_yr']}-#{row['term_cd']}"
-      # Make it embeddable as an element in a URL path.
-      course_id = course_id.downcase.gsub(/[^a-z0-9-]+/, '_')
-      if course_id == previous_item[:id]
+      unless (course_item = new_course_item(row, previous_item))
         previous_item[:sections] << row_to_section_data(row)
         nil
       else
-        course_data = {
-          id: course_id,
+        course_item.merge!({
           term_yr: row['term_yr'],
           term_cd: row['term_cd'],
           dept: row['dept_name'],
           dept_desc: row['dept_description'],
           catid: row['catalog_id'],
-          course_code: "#{row['dept_name']} #{row['catalog_id']}",
           course_catalog: row['catalog_id'],
           emitter: 'Campus',
           name: row['course_title'],
           sections: [
             row_to_section_data(row)
           ]
-        }
+        })
         # This only applies to instructors and will be skipped for students.
         if (course_option = row['course_option'])
-          course_data[:course_option] = course_option
+          course_item[:course_option] = course_option
         end
-        course_data
+        course_item
       end
+    end
+
+    def new_course_item(row, previous_item)
+      matched = (row['dept_name'] == previous_item[:dept]) &&
+        (row['catalog_id'] == previous_item[:catid]) &&
+        (row['term_yr'] == previous_item[:term_yr]) &&
+        (row['term_cd'] == previous_item[:term_cd])
+      if matched
+        nil
+      else
+        course_ids_from_row(row)
+      end
+    end
+
+    # Course ID includes term information, but the slug used by Academics does not.
+    def course_ids_from_row(row)
+      slug = row['dept_name'].downcase.gsub(/[^a-z0-9-]+/, '_') +
+        '-' + row['catalog_id'].downcase.gsub(/[^a-z0-9-]+/, '_')
+      course_data = {
+        id: "#{slug}-#{row['term_yr']}-#{row['term_cd']}",
+        slug: slug,
+        course_code: "#{row['dept_name']} #{row['catalog_id']}"
+      }
+      course_data
     end
 
     def row_to_section_data(row)
@@ -199,6 +209,11 @@ module CampusOracle
         section_label: "#{row['instruction_format']} #{row['section_num']}",
         section_number: row['section_num']
       }
+      if row['primary_secondary_cd'] == 'P'
+        section_data[:unit] = row['unit']
+        section_data[:pnp_flag] = row['pnp_flag']
+        section_data[:cred_cd] = row['cred_cd']
+      end
       # This only applies to enrollment records and will be skipped for instructors.
       if row['enroll_status'] == 'W'
         section_data[:waitlistPosition] = row['wait_list_seq_num']

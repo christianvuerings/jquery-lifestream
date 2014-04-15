@@ -29,13 +29,9 @@ module MyAcademics::AcademicsModule
   end
 
   # Link campus courses to internal class pages for the current semester.
-  def class_to_url(term_cd, term_year, department, catalog_id, role)
-    teaching_str = (role == 'Instructor') ? 'teaching-' : ''
-    "/academics/#{teaching_str}semester/#{Berkeley::TermCodes.to_slug(term_year, term_cd)}/class/#{course_to_slug(department, catalog_id)}"
-  end
-
-  def course_to_slug(department, catalog_id)
-    "#{department.downcase.gsub(/[^a-z0-9]+/, '_')}-#{catalog_id.downcase.gsub(/[^a-z0-9]+/, '_')}"
+  def class_to_url(campus_course)
+    teaching_str = (campus_course[:role] == 'Instructor') ? 'teaching-' : ''
+    "/academics/#{teaching_str}semester/#{Berkeley::TermCodes.to_slug(campus_course[:term_yr], campus_course[:term_cd])}/class/#{campus_course[:slug]}"
   end
 
   def semester_info(term_yr, term_cd)
@@ -54,7 +50,7 @@ module MyAcademics::AcademicsModule
       dept: campus_course[:dept],
       course_catalog: campus_course[:course_catalog],
       dept_desc: campus_course[:dept_desc],
-      slug: course_to_slug(campus_course[:dept], campus_course[:catid]),
+      slug: campus_course[:slug],
       title: campus_course[:name],
       sections: campus_course[:sections],
       course_id: campus_course[:id]

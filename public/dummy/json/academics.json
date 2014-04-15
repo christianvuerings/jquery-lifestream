@@ -457,22 +457,21 @@
         {
           "course_code": "BIOLOGY 1A",
           "dept": "BIOLOGY",
-          "grade": null,
-          "grade_option": "Letter",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
-          "units": "5.0",
           "sections": [
             {
               "ccn": "07309",
               "enroll_limit": "105",
+              "grade_option": "Letter",
               "instruction_format": "LEC",
               "instructors": [],
               "is_primary_section": true,
               "schedules": [],
               "section_label": "LEC 003",
               "section_number": "003",
-              "waitlistPosition": "29"
+              "units": "5.0",
+              "waitlist_position": "29"
             },
             {
               "ccn": "07311",
@@ -508,14 +507,12 @@
         {
           "course_code": "BIOLOGY 1A",
           "dept": "BIOLOGY",
-          "grade": null,
-          "grade_option": "Letter",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
-          "units": "5.0",
           "sections": [
             {
               "ccn": "07309",
+              "grade_option": "Letter",
               "instruction_format": "LEC",
               "is_primary_section": true,
               "section_label": "LEC 003",
@@ -536,7 +533,8 @@
                   "roomNumber": "2030",
                   "schedule": "M 4:00P-5:00P"
                 }
-              ]
+              ],
+              "units": "5.0"
             },
             {
               "ccn": "07310",
@@ -564,14 +562,12 @@
         {
           "course_code": "COG SCI C147",
           "dept": "COG SCI",
-          "grade": null,
-          "grade_option": "Letter",
           "slug": "cog_sci-c147",
           "title": "Language Disorders",
-          "units": "3.0",
           "sections": [
             {
               "ccn": "16171",
+              "grade_option": "Letter",
               "instruction_format": "LEC",
               "is_primary_section": true,
               "section_label": "LEC 001",
@@ -593,7 +589,61 @@
                   "roomNumber": "117",
                   "schedule": "W 4:00P-5:30P"
                 }
-              ]
+              ],
+              "units": "3.0"
+            }
+          ]
+        },
+        {
+          "course_code": "PHYS ED 1",
+          "dept": "PHYS ED",
+          "slug": "phys_ed-1",
+          "title": "Physical Education Activities",
+          "sections": [
+            {
+              "ccn": "72910",
+              "grade_option": "Letter",
+              "instruction_format": "LAB",
+              "is_primary_section": true,
+              "section_label": "LAB 002",
+              "section_number": "002",
+              "schedules": [
+                {
+
+                  "buildingName": "HEARST GYM",
+                  "roomNumber": "234",
+                  "schedule": "MTuWTh 8:30A-10:00A"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "Louis Pasteur",
+                  "uid": "938382"
+                }
+              ],
+              "units": ".5"
+            },
+            {
+              "ccn": "72945",
+              "grade_option": "P/NP",
+              "instruction_format": "LAB",
+              "is_primary_section": true,
+              "section_label": "LAB 104",
+              "section_number": "104",
+              "schedules": [
+                {
+                  "buildingName": "HEARST GYM",
+                  "roomNumber": "230",
+                  "schedule": "TuWTh 5:00P-7:00P"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "Richard Emanuel IVES",
+                  "uid": "38383737"
+                }
+              ],
+              "units": "1.5"
             }
           ]
         }
@@ -609,15 +659,14 @@
         {
           "course_code": "BIOLOGY 1A",
           "dept": "BIOLOGY",
-          "grade": "B",
-          "grade_option": "Letter",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
-          "units": "5.0",
           "sections": [
             {
               "ccn": "07366",
+              "grade_option": "Letter",
               "instruction_format": "DIS",
+              "is_primary_section": true,
               "section_label": "DIS 201",
               "section_number": "201",
               "schedules": [],
@@ -627,23 +676,27 @@
                   "uid": "238382"
                 }
               ],
-              "is_primary_section": true
+              "units": "5.0"
+            }
+          ],
+          "transcript": [
+            {
+              "grade": "B",
+              "units": "5.0"
             }
           ]
         },
         {
           "course_code": "COG SCI C147",
           "dept": "COG SCI",
-          "grade": "C+",
-          "grade_option": "Letter",
-          "is_primary_section": true,
           "slug": "cog_sci-c147",
           "title": "Language Disorders",
-          "units": "3.0",
           "sections": [
             {
               "ccn": "16171",
+              "grade_option": "Letter",
               "instruction_format": "LEC",
+              "is_primary_section": true,
               "section_label": "LEC 001",
               "section_number": "001",
               "schedules": [],
@@ -652,7 +705,64 @@
                   "name": "Bernadette Geuy",
                   "uid": "238382"
                 }
-              ]
+              ],
+              "units": "3.0"
+            }
+          ],
+          "transcript": [
+            {
+              "grade": "C+",
+              "units": "3.0"
+            }
+          ]
+        },
+        {
+          "course_code": "PB HLTH 297",
+          "dept": "PB HLTH",
+          "slug": "pb_hlth-297",
+          "title": "Field Study in Public Health",
+          "sections": [
+            {
+              "ccn": "78171",
+              "grade_option": "Letter",
+              "instruction_format": "FLD",
+              "is_primary_section": true,
+              "section_label": "FLD 004",
+              "section_number": "004",
+              "schedules": [],
+              "instructors": [
+                {
+                  "name": "Louis Pasteur",
+                  "uid": "938382"
+                }
+              ],
+              "units": "3.0"
+            },
+            {
+              "ccn": "78172",
+              "grade_option": "P/NP",
+              "instruction_format": "FLD",
+              "is_primary_section": true,
+              "section_label": "FLD 015",
+              "section_number": "015",
+              "schedules": [],
+              "instructors": [
+                {
+                  "name": "Jean-Joseph Henri Toussaint",
+                  "uid": "938383"
+                }
+              ],
+              "units": "2.0"
+            }
+          ],
+          "transcript": [
+            {
+              "grade": "A-",
+              "units": "3.0"
+            },
+            {
+              "grade": "P",
+              "units": "2.0"
             }
           ]
         }

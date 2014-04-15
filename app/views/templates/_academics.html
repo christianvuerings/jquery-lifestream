@@ -288,12 +288,19 @@
                       <th width="25%" scope="col" data-ng-if="semester.time_bucket === 'past'" title="Grades">Gr.</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr data-ng-repeat="class in semester.classes">
+                  <tbody data-ng-if="semester.time_bucket !== 'past'" data-ng-repeat="class in semester.classes">
+                    <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section">
                       <td><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{class.slug}}" data-ng-bind="class.course_code"></a></td>
                       <td data-ng-bind="class.title"></td>
-                      <td data-ng-bind="class.units | number:1" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.time_bucket === 'past')}"></td>
-                      <td data-ng-bind="class.grade" data-ng-if="semester.time_bucket === 'past'">Gr.</td>
+                      <td data-ng-bind="section.units | number:1" class="cc-table-right"></td>
+                    </tr>
+                  </tbody>
+                  <tbody data-ng-if="semester.time_bucket === 'past'" data-ng-repeat="class in semester.classes">
+                    <tr data-ng-repeat="transcript in class.transcript">
+                      <td><a data-ng-href="/academics/semester/{{semester.slug}}/class/{{class.slug}}" data-ng-bind="class.course_code"></a></td>
+                      <td data-ng-bind="class.title"></td>
+                      <td data-ng-bind="transcript.units | number:1" class="cc-table-right cc-table-right-spacing"></td>
+                      <td data-ng-bind="transcript.grade" data-ng-if="semester.time_bucket === 'past'"></td>
                     </tr>
                   </tbody>
                 </table>

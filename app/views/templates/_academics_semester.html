@@ -36,8 +36,8 @@
                   <th scope="col">Grade Option</th>
                   <th class="cc-table-right" scope="col">Units</th>
                 </thead>
-                <tbody data-ng-if="selectedCourses.length" data-ng-repeat="course in enrolledCourses">
-                  <tr data-ng-class-even="'cc-academics-even'">
+                <tbody data-ng-if="selectedCourses.length" data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
+                  <tr>
                     <td class="cc-table-right-spacing cc-academics-course-number">
                       <a data-ng-href="/academics/semester/{{selectedSemester.slug}}/class/{{course.slug}}"
                          data-ng-bind="course.course_code">
@@ -203,21 +203,28 @@
                   <th scope="col" class="cc-table-right cc-table-right-spacing">Units</th>
                   <th scope="col">Grade</th>
                 </thead>
-                <tbody>
-                  <tr data-ng-repeat="course in selectedCourses">
+                <tbody data-ng-repeat="course in selectedCourses">
+                  <tr data-ng-repeat="estimated in course.estimatedTranscript">
                     <td data-ng-bind="course.course_code"></td>
-                    <td class="cc-table-right cc-table-right-spacing" data-ng-bind="course.units | number:1"></td>
-                    <td data-ng-if="!course.units">--</td>
+                    <td class="cc-table-right cc-table-right-spacing" data-ng-bind="estimated.units | number:1"></td>
+                    <td data-ng-if="!estimated.units">--</td>
                     <td>
-                      <span data-ng-if="course.units === '0' && selectedSemester.time_bucket === 'current'" data-ng-bind="course.grade_option"></span>
+                      <span data-ng-if="estimated.units === '0' && selectedSemester.time_bucket === 'current'" data-ng-bind="estimated.grade_option"></span>
                       <select
-                        data-ng-if="course.units && !course.grade && course.units !== '0'"
-                        data-ng-model="course.estimatedGrade"
-                        data-ng-change="gpaUpdateCourse(course, course.estimatedGrade)"
+                        data-ng-if="estimated.units && !estimated.grade && estimated.units !== '0'"
+                        data-ng-model="estimated.estimatedGrade"
+                        data-ng-change="gpaUpdateCourse(estimated, estimated.estimatedGrade)"
                         data-ng-options="g.weight as g.grade for g in gradeOptions"
                       >
                       </select>
-                      <span data-ng-if="course.grade" data-ng-bind="course.grade"></span>
+                    </td>
+                  </tr>
+                  <tr data-ng-repeat="transcript in course.transcript">
+                    <td data-ng-bind="course.course_code"></td>
+                    <td class="cc-table-right cc-table-right-spacing" data-ng-bind="transcript.units | number:1"></td>
+                    <td data-ng-if="!transcript.units">--</td>
+                    <td>
+                      <span data-ng-if="transcript.grade" data-ng-bind="transcript.grade"></span>
                     </td>
                   </tr>
                 </tbody>
