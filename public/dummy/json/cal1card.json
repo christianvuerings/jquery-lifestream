@@ -1,0 +1,19 @@
+{
+  "cal1cardStatus": "OK",
+  "cal1cardLost": "Found",
+  "debit": "3.01",
+  "debitMessage": "OK",
+  "mealpoints": null,
+  "mealpointsMessage": "OK",
+  "mealpointsPlan": null,
+  "status_code": 200,
+  "lastModified": {
+    "hash": "e5569fb761838b28150bf0f5d7536707be4c829b",
+    "timestamp": {
+      "epoch": 1397610967,
+      "date_time": "2014-04-15T18:16:07-07:00",
+      "date_string": "4/15"
+    }
+  },
+  "feedName": "Cal1card::MyCal1card"
+}
