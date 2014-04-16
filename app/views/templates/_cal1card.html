@@ -5,6 +5,18 @@
     </div>
     <div data-cc-spinner-directive>
       <ul class="cc-widget-list">
+        <li class="cc-clearfix-container" data-ng-if="cal1cardLost === 'Lost'">
+          <div class="cc-cal1card-header">
+            <strong>Did you know?</strong>
+          </div>
+          <i class="fa fa-exclamation-circle"></i> Your Cal 1 Card is reported as lost.
+        </li>
+        <li class="cc-clearfix-container" data-ng-if="cal1cardLost === 'Found'">
+          <div class="cc-cal1card-header">
+            <strong>Good news!</strong>
+          </div>
+          <i class="fa fa-check cc-icon-green"></i> Your Cal 1 Card has been found.
+        </li>
         <li class="cc-clearfix-container">
           <div data-ng-if="debitMessage === 'OK' && debitMessage !== 'Inactive'">
             <div class="cc-cal1card-header">
@@ -40,18 +52,6 @@
             </div>
             <a href="http://caldining.berkeley.edu">Learn more about Meal Plans</a>
           </div>
-        </li>
-        <li class="cc-clearfix-container" data-ng-if="cal1cardLost === 'Lost'">
-          <div class="cc-cal1card-header">
-            <strong>Did you know?</strong>
-          </div>
-          <i class="fa fa-exclamation-circle"></i> Your Cal 1 Card is reported as lost.
-        </li>
-        <li class="cc-clearfix-container" data-ng-if="cal1cardLost === 'Found'">
-          <div class="cc-cal1card-header">
-            <strong>Good news!</strong>
-          </div>
-          <i class="fa fa-check cc-icon-green"></i> Your Cal 1 Card has been found.
         </li>
       </ul>
     </div>
