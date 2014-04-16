@@ -39,7 +39,7 @@
                 <tbody data-ng-if="selectedCourses.length" data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
                   <tr>
                     <td class="cc-table-right-spacing cc-academics-course-number">
-                      <a data-ng-href="/academics/semester/{{selectedSemester.slug}}/class/{{course.slug}}"
+                      <a data-ng-href="{{course.url}}"
                          data-ng-bind="course.course_code">
                       </a>
                       <div data-ng-repeat="section in course.sections">
@@ -72,7 +72,7 @@
                   <tbody data-ng-repeat="course in waitlistedCourses">
                   <tr data-ng-repeat="section in course.sections">
                     <td>
-                      <a data-ng-href="/academics/semester/{{selectedSemester.slug}}/class/{{course.slug}}"
+                      <a data-ng-href="{{course.url}}"
                          data-ng-bind="course.course_code">
                       </a>
                       <span data-ng-bind="section.section_label"></span>
@@ -102,7 +102,7 @@
                 <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
                   <tr data-ng-class-even="'cc-academics-even'">
                     <td class="cc-table-right-spacing cc-academics-course-number">
-                      <a data-ng-href="/academics/teaching-semester/{{selectedSemester.slug}}/class/{{course.slug}}"
+                      <a data-ng-href="{{course.url}}"
                          data-ng-bind="course.course_code">
                       </a>
                       <div data-ng-repeat="section in course.sections">

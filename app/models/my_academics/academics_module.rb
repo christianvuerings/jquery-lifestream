@@ -28,7 +28,8 @@ module MyAcademics::AcademicsModule
     end
   end
 
-  # Link campus courses to internal class pages for the current semester.
+  # Link campus course data to the corresponding Academics class info page.
+  # This URL is internally routed by JavaScript code rather than Rails.
   def class_to_url(campus_course)
     teaching_str = (campus_course[:role] == 'Instructor') ? 'teaching-' : ''
     "/academics/#{teaching_str}semester/#{Berkeley::TermCodes.to_slug(campus_course[:term_yr], campus_course[:term_cd])}/class/#{campus_course[:slug]}"
@@ -53,7 +54,8 @@ module MyAcademics::AcademicsModule
       slug: campus_course[:slug],
       title: campus_course[:name],
       sections: campus_course[:sections],
-      course_id: campus_course[:id]
+      course_id: campus_course[:id],
+      url: class_to_url(campus_course)
     }
   end
 

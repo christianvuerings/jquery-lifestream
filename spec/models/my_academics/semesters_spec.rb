@@ -33,6 +33,7 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
       it { subject[0][:classes][0][:sections][0][:waitlistPosition].should eq 42 }
       it { subject[0][:classes][0][:sections][0][:enroll_limit].should eq 5000 }
       it { subject[0][:classes][0][:sections][0][:grade_option].should eq "P/NP" }
+      it { subject[0][:classes][0][:url].should eq '/academics/semester/spring-2015/class/biology-1a' }
       it { subject[1][:name].should eq "Spring 2014" }
       it { subject[1][:time_bucket].should eq 'future'}
       it { subject[2][:name].should eq "Fall 2013"}
@@ -47,6 +48,7 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
       it { subject[2][:classes][0][:sections][0][:schedules][0][:schedule].should eq "M 4:00P-5:00P" }
       it { subject[2][:classes][0][:slug].should eq "biology-1a" }
       it { subject[2][:classes][0][:title].should eq "General Biology Lecture" }
+      it { subject[2][:classes][0][:url].should eq '/academics/semester/fall-2013/class/biology-1a' }
       it { subject[2][:classes][0][:sections][0][:grade_option].should eq "Letter" }
       it { subject[2][:classes][0][:sections][0][:instruction_format].should eq "LEC" }
       it { subject[2][:classes][0][:sections][0][:section_number].should eq "003" }

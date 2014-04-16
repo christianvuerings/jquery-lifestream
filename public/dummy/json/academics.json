@@ -493,7 +493,8 @@
               "section_label": "LEC 004",
               "section_number": "004"
             }
-          ]
+          ],
+          "url": "/academics/semester/spring-2014/class/biology-1a"
         }
       ]
     },
@@ -557,7 +558,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "url": "/academics/semester/fall-2013/class/biology-1a"
         },
         {
           "course_code": "COG SCI C147",
@@ -592,7 +594,8 @@
               ],
               "units": "3.0"
             }
-          ]
+          ],
+          "url": "/academics/semester/fall-2013/class/cog_sci-c147"
         },
         {
           "course_code": "PHYS ED 1",
@@ -645,7 +648,8 @@
               ],
               "units": "1.5"
             }
-          ]
+          ],
+          "url": "/academics/semester/fall-2013/class/phys_ed-1"
         }
       ]
     },
@@ -684,7 +688,8 @@
               "grade": "B",
               "units": "5.0"
             }
-          ]
+          ],
+          "url": "/academics/semester/spring-2012/class/biology-1a"
         },
         {
           "course_code": "COG SCI C147",
@@ -714,7 +719,8 @@
               "grade": "C+",
               "units": "3.0"
             }
-          ]
+          ],
+          "url": "/academics/semester/spring-2012/class/cog_sci-c147"
         },
         {
           "course_code": "PB HLTH 297",
@@ -764,7 +770,8 @@
               "grade": "P",
               "units": "2.0"
             }
-          ]
+          ],
+          "url": "/academics/semester/spring-2012/class/pb_hlth-297"
         }
       ]
     }
@@ -876,7 +883,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "url": "/academics/teaching-semester/summer-2013/class/bio-123a"
         }
       ]
     },
@@ -914,7 +922,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "url": "/academics/teaching-semester/fall-2013/class/bio-123a"
         }
       ]
     }
