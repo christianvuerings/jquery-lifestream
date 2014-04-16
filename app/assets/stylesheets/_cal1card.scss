@@ -1,0 +1,33 @@
+.cc-cal1card {
+  .cc-cal1card-amount, .cc-cal1card-points {
+    color: $cc-color-green;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .cc-cal1card-logo {
+    background-image: asset-url("svg/cal1card_logo_50x50.svg", image);
+    background-position: 95% 50%;
+    background-repeat: no-repeat;
+  }
+  .cc-cal1card-header {
+    font-size: 14px;
+  }
+  .cc-cal1card-points {
+    font-weight: normal;
+    margin-left: 5px;
+  }
+  .cc-cal1card-yourbalance {
+    line-height: 11px;
+    margin-bottom: 5px;
+  }
+  .cc-widget-list li {
+    padding: 10px 0;
+  }
+  .cc-widget-list li a {
+    padding: 8px 0 0;
+    &:focus, &:hover {
+      background: transparent;
+      text-decoration: underline;
+    }
+  }
+}
