@@ -189,7 +189,10 @@ module CampusOracle
       end
     end
 
-    # Course ID includes term information, but the slug used by Academics does not.
+    # Create IDs for a given course item:
+    #   "id" : unique for the UserCourses feed across terms; used by Classes
+    #   "slug" : URL-friendly ID without term information; used by Academics
+    #   "course_code" : the short course name as displayed in the UX
     def course_ids_from_row(row)
       slug = row['dept_name'].downcase.gsub(/[^a-z0-9-]+/, '_') +
         '-' + row['catalog_id'].downcase.gsub(/[^a-z0-9-]+/, '_')

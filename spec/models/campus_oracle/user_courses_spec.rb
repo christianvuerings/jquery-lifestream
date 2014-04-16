@@ -159,4 +159,17 @@ describe CampusOracle::UserCourses do
     end
   end
 
+  describe '#course_ids_from_row' do
+    let(:row) {{
+      'catalog_id' => "0109AL",
+      'dept_name' => 'MEC ENG/I,RES',
+      'term_yr' => '2014',
+      'term_cd' => 'B'
+    }}
+    subject {CampusOracle::UserCourses.new(user_id: rand(99)).course_ids_from_row(row)}
+    its([:slug]) {should eq "mec_eng_i_res-0109al"}
+    its([:id]) {should eq "mec_eng_i_res-0109al-2014-B"}
+    its([:course_code]) {should eq 'MEC ENG/I,RES 0109AL'}
+  end
+
 end
