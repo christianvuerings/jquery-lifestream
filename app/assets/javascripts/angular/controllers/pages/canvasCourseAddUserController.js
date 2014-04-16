@@ -135,7 +135,7 @@
       }).success(function(data) {
         $scope.userSearchResults = data.users;
         if (data.users.length > 0) {
-          $scope.userSearchResultsCount = data.users[0].result_count;
+          $scope.userSearchResultsCount = Math.floor(data.users[0].result_count);
           if (data.users.length === 1) {
             $scope.selectedUser = data.users[0];
           }

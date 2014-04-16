@@ -139,7 +139,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1 row_number, 1 result_count
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
       from calcentral_person_info_vw pi
       where pi.student_id = #{student_id_string}
       and rownum <= 1
@@ -155,7 +155,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1 row_number, 1 result_count
+      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
       from calcentral_person_info_vw pi
       where pi.ldap_uid = #{user_id_string}
       and rownum <= 1
