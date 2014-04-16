@@ -30,51 +30,67 @@
   };
 
   /**
-   * Replaces the 'Start a New Course' button, displayed on the Canvas user dashboard.
+   * Returns true if user can view the 'Create a Course Site' buttons/links
+   * @return {boolean}
+   */
+  var canViewAddCourseOption = function() {
+    if (typeof(window.ENV.current_user_roles) !== 'undefined') {
+      // if user is a teacher in any course
+      if (window.ENV.current_user_roles.indexOf('teacher') !== -1) {
+        return true;
+      } else {
+        // can view if not a teacher, but also not a student
+        if (window.ENV.current_user_roles.indexOf('student') === -1) {
+          return true;
+        }
+      }
+      return false;
+    } else {
+      // no buttons shown if roles not defined
+      return false;
+    }
+  };
+
+  /**
+   * Adds 'Start a New Course' link to 'Courses' menu, and buttons to Dashboard and Course Index page
    */
   var replaceStartANewCourseButton = function() {
-    if (typeof(window.ENV.current_user_roles) !== 'undefined') {
-      if (window.ENV.current_user_roles.indexOf('student') === -1) {
+    if (canViewAddCourseOption()) {
+      var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+      $.get(externalToolsUrl, function(externalToolsHash) {
+        var createCourseSiteId = externalToolsHash['Course Provisioning for Users'];
+        var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
 
-        var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
-        $.get(externalToolsUrl, function(externalToolsHash) {
-          var createCourseSiteId = externalToolsHash['Course Provisioning for Users'];
-          var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
+        // add create course site link in every courses menu
+        var $viewMenuItem = $('li#courses_menu_item td#menu_enrollments ul li.menu-item-view-all').first();
+        if (typeof($viewMenuItem) !== 'undefined') {
+          var $addCourseSiteLink = $('<a/>', {
+            text: 'Create a Course Site',
+            class: 'pull-left',
+            href: linkUrl,
+          });
+          $viewMenuItem.prepend($addCourseSiteLink);
+        }
 
-          // add create course site link in every courses menu
-          var $viewMenuItem = $('li#courses_menu_item td#menu_enrollments ul li.menu-item-view-all').first();
-          if (typeof($viewMenuItem) !== 'undefined') {
-            var $addCourseSiteLink = $('<a/>', {
+        // run only on dashboard and course index pages
+        if (['/', '/courses', '/courses.html'].indexOf(window.location.pathname) !== -1) {
+          var $headerWithAddCourseSiteButton = $('<div/>', {
+            style: 'float:right;'
+          }).html(
+            $('<button/>', {
               text: 'Create a Course Site',
-              class: 'pull-left',
-              href: linkUrl,
-            });
-            $viewMenuItem.prepend($addCourseSiteLink);
+              class: 'btn btn-primary',
+              click: function() {
+                window.location.href = linkUrl;
+              }
+            })
+          );
+          var $contentArea = $('div#content');
+          if (typeof($contentArea) !== 'undefined') {
+            $contentArea.prepend($headerWithAddCourseSiteButton);
           }
-
-          // run only on course index page
-          var courseIndexPaths = ['/courses', '/courses.html'];
-          if (courseIndexPaths.indexOf(window.location.pathname) !== -1) {
-            var $contentArea = $('div#content');
-            if (typeof($contentArea) !== 'undefined') {
-
-              var $headerWithAddCourseSiteButton = $('<div/>', {
-                style: 'float:right;'
-              }).html(
-                $('<button/>', {
-                  text: 'Create a Course Site',
-                  class: 'btn btn-primary',
-                  click: function() {
-                    window.location.href = linkUrl;
-                  }
-                })
-              );
-              $contentArea.prepend($headerWithAddCourseSiteButton);
-            }
-          }
-
-        });
-      }
+        }
+      });
     }
   };
 
