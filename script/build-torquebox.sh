@@ -28,6 +28,7 @@ bundle install --deployment --local || { echo "ERROR: bundle install failed" ; e
 # Rebuild static assets (HTML, JS, etc.) after update.
 echo "`date`: Rebuilding static assets..." | $LOGIT
 bundle exec rake assets:precompile || { echo "ERROR: asset compilation failed" ; exit 1 ; }
+bundle exec rake fix_assets || { echo "ERROR: asset fix failed" ; exit 1 ; }
 
 # Stamp version number
 git log --pretty=format:'%H' -n 1 > versions/git.txt || { echo "ERROR: git log command failed" ; exit 1 ; }
