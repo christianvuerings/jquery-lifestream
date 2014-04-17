@@ -10,13 +10,13 @@
     font-size: 16px;
     margin-bottom: 5px;
     &:not(:first-of-type) {
-      @extend .header-margin-top
+      margin-top: 20px;
     }
   }
   h4 {
     font-size: 14px;
     &:not(:first-of-type) {
-      @extend .header-margin-top
+      margin-top: 20px;
     }
   }
   .cc-academics-adviser-message {
