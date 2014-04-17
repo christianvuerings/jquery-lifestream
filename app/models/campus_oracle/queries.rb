@@ -268,7 +268,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
-      stringify_ints!(result, ["enroll_limit", "wait_list_seq_num"])
+      stringify_ints! result
     end
 
     def self.get_transcript_grades(person_id, terms = nil)

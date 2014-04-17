@@ -48,6 +48,65 @@
       "emitter": "Campus"
     },
     {
+      "id": "phys_ed:11_004:2013-C",
+      "name": "Physical Education Activities",
+      "course_code": "PHYS ED 11",
+      "course_code_section": "LAB 004",
+      "term_yr": "2013",
+      "term_cd": "C",
+      "dept": "PHYS ED",
+      "catid": "11",
+      "site_url": "/academics/semester/summer-2013/class/phys_ed-11",
+      "sections": [
+        {
+          "ccn": "04568",
+          "instruction_format": "LAB",
+          "section_number": "004",
+          "schedules": [],
+          "instructors": [{"name": "Max Schreck", "uid": "9992"}]
+        }
+      ],
+      "role": "Student",
+      "emitter": "Campus"
+    },
+    {
+      "id": "phys_ed:11_022:2013-C",
+      "name": "Physical Education Activities",
+      "course_code": "PHYS ED 11",
+      "course_code_section": "LAB 022",
+      "term_yr": "2013",
+      "term_cd": "C",
+      "dept": "PHYS ED",
+      "catid": "11",
+      "site_url": "/academics/semester/summer-2013/class/phys_ed-11",
+      "sections": [
+        {
+          "ccn": "04569",
+          "instruction_format": "LAB",
+          "section_number": "022",
+          "schedules": [],
+          "instructors": [{"name": "Lon Chaney", "uid": "9993"}]
+        }
+      ],
+      "role": "Student",
+      "waitlistPosition": "3",
+      "enroll_limit": "20",
+      "emitter": "Campus"
+    },
+    {
+      "short_description": "Contorting on Camera",
+      "name": "FILM 202 / PHYS ED 11 22",
+      "id": "1093198",
+      "emitter": "bCourses",
+      "site_url": "https://notquitecanvas/courses/1093198",
+      "site_type": "course",
+      "courses": [
+        {
+          "id": "phys_ed:11_022:2013-C"
+        }
+      ]
+    },
+    {
       "short_description": "Lessons from the Cambrian Explosion",
       "name": "Bio 1a Lec 3",
       "id": "1093164",

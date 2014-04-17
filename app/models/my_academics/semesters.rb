@@ -24,17 +24,14 @@ class MyAcademics::Semesters
       semester = self.class.build_semester(term_yr, term_cd)
       feed[term_key].each do |course|
         next unless course[:role] == 'Student'
-
-        # If we have a transcript unit, it needs to trump the unit.
-        transcript = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
-        units = transcript[:transcript_unit] ? transcript[:transcript_unit] : course[:unit]
-        grade_option = Berkeley::GradeOptions.grade_option_for_enrollment(course[:cred_cd], course[:pnp_flag])
-
-        class_item = class_info(course).merge!({
-          grade: transcript[:grade],
-          grade_option: grade_option,
-          units: units
-        })
+        class_item = class_info(course)
+        class_item[:sections].each do |section|
+          if section[:is_primary_section]
+            section[:grade_option] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
+            section[:units] = section[:unit]
+          end
+        end
+        class_item[:transcript] = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
         semester[:classes] << class_item
       end
       semesters << semester unless semester[:classes].empty?
@@ -44,18 +41,22 @@ class MyAcademics::Semesters
   end
 
   def find_transcript_data(transcripts, term_yr, term_cd, dept_name, catalog_id)
-    transcripts.each do |t|
-      if t['term_yr'] == term_yr &&
-          t['term_cd'] == term_cd &&
-          t['dept_name'] == dept_name &&
-          t['catalog_id'] == catalog_id
-        return {
-            transcript_unit: t['transcript_unit'],
-            grade: t['grade']
+    matching_transcripts = transcripts.select do |t|
+      t['term_yr'] == term_yr &&
+        t['term_cd'] == term_cd &&
+        t['dept_name'] == dept_name &&
+        t['catalog_id'] == catalog_id
+    end
+    if matching_transcripts.present?
+      matching_transcripts.collect do |t|
+        {
+          units: t['transcript_unit'],
+          grade: t['grade']
         }
       end
+    else
+      nil
     end
-    {}
   end
 
 end

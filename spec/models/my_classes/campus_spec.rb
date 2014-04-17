@@ -2,47 +2,95 @@ require "spec_helper"
 
 describe MyClasses::Campus do
   let(:user_id) {rand(99999).to_s}
-  let(:ccn) {rand(9999)}
   let(:catid) {"#{rand(999)}B"}
   let(:course_id) {"econ-#{catid}-#{term_yr}-#{term_cd}"}
+  let(:term_yr) {CampusOracle::Queries.current_year}
+  let(:term_cd) {CampusOracle::Queries.current_term}
+  let(:fake_sections) {[
+    {
+      ccn: rand(99999),
+      is_primary_section: true
+    }
+  ]}
+  let(:fake_campus_course) {{
+    id: course_id,
+    term_yr: term_yr,
+    term_cd: term_cd,
+    catid: catid,
+    dept: 'ECON',
+    course_code: "ECON #{catid}",
+    emitter: 'Campus',
+    name: "Retire in Only 85 Years",
+    role: 'Student',
+    sections: fake_sections
+  }}
   let(:fake_campus) do
     {
-      "#{term_yr}-#{term_cd}" => [{
-        id: course_id,
-        term_yr: term_yr,
-        term_cd: term_cd,
-        catid: catid,
-        dept: 'ECON',
-        course_code: "ECON #{catid}",
-        emitter: 'Campus',
-        name: "Retire in #{ccn} Years",
-        role: 'Student',
-        sections: [{
-          ccn: ccn
-        }]
-      }]
+      "#{term_yr}-#{term_cd}" => [fake_campus_course]
     }
+  end
+
+  shared_examples 'a Classes list' do
+    its(:size) {should > 0}
+    it 'sets the usual fields' do
+      subject.each do |course|
+        expect(course[:emitter]).to eq CampusOracle::UserCourses::APP_ID
+        expect(course[:catid]).to eq fake_campus_course[:catid]
+        expect(course[:course_code]).to eq fake_campus_course[:course_code]
+        expect(course[:site_url].blank?).to be_false
+        expect(course[:sections]).to_not be_empty
+      end
+    end
   end
 
   describe '#fetch' do
     before {CampusOracle::UserCourses.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))}
     subject { MyClasses::Campus.new(user_id).fetch }
     context 'when enrolled in a current class' do
-      let(:term_yr) {CampusOracle::Queries.current_year}
-      let(:term_cd) {CampusOracle::Queries.current_term}
-      its(:size) {should eq 1}
-      it 'includes class info' do
-        class_info = subject[0]
-        expect(class_info[:emitter]).to eq CampusOracle::UserCourses::APP_ID
-        expect(class_info[:course_code]).to eq "ECON #{catid}"
-        expect(class_info[:site_url].blank?).to be_false
-        expect(class_info[:sections].first[:ccn]).to eq ccn
-      end
+      it_behaves_like 'a Classes list'
     end
     context 'when enrolled in a non-current term' do
       let(:term_yr) {2012}
-      let(:term_cd) {CampusOracle::Queries.current_term}
       its(:size) {should eq 0}
+    end
+    context 'when student in two primary sections with the same department and catalog ID' do
+      let(:fake_sections) {[
+        {
+          ccn: '76378',
+          enroll_status: 'E',
+          instruction_format: 'FLD',
+          is_primary_section: true,
+          pnp_flag: 'Y ',
+          unit: '3',
+          section_number: '012',
+          waitlistPosition: 0
+        },
+        {
+          ccn: '76392',
+          enroll_status: 'W',
+          enroll_limit: 20,
+          instruction_format: 'FLD',
+          is_primary_section: true,
+          pnp_flag: 'N ',
+          unit: '2',
+          section_number: '021',
+          waitlistPosition: 2
+        }
+      ]}
+      it_behaves_like 'a Classes list'
+      its(:size) {should eq fake_sections.size}
+      it 'treats them as two different classes with the same URL' do
+        expect(subject[0][:id]).to_not eq subject[1][:id]
+        [subject, fake_sections].transpose.each do |course, enrollment|
+          expect(course[:course_code_section]).to eq "#{enrollment[:instruction_format]} #{enrollment[:section_number]}"
+          expect(course[:sections].size).to eq 1
+          expect(course[:sections][0][:ccn]).to eq enrollment[:ccn]
+          if (enrollment[:waitlistPosition] > 0)
+            expect(course[:enroll_limit]).to eq enrollment[:enroll_limit]
+            expect(course[:waitlistPosition]).to eq enrollment[:waitlistPosition]
+          end
+        end
+      end
     end
   end
 

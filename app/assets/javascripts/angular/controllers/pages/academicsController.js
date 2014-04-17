@@ -135,7 +135,7 @@
       var classes = [];
 
       for (var i = 0; i < courses.length; i++) {
-        var course = angular.copy(courses[i]);
+        var course = courses[i];
         var sections = [];
         for (var j = 0; j < course.sections.length; j++) {
           var section = course.sections[j];
@@ -144,8 +144,13 @@
           }
         }
         if (sections.length) {
-          course.sections = sections;
-          classes.push(course);
+          if (findWaitlisted) {
+            var courseCopy = angular.copy(course);
+            courseCopy.sections = sections;
+            classes.push(courseCopy);
+          } else {
+            classes = classes.concat(splitMultiplePrimaries(course, sections));
+          }
         }
       }
 
@@ -229,6 +234,46 @@
       return count;
     };
 
+    var initMultiplePrimaries = function(course) {
+      var primariesCount = 0;
+      angular.forEach(course.sections, function(section) {
+        if (section.is_primary_section) {
+          // Copy the first section's grading information to the course for
+          // easier processing later.
+          if (primariesCount === 0) {
+            course.grade_option = section.grade_option;
+            course.units = section.units;
+          }
+          primariesCount++;
+        }
+      });
+      course.multiplePrimaries = (primariesCount > 1);
+    };
+
+    var splitMultiplePrimaries = function(originalCourse, enrolledSections) {
+      var classes = [];
+      var course = angular.copy(originalCourse);
+      course.sections = [];
+      var hasPrimary = false;
+      for (var i = 0; i < enrolledSections.length; i++) {
+        var section = enrolledSections[i];
+        if (section.is_primary_section) {
+          if (hasPrimary) {
+            classes.push(course);
+            course = angular.copy(originalCourse);
+            course.sections = [];
+            hasPrimary = false;
+          }
+          course.grade_option = section.grade_option;
+          course.units = section.units;
+          hasPrimary = true;
+        }
+        course.sections.push(section);
+      }
+      classes.push(course);
+      return classes;
+    };
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
@@ -255,11 +300,12 @@
         updatePrevNextSemester([data.semesters, data.teaching_semesters], selectedSemester);
 
         $scope.selectedSemester = selectedSemester;
-        if (selectedStudentSemester) {
+        if (selectedStudentSemester && !$routeParams.classSlug) {
           $scope.selectedCourses = selectedStudentSemester.classes;
           if (!isInstructorOrGsi) {
             $scope.enrolledCourses = getClassesSections(selectedStudentSemester.classes, false);
             $scope.waitlistedCourses = getClassesSections(selectedStudentSemester.classes, true);
+            $scope.gpaInit(); // Initialize GPA calculator with selected courses
           }
         }
         $scope.selectedStudentSemester = selectedStudentSemester;
@@ -275,6 +321,7 @@
           for (var i = 0; i < classSemester.classes.length; i++) {
             var course = classSemester.classes[i];
             if (course.slug === $routeParams.classSlug) {
+              initMultiplePrimaries(course);
               $scope.selected_course = course;
               if (isInstructorOrGsi) {
                 $scope.campusCourseId = course.course_id;
@@ -291,8 +338,6 @@
       }
 
       parseExamSchedule(data.exam_schedule);
-
-      $scope.gpaInit(); // Initialize GPA calculator with selected courses
 
       $scope.telebears = data.telebears;
 
@@ -341,30 +386,43 @@
       var weight = gradeOptions.filter(function(element) {
         return element.grade === grade;
       });
-      return weight[0];
+      if (weight.length > 0) {
+        return weight[0].weight;
+      } else {
+        // Do not include unrecognized grades in GPA calculations.
+        return -1;
+      }
+    };
+
+    var accumulateUnits = function(courses, accumulator) {
+      angular.forEach(courses, function(course) {
+        var gradingSource = course.transcript || course.estimatedTranscript;
+        angular.forEach(gradingSource, function(gradingData) {
+          if (gradingData.units) {
+            var grade;
+            if (gradingData.grade) {
+              grade = findWeight(gradingData.grade);
+            } else {
+              grade = gradingData.estimatedGrade;
+            }
+            if ((grade || grade === 0) && grade !== -1) {
+              gradingData.score = parseFloat(grade, 10) * gradingData.units;
+              accumulator.units += parseFloat(gradingData.units, 10);
+              accumulator.score += gradingData.score;
+            }
+          }
+        });
+      });
+      return accumulator;
     };
 
     var gpaCalculate = function() {
-      // Recalculate GPA on every dropdown change.
-      var totalUnits = 0;
-      var totalScore = 0;
-
-      angular.forEach($scope.selectedCourses, function(course) {
-        if (course.units) {
-          var grade;
-          if (course.grade && findWeight(course.grade)) {
-            grade = findWeight(course.grade).weight;
-          } else {
-            grade = course.estimatedGrade;
-          }
-          if (grade && grade !== -1) {
-            course.score = parseFloat(grade, 10) * course.units;
-            totalUnits += parseFloat(course.units, 10);
-            totalScore += course.score;
-          }
-        }
-      });
-      $scope.estimatedGpa = totalScore / totalUnits;
+      var totals = {
+        'score': 0,
+        'units': 0
+      };
+      accumulateUnits($scope.selectedCourses, totals);
+      $scope.estimatedGpa = totals.score / totals.units;
     };
 
     $scope.gpaUpdateCourse = function(course, estimatedGrade) {
@@ -377,10 +435,23 @@
     $scope.gpaInit = function() {
       // On page load, set default values and calculate starter GPA
       angular.forEach($scope.selectedCourses, function(course) {
-        if (course.grade_option === 'Letter') {
-          course.estimatedGrade = 4;
-        } else if (course.grade_option === 'P/NP' || course.grade_option === 'S/U') {
-          course.estimatedGrade = -1;
+        if (!course.transcript) {
+          var estimatedTranscript = [];
+          angular.forEach(course.sections, function(section) {
+            if (section.is_primary_section) {
+              var transcriptRow = {
+                'gradeOption': section.grade_option,
+                'units': section.units
+              };
+              if (transcriptRow.gradeOption === 'Letter') {
+                transcriptRow.estimatedGrade = 4;
+              } else if (transcriptRow.gradeOption === 'P/NP' || transcriptRow.gradeOption === 'S/U') {
+                transcriptRow.estimatedGrade = -1;
+              }
+              estimatedTranscript.push(transcriptRow);
+            }
+          });
+          course.estimatedTranscript = estimatedTranscript;
         }
       });
       gpaCalculate();
@@ -390,29 +461,15 @@
 
     var cumulativeGpaCalculate = function(courses, gpaType) {
       // Recalculate GPA on every dropdown change.
-      var totalUnits = 0;
-      var totalScore = 0;
-      angular.forEach(courses, function(course) {
-        if (course.units) {
-          var grade;
-          if (course.grade && findWeight(course.grade)) {
-            grade = findWeight(course.grade).weight;
-          } else {
-            if (gpaType === 'estimated') {
-              grade = course.estimatedGrade;
-            }
-          }
-          if ((grade || grade === 0) && grade !== -1) {
-            course.score = parseFloat(grade, 10) * course.units;
-            totalUnits += parseFloat(course.units, 10);
-            totalScore += course.score;
-          }
-        }
-      });
+      var totals = {
+        'score': 0,
+        'units': 0
+      };
+      accumulateUnits(courses, totals);
       if (gpaType === 'estimated') {
-        $scope.estimatedCumulativeGpa = totalScore / totalUnits;
+        $scope.estimatedCumulativeGpa = totals.score / totals.units;
       } else {
-        $scope.currentCumulativeGpa = totalScore / totalUnits;
+        $scope.currentCumulativeGpa = totals.score / totals.units;
       }
     };
 

@@ -64,16 +64,19 @@
             <h4 data-ng-hide="isInstructorOrGsi">Course Offering</h4>
 
             <div data-ng-hide="isInstructorOrGsi" class="cc-table">
-              <table>
+              <table class="cc-academics-class-info" data-ng-repeat="section in selected_course.sections" data-ng-if="section.is_primary_section">
                 <tbody>
+                  <tr class="cc-academics-class-primary-row" data-ng-if="selected_course.multiplePrimaries">
+                    <td data-ng-bind="section.section_label"></td>
+                  </tr>
                   <tr>
                     <th scope="row" width="25%">Units</th>
-                    <td data-ng-if="selected_course.units" data-ng-bind="selected_course.units  | number:1"></td>
-                    <td data-ng-if="!selected_course.units">--</td>
+                    <td data-ng-if="section.units" data-ng-bind="section.units  | number:1"></td>
+                    <td data-ng-if="!section.units">--</td>
                   </tr>
-                  <tr data-ng-if="selected_course.grade_option">
+                  <tr data-ng-if="section.grade_option">
                     <th scope="row">Grading</th>
-                    <td data-ng-bind="selected_course.grade_option"></td>
+                    <td data-ng-bind="section.grade_option"></td>
                   </tr>
                 </tbody>
               </table>

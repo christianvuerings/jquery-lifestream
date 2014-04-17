@@ -31,11 +31,13 @@ describe 'MyAcademics::Teaching' do
     bio1a[:sections][0][:is_primary_section].should be_true
     bio1a[:sections][1][:is_primary_section].should be_false
     bio1a[:sections][2][:is_primary_section].should be_false
+    bio1a[:url].should == '/academics/teaching-semester/fall-2013/class/biology-1a'
 
     cogsci = teaching[0][:classes].select {|course| course[:course_code] == 'COG SCI C147'}[0]
     cogsci.empty?.should be_false
     cogsci[:dept].should == "COG SCI"
     cogsci[:title].should == "Language Disorders"
+    cogsci[:url].should == '/academics/teaching-semester/fall-2013/class/cog_sci-c147'
 
     teaching[1][:name].should == "Spring 2012"
     teaching[1][:classes].length.should == 2
