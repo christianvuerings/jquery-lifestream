@@ -64,6 +64,7 @@
       storeUID(uid, RECENT_UID_KEY);
       if (current.length > RECENT_UID_LIMIT) {
         current.pop();
+        storeLocal(RECENT_UID_KEY, current);
       }
     };
 
