@@ -4,7 +4,7 @@
   /**
    * Admin controller
    */
-  angular.module('calcentral.controllers').controller('AdminController', ['$http', '$scope', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('AdminController', ['apiService', '$http', '$scope', function(apiService, $http, $scope) {
 
     /**
      * Store recently entered UIDs
@@ -13,13 +13,7 @@
     var RECENT_UID_KEY = 'recentUIDs';
     var SAVED_UID_KEY = 'savedUIDs';
 
-    $scope.supportsLocalStorage = (function() {
-      try {
-        return 'localStorage' in window && window.localStorage !== null;
-      } catch (e) {
-        return false;
-      }
-    })();
+    $scope.supportsLocalStorage = apiService.util.supportsLocalStorage;
 
     var getUIDs = function(key) {
       var UIDs = localStorage[key];
