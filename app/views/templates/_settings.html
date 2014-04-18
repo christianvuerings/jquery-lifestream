@@ -50,22 +50,22 @@
         </div>
         <div class="row cc-settings-recent-uids">
           <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && admin.savedUIDs.length">
-            <h6>Saved UIDs (<a href="" data-ng-click="admin.clearAllSavedUIDs()">clear all</a>)</h6>
+            <h6>Saved UIDs (<button type="button" class="cc-button-link" data-ng-click="admin.clearAllSavedUIDs()">clear all</button>)</h6>
             <ul>
               <li data-ng-repeat="UID in admin.savedUIDs track by $index">
-                <a href="" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></a>
-                <span>(<a href="" data-ng-click="admin.clearSavedUID($index)">delete</a>)</span>
+                <button type="button" class="cc-button-link" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></button>
+                <span>(<button type="button" class="cc-button-link" data-ng-click="admin.clearSavedUID($index)">delete</button>)</span>
               </li>
             </ul>
           </div>
         </div>
         <div class="row cc-settings-recent-uids">
           <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && admin.recentUIDs.length">
-            <h6>Recent UIDs (<a href="" data-ng-click="admin.clearAllRecentUIDs()">clear all</a>)</h6>
+            <h6>Recent UIDs (<button type="button" class="cc-button-link" data-ng-click="admin.clearAllRecentUIDs()">clear all</button>)</h6>
             <ul>
               <li data-ng-repeat="UID in admin.recentUIDs track by $index">
-                <a href="" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></a>
-                <span>(<a href="" data-ng-click="admin.storeSavedUID(UID)">save</a>)</span>
+                <button type="button" class="cc-button-link" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></button>
+                <span>(<button type="button" class="cc-button-link" data-ng-click="admin.storeSavedUID(UID)">save</button>)</span>
               </li>
             </ul>
           </div>
