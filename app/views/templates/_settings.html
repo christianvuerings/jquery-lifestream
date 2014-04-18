@@ -49,10 +49,10 @@
           </div>
         </div>
         <div class="row cc-settings-recent-uids">
-          <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && savedUIDs.length">
+          <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && admin.savedUIDs.length">
             <h6>Saved UIDs (<a href="" data-ng-click="admin.clearAllSavedUIDs()">clear all</a>)</h6>
             <ul>
-              <li data-ng-repeat="UID in savedUIDs track by $index" data-ng-mouseover="delete = true" data-ng-mouseleave="delete = false">
+              <li data-ng-repeat="UID in admin.savedUIDs track by $index" data-ng-mouseover="delete = true" data-ng-mouseleave="delete = false">
                 <a href="" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></a>
                 <span data-ng-show="delete">(<a href="" data-ng-click="admin.clearSavedUID($index)">delete</a>)</span>
               </li>
@@ -60,10 +60,10 @@
           </div>
         </div>
         <div class="row cc-settings-recent-uids">
-          <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && recentUIDs.length">
+          <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && admin.recentUIDs.length">
             <h6>Recent UIDs (<a href="" data-ng-click="admin.clearAllRecentUIDs()">clear all</a>)</h6>
             <ul>
-              <li data-ng-repeat="UID in recentUIDs track by $index" data-ng-mouseover="save = true" data-ng-mouseleave="save = false">
+              <li data-ng-repeat="UID in admin.recentUIDs track by $index" data-ng-mouseover="save = true" data-ng-mouseleave="save = false">
                 <a href="" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></a>
                 <span data-ng-show="save">(<a href="" data-ng-click="admin.storeSavedUID(UID)">save</a>)</span>
               </li>
