@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe MyActivities::MyFinAid do
+  before(:each) { MyActivities::MyFinAid.cutoff_date=DateTime.new(2013, 3, 1)}
   let!(:oski_uid) { "61889" }
   let!(:non_student_uid) { '212377' }
 
