@@ -34,10 +34,10 @@
       <form data-ng-submit="admin.actAs()">
         <div class="row">
           <div class="small-3 columns">
-            <label for="cc-settings-act-as-uid">Uid</label>
+            <label for="cc-settings-act-as-uid">UID</label>
           </div>
           <div class="small-9 columns">
-            <input id="cc-settings-act-as-uid" data-ng-model="admin.act_as.uid" type="number" />
+            <input id="cc-settings-act-as-uid" data-ng-model="admin.act_as.uid" type="number" data-cc-select-on-click-directive />
           </div>
         </div>
         <div class="row">
@@ -46,6 +46,28 @@
               class="cc-button cc-button-blue"
               data-ng-disabled="!admin.act_as.uid"
               type="submit">Submit</button>
+          </div>
+        </div>
+        <div class="row cc-settings-recent-uids">
+          <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && savedUIDs.length">
+            <h6>Saved UIDs (<a href="" data-ng-click="admin.clearAllSavedUIDs()">clear all</a>)</h6>
+            <ul>
+              <li data-ng-repeat="UID in savedUIDs track by $index" data-ng-mouseover="delete = true" data-ng-mouseleave="delete = false">
+                <a href="" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></a>
+                <span data-ng-show="delete">(<a href="" data-ng-click="admin.clearSavedUID($index)">delete</a>)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row cc-settings-recent-uids">
+          <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && recentUIDs.length">
+            <h6>Recent UIDs (<a href="" data-ng-click="admin.clearAllRecentUIDs()">clear all</a>)</h6>
+            <ul>
+              <li data-ng-repeat="UID in recentUIDs track by $index" data-ng-mouseover="save = true" data-ng-mouseleave="save = false">
+                <a href="" data-ng-click="admin.updateUIDField(UID)" data-ng-bind="UID"></a>
+                <span data-ng-show="save">(<a href="" data-ng-click="admin.storeSavedUID(UID)">save</a>)</span>
+              </li>
+            </ul>
           </div>
         </div>
       </form>
