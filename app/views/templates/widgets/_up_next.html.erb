@@ -1,7 +1,8 @@
 <div class="cc-widget cc-widget-mycalendar" data-ng-controller="UpNextController">
   <div class="cc-widget-title">
     <h2>
-      <span data-ng-bind="lastModifiedDate | date:'EEEE'">Up Next</span>
+      <span data-ng-if="!lastModifiedDate">Up Next</span>
+      <span data-ng-bind="lastModifiedDate | date:'EEEE'"></span>
       <span data-ng-bind="lastModifiedDate | date:'MMM d'" class="cc-widget-title-sub"></span>
     </h2>
   </div>
