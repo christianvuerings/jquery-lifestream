@@ -6,8 +6,8 @@ class CanvasController < ApplicationController
   before_filter :authenticate_canvas_user!, :only => [:course_user_profile]
   before_filter :authenticate_canvas_course_user!, :only => [:course_user_profile]
   before_filter :set_cross_origin_access_control_headers, :only => [:external_tools]
-  rescue_from Errors::ClientError, with: :handle_client_error
   rescue_from StandardError, with: :handle_api_exception
+  rescue_from Errors::ClientError, with: :handle_client_error
 
   # Used to obtain LTI user in context of course embedded apps
   # GET /api/academics/canvas/course_user_profile

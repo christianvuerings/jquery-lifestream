@@ -5,8 +5,8 @@ class CanvasCourseAddUserController < ApplicationController
   before_filter :authenticate_canvas_user!
   before_filter :authenticate_canvas_course_user!
   before_filter :authorize_canvas_course_admin!
-  rescue_from Errors::ClientError, with: :handle_client_error
   rescue_from StandardError, with: :handle_api_exception
+  rescue_from Errors::ClientError, with: :handle_client_error
 
   # GET /api/academics/canvas/course_add_user/search_users.json
   def search_users
