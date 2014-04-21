@@ -27,7 +27,7 @@ module MyBadges
 
         begin
           nokogiri_xml = Nokogiri::XML.parse(google_mail_results.response.body)
-        rescue Exception => e
+        rescue => e
           Rails.logger.fatal "Error parsing XML output for GoogleApps::MailList: #{e}"
           nokogiri_xml = nil
         end
@@ -44,7 +44,7 @@ module MyBadges
     def get_count(nokogiri_xml)
       begin
         nokogiri_xml.search('fullcount').first.content.to_i
-      rescue Exception => e
+      rescue => e
         Rails.logger.warn "#{self.class.name}: Error parsing XML output for unread counts from GoogleApps::MailList: #{e}"
         return 0
       end
@@ -73,20 +73,20 @@ module MyBadges
             if entry[:modified_time]
               begin
                 entry[:modified_time] = format_date DateTime.iso8601(entry[:modified_time])
-              rescue Exception => e
+              rescue => e
                 Rails.logger.warn "#{self.class.name} Could not parse modified: #{entry[:modified_time]}"
                 next
               end
             end
             items << entry
             iter_count +=1
-          rescue Exception => e
+          rescue => e
             Rails.logger.warn "#{self.class.name}: Unable to parse entry - #{raw_entry}"
             next
           end
         end
         items
-      rescue Exception => e
+      rescue => e
         Rails.logger.fatal "#{self.class.name} Error parsing XML output for mail items from GoogleApps::MailList: #{e}"
         Rails.logger.debug "Full dump of xml: #{nokogiri_xml}"
       end
@@ -96,13 +96,13 @@ module MyBadges
     def get_nodeset(key, nodeset, optional = false)
       result = nodeset.search(key)
       if result.nil? && !optional
-        raise ArgumentError "unmatched key: #{key} on nodeset: #{nodeset}"
+        raise ArgumentError, "unmatched key: #{key} on nodeset: #{nodeset}"
       end
 
       if result && result.is_a?(Nokogiri::XML::NodeSet)
         result
       else
-        raise ArgumentError "Not a Nodeset on key: #{key} type: #{result.class}"
+        raise ArgumentError, "Not a Nodeset on key: #{key} type: #{result.class}"
       end
 
     end
@@ -111,13 +111,13 @@ module MyBadges
       # TODO: should tidy this up...
       result = nodeset.at_css(key)
       if result.nil? && !optional
-        raise ArgumentError "unmatched key: #{key} on nodeset: #{nodeset}"
+        raise ArgumentError, "unmatched key: #{key} on nodeset: #{nodeset}"
       end
 
       if !result.nil? && !result.content.nil?
         result.content
       elsif !optional
-        raise ArgumentError "non-leaf node on key: #{key} value: #{result}"
+        raise ArgumentError, "non-leaf node on key: #{key} value: #{result}"
       end
     end
   end

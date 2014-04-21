@@ -46,7 +46,7 @@ class LiveUpdatesWarmer < TorqueBox::Messaging::MessageProcessor
     logger.warn "Processing warmup_request message for uid #{uid}"
     begin
       Cache::UserCacheWarmer.do_warm uid
-    rescue Exception => e
+    rescue => e
       logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
     ensure
       ActiveRecordHelper.clear_active_connections

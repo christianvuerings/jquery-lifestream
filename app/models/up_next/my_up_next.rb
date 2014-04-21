@@ -66,7 +66,7 @@ module UpNext
           uri.query_values = {:q => entry_location}
           location_subset[:location_url] = "https://maps.google.com/maps?" + uri.query
         end
-      rescue Exception => e
+      rescue => e
         logger.warn "#{self.class.name}: #{e} - Error handling location values #{entry_location}"
         return {location: ""}
       end
@@ -77,7 +77,7 @@ module UpNext
       begin
         organizer = entry_organizer["displayName"] if entry_organizer
         organizer ||= ""
-      rescue Exception => e
+      rescue => e
         logger.warn "#{self.class.name}: #{e} - Error handling organizer values #{entry_organizer}"
         return ""
       end
@@ -93,7 +93,7 @@ module UpNext
         else
           result[:is_all_day] = false
         end
-      rescue Exception => e
+      rescue => e
         logger.warn "#{self.class.name}: #{e} - Error handling date values START_DATE=#{start_date} END_DATE=#{end_date}"
         return {}
       end

@@ -10,7 +10,7 @@ module GoogleApps
       def discover_resource_method(api, resource, method)
         begin
           discover_api(api).send(resource.to_sym).send(method.to_sym)
-        rescue Exception => e
+        rescue => e
           Rails.logger.fatal "#{name}: #{e.to_s} - Unable to resolve resource method"
           nil
         end
