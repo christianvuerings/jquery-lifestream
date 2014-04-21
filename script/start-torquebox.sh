@@ -4,7 +4,7 @@
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
 LOG=`date +"$PWD/log/start-stop_%Y-%m-%d.log"`
-TORQUEBOX_LOG="$PWD/log/torquebox.log"
+TORQUEBOX_LOG=`date +"$PWD/log/torquebox_%Y-%m-%d.log"`
 
 LOGIT="tee -a $LOG"
 
@@ -36,7 +36,7 @@ cd deploy
 JBOSS_HOME=`bundle exec torquebox env jboss_home`
 cp ~/.calcentral_config/standalone-ha.xml $JBOSS_HOME/standalone/configuration/
 
-nohup bundle exec torquebox run -b $IP_ADDR -p=3000 --jvm-options="$JVM_OPTS" --clustered --max-threads=$MAX_THREADS < /dev/null > $TORQUEBOX_LOG 2>> $LOG  &
+nohup bundle exec torquebox run -b $IP_ADDR -p=3000 --jvm-options="$JVM_OPTS" --clustered --max-threads=$MAX_THREADS < /dev/null >> $TORQUEBOX_LOG 2>> $LOG  &
 cd ..
 
 # now check if the app is alive (which will also warm up caches)
