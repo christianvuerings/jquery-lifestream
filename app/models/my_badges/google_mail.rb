@@ -96,13 +96,13 @@ module MyBadges
     def get_nodeset(key, nodeset, optional = false)
       result = nodeset.search(key)
       if result.nil? && !optional
-        raise ArgumentError "unmatched key: #{key} on nodeset: #{nodeset}"
+        raise ArgumentError, "unmatched key: #{key} on nodeset: #{nodeset}"
       end
 
       if result && result.is_a?(Nokogiri::XML::NodeSet)
         result
       else
-        raise ArgumentError "Not a Nodeset on key: #{key} type: #{result.class}"
+        raise ArgumentError, "Not a Nodeset on key: #{key} type: #{result.class}"
       end
 
     end
@@ -111,13 +111,13 @@ module MyBadges
       # TODO: should tidy this up...
       result = nodeset.at_css(key)
       if result.nil? && !optional
-        raise ArgumentError "unmatched key: #{key} on nodeset: #{nodeset}"
+        raise ArgumentError, "unmatched key: #{key} on nodeset: #{nodeset}"
       end
 
       if !result.nil? && !result.content.nil?
         result.content
       elsif !optional
-        raise ArgumentError "non-leaf node on key: #{key} value: #{result}"
+        raise ArgumentError, "non-leaf node on key: #{key} value: #{result}"
       end
     end
   end
