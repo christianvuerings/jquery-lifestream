@@ -37,7 +37,7 @@ describe "MyBadges::bMail" do
   it "should handle bad data on xml fields" do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
-    Nokogiri::XML::Document.any_instance.stub(:search).with('fullcount').and_return(%w(potato))
+    Nokogiri::XML::Document.any_instance.stub(:search).and_return(%w(potato))
     suppress_rails_logging {
       results = MyBadges::GoogleMail.new(@user_id).fetch_counts
       results[:count].should == 0

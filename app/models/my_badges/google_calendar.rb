@@ -62,7 +62,7 @@ module MyBadges
               consolidate_all_day_event_key!(event)
               event.merge! event_state_fields(entry)
               modified_entries[:items] << event
-            rescue Exception => e
+            rescue => e
               Rails.logger.warn "#{self.class.name} could not process entry: #{entry} - #{e}"
               next
             end

@@ -20,7 +20,7 @@ class ToolsController < ApplicationController
             colorvars.push(color)
           end
         end
-      rescue Exception
+      rescue
         Rails.logger.warn "Exception thrown in ToolsController::get_styles: #{$!}"
       end
     end

@@ -70,7 +70,7 @@ module GoogleApps
             :uri => request_params[:uri],
             :authenticated => request_params[:authenticated]
           )
-        rescue Exception => e
+        rescue => e
           Rails.logger.fatal "#{self.class.name}: #{e.to_s} - Unable to send request transaction"
           nil
         end
@@ -94,7 +94,7 @@ module GoogleApps
       result_page = FakeableProxy.wrap_request("#{APP_ID}#{page_params[:vcr_id]}", @fake, @fake_options) {
         begin
           GoogleApps::Client.request_page(@authorization, page_params)
-        rescue Exception => e
+        rescue => e
           Rails.logger.fatal "#{self.class.name}: #{e.to_s} - Unable to send request transaction"
           nil
         end

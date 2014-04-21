@@ -36,7 +36,7 @@ module Canvas
     def request_uncached(api_path, vcr_id = "", fetch_options = {})
       begin
         request_internal(api_path, vcr_id, fetch_options)
-      rescue Exception => e
+      rescue => e
         self.class.handle_exception(e, @uid, "Remote server unreachable", true)
       end
     end

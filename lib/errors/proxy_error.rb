@@ -1,5 +1,5 @@
 module Errors
-  class ProxyError < Exception
+  class ProxyError < StandardError
     attr_accessor :wrapped_exception, :log_message, :response
 
     def initialize(log_message, *args)

@@ -41,7 +41,7 @@ module Cache
       begin
         entry = block.call
         entry = entry.to_json if jsonify
-      rescue Exception => e
+      rescue => e
         # don't write to cache if an exception occurs, just log the error and return a body
         response = handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
         response = response.to_json if jsonify
