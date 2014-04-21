@@ -7,10 +7,10 @@ describe CanvasUserProvisionController do
 
     context "if session user not present" do
       before { session[:user_id] = nil }
-      it "returns 401 error" do
+      it "returns empty hash" do
         post :user_import, user_ids: user_id_string
-        expect(response.status).to eq(401)
-        expect(response.body).to eq " "
+        expect(response.status).to eq(200)
+        expect(response.body).to eq "{}"
       end
     end
 
@@ -20,9 +20,9 @@ describe CanvasUserProvisionController do
         User::Auth.stub(:where).and_return([User::Auth.new(uid: "2050", is_superuser: false, active: true)])
       end
 
-      it "returns 401 error" do
+      it "returns 403 error" do
         post :user_import, user_ids: user_id_string
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(403)
         expect(response.body).to eq " "
       end
     end
@@ -46,9 +46,8 @@ describe CanvasUserProvisionController do
         it "returns error response" do
           Canvas::UserProvision.any_instance.stub(:import_users).and_raise(RuntimeError, "User import failed")
           post :user_import, user_ids: user_id_string
-          expect(response.status).to eq(200)
+          expect(response.status).to eq(500)
           json_response = JSON.parse(response.body)
-          expect(json_response['status']).to eq "error"
           expect(json_response['error']).to eq "User import failed"
         end
       end

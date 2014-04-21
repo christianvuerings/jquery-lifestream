@@ -1,12 +1,25 @@
 class CanvasCourseAddUserController < ApplicationController
 
-  include Canvas::AuthorizationHelpers
-  before_filter :authenticate_cas_user!
-  before_filter :authenticate_canvas_user!
-  before_filter :authenticate_canvas_course_user!
-  before_filter :authorize_canvas_course_admin!
+  before_filter :api_authenticate
+  before_filter :authorize_adding_user, :except => [:course_user_roles]
   rescue_from StandardError, with: :handle_api_exception
   rescue_from Errors::ClientError, with: :handle_client_error
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def authorize_adding_user
+    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in session" if session[:canvas_course_id].blank?
+    @canvas_course = Canvas::Course.new(:user_id => session[:user_id], :canvas_course_id => Integer(session[:canvas_course_id], 10))
+    authorize @canvas_course, :can_add_users?
+  end
+
+  # Used to obtain LTI user in context of course embedded apps
+  # GET /api/academics/canvas/course_user_roles
+  def course_user_roles
+    canvas_user_profile = Canvas::UserProfile.new(user_id: session[:user_id]).get
+    course_user_roles = Canvas::CourseUser.new(:user_id => canvas_user_profile['id'], :course_id => Integer(session[:canvas_course_id], 10)).roles
+    global_admin = Canvas::Admins.new.admin_user?(session[:user_id])
+    render json: { courseId: session[:canvas_course_id], roles: course_user_roles.merge({'globalAdmin' => global_admin}) }.to_json
+  end
 
   # GET /api/academics/canvas/course_add_user/search_users.json
   def search_users
@@ -18,7 +31,7 @@ class CanvasCourseAddUserController < ApplicationController
 
   # GET /api/academics/canvas/course_add_user/course_sections.json
   def course_sections
-    sections_list = Canvas::CourseAddUser.course_sections_list(@canvas_course_id)
+    sections_list = Canvas::CourseAddUser.course_sections_list(Integer(session[:canvas_course_id]))
     render json: { course_sections: sections_list }.to_json
   end
 

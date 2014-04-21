@@ -11,8 +11,8 @@ describe RefreshLoggingController do
     Rails.env.stub(:production?).and_return(true)
     CalcentralLogging.should_not_receive(:refresh_logging_level)
     get :refresh_logging, { :format => 'json' }
-    response.status.should eq(401)
-    response.body.blank?.should be_true
+    expect(response.status).to eq(403)
+    expect(response.body.blank?).to be_true
   end
 
   it "should not attempt to change log settings to a new bad config value" do
@@ -21,10 +21,10 @@ describe RefreshLoggingController do
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: true, active: true)])
     CalcentralConfig.stub(:load_settings).and_return(OpenStruct.new({logger: OpenStruct.new({level: 'fooz'})}))
     get :refresh_logging, { :format => 'json' }
-    response.status.should eq(304)
+    expect(response.status).to eq(304)
     CalcentralConfig.stub(:load_settings).and_return(OpenStruct.new({logger: OpenStruct.new({level: 8})}))
     get :refresh_logging, { :format => 'json' }
-    response.status.should eq(304)
+    expect(response.status).to eq(304)
   end
 
   it "should do nothing when the log level has not changed" do
@@ -33,7 +33,7 @@ describe RefreshLoggingController do
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: true, active: true)])
     CalcentralConfig.stub(:load_settings).and_return(OpenStruct.new({logger: OpenStruct.new({level: Rails.logger.level})}))
     get :refresh_logging, { :format => 'json' }
-    response.status.should eq(304)
+    expect(response.status).to eq(304)
   end
 
   it "should succeed in changing the log level" do
@@ -43,8 +43,8 @@ describe RefreshLoggingController do
     Rails.logger.stub(:level).and_return(1)
     CalcentralConfig.stub(:load_settings).and_return(OpenStruct.new({logger: OpenStruct.new({level: 2})}))
     get :refresh_logging, { :format => 'json' }
-    response.status.should eq(200)
+    expect(response.status).to eq(200)
     json_response = JSON.parse(response.body)
-    json_response.blank?.should_not be_true
+    expect(json_response.blank?).to be_false
   end
 end

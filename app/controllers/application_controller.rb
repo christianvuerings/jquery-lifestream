@@ -15,6 +15,13 @@ class ApplicationController < ActionController::Base
     redirect_to url_for_path('/auth/cas') unless session[:user_id]
   end
 
+  def api_authenticate
+    if session[:user_id].blank?
+      Rails.logger.warn "Authenticated user absent in request to #{controller_name}\##{action_name}"
+      render :json => {}.to_json
+    end
+  end
+
   def current_user
     @current_user ||= User::Auth.get(session[:user_id])
   end
@@ -58,8 +65,25 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def user_not_authorized
-    render :nothing => true, :status => 401
+  def user_not_authorized(error)
+    Rails.logger.warn "Unauthorized request made by UID: #{session[:user_id]} to #{controller_name}\##{action_name}: #{error.message}"
+    render :nothing => true, :status => 403
+  end
+
+  def handle_api_exception(error)
+    Rails.logger.error "#{error.class} raised with UID: #{session[:user_id]} in #{controller_name}\##{action_name}: #{error.message}"
+    render json: { :error => error.message }.to_json, status: 500
+  end
+
+  def handle_client_error(error)
+    case error.class.to_s
+      when 'Errors::BadRequestError'
+        Rails.logger.debug "Bad request made to #{controller_name}\##{action_name}: #{error.message}"
+        render text: error.message, status: 400 and return
+      else
+        Rails.logger.error "Unknown Error::ClientError handled in #{controller_name}\##{action_name}: #{error.class} - #{error.message}"
+        render json: {:error => error.message}.to_json, status: 500 and return
+    end
   end
 
   private

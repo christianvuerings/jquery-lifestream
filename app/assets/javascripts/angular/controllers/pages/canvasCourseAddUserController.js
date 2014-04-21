@@ -166,7 +166,7 @@
       $scope.isLoading = true;
       $scope.showAlerts = true;
       var submittedUser = $scope.selectedUser;
-      var submittedSection = $scope.selected_section;
+      var submittedSection = $scope.selectedSection;
       var submittedRole = $scope.selectedRole;
       var addUserUri = '/api/academics/canvas/course_add_user/add_user';
       var addUserParams = {
@@ -198,28 +198,28 @@
     };
 
     var checkAuthorization = function() {
-      var checkAuthorizationUri = '/api/academics/canvas/course_user_profile';
-      var checkAuthorizationParams = {};
+      var courseUserRolesUri = '/api/academics/canvas/course_user_roles';
+      var courseUserRolesParams = {};
       if ($routeParams.canvas_course_id) {
-        checkAuthorizationParams.canvas_course_id = $routeParams.canvas_course_id;
+        courseUserRolesParams.canvas_course_id = $routeParams.canvas_course_id;
       }
       $http({
-        url: checkAuthorizationUri,
+        url: courseUserRolesUri,
         method: 'GET',
-        params: checkAuthorizationParams
+        params: courseUserRolesParams
       }).success(function(data) {
-        $scope.course_user_profile = data.course_user_profile;
-        $scope.is_course_admin = userIsAdmin($scope.course_user_profile);
-        if ($scope.is_course_admin) {
+        $scope.courseUserRoles = data.roles;
+        $scope.canvasCourseId = data.courseId;
+        $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
+        if ($scope.userAuthorized) {
           getCourseSections();
-          $scope.canvas_course_id = $scope.course_user_profile.enrollments[0].course_id;
           $scope.showSearchForm = true;
         } else {
           $scope.showError = true;
           $scope.errorStatus = 'You must be a teacher in this bCourses course to import users.';
         }
       }).error(function(data) {
-        $scope.is_course_admin = false;
+        $scope.userAuthorized = false;
         $scope.showError = true;
         if (data.error) {
           $scope.errorStatus = data.error;
@@ -235,8 +235,8 @@
         url: courseSectionsUri,
         method: 'GET'
       }).success(function(data) {
-        $scope.course_sections = data.course_sections;
-        $scope.selected_section = $scope.course_sections[0];
+        $scope.courseSections = data.course_sections;
+        $scope.selectedSection = $scope.courseSections[0];
       }).error(function(data) {
         $scope.showError = true;
         if (data.error) {
@@ -247,15 +247,9 @@
       });
     };
 
-    var userIsAdmin = function(courseUserProfile) {
-      var adminRoles = ['TeacherEnrollment', 'TaEnrollment', 'DesignerEnrollment'];
-      var enrollments = courseUserProfile.enrollments;
-      for (var i = 0; i < enrollments.length; i++) {
-        var role = enrollments[i].role;
-        var isAdminRole = adminRoles.indexOf(role);
-        if (isAdminRole >= 0) {
-          return true;
-        }
+    var userIsAuthorized = function(courseUserRoles) {
+      if (courseUserRoles.globalAdmin || courseUserRoles.teacher || courseUserRoles.ta || courseUserRoles.designer){
+        return true;
       }
       return false;
     };

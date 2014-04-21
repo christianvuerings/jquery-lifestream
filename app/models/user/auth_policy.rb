@@ -21,7 +21,11 @@ module User
     end
 
     def can_import_canvas_users?
-      can_administrate? || Canvas::Admins.new.admin_user?(user.uid)
+      can_administrate? || can_administrate_canvas?
+    end
+
+    def can_administrate_canvas?
+      Canvas::Admins.new.admin_user?(user.uid)
     end
 
     def can_refresh_log_settings?

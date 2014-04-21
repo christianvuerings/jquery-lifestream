@@ -3,26 +3,46 @@ module Canvas
 
     include SafeJsonParser
 
-    def admins_list
-      self.class.fetch_from_cache do
-        all_admins = []
-        params = "per_page=30"
-        while params do
-          response = request_uncached(
-            "accounts/#{settings.account_id}/admins?#{params}",
-            "_admins"
-          )
-          break unless (response && response.status == 200 && admins_list = safe_json(response.body))
-          all_admins.concat(admins_list)
-          params = next_page_params(response)
-        end
-        all_admins
+    def initialize(options = {})
+      super(options)
+      default_options = {:account_id => settings.account_id}
+      options.reverse_merge!(default_options)
+      raise ArgumentError, "Account ID option must be a String or Fixnum" unless [String,Fixnum].include?(options[:account_id].class)
+      @account_id = options[:account_id].to_s
+    end
+
+    def admins_list(options = {})
+      default_options = {:cache => true}
+      options.reverse_merge!(default_options)
+
+      if options[:cache].present?
+        self.class.fetch_from_cache(@account_id) { request_admins_list(@account_id) }
+      else
+        request_admins_list(@account_id)
       end
     end
 
-    def admin_user?(uid)
-      list = admins_list
-      list.index { |acct| acct['user']['sis_login_id'] == uid.to_s }
+    def admin_user?(uid, cache = true)
+      list = admins_list(:cache => cache)
+      list.index {|acct| acct['user']['sis_login_id'] == uid.to_s} ? true : false
+    end
+
+    private
+
+    def request_admins_list(account_id)
+      all_admins = []
+      params = "per_page=30"
+      account_id ||= settings.account_id
+      while params do
+        response = request_uncached(
+          "accounts/#{account_id}/admins?#{params}",
+          "_admins"
+        )
+        break unless (response && response.status == 200 && admins_list = safe_json(response.body))
+        all_admins.concat(admins_list)
+        params = next_page_params(response)
+      end
+      all_admins
     end
 
   end

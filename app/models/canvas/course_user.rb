@@ -34,6 +34,19 @@ module Canvas
       false
     end
 
+    def roles
+      profile = course_user
+      roles_hash = {'teacher' => false, 'student' => false, 'observer' => false, 'designer' => false, 'ta' => false}
+      return roles_hash if profile.nil? || profile['enrollments'].nil? || profile['enrollments'].empty?
+      roles = profile['enrollments'].collect {|enrollment| enrollment['role'] }
+      roles_hash['student'] = true if roles.include?('StudentEnrollment')
+      roles_hash['teacher'] = true if roles.include?('TeacherEnrollment')
+      roles_hash['observer'] = true if roles.include?('ObserverEnrollment')
+      roles_hash['ta'] = true if roles.include?('TaEnrollment')
+      roles_hash['designer'] = true if roles.include?('DesignerEnrollment')
+      roles_hash
+    end
+
     private
 
     # Interface to request a single users in a course

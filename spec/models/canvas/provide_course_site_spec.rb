@@ -566,8 +566,8 @@ describe Canvas::ProvideCourseSite do
   end
 
   describe "#course_site_url" do
-    it "should raise exception if no response from Canvas::Course" do
-      Canvas::Course.any_instance.stub(:course).and_return(nil)
+    it "should raise exception if no response from Canvas::SisCourse" do
+      Canvas::SisCourse.any_instance.stub(:course).and_return(nil)
       expect do
         canvas_provide_course_site.course_site_url("CRS:COMPSCI-9A-2013-D")
       end.to raise_error(RuntimeError, "Unexpected error obtaining course site URL for CRS:COMPSCI-9A-2013-D!")
@@ -575,9 +575,7 @@ describe Canvas::ProvideCourseSite do
 
     it "should return course site URL when provided with valid sis id" do
       Settings.canvas_proxy.stub(:url_root).and_return("https://berkeley.instructure.com")
-      course_response = double
-      course_response.stub(:body).and_return("{\"id\": 1253733}")
-      Canvas::Course.any_instance.stub(:course).and_return(course_response)
+      Canvas::SisCourse.any_instance.stub(:course).and_return({"id" => 1253733})
       result = canvas_provide_course_site.course_site_url("CRS:COMPSCI-9A-2013-D")
       result.should == "https://berkeley.instructure.com/courses/1253733"
     end

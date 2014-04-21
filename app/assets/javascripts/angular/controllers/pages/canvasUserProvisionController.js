@@ -26,12 +26,16 @@
           }
         };
 
-        $http(importRequest).success(function(data) {
-          $scope.isLoading = false;
-          $scope.importProcessing = false;
-          angular.extend($scope, data);
-        });
-
+        $http(importRequest).
+          success(function(data) {
+            $scope.isLoading = false;
+            $scope.importProcessing = false;
+            angular.extend($scope, data);
+          }).
+          error(function(data) {
+            $scope.status = 'error';
+            angular.extend($scope, data);
+          });
       }
     };
 
