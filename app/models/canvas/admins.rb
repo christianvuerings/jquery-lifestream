@@ -11,19 +11,9 @@ module Canvas
       @account_id = options[:account_id].to_s
     end
 
-    def admins_list(options = {})
-      default_options = {:cache => true}
-      options.reverse_merge!(default_options)
-
-      if options[:cache].present?
-        self.class.fetch_from_cache(@account_id) { request_admins_list(@account_id) }
-      else
-        request_admins_list(@account_id)
-      end
-    end
-
-    def admin_user?(uid, cache = true)
-      admins_list.index {|acct| acct['user']['sis_login_id'] == uid.to_s} ? true : false
+    def admin_user?(uid)
+      admins = self.class.fetch_from_cache(@account_id) { request_admins_list(@account_id) }
+      admins.index {|acct| acct['user']['sis_login_id'] == uid.to_s} ? true : false
     end
 
     private
