@@ -4,7 +4,6 @@ class CanvasController < ApplicationController
   before_filter :set_cross_origin_access_control_headers, :only => [:external_tools]
   rescue_from StandardError, with: :handle_api_exception
   rescue_from Errors::ClientError, with: :handle_client_error
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def set_cross_origin_access_control_headers
     headers['Access-Control-Allow-Origin'] = "#{Settings.canvas_proxy.url_root}"
