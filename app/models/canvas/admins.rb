@@ -23,8 +23,7 @@ module Canvas
     end
 
     def admin_user?(uid, cache = true)
-      list = admins_list(:cache => cache)
-      list.index {|acct| acct['user']['sis_login_id'] == uid.to_s} ? true : false
+      admins_list.index {|acct| acct['user']['sis_login_id'] == uid.to_s} ? true : false
     end
 
     private
