@@ -7,7 +7,7 @@
   angular.module('calcentral.directives').directive('ccSpinnerDirective', function() {
     return {
       restrict: 'A',
-      link: function(scope, elm) {
+      link: function(scope, elm, attr) {
         scope.isLoading = true;
 
         /**
@@ -17,7 +17,13 @@
           elm.toggleClass('cc-spinner', value);
         };
 
-        scope.$watch('isLoading', watch);
+        // This allows us to watch for a different variable than isLoading
+        // We need this when we're using ngInclude
+        if (attr.ccSpinnerDirective) {
+          scope.$watch(attr.ccSpinnerDirective, watch);
+        } else {
+          scope.$watch('isLoading', watch);
+        }
       }
     };
   });

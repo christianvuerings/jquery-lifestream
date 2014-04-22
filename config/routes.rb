@@ -24,6 +24,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
   get '/api/my/academics' => 'my_academics#get_feed', :as => :my_academics, :defaults => { :format => 'json' }
   get '/api/my/financials' => 'my_financials#get_feed', :as => :my_financials, :defaults => {:format => 'json'}
+  get '/api/my/finaid' => 'my_finaid#get_feed', :as => :my_finaid, :defaults => {:format => 'json'}
   get '/api/my/cal1card' => 'my_cal1card#get_feed', :as => :my_cal1card, :defaults => {:format => 'json'}
   get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   get '/api/my/campuslinks/expire' => 'my_campus_links#expire'

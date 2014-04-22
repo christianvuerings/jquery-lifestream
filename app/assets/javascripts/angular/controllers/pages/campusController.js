@@ -124,7 +124,7 @@
 
     // We need to wait until the user is loaded
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
-      if(isAuthenticated) {
+      if (isAuthenticated) {
         getLinks();
       }
     });
