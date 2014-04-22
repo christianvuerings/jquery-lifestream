@@ -18,7 +18,7 @@ describe Canvas::CourseUser do
     }
   end
 
-  subject               { Canvas::CourseUser.new(:user_id => user_id, :course_id => course_id) }
+  subject { Canvas::CourseUser.new(:user_id => user_id, :course_id => course_id) }
 
   context "when initializing" do
     it "raises exception if user id option not present" do
@@ -111,6 +111,47 @@ describe Canvas::CourseUser do
       before { canvas_course_user['enrollments'][1]['role'] = 'DesignerEnrollment' }
       it "returns true" do
         expect(subject.class.is_course_admin?(canvas_course_user)).to be_true
+      end
+    end
+  end
+
+  context "when returning course user roles" do
+    context "if course user exists in canvas" do
+      before { Canvas::CourseUser.any_instance.should_receive(:course_user).and_return({'enrollments' => [{'role' => 'StudentEnrollment'},{'role' => 'DesignerEnrollment'}]}) }
+      it "returns roles hash" do
+        course_user_roles = subject.roles
+        expect(course_user_roles).to be_an_instance_of Hash
+        expect(course_user_roles['teacher']).to eq false
+        expect(course_user_roles['student']).to eq true
+        expect(course_user_roles['observer']).to eq false
+        expect(course_user_roles['designer']).to eq true
+        expect(course_user_roles['ta']).to eq false
+      end
+    end
+
+    context "if course user does not exist in canvas" do
+      before { Canvas::CourseUser.any_instance.should_receive(:request_uncached).and_return(nil) }
+      it "returns roles hash" do
+        course_user_roles = subject.roles
+        expect(course_user_roles).to be_an_instance_of Hash
+        expect(course_user_roles['teacher']).to eq false
+        expect(course_user_roles['student']).to eq false
+        expect(course_user_roles['observer']).to eq false
+        expect(course_user_roles['designer']).to eq false
+        expect(course_user_roles['ta']).to eq false
+      end
+    end
+
+    context "if course user enrollments are empty" do
+      before { Canvas::CourseUser.any_instance.should_receive(:course_user).and_return({'enrollments' => []}) }
+      it "returns roles hash" do
+        course_user_roles = subject.roles
+        expect(course_user_roles).to be_an_instance_of Hash
+        expect(course_user_roles['teacher']).to eq false
+        expect(course_user_roles['student']).to eq false
+        expect(course_user_roles['observer']).to eq false
+        expect(course_user_roles['designer']).to eq false
+        expect(course_user_roles['ta']).to eq false
       end
     end
   end

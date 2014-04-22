@@ -1,13 +1,19 @@
 require "spec_helper"
-require "models/canvas/authorization_helpers_shared"
+require "support/shared_examples"
+require "support/canvas_shared_examples"
 
 describe CanvasCourseAddUserController do
 
-  let(:course_user_hash) do
-    {
-      'id' => 4321321, 'name' => "Michael Steven OWEN", 'sis_user_id' => "UID:105431", 'sis_login_id' => "105431", 'login_id' => "105431",
-      'enrollments' => [{'id' => 20241907, 'course_id' => 767330, 'course_section_id' => 1312468, 'type' => 'TeacherEnrollment', 'role' => 'TeacherEnrollment'}]
-    }
+  let(:student_enrollment_hash) do
+    {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241907, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment"}
+  end
+
+  let(:teacher_enrollment_hash) do
+    {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241908, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment"}
+  end
+
+  let(:canvas_course_user_hash) do
+    { 'id' => 4321321, 'name' => "Michael Steven OWEN", 'sis_user_id' => 'UID:105431', 'sis_login_id' => '105431', 'login_id' => '105431', 'enrollments' => [student_enrollment_hash] }
   end
 
   let(:users_found) do
@@ -27,10 +33,94 @@ describe CanvasCourseAddUserController do
 
   before do
     session[:user_id] = "12345"
-    session[:canvas_user_id] = "4321321"
+    session[:canvas_user_id] = "43232321"
     session[:canvas_course_id] = "767330"
-    Canvas::CourseUser.stub(:is_course_admin?).and_return(true)
+    Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_user_hash)
+    Canvas::Admins.any_instance.stub(:admin_user?).and_return(true)
     Canvas::CourseAddUser.stub(:course_sections_list).and_return(course_sections_list)
+  end
+
+  context "when serving course user role information" do
+
+    it_should_behave_like "an api endpoint" do
+      before { subject.stub(:course_user_roles).and_raise(RuntimeError, "Something went wrong") }
+      let(:make_request) { get :course_user_roles }
+    end
+
+    it_should_behave_like "a user authenticated api endpoint" do
+      let(:make_request) { get :course_user_roles }
+    end
+
+    context "when session with canvas course user present" do
+
+      context "when user is student" do
+        let(:canvas_course_student_hash) { canvas_course_user_hash.merge({'enrollments' => [student_enrollment_hash]}) }
+        before do
+          Canvas::Admins.any_instance.stub(:admin_user?).and_return(false)
+          Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_student_hash)
+        end
+        it "returns course user details" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['roles']).to be_an_instance_of Hash
+          roles = response_json['roles']
+          expect(roles).to be_an_instance_of Hash
+          expect(roles['globalAdmin']).to be_false
+          expect(roles['teacher']).to be_false
+          expect(roles['student']).to be_true
+          expect(roles['observer']).to be_false
+          expect(roles['designer']).to be_false
+          expect(roles['ta']).to be_false
+        end
+      end
+
+      context "when user is canvas course admin" do
+        let(:canvas_course_teacher_hash) { canvas_course_user_hash.merge({'enrollments' => [teacher_enrollment_hash]}) }
+        before do
+          Canvas::Admins.any_instance.stub(:admin_user?).and_return(false)
+          Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_teacher_hash)
+        end
+
+        it "returns course user details" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['roles']).to be_an_instance_of Hash
+          roles = response_json['roles']
+          expect(roles).to be_an_instance_of Hash
+          expect(roles['globalAdmin']).to be_false
+          expect(roles['teacher']).to be_true
+          expect(roles['student']).to be_false
+          expect(roles['observer']).to be_false
+          expect(roles['designer']).to be_false
+          expect(roles['ta']).to be_false
+        end
+      end
+
+      context "when user is canvas account admin" do
+        before do
+          Canvas::Admins.any_instance.stub(:admin_user?).and_return(true)
+          Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(nil)
+        end
+        it "returns canvas admin user details" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['roles']).to be_an_instance_of Hash
+          roles = response_json['roles']
+          expect(roles).to be_an_instance_of Hash
+          expect(roles['globalAdmin']).to be_true
+          expect(roles['teacher']).to be_false
+          expect(roles['student']).to be_false
+          expect(roles['observer']).to be_false
+          expect(roles['designer']).to be_false
+          expect(roles['ta']).to be_false
+        end
+      end
+
+    end
+
   end
 
   context "when performing user search" do
@@ -43,20 +133,11 @@ describe CanvasCourseAddUserController do
       let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
-    it_should_behave_like "a user authenticated controller" do
+    it_should_behave_like "a user authenticated api endpoint" do
       let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
-    it_should_behave_like "a canvas user authenticated controller" do
-      let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
-    end
-
-    it_should_behave_like "a canvas course user authenticated controller" do
-      let(:make_request)                { get :search_users, search_text: "John Doe", search_type: "name" }
-      let(:make_request_with_course_id) { get :search_users, search_text: "John Doe", search_type: "name", canvas_course_id: "4123456" }
-    end
-
-    it_should_behave_like "a canvas course admin authorized controller" do
+    it_should_behave_like "a canvas course admin authorized api endpoint" do
       let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
@@ -92,20 +173,11 @@ describe CanvasCourseAddUserController do
       let(:make_request) { get :course_sections }
     end
 
-    it_should_behave_like "a user authenticated controller" do
+    it_should_behave_like "a user authenticated api endpoint" do
       let(:make_request) { get :course_sections }
     end
 
-    it_should_behave_like "a canvas user authenticated controller" do
-      let(:make_request) { get :course_sections }
-    end
-
-    it_should_behave_like "a canvas course user authenticated controller" do
-      let(:make_request)                { get :course_sections }
-      let(:make_request_with_course_id) { get :course_sections, canvas_course_id: "4123456" }
-    end
-
-    it_should_behave_like "a canvas course admin authorized controller" do
+    it_should_behave_like "a canvas course admin authorized api endpoint" do
       let(:make_request) { get :course_sections }
     end
 
@@ -132,20 +204,11 @@ describe CanvasCourseAddUserController do
       let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
-    it_should_behave_like "a user authenticated controller" do
+    it_should_behave_like "a user authenticated api endpoint" do
       let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
-    it_should_behave_like "a canvas user authenticated controller" do
-      let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
-    end
-
-    it_should_behave_like "a canvas course user authenticated controller" do
-      let(:make_request)                { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
-      let(:make_request_with_course_id) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215, canvas_course_id: "4123456" }
-    end
-
-    it_should_behave_like "a canvas course admin authorized controller" do
+    it_should_behave_like "a canvas course admin authorized api endpoint" do
       let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 

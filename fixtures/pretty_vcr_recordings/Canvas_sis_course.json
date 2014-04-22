@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.beta.instructure.com/api/v1/courses/1121?include%5B%5D=term",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/sis_course_id:CRS:STAT-5432-2013-D-757999?include%5B%5D=term",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -32,10 +32,10 @@
             "application/json; charset=utf-8"
           ],
           "date": [
-            "Tue, 17 Sep 2013 16:51:26 GMT"
+            "Tue, 17 Sep 2013 16:50:08 GMT"
           ],
           "etag": [
-            "\"693f742fb0f4c29b4542035b43980a98\""
+            "\"72bc2741809e62d10ba7e093cf478913\""
           ],
           "p3p": [
             "CP=\"None, see http://www.instructure.com/privacy-policy\""
@@ -44,7 +44,7 @@
             "Apache"
           ],
           "set-cookie": [
-            "canvas_session=zVXTbgj2qiddKgUZeLYJiQ.wEIkwTtyoF6uhvNlixRk67mHUxzvaf5HqNQryIyhuFC33m6a6xzlDetSVvg8V_q-jdGPEaiPhykfQHWwgNT8KUnIgazpsth7FdITAMaOphU._qN5DHQKvfUQptL-3PJ-SEurAv8.U0M8UQ; path=/; secure; HttpOnly"
+            "canvas_session=UMvSfuYUXIU8ayGXCUVozA.--Fo..UjiIQQ; path=/; secure; HttpOnly"
           ],
           "status": [
             "200 OK"
@@ -53,7 +53,7 @@
             "Accept-Encoding"
           ],
           "x-canvas-meta": [
-            "a=90242;s=19;c=cluster19;z=us-east-1b;"
+            "a=90242;s=19;c=cluster19;z=us-east-1c;"
           ],
           "x-canvas-user-id": [
             "190000003057506"
@@ -62,19 +62,19 @@
             "SAMEORIGIN"
           ],
           "x-request-context-id": [
-            "d7726e60-a0de-0131-c0e0-02f88540aa71"
+            "22b3eb20-01e7-0131-ad9e-02f885576c21"
           ],
           "x-runtime": [
-            "70"
+            "400"
           ],
           "x-session-id": [
-            "fc5e0dea28b4e1451ebb138027cb5857"
+            "b268f18bf2facccca9f811d741824f2f"
           ],
           "x-ua-compatible": [
-            "IE=Edge,chrome=1"
+            "IE=edge,chrome=1"
           ],
           "content-length": [
-            "575"
+            "497"
           ],
           "connection": [
             "keep-alive"
@@ -115,7 +115,7 @@
         },
         "http_version": null
       },
-      "recorded_at": "Tue, 17 Sep 2013 16:51:27 GMT"
+      "recorded_at": "Tue, 17 Sep 2013 16:50:09 GMT"
     }
   ],
   "recorded_with": "VCR 2.5.0"
