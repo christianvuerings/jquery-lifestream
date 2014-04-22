@@ -1,3 +1,4 @@
+# Pundit Policy used with Canvas::Course to handle authorizations. Used indirectly by #authorize helper provided by Pundit gem.
 module Canvas
   class CoursePolicy
     include ClassLogger
