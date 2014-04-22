@@ -7,7 +7,7 @@ module Canvas
     end
 
     def course_defined?(sis_course_id)
-      response = request_uncached("courses/sis_course_id:#{sis_course_id}", '_course')
+      response = request_uncached("courses/sis_course_id:#{sis_course_id}?include[]=all_courses", '_course')
       response.present?
     end
 
