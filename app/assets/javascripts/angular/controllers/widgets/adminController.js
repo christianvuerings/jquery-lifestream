@@ -93,6 +93,23 @@
       $scope.admin.act_as.uid = parseInt(uid, 10);
     };
 
+    $scope.admin.uidDivs = [
+      {
+        title: 'Saved UIDs',
+        UIDs: $scope.admin.savedUIDs,
+        updateUIDField: $scope.admin.updateUIDField,
+        clearAllUIDs: $scope.admin.clearAllSavedUIDs,
+        clearUID: $scope.admin.clearSavedUID
+      },
+      {
+        title: 'Recent UIDs',
+        UIDs: $scope.admin.recentUIDs,
+        updateUIDField: $scope.admin.updateUIDField,
+        clearAllUIDs: $scope.admin.clearAllRecentUIDs,
+        storeUID: $scope.admin.storeSavedUID
+      }
+    ];
+
     var redirectToSettings = function() {
       window.location = '/settings';
     };
