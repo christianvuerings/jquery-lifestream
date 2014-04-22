@@ -20,6 +20,17 @@
     };
 
     /**
+     * Check if browser supports localStorage
+     */
+    var supportsLocalStorage = (function() {
+      try {
+        return 'localStorage' in window && window.localStorage !== null;
+      } catch (e) {
+        return false;
+      }
+    })();
+
+    /**
      * Redirect to a page
      */
     var redirect = function(page) {
@@ -58,7 +69,8 @@
       isInIframe: isInIframe,
       preventBubble: preventBubble,
       redirect: redirect,
-      setTitle: setTitle
+      setTitle: setTitle,
+      supportsLocalStorage: supportsLocalStorage
     };
 
   });
