@@ -1,28 +1,14 @@
-<div class="cc-widget cc-widget-last cc-widget-activities" data-ng-controller="ActivityController">
-  <div class="cc-widget-title">
-    <div class="row collapse">
-      <div class="columns" data-ng-class="{true:'small-6',false:'small-12'}[!!activities.length]"><h2>Recent Activity</h2></div>
-      <div class="columns small-6" data-ng-show="activities.length">
-        <div class="cc-right cc-select">
-          <select data-ng-model="search.source" class="cc-ellipsis">
-            <option value="">All Activity</option>
-            <option value="{{source}}" data-ng-repeat="source in activities.sources">{{source}}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div data-cc-spinner-directive>
+<script type="text/ng-template" id="templates/widgets/activity_list.html">
+  <div data-cc-spinner-directive="process.isLoading">
     <ul class="cc-widget-activities-list">
-      <li data-ng-repeat="activity in activities.list | filter:search" data-ng-class="{'cc-widget-list-selected': activity.show, 'cc-widget-activities-list-undated': activity.isLastUndated}">
+      <li data-ng-repeat="activity in list | filter:search" data-ng-class="{'cc-widget-list-selected': activity.show, 'cc-widget-activities-list-undated': activity.isLastUndated}">
         <div class="cc-widget-list-hover"
           data-ng-class="{'cc-widget-list-hover-opened':(activity.show)}"
           data-cc-accessible-focus-directive
-          data-ng-click="api.widget.toggleShow($event, activities.list, activity, 'Recent Activity')">
+          data-ng-click="api.widget.toggleShow($event, list, activity, 'Recent Activity')">
           <div>
             <div class="cc-widget-activities-text-column">
-              <i class="fa fa-{{activities.typeToIcon[activity.type]}} cc-left"></i>
+              <i class="fa fa-{{typeToIcon[activity.type]}} cc-left"></i>
               <div class="cc-widget-activities-text-margin">
                 <strong>{{activity.title}}</strong>
                 <div>
@@ -47,7 +33,7 @@
               More info
               <span class="cc-visuallyhidden">View more info about {{ activity.title }} in {{ activity.source }}</span>
             </a>
-            <button class="cc-button" data-ng-if="api.user.profile.features.activity_to_task && api.user.profile.hasGoogleAccessToken"
+            <button class="cc-button" data-ng-if="mode === 'activity' && addTask && api.user.profile.features.activity_to_task && api.user.profile.hasGoogleAccessToken"
                     data-ng-click="addTask(activity)">Make task</button>
           </div>
           <div class="cc-widget-activities-sub-text-margin" data-ng-show="activity.show && activity.elements">
@@ -69,7 +55,7 @@
                       More info
                       <span class="cc-visuallyhidden">View more info about {{ sub_activity.title }} in {{ sub_activity.source }}</span>
                     </a>
-                    <button class="cc-button"  data-ng-if="api.user.profile.features.activity_to_task && api.user.profile.hasGoogleAccessToken"
+                    <button class="cc-button" data-ng-if="mode === 'activity' && addTask && api.user.profile.features.activity_to_task && api.user.profile.hasGoogleAccessToken"
                             data-ng-click="addTask(sub_activity)">Make task</button>
                   </div>
                 </div>
@@ -84,4 +70,4 @@
       You have no recent activity at this time.
     </div>
   </div>
-</div>
+</script>

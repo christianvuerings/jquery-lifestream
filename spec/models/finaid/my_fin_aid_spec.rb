@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe MyActivities::MyFinAid do
-  before(:each) { MyActivities::MyFinAid.cutoff_date=DateTime.new(2013, 3, 1)}
+describe Finaid::MyFinAid do
+  before(:each) { Finaid::MyFinAid.cutoff_date=DateTime.new(2013, 3, 1) }
   let!(:oski_uid) { "61889" }
   let!(:non_student_uid) { '212377' }
 
@@ -36,7 +36,7 @@ describe MyActivities::MyFinAid do
     before(:each) { @activities = ["some activity"] }
 
     context "non-student finaid" do
-      subject { MyActivities::MyFinAid.append!(non_student_uid, @activities ||= []); @activities}
+      subject { Finaid::MyFinAid.append!(non_student_uid, @activities ||= []); @activities}
 
       it { should eq(["some activity"]) }
     end
@@ -45,7 +45,7 @@ describe MyActivities::MyFinAid do
       before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed) }
       after(:each) { WebMock.reset! }
 
-      subject { MyActivities::MyFinAid.append!(oski_uid, @activities ||= []); @activities}
+      subject { Finaid::MyFinAid.append!(oski_uid, @activities ||= []); @activities}
 
       it { should eq(["some activity"]) }
       it "should not write to cache" do
@@ -57,7 +57,7 @@ describe MyActivities::MyFinAid do
       before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_return(:status => 403) }
       after(:each) { WebMock.reset! }
 
-      subject { MyActivities::MyFinAid.append!(oski_uid, @activities ||= []); @activities}
+      subject { Finaid::MyFinAid.append!(oski_uid, @activities ||= []); @activities}
 
       it { should eq(["some activity"]) }
       it "should not write to cache" do
@@ -69,7 +69,7 @@ describe MyActivities::MyFinAid do
 
   context "2xx states" do
     before(:each) {
-      MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
+      Finaid::MyFinAid.stub(:current_term_year).and_return(this_term_year)
       Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: this_term_year }).and_return(fake_oski_finaid_current)
       Finaid::Proxy.stub(:new).with({ user_id: oski_uid, term_year: next_term_year }).and_return(fake_oski_finaid_next)
       Settings.myfinaid_proxy.include_next_year = true
@@ -77,7 +77,7 @@ describe MyActivities::MyFinAid do
     }
 
     subject do
-      MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+      Finaid::MyFinAid.append!(oski_uid, @activities ||= [])
       @activities
     end
 
@@ -91,7 +91,7 @@ describe MyActivities::MyFinAid do
 
     context "alert types" do
       subject do
-        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        Finaid::MyFinAid.append!(oski_uid, @activities ||= [])
         @activities.select { |entry| entry[:type] == "alert" }
       end
 
@@ -100,7 +100,7 @@ describe MyActivities::MyFinAid do
     end
     context "info types" do
       subject do
-        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        Finaid::MyFinAid.append!(oski_uid, @activities ||= [])
         @activities.select { |entry| entry[:type] == "info" }
       end
 
@@ -109,7 +109,7 @@ describe MyActivities::MyFinAid do
     end
     context "financial types" do
       subject do
-        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        Finaid::MyFinAid.append!(oski_uid, @activities ||= [])
         @activities.select { |entry| entry[:type] == "financial" }
       end
 
@@ -119,7 +119,7 @@ describe MyActivities::MyFinAid do
 
     context "message types" do
       subject do
-        MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+        Finaid::MyFinAid.append!(oski_uid, @activities ||= [])
         @activities.select { |entry| entry[:type] == "message" }
       end
 
@@ -143,7 +143,7 @@ describe MyActivities::MyFinAid do
       context "should have the appropriate status messages" do
 
         subject do
-          MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+          Finaid::MyFinAid.append!(oski_uid, @activities ||= [])
           @activities.select { |entry| !entry[:status].nil? }
         end
 
@@ -177,7 +177,7 @@ describe MyActivities::MyFinAid do
         status = 'W'
         Rails.logger.should_receive(:info).once.with(/Ignore documents with \"#{status}\" status/)
         lambda {
-          result = MyActivities::MyFinAid.decode_status('', status)
+          result = Finaid::MyFinAid.decode_status('', status)
           result.should be_nil
         }.should_not raise_error
       end
@@ -200,7 +200,7 @@ describe MyActivities::MyFinAid do
 
   context "2xx states when proxy is configured to exclude next year" do
     before(:each) {
-      MyActivities::MyFinAid.stub(:current_term_year).and_return(this_term_year)
+      Finaid::MyFinAid.stub(:current_term_year).and_return(this_term_year)
       Finaid::Proxy.stub(:new).with({user_id: oski_uid, term_year: this_term_year}).and_return(fake_oski_finaid_current)
       Finaid::Proxy.stub(:new).with({user_id: oski_uid, term_year: next_term_year}).and_return(fake_oski_finaid_next)
       Settings.myfinaid_proxy.include_next_year = false
@@ -208,7 +208,7 @@ describe MyActivities::MyFinAid do
     }
 
     subject do
-      MyActivities::MyFinAid.append!(oski_uid, @activities ||= [])
+      Finaid::MyFinAid.append!(oski_uid, @activities ||= [])
       @activities
     end
 

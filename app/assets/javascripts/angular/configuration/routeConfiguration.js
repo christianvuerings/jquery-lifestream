@@ -53,6 +53,10 @@
       templateUrl: 'templates/myfinances.html',
       controller: 'MyFinancesController'
     }).
+    when('/finances/details', {
+      templateUrl: 'templates/cars_details.html',
+      controller: 'MyFinancesController'
+    }).
     when('/settings', {
       templateUrl: 'templates/settings.html',
       controller: 'SettingsController'

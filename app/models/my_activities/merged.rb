@@ -14,7 +14,6 @@ module MyActivities
         MyActivities::NotificationActivities,
         MyActivities::RegBlocks,
       ]
-      @proxies << MyActivities::MyFinAid if Settings.features.my_fin_aid
     end
 
     def self.cutoff_date
