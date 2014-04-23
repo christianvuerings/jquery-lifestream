@@ -26,13 +26,12 @@ module EtsBlog
       doc = Nokogiri::XML(xml, &:strict)
       nodes = doc.css('node')
       nodes.each do |node|
-        timestamp = node.css('PostDate').text.to_i
         result = {
           title: node.css('Title').text,
-          teaser: node.css('Teaser').text,
           url: node.css('Link').text,
-          timestamp: format_date(Time.zone.at(timestamp).to_datetime),
+          timestamp: format_date(Time.zone.at(node.css('PostDate').text.to_i).to_datetime),
         }
+        result[:teaser] =  node.css('Teaser').text if node.css('Teaser').present?
         next unless valid_result?(result)
         results << result
       end
@@ -53,17 +52,22 @@ module EtsBlog
     end
 
     def valid_result?(r=nil)
-      valid = true
-      valid = false unless r.is_a?(Hash)
-      [:title, :teaser, :url, :timestamp].each { |k|
-        if !r.key?(k) || r[k].empty?
-          valid = false
-          break
+      unless r.is_a?(Hash)
+        logger.error("expected a hash argument #{r.inspect}")
+        return false
+      end
+      [:title, :url, :timestamp].each { |k|
+        unless r.key?(k) && r[k].present?
+          logger.error("missing required #{k} field for hash argument #{r.inspect}")
+          return false
         end
       }
-      valid = false unless ((r[:timestamp].is_a?(Hash) && r[:timestamp][:epoch] > 0))
-      logger.error("Unexpected result - #{r.inspect}") unless valid
-      valid
+      unless ((r[:timestamp].is_a?(Hash) && r[:timestamp][:epoch] > 0))
+        logger.error("unexpected timestamp value #{r.inspect}")
+        return false
+      end
+      return true
     end
+
   end
 end

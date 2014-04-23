@@ -9,6 +9,7 @@ describe EtsBlog::Alerts do
   let(:bad_xml) { '<xml><chicken>' }
   let(:unexpected_xml) { '<xml><node><chicken>egg</chicken></node></xml>' }
   let(:empty_xml) { '<xml></xml>' }
+  let(:xml_with_no_teaser){ Rails.root.join('fixtures', 'xml', 'app_alerts_feed_no_teaser.xml') }
 
   context "failures" do
     it "not finding fake xml feed on disk should return nil" do
@@ -38,6 +39,12 @@ describe EtsBlog::Alerts do
       alert = fake_proxy.get_latest
       alert.is_a?(Hash)
       alert.count.should == 4
+    end
+    it "the xml alert is missing a teaser" do
+      fake_proxy.stub(:xml_source).and_return(xml_with_no_teaser)
+      alert = fake_proxy.get_latest
+      alert.is_a?(Hash)
+      alert.count.should == 3
     end
     it "Alerts.get_latest formats and returns the latest single well-formed feed message" do
       alert = fake_proxy.get_latest
