@@ -30,8 +30,12 @@ RailsAdmin.config do |config|
 
   # We're not using Devise or Warden for RailsAdmin authentication; check for superuser in authorize_with instead.
   config.authenticate_with {
-    policy = User::Auth.get(session[:user_id]).policy
-    redirect_to main_app.root_path unless policy.can_author?
+    if cookies[:reauthenticated] || !!Settings.features.reauthentication == false
+      policy = User::Auth.get(session[:user_id]).policy
+      redirect_to main_app.root_path unless policy.can_author?
+    else
+      redirect_to main_app.reauth_admin_path
+    end
   }
 
   config.current_user_method {
