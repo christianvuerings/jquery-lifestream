@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class BlogFeedController < ApplicationController
 
   def get_blog_info
