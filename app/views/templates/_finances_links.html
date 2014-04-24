@@ -1,30 +1,10 @@
 <script type="text/ng-template" id="templates/finances_links.html">
-  <div class="cc-widget cc-print-hide">
+  <div class="cc-widget cc-print-hide" data-ng-controller="FinancesLinksController">
     <div class="cc-widget-title">
-      <h2 class="cc-left">Financial Resources</h2>
+      <h2>Financial Resources</h2>
     </div>
-    <div class="cc-list-link-container">
-      <h3>Questions About Your Finances</h3>
-      <ul class="cc-list-links">
-        <li>
-          <a href="https://saservices.berkeley.edu/CSC/student-case.html">Cal Student Central</a>
-        </li>
-      </ul>
-      <h3>Tax Information</h3>
-      <ul class="cc-list-links">
-        <li>
-          <a href="http://studentbilling.berkeley.edu/taxpayer.htm">1098-T Form</a>
-        </li>
-      </ul>
-      <h3>Campus and Beyond</h3>
-      <ul class="cc-list-links">
-        <li>
-          <a href="https://myfinaid.berkeley.edu">MyFinAid</a>
-        </li>
-      </ul>
-    </div>
-    <div class="cc-page-myfinances-resources-more">
-      <a href="/campus/finances"><strong>More Resources</strong></a>
+    <div data-cc-spinner-directive>
+      <div data-ng-include="'templates/campus_link_list'"></div>
     </div>
   </div>
 </script>

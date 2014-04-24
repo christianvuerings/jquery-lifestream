@@ -113,6 +113,10 @@
     var parseCampusLinks = function(campusLinksResponse, categoryId) {
       var data = campusLinksResponse.data;
 
+      if (!data.navigation) {
+        return;
+      }
+
       var currentTopCategory = getCategoryName(categoryId, data.navigation);
       var compileResponse = compileLinks(data.links, currentTopCategory);
 
@@ -127,10 +131,7 @@
     var getLinks = function(categoryId) {
 
       // Data contains "links" and "navigation"
-      var linkDataUrl = '/json/campuslinks_v16.json';
-      if (apiService.user.profile.features.live_campus_links_data) {
-        linkDataUrl = '/api/my/campuslinks';
-      }
+      var linkDataUrl = '/api/my/campuslinks';
 
       return $http.get(linkDataUrl).then(function(response) {
         return parseCampusLinks(response, categoryId);

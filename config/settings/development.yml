@@ -76,7 +76,6 @@ hot_plate:
   enabled: false
 
 features:
-  live_campus_links_data: true
   academic_status: true
   my_fin_aid: true
   activity_to_task: true

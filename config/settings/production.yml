@@ -163,7 +163,6 @@ sakai_proxy:
         }
     ]
 features:
-  live_campus_links_data: true
   academic_status: true
   telebears: true
   financials: true
