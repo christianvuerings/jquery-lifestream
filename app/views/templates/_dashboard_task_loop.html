@@ -47,20 +47,20 @@
       class="cc-widget-tasks-col cc-widget-tasks-col-date">
       <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-show="task.dueDate && task.bucket != 'Due Today' && tasksMode != 'completed'">
-        {{task.dueDate.epoch * 1000 | cc.dateInYear:'MM/dd'}}
+        {{task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'}}
       </span>
       <div
         data-ng-show="task.emitter=='bCourses' && task.dueDate.hasTime"
         class="cc-widget-tasks-timestamp">
           {{task.dueDate.epoch * 1000 | date:'h a'}}
       </div>
-      <span data-ng-show="tasksMode=='completed'">{{task.completedDate.epoch * 1000 | cc.dateInYear:'MM/dd'}}</span>
+      <span data-ng-show="tasksMode=='completed'">{{task.completedDate.epoch * 1000 | dateInYearFilter:'MM/dd'}}</span>
     </div>
     <div
       class="cc-widget-tasks-col cc-widget-tasks-col-date"
       data-ng-show="task.updatedDate">
       <span>
-        {{task.updatedDate.epoch * 1000 | cc.dateInYear:'MM/dd'}}
+        {{task.updatedDate.epoch * 1000 | dateInYearFilter:'MM/dd'}}
       </span>
     </div>
   </div>
@@ -68,7 +68,7 @@
   <div data-ng-show="task.show">
     <div class="cc-widget-tasks-more" data-ng-hide="editorEnabled">
       <div class="cc-clearfix" data-ng-show="task.completedDate && task.dueDate">Due Date:
-        <span data-ng-bind="task.dueDate.epoch * 1000 | cc.dateInYear:'MM/dd'"></span>
+        <span data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>
       </div>
       <div data-ng-bind-html="task.notes | linky" class="cc-break-word cc-clearfix"></div>
 

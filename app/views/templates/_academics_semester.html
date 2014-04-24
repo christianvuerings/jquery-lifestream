@@ -160,11 +160,11 @@
               <ul>
                 <li>
                   <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">Start</strong></div>
-                  <div class="columns medium-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | cc.dateUnlessNoon:'EEE MMM d | h:mm a'"></div>
+                  <div class="columns medium-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:'EEE MMM d | h:mm a'"></div>
                 </li>
                 <li>
                   <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
-                  <div class="columns medium-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | cc.dateUnlessNoon:'EEE MMM d | h:mm a'"></div>
+                  <div class="columns medium-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:'EEE MMM d | h:mm a'"></div>
                 </li>
               </ul>
             </div>
