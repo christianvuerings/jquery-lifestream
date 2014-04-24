@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.filters').filter('cc.dateInYear', function(dateService, $filter) {
+  angular.module('calcentral.filters').filter('dateInYearFilter', function(dateService, $filter) {
     return function(millisecondsEpoch, currentYearFormat, otherYearFormat) {
       var isCurrentYear = dateService.moment().format('YYYY') === dateService.moment(millisecondsEpoch).format('YYYY');
       var standardDateFilter = $filter('date');

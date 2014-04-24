@@ -322,7 +322,7 @@
                       <tr data-ng-repeat="phase in telebears.phases">
                         <td data-ng-bind="phase.period" class="cc-telebears-phase-center"></td>
                         <td data-ng-bind="phase.startTime.epoch * 1000 | date:'EEE MMM d'" class="cc-telebears-date-padding"></td>
-                        <td data-ng-bind="phase.startTime.epoch * 1000 | cc.dateUnlessNoon:'h:mm a'"></td>
+                        <td data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:'h:mm a'"></td>
                       </tr>
                     </tbody>
                   </table>
