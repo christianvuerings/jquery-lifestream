@@ -31,20 +31,20 @@
     <div data-ng-show="api.user.profile.isSuperuser || api.user.profile.isViewer || api.user.profile.actingAsUid" data-ng-controller="AdminController">
       <h2>Admin</h2>
       <h3>View as</h3>
-      <form data-ng-submit="admin.actAs()">
+      <form data-ng-submit="admin.actAsSomeone()">
         <div class="row">
           <div class="small-3 columns">
             <label for="cc-settings-act-as-uid">UID</label>
           </div>
           <div class="small-9 columns">
-            <input id="cc-settings-act-as-uid" data-ng-model="admin.act_as.uid" type="number" data-cc-select-on-click-directive />
+            <input id="cc-settings-act-as-uid" data-ng-model="admin.actAs.uid" type="number" data-cc-select-on-click-directive />
           </div>
         </div>
         <div class="row">
           <div class="small-9 small-offset-3 columns">
             <button
               class="cc-button cc-button-blue"
-              data-ng-disabled="!admin.act_as.uid"
+              data-ng-disabled="!admin.actAs.uid"
               type="submit">Submit</button>
           </div>
         </div>
