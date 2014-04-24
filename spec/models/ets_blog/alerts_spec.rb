@@ -93,9 +93,9 @@ describe EtsBlog::Alerts do
         result = fake_proxy.get_alerts
       }.should raise_exception
     end
-    it "should log a Nokogiri syntax error message" do
+    it "should log an xml parsing syntax error message" do
       fake_proxy.stub(:get_raw_xml).and_return(bad_xml);
-      Rails.logger.should_receive(:error).with(/Nokogiri\:\:XML\:\:SyntaxError/)
+      Rails.logger.should_receive(:error).with(/REXML\:\:ParseException/)
       lambda{
         result = fake_proxy.get_latest
       }.should_not raise_exception

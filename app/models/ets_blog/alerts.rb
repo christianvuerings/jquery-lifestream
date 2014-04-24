@@ -23,17 +23,27 @@ module EtsBlog
     def get_alerts
       results = []
       xml = get_raw_xml
-      doc = Nokogiri::XML(xml, &:strict)
-      nodes = doc.css('node')
+      begin
+        xml_doc = Hash.from_xml(xml)
+      rescue => e
+        logger.error("Unparseable XML content: #{e}")
+        return nil
+      end
+      unless xml_doc['xml'] && xml_doc['xml']['node']
+        logger.error("unexpected xml content: #{xml_doc}")
+        return nil
+      end
+      node_list = xml_doc['xml']['node']
+      nodes = (node_list.is_a? Array) ? node_list : [ node_list ]
       nodes.each do |node|
-        result = {
-          title: node.css('Title').text,
-          url: node.css('Link').text,
-          timestamp: format_date(Time.zone.at(node.css('PostDate').text.to_i).to_datetime),
+        node_entry = {
+          :title => node['Title'],
+          :url => node['Link'],
+          :timestamp => format_date( Time.zone.at( node['PostDate'].to_i ).to_datetime  )
         }
-        result[:teaser] =  node.css('Teaser').text if node.css('Teaser').present?
-        next unless valid_result?(result)
-        results << result
+        node_entry[:teaser] =  node['Teaser'] if node['Teaser'].present?
+        next unless valid_result?(node_entry)
+        results << node_entry
       end
       (results.empty?) ? nil : results
     end
