@@ -1,3 +1,4 @@
+/* jshint camelcase: false */
 (function(window, document, $) {
   'use strict';
 
