@@ -15,17 +15,17 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE3VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "EE 20N Discussion",
-          "start_time": {
+          "startTime": {
             "epoch": 1366214400,
             "date_time": "2013-04-17T09:00:00-07:00",
             "date_string": "4/17",
-            "all_day_event": true
+            "allDayEvent": true
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366218000,
             "date_time": "2013-04-17T10:00:00-07:00",
             "date_string": "4/17",
-            "all_day_event": true
+            "allDayEvent": true
           },
           "modified_time": {
             "epoch": 1365631878,
@@ -37,17 +37,17 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI0VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "EE 20N Discussion",
-          "start_time": {
+          "startTime": {
             "epoch": 1366819200,
             "date_time": "2013-04-24T09:00:00-07:00",
             "date_string": "4/24",
-            "all_day_event": true
+            "allDayEvent": true
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1367168400,
             "date_time": "2013-04-28T10:00:00-07:00",
             "date_string": "4/28",
-            "all_day_event": true
+            "allDayEvent": true
           },
           "modified_time": {
             "epoch": 1365631878,
@@ -59,12 +59,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTdUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "ETH STD 21AC DIS 101",
-          "start_time": {
+          "startTime": {
             "epoch": 1366218000,
             "date_time": "2013-04-17T10:00:00-07:00",
             "date_string": "4/17"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366221600,
             "date_time": "2013-04-17T11:00:00-07:00",
             "date_string": "4/17"
@@ -80,12 +80,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjRUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "ETH STD 21AC DIS 101",
-          "start_time": {
+          "startTime": {
             "epoch": 1366822800,
             "date_time": "2013-04-24T10:00:00-07:00",
             "date_string": "4/24"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366826400,
             "date_time": "2013-04-24T11:00:00-07:00",
             "date_string": "4/24"
@@ -100,12 +100,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE5VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "MATH 53 Discussion",
-          "start_time": {
+          "startTime": {
             "epoch": 1366401600,
             "date_time": "2013-04-19T13:00:00-07:00",
             "date_string": "4/19"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366405200,
             "date_time": "2013-04-19T14:00:00-07:00",
             "date_string": "4/19"
@@ -120,12 +120,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDIyVDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "MATH 53 Discussion",
-          "start_time": {
+          "startTime": {
             "epoch": 1366660800,
             "date_time": "2013-04-22T13:00:00-07:00",
             "date_string": "4/22"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366664400,
             "date_time": "2013-04-22T14:00:00-07:00",
             "date_string": "4/22"
@@ -140,12 +140,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE3VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "MATH 53 Discussion",
-          "start_time": {
+          "startTime": {
             "epoch": 1366228800,
             "date_time": "2013-04-17T13:00:00-07:00",
             "date_string": "4/17"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366232400,
             "date_time": "2013-04-17T14:00:00-07:00",
             "date_string": "4/17"
@@ -160,12 +160,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI0VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "MATH 53 Discussion",
-          "start_time": {
+          "startTime": {
             "epoch": 1366833600,
             "date_time": "2013-04-24T13:00:00-07:00",
             "date_string": "4/24"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366837200,
             "date_time": "2013-04-24T14:00:00-07:00",
             "date_string": "4/24"
@@ -180,12 +180,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MThUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "ETH STD 21AC",
-          "start_time": {
+          "startTime": {
             "epoch": 1366318800,
             "date_time": "2013-04-18T14:00:00-07:00",
             "date_string": "4/18"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366324200,
             "date_time": "2013-04-18T15:30:00-07:00",
             "date_string": "4/18"
@@ -200,12 +200,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjNUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "ETH STD 21AC",
-          "start_time": {
+          "startTime": {
             "epoch": 1366750800,
             "date_time": "2013-04-23T14:00:00-07:00",
             "date_string": "4/23"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366756200,
             "date_time": "2013-04-23T15:30:00-07:00",
             "date_string": "4/23"
@@ -220,12 +220,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTZUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "ETH STD 21AC",
-          "start_time": {
+          "startTime": {
             "epoch": 1366146000,
             "date_time": "2013-04-16T14:00:00-07:00",
             "date_string": "4/16"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366151400,
             "date_time": "2013-04-16T15:30:00-07:00",
             "date_string": "4/16"
@@ -240,12 +240,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjVUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "ETH STD 21AC",
-          "start_time": {
+          "startTime": {
             "epoch": 1366923600,
             "date_time": "2013-04-25T14:00:00-07:00",
             "date_string": "4/25"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366929000,
             "date_time": "2013-04-25T15:30:00-07:00",
             "date_string": "4/25"
@@ -260,12 +260,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTlUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "PHYSICS 7B Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366394400,
             "date_time": "2013-04-19T11:00:00-07:00",
             "date_string": "4/19"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366398000,
             "date_time": "2013-04-19T12:00:00-07:00",
             "date_string": "4/19"
@@ -280,12 +280,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MjJUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "PHYSICS 7B Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366653600,
             "date_time": "2013-04-22T11:00:00-07:00",
             "date_string": "4/22"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366657200,
             "date_time": "2013-04-22T12:00:00-07:00",
             "date_string": "4/22"
@@ -300,12 +300,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTdUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "PHYSICS 7B Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366221600,
             "date_time": "2013-04-17T11:00:00-07:00",
             "date_string": "4/17"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366225200,
             "date_time": "2013-04-17T12:00:00-07:00",
             "date_string": "4/17"
@@ -320,12 +320,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MjRUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
           "title": "PHYSICS 7B Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366826400,
             "date_time": "2013-04-24T11:00:00-07:00",
             "date_string": "4/24"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366830000,
             "date_time": "2013-04-24T12:00:00-07:00",
             "date_string": "4/24"
@@ -340,12 +340,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE4VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "EE 20N Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366313400,
             "date_time": "2013-04-18T12:30:00-07:00",
             "date_string": "4/18"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366318800,
             "date_time": "2013-04-18T14:00:00-07:00",
             "date_string": "4/18"
@@ -360,12 +360,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDIzVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "EE 20N Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366745400,
             "date_time": "2013-04-23T12:30:00-07:00",
             "date_string": "4/23"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366750800,
             "date_time": "2013-04-23T14:00:00-07:00",
             "date_string": "4/23"
@@ -380,12 +380,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE2VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "EE 20N Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366140600,
             "date_time": "2013-04-16T12:30:00-07:00",
             "date_string": "4/16"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366146000,
             "date_time": "2013-04-16T14:00:00-07:00",
             "date_string": "4/16"
@@ -400,12 +400,12 @@
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI1VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
           "title": "EE 20N Lecture",
-          "start_time": {
+          "startTime": {
             "epoch": 1366918200,
             "date_time": "2013-04-25T12:30:00-07:00",
             "date_string": "4/25"
           },
-          "end_time": {
+          "endTime": {
             "epoch": 1366923600,
             "date_time": "2013-04-25T14:00:00-07:00",
             "date_string": "4/25"

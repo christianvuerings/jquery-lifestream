@@ -53,15 +53,15 @@
               <div class="cc-badgepopover-item-calendar-container">
                 <a data-ng-href="{{item.link}}" class="cc-badgepopover-item-details">
                   <div class="cc-left cc-badgepopover-item-calendar">
-                    <div class="cc-badgepopover-item-calendar-day-of-week" data-ng-bind="item.start_time.display.day_of_week"></div>
-                    <div class="cc-badgepopover-item-calendar-day" data-ng-bind="item.start_time.display.day"></div>
-                    <div class="cc-badgepopover-item-calendar-month" data-ng-bind="item.start_time.display.month"></div>
+                    <div class="cc-badgepopover-item-calendar-day-of-week" data-ng-bind="item.startTime.display.dayOfWeek"></div>
+                    <div class="cc-badgepopover-item-calendar-day" data-ng-bind="item.startTime.display.day"></div>
+                    <div class="cc-badgepopover-item-calendar-month" data-ng-bind="item.startTime.display.month"></div>
                   </div>
                   <div class="cc-badgepopover-item-calendar-details">
                     <div class="cc-badgepopover-item-details-title cc-popover-link cc-ellipsis" data-ng-bind="item.title"></div>
                     <div class="cc-ellipsis">
-                      <span class="cc-badgepopover-item-details-all-day" data-ng-show="item.all_day_event">[all-day]</span>
-                      <span data-ng-bind-template="{{item.start_time.display.range_start}} - {{item.end_time.display.range_end}}"></span>
+                      <span class="cc-badgepopover-item-details-all-day" data-ng-show="item.allDayEvent">[all-day]</span>
+                      <span data-ng-bind-template="{{item.startTime.display.rangeStart}} - {{item.endTime.display.rangeEnd}}"></span>
                     </div>
                     <div class="cc-ellipsis cc-badgepopover-item-details-summary">
                       <span data-ng-switch on="item.change_state">
