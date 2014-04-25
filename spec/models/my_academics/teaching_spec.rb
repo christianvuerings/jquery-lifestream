@@ -41,7 +41,7 @@ describe 'MyAcademics::Teaching' do
 
     teaching[1][:name].should == "Spring 2012"
     teaching[1][:classes].length.should == 2
-    teaching[1][:time_bucket].should == "past"
+    teaching[1][:timeBucket].should == "past"
   end
 
   it "should get correct time buckets for teaching semesters", :if => Sakai::SakaiData.test_data? do
@@ -52,9 +52,9 @@ describe 'MyAcademics::Teaching' do
     teaching = feed[:teaching_semesters]
     teaching.length.should == 2
     teaching[0][:name].should == "Spring 2015"
-    teaching[0][:time_bucket].should == "future"
+    teaching[0][:timeBucket].should == "future"
     teaching[1][:name].should == "Fall 2013"
-    teaching[1][:time_bucket].should == "current"
+    teaching[1][:timeBucket].should == "current"
   end
 
 end

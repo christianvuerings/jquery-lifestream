@@ -161,7 +161,7 @@
       var classes = [];
       for (var i = 0; i < semesters.length; i++) {
         for (var j = 0; j < semesters[i].classes.length; j++) {
-          if (semesters[i].time_bucket !== 'future') {
+          if (semesters[i].timeBucket !== 'future') {
             classes.push(semesters[i].classes[j]);
           }
         }
@@ -174,7 +174,7 @@
       var classes = [];
       for (var i = 0; i < semesters.length; i++) {
         for (var j = 0; j < semesters[i].classes.length; j++) {
-          if (semesters[i].time_bucket !== 'future' && semesters[i].time_bucket !== 'current') {
+          if (semesters[i].timeBucket !== 'future' && semesters[i].timeBucket !== 'current') {
             classes.push(semesters[i].classes[j]);
           }
         }

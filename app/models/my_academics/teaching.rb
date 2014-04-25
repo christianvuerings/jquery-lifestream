@@ -12,7 +12,7 @@ class MyAcademics::Teaching
     feed.keys.each do |term_key|
       (term_yr, term_cd) = term_key.split("-")
       teaching_semester = semester_info(term_yr, term_cd).merge({
-        time_bucket: MyAcademics::AcademicsModule.time_bucket(term_yr, term_cd),
+        timeBucket: MyAcademics::AcademicsModule.time_bucket(term_yr, term_cd),
       })
       feed[term_key].each do |course|
         next unless course[:role] == 'Instructor'
