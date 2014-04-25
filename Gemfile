@@ -111,7 +111,7 @@ gem "closure-compiler", "~> 1.1.10"
 
 # Font awesome - an icon font
 # https://github.com/bokmann/font-awesome-rails
-gem "font-awesome-rails", "~> 4.0.0.0"
+gem "font-awesome-rails", "~> 4.0.3.1"
 
 # Moment.js
 # https://github.com/derekprior/momentjs-rails
