@@ -268,7 +268,6 @@ hot_plate:
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
-  live_campus_links_data: false
   academic_status: false
   my_fin_aid: false
   activity_to_task: false
