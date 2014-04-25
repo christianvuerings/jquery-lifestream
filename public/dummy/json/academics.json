@@ -452,7 +452,7 @@
       "slug": "spring-2014",
       "term_cd": "B",
       "term_yr": "2014",
-      "time_bucket": "future",
+      "timeBucket": "future",
       "classes": [
         {
           "course_code": "BIOLOGY 1A",
@@ -503,7 +503,7 @@
       "slug": "fall-2013",
       "term_cd": "D",
       "term_yr": "2013",
-      "time_bucket": "current",
+      "timeBucket": "current",
       "classes": [
         {
           "course_code": "BIOLOGY 1A",
@@ -658,7 +658,7 @@
       "slug": "spring-2012",
       "term_cd": "B",
       "term_yr": "2012",
-      "time_bucket": "past",
+      "timeBucket": "past",
       "classes": [
         {
           "course_code": "BIOLOGY 1A",

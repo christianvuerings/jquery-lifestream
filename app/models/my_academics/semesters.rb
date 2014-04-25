@@ -8,7 +8,7 @@ class MyAcademics::Semesters
 
   def self.build_semester(term_yr, term_cd)
     MyAcademics::AcademicsModule.semester_info(term_yr, term_cd).merge({
-      time_bucket: MyAcademics::AcademicsModule.time_bucket(term_yr, term_cd),
+      timeBucket: MyAcademics::AcademicsModule.time_bucket(term_yr, term_cd),
       classes: []
     })
   end

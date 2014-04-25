@@ -11,7 +11,7 @@
       var semester;
       for (var s = 0; s < semesters.length; s++) {
         semester = semesters[s];
-        if (semester.time_bucket === 'current') {
+        if (semester.timeBucket === 'current') {
           break;
         }
       }

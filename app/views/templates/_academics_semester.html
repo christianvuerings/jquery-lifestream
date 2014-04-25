@@ -17,17 +17,17 @@
       <span class="cc-academics-next cc-academics-prev-next-disabled" data-ng-hide="nextSemester.slug">Next semester</span>
     </div>
 
-    <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="selectedStudentSemester && !selectedCourses.length && selectedSemester.time_bucket === 'future'">
+    <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="selectedStudentSemester && !selectedCourses.length && selectedSemester.timeBucket === 'future'">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Classes</h2>
         </div>
-        <div data-ng-if="selectedStudentSemester || ((selectedSemester.time_bucket === 'current') && !selectedTeachingSemester)">
+        <div data-ng-if="selectedStudentSemester || ((selectedSemester.timeBucket === 'current') && !selectedTeachingSemester)">
           <div class="cc-academics-subtitle">
             <h3>Enrollments</h3>
           </div>
           <div class="cc-widget-padding">
-            <h3 data-ng-if="selectedSemester.time_bucket === 'current'">Current</h3>
+            <h3 data-ng-if="selectedSemester.timeBucket === 'current'">Current</h3>
             <div class="cc-table">
               <table>
                 <thead>
@@ -51,7 +51,7 @@
                     <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
                   </tr>
                 </tbody>
-                <tbody data-ng-if="(selectedSemester.time_bucket === 'current') && !selectedCourses.length">
+                <tbody data-ng-if="(selectedSemester.timeBucket === 'current') && !selectedCourses.length">
                   <tr>
                     <td>
                       <p>You are not currently enrolled in any courses.</p>
@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <div class="cc-widget" data-ng-if="selectedSemester.time_bucket === 'current'">
+      <div class="cc-widget" data-ng-if="selectedSemester.timeBucket === 'current'">
         <div class="cc-widget-title">
           <h2>Final Exam Schedule</h2>
         </div>
@@ -143,7 +143,7 @@
       </div>
     </div>
 
-    <div class="medium-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selectedCourses.length && selectedSemester.time_bucket === 'future')}">
+    <div class="medium-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selectedCourses.length && selectedSemester.timeBucket === 'future')}">
       <div class="cc-academics-telebears cc-widget cc-widget-last" data-ng-if="telebears.slug === selectedSemester.slug">
         <div class="cc-widget-title">
           <h2>Appointments</h2>
@@ -181,7 +181,7 @@
           </div>
         </div>
       </div>
-      <div data-ng-if="selectedStudentSemester && (selectedSemester.time_bucket !== 'future')" class="cc-widget cc-widget-interesting cc-widget-last">
+      <div data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket !== 'future')" class="cc-widget cc-widget-interesting cc-widget-last">
         <div class="cc-widget-title">
           <h2>GPA Calculator</h2>
         </div>
@@ -190,7 +190,7 @@
           <div>
             <h4>Estimate your grades for <span data-ng-bind="selectedSemester.name"></span></h4>
             <div class="cc-table" data-ng-if="selectedCourses.length">
-              <table data-ng-if="selectedSemester.time_bucket === 'current'">
+              <table data-ng-if="selectedSemester.timeBucket === 'current'">
                 <tbody>
                     <td><strong>Current GPA: </strong></td>
                     <td><strong data-ng-bind="(currentCumulativeGpa | number:2) || 'N/A'"></strong></td>
@@ -209,7 +209,7 @@
                     <td class="cc-table-right cc-table-right-spacing" data-ng-bind="estimated.units | number:1"></td>
                     <td data-ng-if="!estimated.units">--</td>
                     <td>
-                      <span data-ng-if="estimated.units === '0' && selectedSemester.time_bucket === 'current'" data-ng-bind="estimated.grade_option"></span>
+                      <span data-ng-if="estimated.units === '0' && selectedSemester.timeBucket === 'current'" data-ng-bind="estimated.grade_option"></span>
                       <select
                         data-ng-if="estimated.units && !estimated.grade && estimated.units !== '0'"
                         data-ng-model="estimated.estimatedGrade"
@@ -233,7 +233,7 @@
                     <td colspan="2"><strong>Estimated semester GPA:</strong></td>
                     <td><strong data-ng-bind="(estimatedGpa | number:2) || 'N/A'"></strong></td>
                   </tr>
-                  <tr data-ng-if="selectedSemester.time_bucket === 'current'">
+                  <tr data-ng-if="selectedSemester.timeBucket === 'current'">
                     <td colspan="2"><strong>Estimated cumulative GPA:</strong></td>
                     <td><strong data-ng-bind="(estimatedCumulativeGpa | number:2) || 'N/A'"></strong></td>
                   </tr>
