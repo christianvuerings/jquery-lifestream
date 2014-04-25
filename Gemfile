@@ -115,7 +115,7 @@ gem "font-awesome-rails", "~> 4.0.3.1"
 
 # Moment.js
 # https://github.com/derekprior/momentjs-rails
-gem "momentjs-rails", "~> 2.2.1"
+gem "momentjs-rails", "~> 2.5.1"
 
 # Placeholder.js
 # https://github.com/ets-berkeley-edu/placeholder-gem
