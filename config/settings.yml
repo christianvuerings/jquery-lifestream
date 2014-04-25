@@ -181,7 +181,7 @@ google_analytics_id: UA-XXXXXX-X
 
 # Sentry URL
 # We use https://getsentry.com for our JavaScript Error logging
-sentry_url: "https://public@app.getsentry.com/7185"
+sentry_url: "https://facf7ad7bd7047f0a356e9322107ce50@app.getsentry.com/7185"
 
 # Cache settings. 0 means never expire.
 # WARNING: memcached's upper limit is 30 days. Specifying longer expiration than that will
