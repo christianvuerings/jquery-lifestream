@@ -33,7 +33,7 @@ describe "MyBadges" do
     mangled_feed[:badges]["bcal"][:count].should == 6
     mangled_feed[:badges]["bcal"][:items].size.should == 6
     mangled_feed[:badges]["bcal"][:items].select { |entry|
-      entry[:all_day_event]
+      entry[:allDayEvent]
     }.size.should == 1
     mangled_feed[:badges]["bcal"][:items].select { |entry|
       entry[:change_state] if entry[:change_state] == "new"
@@ -79,7 +79,7 @@ describe "MyBadges" do
           feed_items[:change_state].blank?.should_not be_true
         end
         if source_key == "bcal"
-          %w(start_time end_time).each do |required_key|
+          %w(startTime endTime).each do |required_key|
             feed_items[required_key.to_sym].blank?.should_not be_true
           end
           if feed_items[:change_state] == "new"

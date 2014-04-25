@@ -54,10 +54,10 @@ module MyBadges
               event = {
                 :link => handle_url(entry['htmlLink']),
                 :title => entry['summary'],
-                :start_time => verify_and_format_date(entry['start']),
-                :end_time => verify_and_format_date(entry['end']),
+                :startTime => verify_and_format_date(entry['start']),
+                :endTime => verify_and_format_date(entry['end']),
                 :modified_time => format_date(entry['updated'].to_datetime),
-                :all_day_event => false
+                :allDayEvent => false
               }
               consolidate_all_day_event_key!(event)
               event.merge! event_state_fields(entry)
@@ -75,14 +75,14 @@ module MyBadges
     end
 
     def consolidate_all_day_event_key!(event)
-      if (event[:start_time][:all_day_event] &&
-        event[:end_time][:all_day_event] &&
-        event[:start_time][:all_day_event] == event[:end_time][:all_day_event])
-        all_day_event_flag = event[:start_time][:all_day_event]
-        %w(start_time end_time).each do |key|
-          event[key.to_sym].reject! {|all_day_key| all_day_key == :all_day_event}
+      if (event[:startTime][:allDayEvent] &&
+        event[:endTime][:allDayEvent] &&
+        event[:startTime][:allDayEvent] == event[:endTime][:allDayEvent])
+        all_day_event_flag = event[:startTime][:allDayEvent]
+        %w(startTime endTime).each do |key|
+          event[key.to_sym].reject! {|all_day_key| all_day_key == :allDayEvent}
         end
-        event[:all_day_event] = all_day_event_flag
+        event[:allDayEvent] = all_day_event_flag
       end
     end
 
@@ -92,7 +92,7 @@ module MyBadges
         return format_date(date_field["dateTime"].to_datetime)
       else
         return {
-          :all_day_event => true
+          :allDayEvent => true
         }.merge format_date(date_field["date"].to_datetime)
       end
     end
