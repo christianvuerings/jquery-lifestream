@@ -22,8 +22,8 @@ describe "MyAcademics::Semesters", :if => Sakai::SakaiData.test_data? do
 
       it { subject.length.should eq(4) }
       it { subject[0][:name].should eq "Spring 2015" }
-      it { subject[0][:term_cd].should eq "B" }
-      it { subject[0][:term_yr].should eq "2015" }
+      it { subject[0][:termCode].should eq "B" }
+      it { subject[0][:termYear].should eq "2015" }
       it { subject[0][:time_bucket].should eq 'future'}
       it { subject[0][:classes].length.should eq 1 }
       it { subject[0][:classes][0][:course_code].should eq "BIOLOGY 1A" }

@@ -18,8 +18,8 @@ describe 'MyAcademics::Teaching' do
     teaching = feed[:teaching_semesters]
     teaching.length.should == 2
     teaching[0][:name].should == "Fall 2013"
-    teaching[0][:term_cd].should == "D"
-    teaching[0][:term_yr].should == "2013"
+    teaching[0][:termCode].should == "D"
+    teaching[0][:termYear].should == "2013"
 
     teaching[0][:classes].length.should == 2
     bio1a = teaching[0][:classes].select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]

@@ -39,8 +39,8 @@ module MyAcademics::AcademicsModule
     {
       name: Berkeley::TermCodes.to_english(term_yr, term_cd),
       slug: Berkeley::TermCodes.to_slug(term_yr, term_cd),
-      term_cd: term_cd,
-      term_yr: term_yr,
+      termCode: term_cd,
+      termYear: term_yr,
       classes: []
     }
   end
