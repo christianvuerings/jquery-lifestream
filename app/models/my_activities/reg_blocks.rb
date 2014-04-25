@@ -53,8 +53,8 @@ class MyActivities::RegBlocks
         type: "message",
         date: block[:cleared_date],
         title: "#{block[:block_type]} Block Cleared",
-        summary: "This block, placed on #{block[:blocked_date][:date_string]}, "\
-            "was cleared on #{block[:cleared_date][:date_string]}."
+        summary: "This block, placed on #{block[:blocked_date][:dateString]}, "\
+            "was cleared on #{block[:cleared_date][:dateString]}."
       })
   end
 

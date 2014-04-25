@@ -3,80 +3,80 @@
     "hash": "44f66aa20b306978fefa765f7eb07b147a91631f",
     "timestamp": {
       "epoch": 1384887165,
-      "date_time": "2013-11-19T10:52:45-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:45-08:00",
+      "dateString": "11/19"
     }
   },
   "MyClasses::Merged": {
     "hash": "70abd657ffd84ef9af1705680d9bbf7f3b853571",
     "timestamp": {
       "epoch": 1384887167,
-      "date_time": "2013-11-19T10:52:47-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:47-08:00",
+      "dateString": "11/19"
     }
   },
   "Financials::MyFinancials": {
     "hash": "bf21a9e8fbc5a3846fb05b4fa0859e0917b2202f",
     "timestamp": {
       "epoch": 1384887169,
-      "date_time": "2013-11-19T10:52:49-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:49-08:00",
+      "dateString": "11/19"
     }
   },
   "MyGroups::Merged": {
     "hash": "e47bf2c7a9cc81a868f83751ce957d74234eec8d",
     "timestamp": {
       "epoch": 1384887169,
-      "date_time": "2013-11-19T10:52:49-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:49-08:00",
+      "dateString": "11/19"
     }
   },
   "MyActivities::Merged": {
     "hash": "82d2ffa6bfa110c6cd52cbbf76fa8573ad251380",
     "timestamp": {
       "epoch": 1384887169,
-      "date_time": "2013-11-19T10:52:49-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:49-08:00",
+      "dateString": "11/19"
     }
   },
   "MyTasks::Merged": {
     "hash": "352bb2886043b585d5c4ab4ad1b6f41119d39d2c",
     "timestamp": {
       "epoch": 1384887169,
-      "date_time": "2013-11-19T10:52:49-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:49-08:00",
+      "dateString": "11/19"
     }
   },
   "MyBadges::Merged": {
     "hash": "45b9daca39b4d56261690fc47e6168a71f328be3",
     "timestamp": {
       "epoch": 1384887171,
-      "date_time": "2013-11-19T10:52:51-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:51-08:00",
+      "dateString": "11/19"
     }
   },
   "UpNext::MyUpNext": {
     "hash": "e640de77d940a7a1dd95561a900c5c4349fd57b9",
     "timestamp": {
       "epoch": 1384887171,
-      "date_time": "2013-11-19T10:52:51-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:51-08:00",
+      "dateString": "11/19"
     }
   },
   "Bearfacts::MyRegBlocks": {
     "hash": "bdc0a25364c9c3f116b78ab39647021ddb966934",
     "timestamp": {
       "epoch": 1384887169,
-      "date_time": "2013-11-19T10:52:49-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:49-08:00",
+      "dateString": "11/19"
     }
   },
   "MyAcademics::Merged": {
     "hash": "9404af1dce85b347ce871dbee3b555aecc0afb6a",
     "timestamp": {
       "epoch": 1384887171,
-      "date_time": "2013-11-19T10:52:51-08:00",
-      "date_string": "11/19"
+      "dateTime": "2013-11-19T10:52:51-08:00",
+      "dateString": "11/19"
     }
   }
 }

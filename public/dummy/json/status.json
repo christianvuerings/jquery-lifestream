@@ -43,8 +43,8 @@
     "hash": "c7e1f3df2ddb1dbf46b0d285185b1af03d20089e",
     "timestamp": {
       "epoch": 1394747903,
-      "date_time": "2014-03-13T22:58:23+01:00",
-      "date_string": "3/13"
+      "dateTime": "2014-03-13T22:58:23+01:00",
+      "dateString": "3/13"
     }
   },
   "feedName": "User::Api"

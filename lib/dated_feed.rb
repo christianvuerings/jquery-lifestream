@@ -18,14 +18,14 @@ module DatedFeed
   def self.shared_format_date(datetime, date_string_format="%-m/%d")
     {
       :epoch => datetime.to_time.to_i,
-      :date_time => datetime.rfc3339,
-      :date_string => datetime.strftime(date_string_format)
+      :dateTime => datetime.rfc3339,
+      :dateString => datetime.strftime(date_string_format)
     }
   rescue NoMethodError
     {
       :epoch => nil,
-      :date_time => nil,
-      :date_string => nil
+      :dateTime => nil,
+      :dateString => nil
     }
   end
 end

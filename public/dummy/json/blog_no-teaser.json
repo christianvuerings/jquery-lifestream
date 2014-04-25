@@ -4,8 +4,8 @@
     "url": "http://ets-dev.berkeley.edu/calcentral-emergency-outage",
     "timestamp": {
       "epoch": 1393620301,
-      "date_time": "2014-02-28T12:45:01-08:00",
-      "date_string": "2/28"
+      "dateTime": "2014-02-28T12:45:01-08:00",
+      "dateString": "2/28"
     }
   },
   "entries":[

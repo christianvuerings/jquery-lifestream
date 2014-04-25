@@ -6,8 +6,8 @@
       "status": "Overdue",
       "due_date": {
         "epoch": 1354320000,
-        "date_time": "2012-12-01T00:00:00+00:00",
-        "date_string": "12/01"
+        "dateTime": "2012-12-01T00:00:00+00:00",
+        "dateString": "12/01"
       },
       "link_url": "https://mail.google.com/tasks/canvas?pli=1",
       "source": "PLEO 22",
@@ -29,16 +29,16 @@
       "status": "Overdue",
       "due_date": {
         "epoch": 1354320000,
-        "date_time": "2012-12-01T00:00:00+00:00",
-        "date_string": "12/01"
+        "dateTime": "2012-12-01T00:00:00+00:00",
+        "dateString": "12/01"
       }
     },
     {
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "date_time": "2012-12-05T00:00:00+00:00",
-        "date_string": "12/05"
+        "dateTime": "2012-12-05T00:00:00+00:00",
+        "dateString": "12/05"
       },
       "title": "Run fourier transforms on buzz saw",
       "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
@@ -53,8 +53,8 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "date_time": "2012-12-05T00:00:00+00:00",
-        "date_string": "12/05"
+        "dateTime": "2012-12-05T00:00:00+00:00",
+        "dateString": "12/05"
       },
       "title": "Report on frog dissection",
       "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
@@ -68,8 +68,8 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "date_time": "2012-12-05T00:00:00+00:00",
-        "date_string": "12/05"
+        "dateTime": "2012-12-05T00:00:00+00:00",
+        "dateString": "12/05"
       },
       "title": "Finish Shakespeare",
       "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
@@ -84,8 +84,8 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "date_time": "2012-12-05T00:00:00+00:00",
-        "date_string": "12/05"
+        "dateTime": "2012-12-05T00:00:00+00:00",
+        "dateString": "12/05"
       },
       "title": "Chapter Seven",
       "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
@@ -99,8 +99,8 @@
       "type": "assignment",
       "due_date": {
         "epoch": 1354320000,
-        "date_time": "2012-12-05T00:00:00+00:00",
-        "date_string": "12/05"
+        "dateTime": "2012-12-05T00:00:00+00:00",
+        "dateString": "12/05"
       },
       "title": "Bring tweezers",
       "link_url": "https://ucberkeley.instructure.com/courses/832071/assignments/2217453",
@@ -136,8 +136,8 @@
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
     "timestamp": {
       "epoch": 1383947240,
-      "date_time": "2013-11-08T13:47:20-08:00",
-      "date_string": "11/08"
+      "dateTime": "2013-11-08T13:47:20-08:00",
+      "dateString": "11/08"
     }
   }
 }

@@ -61,8 +61,8 @@
       "title": "Free Application for Federal Student Aid (FAFSA)",
       "date": {
         "epoch": 1366268400,
-        "date_time": "2013-04-18T00:00:00-07:00",
-        "date_string": "4/18"
+        "dateTime": "2013-04-18T00:00:00-07:00",
+        "dateString": "4/18"
       },
       "summary": "",
       "source_url": "https://myfinaid.berkeley.edu",
@@ -77,8 +77,8 @@
       "title": "Verification Dependent",
       "date": {
         "epoch": 1370588400,
-        "date_time": "2013-06-07T00:00:00-07:00",
-        "date_string": "6/07"
+        "dateTime": "2013-06-07T00:00:00-07:00",
+        "dateString": "6/07"
       },
       "summary": "Your financial aid awards are not official because you were selected for Verification.  These estimated, conditional awards will not pay to your CARS account.  You must complete the Verification documents and submit them to the Financial Aid and Scholarships Office with the required documentation.  If your verified household or financial information varies significantly from what you reported on your FAFSA, your awards are subject to change from your conditional offer.   The verification documents will be mailed to your permanent address.",
       "source_url": "https://myfinaid.berkeley.edu",
@@ -141,8 +141,8 @@
       "title": "FAFSA Income or Asset Change",
       "date": {
         "epoch": 1379055600,
-        "date_time": "2013-09-13T00:00:00-07:00",
-        "date_string": "9/13"
+        "dateTime": "2013-09-13T00:00:00-07:00",
+        "dateString": "9/13"
       },
       "summary": "We were notified that you updated your FAFSA with new information that resulted in a change to your Expected Family Contribution (EFC).  You must complete the FAFSA Income or Asset Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
       "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAIncomeAssetChange96-1213.pdf",
@@ -168,8 +168,8 @@
     "hash": "c78afd5ef7549973e02d230ec3c30b3cc3cd7c08",
     "timestamp": {
       "epoch": 1397756074,
-      "date_time": "2014-04-17T10:34:34-07:00",
-      "date_string": "4/17"
+      "dateTime": "2014-04-17T10:34:34-07:00",
+      "dateString": "4/17"
     }
   },
   "feedName": "Finaid::MyFinAid"

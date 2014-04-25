@@ -100,7 +100,7 @@
               return ((subIndex !== index) &&
                 (subValue.source === value.source) &&
                 (subValue.type === value.type) &&
-                (subValue.date.date_string === value.date.date_string));
+                (subValue.date.dateString === value.date.dateString));
             });
             if (multiElementSource.length > 0) {
               multiElementSource.forEach(function(multiValue) {
