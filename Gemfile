@@ -122,7 +122,7 @@ gem "momentjs-rails", "~> 2.2.1"
 gem "placeholder-gem", "~> 3.0.2"
 
 # Raven.js - library for JS error logging
-gem "ravenjs-gem", "~> 1.0.7.0"
+gem "ravenjs-gem", "~> 1.1.14"
 
 # ngmin-rails
 # https://github.com/jasonm/ngmin-rails
