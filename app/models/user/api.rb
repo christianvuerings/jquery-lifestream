@@ -92,6 +92,7 @@ module User
       has_instructor_history = campus_courses_proxy.has_instructor_history?
       roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
       {
+        :profilePicture => Rails.application.routes.url_helpers.my_photo_path + ".jpg",
         :isSuperuser => current_user.is_superuser?,
         :isViewer => current_user.is_viewer?,
         :firstLoginAt => @first_login_at,

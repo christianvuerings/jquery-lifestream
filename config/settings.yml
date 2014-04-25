@@ -279,6 +279,7 @@ features:
   podcasts: false
   app_alerts: false
   cal1card: false
+  profile_page: false
   reauthentication: false
 
 oec:
