@@ -49,7 +49,7 @@
     };
 
     $scope.admin = {
-      act_as: {
+      actAs: {
         uid: parseInt(UIDs[RECENT_UID_KEY][0], 10) || ''
       }
     };
@@ -90,7 +90,7 @@
     };
 
     $scope.admin.updateUIDField = function(uid) {
-      $scope.admin.act_as.uid = parseInt(uid, 10);
+      $scope.admin.actAs.uid = parseInt(uid, 10);
     };
 
     $scope.admin.uidDivs = [
@@ -117,11 +117,11 @@
     /**
      * Act as someone else
      */
-    $scope.admin.actAs = function() {
-      if (!$scope.admin.act_as || !$scope.admin.act_as.uid) {
+    $scope.admin.actAsSomeone = function() {
+      if (!$scope.admin.actAs || !$scope.admin.actAs.uid) {
         return;
       }
-      var uid = $scope.admin.act_as.uid + '';
+      var uid = $scope.admin.actAs.uid + '';
       if ($scope.supportsLocalStorage) {
         $scope.admin.storeRecentUID(uid);
       }
