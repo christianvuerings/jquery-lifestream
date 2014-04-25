@@ -75,7 +75,7 @@ describe MyAcademics::Telebears do
       it { subject[:telebears][:url].should_not be_blank }
       it "should have the same timezone setting as specified from the server" do
         %w(startTime endTime).each do |key|
-          time_string = subject[:telebears][:phases].first[key.to_sym][:date_time]
+          time_string = subject[:telebears][:phases].first[key.to_sym][:dateTime]
           tz_from_string = DateTime.parse(time_string).rfc3339
           server_enforced_tz = Time.zone.parse(time_string).to_datetime.rfc3339
           tz_from_string.should eq(server_enforced_tz)

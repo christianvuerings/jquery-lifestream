@@ -8,8 +8,8 @@
       "type": "alert",
       "date": {
         "epoch": 1349049728,
-        "date_time": "2013-01-15T19:52:27+00:00",
-        "date_string": "Today"
+        "dateTime": "2013-01-15T19:52:27+00:00",
+        "dateString": "Today"
       },
       "source_url": "https://warnme.berkeley.edu/",
       "emitter": "bSpace"
@@ -22,8 +22,8 @@
       "type": "alert",
       "date": {
         "epoch": 1349049728,
-        "date_time": "2013-01-15T19:52:27+00:00",
-        "date_string": "Today"
+        "dateTime": "2013-01-15T19:52:27+00:00",
+        "dateString": "Today"
       },
       "source_url": "https:// warnme.berkeley.edu/",
       "emitter": "bSpace"
@@ -36,8 +36,8 @@
       "type": "alert",
       "date": {
         "epoch": 1349049729,
-        "date_time": "2013-01-15T19:52:27+00:00",
-        "date_string": "Today"
+        "dateTime": "2013-01-15T19:52:27+00:00",
+        "dateString": "Today"
       },
       "source_url": "https://warnme.berkeley.edu/",
       "emitter": "bSpace"
@@ -50,8 +50,8 @@
       "type": "alert",
       "date": {
         "epoch": 1349049728,
-        "date_time": "2013-01-15T19:52:27+00:00",
-        "date_string": "Today"
+        "dateTime": "2013-01-15T19:52:27+00:00",
+        "dateString": "Today"
       },
       "source_url": "https://bearfacts.berkeley.edu/",
       "emitter": "Campus"
@@ -64,8 +64,8 @@
       "type": "block",
       "date": {
         "epoch": 1348185901,
-        "date_time": "2012-12-30T19:52:27+00:00",
-        "date_string": "12/30"
+        "dateTime": "2012-12-30T19:52:27+00:00",
+        "dateString": "12/30"
       },
       "source_url": "http://studentbilling.berkeley.edu",
       "emitter": "Campus"
@@ -78,8 +78,8 @@
       "type": "grade",
       "date": {
         "epoch": 1348185901,
-        "date_time": "2013-12-29T19:52:27+00:00",
-        "date_string": "12/29"
+        "dateTime": "2013-12-29T19:52:27+00:00",
+        "dateString": "12/29"
       },
       "source_url": "https://ucberkeley.instructure.com/courses/833384",
       "emitter": "bCourses"
@@ -92,8 +92,8 @@
       "type": "financial",
       "date": {
         "epoch": 1348185901,
-        "date_time": "2013-12-28T19:52:27+00:00",
-        "date_string": "12/28"
+        "dateTime": "2013-12-28T19:52:27+00:00",
+        "dateString": "12/28"
       },
       "source_url": "http://studentbilling.berkeley.edu/",
       "emitter": "Campus"
@@ -106,8 +106,8 @@
       "type": "announcement",
       "date": {
         "epoch": 1348185901,
-        "date_time": "2013-12-26T19:52:27+00:00",
-        "date_string": "12/26"
+        "dateTime": "2013-12-26T19:52:27+00:00",
+        "dateString": "12/26"
       },
       "source_url": "https://sakai.example.com/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
       "emitter": "bSpace"
@@ -120,8 +120,8 @@
       "type": "academics",
       "date": {
         "epoch": 1348185901,
-        "date_time": "2013-12-18T19:52:27+00:00",
-        "date_string": "12/18"
+        "dateTime": "2013-12-18T19:52:27+00:00",
+        "dateString": "12/18"
       },
       "source_url": "https://telebears.berkeley.edu",
       "emitter": "Campus"
@@ -187,8 +187,8 @@
       "title": "Free Application for Federal Student Aid (FAFSA)",
       "date": {
         "epoch": 1366268400,
-        "date_time": "2013-04-18T00:00:00-07:00",
-        "date_string": "4/18"
+        "dateTime": "2013-04-18T00:00:00-07:00",
+        "dateString": "4/18"
       },
       "summary": "",
       "source_url": "https://myfinaid.berkeley.edu",
@@ -203,8 +203,8 @@
       "title": "Verification Dependent",
       "date": {
         "epoch": 1370588400,
-        "date_time": "2013-06-07T00:00:00-07:00",
-        "date_string": "6/07"
+        "dateTime": "2013-06-07T00:00:00-07:00",
+        "dateString": "6/07"
       },
       "summary": "Your financial aid awards are not official because you were selected for Verification. These estimated, conditional awards will not pay to your CARS account. You must complete the Verification documents and submit them to the Financial Aid and Scholarships Office with the required documentation. If your verified household or financial information varies significantly from what you reported on your FAFSA, your awards are subject to change from your conditional offer. The verification documents will be mailed to your permanent address.",
       "source_url": "https://myfinaid.berkeley.edu",
@@ -267,8 +267,8 @@
       "title": "FAFSA Income or Asset Change",
       "date": {
         "epoch": 1379055600,
-        "date_time": "2013-09-13T00:00:00-07:00",
-        "date_string": "9/13"
+        "dateTime": "2013-09-13T00:00:00-07:00",
+        "dateString": "9/13"
       },
       "summary": "We were notified that you updated your FAFSA with new information that resulted in a change to your Expected Family Contribution (EFC). You must complete the FAFSA Income or Asset Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
       "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAIncomeAssetChange96-1213.pdf",
@@ -402,8 +402,8 @@
       "title": "Budget Appeal",
       "date": {
         "epoch": 1386662400,
-        "date_time": "2013-12-10T00:00:00-08:00",
-        "date_string": "12/10"
+        "dateTime": "2013-12-10T00:00:00-08:00",
+        "dateString": "12/10"
       },
       "summary": "",
       "source_url": "https://myfinaid.berkeley.edu",
@@ -442,8 +442,8 @@
       "title": "Free Application for Federal Student Aid (FAFSA)",
       "date": {
         "epoch": 1366268400,
-        "date_time": "2013-04-18T00:00:00-07:00",
-        "date_string": "4/18"
+        "dateTime": "2013-04-18T00:00:00-07:00",
+        "dateString": "4/18"
       },
       "summary": "",
       "source_url": "https://myfinaid.berkeley.edu",
@@ -457,8 +457,8 @@
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
     "timestamp": {
       "epoch": 1383947240,
-      "date_time": "2013-11-08T13:47:20-08:00",
-      "date_string": "11/08"
+      "dateTime": "2013-11-08T13:47:20-08:00",
+      "dateString": "11/08"
     }
   }
 }

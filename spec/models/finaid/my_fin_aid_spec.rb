@@ -128,7 +128,7 @@ describe Finaid::MyFinAid do
       it "should format dates with the server's timezone configuration and not GMT" do
         a_dated_entry   = subject.find{ |entry| entry[:date].present? }
         # We expect the date information for midnight according to the server's time zone, not midnight GMT
-        DateTime.parse(a_dated_entry[:date][:date_time]).zone.should_not == '+00:00'
+        DateTime.parse(a_dated_entry[:date][:dateTime]).zone.should_not == '+00:00'
       end
 
     end

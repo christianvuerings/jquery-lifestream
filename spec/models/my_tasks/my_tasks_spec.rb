@@ -71,7 +71,7 @@ describe "MyTasks" do
         if task["emitter"] == GoogleApps::Proxy::APP_ID
           task["linkUrl"].should == "https://mail.google.com/tasks/canvas?pli=1"
           if task["dueDate"]
-            task["dueDate"]["date_string"] =~ /\d\d\/\d\d/
+            task["dueDate"]["dateString"] =~ /\d\d\/\d\d/
             task["dueDate"]["epoch"].should >= 1351641600
           end
         end
@@ -79,7 +79,7 @@ describe "MyTasks" do
           task["linkUrl"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
           task["linkUrl"].should == task["sourceUrl"]
           if task["dueDate"]
-            task["dueDate"]["date_string"] =~ /\d\d\/\d\d/
+            task["dueDate"]["dateString"] =~ /\d\d\/\d\d/
             task["dueDate"]["epoch"].should >= 1351641600
           end
         end

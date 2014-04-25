@@ -103,8 +103,8 @@ module MyTasks
       formatted_entry["status"] ||= "completed"
       formatted_entry["title"] = entry["title"] unless entry["title"].blank?
       formatted_entry["notes"] = entry["notes"] unless entry["notes"].nil?
-      if entry["dueDate"] && entry["dueDate"]["date_time"]
-        formatted_entry["due"] = Date.strptime(entry["dueDate"]["date_time"]).in_time_zone.to_datetime
+      if entry["dueDate"] && entry["dueDate"]["dateTime"]
+        formatted_entry["due"] = Date.strptime(entry["dueDate"]["dateTime"]).in_time_zone.to_datetime
       end
       Rails.logger.debug "Formatted body entry for google proxy update_task: #{formatted_entry.inspect}"
       formatted_entry

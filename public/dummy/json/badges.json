@@ -5,8 +5,8 @@
     "url": "http://ets-dev.berkeley.edu/calcentral-scheduled-maintenance-317",
     "timestamp": {
       "epoch": 1393495946,
-      "date_time": "2014-02-27T02:12:26-08:00",
-      "date_string": "2/27"
+      "dateTime": "2014-02-27T02:12:26-08:00",
+      "dateString": "2/27"
     }
   },
   "badges": {
@@ -17,20 +17,20 @@
           "title": "EE 20N Discussion",
           "startTime": {
             "epoch": 1366214400,
-            "date_time": "2013-04-17T09:00:00-07:00",
-            "date_string": "4/17",
+            "dateTime": "2013-04-17T09:00:00-07:00",
+            "dateString": "4/17",
             "allDayEvent": true
           },
           "endTime": {
             "epoch": 1366218000,
-            "date_time": "2013-04-17T10:00:00-07:00",
-            "date_string": "4/17",
+            "dateTime": "2013-04-17T10:00:00-07:00",
+            "dateString": "4/17",
             "allDayEvent": true
           },
           "modified_time": {
             "epoch": 1365631878,
-            "date_time": "2013-04-10T22:11:18+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:11:18+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -39,20 +39,20 @@
           "title": "EE 20N Discussion",
           "startTime": {
             "epoch": 1366819200,
-            "date_time": "2013-04-24T09:00:00-07:00",
-            "date_string": "4/24",
+            "dateTime": "2013-04-24T09:00:00-07:00",
+            "dateString": "4/24",
             "allDayEvent": true
           },
           "endTime": {
             "epoch": 1367168400,
-            "date_time": "2013-04-28T10:00:00-07:00",
-            "date_string": "4/28",
+            "dateTime": "2013-04-28T10:00:00-07:00",
+            "dateString": "4/28",
             "allDayEvent": true
           },
           "modified_time": {
             "epoch": 1365631878,
-            "date_time": "2013-04-10T22:11:18+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:11:18+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -61,18 +61,18 @@
           "title": "ETH STD 21AC DIS 101",
           "startTime": {
             "epoch": 1366218000,
-            "date_time": "2013-04-17T10:00:00-07:00",
-            "date_string": "4/17"
+            "dateTime": "2013-04-17T10:00:00-07:00",
+            "dateString": "4/17"
           },
           "endTime": {
             "epoch": 1366221600,
-            "date_time": "2013-04-17T11:00:00-07:00",
-            "date_string": "4/17"
+            "dateTime": "2013-04-17T11:00:00-07:00",
+            "dateString": "4/17"
           },
           "modified_time": {
             "epoch": 1365631861,
-            "date_time": "2013-04-10T22:11:01+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:11:01+00:00",
+            "dateString": "4/10"
           },
           "change_state": "new",
           "editor": "Spongebob overly-squre Squarepants"
@@ -82,18 +82,18 @@
           "title": "ETH STD 21AC DIS 101",
           "startTime": {
             "epoch": 1366822800,
-            "date_time": "2013-04-24T10:00:00-07:00",
-            "date_string": "4/24"
+            "dateTime": "2013-04-24T10:00:00-07:00",
+            "dateString": "4/24"
           },
           "endTime": {
             "epoch": 1366826400,
-            "date_time": "2013-04-24T11:00:00-07:00",
-            "date_string": "4/24"
+            "dateTime": "2013-04-24T11:00:00-07:00",
+            "dateString": "4/24"
           },
           "modified_time": {
             "epoch": 1365631861,
-            "date_time": "2013-04-10T22:11:01+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:11:01+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -102,18 +102,18 @@
           "title": "MATH 53 Discussion",
           "startTime": {
             "epoch": 1366401600,
-            "date_time": "2013-04-19T13:00:00-07:00",
-            "date_string": "4/19"
+            "dateTime": "2013-04-19T13:00:00-07:00",
+            "dateString": "4/19"
           },
           "endTime": {
             "epoch": 1366405200,
-            "date_time": "2013-04-19T14:00:00-07:00",
-            "date_string": "4/19"
+            "dateTime": "2013-04-19T14:00:00-07:00",
+            "dateString": "4/19"
           },
           "modified_time": {
             "epoch": 1365631738,
-            "date_time": "2013-04-10T22:08:58+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:58+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -122,18 +122,18 @@
           "title": "MATH 53 Discussion",
           "startTime": {
             "epoch": 1366660800,
-            "date_time": "2013-04-22T13:00:00-07:00",
-            "date_string": "4/22"
+            "dateTime": "2013-04-22T13:00:00-07:00",
+            "dateString": "4/22"
           },
           "endTime": {
             "epoch": 1366664400,
-            "date_time": "2013-04-22T14:00:00-07:00",
-            "date_string": "4/22"
+            "dateTime": "2013-04-22T14:00:00-07:00",
+            "dateString": "4/22"
           },
           "modified_time": {
             "epoch": 1365631738,
-            "date_time": "2013-04-10T22:08:58+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:58+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -142,18 +142,18 @@
           "title": "MATH 53 Discussion",
           "startTime": {
             "epoch": 1366228800,
-            "date_time": "2013-04-17T13:00:00-07:00",
-            "date_string": "4/17"
+            "dateTime": "2013-04-17T13:00:00-07:00",
+            "dateString": "4/17"
           },
           "endTime": {
             "epoch": 1366232400,
-            "date_time": "2013-04-17T14:00:00-07:00",
-            "date_string": "4/17"
+            "dateTime": "2013-04-17T14:00:00-07:00",
+            "dateString": "4/17"
           },
           "modified_time": {
             "epoch": 1365631738,
-            "date_time": "2013-04-10T22:08:58+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:58+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -162,18 +162,18 @@
           "title": "MATH 53 Discussion",
           "startTime": {
             "epoch": 1366833600,
-            "date_time": "2013-04-24T13:00:00-07:00",
-            "date_string": "4/24"
+            "dateTime": "2013-04-24T13:00:00-07:00",
+            "dateString": "4/24"
           },
           "endTime": {
             "epoch": 1366837200,
-            "date_time": "2013-04-24T14:00:00-07:00",
-            "date_string": "4/24"
+            "dateTime": "2013-04-24T14:00:00-07:00",
+            "dateString": "4/24"
           },
           "modified_time": {
             "epoch": 1365631738,
-            "date_time": "2013-04-10T22:08:58+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:58+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -182,18 +182,18 @@
           "title": "ETH STD 21AC",
           "startTime": {
             "epoch": 1366318800,
-            "date_time": "2013-04-18T14:00:00-07:00",
-            "date_string": "4/18"
+            "dateTime": "2013-04-18T14:00:00-07:00",
+            "dateString": "4/18"
           },
           "endTime": {
             "epoch": 1366324200,
-            "date_time": "2013-04-18T15:30:00-07:00",
-            "date_string": "4/18"
+            "dateTime": "2013-04-18T15:30:00-07:00",
+            "dateString": "4/18"
           },
           "modified_time": {
             "epoch": 1365631715,
-            "date_time": "2013-04-10T22:08:35+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:35+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -202,18 +202,18 @@
           "title": "ETH STD 21AC",
           "startTime": {
             "epoch": 1366750800,
-            "date_time": "2013-04-23T14:00:00-07:00",
-            "date_string": "4/23"
+            "dateTime": "2013-04-23T14:00:00-07:00",
+            "dateString": "4/23"
           },
           "endTime": {
             "epoch": 1366756200,
-            "date_time": "2013-04-23T15:30:00-07:00",
-            "date_string": "4/23"
+            "dateTime": "2013-04-23T15:30:00-07:00",
+            "dateString": "4/23"
           },
           "modified_time": {
             "epoch": 1365631715,
-            "date_time": "2013-04-10T22:08:35+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:35+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -222,18 +222,18 @@
           "title": "ETH STD 21AC",
           "startTime": {
             "epoch": 1366146000,
-            "date_time": "2013-04-16T14:00:00-07:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T14:00:00-07:00",
+            "dateString": "4/16"
           },
           "endTime": {
             "epoch": 1366151400,
-            "date_time": "2013-04-16T15:30:00-07:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T15:30:00-07:00",
+            "dateString": "4/16"
           },
           "modified_time": {
             "epoch": 1365631715,
-            "date_time": "2013-04-10T22:08:35+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:35+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -242,18 +242,18 @@
           "title": "ETH STD 21AC",
           "startTime": {
             "epoch": 1366923600,
-            "date_time": "2013-04-25T14:00:00-07:00",
-            "date_string": "4/25"
+            "dateTime": "2013-04-25T14:00:00-07:00",
+            "dateString": "4/25"
           },
           "endTime": {
             "epoch": 1366929000,
-            "date_time": "2013-04-25T15:30:00-07:00",
-            "date_string": "4/25"
+            "dateTime": "2013-04-25T15:30:00-07:00",
+            "dateString": "4/25"
           },
           "modified_time": {
             "epoch": 1365631715,
-            "date_time": "2013-04-10T22:08:35+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:08:35+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -262,18 +262,18 @@
           "title": "PHYSICS 7B Lecture",
           "startTime": {
             "epoch": 1366394400,
-            "date_time": "2013-04-19T11:00:00-07:00",
-            "date_string": "4/19"
+            "dateTime": "2013-04-19T11:00:00-07:00",
+            "dateString": "4/19"
           },
           "endTime": {
             "epoch": 1366398000,
-            "date_time": "2013-04-19T12:00:00-07:00",
-            "date_string": "4/19"
+            "dateTime": "2013-04-19T12:00:00-07:00",
+            "dateString": "4/19"
           },
           "modified_time": {
             "epoch": 1365631665,
-            "date_time": "2013-04-10T22:07:45+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:45+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -282,18 +282,18 @@
           "title": "PHYSICS 7B Lecture",
           "startTime": {
             "epoch": 1366653600,
-            "date_time": "2013-04-22T11:00:00-07:00",
-            "date_string": "4/22"
+            "dateTime": "2013-04-22T11:00:00-07:00",
+            "dateString": "4/22"
           },
           "endTime": {
             "epoch": 1366657200,
-            "date_time": "2013-04-22T12:00:00-07:00",
-            "date_string": "4/22"
+            "dateTime": "2013-04-22T12:00:00-07:00",
+            "dateString": "4/22"
           },
           "modified_time": {
             "epoch": 1365631665,
-            "date_time": "2013-04-10T22:07:45+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:45+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -302,18 +302,18 @@
           "title": "PHYSICS 7B Lecture",
           "startTime": {
             "epoch": 1366221600,
-            "date_time": "2013-04-17T11:00:00-07:00",
-            "date_string": "4/17"
+            "dateTime": "2013-04-17T11:00:00-07:00",
+            "dateString": "4/17"
           },
           "endTime": {
             "epoch": 1366225200,
-            "date_time": "2013-04-17T12:00:00-07:00",
-            "date_string": "4/17"
+            "dateTime": "2013-04-17T12:00:00-07:00",
+            "dateString": "4/17"
           },
           "modified_time": {
             "epoch": 1365631665,
-            "date_time": "2013-04-10T22:07:45+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:45+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -322,18 +322,18 @@
           "title": "PHYSICS 7B Lecture",
           "startTime": {
             "epoch": 1366826400,
-            "date_time": "2013-04-24T11:00:00-07:00",
-            "date_string": "4/24"
+            "dateTime": "2013-04-24T11:00:00-07:00",
+            "dateString": "4/24"
           },
           "endTime": {
             "epoch": 1366830000,
-            "date_time": "2013-04-24T12:00:00-07:00",
-            "date_string": "4/24"
+            "dateTime": "2013-04-24T12:00:00-07:00",
+            "dateString": "4/24"
           },
           "modified_time": {
             "epoch": 1365631665,
-            "date_time": "2013-04-10T22:07:45+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:45+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -342,18 +342,18 @@
           "title": "EE 20N Lecture",
           "startTime": {
             "epoch": 1366313400,
-            "date_time": "2013-04-18T12:30:00-07:00",
-            "date_string": "4/18"
+            "dateTime": "2013-04-18T12:30:00-07:00",
+            "dateString": "4/18"
           },
           "endTime": {
             "epoch": 1366318800,
-            "date_time": "2013-04-18T14:00:00-07:00",
-            "date_string": "4/18"
+            "dateTime": "2013-04-18T14:00:00-07:00",
+            "dateString": "4/18"
           },
           "modified_time": {
             "epoch": 1365631634,
-            "date_time": "2013-04-10T22:07:14+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:14+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -362,18 +362,18 @@
           "title": "EE 20N Lecture",
           "startTime": {
             "epoch": 1366745400,
-            "date_time": "2013-04-23T12:30:00-07:00",
-            "date_string": "4/23"
+            "dateTime": "2013-04-23T12:30:00-07:00",
+            "dateString": "4/23"
           },
           "endTime": {
             "epoch": 1366750800,
-            "date_time": "2013-04-23T14:00:00-07:00",
-            "date_string": "4/23"
+            "dateTime": "2013-04-23T14:00:00-07:00",
+            "dateString": "4/23"
           },
           "modified_time": {
             "epoch": 1365631634,
-            "date_time": "2013-04-10T22:07:14+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:14+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -382,18 +382,18 @@
           "title": "EE 20N Lecture",
           "startTime": {
             "epoch": 1366140600,
-            "date_time": "2013-04-16T12:30:00-07:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T12:30:00-07:00",
+            "dateString": "4/16"
           },
           "endTime": {
             "epoch": 1366146000,
-            "date_time": "2013-04-16T14:00:00-07:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T14:00:00-07:00",
+            "dateString": "4/16"
           },
           "modified_time": {
             "epoch": 1365631634,
-            "date_time": "2013-04-10T22:07:14+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:14+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         },
@@ -402,18 +402,18 @@
           "title": "EE 20N Lecture",
           "startTime": {
             "epoch": 1366918200,
-            "date_time": "2013-04-25T12:30:00-07:00",
-            "date_string": "4/25"
+            "dateTime": "2013-04-25T12:30:00-07:00",
+            "dateString": "4/25"
           },
           "endTime": {
             "epoch": 1366923600,
-            "date_time": "2013-04-25T14:00:00-07:00",
-            "date_string": "4/25"
+            "dateTime": "2013-04-25T14:00:00-07:00",
+            "dateString": "4/25"
           },
           "modified_time": {
             "epoch": 1365631634,
-            "date_time": "2013-04-10T22:07:14+00:00",
-            "date_string": "4/10"
+            "dateTime": "2013-04-10T22:07:14+00:00",
+            "dateString": "4/10"
           },
           "change_state": "updated"
         }
@@ -428,8 +428,8 @@
           "link": "https://www.googleapis.com/drive/v2/files/1CRO3fkWnQrqm_-8M1pO5cB6opxXB7HWxUN4IPDqdzrI",
           "modified_time": {
             "epoch": 1363798261,
-            "date_time": "2013-03-20T16:51:01+00:00",
-            "date_string": "3/20"
+            "dateTime": "2013-03-20T16:51:01+00:00",
+            "dateString": "3/20"
           },
           "editor": "Sage Adams",
           "change_state": "modified"
@@ -439,8 +439,8 @@
           "link": "https://www.googleapis.com/drive/v2/files/1PJExieJtoo5xf945FvmWbxJZaltkmtcqPzEcFs2o2P8",
           "modified_time": {
             "epoch": 1363715337,
-            "date_time": "2013-03-19T17:48:57+00:00",
-            "date_string": "3/19"
+            "dateTime": "2013-03-19T17:48:57+00:00",
+            "dateString": "3/19"
           },
           "editor": "Sage Adams",
           "change_state": "modified"
@@ -450,8 +450,8 @@
           "link": "https://www.googleapis.com/drive/v2/files/1CRO3fkWnQrqm_-8M1pO5cB6opxXB7HWxUN4IPDqdzrI",
           "modified_time": {
             "epoch": 1363798261,
-            "date_time": "2013-03-20T16:51:01+00:00",
-            "date_string": "3/20"
+            "dateTime": "2013-03-20T16:51:01+00:00",
+            "dateString": "3/20"
           },
           "editor": "Sage Adams",
           "change_state": "modified"
@@ -461,8 +461,8 @@
           "link": "https://www.googleapis.com/drive/v2/files/1PJExieJtoo5xf945FvmWbxJZaltkmtcqPzEcFs2o2P8",
           "modified_time": {
             "epoch": 1363715337,
-            "date_time": "2013-03-19T17:48:57+00:00",
-            "date_string": "3/19"
+            "dateTime": "2013-03-19T17:48:57+00:00",
+            "dateString": "3/19"
           },
           "editor": "Sage Adams",
           "change_state": "modified"
@@ -477,8 +477,8 @@
           "summary": "Since insurers pay more for patients with surgical complications, some hospitals",
           "modified_time": {
             "epoch": 1366151767,
-            "date_time": "2013-04-16T22:36:07+00:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T22:36:07+00:00",
+            "dateString": "4/16"
           },
           "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fda5e01d126&view=conv&extsrc=atom",
           "editor": "Instructure Canvas"
@@ -488,8 +488,8 @@
           "summary": "Asking Congress for more authority, Dr. Margaret A. Hamburg said her agency should",
           "modified_time": {
             "epoch": 1366151766,
-            "date_time": "2013-04-16T22:36:06+00:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T22:36:06+00:00",
+            "dateString": "4/16"
           },
           "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fda2c441a9a&view=conv&extsrc=atom",
           "editor": "Instructure Canvas"
@@ -499,8 +499,8 @@
           "summary": "Bill Richard, the father of the 8-year-old boy who was killed Monday, offered thanks",
           "modified_time": {
             "epoch": 1366151766,
-            "date_time": "2013-04-16T22:36:06+00:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T22:36:06+00:00",
+            "dateString": "4/16"
           },
           "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fda191e34df&view=conv&extsrc=atom",
           "editor": "Instructure Canvas"
@@ -510,8 +510,8 @@
           "summary": "Authorities were trying to identify suspects and a motive behind an attack that",
           "modified_time": {
             "epoch": 1366151765,
-            "date_time": "2013-04-16T22:36:05+00:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T22:36:05+00:00",
+            "dateString": "4/16"
           },
           "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fd9e5ff01bc&view=conv&extsrc=atom",
           "editor": "Instructure Canvas"
@@ -521,8 +521,8 @@
           "summary": "The Supreme Court considered whether a 3-year-old should remain with her biological",
           "modified_time": {
             "epoch": 1366151765,
-            "date_time": "2013-04-16T22:36:05+00:00",
-            "date_string": "4/16"
+            "dateTime": "2013-04-16T22:36:05+00:00",
+            "dateString": "4/16"
           },
           "link": "http://mail.google.com/mail?account_id=tammi.chang.clc@gmail.com&message_id=13e14fd9e21bc151&view=conv&extsrc=atom",
           "editor": "Instructure Canvas"
@@ -552,8 +552,8 @@
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
     "timestamp": {
       "epoch": 1383947240,
-      "date_time": "2013-11-08T13:47:20-08:00",
-      "date_string": "11/08"
+      "dateTime": "2013-11-08T13:47:20-08:00",
+      "dateString": "11/08"
     }
   }
 }

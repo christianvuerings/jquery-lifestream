@@ -60,7 +60,7 @@ describe UpNext::MyUpNext do
     valid_feed = UpNext::MyUpNext.new(@user_id).get_feed
     valid_feed[:items].size.should be > 0
     out_of_scope_items = valid_feed[:items].select { |entry|
-      entry[:is_all_day] && DateTime.parse(entry[:start][:date_time]) >= too_late
+      entry[:is_all_day] && DateTime.parse(entry[:start][:dateTime]) >= too_late
     }
     out_of_scope_items.size.should == 0
   end
