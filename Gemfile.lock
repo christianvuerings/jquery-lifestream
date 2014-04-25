@@ -220,7 +220,7 @@ GEM
       builder
       minitest (>= 2.12, < 5.0)
       powerbar
-    momentjs-rails (2.2.1)
+    momentjs-rails (2.5.1)
       railties (>= 3.1)
     multi_json (1.9.2)
     multi_xml (0.5.5)
@@ -483,7 +483,7 @@ DEPENDENCIES
   log4r (~> 1.1.10)
   meta_request (~> 0.2.8)
   minitest-reporters (~> 0.14.20)
-  momentjs-rails (~> 2.2.1)
+  momentjs-rails (~> 2.5.1)
   ngmin-rails (~> 0.4.0)
   nokogiri (~> 1.5.9)
   omniauth-cas (~> 1.0.1)
