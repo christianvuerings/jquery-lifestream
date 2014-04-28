@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
   end
 
   def reauth_admin
-    redirect_to "/auth/cas?renew=true&url=/ccadmin"
+    redirect_to url_for_path("/auth/cas?renew=true&url=/ccadmin")
   end
 
   def basic_lookup
