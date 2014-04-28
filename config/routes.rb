@@ -1,7 +1,9 @@
+
 Calcentral::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/ccadmin', :as => 'rails_admin'
 
+  get '/reauth/admin' => 'sessions#reauth_admin', :as => :reauth_admin
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

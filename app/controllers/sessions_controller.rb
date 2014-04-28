@@ -5,10 +5,14 @@ class SessionsController < ApplicationController
 
   def lookup
     auth = request.env["omniauth.auth"]
-    if (acting_as? && params[:renew] == 'true')
+    if (params[:renew] == 'true')
       cookies[:reauthenticated] = { :value => true, :expires => 8.hours.from_now }
     end
     continue_login_success auth['uid']
+  end
+
+  def reauth_admin
+    redirect_to url_for_path("/auth/cas?renew=true&url=/ccadmin")
   end
 
   def basic_lookup

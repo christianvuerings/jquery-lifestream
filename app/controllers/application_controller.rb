@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   end
 
   def delete_reauth_cookie
-    cookies.delete :reauthenticated if cookies[:reauthenticated]
+    cookies.delete :reauthenticated
   end
 
   def current_user
