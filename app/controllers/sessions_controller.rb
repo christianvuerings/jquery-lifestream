@@ -8,17 +8,11 @@ class SessionsController < ApplicationController
     if (params[:renew] == 'true')
       cookies[:reauthenticated] = { :value => true, :expires => 8.hours.from_now }
     end
-    if cookies[:reauth_admin]
-      cookies.delete :reauth_admin
-      redirect_to '/ccadmin'
-      return
-    end
     continue_login_success auth['uid']
   end
 
   def reauth_admin
-    cookies[:reauth_admin] = true
-    redirect_to '/auth/cas?renew=true'
+    redirect_to "/auth/cas?renew=true&url=/ccadmin"
   end
 
   def basic_lookup
@@ -59,7 +53,7 @@ class SessionsController < ApplicationController
 
   def destroy
     begin
-      delete_reauth_cookies
+      delete_reauth_cookie
       reset_session
     ensure
       ActiveRecord::Base.clear_active_connections!

@@ -28,13 +28,13 @@ class ApplicationController < ActionController::Base
   end
 
   def reauthenticate
-    delete_reauth_cookies
+    delete_reauth_cookie
     redirect_to url_for_path("/auth/cas?renew=true")
   end
 
   def check_reauthentication
     unless !!session[:user_id]
-      delete_reauth_cookies
+      delete_reauth_cookie
       return
     end
     return unless Settings.features.reauthentication
@@ -42,10 +42,8 @@ class ApplicationController < ActionController::Base
     reauthenticate if acting_as? && !cookies[:reauthenticated]
   end
 
-  def delete_reauth_cookies
-    [:reauthenticated,  :reauth_admin].each do |cookie|
-      cookies.delete cookie
-    end
+  def delete_reauth_cookie
+    cookies.delete :reauthenticated
   end
 
   def current_user
