@@ -271,7 +271,7 @@ features:
 oec:
   export_directory: 'tmp/oec'
   current_terms_codes: [{
-    term_yr: "2013",
-    term_cd: "D"
+    year: 2013,
+    code: "D"
   }]
   departments: [ 'STAT', 'SPANISH', 'PORTUG', 'CHEM' ]
