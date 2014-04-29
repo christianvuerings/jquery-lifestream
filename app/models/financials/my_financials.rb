@@ -10,7 +10,7 @@ module Financials
         if proxy_response && body = proxy_response[:body]
           if body.is_a?(Hash) && student = body["student"]
             feed.merge!(student)
-            feed.merge!({"current_term" => Settings.sakai_proxy.current_terms.first})
+            feed.merge!({"current_term" => Berkeley::Terms.fetch.current.to_english})
             feed.merge!({"apiVersion" => proxy_response[:apiVersion]})
           else
             feed.merge!(proxy_response)

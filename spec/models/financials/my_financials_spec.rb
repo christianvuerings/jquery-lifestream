@@ -10,7 +10,7 @@ describe Financials::MyFinancials do
     subject { Financials::MyFinancials.new(oski_uid).get_feed }
     it { should_not be_nil }
     its(["summary"]) { should_not be_nil }
-    its(["current_term"]) { should == Settings.sakai_proxy.current_terms.first }
+    its(["current_term"]) { should == Berkeley::Terms.fetch.current.to_english }
     its(["apiVersion"]) { should == "1.0.6" }
   end
 

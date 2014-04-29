@@ -3,11 +3,14 @@ module MyClasses::ClassesModule
 
   def initialize(uid)
     @uid = uid
-    @current_terms = Settings.sakai_proxy.current_terms_codes
+  end
+
+  def current_term
+    @current_term ||= Berkeley::Terms.fetch.current
   end
 
   def current_term?(term_yr, term_cd)
-    @current_terms.index {|t| t.term_yr == term_yr && t.term_cd == term_cd}.present?
+    current_term.year == term_yr.to_i && current_term.code == term_cd
   end
 
   def course_site_entry(campus_courses, course_site)

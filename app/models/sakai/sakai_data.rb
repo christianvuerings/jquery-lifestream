@@ -6,23 +6,6 @@ module Sakai
       Settings.campusdb.bspace_prefix || ''
     end
 
-    # Oracle and H2 have no timestamp formatting function in common.
-    def self.timestamp_format(timestamp_column)
-      if test_data?
-        "formatdatetime(#{timestamp_column}, 'yyyy-MM-dd HH:mm:ss')"
-      else
-        "to_char(#{timestamp_column}, 'yyyy-mm-dd hh24:mi:ss')"
-      end
-    end
-
-    def self.timestamp_parse(datetime)
-      if test_data?
-        "parsedatetime('#{datetime.utc.to_s(:db)}', 'yyyy-MM-dd HH:mm:ss')"
-      else
-        "to_date('#{datetime.utc.to_s(:db)}', 'yyyy-mm-dd hh24:mi:ss')"
-      end
-    end
-
     # TODO This is another fairly stable query.
     def self.get_announcement_tool_id(site_id)
       announcement = {}

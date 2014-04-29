@@ -2,10 +2,6 @@ require "spec_helper"
 
 describe CampusOracle::Queries do
 
-  before do
-    @current_terms = Settings.sakai_proxy.current_terms_codes
-  end
-
   it "should find Oliver" do
     data = CampusOracle::Queries.get_person_attributes(2040)
     data['first_name'].should == "Oliver"
@@ -35,25 +31,7 @@ describe CampusOracle::Queries do
     end
   end
 
-  it "should find the most currently available student data between terms" do
-    CampusOracle::Queries.stub(:current_year).and_return(2525)
-    data = CampusOracle::Queries.get_person_attributes(300846)
-    if CampusOracle::Queries.test_data?
-      data['reg_status_cd'].should == "C"
-    end
-  end
-
   it "should find Stu TestB's registration status" do
-    data = CampusOracle::Queries.get_reg_status(300846)
-    if CampusOracle::Queries.test_data?
-      data['ldap_uid'].should == "300846"
-      # we will only have predictable reg_status_cd values in our fake Oracle db.
-      data['reg_status_cd'].should == "C"
-    end
-  end
-
-  it "should find the most currently available registration status between terms" do
-    CampusOracle::Queries.stub(:current_year).and_return(2525)
     data = CampusOracle::Queries.get_reg_status(300846)
     if CampusOracle::Queries.test_data?
       data['ldap_uid'].should == "300846"
@@ -143,10 +121,19 @@ describe CampusOracle::Queries do
     end
   end
 
-  it "should be able to limit enrollment queries" do
-    sections = CampusOracle::Queries.get_enrolled_sections('300939', @current_terms)
-    sections.should_not be_nil
-    sections.length.should == 3 if CampusOracle::Queries.test_data?
+  context 'confined to current term' do
+    let(:current_term) {Berkeley::Terms.fetch.current}
+    it "should be able to limit enrollment queries" do
+      sections = CampusOracle::Queries.get_enrolled_sections('300939', [current_term])
+      sections.should_not be_nil
+      sections.length.should == 3 if CampusOracle::Queries.test_data?
+    end
+    it "should be able to limit teaching assignment queries" do
+      # These are only the explicitly assigned sections and do not include implicit nesting.
+      sections = CampusOracle::Queries.get_instructing_sections('238382', [current_term])
+      sections.should_not be_nil
+      sections.length.should == 2 if CampusOracle::Queries.test_data?
+    end
   end
 
   context "#get_enrolled_sections", if: Sakai::SakaiData.test_data? do
@@ -160,13 +147,6 @@ describe CampusOracle::Queries do
     sections = CampusOracle::Queries.get_instructing_sections('238382')
     sections.should_not be_nil
     sections.length.should == 4 if CampusOracle::Queries.test_data?
-  end
-
-  it "should be able to limit teaching assignment queries" do
-    # These are only the explicitly assigned sections and do not include implicit nesting.
-    sections = CampusOracle::Queries.get_instructing_sections('238382', @current_terms)
-    sections.should_not be_nil
-    sections.length.should == 2 if CampusOracle::Queries.test_data?
   end
 
   it 'finds all active secondary sections for the course' do
@@ -291,17 +271,18 @@ describe CampusOracle::Queries do
     CampusOracle::Queries.is_previous_ugrad?("300939").should be_true #ugrad only
   end
 
-  it "should say an instructor has instructional history", if: CampusOracle::Queries.test_data? do
-    CampusOracle::Queries.has_instructor_history?("238382", Settings.sakai_proxy.academic_terms.instructor).should be_true
-  end
-
-  it "should say a student has student history", if: CampusOracle::Queries.test_data? do
-    CampusOracle::Queries.has_student_history?("300939", Settings.sakai_proxy.academic_terms.student).should be_true
-  end
-
-  it "should say a staff member does not have instructional or student history", if: CampusOracle::Queries.test_data? do
-    CampusOracle::Queries.has_instructor_history?("2040", Settings.sakai_proxy.academic_terms.instructor).should be_false
-    CampusOracle::Queries.has_student_history?("2040", Settings.sakai_proxy.academic_terms.student).should be_false
+  context 'with default academic terms', if: CampusOracle::Queries.test_data? do
+    let(:academic_terms) {Berkeley::Terms.fetch.campus.values}
+    it "should say an instructor has instructional history" do
+      CampusOracle::Queries.has_instructor_history?("238382", academic_terms).should be_true
+    end
+    it "should say a student has student history" do
+      CampusOracle::Queries.has_student_history?("300939", academic_terms).should be_true
+    end
+    it "should say a staff member does not have instructional or student history" do
+      CampusOracle::Queries.has_instructor_history?("2040", academic_terms).should be_false
+      CampusOracle::Queries.has_student_history?("2040", academic_terms).should be_false
+    end
   end
 
   context "when searching for users by name" do

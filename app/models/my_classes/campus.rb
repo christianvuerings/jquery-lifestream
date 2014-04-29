@@ -5,13 +5,11 @@ class MyClasses::Campus
     # Only include classes for current terms.
     classes = []
     all_courses = CampusOracle::UserCourses.new(user_id: @uid).get_all_campus_courses
-    @current_terms.each do |term|
-      semester_key = "#{term.term_yr}-#{term.term_cd}"
-      if all_courses[semester_key]
-        all_courses[semester_key].each do |course|
-          course[:site_url] = MyAcademics::AcademicsModule.class_to_url(course)
-          append_class_info(course, classes)
-        end
+    semester_key = "#{current_term.year}-#{current_term.code}"
+    if all_courses[semester_key]
+      all_courses[semester_key].each do |course|
+        course[:site_url] = MyAcademics::AcademicsModule.class_to_url(course)
+        append_class_info(course, classes)
       end
     end
     classes

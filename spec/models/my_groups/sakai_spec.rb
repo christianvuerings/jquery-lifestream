@@ -26,7 +26,7 @@ describe MyGroups::Sakai do
     end
   end
   context 'when a Sakai course site' do
-    let(:sakai_site) {sakai_site_base.merge({term_yr: CampusOracle::Queries.current_year, term_cd: CampusOracle::Queries.current_term})}
+    let(:sakai_site) {sakai_site_base.merge({term_yr: 2013, term_cd: 'D'})}
     let(:sakai_sites) {{courses: [sakai_site], groups: []}}
     its(:size) {should eq 0}
   end

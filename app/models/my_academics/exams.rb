@@ -55,9 +55,10 @@ class MyAcademics::Exams
 
   def matches_current_year_term?(nodeset)
     begin
-      term_year = nodeset.attribute("termYear").value
+      term_year = nodeset.attribute("termYear").value.to_i
       term_code = nodeset.attribute("termCode").value
-      return (CampusOracle::Queries.current_term == term_code && CampusOracle::Queries.current_year == term_year)
+      current_term = Berkeley::Terms.fetch.current
+      return (current_term.code == term_code && current_term.year == term_year)
     rescue NoMethodError, ArgumentError => e
       Rails.logger.warn "#{self.class.name}: Error parsing studentFinalExamSchedules #{nodeset} for termYear and termCode - #{e.message}"
       return false

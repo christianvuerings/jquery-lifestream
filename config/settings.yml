@@ -38,6 +38,11 @@ campusdb:
   pool: 95
   # Needed when the bSpace application tables are in a different namespace.
   bspace_prefix:
+terms:
+  # Limit how far back our academic history goes.
+  oldest: spring-2010
+  # Timestamp in UTC, needed when testing against test Campus data
+  fake_now:
 test_sqlite:
   pool: 3
 
@@ -86,27 +91,6 @@ sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
   fake_user_id: "300939"
-  current_terms: ["Fall 2013"]
-  # The first term in the array is the one happening now. The rest of the array will
-  # also be included in the Dashboard widgets.
-  current_terms_codes: [{
-    term_yr: "2013",
-    term_cd: "D"
-  }]
-  # Used to constrain My Academics range
-  academic_terms:
-    student: [
-      {
-        term_yr: "2013",
-        term_cd: "D"
-      }
-    ]
-    instructor: [
-      {
-        term_yr: "2013",
-        term_cd: "D"
-      }
-    ]
   # Timestamp in UTC, needed when testing against older DB snapshot
   fake_now:
 cal_link_proxy:
@@ -218,6 +202,8 @@ cache:
     CanvasCourseProvisioningJobs: <%= 24.hours %>
     Bearfacts::MyRegBlocks: 0
 
+    Berkeley::Terms: <%= 4.hours %>
+
     Canvas::MergedUserSites: <%= 15.minutes %>
     Canvas::UserCourses: <%= 30.minutes %>
     Canvas::Groups: <%= 30.minutes %>
@@ -285,7 +271,7 @@ features:
 oec:
   export_directory: 'tmp/oec'
   current_terms_codes: [{
-    term_yr: "2013",
-    term_cd: "D"
+    year: 2013,
+    code: "D"
   }]
   departments: [ 'STAT', 'SPANISH', 'PORTUG', 'CHEM' ]
