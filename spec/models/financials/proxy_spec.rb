@@ -38,7 +38,7 @@ describe Financials::Proxy do
   context "non-student should not get any financials" do
     before { Rails.cache.should_receive(:write) }
     subject { non_student_financials }
-    its([:body]) { should eq("CalCentral's My Finances tab is only available for current or recent UC Berkeley students. If you are seeing this message, it is because CalCentral did not receive any CARS data for your account. If you believe that you have received this message in error, please use the Feedback link below to tell us about the problem.")}
+    its([:body]) { should eq("CalCentral's My Finances tab provides financial data for current students and recent graduates. You are seeing this message because you we not have CARS billing data for your account. If you believe that you have received this message in error, please report the problem using the Feedback link below.")}
     its([:status_code]) { should eq(400) }
   end
 
