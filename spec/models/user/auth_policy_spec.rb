@@ -26,7 +26,7 @@ describe User::AuthPolicy do
     end
   end
 
-  describe "#can_administrate_canvas" do
+  describe "#can_administrate_canvas?" do
     it "returns true when user is a canvas root account administrator" do
       canvas_admins = double()
       canvas_admins.stub(:admin_user?).and_return(true)
@@ -38,4 +38,33 @@ describe User::AuthPolicy do
       expect(subject.can_administrate_canvas?).to be_false
     end
   end
+
+  describe "#can_create_canvas_course_site?" do
+    subject { User::AuthPolicy.new(user, user).can_create_canvas_course_site? }
+    before do
+      User::AuthPolicy.any_instance.stub(:can_administrate?).and_return(false)
+      User::AuthPolicy.any_instance.stub(:can_administrate_canvas?).and_return(false)
+    end
+
+    context "when user is not teaching courses in current or future semester" do
+      before { Canvas::ProvideCourseSite.any_instance.stub(:user_currently_teaching?).and_return(false) }
+      it { should be_false }
+    end
+
+    context "when user is a canvas root account administrator" do
+      before { User::AuthPolicy.any_instance.stub(:can_administrate_canvas?).and_return(true) }
+      it { should be_true }
+    end
+
+    context "when user is a calcentral administrator" do
+      before { User::AuthPolicy.any_instance.stub(:can_administrate?).and_return(true) }
+      it { should be_true }
+    end
+
+    context "when user is teaching courses in a current term" do
+      before { Canvas::ProvideCourseSite.any_instance.stub(:user_currently_teaching?).and_return(true) }
+      it { should be_true }
+    end
+  end
+
 end
