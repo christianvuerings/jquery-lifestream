@@ -13,10 +13,12 @@ describe MyAcademics::TeachingCanvas do
       class_sites: []
     }
   end
+  let(:fake_term_yr) {2013}
+  let(:fake_term_cd) {'D'}
   let(:campus_courses) do
     [{
-      name: Berkeley::TermCodes.to_english(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
-      slug: Berkeley::TermCodes.to_slug(CampusOracle::Queries.current_year, CampusOracle::Queries.current_term),
+      name: Berkeley::TermCodes.to_english(fake_term_yr, fake_term_cd),
+      slug: Berkeley::TermCodes.to_slug(fake_term_yr, fake_term_cd),
       classes: [
         campus_course_base
       ]
@@ -58,8 +60,8 @@ describe MyAcademics::TeachingCanvas do
     before {Canvas::MergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
 
     context 'when Canvas course has an academic term' do
-      let(:term_yr) {CampusOracle::Queries.current_year}
-      let(:term_cd) {CampusOracle::Queries.current_term}
+      let(:term_yr) {fake_term_yr}
+      let(:term_cd) {fake_term_cd}
       context 'when Canvas course site matches a campus section' do
         let(:canvas_site) {canvas_site_base.merge({sections: [{ccn: ccn.to_s}]})}
         let(:canvas_sites) {{courses: [canvas_site], groups: []}}

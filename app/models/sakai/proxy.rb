@@ -14,9 +14,5 @@ module Sakai
       !uid.blank?
     end
 
-    def current_terms
-      Settings.sakai_proxy.current_terms
-    end
-
   end
 end

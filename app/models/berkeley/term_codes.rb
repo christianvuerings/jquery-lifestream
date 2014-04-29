@@ -1,7 +1,8 @@
 module Berkeley
-  class TermCodes
+  module TermCodes
+    extend self
 
-    def self.codes
+    def codes
       @codes ||= {
         :B => "Spring",
         :C => "Summer",
@@ -9,36 +10,47 @@ module Berkeley
       }
     end
 
-    def self.names
-      @names ||= self.init_names
+    def names
+      @names ||= init_names
     end
 
-    def self.to_english(term_yr, term_cd)
-      term = self.codes[term_cd.to_sym]
+    def to_english(term_yr, term_cd)
+      term = codes[term_cd.to_sym]
       unless term
         raise ArgumentError, "No such term code: #{term_cd}"
       end
       "#{term} #{term_yr}"
     end
 
-    def self.to_slug(term_yr, term_cd)
-      term = self.codes[term_cd.to_sym]
+    def to_slug(term_yr, term_cd)
+      term = codes[term_cd.to_sym]
       unless term
         raise ArgumentError, "No such term code: #{term_cd}"
       end
       "#{term.downcase}-#{term_yr}"
     end
 
-    def self.to_code(name)
-      name = self.names[name.downcase]
+    def to_code(name)
+      name = names[name.downcase]
       unless name
         raise ArgumentError, "No such term code: #{name}"
       end
       name
     end
 
-    def self.from_english(str)
+    def from_english(str)
       if (parsed = /(?<term_name>[[:alpha:]]+) (?<term_yr>\d+)/.match(str)) && (term_cd = to_code(parsed[:term_name]))
+        {
+          term_yr: parsed[:term_yr],
+          term_cd: term_cd
+        }
+      else
+        nil
+      end
+    end
+
+    def from_slug(slug)
+      if (parsed = /(?<term_name>[[:alpha:]]+)-(?<term_yr>\d+)/.match(slug)) && (term_cd = to_code(parsed[:term_name]))
         {
           term_yr: parsed[:term_yr],
           term_cd: term_cd
@@ -50,10 +62,10 @@ module Berkeley
 
     private
 
-    def self.init_names
+    def init_names
       names = {}
-      self.codes.keys.each do |key|
-        name = self.codes[key]
+      codes.keys.each do |key|
+        name = codes[key]
         names[name.downcase] = key.to_s
       end
       names

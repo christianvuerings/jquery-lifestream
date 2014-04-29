@@ -13,7 +13,7 @@ module CampusOracle
         clause = 'and ('
         terms.each_index do |idx|
           clause.concat(' or ') if idx > 0
-          clause.concat("(#{table}.term_cd=#{connection.quote(terms[idx].term_cd)} and #{table}.term_yr=#{terms[idx].term_yr.to_i})")
+          clause.concat("(#{table}.term_cd=#{connection.quote(terms[idx].code)} and #{table}.term_yr=#{terms[idx].year.to_i})")
         end
         clause.concat(')')
         clause
@@ -43,6 +43,23 @@ module CampusOracle
         end
       end
       row
+    end
+
+    # Oracle and H2 have no timestamp formatting function in common.
+    def self.timestamp_format(timestamp_column)
+      if test_data?
+        "formatdatetime(#{timestamp_column}, 'yyyy-MM-dd HH:mm:ss')"
+      else
+        "to_char(#{timestamp_column}, 'yyyy-mm-dd hh24:mi:ss')"
+      end
+    end
+
+    def self.timestamp_parse(datetime)
+      if test_data?
+        "parsedatetime('#{datetime.utc.to_s(:db)}', 'yyyy-MM-dd HH:mm:ss')"
+      else
+        "to_date('#{datetime.utc.to_s(:db)}', 'yyyy-mm-dd hh24:mi:ss')"
+      end
     end
 
   end

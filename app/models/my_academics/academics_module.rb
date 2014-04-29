@@ -71,13 +71,14 @@ module MyAcademics::AcademicsModule
   end
 
   def current_term
-    Settings.sakai_proxy.current_terms_codes[0]
+    @current_term ||= Berkeley::Terms.fetch.current
   end
 
   def time_bucket(term_yr, term_cd)
-    if term_yr < current_term.term_yr || (term_yr == current_term.term_yr && term_cd < current_term.term_cd)
+    term_yr = term_yr.to_i
+    if term_yr < current_term.year || (term_yr == current_term.year && term_cd < current_term.code)
       bucket = 'past'
-    elsif term_yr > current_term.term_yr || (term_yr == current_term.term_yr && term_cd > current_term.term_cd)
+    elsif term_yr > current_term.year || (term_yr == current_term.year && term_cd > current_term.code)
       bucket = 'future'
     else
       bucket = 'current'

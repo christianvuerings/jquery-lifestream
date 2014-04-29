@@ -27,4 +27,10 @@ describe Berkeley::TermCodes do
     Berkeley::TermCodes.from_english('Indefinitely').should be_nil
   end
 
+  it 'converts a slug into code and year' do
+    term_hash = Berkeley::TermCodes.from_slug('fall-2013')
+    term_hash[:term_yr].should == '2013'
+    term_hash[:term_cd].should == 'D'
+  end
+
 end

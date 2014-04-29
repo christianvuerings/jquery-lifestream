@@ -7,6 +7,7 @@ module CampusOracle
     def initialize(options = {})
       super(Settings.sakai_proxy, options)
       @uid = @settings.fake_user_id if @fake
+      @academic_terms = Berkeley::Terms.fetch.campus.values
     end
 
     def self.expires_in
@@ -15,10 +16,6 @@ module CampusOracle
 
     def self.access_granted?(uid)
       !uid.blank?
-    end
-
-    def academic_terms
-      @settings.academic_terms
     end
 
     def get_all_campus_courses
@@ -54,7 +51,7 @@ module CampusOracle
 
     def merge_enrollments(campus_classes)
       previous_item = {}
-      enrollments = CampusOracle::Queries.get_enrolled_sections(@uid, academic_terms.student)
+      enrollments = CampusOracle::Queries.get_enrolled_sections(@uid, @academic_terms)
       enrollments.each do |row|
         if (item = row_to_feed_item(row, previous_item))
           item[:role] = 'Student'
@@ -68,7 +65,7 @@ module CampusOracle
 
     def merge_explicit_instructing(campus_classes)
       previous_item = {}
-      assigneds = CampusOracle::Queries.get_instructing_sections(@uid, academic_terms.instructor)
+      assigneds = CampusOracle::Queries.get_instructing_sections(@uid, @academic_terms)
       is_instructing = assigneds.present?
       assigneds.each do |row|
         if (item = row_to_feed_item(row, previous_item))
@@ -118,19 +115,19 @@ module CampusOracle
 
     def get_all_transcripts
       self.class.fetch_from_cache "all-transcripts-#{@uid}" do
-        CampusOracle::Queries.get_transcript_grades(@uid, academic_terms.student)
+        CampusOracle::Queries.get_transcript_grades(@uid, @academic_terms)
       end
     end
 
     def has_student_history?
       self.class.fetch_from_cache "has_student_history-#{@uid}" do
-        CampusOracle::Queries.has_student_history?(@uid, academic_terms.student)
+        CampusOracle::Queries.has_student_history?(@uid, @academic_terms)
       end
     end
 
     def has_instructor_history?
       self.class.fetch_from_cache "has_instructor_history-#{@uid}" do
-        CampusOracle::Queries.has_instructor_history?(@uid, academic_terms.instructor)
+        CampusOracle::Queries.has_instructor_history?(@uid, @academic_terms)
       end
     end
 

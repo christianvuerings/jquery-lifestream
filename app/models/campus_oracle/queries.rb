@@ -14,14 +14,6 @@ module CampusOracle
       @cal_residency_translator ||= Notifications::CalResidencyTranslator.new
     end
 
-    def self.current_year
-      Settings.sakai_proxy.current_terms_codes.first.term_yr
-    end
-
-    def self.current_term
-      Settings.sakai_proxy.current_terms_codes.first.term_cd
-    end
-
     def self.get_person_attributes(person_id)
       result = {}
       use_pooled_connection {
@@ -460,6 +452,20 @@ module CampusOracle
       }
       Rails.logger.debug "Student #{ldap_uid} history for terms #{student_terms} count = #{result}"
       return result["course_count"].to_i > 0
+    end
+
+    def self.terms
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
+        select term_century || term_yr as term_yr, term_cd, trim(term_status_desc) as term_status_desc,
+          trim(term_name) as term_name, current_tb_term_flag, term_start_date, term_end_date
+        from calcentral_term_info_vw
+        order by term_start_date desc
+        SQL
+        result = connection.select_all(sql)
+      }
+      result
     end
 
   end

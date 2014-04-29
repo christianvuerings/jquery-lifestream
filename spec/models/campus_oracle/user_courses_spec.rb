@@ -9,9 +9,8 @@ describe CampusOracle::UserCourses do
     client.get_all_campus_courses.should_not be_nil
   end
 
-  it "should return pre-populated test enrollments for all semesters", :if => Sakai::SakaiData.test_data? do
-    Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
-    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
+  it "should return pre-populated test enrollments for all semesters", :if => CampusOracle::Connection.test_data? do
+    Settings.terms.stub(:oldest).and_return(nil)
     client = CampusOracle::UserCourses.new({user_id: '300939'})
     courses = client.get_all_campus_courses
     courses.empty?.should be_false
@@ -46,7 +45,7 @@ describe CampusOracle::UserCourses do
     end
   end
 
-  it 'includes nested sections for instructors', :if => Sakai::SakaiData.test_data? do
+  it 'includes nested sections for instructors', :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '238382'})
     courses = client.get_all_campus_courses
     sections = courses['2013-D'].select {|c| c[:dept] == 'BIOLOGY' && c[:catid] == '1A'}.first[:sections]
@@ -55,7 +54,7 @@ describe CampusOracle::UserCourses do
     expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
   end
 
-  it 'prefixes short CCNs with zeroes', :if => Sakai::SakaiData.test_data? do
+  it 'prefixes short CCNs with zeroes', :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '238382'})
     courses = client.get_selected_sections(2013, 'D', [7309])
     sections = courses['2013-D'].first[:sections]
@@ -63,23 +62,21 @@ describe CampusOracle::UserCourses do
     expect(sections.first[:ccn]).to eq '07309'
   end
 
-  it "should find waitlisted status in test enrollments", :if => Sakai::SakaiData.test_data? do
-    Settings.sakai_proxy.academic_terms.stub(:student).and_return(nil)
-    Settings.sakai_proxy.academic_terms.stub(:instructor).and_return(nil)
+  it "should find waitlisted status in test enrollments", :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '300939'})
     courses = client.get_all_campus_courses
-    courses["2015-B"].length.should == 1
-    course_primary = courses["2015-B"][0][:sections][0]
+    courses["2014-C"].length.should == 1
+    course_primary = courses["2014-C"][0][:sections][0]
     course_primary[:waitlistPosition].should == 42
     course_primary[:enroll_limit].should == 5000
   end
 
-  it "should say that Tammi has student history", :if => Sakai::SakaiData.test_data? do
+  it "should say that Tammi has student history", :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '300939'})
     client.has_student_history?.should be_true
   end
 
-  it "should say that our fake teacher has instructor history", :if => Sakai::SakaiData.test_data? do
+  it "should say that our fake teacher has instructor history", :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '238382'})
     client.has_instructor_history?.should be_true
   end
@@ -87,8 +84,8 @@ describe CampusOracle::UserCourses do
   describe '#merge_enrollments' do
     let(:user_id) {rand(99999).to_s}
     let(:catalog_id) {"#{rand(999)}"}
-    let(:term_yr) {CampusOracle::Queries.current_year}
-    let(:term_cd) {CampusOracle::Queries.current_term}
+    let(:term_yr) {2013}
+    let(:term_cd) {'D'}
     context 'student in two primary sections with the same department and catalog ID' do
       let(:base_enrollment) {
         {

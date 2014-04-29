@@ -4,8 +4,8 @@ describe MyClasses::Campus do
   let(:user_id) {rand(99999).to_s}
   let(:catid) {"#{rand(999)}B"}
   let(:course_id) {"econ-#{catid}-#{term_yr}-#{term_cd}"}
-  let(:term_yr) {CampusOracle::Queries.current_year}
-  let(:term_cd) {CampusOracle::Queries.current_term}
+  let(:term_yr) {2013}
+  let(:term_cd) {'D'}
   let(:fake_sections) {[
     {
       ccn: rand(99999),

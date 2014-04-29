@@ -56,18 +56,8 @@ module Textbooks
     end
 
     def get_term(slug)
-      semester = slug.split('-')[0]
-      year = slug.split('-')[1]
-
-      case semester
-        when 'fall'
-          term = year + 'D'
-        when 'spring'
-          term = year + 'B'
-        when 'summer'
-          term = year + 'C'
-      end
-      term
+      term_hash = Berkeley::TermCodes.from_slug(slug)
+      "#{term_hash[:term_yr]}#{term_hash[:term_cd]}"
     end
 
     def initialize(options = {})
