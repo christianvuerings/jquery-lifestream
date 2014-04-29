@@ -1,14 +1,14 @@
 <script type="text/ng-template" id="templates/cars_summary.html">
-  <div class="cc-widget cc-widget" data-ng-show="myfinances.summary" data-ng-controller="CarsController">
+  <div class="cc-widget" data-ng-controller="CarsController">
     <div class="cc-widget-title">
       <h2 class="cc-left">Billing Summary</h2>
-      <a data-ng-if="!carsDetails" class="cc-right cc-widget-title-link" href="/finances/details">
+      <a data-ng-if="!carsDetails && !myfinancesError" class="cc-right cc-widget-title-link" href="/finances/details">
         <strong>Details</strong>
       </a>
     </div>
 
     <div data-cc-spinner-directive>
-      <ul class="cc-widget-list cc-page-myfinances-account-summary-list">
+      <ul class="cc-widget-list cc-page-myfinances-account-summary-list" data-ng-show="myfinances.summary">
         <li class="cc-page-myfinances-account-summary-item cc-clearfix-container cc-page-myfinances-dpp" data-ng-if="myfinances.summary.isOnDPP">
           <div class="small-12 columns">
             <strong>Deferred Payment Plan</strong>
@@ -89,6 +89,8 @@
           </div>
         </li>
       </ul>
+      <p data-ng-if="myfinancesError" class="cc-widget-text cc-page-myfinances-account-summary-error" data-ng-bind="myfinancesError.body">
+      </p>
     </div>
   </div>
 </script>

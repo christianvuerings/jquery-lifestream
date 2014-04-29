@@ -20,7 +20,7 @@ module Financials
       if student_id.nil?
         logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API path #{path}"
         return {
-          body: "CalCentral's My Finances tab is only available for current or recent UC Berkeley students. If you are seeing this message, it is because CalCentral did not receive any CARS data for your account. If you believe that you have received this message in error, please use the Feedback link below to tell us about the problem.",
+          body: "CalCentral's My Finances tab provides financial data for current students and recent graduates. You are seeing this message because you we not have CARS billing data for your account. If you believe that you have received this message in error, please report the problem using the Feedback link below.",
           status_code: 400
         }
       else
