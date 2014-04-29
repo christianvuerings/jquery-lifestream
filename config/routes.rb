@@ -31,7 +31,6 @@ Calcentral::Application.routes.draw do
   get '/api/my/cal1card' => 'my_cal1card#get_feed', :as => :my_cal1card, :defaults => {:format => 'json'}
   get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
-  get '/api/my/refresh' => 'my_refresh#refresh', :defaults => { :format => 'json' }
   get '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
   post '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }
 

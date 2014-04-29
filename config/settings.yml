@@ -193,7 +193,6 @@ cache:
     MyGroups::Merged: 0
     MyTasks::Merged: 0
     UpNext::MyUpNext: 0
-    MyRefreshController: <%= 30.seconds %>
     User::Api: 0
     UserApiController: <%= 4.hours %>
     Canvas::Lti: <%= 5.minutes %>
