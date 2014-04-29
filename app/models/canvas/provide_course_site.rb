@@ -206,12 +206,12 @@ module Canvas
     end
 
     def current_terms
-      @current_terms ||= Settings.canvas_proxy.current_terms_codes.collect do |term|
+      @current_terms ||= Canvas::Proxy.canvas_current_terms.collect do |term|
         {
-          yr: term.term_yr,
-          cd: term.term_cd,
-          slug: Berkeley::TermCodes.to_slug(term.term_yr, term.term_cd),
-          name: Berkeley::TermCodes.to_english(term.term_yr, term.term_cd)
+          yr: term.year.to_s,
+          cd: term.code,
+          slug: term.slug,
+          name: term.to_english
         }
       end
     end
@@ -226,10 +226,8 @@ module Canvas
       raise RuntimeError, "User ID not found" if @uid.blank?
       feed = CampusOracle::UserCourses.new(:user_id => @uid).get_all_campus_courses
       instructor_courses = feed.values.flatten.select {|course| course[:role] == 'Instructor'}
-      instructor_courses_with_slugs = instructor_courses.collect {|course| course[:term_slug] = Berkeley::TermCodes.to_slug(course[:term_yr], course[:term_cd]) }
-      current_term_slugs = current_terms.collect {|term| Berkeley::TermCodes.to_slug(term[:yr], term[:cd]) }
       current_courses = instructor_courses.select do |course|
-        current_term_slugs.index { |term| course[:term_slug] == term }
+        current_terms.index { |term| course[:term_yr] == term[:yr] && course[:term_cd] == term[:cd] }
       end
       current_courses.count > 0 ? true : false
     end

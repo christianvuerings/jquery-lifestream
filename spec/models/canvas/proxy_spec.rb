@@ -106,4 +106,34 @@ describe Canvas::Proxy do
     end
   end
 
+  describe '#canvas_current_terms' do
+    before { allow(Settings.terms).to receive(:fake_now).and_return(fake_now) }
+    subject {Canvas::Proxy.canvas_current_terms}
+    context 'during the Fall term' do
+      let(:fake_now) {DateTime.parse('2013-10-10')}
+      its(:length) {should eq 2}
+      it 'includes next term and this term' do
+        expect(subject[0].slug).to eq 'spring-2014'
+        expect(subject[1].slug).to eq 'fall-2013'
+      end
+    end
+    context 'between terms' do
+      let(:fake_now) {DateTime.parse('2013-09-20')}
+      its(:length) {should eq 2}
+      it 'includes the next two terms' do
+        expect(subject[0].slug).to eq 'spring-2014'
+        expect(subject[1].slug).to eq 'fall-2013'
+      end
+    end
+    context 'during the Spring term' do
+      let(:fake_now) {DateTime.parse('2014-02-10')}
+      its(:length) {should eq 3}
+      it 'includes next Fall term if available' do
+        expect(subject[0].slug).to eq 'fall-2014'
+        expect(subject[1].slug).to eq 'summer-2014'
+        expect(subject[2].slug).to eq 'spring-2014'
+      end
+    end
+  end
+
 end

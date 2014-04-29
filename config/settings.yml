@@ -67,17 +67,6 @@ canvas_proxy:
   # Only used for testing + recording responses
   test_user_id: "300846"
   test_user_access_token: "someMumboJumbo"
-  # Used to import campus users and enrollments
-  current_terms_codes: [
-    {
-      term_yr: "2014",
-      term_cd: "B"
-    },
-    {
-      term_yr: "2013",
-      term_cd: "D"
-    }
-  ]
   mixed_sis_user_id: true
 google_proxy:
   client_id: 1

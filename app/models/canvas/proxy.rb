@@ -79,12 +79,21 @@ module Canvas
       Settings.canvas_proxy.fake || (Canvas::UserProfile.new(user_id: user_id).user_profile != nil)
     end
 
-    def self.current_sis_term_ids
-      sis_term_ids = []
-      Settings.canvas_proxy.current_terms_codes.each do |t|
-        sis_term_ids.push(term_to_sis_id(t.term_yr, t.term_cd))
+    def self.canvas_current_terms
+      terms = []
+      campus_terms = Berkeley::Terms.fetch
+      if (future_term = campus_terms.future) && future_term.name == 'Fall'
+        terms.push future_term
       end
-      sis_term_ids
+      terms.push campus_terms.next if campus_terms.next
+      terms.push campus_terms.current
+      terms
+    end
+
+    def self.current_sis_term_ids
+      canvas_current_terms.collect do |term|
+        term_to_sis_id(term.year, term.code)
+      end
     end
 
     def self.sis_section_id_to_ccn_and_term(sis_term_id)

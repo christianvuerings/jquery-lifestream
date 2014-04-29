@@ -575,9 +575,14 @@ describe Canvas::ProvideCourseSite do
   end
 
   describe "#current_terms" do
+    let(:term_codes) do
+      [
+        double(year: 2013, code: 'C', slug: 'summer-2013', to_english: 'Summer 2013'),
+        double(year: 2013, code: 'D', slug: 'fall-2013', to_english: 'Fall 2013')
+      ]
+    end
     it "returns array of term hashes" do
-      term_codes = [OpenStruct.new(term_yr: "2013", term_cd: "C"), OpenStruct.new(term_yr: "2013", term_cd: "D")]
-      expect(Settings.canvas_proxy).to receive(:current_terms_codes).and_return(term_codes)
+      expect(Canvas::Proxy).to receive(:canvas_current_terms).and_return(term_codes)
       result = subject.current_terms
       expect(result).to be_an_instance_of Array
       expect(result.count).to eq 2
