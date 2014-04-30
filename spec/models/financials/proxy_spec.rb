@@ -71,7 +71,7 @@ describe Financials::Proxy do
       before { expect(Rails.cache).to receive(:write) }
       it_behaves_like 'has some minimal oski data'
       it 'has a specific apiVersion field' do
-        expect(subject[:apiVersion]).to >= '1.0.6'
+        expect(subject[:apiVersion]).to be >= '1.0.6'
       end
     end
 
