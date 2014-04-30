@@ -125,8 +125,8 @@
       $http.post('/api/my/tasks/delete/' + task.id, deltask).success(function() {
 
         // task.$index is duplicated between buckets, so need to iterate through ALL tasks
-        for(var i = 0; i < $scope.tasks.length; i++) {
-          if($scope.tasks[i].id === task.id) {
+        for (var i = 0; i < $scope.tasks.length; i++) {
+          if ($scope.tasks[i].id === task.id) {
             $scope.tasks.splice(i, 1);
             break;
           }
