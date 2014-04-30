@@ -19,11 +19,23 @@
 
 ## Installation
 
-1. Install Java 7:
+1. Install Java 7 JDK:
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 1. Install postgres:
 
+    **Note**: To install postgres, you must first install homebrew.
+
+    Install homebrew with the following command:
+    ```bash
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    ```
+    Run the following command in terminal after installation:
+    ```bash
+    brew --version
+    ```
+
+    Then run the following:
     ```bash
     brew update
     brew install postgresql
@@ -56,6 +68,8 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     create user calcentral_test with password 'secret';
     grant all privileges on database calcentral_test to calcentral_test;
     ```
+
+    **Note**: At this point, exit out of postgres. To do this, type "\q" and then press ENTER.
 
 1. Fork this repository, then:
 
@@ -111,6 +125,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 1. Install JDBC driver (for Oracle connection)
   * Download [ojdbc6.jar](http://svn.media.berkeley.edu/nexus/content/repositories/myberkeley/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar)
+  * Note: You do not have to open the file.
   * Rename the file to `ojdbc6.jar`
   * Copy `ojdbc6.jar` to `calcentral/lib`
 
