@@ -11,7 +11,7 @@ module Errors
         @wrapped_exception = nil
         @response = {
           :body => log_message,
-          :status_code => 500
+          :statusCode => 500
         }
       end
     end

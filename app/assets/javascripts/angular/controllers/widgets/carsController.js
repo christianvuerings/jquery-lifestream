@@ -151,12 +151,12 @@
      * Select the current term when it exists
      */
     var selectCurrentTerm = function(addedTerms, terms) {
-      var current_term = $scope.myfinances.current_term;
+      var currentTerm = $scope.myfinances.currentTerm;
       var toSelectTerm = '';
 
-      if (addedTerms.indexOf(current_term) !== -1) {
+      if (addedTerms.indexOf(currentTerm) !== -1) {
         // When the current term actually exists in the list, we select it
-        toSelectTerm = $scope.myfinances.current_term;
+        toSelectTerm = $scope.myfinances.currentTerm;
       } else {
         // Otherwise we select the first item in the list
         toSelectTerm = terms[0].value;
@@ -222,7 +222,7 @@
           createTerms();
         }
 
-        if (data.status_code && data.status_code >= 400) {
+        if (data.statusCode && data.statusCode >= 400) {
           $scope.myfinancesError = data;
         }
 

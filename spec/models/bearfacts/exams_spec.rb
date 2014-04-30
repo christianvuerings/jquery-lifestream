@@ -12,7 +12,7 @@ describe Bearfacts::Exams do
     client = Bearfacts::Exams.new({:user_id => "0", :fake => true})
     response = client.get
     response[:body].should == "Lookup of student_id for uid 0 failed, cannot call Bearfacts API"
-    response[:status_code].should == 400
+    response[:statusCode].should == 400
   end
 
   it "should get Oski Bear's exams from a real server", :testext => true do

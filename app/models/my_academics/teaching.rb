@@ -30,7 +30,7 @@ class MyAcademics::Teaching
       ].each do |site_provider|
         site_provider.new(@uid).merge_sites(teaching_semesters)
       end
-      data[:teaching_semesters] = teaching_semesters
+      data[:teachingSemesters] = teaching_semesters
     end
   end
 

@@ -31,7 +31,7 @@ describe Cal1card::Proxy do
   context "getting real data feed", testext: true do
     subject { real_oski_proxy.get }
     it { should_not be_empty }
-    its([:status_code]) { should eq 200 }
+    its([:statusCode]) { should eq 200 }
   end
 
   context "unreachable remote server (connection errors)" do
@@ -43,7 +43,7 @@ describe Cal1card::Proxy do
     subject { real_oski_proxy.get }
 
     its([:body]) { should eq("An unknown server error occurred") }
-    its([:status_code]) { should eq(503) }
+    its([:statusCode]) { should eq(503) }
   end
 
   context "error on remote server (5xx errors)" do
@@ -55,7 +55,7 @@ describe Cal1card::Proxy do
     subject { real_oski_proxy.get }
 
     its([:body]) { should eq("Cal1Card is currently unavailable. Please try again later.") }
-    its([:status_code]) { should eq(506) }
+    its([:statusCode]) { should eq(506) }
   end
 
   context "proxy should respect a disabled feature flag" do

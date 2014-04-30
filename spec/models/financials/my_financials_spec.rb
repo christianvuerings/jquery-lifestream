@@ -10,7 +10,7 @@ describe Financials::MyFinancials do
     subject { Financials::MyFinancials.new(oski_uid).get_feed }
     it { should_not be_nil }
     its(["summary"]) { should_not be_nil }
-    its(["current_term"]) { should == Berkeley::Terms.fetch.current.to_english }
+    its(["currentTerm"]) { should == Berkeley::Terms.fetch.current.to_english }
     its(["apiVersion"]) { should == "1.0.6" }
   end
 
@@ -18,13 +18,13 @@ describe Financials::MyFinancials do
     before(:each) { fake_financials_proxy.stub(:get).and_return(
       {
         body: "an error message",
-        status_code: 500
+        statusCode: 500
       }
     ) }
     subject { Financials::MyFinancials.new(oski_uid).get_feed }
     it { subject.length.should == 4 }
     its([:body]) { should == "an error message"}
-    its([:status_code]) { should == 500 }
+    its([:statusCode]) { should == 500 }
   end
 
   context "it should not explode on a null proxy response" do

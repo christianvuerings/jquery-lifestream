@@ -18,12 +18,12 @@ describe Cal1card::MyCal1card do
     before(:each) { fake_proxy.stub(:get).and_return(
       {
         body: "an error message",
-        status_code: 500
+        statusCode: 500
       }
     ) }
     subject { Cal1card::MyCal1card.new(oski_uid).get_feed }
     its([:body]) { should == "an error message" }
-    its([:status_code]) { should == 500 }
+    its([:statusCode]) { should == 500 }
   end
 
   context "it should not explode on a null proxy response" do

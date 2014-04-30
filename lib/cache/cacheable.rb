@@ -71,7 +71,7 @@ module Cache
         else
           response = {
             :body => user_message_on_exception,
-            :status_code => 503
+            :statusCode => 503
           }
         end
       end

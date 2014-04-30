@@ -6,7 +6,7 @@
   "mealpoints": null,
   "mealpointsMessage": "OK",
   "mealpointsPlan": null,
-  "status_code": 200,
+  "statusCode": 200,
   "lastModified": {
     "hash": "e5569fb761838b28150bf0f5d7536707be4c829b",
     "timestamp": {

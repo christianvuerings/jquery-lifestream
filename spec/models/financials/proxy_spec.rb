@@ -9,7 +9,7 @@ describe Financials::Proxy do
 
   shared_examples "has some minimal oski data" do
     its([:body]) { should_not be_nil }
-    its([:status_code]) { should == 200 }
+    its([:statusCode]) { should == 200 }
     it { subject[:apiVersion].is_a?(String).should be_true}
     it { subject[:body]["student"].should_not be_nil }
     it { subject[:body]["student"]["summary"].should_not be_nil }
@@ -32,14 +32,14 @@ describe Financials::Proxy do
     before { Rails.cache.should_receive(:write) }
     subject { fake_tammi_financials }
     its([:body]) { should eq("My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem.") }
-    its([:status_code]) { should eq(404) }
+    its([:statusCode]) { should eq(404) }
   end
 
   context "non-student should not get any financials" do
     before { Rails.cache.should_receive(:write) }
     subject { non_student_financials }
     its([:body]) { should eq("CalCentral's My Finances tab provides financial data for current students and recent graduates. You are seeing this message because you we not have CARS billing data for your account. If you believe that you have received this message in error, please report the problem using the Feedback link below.")}
-    its([:status_code]) { should eq(400) }
+    its([:statusCode]) { should eq(400) }
   end
 
   context "fake oski financials" do
@@ -58,7 +58,7 @@ describe Financials::Proxy do
     subject { live_oski_financials }
 
     its([:body]) { should eq("My Finances is currently unavailable. Please try again later.") }
-    its([:status_code]) { should eq(503) }
+    its([:statusCode]) { should eq(503) }
   end
 
   context "errors on remote server" do
@@ -69,6 +69,6 @@ describe Financials::Proxy do
     after(:each) { WebMock.reset! }
     subject { live_oski_financials }
     its([:body]) { should eq("My Finances is currently unavailable. Please try again later.") }
-    its([:status_code]) { should eq(403) }
+    its([:statusCode]) { should eq(403) }
   end
 end

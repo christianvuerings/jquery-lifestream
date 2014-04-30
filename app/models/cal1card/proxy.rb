@@ -34,7 +34,7 @@ module Cal1card
           body = "Cal1Card is currently unavailable. Please try again later."
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
             body: body,
-            status_code: response.code
+            statusCode: response.code
           })
         else
           xml = response.body
@@ -42,7 +42,7 @@ module Cal1card
         logger.debug "Cal1Card remote response: #{response.inspect}"
       end
       convert_xml(xml)[:cal1card].merge({
-        status_code: 200
+        statusCode: 200
       })
     end
 

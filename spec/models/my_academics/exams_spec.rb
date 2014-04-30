@@ -9,17 +9,17 @@ describe "MyAcademics::Exams" do
     feed = {}
     MyAcademics::Exams.new("61889").merge(feed)
 
-    feed[:exam_schedule].should_not be_nil
-    feed[:exam_schedule][0][:course_code].should == "Psychology C120"
-    feed[:exam_schedule][0][:time].should == "8:00A"
-    feed[:exam_schedule][0][:location][:rawLocation].should == "390 HEARST MIN"
-    feed[:exam_schedule][0][:location]["roomNumber"].should == "390"
-    feed[:exam_schedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
+    feed[:examSchedule].should_not be_nil
+    feed[:examSchedule][0][:course_code].should == "Psychology C120"
+    feed[:examSchedule][0][:time].should == "8:00A"
+    feed[:examSchedule][0][:location][:rawLocation].should == "390 HEARST MIN"
+    feed[:examSchedule][0][:location]["roomNumber"].should == "390"
+    feed[:examSchedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
     # Make sure the date epoch matches the expected date.
-    Time.at(feed[:exam_schedule][0][:date][:epoch]).to_s.start_with?('2013-05-14').should be_true
+    Time.at(feed[:examSchedule][0][:date][:epoch]).to_s.start_with?('2013-05-14').should be_true
     # making sure sorting works in right order
-    feed[:exam_schedule][0][:date][:epoch].should < feed[:exam_schedule][1][:date][:epoch]
-    feed[:exam_schedule][1][:date][:epoch].should < feed[:exam_schedule][2][:date][:epoch]
+    feed[:examSchedule][0][:date][:epoch].should < feed[:examSchedule][1][:date][:epoch]
+    feed[:examSchedule][1][:date][:epoch].should < feed[:examSchedule][2][:date][:epoch]
   end
 
   it "should properly handle a student with an exam in an unparseable room" do
@@ -29,8 +29,8 @@ describe "MyAcademics::Exams" do
     feed = {}
     MyAcademics::Exams.new("865826").merge(feed)
 
-    feed[:exam_schedule].should_not be_nil
-    feed[:exam_schedule][0][:location][:rawLocation].should == "F295 HAAS"
+    feed[:examSchedule].should_not be_nil
+    feed[:examSchedule][0][:location][:rawLocation].should == "F295 HAAS"
   end
 
   it "should not return any exam schedules for exam information not matching current_year and term" do
@@ -41,18 +41,18 @@ describe "MyAcademics::Exams" do
     feed = {}
     MyAcademics::Exams.new("865826").merge(feed)
 
-    feed[:exam_schedule].should be_nil
+    feed[:examSchedule].should be_nil
   end
 
   it "should handle badly formatted BearfactsExamProxy XML responses" do
     proxy = Bearfacts::Exams.new({:user_id => "865826", :fake => true})
     Bearfacts::Exams.stub(:new).and_return(proxy)
-    Bearfacts::Exams.any_instance.stub(:get).and_return({body: 'gobbly gook', status_code: 200})
+    Bearfacts::Exams.any_instance.stub(:get).and_return({body: 'gobbly gook', statusCode: 200})
 
     feed = {}
     MyAcademics::Exams.new("865826").merge(feed)
 
-    feed[:exam_schedule].should be_nil
+    feed[:examSchedule].should be_nil
   end
 
   context "failing bearfacts proxy" do

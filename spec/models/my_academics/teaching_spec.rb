@@ -7,7 +7,7 @@ describe 'MyAcademics::Teaching' do
     MyAcademics::Teaching.new("238382").merge(feed)
     feed.empty?.should be_false
 
-    teaching = feed[:teaching_semesters]
+    teaching = feed[:teachingSemesters]
     teaching.length.should == 2
     teaching[0][:name].should == "Fall 2013"
     teaching[0][:termCode].should == "D"
@@ -40,7 +40,7 @@ describe 'MyAcademics::Teaching' do
     feed = {}
     MyAcademics::Teaching.new("904715").merge(feed)
     feed.empty?.should be_false
-    teaching = feed[:teaching_semesters]
+    teaching = feed[:teachingSemesters]
     teaching.length.should == 2
     teaching[0][:name].should == "Summer 2014"
     teaching[0][:timeBucket].should == "future"

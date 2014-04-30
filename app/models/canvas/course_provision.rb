@@ -54,7 +54,7 @@ module Canvas
       feed = {
         is_admin: user_admin?,
         admin_acting_as: @admin_acting_as,
-        teaching_semesters: worker.candidate_courses_list,
+        teachingSemesters: worker.candidate_courses_list,
         admin_semesters: user_admin? ? worker.current_terms : nil
       }
       feed
@@ -65,7 +65,7 @@ module Canvas
       feed = {
         is_admin: user_admin?,
         admin_semesters: worker.current_terms,
-        teaching_semesters: worker.courses_list_from_ccns(@admin_term_slug, @admin_by_ccns)
+        teachingSemesters: worker.courses_list_from_ccns(@admin_term_slug, @admin_by_ccns)
       }
       feed
     end

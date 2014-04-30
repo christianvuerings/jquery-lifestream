@@ -7,8 +7,8 @@ describe Textbooks::Proxy do
     @slug = "spring-2014"
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
     proxy_response = proxy.get
-    proxy_response[:status_code].should_not be_nil
-    if proxy_response[:status_code] == 200
+    proxy_response[:statusCode].should_not be_nil
+    if proxy_response[:statusCode] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
       feed[:hasBooks].should be_true
@@ -22,8 +22,8 @@ describe Textbooks::Proxy do
     @slug = 'fall-2011'
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
     proxy_response = proxy.get
-    proxy_response[:status_code].should_not be_nil
-    if proxy_response[:status_code] == 200
+    proxy_response[:statusCode].should_not be_nil
+    if proxy_response[:statusCode] == 200
       feed = proxy_response
       feed.should_not be_nil
       feed[:hasBooks].should be_false
@@ -35,8 +35,8 @@ describe Textbooks::Proxy do
     @slug = 'spring-2014'
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
     proxy_response = proxy.get
-    proxy_response[:status_code].should_not be_nil
-    if proxy_response[:status_code] == 200
+    proxy_response[:statusCode].should_not be_nil
+    if proxy_response[:statusCode] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
       feed[:hasBooks].should be_true
@@ -49,8 +49,8 @@ describe Textbooks::Proxy do
     @slug = "spring-2014"
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
     proxy_response = proxy.get
-    proxy_response[:status_code].should_not be_nil
-    if proxy_response[:status_code] == 200
+    proxy_response[:statusCode].should_not be_nil
+    if proxy_response[:statusCode] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
       expect(feed[:bookUnavailableError]).to eq 'Textbook information for this course could not be found.'
@@ -66,7 +66,7 @@ describe Textbooks::Proxy do
     proxy_response.should_not be_nil
     parsed_response = JSON.parse(proxy_response)
     parsed_response.should_not be_nil
-    if proxy_response["status_code"] == 200
+    if proxy_response["statusCode"] == 200
       feed = proxy_response["books"]
       feed.should_not be_nil
     end
@@ -77,8 +77,8 @@ describe Textbooks::Proxy do
     @slug = "spring-2074"
     proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
     proxy_response = proxy.get
-    proxy_response[:status_code].should_not be_nil
-    if proxy_response[:status_code] == 200
+    proxy_response[:statusCode].should_not be_nil
+    if proxy_response[:statusCode] == 200
       feed = proxy_response[:books]
       feed.should_not be_nil
       expect(feed[:bookUnavailableError]).to eq 'Textbook information for this term could not be found.'

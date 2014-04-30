@@ -98,7 +98,7 @@
       templateUrl: 'templates/canvas_embedded/course_add_user.html',
       controller: 'CanvasCourseAddUserController'
     }).
-    when('/canvas/rosters/:canvas_course_id', {
+    when('/canvas/rosters/:canvasCourseId', {
       templateUrl: 'templates/canvas_embedded/roster.html'
     }).
     when('/canvas/course_provision', {

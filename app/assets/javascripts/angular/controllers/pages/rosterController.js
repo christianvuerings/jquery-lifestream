@@ -6,7 +6,7 @@
    */
   angular.module('calcentral.controllers').controller('RosterController', function(apiService, $http, $routeParams, $scope, $window) {
 
-    if ($routeParams.canvas_course_id) {
+    if ($routeParams.canvasCourseId) {
       apiService.util.setTitle('Roster Photos');
     }
 
@@ -39,7 +39,7 @@
         return;
       }
 
-      var canvasCourseId = $routeParams.canvas_course_id || 'embedded';
+      var canvasCourseId = $routeParams.canvasCourseId || 'embedded';
       $http.get('/api/academics/rosters/canvas/' + canvasCourseId).success(function(data) {
         angular.extend($scope, data);
         window.setInterval(postHeight, 250);

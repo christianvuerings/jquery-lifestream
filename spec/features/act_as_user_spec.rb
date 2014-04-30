@@ -46,7 +46,7 @@ feature "act_as_user" do
     Settings.application.stub(:layer).and_return("production")
     # make the act_as request
     page.driver.post '/act_as', {:uid=>act_as_uid}
-    # failing attempts will redirect to the root_path, giving a 302 status_code
+    # failing attempts will redirect to the root_path, giving a 302 statusCode
     # successful attempts don't redirect and return nothing but a 204 status code
     page.status_code.should == 204
   end

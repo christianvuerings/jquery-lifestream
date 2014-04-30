@@ -5,7 +5,7 @@
     return {
       link: function(scope, elm, attrs) {
         scope.$watch(attrs.ccFocusDirective, function(value) {
-          if(value === true) {
+          if (value === true) {
             $timeout(function() {
               elm[0].focus();
             });

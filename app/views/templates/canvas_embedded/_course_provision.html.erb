@@ -54,14 +54,14 @@
 
           <div data-ng-show="currentWorkflowStep === 'selecting'">
             <div data-cc-spinner-directive>
-              <div data-ng-hide="teaching_semesters && teaching_semesters.length > 0">
+              <div data-ng-hide="teachingSemesters && teachingSemesters.length > 0">
                 No courses found.
               </div>
-              <div data-ng-show="teaching_semesters && teaching_semesters.length > 0">
+              <div data-ng-show="teachingSemesters && teachingSemesters.length > 0">
                 <div class="row collapse">
                   <div class="medium-5 columns">
-                    <ul class="cc-button-group cc-even-{{teaching_semesters.length}} cc-page-provision-margin" role="tablist">
-                      <li data-ng-repeat="semester in teaching_semesters">
+                    <ul class="cc-button-group cc-even-{{teachingSemesters.length}} cc-page-provision-margin" role="tablist">
+                      <li data-ng-repeat="semester in teachingSemesters">
                         <button class="cc-button"
                                 data-ng-click="switchSemester(semester)"
                                 data-ng-class="{'cc-button-selected':(current_semester==semester.slug)}"

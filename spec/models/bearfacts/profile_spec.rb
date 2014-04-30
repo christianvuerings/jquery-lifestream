@@ -12,7 +12,7 @@ describe Bearfacts::Profile do
     client = Bearfacts::Profile.new({:user_id => "0", :fake => true})
     response = client.get
     response[:body].should == "Lookup of student_id for uid 0 failed, cannot call Bearfacts API"
-    response[:status_code].should == 400
+    response[:statusCode].should == 400
   end
 
   it "should get Oski Bear's profile from a real server", :testext => true do
@@ -28,7 +28,7 @@ describe Bearfacts::Profile do
     subject { Bearfacts::Profile.new({:user_id => "61889", :fake => false}).get }
 
     it { subject[:body].should eq("Remote server unreachable") }
-    it { subject[:status_code].should be > 500 }
+    it { subject[:statusCode].should be > 500 }
   end
 
 end
