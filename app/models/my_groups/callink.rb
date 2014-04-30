@@ -6,7 +6,7 @@ class MyGroups::Callink
     return response unless @uid.present?
     membership_proxy = CalLink::Memberships.new({:user_id => @uid})
     cal_link_groups = membership_proxy.get_memberships
-    return response unless cal_link_groups && cal_link_groups[:status_code] == 200
+    return response unless cal_link_groups && cal_link_groups[:statusCode] == 200
 
     logger.debug "fetch: body = #{cal_link_groups[:body]}"
     if cal_link_groups[:body] && cal_link_groups[:body]["items"]
@@ -14,7 +14,7 @@ class MyGroups::Callink
       cal_link_groups[:body]["items"].each do |group|
         if seen_orgs.add? group["organizationId"]
           org = CalLink::Organization.new({:org_id => group["organizationId"]}).get_organization
-          next unless org && org[:status_code] == 200
+          next unless org && org[:statusCode] == 200
           next unless filter_callink_organization!(org).present?
           organization = org[:body]
           site_url = "https://callink.berkeley.edu/"

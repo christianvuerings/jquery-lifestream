@@ -244,7 +244,7 @@ module Canvas
       # merged model, we're probably better off selecting the desired teaching-semester from that bigger feed.
 
       academics_feed = MyAcademics::Merged.new(@uid).get_feed
-      if (teaching_semesters = academics_feed[:teaching_semesters])
+      if (teaching_semesters = academics_feed[:teachingSemesters])
         teaching_semesters.select do |teaching_semester|
           terms_filter.index { |term| teaching_semester[:slug] == term[:slug] }
         end

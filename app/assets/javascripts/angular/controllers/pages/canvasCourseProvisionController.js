@@ -176,10 +176,10 @@
         params: feedParams
       }).success(function(data) {
         angular.extend($scope, data);
-        fillCourseSites($scope.teaching_semesters);
+        fillCourseSites($scope.teachingSemesters);
         window.setInterval(postHeight, 250);
-        if ($scope.teaching_semesters && $scope.teaching_semesters.length > 0) {
-          $scope.switchSemester($scope.teaching_semesters[0]);
+        if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
+          $scope.switchSemester($scope.teachingSemesters[0]);
         }
         if (!$scope.currentAdminSemester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
           $scope.switchAdminSemester($scope.admin_semesters[0]);
@@ -216,7 +216,7 @@
       angular.extend($scope, {
         currentWorkflowStep: 'selecting',
         adminMode: adminMode,
-        teaching_semesters: []
+        teachingSemesters: []
       });
     };
 

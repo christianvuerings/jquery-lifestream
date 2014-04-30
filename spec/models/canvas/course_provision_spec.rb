@@ -88,7 +88,7 @@ describe Canvas::CourseProvision do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_true
         expect(feed[:admin_acting_as]).to eq instructor_id
-        expect(feed[:teaching_semesters]).to eq teaching_semesters
+        expect(feed[:teachingSemesters]).to eq teaching_semesters
       end
     end
     context 'when a superuser' do
@@ -106,7 +106,7 @@ describe Canvas::CourseProvision do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_false
         expect(feed[:admin_acting_as]).to be_nil
-        expect(feed[:teaching_semesters]).to be_empty
+        expect(feed[:teachingSemesters]).to be_empty
         expect(feed[:admin_semesters]).to be_nil
       end
     end
@@ -117,7 +117,7 @@ describe Canvas::CourseProvision do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_false
         expect(feed[:admin_acting_as]).to be_nil
-        expect(feed[:teaching_semesters]).to eq teaching_semesters
+        expect(feed[:teachingSemesters]).to eq teaching_semesters
         expect(feed[:admin_semesters]).to be_nil
       end
     end
@@ -148,7 +148,7 @@ describe Canvas::CourseProvision do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_true
         expect(feed[:admin_acting_as]).to be_nil
-        expect(feed[:teaching_semesters]).to eq by_ccns_course_list
+        expect(feed[:teachingSemesters]).to eq by_ccns_course_list
         expect(feed[:admin_semesters]).to eq current_terms
       end
     end

@@ -86,7 +86,7 @@ module Textbooks
       required_books = []
       recommended_books = []
       optional_books = []
-      status_code = ''
+      statusCode = ''
       url = ''
       bookstore_error_text = ''
 
@@ -105,7 +105,7 @@ module Textbooks
           raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
         end
 
-        status_code = response.code
+        statusCode = response.code
         text_books = Nokogiri::HTML(response.body)
         logger.debug "Remote server status #{response.code}; url = #{url}"
         text_books_items = text_books.xpath('//h2 | //ul')
@@ -170,7 +170,7 @@ module Textbooks
       book_response[:hasBooks] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
       {
         books: book_response,
-        status_code: status_code
+        statusCode: statusCode
       }
 
     end

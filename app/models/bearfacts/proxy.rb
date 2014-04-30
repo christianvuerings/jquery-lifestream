@@ -25,7 +25,7 @@ module Bearfacts
         logger.info "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API path #{path}"
         return {
           :body => "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API",
-          :status_code => 400
+          :statusCode => 400
         }
       else
         url = "#{Settings.bearfacts_proxy.base_url}#{path}"
@@ -53,7 +53,7 @@ module Bearfacts
         logger.debug "Remote server status #{response.status}, Body = #{response.body}"
         return {
           :body => response.body,
-          :status_code => response.status
+          :statusCode => response.status
         }
       end
     end

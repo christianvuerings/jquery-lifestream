@@ -39,7 +39,7 @@
           }
         }
 
-        if (data.status_code && data.status_code >= 400) {
+        if (data.statusCode && data.statusCode >= 400) {
           $scope.textbookError = data;
         }
       });

@@ -23,7 +23,7 @@ module Finaid
         logger.info "Lookup of student_id for uid #@uid failed, cannot call Myfinaid API"
         return {
           :body => "Lookup of student_id for uid #@uid failed, cannot call Myfinaid API",
-          :status_code => 400
+          :statusCode => 400
         }
       else
         url = "#{@settings.base_url}/#{student_id}/finaid"
@@ -54,7 +54,7 @@ module Finaid
         logger.debug "Remote server status #{response.status}, Body = #{response.body}"
         return {
           :body => response.body,
-          :status_code => response.status
+          :statusCode => response.status
         }
       end
     end

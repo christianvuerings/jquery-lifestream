@@ -15,7 +15,7 @@ describe Bearfacts::Telebears do
     subject { live_non_student }
 
     its([:body]) { should eq "Lookup of student_id for uid 212377 failed, cannot call Bearfacts API" }
-    its([:status_code]) { should eq(400) }
+    its([:statusCode]) { should eq(400) }
   end
 
   context "live oski has a valid telebears date", testext: true do

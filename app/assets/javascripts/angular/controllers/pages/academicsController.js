@@ -192,15 +192,15 @@
       return false;
     };
 
-    var parseTeaching = function(teaching_semesters) {
+    var parseTeaching = function(teachingSemesters) {
 
-      if (!teaching_semesters) {
+      if (!teachingSemesters) {
         return {};
       }
 
       var teaching = {};
-      for (var i = 0; i < teaching_semesters.length; i++) {
-        var semester = teaching_semesters[i];
+      for (var i = 0; i < teachingSemesters.length; i++) {
+        var semester = teachingSemesters[i];
         for (var j = 0; j < semester.classes.length; j++) {
           var course = semester.classes[j];
           if (!teaching[course.slug]) {
@@ -284,7 +284,7 @@
 
       $scope.isUndergraduate = ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
 
-      $scope.teaching = parseTeaching(data.teaching_semesters);
+      $scope.teaching = parseTeaching(data.teachingSemesters);
       $scope.teachingLength = Object.keys($scope.teaching).length;
 
       // Get selected semester from URL params and extract data from semesters array
@@ -292,12 +292,12 @@
       if (semesterSlug) {
         var isInstructorOrGsi = !!$routeParams.teachingSemesterSlug;
         var selectedStudentSemester = findSemester(data.semesters, semesterSlug, selectedStudentSemester);
-        var selectedTeachingSemester = findSemester(data.teaching_semesters, semesterSlug, selectedTeachingSemester);
+        var selectedTeachingSemester = findSemester(data.teachingSemesters, semesterSlug, selectedTeachingSemester);
         var selectedSemester = (selectedStudentSemester || selectedTeachingSemester);
         if (!checkPageExists(selectedSemester)) {
           return;
         }
-        updatePrevNextSemester([data.semesters, data.teaching_semesters], selectedSemester);
+        updatePrevNextSemester([data.semesters, data.teachingSemesters], selectedSemester);
 
         $scope.selectedSemester = selectedSemester;
         if (selectedStudentSemester && !$routeParams.classSlug) {
@@ -337,7 +337,7 @@
         }
       }
 
-      parseExamSchedule(data.exam_schedule);
+      parseExamSchedule(data.examSchedule);
 
       $scope.telebears = data.telebears;
 

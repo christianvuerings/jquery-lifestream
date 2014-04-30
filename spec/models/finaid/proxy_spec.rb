@@ -10,7 +10,7 @@ describe Finaid::Proxy do
 
   shared_examples "oski tests" do
     it { subject[:body].should be_present }
-    it { subject[:status_code].should eq(200) }
+    it { subject[:statusCode].should eq(200) }
     it "should be valid xml" do
       expect {
         Nokogiri::XML(subject[:body]) { |config| config.strict }
@@ -35,7 +35,7 @@ describe Finaid::Proxy do
       subject { live_non_student }
 
       it { subject[:body].should eq("Lookup of student_id for uid 212377 failed, cannot call Myfinaid API") }
-      it { subject[:status_code].should eq(400) }
+      it { subject[:statusCode].should eq(400) }
     end
   end
 

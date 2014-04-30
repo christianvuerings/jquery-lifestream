@@ -48,7 +48,7 @@ class MyAcademics::Exams
       }
     end
     exams.sort! { |a, b| a[:date][:epoch] <=> b[:date][:epoch] }
-    data[:exam_schedule] = exams
+    data[:examSchedule] = exams
   end
 
   private
