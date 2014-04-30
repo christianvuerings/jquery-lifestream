@@ -4,7 +4,9 @@ describe Financials::MyFinancials do
 
   let!(:oski_uid) { '61889' }
   let!(:fake_proxy) { Financials::Proxy.new({user_id: oski_uid, fake: true}) }
-  before(:each) { Financials::Proxy.stub(:new).and_return(fake_proxy) }
+  before(:each) {
+    allow(Financials::Proxy).to receive(:new).and_return(fake_proxy)
+  }
 
   subject { Financials::MyFinancials.new(oski_uid).get_feed }
 
@@ -23,7 +25,7 @@ describe Financials::MyFinancials do
     end
   end
 
-  context 'happy path for #get_feed' do
+  context 'when following a happy path for #get_feed' do
     it 'has a non-nil model response' do
       expect(subject).to be
     end
@@ -40,12 +42,12 @@ describe Financials::MyFinancials do
   end
 
   context 'when the proxy returns an error condition' do
-    before { fake_proxy.stub(:get).and_return(
-      {
-        body: 'an error message',
-        statusCode: 500
-      }
-    ) }
+    before { allow(fake_proxy).to receive(:get).and_return(
+                                    {
+                                      body: 'an error message',
+                                      statusCode: 500
+                                    })
+    }
     it 'should have an error message text' do
       expect(subject[:body]).to eq 'an error message'
     end
@@ -56,13 +58,13 @@ describe Financials::MyFinancials do
   end
 
   context 'when the proxy returns nil' do
-    before { fake_proxy.stub(:get).and_return(nil) }
+    before { allow(fake_proxy).to receive(:get).and_return(nil) }
     it_behaves_like 'an empty feed'
     it_behaves_like 'a feed with the common live-updates fields'
   end
 
   context 'when the financials feature flag is disabled' do
-    before { Settings.features.stub(:financials).and_return(false) }
+    before { allow(Settings.features).to receive(:financials).and_return(false) }
     it_behaves_like 'an empty feed'
     it_behaves_like 'a feed with the common live-updates fields'
   end
