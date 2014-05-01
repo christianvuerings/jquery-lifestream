@@ -1,6 +1,6 @@
 class MyTasksController < ApplicationController
 
-  before_filter :check_authentication
+  before_filter :api_authenticate
 
   def get_feed
     render :json => MyTasks::Merged.new(session[:user_id], :original_user_id => session[:original_user_id]).get_feed_as_json
@@ -21,10 +21,5 @@ class MyTasksController < ApplicationController
   define_passthrough :insert_task
   define_passthrough :clear_completed_tasks
   define_passthrough :delete_task
-
-  private
-  def check_authentication
-    render :json => {}.to_json unless session[:user_id]
-  end
 
 end

@@ -16,10 +16,19 @@ class ApplicationController < ActionController::Base
     redirect_to url_for_path('/auth/cas') unless session[:user_id]
   end
 
+  # TODO see if we can standardize empty responses. We have 2 forms: This one, which returns empty JSON and
+  # an HTTP 200 status, and another form that returns empty body with 401 status.
   def api_authenticate
     if session[:user_id].blank?
       Rails.logger.warn "Authenticated user absent in request to #{controller_name}\##{action_name}"
       render :json => {}.to_json
+    end
+  end
+
+  def api_authenticate_401
+    if session[:user_id].blank?
+      Rails.logger.warn "Authenticated user absent in request to #{controller_name}\##{action_name}"
+      render :nothing => true, :status => 401
     end
   end
 

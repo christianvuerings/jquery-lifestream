@@ -1,11 +1,9 @@
 class MyPlaylistsController < ApplicationController
 
+  before_filter :api_authenticate
+
   def get_playlists
-    if session[:user_id]
-      render :json => Mediacasts::Playlists.new({:playlist_title => params[:playlist_title]}).get
-    else
-      render :json => {}.to_json
-    end
+    render :json => Mediacasts::Playlists.new({:playlist_title => params[:playlist_title]}).get
   end
 
 end

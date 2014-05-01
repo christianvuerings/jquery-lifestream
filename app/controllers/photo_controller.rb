@@ -1,10 +1,6 @@
 class PhotoController < ApplicationController
 
-  before_action :asset_authenticate
-
-  def asset_authenticate
-    render :nothing => true, :status => 401 if session[:user_id].blank?    
-  end
+  before_filter :api_authenticate_401
 
   def my_photo
     photo_row = User::Photo.fetch(session[:user_id])
