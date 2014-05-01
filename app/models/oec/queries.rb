@@ -12,7 +12,7 @@ module Oec
         where
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
-          and c.course_cntl_num IN ( #{course_cntl_nums.join(',')} )
+          #{self.ccns_in_chunks('c', course_cntl_nums)}
           and r.enroll_status != 'D'
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
@@ -35,7 +35,7 @@ module Oec
         where
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
-          and c.course_cntl_num IN ( #{course_cntl_nums.join(',')} )
+          #{self.ccns_in_chunks('c', course_cntl_nums)}
           and r.enroll_status != 'D'
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
@@ -56,7 +56,7 @@ module Oec
       course_cntl_nums_clause = ''
       this_depts_clause = depts_clause
       if course_cntl_nums.present?
-        course_cntl_nums_clause = " and c.course_cntl_num IN ( #{course_cntl_nums} )"
+        course_cntl_nums_clause = self.ccns_in_chunks('c', course_cntl_nums)
         this_depts_clause = ''
       end
 
@@ -106,7 +106,7 @@ module Oec
       where
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
-          and c.course_cntl_num IN ( #{course_cntl_nums.join(',')} )
+          #{self.ccns_in_chunks('c', course_cntl_nums)}
           and r.enroll_status != 'D'
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
@@ -131,7 +131,7 @@ module Oec
       where
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
-          and c.course_cntl_num IN ( #{course_cntl_nums.join(',')} )
+          #{self.ccns_in_chunks('c', course_cntl_nums)}
           and r.enroll_status != 'D'
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
@@ -158,6 +158,20 @@ module Oec
                  clause
                end
       string
+    end
+
+    # Oracle has a limit of 1000 terms per expression, so do CCN filtering as a series of OR statements with up to
+    # 1000 CCNs per chunk.
+    def self.ccns_in_chunks(prefix, course_cntl_nums=[])
+      slice = 0
+      statement = 'and ( '
+      course_cntl_nums.each_slice(1000) { |chunk|
+        statement += ' or ' if slice > 0
+        statement += "#{prefix}.course_cntl_num IN ( #{chunk.join(',')} )"
+        slice += 1
+      }
+      statement += ')'
+      statement
     end
 
   end
