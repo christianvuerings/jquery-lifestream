@@ -133,9 +133,16 @@
       // Data contains "links" and "navigation"
       var linkDataUrl = '/api/my/campuslinks';
 
-      return $http.get(linkDataUrl).then(function(response) {
-        return parseCampusLinks(response, categoryId);
-      });
+      // We need to make sure to load the user data first since that contains the roles information
+      return apiService.user.fetch()
+        // Load the campus links
+        .then(function() {
+          return $http.get(linkDataUrl);
+        })
+        // Parse the campus links
+        .then(function(response) {
+          return parseCampusLinks(response, categoryId);
+        });
     };
 
     return {
