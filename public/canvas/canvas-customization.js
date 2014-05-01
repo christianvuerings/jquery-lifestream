@@ -3,70 +3,44 @@
   'use strict';
 
   /**
-   * Returns true if the current page is a courses 'People' page
-   * @return {Boolean}
-   */
-  var isViewingCoursePeople = function() {
-    if (typeof window.ENV !== 'undefined') {
-      if (typeof window.ENV.COURSE_ROOT_URL !== 'undefined') {
-        var people_path = window.ENV.COURSE_ROOT_URL + '/users';
-        if (window.location.pathname === people_path) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-
-  /**
-   * Returns true if user can add users to course
-   * @return {Boolean}
-   */
-  var canAddUsers = function() {
-    if (typeof window.ENV !== 'undefined') {
-      if (typeof window.ENV.permissions !== 'undefined') {
-        if (typeof window.ENV.permissions.add_users !== 'undefined') {
-          return window.ENV.permissions.add_users;
-        }
-      }
-    }
-    return false;
-  };
-
-  /**
    * Adds a link to the 'Add People' external application
    * on the 'People' page within a course, after the hidden 'Add People' button
    */
   var replaceAddPeopleButton = function() {
-    if (isViewingCoursePeople()) {
-      if (canAddUsers()) {
 
-        // replace button with link
-        var replaceAddPeopleButton = function() {
-          var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
-          $.get(externalToolsUrl, function(externalToolsHash) {
-            var addPeopleToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' + externalToolsHash['Add People'];
-            var $addPeopleButton = $('a#addUsers.btn.btn-primary');
-            var $addPeopleLink = $('<p class="pull-right" style="margin-top:7px;">Need to add a user? Go to <a href="' + addPeopleToolHref + '">Add People</a>.</p>');
-            $addPeopleButton.after($addPeopleLink);
-          });
-        };
+    var isViewingCoursePeople = window.ENV &&
+      window.ENV.COURSE_ROOT_URL &&
+      window.location.pathname === window.ENV.COURSE_ROOT_URL + '/users';
 
-        // loop for 'Add People' button every 300 milliseconds
-        var findAddPeopleButtonLoop = window.setInterval(function() {
+    var canAddUsers = window.ENV && window.ENV.permissions && window.ENV.permissions.add_users;
+
+    if (isViewingCoursePeople && canAddUsers) {
+
+      // replace button with link
+      var replaceAddPeopleButton = function() {
+        var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+        $.get(externalToolsUrl, function(externalToolsHash) {
+          var addPeopleToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' + externalToolsHash['Add People'];
           var $addPeopleButton = $('a#addUsers.btn.btn-primary');
-          if ($addPeopleButton.length) {
-            replaceAddPeopleButton();
-            stopFindPeopleButtonLoop();
-          }
-        }, 300);
+          var $addPeopleLink = $('<p class="pull-right" style="margin-top:7px;">Need to add a user? Go to <a href="' + addPeopleToolHref + '">Add People</a>.</p>');
+          $addPeopleButton.after($addPeopleLink);
+        });
+      };
 
-        // halts check once link added after button
-        var stopFindPeopleButtonLoop = function() {
-          window.clearInterval(findAddPeopleButtonLoop);
-        };
+      // loop for 'Add People' button every 300 milliseconds
+      var findAddPeopleButtonLoop = window.setInterval(function() {
+        var $addPeopleButton = $('a#addUsers.btn.btn-primary');
+        if ($addPeopleButton.length) {
+          replaceAddPeopleButton();
+          stopFindPeopleButtonLoop();
+        }
+      }, 300);
 
-      }
+      // halts check once link added after button
+      var stopFindPeopleButtonLoop = function() {
+        window.clearInterval(findAddPeopleButtonLoop);
+      };
+
     }
   };
 
