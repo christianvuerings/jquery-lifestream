@@ -17,13 +17,13 @@ gem "protected_attributes", "~> 1.0.7"
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.3'
 
-gem "activerecord-jdbc-adapter", "~> 1.3.6"
+gem "activerecord-jdbc-adapter", "~> 1.3.7"
 
 # Postgresql adapter
-gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.6"
+gem "activerecord-jdbcpostgresql-adapter", "~> 1.3.7"
 
 # H2 adapter
-gem "activerecord-jdbch2-adapter", "~> 1.3.6"
+gem "activerecord-jdbch2-adapter", "~> 1.3.7"
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -57,7 +57,7 @@ gem "dalli", "~> 2.7.0"
 gem "log4r", "~> 1.1.10"
 
 # for easier non-DB-backed models
-gem "active_attr", "~> 0.8.1"
+gem "active_attr", "~> 0.8.3"
 
 # for production deployment
 gem "jruby-activemq", "~> 5.5.1"
@@ -182,7 +182,7 @@ group :development do
 end
 
 group :test do
-  gem "activerecord-jdbcsqlite3-adapter", "~> 1.3.6"
+  gem "activerecord-jdbcsqlite3-adapter", "~> 1.3.7"
 end
 
 group :test, :testext do
