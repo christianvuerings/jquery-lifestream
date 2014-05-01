@@ -74,7 +74,9 @@
      * Get the actual user information
      */
     var fetch = function() {
-      $http.get('/api/my/status').success(handleUserLoaded);
+      return $http.get('/api/my/status').then(function(xhr) {
+        return handleUserLoaded(xhr.data);
+      });
     };
 
     var enableOAuth = function(authorizationService) {
