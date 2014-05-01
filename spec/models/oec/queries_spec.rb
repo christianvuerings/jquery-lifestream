@@ -27,6 +27,12 @@ describe Oec::Queries do
     it { subject[0]["course_id"].should_not be_nil }
   end
 
+  context "looking up students in 1000 courses", :testext => true do
+    subject { Oec::Queries.get_all_students((7000..9000).to_a) }
+    it { should_not be_nil }
+    it { subject[0]["ldap_uid"].should_not be_nil }
+  end
+
   context "looking up course_instructors" do
     subject { Oec::Queries.get_all_course_instructors([test_ccn]) }
     it { should_not be_nil }
