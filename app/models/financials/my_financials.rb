@@ -1,5 +1,10 @@
-# TODO collapse this class into Financials::Proxy (maybe)
 module Financials
+  # This model class caches a JSON translation of CFV data fetched by Financials::Proxy.
+  # Inheriting from UserSpecificModel means it participates in the live-updates cache
+  # invalidation and warmup cycle. At the model layer the cache entries persist forever
+  # until a live-updates cycle hits them (see LiveUpdatesWarmer and IsUpdatedController).
+  # At the proxy layer cache entries have shorter expiration times, tuned to the external
+  # data's update frequency.
   class MyFinancials < UserSpecificModel
 
     def get_feed_internal

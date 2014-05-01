@@ -15,6 +15,7 @@ module SafeJsonParser
     klass.extend ClassMethods
   end
 
+  # convert a String into JSON, returning nil if there's a parse error
   def safe_json(str)
     self.class.safe_json(str)
   end
