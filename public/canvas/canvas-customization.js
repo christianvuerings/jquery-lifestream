@@ -3,36 +3,50 @@
   'use strict';
 
   /**
-   * Replaces the 'Add People' button, displayed on 'People' page within the course
-   * site context, with a link to the 'Add People' external application.
+   * Adds a link to the 'Add People' external application
+   * on the 'People' page within a course, after the hidden 'Add People' button
    */
   var replaceAddPeopleButton = function() {
-    var $addPeopleButtonOriginal = $('a#addUsers.btn.btn-primary');
-    if ($addPeopleButtonOriginal.length) {
-      // Obtain URL for 'Add People' external tool page
-      var addPeopleExactMatch = function() {
-        return $.trim($(this).text()) === 'Add People';
+
+    var isViewingCoursePeople = window.ENV &&
+      window.ENV.COURSE_ROOT_URL &&
+      window.location.pathname === window.ENV.COURSE_ROOT_URL + '/users';
+
+    var canAddUsers = window.ENV && window.ENV.permissions && window.ENV.permissions.add_users;
+
+    if (isViewingCoursePeople && canAddUsers) {
+
+      // replace button with link
+      var replaceAddPeopleButton = function() {
+        var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+        $.get(externalToolsUrl, function(externalToolsHash) {
+          var addPeopleToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' + externalToolsHash['Add People'];
+          var $addPeopleButton = $('a#addUsers.btn.btn-primary');
+          var $addPeopleLink = $('<p class="pull-right" style="margin-top:7px;">Need to add a user? Go to <a href="' + addPeopleToolHref + '">Add People</a>.</p>');
+          $addPeopleButton.after($addPeopleLink);
+        });
       };
-      var addPeopleNavHref = $('div#left-side nav ul li a:contains("Add People")').filter(addPeopleExactMatch).attr('href');
 
-      // Replace button with link if 'Add People' tool present
-      if (typeof addPeopleNavHref !== 'undefined') {
-
-        var $addPeopleLink = $('<p class="pull-right" style="margin-top:7px;">Need to add a user? Go to <a href="' + addPeopleNavHref + '">Add People</a>.</p>');
-        $addPeopleButtonOriginal.after($addPeopleLink);
-      // Otherwise replace with link to enable 'Add People' tool
-      } else {
-        if (window.ENV.COURSE_ROOT_URL) {
-          var $enableAddPeopleLink = $('<p class="pull-right" style="margin-top:7px;">Need to add a user? Unhide "Add People" in <a href="' + window.ENV.COURSE_ROOT_URL + '/settings#tab-navigation' + '">Navigation Settings</a>.</p>');
-          $addPeopleButtonOriginal.after($enableAddPeopleLink);
+      // loop for 'Add People' button every 300 milliseconds
+      var findAddPeopleButtonLoop = window.setInterval(function() {
+        var $addPeopleButton = $('a#addUsers.btn.btn-primary');
+        if ($addPeopleButton.length) {
+          replaceAddPeopleButton();
+          stopFindPeopleButtonLoop();
         }
-      }
+      }, 300);
+
+      // halts check once link added after button
+      var stopFindPeopleButtonLoop = function() {
+        window.clearInterval(findAddPeopleButtonLoop);
+      };
+
     }
   };
 
   /**
    * Returns true if user can view the 'Create a Course Site' buttons/links
-   * @return {boolean}
+   * @return {Boolean}
    */
   var canViewAddCourseOption = function() {
     if (typeof(window.ENV.current_user_roles) !== 'undefined') {
