@@ -1,11 +1,9 @@
 class MyMediaController < ApplicationController
 
+  before_filter :api_authenticate
+
   def get_media
-    if session[:user_id]
-      render :json => Mediacasts::MyMedia.new(:playlist_title => params[:playlist_title]).get_media_as_json
-    else
-      render :json => {}.to_json
-    end
+    render :json => Mediacasts::MyMedia.new(:playlist_title => params[:playlist_title]).get_media_as_json
   end
 
 end

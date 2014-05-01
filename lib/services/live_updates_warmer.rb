@@ -1,3 +1,6 @@
+# Refreshes user-specific cached data and keeps track of stats showing how long it took.
+# Warmup happens asynchronously in the TorqueBox messaging queue so that load can be shared
+# among all machines in the cluster.
 class LiveUpdatesWarmer < TorqueBox::Messaging::MessageProcessor
 
   extend Cache::Cacheable, Cache::StatAccumulator
