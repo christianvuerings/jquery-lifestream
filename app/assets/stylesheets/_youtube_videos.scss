@@ -2,4 +2,17 @@
   height: 300px;
   margin-top: 15px;
   width: 100%;
+  .cc-youtube-thumbnail-button {
+    background-image: asset-data-url('icon_youtube_60x42.svg');
+    height: 55px;
+    left: 50%;
+    margin: 0;
+    margin-top: -30px;
+    margin-left: -30px;
+    padding: 0;
+    position: absolute;
+    top: 45%;
+    width: 80px;
+    z-index: 100;
+  }
 }

@@ -49,6 +49,7 @@ module Mediacasts
         url = entry['media$group']['media$content'][0]['url']
         url.gsub!('/v/', '/embed/')
         link = url + '&showinfo=0&theme=light&modestbranding=1'
+        id = link[link.index('embed/') + 6..link.index('?version') - 1]
         # Extract "Lecture x" from the title
         start1 = title.downcase.index('lecture')
         # Or extract date from title
@@ -61,7 +62,8 @@ module Mediacasts
         videos.push({
                       :title => title,
                       :lecture => lecture || title,
-                      :link => link
+                      :link => link,
+                      :id => id
                     })
       end
       videos
