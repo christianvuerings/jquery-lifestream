@@ -3,7 +3,6 @@
   "isBasicAuthEnabled": false,
   "isLoggedIn": true,
   "features": {
-    "user_whitelist": false,
     "academic_status": true,
     "my_fin_aid": true,
     "activity_to_task": true,
