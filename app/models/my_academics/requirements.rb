@@ -1,7 +1,7 @@
 # TODO collapse this class into Bearfacts::Profile
 module MyAcademics
   class Requirements
-    include MyAcademicsModule
+    include AcademicsModule
 
     def merge(data)
       profile_proxy = Bearfacts::Profile.new({:user_id => @uid})

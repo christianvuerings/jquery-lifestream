@@ -10,14 +10,14 @@ module MyAcademics
     def get_feed_internal
       feed = {}
       [
-        MyAcademics::CollegeAndLevel,
-        MyAcademics::GpaUnits,
-        MyAcademics::Requirements,
-        MyAcademics::Regblocks,
-        MyAcademics::Semesters,
-        MyAcademics::Teaching,
-        MyAcademics::Exams,
-        MyAcademics::Telebears,
+        CollegeAndLevel,
+        GpaUnits,
+        Requirements,
+        Regblocks,
+        Semesters,
+        Teaching,
+        Exams,
+        Telebears,
       ].each do |provider|
         provider.new(@uid).merge(feed)
       end

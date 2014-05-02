@@ -2,7 +2,7 @@
 module MyAcademics
   class Regblocks
 
-    include MyAcademicsModule
+    include AcademicsModule
     include DatedFeed
 
     def merge(data)

@@ -262,9 +262,9 @@ module Canvas
       feed = proxy.get_selected_sections(term[:yr], term[:cd], ccns)
       feed.keys.each do |term_key|
         (term_yr, term_cd) = term_key.split("-")
-        semester = MyAcademicsModule.semester_info(term_yr, term_cd)
+        semester = MyAcademics::AcademicsModule.semester_info(term_yr, term_cd)
         feed[term_key].each do |course|
-          semester[:classes] << MyAcademicsModule.class_info(course)
+          semester[:classes] << MyAcademics::AcademicsModule.class_info(course)
         end
         courses_list << semester unless semester[:classes].empty?
       end

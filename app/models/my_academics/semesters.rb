@@ -1,14 +1,14 @@
 module MyAcademics
   class Semesters
-    include MyAcademicsModule
+    include AcademicsModule
 
     def initialize(uid)
       super(uid)
     end
 
     def self.build_semester(term_yr, term_cd)
-      MyAcademicsModule.semester_info(term_yr, term_cd).merge({
-        timeBucket: MyAcademicsModule.time_bucket(term_yr, term_cd),
+      AcademicsModule.semester_info(term_yr, term_cd).merge({
+        timeBucket: AcademicsModule.time_bucket(term_yr, term_cd),
         classes: []
       })
     end

@@ -1,6 +1,6 @@
 module MyAcademics
   class TeachingSakai
-    include MyAcademicsModule
+    include AcademicsModule
 
     def merge_sites(campus_terms)
       return unless Sakai::Proxy.access_granted?(@uid)

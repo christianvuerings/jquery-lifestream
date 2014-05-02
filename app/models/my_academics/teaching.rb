@@ -1,6 +1,6 @@
 module MyAcademics
   class Teaching
-    include MyAcademicsModule
+    include AcademicsModule
 
     def merge(data)
       proxy = CampusOracle::UserCourses.new({user_id: @uid})
@@ -12,7 +12,7 @@ module MyAcademics
       feed.keys.each do |term_key|
         (term_yr, term_cd) = term_key.split("-")
         teaching_semester = semester_info(term_yr, term_cd).merge({
-          timeBucket: MyAcademicsModule.time_bucket(term_yr, term_cd),
+          timeBucket: AcademicsModule.time_bucket(term_yr, term_cd),
         })
         feed[term_key].each do |course|
           next unless course[:role] == 'Instructor'
