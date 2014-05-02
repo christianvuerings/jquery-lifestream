@@ -20,9 +20,9 @@ module Finaid
                 next_year = current_year + 1
                 years.push(next_year)
                 # If the next year's transition hasn't been recorded yet in the DB,
-                # issue a gentle reminder.
+                # issue a stern reminder. We have less than five months to add it.
                 unless FinAidYear.get_upcoming_start_date(next_year)
-                  logger.error("No FinAidYear record for academic year #{next_year} yet. Please obtain from the academic calendar.")
+                  logger.fatal("No FinAidYear record for academic year #{next_year} yet! Please obtain it from the academic calendar and add it to the CalCentral DB ASAP!")
                 end
               end
             end

@@ -28,9 +28,9 @@ describe Finaid::TimeRange do
     end
     context 'close to last year in DB' do
       let(:fake_now) {DateTime.parse('2014-04-01')}
-      it 'logs an error' do
+      it 'logs a fatal error' do
         class_logger = double
-        expect(class_logger).to receive(:error).with(/2014/)
+        expect(class_logger).to receive(:fatal).with(/2014/)
         allow(Finaid::TimeRange).to receive(:logger).and_return(class_logger)
         expect(subject).to eq [2013, 2014]
       end
