@@ -1,7 +1,7 @@
 # TODO collapse this class into Bearfacts::Telebears
 module MyAcademics
   class Telebears
-    include MyAcademicsModule, ClassLogger, DatedFeed
+    include AcademicsModule, ClassLogger, DatedFeed
 
     def merge(data)
       data[:telebears] = {}

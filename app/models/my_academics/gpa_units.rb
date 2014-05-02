@@ -1,6 +1,6 @@
 module MyAcademics
   class GpaUnits
-    include MyAcademicsModule
+    include AcademicsModule
 
     def merge(data)
       student_info = CampusOracle::Queries.get_student_info(@uid) || {}

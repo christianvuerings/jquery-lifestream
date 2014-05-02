@@ -1,7 +1,7 @@
 # TODO collapse this class into Bearfacts::Exams
 module MyAcademics
   class Exams
-    include MyAcademicsModule
+    include AcademicsModule
     include DatedFeed
 
     def merge(data = {})

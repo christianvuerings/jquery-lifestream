@@ -1,6 +1,6 @@
 module MyAcademics
   class TeachingCanvas
-    include MyAcademicsModule
+    include AcademicsModule
 
     def merge_sites(campus_courses)
       return unless Canvas::Proxy.access_granted?(@uid)
