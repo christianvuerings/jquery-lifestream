@@ -181,6 +181,7 @@ end
 
 group :test do
   gem "activerecord-jdbcsqlite3-adapter", "~> 1.3.7"
+  gem 'page-object', '~> 0.9.8'
 end
 
 group :test, :testext do
