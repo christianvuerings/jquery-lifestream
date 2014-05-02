@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Finaid::Proxy do
 
-  let(:this_year){ Settings.myfinaid_proxy.test_term_year } # start with 2013!
+  let(:this_year){ 2013 }
 
   let(:live_oski_finaid){ Finaid::Proxy.new({user_id: "61889",  term_year: this_year }).get }
   let(:fake_oski_finaid){ Finaid::Proxy.new({user_id: "61889",  term_year: this_year, fake: true}).get }

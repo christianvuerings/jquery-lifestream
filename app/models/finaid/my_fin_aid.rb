@@ -30,14 +30,11 @@ module Finaid
     end
 
     def self.append_activities!(uid, activities)
-      finaid_proxy_current = Finaid::Proxy.new({user_id: uid, term_year: current_term_year})
-
-      return unless finaid_proxy_current.lookup_student_id.present?
-
-      proxies = [finaid_proxy_current]
-      if Settings.myfinaid_proxy.include_next_year
-        proxies << Finaid::Proxy.new({user_id: uid, term_year: next_term_year})
+      proxies = TimeRange.current_years.collect do |year|
+        Finaid::Proxy.new({user_id: uid, term_year: year})
       end
+      return unless proxies.present? && proxies.first.lookup_student_id.present?
+
       proxies.each do |proxy|
         next unless feed = proxy.get.try(:[], :body)
         begin
@@ -56,6 +53,7 @@ module Finaid
     end
 
     def self.append_documents!(documents, academic_year, activities)
+      cutoff_date = TimeRange.cutoff_date
       documents.each do |document|
         title = document.css("Name").text.strip
 
@@ -164,27 +162,6 @@ module Finaid
       else
         raise ArgumentError, "Cannot decode date: #{date} status: #{status}"
       end
-    end
-
-    def self.current_term_year
-      # to-do: revise this logic with the team
-      return Settings.myfinaid_proxy.test_term_year if Settings.myfinaid_proxy.fake
-      year = Time.now.year
-      term_year = (Time.now.month.between?(1, 8)) ? year : year + 1
-      "#{term_year}"
-    end
-
-    def self.cutoff_date
-      @cutoff_date ||= (Time.zone.now - 1.year)
-    end
-
-    # allow setting a fake now, for use in tests only.
-    def self.cutoff_date=(date)
-      @cutoff_date = date
-    end
-
-    def self.next_term_year
-      "#{current_term_year.to_i + 1}"
     end
 
     def self.parsed_date(date_string='')

@@ -10,7 +10,9 @@ SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
+DROP INDEX public.index_fin_aid_years_on_current_year;
 DROP INDEX public.index_user_auths_on_uid;
+ALTER TABLE ONLY public.fin_aid_years DROP CONSTRAINT fin_aid_years_pkey;
 ALTER TABLE ONLY public.user_roles DROP CONSTRAINT user_roles_pkey;
 ALTER TABLE ONLY public.user_auths DROP CONSTRAINT user_auths_pkey;
 ALTER TABLE ONLY public.links DROP CONSTRAINT links_pkey;
@@ -21,6 +23,8 @@ ALTER TABLE public.user_auths ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.links ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_sections ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_categories ALTER COLUMN id DROP DEFAULT;
+DROP SEQUENCE public.fin_aid_years_id_seq;
+DROP TABLE public.fin_aid_years;
 DROP SEQUENCE public.user_roles_id_seq;
 DROP TABLE public.user_roles;
 DROP SEQUENCE public.user_auths_id_seq;
@@ -39,6 +43,42 @@ SET search_path = public, pg_catalog;
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: fin_aid_years; Type: TABLE; Schema: public; Owner: calcentral_development; Tablespace:
+--
+
+CREATE TABLE fin_aid_years (
+    id integer NOT NULL,
+    current_year integer NOT NULL,
+    upcoming_start_date date NOT NULL,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.fin_aid_years OWNER TO calcentral_development;
+
+--
+-- Name: fin_aid_years_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral_development
+--
+
+CREATE SEQUENCE fin_aid_years_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.fin_aid_years_id_seq OWNER TO calcentral_development;
+
+--
+-- Name: fin_aid_years_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral_development
+--
+
+ALTER SEQUENCE fin_aid_years_id_seq OWNED BY fin_aid_years.id;
+
 
 --
 -- Name: link_categories; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
@@ -263,7 +303,15 @@ ALTER SEQUENCE user_roles_id_seq OWNED BY user_roles.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: calcentral
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: calcentral_development
+--
+
+ALTER TABLE ONLY fin_aid_years ALTER COLUMN id SET DEFAULT nextval('fin_aid_years_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: calcentral_development
 --
 
 ALTER TABLE ONLY link_categories ALTER COLUMN id SET DEFAULT nextval('link_categories_id_seq'::regclass);
@@ -298,7 +346,25 @@ ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_s
 
 
 --
--- Data for Name: link_categories; Type: TABLE DATA; Schema: public; Owner: calcentral
+-- Data for Name: fin_aid_years; Type: TABLE DATA; Schema: public; Owner: calcentral_development
+--
+
+COPY fin_aid_years (id, current_year, upcoming_start_date, created_at, updated_at) FROM stdin;
+1	2013	2014-03-29	2014-05-01 21:32:13.581	2014-05-01 21:32:13.581
+2	2014	2015-03-28	2014-05-01 21:32:13.588	2014-05-01 21:32:13.588
+3	2015	2016-03-26	2014-05-01 21:32:13.593	2014-05-01 21:32:13.593
+\.
+
+
+--
+-- Name: fin_aid_years_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral_development
+--
+
+SELECT pg_catalog.setval('fin_aid_years_id_seq', 3, true);
+
+
+--
+-- Data for Name: link_categories; Type: TABLE DATA; Schema: public; Owner: calcentral_development
 --
 
 INSERT INTO link_categories VALUES (280, 'Academic', 'academic', true, '2013-08-15 23:09:37.893', '2013-08-15 23:09:37.893');
@@ -1439,6 +1505,14 @@ SELECT pg_catalog.setval('user_roles_id_seq', 3, true);
 
 
 --
+-- Name: fin_aid_years_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral_development; Tablespace:
+--
+
+ALTER TABLE ONLY fin_aid_years
+    ADD CONSTRAINT fin_aid_years_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
 --
 
@@ -1476,6 +1550,13 @@ ALTER TABLE ONLY user_auths
 
 ALTER TABLE ONLY user_roles
     ADD CONSTRAINT user_roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_fin_aid_years_on_current_year; Type: INDEX; Schema: public; Owner: calcentral_development; Tablespace:
+--
+
+CREATE UNIQUE INDEX index_fin_aid_years_on_current_year ON fin_aid_years USING btree (current_year);
 
 
 --
