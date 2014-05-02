@@ -10,7 +10,7 @@ require_relative 'pages/my_academics_page'
 require_relative 'pages/my_campus_page'
 require_relative 'pages/my_finances_page'
 
-describe 'Logging in with deep linking' do
+describe 'Logging in with deep linking', :testui => true do
 
   before(:all) do
     @user = UserUtils.oski_username

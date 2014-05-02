@@ -9,7 +9,7 @@ require_relative 'pages/settings_page'
 require_relative 'util/web_driver_utils'
 require_relative 'util/user_utils'
 
-describe 'When I visit My Finances' do
+describe 'When I visit My Finances', :testui => true do
 
   before(:all) do
     @driver = WebDriverUtils.driver

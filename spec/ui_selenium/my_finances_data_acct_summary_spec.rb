@@ -13,7 +13,7 @@ require_relative 'pages/api_my_status_page'
 require_relative 'util/web_driver_utils'
 require_relative 'util/user_utils'
 
-describe 'My Finances Billing Summary card' do
+describe 'My Finances Billing Summary card', :testui => true do
 
   before(:all) do
     @driver = WebDriverUtils.driver
