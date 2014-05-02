@@ -1,6 +1,10 @@
 /* Activities widget */
 .cc-widget-activities {
 
+  a {
+    @include hyphenation;
+  }
+
   .cc-widget-title .cc-select {
     margin: 7px 10px 0 0;
   }
