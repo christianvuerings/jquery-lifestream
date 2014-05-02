@@ -1,4 +1,4 @@
-module MyAcademics::AcademicsModule
+module MyAcademicsModule
   extend self
 
   def initialize(uid)

@@ -1,62 +1,62 @@
-class MyAcademics::Semesters
+module MyAcademics
+  class Semesters
+    include MyAcademicsModule
 
-  include MyAcademics::AcademicsModule
+    def initialize(uid)
+      super(uid)
+    end
 
-  def initialize(uid)
-    super(uid)
-  end
+    def self.build_semester(term_yr, term_cd)
+      MyAcademicsModule.semester_info(term_yr, term_cd).merge({
+        timeBucket: MyAcademicsModule.time_bucket(term_yr, term_cd),
+        classes: []
+      })
+    end
 
-  def self.build_semester(term_yr, term_cd)
-    MyAcademics::AcademicsModule.semester_info(term_yr, term_cd).merge({
-      timeBucket: MyAcademics::AcademicsModule.time_bucket(term_yr, term_cd),
-      classes: []
-    })
-  end
+    def merge(data)
+      proxy = CampusOracle::UserCourses.new({:user_id => @uid})
+      feed = proxy.get_all_campus_courses
+      transcripts = proxy.get_all_transcripts
+      semesters = []
 
-  def merge(data)
-    proxy = CampusOracle::UserCourses.new({:user_id => @uid})
-    feed = proxy.get_all_campus_courses
-    transcripts = proxy.get_all_transcripts
-    semesters = []
-
-    feed.keys.each do |term_key|
-      (term_yr, term_cd) = term_key.split("-")
-      semester = self.class.build_semester(term_yr, term_cd)
-      feed[term_key].each do |course|
-        next unless course[:role] == 'Student'
-        class_item = class_info(course)
-        class_item[:sections].each do |section|
-          if section[:is_primary_section]
-            section[:grade_option] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
-            section[:units] = section[:unit]
+      feed.keys.each do |term_key|
+        (term_yr, term_cd) = term_key.split("-")
+        semester = self.class.build_semester(term_yr, term_cd)
+        feed[term_key].each do |course|
+          next unless course[:role] == 'Student'
+          class_item = class_info(course)
+          class_item[:sections].each do |section|
+            if section[:is_primary_section]
+              section[:grade_option] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
+              section[:units] = section[:unit]
+            end
           end
+          class_item[:transcript] = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
+          semester[:classes] << class_item
         end
-        class_item[:transcript] = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
-        semester[:classes] << class_item
+        semesters << semester unless semester[:classes].empty?
       end
-      semesters << semester unless semester[:classes].empty?
+
+      data[:semesters] = semesters
     end
 
-    data[:semesters] = semesters
-  end
-
-  def find_transcript_data(transcripts, term_yr, term_cd, dept_name, catalog_id)
-    matching_transcripts = transcripts.select do |t|
-      t['term_yr'] == term_yr &&
-        t['term_cd'] == term_cd &&
-        t['dept_name'] == dept_name &&
-        t['catalog_id'] == catalog_id
-    end
-    if matching_transcripts.present?
-      matching_transcripts.collect do |t|
-        {
-          units: t['transcript_unit'],
-          grade: t['grade']
-        }
+    def find_transcript_data(transcripts, term_yr, term_cd, dept_name, catalog_id)
+      matching_transcripts = transcripts.select do |t|
+        t['term_yr'] == term_yr &&
+          t['term_cd'] == term_cd &&
+          t['dept_name'] == dept_name &&
+          t['catalog_id'] == catalog_id
       end
-    else
-      nil
+      if matching_transcripts.present?
+        matching_transcripts.collect do |t|
+          {
+            units: t['transcript_unit'],
+            grade: t['grade']
+          }
+        end
+      else
+        nil
+      end
     end
   end
-
 end
