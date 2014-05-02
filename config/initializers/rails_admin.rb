@@ -10,7 +10,7 @@ class Ability
       can :access, :all
       can :dashboard, :all
       if user.policy.can_administrate?
-        can :manage, [User::Auth]
+        can :manage, [User::Auth, Finaid::FinAidYear]
       end
       if user.policy.can_author?
         can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection, Links::UserRole]
@@ -60,7 +60,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole']
+  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole', 'Finaid::FinAidYear']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -122,6 +122,10 @@ RailsAdmin.config do |config|
 
   config.model 'User::Auth' do
     label "User Authorizations"
+  end
+
+  config.model 'Finaid::FinAidYear' do
+    label "Financial Aid Transition Dates"
   end
 
   config.navigation_static_label = "Tools"

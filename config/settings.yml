@@ -108,8 +108,6 @@ myfinaid_proxy:
   app_id: ''
   app_key: ''
   base_url: "https://apis-dev.berkeley.edu/myfinaid"
-  test_term_year: "2013"
-  include_next_year: false
 
 financials_proxy:
   fake: false
@@ -191,6 +189,7 @@ cache:
     Bearfacts::MyRegBlocks: 0
 
     Berkeley::Terms: <%= 4.hours %>
+    Finaid::TimeRange: <%= 4.hours %>
 
     Canvas::MergedUserSites: <%= 15.minutes %>
     Canvas::UserCourses: <%= 30.minutes %>
