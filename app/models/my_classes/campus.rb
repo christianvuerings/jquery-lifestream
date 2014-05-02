@@ -8,7 +8,7 @@ class MyClasses::Campus
     semester_key = "#{current_term.year}-#{current_term.code}"
     if all_courses[semester_key]
       all_courses[semester_key].each do |course|
-        course[:site_url] = MyAcademics::AcademicsModule.class_to_url(course)
+        course[:site_url] = MyAcademicsModule.class_to_url(course)
         append_class_info(course, classes)
       end
     end
