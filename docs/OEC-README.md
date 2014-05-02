@@ -2,7 +2,7 @@
 
 ## Configuration
 
-* Settings.oec has the list of terms and departments to restrict the export.
+* The "oec" section of ./config/settings.yml has the list of terms and departments to restrict the export. It can take multiple values.
 * Make sure your campusdb points at production oracle (bspprod) and that you have access to it.
 
 ## Rake tasks
@@ -53,3 +53,15 @@ RAILS_ENV=production rake oec:students
 cp tmp/oec/students-{timestamp}.csv tmp/oec/students.csv
 cp tmp/oec/course_students-{timestamp}.csv tmp/oec/course_students.csv
 ```
+
+## Technical Overview
+
+The rake tasks are defined in ./lib/tasks/oec.rake. They call out to model classes that are subclasses of Oec::Export.
+Calling the #export method generates a CSV file with the subclass's defined headers. The subclass uses #append_records
+to fill in the data appropriate to it.
+
+Queries to the Oracle database are all kept in Oec::Queries.
+
+Unit tests that cover all Oec code are in ./specs/models/oec. The tests use the CSV files in ./fixtures/oec to build
+up fake lists of CCNs and then verify that the output code matches the fixture CSV. If you add columns to the CSV files
+make sure to add the columns to the fixture files too, or unit tests may begin to fail.
