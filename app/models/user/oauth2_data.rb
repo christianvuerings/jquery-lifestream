@@ -62,7 +62,7 @@ module User
       use_pooled_connection {
         authenticated_entry = self.where(uid: user_id, app_id: Canvas::Proxy::APP_ID).first
         return unless authenticated_entry
-        userinfo = Canvas::UserProfile.new(user_id: user_id).user_profile
+        userinfo = Canvas::SisUserProfile.new(user_id: user_id).sis_user_profile
         return unless userinfo && userinfo.status == 200
         login_info = safe_json userinfo.body
         if login_info && login_info["primary_email"]

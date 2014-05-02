@@ -25,12 +25,6 @@ describe Canvas::CourseAddUser do
     ]
   end
 
-  let(:canvas_user_profile_response) do
-    profile_response = double()
-    profile_response.stub(:body).and_return(canvas_user_profile.to_json)
-    profile_response
-  end
-
   let(:canvas_course_sections_list_response) do
     sections_list_response = double()
     sections_list_response.stub(:body).and_return(canvas_course_sections_list.to_json)
@@ -38,8 +32,8 @@ describe Canvas::CourseAddUser do
   end
 
   before do
-    Canvas::UserProfile.any_instance.stub(:user_profile).and_return(canvas_user_profile_response)
-    Canvas::CourseSections.any_instance.stub(:sections_list).and_return(canvas_course_sections_list_response)
+    allow_any_instance_of(Canvas::SisUserProfile).to receive(:get).and_return(canvas_user_profile)
+    allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(canvas_course_sections_list_response)
   end
 
   context "when searching for users" do
@@ -102,8 +96,8 @@ describe Canvas::CourseAddUser do
 
   context "when adding user to a course section" do
     before do
-      Canvas::UserProvision.any_instance.stub(:import_users).with(["260506"]).and_return(true)
-      Canvas::SectionEnrollments.any_instance.stub(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
+      allow_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(["260506"]).and_return(true)
+      allow_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
     end
 
     it "raises exception when ldap_user_id is not a string" do
@@ -119,13 +113,13 @@ describe Canvas::CourseAddUser do
     end
 
     it "adds user to canvas" do
-      Canvas::UserProvision.any_instance.should_receive(:import_users).with(["260506"]).and_return(true)
+      expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(["260506"]).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
       expect(result).to be_true
     end
 
     it "adds user to canvas course section using canvas user id" do
-      Canvas::SectionEnrollments.any_instance.should_receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
+      expect_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
       expect(result).to be_true
     end

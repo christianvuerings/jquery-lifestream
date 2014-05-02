@@ -15,7 +15,7 @@ class CanvasCourseAddUserController < ApplicationController
   # Used to obtain LTI user in context of course embedded apps
   # GET /api/academics/canvas/course_user_roles
   def course_user_roles
-    canvas_user_profile = Canvas::UserProfile.new(user_id: session[:user_id]).get
+    canvas_user_profile = Canvas::SisUserProfile.new(user_id: session[:user_id]).get
     course_user_roles = Canvas::CourseUser.new(:user_id => canvas_user_profile['id'], :course_id => canvas_course_id).roles
     global_admin = Canvas::Admins.new.admin_user?(session[:user_id])
     render json: { courseId: session[:canvas_course_id], roles: course_user_roles.merge({'globalAdmin' => global_admin}) }.to_json
