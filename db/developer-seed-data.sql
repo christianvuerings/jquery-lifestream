@@ -18,6 +18,7 @@ ALTER TABLE ONLY public.user_auths DROP CONSTRAINT user_auths_pkey;
 ALTER TABLE ONLY public.links DROP CONSTRAINT links_pkey;
 ALTER TABLE ONLY public.link_sections DROP CONSTRAINT link_sections_pkey;
 ALTER TABLE ONLY public.link_categories DROP CONSTRAINT link_categories_pkey;
+ALTER TABLE public.fin_aid_years ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.user_roles ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.user_auths ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.links ALTER COLUMN id DROP DEFAULT;
@@ -349,12 +350,9 @@ ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_s
 -- Data for Name: fin_aid_years; Type: TABLE DATA; Schema: public; Owner: calcentral_development
 --
 
-COPY fin_aid_years (id, current_year, upcoming_start_date, created_at, updated_at) FROM stdin;
-1	2013	2014-03-29	2014-05-01 21:32:13.581	2014-05-01 21:32:13.581
-2	2014	2015-03-28	2014-05-01 21:32:13.588	2014-05-01 21:32:13.588
-3	2015	2016-03-26	2014-05-01 21:32:13.593	2014-05-01 21:32:13.593
-\.
-
+INSERT INTO fin_aid_years VALUES (1, 2013, '2014-03-29', '2014-05-01 21:32:13.581', '2014-05-01 21:32:13.581');
+INSERT INTO fin_aid_years VALUES (2, 2014, '2015-03-28', '2014-05-01 21:32:13.588', '2014-05-01 21:32:13.588');
+INSERT INTO fin_aid_years VALUES (3, 2015, '2016-03-26', '2014-05-01 21:32:13.593', '2014-05-01 21:32:13.593');
 
 --
 -- Name: fin_aid_years_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral_development
