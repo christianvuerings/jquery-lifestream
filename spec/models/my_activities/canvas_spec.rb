@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MyActivities::Canvas do
+describe MyActivities::CanvasActivities do
   let!(:documented_types) { %w(alert announcement assignment discussion gradePosting message webconference) }
 
   before do
@@ -11,7 +11,7 @@ describe MyActivities::Canvas do
   end
 
   it "should be able to process a normal canvas feed" do
-    activities = MyActivities::Canvas.get_feed(@user_id, [])
+    activities = MyActivities::CanvasActivities.get_feed(@user_id, [])
     activities.instance_of?(Array).should == true
     activities.each do | activity |
       activity[:id].blank?.should_not == true
@@ -85,7 +85,7 @@ describe MyActivities::Canvas do
         emitter: Canvas::Proxy::APP_NAME
       }
     ]
-    activities = MyActivities::Canvas.get_feed(@user_id, canvas_sites)
+    activities = MyActivities::CanvasActivities.get_feed(@user_id, canvas_sites)
     activities.length.should == 4
     activities.each do | activity |
       activity[:user_id].should == @user_id
@@ -108,7 +108,7 @@ describe MyActivities::Canvas do
     bad_date_entry = { "id" => @user_id, "user_id" => @user_id, "created_at" => "stone-age"}
     flawed_activity_stream = @fake_activity_stream + [bad_date_entry]
     Canvas::UserActivityStream.stub(:new).and_return(stub_proxy(:user_activity, flawed_activity_stream))
-    activities = MyActivities::Canvas.get_feed(@user_id, [])
+    activities = MyActivities::CanvasActivities.get_feed(@user_id, [])
     activities.instance_of?(Array).should == true
     activities.size.should == @fake_activity_stream.size
   end
@@ -116,7 +116,7 @@ describe MyActivities::Canvas do
   it "should sometimes have score and instructor message appended to the summary field" do
     # Search for a particular entry in the cassette and make sure it's appended to properly
     Canvas::UserActivityStream.stub(:new).and_return(@fake_activity_stream_proxy)
-    activities = MyActivities::Canvas.get_feed(@user_id, [])
+    activities = MyActivities::CanvasActivities.get_feed(@user_id, [])
     activity = activities.select {|entry| entry[:id] == "canvas_40544495"}.first
     activity[:summary].should eq("Please write more neatly next time. 87 out of 100 - Good work!")
   end
@@ -124,7 +124,7 @@ describe MyActivities::Canvas do
   it "should strip system generated 'click here' URLs from the summary field" do
     # But should not over-strip by removing instructor-added 'click here' URLs
     Canvas::UserActivityStream.stub(:new).and_return(@fake_activity_stream_proxy)
-    activities = MyActivities::Canvas.get_feed(@user_id, [])
+    activities = MyActivities::CanvasActivities.get_feed(@user_id, [])
 
     activity = activities.select {|entry| entry[:id] == "canvas_43225861"}.first
     activity[:summary].should eq("First, some instructor-written text. Click here to view the assignment: https://ucberkeley.instructure.com/courses/832071/assignments/3043635 A new assignment has been created for your course, Biology for Poets Report to STC due: Apr 1 at 11:59pm")
