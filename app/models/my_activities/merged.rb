@@ -7,7 +7,7 @@ module MyActivities
     def initialize(uid, options={})
       super(uid, options)
       @site_proxies = [
-        MyActivities::Canvas,
+        MyActivities::CanvasActivities,
         MyActivities::SakaiAnnouncements
       ]
       @proxies = [
