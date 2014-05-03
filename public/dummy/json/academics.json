@@ -450,8 +450,8 @@
     {
       "name": "Spring 2014",
       "slug": "spring-2014",
-      "term_cd": "B",
-      "term_yr": "2014",
+      "termCode": "B",
+      "termYear": "2014",
       "timeBucket": "future",
       "classes": [
         {
@@ -501,8 +501,8 @@
     {
       "name": "Fall 2013",
       "slug": "fall-2013",
-      "term_cd": "D",
-      "term_yr": "2013",
+      "termCode": "D",
+      "termYear": "2013",
       "timeBucket": "current",
       "classes": [
         {
@@ -656,8 +656,8 @@
     {
       "name": "Spring 2012",
       "slug": "spring-2012",
-      "term_cd": "B",
-      "term_yr": "2012",
+      "termCode": "B",
+      "termYear": "2012",
       "timeBucket": "past",
       "classes": [
         {
@@ -780,8 +780,8 @@
     {
       "name": "Summer 2013",
       "slug": "summer-2013",
-      "term_cd": "C",
-      "term_yr": "2013",
+      "termCode": "C",
+      "termYear": "2013",
       "classes": [
         {
           "course_code": "BIO 123A",
@@ -891,8 +891,8 @@
     {
       "name": "Fall 2013",
       "slug": "fall-2013",
-      "term_cd": "D",
-      "term_yr": "2013",
+      "termCode": "D",
+      "termYear": "2013",
       "classes": [
         {
           "course_code": "BIO 123A",
