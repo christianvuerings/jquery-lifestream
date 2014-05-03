@@ -3,8 +3,13 @@ module Canvas
     include SafeJsonParser
     include Cache::UserCacheExpiry
 
+    def initialize(options = {})
+      super(options)
+      @canvas_user_id = options[:canvas_user_id]
+    end
+
     def user_profile
-      request("users/sis_login_id:#{@uid}/profile", "_user_profile")
+      self.class.fetch_from_cache(@canvas_user_id.to_s) { request_user_profile }
     end
 
     def get
@@ -14,6 +19,12 @@ module Canvas
 
     def existence_check
       true
+    end
+
+    private
+
+    def request_user_profile
+      request_uncached("users/#{@canvas_user_id}/profile", "_user_profile")
     end
 
   end
