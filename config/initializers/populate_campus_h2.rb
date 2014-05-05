@@ -536,15 +536,9 @@
         connection.execute sql
 
         # Insert binary data for the test student photo.
-        raw_data = File.open('public/dummy/images/sample_student_72x96.jpg', 'rb') {|file| file.read}
-        column_def = Object.new
-        column_def.define_singleton_method(:name) {'PHOTO'}
-        column_def.define_singleton_method(:type) {:binary}
-        # TODO fix this insert statement, which fails in Rails 4. CLC-3543.
-        #connection.insert(
-        #    'insert into CALCENTRAL_STUDENT_PHOTO_VW set STUDENT_LDAP_UID=?, BYTES=?, PHOTO=?',
-        #    nil, nil, nil, nil,
-        #    [[nil, 300939], [nil, raw_data.length], [column_def, raw_data]])
+        raw_data = File.open('public/dummy/images/sample_student_72x96.jpg', 'rb').read
+        sql = "insert into CALCENTRAL_STUDENT_PHOTO_VW (student_ldap_uid, bytes, photo) values (300939, #{raw_data.length}, '#{raw_data.unpack('H*').first}');"
+        connection.execute(sql)
       end
     end
   end
