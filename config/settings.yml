@@ -253,7 +253,7 @@ features:
   app_alerts: false
   cal1card: false
   profile_page: false
-  reauthentication: false
+  reauthentication: true
 
 oec:
   export_directory: 'tmp/oec'

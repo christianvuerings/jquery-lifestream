@@ -32,7 +32,6 @@ features:
   app_alerts: true
   cal1card: true
   profile_page: true
-  reauthentication: true
 
 cache:
   store: "memory"
