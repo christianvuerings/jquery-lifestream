@@ -30,7 +30,7 @@ module EtsBlog
         return nil
       end
       unless xml_doc['xml'] && xml_doc['xml']['node']
-        logger.error("unexpected xml content: #{xml_doc}")
+        logger.info("Unexpected XML content: #{xml_doc}")
         return nil
       end
       node_list = xml_doc['xml']['node']
