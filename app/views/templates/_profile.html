@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="templates/profile.html">
   <div class="cc-page-profile" data-ng-show="api.user.profile.features.profile_page">
     <div class="cc-heading-page-title">
-      <a href="dashboard">My Dashboard</a> » Profile 
+      <a href="dashboard">My Dashboard</a> » Profile
     </div>
     <div class="medium-3">
       <div class="cc-widget">
@@ -13,19 +13,19 @@
             <img data-cc-image-loaded-directive="profilePictureLoaded" alt="{{api.user.profile.full_name}}'s Profile Picture" data-ng-src="{{api.user.profile.profilePicture}}" width="105" height="140">
           </div>
           <div class="cc-widget-padding">
-            <div ng-show="api.user.profile.full_name"> 
+            <div ng-show="api.user.profile.full_name">
               <strong>Name: </strong> <span ng-bind="api.user.profile.full_name"></span>
               <br/>
             </div>
-            <div ng-show="api.user.profile.preferred_name"> 
+            <div ng-show="api.user.profile.preferred_name">
               <strong>Preferred Name: </strong> <span ng-bind="api.user.profile.preferred_name"></span>
               <br/>
             </div>
-            <div ng-show="api.user.profile.googleEmail"> 
+            <div ng-show="api.user.profile.googleEmail">
               <strong>Email: </strong> <span ng-bind="api.user.profile.googleEmail"></span>
               <br/>
             </div>
-            <div ng-show="api.user.profile.canvasEmail">  
+            <div ng-show="api.user.profile.canvasEmail">
               <strong>Email: </strong> <span ng-bind="api.user.profile.canvasEmail"></span>
               <br/>
             </div>
