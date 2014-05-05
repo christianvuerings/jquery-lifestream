@@ -135,9 +135,7 @@
                     <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
                   </div>
                   <div class="cc-youtube-video">
-                    <iframe type="text/html" width="100%" height="100%"
-                    data-ng-attr-src="{{selectedVideo.link}}"
-                    frameborder="0" allowfullscreen></iframe>
+                    <div data-cc-youtube-directive="selectedVideo.id"></div>
                   </div>
                 </div>
                 <div data-ng-if="api.user.profile.features.podcasts">
