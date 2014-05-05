@@ -216,8 +216,8 @@ module CampusOracle
       end
       # This only applies to enrollment records and will be skipped for instructors.
       if row['enroll_status'] == 'W'
-        section_data[:waitlistPosition] = row['wait_list_seq_num']
-        section_data[:enroll_limit] = row['enroll_limit']
+        section_data[:waitlistPosition] = row['wait_list_seq_num'].to_i
+        section_data[:enroll_limit] = row['enroll_limit'].to_i
       end
       section_data
     end

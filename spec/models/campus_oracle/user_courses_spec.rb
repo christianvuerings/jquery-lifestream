@@ -69,6 +69,8 @@ describe CampusOracle::UserCourses do
     course_primary = courses["2014-C"][0][:sections][0]
     course_primary[:waitlistPosition].should == 42
     course_primary[:enroll_limit].should == 5000
+    course_primary[:waitlistPosition].to_s.should == '42'
+    course_primary[:enroll_limit].to_s.should == '5000'
   end
 
   it "should say that Tammi has student history", :if => CampusOracle::Connection.test_data? do
@@ -111,7 +113,7 @@ describe CampusOracle::UserCourses do
             'pnp_flag' => 'Y ',
             'unit' => '3',
             'section_num' => '012',
-            'wait_list_seq_num' => 0
+            'wait_list_seq_num' => BigDecimal.new(0)
           }),
           base_enrollment.merge({
             'course_cntl_num' => '76392',
@@ -119,7 +121,7 @@ describe CampusOracle::UserCourses do
             'pnp_flag' => 'N ',
             'unit' => '2',
             'section_num' => '021',
-            'wait_list_seq_num' => 2
+            'wait_list_seq_num' => BigDecimal.new(2)
           })
         ]
       }
