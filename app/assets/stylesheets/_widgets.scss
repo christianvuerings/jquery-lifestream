@@ -110,10 +110,6 @@
     }
   }
 }
-.cc-widget-sublist-extra {
-  display: block;
-  margin-top: 10px;
-}
 .cc-widget-subtitle {
   background: $cc-color-lighter-medium-grey;
 
@@ -126,6 +122,7 @@
   }
 }
 .cc-widget-text {
+  line-height: 1.6;
   padding: 15px;
 }
 .cc-widget-title {
