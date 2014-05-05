@@ -15,19 +15,14 @@ module Finaid
     end
 
     def self.append!(uid, activities)
-      finaid_activities = get_activities_from_cache(uid)
-      activities.concat(finaid_activities) if finaid_activities
+      begin
+        append_activities!(uid, activities)
+      rescue => e
+        self.handle_exception(e, @uid, "Remote server unreachable", true)
+      end
     end
 
     private
-
-    def self.get_activities_from_cache(uid)
-      smart_fetch_from_cache({id: uid, user_message_on_exception: "Remote server unreachable", return_nil_on_generic_error: true}) do
-        activities = []
-        append_activities!(uid, activities)
-        activities
-      end
-    end
 
     def self.append_activities!(uid, activities)
       proxies = TimeRange.current_years.collect do |year|
