@@ -350,9 +350,9 @@ ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_s
 -- Data for Name: fin_aid_years; Type: TABLE DATA; Schema: public; Owner: calcentral_development
 --
 
-INSERT INTO fin_aid_years VALUES (1, 2013, '2014-03-29', '2014-05-01 21:32:13.581', '2014-05-01 21:32:13.581');
-INSERT INTO fin_aid_years VALUES (2, 2014, '2015-03-28', '2014-05-01 21:32:13.588', '2014-05-01 21:32:13.588');
-INSERT INTO fin_aid_years VALUES (3, 2015, '2016-03-26', '2014-05-01 21:32:13.593', '2014-05-01 21:32:13.593');
+INSERT INTO fin_aid_years VALUES (1, 2014, '2014-03-29', '2014-05-01 21:32:13.581', '2014-05-01 21:32:13.581');
+INSERT INTO fin_aid_years VALUES (2, 2015, '2015-03-28', '2014-05-01 21:32:13.588', '2014-05-01 21:32:13.588');
+INSERT INTO fin_aid_years VALUES (3, 2016, '2016-03-26', '2014-05-01 21:32:13.593', '2014-05-01 21:32:13.593');
 
 --
 -- Name: fin_aid_years_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral_development
