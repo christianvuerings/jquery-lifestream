@@ -14,7 +14,7 @@ module EtsBlog
                                           user_message_on_exception: "Alert server unreachable",
                                           return_nil_on_generic_error: true,
                                         }) do
-        (get_alerts.nil?) ? nil : get_alerts.first
+        (get_alerts.nil?) ? '' : get_alerts.first
       end
     end
 

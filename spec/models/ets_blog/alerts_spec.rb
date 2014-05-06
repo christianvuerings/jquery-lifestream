@@ -25,15 +25,15 @@ describe EtsBlog::Alerts do
     end
     it "that receive unexpected xml data should return nil" do
       fake_proxy.stub(:get_raw_xml).and_return(unexpected_xml)
-      fake_proxy.get_latest.should be_nil
+      fake_proxy.get_latest.should eq ''
     end
     it "that receive empty xml data should return nil" do
       fake_proxy.stub(:get_raw_xml).and_return(empty_xml)
-      fake_proxy.get_latest.should be_nil
+      fake_proxy.get_latest.should eq ''
       fake_proxy.stub(:get_raw_xml).and_return(nil)
-      fake_proxy.get_latest.should be_nil
+      fake_proxy.get_latest.should eq ''
       fake_proxy.stub(:get_raw_xml).and_return('')
-      fake_proxy.get_latest.should be_nil
+      fake_proxy.get_latest.should eq ''
     end
   end
 
