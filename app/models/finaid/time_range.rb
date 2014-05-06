@@ -8,12 +8,11 @@ module Finaid
       fetch_from_cache do
         years = []
         terms = Berkeley::Terms.fetch
-        # We use the current term's official start year rather than the current time's year
+        # We use the current term's official end year rather than the current time's year
         # to deal with Spring 2015 being "current" on December 30, 2014.
-        current_year = terms.current.start.year
+        current_year = terms.current.end.year
         case terms.current.name
           when 'Spring', 'Summer'
-            current_year -= 1
             years.push(current_year)
             if (date_to_show_next_year = FinAidYear.get_upcoming_start_date current_year)
               if now >= date_to_show_next_year.in_time_zone.to_datetime
@@ -27,6 +26,7 @@ module Finaid
               end
             end
           when 'Fall'
+            current_year += 1
             years.push(current_year)
         end
         years
