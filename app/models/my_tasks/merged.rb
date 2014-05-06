@@ -2,7 +2,7 @@ require 'my_tasks/param_validator'
 
 module MyTasks
   class Merged < UserSpecificModel
-    include MyTasks::ParamValidator
+    include MyTasks::ParamValidator, Cache::LiveUpdatesEnabled
 
     attr_reader :enabled_sources
 

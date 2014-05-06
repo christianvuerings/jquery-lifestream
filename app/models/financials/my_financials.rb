@@ -7,6 +7,8 @@ module Financials
   # data's update frequency.
   class MyFinancials < UserSpecificModel
 
+    include Cache::LiveUpdatesEnabled
+
     def get_feed_internal
       feed = {}
       if Settings.features.financials

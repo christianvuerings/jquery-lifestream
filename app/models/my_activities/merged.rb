@@ -1,6 +1,8 @@
 module MyActivities
   class Merged < UserSpecificModel
 
+    include Cache::LiveUpdatesEnabled
+
     attr_accessor :site_proxies
     attr_accessor :proxies
 

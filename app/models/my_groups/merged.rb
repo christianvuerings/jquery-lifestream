@@ -1,5 +1,7 @@
 class MyGroups::Merged  < UserSpecificModel
 
+  include Cache::LiveUpdatesEnabled
+
   def get_feed_internal
     groups = []
     [

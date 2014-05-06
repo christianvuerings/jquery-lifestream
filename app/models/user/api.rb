@@ -1,6 +1,6 @@
 module User
   class Api < UserSpecificModel
-    include ActiveRecordHelper
+    include ActiveRecordHelper, Cache::LiveUpdatesEnabled
 
     def initialize(uid)
       super(uid)
