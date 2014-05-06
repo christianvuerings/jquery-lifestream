@@ -4,7 +4,7 @@ describe BlogFeedController do
 
   before do
     @alert_ok = EtsBlog::Alerts.new({fake:true}).get_latest;
-    @alert_ko = EtsBlog::Alerts.new({fake:true}).stub(:get_latest).and_return(nil);
+    @alert_ko = EtsBlog::Alerts.new({fake:true}).stub(:get_latest).and_return('');
   end
 
   it "should return an alert and entries for non-authenticated users" do
