@@ -9,7 +9,7 @@
         scope.$watch(attrs.ccYoutubeDirective, function(value) {
           var videoid = value;
           var videourl = 'https://www.youtube.com/embed/' + videoid + '?version=3&f=playlists&app=youtube_gdata&showinfo=0&theme=light&modestbranding=1&autoplay=1';
-          var imageUrl = $sce.trustAsResourceUrl('https://img.youtube.com/vi/' + videoid + '/maxresdefault.jpg');
+          var imageUrl = $sce.trustAsResourceUrl('https://img.youtube.com/vi/' + videoid + '/hqdefault.jpg');
 
           // Templates for the player
           var templates = {
