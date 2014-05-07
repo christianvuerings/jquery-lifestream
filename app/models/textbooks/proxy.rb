@@ -35,7 +35,7 @@ module Textbooks
           book_detail = {
             :hasChoices => bl.xpath('.//h3[@class="material-group-title choice-title"]').length > 0 || bl.xpath('.//div[@class="choice-list-heading-sub"]').length > 0,
             :title => bl.xpath('.//h3[@class="material-group-title"]')[0].text.split("\n")[0],
-            :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src')[0].text,
+            :image => bl.xpath('.//span[@id="materialTitleImage"]/img/@src')[0].text.gsub("http:", ""),
             :isbn => isbn,
             :author => bl.xpath('.//span[@id="materialAuthor"]')[0].text.split(":")[1],
             :edition => bl.xpath('.//span[@id="materialEdition"]')[0].text.split(":")[1],

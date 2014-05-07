@@ -44,6 +44,20 @@ describe Textbooks::Proxy do
     end
   end
 
+  it "should make sure there is no http:// in the image URL", :testext => true do
+    @ccns = ['73899']
+    @slug = 'spring-2014'
+    proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
+    proxy_response = proxy.get
+    proxy_response[:statusCode].should_not be_nil
+    if proxy_response[:statusCode] == 200
+      feed = proxy_response[:books]
+      feed.should_not be_nil
+      puts feed[:bookDetails][0][:books][0][:image]
+      expect(feed[:bookDetails][0][:books][0][:image]).to_not match /http:/
+    end
+  end
+
   it "should return a friendly error message when a course can't be found", :testext => true do
     @ccns = ["09259"]
     @slug = "spring-2014"
