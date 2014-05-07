@@ -1,6 +1,6 @@
 module Sakai
   class SakaiMergedUserSites < Proxy
-    include ClassLogger
+    include ClassLogger, Cache::UserCacheExpiry
 
     def get_feed
       self.class.fetch_from_cache @uid do

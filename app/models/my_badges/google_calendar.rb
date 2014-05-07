@@ -2,7 +2,7 @@ require 'mail'
 
 module MyBadges
   class GoogleCalendar
-    include MyBadges::BadgesModule, DatedFeed
+    include MyBadges::BadgesModule, DatedFeed, Cache::UserCacheExpiry
 
     def initialize(uid)
       @uid = uid

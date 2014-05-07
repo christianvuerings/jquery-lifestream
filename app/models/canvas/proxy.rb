@@ -2,7 +2,7 @@ module Canvas
   require 'signet/oauth_2/client'
 
   class Proxy < BaseProxy
-    include ClassLogger, SafeJsonParser
+    include ClassLogger, SafeJsonParser, Cache::UserCacheExpiry
     extend Proxies::EnableForActAs
 
     attr_accessor :client
