@@ -48,7 +48,7 @@ module User
         }
       end
 
-      Calcentral::USER_CACHE_EXPIRATION.notify uid
+      Cache::UserCacheExpiry.notify uid
     end
 
     def save
@@ -64,7 +64,7 @@ module User
           end
         end
       }
-      Calcentral::USER_CACHE_EXPIRATION.notify @uid
+      Cache::UserCacheExpiry.notify @uid
     end
 
     def update_attributes(attributes)

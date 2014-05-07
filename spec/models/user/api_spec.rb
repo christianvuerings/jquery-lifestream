@@ -69,7 +69,7 @@ describe User::Api do
 
     User::Oauth2Data.should_receive(:destroy_all)
     Notifications::Notification.should_receive(:destroy_all)
-    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify)
+    Cache::UserCacheExpiry.should_receive(:notify)
 
     User::Api.delete @random_id
 
@@ -168,7 +168,7 @@ describe User::Api do
 
       sleep 1
 
-      Calcentral::USER_CACHE_EXPIRATION.notify @random_id
+      Cache::UserCacheExpiry.notify @random_id
       feed = user_api.get_feed
       unchanged_last_modified = User::Api.get_last_modified(@random_id)
       original_last_modified.should == unchanged_last_modified

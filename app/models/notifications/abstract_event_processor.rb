@@ -20,7 +20,7 @@ module Notifications
         notifications.each do |notification|
           if User::Data.where(:uid => "#{notification.uid}").exists?
             notification.save
-            Calcentral::USER_CACHE_EXPIRATION.notify notification.uid
+            Cache::UserCacheExpiry.notify notification.uid
           else
             Rails.logger.debug "#{self.class.name} Skipping user #{notification.uid} that does not exist in our user table"
           end

@@ -1,6 +1,12 @@
 module Cache
   module UserCacheExpiry
 
+    def self.notify(uid)
+      (Cache::UserCacheExpiry.classes + Cache::LiveUpdatesEnabled.classes).each do |klass|
+        klass.expire uid
+      end
+    end
+
     def self.included(klass)
       @classes ||= []
       @classes << klass

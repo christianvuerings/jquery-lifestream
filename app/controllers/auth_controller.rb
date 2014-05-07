@@ -68,7 +68,7 @@ class AuthController < ApplicationController
   end
 
   def expire
-    Calcentral::USER_CACHE_EXPIRATION.notify session[:user_id]
+    Cache::UserCacheExpiry.notify session[:user_id]
   end
 
 end
