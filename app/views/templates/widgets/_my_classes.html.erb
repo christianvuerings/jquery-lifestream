@@ -5,12 +5,11 @@
   <div data-cc-spinner-directive>
     <div data-ng-show="allClassesPresent" data-ng-repeat="category in allClasses"
          data-ng-class="'cc-widget-classes-{{ category.categoryId }}'">
-      <div class="cc-widget-subtitle" data-ng-show="category.length">
+      <div class="cc-widget-subtitle" data-ng-show="category.length && !onlyStudentInstructor">
         <h3 data-ng-bind="category.categoryTitle"></h3>
       </div>
       <ul class="cc-widget-list">
-        <li data-ng-repeat="class in category.data"
-            data-ng-class="{'cc-widget-list-selected': class.show && category.categoryId !== 'other'}">
+        <li data-ng-repeat="class in category.data">
           <div data-ng-switch="category.categoryId">
             <a data-ng-switch-when="other" class="cc-widget-list-link" data-ng-href="{{class.site_url}}"
                data-ng-click="api.analytics.trackExternalLink('My Other Site Memberships', class.emitter, class.site_url)">
@@ -19,44 +18,52 @@
               </div>
               <strong class="cc-ellipsis" data-ng-bind="class.name"></strong>
             </a>
-            <div data-ng-switch-default
-                 class="cc-widget-list-hover"
-                 data-ng-class="{'cc-widget-list-hover-opened':(class.show)}"
-                 data-cc-accessible-focus-directive
-                 data-ng-click="api.widget.toggleShow($event, category.data, class, 'My Classes')">
-              <span class="cc-visuallyhidden" data-ng-bind-template="Show {{class.show ? 'less' : 'more'}} information about {{class.course_code}} {{class.course_code_section}}"></span>
+            <div data-ng-switch-default>
               <div class="cc-ellipsis">
-                <strong data-ng-bind="class.course_code" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
-                <strong data-ng-bind="class.course_code_section" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
+                <a data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
+                   data-ng-href="{{class.site_url}}">
+                  <strong data-ng-bind="class.course_code" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
+                  <strong data-ng-bind="class.course_code_section" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
+                </a>
                 <span class="cc-text-light" data-ng-show="class.waitlistPosition" data-ng-bind-template="- #{{ class.waitlistPosition }} on the wait list"></span>
               </div>
-              <div class="cc-ellipsis cc-text-light" data-ng-class="{'cc-italic': class.waitlistPosition}" data-ng-show="!!class.name" data-ng-bind="class.name">
+              <div class="cc-ellipsis cc-text-light cc-widget-classes-subtitle" data-ng-class="{'cc-italic': class.waitlistPosition}" data-ng-show="!!class.name" data-ng-bind="class.name">
               </div>
-              <div data-ng-show="class.show">
-                <ul class="cc-widget-sublist">
-                  <li data-ng-repeat="subclass in class.subclasses">
-                    <div class="cc-icon" data-ng-class="{'bSpace':'cc-icon-bspace', 'bCourses':'cc-icon-bcourses'}[subclass.emitter]">
-                    </div>
-                    <strong><a class="cc-ellipsis" data-ng-bind="subclass.name" data-ng-href="{{subclass.site_url}}"></a></strong>
-                  </li>
-                </ul>
-                <a class="cc-widget-sublist-extra"
-                   data-ng-show="class.site_url"
-                   data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
-                   data-ng-href="{{class.site_url}}">
-                  <strong>Class details</strong>
-                </a>
-                <div data-ng-show="!class.site_url">
-                  Class details unavailable
-                </div>
-              </div>
+              <ul class="cc-widget-sublist">
+                <li data-ng-repeat="subclass in class.subclasses">
+                  <div class="cc-icon" data-ng-class="{'bSpace':'cc-icon-bspace', 'bCourses':'cc-icon-bcourses'}[subclass.emitter]">
+                  </div>
+                  <a class="cc-ellipsis" data-ng-bind="subclass.name" data-ng-href="{{subclass.site_url}}"></a>
+                </li>
+              </ul>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div data-ng-if="!allClassesPresent" class="cc-widget-text">
-      There are currently no classes available.
+   <div data-ng-if="!allClassesPresent" class="cc-widget-text">
+      <div data-ng-if="api.user.profile.roles.student && !api.user.profile.roles.teacher">
+        <p>You are not enrolled in any classes.</p>
+        <ul class="cc-list-bullets">
+          <li>Check <a href="/academics">My Academics</a> to see your academic history.</li>
+          <li>If you still have questions, contact the <a href="http://registrar.berkeley.edu/">Office of the Registrar</a> or visit <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a>.</li>
+        </ul>
+      </div>
+      <div data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.teacher">
+        <p>You have no classes assigned to you.</p>
+        <p>If you have any questions about your teaching assignments, please contact your academic department.</p>
+      </div>
+      <div data-ng-if="api.user.profile.roles.student && api.user.profile.roles.teacher">
+        <p>You are not enrolled in any classes and you have no classes assigned to you.</p>
+        <ul class="cc-list-bullets">
+          <li>For enrollments, check <a href="/academics">My Academics</a> to see your academic history.</li>
+          <li>If you still have questions, contact the <a href="http://registrar.berkeley.edu/">Office of the Registrar</a> or visit <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a>.</li>
+          <li>If you have any questions about your teaching assignments, please contact your academic department.</li>
+        </ul>
+      </div>
+      <div data-ng-if="!api.user.profile.roles.student && !api.user.profile.roles.teacher">
+        There are currently no classes available.
+      </div>
     </div>
   </div>
 </div>

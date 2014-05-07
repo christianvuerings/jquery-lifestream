@@ -1,6 +1,21 @@
 .cc-widget-classes {
+  p {
+    margin-bottom: 0;
+  }
+  .cc-widget-classes-subtitle {
+    font-size: 12px;
+    margin: -4px 0;
+  }
+  .cc-widget-list {
+    font-size: 13px;
+    > li {
+      padding: 10px 0;
+    }
+  }
+  .cc-widget-sublist {
+    font-size: 12px;
+  }
   .cc-widget-classes-other {
-
     .cc-widget-list-hover {
       padding-left: 0;
     }

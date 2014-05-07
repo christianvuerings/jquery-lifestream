@@ -280,6 +280,17 @@ button {
 }
 
 /* List */
+.cc-list-bullets {
+  margin: 10px 10px 0 15px;
+  li:before {
+    content: '\25A0';
+    color: #61889d;
+    float: left;
+    margin-left: -16px;
+    margin-top: -2px;
+    padding-right: 8px;
+  }
+}
 .cc-list-links {
   margin: 10px 0;
   a {
