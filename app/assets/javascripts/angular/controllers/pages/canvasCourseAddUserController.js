@@ -4,7 +4,7 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, $http, $routeParams, $scope, $window) {
+  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, $http, $routeParams, $scope) {
 
     apiService.util.setTitle('Add People');
 
@@ -69,23 +69,6 @@
       }
     ];
     $scope.selectedRole = $scope.userRoles[0];
-
-    /**
-     * Post a message to the parent
-     * @param {String|Object} message Message you want to send over.
-     */
-    var postMessage = function(message) {
-      if ($window.parent) {
-        $window.parent.postMessage(message, '*');
-      }
-    };
-
-    var postHeight = function() {
-      var docHeight = document.body.scrollHeight;
-      postMessage({
-        height: docHeight
-      });
-    };
 
     var invalidSearchForm = function() {
       if ($scope.search_text === '') {
@@ -254,7 +237,7 @@
       return false;
     };
 
-    window.setInterval(postHeight, 250);
+    apiService.util.iframeUpdateHeight();
     checkAuthorization();
   });
 

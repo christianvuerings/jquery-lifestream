@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('utilService', function($location, $rootScope) {
+  angular.module('calcentral.services').service('utilService', function($location, $rootScope, $window) {
 
     /**
      * Pass in controller name so we can set active location in menu
@@ -15,9 +15,7 @@
     /**
      * Check whether CalCentral is being loaded within an iframe
      */
-    var isInIframe = function() {
-      return !!window.parent.frames.length;
-    };
+    var isInIframe = !!window.parent.frames.length;
 
     /**
      * Check if browser supports localStorage
@@ -63,10 +61,33 @@
       $rootScope.title = title + ' | CalCentral';
     };
 
+    /**
+     * Post a message to the parent
+     * @param {String|Object} message Message you want to send over.
+     */
+    var iframePostMessage = function(message) {
+      if ($window.parent) {
+        $window.parent.postMessage(message, '*');
+      }
+    };
+
+    /**
+     * Update the iframe height on a regular basis
+     */
+    var iframeUpdateHeight = function() {
+      if (isInIframe) {
+        $window.setInterval(function updateHeight() {
+          iframePostMessage({
+            height: document.body.scrollHeight
+          });
+        }, 250);
+      }
+    };
+
     // Expose methods
     return {
       changeControllerName: changeControllerName,
-      isInIframe: isInIframe,
+      iframeUpdateHeight: iframeUpdateHeight,
       preventBubble: preventBubble,
       redirect: redirect,
       setTitle: setTitle,
