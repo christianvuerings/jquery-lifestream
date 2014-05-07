@@ -38,7 +38,7 @@ module Calcentral
       USER_CACHE_EXPIRATION.add_observer(key, value)
     end
 
-    merged_feeds_array = [
+    [
       User::Api,
       MyClasses::Merged,
       Financials::MyFinancials,
@@ -50,16 +50,9 @@ module Calcentral
       MyBadges::Merged,
       UpNext::MyUpNext,
       Bearfacts::MyRegBlocks
-    ]
-    MERGED_FEEDS = {}
-    merged_feeds_array.each do |feed|
+    ].each do |feed|
       USER_CACHE_EXPIRATION.add_observer(feed, :expire)
-      MERGED_FEEDS[feed.name] = feed
     end
-
-    # MyAcademics is a merged feed but shouldn't get expired by the usual observer pattern; instead it expires
-    # at 8am the day after today.
-    MERGED_FEEDS[MyAcademics::Merged.name] = MyAcademics::Merged
 
     #Pseudo-prefix constant
     PSEUDO_USER_PREFIX = "pseudo_"
