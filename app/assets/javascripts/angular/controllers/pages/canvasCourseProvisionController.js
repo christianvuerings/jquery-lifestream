@@ -4,25 +4,9 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, $http, $scope, $timeout, $window) {
+  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, $http, $scope, $timeout) {
 
     apiService.util.setTitle('bCourses Course Provision');
-
-    /**
-     * Post a message to the parent
-     * @param {String|Object} message Message you want to send over.
-     */
-    var postMessage = function(message) {
-      if ($window.parent) {
-        $window.parent.postMessage(message, '*');
-      }
-    };
-
-    var postHeight = function() {
-      postMessage({
-        height: document.body.scrollHeight
-      });
-    };
 
     var statusProcessor = function() {
       if ($scope.status === 'Processing' || $scope.status === 'New') {
@@ -177,7 +161,7 @@
       }).success(function(data) {
         angular.extend($scope, data);
         fillCourseSites($scope.teachingSemesters);
-        window.setInterval(postHeight, 250);
+        apiService.util.iframeUpdateHeight();
         if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
           $scope.switchSemester($scope.teachingSemesters[0]);
         }
