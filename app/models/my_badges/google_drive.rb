@@ -1,6 +1,7 @@
 module MyBadges
   class GoogleDrive
-    include MyBadges::BadgesModule, DatedFeed, Cache::UserCacheExpiry
+    include MyBadges::BadgesModule, DatedFeed
+    include Cache::UserCacheExpiry
 
     def initialize(uid)
       @uid = uid

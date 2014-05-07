@@ -8,6 +8,9 @@ module Cache
     end
 
     def self.included(klass)
+      unless klass.respond_to?(:expire)
+        raise ArgumentError.new "Class #{klass.name} must implement expire to be expirable"
+      end
       @classes ||= []
       @classes << klass
     end

@@ -1,7 +1,7 @@
 module Canvas
   class MergedUserSites
-    include ClassLogger, Cache::UserCacheExpiry
     extend Cache::Cacheable
+    include ClassLogger, Cache::UserCacheExpiry
 
     def initialize(uid)
       @uid = uid

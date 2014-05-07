@@ -1,7 +1,8 @@
 
 module MyTasks
   class GoogleTasks
-    include MyTasks::TasksModule, Cache::UserCacheExpiry
+    include MyTasks::TasksModule
+    include Cache::UserCacheExpiry
     attr_accessor :future_count
 
     def initialize(uid, starting_date)
