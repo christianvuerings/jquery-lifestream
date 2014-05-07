@@ -296,13 +296,13 @@
                     </tr>
                   </tbody>
                   <tbody data-ng-if="semester.timeBucket === 'past'" data-ng-repeat="class in semester.classes">
-                    <tr data-ng-if="class.transcript && class.transcript.length > 0" data-ng-repeat="transcript in class.transcript">
+                    <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
                       <td><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a></td>
                       <td data-ng-bind="class.title"></td>
                       <td data-ng-bind="transcript.units | number:1" class="cc-table-right cc-table-right-spacing"></td>
                       <td data-ng-bind="transcript.grade" data-ng-if="semester.timeBucket === 'past'"></td>
                     </tr>
-                    <tr data-ng-if="(!class.transcript || class.transcript.length === 0) && section.is_primary_section" data-ng-repeat="section in class.sections">
+                    <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat="section in class.sections">
                       <td><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a></td>
                       <td data-ng-bind="class.title"></td>
                       <td data-ng-bind="section.units | number:1" class="cc-table-right cc-table-right-spacing"></td>

@@ -49,7 +49,7 @@ module MyAcademics
       end
 
       unless this_semester_in_feed
-        data[:semesters].unshift(MyAcademics::Semesters.build_semester(year.to_s, Berkeley::TermCodes.to_code(term)))
+        data[:semesters].unshift(semester_info(year.to_s, Berkeley::TermCodes.to_code(term)))
       end
 
     end

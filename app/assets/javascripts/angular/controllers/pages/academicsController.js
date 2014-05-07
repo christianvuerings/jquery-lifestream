@@ -279,9 +279,6 @@
 
       $scope.semesters = data.semesters;
 
-      $scope.allCourses = getAllClasses(data.semesters);
-      $scope.previousCourses = getPreviousClasses(data.semesters);
-
       $scope.isUndergraduate = ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
@@ -290,7 +287,7 @@
       // Get selected semester from URL params and extract data from semesters array
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
       if (semesterSlug) {
-        var isInstructorOrGsi = !!$routeParams.teachingSemesterSlug;
+        var isOnlyInstructor = !!$routeParams.teachingSemesterSlug;
         var selectedStudentSemester = findSemester(data.semesters, semesterSlug, selectedStudentSemester);
         var selectedTeachingSemester = findSemester(data.teachingSemesters, semesterSlug, selectedTeachingSemester);
         var selectedSemester = (selectedStudentSemester || selectedTeachingSemester);
@@ -302,20 +299,22 @@
         $scope.selectedSemester = selectedSemester;
         if (selectedStudentSemester && !$routeParams.classSlug) {
           $scope.selectedCourses = selectedStudentSemester.classes;
-          if (!isInstructorOrGsi) {
+          if (!isOnlyInstructor) {
+            $scope.allCourses = getAllClasses(data.semesters);
+            $scope.previousCourses = getPreviousClasses(data.semesters);
             $scope.enrolledCourses = getClassesSections(selectedStudentSemester.classes, false);
             $scope.waitlistedCourses = getClassesSections(selectedStudentSemester.classes, true);
             $scope.gpaInit(); // Initialize GPA calculator with selected courses
           }
         }
         $scope.selectedStudentSemester = selectedStudentSemester;
-        $scope.isInstructorOrGsi = isInstructorOrGsi;
         $scope.selectedTeachingSemester = selectedTeachingSemester;
 
         // Get selected course from URL params and extract data from selected semester schedule
         if ($routeParams.classSlug) {
+          $scope.isInstructorOrGsi = isOnlyInstructor;
           var classSemester = selectedStudentSemester;
-          if (isInstructorOrGsi) {
+          if (isOnlyInstructor) {
             classSemester = selectedTeachingSemester;
           }
           for (var i = 0; i < classSemester.classes.length; i++) {
@@ -323,7 +322,7 @@
             if (course.slug === $routeParams.classSlug) {
               initMultiplePrimaries(course);
               $scope.selected_course = course;
-              if (isInstructorOrGsi) {
+              if (isOnlyInstructor) {
                 $scope.campusCourseId = course.course_id;
               }
               break;
@@ -434,26 +433,28 @@
 
     $scope.gpaInit = function() {
       // On page load, set default values and calculate starter GPA
-      angular.forEach($scope.selectedCourses, function(course) {
-        if (!course.transcript) {
-          var estimatedTranscript = [];
-          angular.forEach(course.sections, function(section) {
-            if (section.is_primary_section) {
-              var transcriptRow = {
-                'gradeOption': section.grade_option,
-                'units': section.units
-              };
-              if (transcriptRow.gradeOption === 'Letter') {
-                transcriptRow.estimatedGrade = 4;
-              } else if (transcriptRow.gradeOption === 'P/NP' || transcriptRow.gradeOption === 'S/U') {
-                transcriptRow.estimatedGrade = -1;
+      if ($scope.selectedSemester.timeBucket !== 'past' || $scope.selectedSemester.gradingInProgress) {
+        angular.forEach($scope.selectedCourses, function(course) {
+          if (!course.transcript) {
+            var estimatedTranscript = [];
+            angular.forEach(course.sections, function(section) {
+              if (section.is_primary_section) {
+                var transcriptRow = {
+                  'gradeOption': section.grade_option,
+                  'units': section.units
+                };
+                if (transcriptRow.gradeOption === 'Letter') {
+                  transcriptRow.estimatedGrade = 4;
+                } else if (transcriptRow.gradeOption === 'P/NP' || transcriptRow.gradeOption === 'S/U') {
+                  transcriptRow.estimatedGrade = -1;
+                }
+                estimatedTranscript.push(transcriptRow);
               }
-              estimatedTranscript.push(transcriptRow);
-            }
-          });
-          course.estimatedTranscript = estimatedTranscript;
-        }
-      });
+            });
+            course.estimatedTranscript = estimatedTranscript;
+          }
+        });
+      }
       gpaCalculate();
       cumulativeGpaCalculate($scope.previousCourses, 'current');
       cumulativeGpaCalculate($scope.allCourses, 'estimated');
