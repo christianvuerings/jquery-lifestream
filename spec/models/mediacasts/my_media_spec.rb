@@ -12,8 +12,8 @@ describe Mediacasts::MyMedia do
 
   let(:errors) do
     {
-      :video_error_message => "There are no webcasts available. Please check again later.",
-      :podcast_error_message => "There are no podcasts available. Please check again later."
+      :video_error_message => "There are no webcasts available.",
+      :podcast_error_message => "There are no podcasts available."
     }
   end
 

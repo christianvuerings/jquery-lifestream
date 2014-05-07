@@ -5,8 +5,8 @@ module Mediacasts
 
     APP_ID = "Playlists"
     ERRORS = {
-      :video_error_message => "There are no webcasts available. Please check again later.",
-      :podcast_error_message => "There are no podcasts available. Please check again later."
+      :video_error_message => "There are no webcasts available.",
+      :podcast_error_message => "There are no podcasts available."
     }
     PROXY_ERROR = {
       :proxy_error_message => "There was a problem fetching the webcasts and podcasts."
