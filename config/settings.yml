@@ -254,6 +254,8 @@ features:
   profile_page: false
   reauthentication: true
 
+youtube_splash_id: 'HRIv6wqqDG4'
+
 oec:
   export_directory: 'tmp/oec'
   current_terms_codes: [{
