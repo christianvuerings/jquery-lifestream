@@ -8,7 +8,7 @@ describe Cache::UserCacheWarmer do
 
   it "should warm the cache when told" do
     force_cache_write = true
-    model_classes = [ User::Api, MyClasses::Merged, Financials::MyFinancials, Finaid::MyFinAid, Cal1card::MyCal1card, MyGroups::Merged, MyTasks::Merged, MyActivities::Merged, UpNext::MyUpNext, MyBadges::Merged ]
+    model_classes = Cache::LiveUpdatesEnabled.classes
     model_classes.each do |klass|
       model = klass.new @user_id
       klass.stub(:new).and_return(model)

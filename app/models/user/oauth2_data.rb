@@ -30,7 +30,7 @@ module User
       use_pooled_connection {
         self.destroy_all(uid: uid, app_id: app_id)
       }
-      Calcentral::USER_CACHE_EXPIRATION.notify uid
+      Cache::UserCacheExpiry.notify uid
     end
 
     def self.get_google_email(user_id)
@@ -112,7 +112,7 @@ module User
     end
 
     def expire_user
-      Calcentral::USER_CACHE_EXPIRATION.notify @uid
+      Cache::UserCacheExpiry.notify @uid
     end
 
     def self.encrypt_with_iv(value)

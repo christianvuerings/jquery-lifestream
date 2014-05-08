@@ -1,6 +1,8 @@
 module Canvas
   class Groups < Proxy
 
+    include Cache::UserCacheExpiry
+
     def groups
       self.class.fetch_from_cache(@uid) do
         all_groups = []

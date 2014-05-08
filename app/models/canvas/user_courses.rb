@@ -1,6 +1,8 @@
 module Canvas
   class UserCourses < Proxy
 
+    include Cache::UserCacheExpiry
+
     def courses
       self.class.fetch_from_cache(@uid) do
         all_courses = []

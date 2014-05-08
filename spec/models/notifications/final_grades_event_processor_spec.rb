@@ -36,7 +36,7 @@ describe Notifications::FinalGradesEventProcessor do
 
     User::Data.stub(:where).and_return(MockUserData.new)
 
-    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).exactly(8).times
+    Cache::UserCacheExpiry.should_receive(:notify).exactly(8).times
 
     @processor.process(event, timestamp).should == true
 
@@ -70,7 +70,7 @@ describe Notifications::FinalGradesEventProcessor do
             {"ldap_uid" => "978966"}])
     CampusOracle::Queries.stub(:get_enrolled_students).with(7366, 2013, 'C').and_return([])
     User::Api.should_not_receive(:delete)
-    Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
+    Cache::UserCacheExpiry.should_not_receive(:notify)
     User::Data.stub(:where, {uid: "300846"}).and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true
   end

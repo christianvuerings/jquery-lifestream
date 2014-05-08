@@ -1,6 +1,6 @@
 module UpNext
   class MyUpNext < UserSpecificModel
-    include DatedFeed
+    include DatedFeed, Cache::LiveUpdatesEnabled
 
     attr_reader :begin_today, :next_day
 

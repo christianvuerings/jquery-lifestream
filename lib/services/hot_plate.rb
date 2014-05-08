@@ -77,7 +77,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
         deleted_count = 0
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            Calcentral::USER_CACHE_EXPIRATION.notify visit.uid
+            Cache::UserCacheExpiry.notify visit.uid
             visit.delete
             deleted_count += 1
           end
@@ -96,7 +96,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     start_time = Time.now.to_i
     logger.warn "Doing complete feed warmup for uid #{uid}"
     self.class.increment(self.class.total_warmups_processed, 1)
-    Calcentral::USER_CACHE_EXPIRATION.notify uid
+    Cache::UserCacheExpiry.notify uid
     begin
       Cache::UserCacheWarmer.do_warm uid
     rescue => e

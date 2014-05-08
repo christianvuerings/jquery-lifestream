@@ -1,6 +1,8 @@
 module MyBadges
   class Merged < UserSpecificModel
 
+    include Cache::LiveUpdatesEnabled
+
     def initialize(uid, options={})
       super(uid, options)
       @now_time = Time.zone.now

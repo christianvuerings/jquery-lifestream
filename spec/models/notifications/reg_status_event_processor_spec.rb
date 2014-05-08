@@ -29,7 +29,7 @@ describe Notifications::RegStatusEventProcessor do
         })
     CampusOracle::Queries.stub(:get_reg_status).with(300847).and_return(nil)
     User::Api.should_not_receive(:delete)
-    Calcentral::USER_CACHE_EXPIRATION.should_receive(:notify).once
+    Cache::UserCacheExpiry.should_receive(:notify).once
     User::Data.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
 
     @processor.process(event, timestamp).should == true
@@ -88,7 +88,7 @@ describe Notifications::RegStatusEventProcessor do
             "on_probation_flag" => "N"
         })
     User::Api.should_not_receive(:delete)
-    Calcentral::USER_CACHE_EXPIRATION.should_not_receive(:notify)
+    Cache::UserCacheExpiry.should_not_receive(:notify)
     User::Data.stub(:where).and_return(NonexistentUserData.new)
     @processor.process(event, timestamp).should == true
   end

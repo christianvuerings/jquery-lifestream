@@ -22,7 +22,7 @@ module Cache
     def self.get_whiteboard(uid)
       self.fetch_from_cache uid do
         whiteboard = {}
-        Calcentral::MERGED_FEEDS.values.each do |feed|
+        Cache::LiveUpdatesEnabled.classes.each do |feed|
           whiteboard[feed.name] = feed.get_last_modified(uid)
         end
         whiteboard

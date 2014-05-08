@@ -2,6 +2,8 @@
 module Cal1card
   class MyCal1card < UserSpecificModel
 
+    include Cache::LiveUpdatesEnabled
+
     def get_feed_internal
       feed = {}
       if Settings.features.cal1card

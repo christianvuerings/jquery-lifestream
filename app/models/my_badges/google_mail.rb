@@ -1,6 +1,7 @@
 module MyBadges
   class GoogleMail
     include MyBadges::BadgesModule, DatedFeed
+    include Cache::UserCacheExpiry
 
     def initialize(uid)
       @uid = uid

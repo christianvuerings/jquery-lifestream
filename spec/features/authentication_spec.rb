@@ -3,7 +3,7 @@ require "spec_helper"
 feature "authentication" do
   scenario "Working authentication, login and logout" do
     # Logging in and out quickly also triggers a rapid cache warming and expiration issue.
-    Calcentral::USER_CACHE_WARMER.stub(:warm).and_return(nil)
+    Cache::UserCacheWarmer.stub(:warm).and_return(nil)
     login_with_cas "238382"
     visit "/api/my/status"
     response = JSON.parse(page.body)
