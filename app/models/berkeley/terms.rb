@@ -14,8 +14,8 @@
 #       - In Spring, the next Fall term, when available
 #   * FinAid :
 #       - Always display the "current Aid Year", which is defined as:
-#           - After the end of the Summer term, the current calendar year
-#           - Up to and including the last day of this year's Summer term, the previous calendar year
+#           - After the end of the Summer term, the next calendar year
+#           - Up to and including the last day of this year's Summer term, the current calendar year
 #       - Also display the "next Aid Year" between "the day admissions letters are released"
 #         and the last day of Summer term. The admissions-release day is not available in the
 #         campus DB, and so it is maintained in the CalCentral application DB.
@@ -37,9 +37,9 @@ module Berkeley
     # during Spring terms, when most instructors and most enrolled students will have more
     # interest in the Fall schedule than in Summer classes.
     attr_reader :future
-    # The previous term. Of special interest immediately after its official end, while final
-    # grades are posted.
-    attr_reader :previous
+    # The previous term immediately after its official end, while final
+    # grades are being posted.
+    attr_reader :grading_in_progress
     # How far back do we look for enrollments, transcripts, & teaching assignments?
     attr_reader :oldest
     # Full list of terms in DB.
@@ -66,8 +66,8 @@ module Berkeley
           future_terms.push term
         elsif term.end >= current_date
           @running = term
-        elsif @previous.blank?
-          @previous = term
+        elsif @grading_in_progress.blank? && term.grades_entered >= current_date
+          @grading_in_progress = term
         end
         break if term.slug == @oldest
       end

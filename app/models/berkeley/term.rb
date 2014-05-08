@@ -37,5 +37,10 @@ module Berkeley
     def to_english
       TermCodes.to_english(year, code)
     end
+
+    # Most final grades should appear on the transcript by this date.
+    def grades_entered
+      @end.advance(weeks: 3, days: 2)
+    end
   end
 end

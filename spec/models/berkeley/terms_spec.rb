@@ -28,7 +28,7 @@ describe Berkeley::Terms do
       its('running.slug') {should eq 'fall-2013'}
       its('next.slug') {should eq 'spring-2014'}
       its('future.slug') {should eq 'summer-2014'}
-      its('previous.slug') {should eq 'summer-2013'}
+      its('grading_in_progress') {should be_nil}
     end
     context 'during final exams' do
       let(:fake_now) {DateTime.parse('2013-12-14')}
@@ -37,7 +37,7 @@ describe Berkeley::Terms do
       its('running.slug') {should eq 'fall-2013'}
       its('next.slug') {should eq 'spring-2014'}
       its('future.slug') {should eq 'summer-2014'}
-      its('previous.slug') {should eq 'summer-2013'}
+      its('grading_in_progress') {should be_nil}
     end
     context 'between terms' do
       let(:fake_now) {DateTime.parse('2013-12-31')}
@@ -46,7 +46,7 @@ describe Berkeley::Terms do
       its(:running) {should be_nil}
       its('next.slug') {should eq 'summer-2014'}
       its('future.slug') {should eq 'fall-2014'}
-      its('previous.slug') {should eq 'fall-2013'}
+      its('grading_in_progress.slug') {should eq 'fall-2013'}
     end
     context 'in last of available terms' do
       let(:fake_now) {DateTime.parse('2014-11-11')}
@@ -55,7 +55,7 @@ describe Berkeley::Terms do
       its('running.slug') {should eq 'fall-2014'}
       its(:next) {should be_nil}
       its(:future) {should be_nil}
-      its('previous.slug') {should eq 'summer-2014'}
+      its('grading_in_progress') {should be_nil}
     end
     context 'limiting semester range' do
       let(:options) {{oldest: 'summer-2012'}}

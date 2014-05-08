@@ -6,13 +6,6 @@ module MyAcademics
       super(uid)
     end
 
-    def self.build_semester(term_yr, term_cd)
-      AcademicsModule.semester_info(term_yr, term_cd).merge({
-        timeBucket: AcademicsModule.time_bucket(term_yr, term_cd),
-        classes: []
-      })
-    end
-
     def merge(data)
       proxy = CampusOracle::UserCourses.new({:user_id => @uid})
       feed = proxy.get_all_campus_courses
@@ -21,7 +14,7 @@ module MyAcademics
 
       feed.keys.each do |term_key|
         (term_yr, term_cd) = term_key.split("-")
-        semester = self.class.build_semester(term_yr, term_cd)
+        semester = semester_info(term_yr, term_cd)
         feed[term_key].each do |course|
           next unless course[:role] == 'Student'
           class_item = class_info(course)

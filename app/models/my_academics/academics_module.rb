@@ -37,11 +37,14 @@ module MyAcademics
     end
 
     def semester_info(term_yr, term_cd)
+      slug = Berkeley::TermCodes.to_slug(term_yr, term_cd)
       {
         name: Berkeley::TermCodes.to_english(term_yr, term_cd),
-        slug: Berkeley::TermCodes.to_slug(term_yr, term_cd),
+        slug: slug,
         termCode: term_cd,
         termYear: term_yr,
+        timeBucket: time_bucket(term_yr, term_cd),
+        gradingInProgress: (terms.grading_in_progress && (slug == terms.grading_in_progress.slug)),
         classes: []
       }
     end
@@ -72,7 +75,11 @@ module MyAcademics
     end
 
     def current_term
-      @current_term ||= Berkeley::Terms.fetch.current
+      @current_term ||= terms.current
+    end
+
+    def terms
+      @terms ||= Berkeley::Terms.fetch
     end
 
     def time_bucket(term_yr, term_cd)
