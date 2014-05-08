@@ -25,7 +25,7 @@ describe MyBadgesController do
 
     if json_response["alert"].present?
       json_response["alert"].is_a?(Hash).should be_true
-      json_response["alert"].keys.count.should == 4
+      json_response["alert"].keys.count.should >= 3
     end
 
     json_response["badges"].present?.should be_true
