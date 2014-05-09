@@ -66,8 +66,6 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/course_add_user/course_sections' => 'canvas_course_add_user#course_sections', :via => :get, :as => :canvas_course_add_user_course_sections, :defaults => { :format => 'json' }
   post '/api/academics/canvas/course_add_user/add_user' => 'canvas_course_add_user#add_user', :via => :post, :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
 
-  get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
-
   # System utility endpoints
   get '/api/clear_cache' => 'clear_cache#do'
   get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
@@ -75,6 +73,7 @@ Calcentral::Application.routes.draw do
   get '/api/tools/styles' => 'tools#get_styles', :via => :get
   get '/api/server_info' => 'server_runtime#get_info', :via => :get
   get '/api/stats' => 'stats#get_stats', :via => :get, :defaults => { :format => 'json' }
+  get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
   # Oauth endpoints: Canvas
   get '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
