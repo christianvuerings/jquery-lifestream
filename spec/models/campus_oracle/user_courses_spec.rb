@@ -54,6 +54,15 @@ describe CampusOracle::UserCourses do
     expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
   end
 
+  it 'does not duplicate nested sections for instructors', :if => CampusOracle::Connection.test_data? do
+    client = CampusOracle::UserCourses.new({user_id: '904715'})
+    courses = client.get_all_campus_courses
+    sections = courses['2013-D'].select {|c| c[:dept] == 'BIOLOGY' && c[:catid] == '1A'}.first[:sections]
+    expect(sections.size).to eq 3
+    # One primary and one secondary, plus one nested secondaries.
+    expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
+  end
+
   it 'prefixes short CCNs with zeroes', :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses.new({user_id: '238382'})
     courses = client.get_selected_sections(2013, 'D', [7309])
