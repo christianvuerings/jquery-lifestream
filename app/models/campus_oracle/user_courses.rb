@@ -80,7 +80,7 @@ module CampusOracle
       is_instructing
     end
 
-    # This is done in a separate step so that implicitly nested secondary sections
+    # This is done in a separate step so that all secondary sections
     # are ordered after explicitly assigned primary sections.
     def merge_nested_instructing(campus_classes)
       campus_classes.values.each do |semester|
@@ -90,16 +90,19 @@ module CampusOracle
             if primaries.present? && Berkeley::CourseOptions::MAPPING[course[:course_option]]
               secondaries = get_all_secondary_sections(course)
               if secondaries.present?
+                # Remember any explicit assignments to avoid duplicates and maintain ordering.
+                explicit_secondaries = course[:sections].select {|s| !s[:is_primary_section] }.collect {|s| s[:ccn]}
                 # Use a hash to avoid duplicates when an instructor is assigned more than one primary.
                 nested_secondaries = {}
                 primaries.each do |prim|
                   secondaries.each do |sec|
-                    if Berkeley::CourseOptions.nested?(course[:course_option], prim[:section_number], sec)
+                    if explicit_secondaries.include?(sec['course_cntl_num']) ||
+                      Berkeley::CourseOptions.nested?(course[:course_option], prim[:section_number], sec)
                       nested_secondaries[sec['course_cntl_num']] = row_to_section_data(sec)
                     end
                   end
                 end
-                course[:sections].concat(nested_secondaries.values)
+                course[:sections] = primaries.concat(nested_secondaries.values) unless nested_secondaries.empty?
               end
             end
           end

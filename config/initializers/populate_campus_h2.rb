@@ -398,6 +398,7 @@
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 16171, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7309, 904715, ' ', '2', '4');
+        INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2013, 'D', 7366, 904715, ' ', '2', '4');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2012, 'B', 7366, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2012, 'B', 16171, 238382, ' ', '2', '1');
         INSERT INTO CALCENTRAL_COURSE_INSTR_VW (term_yr, term_cd, course_cntl_num, instructor_ldap_uid, multi_entry_cd, sub_term_cd, instructor_func) VALUES (2014, 'C', 7309, 904715, ' ', '2', '4');
