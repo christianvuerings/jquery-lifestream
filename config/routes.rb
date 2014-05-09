@@ -71,8 +71,8 @@ Calcentral::Application.routes.draw do
   get '/api/blog' => 'blog_feed#get_blog_info', :as => :blog_info, :defaults => { :format => 'json' }
 
   post '/api/my/opt_out'=> 'user_api#delete', :via => :post
-  get '/api/clear_cache' => 'application#clear_cache'
-  get '/api/ping' => 'application#ping', :defaults => {:format => 'json'}
+  get '/api/clear_cache' => 'clear_cache#do'
+  get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
   get '/api/refresh_logging' => 'refresh_logging#refresh_logging', :defaults => { :format => 'json' }
 
   get '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'

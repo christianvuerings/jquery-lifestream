@@ -95,26 +95,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def clear_cache
-    authorize(current_user, :can_clear_cache?)
-    Rails.logger.info "Clearing all cache entries"
-    Rails.cache.clear
-    render :nothing => true, :status => 204
-  end
-
-  def ping
-    # IST's nagios and our check-alive.sh script use this endpoint to tell whether the server's up.
-    # Don't modify its content unless you have general agreement that it's necessary to do so.
-    ping_state = do_ping
-    if ping_state
-      render :json => {
-        :server_alive => true
-      }.to_json
-    else
-      render :nothing => true, :status => 503
-    end
-  end
-
   def user_not_authorized(error)
     Rails.logger.warn "Unauthorized request made by UID: #{session[:user_id]} to #{controller_name}\##{action_name}: #{error.message}"
     render :nothing => true, :status => 403
@@ -137,21 +117,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def do_ping
-    # rate limit so we don't check server status excessively often
-    Rails.cache.fetch(
-      "server_ping_#{ServerRuntime.get_settings["hostname"]}",
-      :expires_in => 30.seconds) {
-      if !User::Data.database_alive?
-        raise "CalCentral database is currently unavailable"
-      end
-      if !CampusOracle::Queries.database_alive?
-        raise "Campus database is currently unavailable"
-      end
-      true
-    }
-  end
 
   def get_settings
     @server_settings = ServerRuntime.get_settings
