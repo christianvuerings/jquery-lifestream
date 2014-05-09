@@ -87,19 +87,22 @@ Calcentral::Application.routes.draw do
   post '/api/google/remove_authorization' => 'google_auth#remove_authorization', :via => :post
   post '/api/google/dismiss_reminder' => 'google_auth#dismiss_reminder', :defaults => { :format => 'json'}, :via => :post
 
-  # Authentication and act-as endpoints
+  # Authentication endpoints
   get '/auth/cas/callback' => 'sessions#lookup'
   get '/auth/failure' => 'sessions#failure'
+  get '/reauth/admin' => 'sessions#reauth_admin', :as => :reauth_admin
   if Settings.developer_auth.enabled
+    # the backdoor for http basic auth (bypasses CAS) only on development environments.
     get '/basic_auth_login' => 'sessions#basic_lookup'
     get '/logout' => 'sessions#destroy', :as => :logout
     post '/logout' => 'sessions#destroy', :as => :logout_post, :via => :post
   else
     post '/logout' => 'sessions#destroy', :as => :logout, :via => :post
   end
-  post '/act_as' => 'sessions#act_as', :via => :post
-  post '/stop_act_as' => 'sessions#stop_act_as', :via => :post
-  get '/reauth/admin' => 'sessions#reauth_admin', :as => :reauth_admin
+
+  # Act-as endpoints
+  post '/act_as' => 'act_as#start', :via => :post
+  post '/stop_act_as' => 'act_as#stop', :via => :post
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
