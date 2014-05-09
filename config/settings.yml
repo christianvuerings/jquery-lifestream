@@ -41,7 +41,9 @@ campusdb:
 terms:
   # Limit how far back our academic history goes.
   oldest: spring-2010
-  # Timestamp in UTC, needed when testing against test Campus data
+  # Timestamp in UTC, needed when testing against test Campus data.
+  # Can also be used to force selection of a "current term" different
+  # from the default.
   fake_now:
 test_sqlite:
   pool: 3
