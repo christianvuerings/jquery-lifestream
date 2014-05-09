@@ -31,6 +31,9 @@
     <div class="medium-6 columns">
       <div class="cc-page-splash-container-right">
         <div class="cc-page-splash-container-right-images">
+          <div data-ng-if="api.user.profile.youtubeSplashId" class="cc-youtube-video row cc-page-splash-info cc-page-splash-center">
+            <div data-cc-youtube-directive="api.user.profile.youtubeSplashId"></div>
+          </div>
           <div class="row cc-page-splash-info cc-page-splash-center">
             <%= image_tag "splash_waitlist_625×415.png", :size => "625×415", :alt => "", :class => "cc-page-splash-info-image" %>
             <p class="cc-page-splash-info-text">

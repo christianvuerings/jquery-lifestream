@@ -30,14 +30,16 @@ class UserApiController < ApplicationController
         :isBasicAuthEnabled => Settings.developer_auth.enabled,
         :isLoggedIn => true,
         :features => Settings.features.marshal_dump,
-        :actingAsUid => acting_as_uid
+        :actingAsUid => acting_as_uid,
+        :youtubeSplashId => Settings.youtube_splash_id
       })
       status.merge!(User::Api.new(session[:user_id]).get_feed)
     else
       status.merge!({
         :isBasicAuthEnabled => Settings.developer_auth.enabled,
         :isLoggedIn => false,
-        :features => Settings.features.marshal_dump
+        :features => Settings.features.marshal_dump,
+        :youtubeSplashId => Settings.youtube_splash_id
       })
     end
     render :json => status.to_json
