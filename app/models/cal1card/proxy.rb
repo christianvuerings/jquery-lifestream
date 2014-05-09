@@ -2,6 +2,7 @@ module Cal1card
   class Proxy < BaseProxy
 
     include ClassLogger
+    include Cache::UserCacheExpiry
 
     APP_ID = "Cal1Card"
 

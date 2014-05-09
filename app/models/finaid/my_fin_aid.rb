@@ -1,8 +1,9 @@
 # TODO collapse this class into Finaid::Proxy
 module Finaid
   class MyFinAid < UserSpecificModel
-    include DatedFeed, ClassLogger, Cache::LiveUpdatesEnabled
     extend Cache::Cacheable
+    include DatedFeed, ClassLogger
+    include Cache::LiveUpdatesEnabled
 
     def get_feed_internal
       feed = {

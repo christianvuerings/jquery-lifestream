@@ -1,7 +1,8 @@
 module CalLink
   class Memberships < Proxy
 
-    include SafeJsonParser, Cache::UserCacheExpiry
+    include SafeJsonParser
+    include Cache::UserCacheExpiry
 
     def get_memberships
       self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do

@@ -2,6 +2,7 @@ module CalLink
   class Organization < Proxy
 
     include SafeJsonParser
+    include Cache::UserCacheExpiry
 
     def initialize(options = {})
       super(options)
