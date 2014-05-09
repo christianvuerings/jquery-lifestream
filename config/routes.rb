@@ -3,25 +3,23 @@ Calcentral::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/ccadmin', :as => 'rails_admin'
 
-  get '/reauth/admin' => 'sessions#reauth_admin', :as => :reauth_admin
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   root :to => 'bootstrap#index'
 
-  # Rails API endpoints.
+  # User management/status endpoints.
   get '/api/my/am_i_logged_in' => 'user_api#am_i_logged_in', :as => :am_i_logged_in, :defaults => { :format => 'json' }
   get '/api/my/status' => 'user_api#mystatus', :as => :mystatus, :defaults => { :format => 'json' }
+  post '/api/my/record_first_login' => 'user_api#record_first_login', :as => :record_first_login, :defaults => { :format => 'json' }, :via => :post
+  post '/api/my/opt_out'=> 'user_api#delete', :via => :post
+
+  # Feeds of read-only content
   get '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
   get '/api/my/photo' => 'photo#my_photo', :as => :my_photo, :defaults => {:format => 'jpeg' }
   get '/api/my/textbooks_details' => 'my_textbooks#get_feed', :as => :my_textbooks, :defaults => { :format => 'json' }
-  post '/api/my/record_first_login' => 'user_api#record_first_login', :as => :record_first_login, :defaults => { :format => 'json' }, :via => :post
   get '/api/my/up_next' => 'my_up_next#get_feed', :as => :my_up_next, :defaults => { :format => 'json' }
-  post '/api/my/tasks/create' => 'my_tasks#insert_task', :via => :post, :as => :insert_task, :defaults => { :format => 'json' }
-  post '/api/my/tasks/clear_completed' => 'my_tasks#clear_completed_tasks', :via => :post, :as => :clear_completed_tasks, :defaults => { :format => 'json' }
-  post '/api/my/tasks/delete/:task_id' => 'my_tasks#delete_task', :via => :post, :as => :delete_task, :defaults => { :format => 'json' }
   get '/api/my/tasks' => 'my_tasks#get_feed', :via => :get, :as => :my_tasks, :defaults => { :format => 'json' }
-  post '/api/my/tasks' => 'my_tasks#update_task', :via => :post, :as => :update_task, :defaults => { :format => 'json' }
   get '/api/my/groups' => 'my_groups#get_feed', :as => :my_groups, :defaults => { :format => 'json' }
   get '/api/my/activities' => 'my_activities#get_feed', :as => :my_activities, :defaults => { :format => 'json' }
   get '/api/my/badges' => 'my_badges#get_feed', :as => :my_badges, :defaults => { :format => 'json' }
@@ -32,15 +30,18 @@ Calcentral::Application.routes.draw do
   get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
   get '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
-  post '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }
-
-  # Youtube class videos endpoints
-  ## Get the playlist_id of the title given, or list all playlists if no title given.
+  get '/api/blog' => 'blog_feed#get_blog_info', :as => :blog_info, :defaults => { :format => 'json' }
+  get '/api/search_users/:id' => 'search_users#search_users', :via => :get, :defaults => { :format => 'json' }
   get '/api/my/playlists(/:playlist_title)' => 'my_playlists#get_playlists', :defaults => { :format => 'json' }
-  ## Get a list of youtube videos given a playlist_id.
   get '/api/my/youtube/:playlist_id' => 'my_youtube#get_videos', :defaults => { :format => 'json' }
-  ## Get a list of youtube videos given a playlist_title.
   get '/api/my/media/:playlist_title' => 'my_media#get_media', :constraints => { :playlist_title => /[^\/]+/ }, :defaults => { :format => 'json' }
+
+  # Google API writing endpoints
+  post '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }
+  post '/api/my/tasks' => 'my_tasks#update_task', :via => :post, :as => :update_task, :defaults => { :format => 'json' }
+  post '/api/my/tasks/create' => 'my_tasks#insert_task', :via => :post, :as => :insert_task, :defaults => { :format => 'json' }
+  post '/api/my/tasks/clear_completed' => 'my_tasks#clear_completed_tasks', :via => :post, :as => :clear_completed_tasks, :defaults => { :format => 'json' }
+  post '/api/my/tasks/delete/:task_id' => 'my_tasks#delete_task', :via => :post, :as => :delete_task, :defaults => { :format => 'json' }
 
   # Canvas embedded application support.
   post '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
@@ -49,7 +50,6 @@ Calcentral::Application.routes.draw do
   get '/canvas/lti_course_provision_user_navigation' => 'canvas_lti#lti_course_provision_user_navigation', :defaults => { :format => 'xml' }
   get '/canvas/lti_user_provision' => 'canvas_lti#lti_user_provision', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_add_user' => 'canvas_lti#lti_course_add_user', :defaults => { :format => 'xml' }
-
   # A Canvas course ID of "embedded" means to retrieve from session properties.
   get '/api/academics/canvas/course_user_roles' => 'canvas_course_add_user#course_user_roles', :defaults => { :format => 'json' }
   get '/api/academics/canvas/external_tools' => 'canvas#external_tools', :defaults => { :format => 'json' }
@@ -66,32 +66,32 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/course_add_user/course_sections' => 'canvas_course_add_user#course_sections', :via => :get, :as => :canvas_course_add_user_course_sections, :defaults => { :format => 'json' }
   post '/api/academics/canvas/course_add_user/add_user' => 'canvas_course_add_user#add_user', :via => :post, :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
 
+  # System utility endpoints
+  get '/api/clear_cache' => 'clear_cache#do'
+  get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
+  get '/api/refresh_logging' => 'refresh_logging#refresh_logging', :defaults => { :format => 'json' }
+  get '/api/tools/styles' => 'tools#get_styles', :via => :get
+  get '/api/server_info' => 'server_runtime#get_info', :via => :get
+  get '/api/stats' => 'stats#get_stats', :via => :get, :defaults => { :format => 'json' }
   get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
-  get '/api/blog' => 'blog_feed#get_blog_info', :as => :blog_info, :defaults => { :format => 'json' }
-
-  post '/api/my/opt_out'=> 'user_api#delete', :via => :post
-  get '/api/clear_cache' => 'application#clear_cache'
-  get '/api/ping' => 'application#ping', :defaults => {:format => 'json'}
-  get '/api/refresh_logging' => 'refresh_logging#refresh_logging', :defaults => { :format => 'json' }
-
+  # Oauth endpoints: Canvas
   get '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
   get '/canvas/oAuthResponse' => 'canvas_auth#handle_callback'
   post '/api/canvas/remove_authorization' => 'canvas_auth#remove_authorization', :via => :post
 
+  # Oauth endpoints: Google
   get '/api/google/request_authorization'=> 'google_auth#request_authorization'
   get '/api/google/handle_callback' => 'google_auth#handle_callback'
   post '/api/google/remove_authorization' => 'google_auth#remove_authorization', :via => :post
   post '/api/google/dismiss_reminder' => 'google_auth#dismiss_reminder', :defaults => { :format => 'json'}, :via => :post
 
-  get '/api/tools/styles' => 'tools#get_styles', :via => :get
-
-  get '/api/server_info' => 'server_runtime#get_info', :via => :get
-  get '/api/stats' => 'stats#get_stats', :via => :get, :defaults => { :format => 'json' }
-
+  # Authentication endpoints
   get '/auth/cas/callback' => 'sessions#lookup'
   get '/auth/failure' => 'sessions#failure'
+  get '/reauth/admin' => 'sessions#reauth_admin', :as => :reauth_admin
   if Settings.developer_auth.enabled
+    # the backdoor for http basic auth (bypasses CAS) only on development environments.
     get '/basic_auth_login' => 'sessions#basic_lookup'
     get '/logout' => 'sessions#destroy', :as => :logout
     post '/logout' => 'sessions#destroy', :as => :logout_post, :via => :post
@@ -99,10 +99,9 @@ Calcentral::Application.routes.draw do
     post '/logout' => 'sessions#destroy', :as => :logout, :via => :post
   end
 
-  post '/act_as' => 'sessions#act_as', :via => :post
-  post '/stop_act_as' => 'sessions#stop_act_as', :via => :post
-
-  get '/api/search_users/:id' => 'search_users#search_users', :via => :get, :defaults => { :format => 'json' }
+  # Act-as endpoints
+  post '/act_as' => 'act_as#start', :via => :post
+  post '/stop_act_as' => 'act_as#stop', :via => :post
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
