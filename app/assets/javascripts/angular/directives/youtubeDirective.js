@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccYoutubeDirective', function($sce, $compile) {
+  angular.module('calcentral.directives').directive('ccYoutubeDirective', function($compile, $sce, $timeout) {
     return {
       restrict: 'ACE',
       replace: true,
@@ -13,8 +13,8 @@
 
           // Templates for the player
           var templates = {
-            image: '<div id="cc-youtube-image-placeholder" class="cc-youtube-image-placeholder" tabindex="0"><img ng-src="' + imageUrl + '"></img><div class="cc-youtube-thumbnail-button"></div></div>',
-            video: '<div id="cc-youtube-video-placeholder" class="cc-youtube-video-placeholder"><iframe type="text/html" width="100%" height="100%" src=' + videourl + ' frameborder="0" allowfullscreen></iframe></div>'
+            image: '<button id="cc-youtube-image-placeholder" class="cc-youtube-image-placeholder" tabindex="0"><span class="cc-visuallyhidden">Play video</span><img ng-src="' + imageUrl + '"></img><div class="cc-youtube-thumbnail-button"></div></button>',
+            video: '<div id="cc-youtube-video-placeholder" class="cc-youtube-video-placeholder" tabindex="0"><iframe type="text/html" width="100%" height="100%" src=' + videourl + ' frameborder="0" allowfullscreen></iframe></div>'
           };
 
           /**
@@ -34,13 +34,21 @@
             var compiled = $compile(el);
             elem.append(el);
 
-            // If you click the image or hit ENTER when it's focussed, start playing the video
+            // When we launch the video, make sure to focus on the youtube player
+            if (mode === 'video') {
+              $timeout(function() {
+                el[0].focus();
+              }, 1);
+            }
+
             if (mode === 'image') {
+              // If you click the image, start playing the video
               el.on('click', function() {
                 launch('video');
               });
               el.on('keydown', function(event) {
-                if (event.keyCode === 13) {
+                // If you hit ENTER or SPACE when it's focussed, start playing the video
+                if (event.keyCode === 13 || event.keyCode === 32) {
                   launch('video');
                 }
               });
