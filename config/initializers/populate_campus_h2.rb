@@ -537,7 +537,7 @@
         connection.execute sql
 
         # Insert binary data for the test student photo.
-        raw_data = File.open('public/dummy/images/sample_student_72x96.jpg', 'rb').read
+        raw_data = File.open(Rails.root.join('public', 'dummy', 'images', 'sample_student_72x96.jpg'), 'rb').read
         sql = "insert into CALCENTRAL_STUDENT_PHOTO_VW (student_ldap_uid, bytes, photo) values (300939, #{raw_data.length}, '#{raw_data.unpack('H*').first}');"
         connection.execute(sql)
       end
