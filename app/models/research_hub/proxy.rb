@@ -1,6 +1,7 @@
 module ResearchHub
   class Proxy < BaseProxy
     include ClassLogger, SafeJsonParser
+    include Cache::UserCacheExpiry
     extend Proxies::EnableForActAs
 
     require 'open-uri'

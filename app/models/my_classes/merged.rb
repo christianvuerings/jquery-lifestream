@@ -1,5 +1,7 @@
 class MyClasses::Merged  < UserSpecificModel
 
+  include Cache::LiveUpdatesEnabled
+
   def get_feed_internal
     sites = []
     campus = MyClasses::Campus.new(@uid)

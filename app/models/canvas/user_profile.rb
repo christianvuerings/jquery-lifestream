@@ -1,6 +1,7 @@
 module Canvas
   class UserProfile < Proxy
-    include SafeJsonParser, Cache::UserCacheExpiry
+    include SafeJsonParser
+    include Cache::UserCacheExpiry
 
     def user_profile
       request("users/sis_login_id:#{@uid}/profile", "_user_profile")

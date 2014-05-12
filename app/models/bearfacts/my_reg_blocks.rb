@@ -1,7 +1,8 @@
 module Bearfacts
 # TODO collapse this class into Bearfacts::Regblocks
   class MyRegBlocks < UserSpecificModel
-    include DatedFeed, Cache::LiveUpdatesEnabled
+    include DatedFeed
+    include Cache::LiveUpdatesEnabled
 
     def get_feed_internal
       proxy = Bearfacts::Regblocks.new({:user_id => @uid})
