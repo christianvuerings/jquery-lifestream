@@ -3,6 +3,7 @@
   width: 100%;
   .cc-youtube-image-placeholder {
     min-height: 150px;
+    padding: 0;
     position: relative;
     .cc-youtube-thumbnail-button {
       background-image: asset-data-url('icon_youtube_85x60.svg');
