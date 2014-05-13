@@ -88,4 +88,17 @@ describe "MyAcademics::CollegeAndLevel" do
     it { should be_blank }
   end
 
+  context 'when ex-student with empty BearFacts student profile' do
+    let(:uid) {rand(999999)}
+    let(:feed) {{}}
+    before do
+      allow(Bearfacts::Profile).to receive(:new).with(user_id: uid).and_return(double(get: {status_code: 204, body: nil}))
+    end
+    subject do
+      MyAcademics::CollegeAndLevel.new(uid).merge(feed)
+      feed
+    end
+    it {should be_blank}
+  end
+
 end

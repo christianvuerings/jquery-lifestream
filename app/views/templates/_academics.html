@@ -13,7 +13,12 @@
             <h2>Records</h2>
           </div>
 
-          <div class="cc-widget-padding">
+          <div class="cc-widget-padding" data-ng-if="!college_and_level">
+            <h3>Status</h3>
+            <div class="medium-6 columns end">You are not currently enrolled as an active student.</div>
+          </div>
+
+          <div class="cc-widget-padding" data-ng-if="college_and_level">
             <h3>Standing, Major and Level</h3>
 
             <div class="cc-table cc-table-top-border">
@@ -92,7 +97,9 @@
                 </tbody>
               </table>
             </div>
+          </div>
 
+          <div class="cc-widget-padding">
             <div class="cc-academics-status-and-blocks">
               <h3><span data-ng-if="studentInfo.regStatus.code !== null && api.user.profile.features.academic_status">Status and </span>Blocks</h3>
 
