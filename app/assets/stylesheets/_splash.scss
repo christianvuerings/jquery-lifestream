@@ -100,7 +100,7 @@ $cc-color-splash-blue-dark: #025A86;
   .cc-page-splash-info {
     margin: 20px 10px 0;
   }
-  .cc-page-splash-info-image {
+  .cc-page-splash-info-image, .cc-page-splash-video>button, .cc-page-splash-video>div {
     border: 1px solid $cc-color-button-border;
     @include box-shadow(3px 3px 5px $cc-color-placeholder);
     margin-bottom: 20px;
