@@ -58,7 +58,7 @@
     </div>
     <div
       class="cc-widget-tasks-col cc-widget-tasks-col-date"
-      data-ng-show="task.updatedDate">
+      data-ng-show="task.updatedDate && task.bucket === 'Unscheduled'">
       <span>
         {{task.updatedDate.epoch * 1000 | dateInYearFilter:'MM/dd'}}
       </span>
