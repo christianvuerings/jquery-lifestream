@@ -2,18 +2,6 @@ module CampusOracle
   class Queries < Connection
     include ActiveRecordHelper
 
-    def self.reg_status_translator
-      @reg_status_translator ||= Notifications::RegStatusTranslator.new
-    end
-
-    def self.educ_level_translator
-      @educ_level_translator ||= Notifications::EducLevelTranslator.new
-    end
-
-    def self.cal_residency_translator
-      @cal_residency_translator ||= Notifications::CalResidencyTranslator.new
-    end
-
     def self.get_person_attributes(person_id)
       result = {}
       use_pooled_connection {
@@ -31,27 +19,6 @@ module CampusOracle
         SQL
         result = connection.select_one(sql)
       }
-      if result
-        result[:reg_status] = {
-          :code => result["reg_status_cd"],
-          :summary => self.reg_status_translator.status(result["reg_status_cd"]),
-          :explanation => self.reg_status_translator.status_explanation(result["reg_status_cd"]),
-          :needsAction => !self.reg_status_translator.is_registered(result["reg_status_cd"])
-        }
-        result[:units_enrolled] = result["tot_enroll_unit"]
-        result[:education_level] = self.educ_level_translator.translate(result["educ_level"])
-        result[:california_residency] = self.cal_residency_translator.translate(result["cal_residency_flag"])
-        result['affiliations'] ||= ""
-        result[:roles] = {
-          :student => result['affiliations'].include?("STUDENT-TYPE-"),
-          :registered => result['affiliations'].include?("STUDENT-TYPE-REGISTERED"),
-          :exStudent => result['affiliations'].include?("STUDENT-STATUS-EXPIRED"),
-          :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
-          :staff => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF"),
-          :guest => result['affiliations'].include?("GUEST-TYPE-COLLABORATOR")
-        }
-
-      end
       stringify_ints!(result, ["tot_enroll_unit"])
     end
 

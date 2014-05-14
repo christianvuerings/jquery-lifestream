@@ -28,16 +28,14 @@ describe UserApiController do
   end
 
   it "should record first login for a new user" do
-    CampusOracle::Queries.stub(:get_person_attributes) do |uid|
-      {
-        'person_name' => "Joe Test",
-        :roles => {
-          :student => true,
-          :faculty => false,
-          :staff => false
-        }
+    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+      'person_name' => "Joe Test",
+      :roles => {
+        :student => true,
+        :faculty => false,
+        :staff => false
       }
-    end
+    }))
     session[:user_id] = @user_id
     get :mystatus
     json_response = JSON.parse(response.body)

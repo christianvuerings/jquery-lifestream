@@ -4,17 +4,15 @@ describe User::Api do
   before(:each) do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     @default_name = "Joe Default"
-    CampusOracle::Queries.stub(:get_person_attributes) do |uid|
-      {
-        'person_name' => @default_name,
-        :roles => {
-          :student => true,
-          :exStudent => false,
-          :faculty => false,
-          :staff => false
-        }
+    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+      'person_name' => @default_name,
+      :roles => {
+        :student => true,
+        :exStudent => false,
+        :faculty => false,
+        :staff => false
       }
-    end
+    }))
   end
 
   it "should find user with default name" do
@@ -81,16 +79,15 @@ describe User::Api do
     user_data[:hasAcademicsTab].should be_true
   end
 
-  it "should say Chris does not get the academics tab", if: CampusOracle::Queries.test_data? do
-    CampusOracle::Queries.stub(:get_person_attributes).and_return(
-      {
-        'person_name' => @default_name,
-        :roles => {
-          :student => false,
-          :faculty => false,
-          :staff => true
-        }
-      })
+  it "should say a staff member with no academic history does not get the academics tab", if: CampusOracle::Queries.test_data? do
+    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+      'person_name' => @default_name,
+      :roles => {
+        :student => false,
+        :faculty => false,
+        :staff => true
+      }
+    }))
     fake_courses_proxy = CampusOracle::UserCourses.new({:fake => true})
     fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
     fake_courses_proxy.stub(:has_student_history?).and_return(false)
@@ -100,38 +97,38 @@ describe User::Api do
     user_data[:hasAcademicsTab].should be_false
   end
 
-  context "my finances tab" do
-    before do
-      @student_roles = {
+  describe "my finances tab" do
+    let(:student_roles) do
+      {
         :active   => { :student => true,  :exStudent => false, :faculty => false, :staff => false },
         :expired  => { :student => false, :exStudent => true,  :faculty => false, :staff => false },
         :non      => { :student => false, :exStudent => false, :faculty => false, :staff => true },
       }
     end
-    it "should be toggled based on a :has_finances_tab attribute in student info" do
-      data = User::Api.new(@random_id).get_feed
-      data[:hasFinancialsTab].should_not be_nil
+    before do
+      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {
+        roles: test_roles
+      }))
     end
-    it "should be true for an active student"  do  #check
-      CampusOracle::Queries.stub(:get_person_attributes).and_return({ :roles => @student_roles[:active] })
-      data = User::Api.new(@random_id).get_feed
-      data[:hasFinancialsTab].should == true
+    subject {User::Api.new(@random_id).get_feed[:hasFinancialsTab]}
+    context 'an active student' do
+      let(:test_roles) {student_roles[:active]}
+      it {should be_true}
     end
-    it "should be false for a non-student", if: CampusOracle::Queries.test_data?  do   #check
-      CampusOracle::Queries.stub(:get_person_attributes).and_return({ :roles => @student_roles[:non] })
-      data = User::Api.new(@random_id).get_feed
-      data[:hasFinancialsTab].should == false
+    context 'a non-student' do
+      let(:test_roles) {student_roles[:non]}
+      it {should be_false}
     end
-    it "should be true for Bernie as an ex-student", if: CampusOracle::Queries.test_data?  do
-      CampusOracle::Queries.stub(:get_person_attributes).and_return({ :roles => @student_roles[:expired] })
-      data = User::Api.new(@random_id).get_feed
-      data[:hasFinancialsTab].should be_true
+    context 'an ex-student' do
+      let(:test_roles) {student_roles[:expired]}
+      it {should be_true}
     end
   end
 
 
-  it "should not explode when CampusOracle::Queries returns empty" do
-    CampusOracle::Queries.stub(:get_person_attributes).and_return({})
+  it "should not explode when CampusOracle returns empty feeds" do
+    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+    }))
     fake_courses_proxy = CampusOracle::UserCourses.new({:fake => true})
     fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
     fake_courses_proxy.stub(:has_student_history?).and_return(false)

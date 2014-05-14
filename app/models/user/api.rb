@@ -11,7 +11,7 @@ module User
       use_pooled_connection {
         @calcentral_user_data ||= User::Data.where(:uid => @uid).first
       }
-      @campus_attributes ||= CampusOracle::Queries.get_person_attributes(@uid) || {}
+      @campus_attributes ||= CampusOracle::UserAttributes.new(user_id: @uid).get_feed
       @default_name ||= @campus_attributes['person_name']
       @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
       @first_name ||= @campus_attributes['first_name'] || ""
