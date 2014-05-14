@@ -128,7 +128,7 @@
         <div class="cc-widget-padding" data-ng-if="examScheduleLength">
           <div data-ng-repeat="(day, dayData) in examSchedule" class="cc-academics-exam-block">
             <div class="row collapse">
-              <div class="medium-12 small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
+              <div class="small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
             </div>
             <div class="row collapse" data-ng-repeat="exam in dayData">
               <div class="medium-2 small-2 columns" data-ng-bind="exam.time"></div>
@@ -181,17 +181,69 @@
           </div>
         </div>
       </div>
-      <div data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket !== 'future')" class="cc-widget cc-widget-interesting cc-widget-last">
+
+      <div data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket === 'past') && !selectedSemester.gradingInProgress" class="cc-widget cc-widget-interesting cc-widget-last">
+        <div class="cc-widget-title">
+          <h2>Final Grades</h2>
+        </div>
+        <div class="cc-widget-padding">
+          <div>
+            <div data-ng-if="semesterHasTranscripts">
+              <h4>Grades for <span data-ng-bind="selectedSemester.name"></span></h4>
+              <div class="cc-table">
+                <table>
+                  <thead>
+                    <th scope="col" width="60%">Class</th>
+                    <th scope="col" class="cc-table-right cc-table-right-spacing">Units</th>
+                    <th scope="col">Grade</th>
+                  </thead>
+                  <tbody data-ng-repeat="course in selectedCourses">
+                    <tr data-ng-repeat="transcript in course.transcript">
+                      <td data-ng-bind="course.course_code"></td>
+                      <td class="cc-table-right cc-table-right-spacing" data-ng-bind="transcript.units | number:1"></td>
+                      <td data-ng-if="!transcript.units">--</td>
+                      <td>
+                        <span data-ng-if="transcript.grade" data-ng-bind="transcript.grade"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div data-ng-if="!semesterHasTranscripts">
+              <h4>No grade data available for <span data-ng-bind="selectedSemester.name"></span></h4>
+            </div>
+            <div class="row collapse cc-academics-calculator-disclaimer" data-ng-if="selectedCourses.length">
+              <div class="small-12 columns">
+                <p>This unofficial list of grades is based on available data<span data-ng-show="hideDisclaimer">...</span>
+                  <span data-ng-show="!hideDisclaimer">
+                    and may not reflect your full transcript.
+                    Current students can view an unofficial transcript on <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a> by selecting <em>All Grades</em>.
+                    <span data-ng-if="api.user.profile.roles.exStudent">
+                      Students who have graduated may request transcripts online through an <a href="https://www.credentials-inc.com/CGI-BIN/dvcgitp.pgm?ALUMTRO001312">alumni service</a>.
+                    </span>
+                  </span>
+                  <button class="cc-button-link" data-ng-show="hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show more</button>
+                  <button class="cc-button-link" data-ng-show="!hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show less</button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket !== 'future') && ((selectedSemester.timeBucket !== 'past') || selectedSemester.gradingInProgress)"
+           class="cc-widget cc-widget-interesting cc-widget-last">
         <div class="cc-widget-title">
           <h2>GPA Calculator</h2>
         </div>
-
         <div class="cc-widget-padding">
           <div>
             <h4>Estimate your grades for <span data-ng-bind="selectedSemester.name"></span></h4>
             <div class="cc-table" data-ng-if="selectedCourses.length">
               <table data-ng-if="selectedSemester.timeBucket === 'current'">
                 <tbody>
+                  <tr>
                     <td><strong>Current GPA: </strong></td>
                     <td><strong data-ng-bind="(currentCumulativeGpa | number:2) || 'N/A'"></strong></td>
                   </tr>
@@ -241,10 +293,13 @@
               </table>
             </div>
             <div class="row collapse cc-academics-calculator-disclaimer" data-ng-if="selectedCourses.length">
-              <div class="medium-12 small-12 columns">
+              <div class="small-12 columns">
                 <p>This calculator provides a "best guess" calculation of your GPA based on available data<span data-ng-show="hideDisclaimer">...</span>
-                  <span data-ng-show="!hideDisclaimer">and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />When grades are available, your actual grade will replace the popup menu for that class. Once a semester is over, if any grades are still not available a popup menu will remain that will allow you to enter your estimated grade.<br /><br />The estimated cumulative GPA calculation does not consider repeated courses.</span>
-
+                  <span data-ng-show="!hideDisclaimer">
+                    and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />
+                    When grades are available, your actual grade will replace the popup menu for that class.<br /><br />
+                    The estimated cumulative GPA calculation does not consider repeated courses.
+                  </span>
                   <button class="cc-button-link" data-ng-show="hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show more</button>
                   <button class="cc-button-link" data-ng-show="!hideDisclaimer" data-ng-click="hideDisclaimer=!hideDisclaimer">Show less</button>
                 </p>
@@ -256,6 +311,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </script>
