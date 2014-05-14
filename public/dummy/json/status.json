@@ -32,6 +32,7 @@
   "preferred_name": "BABTREW,IWQROE",
   "roles": {
     "student": true,
+    "registered": true,
     "exStudent": false,
     "faculty": false,
     "staff": false,
