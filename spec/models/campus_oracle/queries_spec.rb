@@ -25,6 +25,7 @@ describe CampusOracle::Queries do
       data['tot_enroll_unit'].should == "1"
       data['cal_residency_flag'].should == "N"
       data[:roles][:student].should == true
+      data[:roles][:registered].should == true
       data[:roles][:exStudent].should == false
       data[:roles][:faculty].should == false
       data[:roles][:staff].should == true

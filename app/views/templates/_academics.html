@@ -7,7 +7,7 @@
         <h1 class="cc-heading-page-title">My Academics</h1>
       </div>
 
-      <div class="medium-8 columns cc-academics-page-left" data-ng-if="api.user.profile.hasStudentHistory">
+      <div class="medium-8 columns cc-academics-page-left" data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student">
         <div class="cc-widget">
           <div class="cc-widget-title">
             <h2>Records</h2>
@@ -15,7 +15,24 @@
 
           <div class="cc-widget-padding" data-ng-if="!college_and_level">
             <h3>Status</h3>
-            <div class="medium-6 columns end">You are not currently enrolled as an active student.</div>
+            <div data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
+              You are no longer an active student.
+            </div>
+            <div data-ng-if="api.user.profile.roles.registered">
+              You are registered as a student but not currently considered active.
+            </div>
+            <div data-ng-if="api.user.profile.roles.student && !api.user.profile.roles.registered">
+              You are not yet officially registered as a student.
+            </div>
+            <div class="cc-academics-nocontent" data-ng-if="api.user.profile.roles.student && !semesters.length && studentInfo.regStatus.code === null && !requirements.length">
+              <div>More information will display here when your academic status changes. Check back often for information about:</div>
+              <ul class="cc-list-bullets">
+                <li>Class enrollments, including waitlist information.</li>
+                <li>Your academic status, including standing, GPA, units, major, college, and more.</li>
+                <li>Your registration status, including any blocks limiting your access to campus services.</li>
+                <li>Course information, including class and exam schedules, class locations, textbooks, and webcasts.</li>
+              </ul>
+            </div>
           </div>
 
           <div class="cc-widget-padding" data-ng-if="college_and_level">
