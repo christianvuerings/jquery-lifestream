@@ -99,8 +99,13 @@
       margin-left: 20px;
     }
   }
-  .cc-academics-nocontent {
-    margin: 20px;
+  .cc-academics-nocontent-container {
+    p {
+      margin-bottom: 0;
+    }
+    .cc-academics-nocontent {
+      margin: 20px;
+    }
   }
   .cc-academics-nolink {
     color: $cc-color-light-medium-grey;
