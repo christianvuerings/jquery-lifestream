@@ -433,6 +433,7 @@
 
     $scope.gpaInit = function() {
       // On page load, set default values and calculate starter GPA
+      var hasTranscripts = false;
       if ($scope.selectedSemester.timeBucket !== 'past' || $scope.selectedSemester.gradingInProgress) {
         angular.forEach($scope.selectedCourses, function(course) {
           if (!course.transcript) {
@@ -452,9 +453,19 @@
               }
             });
             course.estimatedTranscript = estimatedTranscript;
+          } else {
+            hasTranscripts = true;
           }
         });
+      } else {
+        for (var i = 0; i < $scope.selectedCourses.length; i++) {
+          if ($scope.selectedCourses[i].transcript) {
+            hasTranscripts = true;
+            break;
+          }
+        }
       }
+      $scope.semesterHasTranscripts = hasTranscripts;
       gpaCalculate();
       cumulativeGpaCalculate($scope.previousCourses, 'current');
       cumulativeGpaCalculate($scope.allCourses, 'estimated');
