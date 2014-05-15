@@ -16,10 +16,10 @@
     };
 
     var formatClassTitle = function() {
-      var courseDepartment = $scope.selected_course.dept;
-      var courseCatalog = $scope.selected_course.course_catalog;
-      var courseSemester = $scope.selectedSemester.termCode;
-      var courseYear = $scope.selectedSemester.termYear;
+      var courseYear = encodeURIComponent($scope.selectedSemester.termYear);
+      var courseSemester = encodeURIComponent($scope.selectedSemester.termCode);
+      var courseDepartment = encodeURIComponent($scope.selected_course.dept);
+      var courseCatalog = encodeURIComponent($scope.selected_course.course_catalog);
       var title = courseYear + '/' + courseSemester + '/' + courseDepartment + '/' + courseCatalog;
       getVideos(title);
     };
