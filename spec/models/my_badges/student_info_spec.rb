@@ -8,17 +8,15 @@ describe "MyBadges::StudentInfo" do
   let(:fake_courses_proxy) {    CampusOracle::UserCourses.new({:fake => true} ) }
 
   before(:each) do
-    CampusOracle::Queries.stub(:get_person_attributes) do |uid|
-      {
-        'person_name' => default_name,
-        :roles => {
-          :student => true,
-          :exStudent => false,
-          :faculty => false,
-          :staff => false
-        }
+    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+      'person_name' => default_name,
+      :roles => {
+        :student => true,
+        :exStudent => false,
+        :faculty => false,
+        :staff => false
       }
-    end
+    }))
   end
 
   it "should create student_info instance along with the necessary variables" do

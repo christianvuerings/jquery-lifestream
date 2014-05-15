@@ -10,8 +10,7 @@ module MyBadges
     end
 
     def get
-      campus_attributes ||= CampusOracle::Queries.get_person_attributes(@uid) || {}
-      campus_courses_proxy = CampusOracle::UserCourses.new({:user_id => @uid})
+      campus_attributes = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
       result = {
         :californiaResidency => campus_attributes[:california_residency],
         :regStatus => campus_attributes[:reg_status],

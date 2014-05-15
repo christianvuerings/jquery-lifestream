@@ -17,7 +17,7 @@ class BaseProxy
   end
 
   def lookup_student_id
-    student = CampusOracle::Queries.get_person_attributes @uid
+    student = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
     student.try(:[], "student_id")
   end
 

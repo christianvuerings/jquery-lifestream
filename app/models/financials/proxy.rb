@@ -15,24 +15,24 @@ module Financials
     def get
       # smart_fetch_from_cache provides helpful services like writing only successful entries to the cache.
       self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: 'My Finances is currently unavailable. Please try again later.'}) do
-        request_internal("/student/#{lookup_student_id}", 'financials')
+        request_internal('financials')
       end
     end
 
     private
 
-    def request_internal(path, vcr_cassette)
+    def request_internal(vcr_cassette)
       # not all external data sources need a student id, but this one does.
       student_id = lookup_student_id
-      if student_id.nil?
+      if student_id.blank?
         # don't continue if student id can't be found.
-        logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API path #{path}"
+        logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API"
         {
           body: "CalCentral's My Finances tab provides financial data for current students and recent graduates. You are seeing this message because we do not have CARS billing data for your account. If you believe that you have received this message in error, please report the problem using the Feedback link below.",
           statusCode: 400
         }
       else
-        url = "#{Settings.financials_proxy.base_url}#{path}"
+        url = "#{Settings.financials_proxy.base_url}/student/#{student_id}"
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
 
         # HTTParty is our preferred HTTP library. FakeableProxy provides the (deprecated) VCR response recording system.

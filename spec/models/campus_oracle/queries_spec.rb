@@ -5,12 +5,6 @@ describe CampusOracle::Queries do
   it "should find Oliver" do
     data = CampusOracle::Queries.get_person_attributes(2040)
     data['first_name'].should == "Oliver"
-    if CampusOracle::Queries.test_data?
-      data[:roles][:student].should == false
-      data[:roles][:exStudent].should == true
-      data[:roles][:faculty].should == false
-      data[:roles][:staff].should == true
-    end
   end
 
   it "should find a user who has a bunch of blocks" do
@@ -24,11 +18,6 @@ describe CampusOracle::Queries do
       data['reg_blk_flag'].should == "Y"
       data['tot_enroll_unit'].should == "1"
       data['cal_residency_flag'].should == "N"
-      data[:roles][:student].should == true
-      data[:roles][:registered].should == true
-      data[:roles][:exStudent].should == false
-      data[:roles][:faculty].should == false
-      data[:roles][:staff].should == true
     end
   end
 
@@ -173,24 +162,6 @@ describe CampusOracle::Queries do
     )
     is_ok = CampusOracle::Queries.database_alive?
     is_ok.should be_false
-  end
-
-  it "should handle a person with no affiliations" do
-    # Temp Agency Staff has no affiliations
-    data = CampusOracle::Queries.get_person_attributes(321765)
-    data[:roles].each do |role_name, role_value|
-      role_value.should be_false
-    end
-  end
-
-  it "should include an exStudent role for a person with a STUDENT-STATUS-EXPIRED affiliation" do
-    result = CampusOracle::Queries.get_person_attributes( 238382 ) # Bernie!!
-    result[:roles][:exStudent].should be_true
-  end
-
-  it "should include a guest role", if: CampusOracle::Queries.test_data? do
-    result = CampusOracle::Queries.get_person_attributes(19999969)
-    result[:roles][:guest].should be_true
   end
 
   it "should return class schedule data" do
