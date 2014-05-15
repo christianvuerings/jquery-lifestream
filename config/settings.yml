@@ -125,6 +125,12 @@ playlists_proxy:
   fake: false
   base_url: 'http://webcast.berkeley.edu/itunesu_podcasts.js'
 
+playlists_warehouse_proxy:
+  fake: false
+  base_url: 'https://video-qa.ets.berkeley.edu/warehouse/webcast.json'
+  username: secret
+  password: secret
+
 youtube_proxy:
   fake: false
   base_url: 'https://gdata.youtube.com/feeds/api/playlists/'
@@ -213,7 +219,7 @@ cache:
 
     Textbooks::Proxy: <%= 24.hours %>
     Mediacasts::Youtube: <%= 24.hours %>
-    Mediacasts::Playlists: <%= 24.hours %>
+    Mediacasts::AllPlaylists: <%= 24.hours %>
     EtsBlog::Alerts: <%= 2.minutes %>
 
 # Cache warmer settings

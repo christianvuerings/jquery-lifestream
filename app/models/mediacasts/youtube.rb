@@ -18,6 +18,8 @@ module Mediacasts
       end
     end
 
+    private
+
     def request_internal(params = {})
       return {} unless Settings.features.videos
       response = FakeableProxy.wrap_request(APP_ID + "_" + "videos", @fake, {:match_requests_on => [:method, :path]}) {

@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe Mediacasts::MyMedia do
+describe Mediacasts::CourseMedia do
 
   let(:proxy_error_hash) do
-    { :proxy_error_message => "Proxy Error" }
+    {:proxy_error_message => "Proxy Error"}
   end
 
   let(:empty_proxy_error_hash) do
-    { :proxy_error_message => "" }
+    {:proxy_error_message => ""}
   end
 
   let(:errors) do
@@ -42,35 +42,22 @@ describe Mediacasts::MyMedia do
   end
 
   let(:fake_video_result) do
-    { :videos => ['video1', 'video2'] }
+    {:videos => ['video1', 'video2']}
   end
 
   let(:fake_podcast_result) do
-    { :podcast => 'podcast link' }
+    {:podcast => 'podcast link'}
   end
 
   context "when serving mediacasts" do
 
-    context "when playlist title has a _slash_" do
-      it "should decode _slash_ to /" do
-        my_media = Mediacasts::MyMedia.new({:playlist_title => "Eve_slash_Wknd Masters in Bus. Adm. 236G, 11A - Fall 2013"})
-        expect(my_media.instance_eval {@playlist_title}).to eq "Eve/Wknd Masters in Bus. Adm. 236G, 11A - Fall 2013"
-      end
-    end
-
-    context "when playlist title has no slash" do
-      it "should do nothing to title" do
-        title = "Computer Science 61A, 001 - Fall 2013"
-        my_media = Mediacasts::MyMedia.new({:playlist_title => title})
-        expect(my_media.instance_eval {@playlist_title}).to eq title
-      end
-    end
+    subject { Mediacasts::CourseMedia.new(2008, 'D', 'LAW', '2723') }
 
     context "when proxy error message is not blank" do
       before { subject.should_receive(:get_playlist).twice.and_return(proxy_error_hash) }
       it "should return the proxy error message" do
-        expect(subject.get_media_as_json).to be_an_instance_of Hash
-        expect(subject.get_media_as_json[:proxyErrorMessage]).to eq "Proxy Error"
+        expect(subject.get_feed).to be_an_instance_of Hash
+        expect(subject.get_feed[:proxyErrorMessage]).to eq "Proxy Error"
       end
     end
 
@@ -79,7 +66,7 @@ describe Mediacasts::MyMedia do
         subject.should_receive(:get_playlist).and_return(empty_proxy_error_hash)
         subject.should_receive(:get_videos_as_json).and_return(fake_video_result)
         subject.should_receive(:get_podcasts_as_json).and_return(fake_podcast_result)
-        result = subject.get_media_as_json
+        result = subject.get_feed
         expect(result).to be_an_instance_of Hash
         expect(result).to eq fake_video_result.merge(fake_podcast_result)
       end
@@ -140,4 +127,67 @@ describe Mediacasts::MyMedia do
 
   end
 
+  context 'retrieving the playlist id for a course' do
+    context 'with a fake playlists proxy' do
+      subject { Mediacasts::CourseMedia.new(2008, 'D', 'LAW', '2723') }
+
+      before do
+        allow(Mediacasts::AllPlaylists).to receive(:new).and_return(Mediacasts::AllPlaylists.new({fake: true}))
+      end
+
+      context 'a normal return of fake data' do
+        it 'should return a specific playlist id that we know about' do
+          result = subject.get_playlist
+          expect(result[:playlist_id]).to eq "EC8DA9DAD111EAAD28"
+        end
+      end
+    end
+
+    context 'with a real, nonfake playlists proxy' do
+      let (:playlist_uri) { URI.parse(Settings.playlists_warehouse_proxy.base_url) }
+      subject { Mediacasts::CourseMedia.new(2012, 'B', 'BIOLOGY', '1A') }
+
+      context "normal return of real data", :testext => true do
+        it "should return playlist id" do
+          result = subject.get_playlist
+          expect(result[:playlist_id]).to eq "ECCF8E59B3C769FB01"
+          expect(result[:podcast_id]).to eq "496300137"
+        end
+      end
+
+      context "on remote server errors" do
+        before(:each) {
+          stub_request(:any, /.*#{playlist_uri.hostname}.*/).to_return(status: 506)
+        }
+        after(:each) { WebMock.reset! }
+        it "should return the fetch error message" do
+          response = subject.get_playlist
+          expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts and podcasts."
+        end
+      end
+
+      context "when json formatting fails" do
+        before(:each) {
+          stub_request(:any, /.*#{playlist_uri.hostname}.*/).to_return(status: 200, body: "bogus json")
+        }
+        after(:each) { WebMock.reset! }
+        it "should return the fetch error message" do
+          response = subject.get_playlist
+          expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts and podcasts."
+        end
+      end
+
+      context "when videos and podcasts are disabled" do
+        before { Settings.features.podcasts = false }
+        before { Settings.features.videos = false }
+        after { Settings.features.podcasts = true }
+        after { Settings.features.videos = true }
+        it "should return an empty hash" do
+          result = subject.get_playlist
+          expect(result).to be_an_instance_of Hash
+          expect(result).to be_empty
+        end
+      end
+    end
+  end
 end

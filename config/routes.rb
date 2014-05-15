@@ -32,9 +32,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
   get '/api/blog' => 'blog_feed#get_blog_info', :as => :blog_info, :defaults => { :format => 'json' }
   get '/api/search_users/:id' => 'search_users#search_users', :via => :get, :defaults => { :format => 'json' }
-  get '/api/my/playlists(/:playlist_title)' => 'my_playlists#get_playlists', :defaults => { :format => 'json' }
-  get '/api/my/youtube/:playlist_id' => 'my_youtube#get_videos', :defaults => { :format => 'json' }
-  get '/api/my/media/:playlist_title' => 'my_media#get_media', :constraints => { :playlist_title => /[^\/]+/ }, :defaults => { :format => 'json' }
+  get '/api/media/:year/:term_code/:dept/:catalog_id' => 'mediacasts#get_media', :defaults => { :format => 'json' }
 
   # Google API writing endpoints
   post '/api/my/event' => 'my_events#create', via: :post, defaults: { format: 'json' }
