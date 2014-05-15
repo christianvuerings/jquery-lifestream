@@ -10,6 +10,13 @@ describe Canvas::UserProfile do
         expect(subject.get).to be_nil
       end
     end
+
+    context "when providing canvas login id" do
+      it "returns nil" do
+        expect(subject.login_id).to be_nil
+      end
+    end
+
   end
 
   context "when canvas user profile api request succeeds" do
@@ -25,6 +32,13 @@ describe Canvas::UserProfile do
         expect(result['login_id']).to eq "300846"
       end
     end
+
+    context "when providing canvas login id" do
+      it "returns uid string" do
+        expect(subject.login_id).to eq "300846"
+      end
+    end
+
   end
 
 end

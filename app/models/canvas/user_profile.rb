@@ -17,6 +17,12 @@ module Canvas
       return profile_response ? safe_json(profile_response.body) : nil
     end
 
+    def login_id
+      profile = get
+      return profile if profile.nil?
+      profile['login_id']
+    end
+
     def existence_check
       true
     end
