@@ -2,7 +2,7 @@
   <div class="cc-widget" data-ng-controller="CarsController">
     <div class="cc-widget-title">
       <h2 class="cc-left">Billing Summary</h2>
-      <a data-ng-if="!carsDetails && !myfinancesError" class="cc-right cc-widget-title-link" href="/finances/details">
+      <a data-ng-if="!carsDetails && myfinances.activity && !myfinancesError" class="cc-right cc-widget-title-link" href="/finances/details">
         <strong>Details</strong>
       </a>
     </div>
@@ -90,6 +90,9 @@
         </li>
       </ul>
       <p data-ng-if="myfinancesError" class="cc-widget-text cc-page-myfinances-account-summary-error" data-ng-bind="myfinancesError.body">
+      </p>
+      <p data-ng-if="!myfinancesError && !myfinances.activity" class="cc-widget-text cc-page-myfinances-account-summary-error">
+        CalCentral's My Finances tab provides financial data for current students and recent graduates. You are seeing this message because we do not have CARS billing data for your account. If you believe that you have received this message in error, please report the problem using the Feedback link below.
       </p>
     </div>
   </div>
