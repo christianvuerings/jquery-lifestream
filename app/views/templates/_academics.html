@@ -13,19 +13,19 @@
             <h2>Records</h2>
           </div>
 
-          <div class="cc-widget-padding" data-ng-if="!college_and_level">
+          <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!college_and_level">
             <h3>Status</h3>
-            <div data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
+            <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
               You are no longer an active student.
-            </div>
-            <div data-ng-if="api.user.profile.roles.registered">
+            </p>
+            <p data-ng-if="api.user.profile.roles.registered">
               You are registered as a student but not currently considered active.
-            </div>
-            <div data-ng-if="api.user.profile.roles.student && !api.user.profile.roles.registered">
+            </p>
+            <p data-ng-if="api.user.profile.roles.student && !api.user.profile.roles.registered">
               You are not yet officially registered as a student.
-            </div>
+            </p>
             <div class="cc-academics-nocontent" data-ng-if="api.user.profile.roles.student && !semesters.length && studentInfo.regStatus.code === null && !requirements.length">
-              <div>More information will display here when your academic status changes. Check back often for information about:</div>
+              <p>More information will display here when your academic status changes. Check back often for information about:</p>
               <ul class="cc-list-bullets">
                 <li>Class enrollments, including waitlist information.</li>
                 <li>Your academic status, including standing, GPA, units, major, college, and more.</li>
