@@ -353,12 +353,17 @@ ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_s
 INSERT INTO fin_aid_years VALUES (1, 2014, '2014-03-29', '2014-05-01 21:32:13.581', '2014-05-01 21:32:13.581');
 INSERT INTO fin_aid_years VALUES (2, 2015, '2015-03-28', '2014-05-01 21:32:13.588', '2014-05-01 21:32:13.588');
 INSERT INTO fin_aid_years VALUES (3, 2016, '2016-03-26', '2014-05-01 21:32:13.593', '2014-05-01 21:32:13.593');
+INSERT INTO fin_aid_years VALUES (4, 2017, '2017-04-01', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
+INSERT INTO fin_aid_years VALUES (5, 2018, '2018-03-31', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
+INSERT INTO fin_aid_years VALUES (6, 2019, '2019-03-30', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
+INSERT INTO fin_aid_years VALUES (7, 2020, '2020-03-28', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
+INSERT INTO fin_aid_years VALUES (8, 2021, '2021-03-27', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
 
 --
 -- Name: fin_aid_years_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral_development
 --
 
-SELECT pg_catalog.setval('fin_aid_years_id_seq', 3, true);
+SELECT pg_catalog.setval('fin_aid_years_id_seq', 8, true);
 
 
 --
