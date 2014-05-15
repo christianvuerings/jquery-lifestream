@@ -1,19 +1,25 @@
 <div data-ng-controller="HookupGoogleReminderController">
   <div class="cc-widget cc-widget-hookup-google-reminder" data-ng-if="showReminderCard">
     <div class="cc-widget-title">
-      <h2>Connect CalCentral to bConnected</h2>
+      <h2>Setup</h2>
     </div>
     <div class="cc-widget-hookup-google-reminder-container">
-      <div class="cc-widget-hookup-google-reminder-subtitle">
-        <div class="cc-widget-hookup-google-reminder-subtitle-icon"></div>
-        <h3>bConnected</h3>
+      <div class="cc-clearfix-container">
+        <h3 class="cc-left">Connect to bConnected</h3>
+        <div class="cc-left cc-widget-hookup-google-reminder-icons">
+          <div class="cc-left cc-icon cc-icon-22 cc-icon-mail"></div>
+          <div class="cc-left cc-icon cc-icon-22 cc-icon-calendar"></div>
+          <div class="cc-left cc-icon cc-icon-22 cc-icon-drive"></div>
+        </div>
       </div>
       <div class="cc-widget-hookup-google-reminder-content">
-        <p>You have not connected CalCentral to your <a href="http://bconnected.berkeley.edu/usingbconn">Google Apps for Education Account</a>. Connecting will allow you to access your drive, tasks, mail and calendar.</p>
-        <p>To connect, click "Go to Settings" below.</p>
+        <p>Connect CalCentral to your campus bConnected <em>email</em>, <em>calendar</em> and <em>drive</em> account.</p>
+        <p>Click Connect to go to a Google page, then Accept to complete the setup with CalCentral. <button class="cc-button-link" data-ng-show="!showReminder" data-ng-click="showReminder=!showReminder">Show more</button></p>
+        <p data-ng-if="showReminder">Why connect? From your Dashboard, you will be able to see when you have new bMail email messages and bCal calendar events, as well as your tasks and today's events.</p>
+        <p data-ng-if="showReminder">Not ready? You can connect later using the <a href="/settings">Settings page</a>.</p>
       </div>
       <div class="cc-widget-hookup-google-reminder-content-buttons">
-        <a class="cc-button cc-button-blue" href="/settings">Go to Settings</a>
+        <button class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth('Google')">Connect</button>
         <button class="cc-button" data-ng-click="dismissReminder()">Dismiss</button>
       </div>
     </div>

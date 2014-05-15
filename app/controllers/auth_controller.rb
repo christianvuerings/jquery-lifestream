@@ -17,7 +17,7 @@ class AuthController < ApplicationController
 
   def request_authorization
     expire
-    final_redirect = params[:final_redirect] || "/settings"
+    final_redirect = params[:final_redirect] || "/"
     if params[:force_domain].present? && params[:force_domain] == 'false'
       client = get_client(final_redirect, force_domain = false)
     end
@@ -56,7 +56,7 @@ class AuthController < ApplicationController
     if (final_redirect = params[:state])
       redirect_to Base64.decode64(final_redirect)
     else
-      redirect_to url_for_path("/settings")
+      redirect_to url_for_path("/")
     end
   end
 

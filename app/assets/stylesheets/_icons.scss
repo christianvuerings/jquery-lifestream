@@ -4,9 +4,10 @@
   height: 16px;
   width: 16px;
 }
-.cc-icon-24 {
-  height: 24px;
-  width: 24px;
+.cc-icon-22 {
+  background-size: 22px;
+  height: 22px;
+  width: 22px;
 }
 
 .cc-icon-bcourses {
@@ -16,16 +17,16 @@
   background-image: asset-data-url('icon_bspace_16x16.png');
 }
 .cc-icon-calendar {
-  background-image: asset-data-url('icon_calendar_24x24.png');
+  background-image: asset-data-url('svg/icon_calendar_256x256.svg');
 }
 .cc-icon-callink {
   background-image: asset-data-url('icon_callink_16x16.png');
 }
 .cc-icon-drive {
-  background-image: asset-data-url('icon_drive_24x24.png');
+  background-image: asset-data-url('svg/icon_drive_256x256.svg');
 }
 .cc-icon-mail {
-  background-image: asset-data-url('icon_mail_24x24.png');
+  background-image: asset-data-url('svg/icon_mail_256x256.svg');
 }
 .cc-icon-researchhub{
   background-image: asset-data-url('icon_research_16x16.png')
