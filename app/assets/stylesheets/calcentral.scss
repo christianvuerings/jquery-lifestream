@@ -323,7 +323,7 @@ button {
 /* We need to wrap a select in a <div> to have consistent styling */
 .cc-select {
   background: $cc-color-white;
-  @include background(asset-data-url('select_arrow_20x28.png') no-repeat right center, linear-gradient($cc-color-white, $cc-color-button-regular));
+  @include background(asset-data-url('svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($cc-color-white, $cc-color-button-regular));
   border: 1px solid $cc-color-button-border;
   border-radius: 5px;
   overflow: hidden;
