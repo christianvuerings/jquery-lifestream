@@ -1,12 +1,18 @@
 class SessionsController < ApplicationController
   include ActiveRecordHelper, ClassLogger
 
-  skip_before_filter :check_reauthentication, :only => [:lookup, :stop_act_as, :destroy]
+  skip_before_filter :check_reauthentication, :only => [:lookup, :destroy]
 
   def lookup
     auth = request.env["omniauth.auth"]
-    if (params[:renew] == 'true')
-      cookies[:reauthenticated] = { :value => true, :expires => 8.hours.from_now }
+    if params[:renew] == 'true'
+      if session[:original_user_id] && session[:original_user_id] != auth['uid']
+        logger.warn "ACT-AS: Active user session for #{session[:original_user_id]} exists, but CAS is giving us a different UID: #{auth['uid']}. Logging user out."
+        logout
+        return redirect_to Settings.cas_logout_url
+      else
+        cookies[:reauthenticated] = {:value => true, :expires => 8.hours.from_now}
+      end
     end
     continue_login_success auth['uid']
   end
@@ -28,12 +34,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    begin
-      delete_reauth_cookie
-      reset_session
-    ensure
-      ActiveRecord::Base.clear_active_connections!
-    end
+    logout
     render :json => {
       :redirectUrl => "#{Settings.cas_logout_url}?url=#{CGI.escape(request.protocol + request.host_with_port)}"
     }.to_json
@@ -62,6 +63,15 @@ class SessionsController < ApplicationController
     else
       session[:user_id] = (acting_as?) ? act_as_uid : uid
       redirect_to smart_success_path, :notice => "Signed in!"
+    end
+  end
+
+  def logout
+    begin
+      delete_reauth_cookie
+      reset_session
+    ensure
+      ActiveRecord::Base.clear_active_connections!
     end
   end
 

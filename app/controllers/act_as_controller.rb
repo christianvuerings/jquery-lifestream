@@ -2,6 +2,8 @@ class ActAsController < ApplicationController
 
   include ClassLogger
 
+  skip_before_filter :check_reauthentication, :only => [:stop_act_as]
+
   def start
     return redirect_to root_path unless valid_params?(current_user, params[:uid])
     logger.warn "ACT-AS: User #{session[:user_id]} acting as #{params[:uid]} begin"
