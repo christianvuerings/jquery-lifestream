@@ -597,68 +597,6 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe "#user_currently_teaching?" do
-    let(:current_terms) do
-      [
-        {:yr=>'2013', :cd=>'D', :slug=>'fall-2013', :name=>'Fall 2013'},
-        {:yr=>'2013', :cd=>'B', :slug=>'spring-2013', :name=>'Spring 2013'}
-      ]
-    end
-    before { allow_any_instance_of(Canvas::ProvideCourseSite).to receive(:current_terms).and_return(current_terms) }
-
-    let(:campus_courses) do
-      {
-        '2013-B' => [
-          {
-            :name=>'Matlab for Programmers',
-            :term_yr=>'2013',
-            :term_cd=>'B',
-            :role=>'Student'
-          }
-        ],
-        '2012-D' => [
-          {
-            :name=>'Matlab for Programmers',
-            :term_yr=>'2012',
-            :term_cd=>'D',
-            :role=>'Student'
-          }
-        ]
-      }
-    end
-
-    it "raises exception if user id is not present" do
-      subject.instance_eval { @uid = nil }
-      expect { subject.user_currently_teaching? }.to raise_error(RuntimeError, "User ID not found")
-    end
-
-    context "when user has no instructor courses" do
-      before { allow_any_instance_of(CampusOracle::UserCourses).to receive(:get_all_campus_courses).and_return(campus_courses) }
-      its(:user_currently_teaching?) { should be_false }
-    end
-
-    context "when user has instructor courses" do
-      before { allow_any_instance_of(CampusOracle::UserCourses).to receive(:get_all_campus_courses).and_return(instructor_courses) }
-
-      context "and courses not within in current terms" do
-        let(:instructor_courses) do
-          campus_courses['2012-D'][0][:role] = 'Instructor'
-          campus_courses
-        end
-        its(:user_currently_teaching?) { should be_false }
-      end
-
-      context "and courses within in current terms" do
-        let(:instructor_courses) do
-          campus_courses['2013-B'][0][:role] = 'Instructor'
-          campus_courses
-        end
-        its(:user_currently_teaching?) { should be_true }
-      end
-    end
-
-  end
-
   describe "#candidate_courses_list" do
     it "should raise exception if user id not initialized" do
       subject.instance_eval { @uid = nil }

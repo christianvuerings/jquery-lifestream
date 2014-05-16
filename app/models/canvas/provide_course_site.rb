@@ -222,16 +222,6 @@ module Canvas
       current_terms[term_index]
     end
 
-    def user_currently_teaching?
-      raise RuntimeError, "User ID not found" if @uid.blank?
-      feed = CampusOracle::UserCourses.new(:user_id => @uid).get_all_campus_courses
-      instructor_courses = feed.values.flatten.select {|course| course[:role] == 'Instructor'}
-      current_courses = instructor_courses.select do |course|
-        current_terms.index { |term| course[:term_yr] == term[:yr] && course[:term_cd] == term[:cd] }
-      end
-      current_courses.count > 0 ? true : false
-    end
-
     def candidate_courses_list
       raise RuntimeError, "User ID not found for candidate" if @uid.blank?
       terms_filter = current_terms

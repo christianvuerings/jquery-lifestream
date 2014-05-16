@@ -47,8 +47,13 @@ describe User::AuthPolicy do
     end
 
     context "when user is not teaching courses in current or future semester" do
-      before { Canvas::ProvideCourseSite.any_instance.stub(:user_currently_teaching?).and_return(false) }
+      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:user_currently_teaching?).and_return(false) }
       it { should be_false }
+    end
+
+    context "when user is teaching courses in a current term" do
+      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:user_currently_teaching?).and_return(true) }
+      it { should be_true }
     end
 
     context "when user is a canvas root account administrator" do
@@ -58,11 +63,6 @@ describe User::AuthPolicy do
 
     context "when user is a calcentral administrator" do
       before { User::AuthPolicy.any_instance.stub(:can_administrate?).and_return(true) }
-      it { should be_true }
-    end
-
-    context "when user is teaching courses in a current term" do
-      before { Canvas::ProvideCourseSite.any_instance.stub(:user_currently_teaching?).and_return(true) }
       it { should be_true }
     end
   end

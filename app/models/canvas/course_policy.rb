@@ -36,7 +36,7 @@ module Canvas
     private
 
     def canvas_user_profile
-      Canvas::UserProfile.new(user_id: @user.uid).get
+      Canvas::SisUserProfile.new(user_id: @user.uid).get
     end
 
     def canvas_course_user

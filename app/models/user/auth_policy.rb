@@ -42,7 +42,7 @@ module User
     end
 
     def can_create_canvas_course_site?
-      is_current_instructor = Canvas::ProvideCourseSite.new('2050').user_currently_teaching?
+      is_current_instructor = Canvas::PublicAuthorizer.new(user.uid).user_currently_teaching?
       can_administrate? || can_administrate_canvas? || is_current_instructor
     end
 

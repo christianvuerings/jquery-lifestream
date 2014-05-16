@@ -77,7 +77,7 @@ module Canvas
     end
 
     def self.has_account?(user_id)
-      Settings.canvas_proxy.fake || (Canvas::UserProfile.new(user_id: user_id).user_profile != nil)
+      Settings.canvas_proxy.fake || (Canvas::SisUserProfile.new(user_id: user_id).sis_user_profile != nil)
     end
 
     def self.canvas_current_terms

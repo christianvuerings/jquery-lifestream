@@ -45,11 +45,11 @@ describe Canvas::CoursePolicy do
   let(:course_designer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'DesignerEnrollment', 'role' => 'DesignerEnrollment'}]}) }
   let(:invariable_course_user_hash) { course_user_hash }
   subject { Canvas::CoursePolicy.new(user, course) }
-  before  { Canvas::CourseUser.any_instance.stub(:course_user).and_return(invariable_course_user_hash) }
+  before  { allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(invariable_course_user_hash) }
 
   shared_examples "a canvas user requirement" do
     context "when no canvas user found for current user" do
-      before { Canvas::UserProfile.any_instance.stub(:user_profile).and_return(nil) }
+      before { allow_any_instance_of(Canvas::SisUserProfile).to receive(:get).and_return(nil) }
       it "returns false" do
         expect(authorization_method).to be_false
       end
@@ -65,7 +65,7 @@ describe Canvas::CoursePolicy do
       before do
         canvas_admins = double()
         canvas_admins.stub(:admin_user?).and_return(true)
-        Canvas::Admins.stub(:new).and_return(canvas_admins)
+        allow(Canvas::Admins).to receive(:new).and_return(canvas_admins)
       end
       it "should return true" do
         expect(subject.can_add_users?).to be_true
@@ -101,8 +101,8 @@ describe Canvas::CoursePolicy do
   describe "#is_canvas_account_admin?" do
     it "returns true when user is a canvas root account administrator" do
       canvas_admins = double()
-      canvas_admins.stub(:admin_user?).and_return(true)
-      Canvas::Admins.stub(:new).and_return(canvas_admins)
+      allow(canvas_admins).to receive(:admin_user?).and_return(true)
+      allow(Canvas::Admins).to receive(:new).and_return(canvas_admins)
       expect(subject.is_canvas_account_admin?).to be_true
     end
 
@@ -114,7 +114,7 @@ describe Canvas::CoursePolicy do
   describe "#is_canvas_course_user?" do
 
     context "if user is not a member of the course" do
-      before { Canvas::CourseUser.any_instance.stub(:course_user).and_return(nil) }
+      before { allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(nil) }
       it "returns false" do
         expect(subject.is_canvas_course_user?).to be_false
       end

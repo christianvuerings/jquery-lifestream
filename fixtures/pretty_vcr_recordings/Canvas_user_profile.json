@@ -3,86 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/users/sis_login_id:MaynardGKrebs/profile",
-        "body": {
-          "encoding": "US-ASCII",
-          "string": ""
-        },
-        "headers": {
-          "Authorization": [
-            ""
-          ],
-          "Cache-Control": [
-            "no-store"
-          ],
-          "Content-Type": [
-            "application/x-www-form-urlencoded"
-          ],
-          "x-sakai-token": [
-
-          ]
-        }
-      },
-      "response": {
-        "status": {
-          "code": 404,
-          "message": null
-        },
-        "headers": {
-          "cache-control": [
-            "no-cache"
-          ],
-          "content-type": [
-            "application/json; charset=utf-8"
-          ],
-          "date": [
-            "Wed, 20 Feb 2013 18:46:22 GMT"
-          ],
-          "p3p": [
-            "CP=\"None, see http://www.instructure.com/privacy-policy\""
-          ],
-          "server": [
-            "Apache"
-          ],
-          "set-cookie": [
-            "canvas_session=tsSM2UJE1as_7bMxCzh9qw.F3uV2HcfyoOWd1bRytKfDo6qduXc-QDiMq7nE-Fl4GnJR45lKWwlgcMX2p6GMBdFZUtyAzHF8ILvLAvA1q9pTA.t_7cWGebklUsQLCcsDWT4kUPsHA.USUZ_g; path=/; secure; HttpOnly"
-          ],
-          "status": [
-            "404"
-          ],
-          "vary": [
-            "Accept-Encoding"
-          ],
-          "x-canvas-user-id": [
-            "10000003057506"
-          ],
-          "x-request-context-id": [
-            "bebc73d0-5dbb-0130-fdfe-02e33a86fa36"
-          ],
-          "content-length": [
-            "100"
-          ],
-          "connection": [
-            "keep-alive"
-          ]
-        },
-        "body": {
-          "encoding": "US-ASCII",
-          "string": "",
-          "debug_json": {
-            "status": "not_found",
-            "error_report_id": 33962530,
-            "message": "The specified resource does not exist."
-          }
-        },
-        "http_version": null
-      },
-      "recorded_at": "Wed, 20 Feb 2013 18:46:22 GMT"
-    },
-    {
-      "request": {
-        "method": "get",
-        "uri": "https://ucberkeley.instructure.com/api/v1/users/sis_login_id:300846/profile",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/users/3323890/profile",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -111,10 +32,10 @@
             "application/json; charset=utf-8"
           ],
           "date": [
-            "Wed, 20 Feb 2013 19:00:56 GMT"
+            "Sat, 03 May 2014 00:13:29 GMT"
           ],
           "etag": [
-            "\"7a9731487f62de7c4890546168473c13\""
+            "\"1bf49735bb37139d4040560a3226bd68\""
           ],
           "p3p": [
             "CP=\"None, see http://www.instructure.com/privacy-policy\""
@@ -123,31 +44,37 @@
             "Apache"
           ],
           "set-cookie": [
-            "canvas_session=_kgz3EwBCwSvt8WmiOFb_A.Yj0hcOMAUVLOFqXzjoZSJ4u0sLB24WLca038dvK_7WV1rquUZ-5PkVnsoW_2waQkGeuOPWrpa75TlS49itCNTA.0J3y8BDi9o0rlEH1vnehR3tyEwg.USUdaQ; path=/; secure; HttpOnly"
+            "canvas_session=huK8hl5PnDE1RolV_uAl_A.CIUQDVtoDA1x8q7vKxgThMeq1FjCHuwAQjG-emaQKAI65qzBJc8sIUQr2lf9ruzEosC-YEP7oARR64pXAfyfMDAJuLjtgdm2j__srlxPgLg.Mx6g6EOf8xiCop0XtBP8V5CuYVc.U2Q0qQ; path=/; secure; HttpOnly"
           ],
           "status": [
-            "200"
+            "200 OK"
           ],
           "vary": [
             "Accept-Encoding"
           ],
+          "x-canvas-meta": [
+            "a=90242;s=19;c=cluster19;z=us-east-1c;"
+          ],
           "x-canvas-user-id": [
-            "10000003057506"
+            "190000003057506"
           ],
           "x-frame-options": [
             "SAMEORIGIN"
           ],
           "x-request-context-id": [
-            "c81f71c0-5dbd-0130-8279-02e33a85bc71"
+            "ad60f1d0-b485-0131-868a-02f8856d54b5"
           ],
           "x-runtime": [
-            "122"
+            "535"
+          ],
+          "x-session-id": [
+            "c7e70f6cbbc3cdd0c3b7ad4e9c0ebacc"
           ],
           "x-ua-compatible": [
-            "IE=edge,chrome=1"
+            "IE=Edge,chrome=1"
           ],
           "content-length": [
-            "393"
+            "452"
           ],
           "connection": [
             "keep-alive"
@@ -158,22 +85,23 @@
           "string": "",
           "debug_json": {
             "id": 3323890,
-            "name": "Stu Testb",
-            "short_name": "Stu Testb",
-            "sortable_name": "Testb, Stu",
-            "sis_user_id": "300846",
+            "name": "STUDENT TEST-300846",
+            "short_name": "STUDENT TEST-300846",
+            "sortable_name": "TEST-300846, STUDENT",
+            "sis_user_id": "UID:300846",
             "sis_login_id": "300846",
             "login_id": "300846",
-            "avatar_url": "https://secure.gravatar.com/avatar/595e055e30397015914b97402393a291?s=50&d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
+            "avatar_url": "https://secure.gravatar.com/avatar/595e055e30397015914b97402393a291?s=50&d=https%3A%2F%2Fcanvas.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
             "title": null,
             "bio": null,
-            "primary_email": "test-300846@berkeley.edu"
+            "primary_email": "test-300846@berkeley.edu",
+            "time_zone": "America/Los_Angeles"
           }
         },
         "http_version": null
       },
-      "recorded_at": "Wed, 20 Feb 2013 19:00:57 GMT"
+      "recorded_at": "Sat, 03 May 2014 00:13:29 GMT"
     }
   ],
-  "recorded_with": "VCR 2.4.0"
+  "recorded_with": "VCR 2.5.0"
 }

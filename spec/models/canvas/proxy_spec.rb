@@ -87,8 +87,8 @@ describe Canvas::Proxy do
   end
 
   it "should find a registered user's profile" do
-    client = Canvas::UserProfile.new(:user_id => @user_id)
-    response = client.user_profile
+    client = Canvas::SisUserProfile.new(:user_id => @user_id)
+    response = client.sis_user_profile
     response.should_not be_nil
   end
 
