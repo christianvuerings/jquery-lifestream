@@ -127,7 +127,7 @@ playlists_proxy:
 
 playlists_warehouse_proxy:
   fake: false
-  base_url: 'https://video-qa.ets.berkeley.edu/warehouse/webcast.json'
+  base_url: 'https://video-dev.ets.berkeley.edu/warehouse/webcast.json'
   username: secret
   password: secret
 
