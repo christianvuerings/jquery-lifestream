@@ -65,7 +65,7 @@ describe Canvas::PublicAuthorizer do
       its(:user_currently_teaching?) { should be_false }
     end
 
-    context "when response is cached" do
+    context "when response is cached", if: CampusOracle::Queries.test_data? do
       subject { Canvas::PublicAuthorizer.new(summer_2014_instructor_uid) }
       it "does not make calls to dependent objects" do
         expect(subject.user_currently_teaching?).to be_true
