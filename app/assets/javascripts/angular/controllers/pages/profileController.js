@@ -8,11 +8,7 @@
 
     apiService.util.setTitle('Profile');
 
-    $scope.$watch('profilePictureLoaded', function(value) {
-      if (value) {
-        $scope.isLoading = false;
-      }
-    });
+    $scope.profilePictureLoading = true;
 
   });
 
