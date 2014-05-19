@@ -8,9 +8,9 @@
         <div class="cc-widget-title">
           <h2>Profile Picture</h2>
         </div>
-        <div data-cc-spinner-directive>
+        <div data-cc-spinner-directive="profilePictureLoading">
           <div class="cc-widget-padding">
-            <img data-cc-image-loaded-directive="profilePictureLoaded" alt="{{api.user.profile.full_name}}'s Profile Picture" data-ng-src="{{api.user.profile.profilePicture}}" width="105" height="140">
+            <img data-cc-image-loaded-directive="profilePictureLoading" alt="{{api.user.profile.full_name}}'s Profile Picture" data-ng-src="{{api.user.profile.profilePicture}}" width="105" height="140">
           </div>
           <div class="cc-widget-padding">
             <div ng-show="api.user.profile.full_name">

@@ -5,7 +5,9 @@
     return {
       link: function(scope, elm, attrs) {
         elm.bind('load', function() {
-          scope[attrs.ccImageLoadedDirective] = true;
+          scope.$apply(function() {
+            scope[attrs.ccImageLoadedDirective] = false;
+          });
         });
       }
     };
