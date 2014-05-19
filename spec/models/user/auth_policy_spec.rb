@@ -47,12 +47,12 @@ describe User::AuthPolicy do
     end
 
     context "when user is not teaching courses in current or future semester" do
-      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:user_currently_teaching?).and_return(false) }
+      before { allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return(false) }
       it { should be_false }
     end
 
     context "when user is teaching courses in a current term" do
-      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:user_currently_teaching?).and_return(true) }
+      before { allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return(true) }
       it { should be_true }
     end
 

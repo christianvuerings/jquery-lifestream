@@ -2,76 +2,51 @@ require "spec_helper"
 
 describe Canvas::PublicAuthorizer do
 
-  let(:uid) { rand(99999).to_s }
+  let(:uid)             { rand(99999).to_s }
+  let(:canvas_user_id)  { '3323890' }
 
-  subject { Canvas::PublicAuthorizer.new(uid) }
+  subject { Canvas::PublicAuthorizer.new(canvas_user_id) }
 
-  describe "#user_currently_teaching?" do
+  describe "#canvas_user_currently_teaching?" do
 
-    let(:current_term_db_row) {{
-      'term_yr' => '2014',
-      'term_cd' => 'B',
-      'term_status_desc' => 'Current Term',
-      'term_name' => 'Spring',
-      'term_start_date' => Time.gm(2014, 1, 21),
-      'term_end_date' => Time.gm(2014, 5, 9)
-    }}
-
-    let(:summer_term_db_row) {{
-      'term_yr' => '2014',
-      'term_cd' => 'C',
-      'term_status_desc' => 'Current Summer',
-      'term_name' => 'Summer',
-      'term_start_date' => Time.gm(2014, 5, 27),
-      'term_end_date' => Time.gm(2014, 8, 15)
-    }}
-
-    let(:fall_term_db_row) {{
-      'term_yr' => '2014',
-      'term_cd' => 'D',
-      'term_status_desc' => 'Future Term',
-      'term_name' => 'Fall',
-      'term_start_date' => Time.gm(2014, 8, 28),
-      'term_end_date' => Time.gm(2014, 12, 12)
-    }}
-
-    let(:current_terms) {
-      [
-        Berkeley::Term.new(fall_term_db_row),
-        Berkeley::Term.new(summer_term_db_row),
-        Berkeley::Term.new(current_term_db_row),
-      ]
-    }
-
-    let(:spring_2012_instructor_uid) { '238382' }
-    let(:summer_2014_instructor_uid) { '904715' }
+    # Note: This method serves a public interface, and must return an exact TRUE or FALSE value, not
+    # a value that is interpretted as "truthy" (not nil or false), or falsey (nil, negative number, etc.)
+    # The assertions below should not use be_false or be_true.
+    # https://www.relishapp.com/rspec/rspec-expectations/v/2-2/docs/matchers/be-matchers
 
     before do
-      allow(Canvas::Proxy).to receive(:canvas_current_terms).and_return(current_terms)
+      allow_any_instance_of(Canvas::UserProfile).to receive(:login_id).and_return(uid)
+      allow_any_instance_of(User::AuthPolicy).to receive(:can_create_canvas_course_site?).and_return(true)
     end
 
-    context "when user is instructing in current canvas terms", if: CampusOracle::Queries.test_data? do
-      subject { Canvas::PublicAuthorizer.new(summer_2014_instructor_uid) }
-      its(:user_currently_teaching?) { should be_true }
+    context "when canvas user login id not present" do
+      before { allow_any_instance_of(Canvas::UserProfile).to receive(:login_id).and_return(nil) }
+      it 'returns false' do
+        expect(subject.can_create_course_site?).to eq false
+      end
     end
 
-    context "when user is not instructing in current canvas terms", if: CampusOracle::Queries.test_data? do
-      subject { Canvas::PublicAuthorizer.new(spring_2012_instructor_uid) }
-      its(:user_currently_teaching?) { should be_false }
+    context "when canvas user login id is present" do
+      context "when user is not authorized to create course site" do
+        before { allow_any_instance_of(User::AuthPolicy).to receive(:can_create_canvas_course_site?).and_return(false) }
+        it 'returns false' do
+          expect(subject.can_create_course_site?).to eq false
+        end
+      end
+
+      context "when user is authorized to create course site" do
+        it 'returns true' do
+          expect(subject.can_create_course_site?).to eq true
+        end
+      end
     end
 
-    context "when uid is unavailable" do
-      subject { Canvas::PublicAuthorizer.new(nil) }
-      its(:user_currently_teaching?) { should be_false }
-    end
-
-    context "when response is cached", if: CampusOracle::Queries.test_data? do
-      subject { Canvas::PublicAuthorizer.new(summer_2014_instructor_uid) }
-      it "does not make calls to dependent objects" do
-        expect(subject.user_currently_teaching?).to be_true
-        expect(Canvas::Proxy).to_not receive(:canvas_current_terms)
-        expect(CampusOracle::Queries).to_not receive(:has_instructor_history?)
-        expect(subject.user_currently_teaching?).to be_true
+    context "when response is cached" do
+      it "does not repeat requests to dependencies" do
+        user_profile = double(:login_id => uid)
+        expect(Canvas::UserProfile).to receive(:new).once.and_return(user_profile)
+        expect(subject.can_create_course_site?).to eq true
+        expect(subject.can_create_course_site?).to eq true
       end
     end
   end
