@@ -1,0 +1,68 @@
+{
+  "summary": {
+    "futureActivity": 400,
+    "lastStatementBalance": 0,
+    "lastStatementDate": "2014-04-15",
+    "minimumAmountDue": -832,
+    "minimumAmountDueDate": "2014-05-15",
+    "isOnDPP": false,
+    "isDppPastDue": false,
+    "dppNormalInstallmentAmount": 0,
+    "dppBalance": 0,
+    "totalCurrentBalance": -832,
+    "totalPastDueAmount": 0,
+    "lastUpdateDate": "2014-05-08",
+    "accountBalance": -432
+  },
+  "activity": [
+    {
+      "transAmount": 400,
+      "transBalance": 400,
+      "transDate": "2014-04-30",
+      "transTime": "08:04:08",
+      "transDept": "Summer Sessions Office",
+      "transDeptUrl": "http://summer.berkeley.edu/contact-us",
+      "transDesc": "TRAVEL STUDIES PROGRAM DEPOSIT",
+      "transDueDate": "2014-06-15",
+      "transId": "SM0001147484",
+      "transStatus": "Future",
+      "transType": "Charge",
+      "transTerm": "Summer 2014",
+      "transTermCd": "Summer",
+      "transTermYr": "2014",
+      "transPotentialDisbursementDate": "",
+      "agingOpt": "F",
+      "transPmtType": ""
+    },
+    {
+      "transAmount": -832,
+      "transBalance": -832,
+      "transDate": "2014-05-05",
+      "transTime": "22:05:46",
+      "transDept": "",
+      "transDeptUrl": "",
+      "transDesc": "SUMMER SESSION WEB PAYMENTS",
+      "transDueDate": "",
+      "transId": "SSWEB",
+      "transStatus": "Unapplied",
+      "transType": "Payment",
+      "transTerm": "Spring 2014",
+      "transTermCd": "Spring",
+      "transTermYr": "2014",
+      "transPotentialDisbursementDate": "2014-06-09",
+      "agingOpt": "C",
+      "transPmtType": ""
+    }
+  ],
+  "currentTerm": "Spring 2014",
+  "apiVersion": "1.0.7",
+  "lastModified": {
+    "hash": "5487ad7f77a8309af55dae6671bc87b706ee3d12",
+    "timestamp": {
+      "epoch": 1399590141,
+      "dateTime": "2014-05-08T16:02:21-07:00",
+      "dateString": "5/08"
+    }
+  },
+  "feedName": "Financials::MyFinancials"
+}
