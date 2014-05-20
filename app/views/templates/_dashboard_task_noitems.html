@@ -10,7 +10,7 @@
     </div>
     <p>To <strong>create a task</strong>, click the <em>New Task</em> button.</p>
   </div>
-  <div class="cc-widget-tasks-no-items" data-ng-show="counts.current === 0 && counts.opposite === 0 && !api.user.profile.hasGoogleAccessToken">
-    <p class="cc-widget-tasks-no-items-first">You don't have anything in your To Do list. To manage your personal tasks, connect CalCentral to your bConnected account on the <a href="/settings">Settings</a> page.</p>
+  <div class="cc-widget-tasks-no-items cc-widget-tasks-no-items-first" data-ng-show="counts.current === 0 && counts.opposite === 0 && !api.user.profile.hasGoogleAccessToken">
+    <div data-ng-include="'templates/no_bconnected.html'" data-onload="mode='tasks'"></div>
   </div>
 </script>
