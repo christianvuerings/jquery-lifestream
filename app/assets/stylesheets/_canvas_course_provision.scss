@@ -1,5 +1,57 @@
 .cc-page-course-provision {
   padding: 10px 20px;
+  background: $cc-color-white;
+
+  h2 {
+    color: #424242;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 23px;
+    font-weight: normal;
+    height: 40px;
+    line-height: 40px;
+    margin: 5px 0px;
+  }
+
+  h3 {
+    color: #424242;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+    margin: 10px 0px;
+  }
+
+  /* Reset to avoid default Foundation form styling */
+  form {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .cc-page-provision-no-courses {
+    color: #424242;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 20px;
+  }
+
+  .cc-page-provision-select-rosters {
+    border-top: 1px solid $bc-color-top-border;
+  }
+
+  .cc-page-provision-step-indent {
+    padding-left: 18px;
+  }
+
+  .cc-page-provision-roster-area {
+    background: $bc-color-roster-background;
+    border: 1px solid $bc-color-roster-background;
+    padding: 10px 5px;
+  }
+
+  .cc-page-provision-acting-as {
+    height: 24px;
+  }
 
   .cc-page-provision-student-warning {
     margin: 10px 0;
@@ -9,7 +61,7 @@
     background: $cc-color-white;
     input[type="text"] {
       margin: 2px 10px 0 0;
-      padding: 0 2px;
+      padding: 3px 2px;
       width: 140px;
     }
   }
@@ -58,7 +110,7 @@
   }
 
   .cc-page-provision-margin {
-    margin: 0 0 10px;
+    margin: 0;
     overflow: hidden;
   }
 

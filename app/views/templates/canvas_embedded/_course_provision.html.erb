@@ -45,85 +45,97 @@
         </div>
       </div>
 
-      <div class="cc-widget cc-widget-last">
-        <div class="cc-widget-title">
-          <h2>Create a Course Site</h2>
-        </div>
+      <div>
+        <h2>Create a Course Site</h2>
 
-        <div class="cc-widget-padding">
+        <div class="cc-page-provision-select-rosters">
 
           <div data-ng-show="currentWorkflowStep === 'selecting'">
             <div data-cc-spinner-directive>
-              <div data-ng-hide="teachingSemesters && teachingSemesters.length > 0">
+              <div data-ng-hide="teachingSemesters && teachingSemesters.length > 0" class="cc-page-provision-no-courses">
                 No courses found.
               </div>
               <div data-ng-show="teachingSemesters && teachingSemesters.length > 0">
                 <div class="row collapse">
+
+                  <h3>1. Select Term:</h3>
+
                   <div class="medium-5 columns">
-                    <ul class="cc-button-group cc-even-{{teachingSemesters.length}} cc-page-provision-margin" role="tablist">
-                      <li data-ng-repeat="semester in teachingSemesters">
-                        <button class="cc-button"
-                                data-ng-click="switchSemester(semester)"
-                                data-ng-class="{'cc-button-selected':(current_semester==semester.slug)}"
-                                aria-selected="{{current_semester==semester.slug}}"
-                                role="tab"
-                                data-ng-bind="semester.name">
-                        </button>
-                      </li>
-                    </ul>
+                    <div class="cc-page-provision-step-indent">
+                      <ul class="cc-button-group cc-even-{{teachingSemesters.length}} cc-page-provision-margin" role="tablist">
+                        <li data-ng-repeat="semester in teachingSemesters">
+                          <button class="cc-button"
+                                  data-ng-click="switchSemester(semester)"
+                                  data-ng-class="{'cc-button-selected':(current_semester==semester.slug)}"
+                                  aria-selected="{{current_semester==semester.slug}}"
+                                  role="tab"
+                                  data-ng-bind="semester.name">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                <form data-ng-submit="createCourseSiteJob(selectedCourses)">
-                  <div>
-                    <ul class="cc-page-provision-margin">
-                      <li data-ng-repeat="course in selectedCourses" class="cc-page-provision-form-course">
-                        <strong>{{course.title}} ({{course.course_code}})</strong>
-                        <div class="cc-page-provision-form-select-all-option" data-ng-show="course.sections.length > 1">
-                          Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
-                        </div>
-                        <ul>
-                          <li data-ng-repeat="section in course.sections">
-                            <div data-ng-if="!section.sites">
-                              <input type="checkbox"
-                                     id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                     data-ng-model="section.selected">
-                              <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                class="cc-page-provision-section-label"
-                                data-ng-bind-template="{{course.course_code}} {{section.section_label}} ({{section.ccn}})">
-                              </label>
-                            </div>
-                          </li>
-                        </ul>
-                        <div data-ng-if="course.hasSites">
-                          <div class="cc-page-provision-has-sites-message">
-                            <span data-ng-show="course.sections.length > 1">The following sections are in use in other course sites:</span>
-                            <span data-ng-show="course.sections.length === 1">The following section is in use in other course sites:</span>
+
+
+                <h3>2. Select Roster(s):</h3>
+
+                <div class="cc-page-provision-step-indent">
+                  <p>All rosters you select below will be put in ONE, single course site.</p>
+                  <form data-ng-submit="createCourseSiteJob(selectedCourses)">
+                    <div>
+                      <ul class="cc-page-provision-margin">
+                        <li data-ng-repeat="course in selectedCourses" class="cc-page-provision-form-course cc-page-provision-roster-area">
+                          <strong>{{course.title}} ({{course.course_code}})</strong>
+                          <div class="cc-page-provision-form-select-all-option" data-ng-show="course.sections.length > 1">
+                            Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
                           </div>
                           <ul>
                             <li data-ng-repeat="section in course.sections">
-                              <div data-ng-if="section.sites">
+                              <div data-ng-if="!section.sites">
                                 <input type="checkbox"
                                        id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
                                        data-ng-model="section.selected">
                                 <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                  class="cc-page-provision-section-label cc-page-provision-section-sited-label"
+                                  class="cc-page-provision-section-label"
                                   data-ng-bind-template="{{course.course_code}} {{section.section_label}} ({{section.ccn}})">
                                 </label>
-                                <div data-ng-repeat="site in section.sites" class="cc-page-provision-section-sites">
-                                <i class="fa fa-cogs cc-page-provision-section-sited-icon"></i>
-                                Used in <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
-                                </div>
                               </div>
                             </li>
                           </ul>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div>
-                    <button class="cc-button cc-button-blue cc-page-provision-create-site-button" type="submit">Create Course Site</button>
-                  </div>
-                </form>
+                          <div data-ng-if="course.hasSites">
+                            <div class="cc-page-provision-has-sites-message">
+                              <span data-ng-show="course.sections.length > 1">The following sections are in use in other course sites:</span>
+                              <span data-ng-show="course.sections.length === 1">The following section is in use in other course sites:</span>
+                            </div>
+                            <ul>
+                              <li data-ng-repeat="section in course.sections">
+                                <div data-ng-if="section.sites">
+                                  <input type="checkbox"
+                                         id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
+                                         data-ng-model="section.selected">
+                                  <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
+                                    class="cc-page-provision-section-label cc-page-provision-section-sited-label"
+                                    data-ng-bind-template="{{course.course_code}} {{section.section_label}} ({{section.ccn}})">
+                                  </label>
+                                  <div data-ng-repeat="site in section.sites" class="cc-page-provision-section-sites">
+                                  <i class="fa fa-cogs cc-page-provision-section-sited-icon"></i>
+                                  Used in <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="cc-page-provision-roster-area">
+                      <button class="cc-button cc-button-blue cc-page-provision-create-site-button" type="submit">Next</button>
+                    </div>
+
+                  </form>
+                </div>
               </div>
             </div>
           </div>
