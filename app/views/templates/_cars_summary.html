@@ -70,7 +70,7 @@
               <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.accountBalance"></div>
             </div>
 
-            <div class="cc-page-myfinances-light" data-ng-if="myfinances.show">
+            <div class="cc-page-myfinances-light cc-print-show" data-ng-show="myfinances.show">
               <div class="small-8 columns cc-print-clear cc-print-width-auto">
                 Last Statement Balance <span class="cc-page-myfinances-lighter">({{myfinances.summary.lastStatementDate | date:'MM/dd/yy'}})</span>
               </div>
@@ -78,7 +78,7 @@
                 <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.lastStatementBalance"></div>
               </div>
             </div>
-            <div class="small-12 columns cc-page-myfinances-light" data-ng-if="myfinances.show">
+            <div class="small-12 columns cc-page-myfinances-light cc-print-show" data-ng-show="myfinances.show">
               <a href="https://bearfacts.berkeley.edu/bearfacts/student/CARS/ebill.do?bfaction=accessEBill">View Statements</a>
             </div>
           </div>
