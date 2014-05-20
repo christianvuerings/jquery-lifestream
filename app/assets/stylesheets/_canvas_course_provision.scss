@@ -3,7 +3,7 @@
   padding: 10px 20px;
 
   h2, h3 {
-    color: #424242;
+    color: $bc-color-headers;
     font-family: $bc-header-font-family;
     font-weight: normal;
     line-height: 40px;
@@ -27,8 +27,8 @@
   }
 
   .cc-page-provision-no-courses {
-    color: #424242;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: $bc-color-headers;
+    font-family: $bc-header-font-family;
     font-size: 16px;
     font-weight: normal;
     padding: 20px;
