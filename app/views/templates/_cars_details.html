@@ -4,8 +4,11 @@
     <div class="row collapse">
 
       <div class="column">
-        <h1 class="cc-heading-page-title">
+        <h1 class="cc-heading-page-title cc-print-hide">
           <a href="/finances">My Finances</a> &raquo; Details
+        </h1>
+        <h1 class="cc-heading-page-title cc-hidden cc-print-show">
+          My Finances for <span ng-bind="api.user.profile.full_name"></span>
         </h1>
       </div>
 
