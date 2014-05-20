@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Textbooks::Proxy do
+describe Textbooks::Proxy, ignore: true do
 
   it "should get real textbook feed for valid ccns and slug", :testext => true do
     @ccns = ["41575"]
