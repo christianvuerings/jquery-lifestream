@@ -56,7 +56,7 @@ module Oec
       course_cntl_nums_clause = ''
       this_depts_clause = depts_clause
       if course_cntl_nums.present?
-        course_cntl_nums_clause = self.ccns_in_chunks('c', course_cntl_nums)
+        course_cntl_nums_clause = self.ccns_in_chunks('c', course_cntl_nums.split(','))
         this_depts_clause = ''
       end
 
