@@ -8,6 +8,10 @@
    */
   angular.module('calcentral.factories').factory('activityFactory', function($http) {
 
+    /**
+     * Pare the the activity response
+     * @param {Object} activityResponse The response from the server
+     */
     var parseActivities = function(activityResponse) {
       var data = activityResponse.data;
       var activities = activityResponse.data.activities;
@@ -39,7 +43,7 @@
        * Algorithm to use when sorting activity elements
        * @param {Object} a Exhibit #1
        * @param {Object} b Exhibit #2 that's being compared to exhibit 1
-       * @return {int} see String.compareTo responses
+       * @return {Integer} see String.compareTo responses
        */
       var sortFunction = function(a, b) {
         // Time descending.
@@ -88,6 +92,7 @@
          * Collapse all the similar items into "multiElementArray".
          * @param {Array} originalSource flat array of activities.
          * @return {Array} activities without any "similar" items.
+         * @private
          */
         var spliceMultiSourceElements = function(originalSource) {
           return originalSource.filter(function(value, index, arr) {
@@ -119,6 +124,7 @@
          * @param {Array} tmpMultiElementArray an array of similar activity objects.
          * @return {Object} a wrapping "grouping" object (ie. 2 Activities posted), that contains
          * the similar objects array underneath.
+         * @private
          */
         var processMultiElementArray = function(tmpMultiElementArray) {
           return tmpMultiElementArray.map(function(value) {

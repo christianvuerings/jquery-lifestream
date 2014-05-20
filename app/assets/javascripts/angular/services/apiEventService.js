@@ -32,7 +32,7 @@
 
     /**
      * Fire the events for the API
-     * @return {[type]} [description]
+     * @return {Object} api Contains all the api modules
      */
     var fireApiEvents = function(api) {
       for (var i in api) {
