@@ -20,13 +20,7 @@ class CanvasController < ApplicationController
   # Indicates if a Canvas user is authorized to provision course sites
   # GET /api/academics/canvas/user_can_create_course_site
   def user_can_create_course_site
-    authorization = false
-    campus_uid = Canvas::UserProfile.new(:canvas_user_id => params[:canvas_user_id]).login_id
-    if campus_uid
-      user = User::Auth.get(campus_uid.to_s)
-      policy = User::AuthPolicy.new(user,user)
-      authorization = policy.can_create_canvas_course_site?
-    end
+    authorization = Canvas::PublicAuthorizer.new(params[:canvas_user_id]).can_create_course_site?
     render json: {'canCreateCourseSite' => authorization}.to_json
   end
 end
