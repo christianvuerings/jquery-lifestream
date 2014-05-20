@@ -28,7 +28,7 @@ module Financials
         # don't continue if student id can't be found.
         logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API"
         {
-          body: "CalCentral's My Finances tab provides financial data for current students and recent graduates. You are seeing this message because we do not have CARS billing data for your account. If you believe that you have received this message in error, please report the problem using the Feedback link below.",
+          body: "You are seeing this message because CalCentral does not have CARS billing data for your account. If you are a new student, your account may not have been assessed charges yet. Please try again later. Current or former students should contact us for further assistance using the Feedback link below.",
           statusCode: 400
         }
       else
@@ -51,7 +51,7 @@ module Financials
         # the error in the proxy body.
         if response.code == 404
           logger.debug "Connection failed: #{response.code} #{response.body}; url = #{url}"
-          body = "My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem."
+          body = "You are seeing this message because CalCentral does not have CARS billing data for your account. If you are a new student, your account may not have been assessed charges yet. Please try again later. Current or former students should contact us for further assistance using the Feedback link below."
         elsif response.code >= 400
           body = 'My Finances is currently unavailable. Please try again later.'
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {

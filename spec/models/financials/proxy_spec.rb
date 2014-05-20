@@ -47,7 +47,7 @@ describe Financials::Proxy do
   context 'when a student whose data is missing gets the feed' do
     subject { Financials::Proxy.new({user_id: '300940', fake: true}).get }
     it 'should return a specific error message explaining the missing data' do
-      expect(subject[:body]).to eq("My Finances did not receive any CARS data for your account. If you are a current or recent student, and you feel that you've received this message in error, please try again later. If you continue to see this error, please use the feedback link below to tell us about the problem.")
+      expect(subject[:body]).to eq("You are seeing this message because CalCentral does not have CARS billing data for your account. If you are a new student, your account may not have been assessed charges yet. Please try again later. Current or former students should contact us for further assistance using the Feedback link below.")
     end
     it 'should return a 404 status' do
       expect(subject[:statusCode]).to eq(404)
@@ -58,7 +58,7 @@ describe Financials::Proxy do
   context 'when a non-student calls the proxy' do
     subject { Financials::Proxy.new({user_id: '212377'}).get }
     it 'should return a specific error message explaining that non-students lack financials' do
-      expect(subject[:body]).to eq("CalCentral's My Finances tab provides financial data for current students and recent graduates. You are seeing this message because we do not have CARS billing data for your account. If you believe that you have received this message in error, please report the problem using the Feedback link below.")
+      expect(subject[:body]).to eq("You are seeing this message because CalCentral does not have CARS billing data for your account. If you are a new student, your account may not have been assessed charges yet. Please try again later. Current or former students should contact us for further assistance using the Feedback link below.")
     end
     it 'should return a 400 status' do
       expect(subject[:statusCode]).to eq(400)
