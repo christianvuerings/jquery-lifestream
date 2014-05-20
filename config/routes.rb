@@ -66,7 +66,8 @@ Calcentral::Application.routes.draw do
   post '/api/academics/canvas/course_add_user/add_user' => 'canvas_course_add_user#add_user', :via => :post, :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
 
   # System utility endpoints
-  get '/api/clear_cache' => 'clear_cache#do'
+  get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
+  get '/api/cache/warm/:uid' => 'cache#warm', :defaults => { :format => 'json' }
   get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
   get '/api/refresh_logging' => 'refresh_logging#refresh_logging', :defaults => { :format => 'json' }
   get '/api/tools/styles' => 'tools#get_styles', :via => :get

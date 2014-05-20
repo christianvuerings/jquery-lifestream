@@ -22,7 +22,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
 
   def run
     if Settings.hot_plate.enabled
-      warm
+      HotPlate.request_warmups_for_all
     else
       logger.warn "#{self.class.name} is disabled, skipping warmup"
     end
@@ -54,7 +54,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     raise exception
   end
 
-  def warm
+  def self.request_warmups_for_all
     begin
       use_pooled_connection {
         today = Time.zone.today.in_time_zone.to_datetime
@@ -62,14 +62,14 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
         purge_cutoff = today.advance(:seconds => -1 * 2 * Settings.hot_plate.last_visit_cutoff)
 
         visits = User::Visit.where("last_visit_at >= :cutoff", :cutoff => cutoff.to_date)
-        logger.warn "#{self.class.name} Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
-        self.class.zero(self.class.last_batch_size)
-        self.class.increment(self.class.last_batch_size, visits.size)
-        self.class.increment(self.class.total_warmups_requested, visits.size)
+        logger.warn "Starting to warm up #{visits.size} users; cutoff date #{cutoff}"
+        self.zero(self.last_batch_size)
+        self.increment(self.last_batch_size, visits.size)
+        self.increment(self.total_warmups_requested, visits.size)
 
         visits.find_in_batches do |batch|
           batch.each do |visit|
-            Messaging.publish('/queues/hot_plate', visit.uid, {ttl: 86400000, persistent: false})
+            HotPlate.request_warmup visit.uid
           end
         end
 
@@ -82,7 +82,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
             deleted_count += 1
           end
         end
-        logger.warn "#{self.class.name} Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
+        logger.warn "Purged #{deleted_count} users who have not visited since twice the cutoff interval; date #{purge_cutoff}"
       }
 
     ensure
@@ -100,7 +100,7 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     begin
       Cache::UserCacheWarmer.do_warm uid
     rescue => e
-      logger.error "#{self.class.name} Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
+      logger.error "Got exception while warming cache for user #{uid}: #{e}. Backtrace: #{e.backtrace.join("\n")}"
     ensure
       ActiveRecordHelper.clear_active_connections
       ActiveRecordHelper.clear_stale_connections
@@ -108,6 +108,10 @@ class HotPlate < TorqueBox::Messaging::MessageProcessor
     end_time = Time.now.to_i
     time = end_time - start_time
     self.class.increment(self.class.total_warmup_time, time)
+  end
+
+  def self.request_warmup(uid)
+    Messaging.publish('/queues/hot_plate', uid, {ttl: 86400000, persistent: false})
   end
 
 end
