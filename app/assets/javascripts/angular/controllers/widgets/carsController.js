@@ -207,6 +207,23 @@
     };
 
     /**
+     * Create the counts for a certain status.
+     */
+    var createCounts = function() {
+      var openCount = 0;
+      for (var i = 0; i < $scope.myfinances.activity.length; i++){
+        var item = $scope.myfinances.activity[i];
+
+        if (statuses.open.indexOf(item.transStatus) !== -1) {
+          openCount++;
+        }
+      }
+      $scope.counts = {
+        open: openCount
+      };
+    };
+
+    /**
      * Get the student's financial information
      */
     var getCarsInfo = function() {
@@ -220,6 +237,8 @@
           parseData(data);
 
           createTerms();
+
+          createCounts();
         }
 
         if (data.statusCode && data.statusCode >= 400) {
