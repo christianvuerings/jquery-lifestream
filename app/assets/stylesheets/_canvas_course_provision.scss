@@ -2,21 +2,20 @@
   padding: 10px 20px;
   background: $cc-color-white;
 
-  h2 {
+  h2, h3 {
     color: #424242;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 23px;
+    font-family: $bc-header-font-family;
     font-weight: normal;
-    height: 40px;
     line-height: 40px;
     margin: 5px 0px;
   }
 
+  h2 {
+    font-size: 23px;
+  }
+
   h3 {
-    color: #424242;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 18px;
-    font-weight: normal;
     margin: 10px 0px;
   }
 
