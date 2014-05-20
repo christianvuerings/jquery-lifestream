@@ -33,7 +33,7 @@ module User
       can_administrate? || (user.active? && user.is_author?)
     end
 
-    def can_import_canvas_users?
+    def can_administrate_globally?
       can_administrate? || can_administrate_canvas?
     end
 
