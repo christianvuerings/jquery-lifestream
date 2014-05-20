@@ -12,7 +12,7 @@ describe "HotPlate" do
     User::Visit.record "5678"
     Messaging.should_receive(:publish).with('/queues/hot_plate', "1234", {ttl: 86400000, persistent: false}).exactly(1).times
     Messaging.should_receive(:publish).with('/queues/hot_plate', "5678", {ttl: 86400000, persistent: false}).exactly(1).times
-    @plate.warm
+    HotPlate.request_warmups_for_all
   end
 
   it "should not explode if an error gets thrown during the warming" do
