@@ -1,6 +1,10 @@
 /* bCourses Colors */
 $bc-color-dark-blue: #0e7eb8;
+$bc-color-error-border: #eed3d7;
+$bc-color-error-background: #f2dede;
+$bc-color-error-foreground: #b94a48;
 $bc-color-grey: #cccccc;
+$bc-color-headers: #424242;
 $bc-color-help-link-blue: #2274A7;
 $bc-color-light-blue: #37c9ff;
 $bc-color-medium-blue: #028ed6;
@@ -9,16 +13,18 @@ $bc-color-notice-info: #3a87ad;
 $bc-color-notice-success: #468847;
 $bc-color-notice-warning: #f9a42b;
 $bc-color-off-black: #333333;
-$bc-color-white: #ffffff;
-$bc-color-error-border: #eed3d7;
-$bc-color-error-background: #f2dede;
-$bc-color-error-foreground: #b94a48;
+$bc-color-roster-background: #edf0f2;
 $bc-color-success-border: #d6e9c6;
 $bc-color-success-background: #dff0d8;
 $bc-color-success-foreground: #468847;
+$bc-color-top-border: #b3b3b3;
 $bc-color-warning-border: #fbeed5;
 $bc-color-warning-background: #fcf8e3;
 $bc-color-warning-foreground: #c09853;
+$bc-color-white: #ffffff;
+
+/* bCourses Fonts */
+$bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 /* Global Styles for Canvas Embedded Applications */
 .cc-canvas-embedded {
