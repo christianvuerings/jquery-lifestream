@@ -59,30 +59,36 @@ describe Canvas::CourseProvision do
       }
     ]
   }
-  before {
+  before do
     User::Auth.new_or_update_superuser!(superuser_id)
     [user_id, instructor_id, canvas_admin_id].each do |id|
       User::Auth.new_or_update_test_user!(id)
     end
-  }
-  before { Canvas::Admins.any_instance.stub(:admin_user?) {|uid| uid == canvas_admin_id} }
-  before { Canvas::ProvideCourseSite.stub(:new) do |uid|
-    double(
-      candidate_courses_list: (uid == instructor_id) ? teaching_semesters : [],
-      current_terms: current_terms,
-      courses_list_from_ccns: by_ccns_course_list
-    )
-  end }
+    allow_any_instance_of(Canvas::Admins).to receive(:admin_user?) {|uid| uid == canvas_admin_id }
+    allow(Canvas::ProvideCourseSite).to receive(:new) do |uid|
+      double(
+        candidate_courses_list: (uid == instructor_id) ? teaching_semesters : [],
+        current_terms: current_terms,
+        courses_list_from_ccns: by_ccns_course_list
+      )
+    end
+  end
 
-  context 'when delegating' do
-    subject {Canvas::CourseProvision.new(uid, admin_acting_as: instructor_id)}
+  context "when uid is not present" do
+    subject { Canvas::CourseProvision.new(nil) }
+    its(:user_authorized?) { should eq false }
+    its(:user_admin?) { should eq false }
+  end
+
+  context 'when admin acting as a user' do
+    subject { Canvas::CourseProvision.new(uid, admin_acting_as: instructor_id) }
     context 'when a mischiefmaker' do
-      let(:uid) {user_id}
+      let(:uid) { user_id }
       its(:user_authorized?) { should be_false }
-      its(:get_feed) {should be_nil }
+      its(:get_feed) { should be_nil }
     end
     context 'when a Canvas admin' do
-      let(:uid) {canvas_admin_id}
+      let(:uid) { canvas_admin_id }
       its(:user_authorized?) { should be_true }
       it "should find courses" do
         feed = subject.get_feed
@@ -92,37 +98,37 @@ describe Canvas::CourseProvision do
       end
     end
     context 'when a superuser' do
-      let(:uid) {superuser_id}
+      let(:uid) { superuser_id }
       its(:user_authorized?) { should be_true }
     end
   end
 
-  context 'when not delegating' do
-    subject {Canvas::CourseProvision.new(uid)}
+  context 'when not admin acting as a user' do
+    subject { Canvas::CourseProvision.new(uid) }
     context 'when a normal user' do
       let(:uid) {user_id}
       its(:user_authorized?) { should be_true }
       it "should have empty feed" do
         feed = subject.get_feed
-        expect(feed[:is_admin]).to be_false
+        expect(feed[:is_admin]).to eq false
         expect(feed[:admin_acting_as]).to be_nil
         expect(feed[:teachingSemesters]).to be_empty
         expect(feed[:admin_semesters]).to be_nil
       end
     end
     context 'when an instructor' do
-      let(:uid) {instructor_id}
-      its(:user_authorized?) { should be_true }
+      let(:uid) { instructor_id }
+      its(:user_authorized?) { should eq true }
       it "should have courses" do
         feed = subject.get_feed
-        expect(feed[:is_admin]).to be_false
+        expect(feed[:is_admin]).to eq false
         expect(feed[:admin_acting_as]).to be_nil
         expect(feed[:teachingSemesters]).to eq teaching_semesters
         expect(feed[:admin_semesters]).to be_nil
       end
     end
     context 'when a Canvas admin' do
-      let(:uid) {canvas_admin_id}
+      let(:uid) { canvas_admin_id }
       its(:user_authorized?) { should be_true }
       it 'provides all available semesters' do
         feed = subject.get_feed
@@ -131,18 +137,15 @@ describe Canvas::CourseProvision do
     end
   end
 
-  context 'when directly specifying CCNs' do
-    subject {Canvas::CourseProvision.new(uid, {
-      admin_by_ccns: by_ccns,
-      admin_term_slug: by_ccns_semester
-    })}
+  context 'when admin directly specifying CCNs' do
+    subject { Canvas::CourseProvision.new(uid, admin_by_ccns: by_ccns, admin_term_slug: by_ccns_semester) }
     context 'when a mischiefmaker' do
-      let(:uid) {user_id}
+      let(:uid) { user_id }
       its(:user_authorized?) { should be_false }
-      its(:get_feed) {should be_nil }
+      its(:get_feed) { should be_nil }
     end
     context 'when a Canvas admin' do
-      let(:uid) {canvas_admin_id}
+      let(:uid) { canvas_admin_id }
       its(:user_authorized?) { should be_true }
       it "should find courses" do
         feed = subject.get_feed
@@ -153,7 +156,7 @@ describe Canvas::CourseProvision do
       end
     end
     context 'when a superuser' do
-      let(:uid) {superuser_id}
+      let(:uid) { superuser_id }
       its(:user_authorized?) { should be_true }
     end
   end
@@ -162,28 +165,28 @@ describe Canvas::CourseProvision do
     subject     { Canvas::CourseProvision.new(instructor_id) }
     let(:cpcs)  { double() }
     before do
-      cpcs.stub(:background).and_return(cpcs)
-      cpcs.stub(:save).and_return(true)
-      cpcs.stub(:create_course_site).and_return(true)
-      cpcs.stub(:job_id).and_return('canvas.courseprovision.1234.1383330151057')
-      Canvas::ProvideCourseSite.stub(:new).and_return(cpcs)
+      allow(cpcs).to receive(:background).and_return(cpcs)
+      allow(cpcs).to receive(:save).and_return(true)
+      allow(cpcs).to receive(:create_course_site).and_return(true)
+      allow(cpcs).to receive(:job_id).and_return('canvas.courseprovision.1234.1383330151057')
+      allow(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
     end
 
     it "returns nil if instructor does not have access to CCNs" do
-      subject.should_receive(:user_authorized?).and_return(false)
-      subject.create_course_site("fall-2013", ["1136", "1204"]).should be_nil
+      expect(subject).to receive(:user_authorized?).and_return(false)
+      expect(subject.create_course_site("fall-2013", ["1136", "1204"])).to be_nil
     end
 
     it "returns canvas course provision job id" do
-      subject.should_receive(:user_authorized?).and_return(true)
+      expect(subject).to receive(:user_authorized?).and_return(true)
       result = subject.create_course_site("fall-2013", ["1136", "1204"])
-      result.should == 'canvas.courseprovision.1234.1383330151057'
+      expect(result).to eq 'canvas.courseprovision.1234.1383330151057'
     end
 
     it "saves state of job before sending to bg job queue" do
-      cpcs.should_receive(:save).ordered.and_return(true)
-      cpcs.should_receive(:background).ordered.and_return(cpcs)
-      cpcs.should_receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
+      expect(cpcs).to receive(:save).ordered.and_return(true)
+      expect(cpcs).to receive(:background).ordered.and_return(cpcs)
+      expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
       result = subject.create_course_site("fall-2013", ["1136", "1204"])
     end
   end
