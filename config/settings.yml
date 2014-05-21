@@ -218,7 +218,6 @@ cache:
     CalLink::Organization: <%= 4.hours %>
 
     Textbooks::Proxy: <%= 24.hours %>
-    Mediacasts::Youtube: <%= 24.hours %>
     EtsBlog::Alerts: <%= 2.minutes %>
 
 # Cache warmer settings
