@@ -14,9 +14,6 @@
     // Add the spinner service
     $httpProvider.interceptors.push('spinnerInterceptorService');
 
-    // Add the location bar service
-    $httpProvider.interceptors.push('locationbarInterceptorService');
-
   });
 
 })(window.angular);
