@@ -94,6 +94,15 @@
       $scope.selectedCourses = newSelectedCourses;
     };
 
+    var countClasses = function() {
+      $scope.classCount = 0;
+      if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
+        angular.forEach($scope.teachingSemesters, function(semester) {
+          $scope.classCount += semester.classes.length;
+        });
+      }
+    };
+
     $scope.toggleCheckboxes = function(selectedCourse) {
       selectedCourse.allSelected = !selectedCourse.allSelected;
       selectedCourse.selectToggleText = selectedCourse.allSelected ? 'None' : 'All';
@@ -171,7 +180,8 @@
         if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
           selectAllSections();
         }
-        $scope.isCourseCreator = $scope.is_admin || apiService.user.profile.roles.faculty;
+        countClasses();
+        $scope.isCourseCreator = $scope.is_admin || $scope.classCount > 0;
         $scope.feedFetched = true;
       });
     };

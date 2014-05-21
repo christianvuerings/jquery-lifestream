@@ -72,7 +72,7 @@ module Canvas
 
     def user_admin?
       policy = User::Auth.get(@uid).policy
-      @uid.present? && policy.can_import_canvas_users?
+      @uid.present? && policy.can_administrate_globally?
     end
 
     def user_authorized?

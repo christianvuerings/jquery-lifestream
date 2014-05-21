@@ -17,7 +17,7 @@ describe "User::Auth" do
     policy.can_administrate?.should be_true
     policy.can_clear_cache?.should be_true
     policy.can_clear_campus_links_cache?.should be_true
-    policy.can_import_canvas_users?.should be_true
+    policy.can_administrate_globally?.should be_true
     policy.can_refresh_log_settings?.should be_true
     policy.can_act_as?.should be_true
     policy.can_author?.should be_true
@@ -37,7 +37,7 @@ describe "User::Auth" do
     policy = anon.policy
     policy.can_clear_cache?.should be_false
     policy.can_clear_campus_links_cache?.should be_false
-    policy.can_import_canvas_users?.should be_false
+    policy.can_administrate_globally?.should be_false
     policy.can_refresh_log_settings?.should be_false
     policy.can_act_as?.should be_false
     policy.can_author?.should be_false
@@ -54,7 +54,7 @@ describe "User::Auth" do
     policy.can_administrate?.should be_false
     policy.can_clear_cache?.should be_false
     policy.can_clear_campus_links_cache?.should be_false
-    policy.can_import_canvas_users?.should be_false
+    policy.can_administrate_globally?.should be_false
     policy.can_refresh_log_settings?.should be_false
     policy.can_act_as?.should be_false
     policy.can_author?.should be_false

@@ -8,21 +8,21 @@ describe User::AuthPolicy do
 
   # Note: The ApplicationController#current_user method returns User::Auth object used both as the user and record arguments to initialize User::AuthPolicy.
 
-  describe "#can_import_canvas_users?" do
+  describe "#can_administrate_globally?" do
     it "returns true when user is super user" do
       auth_policy = User::AuthPolicy.new(super_user, super_user)
-      expect(auth_policy.can_import_canvas_users?).to be_true
+      expect(auth_policy.can_administrate_globally?).to be_true
     end
 
     it "returns true when user is a canvas root account administrator" do
       canvas_admins = double()
       canvas_admins.stub(:admin_user?).and_return(true)
       Canvas::Admins.stub(:new).and_return(canvas_admins)
-      expect(subject.can_import_canvas_users?).to be_true
+      expect(subject.can_administrate_globally?).to be_true
     end
 
     it "returns false is not a super user or canvas administrator" do
-      expect(subject.can_import_canvas_users?).to be_false
+      expect(subject.can_administrate_globally?).to be_false
     end
   end
 
