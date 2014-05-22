@@ -26,10 +26,14 @@
     padding: 0;
   }
 
+  .cc-page-provision-pending-request {
+    margin-top: 10px;
+  }
+
   .cc-page-provision-no-courses {
     color: $bc-color-headers;
     font-family: $bc-header-font-family;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
     padding: 20px;
   }
@@ -129,6 +133,38 @@
 
   .cc-page-provision-create-site-button {
     margin: 0 0 0 23px;
+  }
+
+  .cc-page-provision-progress-bar-container {
+    margin: 25px auto;
+    width: 75%;
+  }
+
+  .cc-page-provision-progress-bar {
+    @include background(linear-gradient(#ffffff, #c5d8e2));
+    border: 2px solid #c6c7c7;
+    border-radius: 5px;
+    height: 25px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cc-page-provision-progress-bar-value {
+    @include background(linear-gradient(#88cef7, #4baff6));
+    height: 100%;
+  }
+
+  .cc-page-provision-progress-bar-status {
+    color: #2f2e2e;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    left: 50%;
+    line-height: 25px;
+    margin-left: -75px;
+    position: absolute;
+    text-align: center;
+    width: 150px;
   }
 
 }
