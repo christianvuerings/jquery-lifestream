@@ -141,7 +141,7 @@
   }
 
   .cc-page-provision-progress-bar {
-    @include background(linear-gradient(#ffffff, #c5d8e2));
+    @include background(linear-gradient($bc-color-progressbar-bg-gradient1, $bc-color-progressbar-bg-gradient2));
     border: 2px solid #c6c7c7;
     border-radius: 5px;
     height: 25px;
@@ -150,7 +150,7 @@
   }
 
   .cc-page-provision-progress-bar-value {
-    @include background(linear-gradient(#88cef7, #4baff6));
+    @include background(linear-gradient($bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2));
     height: 100%;
   }
 
