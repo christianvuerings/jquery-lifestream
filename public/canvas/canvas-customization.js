@@ -45,68 +45,49 @@
   };
 
   /**
-   * Returns true if user can view the 'Create a Course Site' buttons/links
+   * Adds 'Create a Course Site' button to Dashboard and Course Index page
+   * if the user is authorized to do so
    * @return {Boolean}
    */
-  var canViewAddCourseOption = function() {
-    if (typeof(window.ENV.current_user_roles) !== 'undefined') {
-      // if user is a teacher in any course
-      if (window.ENV.current_user_roles.indexOf('teacher') !== -1) {
-        return true;
-      } else {
-        // can view if not a teacher, but also not a student
-        if (window.ENV.current_user_roles.indexOf('student') === -1) {
-          return true;
-        }
+  var authorizeViewAddCourseButton = function() {
+    // run only on dashboard and course index pages
+    if (['/', '/courses', '/courses.html'].indexOf(window.location.pathname) !== -1) {
+      if (window.ENV.current_user_id) {
+        var userCanCreateCourseSiteUrl = calcentralRootUrl() + '/api/academics/canvas/user_can_create_course_site?canvas_user_id=' + window.ENV.current_user_id;
+        $.get(userCanCreateCourseSiteUrl, function(authResult) {
+          if (authResult.canCreateCourseSite) {
+            addStartANewCourseButton();
+          }
+        });
       }
-      return false;
-    } else {
-      // no buttons shown if roles not defined
-      return false;
     }
   };
 
   /**
-   * Adds 'Start a New Course' link to 'Courses' menu, and buttons to Dashboard and Course Index page
+   * Adds 'Start a New Course' link to page
    */
-  var replaceStartANewCourseButton = function() {
-    if (canViewAddCourseOption()) {
-      var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
-      $.get(externalToolsUrl, function(externalToolsHash) {
-        var createCourseSiteId = externalToolsHash['Course Provisioning for Users'];
-        var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
+  var addStartANewCourseButton = function() {
+    var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+    $.get(externalToolsUrl, function(externalToolsHash) {
+      var createCourseSiteId = externalToolsHash['Course Provisioning for Users'];
+      var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
 
-        // add create course site link in every courses menu
-        var $viewMenuItem = $('li#courses_menu_item td#menu_enrollments ul li.menu-item-view-all').first();
-        if (typeof($viewMenuItem) !== 'undefined') {
-          var $addCourseSiteLink = $('<a/>', {
-            text: 'Create a Course Site',
-            class: 'pull-left',
-            href: linkUrl,
-          });
-          $viewMenuItem.prepend($addCourseSiteLink);
-        }
-
-        // run only on dashboard and course index pages
-        if (['/', '/courses', '/courses.html'].indexOf(window.location.pathname) !== -1) {
-          var $headerWithAddCourseSiteButton = $('<div/>', {
-            style: 'float:right;'
-          }).html(
-            $('<button/>', {
-              text: 'Create a Course Site',
-              class: 'btn btn-primary',
-              click: function() {
-                window.location.href = linkUrl;
-              }
-            })
-          );
-          var $contentArea = $('div#content');
-          if (typeof($contentArea) !== 'undefined') {
-            $contentArea.prepend($headerWithAddCourseSiteButton);
+      var $headerWithAddCourseSiteButton = $('<div/>', {
+        style: 'float:right;'
+      }).html(
+        $('<button/>', {
+          text: 'Create a Course Site',
+          class: 'btn btn-primary',
+          click: function() {
+            window.location.href = linkUrl;
           }
-        }
-      });
-    }
+        })
+      );
+      var $contentArea = $('div#content');
+      if (typeof($contentArea) !== 'undefined') {
+        $contentArea.prepend($headerWithAddCourseSiteButton);
+      }
+    });
   };
 
   /**
@@ -129,7 +110,7 @@
     $('#footer div.bcourses-footer').prepend($bcoursesFooter);
     $('#footer span#footer-links').replaceWith($bcoursesLinks);
 
-    replaceStartANewCourseButton();
+    authorizeViewAddCourseButton();
     replaceAddPeopleButton();
   });
 
