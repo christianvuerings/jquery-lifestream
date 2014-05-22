@@ -141,21 +141,26 @@
           </div>
 
           <div data-ng-show="currentWorkflowStep === 'monitoring_job'">
-            <div data-ng-hide="status">
+
+            <div data-ng-hide="status" class="cc-page-provision-pending-request">
               <i class="fa fa-spinner fa-spin"></i>
               Sending course provisioning request....
             </div>
-            <div data-ng-show="status === 'New'">
+
+            <div data-ng-show="status === 'New'" class="cc-page-provision-pending-request">
               <i class="fa fa-spinner fa-spin"></i>
               Course provisioning request sent. Awaiting processing....
             </div>
+
             <div data-ng-show="status">
-              <ul>
-                <li data-ng-repeat="step in completed_steps">
-                  <i class="fa fa-check-circle cc-icon-green"></i>
-                  <span data-ng-bind="step"></span>
-                </li>
-              </ul>
+
+              <div class="cc-page-provision-progress-bar-container" data-ng-show="percentCompleteRounded">
+                <div class="cc-page-provision-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{percentCompleteRounded}}">
+                  <div class="cc-page-provision-progress-bar-status">{{percentCompleteRounded}}% Complete</div>
+                  <div class="cc-page-provision-progress-bar-value" style="width:{{percentCompleteRounded}}%"></div>
+                </div>
+              </div>
+
               <div data-ng-show="status === 'Error'">
                 <div class="cc-page-provision-feedback">
                   <i class="cc-left fa fa-exclamation-circle"></i>
@@ -165,17 +170,6 @@
                       Please report this issue to <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a>
                     </strong>
                   </div>
-                </div>
-              </div>
-
-              <div data-ng-show="percentCompleteRounded">
-                <div data-ng-show="status === 'Processing'">
-                  <i class="fa fa-spinner fa-spin"></i>
-                  <strong><span data-ng-bind="percentCompleteRounded"></span>&#37; Completed</strong>
-                </div>
-                <div data-ng-show="error">
-                  <i class="fa fa-spinner"></i>
-                  <strong><span data-ng-bind="percentCompleteRounded"></span>&#37; completed, yet failed.</strong>
                 </div>
               </div>
 
