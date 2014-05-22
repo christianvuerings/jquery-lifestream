@@ -1,8 +1,11 @@
-(function(angular) {
+(function(angular, calcentralConfig) {
 
   'use strict';
 
   angular.module('calcentral.services').service('analyticsService', function($rootScope, $window, $location) {
+
+    // See whether GA is available
+    var isGaAvailable = $window && $window.ga;
 
     /**
      * Send an analytics event
@@ -12,8 +15,18 @@
      * More info on https://developers.google.com/analytics/devguides/collection/analyticsjs/events
      */
     var sendEvent = function(category, action, label) {
-      if ($window && $window.ga) {
+      if (isGaAvailable) {
         $window.ga('send', 'event', category, action, label);
+      }
+    };
+
+    /**
+     * Set the user id for the analytics service
+     * @param {String} uid The uid of the current user
+     */
+    var setUserId = function(uid) {
+      if (isGaAvailable && uid) {
+        $window.ga('set', '&uid', uid);
       }
     };
 
@@ -38,6 +51,8 @@
     // Whenever we're changing the content loaded, we need to track which page we're viewing.
     $rootScope.$on('$viewContentLoaded', trackPageview);
 
+    setUserId(calcentralConfig.uid);
+
     // Expose methods
     return {
       sendEvent: sendEvent,
@@ -46,4 +61,4 @@
 
   });
 
-}(window.angular));
+}(window.angular, window.calcentralConfig));
