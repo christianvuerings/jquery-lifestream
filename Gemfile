@@ -38,7 +38,7 @@ gem "secure_headers", "~> 0.5.0"
 
 gem "faraday", "~> 0.9.0"
 gem "faraday_middleware", "~> 0.9.1"
-gem "httparty", "~> 0.11.0"
+gem "httparty", "~> 0.13"
 
 # OAuth2 support
 gem "signet", "~> 0.5"
@@ -54,7 +54,7 @@ gem "vcr", "~> 2.5.0"
 gem "dalli", "~> 2.7"
 
 # smarter logging
-gem "log4r", "~> 1.1.10"
+gem "log4r", "~> 1.1"
 
 # for easier non-DB-backed models
 gem "active_attr", "~> 0.8.3"
