@@ -4,7 +4,7 @@ module GoogleApps
   class Client
     class << self
       def client
-        @client ||= Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1", :auto_refresh_token => true})
+        @client ||= Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1", :auto_refresh_token => true, :retries => 3})
       end
 
       def discover_resource_method(api, resource, method)
