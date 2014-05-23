@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccYoutubeDirective', function($compile, $sce, $timeout) {
+  angular.module('calcentral.directives').directive('ccYoutubeDirective', function(apiService, $compile, $sce, $timeout) {
     return {
       restrict: 'ACE',
       replace: true,
@@ -36,6 +36,7 @@
 
             // When we launch the video, make sure to focus on the youtube player
             if (mode === 'video') {
+              apiService.analytics.sendEvent('Video', 'Play', 'Webcast');
               $timeout(function() {
                 el[0].focus();
               }, 1);
