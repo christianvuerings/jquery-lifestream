@@ -260,7 +260,7 @@ features:
   profile_page: false
   reauthentication: true
 
-youtube_splash_id: 'HRIv6wqqDG4'
+youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
   export_directory: 'tmp/oec'
