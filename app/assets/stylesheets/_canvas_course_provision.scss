@@ -131,8 +131,8 @@
     margin: 5px 0 0 23px;
   }
 
-  .cc-page-provision-create-site-button {
-    margin: 0 0 0 23px;
+  .cc-page-provision-form-button {
+    @include background(linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2));
   }
 
   .cc-page-provision-progress-bar-container {
