@@ -36,13 +36,13 @@ gem "omniauth-cas", "~> 1.0.1"
 # secure_headers provides x-frame, csp and other http headers
 gem "secure_headers", "~> 0.5.0"
 
-gem "faraday", "~> 0.8.7"
-gem "faraday_middleware", "~> 0.9.0"
+gem "faraday", "~> 0.9.0"
+gem "faraday_middleware", "~> 0.9.1"
 gem "httparty", "~> 0.11.0"
 
 # OAuth2 support
-gem "signet", "~> 0.4.5"
-gem "google-api-client", "~> 0.6.4"
+gem "signet", "~> 0.5"
+gem "google-api-client", "~> 0.7.1"
 
 # LTI support
 gem 'ims-lti', :git => "https://github.com/instructure/ims-lti.git"
@@ -51,7 +51,7 @@ gem 'ims-lti', :git => "https://github.com/instructure/ims-lti.git"
 gem "vcr", "~> 2.5.0"
 
 # for memcached connection
-gem "dalli", "~> 2.7.0"
+gem "dalli", "~> 2.7"
 
 # smarter logging
 gem "log4r", "~> 1.1.10"
@@ -83,7 +83,7 @@ gem "torquebox-server", "~> 3.0.1"
 gem "torquebox-messaging", "~> 3.0.1"
 
 # for trying, and trying again, and then giving up.
-gem "retriable", "~> 1.3.3.1"
+gem "retriable", "~> 1.4"
 
 # authorization abstraction layer
 gem "pundit", "~> 0.2.2"

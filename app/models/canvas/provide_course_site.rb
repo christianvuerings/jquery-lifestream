@@ -343,7 +343,7 @@ module Canvas
       sis_id_root = "#{slug}-#{term_yr}-#{term_cd}"
       sis_id_suffix = ''
       sis_id = nil
-      retriable(on: Canvas::ProvideCourseSite::IdNotUniqueException, tries: 20) do
+      Retriable.retriable(on: Canvas::ProvideCourseSite::IdNotUniqueException, tries: 20) do
         candidate = "CRS:#{sis_id_root}#{sis_id_suffix}".upcase
         if existence_proxy.course_defined?(candidate)
           logger.info("Already have Canvas course with SIS ID #{candidate}")
@@ -360,7 +360,7 @@ module Canvas
       sis_id_root = "#{term_yr}-#{term_cd}-#{ccn}"
       sis_id_suffix = ''
       sis_id = nil
-      retriable(on: Canvas::ProvideCourseSite::IdNotUniqueException, tries: 20) do
+      Retriable.retriable(on: Canvas::ProvideCourseSite::IdNotUniqueException, tries: 20) do
         candidate = "SEC:#{sis_id_root}#{sis_id_suffix}".upcase
         if existence_proxy.section_defined?(candidate)
           logger.info("Already have Canvas section with SIS ID #{candidate}")
