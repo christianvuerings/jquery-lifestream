@@ -72,12 +72,10 @@ gem 'nokogiri', "~> 1.5.9", :platforms => :jruby
 # for parsing paged feeds
 gem 'link_header', "~> 0.0.7"
 
-# for simplified relational data management. rails_admin requires devise.
-gem 'rails_admin', "0.6.1"
+# for simplified relational data management
+gem 'rails_admin', "0.6.2"
 
-# rails_admin requires bootstrap_sass but isn't very picky about the version it uses.
-# lock bootstrap-sass at 2.3.2.0 because later version introduce an "invalid character" error during assets:precompile
-gem "bootstrap-sass", "2.3.2.0"
+gem "bootstrap-sass", "~> 3.1.1"
 
 # TorqueBox app server
 gem "torquebox", "~> 3.0.1"
