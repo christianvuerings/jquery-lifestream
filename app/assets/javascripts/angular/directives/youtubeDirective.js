@@ -36,6 +36,7 @@
 
             // When we launch the video, make sure to focus on the youtube player
             if (mode === 'video') {
+              apiService.analytics.sendEvent('Video', 'Play', 'Webcast');
               $timeout(function() {
                 el[0].focus();
               }, 1);
@@ -45,14 +46,11 @@
               // If you click the image, start playing the video
               el.on('click', function() {
                 launch('video');
-                apiService.analytics.sendEvent('Video', 'Play', 'Webcast');
-
               });
               el.on('keydown', function(event) {
                 // If you hit ENTER or SPACE when it's focussed, start playing the video
                 if (event.keyCode === 13 || event.keyCode === 32) {
                   launch('video');
-                  apiService.analytics.sendEvent('Video', 'Play', 'Webcast');
                 }
               });
             }
