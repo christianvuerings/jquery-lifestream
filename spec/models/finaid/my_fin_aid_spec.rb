@@ -21,7 +21,7 @@ describe Finaid::MyFinAid do
       content.css('Response Code').text.strip.should == '0000'
       content.css('Response Message').text.strip.should == 'Success'
     end
-    it "should have a unsuccessful response code and message for registered test students" , :testext => true do
+    it "should have a unsuccessful response code and message for registered test students" , :testext => true, :ignore => true do
       Finaid::Proxy.any_instance.stub(:lookup_student_id).and_return('97450293475029347520394785')
       proxy = Finaid::Proxy.new({user_id: '300849', term_year: this_term_year })
       feed = proxy.get.try(:[], :body)

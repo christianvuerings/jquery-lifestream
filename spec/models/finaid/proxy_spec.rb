@@ -18,7 +18,7 @@ describe Finaid::Proxy do
     end
   end
 
-  context "oski live finaid with data", :testext => true do
+  context "oski live finaid with data", :testext => true, :ignore => true do
     it_behaves_like "oski tests" do
       subject { live_oski_finaid }
     end
