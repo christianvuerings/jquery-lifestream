@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="templates/no_bconnected.html">
 <p data-ng-show="mode === 'upnext' || mode === 'tasks'">
-  <span data-ng-if="mode === 'tasks'">To manage your personal tasks</span><span data-ng-if="mode === 'upnext'">To see events from your bCal calendar</span>, <button class="cc-button-link" data-ng-click="api.user.enableOAuth('Google')">Connect</button> CalCentral to your bConected Google calendar account, then Accept. <button class="cc-button-link" data-ng-show="!showReminder" data-ng-click="showReminder=!showReminder">Show more</button>
+  <span data-ng-if="mode === 'tasks'">To manage your personal tasks</span><span data-ng-if="mode === 'upnext'">To see events from your bCal calendar</span>, <button data-ng-if="!api.user.profile['actingAsUid']" class="cc-button-link" data-ng-click="api.user.enableOAuth('Google')">Connect</button><span data-ng-if="api.user.profile['actingAsUid']">connect</span> CalCentral to your bConected Google calendar account, then Accept. <button class="cc-button-link" data-ng-show="!showReminder" data-ng-click="showReminder=!showReminder">Show more</button>
 </p>
 <div data-ng-show="mode === 'main'">
   <p>Connect CalCentral to your campus bConnected <em>email</em>, <em>calendar</em> and <em>drive</em> account.</p>
