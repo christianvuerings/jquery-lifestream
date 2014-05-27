@@ -45,6 +45,12 @@ describe Canvas::ExternalTools do
         expect(id).to be_an_instance_of Fixnum
       end
     end
+    it 'includes a cached JSON endpoint for maximal efficiency' do
+      expect(Rails.cache).to receive(:write).once
+      raw_feed = subject.public_list
+      json_feed = subject.public_list_as_json
+      expect(json_feed).to eq raw_feed.to_json
+    end
   end
 
 end

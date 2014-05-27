@@ -27,6 +27,13 @@ module Canvas
       all_tools
     end
 
+    # The publicly accessible feed does have to be cached.
+    def public_list_as_json
+      self.class.fetch_from_cache do
+        public_list.to_json
+      end
+    end
+
     def public_list
       external_tools_list.each_with_object({}) do |tool, hash|
         hash[tool['name']] = tool['id']

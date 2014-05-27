@@ -14,7 +14,7 @@ class CanvasController < ApplicationController
   # Provides data on LTI applications configured in Canvas
   # GET /api/academics/canvas/external_tools
   def external_tools
-    render json: Canvas::ExternalTools.new.public_list.to_json
+    render json: Canvas::ExternalTools.new.public_list_as_json
   end
 
   # Indicates if a Canvas user is authorized to provision course sites
