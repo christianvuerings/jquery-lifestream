@@ -132,7 +132,7 @@ $cc-color-splash-blue-dark: #025A86;
     }
     .cc-page-splash-container-right-images {
       max-height: none;
-      div:last-child {
+      > div:last-child {
         padding-bottom: 0;
       }
       &::after {
