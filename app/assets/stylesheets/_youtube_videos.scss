@@ -2,10 +2,15 @@
   margin-top: 15px;
   width: 100%;
   .cc-youtube-image-placeholder {
+    background: transparent;
     min-height: 150px;
     padding: 0;
     position: relative;
     max-width: 100%;
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
     .cc-youtube-thumbnail-button {
       background-image: asset-data-url('icon_youtube_85x60.svg');
       height: 60px;
