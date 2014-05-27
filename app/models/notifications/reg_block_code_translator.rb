@@ -59,8 +59,8 @@ module Notifications
 
       admissions_ugrad = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by the Office of Undergraduate Admissions for failure to
-      meet your Conditions of Admission. Though you may enroll in classes for the current term term, until this block is
-      cleared you <strong>cannot</strong> enroll in classes for the next term term, use campus services (e.g. libraries, health services,
+      meet your Conditions of Admission. Though you may enroll in classes for the current term, until this block is
+      cleared you <strong>cannot</strong> enroll in classes for the next term, use campus services (e.g. libraries, health services,
       recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official
       campus transcripts.</p>
       <p>To clear this block, follow these procedures:</p>
@@ -80,8 +80,8 @@ module Notifications
 
       status_lapse = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by the Office of the Registrar for failure to pay the
-      balance of your registration fees from a previous term. Though you may enroll in classes for the current term term,
-      until this block is cleared you <strong>cannot</strong> enroll in classes for the next term term, use campus services (e.g. libraries,
+      balance of your registration fees from a previous term. Though you may enroll in classes for the current term,
+      until this block is cleared you <strong>cannot</strong> enroll in classes for the next term, use campus services (e.g. libraries,
       health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or
       obtain official campus transcripts.</p>
       <p>To clear this block, you must pay the balance on your CARS account and wait two weeks after your payment has cleared.
@@ -92,7 +92,7 @@ module Notifications
       education_abroad = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by the Office of the Registrar at the request of the main
       office of the Education Abroad Program (EAP) at UC Santa Barbara. Though you may enroll in classes for the current term
-      term, until this block is cleared you <strong>cannot</strong> enroll in classes for the next term term, use campus services (e.g. libraries,
+      term, until this block is cleared you <strong>cannot</strong> enroll in classes for the next term, use campus services (e.g. libraries,
       health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades,
       or obtain official campus transcripts.</p>
       <p>To clear this block, contact <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a> at 120 Sproul Hall,
@@ -103,7 +103,7 @@ module Notifications
       <p>Your registration as an official UC Berkeley student has been blocked by the Center for Student Conduct due to overdue
       sanction(s) resulting from your student conduct case(s). Your block will be lifted once the Center for Student Conduct
       receives confirmation that you have completed your overdue sanction(s). Though you may enroll in classes for the {current
-      term} term, until this block is cleared you <strong>cannot</strong> enroll in classes for the next term term, use campus services (e.g.
+      term} term, until this block is cleared you <strong>cannot</strong> enroll in classes for the next term, use campus services (e.g.
       libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final
       grades, or obtain official campus transcripts.</p>
       <p>Please feel free to contact the Center for Student Conduct at 510-643-9069 or email
@@ -112,8 +112,8 @@ module Notifications
 
       student_health_registrar = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by the Office of the Registrar at the request of the
-      Student Health Service. Though you may enroll in classes for the current term term, until this block is cleared you
-      <strong>cannot</strong> enroll in classes for the next term term, use campus services (e.g. libraries, health services, recreational
+      Student Health Service. Though you may enroll in classes for the current term, until this block is cleared you
+      <strong>cannot</strong> enroll in classes for the next term, use campus services (e.g. libraries, health services, recreational
       sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
       <p>To clear this block, visit University Health Service at the <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?tang">Tang
       Center</a>, 2222 Bancroft Way.</p>
@@ -121,8 +121,8 @@ module Notifications
 
       student_health_uhs = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by University Health Services due to a medical condition
-      that prevents you from attending classes. Though you may enroll in classes for the current term term, until this block
-      is cleared you <strong>cannot</strong> enroll in classes for  the next term term, use campus services (e.g. library, RSF, Class Pass,
+      that prevents you from attending classes. Though you may enroll in classes for the current term, until this block
+      is cleared you <strong>cannot</strong> enroll in classes for  the next term, use campus services (e.g. library, RSF, Class Pass,
       Career Center), receive final grades, or obtain formal campus transcripts.</p>
       <p>To clear this block, please contact <a href="http://www.uhs.berkeley.edu/students/counseling/socialservices.shtml">UHS
       Social Services</a>.</p>
@@ -130,8 +130,8 @@ module Notifications
 
       student_health_hb = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by University Health Services because you do not have
-      evidence of a Hepatitis B vaccine on file. Though you may enroll in classes for the current term term, until this block
-      is cleared you <strong>cannot</strong> enroll in classes for  the next term term, use campus services (e.g. library, RSF, Class Pass,
+      evidence of a Hepatitis B vaccine on file. Though you may enroll in classes for the current term, until this block
+      is cleared you <strong>cannot</strong> enroll in classes for  the next term, use campus services (e.g. library, RSF, Class Pass,
       Career Center), receive final grades, or obtain formal campus transcripts.</p>
 
       <p>To clear this block, please follow the instructions on the
@@ -157,7 +157,7 @@ module Notifications
       academic_busadm = <<-EOS
       <p>Your enrollment is blocked by the Haas School of Business Undergraduate Program because you have failed to comply with
       one or more of their undergraduate program policies. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the
-      next term term and may not receive your advisor code. If you are not enrolled in classes, you will not be an officially
+      next term and may not receive your advisor code. If you are not enrolled in classes, you will not be an officially
       registered student. You must be an officially registered student to use campus services (e.g. libraries, health services,
       recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official
       campus transcripts.</p>
@@ -167,7 +167,7 @@ module Notifications
 
       academic_ced = <<-EOS
       <p>Your enrollment has is blocked by the Office of Undergraduate Advising in the College of Environmental Design due to an
-      academic problem. Unless this block is cleared, you <strong>cannot</strong> enroll in classes for the next term term. If you are not
+      academic problem. Unless this block is cleared, you <strong>cannot</strong> enroll in classes for the next term. If you are not
       enrolled in classes, you will not be an officially registered student. You must be an officially registered student to use
       campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.),
       receive final grades, or obtain official campus transcripts.</p>
@@ -177,7 +177,7 @@ module Notifications
 
       academic_engin = <<-EOS
       <p>Your enrollment is blocked by Engineering Student Services for an academic reason. Until this block is cleared, you
-      <strong>cannot</strong> enroll in classes for the next term term. If you are not enrolled in classes, you will not be an officially
+      <strong>cannot</strong> enroll in classes for the next term. If you are not enrolled in classes, you will not be an officially
       registered student. You must be an officially registered student to use campus services (e.g. libraries, health
       services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or
       obtain official campus transcripts.</p>
@@ -189,7 +189,7 @@ module Notifications
 
       academic_chem = <<-EOS
       <p>Your enrollment is blocked by the College of Chemistry. Until this block is cleared, you <strong>cannot</strong> enroll in classes
-      for the next term term. If you are not enrolled in classes, you will not be an officially registered student. You
+      for the next term. If you are not enrolled in classes, you will not be an officially registered student. You
       must be an officially registered student to use campus services (e.g. libraries, health services, recreational sports
       facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
       <p>To clear this block, contact your staff advisor in the <a href="http://chemistry.berkeley.edu/student_info/undergrad_info/people/office_directory.php">
@@ -198,7 +198,7 @@ module Notifications
 
       academic_law = <<-EOS
       <p>Your enrollment is blocked by the Law School Registrar because you have not submitted an official transcript showing
-      the award of your bachelor's degree. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term term.
+      the award of your bachelor's degree. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term.
       If you are not enrolled in classes, you will not be an officially registered student. You must be an officially registered
       student to use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel,
       Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
@@ -210,7 +210,7 @@ module Notifications
       rnc_ced = <<-EOS
       <p>Your enrollment is blocked by the Office of Undergraduate Advising in the College of Environmental Design for failure
       to complete the Reading and Composition requirement by the designated deadline. Until this block is cleared, you <strong>cannot</strong>
-      enroll in classes for the next term term. If you are not enrolled in classes, you will not be an officially registered
+      enroll in classes for the next term. If you are not enrolled in classes, you will not be an officially registered
       student. You must be an officially registered student to use campus services (e.g. libraries, health services, recreational
       sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official campus transcripts.</p>
       <p>To clear this block, meet with an advisor in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?wurster">250 Wurster
@@ -219,7 +219,7 @@ module Notifications
 
       rnc_engin = <<-EOS
       <p>Your enrollment is blocked by the College of Engineering for failure to complete the Reading and Composition requirement
-      by the designated deadline. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term term. If you are
+      by the designated deadline. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term. If you are
       not enrolled in classes, you will not be an officially registered student. You must be an officially registered student to
       use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center,
       etc.), receive final grades, or obtain official campus transcripts.</p>
@@ -231,7 +231,7 @@ module Notifications
 
       rnc_chem = <<-EOS
       <p>Your enrollment is blocked by the College of Chemistry because you have not completed the Reading and Composition
-      requirement for your major. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term term. If you
+      requirement for your major. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term. If you
       are not enrolled in classes, you will not be an officially registered student. You must be an officially registered student
       to use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career
       Center, etc.), receive final grades, or obtain official campus transcripts.</p>
@@ -242,7 +242,7 @@ module Notifications
 
       rnc_lns = <<-EOS
       <p>Your enrollment is blocked by the College of Letters & Science because you have not completed the Reading and Composition
-      requirement for your major. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term term. If you are
+      requirement for your major. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term. If you are
       not enrolled in classes, you will not be an officially registered student. You must be an officially registered student
       to use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career
       Center, etc.), receive final grades, or obtain official campus transcripts.</p>
@@ -259,7 +259,7 @@ module Notifications
       minimum_progress = <<-EOS
       <p>Your enrollment is blocked by the College of Letters & Science because you did not enroll in the required minimum
       number of units during the current term although a previous warning had been sent to you. Until this block is cleared,
-      you <strong>cannot</strong> enroll in classes for the next term term. If you are not enrolled in classes, you will not be an officially
+      you <strong>cannot</strong> enroll in classes for the next term. If you are not enrolled in classes, you will not be an officially
       registered student. You must be an officially registered student to use campus services (e.g. libraries, health services,
       recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final grades, or obtain official
       campus transcripts.</p>
@@ -312,7 +312,7 @@ module Notifications
       unauth_short_study = <<-EOS
       <p>Your registration has been blocked for next term by the College of Letters & Science because you did not enroll in
       the required minimum number of units during the current term although a previous warning had been sent to you. Until
-      this block is cleared, you <strong>cannot</strong> enroll in classes for the next term term. If you are not enrolled in classes, you
+      this block is cleared, you <strong>cannot</strong> enroll in classes for the next term. If you are not enrolled in classes, you
       will not be an officially registered student. You must be an officially registered student to use campus services (e.g.
       libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.), receive final
       grades, or obtain official campus transcripts.</p>
@@ -339,7 +339,7 @@ module Notifications
       excess_units = <<-EOS
       <p>Your registration has been blocked for next term by the College of Letters & Science because you have exceeded the
       maximum number semesters and/or units allowed. By the end of this semester, you will have completed eight or more semesters
-      and exceeded 130 units. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term term. If you are not
+      and exceeded 130 units. Until this block is cleared, you <strong>cannot</strong> enroll in classes for the next term. If you are not
       enrolled in classes, you will not be an officially registered student. You must be an officially registered student to use
       campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.),
       receive final grades, or obtain official campus transcripts.</p>
