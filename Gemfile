@@ -36,13 +36,13 @@ gem "omniauth-cas", "~> 1.0.1"
 # secure_headers provides x-frame, csp and other http headers
 gem "secure_headers", "~> 0.5.0"
 
-gem "faraday", "~> 0.8.7"
-gem "faraday_middleware", "~> 0.9.0"
-gem "httparty", "~> 0.11.0"
+gem "faraday", "~> 0.9.0"
+gem "faraday_middleware", "~> 0.9.1"
+gem "httparty", "~> 0.13"
 
 # OAuth2 support
-gem "signet", "~> 0.4.5"
-gem "google-api-client", "~> 0.6.4"
+gem "signet", "~> 0.5"
+gem "google-api-client", "~> 0.7.1"
 
 # LTI support
 gem 'ims-lti', :git => "https://github.com/instructure/ims-lti.git"
@@ -51,10 +51,10 @@ gem 'ims-lti', :git => "https://github.com/instructure/ims-lti.git"
 gem "vcr", "~> 2.5.0"
 
 # for memcached connection
-gem "dalli", "~> 2.7.0"
+gem "dalli", "~> 2.7"
 
 # smarter logging
-gem "log4r", "~> 1.1.10"
+gem "log4r", "~> 1.1"
 
 # for easier non-DB-backed models
 gem "active_attr", "~> 0.8.3"
@@ -72,12 +72,10 @@ gem 'nokogiri', "~> 1.5.9", :platforms => :jruby
 # for parsing paged feeds
 gem 'link_header', "~> 0.0.7"
 
-# for simplified relational data management. rails_admin requires devise.
-gem 'rails_admin', "0.6.1"
+# for simplified relational data management
+gem 'rails_admin', "0.6.2"
 
-# rails_admin requires bootstrap_sass but isn't very picky about the version it uses.
-# lock bootstrap-sass at 2.3.2.0 because later version introduce an "invalid character" error during assets:precompile
-gem "bootstrap-sass", "2.3.2.0"
+gem "bootstrap-sass", "~> 3.1.1"
 
 # TorqueBox app server
 gem "torquebox", "~> 3.0.1"
@@ -85,7 +83,7 @@ gem "torquebox-server", "~> 3.0.1"
 gem "torquebox-messaging", "~> 3.0.1"
 
 # for trying, and trying again, and then giving up.
-gem "retriable", "~> 1.3.3.1"
+gem "retriable", "~> 1.4"
 
 # authorization abstraction layer
 gem "pundit", "~> 0.2.2"

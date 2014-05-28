@@ -76,7 +76,7 @@ module Canvas
       status = nil
       sleep 2
       begin
-        retriable(:on => Canvas::SisImport::ReportNotReadyException, :tries => 150, :interval => 20) do
+        Retriable.retriable(:on => Canvas::SisImport::ReportNotReadyException, :tries => 150, :interval => 20) do
           response = request_uncached(url, '_sis_import_status', {
             method: :get
           })

@@ -74,7 +74,7 @@ module Canvas
       sleep 5
       tries = 40
       begin
-        retriable(on: Canvas::Report::ReportNotReadyException, tries: tries, interval: 20) do
+        Retriable.retriable(on: Canvas::Report::ReportNotReadyException, tries: tries, interval: 20) do
           response = request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
             method: :get
           })

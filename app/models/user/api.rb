@@ -54,7 +54,7 @@ module User
 
     def save
       use_pooled_connection {
-        retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
+        Retriable.retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
           @calcentral_user_data = User::Data.where(uid: @uid).first_or_create do |record|
             Rails.logger.debug "#{self.class.name} recording first login for #{@uid}"
             record.preferred_name = @override_name

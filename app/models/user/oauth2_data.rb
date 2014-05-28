@@ -74,7 +74,7 @@ module User
 
     def self.new_or_update(user_id, app_id, access_token, refresh_token=nil, expiration_time=nil, options={})
       use_pooled_connection {
-        retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
+        Retriable.retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
           entry = self.where(:uid => user_id, :app_id => app_id).first_or_initialize
           entry.access_token = access_token
           entry.refresh_token = refresh_token
