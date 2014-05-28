@@ -17,11 +17,23 @@ module MyAcademics
 
       general_profile = doc.css("studentGeneralProfile")
       if general_profile.blank?
-        # No student profile available, probably because the user is no longer considered an active student.
+        # No student profile available, probably because the user is no longer (or not yet) considered an active student.
         return
       end
       ug_grad_flag = to_text doc.css("ugGradFlag")
-      standing = ug_grad_flag.upcase == "U" ? "Undergraduate" : "Graduate"
+      if ug_grad_flag.blank?
+        # Partial profiles can be returned for incoming students around the start of the term.
+        return
+      end
+      case ug_grad_flag.upcase
+        when 'U'
+          standing = 'Undergraduate'
+        when 'G'
+          standing = 'Graduate'
+        else
+          logger.error("Unknown ugGradFlag '#{ug_grad_flag}' for user #{@uid}")
+          return
+      end
       level = to_text(general_profile.css("corpEducLevel")).titleize
       nonAPLevel = to_text(general_profile.css("nonAPLevel")).titleize
       futureTBLevel = to_text(general_profile.css("futureTBLevel")).titleize
