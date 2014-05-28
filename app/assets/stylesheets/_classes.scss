@@ -11,19 +11,19 @@
     > li {
       padding: 10px 0;
     }
-  }
-  .cc-widget-sublist {
-    font-size: 12px;
+    .cc-widget-sublist {
+      font-size: 12px;
+      margin-left: 5px;
+    }
   }
   .cc-widget-classes-other {
+    .cc-widget-list {
+      > li {
+        padding: 0;
+      }
+    }
     .cc-widget-list-hover {
       padding-left: 0;
     }
   }
-  .cc-widget-list {
-    .cc-widget-sublist {
-      margin-left: 5px;
-    }
-  }
-
 }
