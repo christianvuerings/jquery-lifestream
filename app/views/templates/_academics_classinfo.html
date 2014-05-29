@@ -9,7 +9,7 @@
       <h1 class="cc-heading-page-title">
         <a href="/academics">My Academics</a> &raquo;
         <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
-        <span data-ng-bind="selected_course.course_code"></span>
+        <span data-ng-bind="selectedCourse.course_code"></span>
         <div class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
           <ul class="cc-button-group cc-even-{{selectOptions.length}}" role="tablist">
             <li data-ng-repeat="select_option in selectOptions">
@@ -35,14 +35,14 @@
           </div>
           <div class="cc-widget-padding">
             <h3>Class Title</h3>
-            <div data-ng-bind="selected_course.title"></div>
+            <div data-ng-bind="selectedCourse.title"></div>
 
-            <h3 data-ng-if="selected_course.role">My Role</h3>
-            <div data-ng-bind="selected_course.role"></div>
+            <h3 data-ng-if="selectedCourse.role">My Role</h3>
+            <div data-ng-bind="selectedCourse.role"></div>
 
-            <h3 data-ng-if="selected_course.sections.length && !isInstructorOrGsi">My Enrollment</h3>
+            <h3 data-ng-if="selectedCourse.sections.length && !isInstructorOrGsi">My Enrollment</h3>
 
-            <div class="cc-table" data-ng-if="selected_course.sections.length && !isInstructorOrGsi">
+            <div class="cc-table" data-ng-if="selectedCourse.sections.length && !isInstructorOrGsi">
               <table>
                 <thead>
                   <tr>
@@ -51,7 +51,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr data-ng-repeat="sec in selected_course.sections">
+                  <tr data-ng-repeat="sec in selectedCourse.sections">
                     <td data-ng-bind="sec.section_label"></td>
                     <td data-ng-bind="sec.ccn"></td>
                   </tr>
@@ -59,14 +59,14 @@
               </table>
             </div>
 
-            <h3 data-ng-if="selectedCourseCountSchedules || selected_course.units || selected_course.grade_option">Class Info</h3>
+            <h3 data-ng-if="selectedCourseCountSchedules || selectedCourse.units || selectedCourse.grade_option">Class Info</h3>
 
             <h4 data-ng-hide="isInstructorOrGsi">Course Offering</h4>
 
             <div data-ng-hide="isInstructorOrGsi" class="cc-table">
-              <table class="cc-academics-class-info" data-ng-repeat="section in selected_course.sections" data-ng-if="section.is_primary_section">
+              <table class="cc-academics-class-info" data-ng-repeat="section in selectedCourse.sections" data-ng-if="section.is_primary_section">
                 <tbody>
-                  <tr class="cc-academics-class-primary-row" data-ng-if="selected_course.multiplePrimaries">
+                  <tr class="cc-academics-class-primary-row" data-ng-if="selectedCourse.multiplePrimaries">
                     <td data-ng-bind="section.section_label"></td>
                   </tr>
                   <tr>
@@ -84,7 +84,7 @@
 
             <h4 data-ng-if="selectedCourseCountSchedules">Section Schedules</h4>
 
-            <div class="row collapse" data-ng-repeat="section in selected_course.sections">
+            <div class="row collapse" data-ng-repeat="section in selectedCourse.sections">
               <div class="small-3 columns" data-ng-if="section.schedules" data-ng-bind="section.section_label"></div>
               <div class="small-9 columns">
                 <div data-ng-repeat="schedule in section.schedules" data-ng-if="section.schedules" class="cc-academics-schedule-room">
@@ -103,7 +103,7 @@
             <h2 data-ng-pluralize count="selectedCourseCountInstructors" when="{'1': 'Instructor', 'other': 'Instructors'}">Instructors</h2>
           </div>
           <div class="cc-widget-padding">
-            <div data-ng-repeat="section in selected_course.sections">
+            <div data-ng-repeat="section in selectedCourse.sections">
               <h3 data-ng-bind="section.section_label"></h3>
               <ul class="cc-academics-instructors">
                 <li data-ng-repeat="instructor in section.instructors">
@@ -150,13 +150,13 @@
           </div>
         </div>
 
-        <div class="cc-widget cc-widget-last" data-ng-if="selected_course.class_sites.length">
+        <div class="cc-widget cc-widget-last" data-ng-if="selectedCourse.class_sites.length">
           <div class="cc-widget-title">
             <h2>Class Sites</h2>
           </div>
           <div class="cc-widget-padding">
             <ul class="cc-academics-class-sites-list">
-              <li data-ng-repeat="site in selected_course.class_sites">
+              <li data-ng-repeat="site in selectedCourse.class_sites">
                 <a data-ng-href="{{site.site_url}}"
                    data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
                   <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
