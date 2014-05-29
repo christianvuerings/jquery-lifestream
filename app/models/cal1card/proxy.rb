@@ -29,7 +29,8 @@ module Cal1card
         response = HTTParty.get(
           url,
           basic_auth: {username: @settings.username, password: @settings.password},
-          timeout: Settings.application.outgoing_http_timeout
+          timeout: Settings.application.outgoing_http_timeout,
+          verify: Rails.env.production?
         )
         if response.code >= 400
           body = "Cal1Card is currently unavailable. Please try again later."
