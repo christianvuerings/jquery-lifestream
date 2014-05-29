@@ -19,7 +19,7 @@
       var courseYear = encodeURIComponent($scope.selectedSemester.termYear);
       var courseSemester = encodeURIComponent($scope.selectedSemester.termCode);
       var courseDepartment = encodeURIComponent($scope.selectedCourse.dept);
-      var courseCatalog = encodeURIComponent($scope.selectedCourse.course_catalog);
+      var courseCatalog = encodeURIComponent($scope.selectedCourse.courseCatalog);
       var title = courseYear + '/' + courseSemester + '/' + courseDepartment + '/' + courseCatalog;
       getVideos(title);
     };
