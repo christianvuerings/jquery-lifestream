@@ -45,7 +45,7 @@
       });
     };
 
-    $scope.$watchCollection('[$parent.selected_course, api.user.profile.features.textbooks]', function(returnValues) {
+    $scope.$watchCollection('[$parent.selectedCourse, api.user.profile.features.textbooks]', function(returnValues) {
       if (returnValues[0] && returnValues[1] === true) {
         getTextbooks(returnValues[0]);
       }

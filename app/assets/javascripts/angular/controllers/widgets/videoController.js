@@ -18,13 +18,13 @@
     var formatClassTitle = function() {
       var courseYear = encodeURIComponent($scope.selectedSemester.termYear);
       var courseSemester = encodeURIComponent($scope.selectedSemester.termCode);
-      var courseDepartment = encodeURIComponent($scope.selected_course.dept);
-      var courseCatalog = encodeURIComponent($scope.selected_course.course_catalog);
+      var courseDepartment = encodeURIComponent($scope.selectedCourse.dept);
+      var courseCatalog = encodeURIComponent($scope.selectedCourse.course_catalog);
       var title = courseYear + '/' + courseSemester + '/' + courseDepartment + '/' + courseCatalog;
       getVideos(title);
     };
 
-    $scope.$watchCollection('[$parent.selected_course.sections, api.user.profile.features.videos]', function(returnValues) {
+    $scope.$watchCollection('[$parent.selectedCourse.sections, api.user.profile.features.videos]', function(returnValues) {
       if (returnValues[0] && returnValues[1] === true) {
         formatClassTitle();
       }

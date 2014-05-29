@@ -224,11 +224,11 @@
 
     };
 
-    var countSectionItem = function(selected_course, sectionItem) {
+    var countSectionItem = function(selectedCourse, sectionItem) {
       var count = 0;
-      for (var i = 0; i < selected_course.sections.length; i++) {
-        if (selected_course.sections[i][sectionItem] && selected_course.sections[i][sectionItem].length) {
-          count += selected_course.sections[i][sectionItem].length;
+      for (var i = 0; i < selectedCourse.sections.length; i++) {
+        if (selectedCourse.sections[i][sectionItem] && selectedCourse.sections[i][sectionItem].length) {
+          count += selectedCourse.sections[i][sectionItem].length;
         }
       }
       return count;
@@ -321,18 +321,18 @@
             var course = classSemester.classes[i];
             if (course.slug === $routeParams.classSlug) {
               initMultiplePrimaries(course);
-              $scope.selected_course = course;
+              $scope.selectedCourse = course;
               if (isOnlyInstructor) {
                 $scope.campusCourseId = course.course_id;
               }
               break;
             }
           }
-          if (!checkPageExists($scope.selected_course)) {
+          if (!checkPageExists($scope.selectedCourse)) {
             return;
           }
-          $scope.selectedCourseCountInstructors = countSectionItem($scope.selected_course, 'instructors');
-          $scope.selectedCourseCountSchedules = countSectionItem($scope.selected_course, 'schedules');
+          $scope.selectedCourseCountInstructors = countSectionItem($scope.selectedCourse, 'instructors');
+          $scope.selectedCourseCountSchedules = countSectionItem($scope.selectedCourse, 'schedules');
         }
       }
 
