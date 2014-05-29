@@ -124,6 +124,9 @@
     if (e && e.data && e.data.height) {
       document.getElementById('tool_content').style.height = e.data.height + 'px';
     }
+    if (e && e.data && e.data.scrollToTop) {
+      window.scrollTo(0, 0);
+    }
   };
 
 })(window, window.document, window.$);

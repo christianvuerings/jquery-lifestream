@@ -66,8 +66,8 @@
                         <li data-ng-repeat="semester in teachingSemesters">
                           <button class="cc-button"
                                   data-ng-click="switchSemester(semester)"
-                                  data-ng-class="{'cc-button-selected':(current_semester==semester.slug)}"
-                                  aria-selected="{{current_semester==semester.slug}}"
+                                  data-ng-class="{'cc-button-selected':(currentSemester==semester.slug)}"
+                                  aria-selected="{{currentSemester==semester.slug}}"
                                   role="tab"
                                   data-ng-bind="semester.name">
                           </button>
@@ -77,15 +77,14 @@
                   </div>
                 </div>
 
-
                 <h3>2. Select Roster(s):</h3>
 
                 <div class="cc-page-provision-step-indent">
                   <p>All rosters you select below will be put in ONE, single course site.</p>
-                  <form data-ng-submit="createCourseSiteJob(selectedCourses)">
+                  <form data-ng-submit="showConfirmation()">
                     <div>
                       <ul class="cc-page-provision-margin">
-                        <li data-ng-repeat="course in selectedCourses" class="cc-page-provision-form-course cc-page-provision-roster-area">
+                        <li data-ng-repeat="course in currentCourses" class="cc-page-provision-form-course cc-page-provision-roster-area">
                           <strong>{{course.title}} ({{course.course_code}})</strong>
                           <div class="cc-page-provision-form-select-all-option" data-ng-show="course.sections.length > 1">
                             Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
@@ -130,7 +129,7 @@
                       </ul>
                     </div>
 
-                    <div class="cc-page-provision-roster-area">
+                    <div class="cc-page-provision-form-actions">
                       <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Next &gt;&gt;</button>
                     </div>
 
@@ -138,6 +137,63 @@
                 </div>
               </div>
             </div>
+          </div>
+
+          <div data-ng-show="currentWorkflowStep === 'confirmation'">
+            <div class="cc-page-provision-confirmation">
+              <div data-ng-if="selectedSections().length === 1">
+                <strong>You are about to create 1 course site with 1 roster:</strong>
+              </div>
+              <div data-ng-if="selectedSections().length > 1">
+                <strong>You are about to create 1 course site with these <span data-ng-bind="selectedSections().length"></span> rosters:</strong>
+              </div>
+              <ul class="cc-page-provision-roster-list">
+                <li data-ng-repeat="section in selectedSections()">
+                  <span data-ng-bind="section.courseTitle"></span> - <span data-ng-bind="section.section_label"></span> (<span data-ng-bind="section.ccn"></span>)
+                </li>
+              </ul>
+            </div>
+
+            <form data-ng-submit="createCourseSiteJob(currentCourses)" class="cc-page-provision-site-labels-form">
+              <div class="row">
+                <div class="medium-6">
+
+                  <div class="row">
+                    <div class="medium-offset-1 medium-3 columns">
+                      <label for="siteName" class="right">Site Name:</label>
+                    </div>
+                    <div class="medium-8 columns">
+                      <input type="text" id="siteName" data-ng-model="siteName">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="medium-offset-1 medium-3 columns">
+                      <label for="siteAbbreviation" class="right">Site Abbreviation:</label>
+                    </div>
+                    <div class="medium-8 columns">
+                      <input type="text" id="siteAbbreviation" data-ng-model="siteAbbreviation">
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="medium-offset-1 medium-3 columns">
+                      &nbsp;
+                    </div>
+                    <div class="medium-8 columns">
+                      <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Create Course Site</button>
+                      <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="medium-10 columns">
+                </div>
+              </div>
+
+            </form>
           </div>
 
           <div data-ng-show="currentWorkflowStep === 'monitoring_job'">
@@ -178,6 +234,7 @@
                   Success : <span data-ng-bind="course_site.short_name"></span> site created
                   <i class="cc-left fa fa-check-circle cc-icon-green"></i>
                 </div>
+
                 <strong>
                   You may now:
                 </strong>

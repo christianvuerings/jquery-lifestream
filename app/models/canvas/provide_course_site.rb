@@ -31,10 +31,12 @@ module Canvas
       @cache_key = "canvas.courseprovision.#{@uid}.#{Canvas::ProvideCourseSite.unique_job_id}"
     end
 
-    def create_course_site(term_slug, ccns, is_admin_by_ccns = false)
+    def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
       @status = "Processing"
       save
       logger.info("Course provisioning job started. Job state updated in cache key #{@cache_key}")
+      @import_data['site_name'] = site_name
+      @import_data['site_course_code'] = site_course_code
       @import_data['term_slug'] = term_slug
       @import_data['term'] = find_term(term_slug)
       @import_data['ccns'] = ccns
@@ -105,7 +107,7 @@ module Canvas
       raise RuntimeError, "Unable to prepare course site definition. Courses list is not present." if @import_data['courses'].blank?
 
       # Because the course's term is not included in the "Create a new course" API, we must use CSV import.
-      @import_data['course_site_definition'] = generate_course_site_definition(@import_data['term'][:yr], @import_data['term'][:cd], @import_data['subaccount'], @import_data['courses'][0])
+      @import_data['course_site_definition'] = generate_course_site_definition(@import_data['site_name'], @import_data['site_course_code'], @import_data['term'][:yr], @import_data['term'][:cd], @import_data['subaccount'], @import_data['courses'][0][:slug])
       @import_data['sis_course_id'] = @import_data['course_site_definition']['course_id']
       @import_data['course_site_short_name'] = @import_data['course_site_definition']['short_name']
       complete_step("Prepared course site definition")
@@ -303,12 +305,12 @@ module Canvas
       enrollments
     end
 
-    def generate_course_site_definition(term_yr, term_cd, subaccount, campus_course_data)
-      if (sis_id = generate_unique_sis_course_id(Canvas::ExistenceCheck.new, campus_course_data[:slug], term_yr, term_cd))
+    def generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
+      if (sis_id = generate_unique_sis_course_id(Canvas::ExistenceCheck.new, campus_course_slug, term_yr, term_cd))
         {
           'course_id' => sis_id,
-          'short_name' => campus_course_data[:course_code],
-          'long_name' => campus_course_data[:title] || campus_course_data[:course_code],
+          'short_name' => site_course_code,
+          'long_name' => site_name,
           'account_id' => subaccount,
           'term_id' => Canvas::Proxy.term_to_sis_id(term_yr, term_cd),
           'status' => 'active'

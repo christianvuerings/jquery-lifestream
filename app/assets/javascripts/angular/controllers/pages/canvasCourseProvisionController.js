@@ -13,6 +13,7 @@
       if ($scope.status === 'Processing' || $scope.status === 'New') {
         courseSiteJobStatusLoader();
       } else {
+        delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
       }
     };
@@ -86,13 +87,13 @@
 
     var selectAllSections = function() {
       var newSelectedCourses = [];
-      angular.forEach($scope.selectedCourses, function(course) {
+      angular.forEach($scope.currentCourses, function(course) {
         angular.forEach(course.sections, function(section) {
           section.selected = true;
         });
         newSelectedCourses.push(course);
       });
-      $scope.selectedCourses = newSelectedCourses;
+      $scope.currentCourses = newSelectedCourses;
     };
 
     var countClasses = function() {
@@ -104,6 +105,29 @@
       }
     };
 
+    var selectedCcns = function() {
+      var ccns = [];
+      angular.forEach($scope.selectedSections(), function(section) {
+        ccns.push(section.ccn);
+      });
+      return ccns;
+    };
+
+    $scope.selectedSections = function() {
+      var selectedSections = [];
+      angular.forEach($scope.currentCourses, function(course) {
+        angular.forEach(course.sections, function(section) {
+          if (section.selected) {
+            section.courseTitle = course.title;
+            section.courseCode = course.course_code;
+            section.courseCatalog = course.course_catalog;
+            selectedSections.push(section);
+          }
+        });
+      });
+      return selectedSections;
+    };
+
     $scope.toggleCheckboxes = function(selectedCourse) {
       selectedCourse.allSelected = !selectedCourse.allSelected;
       selectedCourse.selectToggleText = selectedCourse.allSelected ? 'None' : 'All';
@@ -112,18 +136,25 @@
       });
     };
 
-    $scope.createCourseSiteJob = function(selectedCourses) {
-      var ccns = [];
-      angular.forEach(selectedCourses, function(course) {
-        angular.forEach(course.sections, function(section) {
-          if (section.selected) {
-            ccns.push(section.ccn);
-          }
-        });
-      });
+    $scope.showSelecting = function() {
+      $scope.currentWorkflowStep = 'selecting';
+    };
+
+    $scope.showConfirmation = function() {
+      $scope.currentWorkflowStep = 'confirmation';
+      var selectedSections = $scope.selectedSections();
+      $scope.siteName = selectedSections[0].courseTitle;
+      $scope.siteAbbreviation = selectedSections[0].courseCode + ' - ' + selectedSections[0].section_label;
+      apiService.util.iframeScrollToTop();
+    };
+
+    $scope.createCourseSiteJob = function() {
+      var ccns = selectedCcns();
       if (ccns.length > 0) {
         var newCourse = {
-          'term_slug': $scope.current_semester,
+          'siteName': $scope.siteName,
+          'siteAbbreviation': $scope.siteAbbreviation,
+          'termSlug': $scope.currentSemester,
           'ccns': ccns
         };
         if ($scope.is_admin) {
@@ -138,6 +169,7 @@
           .success(courseSiteJobCreated)
           .error(function() {
             angular.extend($scope, {
+              percentCompleteRounded: 0,
               currentWorkflowStep: 'monitoring_job',
               status: 'Error',
               error: 'Failed to create course provisioning job.'
@@ -195,8 +227,8 @@
 
     $scope.switchSemester = function(semester) {
       angular.extend($scope, {
-        current_semester: semester.slug,
-        selectedCourses: semester.classes
+        currentSemester: semester.slug,
+        currentCourses: semester.classes
       });
     };
 
