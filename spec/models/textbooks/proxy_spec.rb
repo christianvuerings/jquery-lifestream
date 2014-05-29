@@ -71,18 +71,20 @@ describe Textbooks::Proxy do
     end
   end
 
-  it "should get data as json" do
-    Rails.cache.should_receive(:write)
-    @ccns = ["41575"]
-    @slug = "fall-2014"
-    proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
-    proxy_response = proxy.get_as_json
-    proxy_response.should_not be_nil
-    parsed_response = JSON.parse(proxy_response)
-    parsed_response.should_not be_nil
-    if proxy_response["statusCode"] == 200
-      feed = proxy_response["books"]
-      feed.should_not be_nil
+  context 'getting json data' do
+    include_context 'it writes to the cache'
+    it "should get data as json" do
+      @ccns = ["41575"]
+      @slug = "fall-2014"
+      proxy = Textbooks::Proxy.new({:ccns => @ccns, :slug => @slug, :fake => false})
+      proxy_response = proxy.get_as_json
+      proxy_response.should_not be_nil
+      parsed_response = JSON.parse(proxy_response)
+      parsed_response.should_not be_nil
+      if proxy_response["statusCode"] == 200
+        feed = proxy_response["books"]
+        feed.should_not be_nil
+      end
     end
   end
 

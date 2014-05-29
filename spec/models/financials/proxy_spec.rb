@@ -85,6 +85,7 @@ describe Financials::Proxy do
     end
 
     context 'when simulated remote errors occur' do
+      include_context 'short-lived cache write of Hash on failures'
       after { WebMock.reset! }
 
       context 'when remote server is unreachable (connection refused)' do
@@ -97,7 +98,7 @@ describe Financials::Proxy do
         end
         it 'should have a 503 status' do
           expect(subject[:statusCode]).to eq 503
-          expect(@cached_count).to eq 0
+          expect(@cached_count).to eq 1
         end
       end
 
@@ -110,7 +111,7 @@ describe Financials::Proxy do
         end
         it 'should have a 403 status' do
           expect(subject[:statusCode]).to eq 403
-          expect(@cached_count).to eq 0
+          expect(@cached_count).to eq 1
         end
       end
     end

@@ -175,6 +175,7 @@ cache:
   log_level: <%= Logger::ERROR %>
   expiration:
     default: <%= 35.minutes %>
+    failure: <%= 30.seconds %>
     Cache::FeedUpdateWhiteboard: <%= 5.minutes %>
     LiveUpdatesWarmer: <%= 2.minutes %>
     MyAcademics::Merged: 0

@@ -8,15 +8,17 @@ module Cache
     def fetch_from_cache(id=nil, force_write=false)
       key = key id
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}, forced: #{force_write}"
-      Rails.cache.fetch(
+      value = Rails.cache.fetch(
         key,
         :expires_in => self.expires_in,
         :force => force_write
       ) do
         if block_given?
-          yield
+          new_value = yield
+          new_value.nil? ? NilClass : new_value
         end
       end
+      (value == NilClass) ? nil : value
     end
 
     # reads from cache if possible, otherwise executes the passed block and caches the result.
@@ -45,12 +47,18 @@ module Cache
         # don't write to cache if an exception occurs, just log the error and return a body
         response = handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
         response = response.to_json if jsonify
-        Rails.logger.debug "#{self.name} Error occurred; NOT Writing entry to cache: #{key}"
+        Rails.logger.debug "#{self.name} Error occurred; writing entry to cache with short lifespan: #{key}"
+        cached_response = (response.nil?) ? NilClass : response
+        Rails.cache.write(key,
+                          cached_response,
+                          :expires_in => Settings.cache.expiration.failure,
+                          :force => true)
         return response
       end
       Rails.logger.debug "#{self.name} Writing entry to cache: #{key}"
+      cached_entry = (entry.nil?) ? NilClass : entry
       Rails.cache.write(key,
-                        entry,
+                        cached_entry,
                         :expires_in => self.expires_in,
                         :force => true)
       entry

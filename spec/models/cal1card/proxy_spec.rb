@@ -22,8 +22,8 @@ describe Cal1card::Proxy do
   end
 
   context "proper caching behaviors" do
+    include_context 'it writes to the cache'
     it "should write to cache" do
-      Rails.cache.should_receive(:write)
       fake_oski_proxy.get
     end
   end
@@ -34,28 +34,26 @@ describe Cal1card::Proxy do
     its([:statusCode]) { should eq 200 }
   end
 
-  context "unreachable remote server (connection errors)" do
-    before(:each) {
-      stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_raise(Errno::ECONNREFUSED)
-      Rails.cache.should_not_receive(:write)
-    }
+  context "server errors" do
+    include_context 'short-lived cache write of Hash on failures'
     after(:each) { WebMock.reset! }
     subject { real_oski_proxy.get }
 
-    its([:body]) { should eq("An unknown server error occurred") }
-    its([:statusCode]) { should eq(503) }
-  end
+    context "unreachable remote server (connection errors)" do
+      before(:each) {
+        stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_raise(Errno::ECONNREFUSED)
+      }
+      its([:body]) { should eq("An unknown server error occurred") }
+      its([:statusCode]) { should eq(503) }
+    end
 
-  context "error on remote server (5xx errors)" do
-    before(:each) {
-      stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_return(status: 506)
-      Rails.cache.should_not_receive(:write)
-    }
-    after(:each) { WebMock.reset! }
-    subject { real_oski_proxy.get }
-
-    its([:body]) { should eq("Cal1Card is currently unavailable. Please try again later.") }
-    its([:statusCode]) { should eq(506) }
+    context "error on remote server (5xx errors)" do
+      before(:each) {
+        stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_return(status: 506)
+      }
+      its([:body]) { should eq("Cal1Card is currently unavailable. Please try again later.") }
+      its([:statusCode]) { should eq(506) }
+    end
   end
 
   context "proxy should respect a disabled feature flag" do

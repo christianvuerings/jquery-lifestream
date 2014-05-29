@@ -4,7 +4,7 @@ describe ResearchHub::Proxy do
   let(:user_id) { rand(99999).to_s }
 
   describe 'getting a fake feed' do
-    before { Rails.cache.should_receive(:write) }
+    include_context 'it writes to the cache'
     subject { ResearchHub::Proxy.new({:user_id => user_id, :fake => true}).get_sites }
     its(:size) { should be > 0 }
     it 'contains Research groups' do

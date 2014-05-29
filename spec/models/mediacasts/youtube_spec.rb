@@ -20,7 +20,7 @@ describe Mediacasts::Youtube do
   end
 
   context "proper caching behavior", :textext => true do
-    before { Rails.cache.should_receive(:write) }
+    include_context 'it writes to the cache'
     it "should get and cache json on a successful request", :testext => true do
       proxy = Mediacasts::Youtube.new({:playlist_id => "-XXv-cvA_iCIEwJhyDVdyLMCiimv6Tup"})
       json_response = proxy.get
@@ -29,8 +29,8 @@ describe Mediacasts::Youtube do
   end
 
   context "proper caching behavior when remote site has errors" do
+    include_context 'short-lived cache write of Hash on failures'
     before(:each) {
-      Rails.cache.should_not_receive(:write)
       stub_request(:any, /#{Regexp.quote(Settings.youtube_proxy.base_url)}.*/).to_return(status: 500)
     }
     after(:each) { WebMock.reset! }

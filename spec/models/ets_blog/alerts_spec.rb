@@ -66,23 +66,20 @@ describe EtsBlog::Alerts do
     end
   end
 
-  context "caching" do
+  context "caching successes" do
+    include_context 'it writes to the cache'
     it "should write to cache" do
-      Rails.cache.clear
-      Rails.cache.should_receive(:write)
       alert = EtsBlog::Alerts.new({fake:true}).get_latest
     end
-    it "should not write to cache test" do
-      Rails.cache.clear
+  end
+
+  context "caching failures" do
+    include_context 'short-lived cache write of NilClass on failures'
+    it "should write failure state to cache" do
       fake_proxy.stub(:xml_source).and_return(bad_file_path)
-      Rails.cache.should_not_receive(:write)
       lambda{
         alert = fake_proxy.get_latest
       }.should_not raise_exception
-    end
-    it "should not write to cache" do
-      alert = fake_proxy.get_latest
-      Rails.cache.should_not_receive(:write)
     end
   end
 
