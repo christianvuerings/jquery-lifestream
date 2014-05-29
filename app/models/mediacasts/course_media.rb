@@ -23,8 +23,8 @@ module Mediacasts
         }
       end
       videos = get_videos_as_json(playlist)
-      podcasts = get_podcasts_as_json(playlist)
-      videos.merge(podcasts)
+      itunes = get_itunes_as_json(playlist)
+      videos.merge(itunes)
     end
 
     def get_playlist
@@ -42,6 +42,19 @@ module Mediacasts
       end
     end
 
+    def get_itunes_url(id)
+      !id.blank? ? 'https://itunes.apple.com/us/itunes-u/id' + id : nil
+    end
+
+    def get_itunes_as_json(playlist)
+      {
+        :itunes => {
+          :audio => get_itunes_url(playlist[:itunes_audio]),
+          :video => get_itunes_url(playlist[:itunes_video])
+        }
+      }
+    end
+
     def get_videos_as_json(playlist)
       return {} unless Settings.features.videos
       if !playlist[:video_error_message].blank?
@@ -50,18 +63,6 @@ module Mediacasts
         }
       end
       get_youtube_videos(playlist[:playlist_id])
-    end
-
-    def get_podcasts_as_json(playlist)
-      return {} unless Settings.features.podcasts
-      if !playlist[:podcast_error_message].blank?
-        return {
-          :podcastErrorMessage => playlist[:podcast_error_message]
-        }
-      end
-      {
-        :podcast => 'https://itunes.apple.com/us/itunes-u/id' + playlist[:podcast_id]
-      }
     end
 
     def get_youtube_videos(id)

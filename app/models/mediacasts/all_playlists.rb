@@ -4,12 +4,11 @@ module Mediacasts
     include ClassLogger, SafeJsonParser
 
     PROXY_ERROR = {
-      :proxy_error_message => "There was a problem fetching the webcasts and podcasts."
+      :proxy_error_message => "There was a problem fetching the webcasts."
     }
 
     ERRORS = {
-      :video_error_message => "There are no webcasts available.",
-      :podcast_error_message => "There are no podcasts available."
+      :video_error_message => "There are no webcasts available."
     }
 
     def initialize(options = {})
@@ -26,7 +25,7 @@ module Mediacasts
     private
 
     def request_internal
-      return {} unless Settings.features.videos || Settings.features.podcasts
+      return {} unless Settings.features.videos
       if @fake
         logger.info "Fake = #@fake, getting data from JSON fixture file; cache expiration #{self.class.expires_in}"
         data = safe_json File.read(Rails.root.join('fixtures', 'json', 'webcasts.json').to_s)
@@ -59,13 +58,11 @@ module Mediacasts
           key = Mediacasts::CourseMedia.course_id(course['year'], course['semester'], course['deptName'], course['catalogId'])
           processed_playlists[:courses][key] = {
             playlist_id: course['youTubePlaylist'].to_s,
-            podcast_id: course['iTunesAudio'].to_s
+            itunes_audio: course['iTunesAudio'].to_s,
+            itunes_video: course['iTunesVideo'].to_s
           }
           if course['youTubePlaylist'].blank?
             processed_playlists[:courses][key][:video_error_message] = ERRORS[:video_error_message]
-          end
-          if course['iTunesAudio'].blank?
-            processed_playlists[:courses][key][:podcast_error_message] = ERRORS[:podcast_error_message]
           end
         end
       end

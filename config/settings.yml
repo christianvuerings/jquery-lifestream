@@ -121,10 +121,6 @@ textbooks_proxy:
   fake: false
   base_url: "http://www.bkstr.com"
 
-playlists_proxy:
-  fake: false
-  base_url: 'http://webcast.berkeley.edu/itunesu_podcasts.js'
-
 playlists_warehouse_proxy:
   fake: false
   base_url: 'https://video-dev.ets.berkeley.edu/warehouse/webcast.json'
@@ -255,7 +251,6 @@ features:
   research: false
   textbooks: false
   videos: false
-  podcasts: false
   app_alerts: false
   cal1card: false
   profile_page: false
