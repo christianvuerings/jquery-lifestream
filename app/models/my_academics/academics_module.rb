@@ -1,6 +1,5 @@
 module MyAcademics
   module AcademicsModule
-    extend self
 
     def initialize(uid)
       @uid = uid
