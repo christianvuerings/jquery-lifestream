@@ -134,6 +134,27 @@ describe Cache::Cacheable do
         expect(second_val).to be_nil
       end
     end
+
+    context 'with nil values and jsonification' do
+      before do
+        expect(Rails.cache).to receive(:read).twice.with(randkey).and_call_original
+        expect(Rails.cache).to receive(:write).once.with(
+                                 randkey,
+                                 'null',
+                                 {expires_in: Settings.cache.expiration.default, force: true}
+                               ).and_call_original
+      end
+      it 'caches a nil with jsonification' do
+        first_val = TestCacheable.smart_fetch_from_cache({id: randkey, jsonify: true}) do
+          nil
+        end
+        expect(first_val).to eq 'null'
+        second_val= TestCacheable.smart_fetch_from_cache({id: randkey, jsonify: true}) do
+          nil
+        end
+        expect(second_val).to eq 'null'
+      end
+    end
   end
 
 end
