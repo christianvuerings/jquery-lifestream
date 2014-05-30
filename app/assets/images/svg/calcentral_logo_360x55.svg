@@ -1,14 +1,11 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-   width="405px" height="55px" viewBox="0 0 405 55" enable-background="new 0 0 405 55" xml:space="preserve">
+   width="360px" height="55px" viewBox="0 0 360 55" enable-background="new 0 0 360 55" xml:space="preserve">
 <style>
   .cc-svg-calcentral-logo-gold {
     fill: #f1a91e;
   }
   .cc-svg-calcentral-logo-blue {
     fill: #104777;
-  }
-  .cc-svg-calcentral-logo-red {
-    fill: #c02026;
   }
 </style>
 <g>
@@ -32,15 +29,5 @@
   <path class="cc-svg-calcentral-logo-blue" d="M322.505,48.278h-6.643l-2.808-7.992h-13.608l-2.754,7.992h-6.643l12.312-33.75h7.992L322.505,48.278z
      M306.305,20.198l-5.131,14.634h10.206L306.305,20.198z"/>
   <path class="cc-svg-calcentral-logo-blue" d="M331.468,48.278v-33.75h6.589V42.5h15.228v5.778H331.468z"/>
-</g>
-<g>
-  <path class="cc-svg-calcentral-logo-red" d="M361.609,16.196c0,2.244-1.474,3.829-4.95,3.829h-4.467V6.273h4.29c3.301,0,4.688,1.496,4.688,3.586
-    c0,1.342-0.814,2.663-2.641,3.125C360.554,13.38,361.609,14.59,361.609,16.196z M356.549,7.549h-2.948V12.5
-    c0.022,0,2.729,0,2.729,0c2.068,0,3.433-0.902,3.433-2.531C359.762,8.495,358.728,7.549,356.549,7.549z M356.417,13.776h-2.816
-    v4.973h3.169c2.42,0,3.432-0.99,3.432-2.552C360.201,14.59,358.859,13.776,356.417,13.776z"/>
-  <path class="cc-svg-calcentral-logo-red" d="M364.292,20.025V6.273h8.317v1.298H365.7V12.5h5.765v1.276H365.7v4.951h6.909v1.298H364.292z"/>
-  <path class="cc-svg-calcentral-logo-red" d="M380.44,7.593v12.432h-1.408V7.593h-4.841v-1.32h11.09v1.32H380.44z"/>
-  <path class="cc-svg-calcentral-logo-red" d="M397.008,20.025h-1.431l-1.452-3.938h-6.227l-1.453,3.938h-1.43l5.215-13.752h1.65L397.008,20.025z
-     M391.022,7.659l-2.64,7.151h5.258L391.022,7.659z"/>
 </g>
 </svg>

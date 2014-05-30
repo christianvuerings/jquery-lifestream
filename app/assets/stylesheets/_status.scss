@@ -43,17 +43,3 @@
     }
   }
 }
-
-.cc-page-sorry {
-  .cc-page-sorry-beta {
-    background: $cc-color-green-light;
-    border: 10px solid $cc-color-blue-dark;
-    border-left: none;
-    border-right: none;
-    @include box-shadow(0 4px 8px #888);
-    color: $cc-color-white;
-    font-size: 48px;
-    font-weight: bold;
-    padding: 10px 25px;
-  }
-}
