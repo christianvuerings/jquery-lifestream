@@ -7,8 +7,10 @@ class MyClasses::Campus
     all_courses = CampusOracle::UserCourses.new(user_id: @uid).get_all_campus_courses
     semester_key = "#{current_term.year}-#{current_term.code}"
     if all_courses[semester_key]
+      # Ask My Academics for the URL to this class info page in My Academics.
+      my_academics = MyAcademics::Semesters.new(@uid)
       all_courses[semester_key].each do |course|
-        course[:site_url] = MyAcademics::AcademicsModule.class_to_url(course)
+        course[:site_url] = my_academics.class_to_url(course)
         append_class_info(course, classes)
       end
     end

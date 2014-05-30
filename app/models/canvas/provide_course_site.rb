@@ -246,15 +246,16 @@ module Canvas
     # When an admin specifies CCNs directly, we cannot repurpose an existing MyAcademics::Teaching feed.
     # Instead, mimic its data structure.
     def courses_list_from_ccns(term_slug, ccns)
+      my_academics = MyAcademics::Teaching.new(@uid)
       courses_list = []
       term = find_term(term_slug)
       proxy = CampusOracle::UserCourses.new({user_id: @uid})
       feed = proxy.get_selected_sections(term[:yr], term[:cd], ccns)
       feed.keys.each do |term_key|
         (term_yr, term_cd) = term_key.split("-")
-        semester = MyAcademics::AcademicsModule.semester_info(term_yr, term_cd)
+        semester = my_academics.semester_info(term_yr, term_cd)
         feed[term_key].each do |course|
-          semester[:classes] << MyAcademics::AcademicsModule.class_info(course)
+          semester[:classes] << my_academics.class_info(course)
         end
         courses_list << semester unless semester[:classes].empty?
       end
