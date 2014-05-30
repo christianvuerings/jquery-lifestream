@@ -53,6 +53,46 @@ describe Cache::Cacheable do
           expect(second_val).to eq normal_hash
         end
       end
+
+      context 'when forcing a write' do
+        let(:new_hash) { {blah: 'bonk'} }
+        before do
+          expect(Rails.cache).not_to receive(:read)
+          expect(Rails.cache).to receive(:write).twice.with(
+                                   randkey,
+                                   an_instance_of(Hash),
+                                   {expires_in: Settings.cache.expiration.default, force: true}
+                                 ).and_call_original
+        end
+        it 'always writes to cache when force is on' do
+          first_val = TestCacheable.smart_fetch_from_cache({id: randkey, force_write: true}) do
+            normal_hash
+          end
+          expect(first_val).to eq normal_hash
+          second_val = TestCacheable.smart_fetch_from_cache({id: randkey, force_write: true}) do
+            new_hash
+          end
+          expect(second_val).to eq new_hash
+        end
+      end
+
+      context 'when jsonification has been requested' do
+        before do
+          expect(Rails.cache).to receive(:read).once.with(randkey).and_call_original
+          expect(Rails.cache).to receive(:write).once.with(
+                                   randkey,
+                                   normal_hash.to_json,
+                                   {expires_in: Settings.cache.expiration.default, force: true}
+                                 ).and_call_original
+        end
+        it 'converts input to json and caches that' do
+          val = TestCacheable.smart_fetch_from_cache({id: randkey, jsonify: true}) do
+            normal_hash
+          end
+          expect(val).to eq normal_hash.to_json
+        end
+      end
+
     end
   end
 
