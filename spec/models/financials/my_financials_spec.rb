@@ -63,10 +63,4 @@ describe Financials::MyFinancials do
     it_behaves_like 'a feed with the common live-updates fields'
   end
 
-  context 'when the financials feature flag is disabled' do
-    before { allow(Settings.features).to receive(:financials).and_return(false) }
-    it_behaves_like 'an empty feed'
-    it_behaves_like 'a feed with the common live-updates fields'
-  end
-
 end
