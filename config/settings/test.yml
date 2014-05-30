@@ -30,6 +30,8 @@ cal1card_proxy:
 oauth2:
   encryption: "aes-128-cbc"
 
+myfinaid_proxy:
+  fake: true
 
 app_alerts_proxy:
   fake: true

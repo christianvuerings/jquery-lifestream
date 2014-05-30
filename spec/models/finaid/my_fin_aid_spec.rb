@@ -21,7 +21,7 @@ describe Finaid::MyFinAid do
       content.css('Response Code').text.strip.should == '0000'
       content.css('Response Message').text.strip.should == 'Success'
     end
-    it "should have a unsuccessful response code and message for registered test students" , :testext => true, :ignore => true do
+    it "should have a unsuccessful response code and message for registered test students", :testext => true do
       Finaid::Proxy.any_instance.stub(:lookup_student_id).and_return('97450293475029347520394785')
       proxy = Finaid::Proxy.new({user_id: '300849', term_year: this_term_year })
       feed = proxy.get.try(:[], :body)
@@ -60,6 +60,8 @@ describe Finaid::MyFinAid do
   end
 
   describe "non 2xx states" do
+    before { Settings.myfinaid_proxy.fake = false }
+    after { Settings.myfinaid_proxy.fake = true }
     let(:activities) { ["some activity"] }
 
     context "non-student finaid" do
@@ -114,7 +116,9 @@ describe Finaid::MyFinAid do
       end
 
       it { should_not be_blank }
-      it { subject.length.should eq(26) }
+      if Settings.myfinaid_proxy.fake
+        it { subject.length.should eq(26) }
+      end
       it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
       it { subject.each { |entry| entry[:title].should be_present } }
       it { subject.each { |entry| entry[:source_url].should be_present } }
@@ -127,7 +131,9 @@ describe Finaid::MyFinAid do
           activities.select { |entry| entry[:type] == "alert" }
         end
 
-        it { subject.length.should eq(19) }
+        if Settings.myfinaid_proxy.fake
+          it { subject.length.should eq(19) }
+        end
         it { subject.each { |entry| entry[:date].should be_blank } }
       end
       describe "info types" do
@@ -145,7 +151,9 @@ describe Finaid::MyFinAid do
           activities.select { |entry| entry[:type] == "financial" }
         end
 
-        it { subject.length.should eq(1) }
+        if Settings.myfinaid_proxy.fake
+          it { subject.length.should eq(1) }
+        end
         it { subject.each { |entry| entry[:title].should be_present } }
       end
 
@@ -208,7 +216,9 @@ describe Finaid::MyFinAid do
         ))
       end
       it { should_not be_blank }
-      it { subject.length.should eq(13) }
+      if Settings.myfinaid_proxy.fake
+        it { subject.length.should eq(13) }
+      end
     end
 
   end
