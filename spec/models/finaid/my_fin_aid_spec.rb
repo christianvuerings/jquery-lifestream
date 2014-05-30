@@ -114,7 +114,7 @@ describe Finaid::MyFinAid do
       end
 
       it { should_not be_blank }
-      it { subject.length.should eq(25) }
+      it { subject.length.should eq(26) }
       it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
       it { subject.each { |entry| entry[:title].should be_present } }
       it { subject.each { |entry| entry[:source_url].should be_present } }
@@ -127,7 +127,7 @@ describe Finaid::MyFinAid do
           activities.select { |entry| entry[:type] == "alert" }
         end
 
-        it { subject.length.should eq(17) }
+        it { subject.length.should eq(19) }
         it { subject.each { |entry| entry[:date].should be_blank } }
       end
       describe "info types" do
@@ -145,7 +145,7 @@ describe Finaid::MyFinAid do
           activities.select { |entry| entry[:type] == "financial" }
         end
 
-        it { subject.length.should eq(2) }
+        it { subject.length.should eq(1) }
         it { subject.each { |entry| entry[:title].should be_present } }
       end
 
@@ -208,7 +208,7 @@ describe Finaid::MyFinAid do
         ))
       end
       it { should_not be_blank }
-      it { subject.length.should eq(12) }
+      it { subject.length.should eq(13) }
     end
 
   end
