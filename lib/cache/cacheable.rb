@@ -37,14 +37,14 @@ module Cache
         entry = Rails.cache.read key
         if entry
           Rails.logger.debug "#{self.name} Entry is already in cache: #{key}"
-          return entry
+          return (entry == NilClass) ? nil : entry
         end
       end
       begin
         entry = block.call
         entry = entry.to_json if jsonify
       rescue => e
-        # don't write to cache if an exception occurs, just log the error and return a body
+        # when an exception occurs, write with a short expiration time, log an error, and return the body with error info
         response = handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
         response = response.to_json if jsonify
         Rails.logger.debug "#{self.name} Error occurred; writing entry to cache with short lifespan: #{key}"
