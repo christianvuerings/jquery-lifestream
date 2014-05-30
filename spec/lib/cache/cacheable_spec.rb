@@ -11,21 +11,23 @@ describe Cache::Cacheable do
 
   let(:randkey) { rand(99999).to_s }
 
-  context 'with nil values' do
-    describe '#fetch_from_cache' do
-      before do
-        expect(Rails.cache).to receive(:write).once.with(randkey, NilClass, anything).and_call_original
-        expect(Rails.cache).to receive(:fetch).twice.with(randkey, anything).and_call_original
-      end
-      it 'translates nil' do
-        first_val = TestCacheable.fetch_from_cache randkey do
-          nil
+  context 'regular fetch' do
+    context 'with nil values' do
+      describe '#fetch_from_cache' do
+        before do
+          expect(Rails.cache).to receive(:write).once.with(randkey, NilClass, anything).and_call_original
+          expect(Rails.cache).to receive(:fetch).twice.with(randkey, anything).and_call_original
         end
-        expect(first_val).to be_nil
-        second_val = TestCacheable.fetch_from_cache randkey do
-          'something else'
+        it 'translates nil' do
+          first_val = TestCacheable.fetch_from_cache randkey do
+            nil
+          end
+          expect(first_val).to be_nil
+          second_val = TestCacheable.fetch_from_cache randkey do
+            'something else'
+          end
+          expect(second_val).to be_nil
         end
-        expect(second_val).to be_nil
       end
     end
   end
@@ -93,6 +95,44 @@ describe Cache::Cacheable do
         end
       end
 
+      context 'when an exception occurs' do
+        let(:error_response) { {body: 'An unknown server error occurred', statusCode: 503} }
+        before do
+          expect(Rails.cache).to receive(:read).once.with(randkey).and_call_original
+          expect(Rails.cache).to receive(:write).once.with(
+                                   randkey,
+                                   error_response,
+                                   {expires_in: Settings.cache.expiration.failure, force: true}
+                                 ).and_call_original
+        end
+        it 'returns a friendlier error response on exceptions' do
+          val = TestCacheable.smart_fetch_from_cache({id: randkey}) do
+            raise ArgumentError.new 'an error occurred'
+          end
+          expect(val).to eq error_response
+        end
+      end
+    end
+
+    context 'with nil values' do
+      before do
+        expect(Rails.cache).to receive(:read).twice.with(randkey).and_call_original
+        expect(Rails.cache).to receive(:write).once.with(
+                                 randkey,
+                                 NilClass,
+                                 {expires_in: Settings.cache.expiration.default, force: true}
+                               ).and_call_original
+      end
+      it 'caches a nil' do
+        first_val = TestCacheable.smart_fetch_from_cache({id: randkey}) do
+          nil
+        end
+        expect(first_val).to be_nil
+        second_val= TestCacheable.smart_fetch_from_cache({id: randkey}) do
+          nil
+        end
+        expect(second_val).to be_nil
+      end
     end
   end
 
