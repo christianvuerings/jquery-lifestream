@@ -12,41 +12,33 @@ describe Mediacasts::CourseMedia do
 
   let(:errors) do
     {
-      :video_error_message => "There are no webcasts available.",
-      :podcast_error_message => "There are no podcasts available."
+      :video_error_message => "There are no webcasts available."
     }
   end
 
   let(:playlist_id) { 'abcdef' }
-  let(:podcast_id) { '12345' }
+  let(:itunes_video_id) { '12345' }
+  let(:fake_itunes_no_audio) do
+    {
+      :itunes_audio => nil,
+      :itunes_video => itunes_video_id
+    }
+  end
 
   let(:fake_playlist) do
     {
-      :playlist_id => playlist_id,
-      :podcast_id => podcast_id
+      :playlist_id => playlist_id
     }
   end
 
   let(:fake_playlist_no_videos) do
     {
-      :podcast_id => podcast_id,
       :video_error_message => errors[:video_error_message]
-    }
-  end
-
-  let(:fake_playlist_no_podcasts) do
-    {
-      :playlist_id => playlist_id,
-      :podcast_error_message => errors[:podcast_error_message]
     }
   end
 
   let(:fake_video_result) do
     {:videos => ['video1', 'video2']}
-  end
-
-  let(:fake_podcast_result) do
-    {:podcast => 'podcast link'}
   end
 
   context "when serving mediacasts" do
@@ -65,36 +57,8 @@ describe Mediacasts::CourseMedia do
       it "should return mediacasts" do
         subject.should_receive(:get_playlist).and_return(empty_proxy_error_hash)
         subject.should_receive(:get_videos_as_json).and_return(fake_video_result)
-        subject.should_receive(:get_podcasts_as_json).and_return(fake_podcast_result)
         result = subject.get_feed
         expect(result).to be_an_instance_of Hash
-        expect(result).to eq fake_video_result.merge(fake_podcast_result)
-      end
-    end
-
-    context "when podcasts are disabled" do
-      before { Settings.features.podcasts = false }
-      after { Settings.features.podcasts = true }
-      it "should return empty hash" do
-        result = subject.get_podcasts_as_json(fake_playlist)
-        expect(result).to be_an_instance_of Hash
-        expect(result).to be_empty
-      end
-    end
-
-    context "when podcasts are present" do
-      it "should format the itunes url" do
-        result = subject.get_podcasts_as_json(fake_playlist)
-        expect(result).to be_an_instance_of Hash
-        expect(result[:podcast]).to eq 'https://itunes.apple.com/us/itunes-u/id12345'
-      end
-    end
-
-    context "when podcasts are not present" do
-      it "should return podcast error hash" do
-        result = subject.get_podcasts_as_json(fake_playlist_no_podcasts)
-        expect(result).to be_an_instance_of Hash
-        expect(result[:podcastErrorMessage]).to eq errors[:podcast_error_message]
       end
     end
 
@@ -125,6 +89,22 @@ describe Mediacasts::CourseMedia do
       end
     end
 
+    context "when iTunes audio is nil" do
+      it "should return an iTunes audio nil response" do
+        result = subject.get_itunes_as_json(fake_itunes_no_audio)
+        expect(result).to be_an_instance_of Hash
+        expect(result[:itunes][:audio]).to eq nil
+      end
+    end
+
+    context "when iTunes video is present" do
+      it "should return an iTunes audio nil response" do
+        result = subject.get_itunes_as_json(fake_itunes_no_audio)
+        expect(result).to be_an_instance_of Hash
+        expect(result[:itunes][:video]).to eq 'https://itunes.apple.com/us/itunes-u/id' + itunes_video_id
+      end
+    end
+
   end
 
   context 'retrieving the playlist id for a course' do
@@ -151,7 +131,6 @@ describe Mediacasts::CourseMedia do
         it "should return playlist id" do
           result = subject.get_playlist
           expect(result[:playlist_id]).to eq "ECCF8E59B3C769FB01"
-          expect(result[:podcast_id]).to eq "496300137"
         end
       end
 
@@ -162,7 +141,7 @@ describe Mediacasts::CourseMedia do
         after(:each) { WebMock.reset! }
         it "should return the fetch error message" do
           response = subject.get_playlist
-          expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts and podcasts."
+          expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts."
         end
       end
 
@@ -173,14 +152,12 @@ describe Mediacasts::CourseMedia do
         after(:each) { WebMock.reset! }
         it "should return the fetch error message" do
           response = subject.get_playlist
-          expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts and podcasts."
+          expect(response[:proxy_error_message]).to eq "There was a problem fetching the webcasts."
         end
       end
 
-      context "when videos and podcasts are disabled" do
-        before { Settings.features.podcasts = false }
+      context "when videos are disabled" do
         before { Settings.features.videos = false }
-        after { Settings.features.podcasts = true }
         after { Settings.features.videos = true }
         it "should return an empty hash" do
           result = subject.get_playlist

@@ -122,7 +122,7 @@
       <div class="medium-4 columns">
         <div class="cc-widget cc-widget-last" data-ng-controller="VideoController" data-ng-if="api.user.profile.features.videos">
           <div class="cc-widget-title">
-            <h2>Webcasts<span data-ng-if="api.user.profile.features.podcasts"> and Podcasts</span></h2>
+            <h2>Webcasts</h2>
           </div>
           <div class="cc-widget-padding">
             <div data-cc-spinner-directive>
@@ -136,13 +136,6 @@
                   </div>
                   <div class="cc-youtube-video">
                     <div data-cc-youtube-directive="selectedVideo.id"></div>
-                  </div>
-                </div>
-                <div data-ng-if="api.user.profile.features.podcasts">
-                  <h3 class="header-margin-top">Podcasts</h3>
-                  <div data-ng-bind="podcastErrorMessage"></div>
-                  <div data-ng-if="podcast">
-                    Listen to <a data-ng-href="{{podcast}}">podcasts for this class</a> on <i class="fa fa-apple"></i> iTunes U.
                   </div>
                 </div>
               </div>
