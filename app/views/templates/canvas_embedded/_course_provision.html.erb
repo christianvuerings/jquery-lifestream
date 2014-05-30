@@ -1,4 +1,5 @@
 <script type="text/ng-template" id="templates/canvas_embedded/course_provision.html">
+
   <div class="cc-page-course-provision">
 
     <div data-ng-show="feedFetched && isCourseCreator">
@@ -157,7 +158,7 @@
               <div class="cc-page-provision-progress-bar-container" data-ng-show="percentCompleteRounded">
                 <div class="cc-page-provision-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{percentCompleteRounded}}">
                   <div class="cc-page-provision-progress-bar-status">{{percentCompleteRounded}}% Complete</div>
-                  <div class="cc-page-provision-progress-bar-value" style="width:{{percentCompleteRounded}}%"></div>
+                  <div class="cc-page-provision-progress-bar-value" data-ng-style="{'width':percentCompleteRounded + '%'}"></div>
                 </div>
               </div>
 
