@@ -24,6 +24,7 @@ module Financials
     def request_internal(vcr_cassette)
       # not all external data sources need a student id, but this one does.
       student_id = lookup_student_id
+
       if student_id.blank?
         # don't continue if student id can't be found.
         logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API"
@@ -36,13 +37,15 @@ module Financials
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
 
         # HTTParty is our preferred HTTP library. FakeableProxy provides the (deprecated) VCR response recording system.
-        response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
+        response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
+            FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
           HTTParty.get(
             url,
             digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password},
             timeout: Settings.application.outgoing_http_timeout
           )
         }
+        end
 
         # handle errors that we expect, like 404s and 500s, with a helpful error message.
         # raising a ProxyError will make smart_fetch_from_cache skip writing to the cache.

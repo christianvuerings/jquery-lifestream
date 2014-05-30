@@ -15,15 +15,17 @@ module CalLink
       params = build_params
       Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"
 
-      response = FakeableProxy.wrap_request(APP_ID + "_memberships", @fake, {:match_requests_on => [:method, :path, :body]}) {
-        Faraday::Connection.new(
-          :url => url,
-          :params => params,
-          :request => {
-            :timeout => Settings.application.outgoing_http_timeout
-          }
-        ).get
-      }
+      response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
+        FakeableProxy.wrap_request(APP_ID + "_memberships", @fake, {:match_requests_on => [:method, :path, :body]}) {
+          Faraday::Connection.new(
+            :url => url,
+            :params => params,
+            :request => {
+              :timeout => Settings.application.outgoing_http_timeout
+            }
+          ).get
+        }
+      end
       if response.status >= 400
         raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}; url = #{url}")
       end

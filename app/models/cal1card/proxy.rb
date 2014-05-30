@@ -20,18 +20,22 @@ module Cal1card
 
     def internal_get
       return {} unless Settings.features.cal1card
+      logger.info "In INTERNAL_GET, Fake=#{@fake}"
       if @fake
+        logger.info "Fake; Internal GET"
         logger.info "Fake = #@fake, getting data from XML fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
         xml = File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml').to_s)
       else
         url = "#{@settings.feed_url}?uid=#{@uid}"
-        logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        response = HTTParty.get(
-          url,
-          basic_auth: {username: @settings.username, password: @settings.password},
+        logger.info "Internal_get: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+        response =  ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
+          HTTParty.get(
+            url,
+            basic_auth: {username: @settings.username, password: @settings.password},
           timeout: Settings.application.outgoing_http_timeout,
           verify: Rails.env.production?
-        )
+          )
+        end
         if response.code >= 400
           body = "Cal1Card is currently unavailable. Please try again later."
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {

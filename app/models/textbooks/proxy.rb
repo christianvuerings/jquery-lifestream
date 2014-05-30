@@ -8,10 +8,12 @@ module Textbooks
     def google_book(isbn)
       google_book_url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
       google_response = ""
-      response = HTTParty.get(
+      response = ActiveSupport::Notifications.instrument('proxy', { url: google_book_url , class: self.class }) do
+          HTTParty.get(
         google_book_url,
         timeout: Settings.application.outgoing_http_timeout
       )
+      end
 
       if response["totalItems"] > 0
         google_response = response["items"][0]["volumeInfo"]["infoLink"]
