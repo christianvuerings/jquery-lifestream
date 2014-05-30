@@ -108,7 +108,7 @@ module User
         roles[:student] || roles[:faculty] ||
           has_instructor_history || has_student_history
         ),
-        :hasFinancialsTab => Settings.features.financials && (roles[:student] || roles[:exStudent]),
+        :hasFinancialsTab => (roles[:student] || roles[:exStudent]),
         :googleEmail => google_mail,
         :canvasEmail => canvas_mail,
         :last_name => @last_name,

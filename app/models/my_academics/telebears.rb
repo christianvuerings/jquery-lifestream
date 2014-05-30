@@ -6,7 +6,6 @@ module MyAcademics
     def merge(data)
       data[:telebears] = {}
 
-      return unless Settings.features.telebears
       profile_feed = Bearfacts::Telebears.new({:user_id => @uid}).get
       return if profile_feed.nil?
 

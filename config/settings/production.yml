@@ -18,7 +18,3 @@ campusdb:
 canvas_proxy:
   export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
 sakai_proxy:
-features:
-  academic_status: true
-  telebears: true
-  financials: true

@@ -2,7 +2,11 @@
   "isBasicAuthEnabled": true,
   "isLoggedIn": false,
   "features": {
-    "academic_status": true,
-    "financials": true
+    "my_fin_aid": true,
+    "activity_to_task": true,
+    "research": false,
+    "textbooks": true,
+    "videos": true,
+    "app_alerts": true
   }
 }

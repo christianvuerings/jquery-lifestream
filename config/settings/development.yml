@@ -76,11 +76,8 @@ hot_plate:
   enabled: false
 
 features:
-  academic_status: true
   my_fin_aid: true
   activity_to_task: true
-  financials: true
-  telebears: true
   textbooks: true
   videos: true
   app_alerts: true

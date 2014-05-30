@@ -243,11 +243,8 @@ hot_plate:
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
-  academic_status: false
   my_fin_aid: false
   activity_to_task: false
-  financials: false
-  telebears: false
   research: false
   textbooks: false
   videos: false
