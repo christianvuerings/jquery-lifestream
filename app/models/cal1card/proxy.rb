@@ -20,9 +20,7 @@ module Cal1card
 
     def internal_get
       return {} unless Settings.features.cal1card
-      logger.info "In INTERNAL_GET, Fake=#{@fake}"
       if @fake
-        logger.info "Fake; Internal GET"
         logger.info "Fake = #@fake, getting data from XML fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
         xml = File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml').to_s)
       else

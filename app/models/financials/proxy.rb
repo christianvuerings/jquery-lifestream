@@ -38,13 +38,13 @@ module Financials
 
         # HTTParty is our preferred HTTP library. FakeableProxy provides the (deprecated) VCR response recording system.
         response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
-            FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
-          HTTParty.get(
-            url,
-            digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password},
-            timeout: Settings.application.outgoing_http_timeout
-          )
-        }
+          FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
+            HTTParty.get(
+              url,
+              digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password},
+              timeout: Settings.application.outgoing_http_timeout
+            )
+          }
         end
 
         # handle errors that we expect, like 404s and 500s, with a helpful error message.

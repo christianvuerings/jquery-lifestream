@@ -3,7 +3,7 @@ if Settings.logger.proxy_threshold_in_ms > 0
   ActiveSupport::Notifications.subscribe  'proxy' do |name, start, finish, id, payload|
     duration = (finish - start)*1000.0
     if duration > Settings.logger.proxy_threshold_in_ms.to_i
-      Rails.logger.info "PROXY #{name} - duration: #{duration}ms  #{payload.inspect} "
+      Rails.logger.error "SLOW REQUEST #{name} - duration: #{duration}ms  #{payload.inspect} "
     end
   end
 end
