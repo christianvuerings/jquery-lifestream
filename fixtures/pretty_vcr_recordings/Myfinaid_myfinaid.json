@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://apis-dev.berkeley.edu/myfinaid/11667051/finaid?aidYear=2013",
+        "uri": "https://apis-qa.berkeley.edu/myfinaid/11667051/finaid?aidYear=2013",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -56,7 +56,7 @@
 		{
       "request": {
         "method": "get",
-        "uri": "https://apis-dev.berkeley.edu/myfinaid/11667051/finaid?aidYear=2014",
+        "uri": "https://apis-qa.berkeley.edu/myfinaid/11667051/finaid?aidYear=2014",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
