@@ -128,6 +128,9 @@ playlists_warehouse_proxy:
   username: secret
   password: secret
 
+audio_proxy:
+  base_url: 'http://wbe-itunes.berkeley.edu'
+
 youtube_proxy:
   fake: false
   base_url: 'https://gdata.youtube.com/feeds/api/playlists/'
@@ -253,6 +256,7 @@ features:
   cal1card: false
   profile_page: false
   reauthentication: true
+  audio: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
