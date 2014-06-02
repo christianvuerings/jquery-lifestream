@@ -31,7 +31,7 @@ gem "json", "~> 1.8.0"
 
 # CAS Strategy for OmniAuth
 # https://rubygems.org/gems/omniauth-cas
-gem "omniauth-cas", "~> 1.0.4"
+gem "omniauth-cas", "~> 1.0.1"
 
 # secure_headers provides x-frame, csp and other http headers
 gem "secure_headers", "~> 0.5.0"
@@ -67,7 +67,7 @@ gem "jruby-activemq", "~> 5.5.1"
 gem "addressable", "~> 2.3.4"
 
 # for parsing formatted html
-gem 'nokogiri', "~> 1.6.2.1", :platforms => :jruby
+gem 'nokogiri', "~> 1.5.9", :platforms => :jruby
 
 # for parsing paged feeds
 gem 'link_header', "~> 0.0.7"
