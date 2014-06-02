@@ -18,55 +18,6 @@
     margin: 0 0 10px 0;
   }
 
-  .bc-notice-box {
-    color: $bc-color-white;
-    background-color: $bc-color-notice-default;
-    border: none;
-    display: block;
-    padding: 10px;
-    margin-bottom: 8px;
-    font-size: 13px;
-    font-weight: bold;
-    line-height: 20px;
-    .bc-close-button {
-      &:hover {
-        text-decoration: none;
-      }
-      font-size: 20px;
-      background-color: transparent;
-    }
-    .bc-notice-close-button {
-      .small {
-        margin: 0;
-        padding: 0;
-      }
-      display: inline-block;
-      float: right;
-    }
-  }
-
-  .bc-radius {
-    border-radius: 3px;
-  }
-
-  .bc-notice-success {
-    color: $bc-color-success-foreground;
-    background-color: $bc-color-success-background;
-    border: 1px solid $bc-color-success-border;
-  }
-
-  .bc-notice-warning {
-    color: $bc-color-warning-foreground;
-    background-color: $bc-color-warning-background;
-    border: 1px solid $bc-color-warning-border;
-  }
-
-  .bc-notice-error {
-    color: $bc-color-error-foreground;
-    background-color: $bc-color-error-background;
-    border: 1px solid $bc-color-error-border;
-  }
-
   .bc-fa-black {
     color: $bc-color-off-black !important;
   }
