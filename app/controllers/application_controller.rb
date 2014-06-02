@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
-  before_filter :get_settings, :initialize_calcentral_config
   before_filter :check_reauthentication
   after_filter :access_log
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
