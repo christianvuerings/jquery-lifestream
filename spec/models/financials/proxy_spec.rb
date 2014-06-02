@@ -80,7 +80,7 @@ describe Financials::Proxy do
     context 'when Oski gets his feed', testext: true do
       it_behaves_like 'has some minimal oski data'
       it 'has a specific apiVersion field' do
-        expect(subject[:apiVersion]).to be >= '1.0.6'
+        expect(subject[:apiVersion].gsub('.', '').to_i).to be >= 106
       end
     end
 
