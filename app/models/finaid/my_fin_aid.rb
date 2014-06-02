@@ -10,24 +10,22 @@ module Finaid
         :activities => []
       }
       if Settings.features.my_fin_aid
-        self.class.append!(@uid, feed[:activities])
+        append!(feed[:activities])
       end
       feed
     end
 
-    def self.append!(uid, activities)
+    def append!(activities)
       begin
-        append_activities!(uid, activities)
+        append_activities!(activities)
       rescue => e
-        self.handle_exception(e, @uid, "Remote server unreachable", true)
+        self.class.handle_exception(e, @uid, "Remote server unreachable", true)
       end
     end
 
-    private
-
-    def self.append_activities!(uid, activities)
+    def append_activities!(activities)
       proxies = TimeRange.current_years.collect do |year|
-        Finaid::Proxy.new({user_id: uid, term_year: year})
+        Finaid::Proxy.new({user_id: @uid, term_year: year})
       end
       return unless proxies.present? && proxies.first.lookup_student_id.present?
 
@@ -39,7 +37,7 @@ module Finaid
           next
         end
 
-        next unless valid_xml_response?(uid, content)
+        next unless valid_xml_response?(content)
 
         academic_year = term_year_to_s(proxy.term_year)
 
@@ -48,7 +46,7 @@ module Finaid
       end
     end
 
-    def self.append_documents!(documents, academic_year, activities)
+    def append_documents!(documents, academic_year, activities)
       cutoff_date = TimeRange.cutoff_date
       documents.each do |document|
         title = document.css("Name").text.strip
@@ -98,7 +96,7 @@ module Finaid
       end
     end
 
-    def self.append_diagnostics!(diagnostics, academic_year, activities)
+    def append_diagnostics!(diagnostics, academic_year, activities)
       diagnostics.each do |diagnostic|
         next unless diagnostic.css("Categories Category[Name='CAT01']").text.try(:strip) == 'W'
         title = diagnostic.css("Message").text.strip
@@ -123,7 +121,7 @@ module Finaid
       end
     end
 
-    def self.diagnostic_type_from_category(category)
+    def diagnostic_type_from_category(category)
       if category == 'PKG'
         'info'
       elsif category == 'SUM'
@@ -136,7 +134,7 @@ module Finaid
       end
     end
 
-    def self.decode_status(date, status)
+    def decode_status(date, status)
       if date.blank? && (status.blank? || status == 'Q')
         {
           received: false,
@@ -160,19 +158,19 @@ module Finaid
       end
     end
 
-    def self.parsed_date(date_string='')
+    def parsed_date(date_string='')
       Date.parse(date_string).in_time_zone.to_datetime rescue ""
     end
 
-    def self.term_year_to_s(term_year)
+    def term_year_to_s(term_year)
       "#{term_year.to_i-1}-#{term_year}"
     end
 
-    def self.valid_xml_response?(uid, xmldoc)
+    def valid_xml_response?(xmldoc)
       code = xmldoc.css('Response Code').text.strip
       message = xmldoc.css('Response Message').text.strip
       return true if code == '0000'
-      logger.warn("Feed not available for UID (#{uid}). Code: #{code}, Message: #{message}")
+      logger.warn("Feed not available for UID (#{@uid}). Code: #{code}, Message: #{message}")
       false
     end
 
