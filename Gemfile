@@ -31,7 +31,7 @@ gem "json", "~> 1.8.0"
 
 # CAS Strategy for OmniAuth
 # https://rubygems.org/gems/omniauth-cas
-gem "omniauth-cas", "~> 1.0.1"
+gem "omniauth-cas", "~> 1.0.4"
 
 # secure_headers provides x-frame, csp and other http headers
 gem "secure_headers", "~> 0.5.0"
@@ -51,7 +51,7 @@ gem 'ims-lti', :git => "https://github.com/instructure/ims-lti.git"
 gem "vcr", "~> 2.5.0"
 
 # for memcached connection
-gem "dalli", "~> 2.7"
+gem "dalli", "~> 2.7.2"
 
 # smarter logging
 gem "log4r", "~> 1.1"
@@ -67,7 +67,7 @@ gem "jruby-activemq", "~> 5.5.1"
 gem "addressable", "~> 2.3.4"
 
 # for parsing formatted html
-gem 'nokogiri', "~> 1.5.9", :platforms => :jruby
+gem 'nokogiri', "~> 1.6.2.1", :platforms => :jruby
 
 # for parsing paged feeds
 gem 'link_header', "~> 0.0.7"
@@ -132,7 +132,7 @@ gem 'therubyrhino', '~> 2.0.3'
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :testext, :production do
-  gem "activerecord-oracle_enhanced-adapter", "1.5.4"
+  gem "activerecord-oracle_enhanced-adapter", "1.5.5"
   gem "rvm-capistrano", "~> 1.3.1"
   gem "capistrano", "~> 2.15.4"
 end
