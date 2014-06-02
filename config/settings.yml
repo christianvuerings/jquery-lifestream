@@ -3,6 +3,7 @@ logger:
   stdout: <%= ENV['LOGGER_STDOUT'] %>
   slow_query_threshold_in_ms: 250
   slow_request_threshold_in_ms: 60000
+  proxy_threshold_in_ms: 1000
 
 application:
   # Set to true if testing production env without Apache/Nginx

@@ -13,11 +13,13 @@ module Canvas
 
     def get_account_csv(report_type, object_type, term_id)
       term_param = term_id.blank? ? '' : "&parameters[enrollment_term]=sis_term_id:#{term_id}"
-      response = request_uncached(
-        "accounts/#{settings.account_id}/reports/#{report_type}_csv?parameters[#{object_type}]=1#{term_param}",
-        "_start_#{report_type}_report_#{object_type}",
-        {method: :post}
-      )
+      response = ActiveSupport::Notifications.instrument('proxy', { class: self.class, method: __method__ }) do
+        request_uncached(
+          "accounts/#{settings.account_id}/reports/#{report_type}_csv?parameters[#{object_type}]=1#{term_param}",
+          "_start_#{report_type}_report_#{object_type}",
+          {method: :post}
+        )
+      end
       unless (response && response.status == 200 && report_status = safe_json(response.body))
         logger.warn("Unable to request #{report_type} report")
         return nil
@@ -51,14 +53,16 @@ module Canvas
           c.use FaradayMiddleware::FollowRedirects
           c.use Faraday::Adapter::NetHttp
         end
-        csv_response = request_uncached(
-          "",
-          "_#{report_type}_report_#{object_type}_csv",
-          {
-            uri: file_info["url"],
-            non_oauth_connection: conn
-          }
-        )
+        csv_response = ActiveSupport::Notifications.instrument('proxy', { class: self.class, method: __method__ }) do
+          request_uncached(
+            "",
+            "_#{report_type}_report_#{object_type}_csv",
+            {
+              uri: file_info["url"],
+              non_oauth_connection: conn
+            }
+          )
+        end
         unless response && response.status == 200
           logger.error("Unable to download report #{report_id} : #{response}")
           return nil
@@ -75,9 +79,11 @@ module Canvas
       tries = 40
       begin
         Retriable.retriable(on: Canvas::Report::ReportNotReadyException, tries: tries, interval: 20) do
-          response = request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
-            method: :get
-          })
+          response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class, method: __method__ }) do
+            request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
+              method: :get
+            })
+          end
           unless (response && response.status == 200 && json = safe_json(response.body))
             logger.error "Report ID #{report_id} status missing or errored; will retry later"
             raise Canvas::Report::ReportNotReadyException

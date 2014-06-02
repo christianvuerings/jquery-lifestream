@@ -48,11 +48,17 @@ module Canvas
     def post_sis_import(csv_file_path, vcr_id, extra_params)
       upload_body = {attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv')}
       url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv#{extra_params}"
-      request_uncached(url, vcr_id, {
-        method: :post,
-        connection: @multipart_conn,
-        body: upload_body
-      })
+      callstack = caller(0).inject([]){
+          |list, meth| meth.split(' ').last =~ /([a-z_]+)/
+        list << $1
+      }
+      ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class, callstack: callstack[0..4] }) do
+        request_uncached(url, vcr_id, {
+          method: :post,
+          connection: @multipart_conn,
+          body: upload_body
+        })
+      end
     end
 
     def import_successful?(response)

@@ -30,11 +30,13 @@ module Mediacasts
         logger.info "Fake = #@fake, getting data from JSON fixture file; cache expiration #{self.class.expires_in}"
         data = safe_json File.read(Rails.root.join('fixtures', 'json', 'webcasts.json').to_s)
       else
-        response = HTTParty.get(
-          @settings.base_url,
-          basic_auth: {username: @settings.username, password: @settings.password},
-          timeout: Settings.application.outgoing_http_timeout
+        response = ActiveSupport::Notifications.instrument('proxy', { url: @settings.base_url, class: self.class }) do
+          HTTParty.get(
+            @settings.base_url,
+            basic_auth: {username: @settings.username, password: @settings.password},
+            timeout: Settings.application.outgoing_http_timeout
         )
+        end
         if response.code >= 400
           raise Errors::ProxyError.new(
                   "Connection failed: #{response.code} #{response.body}",
