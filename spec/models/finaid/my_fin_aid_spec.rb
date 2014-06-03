@@ -12,8 +12,6 @@ describe Finaid::MyFinAid do
 
   let(:documented_types) { %w(alert financial message info) }
 
-  it { described_class.should respond_to(:append!) }
-
   describe "expected feed structure on remote proxy" do
     it "should have a successful response code and message" do
       feed = fake_oski_finaid_current.get.try(:[], :body)
@@ -33,12 +31,14 @@ describe Finaid::MyFinAid do
 
   describe "helper methods" do
 
+    subject { Finaid::MyFinAid.new(nil) }
+
     describe '#decode_status' do
       it "should ignore documents with a status of W" do
         status = 'W'
         Rails.logger.should_receive(:info).once.with(/Ignore documents with \"#{status}\" status/)
         lambda {
-          result = Finaid::MyFinAid.decode_status('', status)
+          result = subject.decode_status('', status)
           result.should be_nil
         }.should_not raise_error
       end
@@ -52,7 +52,7 @@ describe Finaid::MyFinAid do
         content = Nokogiri::XML(feed, &:strict)
         documents = content.css("TrackDocs Document")
         Rails.logger.should_receive(:info).once.with(/Document is too old to be shown/)
-        described_class.append_documents!(documents, "2013-2014", activities)
+        subject.append_documents!(documents, "2013-2014", activities)
         activities.length.should == 1
       end
     end
@@ -65,32 +65,33 @@ describe Finaid::MyFinAid do
     let(:activities) { ["some activity"] }
 
     context "non-student finaid" do
-      subject { Finaid::MyFinAid.append!(non_student_uid, activities); activities}
-
+      subject { Finaid::MyFinAid.new(non_student_uid).append!(activities); activities}
       it { should eq(["some activity"]) }
     end
 
-    context "dead remote proxy (5xx errors)" do
-      before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed) }
-      after(:each) { WebMock.reset! }
+    context "student finaid with remote problems" do
 
-      subject { Finaid::MyFinAid.append!(oski_uid, activities); activities}
+      subject { Finaid::MyFinAid.new(oski_uid).append!(activities); activities }
 
-      it { should eq(["some activity"]) }
-      it "should not write to cache" do
-        Rails.cache.should_not_receive(:write)
+      context "dead remote proxy (5xx errors)" do
+        before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed) }
+        after(:each) { WebMock.reset! }
+
+        it { should eq(["some activity"]) }
+        it "should not write to cache" do
+          Rails.cache.should_not_receive(:write)
+        end
       end
-    end
 
-    context "4xx errors on remote proxy" do
-      before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_return(:status => 403) }
-      after(:each) { WebMock.reset! }
+      context "4xx errors on remote proxy" do
+        before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_return(:status => 403) }
+        after(:each) { WebMock.reset! }
 
-      subject { Finaid::MyFinAid.append!(oski_uid, activities); activities}
+        it { should eq(["some activity"]) }
+        it "should not write to cache" do
+          Rails.cache.should_not_receive(:write)
+        end
 
-      it { should eq(["some activity"]) }
-      it "should not write to cache" do
-        Rails.cache.should_not_receive(:write)
       end
 
     end
@@ -103,7 +104,7 @@ describe Finaid::MyFinAid do
     end
     let(:activities) { [] }
     subject do
-      Finaid::MyFinAid.append!(oski_uid, activities)
+      Finaid::MyFinAid.new(oski_uid).append!(activities)
       activities
     end
 
@@ -127,7 +128,7 @@ describe Finaid::MyFinAid do
 
       describe "alert types" do
         subject do
-          Finaid::MyFinAid.append!(oski_uid, activities)
+          Finaid::MyFinAid.new(oski_uid).append!(activities)
           activities.select { |entry| entry[:type] == "alert" }
         end
 
@@ -138,7 +139,7 @@ describe Finaid::MyFinAid do
       end
       describe "info types" do
         subject do
-          Finaid::MyFinAid.append!(oski_uid, activities)
+          Finaid::MyFinAid.new(oski_uid).append!(activities)
           activities.select { |entry| entry[:type] == "info" }
         end
 
@@ -147,7 +148,7 @@ describe Finaid::MyFinAid do
       end
       describe "financial types" do
         subject do
-          Finaid::MyFinAid.append!(oski_uid, activities)
+          Finaid::MyFinAid.new(oski_uid).append!(activities)
           activities.select { |entry| entry[:type] == "financial" }
         end
 
@@ -159,7 +160,7 @@ describe Finaid::MyFinAid do
 
       describe "message types" do
         subject do
-          Finaid::MyFinAid.append!(oski_uid, activities)
+          Finaid::MyFinAid.new(oski_uid).append!(activities)
           activities.select { |entry| entry[:type] == "message" }
         end
 
@@ -181,7 +182,7 @@ describe Finaid::MyFinAid do
 
         describe "should have the appropriate status messages" do
           subject do
-            Finaid::MyFinAid.append!(oski_uid, activities)
+            Finaid::MyFinAid.new(oski_uid).append!(activities)
             activities.select { |entry| !entry[:status].nil? }
           end
 
