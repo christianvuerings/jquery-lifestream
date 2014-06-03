@@ -31,13 +31,13 @@ describe MyActivities::RegBlocks do
 
     context "cleared date on very old blocks" do
       before(:each) do
-        mangled_inactive = oski_blocks.get_feed[:inactive_blocks].map do |block|
+        mangled_inactive = oski_blocks.get_feed[:inactiveBlocks].map do |block|
           {
             cleared_date: oski_blocks.format_date(Time.now.to_datetime),
             blocked_date: oski_blocks.format_date(Time.at(0).to_datetime)
           }.reverse_merge(block)
         end
-        mangled_oski_blocks = oski_blocks.get_feed.merge({ inactive_blocks: mangled_inactive })
+        mangled_oski_blocks = oski_blocks.get_feed.merge({ inactiveBlocks: mangled_inactive })
         Bearfacts::MyRegBlocks.any_instance.stub(:get_feed).and_return(mangled_oski_blocks)
       end
 
@@ -52,14 +52,14 @@ describe MyActivities::RegBlocks do
         cleared_blocks = subject.select do |act|
           act[:emitter]== "Bear Facts" && act[:type] == "message" && act[:title].include?("Block Cleared")
         end
-        cleared_blocks.length.should eq(oski_blocks.get_feed[:inactive_blocks].length)
+        cleared_blocks.length.should eq(oski_blocks.get_feed[:inactiveBlocks].length)
       end
 
     end
   end
 
   context "4xx response from bearfacts proxy" do
-    before(:each) { Bearfacts::MyRegBlocks.any_instance.stub(:get_feed).and_return({ available: false }) }
+    before(:each) { Bearfacts::MyRegBlocks.any_instance.stub(:get_feed).and_return({ unavailable: true }) }
 
     it "should not malform the activities passed into append_reg_blocks" do
       my_activities = MyActivities::RegBlocks

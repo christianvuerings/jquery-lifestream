@@ -56,15 +56,16 @@ describe "MyAcademics::Exams" do
   end
 
   context "failing bearfacts proxy" do
+    let(:feed) {{}}
+    let(:uid) {'212381'}
     before(:each) do
       stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
-      Bearfacts::Profile.new({:user_id => "212381", :fake => false})
+      Bearfacts::Profile.new({:user_id => uid, :fake => false})
     end
-    after(:each) { WebMock.reset! }
 
     subject do
-      MyAcademics::Exams.new("212381").merge(@feed = {})
-      @feed
+      MyAcademics::Exams.new(uid).merge(feed)
+      feed
     end
 
     it { should be_blank }

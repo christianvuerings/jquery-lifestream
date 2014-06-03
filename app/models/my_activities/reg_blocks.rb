@@ -3,11 +3,11 @@ module MyActivities
 
     def self.append!(uid, activities)
       blocks_feed = Bearfacts::MyRegBlocks.new(uid).get_feed
-      if blocks_feed.empty? || blocks_feed[:available] == false
+      if blocks_feed[:unavailable] || blocks_feed[:noStudentId]
         return activities
       end
 
-      %w(active_blocks inactive_blocks).each do |block_category|
+      %w(activeBlocks inactiveBlocks).each do |block_category|
         blocks_feed[block_category.to_sym].each do |block|
           notification = process_block!(block)
           activities << notification if notification.present?

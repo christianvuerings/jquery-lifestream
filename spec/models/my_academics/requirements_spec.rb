@@ -20,10 +20,9 @@ describe "MyAcademics::Requirements" do
       stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
       Bearfacts::Profile.new({:user_id => "61889", :fake => false})
     end
-    after(:each) { WebMock.reset! }
 
     subject do
-      MyAcademics::CollegeAndLevel.new("61889").merge(@feed = {})
+      MyAcademics::Requirements.new("61889").merge(@feed = {})
       @feed
     end
 

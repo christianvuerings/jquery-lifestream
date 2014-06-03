@@ -14,8 +14,7 @@ describe Bearfacts::Profile do
   it "should fail gracefully on a user whose student_id can't be found" do
     client = Bearfacts::Profile.new({:user_id => "0", :fake => true})
     response = client.get
-    response[:body].should == "Lookup of student_id for uid 0 failed, cannot call Bearfacts API"
-    response[:statusCode].should == 400
+    response[:noStudentId].should be_true
     response[:xml_doc].should be_nil
   end
 
@@ -30,8 +29,7 @@ describe Bearfacts::Profile do
     after(:each) { WebMock.reset! }
     it 'returns an error status and a nil XML document' do
       response = Bearfacts::Profile.new({:user_id => "61889", :fake => false}).get
-      expect(response[:body]).to eq("Remote server unreachable")
-      expect(response[:statusCode]).to be > 500
+      expect(response[:unavailable]).to be_true
       expect(response[:xml_doc]).to be_nil
     end
   end

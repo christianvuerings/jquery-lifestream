@@ -11,20 +11,21 @@ describe "MyAcademics::Regblocks" do
     feed.empty?.should be_false
 
     oski_blocks = feed[:regblocks]
-    oski_blocks[:active_blocks].empty?.should be_false
-    oski_blocks[:active_blocks].each do |block|
+    oski_blocks[:unavailable].should be_false
+    oski_blocks[:activeBlocks].empty?.should be_false
+    oski_blocks[:activeBlocks].each do |block|
       block[:status].should == "Active"
       block[:type].should_not be_nil
     end
 
-    oski_blocks[:inactive_blocks].empty?.should be_false
-    oski_blocks[:inactive_blocks].each do |block|
+    oski_blocks[:inactiveBlocks].empty?.should be_false
+    oski_blocks[:inactiveBlocks].each do |block|
       block[:status].should == "Released"
       block[:type].should_not be_nil
     end
 
     # Make sure the date epoch matches the expected date.
-    Time.at(oski_blocks[:inactive_blocks][1][:blocked_date][:epoch]).to_s.start_with?('2012-03-20').should be_true
+    Time.at(oski_blocks[:inactiveBlocks][1][:blocked_date][:epoch]).to_s.start_with?('2012-03-20').should be_true
 
   end
 
@@ -38,8 +39,8 @@ describe "MyAcademics::Regblocks" do
     end
 
     it "should be offline with empty blocks" do
-      subject[:available].should be_false
-      %w(active_blocks inactive_blocks).each { |key| subject[key.to_sym].should be_empty }
+      subject[:unavailable].should be_true
+      %w(activeBlocks inactiveBlocks).each { |key| subject[key.to_sym].should be_blank }
     end
   end
 

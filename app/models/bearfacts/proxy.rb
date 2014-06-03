@@ -14,14 +14,19 @@ module Bearfacts
     end
 
     def request(path, vcr_cassette, params = {})
-      response = self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
+      raw_response = self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
         request_internal(path, vcr_cassette, params)
       end
-      if response[:statusCode] < 400
+      parsed_response = {}
+      if raw_response[:statusCode] < 400
         # Nokogiri does not serialize to cache reliably.
-        response[:xml_doc] = xml_doc(response[:body])
+        parsed_response[:xml_doc] = xml_doc(raw_response[:body])
+      elsif raw_response[:statusCode] == 400
+        parsed_response[:noStudentId] = true
+      else
+        parsed_response[:unavailable] = true
       end
-      response
+      parsed_response
     end
 
     def xml_doc(xml_string)
@@ -39,8 +44,7 @@ module Bearfacts
       if student_id.nil?
         logger.info "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API path #{path}"
         return {
-          :body => "Lookup of student_id for uid #@uid failed, cannot call Bearfacts API",
-          :statusCode => 400
+          statusCode: 400
         }
       else
         url = "#{Settings.bearfacts_proxy.base_url}#{path}"

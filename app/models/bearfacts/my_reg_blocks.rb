@@ -7,11 +7,10 @@ module Bearfacts
     def get_feed_internal
       proxy = Bearfacts::Regblocks.new({:user_id => @uid})
       blocks_feed = proxy.get
+      feed = blocks_feed.except(:xml_doc)
       doc = blocks_feed[:xml_doc]
       unless doc.present?
-        return {
-          available: false,
-        }
+        return feed
       end
       active_blocks = []
       inactive_blocks = []
@@ -59,11 +58,10 @@ module Bearfacts
       active_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
       inactive_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
 
-      {
-        available: true,
-        active_blocks: active_blocks,
-        inactive_blocks: inactive_blocks
-      }
+      feed.merge({
+        activeBlocks: active_blocks,
+        inactiveBlocks: inactive_blocks
+      })
     end
 
     private

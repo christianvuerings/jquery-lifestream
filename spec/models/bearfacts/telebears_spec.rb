@@ -7,20 +7,16 @@ describe Bearfacts::Telebears do
 
   context "fake oski recordings are valid" do
     subject { fake_oski }
-
-    it { should_not be_blank }
+    its([:xml_doc]) { should be_present }
   end
 
-  context "should 400 with a non-student" do
+  context "should indicate a non-student" do
     subject { live_non_student }
-
-    its([:body]) { should eq "Lookup of student_id for uid 212377 failed, cannot call Bearfacts API" }
-    its([:statusCode]) { should eq(400) }
+    its([:noStudentId]) { should be_true }
   end
 
   context "live oski has a valid telebears date", testext: true do
     subject { live_oski }
-
     it { should_not be_blank }
   end
 

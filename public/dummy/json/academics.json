@@ -1,5 +1,8 @@
 {
   "college_and_level": {
+    "empty": "false",
+    "noStudentId": "false",
+    "unavailable": false,
     "standing": "Undergraduate",
     "level": "Senior",
     "college": "ENGR",
@@ -24,8 +27,8 @@
     }
   ],
   "regblocks": {
-    "available": true,
-    "active_blocks": [
+    "unavailable": false,
+    "activeBlocks": [
       {
         "status": "Active",
         "type": "FINAN",
@@ -43,7 +46,7 @@
         "office": "BPS"
       }
     ],
-    "inactive_blocks": [
+    "inactiveBlocks": [
       {
         "status": "Released",
         "type": "ACAD",
