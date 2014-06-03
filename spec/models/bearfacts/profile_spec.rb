@@ -23,9 +23,6 @@ describe Bearfacts::Profile do
     client = Bearfacts::Profile.new({:user_id => "61889", :fake => false})
     response = client.get
     response.should_not be_nil
-    response[:status].should be < 400
-    xml_doc = response[:xml_doc]
-    xml_doc.should_not be_nil
   end
 
   context "connection failure" do
