@@ -1,5 +1,6 @@
 class BootstrapController < ApplicationController
   include ActiveRecordHelper
+  before_filter :get_settings, :initialize_calcentral_config
   before_filter :check_databases_alive, :warmup_live_updates
   layout 'application'
   caches_action :index, :layout => false
