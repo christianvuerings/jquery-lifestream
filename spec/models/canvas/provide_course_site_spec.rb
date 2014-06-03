@@ -81,7 +81,6 @@ describe Canvas::ProvideCourseSite do
 
     it "intercepts raised exceptions and updates status" do
       allow(subject).to receive(:import_course_site).and_raise(RuntimeError, "Course site could not be created!")
-      # (site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
       expect { subject.create_course_site(site_name, site_course_code, "fall-2013", ["1136", "1204"]) }.to raise_error(RuntimeError, "Course site could not be created!")
       expect(subject.status).to eq "Error"
       errors = subject.instance_eval { @errors }
