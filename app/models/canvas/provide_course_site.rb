@@ -316,7 +316,7 @@ module Canvas
           'status' => 'active'
         }
       else
-        logger.error("Unable to generate unique Canvas course SIS ID for '#{campus_course_data[:course_code]}'; will NOT create site")
+        logger.error("Unable to generate unique Canvas course SIS ID for '#{campus_course_slug}' in #{term_yr}-#{term_cd} term; will NOT create site")
         raise RuntimeError, "Could not define new course site!"
       end
     end
