@@ -45,14 +45,23 @@ module Mediacasts
       format_date(date_time)
     end
 
+    def get_download_url(play_url)
+      parsed_uri = Addressable::URI.parse(play_url)
+      # Replace the path that starts with /media/
+      parsed_uri.path = parsed_uri.path.sub(/^\/media\//, '/download/')
+      parsed_uri.to_s
+    end
+
     def filter_audio(response)
       doc = Nokogiri::XML(response, &:strict)
       items = doc.xpath('//item').map do |i|
+        # Older versions of the RSS have an empty link tag
+        # so we need to use the enclosure tag instead
+        url = i.xpath('enclosure/@url').text
         {
           :date => get_parsed_pub_date(i.xpath('pubDate').text),
-          # Older versions of the RSS have an empty link tag
-          # so we need to use the enclosure tag instead
-          :playUrl => i.xpath('enclosure/@url').text
+          :playUrl => url,
+          :downloadUrl => get_download_url(url)
         }
       end
       items

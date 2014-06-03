@@ -20,6 +20,12 @@ describe Mediacasts::Audio do
       expect(proxy_response[:audio][0][:playUrl]).to eq play_url
     end
 
+    it "should get correct downloadUrls" do
+      proxy_response = proxy.get
+      download_url = "#{audio_base_url}/download/common/courses/spring_2014/media/english_117s_001/340a8274-480e-4bf8-811b-b418af78658b_audio.m4a"
+      expect(proxy_response[:audio][0][:downloadUrl]).to eq download_url
+    end
+
     it "should get correct dates" do
       proxy_response = proxy.get
       expect(proxy_response[:audio][0][:date]).to be_an_instance_of Hash
