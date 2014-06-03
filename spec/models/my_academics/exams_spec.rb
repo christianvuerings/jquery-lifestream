@@ -47,7 +47,7 @@ describe "MyAcademics::Exams" do
   it "should handle badly formatted BearfactsExamProxy XML responses" do
     proxy = Bearfacts::Exams.new({:user_id => "865826", :fake => true})
     Bearfacts::Exams.stub(:new).and_return(proxy)
-    Bearfacts::Exams.any_instance.stub(:get).and_return({body: 'gobbly gook', statusCode: 200})
+    Bearfacts::Exams.any_instance.stub(:get).and_return({xml_doc: nil, statusCode: 200})
 
     feed = {}
     MyAcademics::Exams.new("865826").merge(feed)

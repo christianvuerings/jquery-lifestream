@@ -29,7 +29,7 @@ describe "MyAcademics::Regblocks" do
   end
 
   context "Offline BearfactsApi for regblocks" do
-    before { Bearfacts::Regblocks.any_instance.stub(:get).and_return {} }
+    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed) }
 
     subject do
       feed = {}

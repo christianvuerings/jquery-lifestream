@@ -7,24 +7,14 @@ module Bearfacts
     def get_feed_internal
       proxy = Bearfacts::Regblocks.new({:user_id => @uid})
       blocks_feed = proxy.get
-
-      #Bearfacts proxy will return nil on >= 400 errors.
-      if blocks_feed.nil?
+      doc = blocks_feed[:xml_doc]
+      unless doc.present?
         return {
           available: false,
         }
       end
       active_blocks = []
       inactive_blocks = []
-
-      begin
-        doc = Nokogiri::XML(blocks_feed[:body], &:strict)
-      rescue Nokogiri::XML::SyntaxError
-        #Will only get here on >400 errors, which are already logged
-        return {
-          available: false,
-        }
-      end
 
       doc.css("studentRegistrationBlock").each do |block|
         blocked_date = cleared_date = nil

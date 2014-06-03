@@ -5,15 +5,8 @@ module MyAcademics
 
     def merge(data)
       profile_proxy = Bearfacts::Profile.new({:user_id => @uid})
-      profile_feed = profile_proxy.get
-      return unless profile_feed.present? && profile_feed[:body].present?
-
-      begin
-        doc = Nokogiri::XML(profile_feed[:body], &:strict)
-      rescue Nokogiri::XML::SyntaxError
-        #Will only get here on >400 errors, which are already logged
-        return
-      end
+      doc = profile_proxy.get[:xml_doc]
+      return if doc.blank?
 
       general_profile = doc.css("studentGeneralProfile")
       if general_profile.blank?

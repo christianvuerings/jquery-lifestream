@@ -14,8 +14,23 @@ module Bearfacts
     end
 
     def request(path, vcr_cassette, params = {})
-      self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
+      response = self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
         request_internal(path, vcr_cassette, params)
+      end
+      if response[:statusCode] < 400
+        # Nokogiri does not serialize to cache reliably.
+        response[:xml_doc] = xml_doc(response[:body])
+      end
+      response
+    end
+
+    def xml_doc(xml_string)
+      return nil unless xml_string
+      begin
+        Nokogiri::XML(xml_string, &:strict)
+      rescue Nokogiri::XML::SyntaxError
+        logger.error("Error parsing '#{xml_string}' for user #{@uid}")
+        nil
       end
     end
 
@@ -54,8 +69,8 @@ module Bearfacts
 
         logger.debug "Remote server status #{response.status}, Body = #{response.body}"
         return {
-          :body => response.body,
-          :statusCode => response.status
+          body: response.body,
+          statusCode: response.status
         }
       end
     end

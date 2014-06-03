@@ -39,8 +39,7 @@ describe "MyBadges::StudentInfo" do
   end
 
   context "invalid/offline bearfacts regblock" do
-
-    before { Bearfacts::Regblocks.any_instance.stub(:get).and_return {} }
+    before(:each) { stub_request(:any, /.+regblocks.*/).to_raise(Faraday::Error::ConnectionFailed) }
     subject { MyBadges::StudentInfo.new("61889").get }
 
     it "should have no active blocks" do
