@@ -154,7 +154,7 @@
               </ul>
             </div>
 
-            <form data-ng-submit="createCourseSiteJob(currentCourses)" class="cc-page-provision-site-labels-form">
+            <form data-ng-submit="createCourseSiteJob()" class="cc-page-provision-site-labels-form">
               <div class="row">
                 <div class="medium-6">
 
@@ -200,7 +200,7 @@
 
             <div data-ng-hide="status" class="cc-page-provision-pending-request">
               <i class="fa fa-spinner fa-spin"></i>
-              Sending course provisioning request....
+              Sending request...
             </div>
 
             <div data-ng-show="status === 'New'" class="cc-page-provision-pending-request">
@@ -218,26 +218,38 @@
               </div>
 
               <div data-ng-show="status === 'Error'">
-                <div class="cc-page-provision-feedback">
-                  <i class="cc-left fa fa-exclamation-circle"></i>
-                  <p><span data-ng-bind="error"></span></p>
-                  <div data-ng-show="error">
-                    <strong>
-                      Please report this issue to <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a>
-                    </strong>
+                <div class="cc-page-provision-error">
+                  <p>
+                    <i class="cc-left fa fa-exclamation-circle cc-page-provision-error-icon"></i>
+                    <span class="cc-page-provision-error-header">Course Site Creation Failed: We could not create your site automatically.</span>
+                  </p>
+                  <p>Due to technical issues encountered, we must create your course site manually.</p>
+                  <p>Please report this issue to <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> with:</p>
+                  <ul class="cc-page-provision-error-list">
+                   <li>The title of the course site you were trying to create</li>
+                   <li>The rosters you would like to add (e.g. BIOLOGY 1A LEC 001)</li>
+                   <li>The following error message: &quot;<span data-ng-bind="error"></span>&quot;</li>
+                  </ul>
+                </div>
+
+                <div class="row cc-page-provision-step-options">
+                  <div class="medium-12 columns">
+                    <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()">&lt;&lt; Back</button>
+                    <button class="cc-button cc-button-blue cc-page-provision-form-button" type="button" data-ng-click="fetchFeed()">Start Over</button>
                   </div>
                 </div>
               </div>
 
               <div data-ng-show="status === 'Completed'">
-                <div class="cc-page-provision-feedback">
+
+                <div class="cc-notice-box cc-notice-success cc-radius">
                   Success : <span data-ng-bind="course_site.short_name"></span> site created
                   <i class="cc-left fa fa-check-circle cc-icon-green"></i>
                 </div>
 
-                <strong>
-                  You may now:
-                </strong>
+                <div class="cc-page-provision-success-intro">
+                  <strong>You may now:</strong>
+                </div>
                 <ul class="cc-page-provision-choices">
                   <li>Go to <a data-ng-href="{{course_site.url}}" data-ng-bind="course_site.short_name"></a> to finish setting up your site.</li>
                   <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>

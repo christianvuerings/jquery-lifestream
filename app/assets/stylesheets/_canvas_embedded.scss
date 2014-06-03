@@ -58,7 +58,9 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin-bottom: 8px;
     font-size: 13px;
     font-weight: bold;
-    line-height: 20px;
+    i {
+      margin-right: 5px;
+    }
     .cc-close-button {
       &:hover {
         text-decoration: none;
