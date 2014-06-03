@@ -23,8 +23,9 @@ module Mediacasts
         }
       end
       videos = get_videos_as_json(playlist)
+      audio = get_audio_as_json(playlist)
       itunes = get_itunes_as_json(playlist)
-      videos.merge(itunes)
+      videos.merge(audio).merge(itunes)
     end
 
     def get_playlist
@@ -63,6 +64,14 @@ module Mediacasts
         }
       end
       get_youtube_videos(playlist[:playlist_id])
+    end
+
+    def get_audio_as_json(playlist)
+      get_audio(playlist[:audio_rss])
+    end
+
+    def get_audio(audio_rss)
+      Mediacasts::Audio.new({:audio_rss => audio_rss}).get
     end
 
     def get_youtube_videos(id)

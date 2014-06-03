@@ -59,6 +59,7 @@ module Mediacasts
         if course['year'] && course['semester'] && course['deptName'] && course['catalogId']
           key = Mediacasts::CourseMedia.course_id(course['year'], course['semester'], course['deptName'], course['catalogId'])
           processed_playlists[:courses][key] = {
+            audio_rss: course['audioRSS'].to_s,
             playlist_id: course['youTubePlaylist'].to_s,
             itunes_audio: course['iTunesAudio'].to_s,
             itunes_video: course['iTunesVideo'].to_s
