@@ -17,8 +17,8 @@ module MyActivities
 
     private
     def self.process_block!(block)
-      blocked_date = block.try(:[], :blocked_date).try(:[], :epoch)
-      cleared_date = block.try(:[], :cleared_date).try(:[], :epoch)
+      blocked_date = block.try(:[], :blockedDate).try(:[], :epoch)
+      cleared_date = block.try(:[], :clearedDate).try(:[], :epoch)
       if include_in_feed?(blocked_date, cleared_date)
         block.merge!(
           {
@@ -34,11 +34,11 @@ module MyActivities
           process_active_block!(block)
         end
 
-        unless (block[:block_type] == 'Academic' && block[:reason] == 'Academic')
+        unless (block[:blockType] == 'Academic' && block[:reason] == 'Academic')
           block[:title] += ": #{block[:reason]}"
         end
 
-        Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{block[:block_type]}," \
+        Rails.logger.debug "#{self.class.name} Reg block is in feed, type = #{block[:blockType]}," \
             "blocked_date = #{blocked_date}; cleared_date = #{cleared_date}"
         block
       else
@@ -52,10 +52,10 @@ module MyActivities
       block.merge!(
         {
           type: "message",
-          date: block[:cleared_date],
-          title: "#{block[:block_type]} Block Cleared",
-          summary: "This block, placed on #{block[:blocked_date][:dateString]}, "\
-              "was cleared on #{block[:cleared_date][:dateString]}."
+          date: block[:clearedDate],
+          title: "#{block[:blockType]} Block Cleared",
+          summary: "This block, placed on #{block[:blockedDate][:dateString]}, "\
+              "was cleared on #{block[:clearedDate][:dateString]}."
         })
     end
 
@@ -63,8 +63,8 @@ module MyActivities
       block.merge!(
         {
           type: "alert",
-          date: block[:blocked_date],
-          title: "#{block[:block_type]} Block Placed",
+          date: block[:blockedDate],
+          title: "#{block[:blockType]} Block Placed",
           summary: block[:message],
         }
       )

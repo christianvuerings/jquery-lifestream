@@ -25,7 +25,7 @@ describe "MyAcademics::Regblocks" do
     end
 
     # Make sure the date epoch matches the expected date.
-    Time.at(oski_blocks[:inactiveBlocks][1][:blocked_date][:epoch]).to_s.start_with?('2012-03-20').should be_true
+    Time.at(oski_blocks[:inactiveBlocks][1][:blockedDate][:epoch]).to_s.start_with?('2012-03-20').should be_true
 
   end
 

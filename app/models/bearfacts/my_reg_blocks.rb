@@ -39,10 +39,10 @@ module Bearfacts
         reg_block = {
           status: status,
           type: type,
-          short_description: short_desc,
-          block_type: block_type,
-          blocked_date: format_date(blocked_date, "%-m/%d/%Y"),
-          cleared_date: format_date(cleared_date, "%-m/%d/%Y"),
+          shortDescription: short_desc,
+          blockType: block_type,
+          blockedDate: format_date(blocked_date, "%-m/%d/%Y"),
+          clearedDate: format_date(cleared_date, "%-m/%d/%Y"),
           reason: reason,
           office: office,
           message: message,
@@ -55,8 +55,8 @@ module Bearfacts
       end
 
       # sort by blocked_date descending.
-      active_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
-      inactive_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
+      active_blocks.sort! { |a, b| b[:blockedDate][:epoch] <=> a[:blockedDate][:epoch] }
+      inactive_blocks.sort! { |a, b| b[:blockedDate][:epoch] <=> a[:blockedDate][:epoch] }
 
       feed.merge({
         activeBlocks: active_blocks,

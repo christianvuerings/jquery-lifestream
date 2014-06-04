@@ -33,8 +33,8 @@ describe MyActivities::RegBlocks do
       before(:each) do
         mangled_inactive = oski_blocks.get_feed[:inactiveBlocks].map do |block|
           {
-            cleared_date: oski_blocks.format_date(Time.now.to_datetime),
-            blocked_date: oski_blocks.format_date(Time.at(0).to_datetime)
+            clearedDate: oski_blocks.format_date(Time.now.to_datetime),
+            blockedDate: oski_blocks.format_date(Time.at(0).to_datetime)
           }.reverse_merge(block)
         end
         mangled_oski_blocks = oski_blocks.get_feed.merge({ inactiveBlocks: mangled_inactive })

@@ -10,7 +10,7 @@
           <th scope="col" width="40%">Blocked</th>
         </tr>
       </thead>
-      <tbody data-ng-repeat="block in regblocks.activeBlocks | orderBy:'blocked_date.epoch':true">
+      <tbody data-ng-repeat="block in regblocks.activeBlocks | orderBy:'blockedDate.epoch':true">
         <tr class="cc-widget-table-hover"
             data-ng-class="{'cc-widget-table-hover-opened':(block.show)}"
             data-cc-accessible-focus-directive
@@ -18,7 +18,7 @@
           <td><i class="fa fa-exclamation-circle"></i><span data-ng-bind="block.type"></span></td>
           <td class="cc-ellipsis" data-ng-bind="block.reason"></td>
           <td data-ng-bind="block.office || '&nbsp;'"></td>
-          <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy'"></td>
+          <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy'"></td>
         </tr>
         <tr data-ng-if="block.show">
           <td data-ng-bind-html="block.message" colspan="4"></td>
@@ -74,12 +74,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="block in regblocks.inactiveBlocks | orderBy:'blocked_date.epoch':true">
+        <tr data-ng-repeat="block in regblocks.inactiveBlocks | orderBy:'blockedDate.epoch':true">
           <td data-ng-bind="block.type || '&nbsp;'"></td>
           <td data-ng-bind="block.reason || '&nbsp;'"></td>
           <td data-ng-bind="block.office || '&nbsp;'"></td>
-          <td data-ng-bind="block.blocked_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
-          <td data-ng-bind="block.cleared_date.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+          <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+          <td data-ng-bind="block.clearedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
         </tr>
       </tbody>
     </table>
