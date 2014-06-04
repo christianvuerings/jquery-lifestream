@@ -1,10 +1,15 @@
+require 'spec_helper'
 require 'selenium-webdriver'
+require 'page-object'
 require 'json'
 require_relative '../util/web_driver_utils'
 
 class ApiMyFinancialsPage
 
+  include PageObject
+
   def get_json(driver)
+    Rails.logger.info('Parsing JSON from /api/my/financials')
     driver.get(WebDriverUtils.base_url + '/api/my/financials')
     body = driver.find_element(:xpath, '//pre').text
     @parsed = JSON.parse(body)
@@ -12,7 +17,7 @@ class ApiMyFinancialsPage
 
   def has_cars_data?
     if @parsed['statusCode'] == 400 || @parsed['statusCode'] == 404
-      puts 'User has no CARS data'
+      Rails.logger.info('User has no CARS data')
       return false
     end
     true
@@ -45,6 +50,14 @@ class ApiMyFinancialsPage
 
   def past_due_amt_str
     (sprintf '%.2f', self.past_due_amt).to_s
+  end
+
+  def future_activity
+    @parsed['summary']['futureActivity']
+  end
+
+  def future_activity_str
+    (sprintf '%.2f', self.future_activity).to_s
   end
 
   def is_on_dpp?

@@ -10,6 +10,6 @@ webDriver: firefox
 # web_driver: ie
 
 pageEventTimeout: 1
-pageLoadTimeout: 3
-finResourcesLinksTimeout: 20
+pageLoadTimeout: 5
+finResourcesLinksTimeout: 10
 financialsTimeout: 5

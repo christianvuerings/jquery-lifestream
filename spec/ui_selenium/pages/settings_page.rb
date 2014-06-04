@@ -1,9 +1,10 @@
 require 'selenium-webdriver'
 require 'page-object'
-require_relative 'cal_central_pages'
+require_relative '../pages/cal_central_pages'
 require_relative '../util/web_driver_utils'
 
-  class CalCentralPages::SettingsPage
+module CalCentralPages
+  class SettingsPage
 
     include PageObject
     include CalCentralPages
@@ -36,3 +37,4 @@ require_relative '../util/web_driver_utils'
     end
 
   end
+end

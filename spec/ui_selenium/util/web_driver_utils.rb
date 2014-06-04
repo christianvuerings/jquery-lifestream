@@ -6,10 +6,13 @@ class WebDriverUtils
 
   def self.driver
     if @config['webDriver'] == 'firefox'
+      Rails.logger.info('Browser is Firefox')
       Selenium::WebDriver.for :firefox
     elsif @config['webDriver'] == 'chrome'
+      Rails.logger.info('Browser is Chrome')
       Selenium::WebDriver.for :chrome
     elsif @config['webDriver'] == 'safari'
+      Rails.logger.info('Browser is Safari')
       Selenium::WebDriver.for :safari
     end
   rescue
@@ -38,6 +41,10 @@ class WebDriverUtils
 
   def self.page_event_timeout
     @config['pageEventTimeout']
+  end
+
+  def self.live_users
+    ENV['HOME'] + '/.calcentral_config/selenium-uids.csv'
   end
 
 end

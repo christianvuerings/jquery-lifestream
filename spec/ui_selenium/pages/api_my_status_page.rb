@@ -1,10 +1,15 @@
+require 'spec_helper'
 require 'selenium-webdriver'
+require 'page-object'
 require 'json'
 require_relative '../util/web_driver_utils'
 
 class ApiMyStatusPage
 
+  include PageObject
+
   def get_json(driver)
+    Rails.logger.info('Parsing JSON from /api/my/status')
     driver.get(WebDriverUtils.base_url + '/api/my/status')
     body = driver.find_element(:xpath, '//pre').text
     @parsed = JSON.parse(body)
