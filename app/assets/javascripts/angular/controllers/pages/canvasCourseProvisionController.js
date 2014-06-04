@@ -113,6 +113,10 @@
       return ccns;
     };
 
+    $scope.errorEmail = function() {
+      window.top.location = 'mailto:bcourseshelp@berkeley.edu?subject=bCourses+Course+Site+Creation+Failure';
+    };
+
     $scope.selectedSections = function() {
       var selectedSections = [];
       angular.forEach($scope.currentCourses, function(course) {
