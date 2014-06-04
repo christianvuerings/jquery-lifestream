@@ -26,10 +26,9 @@ describe Mediacasts::Audio do
       expect(proxy_response[:audio][0][:downloadUrl]).to eq download_url
     end
 
-    it "should get correct dates" do
+    it "should get correct titles" do
       proxy_response = proxy.get
-      expect(proxy_response[:audio][0][:date]).to be_an_instance_of Hash
-      expect(proxy_response[:audio][0][:date][:epoch]).to eq 1390336620
+      expect(proxy_response[:audio][0][:title]).to eq "English 117S - 2014-01-21"
     end
 
     context "on remote server errors" do

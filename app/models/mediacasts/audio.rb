@@ -40,11 +40,6 @@ module Mediacasts
       }
     end
 
-    def get_parsed_pub_date(pub_date)
-      date_time = DateTime.parse(pub_date)
-      format_date(date_time)
-    end
-
     def get_download_url(play_url)
       parsed_uri = Addressable::URI.parse(play_url)
       # Replace the path that starts with /media/
@@ -59,9 +54,9 @@ module Mediacasts
         # so we need to use the enclosure tag instead
         url = i.xpath('enclosure/@url').text
         {
-          :date => get_parsed_pub_date(i.xpath('pubDate').text),
+          :downloadUrl => get_download_url(url),
           :playUrl => url,
-          :downloadUrl => get_download_url(url)
+          :title => i.xpath('title').text
         }
       end
       items
