@@ -81,9 +81,7 @@ module CalCentralPages
     driver.find_element(:xpath, '//div[@class=\'cc-footer-berkeley\']').click
     basic_auth_uid_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     self.basic_auth_uid_input = uid
-    Rails.logger.info('Entering password')
     self.basic_auth_password_input = UserUtils.basic_auth_pass
-    Rails.logger.info('Clicking login button')
     basic_auth_login_button
     basic_auth_uid_input_element.when_not_present(timeout=WebDriverUtils.page_load_timeout)
   end

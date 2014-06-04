@@ -267,3 +267,22 @@ oec:
     code: "D"
   }]
   departments: [ 'STAT', 'SPANISH', 'PORTUG', 'CHEM' ]
+
+ui_selenium:
+  baseUrl: https://calcentral-dev.berkeley.edu
+  #baseUrl: https://calcentral-qa.berkeley.edu
+
+  calNetUrl: https://auth-test.berkeley.edu
+
+  webDriver: firefox
+  # web_driver: chrome
+  # web_driver: safari
+  # web_driver: ie
+
+  pageEventTimeout: 1
+  pageLoadTimeout: 5
+  finResourcesLinksTimeout: 10
+  financialsTimeout: 5
+  test_user_password: secret
+  oski_username: secret
+  oski_password: secret

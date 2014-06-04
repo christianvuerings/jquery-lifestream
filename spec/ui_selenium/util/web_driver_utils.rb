@@ -2,16 +2,14 @@ require 'selenium-webdriver'
 
 class WebDriverUtils
 
-  @config = YAML::load_file(File.join(File.dirname(File.expand_path(__FILE__)), 'settings.yml'))
-
   def self.driver
-    if @config['webDriver'] == 'firefox'
+    if Settings.ui_selenium.webDriver == 'firefox'
       Rails.logger.info('Browser is Firefox')
       Selenium::WebDriver.for :firefox
-    elsif @config['webDriver'] == 'chrome'
+    elsif Settings.ui_selenium.webDriver['webDriver'] == 'chrome'
       Rails.logger.info('Browser is Chrome')
       Selenium::WebDriver.for :chrome
-    elsif @config['webDriver'] == 'safari'
+    elsif Settings.ui_selenium.webDriver['webDriver'] == 'safari'
       Rails.logger.info('Browser is Safari')
       Selenium::WebDriver.for :safari
     end
@@ -20,31 +18,31 @@ class WebDriverUtils
   end
 
   def self.base_url
-    @config['baseUrl']
+    Settings.ui_selenium.baseUrl
   end
 
   def self.cal_net_url
-    @config['calNetUrl']
+    Settings.ui_selenium.calNetUrl
   end
 
   def self.page_load_timeout
-    @config['pageLoadTimeout']
+    Settings.ui_selenium.pageLoadTimeout
   end
 
   def self.financials_timeout
-    @config['financialsTimeout']
+    Settings.ui_selenium.financialsTimeout
   end
 
   def self.fin_resources_links_timeout
-    @config['finResourcesLinksTimeout']
+    Settings.ui_selenium.finResourcesLinksTimeout
   end
 
   def self.page_event_timeout
-    @config['pageEventTimeout']
+    Settings.ui_selenium.pageEventTimeout
   end
 
   def self.live_users
-    ENV['HOME'] + '/.calcentral_config/selenium-uids.csv'
+    Rails.root.join('fixtures', 'ui_selenium', 'uids.csv')
   end
 
 end

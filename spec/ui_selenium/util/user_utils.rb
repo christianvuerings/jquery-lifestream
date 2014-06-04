@@ -10,22 +10,21 @@ class UserUtils
   include PageObject
   include CalCentralPages
 
-  @config = YAML.load_file((ENV['HOME'] + '/.calcentral_config/production.local.yml'))
-
   def self.basic_auth_pass
-    @config['developer_auth']['password']
+    Settings.developer_auth.password
   end
 
   def self.oski_username
-    @config['calnet_oski']['username']
+    Settings.ui_selenium.oski_username
   end
 
   def self.oski_password
-    @config['calnet_oski']['password']
+    Rails.logger.error("password #{Settings.ui_selenium.oski_password}")
+    Settings.ui_selenium.oski_password
   end
 
   def self.test_password
-    @config['calnet_test']['password']
+    Settings.ui_selenium.test_user_password
   end
 
 end
