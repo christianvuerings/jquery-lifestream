@@ -5,29 +5,40 @@
         <h2>Records</h2>
       </div>
 
-      <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!college_and_level">
-        <h3>Standing</h3>
-        <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
-          You are no longer an active student.
-        </p>
-        <p data-ng-if="api.user.profile.roles.registered">
-          You are registered as a student but not currently considered active.
-        </p>
-        <p data-ng-if="api.user.profile.roles.student && !api.user.profile.roles.registered">
-          You are not yet officially registered as a student.
-        </p>
-        <div class="cc-academics-nocontent" data-ng-if="api.user.profile.roles.student && !semesters.length && studentInfo.regStatus.code === null && !requirements.length">
-          <p>More information will display here when your academic status changes. Check back often for information about:</p>
-          <ul class="cc-list-bullets">
-            <li>Class enrollments, including waitlist information.</li>
-            <li>Your academic status, including standing, GPA, units, major, college, and more.</li>
-            <li>Your registration status, including any blocks limiting your access to campus services.</li>
-            <li>Course information, including class and exam schedules, class locations, textbooks, and webcasts.</li>
-          </ul>
+      <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!college_and_level.standing">
+        <div data-ng-if="college_and_level.unavailable">
+          There was a problem reaching campus services.
+          Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
+        </div>
+        <div data-ng-if="college_and_level.empty || college_and_level.noStudentId">
+          <h3>Standing</h3>
+          <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
+            You are not currently considered an active student.
+          </p>
+          <div data-ng-if="api.user.profile.roles.student">
+            <p data-ng-if="api.user.profile.roles.registered">
+              You are registered as a student but not currently considered active by all campus services.
+            </p>
+            <p data-ng-if="!api.user.profile.roles.registered">
+              You are not currently officially registered as a student.
+            </p>
+            <p data-ng-if="semesters.length || studentInfo.regStatus.code !== null || requirements.length">
+              Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
+            </p>
+            <div class="cc-academics-nocontent" data-ng-if="!semesters.length && studentInfo.regStatus.code === null && !requirements.length">
+              <p>More information will display here when your academic status changes. Check back often for information about:</p>
+              <ul class="cc-list-bullets">
+                <li>Class enrollments, including waitlist information.</li>
+                <li>Your academic status, including standing, GPA, units, major, college, and more.</li>
+                <li>Your registration status, including any blocks limiting your access to campus services.</li>
+                <li>Course information, including class and exam schedules, class locations, textbooks, and webcasts.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="cc-widget-padding" data-ng-if="college_and_level">
+      <div class="cc-widget-padding" data-ng-if="college_and_level.standing">
         <h3>Standing, Major and Level</h3>
 
         <div class="cc-table cc-table-top-border">
@@ -109,7 +120,7 @@
       </div>
 
       <div class="cc-widget-padding">
-        <div class="cc-academics-status-and-blocks">
+        <div class="cc-academics-status-and-blocks" data-ng-if="!regblocks.noStudentId || studentInfo.regStatus.code !== null">
           <h3><span data-ng-if="studentInfo.regStatus.code !== null">Status and </span>Blocks</h3>
 
           <div class="cc-table" data-ng-if="studentInfo.regStatus.code !== null">
