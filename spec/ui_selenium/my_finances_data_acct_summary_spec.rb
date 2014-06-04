@@ -16,7 +16,7 @@ describe 'My Finances', :testui => true do
 
   begin
     driver = WebDriverUtils.driver
-    test_output = ENV['HOME'] + '/calcentral-selenium/test-output/my_finances_data_acct_summary.csv'
+    test_output = Rails.root.join('tmp', 'ui_selenium_output', 'my_finances_data_acct_summary.csv')
     Rails.logger.info('Opening output CSV')
     CSV.open(test_output, 'wb') do |user_info_csv|
       user_info_csv << ['UID', 'Finances Tab', 'CARS Data', 'Acct Bal', 'Amt Due Now', 'Past Due', 'Future Activity',
