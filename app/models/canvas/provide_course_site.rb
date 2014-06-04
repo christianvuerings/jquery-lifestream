@@ -72,7 +72,7 @@ module Canvas
     end
 
     def prepare_users_courses_list
-      raise RuntimeError, "Unable to prepare course list. Term slug not present." if @import_data['term_slug'].blank?
+      raise RuntimeError, "Unable to prepare course list. Term code not present." if @import_data['term_slug'].blank?
       raise RuntimeError, "Unable to prepare course list. CCNs not present." if @import_data['ccns'].blank?
 
       if @import_data['is_admin_by_ccns']
