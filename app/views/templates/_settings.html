@@ -54,7 +54,7 @@
             <h6>{{uidDiv.title}} (<button type="button" class="cc-button-link" data-ng-click="uidDiv.clearAllUIDs()">clear all</button>)</h6>
             <ul>
               <li data-ng-repeat="UID in uidDiv.UIDs track by $index">
-                <button type="button" class="cc-button-link" data-ng-click="uidDiv.updateUIDField(UID)" data-ng-bind="UID"></button>
+                <button type="submit" class="cc-button-link" data-ng-click="uidDiv.updateUIDField(UID)" data-ng-bind="UID"></button>
                 <span data-ng-if="uidDiv.storeUID">(<button type="button" class="cc-button-link" data-ng-click="uidDiv.storeUID(UID)">save</button>)</span>
                 <span data-ng-if="uidDiv.clearUID">(<button type="button" class="cc-button-link" data-ng-click="uidDiv.clearUID($index)">delete</button>)</span>
               </li>
