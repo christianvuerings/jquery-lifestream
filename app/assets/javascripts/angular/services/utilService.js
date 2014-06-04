@@ -5,6 +5,23 @@
   angular.module('calcentral.services').service('utilService', function($location, $rootScope, $window) {
 
     /**
+     * Check whether the current browser can play m4a files
+     * Based on http://git.io/DPOxlQ
+     */
+    var canPlayM4A = function() {
+      var canPlay = false;
+      var element = document.createElement('audio');
+
+      try {
+        var hasAudioElement = !!element.canPlayType;
+        if (hasAudioElement) {
+          canPlay = element.canPlayType('audio/x-m4a;') || element.canPlayType('audio/aac;');
+        }
+      } catch (e) { }
+      return canPlay;
+    };
+
+    /**
      * Pass in controller name so we can set active location in menu
      * @param {String} name The name of the controller
      */
@@ -97,6 +114,7 @@
 
     // Expose methods
     return {
+      canPlayM4A: canPlayM4A,
       changeControllerName: changeControllerName,
       iframeUpdateHeight: iframeUpdateHeight,
       preventBubble: preventBubble,

@@ -120,28 +120,7 @@
       </div>
 
       <div class="medium-4 columns">
-        <div class="cc-widget cc-widget-last" data-ng-controller="VideoController" data-ng-if="api.user.profile.features.videos">
-          <div class="cc-widget-title">
-            <h2>Webcasts</h2>
-          </div>
-          <div class="cc-widget-padding">
-            <div data-cc-spinner-directive>
-              <div data-ng-bind="proxyErrorMessage"></div>
-              <div data-ng-if="!proxyErrorMessage">
-                <h3>Webcasts</h3>
-                <div data-ng-bind="videoErrorMessage"></div>
-                <div data-ng-if="videos">
-                  <div class="cc-select cc-academics-webcast-select">
-                    <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
-                  </div>
-                  <div class="cc-youtube-video">
-                    <div data-cc-youtube-directive="selectedVideo.id"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div data-ng-include="'templates/widgets/webcast.html'"></div>
 
         <div class="cc-widget cc-widget-last" data-ng-if="selectedCourse.class_sites.length">
           <div class="cc-widget-title">
