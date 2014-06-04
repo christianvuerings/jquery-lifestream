@@ -3,6 +3,8 @@ require "spec_helper"
 describe Canvas::ProvideCourseSite do
 
   let(:uid)   { rand(99999).to_s }
+  let(:site_name) { 'Introduction to Computer Programming for Scientists and Engineers' }
+  let(:site_course_code) { 'ENGIN 7' }
   subject     { Canvas::ProvideCourseSite.new(uid) }
 
   #####################################
@@ -79,7 +81,7 @@ describe Canvas::ProvideCourseSite do
 
     it "intercepts raised exceptions and updates status" do
       allow(subject).to receive(:import_course_site).and_raise(RuntimeError, "Course site could not be created!")
-      expect { subject.create_course_site("fall-2013", ["1136", "1204"]) }.to raise_error(RuntimeError, "Course site could not be created!")
+      expect { subject.create_course_site(site_name, site_course_code, "fall-2013", ["1136", "1204"]) }.to raise_error(RuntimeError, "Course site could not be created!")
       expect(subject.status).to eq "Error"
       errors = subject.instance_eval { @errors }
       expect(errors).to be_an_instance_of Array
@@ -99,11 +101,11 @@ describe Canvas::ProvideCourseSite do
       expect(subject).to receive(:import_enrollments).ordered.and_return(true)
       expect(subject).to receive(:retrieve_course_site_details).ordered.and_return(true)
       expect(subject).to receive(:expire_instructor_sites_cache).ordered.and_return(true)
-      subject.create_course_site("fall-2013", ["1136", "1204"])
+      subject.create_course_site(site_name, site_course_code, "fall-2013", ["1136", "1204"])
     end
 
     it "sets term and ccns for import" do
-      subject.create_course_site("fall-2013", ["1136", "1204"])
+      subject.create_course_site(site_name, site_course_code, "fall-2013", ["1136", "1204"])
       expect(subject.instance_eval { @import_data['term_slug'] }).to eq "fall-2013"
       expect(subject.instance_eval { @import_data['term'][:yr] }).to eq "2013"
       expect(subject.instance_eval { @import_data['term'][:cd] }).to eq "D"
@@ -111,7 +113,7 @@ describe Canvas::ProvideCourseSite do
     end
 
     it "sets status as completed and saves" do
-      subject.create_course_site("fall-2013", ["1136", "1204"])
+      subject.create_course_site(site_name, site_course_code, "fall-2013", ["1136", "1204"])
       cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
       expect(cached_object.status).to eq "Completed"
     end
@@ -707,35 +709,18 @@ describe Canvas::ProvideCourseSite do
     let(:term_yr)     { '2013' }
     let(:term_cd)     { 'D' }
     let(:subaccount)  { 'ACCT:ENGIN' }
-    let(:course_data) do
-      {
-        :course_code => "ENGIN 7",
-        :dept => "ENGIN",
-        :slug => "engin-7",
-        :title => "Introduction to Computer Programming for Scientists and Engineers",
-        :role => "Instructor",
-        :sections => [
-          {
-            :ccn => "#{rand(99999)}",
-            :instruction_format => "DIS",
-            :is_primary_section => false,
-            :section_label => "DIS 102",
-            :section_number => "102"
-          }
-        ]
-      }
-    end
+    let(:campus_course_slug) { 'engin-7' }
 
     it "should raise exception when sis course id fails to generate" do
       subject.stub(:generate_unique_sis_course_id).and_return(nil)
       expect do
-        subject.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
+        subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
       end.to raise_error(RuntimeError, "Could not define new course site!")
     end
 
     it "should generate a Course import CSV row for the selected courses" do
       allow_any_instance_of(Canvas::ExistenceCheck).to receive(:course_defined?).and_return(false)
-      canvas_course = subject.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
+      canvas_course = subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
       expect(canvas_course['course_id'].present?).to be_true
       expect(canvas_course['course_id']).to eq "CRS:ENGIN-7-2013-D"
       expect(canvas_course['short_name']).to eq 'ENGIN 7'
@@ -751,33 +736,16 @@ describe Canvas::ProvideCourseSite do
       expect(stub_existence_check).to receive(:course_defined?).and_return(false)
       allow(Canvas::ExistenceCheck).to receive(:new).and_return(stub_existence_check)
 
-      first_canvas_course = subject.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
+      first_canvas_course = subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
       first_course_sis_id = first_canvas_course['course_id']
       expect(stub_existence_check).to receive(:course_defined?).twice do |id|
         id == first_course_sis_id
       end
-      second_canvas_course = subject.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
+      second_canvas_course = subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
       second_course_sis_id = second_canvas_course['course_id']
       expect(second_course_sis_id.present?).to be_true
       expect(second_course_sis_id).to_not eq first_course_sis_id
     end
-
-    context "when course title is not present" do
-      before { course_data[:title] = nil }
-
-      it "should use the short title if the long title is not present" do
-        allow_any_instance_of(Canvas::ExistenceCheck).to receive(:course_defined?).and_return(false)
-        canvas_course = subject.generate_course_site_definition(term_yr, term_cd, subaccount, course_data)
-        expect(canvas_course['course_id'].present?).to be_true
-        expect(canvas_course['course_id']).to eq "CRS:ENGIN-7-2013-D"
-        expect(canvas_course['short_name']).to eq 'ENGIN 7'
-        expect(canvas_course['long_name']).to eq 'ENGIN 7'
-        expect(canvas_course['account_id']).to eq 'ACCT:ENGIN'
-        expect(canvas_course['term_id']).to eq 'TERM:2013-D'
-        expect(canvas_course['status']).to eq 'active'
-      end
-    end
-
   end
 
   describe "#generate_course_memberships" do

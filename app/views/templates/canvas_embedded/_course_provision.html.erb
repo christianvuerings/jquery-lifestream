@@ -66,8 +66,8 @@
                         <li data-ng-repeat="semester in teachingSemesters">
                           <button class="cc-button"
                                   data-ng-click="switchSemester(semester)"
-                                  data-ng-class="{'cc-button-selected':(current_semester==semester.slug)}"
-                                  aria-selected="{{current_semester==semester.slug}}"
+                                  data-ng-class="{'cc-button-selected':(currentSemester==semester.slug)}"
+                                  aria-selected="{{currentSemester==semester.slug}}"
                                   role="tab"
                                   data-ng-bind="semester.name">
                           </button>
@@ -77,15 +77,14 @@
                   </div>
                 </div>
 
-
                 <h3>2. Select Roster(s):</h3>
 
                 <div class="cc-page-provision-step-indent">
                   <p>All rosters you select below will be put in ONE, single course site.</p>
-                  <form data-ng-submit="createCourseSiteJob(selectedCourses)">
+                  <form data-ng-submit="showConfirmation()">
                     <div>
                       <ul class="cc-page-provision-margin">
-                        <li data-ng-repeat="course in selectedCourses" class="cc-page-provision-form-course cc-page-provision-roster-area">
+                        <li data-ng-repeat="course in currentCourses" class="cc-page-provision-form-course cc-page-provision-roster-area">
                           <strong>{{course.title}} ({{course.course_code}})</strong>
                           <div class="cc-page-provision-form-select-all-option" data-ng-show="course.sections.length > 1">
                             Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
@@ -130,8 +129,8 @@
                       </ul>
                     </div>
 
-                    <div class="cc-page-provision-roster-area">
-                      <button class="cc-button cc-button-blue cc-page-provision-create-site-button" type="submit">Next</button>
+                    <div class="cc-page-provision-form-actions">
+                      <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Next &gt;&gt;</button>
                     </div>
 
                   </form>
@@ -140,11 +139,60 @@
             </div>
           </div>
 
+          <div data-ng-show="currentWorkflowStep === 'confirmation'">
+            <div class="cc-page-provision-confirmation">
+              <div data-ng-if="selectedSections().length === 1">
+                <strong>You are about to create 1 course site with 1 roster:</strong>
+              </div>
+              <div data-ng-if="selectedSections().length > 1">
+                <strong>You are about to create 1 course site with these <span data-ng-bind="selectedSections().length"></span> rosters:</strong>
+              </div>
+              <ul class="cc-page-provision-roster-list">
+                <li data-ng-repeat="section in selectedSections()">
+                  <span data-ng-bind="section.courseTitle"></span> - <span data-ng-bind="section.section_label"></span> (<span data-ng-bind="section.ccn"></span>)
+                </li>
+              </ul>
+            </div>
+
+            <form data-ng-submit="createCourseSiteJob()" class="cc-page-provision-site-labels-form">
+              <div class="row">
+                <div class="medium-6">
+
+                  <div class="row">
+                    <div class="medium-offset-1 medium-3 columns">
+                      <label for="siteName" class="right">Site Name:</label>
+                    </div>
+                    <div class="medium-8 columns">
+                      <input type="text" id="siteName" data-ng-model="siteName">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="medium-offset-1 medium-3 columns">
+                      <label for="siteAbbreviation" class="right">Site Abbreviation:</label>
+                    </div>
+                    <div class="medium-8 columns">
+                      <input type="text" id="siteAbbreviation" data-ng-model="siteAbbreviation">
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="medium-offset-4 medium-8 columns">
+                      <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Create Course Site</button>
+                      <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </form>
+          </div>
+
           <div data-ng-show="currentWorkflowStep === 'monitoring_job'">
 
             <div data-ng-hide="status" class="cc-page-provision-pending-request">
               <i class="fa fa-spinner fa-spin"></i>
-              Sending course provisioning request....
+              Sending request...
             </div>
 
             <div data-ng-show="status === 'New'" class="cc-page-provision-pending-request">
@@ -162,25 +210,38 @@
               </div>
 
               <div data-ng-show="status === 'Error'">
-                <div class="cc-page-provision-feedback">
-                  <i class="cc-left fa fa-exclamation-circle"></i>
-                  <p><span data-ng-bind="error"></span></p>
-                  <div data-ng-show="error">
-                    <strong>
-                      Please report this issue to <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a>
-                    </strong>
+                <div class="cc-page-provision-error">
+                  <p>
+                    <i class="cc-left fa fa-exclamation-circle cc-page-provision-error-icon"></i>
+                    <span class="cc-page-provision-error-header">Course Site Creation Failed: We could not create your site automatically.</span>
+                  </p>
+                  <p>Due to technical issues encountered, we must create your course site manually.</p>
+                  <p>Please report this issue to <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> with:</p>
+                  <ul class="cc-page-provision-error-list">
+                    <li>The title of the course site you were trying to create</li>
+                    <li>The rosters you would like to add (e.g. BIOLOGY 1A LEC 001)</li>
+                    <li>The following error message: &quot;<span data-ng-bind="error"></span>&quot;</li>
+                  </ul>
+                </div>
+
+                <div class="row cc-page-provision-step-options">
+                  <div class="medium-12 columns">
+                    <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()">&lt;&lt; Back</button>
+                    <button class="cc-button cc-button-blue cc-page-provision-form-button" type="button" data-ng-click="fetchFeed()">Start Over</button>
                   </div>
                 </div>
               </div>
 
               <div data-ng-show="status === 'Completed'">
-                <div class="cc-page-provision-feedback">
+
+                <div class="cc-notice-box cc-notice-success cc-radius">
                   Success : <span data-ng-bind="course_site.short_name"></span> site created
                   <i class="cc-left fa fa-check-circle cc-icon-green"></i>
                 </div>
-                <strong>
-                  You may now:
-                </strong>
+
+                <div class="cc-page-provision-success-intro">
+                  <strong>You may now:</strong>
+                </div>
                 <ul class="cc-page-provision-choices">
                   <li>Go to <a data-ng-href="{{course_site.url}}" data-ng-bind="course_site.short_name"></a> to finish setting up your site.</li>
                   <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>

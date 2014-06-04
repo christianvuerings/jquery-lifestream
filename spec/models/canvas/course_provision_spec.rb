@@ -174,12 +174,12 @@ describe Canvas::CourseProvision do
 
     it "returns nil if instructor does not have access to CCNs" do
       expect(subject).to receive(:user_authorized?).and_return(false)
-      expect(subject.create_course_site("fall-2013", ["1136", "1204"])).to be_nil
+      expect(subject.create_course_site("Intro to Biomedicine", "BIOENG 101 LEC", "fall-2013", ["1136", "1204"])).to be_nil
     end
 
     it "returns canvas course provision job id" do
       expect(subject).to receive(:user_authorized?).and_return(true)
-      result = subject.create_course_site("fall-2013", ["1136", "1204"])
+      result = subject.create_course_site("Intro to Biomedicine", "BIOENG 101 LEC", "fall-2013", ["1136", "1204"])
       expect(result).to eq 'canvas.courseprovision.1234.1383330151057'
     end
 
@@ -187,7 +187,7 @@ describe Canvas::CourseProvision do
       expect(cpcs).to receive(:save).ordered.and_return(true)
       expect(cpcs).to receive(:background).ordered.and_return(cpcs)
       expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
-      result = subject.create_course_site("fall-2013", ["1136", "1204"])
+      result = subject.create_course_site("Intro to Biomedicine", "BIOENG 101 LEC", "fall-2013", ["1136", "1204"])
     end
   end
 

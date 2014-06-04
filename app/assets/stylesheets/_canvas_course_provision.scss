@@ -2,6 +2,10 @@
   background: $cc-color-white;
   padding: 10px 20px;
 
+  .cc-button {
+    padding: 10px;
+  }
+
   h2, h3 {
     color: $bc-color-headers;
     font-family: $bc-header-font-family;
@@ -26,8 +30,28 @@
     padding: 0;
   }
 
-  .cc-page-provision-pending-request {
+  .cc-page-button-grey {
+    @include background(linear-gradient($bc-color-button-grey-gradient-1, $bc-color-button-grey-gradient-2));
+    color: $bc-color-button-grey-text;
+    border: 1px solid $bc-color-button-grey-border;
+  }
+
+  .cc-page-provision-confirmation {
+    @include background(linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2));
+    border-radius: 5px;
+    padding: 20px;
+    .cc-page-provision-roster-list {
+      list-style-type: disc;
+      margin: 10px 0 0 39px;
+    }
+  }
+
+  .cc-page-provision-site-labels-form {
     margin-top: 10px;
+  }
+
+  .cc-page-provision-pending-request {
+    margin: 15px auto;
   }
 
   .cc-page-provision-no-courses {
@@ -39,6 +63,7 @@
   }
 
   .cc-page-provision-select-rosters {
+    padding: 10px 0;
     border-top: 1px solid $bc-color-top-border;
   }
 
@@ -46,7 +71,17 @@
     padding-left: 18px;
   }
 
+  .cc-page-provision-step-options {
+    padding: 20px 0;
+  }
+
   .cc-page-provision-roster-area {
+    background: $bc-color-roster-background;
+    border: 1px solid $bc-color-roster-background;
+    padding: 10px 5px;
+  }
+
+  .cc-page-provision-form-actions {
     background: $bc-color-roster-background;
     border: 1px solid $bc-color-roster-background;
     padding: 10px 5px;
@@ -69,6 +104,10 @@
     }
   }
 
+  .cc-page-provision-success-intro {
+    margin: 15px 0 0;
+  }
+
   .cc-page-provision-choices {
     overflow: hidden;
     li {
@@ -83,14 +122,42 @@
     }
   }
 
-  .cc-page-provision-feedback {
-    padding: 5px 0 15px;
+  .cc-page-provision-error {
+    background-color: $bc-color-notice-red-bg;
+    border: 1px solid $bc-color-notice-red-border;
+    border-radius: 5px;
+    padding: 20px;
     i {
       margin-right: 5px;
     }
     > div {
       margin-top: 5px;
     }
+    p {
+      color: $bc-color-headers;
+      font-size: 15px;
+      margin: 0 10px 10px 0;
+    }
+    ul {
+      font-size: 15px;
+      margin: 5px 20px 5px;
+      list-style: disc inside none;
+    }
+  }
+
+  .cc-page-provision-error-header {
+    color: $bc-color-notice-red-header;
+    font-size: 17px;
+  }
+
+  .cc-page-provision-error-icon {
+    color: $bc-color-notice-red-header;
+    font-size: 17px;
+    line-height: 27px;
+  }
+
+  .cc-page-provision-error-notice {
+    background-color: $bc-color-notice-red-bg;
   }
 
   .cc-page-provision-section-label {
@@ -131,12 +198,12 @@
     margin: 5px 0 0 23px;
   }
 
-  .cc-page-provision-create-site-button {
-    margin: 0 0 0 23px;
+  .cc-page-provision-form-button {
+    @include background(linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2));
   }
 
   .cc-page-provision-progress-bar-container {
-    margin: 25px auto;
+    margin: 35px auto;
     width: 75%;
   }
 

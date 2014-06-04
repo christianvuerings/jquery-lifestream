@@ -84,6 +84,17 @@
       }
     };
 
+    /**
+     * Send a message triggering the parent page to scroll to the top
+     */
+    var iframeScrollToTop = function() {
+      if (isInIframe) {
+        iframePostMessage({
+          scrollToTop: true
+        });
+      }
+    };
+
     // Expose methods
     return {
       changeControllerName: changeControllerName,
@@ -91,7 +102,8 @@
       preventBubble: preventBubble,
       redirect: redirect,
       setTitle: setTitle,
-      supportsLocalStorage: supportsLocalStorage
+      supportsLocalStorage: supportsLocalStorage,
+      iframeScrollToTop: iframeScrollToTop
     };
 
   });

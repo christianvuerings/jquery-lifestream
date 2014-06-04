@@ -1,8 +1,14 @@
 /* bCourses Colors */
+$bc-color-button-grey-gradient-1: #fefefe;
+$bc-color-button-grey-gradient-2: #ececec;
+$bc-color-button-grey-text: #464646;
+$bc-color-button-grey-border: #d0d0d0;
 $bc-color-dark-blue: #0e7eb8;
 $bc-color-error-border: #eed3d7;
 $bc-color-error-background: #f2dede;
 $bc-color-error-foreground: #b94a48;
+$bc-color-form-button-gradient1: #07c8fd;
+$bc-color-form-button-gradient2: #03a5e1;
 $bc-color-grey: #cccccc;
 $bc-color-headers: #424242;
 $bc-color-help-link-blue: #2274A7;
@@ -10,8 +16,13 @@ $bc-color-light-blue: #37c9ff;
 $bc-color-medium-blue: #028ed6;
 $bc-color-notice-default: #888888;
 $bc-color-notice-info: #3a87ad;
+$bc-color-notice-red-bg: #f2dede;
+$bc-color-notice-red-border: #eed3d7;
+$bc-color-notice-red-header: #b94a48;
 $bc-color-notice-success: #468847;
 $bc-color-notice-warning: #f9a42b;
+$bc-color-notice-yellow-bg-gradient1: #fcf0d1;
+$bc-color-notice-yellow-bg-gradient2: #f1e2b0;
 $bc-color-off-black: #333333;
 $bc-color-progressbar-bg-gradient1: #ffffff;
 $bc-color-progressbar-bg-gradient2: #c5d8e2;
@@ -37,4 +48,56 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: #fff;
     min-height: 570px;
   }
+
+  .cc-notice-box {
+    color: $bc-color-white;
+    background-color: $bc-color-notice-default;
+    border: none;
+    display: block;
+    padding: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    i {
+      margin-right: 5px;
+    }
+    .cc-close-button {
+      &:hover {
+        text-decoration: none;
+      }
+      font-size: 20px;
+      background-color: transparent;
+    }
+    .cc-notice-close-button {
+      .small {
+        margin: 0;
+        padding: 0;
+      }
+      display: inline-block;
+      float: right;
+    }
+  }
+
+  .cc-radius {
+    border-radius: 3px;
+  }
+
+  .cc-notice-success {
+    color: $bc-color-success-foreground;
+    background-color: $bc-color-success-background;
+    border: 1px solid $bc-color-success-border;
+  }
+
+  .cc-notice-warning {
+    color: $bc-color-warning-foreground;
+    background-color: $bc-color-warning-background;
+    border: 1px solid $bc-color-warning-border;
+  }
+
+  .cc-notice-error {
+    color: $bc-color-error-foreground;
+    background-color: $bc-color-error-background;
+    border: 1px solid $bc-color-error-border;
+  }
+
 }

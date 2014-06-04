@@ -38,12 +38,12 @@ module Canvas
       instance_key
     end
 
-    def create_course_site(term_slug, ccns)
+    def create_course_site(site_name, site_course_code, term_slug, ccns)
       return nil unless user_authorized?
       working_uid = @admin_acting_as || @uid
       cpcs = Canvas::ProvideCourseSite.new(working_uid)
       cpcs.save
-      cpcs.background.create_course_site(term_slug, ccns, @admin_by_ccns.present?)
+      cpcs.background.create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
       self.class.expire instance_key unless @admin_by_ccns
       cpcs.job_id
     end
