@@ -62,14 +62,6 @@ module Finaid
         url = document.css("Supplemental Usage Content[Type='URL']").text.strip
         url = "https://myfinaid.berkeley.edu" if url.blank?
 
-        begin
-          status = decode_status(date, document.css("Status").text.strip)
-          next if status.nil?
-        rescue ArgumentError
-          logger.error "Unable to decode finAid status for document: #{document.inspect} date: #{date.inspect}, status: #{status.inspect}"
-          next
-        end
-
         result = {
           id: '',
           source: "Financial Aid",
@@ -81,15 +73,12 @@ module Finaid
           term_year: academic_year
         }
 
-        if (status.values.none?)
-          result[:type] = "alert"
-          result[:status] = "Action required, missing document"
-        elsif (status[:received] && !status[:reviewed])
-          result[:type] = "financial"
-          result[:status] = "No action required, document received not yet reviewed"
-        elsif (status.values.all?)
-          result[:type] = "message"
-          result[:status] = "No action required, document reviewed and processed"
+        begin
+          raw_status = document.css("Status").text.strip
+          append_status(date, raw_status, result)
+        rescue ArgumentError
+          logger.error "Unable to decode finAid status for document: #{document.inspect} date: #{date.inspect}, status: #{status.inspect}"
+          next
         end
 
         activities << result
@@ -134,27 +123,34 @@ module Finaid
       end
     end
 
-    def decode_status(date, status)
-      if date.blank? && (status.blank? || status == 'Q')
-        {
-          received: false,
-          reviewed: false,
-        }
+    def append_status(date, status, result)
+      if status == 'Q' || (date.blank? && status.blank?)
+        result[:type] = 'alert'
+        result[:status] = 'Action required, missing document'
+        result[:date] = ''
       elsif date.present? && status == 'N'
-        {
-          received: true,
-          reviewed: false,
-        }
-      elsif date.present? && (status.blank? || status == "P")
-        {
-          received: true,
-          reviewed: true,
-        }
+        result[:type] = 'financial'
+        result[:status] = 'No action required, document received not yet reviewed'
+      elsif date.present? && (status.blank? || status == 'M' || status == 'P' || status == 'W')
+        result[:type] = 'message'
+        result[:status] = 'No action required, document reviewed and processed'
+      elsif status == 'R'
+        result[:type] = 'alert'
+        result[:status] = 'Action required, document received and returned'
+      elsif status == 'I'
+        result[:type] = 'alert'
+        result[:status] = 'Action required, document received and incomplete'
+      elsif status == 'U'
+        result[:type] = 'alert'
+        result[:status] = 'Action required, document received and unsigned'
+      elsif status == 'X'
+        result[:type] = 'alert'
+        result[:status] = 'Action required, document received and on hold'
       elsif ['W'].include? status
         logger.info("Ignore documents with \"#{status}\" status")
         nil
       else
-        raise ArgumentError, "Cannot decode date: #{date} status: #{status}"
+        raise ArgumentError, "Cannot decode status: #{date} status: #{status}"
       end
     end
 
