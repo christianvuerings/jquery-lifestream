@@ -12,13 +12,13 @@
         <span data-ng-bind="selectedCourse.course_code"></span>
         <div class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
           <ul class="cc-button-group cc-even-{{selectOptions.length}}" role="tablist">
-            <li data-ng-repeat="select_option in selectOptions">
+            <li data-ng-repeat="selectOption in selectOptions">
               <button class="cc-button"
-                data-ng-click="switchSelectedOption(select_option)"
-                data-ng-class="{'cc-button-selected cc-button-selected-roster':(currentSelection === select_option)}"
-                aria-selected="{{currentSelection === select_option}}"
+                data-ng-click="switchSelectedOption(selectOption)"
+                data-ng-class="{'cc-button-selected cc-button-selected-roster':(currentSelection === selectOption)}"
+                aria-selected="{{currentSelection === selectOption}}"
                 role="tab"
-                data-ng-bind="select_option">
+                data-ng-bind="selectOption">
               </button>
             </li>
           </ul>
