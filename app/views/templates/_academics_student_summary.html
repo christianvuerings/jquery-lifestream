@@ -48,7 +48,7 @@
                 <th width="25%">General</th>
                 <th width="25%" class="cc-table-subheader" scope="col">Standing</th>
                 <th width="25%" class="cc-table-subheader" scope="col" data-ng-if="gpaUnits.totalUnits !== null">Units</th>
-                <th class="cc-table-subheader" scope="col" data-ng-if="gpaUnits.cumulative_gpa !== null">GPA</th>
+                <th class="cc-table-subheader" scope="col" data-ng-if="gpaUnits.cumulativeGpa !== null">GPA</th>
               </tr>
             </thead>
             <tbody>
@@ -56,7 +56,7 @@
                 <td></td>
                 <td><strong data-ng-bind="collegeAndLevel.standing"></strong></td>
                 <td data-ng-if="gpaUnits.totalUnits !== null"><strong data-ng-bind="gpaUnits.totalUnits"></strong></td>
-                <td data-ng-if="gpaUnits.cumulative_gpa !== null"><strong data-ng-bind="gpaUnits.cumulative_gpa"></strong></td>
+                <td data-ng-if="gpaUnits.cumulativeGpa !== null"><strong data-ng-bind="gpaUnits.cumulativeGpa"></strong></td>
               </tr>
             </tbody>
           </table>
