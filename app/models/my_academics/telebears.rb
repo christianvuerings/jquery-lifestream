@@ -23,7 +23,7 @@ module MyAcademics
         term: term,
         year: year,
         slug: slug,
-        adviser_code_required: adviser_code_required,
+        adviserCodeRequired: adviser_code_required,
         phases: phases.compact,
         url: "http://registrar.berkeley.edu/tbfaqs.html"
       }
