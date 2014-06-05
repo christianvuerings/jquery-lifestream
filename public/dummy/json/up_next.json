@@ -17,7 +17,7 @@
         "epoch": 1352160000,
         "dateTime": "2012-11-17"
       },
-      "is_all_day": true,
+      "isAllDay": true,
       "emitter": "Google Calendar"
     },
     {
@@ -33,7 +33,7 @@
         "epoch": 1352142900,
         "dateTime": "2012-11-16T19:30:00-08:00"
       },
-      "is_all_day": false,
+      "isAllDay": false,
       "emitter": "Google Calendar"
     },
     {
@@ -48,7 +48,7 @@
         "epoch": 1352142900,
         "dateTime": "2012-11-16T21:00:00-08:00"
       },
-      "is_all_day": false,
+      "isAllDay": false,
       "emitter": "Google Calendar"
     },
     {
@@ -63,7 +63,7 @@
         "epoch": 1353062800,
         "dateTime": "2012-11-16T22:30:00-08:00"
       },
-      "is_all_day": false,
+      "isAllDay": false,
       "emitter": "Google Calendar"
     },
     {
@@ -78,7 +78,7 @@
         "epoch": 1353082800,
         "dateTime": "2012-11-17T00:00:00-08:00"
       },
-      "is_all_day": false,
+      "isAllDay": false,
       "emitter": "Google Calendar"
     }
   ],

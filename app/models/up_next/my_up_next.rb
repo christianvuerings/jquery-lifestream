@@ -90,9 +90,9 @@ module UpNext
         result[:start] = format_date(parse_date(start_date))
         result[:end] = format_date(parse_date(end_date))
         if start_date["date"] && end_date["date"]
-          result[:is_all_day] = true
+          result[:isAllDay] = true
         else
-          result[:is_all_day] = false
+          result[:isAllDay] = false
         end
       rescue => e
         logger.warn "#{self.class.name}: #{e} - Error handling date values START_DATE=#{start_date} END_DATE=#{end_date}"
@@ -125,7 +125,7 @@ module UpNext
           formatted_entry.merge! handle_location(entry["location"])
           formatted_entry.merge! handle_start_end_all_day(entry["start"], entry["end"])
 
-          if formatted_entry[:is_all_day]
+          if formatted_entry[:isAllDay]
             day_events.push(formatted_entry)
           else
             timed_events.push(formatted_entry)
