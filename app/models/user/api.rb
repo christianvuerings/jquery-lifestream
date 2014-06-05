@@ -98,7 +98,7 @@ module User
         :isViewer => current_user.is_viewer?,
         :firstLoginAt => @first_login_at,
         :first_name => @first_name,
-        :full_name => @first_name + ' ' + @last_name,
+        :fullName => @first_name + ' ' + @last_name,
         :isGoogleReminderDismissed => is_google_reminder_dismissed,
         :hasCanvasAccount => Canvas::Proxy.has_account?(@uid),
         :hasGoogleAccessToken => GoogleApps::Proxy.access_granted?(@uid),
