@@ -1,11 +1,11 @@
 <script type="text/ng-template" id="templates/textbook.html">
-  <div data-ng-repeat="books_category in books.bookDetails" ng-class="{'cc-textbooks-last-section':$last}" class="cc-clearfix-container cc-textbooks-category">
-    <h3 data-ng-if="books_category.books" data-ng-bind="books_category.type"></h3>
-    <p data-ng-if="books_category.hasChoices">
+  <div data-ng-repeat="booksCategory in books.bookDetails" ng-class="{'cc-textbooks-last-section':$last}" class="cc-clearfix-container cc-textbooks-category">
+    <h3 data-ng-if="booksCategory.books" data-ng-bind="booksCategory.type"></h3>
+    <p data-ng-if="booksCategory.hasChoices">
       This section has a choice of titles. Please visit the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a> to see them all.
     </p>
-    <div data-ng-if="books_category.books && !books_category.hasChoices">
-      <div data-ng-repeat="book in books_category.books" ng-class="{'cc-textbooks-last':$last}" class="cc-textbooks-list">
+    <div data-ng-if="booksCategory.books && !booksCategory.hasChoices">
+      <div data-ng-repeat="book in booksCategory.books" ng-class="{'cc-textbooks-last':$last}" class="cc-textbooks-list">
         <div class="small-4 columns rows" data-ng-if="book.image">
           <img class="cc-textbooks-image" data-ng-attr-alt="Textbook cover for {{book.title}}" data-ng-src="{{book.image}}" width="110" height="180"></img>
         </div>
