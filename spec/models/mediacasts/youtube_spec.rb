@@ -19,6 +19,14 @@ describe Mediacasts::Youtube do
     expect(proxy_response[:videos][0][:link]).to eq link
   end
 
+  it 'should not explode on a feed that has a private video', :textext => true do
+    proxy = Mediacasts::Youtube.new({:playlist_id => '-XXv-cvA_iBapEvcNwRuTJVt6BPpcMaJ'})
+    proxy_response = proxy.get
+    title = 'Computer Science 170 - Lecture 40'
+    expect(proxy_response[:videos][0][:title]).to eq title
+    expect(proxy_response[:videos].length).to eq 34
+  end
+
   context "proper caching behavior", :textext => true do
     include_context 'it writes to the cache'
     it "should get and cache json on a successful request", :testext => true do
