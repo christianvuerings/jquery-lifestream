@@ -47,6 +47,7 @@ module Mediacasts
       return videos unless data && data['feed'] && data['feed']['entry']
       entries = data['feed']['entry']
       entries.each do |entry|
+        next unless entry['media$group']['media$title'] && entry['media$group']['media$content'] && entry['media$group']['media$content'][0]
         title = entry['media$group']['media$title']['$t']
         url = entry['media$group']['media$content'][0]['url']
         url.gsub!('/v/', '/embed/')
