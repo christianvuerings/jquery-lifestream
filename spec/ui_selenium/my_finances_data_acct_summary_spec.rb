@@ -14,7 +14,7 @@ require_relative 'pages/my_finances_details_page'
 
 describe 'My Finances', :testui => true do
 
-  if ENV["UI_TEST"] == true
+  if ENV["UI_TEST"]
 
     begin
       driver = WebDriverUtils.driver

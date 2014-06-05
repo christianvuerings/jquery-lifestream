@@ -10,7 +10,7 @@ require_relative 'util/user_utils'
 
 describe 'Opting out', :testui => true do
 
-  if ENV["UI_TEST"] == true
+  if ENV["UI_TEST"]
 
     before(:each) do
       @driver = WebDriverUtils.driver

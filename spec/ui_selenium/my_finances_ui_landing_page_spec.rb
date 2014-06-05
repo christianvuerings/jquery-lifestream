@@ -14,7 +14,7 @@ require_relative 'pages/settings_page'
 
 describe 'My Finances landing page', :testui => true do
 
-  if ENV["UI_TEST"] == true
+  if ENV["UI_TEST"]
 
     before(:all) do
       @driver = WebDriverUtils.driver

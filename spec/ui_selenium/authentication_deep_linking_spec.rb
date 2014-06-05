@@ -13,7 +13,7 @@ require_relative 'pages/my_finances_landing_page'
 
 describe 'Logging in with deep linking', :testui => true do
 
-  if ENV["UI_TEST"] == true
+  if ENV["UI_TEST"]
 
     user = UserUtils.oski_username
     password = UserUtils.oski_password
