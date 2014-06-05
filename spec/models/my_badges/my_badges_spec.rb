@@ -36,10 +36,10 @@ describe "MyBadges" do
       entry[:allDayEvent]
     }.size.should == 1
     mangled_feed[:badges]["bcal"][:items].select { |entry|
-      entry[:change_state] if entry[:change_state] == "new"
+      entry[:changeState] if entry[:changeState] == "new"
     }.size.should == 1
     mangled_feed[:badges]["bcal"][:items].select { |entry|
-      entry[:change_state] if entry[:change_state] == "created"
+      entry[:changeState] if entry[:changeState] == "created"
     }.size.should == 1
   end
 
@@ -76,13 +76,13 @@ describe "MyBadges" do
       source_value[:items].kind_of?(Enumerable).should be_true
       source_value[:items].each do |feed_items|
         if %w(bcal bdrive).include? source_key
-          feed_items[:change_state].blank?.should_not be_true
+          feed_items[:changeState].blank?.should_not be_true
         end
         if source_key == "bcal"
           %w(startTime endTime).each do |required_key|
             feed_items[required_key.to_sym].blank?.should_not be_true
           end
-          if feed_items[:change_state] == "new"
+          if feed_items[:changeState] == "new"
             feed_items[:editor].blank?.should_not be_true
           end
         end
