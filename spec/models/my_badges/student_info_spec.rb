@@ -52,7 +52,7 @@ describe "MyBadges::StudentInfo" do
     end
 
     it "bearfacts API should be offline" do
-      subject[:regBlock][:unavailable].should be_true
+      subject[:regBlock][:errored].should be_true
     end
 
     it "needsAction should be false" do
@@ -76,7 +76,7 @@ describe "MyBadges::StudentInfo" do
     end
 
     it "bearfacts API should be online" do
-      subject[:regBlock][:unavailable].should be_false
+      subject[:regBlock][:errored].should be_false
     end
 
     it "needsAction should be true" do

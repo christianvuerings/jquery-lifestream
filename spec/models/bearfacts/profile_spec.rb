@@ -29,7 +29,7 @@ describe Bearfacts::Profile do
     after(:each) { WebMock.reset! }
     it 'returns an error status and a nil XML document' do
       response = Bearfacts::Profile.new({:user_id => "61889", :fake => false}).get
-      expect(response[:unavailable]).to be_true
+      expect(response[:errored]).to be_true
       expect(response[:xml_doc]).to be_nil
     end
   end

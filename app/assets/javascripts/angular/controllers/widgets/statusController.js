@@ -23,7 +23,7 @@
       if (data.studentInfo.regBlock.activeBlocks) {
         $scope.count += data.studentInfo.regBlock.activeBlocks;
         $scope.hasAlerts = true;
-      } else if (data.studentInfo.regBlock.unavailable) {
+      } else if (data.studentInfo.regBlock.errored) {
         $scope.count++;
         $scope.hasWarnings = true;
       }

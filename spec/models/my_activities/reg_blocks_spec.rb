@@ -59,7 +59,7 @@ describe MyActivities::RegBlocks do
   end
 
   context "4xx response from bearfacts proxy" do
-    before(:each) { Bearfacts::MyRegBlocks.any_instance.stub(:get_feed).and_return({ unavailable: true }) }
+    before(:each) { Bearfacts::MyRegBlocks.any_instance.stub(:get_feed).and_return({ errored: true }) }
 
     it "should not malform the activities passed into append_reg_blocks" do
       my_activities = MyActivities::RegBlocks

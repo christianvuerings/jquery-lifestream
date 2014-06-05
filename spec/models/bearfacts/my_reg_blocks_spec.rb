@@ -10,7 +10,7 @@ describe Bearfacts::MyRegBlocks do
 
     its([:activeBlocks]) { should_not be_empty }
     its([:inactiveBlocks]) { should_not be_empty }
-    its([:unavailable]) { should be_false }
+    its([:errored]) { should be_false }
     it "active status and non-nil type on active blocks" do
       subject[:activeBlocks].each do |block|
         block[:status].should == "Active"
@@ -33,7 +33,7 @@ describe Bearfacts::MyRegBlocks do
 
     subject { Bearfacts::MyRegBlocks.new(61889).get_feed }
 
-    its([:unavailable]) { should be_true }
+    its([:errored]) { should be_true }
 
   end
 end

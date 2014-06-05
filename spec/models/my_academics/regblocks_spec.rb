@@ -11,7 +11,7 @@ describe "MyAcademics::Regblocks" do
     feed.empty?.should be_false
 
     oski_blocks = feed[:regblocks]
-    oski_blocks[:unavailable].should be_false
+    oski_blocks[:errored].should be_false
     oski_blocks[:activeBlocks].empty?.should be_false
     oski_blocks[:activeBlocks].each do |block|
       block[:status].should == "Active"
@@ -39,7 +39,7 @@ describe "MyAcademics::Regblocks" do
     end
 
     it "should be offline with empty blocks" do
-      subject[:unavailable].should be_true
+      subject[:errored].should be_true
       %w(activeBlocks inactiveBlocks).each { |key| subject[key.to_sym].should be_blank }
     end
   end

@@ -82,7 +82,7 @@ describe "MyAcademics::CollegeAndLevel" do
     end
     it 'indicates a server failure' do
       MyAcademics::CollegeAndLevel.new(uid).merge(feed)
-      expect(feed[:college_and_level][:unavailable]).to be_true
+      expect(feed[:college_and_level][:errored]).to be_true
     end
  end
 
@@ -100,14 +100,14 @@ describe "MyAcademics::CollegeAndLevel" do
     end
     context 'when ex-student with empty BearFacts student profile' do
       let(:xml_body) {nil}
-      its([:unavailable]) {should be_false}
+      its([:errored]) {should be_false}
       its([:empty]) {should be_true}
     end
     context 'when Bearfacts student profile lacks key data' do
       let(:xml_body) {
         "<studentProfile xmlns=\"urn:berkeley.edu/babl\" termName=\"Spring\" termYear=\"2014\" asOfDate=\"May 27, 2014 12:00 AM\"><studentType>STUDENT</studentType><noProfileDataFlag>false</noProfileDataFlag><studentGeneralProfile><studentName><firstName>OWPRQTOPEW</firstName><lastName>SEBIRTFEIWB</lastName></studentName></studentGeneralProfile></studentProfile>"
       }
-      its([:unavailable]) {should be_false}
+      its([:errored]) {should be_false}
       its([:empty]) {should be_true}
     end
   end

@@ -24,7 +24,7 @@ module Bearfacts
       elsif raw_response[:statusCode] == 400
         parsed_response[:noStudentId] = true
       else
-        parsed_response[:unavailable] = true
+        parsed_response[:errored] = true
       end
       parsed_response
     end

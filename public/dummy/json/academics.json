@@ -1,8 +1,8 @@
 {
   "college_and_level": {
     "empty": "false",
+    "errored": false,
     "noStudentId": "false",
-    "unavailable": false,
     "standing": "Undergraduate",
     "level": "Senior",
     "college": "ENGR",
@@ -27,7 +27,7 @@
     }
   ],
   "regblocks": {
-    "unavailable": false,
+    "errored": false,
     "activeBlocks": [
       {
         "status": "Active",

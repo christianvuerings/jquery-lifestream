@@ -6,7 +6,7 @@
       </div>
 
       <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!college_and_level.standing">
-        <div data-ng-if="college_and_level.unavailable">
+        <div data-ng-if="college_and_level.errored">
           There was a problem reaching campus services.
           Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
         </div>
@@ -157,10 +157,10 @@
             </table>
           </div>
 
-          <div data-ng-if="!regblocks.unavailable" data-ng-include src="'templates/academics_regblocks.html'"></div>
-          <div data-ng-if="regblocks.unavailable">
+          <div data-ng-if="!regblocks.errored" data-ng-include src="'templates/academics_regblocks.html'"></div>
+          <div data-ng-if="regblocks.errored">
             <div class="row collapse">
-              <div class="medium-6 columns end"><i class="fa fa-exclamation-triangle cc-unavailable"></i>Block message is currently unavailable.</div>
+              <div class="medium-6 columns end"><i class="fa fa-exclamation-triangle cc-errored"></i>Block message is currently unavailable.</div>
             </div>
           </div>
 

@@ -543,7 +543,7 @@
       "needsAction": false
     },
     "regBlock": {
-      "unavailable": false,
+      "errored": false,
       "needsAction": true,
       "activeBlocks": 2
     }
