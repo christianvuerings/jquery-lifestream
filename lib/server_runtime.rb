@@ -17,11 +17,11 @@ class ServerRuntime
       if git_file
         rev = git_file.read.strip
         Rails.logger.info "#{self.name} Using git version #{rev} from /versions/git.txt"
-        settings["git_commit"] = rev
+        settings["gitCommit"] = rev
       end
     rescue
       Rails.logger.info "#{self.name} Looking up git version from git command"
-      settings["git_commit"] = `git log --pretty=format:'%H' -n 1`
+      settings["gitCommit"] = `git log --pretty=format:'%H' -n 1`
     end
 
     migrations = Dir.glob("#{Rails.root}/db/migrate/*.rb")

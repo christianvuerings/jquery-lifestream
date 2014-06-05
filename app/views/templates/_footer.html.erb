@@ -28,7 +28,7 @@
       <li>Current DB Schema: <span data-ng-bind="versions.currentDbSchema"></span></li>
       <li>Previous Release DB Schema: <span data-ng-bind="versions.previousReleaseDbSchema"></span></li>
       <li>Up Since: <span data-ng-bind="firstVisited"></span></li>
-      <li>Links: <a data-ng-href="https://github.com/ets-berkeley-edu/calcentral/commit/{{git_commit}}">Git commit</a>, <a href="/tools/styles">Styles Reference</a></li>
+      <li>Links: <a data-ng-href="https://github.com/ets-berkeley-edu/calcentral/commit/{{gitCommit}}">Git commit</a>, <a href="/tools/styles">Styles Reference</a></li>
     </ul>
     <button class="cc-button cc-button-blue" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>
     <div class="cc-footer-confirmation" data-ng-if="deleteSelf">Are you sure?

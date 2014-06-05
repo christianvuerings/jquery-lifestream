@@ -12,7 +12,7 @@ module Cache
             *Settings.cache.servers,
             {
               :expires_in => Settings.cache.maximum_expires_in,
-              :namespace => ServerRuntime.get_settings["git_commit"],
+              :namespace => ServerRuntime.get_settings["gitCommit"],
               :race_condition_ttl => Settings.cache.race_condition_ttl
             }
           )
@@ -21,7 +21,7 @@ module Cache
           config.cache_store = ActiveSupport::Cache.lookup_store(
             :memory_store,
             :size => 16.megabytes,
-            :namespace => ServerRuntime.get_settings["git_commit"])
+            :namespace => ServerRuntime.get_settings["gitCommit"])
       end
 
       config.cache_store.logger = Logger.new("#{CalcentralLogging.log_root}/cache_#{Time.now.strftime('%Y-%m-%d')}.log")
