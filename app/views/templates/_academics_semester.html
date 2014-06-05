@@ -47,7 +47,7 @@
                       </div>
                     </td>
                     <td data-ng-bind="course.title"></td>
-                    <td data-ng-bind="course.grade_option"></td>
+                    <td data-ng-bind="course.gradeOption"></td>
                     <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
                   </tr>
                 </tbody>
@@ -261,7 +261,7 @@
                     <td class="cc-table-right cc-table-right-spacing" data-ng-bind="estimated.units | number:1"></td>
                     <td data-ng-if="!estimated.units">--</td>
                     <td>
-                      <span data-ng-if="estimated.units === '0' && selectedSemester.timeBucket === 'current'" data-ng-bind="estimated.grade_option"></span>
+                      <span data-ng-if="estimated.units === '0' && selectedSemester.timeBucket === 'current'" data-ng-bind="estimated.gradeOption"></span>
                       <select
                         data-ng-if="estimated.units && !estimated.grade && estimated.units !== '0'"
                         data-ng-model="estimated.estimatedGrade"

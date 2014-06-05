@@ -59,7 +59,7 @@
               </table>
             </div>
 
-            <h3 data-ng-if="selectedCourseCountSchedules || selectedCourse.units || selectedCourse.grade_option">Class Info</h3>
+            <h3 data-ng-if="selectedCourseCountSchedules || selectedCourse.units || selectedCourse.gradeOption">Class Info</h3>
 
             <h4 data-ng-hide="isInstructorOrGsi">Course Offering</h4>
 
@@ -74,9 +74,9 @@
                     <td data-ng-if="section.units" data-ng-bind="section.units  | number:1"></td>
                     <td data-ng-if="!section.units">--</td>
                   </tr>
-                  <tr data-ng-if="section.grade_option">
+                  <tr data-ng-if="section.gradeOption">
                     <th scope="row">Grading</th>
-                    <td data-ng-bind="section.grade_option"></td>
+                    <td data-ng-bind="section.gradeOption"></td>
                   </tr>
                 </tbody>
               </table>

@@ -20,7 +20,7 @@ module MyAcademics
           class_item = class_info(course)
           class_item[:sections].each do |section|
             if section[:is_primary_section]
-              section[:grade_option] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
+              section[:gradeOption] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
               section[:units] = section[:unit]
             end
           end

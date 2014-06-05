@@ -242,7 +242,7 @@
           // Copy the first section's grading information to the course for
           // easier processing later.
           if (primariesCount === 0) {
-            course.grade_option = section.grade_option;
+            course.gradeOption = section.gradeOption;
             course.units = section.units;
           }
           primariesCount++;
@@ -265,7 +265,7 @@
             course.sections = [];
             hasPrimary = false;
           }
-          course.grade_option = section.grade_option;
+          course.gradeOption = section.gradeOption;
           course.units = section.units;
           hasPrimary = true;
         }
@@ -442,7 +442,7 @@
             angular.forEach(course.sections, function(section) {
               if (section.is_primary_section) {
                 var transcriptRow = {
-                  'gradeOption': section.grade_option,
+                  'gradeOption': section.gradeOption,
                   'units': section.units
                 };
                 if (transcriptRow.gradeOption === 'Letter') {

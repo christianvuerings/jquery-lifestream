@@ -466,7 +466,7 @@
             {
               "ccn": "07309",
               "enroll_limit": "105",
-              "grade_option": "Letter",
+              "gradeOption": "Letter",
               "instruction_format": "LEC",
               "instructors": [],
               "is_primary_section": true,
@@ -516,7 +516,7 @@
           "sections": [
             {
               "ccn": "07309",
-              "grade_option": "Letter",
+              "gradeOption": "Letter",
               "instruction_format": "LEC",
               "is_primary_section": true,
               "section_label": "LEC 003",
@@ -572,7 +572,7 @@
           "sections": [
             {
               "ccn": "16171",
-              "grade_option": "Letter",
+              "gradeOption": "Letter",
               "instruction_format": "LEC",
               "is_primary_section": true,
               "section_label": "LEC 001",
@@ -608,7 +608,7 @@
           "sections": [
             {
               "ccn": "72910",
-              "grade_option": "Letter",
+              "gradeOption": "Letter",
               "instruction_format": "LAB",
               "is_primary_section": true,
               "section_label": "LAB 002",
@@ -631,7 +631,7 @@
             },
             {
               "ccn": "72945",
-              "grade_option": "P/NP",
+              "gradeOption": "P/NP",
               "instruction_format": "LAB",
               "is_primary_section": true,
               "section_label": "LAB 104",
@@ -671,7 +671,7 @@
           "sections": [
             {
               "ccn": "07366",
-              "grade_option": "Letter",
+              "gradeOption": "Letter",
               "instruction_format": "DIS",
               "is_primary_section": true,
               "section_label": "DIS 201",
@@ -702,7 +702,7 @@
           "sections": [
             {
               "ccn": "16171",
-              "grade_option": "Letter",
+              "gradeOption": "Letter",
               "instruction_format": "LEC",
               "is_primary_section": true,
               "section_label": "LEC 001",
@@ -733,7 +733,7 @@
           "sections": [
             {
               "ccn": "78171",
-              "grade_option": "Letter",
+              "gradeOption": "Letter",
               "instruction_format": "FLD",
               "is_primary_section": true,
               "section_label": "FLD 004",
@@ -749,7 +749,7 @@
             },
             {
               "ccn": "78172",
-              "grade_option": "P/NP",
+              "gradeOption": "P/NP",
               "instruction_format": "FLD",
               "is_primary_section": true,
               "section_label": "FLD 015",
