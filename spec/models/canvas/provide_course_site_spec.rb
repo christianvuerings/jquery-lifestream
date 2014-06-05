@@ -142,7 +142,7 @@ describe Canvas::ProvideCourseSite do
 
     it "raises exception if term slug not present in import data set" do
       subject.instance_eval { @import_data['term_slug'] = nil }
-      expect { subject.prepare_users_courses_list }.to raise_error(RuntimeError, "Unable to prepare course list. Term slug not present.")
+      expect { subject.prepare_users_courses_list }.to raise_error(RuntimeError, "Unable to prepare course list. Term code not present.")
     end
 
     it "raises exception if course control numbers are not present in import data set" do
