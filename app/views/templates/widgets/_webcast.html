@@ -41,15 +41,24 @@
             <div data-ng-show="currentSelection === 'Audio'">
               <div data-ng-show="audio.length">
                 <div class="cc-select cc-widget-webcast-select">
-                  <select data-ng-model="selectedAudio" data-ng-options="item.date.epoch * 1000 | date:'EEE, MMMM d' for item in audio"></select>
+                  <select data-ng-model="selectedAudio" data-ng-options="item.title for item in audio"></select>
                 </div>
                 <div class="cc-widget-webcast-audio" controls>
                   <div data-cc-audio-directive="selectedAudio.playUrl"></div>
                 </div>
               </div>
-              <div data-ng-if="itunes.audio" class="cc-widget-webcast-itunes">
-                <a data-ng-href="{{itunes.audio}}"><i class="fa fa-apple cc-widget-webcast-apple"></i> iTunes audio</a>
-              </div>
+              <ul class="cc-widget-webcast-links">
+                <li class="cc-widget-webcast-download">
+                  <a data-ng-href="{{selectedAudio.downloadUrl}}">
+                    <i class="fa fa-download cc-widget-webcast-icon-link"></i> Download audio
+                  </a>
+                </li>
+                <li data-ng-if="itunes.audio">
+                  <a data-ng-href="{{itunes.audio}}">
+                    <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes audio
+                  </a>
+                </li>
+              </ul>
               <div data-ng-if="!audio.length && !itunes.audio" class="cc-widget-webcast-error">
                 No audio information available.
               </div>
