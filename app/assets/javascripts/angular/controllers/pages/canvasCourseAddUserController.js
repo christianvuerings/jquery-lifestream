@@ -164,7 +164,7 @@
         params: addUserParams
       }).success(function(data) {
         $scope.user_added = data.user_added;
-        $scope.user_added.full_name = submittedUser.first_name + ' ' + submittedUser.last_name;
+        $scope.user_added.fullName = submittedUser.first_name + ' ' + submittedUser.last_name;
         $scope.user_added.role_name = submittedRole.name;
         $scope.user_added.section_name = submittedSection.name;
         $scope.additionSuccessMessage = true;

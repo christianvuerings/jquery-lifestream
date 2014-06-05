@@ -5,12 +5,12 @@
         <h2>Records</h2>
       </div>
 
-      <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!college_and_level.standing">
-        <div data-ng-if="college_and_level.errored">
+      <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!collegeAndLevel.standing">
+        <div data-ng-if="collegeAndLevel.errored">
           There was a problem reaching campus services.
           Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
         </div>
-        <div data-ng-if="college_and_level.empty || college_and_level.noStudentId">
+        <div data-ng-if="collegeAndLevel.empty || collegeAndLevel.noStudentId">
           <h3>Standing</h3>
           <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
             You are not currently considered an active student.
@@ -38,7 +38,7 @@
         </div>
       </div>
 
-      <div class="cc-widget-padding" data-ng-if="college_and_level.standing">
+      <div class="cc-widget-padding" data-ng-if="collegeAndLevel.standing">
         <h3>Standing, Major and Level</h3>
 
         <div class="cc-table cc-table-top-border">
@@ -47,16 +47,16 @@
               <tr>
                 <th width="25%">General</th>
                 <th width="25%" class="cc-table-subheader" scope="col">Standing</th>
-                <th width="25%" class="cc-table-subheader" scope="col" data-ng-if="gpa_units.total_units !== null">Units</th>
-                <th class="cc-table-subheader" scope="col" data-ng-if="gpa_units.cumulative_gpa !== null">GPA</th>
+                <th width="25%" class="cc-table-subheader" scope="col" data-ng-if="gpaUnits.totalUnits !== null">Units</th>
+                <th class="cc-table-subheader" scope="col" data-ng-if="gpaUnits.cumulativeGpa !== null">GPA</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td></td>
-                <td><strong data-ng-bind="college_and_level.standing"></strong></td>
-                <td data-ng-if="gpa_units.total_units !== null"><strong data-ng-bind="gpa_units.total_units"></strong></td>
-                <td data-ng-if="gpa_units.cumulative_gpa !== null"><strong data-ng-bind="gpa_units.cumulative_gpa"></strong></td>
+                <td><strong data-ng-bind="collegeAndLevel.standing"></strong></td>
+                <td data-ng-if="gpaUnits.totalUnits !== null"><strong data-ng-bind="gpaUnits.totalUnits"></strong></td>
+                <td data-ng-if="gpaUnits.cumulativeGpa !== null"><strong data-ng-bind="gpaUnits.cumulativeGpa"></strong></td>
               </tr>
             </tbody>
           </table>
@@ -80,7 +80,7 @@
                 </th>
               </tr>
             </thead>
-            <tbody data-ng-repeat="college in college_and_level.colleges">
+            <tbody data-ng-repeat="college in collegeAndLevel.colleges">
               <tr>
                 <td></td>
                 <td><strong data-ng-bind="college.college"></strong></td>
@@ -110,9 +110,9 @@
             <tbody>
               <tr>
                 <td></td>
-                <td><strong data-ng-bind="college_and_level.level"></strong></td>
-                <td data-ng-if="isUndergraduate"><strong data-ng-bind="college_and_level.non_ap_level"></strong></td>
-                <td><strong data-ng-bind="college_and_level.future_telebears_level"></strong></td>
+                <td><strong data-ng-bind="collegeAndLevel.level"></strong></td>
+                <td data-ng-if="isUndergraduate"><strong data-ng-bind="collegeAndLevel.nonApLevel"></strong></td>
+                <td><strong data-ng-bind="collegeAndLevel.futureTelebearsLevel"></strong></td>
               </tr>
             </tbody>
           </table>

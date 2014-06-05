@@ -35,7 +35,7 @@ class MyClasses::Campus
         working_course = campus_course.deep_dup
         if split_primaries
           working_course[:id] = "#{campus_course[:id]}-#{section[:section_number]}"
-          working_course[:course_code_section] = "#{section[:instruction_format]} #{section[:section_number]}"
+          working_course[:courseCodeSection] = "#{section[:instruction_format]} #{section[:section_number]}"
         end
         if section[:waitlistPosition] && section[:waitlistPosition] > 0
           working_course[:enroll_limit] = section[:enroll_limit]

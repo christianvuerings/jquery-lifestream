@@ -49,7 +49,7 @@ module MyBadges
                   icon_class: process_icon(entry['iconLink']),
                   modified_time: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
                   editor: entry["lastModifyingUserName"],
-                  change_state: handle_change_state(entry)
+                  changeState: handle_change_state(entry)
                 }
                 response[:items] << item
               end

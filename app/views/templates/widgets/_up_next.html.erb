@@ -17,7 +17,7 @@
           data-cc-accessible-focus-directive
           data-ng-click="api.widget.toggleShow($event, items, item, 'Up Next')">
           <div class="cc-widget-list-column-left cc-widget-mycalendar-datelist-time">
-            <div data-ng-switch data-on="item.is_all_day">
+            <div data-ng-switch data-on="item.isAllDay">
               <div data-ng-switch-when="true" class="cc-widget-mycalendar-datelist-time-allday cc-text-light">all<br />day</div>
               <div data-ng-switch-when="false">
                 <div class="cc-widget-mycalendar-datelist-time cc-left">
@@ -33,7 +33,7 @@
           </div>
           <div class="cc-widget-mycalendar-more" data-ng-if="item.show">
             <div class="cc-widget-mycalendar-startend">
-              <div data-ng-switch data-on="item.is_all_day">
+              <div data-ng-switch data-on="item.isAllDay">
                 <div data-ng-switch-when="true"><p data-ng-bind="item.start.epoch * 1000 | date:'EEE, MMMM d'"></p></div>
                 <div data-ng-switch-when="false">
                   <div class="cc-widget-mycalendar-header small-3 columns">Start:</div>

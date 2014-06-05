@@ -21,7 +21,7 @@ describe CampusOracle::UserCourses do
       course[:slug].blank?.should be_false
       course[:emitter].should == 'Campus'
       course[:name].blank?.should be_false
-      expect(course[:course_code_section]).to be_blank
+      expect(course[:courseCodeSection]).to be_blank
       expect(course[:cred_cd]).to be_blank
       expect(course[:pnp_flag]).to be_blank
       expect(course[:unit]).to be_blank

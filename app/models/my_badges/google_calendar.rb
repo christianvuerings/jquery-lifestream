@@ -105,14 +105,14 @@ module MyBadges
         #only use new if the author != self
         if (entry['creator'] && entry['creator']['email'] &&
           entry['creator']['displayName'] && entry['creator']['email'] != @google_mail)
-          new_entry_hash[:change_state] = 'new'
+          new_entry_hash[:changeState] = 'new'
           new_entry_hash[:editor] = entry['creator']['displayName'] if entry['creator']['displayName']
         else
-          new_entry_hash[:change_state] = 'created'
+          new_entry_hash[:changeState] = 'created'
         end
         new_entry_hash
       else
-        { :change_state => "updated" }
+        { :changeState => "updated" }
       end
     end
 

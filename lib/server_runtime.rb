@@ -9,7 +9,7 @@ class ServerRuntime
     Rails.logger.info "#{self.name} Initializing settings"
 
     settings = {}
-    settings["first_visited"] = `date`.strip
+    settings["firstVisited"] = `date`.strip
     settings["hostname"] = `hostname -s`.strip
 
     begin
@@ -17,11 +17,11 @@ class ServerRuntime
       if git_file
         rev = git_file.read.strip
         Rails.logger.info "#{self.name} Using git version #{rev} from /versions/git.txt"
-        settings["git_commit"] = rev
+        settings["gitCommit"] = rev
       end
     rescue
       Rails.logger.info "#{self.name} Looking up git version from git command"
-      settings["git_commit"] = `git log --pretty=format:'%H' -n 1`
+      settings["gitCommit"] = `git log --pretty=format:'%H' -n 1`
     end
 
     migrations = Dir.glob("#{Rails.root}/db/migrate/*.rb")
@@ -29,8 +29,8 @@ class ServerRuntime
     settings["versions"] = {
         "api" => File.open(Rails.root.join("versions", "api.txt")).read.strip,
         "application" => File.open(Rails.root.join("versions", "application.txt")).read.strip,
-        "current_db_schema" => current_schema,
-        "previous_release_db_schema" => File.open(Rails.root.join("versions", "previous_release_db_schema.txt")).read.strip
+        "currentDbSchema" => current_schema,
+        "previousReleaseDbSchema" => File.open(Rails.root.join("versions", "previous_release_db_schema.txt")).read.strip
     }
     settings
   end

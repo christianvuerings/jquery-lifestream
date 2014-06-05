@@ -82,7 +82,7 @@ describe MyClasses::Campus do
       it 'treats them as two different classes with the same URL' do
         expect(subject[0][:id]).to_not eq subject[1][:id]
         [subject, fake_sections].transpose.each do |course, enrollment|
-          expect(course[:course_code_section]).to eq "#{enrollment[:instruction_format]} #{enrollment[:section_number]}"
+          expect(course[:courseCodeSection]).to eq "#{enrollment[:instruction_format]} #{enrollment[:section_number]}"
           expect(course[:sections].size).to eq 1
           expect(course[:sections][0][:ccn]).to eq enrollment[:ccn]
           if (enrollment[:waitlistPosition] > 0)

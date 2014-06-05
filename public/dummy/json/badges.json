@@ -32,7 +32,7 @@
             "dateTime": "2013-04-10T22:11:18+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNmM5ZDc1MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI0VDE2MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -54,7 +54,7 @@
             "dateTime": "2013-04-10T22:11:18+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3NqMGI5aDgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTdUMTcwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -74,7 +74,7 @@
             "dateTime": "2013-04-10T22:11:01+00:00",
             "dateString": "4/10"
           },
-          "change_state": "new",
+          "changeState": "new",
           "editor": "Spongebob overly-squre Squarepants"
         },
         {
@@ -95,7 +95,7 @@
             "dateTime": "2013-04-10T22:11:01+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE5VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -115,7 +115,7 @@
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDIyVDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -135,7 +135,7 @@
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE3VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -155,7 +155,7 @@
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqaWQ5ZDZ0MDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI0VDIwMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -175,7 +175,7 @@
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MThUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -195,7 +195,7 @@
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjNUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -215,7 +215,7 @@
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MTZUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -235,7 +235,7 @@
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3MzaWI5aTgxbjZpcmphYzVobXV0YmllZGluNmJqM2R0bWdfMjAxMzA0MjVUMjEwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -255,7 +255,7 @@
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTlUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -275,7 +275,7 @@
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MjJUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -295,7 +295,7 @@
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MTdUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -315,7 +315,7 @@
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=dnRjZ3QyNzQ1ZWRua3VhN2hvZ2pnMmRtMmdfMjAxMzA0MjRUMTgwMDAwWiB0YW1taS5jaGFuZy5jbGNAbQ",
@@ -335,7 +335,7 @@
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE4VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -355,7 +355,7 @@
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDIzVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -375,7 +375,7 @@
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDE2VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -395,7 +395,7 @@
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         },
         {
           "link": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTMwNDI1VDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
@@ -415,7 +415,7 @@
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
           },
-          "change_state": "updated"
+          "changeState": "updated"
         }
       ],
       "count": 20
@@ -432,7 +432,7 @@
             "dateString": "3/20"
           },
           "editor": "Sage Adams",
-          "change_state": "modified"
+          "changeState": "modified"
         },
         {
           "title": "Group Work #1",
@@ -443,7 +443,7 @@
             "dateString": "3/19"
           },
           "editor": "Sage Adams",
-          "change_state": "modified"
+          "changeState": "modified"
         },
         {
           "title": "Assignment #1",
@@ -454,7 +454,7 @@
             "dateString": "3/20"
           },
           "editor": "Sage Adams",
-          "change_state": "modified"
+          "changeState": "modified"
         },
         {
           "title": "Group Work #1",
@@ -465,7 +465,7 @@
             "dateString": "3/19"
           },
           "editor": "Sage Adams",
-          "change_state": "modified"
+          "changeState": "modified"
         }
       ]
     },

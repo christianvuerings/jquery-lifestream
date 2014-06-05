@@ -17,7 +17,7 @@ describe MyAcademics::Semesters do
       it { subject[0][:classes][0][:sections][0][:ccn].should eq "07309" }
       it { subject[0][:classes][0][:sections][0][:waitlistPosition].should eq 42 }
       it { subject[0][:classes][0][:sections][0][:enroll_limit].should eq 5000 }
-      it { subject[0][:classes][0][:sections][0][:grade_option].should eq "P/NP" }
+      it { subject[0][:classes][0][:sections][0][:gradeOption].should eq "P/NP" }
       it { subject[0][:classes][0][:url].should eq '/academics/semester/summer-2014/class/biology-1a' }
       it { subject[1][:name].should eq "Spring 2014" }
       it { subject[1][:timeBucket].should eq 'future'}
@@ -34,7 +34,7 @@ describe MyAcademics::Semesters do
       it { subject[2][:classes][0][:slug].should eq "biology-1a" }
       it { subject[2][:classes][0][:title].should eq "General Biology Lecture" }
       it { subject[2][:classes][0][:url].should eq '/academics/semester/fall-2013/class/biology-1a' }
-      it { subject[2][:classes][0][:sections][0][:grade_option].should eq "Letter" }
+      it { subject[2][:classes][0][:sections][0][:gradeOption].should eq "Letter" }
       it { subject[2][:classes][0][:sections][0][:instruction_format].should eq "LEC" }
       it { subject[2][:classes][0][:sections][0][:section_number].should eq "003" }
       it { subject[2][:classes][0][:sections][0][:section_label].should eq "LEC 003" }

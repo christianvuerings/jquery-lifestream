@@ -242,7 +242,7 @@
           // Copy the first section's grading information to the course for
           // easier processing later.
           if (primariesCount === 0) {
-            course.grade_option = section.grade_option;
+            course.gradeOption = section.gradeOption;
             course.units = section.units;
           }
           primariesCount++;
@@ -265,7 +265,7 @@
             course.sections = [];
             hasPrimary = false;
           }
-          course.grade_option = section.grade_option;
+          course.gradeOption = section.gradeOption;
           course.units = section.units;
           hasPrimary = true;
         }
@@ -280,7 +280,7 @@
 
       $scope.semesters = data.semesters;
 
-      $scope.isUndergraduate = ($scope.college_and_level && $scope.college_and_level.standing === 'Undergraduate');
+      $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
       $scope.teachingLength = Object.keys($scope.teaching).length;
@@ -442,7 +442,7 @@
             angular.forEach(course.sections, function(section) {
               if (section.is_primary_section) {
                 var transcriptRow = {
-                  'gradeOption': section.grade_option,
+                  'gradeOption': section.gradeOption,
                   'units': section.units
                 };
                 if (transcriptRow.gradeOption === 'Letter') {
