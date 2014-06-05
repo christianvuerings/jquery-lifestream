@@ -29,7 +29,7 @@ class ServerRuntime
     settings["versions"] = {
         "api" => File.open(Rails.root.join("versions", "api.txt")).read.strip,
         "application" => File.open(Rails.root.join("versions", "application.txt")).read.strip,
-        "current_db_schema" => current_schema,
+        "currentDbSchema" => current_schema,
         "previous_release_db_schema" => File.open(Rails.root.join("versions", "previous_release_db_schema.txt")).read.strip
     }
     settings
