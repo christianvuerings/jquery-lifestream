@@ -267,3 +267,18 @@ oec:
     code: "D"
   }]
   departments: [ 'STAT', 'SPANISH', 'PORTUG', 'CHEM' ]
+
+ui_selenium:
+  baseUrl: https://calcentral-dev.berkeley.edu
+  calNetUrl: https://auth-test.berkeley.edu
+
+#  Alternative browsers for Selenium tests: chrome, safari, ie
+  webDriver: firefox
+
+  pageEventTimeout: 1
+  pageLoadTimeout: 5
+  finResourcesLinksTimeout: 10
+  financialsTimeout: 5
+  test_user_password: secret
+  oski_username: secret
+  oski_password: secret

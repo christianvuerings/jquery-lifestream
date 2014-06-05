@@ -94,6 +94,12 @@ Spork.prefork do
       config.filter_run_excluding :testext => true
     end
 
+    # Exclusion filter: If a test is marked with :testui => true, it will be skipped
+    # unless tests were started with the UI_TEST env var.
+    unless ENV["UI_TEST"] == 'true'
+      config.filter_run_excluding :testui => true
+    end
+
     # Include Auth helper:
     config.include IntegrationSpecHelper, :type => :feature
 
