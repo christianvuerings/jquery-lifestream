@@ -270,13 +270,10 @@ oec:
 
 ui_selenium:
   baseUrl: https://calcentral-dev.berkeley.edu
-
   calNetUrl: https://auth-test.berkeley.edu
 
+#  Alternative browsers for Selenium tests: chrome, safari, ie
   webDriver: firefox
-  # web_driver: chrome
-  # web_driver: safari
-  # web_driver: ie
 
   pageEventTimeout: 1
   pageLoadTimeout: 5
