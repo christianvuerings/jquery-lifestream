@@ -10,7 +10,7 @@ describe "MyAcademics::CollegeAndLevel" do
     MyAcademics::CollegeAndLevel.new("61889").merge(feed)
     feed.empty?.should be_false
 
-    oski_college = feed[:college_and_level]
+    oski_college = feed[:collegeAndLevel]
     oski_college.should_not be_nil
     oski_college[:colleges].size.should == 3
     oski_college[:colleges][0][:college].should == "College of Engineering"
@@ -30,7 +30,7 @@ describe "MyAcademics::CollegeAndLevel" do
     MyAcademics::CollegeAndLevel.new("300940").merge(feed)
     feed.empty?.should be_false
 
-    colleges = feed[:college_and_level][:colleges]
+    colleges = feed[:collegeAndLevel][:colleges]
     colleges.size.should == 2
     colleges[0][:college].should == "College of Natural Resources"
     colleges[0][:major].should == "Conservation And Resource Studies"
@@ -47,7 +47,7 @@ describe "MyAcademics::CollegeAndLevel" do
     MyAcademics::CollegeAndLevel.new("212379").merge(feed)
     feed.empty?.should be_false
 
-    colleges = feed[:college_and_level][:colleges]
+    colleges = feed[:collegeAndLevel][:colleges]
     colleges.size.should == 3
     colleges[0][:college].should == "College of Chemistry"
     colleges[0][:major].should == "Chemistry"
@@ -65,7 +65,7 @@ describe "MyAcademics::CollegeAndLevel" do
     MyAcademics::CollegeAndLevel.new("212381").merge(feed)
     feed.empty?.should be_false
 
-    colleges = feed[:college_and_level][:colleges]
+    colleges = feed[:collegeAndLevel][:colleges]
     colleges.size.should == 2
     colleges[0][:college].should == "School of Law"
     colleges[0][:major].should == "Jurisprudence And Social Policy"
@@ -82,7 +82,7 @@ describe "MyAcademics::CollegeAndLevel" do
     end
     it 'indicates a server failure' do
       MyAcademics::CollegeAndLevel.new(uid).merge(feed)
-      expect(feed[:college_and_level][:errored]).to be_true
+      expect(feed[:collegeAndLevel][:errored]).to be_true
     end
  end
 
@@ -96,7 +96,7 @@ describe "MyAcademics::CollegeAndLevel" do
     end
     subject do
       MyAcademics::CollegeAndLevel.new(uid).merge(feed)
-      feed[:college_and_level]
+      feed[:collegeAndLevel]
     end
     context 'when ex-student with empty BearFacts student profile' do
       let(:xml_body) {nil}

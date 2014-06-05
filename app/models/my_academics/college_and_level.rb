@@ -16,7 +16,7 @@ module MyAcademics
       else
         feed.merge!(parse_doc(doc))
       end
-      data[:college_and_level] = feed
+      data[:collegeAndLevel] = feed
     end
 
     def parse_doc(doc)

@@ -9,7 +9,7 @@
     // Crude way of testing against the http.success responses due to insufficient status codes.
     var responseDictionary = {
       '/api/blog/release_notes/latest': 'entries',
-      '/api/my/academics': 'college_and_level',
+      '/api/my/academics': 'collegeAndLevel',
       '/api/my/activities': 'activities',
       '/api/my/badges': 'badges',
       '/api/my/campuslinks': 'links',
