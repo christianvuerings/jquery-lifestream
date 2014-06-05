@@ -90,7 +90,7 @@ module MyAcademics
         standing: standing,
         level: level,
         nonApLevel: nonAPLevel,
-        future_telebears_level: futureTBLevel,
+        futureTelebearsLevel: futureTBLevel,
         colleges: colleges
       }
     end
