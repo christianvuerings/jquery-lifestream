@@ -8,7 +8,7 @@ module MyAcademics
 
       data[:gpaUnits] = {
         cumulative_gpa: student_info["cum_gpa"].nil? ? nil: student_info["cum_gpa"].to_f,
-        total_units: student_info["tot_units"].nil? ? nil : student_info["tot_units"].to_f
+        totalUnits: student_info["tot_units"].nil? ? nil : student_info["tot_units"].to_f
       }
     end
   end
