@@ -7,7 +7,7 @@
       <div data-cc-spinner-directive>
         <div data-ng-bind="proxyErrorMessage"></div>
         <div data-ng-if="!proxyErrorMessage">
-          <div data-ng-if="!video && !audio.length">There are no webcasts available.</div>
+          <div data-ng-if="!videos && !audio.length">There are no webcasts available.</div>
           <div data-ng-if="videos || audio.length">
             <div class="cc-widget-webcast-button-group cc-clearfix-container">
               <ul class="cc-button-group cc-even-2" role="tablist">
@@ -48,7 +48,7 @@
                 </div>
               </div>
               <ul class="cc-widget-webcast-links">
-                <li class="cc-widget-webcast-download">
+                <li class="cc-widget-webcast-download" data-ng-if="selectedAudio.downloadUrl">
                   <a data-ng-href="{{selectedAudio.downloadUrl}}">
                     <i class="fa fa-download cc-widget-webcast-icon-link"></i> Download audio
                   </a>
