@@ -47,7 +47,7 @@ describe "MyAcademics::Exams" do
   it "should handle badly formatted BearfactsExamProxy XML responses" do
     proxy = Bearfacts::Exams.new({:user_id => "865826", :fake => true})
     Bearfacts::Exams.stub(:new).and_return(proxy)
-    Bearfacts::Exams.any_instance.stub(:get).and_return({body: 'gobbly gook', statusCode: 200})
+    Bearfacts::Exams.any_instance.stub(:get).and_return({xml_doc: nil, statusCode: 200})
 
     feed = {}
     MyAcademics::Exams.new("865826").merge(feed)
@@ -56,15 +56,16 @@ describe "MyAcademics::Exams" do
   end
 
   context "failing bearfacts proxy" do
+    let(:feed) {{}}
+    let(:uid) {'212381'}
     before(:each) do
       stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
-      Bearfacts::Profile.new({:user_id => "212381", :fake => false})
+      Bearfacts::Profile.new({:user_id => uid, :fake => false})
     end
-    after(:each) { WebMock.reset! }
 
     subject do
-      MyAcademics::Exams.new("212381").merge(@feed = {})
-      @feed
+      MyAcademics::Exams.new(uid).merge(feed)
+      feed
     end
 
     it { should be_blank }

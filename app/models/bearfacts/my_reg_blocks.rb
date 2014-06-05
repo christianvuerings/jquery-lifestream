@@ -7,24 +7,13 @@ module Bearfacts
     def get_feed_internal
       proxy = Bearfacts::Regblocks.new({:user_id => @uid})
       blocks_feed = proxy.get
-
-      #Bearfacts proxy will return nil on >= 400 errors.
-      if blocks_feed.nil?
-        return {
-          available: false,
-        }
+      feed = blocks_feed.except(:xml_doc)
+      doc = blocks_feed[:xml_doc]
+      unless doc.present?
+        return feed
       end
       active_blocks = []
       inactive_blocks = []
-
-      begin
-        doc = Nokogiri::XML(blocks_feed[:body], &:strict)
-      rescue Nokogiri::XML::SyntaxError
-        #Will only get here on >400 errors, which are already logged
-        return {
-          available: false,
-        }
-      end
 
       doc.css("studentRegistrationBlock").each do |block|
         blocked_date = cleared_date = nil
@@ -50,10 +39,10 @@ module Bearfacts
         reg_block = {
           status: status,
           type: type,
-          short_description: short_desc,
-          block_type: block_type,
-          blocked_date: format_date(blocked_date, "%-m/%d/%Y"),
-          cleared_date: format_date(cleared_date, "%-m/%d/%Y"),
+          shortDescription: short_desc,
+          blockType: block_type,
+          blockedDate: format_date(blocked_date, "%-m/%d/%Y"),
+          clearedDate: format_date(cleared_date, "%-m/%d/%Y"),
           reason: reason,
           office: office,
           message: message,
@@ -66,14 +55,13 @@ module Bearfacts
       end
 
       # sort by blocked_date descending.
-      active_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
-      inactive_blocks.sort! { |a, b| b[:blocked_date][:epoch] <=> a[:blocked_date][:epoch] }
+      active_blocks.sort! { |a, b| b[:blockedDate][:epoch] <=> a[:blockedDate][:epoch] }
+      inactive_blocks.sort! { |a, b| b[:blockedDate][:epoch] <=> a[:blockedDate][:epoch] }
 
-      {
-        available: true,
-        active_blocks: active_blocks,
-        inactive_blocks: inactive_blocks
-      }
+      feed.merge({
+        activeBlocks: active_blocks,
+        inactiveBlocks: inactive_blocks
+      })
     end
 
     private

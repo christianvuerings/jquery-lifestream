@@ -74,39 +74,41 @@ describe "MyAcademics::CollegeAndLevel" do
   end
 
   context "failing bearfacts proxy" do
+    let(:uid) {'212381'}
+    let(:feed) {{}}
     before(:each) do
       stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
-      Bearfacts::Profile.new({:user_id => "212381", :fake => false})
+      Bearfacts::Profile.new({user_id: uid, fake: false})
     end
-    after(:each) { WebMock.reset! }
-
-    subject do
-      MyAcademics::CollegeAndLevel.new("212381").merge(@feed = {})
-      @feed
+    it 'indicates a server failure' do
+      MyAcademics::CollegeAndLevel.new(uid).merge(feed)
+      expect(feed[:college_and_level][:errored]).to be_true
     end
-
-    it { should be_blank }
-  end
+ end
 
   context 'when Bearfacts feed is incomplete' do
     let(:uid) {rand(999999)}
     let(:feed) {{}}
     before do
-      allow(Bearfacts::Profile).to receive(:new).with(user_id: uid).and_return(double(get: {status_code: 204, body: xml_body}))
+      allow(Bearfacts::Profile).to receive(:new).with(user_id: uid).and_return(double(get: {
+        xml_doc: Nokogiri::XML(xml_body)
+      }))
     end
     subject do
       MyAcademics::CollegeAndLevel.new(uid).merge(feed)
-      feed
+      feed[:college_and_level]
     end
     context 'when ex-student with empty BearFacts student profile' do
       let(:xml_body) {nil}
-      it {should be_blank}
+      its([:errored]) {should be_false}
+      its([:empty]) {should be_true}
     end
     context 'when Bearfacts student profile lacks key data' do
       let(:xml_body) {
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<studentProfile xmlns=\"urn:berkeley.edu/babl\" termName=\"Spring\" termYear=\"2014\" asOfDate=\"May 27, 2014 12:00 AM\"><studentType>STUDENT</studentType><noProfileDataFlag>false</noProfileDataFlag><studentGeneralProfile><studentName><firstName>OWPRQTOPEW</firstName><middleName></middleName><middleInitial></middleInitial><lastName>SEBIRTFEIWB</lastName></studentName></studentGeneralProfile></studentProfile>"
+        "<studentProfile xmlns=\"urn:berkeley.edu/babl\" termName=\"Spring\" termYear=\"2014\" asOfDate=\"May 27, 2014 12:00 AM\"><studentType>STUDENT</studentType><noProfileDataFlag>false</noProfileDataFlag><studentGeneralProfile><studentName><firstName>OWPRQTOPEW</firstName><lastName>SEBIRTFEIWB</lastName></studentName></studentGeneralProfile></studentProfile>"
       }
-      it {should be_blank}
+      its([:errored]) {should be_false}
+      its([:empty]) {should be_true}
     end
   end
 

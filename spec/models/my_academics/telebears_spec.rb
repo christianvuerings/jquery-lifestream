@@ -30,7 +30,6 @@ describe MyAcademics::Telebears do
 
   context "dead remote proxy (5xx errors)" do
     before(:each) { stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed) }
-    after(:each) { WebMock.reset! }
 
     subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
 
@@ -48,8 +47,7 @@ describe MyAcademics::Telebears do
   context "2xx responses with fake oski" do
     before(:each) do
       Bearfacts::Telebears.stub(:new).and_return(fake_oski_feed)
-      @fake_feed_contents = fake_oski_feed.get
-      @fake_feed_body = Nokogiri::XML.parse(@fake_feed_contents[:body])
+      @fake_feed_body = fake_oski_feed.get[:xml_doc]
     end
 
     context "original fake oski feed" do
@@ -87,8 +85,7 @@ describe MyAcademics::Telebears do
       before(:each) do
         code = @fake_feed_body.at_css("telebearsAppointment authReleaseCode")
         code.content = "P"
-        @fake_feed_contents[:body] = @fake_feed_body.to_s
-        Bearfacts::Telebears.any_instance.stub(:get).and_return(@fake_feed_contents)
+        Bearfacts::Telebears.any_instance.stub(:get).and_return({xml_doc: @fake_feed_body})
       end
 
       subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
@@ -102,8 +99,7 @@ describe MyAcademics::Telebears do
       before(:each) do
         code = @fake_feed_body.at_css("telebearsAppointment authReleaseCode")
         code.content = "C"
-        @fake_feed_contents[:body] = @fake_feed_body.to_s
-        Bearfacts::Telebears.any_instance.stub(:get).and_return(@fake_feed_contents)
+        Bearfacts::Telebears.any_instance.stub(:get).and_return({xml_doc: @fake_feed_body})
       end
 
       subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
@@ -118,8 +114,7 @@ describe MyAcademics::Telebears do
       before(:each) do
         code = @fake_feed_body.at_css("telebearsAppointment authReleaseCode")
         code.content = "foo"
-        @fake_feed_contents[:body] = @fake_feed_body.to_s
-        Bearfacts::Telebears.any_instance.stub(:get).and_return(@fake_feed_contents)
+        Bearfacts::Telebears.any_instance.stub(:get).and_return({xml_doc: @fake_feed_body})
         Rails.logger.should_receive(:warn).at_least(1).times
       end
 

@@ -12,8 +12,7 @@ describe MyAcademicsController do
       session[:user_id] = "0"
       get :get_feed
       json_response = JSON.parse(response.body)
-      json_response["regblocks"]["active_blocks"].should == []
-      json_response["regblocks"]["inactive_blocks"].should == []
+      json_response["regblocks"]["noStudentId"].should be_true
     end
   end
 

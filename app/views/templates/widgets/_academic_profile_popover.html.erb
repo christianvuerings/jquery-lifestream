@@ -38,14 +38,14 @@
           </div>
         </a>
       </li>
-      <li class="cc-popover-item" data-ng-if="studentInfo.regBlock.needsAction || !studentInfo.regBlock.available">
+      <li class="cc-popover-item" data-ng-if="studentInfo.regBlock.needsAction || studentInfo.regBlock.errored">
         <a href="/academics">
           <div class="cc-launcher-status-description">
             <i class="cc-left fa"
                data-ng-class="{'fa-exclamation-circle': studentInfo.regBlock.needsAction,
-               'fa-exclamation-triangle cc-unavailable': !studentInfo.regBlock.available}"></i>
-            <strong>Blocks:</strong> <span data-ng-if="studentInfo.regBlock.available" data-ng-bind="studentInfo.regBlock.activeBlocks"></span>
-            <span data-ng-if="!studentInfo.regBlock.available">Currently Unavailable</span>
+               'fa-exclamation-triangle cc-unavailable': studentInfo.regBlock.errored}"></i>
+            <strong>Blocks:</strong> <span data-ng-if="!studentInfo.regBlock.errored" data-ng-bind="studentInfo.regBlock.activeBlocks"></span>
+            <span data-ng-if="studentInfo.regBlock.errored">Currently Unavailable</span>
           </div>
         </a>
       </li>

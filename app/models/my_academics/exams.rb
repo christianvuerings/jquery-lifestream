@@ -6,20 +6,11 @@ module MyAcademics
 
     def merge(data = {})
       proxy = Bearfacts::Exams.new({:user_id => @uid})
-      feed = proxy.get
+      doc = proxy.get[:xml_doc]
 
       #Bearfacts proxy will return nil on >= 400 errors.
-      return data if feed.nil?
-
+      return data unless doc.present? && matches_current_year_term?(doc.css("studentFinalExamSchedules"))
       exams = []
-      begin
-        doc = Nokogiri::XML(feed[:body], &:strict)
-      rescue Nokogiri::XML::SyntaxError
-        #Will only get here on >400 errors, which are already logged
-        return data
-      end
-
-      return data unless (matches_current_year_term? doc.css("studentFinalExamSchedules"))
 
       doc.css("studentFinalExamSchedule").each do |exam|
         exam_data = exam.css("studentFinalExamScheduleKey")

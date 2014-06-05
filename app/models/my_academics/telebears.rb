@@ -6,17 +6,8 @@ module MyAcademics
     def merge(data)
       data[:telebears] = {}
 
-      profile_feed = Bearfacts::Telebears.new({:user_id => @uid}).get
-      return if profile_feed.nil?
-
-      begin
-        doc = Nokogiri::XML(profile_feed[:body], &:strict)
-      rescue Nokogiri::XML::SyntaxError
-        #Will only get here on >=400 errors, which are already logged
-        return
-      end
-
-      return if doc.at_css("telebearsAppointment").nil?
+      doc = Bearfacts::Telebears.new({:user_id => @uid}).get[:xml_doc]
+      return if doc.blank? || doc.at_css("telebearsAppointment").blank?
 
       term, year = %w(termName termYear).map { |key| doc.at_css("telebearsAppointment").attr(key) }
       year = Integer(year, 10) rescue nil

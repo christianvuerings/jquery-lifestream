@@ -1,0 +1,87 @@
+<script type="text/ng-template" id="templates/academics_regblocks.html">
+  <h4>Active Blocks</h4>
+  <div class="cc-table" data-ng-if="regblocks.activeBlocks.length">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col" width="20%">Type</th>
+          <th scope="col" width="20%">Reason</th>
+          <th scope="col" width="20%">Office</th>
+          <th scope="col" width="40%">Blocked</th>
+        </tr>
+      </thead>
+      <tbody data-ng-repeat="block in regblocks.activeBlocks | orderBy:'blockedDate.epoch':true">
+        <tr class="cc-widget-table-hover"
+            data-ng-class="{'cc-widget-table-hover-opened':(block.show)}"
+            data-cc-accessible-focus-directive
+            data-ng-click="api.widget.toggleShow($event, regblocks.activeBlocks, block, 'Active Blocks')">
+          <td><i class="fa fa-exclamation-circle"></i><span data-ng-bind="block.type"></span></td>
+          <td class="cc-ellipsis" data-ng-bind="block.reason"></td>
+          <td data-ng-bind="block.office || '&nbsp;'"></td>
+          <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy'"></td>
+        </tr>
+        <tr data-ng-if="block.show">
+          <td data-ng-bind-html="block.message" colspan="4"></td>
+        </tr>
+        <tr data-ng-if="block.show">
+          <td colspan="4">
+            <button class="cc-button-link cc-academics-what-is-registration-block"
+                    data-ng-click="api.util.preventBubble($event);block.show_regblock_definition=!block.show_regblock_definition">
+              <i class="fa fa-question-circle text-info"></i>What is a registration block?
+            </button>
+          </td>
+        </tr>
+        <tr data-ng-if="block.show_regblock_definition && block.show">
+          <td colspan="4">
+            <p>
+              A registration block prevents you from being "officially registered" as a student who is attending U.C. Berkeley. You must have both enrolled in classes and paid your fees to be an "officially registered" student.
+              <a href="http://studentcentral.berkeley.edu/node/96">Learn more about blocks &raquo;</a>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div data-ng-if="!regblocks.activeBlocks.length">
+    <div class="row collapse">
+      <div class="medium-6 columns end">You have no active blocks at this time.</div>
+    </div>
+  </div>
+
+  <div class="cc-academics-showhide-block-history">
+    <p class="cc-academics-nolink cc-academics-emphasize"
+       data-ng-if="!regblocks.inactiveBlocks.length">No block history
+    </p>
+    <div data-ng-if="regblocks.inactiveBlocks.length">
+      <button
+        class="cc-button cc-button-blue"
+        data-ng-click="toggleBlockHistory()">
+        <span data-ng-if="!showBlockHistory">Show block history</span>
+        <span data-ng-if="showBlockHistory">Hide block history</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="cc-table">
+    <table class="cc-academics-block-history" data-ng-if="showBlockHistory">
+      <thead>
+        <tr>
+          <th scope="col" width="20%">Type</th>
+          <th scope="col" width="20%">Reason</th>
+          <th scope="col" width="20%">Office</th>
+          <th scope="col" width="20%">Blocked</th>
+          <th scope="col" width="20%">Cleared</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="block in regblocks.inactiveBlocks | orderBy:'blockedDate.epoch':true">
+          <td data-ng-bind="block.type || '&nbsp;'"></td>
+          <td data-ng-bind="block.reason || '&nbsp;'"></td>
+          <td data-ng-bind="block.office || '&nbsp;'"></td>
+          <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+          <td data-ng-bind="block.clearedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</script>

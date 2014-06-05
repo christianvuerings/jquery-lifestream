@@ -38,10 +38,12 @@ describe "MyBadges::StudentInfo" do
     result.has_key?(:activeBlocks).should be_true
   end
 
-  context "invalid/offline bearfacts regblock" do
-
-    before { Bearfacts::Regblocks.any_instance.stub(:get).and_return {} }
-    subject { MyBadges::StudentInfo.new("61889").get }
+  context "offline bearfacts regblock" do
+    before do
+      stub_request(:any, /.+regblocks.*/).to_raise(Faraday::Error::ConnectionFailed)
+      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
+    end
+    subject { MyBadges::StudentInfo.new(random_uid).get }
 
     it "should have no active blocks" do
       subject[:regBlock].should be_present
@@ -50,7 +52,7 @@ describe "MyBadges::StudentInfo" do
     end
 
     it "bearfacts API should be offline" do
-      subject[:regBlock][:available].should be_false
+      subject[:regBlock][:errored].should be_true
     end
 
     it "needsAction should be false" do
@@ -74,7 +76,7 @@ describe "MyBadges::StudentInfo" do
     end
 
     it "bearfacts API should be online" do
-      subject[:regBlock][:available].should be_true
+      subject[:regBlock][:errored].should be_false
     end
 
     it "needsAction should be true" do

@@ -4,27 +4,23 @@ module MyAcademics
     include AcademicsModule, ClassLogger
 
     def merge(data)
-      profile_proxy = Bearfacts::Profile.new({:user_id => @uid})
-      profile_feed = profile_proxy.get
-      return unless profile_feed.present? && profile_feed[:body].present?
-
-      begin
-        doc = Nokogiri::XML(profile_feed[:body], &:strict)
-      rescue Nokogiri::XML::SyntaxError
-        #Will only get here on >400 errors, which are already logged
-        return
+      profile_feed = Bearfacts::Profile.new({:user_id => @uid}).get
+      feed = profile_feed.except(:xml_doc)
+      doc = profile_feed[:xml_doc]
+      # The Bear Facts API can return empty profiles if the user is no longer (or not yet) considered an active student.
+      # Partial profiles can be returned for incoming students around the start of the term.
+      if doc.blank? ||
+        doc.css("studentGeneralProfile").blank? ||
+        doc.css("ugGradFlag").blank?
+        feed[:empty] = true
+      else
+        feed.merge!(parse_doc(doc))
       end
+      data[:college_and_level] = feed
+    end
 
-      general_profile = doc.css("studentGeneralProfile")
-      if general_profile.blank?
-        # No student profile available, probably because the user is no longer (or not yet) considered an active student.
-        return
-      end
+    def parse_doc(doc)
       ug_grad_flag = to_text doc.css("ugGradFlag")
-      if ug_grad_flag.blank?
-        # Partial profiles can be returned for incoming students around the start of the term.
-        return
-      end
       case ug_grad_flag.upcase
         when 'U'
           standing = 'Undergraduate'
@@ -34,6 +30,7 @@ module MyAcademics
           logger.error("Unknown ugGradFlag '#{ug_grad_flag}' for user #{@uid}")
           return
       end
+      general_profile = doc.css("studentGeneralProfile")
       level = to_text(general_profile.css("corpEducLevel")).titleize
       nonAPLevel = to_text(general_profile.css("nonAPLevel")).titleize
       futureTBLevel = to_text(general_profile.css("futureTBLevel")).titleize
@@ -89,7 +86,7 @@ module MyAcademics
         end
       end
 
-      data[:college_and_level] = {
+      {
         standing: standing,
         level: level,
         non_ap_level: nonAPLevel,
