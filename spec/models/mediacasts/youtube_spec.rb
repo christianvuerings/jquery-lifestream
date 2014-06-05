@@ -19,7 +19,7 @@ describe Mediacasts::Youtube do
     expect(proxy_response[:videos][0][:link]).to eq link
   end
 
-  it 'should not explode on a feed that has a private video' do
+  it 'should not explode on a feed that has a private video', :textext => true do
     proxy = Mediacasts::Youtube.new({:playlist_id => '-XXv-cvA_iBapEvcNwRuTJVt6BPpcMaJ'})
     proxy_response = proxy.get
     title = 'Computer Science 170 - Lecture 40'
