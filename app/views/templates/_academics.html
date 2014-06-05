@@ -11,12 +11,20 @@
         data-ng-include src="'templates/academics_student_summary.html'"></div>
 
       <div class="medium-4 columns" data-ng-class="{'pull-8':(!api.user.profile.hasStudentHistory)}">
-        <div class="cc-widget cc-widget-last" data-ng-if="teachingLength">
+        <div class="cc-widget cc-widget-last" data-ng-if="api.user.profile.roles.faculty || teachingLength">
           <div class="cc-widget-title">
             <h2>Teaching</h2>
           </div>
           <div class="cc-widget-padding">
-            <div class="cc-academics-teaching-semester" data-ng-repeat="semester in teachingSemesters">
+            <div data-ng-if="!teachingLength">
+              <p>
+                You are officially an instructor at UC Berkeley, but no courses assigned to you are currently available through campus services.
+              </p>
+              <p>
+                As your status changes, check back for information on class activity, sections, schedules, enrollments, websites, videos, and textbooks.
+              </p>
+            </div>
+            <div class="cc-academics-teaching-semester" data-ng-if="teachingLength" data-ng-repeat="semester in teachingSemesters">
               <h3><a data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
               <div class="cc-academics-teaching-class" data-ng-repeat="class in semester.classes">
                 <div class="cc-academics-teaching-course-number">
