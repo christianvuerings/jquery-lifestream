@@ -19,7 +19,6 @@ class UserUtils
   end
 
   def self.oski_password
-    Rails.logger.error("password #{Settings.ui_selenium.oski_password}")
     Settings.ui_selenium.oski_password
   end
 

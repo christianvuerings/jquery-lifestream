@@ -42,7 +42,7 @@ class WebDriverUtils
   end
 
   def self.live_users
-    Rails.root.join('fixtures', 'ui_selenium', 'uids.csv')
+    File.join(CalcentralConfig.local_dir, "uids.csv")
   end
 
 end

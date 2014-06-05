@@ -270,7 +270,6 @@ oec:
 
 ui_selenium:
   baseUrl: https://calcentral-dev.berkeley.edu
-  #baseUrl: https://calcentral-qa.berkeley.edu
 
   calNetUrl: https://auth-test.berkeley.edu
 

@@ -54,6 +54,7 @@ module CalCentralPages
         details_link
         activity_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       end
+
     end
   end
 end
