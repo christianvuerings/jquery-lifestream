@@ -9,7 +9,7 @@ class ServerRuntime
     Rails.logger.info "#{self.name} Initializing settings"
 
     settings = {}
-    settings["first_visited"] = `date`.strip
+    settings["firstVisited"] = `date`.strip
     settings["hostname"] = `hostname -s`.strip
 
     begin
