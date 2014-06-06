@@ -6,7 +6,7 @@ module Cache
     # the passed block and caches the result. Set force_write=true to make it always execute the block and write
     # to the cache.
     def fetch_from_cache(id=nil, force_write=false)
-      key = key id
+      key = cache_key id
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}, forced: #{force_write}"
       value = Rails.cache.fetch(
         key,
@@ -31,7 +31,7 @@ module Cache
       return_nil_on_generic_error = opts[:return_nil_on_generic_error]
       jsonify = opts[:jsonify]
       force_write = opts[:force_write]
-      key = key id
+      key = cache_key id
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
       unless force_write
         entry = Rails.cache.read key
@@ -65,7 +65,7 @@ module Cache
     end
 
     def handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
-      key = key id
+      key = cache_key id
       if e.is_a?(Errors::ProxyError)
         log_message = e.log_message
         response = e.response
@@ -90,7 +90,7 @@ module Cache
     end
 
     def in_cache?(id = nil)
-      key = key id
+      key = cache_key id
       Rails.cache.exist? key
     end
 
@@ -114,16 +114,8 @@ module Cache
       end
     end
 
-    def cache_key(id)
-      "#{self.name}/#{id}"
-    end
-
-    def global_cache_key()
-      "#{self.name}"
-    end
-
     def expire(id = nil)
-      key = key id
+      key = cache_key id
       Rails.cache.delete(key, :force => true)
       Rails.logger.debug "Expired cache_key #{key}"
       if caches_json?
@@ -133,12 +125,12 @@ module Cache
       end
     end
 
-    def key(id = nil)
-      id ? self.cache_key(id) : self.global_cache_key
+    def cache_key(id = nil)
+      id.nil? ? self.name : "#{self.name}/#{id}"
     end
 
     def json_key(id = nil)
-      key "json-#{id}"
+      cache_key "json-#{id}"
     end
 
     # override to return true if your cacheable thing also caches a JSONified copy of its data.

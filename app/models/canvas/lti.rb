@@ -30,7 +30,7 @@ module Canvas
           nonce_check = params[:oauth_nonce]
           if !nonce_check.blank?
             if !self.class.in_cache?(nonce_check)
-              Rails.cache.write(self.class.key(nonce_check), timestamp, expires_id: self.class.expires_in)
+              Rails.cache.write(self.class.cache_key(nonce_check), timestamp, expires_id: self.class.expires_in)
               request_key = params[:oauth_consumer_key]
               if @lti_key == request_key
                 lti = IMS::LTI::ToolProvider.new(request_key, @lti_secret, params)
