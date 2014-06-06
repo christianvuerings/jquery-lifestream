@@ -8,10 +8,6 @@ module Canvas
       @course_id = options[:course_id]
     end
 
-    def self.cache_key course_id
-      "global/#{self.name}/#{course_id}"
-    end
-
     def full_teachers_list
       self.class.fetch_from_cache @course_id do
         all_teachers = []

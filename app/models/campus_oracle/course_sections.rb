@@ -10,10 +10,6 @@ module CampusOracle
       @section_id = "#{@term_yr}:#{@term_cd}:#{@ccn}"
     end
 
-    def self.cache_key(section_id)
-      "global/#{self.name}/#{section_id}"
-    end
-
     def self.expires_in
       self.bearfacts_derived_expiration
     end

@@ -114,12 +114,12 @@ module Cache
       end
     end
 
-    def cache_key(uid)
-      "user/#{uid}/#{self.name}"
+    def cache_key(id)
+      "#{self.name}/#{id}"
     end
 
     def global_cache_key()
-      "global/#{self.name}"
+      "#{self.name}"
     end
 
     def expire(id = nil)

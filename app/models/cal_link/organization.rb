@@ -9,10 +9,6 @@ module CalLink
       @org_id = options[:org_id]
     end
 
-    def self.cache_key(org_id)
-      "global/#{self.name}/#{org_id}"
-    end
-
     def get_organization
       self.class.smart_fetch_from_cache({id: @org_id, user_message_on_exception: "Remote server unreachable"}) do
         request_internal

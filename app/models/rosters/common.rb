@@ -3,10 +3,6 @@ module Rosters
 
     PHOTO_UNAVAILABLE_FILENAME = 'photo_unavailable_official_72x96.jpg'
 
-    def self.cache_key(course_id)
-      "global/#{self.name}/#{course_id}"
-    end
-
     def initialize(uid, options={})
       @uid = uid
       @course_id = options[:course_id]
