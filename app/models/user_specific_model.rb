@@ -9,12 +9,21 @@ class UserSpecificModel < AbstractModel
   end
 
   def instance_key
-    @uid
+    if is_acting_as_nonfake_user?
+      Calcentral::PSEUDO_USER_PREFIX + @uid
+    else
+      @uid
+    end
   end
 
   def is_acting_as_nonfake_user?
     current_user = User::Auth.get(@uid)
     @original_uid && @uid != @original_uid && !current_user.is_test_user
+  end
+
+  def expire_cache
+    super
+    self.class.expire(Calcentral::PSEUDO_USER_PREFIX + @uid)
   end
 
 end
