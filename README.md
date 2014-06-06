@@ -417,9 +417,12 @@ update it from production. To do that, log into a prod node and do:
 ```bash
 pg_dump calcentral --inserts --clean -f developer-seed-data.sql -t link_categories \
 -t link_categories_link_sections -t link_sections -t link_sections_links -t links \
--t links_user_roles -t user_auths -t user_roles \
+-t links_user_roles -t user_auths -t user_roles -t fin_aid_years \
 -h postgres-hostname -p postgres-port-number -U calcentral
 ```
 
 Take that file, developer-seed-data.sql, and edit it to remove the "REVOKE" and "GRANT" statements at the bottom,
-since those will conflict with local permissions. Copy that file into your source tree and get it merged into master.
+since those will conflict with local permissions. Also remove any lines that change ownership -- they will contain
+the phrase "OWNER TO calcentral".
+
+After deleting the ownership/permissions parts, copy the file into your source tree and get it merged into master.
