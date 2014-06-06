@@ -25,13 +25,10 @@ describe MyClasses::Merged do
 
   describe '#expire_cache' do
     let(:user_cache_key) {MyClasses::Merged.cache_key(user_id)}
-    let(:pseudo_user_cache_key) {MyClasses::Merged.cache_key(Calcentral::PSEUDO_USER_PREFIX + user_id)}
     before {Rails.cache.write(user_cache_key, 'myclasses cached user value')}
-    before {Rails.cache.write(pseudo_user_cache_key, 'myclasses cached pseudo user value')}
-    it 'clears both user and pseudo-user caches' do
+    it 'clears user cache' do
       MyClasses::Merged.new(user_id).expire_cache
       expect(Rails.cache.fetch(user_cache_key)).to eq nil
-      expect(Rails.cache.fetch(pseudo_user_cache_key)).to eq nil
     end
   end
 
