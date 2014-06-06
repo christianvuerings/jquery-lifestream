@@ -59,7 +59,7 @@ module Mediacasts
           :title => i.xpath('title').text
         }
       end
-      items
+      items.reverse
     end
 
   end
