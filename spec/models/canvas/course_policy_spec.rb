@@ -98,6 +98,74 @@ describe Canvas::CoursePolicy do
     end
   end
 
+  describe "#is_canvas_course_teacher_or_assistant?" do
+    it_should_behave_like "a canvas user requirement" do
+      let(:authorization_method) { subject.is_canvas_course_teacher_or_assistant? }
+    end
+
+    context "if canvas user is a teacher" do
+      it "returns true" do
+        allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(true)
+        expect(subject.is_canvas_course_teacher_or_assistant?).to be_true
+      end
+    end
+
+    context "if canvas user is a teachers assistant" do
+      it "returns true" do
+        allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(true)
+        expect(subject.is_canvas_course_teacher_or_assistant?).to be_true
+      end
+    end
+
+    context "if canvas user is not a teacher or assistant" do
+      it "returns false" do
+        allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(false)
+        allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(false)
+        expect(subject.is_canvas_course_teacher_or_assistant?).to be_false
+      end
+    end
+  end
+
+  describe "#is_canvas_course_teacher?" do
+    it_should_behave_like "a canvas user requirement" do
+      let(:authorization_method) { subject.is_canvas_course_teacher? }
+    end
+
+    context "if canvas user is a teacher" do
+      it "returns true" do
+        allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(true)
+        expect(subject.is_canvas_course_teacher?).to be_true
+      end
+    end
+
+    context "if canvas user is not a teacher" do
+      it "returns false" do
+        allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(false)
+        expect(subject.is_canvas_course_teacher?).to be_false
+      end
+    end
+  end
+
+  describe "#is_canvas_course_teachers_assistant?" do
+    it_should_behave_like "a canvas user requirement" do
+      let(:authorization_method) { subject.is_canvas_course_teachers_assistant? }
+    end
+
+    context "if canvas user is a teachers assistant" do
+      it "returns true" do
+        allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(true)
+        expect(subject.is_canvas_course_teachers_assistant?).to be_true
+      end
+    end
+
+    context "if canvas user is not a teachers assistant" do
+      it "returns false" do
+        allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(false)
+        expect(subject.is_canvas_course_teachers_assistant?).to be_false
+      end
+    end
+  end
+
   describe "#is_canvas_account_admin?" do
     it "returns true when user is a canvas root account administrator" do
       canvas_admins = double()

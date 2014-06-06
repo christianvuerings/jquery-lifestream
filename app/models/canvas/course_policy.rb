@@ -29,6 +29,18 @@ module Canvas
       Canvas::Admins.new.admin_user?(@user.uid)
     end
 
+    def is_canvas_course_teacher_or_assistant?
+      is_canvas_course_teacher? || is_canvas_course_teachers_assistant?
+    end
+
+    def is_canvas_course_teacher?
+      is_canvas_user? && Canvas::CourseUser.is_course_teacher?(canvas_course_user)
+    end
+
+    def is_canvas_course_teachers_assistant?
+      is_canvas_user? && Canvas::CourseUser.is_course_teachers_assistant?(canvas_course_user)
+    end
+
     def is_canvas_course_user?
       canvas_course_user.present?
     end
