@@ -40,10 +40,10 @@ describe "Rosters::Campus" do
   let(:fake_campus_student) do
     {
       "#{term_yr}-#{term_cd}" => [{
-        id: 'fake_course_id',
+        id: campus_course_id,
         term_yr: term_yr,
         term_cd: term_cd,
-        catid: rand(999),
+        catid: catid,
         dept: 'INFO',
         course_code: "INFO #{catid}",
         emitter: 'Campus',
