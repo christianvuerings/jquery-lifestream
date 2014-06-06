@@ -18,7 +18,10 @@ module Rosters
 
       all_courses.keys.each do |term|
         semester_courses = all_courses[term]
-        match = semester_courses.index { |semester_course| semester_course[:id] == @campus_course_id }
+        match = semester_courses.index do |semester_course|
+          (semester_course[:id] == @campus_course_id) &&
+            (semester_course[:role] == 'Instructor')
+        end
         if !match.nil?
           selected_course = semester_courses[match]
         end
@@ -79,7 +82,10 @@ module Rosters
       flag = false
       all_courses.keys.each do |term|
         semester_courses = all_courses[term]
-        match = semester_courses.index { |semester_course| semester_course[:id] == @campus_course_id }
+        match = semester_courses.index do |semester_course|
+          (semester_course[:id] == @campus_course_id) &&
+            (semester_course[:role] == 'Instructor')
+        end
         if !match.nil?
           flag = true
         end
