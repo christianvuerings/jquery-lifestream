@@ -11,10 +11,6 @@ module Canvas
       @section_id = options[:section_id]
     end
 
-    def self.cache_key(section_id)
-      "global/#{self.name}/#{section_id}"
-    end
-
     def list_enrollments(options = {})
       default_options = {:cache => true}
       options.reverse_merge!(default_options)

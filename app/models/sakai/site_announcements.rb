@@ -9,10 +9,6 @@ module Sakai
       @message_max_length = options[:message_max_length] || 1000
     end
 
-    def self.cache_key(site_id)
-      "global/#{self.name}/#{site_id}"
-    end
-
     # For test support
     def message_max_length
       @message_max_length

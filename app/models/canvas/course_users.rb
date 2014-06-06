@@ -8,10 +8,6 @@ module Canvas
       @course_id = options[:course_id]
     end
 
-    def self.cache_key(course_id)
-      "global/#{self.name}/#{course_id}"
-    end
-
     def course_users(options = {})
       default_options = {:cache => true}
       options.reverse_merge!(default_options)
