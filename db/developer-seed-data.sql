@@ -1,5 +1,5 @@
 --
--- PostgreSQL database dump, taken from production postgres on 6 December 2013.
+-- PostgreSQL database dump
 --
 
 SET statement_timeout = 0;
@@ -10,22 +10,20 @@ SET client_min_messages = warning;
 
 SET search_path = public, pg_catalog;
 
-DROP INDEX public.index_fin_aid_years_on_current_year;
 DROP INDEX public.index_user_auths_on_uid;
-ALTER TABLE ONLY public.fin_aid_years DROP CONSTRAINT fin_aid_years_pkey;
+DROP INDEX public.index_fin_aid_years_on_current_year;
 ALTER TABLE ONLY public.user_roles DROP CONSTRAINT user_roles_pkey;
 ALTER TABLE ONLY public.user_auths DROP CONSTRAINT user_auths_pkey;
 ALTER TABLE ONLY public.links DROP CONSTRAINT links_pkey;
 ALTER TABLE ONLY public.link_sections DROP CONSTRAINT link_sections_pkey;
 ALTER TABLE ONLY public.link_categories DROP CONSTRAINT link_categories_pkey;
-ALTER TABLE public.fin_aid_years ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE ONLY public.fin_aid_years DROP CONSTRAINT fin_aid_years_pkey;
 ALTER TABLE public.user_roles ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.user_auths ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.links ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_sections ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_categories ALTER COLUMN id DROP DEFAULT;
-DROP SEQUENCE public.fin_aid_years_id_seq;
-DROP TABLE public.fin_aid_years;
+ALTER TABLE public.fin_aid_years ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.user_roles_id_seq;
 DROP TABLE public.user_roles;
 DROP SEQUENCE public.user_auths_id_seq;
@@ -39,6 +37,8 @@ DROP TABLE public.link_sections;
 DROP TABLE public.link_categories_link_sections;
 DROP SEQUENCE public.link_categories_id_seq;
 DROP TABLE public.link_categories;
+DROP SEQUENCE public.fin_aid_years_id_seq;
+DROP TABLE public.fin_aid_years;
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -46,7 +46,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: fin_aid_years; Type: TABLE; Schema: public; Owner: calcentral_development; Tablespace:
+-- Name: fin_aid_years; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE fin_aid_years (
@@ -57,11 +57,8 @@ CREATE TABLE fin_aid_years (
     updated_at timestamp without time zone
 );
 
-
-ALTER TABLE public.fin_aid_years OWNER TO calcentral_development;
-
 --
--- Name: fin_aid_years_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral_development
+-- Name: fin_aid_years_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral
 --
 
 CREATE SEQUENCE fin_aid_years_id_seq
@@ -71,18 +68,15 @@ CREATE SEQUENCE fin_aid_years_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.fin_aid_years_id_seq OWNER TO calcentral_development;
-
 --
--- Name: fin_aid_years_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral_development
+-- Name: fin_aid_years_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral
 --
 
 ALTER SEQUENCE fin_aid_years_id_seq OWNED BY fin_aid_years.id;
 
 
 --
--- Name: link_categories; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: link_categories; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE link_categories (
@@ -93,9 +87,6 @@ CREATE TABLE link_categories (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
-ALTER TABLE public.link_categories OWNER TO calcentral;
 
 --
 -- Name: link_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral
@@ -108,9 +99,6 @@ CREATE SEQUENCE link_categories_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.link_categories_id_seq OWNER TO calcentral;
-
 --
 -- Name: link_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral
 --
@@ -119,7 +107,7 @@ ALTER SEQUENCE link_categories_id_seq OWNED BY link_categories.id;
 
 
 --
--- Name: link_categories_link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: link_categories_link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE link_categories_link_sections (
@@ -127,11 +115,8 @@ CREATE TABLE link_categories_link_sections (
     link_section_id integer
 );
 
-
-ALTER TABLE public.link_categories_link_sections OWNER TO calcentral;
-
 --
--- Name: link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: link_sections; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE link_sections (
@@ -142,9 +127,6 @@ CREATE TABLE link_sections (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
-ALTER TABLE public.link_sections OWNER TO calcentral;
 
 --
 -- Name: link_sections_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral
@@ -157,9 +139,6 @@ CREATE SEQUENCE link_sections_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.link_sections_id_seq OWNER TO calcentral;
-
 --
 -- Name: link_sections_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral
 --
@@ -168,7 +147,7 @@ ALTER SEQUENCE link_sections_id_seq OWNED BY link_sections.id;
 
 
 --
--- Name: link_sections_links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: link_sections_links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE link_sections_links (
@@ -176,11 +155,8 @@ CREATE TABLE link_sections_links (
     link_id integer
 );
 
-
-ALTER TABLE public.link_sections_links OWNER TO calcentral;
-
 --
--- Name: links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: links; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE links (
@@ -193,9 +169,6 @@ CREATE TABLE links (
     updated_at timestamp without time zone NOT NULL
 );
 
-
-ALTER TABLE public.links OWNER TO calcentral;
-
 --
 -- Name: links_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral
 --
@@ -207,9 +180,6 @@ CREATE SEQUENCE links_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.links_id_seq OWNER TO calcentral;
-
 --
 -- Name: links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral
 --
@@ -218,7 +188,7 @@ ALTER SEQUENCE links_id_seq OWNED BY links.id;
 
 
 --
--- Name: links_user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: links_user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE links_user_roles (
@@ -226,11 +196,8 @@ CREATE TABLE links_user_roles (
     user_role_id integer
 );
 
-
-ALTER TABLE public.links_user_roles OWNER TO calcentral;
-
 --
--- Name: user_auths; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: user_auths; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE user_auths (
@@ -245,9 +212,6 @@ CREATE TABLE user_auths (
     is_viewer boolean DEFAULT false NOT NULL
 );
 
-
-ALTER TABLE public.user_auths OWNER TO calcentral;
-
 --
 -- Name: user_auths_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral
 --
@@ -259,9 +223,6 @@ CREATE SEQUENCE user_auths_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.user_auths_id_seq OWNER TO calcentral;
-
 --
 -- Name: user_auths_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral
 --
@@ -270,7 +231,7 @@ ALTER SEQUENCE user_auths_id_seq OWNED BY user_auths.id;
 
 
 --
--- Name: user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace:
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE TABLE user_roles (
@@ -278,9 +239,6 @@ CREATE TABLE user_roles (
     name character varying(255),
     slug character varying(255)
 );
-
-
-ALTER TABLE public.user_roles OWNER TO calcentral;
 
 --
 -- Name: user_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: calcentral
@@ -293,9 +251,6 @@ CREATE SEQUENCE user_roles_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.user_roles_id_seq OWNER TO calcentral;
-
 --
 -- Name: user_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: calcentral
 --
@@ -304,15 +259,14 @@ ALTER SEQUENCE user_roles_id_seq OWNED BY user_roles.id;
 
 
 --
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: calcentral_development
+-- Name: id; Type: DEFAULT; Schema: public; Owner: calcentral
 --
 
 ALTER TABLE ONLY fin_aid_years ALTER COLUMN id SET DEFAULT nextval('fin_aid_years_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: calcentral_development
+-- Name: id; Type: DEFAULT; Schema: public; Owner: calcentral
 --
 
 ALTER TABLE ONLY link_categories ALTER COLUMN id SET DEFAULT nextval('link_categories_id_seq'::regclass);
@@ -347,129 +301,129 @@ ALTER TABLE ONLY user_roles ALTER COLUMN id SET DEFAULT nextval('user_roles_id_s
 
 
 --
--- Data for Name: fin_aid_years; Type: TABLE DATA; Schema: public; Owner: calcentral_development
+-- Data for Name: fin_aid_years; Type: TABLE DATA; Schema: public; Owner: calcentral
 --
 
-INSERT INTO fin_aid_years VALUES (1, 2014, '2014-03-29', '2014-05-01 21:32:13.581', '2014-05-01 21:32:13.581');
-INSERT INTO fin_aid_years VALUES (2, 2015, '2015-03-28', '2014-05-01 21:32:13.588', '2014-05-01 21:32:13.588');
-INSERT INTO fin_aid_years VALUES (3, 2016, '2016-03-26', '2014-05-01 21:32:13.593', '2014-05-01 21:32:13.593');
-INSERT INTO fin_aid_years VALUES (4, 2017, '2017-04-01', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
-INSERT INTO fin_aid_years VALUES (5, 2018, '2018-03-31', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
-INSERT INTO fin_aid_years VALUES (6, 2019, '2019-03-30', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
-INSERT INTO fin_aid_years VALUES (7, 2020, '2020-03-28', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
-INSERT INTO fin_aid_years VALUES (8, 2021, '2021-03-27', '2014-05-15 21:32:13.581', '2014-05-15 21:32:13.581');
-
---
--- Name: fin_aid_years_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral_development
---
-
-SELECT pg_catalog.setval('fin_aid_years_id_seq', 8, true);
+INSERT INTO fin_aid_years VALUES (4, 2014, '2014-03-29', '2014-05-12 13:03:16.162', '2014-05-12 13:03:16.162');
+INSERT INTO fin_aid_years VALUES (5, 2015, '2015-03-28', '2014-05-12 13:03:16.169', '2014-05-12 13:03:16.169');
+INSERT INTO fin_aid_years VALUES (6, 2016, '2016-03-26', '2014-05-12 13:03:16.175', '2014-05-12 13:03:16.175');
+INSERT INTO fin_aid_years VALUES (7, 2017, '2017-04-01', '2014-06-02 13:02:01.337', '2014-06-02 13:02:01.337');
+INSERT INTO fin_aid_years VALUES (8, 2018, '2018-03-31', '2014-06-02 13:02:01.373', '2014-06-02 13:02:01.373');
+INSERT INTO fin_aid_years VALUES (9, 2019, '2019-03-30', '2014-06-02 13:02:01.385', '2014-06-02 13:02:01.385');
+INSERT INTO fin_aid_years VALUES (10, 2020, '2020-03-28', '2014-06-02 13:02:01.396', '2014-06-02 13:02:01.396');
+INSERT INTO fin_aid_years VALUES (11, 2021, '2021-03-27', '2014-06-02 13:02:01.408', '2014-06-02 13:02:01.408');
 
 
 --
--- Data for Name: link_categories; Type: TABLE DATA; Schema: public; Owner: calcentral_development
+-- Name: fin_aid_years_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral
 --
 
-INSERT INTO link_categories VALUES (280, 'Academic', 'academic', true, '2013-08-15 23:09:37.893', '2013-08-15 23:09:37.893');
-INSERT INTO link_categories VALUES (281, 'Academic Departments', 'academicdepartments', false, '2013-08-15 23:09:37.9', '2013-08-15 23:09:37.9');
-INSERT INTO link_categories VALUES (282, 'Academic Planning', 'academicplanning', false, '2013-08-15 23:09:37.907', '2013-08-15 23:09:37.907');
-INSERT INTO link_categories VALUES (283, 'Classes', 'classes', false, '2013-08-15 23:09:37.913', '2013-08-15 23:09:37.913');
-INSERT INTO link_categories VALUES (284, 'Faculty', 'faculty', false, '2013-08-15 23:09:37.923', '2013-08-15 23:09:37.923');
-INSERT INTO link_categories VALUES (285, 'Staff Learning', 'stafflearning', false, '2013-08-15 23:09:37.931', '2013-08-15 23:09:37.931');
-INSERT INTO link_categories VALUES (286, 'Administrative', 'administrative', true, '2013-08-15 23:09:37.938', '2013-08-15 23:09:37.938');
-INSERT INTO link_categories VALUES (287, 'Campus Departments', 'campusdepartments', false, '2013-08-15 23:09:37.945', '2013-08-15 23:09:37.945');
-INSERT INTO link_categories VALUES (288, 'Communication & Collaboration', 'communicationcollaboration', false, '2013-08-15 23:09:37.951', '2013-08-15 23:09:37.951');
-INSERT INTO link_categories VALUES (289, 'Policies & Procedures', 'policiesproceedures', false, '2013-08-15 23:09:37.958', '2013-08-15 23:09:37.958');
-INSERT INTO link_categories VALUES (290, 'Shared Service Center', 'sharedservices', false, '2013-08-15 23:09:37.964', '2013-08-15 23:09:37.964');
-INSERT INTO link_categories VALUES (291, 'Tools & Resources', 'toolsresources', false, '2013-08-15 23:09:37.971', '2013-08-15 23:09:37.971');
-INSERT INTO link_categories VALUES (292, 'Personal', 'personal', true, '2013-08-15 23:09:37.977', '2013-08-15 23:09:37.977');
-INSERT INTO link_categories VALUES (293, 'Career', 'career', false, '2013-08-15 23:09:37.983', '2013-08-15 23:09:37.983');
-INSERT INTO link_categories VALUES (294, 'Finances', 'finances', false, '2013-08-15 23:09:37.989', '2013-08-15 23:09:37.989');
-INSERT INTO link_categories VALUES (295, 'Food & Housing', 'foodandhousing', false, '2013-08-15 23:09:37.995', '2013-08-15 23:09:37.995');
-INSERT INTO link_categories VALUES (296, 'HR & Benefits', 'hrbenefits', false, '2013-08-15 23:09:38.002', '2013-08-15 23:09:38.002');
-INSERT INTO link_categories VALUES (297, 'Wellness', 'wellness', false, '2013-08-15 23:09:38.008', '2013-08-15 23:09:38.008');
-INSERT INTO link_categories VALUES (298, 'Campus Life', 'campus life', true, '2013-08-15 23:09:38.015', '2013-08-15 23:09:38.015');
-INSERT INTO link_categories VALUES (299, 'Community', 'community', false, '2013-08-15 23:09:38.021', '2013-08-15 23:09:38.021');
-INSERT INTO link_categories VALUES (300, 'Getting Around', 'gettingaround', false, '2013-08-15 23:09:38.027', '2013-08-15 23:09:38.027');
-INSERT INTO link_categories VALUES (301, 'Recreation & Entertainment', 'recreationentertainment', false, '2013-08-15 23:09:38.034', '2013-08-15 23:09:38.034');
-INSERT INTO link_categories VALUES (302, 'Safety & Emergency Information', 'safetyemergencyinfo', false, '2013-08-15 23:09:38.04', '2013-08-15 23:09:38.04');
-INSERT INTO link_categories VALUES (303, 'Student Engagement', 'studentgroups', false, '2013-08-15 23:09:38.046', '2013-08-15 23:09:38.046');
-INSERT INTO link_categories VALUES (304, 'Support Services', 'supportservices', false, '2013-08-15 23:09:38.053', '2013-08-15 23:09:38.053');
-INSERT INTO link_categories VALUES (305, 'Computing', 'computing', false, '2013-08-15 23:09:38.061', '2013-08-15 23:09:38.061');
-INSERT INTO link_categories VALUES (306, 'Network & Computing', 'network & computing', false, '2013-08-15 23:09:38.08', '2013-08-15 23:09:38.08');
-INSERT INTO link_categories VALUES (307, 'Graduate', 'graduate', false, '2013-08-15 23:09:38.133', '2013-08-15 23:09:38.133');
-INSERT INTO link_categories VALUES (308, 'Scholarships', 'scholarships', false, '2013-08-15 23:09:38.17', '2013-08-15 23:09:38.17');
-INSERT INTO link_categories VALUES (309, 'Fees & Billing', 'fees & billing', false, '2013-08-15 23:09:38.228', '2013-08-15 23:09:38.228');
-INSERT INTO link_categories VALUES (310, 'Campus Dining', 'campus dining', false, '2013-08-15 23:09:38.267', '2013-08-15 23:09:38.267');
-INSERT INTO link_categories VALUES (311, 'Family', 'family', false, '2013-08-15 23:09:38.314', '2013-08-15 23:09:38.314');
-INSERT INTO link_categories VALUES (312, 'Staff Support Services', 'staff support services', false, '2013-08-15 23:09:38.343', '2013-08-15 23:09:38.343');
-INSERT INTO link_categories VALUES (313, 'Housing', 'housing', false, '2013-08-15 23:09:38.417', '2013-08-15 23:09:38.417');
-INSERT INTO link_categories VALUES (314, 'Benefits', 'benefits', false, '2013-08-15 23:09:38.559', '2013-08-15 23:09:38.559');
-INSERT INTO link_categories VALUES (315, 'My Information', 'my information', false, '2013-08-15 23:09:38.601', '2013-08-15 23:09:38.601');
-INSERT INTO link_categories VALUES (316, 'Retirement', 'retirement', false, '2013-08-15 23:09:38.672', '2013-08-15 23:09:38.672');
-INSERT INTO link_categories VALUES (317, 'Conflict Resolution', 'conflict resolution', false, '2013-08-15 23:09:38.743', '2013-08-15 23:09:38.743');
-INSERT INTO link_categories VALUES (318, 'Campus Health Center', 'campus health center', false, '2013-08-15 23:09:38.785', '2013-08-15 23:09:38.785');
-INSERT INTO link_categories VALUES (319, 'News & Information', 'news & information', false, '2013-08-15 23:09:38.834', '2013-08-15 23:09:38.834');
-INSERT INTO link_categories VALUES (320, 'Professional Development', 'professional development', false, '2013-08-15 23:09:38.932', '2013-08-15 23:09:38.932');
-INSERT INTO link_categories VALUES (321, 'Undergraduate', 'undergraduate', false, '2013-08-15 23:09:38.971', '2013-08-15 23:09:38.971');
-INSERT INTO link_categories VALUES (322, 'Policies', 'policies', false, '2013-08-15 23:09:39.009', '2013-08-15 23:09:39.009');
-INSERT INTO link_categories VALUES (323, 'Emergency Preparedness', 'emergency preparedness', false, '2013-08-15 23:09:39.058', '2013-08-15 23:09:39.058');
-INSERT INTO link_categories VALUES (324, 'Academic Record', 'academic record', false, '2013-08-15 23:09:39.108', '2013-08-15 23:09:39.108');
-INSERT INTO link_categories VALUES (325, 'Calendar', 'calendar', false, '2013-08-15 23:09:39.19', '2013-08-15 23:09:39.19');
-INSERT INTO link_categories VALUES (326, 'Planning', 'planning', false, '2013-08-15 23:09:39.27', '2013-08-15 23:09:39.27');
-INSERT INTO link_categories VALUES (327, 'Student Advising', 'student advising', false, '2013-08-15 23:09:39.524', '2013-08-15 23:09:39.524');
-INSERT INTO link_categories VALUES (328, 'Library', 'library', false, '2013-08-15 23:09:39.78', '2013-08-15 23:09:39.78');
-INSERT INTO link_categories VALUES (329, 'Learning Resources', 'learning resources', false, '2013-08-15 23:09:39.798', '2013-08-15 23:09:39.798');
-INSERT INTO link_categories VALUES (330, 'Research', 'research', false, '2013-08-15 23:09:39.851', '2013-08-15 23:09:39.851');
-INSERT INTO link_categories VALUES (331, 'Collaboration Tools', 'collaboration tools', false, '2013-08-15 23:09:39.945', '2013-08-15 23:09:39.945');
-INSERT INTO link_categories VALUES (332, 'Classroom Technology', 'classroom technology', false, '2013-08-15 23:09:40.276', '2013-08-15 23:09:40.276');
-INSERT INTO link_categories VALUES (333, 'Resources', 'resources', false, '2013-08-15 23:09:40.314', '2013-08-15 23:09:40.314');
-INSERT INTO link_categories VALUES (334, 'Tools', 'tools', false, '2013-08-15 23:09:40.464', '2013-08-15 23:09:40.464');
-INSERT INTO link_categories VALUES (335, 'Health & Safety', 'health & safety', false, '2013-08-15 23:09:40.504', '2013-08-15 23:09:40.504');
-INSERT INTO link_categories VALUES (336, 'Overview', 'overview', false, '2013-08-15 23:09:40.578', '2013-08-15 23:09:40.578');
-INSERT INTO link_categories VALUES (337, 'Administrative and Other', 'administrative and other', false, '2013-08-15 23:09:40.648', '2013-08-15 23:09:40.648');
-INSERT INTO link_categories VALUES (338, 'Student Services', 'student services', false, '2013-08-15 23:09:40.934', '2013-08-15 23:09:40.934');
-INSERT INTO link_categories VALUES (339, 'bConnected Tools', 'bconnected tools', false, '2013-08-15 23:09:40.98', '2013-08-15 23:09:40.98');
-INSERT INTO link_categories VALUES (340, 'Campus Messaging', 'campus messaging', false, '2013-08-15 23:09:41.157', '2013-08-15 23:09:41.157');
-INSERT INTO link_categories VALUES (341, 'Compliance & Risk Management', 'compliance & risk management', false, '2013-08-15 23:09:41.38', '2013-08-15 23:09:41.38');
-INSERT INTO link_categories VALUES (342, 'Employer & Employee', 'employer & employee', false, '2013-08-15 23:09:41.431', '2013-08-15 23:09:41.431');
-INSERT INTO link_categories VALUES (343, 'Service Requests', 'service requests', false, '2013-08-15 23:09:41.556', '2013-08-15 23:09:41.556');
-INSERT INTO link_categories VALUES (344, 'Analysis & Reporting', 'analysis & reporting', false, '2013-08-15 23:09:41.597', '2013-08-15 23:09:41.597');
-INSERT INTO link_categories VALUES (345, 'Asset Management', 'asset management', false, '2013-08-15 23:09:41.637', '2013-08-15 23:09:41.637');
-INSERT INTO link_categories VALUES (346, 'Campus Mail', 'campus mail', false, '2013-08-15 23:09:41.674', '2013-08-15 23:09:41.674');
-INSERT INTO link_categories VALUES (347, 'Financial', 'financial', false, '2013-08-15 23:09:41.891', '2013-08-15 23:09:41.891');
-INSERT INTO link_categories VALUES (348, 'Human Resources', 'human resources', false, '2013-08-15 23:09:41.979', '2013-08-15 23:09:41.979');
-INSERT INTO link_categories VALUES (349, 'Payroll', 'payroll', false, '2013-08-15 23:09:42.046', '2013-08-15 23:09:42.046');
-INSERT INTO link_categories VALUES (350, 'Purchasing', 'purchasing', false, '2013-08-15 23:09:42.112', '2013-08-15 23:09:42.112');
-INSERT INTO link_categories VALUES (351, 'Security & Access', 'security & access', false, '2013-08-15 23:09:42.208', '2013-08-15 23:09:42.208');
-INSERT INTO link_categories VALUES (352, 'Staff Portal', 'staff portal', false, '2013-08-15 23:09:42.361', '2013-08-15 23:09:42.361');
-INSERT INTO link_categories VALUES (353, 'Travel & Entertainment', 'travel & entertainment', false, '2013-08-15 23:09:42.401', '2013-08-15 23:09:42.401');
-INSERT INTO link_categories VALUES (354, 'Directory', 'directory', false, '2013-08-15 23:09:42.441', '2013-08-15 23:09:42.441');
-INSERT INTO link_categories VALUES (355, 'Philanthropy & Public Service', 'philanthropy & public service', false, '2013-08-15 23:09:42.485', '2013-08-15 23:09:42.485');
-INSERT INTO link_categories VALUES (356, 'News & Events', 'news & events', false, '2013-08-15 23:09:42.594', '2013-08-15 23:09:42.594');
-INSERT INTO link_categories VALUES (357, 'Social Media', 'social media', false, '2013-08-15 23:09:42.738', '2013-08-15 23:09:42.738');
-INSERT INTO link_categories VALUES (358, 'Map', 'map', false, '2013-08-15 23:09:42.807', '2013-08-15 23:09:42.807');
-INSERT INTO link_categories VALUES (359, 'Parking & Transportation', 'parking & transportation', false, '2013-08-15 23:09:42.855', '2013-08-15 23:09:42.855');
-INSERT INTO link_categories VALUES (360, 'Points of Interest', 'points of interest', false, '2013-08-15 23:09:43.007', '2013-08-15 23:09:43.007');
-INSERT INTO link_categories VALUES (361, 'Police', 'police', false, '2013-08-15 23:09:43.088', '2013-08-15 23:09:43.088');
-INSERT INTO link_categories VALUES (362, 'Night Safety', 'night safety', false, '2013-08-15 23:09:43.135', '2013-08-15 23:09:43.135');
-INSERT INTO link_categories VALUES (363, 'Sports & Recreation', 'sports & recreation', false, '2013-08-15 23:09:43.253', '2013-08-15 23:09:43.253');
-INSERT INTO link_categories VALUES (364, 'Athletics', 'athletics', false, '2013-08-15 23:09:43.319', '2013-08-15 23:09:43.319');
-INSERT INTO link_categories VALUES (365, 'Activities', 'activities', false, '2013-08-15 23:09:43.368', '2013-08-15 23:09:43.368');
-INSERT INTO link_categories VALUES (366, 'Student Government', 'student government', false, '2013-08-15 23:09:43.577', '2013-08-15 23:09:43.577');
-INSERT INTO link_categories VALUES (367, 'Student Organizations', 'student organizations', false, '2013-08-15 23:09:43.634', '2013-08-15 23:09:43.634');
-INSERT INTO link_categories VALUES (368, 'Students', 'students', false, '2013-08-15 23:09:43.718', '2013-08-15 23:09:43.718');
-INSERT INTO link_categories VALUES (369, 'Jobs', 'jobs', false, '2013-08-15 23:09:43.856', '2013-08-15 23:09:43.856');
-INSERT INTO link_categories VALUES (370, 'Student Employees', 'student employees', false, '2013-08-15 23:09:43.984', '2013-08-15 23:09:43.984');
-INSERT INTO link_categories VALUES (371, 'Federal Loans', 'federal loans', false, '2013-08-15 23:09:44.044', '2013-08-15 23:09:44.044');
-INSERT INTO link_categories VALUES (372, 'Financial Aid', 'financial aid', false, '2013-08-15 23:09:44.099', '2013-08-15 23:09:44.099');
+SELECT pg_catalog.setval('fin_aid_years_id_seq', 11, true);
+
+
+--
+-- Data for Name: link_categories; Type: TABLE DATA; Schema: public; Owner: calcentral
+--
+
+INSERT INTO link_categories VALUES (376, 'Academic', 'academic', true, '2014-05-12 13:03:07.64', '2014-05-12 13:03:07.64');
+INSERT INTO link_categories VALUES (377, 'Academic Departments', 'academicdepartments', false, '2014-05-12 13:03:07.695', '2014-05-12 13:03:07.695');
+INSERT INTO link_categories VALUES (378, 'Academic Planning', 'academicplanning', false, '2014-05-12 13:03:07.713', '2014-05-12 13:03:07.713');
+INSERT INTO link_categories VALUES (379, 'Classes', 'classes', false, '2014-05-12 13:03:07.752', '2014-05-12 13:03:07.752');
+INSERT INTO link_categories VALUES (380, 'Faculty', 'faculty', false, '2014-05-12 13:03:07.768', '2014-05-12 13:03:07.768');
+INSERT INTO link_categories VALUES (381, 'Staff Learning', 'stafflearning', false, '2014-05-12 13:03:07.782', '2014-05-12 13:03:07.782');
+INSERT INTO link_categories VALUES (382, 'Administrative', 'administrative', true, '2014-05-12 13:03:07.797', '2014-05-12 13:03:07.797');
+INSERT INTO link_categories VALUES (383, 'Campus Departments', 'campusdepartments', false, '2014-05-12 13:03:07.812', '2014-05-12 13:03:07.812');
+INSERT INTO link_categories VALUES (384, 'Communication & Collaboration', 'communicationcollaboration', false, '2014-05-12 13:03:07.828', '2014-05-12 13:03:07.828');
+INSERT INTO link_categories VALUES (385, 'Policies & Procedures', 'policiesproceedures', false, '2014-05-12 13:03:07.843', '2014-05-12 13:03:07.843');
+INSERT INTO link_categories VALUES (386, 'Shared Service Center', 'sharedservices', false, '2014-05-12 13:03:07.857', '2014-05-12 13:03:07.857');
+INSERT INTO link_categories VALUES (387, 'Tools & Resources', 'toolsresources', false, '2014-05-12 13:03:07.871', '2014-05-12 13:03:07.871');
+INSERT INTO link_categories VALUES (388, 'Personal', 'personal', true, '2014-05-12 13:03:07.886', '2014-05-12 13:03:07.886');
+INSERT INTO link_categories VALUES (389, 'Career', 'career', false, '2014-05-12 13:03:07.9', '2014-05-12 13:03:07.9');
+INSERT INTO link_categories VALUES (390, 'Finances', 'finances', false, '2014-05-12 13:03:07.914', '2014-05-12 13:03:07.914');
+INSERT INTO link_categories VALUES (391, 'Food & Housing', 'foodandhousing', false, '2014-05-12 13:03:07.929', '2014-05-12 13:03:07.929');
+INSERT INTO link_categories VALUES (392, 'HR & Benefits', 'hrbenefits', false, '2014-05-12 13:03:07.943', '2014-05-12 13:03:07.943');
+INSERT INTO link_categories VALUES (393, 'Wellness', 'wellness', false, '2014-05-12 13:03:07.959', '2014-05-12 13:03:07.959');
+INSERT INTO link_categories VALUES (394, 'Campus Life', 'campus life', true, '2014-05-12 13:03:07.973', '2014-05-12 13:03:07.973');
+INSERT INTO link_categories VALUES (395, 'Community', 'community', false, '2014-05-12 13:03:07.988', '2014-05-12 13:03:07.988');
+INSERT INTO link_categories VALUES (396, 'Getting Around', 'gettingaround', false, '2014-05-12 13:03:08.004', '2014-05-12 13:03:08.004');
+INSERT INTO link_categories VALUES (397, 'Recreation & Entertainment', 'recreationentertainment', false, '2014-05-12 13:03:08.018', '2014-05-12 13:03:08.018');
+INSERT INTO link_categories VALUES (398, 'Safety & Emergency Information', 'safetyemergencyinfo', false, '2014-05-12 13:03:08.033', '2014-05-12 13:03:08.033');
+INSERT INTO link_categories VALUES (399, 'Student Engagement', 'studentgroups', false, '2014-05-12 13:03:08.047', '2014-05-12 13:03:08.047');
+INSERT INTO link_categories VALUES (400, 'Support Services', 'supportservices', false, '2014-05-12 13:03:08.061', '2014-05-12 13:03:08.061');
+INSERT INTO link_categories VALUES (401, 'Points of Interest', 'points of interest', false, '2014-05-12 13:03:08.08', '2014-05-12 13:03:08.08');
+INSERT INTO link_categories VALUES (402, 'Night Safety', 'night safety', false, '2014-05-12 13:03:08.306', '2014-05-12 13:03:08.306');
+INSERT INTO link_categories VALUES (403, 'Philanthropy & Public Service', 'philanthropy & public service', false, '2014-05-12 13:03:08.393', '2014-05-12 13:03:08.393');
+INSERT INTO link_categories VALUES (404, 'Travel & Entertainment', 'travel & entertainment', false, '2014-05-12 13:03:08.475', '2014-05-12 13:03:08.475');
+INSERT INTO link_categories VALUES (405, 'Purchasing', 'purchasing', false, '2014-05-12 13:03:08.56', '2014-05-12 13:03:08.56');
+INSERT INTO link_categories VALUES (406, 'Human Resources', 'human resources', false, '2014-05-12 13:03:08.634', '2014-05-12 13:03:08.634');
+INSERT INTO link_categories VALUES (407, 'Financial', 'financial', false, '2014-05-12 13:03:08.708', '2014-05-12 13:03:08.708');
+INSERT INTO link_categories VALUES (408, 'Computing', 'computing', false, '2014-05-12 13:03:08.78', '2014-05-12 13:03:08.78');
+INSERT INTO link_categories VALUES (409, 'Service Requests', 'service requests', false, '2014-05-12 13:03:08.896', '2014-05-12 13:03:08.896');
+INSERT INTO link_categories VALUES (410, 'Student Organizations', 'student organizations', false, '2014-05-12 13:03:09.001', '2014-05-12 13:03:09.001');
+INSERT INTO link_categories VALUES (411, 'Students', 'students', false, '2014-05-12 13:03:09.077', '2014-05-12 13:03:09.077');
+INSERT INTO link_categories VALUES (412, 'Sports & Recreation', 'sports & recreation', false, '2014-05-12 13:03:09.149', '2014-05-12 13:03:09.149');
+INSERT INTO link_categories VALUES (413, 'Social Media', 'social media', false, '2014-05-12 13:03:09.275', '2014-05-12 13:03:09.275');
+INSERT INTO link_categories VALUES (414, 'Security & Access', 'security & access', false, '2014-05-12 13:03:09.347', '2014-05-12 13:03:09.347');
+INSERT INTO link_categories VALUES (415, 'Employer & Employee', 'employer & employee', false, '2014-05-12 13:03:09.419', '2014-05-12 13:03:09.419');
+INSERT INTO link_categories VALUES (416, 'Collaboration Tools', 'collaboration tools', false, '2014-05-12 13:03:09.486', '2014-05-12 13:03:09.486');
+INSERT INTO link_categories VALUES (417, 'bConnected Tools', 'bconnected tools', false, '2014-05-12 13:03:09.571', '2014-05-12 13:03:09.571');
+INSERT INTO link_categories VALUES (418, 'Administrative and Other', 'administrative and other', false, '2014-05-12 13:03:09.639', '2014-05-12 13:03:09.639');
+INSERT INTO link_categories VALUES (419, 'Professional Development', 'professional development', false, '2014-05-12 13:03:09.782', '2014-05-12 13:03:09.782');
+INSERT INTO link_categories VALUES (420, 'Resources', 'resources', false, '2014-05-12 13:03:09.844', '2014-05-12 13:03:09.844');
+INSERT INTO link_categories VALUES (421, 'Learning Resources', 'learning resources', false, '2014-05-12 13:03:09.931', '2014-05-12 13:03:09.931');
+INSERT INTO link_categories VALUES (422, 'Student Advising', 'student advising', false, '2014-05-12 13:03:10.166', '2014-05-12 13:03:10.166');
+INSERT INTO link_categories VALUES (423, 'Planning', 'planning', false, '2014-05-12 13:03:10.228', '2014-05-12 13:03:10.228');
+INSERT INTO link_categories VALUES (424, 'Policies', 'policies', false, '2014-05-12 13:03:10.285', '2014-05-12 13:03:10.285');
+INSERT INTO link_categories VALUES (425, 'Academic Record', 'academic record', false, '2014-05-12 13:03:10.352', '2014-05-12 13:03:10.352');
+INSERT INTO link_categories VALUES (426, 'Calendar', 'calendar', false, '2014-05-12 13:03:10.461', '2014-05-12 13:03:10.461');
+INSERT INTO link_categories VALUES (427, 'News & Information', 'news & information', false, '2014-05-12 13:03:10.556', '2014-05-12 13:03:10.556');
+INSERT INTO link_categories VALUES (428, 'Retirement', 'retirement', false, '2014-05-12 13:03:10.611', '2014-05-12 13:03:10.611');
+INSERT INTO link_categories VALUES (429, 'My Information', 'my information', false, '2014-05-12 13:03:10.675', '2014-05-12 13:03:10.675');
+INSERT INTO link_categories VALUES (430, 'Housing', 'housing', false, '2014-05-12 13:03:10.742', '2014-05-12 13:03:10.742');
+INSERT INTO link_categories VALUES (431, 'Network & Computing', 'network & computing', false, '2014-05-12 13:03:10.934', '2014-05-12 13:03:10.934');
+INSERT INTO link_categories VALUES (432, 'Campus Dining', 'campus dining', false, '2014-05-12 13:03:10.996', '2014-05-12 13:03:10.996');
+INSERT INTO link_categories VALUES (433, 'Family', 'family', false, '2014-05-12 13:03:11.062', '2014-05-12 13:03:11.062');
+INSERT INTO link_categories VALUES (434, 'Staff Support Services', 'staff support services', false, '2014-05-12 13:03:11.136', '2014-05-12 13:03:11.136');
+INSERT INTO link_categories VALUES (435, 'Benefits', 'benefits', false, '2014-05-12 13:03:11.211', '2014-05-12 13:03:11.211');
+INSERT INTO link_categories VALUES (436, 'Conflict Resolution', 'conflict resolution', false, '2014-05-12 13:03:11.344', '2014-05-12 13:03:11.344');
+INSERT INTO link_categories VALUES (437, 'Campus Health Center', 'campus health center', false, '2014-05-12 13:03:11.403', '2014-05-12 13:03:11.403');
+INSERT INTO link_categories VALUES (438, 'Emergency Preparedness', 'emergency preparedness', false, '2014-05-12 13:03:11.616', '2014-05-12 13:03:11.616');
+INSERT INTO link_categories VALUES (439, 'Library', 'library', false, '2014-05-12 13:03:11.936', '2014-05-12 13:03:11.936');
+INSERT INTO link_categories VALUES (440, 'Research', 'research', false, '2014-05-12 13:03:12.009', '2014-05-12 13:03:12.009');
+INSERT INTO link_categories VALUES (441, 'Health & Safety', 'health & safety', false, '2014-05-12 13:03:12.292', '2014-05-12 13:03:12.292');
+INSERT INTO link_categories VALUES (442, 'Student Services', 'student services', false, '2014-05-12 13:03:12.385', '2014-05-12 13:03:12.385');
+INSERT INTO link_categories VALUES (443, 'Campus Mail', 'campus mail', false, '2014-05-12 13:03:12.563', '2014-05-12 13:03:12.563');
+INSERT INTO link_categories VALUES (444, 'Asset Management', 'asset management', false, '2014-05-12 13:03:12.621', '2014-05-12 13:03:12.621');
+INSERT INTO link_categories VALUES (445, 'Analysis & Reporting', 'analysis & reporting', false, '2014-05-12 13:03:12.675', '2014-05-12 13:03:12.675');
+INSERT INTO link_categories VALUES (446, 'Overview', 'overview', false, '2014-05-12 13:03:12.731', '2014-05-12 13:03:12.731');
+INSERT INTO link_categories VALUES (447, 'Campus Messaging', 'campus messaging', false, '2014-05-12 13:03:12.947', '2014-05-12 13:03:12.947');
+INSERT INTO link_categories VALUES (448, 'Financial Assistance', 'financial assistance', false, '2014-05-12 13:03:13.036', '2014-05-12 13:03:13.036');
+INSERT INTO link_categories VALUES (449, 'Tools', 'tools', false, '2014-05-12 13:03:13.3', '2014-05-12 13:03:13.3');
+INSERT INTO link_categories VALUES (450, 'Classroom Technology', 'classroom technology', false, '2014-05-12 13:03:13.459', '2014-05-12 13:03:13.459');
+INSERT INTO link_categories VALUES (451, 'Graduate', 'graduate', false, '2014-05-12 13:03:13.563', '2014-05-12 13:03:13.563');
+INSERT INTO link_categories VALUES (452, 'Your Questions Answered Here', 'your questions answered here', false, '2014-05-12 13:03:13.697', '2014-05-12 13:03:13.697');
+INSERT INTO link_categories VALUES (453, 'Directory', 'directory', false, '2014-05-12 13:03:13.823', '2014-05-12 13:03:13.823');
+INSERT INTO link_categories VALUES (454, 'News & Events', 'news & events', false, '2014-05-12 13:03:13.93', '2014-05-12 13:03:13.93');
+INSERT INTO link_categories VALUES (455, 'Map', 'map', false, '2014-05-12 13:03:14.019', '2014-05-12 13:03:14.019');
+INSERT INTO link_categories VALUES (456, 'Parking & Transportation', 'parking & transportation', false, '2014-05-12 13:03:14.082', '2014-05-12 13:03:14.082');
+INSERT INTO link_categories VALUES (457, 'Police', 'police', false, '2014-05-12 13:03:14.172', '2014-05-12 13:03:14.172');
+INSERT INTO link_categories VALUES (458, 'Student Government', 'student government', false, '2014-05-12 13:03:14.331', '2014-05-12 13:03:14.331');
+INSERT INTO link_categories VALUES (459, 'Jobs', 'jobs', false, '2014-05-12 13:03:14.503', '2014-05-12 13:03:14.503');
+INSERT INTO link_categories VALUES (460, 'Activities', 'activities', false, '2014-05-12 13:03:14.627', '2014-05-12 13:03:14.627');
+INSERT INTO link_categories VALUES (461, 'Athletics', 'athletics', false, '2014-05-12 13:03:14.942', '2014-05-12 13:03:14.942');
+INSERT INTO link_categories VALUES (462, 'Staff Portal', 'staff portal', false, '2014-05-12 13:03:15.236', '2014-05-12 13:03:15.236');
+INSERT INTO link_categories VALUES (463, 'Payroll', 'payroll', false, '2014-05-12 13:03:15.382', '2014-05-12 13:03:15.382');
+INSERT INTO link_categories VALUES (464, 'Billing & Payments', 'billing & payments', false, '2014-05-12 13:03:15.606', '2014-05-12 13:03:15.606');
+INSERT INTO link_categories VALUES (465, 'Leaving Cal?', 'leaving cal?', false, '2014-05-12 13:03:15.747', '2014-05-12 13:03:15.747');
+INSERT INTO link_categories VALUES (466, 'Summer Programs', 'summer programs', false, '2014-05-12 13:03:15.797', '2014-05-12 13:03:15.797');
+INSERT INTO link_categories VALUES (467, 'Student Employees', 'student employees', false, '2014-05-12 13:03:15.842', '2014-05-12 13:03:15.842');
 
 
 --
 -- Name: link_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral
 --
 
-SELECT pg_catalog.setval('link_categories_id_seq', 372, true);
+SELECT pg_catalog.setval('link_categories_id_seq', 467, true);
 
 
 --
@@ -482,860 +436,860 @@ SELECT pg_catalog.setval('link_categories_id_seq', 372, true);
 -- Data for Name: link_sections; Type: TABLE DATA; Schema: public; Owner: calcentral
 --
 
-INSERT INTO link_sections VALUES (229, 286, 291, 305, '2013-08-15 23:09:38.072', '2013-08-15 23:09:38.072');
-INSERT INTO link_sections VALUES (230, 292, 295, 306, '2013-08-15 23:09:38.09', '2013-08-15 23:09:38.09');
-INSERT INTO link_sections VALUES (231, 292, 294, 307, '2013-08-15 23:09:38.144', '2013-08-15 23:09:38.144');
-INSERT INTO link_sections VALUES (232, 292, 294, 308, '2013-08-15 23:09:38.18', '2013-08-15 23:09:38.18');
-INSERT INTO link_sections VALUES (233, 292, 294, 309, '2013-08-15 23:09:38.238', '2013-08-15 23:09:38.238');
-INSERT INTO link_sections VALUES (234, 292, 295, 310, '2013-08-15 23:09:38.277', '2013-08-15 23:09:38.277');
-INSERT INTO link_sections VALUES (235, 292, 295, 311, '2013-08-15 23:09:38.324', '2013-08-15 23:09:38.324');
-INSERT INTO link_sections VALUES (236, 292, 296, 311, '2013-08-15 23:09:38.336', '2013-08-15 23:09:38.336');
-INSERT INTO link_sections VALUES (237, 292, 297, 312, '2013-08-15 23:09:38.353', '2013-08-15 23:09:38.353');
-INSERT INTO link_sections VALUES (238, 292, 295, 313, '2013-08-15 23:09:38.432', '2013-08-15 23:09:38.432');
-INSERT INTO link_sections VALUES (239, 292, 296, 314, '2013-08-15 23:09:38.569', '2013-08-15 23:09:38.569');
-INSERT INTO link_sections VALUES (240, 292, 296, 315, '2013-08-15 23:09:38.612', '2013-08-15 23:09:38.612');
-INSERT INTO link_sections VALUES (241, 292, 296, 316, '2013-08-15 23:09:38.682', '2013-08-15 23:09:38.682');
-INSERT INTO link_sections VALUES (242, 292, 296, 317, '2013-08-15 23:09:38.753', '2013-08-15 23:09:38.753');
-INSERT INTO link_sections VALUES (243, 292, 297, 318, '2013-08-15 23:09:38.795', '2013-08-15 23:09:38.795');
-INSERT INTO link_sections VALUES (244, 292, 297, 319, '2013-08-15 23:09:38.845', '2013-08-15 23:09:38.845');
-INSERT INTO link_sections VALUES (245, 280, 285, 320, '2013-08-15 23:09:38.943', '2013-08-15 23:09:38.943');
-INSERT INTO link_sections VALUES (246, 292, 294, 321, '2013-08-15 23:09:38.982', '2013-08-15 23:09:38.982');
-INSERT INTO link_sections VALUES (247, 286, 289, 322, '2013-08-15 23:09:39.02', '2013-08-15 23:09:39.02');
-INSERT INTO link_sections VALUES (248, 298, 302, 323, '2013-08-15 23:09:39.069', '2013-08-15 23:09:39.069');
-INSERT INTO link_sections VALUES (249, 280, 282, 324, '2013-08-15 23:09:39.118', '2013-08-15 23:09:39.118');
-INSERT INTO link_sections VALUES (250, 280, 282, 325, '2013-08-15 23:09:39.2', '2013-08-15 23:09:39.2');
-INSERT INTO link_sections VALUES (251, 280, 282, 326, '2013-08-15 23:09:39.28', '2013-08-15 23:09:39.28');
-INSERT INTO link_sections VALUES (252, 280, 283, 283, '2013-08-15 23:09:39.342', '2013-08-15 23:09:39.342');
-INSERT INTO link_sections VALUES (253, 280, 282, 327, '2013-08-15 23:09:39.534', '2013-08-15 23:09:39.534');
-INSERT INTO link_sections VALUES (254, 280, 281, 280, '2013-08-15 23:09:39.636', '2013-08-15 23:09:39.636');
-INSERT INTO link_sections VALUES (255, 280, 281, 307, '2013-08-15 23:09:39.742', '2013-08-15 23:09:39.742');
-INSERT INTO link_sections VALUES (256, 280, 281, 328, '2013-08-15 23:09:39.79', '2013-08-15 23:09:39.79');
-INSERT INTO link_sections VALUES (257, 280, 283, 329, '2013-08-15 23:09:39.807', '2013-08-15 23:09:39.807');
-INSERT INTO link_sections VALUES (258, 280, 281, 330, '2013-08-15 23:09:39.861', '2013-08-15 23:09:39.861');
-INSERT INTO link_sections VALUES (259, 280, 282, 283, '2013-08-15 23:09:39.938', '2013-08-15 23:09:39.938');
-INSERT INTO link_sections VALUES (260, 286, 288, 331, '2013-08-15 23:09:39.955', '2013-08-15 23:09:39.955');
-INSERT INTO link_sections VALUES (261, 280, 284, 332, '2013-08-15 23:09:40.286', '2013-08-15 23:09:40.286');
-INSERT INTO link_sections VALUES (262, 280, 284, 333, '2013-08-15 23:09:40.324', '2013-08-15 23:09:40.324');
-INSERT INTO link_sections VALUES (263, 280, 284, 334, '2013-08-15 23:09:40.475', '2013-08-15 23:09:40.475');
-INSERT INTO link_sections VALUES (264, 280, 285, 335, '2013-08-15 23:09:40.514', '2013-08-15 23:09:40.514');
-INSERT INTO link_sections VALUES (265, 280, 285, 336, '2013-08-15 23:09:40.588', '2013-08-15 23:09:40.588');
-INSERT INTO link_sections VALUES (266, 286, 287, 337, '2013-08-15 23:09:40.658', '2013-08-15 23:09:40.658');
-INSERT INTO link_sections VALUES (267, 286, 287, 338, '2013-08-15 23:09:40.944', '2013-08-15 23:09:40.944');
-INSERT INTO link_sections VALUES (268, 286, 288, 339, '2013-08-15 23:09:40.99', '2013-08-15 23:09:40.99');
-INSERT INTO link_sections VALUES (269, 286, 288, 340, '2013-08-15 23:09:41.167', '2013-08-15 23:09:41.167');
-INSERT INTO link_sections VALUES (270, 286, 289, 341, '2013-08-15 23:09:41.39', '2013-08-15 23:09:41.39');
-INSERT INTO link_sections VALUES (271, 286, 289, 342, '2013-08-15 23:09:41.459', '2013-08-15 23:09:41.459');
-INSERT INTO link_sections VALUES (272, 286, 290, 336, '2013-08-15 23:09:41.523', '2013-08-15 23:09:41.523');
-INSERT INTO link_sections VALUES (273, 286, 290, 343, '2013-08-15 23:09:41.565', '2013-08-15 23:09:41.565');
-INSERT INTO link_sections VALUES (274, 286, 291, 344, '2013-08-15 23:09:41.607', '2013-08-15 23:09:41.607');
-INSERT INTO link_sections VALUES (275, 286, 291, 345, '2013-08-15 23:09:41.647', '2013-08-15 23:09:41.647');
-INSERT INTO link_sections VALUES (276, 286, 291, 346, '2013-08-15 23:09:41.683', '2013-08-15 23:09:41.683');
-INSERT INTO link_sections VALUES (277, 286, 291, 347, '2013-08-15 23:09:41.9', '2013-08-15 23:09:41.9');
-INSERT INTO link_sections VALUES (278, 286, 291, 348, '2013-08-15 23:09:41.989', '2013-08-15 23:09:41.989');
-INSERT INTO link_sections VALUES (279, 286, 291, 349, '2013-08-15 23:09:42.056', '2013-08-15 23:09:42.056');
-INSERT INTO link_sections VALUES (280, 286, 291, 350, '2013-08-15 23:09:42.122', '2013-08-15 23:09:42.122');
-INSERT INTO link_sections VALUES (281, 286, 291, 351, '2013-08-15 23:09:42.218', '2013-08-15 23:09:42.218');
-INSERT INTO link_sections VALUES (282, 286, 291, 352, '2013-08-15 23:09:42.37', '2013-08-15 23:09:42.37');
-INSERT INTO link_sections VALUES (283, 286, 291, 353, '2013-08-15 23:09:42.41', '2013-08-15 23:09:42.41');
-INSERT INTO link_sections VALUES (284, 298, 299, 354, '2013-08-15 23:09:42.45', '2013-08-15 23:09:42.45');
-INSERT INTO link_sections VALUES (285, 298, 299, 355, '2013-08-15 23:09:42.495', '2013-08-15 23:09:42.495');
-INSERT INTO link_sections VALUES (286, 298, 299, 356, '2013-08-15 23:09:42.605', '2013-08-15 23:09:42.605');
-INSERT INTO link_sections VALUES (287, 298, 299, 357, '2013-08-15 23:09:42.747', '2013-08-15 23:09:42.747');
-INSERT INTO link_sections VALUES (288, 298, 300, 358, '2013-08-15 23:09:42.817', '2013-08-15 23:09:42.817');
-INSERT INTO link_sections VALUES (289, 298, 300, 359, '2013-08-15 23:09:42.865', '2013-08-15 23:09:42.865');
-INSERT INTO link_sections VALUES (290, 298, 300, 360, '2013-08-15 23:09:43.016', '2013-08-15 23:09:43.016');
-INSERT INTO link_sections VALUES (291, 298, 302, 361, '2013-08-15 23:09:43.098', '2013-08-15 23:09:43.098');
-INSERT INTO link_sections VALUES (292, 298, 302, 362, '2013-08-15 23:09:43.145', '2013-08-15 23:09:43.145');
-INSERT INTO link_sections VALUES (293, 298, 301, 360, '2013-08-15 23:09:43.216', '2013-08-15 23:09:43.216');
-INSERT INTO link_sections VALUES (294, 298, 301, 363, '2013-08-15 23:09:43.262', '2013-08-15 23:09:43.262');
-INSERT INTO link_sections VALUES (295, 298, 301, 364, '2013-08-15 23:09:43.329', '2013-08-15 23:09:43.329');
-INSERT INTO link_sections VALUES (296, 298, 301, 365, '2013-08-15 23:09:43.377', '2013-08-15 23:09:43.377');
-INSERT INTO link_sections VALUES (297, 298, 303, 365, '2013-08-15 23:09:43.552', '2013-08-15 23:09:43.552');
-INSERT INTO link_sections VALUES (298, 298, 303, 366, '2013-08-15 23:09:43.586', '2013-08-15 23:09:43.586');
-INSERT INTO link_sections VALUES (299, 298, 303, 367, '2013-08-15 23:09:43.643', '2013-08-15 23:09:43.643');
-INSERT INTO link_sections VALUES (300, 298, 304, 368, '2013-08-15 23:09:43.728', '2013-08-15 23:09:43.728');
-INSERT INTO link_sections VALUES (301, 292, 293, 369, '2013-08-15 23:09:43.865', '2013-08-15 23:09:43.865');
-INSERT INTO link_sections VALUES (302, 292, 293, 370, '2013-08-15 23:09:43.993', '2013-08-15 23:09:43.993');
-INSERT INTO link_sections VALUES (303, 292, 294, 371, '2013-08-15 23:09:44.054', '2013-08-15 23:09:44.054');
-INSERT INTO link_sections VALUES (304, 292, 294, 372, '2013-08-15 23:09:44.109', '2013-08-15 23:09:44.109');
+INSERT INTO link_sections VALUES (308, 394, 397, 401, '2014-05-12 13:03:08.198', '2014-05-12 13:03:08.198');
+INSERT INTO link_sections VALUES (309, 394, 398, 402, '2014-05-12 13:03:08.338', '2014-05-12 13:03:08.338');
+INSERT INTO link_sections VALUES (310, 394, 395, 403, '2014-05-12 13:03:08.422', '2014-05-12 13:03:08.422');
+INSERT INTO link_sections VALUES (311, 382, 387, 404, '2014-05-12 13:03:08.508', '2014-05-12 13:03:08.508');
+INSERT INTO link_sections VALUES (312, 382, 387, 405, '2014-05-12 13:03:08.59', '2014-05-12 13:03:08.59');
+INSERT INTO link_sections VALUES (313, 382, 387, 406, '2014-05-12 13:03:08.661', '2014-05-12 13:03:08.661');
+INSERT INTO link_sections VALUES (314, 382, 387, 407, '2014-05-12 13:03:08.736', '2014-05-12 13:03:08.736');
+INSERT INTO link_sections VALUES (315, 382, 387, 408, '2014-05-12 13:03:08.806', '2014-05-12 13:03:08.806');
+INSERT INTO link_sections VALUES (316, 382, 386, 409, '2014-05-12 13:03:08.921', '2014-05-12 13:03:08.921');
+INSERT INTO link_sections VALUES (317, 394, 399, 410, '2014-05-12 13:03:09.028', '2014-05-12 13:03:09.028');
+INSERT INTO link_sections VALUES (318, 394, 400, 411, '2014-05-12 13:03:09.104', '2014-05-12 13:03:09.104');
+INSERT INTO link_sections VALUES (319, 394, 397, 412, '2014-05-12 13:03:09.172', '2014-05-12 13:03:09.172');
+INSERT INTO link_sections VALUES (320, 394, 396, 401, '2014-05-12 13:03:09.226', '2014-05-12 13:03:09.226');
+INSERT INTO link_sections VALUES (321, 394, 395, 413, '2014-05-12 13:03:09.303', '2014-05-12 13:03:09.303');
+INSERT INTO link_sections VALUES (322, 382, 387, 414, '2014-05-12 13:03:09.373', '2014-05-12 13:03:09.373');
+INSERT INTO link_sections VALUES (323, 382, 385, 415, '2014-05-12 13:03:09.447', '2014-05-12 13:03:09.447');
+INSERT INTO link_sections VALUES (324, 382, 384, 416, '2014-05-12 13:03:09.511', '2014-05-12 13:03:09.511');
+INSERT INTO link_sections VALUES (325, 382, 384, 417, '2014-05-12 13:03:09.596', '2014-05-12 13:03:09.596');
+INSERT INTO link_sections VALUES (326, 382, 383, 418, '2014-05-12 13:03:09.666', '2014-05-12 13:03:09.666');
+INSERT INTO link_sections VALUES (327, 376, 381, 419, '2014-05-12 13:03:09.805', '2014-05-12 13:03:09.805');
+INSERT INTO link_sections VALUES (328, 376, 380, 420, '2014-05-12 13:03:09.867', '2014-05-12 13:03:09.867');
+INSERT INTO link_sections VALUES (329, 376, 379, 421, '2014-05-12 13:03:09.954', '2014-05-12 13:03:09.954');
+INSERT INTO link_sections VALUES (330, 376, 379, 379, '2014-05-12 13:03:10.01', '2014-05-12 13:03:10.01');
+INSERT INTO link_sections VALUES (331, 376, 378, 379, '2014-05-12 13:03:10.037', '2014-05-12 13:03:10.037');
+INSERT INTO link_sections VALUES (332, 376, 377, 376, '2014-05-12 13:03:10.124', '2014-05-12 13:03:10.124');
+INSERT INTO link_sections VALUES (333, 376, 378, 422, '2014-05-12 13:03:10.191', '2014-05-12 13:03:10.191');
+INSERT INTO link_sections VALUES (334, 376, 378, 423, '2014-05-12 13:03:10.25', '2014-05-12 13:03:10.25');
+INSERT INTO link_sections VALUES (335, 382, 385, 424, '2014-05-12 13:03:10.31', '2014-05-12 13:03:10.31');
+INSERT INTO link_sections VALUES (336, 376, 378, 425, '2014-05-12 13:03:10.375', '2014-05-12 13:03:10.375');
+INSERT INTO link_sections VALUES (337, 376, 378, 426, '2014-05-12 13:03:10.482', '2014-05-12 13:03:10.482');
+INSERT INTO link_sections VALUES (338, 388, 393, 427, '2014-05-12 13:03:10.577', '2014-05-12 13:03:10.577');
+INSERT INTO link_sections VALUES (339, 388, 392, 428, '2014-05-12 13:03:10.635', '2014-05-12 13:03:10.635');
+INSERT INTO link_sections VALUES (340, 388, 392, 429, '2014-05-12 13:03:10.699', '2014-05-12 13:03:10.699');
+INSERT INTO link_sections VALUES (341, 388, 391, 430, '2014-05-12 13:03:10.764', '2014-05-12 13:03:10.764');
+INSERT INTO link_sections VALUES (342, 388, 391, 431, '2014-05-12 13:03:10.956', '2014-05-12 13:03:10.956');
+INSERT INTO link_sections VALUES (343, 388, 391, 432, '2014-05-12 13:03:11.019', '2014-05-12 13:03:11.019');
+INSERT INTO link_sections VALUES (344, 388, 391, 433, '2014-05-12 13:03:11.091', '2014-05-12 13:03:11.091');
+INSERT INTO link_sections VALUES (345, 388, 392, 433, '2014-05-12 13:03:11.122', '2014-05-12 13:03:11.122');
+INSERT INTO link_sections VALUES (346, 388, 393, 434, '2014-05-12 13:03:11.159', '2014-05-12 13:03:11.159');
+INSERT INTO link_sections VALUES (347, 388, 392, 435, '2014-05-12 13:03:11.235', '2014-05-12 13:03:11.235');
+INSERT INTO link_sections VALUES (348, 388, 392, 436, '2014-05-12 13:03:11.366', '2014-05-12 13:03:11.366');
+INSERT INTO link_sections VALUES (349, 388, 393, 437, '2014-05-12 13:03:11.426', '2014-05-12 13:03:11.426');
+INSERT INTO link_sections VALUES (350, 394, 398, 438, '2014-05-12 13:03:11.638', '2014-05-12 13:03:11.638');
+INSERT INTO link_sections VALUES (351, 376, 377, 439, '2014-05-12 13:03:11.956', '2014-05-12 13:03:11.956');
+INSERT INTO link_sections VALUES (352, 376, 377, 440, '2014-05-12 13:03:12.029', '2014-05-12 13:03:12.029');
+INSERT INTO link_sections VALUES (353, 376, 381, 441, '2014-05-12 13:03:12.312', '2014-05-12 13:03:12.312');
+INSERT INTO link_sections VALUES (354, 382, 383, 442, '2014-05-12 13:03:12.405', '2014-05-12 13:03:12.405');
+INSERT INTO link_sections VALUES (355, 382, 387, 443, '2014-05-12 13:03:12.585', '2014-05-12 13:03:12.585');
+INSERT INTO link_sections VALUES (356, 382, 387, 444, '2014-05-12 13:03:12.641', '2014-05-12 13:03:12.641');
+INSERT INTO link_sections VALUES (357, 382, 387, 445, '2014-05-12 13:03:12.695', '2014-05-12 13:03:12.695');
+INSERT INTO link_sections VALUES (358, 382, 386, 446, '2014-05-12 13:03:12.753', '2014-05-12 13:03:12.753');
+INSERT INTO link_sections VALUES (359, 382, 384, 447, '2014-05-12 13:03:12.968', '2014-05-12 13:03:12.968');
+INSERT INTO link_sections VALUES (360, 388, 390, 448, '2014-05-12 13:03:13.058', '2014-05-12 13:03:13.058');
+INSERT INTO link_sections VALUES (361, 376, 381, 446, '2014-05-12 13:03:13.238', '2014-05-12 13:03:13.238');
+INSERT INTO link_sections VALUES (362, 376, 380, 449, '2014-05-12 13:03:13.321', '2014-05-12 13:03:13.321');
+INSERT INTO link_sections VALUES (363, 376, 380, 450, '2014-05-12 13:03:13.479', '2014-05-12 13:03:13.479');
+INSERT INTO link_sections VALUES (364, 376, 377, 451, '2014-05-12 13:03:13.584', '2014-05-12 13:03:13.584');
+INSERT INTO link_sections VALUES (365, 388, 390, 452, '2014-05-12 13:03:13.715', '2014-05-12 13:03:13.715');
+INSERT INTO link_sections VALUES (366, 394, 395, 453, '2014-05-12 13:03:13.849', '2014-05-12 13:03:13.849');
+INSERT INTO link_sections VALUES (367, 394, 395, 454, '2014-05-12 13:03:13.951', '2014-05-12 13:03:13.951');
+INSERT INTO link_sections VALUES (368, 394, 396, 455, '2014-05-12 13:03:14.04', '2014-05-12 13:03:14.04');
+INSERT INTO link_sections VALUES (369, 394, 396, 456, '2014-05-12 13:03:14.102', '2014-05-12 13:03:14.102');
+INSERT INTO link_sections VALUES (370, 394, 398, 457, '2014-05-12 13:03:14.192', '2014-05-12 13:03:14.192');
+INSERT INTO link_sections VALUES (371, 394, 399, 458, '2014-05-12 13:03:14.353', '2014-05-12 13:03:14.353');
+INSERT INTO link_sections VALUES (372, 388, 389, 459, '2014-05-12 13:03:14.522', '2014-05-12 13:03:14.522');
+INSERT INTO link_sections VALUES (373, 394, 397, 460, '2014-05-12 13:03:14.646', '2014-05-12 13:03:14.646');
+INSERT INTO link_sections VALUES (374, 394, 399, 460, '2014-05-12 13:03:14.908', '2014-05-12 13:03:14.908');
+INSERT INTO link_sections VALUES (375, 394, 397, 461, '2014-05-12 13:03:14.961', '2014-05-12 13:03:14.961');
+INSERT INTO link_sections VALUES (376, 382, 387, 462, '2014-05-12 13:03:15.265', '2014-05-12 13:03:15.265');
+INSERT INTO link_sections VALUES (377, 382, 387, 463, '2014-05-12 13:03:15.4', '2014-05-12 13:03:15.4');
+INSERT INTO link_sections VALUES (378, 388, 390, 464, '2014-05-12 13:03:15.624', '2014-05-12 13:03:15.624');
+INSERT INTO link_sections VALUES (379, 388, 390, 465, '2014-05-12 13:03:15.766', '2014-05-12 13:03:15.766');
+INSERT INTO link_sections VALUES (380, 388, 390, 466, '2014-05-12 13:03:15.815', '2014-05-12 13:03:15.815');
+INSERT INTO link_sections VALUES (381, 388, 389, 467, '2014-05-12 13:03:15.858', '2014-05-12 13:03:15.858');
 
 
 --
 -- Name: link_sections_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral
 --
 
-SELECT pg_catalog.setval('link_sections_id_seq', 304, true);
+SELECT pg_catalog.setval('link_sections_id_seq', 381, true);
 
 
 --
 -- Data for Name: link_sections_links; Type: TABLE DATA; Schema: public; Owner: calcentral
 --
 
-INSERT INTO link_sections_links VALUES (229, 528);
-INSERT INTO link_sections_links VALUES (230, 528);
-INSERT INTO link_sections_links VALUES (231, 529);
-INSERT INTO link_sections_links VALUES (232, 530);
-INSERT INTO link_sections_links VALUES (231, 531);
-INSERT INTO link_sections_links VALUES (233, 532);
-INSERT INTO link_sections_links VALUES (234, 533);
-INSERT INTO link_sections_links VALUES (235, 534);
-INSERT INTO link_sections_links VALUES (236, 534);
-INSERT INTO link_sections_links VALUES (237, 534);
-INSERT INTO link_sections_links VALUES (238, 535);
-INSERT INTO link_sections_links VALUES (238, 536);
-INSERT INTO link_sections_links VALUES (238, 537);
-INSERT INTO link_sections_links VALUES (238, 538);
-INSERT INTO link_sections_links VALUES (238, 539);
-INSERT INTO link_sections_links VALUES (239, 540);
-INSERT INTO link_sections_links VALUES (240, 541);
-INSERT INTO link_sections_links VALUES (240, 542);
-INSERT INTO link_sections_links VALUES (241, 543);
-INSERT INTO link_sections_links VALUES (241, 544);
-INSERT INTO link_sections_links VALUES (242, 545);
-INSERT INTO link_sections_links VALUES (243, 546);
-INSERT INTO link_sections_links VALUES (244, 547);
-INSERT INTO link_sections_links VALUES (243, 548);
-INSERT INTO link_sections_links VALUES (243, 549);
-INSERT INTO link_sections_links VALUES (245, 550);
-INSERT INTO link_sections_links VALUES (246, 551);
-INSERT INTO link_sections_links VALUES (247, 552);
-INSERT INTO link_sections_links VALUES (248, 553);
-INSERT INTO link_sections_links VALUES (249, 554);
-INSERT INTO link_sections_links VALUES (249, 555);
-INSERT INTO link_sections_links VALUES (250, 556);
-INSERT INTO link_sections_links VALUES (250, 557);
-INSERT INTO link_sections_links VALUES (251, 558);
-INSERT INTO link_sections_links VALUES (251, 559);
-INSERT INTO link_sections_links VALUES (252, 559);
-INSERT INTO link_sections_links VALUES (251, 560);
-INSERT INTO link_sections_links VALUES (252, 560);
-INSERT INTO link_sections_links VALUES (251, 561);
-INSERT INTO link_sections_links VALUES (251, 562);
-INSERT INTO link_sections_links VALUES (251, 563);
-INSERT INTO link_sections_links VALUES (251, 564);
-INSERT INTO link_sections_links VALUES (253, 565);
-INSERT INTO link_sections_links VALUES (233, 565);
-INSERT INTO link_sections_links VALUES (253, 566);
-INSERT INTO link_sections_links VALUES (253, 567);
-INSERT INTO link_sections_links VALUES (253, 568);
-INSERT INTO link_sections_links VALUES (254, 569);
-INSERT INTO link_sections_links VALUES (254, 570);
-INSERT INTO link_sections_links VALUES (254, 571);
-INSERT INTO link_sections_links VALUES (255, 572);
-INSERT INTO link_sections_links VALUES (256, 573);
-INSERT INTO link_sections_links VALUES (257, 573);
-INSERT INTO link_sections_links VALUES (258, 574);
-INSERT INTO link_sections_links VALUES (258, 575);
-INSERT INTO link_sections_links VALUES (252, 576);
-INSERT INTO link_sections_links VALUES (259, 576);
-INSERT INTO link_sections_links VALUES (260, 576);
-INSERT INTO link_sections_links VALUES (252, 577);
-INSERT INTO link_sections_links VALUES (252, 578);
-INSERT INTO link_sections_links VALUES (259, 578);
-INSERT INTO link_sections_links VALUES (252, 579);
-INSERT INTO link_sections_links VALUES (259, 579);
-INSERT INTO link_sections_links VALUES (252, 580);
-INSERT INTO link_sections_links VALUES (259, 580);
-INSERT INTO link_sections_links VALUES (245, 580);
-INSERT INTO link_sections_links VALUES (257, 582);
-INSERT INTO link_sections_links VALUES (257, 583);
-INSERT INTO link_sections_links VALUES (257, 584);
-INSERT INTO link_sections_links VALUES (261, 585);
-INSERT INTO link_sections_links VALUES (262, 586);
-INSERT INTO link_sections_links VALUES (262, 587);
-INSERT INTO link_sections_links VALUES (262, 588);
-INSERT INTO link_sections_links VALUES (262, 589);
-INSERT INTO link_sections_links VALUES (262, 590);
-INSERT INTO link_sections_links VALUES (262, 591);
-INSERT INTO link_sections_links VALUES (263, 592);
-INSERT INTO link_sections_links VALUES (264, 593);
-INSERT INTO link_sections_links VALUES (264, 594);
-INSERT INTO link_sections_links VALUES (265, 595);
-INSERT INTO link_sections_links VALUES (245, 596);
-INSERT INTO link_sections_links VALUES (266, 597);
-INSERT INTO link_sections_links VALUES (266, 598);
-INSERT INTO link_sections_links VALUES (266, 599);
-INSERT INTO link_sections_links VALUES (266, 600);
-INSERT INTO link_sections_links VALUES (266, 601);
-INSERT INTO link_sections_links VALUES (266, 602);
-INSERT INTO link_sections_links VALUES (266, 603);
-INSERT INTO link_sections_links VALUES (266, 604);
-INSERT INTO link_sections_links VALUES (267, 605);
-INSERT INTO link_sections_links VALUES (268, 606);
-INSERT INTO link_sections_links VALUES (268, 607);
-INSERT INTO link_sections_links VALUES (268, 608);
-INSERT INTO link_sections_links VALUES (268, 609);
-INSERT INTO link_sections_links VALUES (268, 610);
-INSERT INTO link_sections_links VALUES (269, 611);
-INSERT INTO link_sections_links VALUES (260, 612);
-INSERT INTO link_sections_links VALUES (260, 613);
-INSERT INTO link_sections_links VALUES (260, 614);
-INSERT INTO link_sections_links VALUES (247, 615);
-INSERT INTO link_sections_links VALUES (247, 616);
-INSERT INTO link_sections_links VALUES (247, 617);
-INSERT INTO link_sections_links VALUES (270, 618);
-INSERT INTO link_sections_links VALUES (271, 619);
-INSERT INTO link_sections_links VALUES (271, 620);
-INSERT INTO link_sections_links VALUES (272, 621);
-INSERT INTO link_sections_links VALUES (273, 622);
-INSERT INTO link_sections_links VALUES (274, 623);
-INSERT INTO link_sections_links VALUES (275, 624);
-INSERT INTO link_sections_links VALUES (276, 625);
-INSERT INTO link_sections_links VALUES (229, 626);
-INSERT INTO link_sections_links VALUES (229, 627);
-INSERT INTO link_sections_links VALUES (229, 628);
-INSERT INTO link_sections_links VALUES (229, 629);
-INSERT INTO link_sections_links VALUES (229, 630);
-INSERT INTO link_sections_links VALUES (229, 631);
-INSERT INTO link_sections_links VALUES (277, 632);
-INSERT INTO link_sections_links VALUES (277, 633);
-INSERT INTO link_sections_links VALUES (277, 634);
-INSERT INTO link_sections_links VALUES (278, 635);
-INSERT INTO link_sections_links VALUES (278, 636);
-INSERT INTO link_sections_links VALUES (279, 637);
-INSERT INTO link_sections_links VALUES (279, 638);
-INSERT INTO link_sections_links VALUES (280, 639);
-INSERT INTO link_sections_links VALUES (280, 640);
-INSERT INTO link_sections_links VALUES (280, 641);
-INSERT INTO link_sections_links VALUES (281, 642);
-INSERT INTO link_sections_links VALUES (281, 643);
-INSERT INTO link_sections_links VALUES (234, 643);
-INSERT INTO link_sections_links VALUES (281, 644);
-INSERT INTO link_sections_links VALUES (281, 645);
-INSERT INTO link_sections_links VALUES (282, 646);
-INSERT INTO link_sections_links VALUES (283, 647);
-INSERT INTO link_sections_links VALUES (284, 648);
-INSERT INTO link_sections_links VALUES (285, 649);
-INSERT INTO link_sections_links VALUES (285, 650);
-INSERT INTO link_sections_links VALUES (285, 651);
-INSERT INTO link_sections_links VALUES (286, 652);
-INSERT INTO link_sections_links VALUES (286, 653);
-INSERT INTO link_sections_links VALUES (286, 654);
-INSERT INTO link_sections_links VALUES (286, 655);
-INSERT INTO link_sections_links VALUES (287, 656);
-INSERT INTO link_sections_links VALUES (287, 657);
-INSERT INTO link_sections_links VALUES (288, 658);
-INSERT INTO link_sections_links VALUES (289, 659);
-INSERT INTO link_sections_links VALUES (289, 660);
-INSERT INTO link_sections_links VALUES (289, 661);
-INSERT INTO link_sections_links VALUES (289, 662);
-INSERT INTO link_sections_links VALUES (290, 663);
-INSERT INTO link_sections_links VALUES (248, 664);
-INSERT INTO link_sections_links VALUES (291, 665);
-INSERT INTO link_sections_links VALUES (292, 666);
-INSERT INTO link_sections_links VALUES (248, 667);
-INSERT INTO link_sections_links VALUES (293, 668);
-INSERT INTO link_sections_links VALUES (294, 669);
-INSERT INTO link_sections_links VALUES (294, 670);
-INSERT INTO link_sections_links VALUES (295, 671);
-INSERT INTO link_sections_links VALUES (296, 672);
-INSERT INTO link_sections_links VALUES (293, 673);
-INSERT INTO link_sections_links VALUES (293, 674);
-INSERT INTO link_sections_links VALUES (293, 675);
-INSERT INTO link_sections_links VALUES (286, 676);
-INSERT INTO link_sections_links VALUES (293, 676);
-INSERT INTO link_sections_links VALUES (297, 677);
-INSERT INTO link_sections_links VALUES (298, 678);
-INSERT INTO link_sections_links VALUES (298, 679);
-INSERT INTO link_sections_links VALUES (299, 680);
-INSERT INTO link_sections_links VALUES (238, 680);
-INSERT INTO link_sections_links VALUES (299, 681);
-INSERT INTO link_sections_links VALUES (299, 682);
-INSERT INTO link_sections_links VALUES (300, 683);
-INSERT INTO link_sections_links VALUES (300, 684);
-INSERT INTO link_sections_links VALUES (300, 685);
-INSERT INTO link_sections_links VALUES (300, 686);
-INSERT INTO link_sections_links VALUES (300, 687);
-INSERT INTO link_sections_links VALUES (300, 688);
-INSERT INTO link_sections_links VALUES (301, 689);
-INSERT INTO link_sections_links VALUES (301, 690);
-INSERT INTO link_sections_links VALUES (301, 691);
-INSERT INTO link_sections_links VALUES (301, 692);
-INSERT INTO link_sections_links VALUES (301, 693);
-INSERT INTO link_sections_links VALUES (302, 694);
-INSERT INTO link_sections_links VALUES (301, 695);
-INSERT INTO link_sections_links VALUES (303, 696);
-INSERT INTO link_sections_links VALUES (303, 697);
-INSERT INTO link_sections_links VALUES (304, 698);
-INSERT INTO link_sections_links VALUES (233, 699);
-INSERT INTO link_sections_links VALUES (233, 700);
-INSERT INTO link_sections_links VALUES (246, 701);
-INSERT INTO link_sections_links VALUES (233, 702);
-INSERT INTO link_sections_links VALUES (304, 703);
+INSERT INTO link_sections_links VALUES (308, 710);
+INSERT INTO link_sections_links VALUES (309, 711);
+INSERT INTO link_sections_links VALUES (310, 712);
+INSERT INTO link_sections_links VALUES (311, 713);
+INSERT INTO link_sections_links VALUES (312, 714);
+INSERT INTO link_sections_links VALUES (313, 715);
+INSERT INTO link_sections_links VALUES (314, 716);
+INSERT INTO link_sections_links VALUES (315, 717);
+INSERT INTO link_sections_links VALUES (315, 718);
+INSERT INTO link_sections_links VALUES (316, 719);
+INSERT INTO link_sections_links VALUES (312, 720);
+INSERT INTO link_sections_links VALUES (317, 721);
+INSERT INTO link_sections_links VALUES (318, 722);
+INSERT INTO link_sections_links VALUES (319, 723);
+INSERT INTO link_sections_links VALUES (320, 724);
+INSERT INTO link_sections_links VALUES (321, 725);
+INSERT INTO link_sections_links VALUES (322, 726);
+INSERT INTO link_sections_links VALUES (323, 727);
+INSERT INTO link_sections_links VALUES (324, 728);
+INSERT INTO link_sections_links VALUES (325, 729);
+INSERT INTO link_sections_links VALUES (326, 730);
+INSERT INTO link_sections_links VALUES (326, 731);
+INSERT INTO link_sections_links VALUES (326, 732);
+INSERT INTO link_sections_links VALUES (327, 733);
+INSERT INTO link_sections_links VALUES (328, 734);
+INSERT INTO link_sections_links VALUES (328, 735);
+INSERT INTO link_sections_links VALUES (329, 736);
+INSERT INTO link_sections_links VALUES (330, 737);
+INSERT INTO link_sections_links VALUES (331, 737);
+INSERT INTO link_sections_links VALUES (332, 738);
+INSERT INTO link_sections_links VALUES (333, 739);
+INSERT INTO link_sections_links VALUES (334, 740);
+INSERT INTO link_sections_links VALUES (335, 741);
+INSERT INTO link_sections_links VALUES (336, 742);
+INSERT INTO link_sections_links VALUES (334, 743);
+INSERT INTO link_sections_links VALUES (330, 743);
+INSERT INTO link_sections_links VALUES (337, 744);
+INSERT INTO link_sections_links VALUES (336, 745);
+INSERT INTO link_sections_links VALUES (338, 746);
+INSERT INTO link_sections_links VALUES (339, 747);
+INSERT INTO link_sections_links VALUES (340, 748);
+INSERT INTO link_sections_links VALUES (341, 749);
+INSERT INTO link_sections_links VALUES (341, 750);
+INSERT INTO link_sections_links VALUES (341, 751);
+INSERT INTO link_sections_links VALUES (341, 752);
+INSERT INTO link_sections_links VALUES (341, 753);
+INSERT INTO link_sections_links VALUES (315, 754);
+INSERT INTO link_sections_links VALUES (342, 754);
+INSERT INTO link_sections_links VALUES (343, 755);
+INSERT INTO link_sections_links VALUES (344, 756);
+INSERT INTO link_sections_links VALUES (345, 756);
+INSERT INTO link_sections_links VALUES (346, 756);
+INSERT INTO link_sections_links VALUES (347, 757);
+INSERT INTO link_sections_links VALUES (340, 758);
+INSERT INTO link_sections_links VALUES (339, 759);
+INSERT INTO link_sections_links VALUES (348, 760);
+INSERT INTO link_sections_links VALUES (349, 761);
+INSERT INTO link_sections_links VALUES (349, 762);
+INSERT INTO link_sections_links VALUES (349, 763);
+INSERT INTO link_sections_links VALUES (327, 764);
+INSERT INTO link_sections_links VALUES (335, 765);
+INSERT INTO link_sections_links VALUES (350, 766);
+INSERT INTO link_sections_links VALUES (337, 767);
+INSERT INTO link_sections_links VALUES (334, 768);
+INSERT INTO link_sections_links VALUES (334, 769);
+INSERT INTO link_sections_links VALUES (330, 769);
+INSERT INTO link_sections_links VALUES (334, 770);
+INSERT INTO link_sections_links VALUES (334, 771);
+INSERT INTO link_sections_links VALUES (334, 772);
+INSERT INTO link_sections_links VALUES (333, 773);
+INSERT INTO link_sections_links VALUES (351, 774);
+INSERT INTO link_sections_links VALUES (329, 774);
+INSERT INTO link_sections_links VALUES (352, 775);
+INSERT INTO link_sections_links VALUES (330, 776);
+INSERT INTO link_sections_links VALUES (331, 776);
+INSERT INTO link_sections_links VALUES (324, 776);
+INSERT INTO link_sections_links VALUES (330, 777);
+INSERT INTO link_sections_links VALUES (331, 777);
+INSERT INTO link_sections_links VALUES (327, 778);
+INSERT INTO link_sections_links VALUES (330, 778);
+INSERT INTO link_sections_links VALUES (331, 778);
+INSERT INTO link_sections_links VALUES (330, 779);
+INSERT INTO link_sections_links VALUES (329, 780);
+INSERT INTO link_sections_links VALUES (353, 781);
+INSERT INTO link_sections_links VALUES (326, 782);
+INSERT INTO link_sections_links VALUES (354, 783);
+INSERT INTO link_sections_links VALUES (325, 784);
+INSERT INTO link_sections_links VALUES (325, 785);
+INSERT INTO link_sections_links VALUES (325, 786);
+INSERT INTO link_sections_links VALUES (315, 787);
+INSERT INTO link_sections_links VALUES (355, 788);
+INSERT INTO link_sections_links VALUES (356, 789);
+INSERT INTO link_sections_links VALUES (357, 790);
+INSERT INTO link_sections_links VALUES (358, 791);
+INSERT INTO link_sections_links VALUES (328, 792);
+INSERT INTO link_sections_links VALUES (335, 793);
+INSERT INTO link_sections_links VALUES (335, 794);
+INSERT INTO link_sections_links VALUES (324, 795);
+INSERT INTO link_sections_links VALUES (324, 796);
+INSERT INTO link_sections_links VALUES (359, 797);
+INSERT INTO link_sections_links VALUES (325, 798);
+INSERT INTO link_sections_links VALUES (360, 799);
+INSERT INTO link_sections_links VALUES (326, 800);
+INSERT INTO link_sections_links VALUES (326, 801);
+INSERT INTO link_sections_links VALUES (326, 802);
+INSERT INTO link_sections_links VALUES (326, 803);
+INSERT INTO link_sections_links VALUES (361, 804);
+INSERT INTO link_sections_links VALUES (353, 805);
+INSERT INTO link_sections_links VALUES (362, 806);
+INSERT INTO link_sections_links VALUES (328, 807);
+INSERT INTO link_sections_links VALUES (328, 808);
+INSERT INTO link_sections_links VALUES (333, 809);
+INSERT INTO link_sections_links VALUES (328, 810);
+INSERT INTO link_sections_links VALUES (363, 811);
+INSERT INTO link_sections_links VALUES (329, 812);
+INSERT INTO link_sections_links VALUES (352, 813);
+INSERT INTO link_sections_links VALUES (364, 814);
+INSERT INTO link_sections_links VALUES (332, 815);
+INSERT INTO link_sections_links VALUES (332, 816);
+INSERT INTO link_sections_links VALUES (333, 817);
+INSERT INTO link_sections_links VALUES (365, 817);
+INSERT INTO link_sections_links VALUES (323, 818);
+INSERT INTO link_sections_links VALUES (343, 819);
+INSERT INTO link_sections_links VALUES (322, 819);
+INSERT INTO link_sections_links VALUES (366, 820);
+INSERT INTO link_sections_links VALUES (310, 821);
+INSERT INTO link_sections_links VALUES (367, 822);
+INSERT INTO link_sections_links VALUES (367, 823);
+INSERT INTO link_sections_links VALUES (368, 824);
+INSERT INTO link_sections_links VALUES (369, 825);
+INSERT INTO link_sections_links VALUES (350, 826);
+INSERT INTO link_sections_links VALUES (370, 827);
+INSERT INTO link_sections_links VALUES (319, 828);
+INSERT INTO link_sections_links VALUES (308, 829);
+INSERT INTO link_sections_links VALUES (367, 830);
+INSERT INTO link_sections_links VALUES (308, 830);
+INSERT INTO link_sections_links VALUES (371, 831);
+INSERT INTO link_sections_links VALUES (371, 832);
+INSERT INTO link_sections_links VALUES (317, 833);
+INSERT INTO link_sections_links VALUES (318, 834);
+INSERT INTO link_sections_links VALUES (318, 835);
+INSERT INTO link_sections_links VALUES (372, 836);
+INSERT INTO link_sections_links VALUES (372, 837);
+INSERT INTO link_sections_links VALUES (341, 838);
+INSERT INTO link_sections_links VALUES (317, 838);
+INSERT INTO link_sections_links VALUES (373, 839);
+INSERT INTO link_sections_links VALUES (308, 840);
+INSERT INTO link_sections_links VALUES (372, 841);
+INSERT INTO link_sections_links VALUES (369, 842);
+INSERT INTO link_sections_links VALUES (372, 843);
+INSERT INTO link_sections_links VALUES (372, 844);
+INSERT INTO link_sections_links VALUES (372, 845);
+INSERT INTO link_sections_links VALUES (318, 846);
+INSERT INTO link_sections_links VALUES (318, 847);
+INSERT INTO link_sections_links VALUES (318, 848);
+INSERT INTO link_sections_links VALUES (374, 849);
+INSERT INTO link_sections_links VALUES (375, 850);
+INSERT INTO link_sections_links VALUES (308, 851);
+INSERT INTO link_sections_links VALUES (350, 852);
+INSERT INTO link_sections_links VALUES (369, 853);
+INSERT INTO link_sections_links VALUES (369, 854);
+INSERT INTO link_sections_links VALUES (321, 855);
+INSERT INTO link_sections_links VALUES (367, 856);
+INSERT INTO link_sections_links VALUES (367, 857);
+INSERT INTO link_sections_links VALUES (310, 858);
+INSERT INTO link_sections_links VALUES (376, 859);
+INSERT INTO link_sections_links VALUES (322, 860);
+INSERT INTO link_sections_links VALUES (322, 861);
+INSERT INTO link_sections_links VALUES (312, 862);
+INSERT INTO link_sections_links VALUES (377, 863);
+INSERT INTO link_sections_links VALUES (377, 864);
+INSERT INTO link_sections_links VALUES (314, 865);
+INSERT INTO link_sections_links VALUES (313, 866);
+INSERT INTO link_sections_links VALUES (314, 867);
+INSERT INTO link_sections_links VALUES (315, 868);
+INSERT INTO link_sections_links VALUES (315, 869);
+INSERT INTO link_sections_links VALUES (315, 870);
+INSERT INTO link_sections_links VALUES (378, 871);
+INSERT INTO link_sections_links VALUES (378, 872);
+INSERT INTO link_sections_links VALUES (360, 873);
+INSERT INTO link_sections_links VALUES (360, 874);
+INSERT INTO link_sections_links VALUES (360, 875);
+INSERT INTO link_sections_links VALUES (379, 876);
+INSERT INTO link_sections_links VALUES (380, 877);
+INSERT INTO link_sections_links VALUES (381, 878);
+INSERT INTO link_sections_links VALUES (360, 878);
+INSERT INTO link_sections_links VALUES (380, 879);
+INSERT INTO link_sections_links VALUES (379, 880);
+INSERT INTO link_sections_links VALUES (378, 881);
+INSERT INTO link_sections_links VALUES (378, 882);
+INSERT INTO link_sections_links VALUES (378, 883);
+INSERT INTO link_sections_links VALUES (360, 884);
 
 
 --
 -- Data for Name: links; Type: TABLE DATA; Schema: public; Owner: calcentral
 --
 
-INSERT INTO links VALUES (528, 'Residential Computing (ResComp)', 'http://www.rescomp.berkeley.edu/', 'Computer and network services for students living in campus housing', true, '2013-08-15 23:09:38.097', '2013-08-15 23:09:38.097');
-INSERT INTO links VALUES (529, 'Graduate Student Financial Support', 'http://www.grad.berkeley.edu/financial/', '', true, '2013-08-15 23:09:38.15', '2013-08-15 23:09:38.15');
-INSERT INTO links VALUES (530, 'Scholarship database', 'http://scholarships.berkeley.edu', '', true, '2013-08-15 23:09:38.187', '2013-08-15 23:09:38.187');
-INSERT INTO links VALUES (531, 'Grad Loans', 'http://students.berkeley.edu/finaid/graduates/types_loans.htm', '', true, '2013-08-15 23:09:38.208', '2013-08-15 23:09:38.208');
-INSERT INTO links VALUES (532, 'Student Billing Services', 'http://studentbilling.berkeley.edu/', '', true, '2013-08-15 23:09:38.247', '2013-08-15 23:09:38.247');
-INSERT INTO links VALUES (533, 'CalDining', 'http://caldining.berkeley.edu/', 'Campus dining facilities', true, '2013-08-15 23:09:38.284', '2013-08-15 23:09:38.284');
-INSERT INTO links VALUES (534, 'Child Care', 'http://www.housing.berkeley.edu/child/', 'Campus child care services', true, '2013-08-15 23:09:38.36', '2013-08-15 23:09:38.36');
-INSERT INTO links VALUES (535, 'Residential & Student Service Programs', 'http://www.housing.berkeley.edu/', '', true, '2013-08-15 23:09:38.439', '2013-08-15 23:09:38.439');
-INSERT INTO links VALUES (536, 'Living At Cal', 'http://www.housing.berkeley.edu/livingatcal/', '', true, '2013-08-15 23:09:38.462', '2013-08-15 23:09:38.462');
-INSERT INTO links VALUES (537, 'Berkeley Student Cooperative', 'http://www.bsc.coop/', '', true, '2013-08-15 23:09:38.484', '2013-08-15 23:09:38.484');
-INSERT INTO links VALUES (538, 'International House', 'http://ihouse.berkeley.edu/', '', true, '2013-08-15 23:09:38.505', '2013-08-15 23:09:38.505');
-INSERT INTO links VALUES (539, 'Cal Rentals', 'http://calrentals.housing.berkeley.edu/', '', true, '2013-08-15 23:09:38.528', '2013-08-15 23:09:38.528');
-INSERT INTO links VALUES (540, 'At Your Service', 'https://atyourserviceonline.ucop.edu', 'Benefits, Earnings, Taxes & Retirement', true, '2013-08-15 23:09:38.576', '2013-08-15 23:09:38.576');
-INSERT INTO links VALUES (541, 'Personal Info - Campus Directory', 'https://calnet.berkeley.edu/directory/update/', '', true, '2013-08-15 23:09:38.618', '2013-08-15 23:09:38.618');
-INSERT INTO links VALUES (542, 'Personal Info - HR record', 'https://auth.berkeley.edu/cas/login?service=https://hrw-vip-prod.is.berkeley.edu/cgi-bin/cas-hrsprod.pl', 'HR personal data, requires log-in.', true, '2013-08-15 23:09:38.647', '2013-08-15 23:09:38.647');
-INSERT INTO links VALUES (543, 'Retirement Benefits - At Your Service', 'https://atyourserviceonline.ucop.edu', 'Benefits, Earnings, Taxes & Retirement', true, '2013-08-15 23:09:38.689', '2013-08-15 23:09:38.689');
-INSERT INTO links VALUES (544, 'Retirement Resources', 'http://thecenter.berkeley.edu/index.shtml', '', true, '2013-08-15 23:09:38.716', '2013-08-15 23:09:38.716');
-INSERT INTO links VALUES (545, 'Staff Ombuds Office', 'http://staffombuds.berkeley.edu/ ', 'an independent department that provides strictly confidential and informal conflict resolution and problem-solving services', true, '2013-08-15 23:09:38.76', '2013-08-15 23:09:38.76');
-INSERT INTO links VALUES (546, 'UHS - Tang Center', 'http://uhs.berkeley.edu/', 'Campus healthcare', true, '2013-08-15 23:09:38.802', '2013-08-15 23:09:38.802');
-INSERT INTO links VALUES (547, 'UC Berkeley Wellness Letter', 'http://www.wellnessletter.com/ucberkeley/', '', true, '2013-08-15 23:09:38.854', '2013-08-15 23:09:38.854');
-INSERT INTO links VALUES (548, 'UC SHIP (Student Health Insurance Plan)', 'http://www.uhs.berkeley.edu/students/insurance/', 'UC Student Health Insurance Plan', true, '2013-08-15 23:09:38.878', '2013-08-15 23:09:38.878');
-INSERT INTO links VALUES (549, 'CARE Services', 'http://uhs.berkeley.edu/facstaff/care/', 'free, confidential problem assessment and referral for UC Berkeley faculty and staff', true, '2013-08-15 23:09:38.904', '2013-08-15 23:09:38.904');
-INSERT INTO links VALUES (550, 'Organizational & Workforce Effectiveness', 'http://hrweb.berkeley.edu/learning/corwe', 'Organization supporting managers wanting to make organizational improvements', true, '2013-08-15 23:09:38.951', '2013-08-15 23:09:38.951');
-INSERT INTO links VALUES (551, 'Undergrad Loans', 'http://students.berkeley.edu/finaid/undergraduates/types_loans.htm', 'Overview of undergraduate loans', true, '2013-08-15 23:09:38.99', '2013-08-15 23:09:38.99');
-INSERT INTO links VALUES (552, 'Policies & procedures A-Z', 'http://campuspol.chance.berkeley.edu/Home/AtoZPolicies.cfm?long_page=yes', 'A-Z of campuswide policies and procedures', true, '2013-08-15 23:09:39.027', '2013-08-15 23:09:39.027');
-INSERT INTO links VALUES (553, 'Safety', 'http://police.berkeley.edu/index.html', 'Safety information and programs', true, '2013-08-15 23:09:39.075', '2013-08-15 23:09:39.075');
-INSERT INTO links VALUES (554, 'Bear Facts', 'https://bearfacts.berkeley.edu', 'Academic record, grades & transcript, bill, degree audit, loans, SLR & personal info', true, '2013-08-15 23:09:39.125', '2013-08-15 23:09:39.125');
-INSERT INTO links VALUES (555, 'Office of the Registrar', 'http://registrar.berkeley.edu/', '', true, '2013-08-15 23:09:39.16', '2013-08-15 23:09:39.16');
-INSERT INTO links VALUES (556, 'Academic Calendar', 'http://registrar.berkeley.edu/CalendarDisp.aspx?terms=current', 'Academic Calendars Future Campus Calendars', true, '2013-08-15 23:09:39.207', '2013-08-15 23:09:39.207');
-INSERT INTO links VALUES (557, 'Undergraduate Student Calendar & Deadlines', 'http://registrar.berkeley.edu/current_students/registration_enrollment/stucal.html', '', true, '2013-08-15 23:09:39.239', '2013-08-15 23:09:39.239');
-INSERT INTO links VALUES (558, 'Course Catalog', 'http://general-catalog.berkeley.edu/catalog/gcc_search_menu', 'Detailed course descriptions', true, '2013-08-15 23:09:39.287', '2013-08-15 23:09:39.287');
-INSERT INTO links VALUES (559, 'Schedule of Classes', 'http://schedule.berkeley.edu/', 'Classes offerings by semester', true, '2013-08-15 23:09:39.349', '2013-08-15 23:09:39.349');
-INSERT INTO links VALUES (560, 'Summer Sessions', 'http://summer.berkeley.edu/', '', true, '2013-08-15 23:09:39.39', '2013-08-15 23:09:39.39');
-INSERT INTO links VALUES (561, 'DARS', 'https://marin.berkeley.edu/darsweb/servlet/ListAuditsServlet ', 'Degree requirements and track progress', true, '2013-08-15 23:09:39.428', '2013-08-15 23:09:39.428');
-INSERT INTO links VALUES (562, 'Finding Your Way (L&S)', 'http://ls-yourway.berkeley.edu/', '', true, '2013-08-15 23:09:39.45', '2013-08-15 23:09:39.45');
-INSERT INTO links VALUES (563, 'Schedule Builder', 'https://schedulebuilder.berkeley.edu/', 'Plan your classes', true, '2013-08-15 23:09:39.472', '2013-08-15 23:09:39.472');
-INSERT INTO links VALUES (564, 'TeleBears', 'https://telebears.berkeley.edu', 'Register for classes', true, '2013-08-15 23:09:39.504', '2013-08-15 23:09:39.504');
-INSERT INTO links VALUES (565, 'Cal Student Central', 'http://studentcentral.berkeley.edu/', '', true, '2013-08-15 23:09:39.543', '2013-08-15 23:09:39.543');
-INSERT INTO links VALUES (566, 'Office of Undergraduate Advising', 'http://ls-advise.berkeley.edu/', '', true, '2013-08-15 23:09:39.57', '2013-08-15 23:09:39.57');
-INSERT INTO links VALUES (567, 'Student Learning Center', 'http://slc.berkeley.edu/general/index.htm', '', true, '2013-08-15 23:09:39.592', '2013-08-15 23:09:39.592');
-INSERT INTO links VALUES (568, 'Educational Opportunity Program', 'http://eop.berkeley.edu', 'Guidance and resources for first generation and low-income college students.', true, '2013-08-15 23:09:39.613', '2013-08-15 23:09:39.613');
-INSERT INTO links VALUES (569, 'Academic Departments & Programs', 'http://www.berkeley.edu/academics/dept/a.shtml', '', true, '2013-08-15 23:09:39.643', '2013-08-15 23:09:39.643');
-INSERT INTO links VALUES (570, 'Colleges & Schools', 'http://www.berkeley.edu/academics/school.shtml', '', true, '2013-08-15 23:09:39.674', '2013-08-15 23:09:39.674');
-INSERT INTO links VALUES (571, 'Executive Vice Chancellor & Provost', 'http://evcp.chance.berkeley.edu/', '', true, '2013-08-15 23:09:39.707', '2013-08-15 23:09:39.707');
-INSERT INTO links VALUES (572, 'Graduate Division', 'http://www.grad.berkeley.edu/', '', true, '2013-08-15 23:09:39.749', '2013-08-15 23:09:39.749');
-INSERT INTO links VALUES (573, 'Library', 'http://library.berkeley.edu', 'Search the UC Library system', true, '2013-08-15 23:09:39.814', '2013-08-15 23:09:39.814');
-INSERT INTO links VALUES (574, 'Berkeley Research', 'http://vcresearch.berkeley.edu/', '', true, '2013-08-15 23:09:39.868', '2013-08-15 23:09:39.868');
-INSERT INTO links VALUES (575, 'Research', 'http://berkeley.edu/research/', 'Directory of UC Berkeley research programs', true, '2013-08-15 23:09:39.901', '2013-08-15 23:09:39.901');
-INSERT INTO links VALUES (576, 'bSpace', 'http://bspace.berkeley.edu', 'Homework assignments, lecture slides, syllabi and class resources', true, '2013-08-15 23:09:39.961', '2013-08-15 23:09:39.961');
-INSERT INTO links VALUES (577, 'Canvas LMS', 'http://ucberkeley.instructure.com', 'Campus pilot of the Canvas Learning Management System', true, '2013-08-15 23:09:40.005', '2013-08-15 23:09:40.005');
-INSERT INTO links VALUES (578, 'DeCal Courses', 'http://www.decal.org/ ', 'Catalog of student-led courses', true, '2013-08-15 23:09:40.041', '2013-08-15 23:09:40.041');
-INSERT INTO links VALUES (579, 'Edx Classes at Berkeley', 'https://www.edx.org/university_profile/BerkeleyX', '', true, '2013-08-15 23:09:40.081', '2013-08-15 23:09:40.081');
-INSERT INTO links VALUES (580, 'UC Extension Classes', 'http://extension.berkeley.edu/', 'Professional development', true, '2013-08-15 23:09:40.127', '2013-08-15 23:09:40.127');
-INSERT INTO links VALUES (582, 'Campus Bookstore', 'http://www.bkstr.com/webapp/wcs/stores/servlet/StoreCatalogDisplay?storeId=10433', 'Text books and more', true, '2013-08-15 23:09:40.196', '2013-08-15 23:09:40.196');
-INSERT INTO links VALUES (583, 'iTunesU - Berkeley', 'http://itunes.berkeley.edu', '', true, '2013-08-15 23:09:40.224', '2013-08-15 23:09:40.224');
-INSERT INTO links VALUES (584, 'YouTube - UC Berkeley', 'http://www.youtube.com/user/UCBerkeley', '', true, '2013-08-15 23:09:40.257', '2013-08-15 23:09:40.257');
-INSERT INTO links VALUES (585, 'Classroom Technology', 'http://ets.berkeley.edu/classroom-technology/', '', true, '2013-08-15 23:09:40.293', '2013-08-15 23:09:40.293');
-INSERT INTO links VALUES (586, 'Academic Senate', 'http://academic-senate.berkeley.edu/', '', true, '2013-08-15 23:09:40.331', '2013-08-15 23:09:40.331');
-INSERT INTO links VALUES (587, 'Faculty gateway', 'http://berkeley.edu/faculty/', '', true, '2013-08-15 23:09:40.355', '2013-08-15 23:09:40.355');
-INSERT INTO links VALUES (588, 'New Faculty resources', 'http://teaching.berkeley.edu/newfaculty.html', '', true, '2013-08-15 23:09:40.376', '2013-08-15 23:09:40.376');
-INSERT INTO links VALUES (589, 'Teaching resources', 'http://teaching.berkeley.edu/teaching.html', '', true, '2013-08-15 23:09:40.399', '2013-08-15 23:09:40.399');
-INSERT INTO links VALUES (590, 'bSpace Support', 'http://ets.berkeley.edu/bspace', '', true, '2013-08-15 23:09:40.421', '2013-08-15 23:09:40.421');
-INSERT INTO links VALUES (591, 'Webcast Support', 'http://ets.berkeley.edu/about-webcastberkeley', '', true, '2013-08-15 23:09:40.443', '2013-08-15 23:09:40.443');
-INSERT INTO links VALUES (592, 'Grade book', 'http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html', '', true, '2013-08-15 23:09:40.482', '2013-08-15 23:09:40.482');
-INSERT INTO links VALUES (593, 'Environmental Health & Safety', 'http://www.ehs.berkeley.edu/', '', true, '2013-08-15 23:09:40.521', '2013-08-15 23:09:40.521');
-INSERT INTO links VALUES (594, 'Lab Safety', 'http://rac.berkeley.edu/compliancebook/labsafety.html', 'Lab Safety & Hazardous Materials Management', true, '2013-08-15 23:09:40.546', '2013-08-15 23:09:40.546');
-INSERT INTO links VALUES (595, 'Learning Resources', 'http://hrweb.berkeley.edu/learning', '', true, '2013-08-15 23:09:40.594', '2013-08-15 23:09:40.594');
-INSERT INTO links VALUES (596, 'UC Learning Center', 'https://shib.berkeley.edu/idp/profile/Shibboleth/SSO?shire=https://uc.sumtotalsystems.com/Shibboleth.sso/SAML/POST&target=https://uc.sumtotalsystems.com/secure/auth.aspx&providerId=https://uc.sumtotalsystems.com/shibboleth', '', true, '2013-08-15 23:09:40.623', '2013-08-15 23:09:40.623');
-INSERT INTO links VALUES (597, 'Administration & Finance', 'http://vcaf.berkeley.edu/divisions', '', true, '2013-08-15 23:09:40.667', '2013-08-15 23:09:40.667');
-INSERT INTO links VALUES (598, 'Berkeley Sites (A-Z)', 'http://www.berkeley.edu/a-z/a.shtml', 'Navigating UC Berkeley', true, '2013-08-15 23:09:40.7', '2013-08-15 23:09:40.7');
-INSERT INTO links VALUES (599, 'Campus IT Offices', 'http://www.berkeley.edu/admin/compute.shtml#offices', '', true, '2013-08-15 23:09:40.732', '2013-08-15 23:09:40.732');
-INSERT INTO links VALUES (600, 'Equity, Inclusion & Diversity', 'http://diversity.berkeley.edu/', '', true, '2013-08-15 23:09:40.764', '2013-08-15 23:09:40.764');
-INSERT INTO links VALUES (601, 'Facilities Services', 'http://www.cp.berkeley.edu/', '', true, '2013-08-15 23:09:40.799', '2013-08-15 23:09:40.799');
-INSERT INTO links VALUES (602, 'Office of the Chancellor', 'http://chancellor.berkeley.edu/', '', true, '2013-08-15 23:09:40.834', '2013-08-15 23:09:40.834');
-INSERT INTO links VALUES (603, 'Student Affairs', 'http://sa.berkeley.edu/', '', true, '2013-08-15 23:09:40.867', '2013-08-15 23:09:40.867');
-INSERT INTO links VALUES (604, 'University Relations', 'http://www.urel.berkeley.edu/', '', true, '2013-08-15 23:09:40.901', '2013-08-15 23:09:40.901');
-INSERT INTO links VALUES (605, 'Conduct Office', 'http://studentconduct.berkeley.edu', 'Student conduct office', true, '2013-08-15 23:09:40.95', '2013-08-15 23:09:40.95');
-INSERT INTO links VALUES (606, 'bConnected Support', 'http://ist.berkeley.edu/bconnected', '', true, '2013-08-15 23:09:40.996', '2013-08-15 23:09:40.996');
-INSERT INTO links VALUES (607, 'bCal', 'http://bcal.berkeley.edu', 'personal calandar', true, '2013-08-15 23:09:41.029', '2013-08-15 23:09:41.029');
-INSERT INTO links VALUES (608, 'bDrive', 'http://bdrive.berkeley.edu', '', true, '2013-08-15 23:09:41.061', '2013-08-15 23:09:41.061');
-INSERT INTO links VALUES (609, 'bMail', 'http://bmail.berkeley.edu', 'email', true, '2013-08-15 23:09:41.093', '2013-08-15 23:09:41.093');
-INSERT INTO links VALUES (610, 'CalMail', 'http://calmail.berkeley.edu', 'email', true, '2013-08-15 23:09:41.125', '2013-08-15 23:09:41.125');
-INSERT INTO links VALUES (611, 'CalMessages', 'https://calmessages.berkeley.edu/', '', true, '2013-08-15 23:09:41.173', '2013-08-15 23:09:41.173');
-INSERT INTO links VALUES (612, 'Box.net', 'https://berkeley.box.com/', '', true, '2013-08-15 23:09:41.194', '2013-08-15 23:09:41.194');
-INSERT INTO links VALUES (613, 'CalShare', 'https://calshare.berkeley.edu/', '', true, '2013-08-15 23:09:41.227', '2013-08-15 23:09:41.227');
-INSERT INTO links VALUES (614, 'Research Hub', 'https://hub.berkeley.edu', '', true, '2013-08-15 23:09:41.253', '2013-08-15 23:09:41.253');
-INSERT INTO links VALUES (615, 'Academic Policies', 'http://catalog.berkeley.edu/policies/', '', true, '2013-08-15 23:09:41.284', '2013-08-15 23:09:41.284');
-INSERT INTO links VALUES (616, 'Student Policies & Procedures', 'http://sa.berkeley.edu/sa/student-policies-and-procedures', '', true, '2013-08-15 23:09:41.318', '2013-08-15 23:09:41.318');
-INSERT INTO links VALUES (617, 'Computer Use Policy', 'https://security.berkeley.edu/policy/usepolicy.html', '', true, '2013-08-15 23:09:41.35', '2013-08-15 23:09:41.35');
-INSERT INTO links VALUES (618, 'Risk Management', 'http://riskservices.berkeley.edu', '', true, '2013-08-15 23:09:41.396', '2013-08-15 23:09:41.396');
-INSERT INTO links VALUES (619, 'Ethics & Compliance, Administrative guide', 'http://ethicscompliance.berkeley.edu/index.shtml', '', true, '2013-08-15 23:09:41.466', '2013-08-15 23:09:41.466');
-INSERT INTO links VALUES (620, 'Personnel Policies', 'http://hrweb.berkeley.edu/', '', true, '2013-08-15 23:09:41.493', '2013-08-15 23:09:41.493');
-INSERT INTO links VALUES (621, 'Campus Shared Services', 'http://sharedservices.berkeley.edu/', '', true, '2013-08-15 23:09:41.53', '2013-08-15 23:09:41.53');
-INSERT INTO links VALUES (622, 'Submit a Service Request', 'https://shared-services-help.berkeley.edu/', '', true, '2013-08-15 23:09:41.572', '2013-08-15 23:09:41.572');
-INSERT INTO links VALUES (623, 'Cal Answers', 'http://calanswers.berkeley.edu/', '', true, '2013-08-15 23:09:41.613', '2013-08-15 23:09:41.613');
-INSERT INTO links VALUES (624, 'BETS - equipment tracking', 'http://bets.berkeley.edu/BETS/home/BetsHome.cfm', '', true, '2013-08-15 23:09:41.654', '2013-08-15 23:09:41.654');
-INSERT INTO links VALUES (625, 'Mail Services', 'http://mailservices.berkeley.edu/', '', true, '2013-08-15 23:09:41.689', '2013-08-15 23:09:41.689');
-INSERT INTO links VALUES (626, 'General Access Computing Facilities', 'http://ets.berkeley.edu/computer-facilities/general-access', '', true, '2013-08-15 23:09:41.715', '2013-08-15 23:09:41.715');
-INSERT INTO links VALUES (627, 'Imagine Services', 'http://imagine.berkeley.edu/', 'custom electronic document workflows', true, '2013-08-15 23:09:41.748', '2013-08-15 23:09:41.748');
-INSERT INTO links VALUES (628, 'IST Knowledge Base', 'http://ist.berkeley.edu/support/kb', '', true, '2013-08-15 23:09:41.77', '2013-08-15 23:09:41.77');
-INSERT INTO links VALUES (629, 'IST Support', 'http://ist.berkeley.edu/support/', '', true, '2013-08-15 23:09:41.803', '2013-08-15 23:09:41.803');
-INSERT INTO links VALUES (630, 'Open Computing Facility', 'http://www.ocf.berkeley.edu/', '', true, '2013-08-15 23:09:41.836', '2013-08-15 23:09:41.836');
-INSERT INTO links VALUES (631, 'Software Central', 'http://ist.berkeley.edu/software-central/', '', true, '2013-08-15 23:09:41.867', '2013-08-15 23:09:41.867');
-INSERT INTO links VALUES (632, 'BAIRS', 'http://www.bai.berkeley.edu/', '', true, '2013-08-15 23:09:41.907', '2013-08-15 23:09:41.907');
-INSERT INTO links VALUES (633, 'BFS', 'http://www.bai.berkeley.edu/', '', true, '2013-08-15 23:09:41.933', '2013-08-15 23:09:41.933');
-INSERT INTO links VALUES (634, 'Campus Deposit System', 'https://cdsonline.berkeley.edu', '', true, '2013-08-15 23:09:41.96', '2013-08-15 23:09:41.96');
-INSERT INTO links VALUES (635, 'HR Web', 'http://hrweb.berkeley.edu/', '', true, '2013-08-15 23:09:41.995', '2013-08-15 23:09:41.995');
-INSERT INTO links VALUES (636, 'HR System', 'http://hrweb.berkeley.edu/hcm', '', true, '2013-08-15 23:09:42.021', '2013-08-15 23:09:42.021');
-INSERT INTO links VALUES (637, 'CalTime', 'http://caltime.berkeley.edu', '', true, '2013-08-15 23:09:42.063', '2013-08-15 23:09:42.063');
-INSERT INTO links VALUES (638, 'Payroll', 'http://controller.berkeley.edu/payroll/', '', true, '2013-08-15 23:09:42.089', '2013-08-15 23:09:42.089');
-INSERT INTO links VALUES (639, 'BearBuy', 'http://www.bai.berkeley.edu/', '', true, '2013-08-15 23:09:42.128', '2013-08-15 23:09:42.128');
-INSERT INTO links VALUES (640, 'Blu Card', 'http://businessservices.berkeley.edu/cards/blucard', '', true, '2013-08-15 23:09:42.155', '2013-08-15 23:09:42.155');
-INSERT INTO links VALUES (641, 'Purchasing', 'http://businessservices.berkeley.edu/procurement/services', '', true, '2013-08-15 23:09:42.183', '2013-08-15 23:09:42.183');
-INSERT INTO links VALUES (642, 'AirBears', 'http://ist.berkeley.edu/airbears/', '', true, '2013-08-15 23:09:42.224', '2013-08-15 23:09:42.224');
-INSERT INTO links VALUES (643, 'Cal 1 Card', 'http://services.housing.berkeley.edu/c1c/static/index.htm', 'Identification card for students, staff and faculty', true, '2013-08-15 23:09:42.26', '2013-08-15 23:09:42.26');
-INSERT INTO links VALUES (644, 'CalNet', 'https://calnet.berkeley.edu/', '', true, '2013-08-15 23:09:42.297', '2013-08-15 23:09:42.297');
-INSERT INTO links VALUES (645, 'SARA - request system access', 'http://www.bai.berkeley.edu/BFS/systems/systemAccess.htm', '', true, '2013-08-15 23:09:42.334', '2013-08-15 23:09:42.334');
-INSERT INTO links VALUES (646, 'Blu', 'http://blu.berkeley.edu', '', true, '2013-08-15 23:09:42.376', '2013-08-15 23:09:42.376');
-INSERT INTO links VALUES (647, 'Travel & Entertainment', 'http://controller.berkeley.edu/travel/', '', true, '2013-08-15 23:09:42.417', '2013-08-15 23:09:42.417');
-INSERT INTO links VALUES (648, 'Campus Directory - People Finder', 'http://directory.berkeley.edu', 'Campus directory of faculty, staff and students', true, '2013-08-15 23:09:42.456', '2013-08-15 23:09:42.456');
-INSERT INTO links VALUES (649, 'Campaign for Berkeley', 'http://campaign.berkeley.edu/', '', true, '2013-08-15 23:09:42.501', '2013-08-15 23:09:42.501');
-INSERT INTO links VALUES (650, 'Give to Berkeley', 'http://givetocal.berkeley.edu/', '', true, '2013-08-15 23:09:42.532', '2013-08-15 23:09:42.532');
-INSERT INTO links VALUES (651, 'Public Service Center', 'http://publicservice.berkeley.edu', 'On and off campus community service engagement', true, '2013-08-15 23:09:42.563', '2013-08-15 23:09:42.563');
-INSERT INTO links VALUES (652, 'Newscenter', 'http://newscenter.berkeley.edu', '', true, '2013-08-15 23:09:42.611', '2013-08-15 23:09:42.611');
-INSERT INTO links VALUES (653, 'Events.Berkeley', 'http://events.berkeley.edu', 'Campus events calendar', true, '2013-08-15 23:09:42.642', '2013-08-15 23:09:42.642');
-INSERT INTO links VALUES (654, 'The Daily Californian (The DailyCal)', 'http://www.dailycal.org/', 'an independent student newspaper', true, '2013-08-15 23:09:42.674', '2013-08-15 23:09:42.674');
-INSERT INTO links VALUES (655, 'The Berkeley Blog', 'http://blogs.berkeley.edu', '', true, '2013-08-15 23:09:42.707', '2013-08-15 23:09:42.707');
-INSERT INTO links VALUES (656, 'Twitter', 'https://twitter.com/UCBerkeley', '', true, '2013-08-15 23:09:42.755', '2013-08-15 23:09:42.755');
-INSERT INTO links VALUES (657, 'UC Berkeley Facebook page', 'http://www.facebook.com/UCBerkeley', '', true, '2013-08-15 23:09:42.786', '2013-08-15 23:09:42.786');
-INSERT INTO links VALUES (658, 'Campus Map', 'http://www.berkeley.edu/map/3dmap/3dmap.shtml', 'Locate campus buildings', true, '2013-08-15 23:09:42.824', '2013-08-15 23:09:42.824');
-INSERT INTO links VALUES (659, 'Parking & Transportation', 'http://pt.berkeley.edu/', 'Parking lots, transportation, car sharing, etc.', true, '2013-08-15 23:09:42.872', '2013-08-15 23:09:42.872');
-INSERT INTO links VALUES (660, 'Campus Shuttles', 'http://pt.berkeley.edu/around/transit/routes/', '', true, '2013-08-15 23:09:42.905', '2013-08-15 23:09:42.905');
-INSERT INTO links VALUES (661, '511.org (Bay Area Transportation Planner)', 'http://www.511.org/', '', true, '2013-08-15 23:09:42.955', '2013-08-15 23:09:42.955');
-INSERT INTO links VALUES (662, 'Class pass', 'http://pt.berkeley.edu/pay/transit/classpass/', '', true, '2013-08-15 23:09:42.987', '2013-08-15 23:09:42.987');
-INSERT INTO links VALUES (663, 'Berkeley Online Tour', 'http://www.berkeley.edu/tour/', '', true, '2013-08-15 23:09:43.023', '2013-08-15 23:09:43.023');
-INSERT INTO links VALUES (664, 'Emergency information', 'http://emergency.berkeley.edu/', 'Go-to site for emergency response information', true, '2013-08-15 23:09:43.057', '2013-08-15 23:09:43.057');
-INSERT INTO links VALUES (665, 'Police & Safety', 'http://police.berkeley.edu', 'Campus police and safety', true, '2013-08-15 23:09:43.104', '2013-08-15 23:09:43.104');
-INSERT INTO links VALUES (666, 'BearWALK Night safety services', 'http://police.berkeley.edu/programsandservices/campus_safety/index.html', '', true, '2013-08-15 23:09:43.151', '2013-08-15 23:09:43.151');
-INSERT INTO links VALUES (667, 'Emergency Preparedness', 'http://oep.berkeley.edu/', '', true, '2013-08-15 23:09:43.183', '2013-08-15 23:09:43.183');
-INSERT INTO links VALUES (668, 'UC Berkeley museums', 'http://bnhm.berkeley.edu/', '', true, '2013-08-15 23:09:43.222', '2013-08-15 23:09:43.222');
-INSERT INTO links VALUES (669, 'Recreational Sports Facility', 'http://recsports.berkeley.edu/ ', 'Sports and fitness programs', true, '2013-08-15 23:09:43.269', '2013-08-15 23:09:43.269');
-INSERT INTO links VALUES (670, 'Physical Education Program', 'http://pe.berkeley.edu/', '', true, '2013-08-15 23:09:43.3', '2013-08-15 23:09:43.3');
-INSERT INTO links VALUES (671, 'CalBears Intercollegiate Athletics', 'http://www.calbears.com/', '', true, '2013-08-15 23:09:43.336', '2013-08-15 23:09:43.336');
-INSERT INTO links VALUES (672, 'Cal Band', 'http://calband.berkeley.edu/', '', true, '2013-08-15 23:09:43.384', '2013-08-15 23:09:43.384');
-INSERT INTO links VALUES (673, 'Cal Marketplace', 'http://calmarketplace.berkeley.edu/', 'everything at Cal you may want to buy, discover or visit', true, '2013-08-15 23:09:43.415', '2013-08-15 23:09:43.415');
-INSERT INTO links VALUES (674, 'Cal Performances', 'http://www.calperformances.org/', '', true, '2013-08-15 23:09:43.447', '2013-08-15 23:09:43.447');
-INSERT INTO links VALUES (675, 'Cal Student Store', 'http://www.bkstr.com/webapp/wcs/stores/servlet/StoreCatalogDisplay?catalogId=10001&langId=-1&demoKey=d&storeId=10433', '', true, '2013-08-15 23:09:43.477', '2013-08-15 23:09:43.477');
-INSERT INTO links VALUES (676, 'KALX', 'http://kalx.berkeley.edu/', '90.7 MHz. Berkeley''s campus radio station', true, '2013-08-15 23:09:43.512', '2013-08-15 23:09:43.512');
-INSERT INTO links VALUES (677, 'Cal Spirit Groups', 'http://calspirit.berkeley.edu/', '', true, '2013-08-15 23:09:43.559', '2013-08-15 23:09:43.559');
-INSERT INTO links VALUES (678, 'ASUC', 'http://asuc.org/', 'Student government', true, '2013-08-15 23:09:43.592', '2013-08-15 23:09:43.592');
-INSERT INTO links VALUES (679, 'Graduate Assembly', 'https://ga.berkeley.edu/', 'Graduate student government', true, '2013-08-15 23:09:43.613', '2013-08-15 23:09:43.613');
-INSERT INTO links VALUES (680, 'CalGreeks', 'http://www.calgreeks.com/', '', true, '2013-08-15 23:09:43.652', '2013-08-15 23:09:43.652');
-INSERT INTO links VALUES (681, 'CalLink (Campus Activities Link)', 'http://callink.berkeley.edu/', 'Official campus student groups', true, '2013-08-15 23:09:43.679', '2013-08-15 23:09:43.679');
-INSERT INTO links VALUES (682, 'Student Organizations Search', 'http://students.berkeley.edu/osl/studentgroups/public/index.asp', '', true, '2013-08-15 23:09:43.699', '2013-08-15 23:09:43.699');
-INSERT INTO links VALUES (683, 'Student Ombuds', 'http://sa.berkeley.edu/ombuds', 'Confidential help with campus issues, conflict situations, and more', true, '2013-08-15 23:09:43.734', '2013-08-15 23:09:43.734');
-INSERT INTO links VALUES (684, 'My Years at Cal', 'http://myyears.berkeley.edu/', '', true, '2013-08-15 23:09:43.756', '2013-08-15 23:09:43.756');
-INSERT INTO links VALUES (685, 'New Student Services (includes CalSO)', 'http://nss.berkeley.edu/', '', true, '2013-08-15 23:09:43.777', '2013-08-15 23:09:43.777');
-INSERT INTO links VALUES (686, 'Disabled Students Program', 'http://dsp.berkeley.edu/', '', true, '2013-08-15 23:09:43.797', '2013-08-15 23:09:43.797');
-INSERT INTO links VALUES (687, 'Transfer, Re-entry and Student Parent Center', 'http://trsp.berkeley.edu/', '', true, '2013-08-15 23:09:43.817', '2013-08-15 23:09:43.817');
-INSERT INTO links VALUES (688, 'Resource Guide for Students', 'http://resource.berkeley.edu/', 'Comprehensive campus guide for students', true, '2013-08-15 23:09:43.837', '2013-08-15 23:09:43.837');
-INSERT INTO links VALUES (689, 'Career Center', 'http://career.berkeley.edu/', 'Cal jobs, internships & career counseling', true, '2013-08-15 23:09:43.871', '2013-08-15 23:09:43.871');
-INSERT INTO links VALUES (690, 'Callisto & CalJobs', 'https://career.berkeley.edu/CareerApps/Callisto/CallistoLogin.aspx', '', true, '2013-08-15 23:09:43.902', '2013-08-15 23:09:43.902');
-INSERT INTO links VALUES (691, 'Career Center: Job Search Tools', 'https://career.berkeley.edu/Tools/Tools.stm', '', true, '2013-08-15 23:09:43.923', '2013-08-15 23:09:43.923');
-INSERT INTO links VALUES (692, 'Career Center: Internships', 'https://career.berkeley.edu/Internships/Internships.stm', '', true, '2013-08-15 23:09:43.945', '2013-08-15 23:09:43.945');
-INSERT INTO links VALUES (693, 'Career Center: Part-time Employment', 'https://career.berkeley.edu/Parttime/Parttime.stm', '', true, '2013-08-15 23:09:43.965', '2013-08-15 23:09:43.965');
-INSERT INTO links VALUES (694, 'Work-Study Programs', 'http://students.berkeley.edu/finaid/home/work.htm', '', true, '2013-08-15 23:09:43.999', '2013-08-15 23:09:43.999');
-INSERT INTO links VALUES (695, 'Berkeley Jobs', 'http://jobs.berkeley.edu/', 'Employment at Berkeley', true, '2013-08-15 23:09:44.02', '2013-08-15 23:09:44.02');
-INSERT INTO links VALUES (696, 'Education loan counseling', 'http://studentbilling.berkeley.edu/exitDirect.htm', '', true, '2013-08-15 23:09:44.06', '2013-08-15 23:09:44.06');
-INSERT INTO links VALUES (697, 'FAFSA', 'http://www.fafsa.ed.gov', '', true, '2013-08-15 23:09:44.081', '2013-08-15 23:09:44.081');
-INSERT INTO links VALUES (698, 'Financial Aid', 'http://students.berkeley.edu/finaid/', 'Student financial aid options and select scholarships', true, '2013-08-15 23:09:44.115', '2013-08-15 23:09:44.115');
-INSERT INTO links VALUES (699, 'Registration Fees', 'http://registrar.berkeley.edu/Registration/feesched.html', '', true, '2013-08-15 23:09:44.138', '2013-08-15 23:09:44.138');
-INSERT INTO links VALUES (700, 'Student Budgets', 'http://www.berkeley.edu/about/fact.shtml#fees', '', true, '2013-08-15 23:09:44.159', '2013-08-15 23:09:44.159');
-INSERT INTO links VALUES (701, 'Undergrad Financial Facts', 'http://students.berkeley.edu/finaid/undergraduates/FinancialAidFacts2011-12.pdf', '', true, '2013-08-15 23:09:44.18', '2013-08-15 23:09:44.18');
-INSERT INTO links VALUES (702, 'Financial Aid Estimator', 'http://calculator.berkeley.edu/', '', true, '2013-08-15 23:09:44.199', '2013-08-15 23:09:44.199');
-INSERT INTO links VALUES (703, 'MyFinAid', 'https://myfinaid.berkeley.edu/', '', true, '2013-08-15 23:09:44.219', '2013-08-15 23:09:44.219');
+INSERT INTO links VALUES (837, 'Berkeley Jobs', 'http://jobs.berkeley.edu/', 'Start here to learn about job openings on campus, student, staff and academic positions', true, '2014-05-12 13:03:14.567', '2014-05-30 23:01:50.776');
+INSERT INTO links VALUES (722, 'My Years at Cal', 'http://myyears.berkeley.edu/', 'Undergraduate advice site with useful resources and on how to stay on track for graduation ', true, '2014-05-12 13:03:09.122', '2014-05-30 23:06:33.137');
+INSERT INTO links VALUES (855, 'Twitter', 'https://twitter.com/UCBerkeley', 'UC Berkeley''s primary Stay updated on campus news through Berkeley''s primary Twitter address', true, '2014-05-12 13:03:15.126', '2014-05-30 23:08:47.536');
+INSERT INTO links VALUES (797, 'CalMessages', 'https://calmessages.berkeley.edu/', 'Berkeley''s official messaging system used to send broadcast email notifications to all staff, all students, etc.', true, '2014-05-12 13:03:12.982', '2014-05-30 23:20:37.794');
+INSERT INTO links VALUES (798, 'bConnected Support', 'http://ist.berkeley.edu/bconnected', 'Information and resources site for Berkeley''s email, calendar and shared drive solutions, powered by Google Apps for Education', true, '2014-05-12 13:03:13.01', '2014-05-30 23:23:00.48');
+INSERT INTO links VALUES (760, 'Staff Ombuds Office', 'http://staffombuds.berkeley.edu/ ', 'An independent department that provides staff with strictly confidential and informal conflict resolution and problem-solving services', true, '2014-05-12 13:03:11.381', '2014-05-30 23:32:30.674');
+INSERT INTO links VALUES (710, 'Cal Student Store', 'http://www.bkstr.com/webapp/wcs/stores/servlet/StoreCatalogDisplay?catalogId=10001&langId=-1&demoKey=d&storeId=10433', 'Apparel, school supplies, and more ', true, '2014-05-12 13:03:08.266', '2014-05-12 13:03:08.266');
+INSERT INTO links VALUES (711, 'BearWALK Night safety services', 'http://police.berkeley.edu/programsandservices/campus_safety/index.html', 'Free safety night walks to and from a desired location with a Community Service Officer', true, '2014-05-12 13:03:08.358', '2014-05-12 13:03:08.358');
+INSERT INTO links VALUES (712, 'Give to Berkeley', 'http://givetocal.berkeley.edu/', 'Help donate to further student''s education', true, '2014-05-12 13:03:08.442', '2014-05-12 13:03:08.442');
+INSERT INTO links VALUES (713, 'Travel & Entertainment', 'http://controller.berkeley.edu/travel/', 'Travel services including airfare and Berkeley''s Direct Bill ID system', true, '2014-05-12 13:03:08.53', '2014-05-12 13:03:08.53');
+INSERT INTO links VALUES (714, 'Purchasing', 'http://businessservices.berkeley.edu/procurement/services', 'Services that can be purchased by individuals with a CalNet ID and passphrase', true, '2014-05-12 13:03:08.607', '2014-05-12 13:03:08.607');
+INSERT INTO links VALUES (715, 'HR Web', 'http://hrweb.berkeley.edu/', 'Human Resources at Berkeley', true, '2014-05-12 13:03:08.678', '2014-05-12 13:03:08.678');
+INSERT INTO links VALUES (716, 'BAIRS', 'http://www.bai.berkeley.edu/', 'Berkeley Administrative Initiative Reporting System', true, '2014-05-12 13:03:08.753', '2014-05-12 13:03:08.753');
+INSERT INTO links VALUES (717, 'Open Computing Facility', 'http://www.ocf.berkeley.edu/', 'Free computing such as printing for Berkeley affiliates', true, '2014-05-12 13:03:08.823', '2014-05-12 13:03:08.823');
+INSERT INTO links VALUES (718, 'General Access Computing Facilities', 'http://ets.berkeley.edu/computer-facilities/general-access', 'Convenient and secure on-campus computing facilities for registered Berkeley affiliates', true, '2014-05-12 13:03:08.865', '2014-05-12 13:03:08.865');
+INSERT INTO links VALUES (719, 'Submit a Service Request', 'https://shared-services-help.berkeley.edu/', 'Help requests for various services such as research', true, '2014-05-12 13:03:08.937', '2014-05-12 13:03:08.937');
+INSERT INTO links VALUES (720, 'BearBuy Procurement', 'http://procurement.berkeley.edu/bearbuy/', 'Campus'' procurement system that allows for catalog shopping and electronically-enabled workflows', true, '2014-05-12 13:03:08.975', '2014-05-12 13:03:08.975');
+INSERT INTO links VALUES (721, 'Student Organizations Search', 'http://students.berkeley.edu/osl/studentgroups/public/index.asp', 'Cal''s clubs and organizations on campus', true, '2014-05-12 13:03:09.05', '2014-05-12 13:03:09.05');
+INSERT INTO links VALUES (723, 'Physical Education Program', 'http://pe.berkeley.edu/', 'Physical education instructional courses for units', true, '2014-05-12 13:03:09.189', '2014-05-12 13:03:09.189');
+INSERT INTO links VALUES (724, 'Berkeley Online Tour', 'http://www.berkeley.edu/tour/', 'Instructor and student perspectives and virtual campus tours of Berkeley', true, '2014-05-12 13:03:09.243', '2014-05-12 13:03:09.243');
+INSERT INTO links VALUES (725, 'UC Berkeley Facebook page', 'http://www.facebook.com/UCBerkeley', 'Keep updated with Berkeley news through social media', true, '2014-05-12 13:03:09.32', '2014-05-12 13:03:09.32');
+INSERT INTO links VALUES (726, 'CalNet', 'https://calnet.berkeley.edu/', 'An online identity username that all Berkeley affiliates have to log into Berkeley websites', true, '2014-05-12 13:03:09.391', '2014-05-12 13:03:09.391');
+INSERT INTO links VALUES (727, 'Ethics & Compliance, Administrative guide', 'http://ethicscompliance.berkeley.edu/index.shtml', 'Contact information to report anything suspicious', true, '2014-05-12 13:03:09.462', '2014-05-12 13:03:09.462');
+INSERT INTO links VALUES (728, 'Box.net', 'https://berkeley.box.com/', 'Cloud-hosted platform allowing users to store and share documents and other materials for collaborations', true, '2014-05-12 13:03:09.528', '2014-05-12 13:03:09.528');
+INSERT INTO links VALUES (729, 'bDrive', 'http://bdrive.berkeley.edu', 'An area to store files that can be shared and collaborated', true, '2014-05-12 13:03:09.612', '2014-05-12 13:03:09.612');
+INSERT INTO links VALUES (731, 'Facilities Services', 'http://www.cp.berkeley.edu/', 'Cleaning, landscaping and other services to maintain exceptional physical appearance', true, '2014-05-12 13:03:09.719', '2014-05-12 13:03:09.719');
+INSERT INTO links VALUES (732, 'Campus IT Offices', 'http://www.berkeley.edu/admin/compute.shtml#offices', 'Contact information for information technology services', true, '2014-05-12 13:03:09.758', '2014-05-12 13:03:09.758');
+INSERT INTO links VALUES (733, 'UC Learning Center', 'https://shib.berkeley.edu/idp/profile/Shibboleth/SSO?shire=https://uc.sumtotalsystems.com/Shibboleth.sso/SAML/POST&target=https://uc.sumtotalsystems.com/secure/auth.aspx&providerId=https://uc.sumtotalsystems.com/shibboleth', 'Various services that help students and instructors succeed', true, '2014-05-12 13:03:09.82', '2014-05-12 13:03:09.82');
+INSERT INTO links VALUES (734, 'Teaching resources', 'http://teaching.berkeley.edu/teaching.html', 'Resources that promotes teaching and learning including consultation and program facilitation', true, '2014-05-12 13:03:09.882', '2014-05-12 13:03:09.882');
+INSERT INTO links VALUES (735, 'Academic Senate', 'http://academic-senate.berkeley.edu/', 'Governance held by faculty member to make decisions campus-wide', true, '2014-05-12 13:03:09.911', '2014-05-12 13:03:09.911');
+INSERT INTO links VALUES (736, 'iTunesU - Berkeley', 'http://itunes.berkeley.edu', 'Audio files of recordings from lectures or events', true, '2014-05-12 13:03:09.968', '2014-05-12 13:03:09.968');
+INSERT INTO links VALUES (737, 'Edx Classes at Berkeley', 'https://www.edx.org/university_profile/BerkeleyX', 'Resources that advise, coordinate, and facilitate the University’s online education initiatives', true, '2014-05-12 13:03:10.053', '2014-05-12 13:03:10.053');
+INSERT INTO links VALUES (738, 'Academic Departments & Programs', 'http://www.berkeley.edu/academics/dept/a.shtml', 'UC Berkeley''s variety of degree programs', true, '2014-05-12 13:03:10.139', '2014-05-12 13:03:10.139');
+INSERT INTO links VALUES (739, 'Office of Undergraduate Advising', 'http://ls-advise.berkeley.edu/', 'Advising provided for students under the college of Letters and Science', true, '2014-05-12 13:03:10.208', '2014-05-12 13:03:10.208');
+INSERT INTO links VALUES (740, 'Finding Your Way (L&S)', 'http://ls-yourway.berkeley.edu/', 'Academic advising for students in the Residence Halls under the college of Letters and Science', true, '2014-05-12 13:03:10.264', '2014-05-12 13:03:10.264');
+INSERT INTO links VALUES (741, 'Academic Policies', 'http://bulletin.berkeley.edu/academicpolicies/', 'Policies set by the university specific for Berkeley students', true, '2014-05-12 13:03:10.326', '2014-05-12 13:03:10.326');
+INSERT INTO links VALUES (742, 'Bear Facts', 'https://bearfacts.berkeley.edu', 'Academic record, grades & transcript, bill, degree audit, loans, SLR & personal info', true, '2014-05-12 13:03:10.39', '2014-05-12 13:03:10.39');
+INSERT INTO links VALUES (743, 'Summer Sessions', 'http://summer.berkeley.edu/', 'Various programs and courses offered during summer for Berkeley students', true, '2014-05-12 13:03:10.434', '2014-05-12 13:03:10.434');
+INSERT INTO links VALUES (744, 'Undergraduate Student Calendar & Deadlines', 'http://registrar.berkeley.edu/current_students/registration_enrollment/stucal.html', 'Student''s academic calendar ', true, '2014-05-12 13:03:10.497', '2014-05-12 13:03:10.497');
+INSERT INTO links VALUES (745, 'Office of the Registrar', 'http://registrar.berkeley.edu/', 'Administrative office with helpful links and resources regarding Berkeley', true, '2014-05-12 13:03:10.53', '2014-05-12 13:03:10.53');
+INSERT INTO links VALUES (746, 'UC Berkeley Wellness Letter', 'http://www.wellnessletter.com/ucberkeley/', 'Tips and information on how to stay healthy', true, '2014-05-12 13:03:10.592', '2014-05-12 13:03:10.592');
+INSERT INTO links VALUES (747, 'Retirement Resources', 'http://thecenter.berkeley.edu/index.shtml', 'Programs and services that contribute to the well being of retired faculty', true, '2014-05-12 13:03:10.65', '2014-05-12 13:03:10.65');
+INSERT INTO links VALUES (748, 'Personal Info - Campus Directory', 'https://calnet.berkeley.edu/directory/update/', 'Public contact information of Berkeley affiliates such as email addresses, UIDs, etc.', true, '2014-05-12 13:03:10.715', '2014-05-12 13:03:10.715');
+INSERT INTO links VALUES (749, 'Cal Rentals', 'http://calrentals.housing.berkeley.edu/', 'Listings of housing opportunities for the Berkeley community', true, '2014-05-12 13:03:10.779', '2014-05-12 13:03:10.779');
+INSERT INTO links VALUES (750, 'International House', 'http://ihouse.berkeley.edu/', 'On-campus dormitory with a dining common for international students', true, '2014-05-12 13:03:10.814', '2014-05-12 13:03:10.814');
+INSERT INTO links VALUES (752, 'Living At Cal', 'http://www.housing.berkeley.edu/livingatcal/', 'UC Berkeley housing options', true, '2014-05-12 13:03:10.875', '2014-05-12 13:03:10.875');
+INSERT INTO links VALUES (753, 'Residential & Student Service Programs', 'http://www.housing.berkeley.edu/', 'UC Berkeley housing options', true, '2014-05-12 13:03:10.906', '2014-05-12 13:03:10.906');
+INSERT INTO links VALUES (754, 'Residential Computing (ResComp)', 'http://www.rescomp.berkeley.edu/', 'Computer and network services for students living in campus housing', true, '2014-05-12 13:03:10.972', '2014-05-12 13:03:10.972');
+INSERT INTO links VALUES (755, 'CalDining', 'http://caldining.berkeley.edu/', 'Campus dining facilities', true, '2014-05-12 13:03:11.034', '2014-05-12 13:03:11.034');
+INSERT INTO links VALUES (756, 'Child Care', 'http://www.housing.berkeley.edu/child/', 'Campus child care services', true, '2014-05-12 13:03:11.178', '2014-05-12 13:03:11.178');
+INSERT INTO links VALUES (757, 'At Your Service', 'https://atyourserviceonline.ucop.edu', 'Benefits, Earnings, Taxes & Retirement', true, '2014-05-12 13:03:11.251', '2014-05-12 13:03:11.251');
+INSERT INTO links VALUES (758, 'Personal Info - HR record', 'https://auth.berkeley.edu/cas/login?service=https://hrw-vip-prod.is.berkeley.edu/cgi-bin/cas-hrsprod.pl', 'HR personal data, requires log-in.', true, '2014-05-12 13:03:11.284', '2014-05-12 13:03:11.284');
+INSERT INTO links VALUES (759, 'Retirement Benefits - At Your Service', 'https://atyourserviceonline.ucop.edu', 'Benefits, Earnings, Taxes & Retirement', true, '2014-05-12 13:03:11.317', '2014-05-12 13:03:11.317');
+INSERT INTO links VALUES (864, 'CalTime', 'http://caltime.berkeley.edu', 'Tracking and reporting work and time leave-timekeeping', true, '2014-05-12 13:03:15.436', '2014-05-12 13:03:15.436');
+INSERT INTO links VALUES (730, 'University Relations', 'http://www.urel.berkeley.edu/', 'Berkeley''s Public Affairs and fundraising Development division', true, '2014-05-12 13:03:09.682', '2014-05-30 23:25:00.713');
+INSERT INTO links VALUES (762, 'UC SHIP (Student Health Insurance Plan)', 'http://www.uhs.berkeley.edu/students/insurance/', 'UC Student Health Insurance Plan', true, '2014-05-12 13:03:11.476', '2014-05-12 13:03:11.476');
+INSERT INTO links VALUES (763, 'CARE Services', 'http://uhs.berkeley.edu/facstaff/care/', 'free, confidential problem assessment and referral for UC Berkeley faculty and staff', true, '2014-05-12 13:03:11.528', '2014-05-12 13:03:11.528');
+INSERT INTO links VALUES (764, 'Organizational & Workforce Effectiveness', 'http://hrweb.berkeley.edu/learning/corwe', 'Organization supporting managers wanting to make organizational improvements', true, '2014-05-12 13:03:11.56', '2014-05-12 13:03:11.56');
+INSERT INTO links VALUES (765, 'Policies & procedures A-Z', 'http://campuspol.chance.berkeley.edu/Home/AtoZPolicies.cfm?long_page=yes', 'A-Z of campuswide policies and procedures', true, '2014-05-12 13:03:11.589', '2014-05-12 13:03:11.589');
+INSERT INTO links VALUES (766, 'Safety', 'http://police.berkeley.edu/index.html', 'Safety information and programs', true, '2014-05-12 13:03:11.652', '2014-05-12 13:03:11.652');
+INSERT INTO links VALUES (767, 'Academic Calendar', 'http://registrar.berkeley.edu/CalendarDisp.aspx?terms=current', 'Academic Calendars Future Campus Calendars', true, '2014-05-12 13:03:11.688', '2014-05-12 13:03:11.688');
+INSERT INTO links VALUES (768, 'Course Catalog', 'http://general-catalog.berkeley.edu/catalog/gcc_search_menu', 'Detailed course descriptions', true, '2014-05-12 13:03:11.727', '2014-05-12 13:03:11.727');
+INSERT INTO links VALUES (769, 'Schedule of Classes', 'http://schedule.berkeley.edu/', 'Classes offerings by semester', true, '2014-05-12 13:03:11.78', '2014-05-12 13:03:11.78');
+INSERT INTO links VALUES (770, 'DARS', 'https://marin.berkeley.edu/darsweb/servlet/ListAuditsServlet ', 'Degree requirements and track progress', true, '2014-05-12 13:03:11.823', '2014-05-12 13:03:11.823');
+INSERT INTO links VALUES (771, 'Schedule Builder', 'https://schedulebuilder.berkeley.edu/', 'Plan your classes', true, '2014-05-12 13:03:11.851', '2014-05-12 13:03:11.851');
+INSERT INTO links VALUES (772, 'TeleBears', 'https://telebears.berkeley.edu', 'Register for classes', true, '2014-05-12 13:03:11.887', '2014-05-12 13:03:11.887');
+INSERT INTO links VALUES (773, 'Educational Opportunity Program', 'http://eop.berkeley.edu', 'Guidance and resources for first generation and low-income college students.', true, '2014-05-12 13:03:11.916', '2014-05-12 13:03:11.916');
+INSERT INTO links VALUES (774, 'Library', 'http://library.berkeley.edu', 'Search the UC Library system', true, '2014-05-12 13:03:11.978', '2014-05-12 13:03:11.978');
+INSERT INTO links VALUES (775, 'Research', 'http://berkeley.edu/research/', 'Directory of UC Berkeley research programs', true, '2014-05-12 13:03:12.042', '2014-05-12 13:03:12.042');
+INSERT INTO links VALUES (776, 'bSpace', 'http://bspace.berkeley.edu', 'Homework assignments, lecture slides, syllabi and class resources', true, '2014-05-12 13:03:12.095', '2014-05-12 13:03:12.095');
+INSERT INTO links VALUES (777, 'DeCal Courses', 'http://www.decal.org/ ', 'Catalog of student-led courses', true, '2014-05-12 13:03:12.146', '2014-05-12 13:03:12.146');
+INSERT INTO links VALUES (778, 'UC Extension Classes', 'http://extension.berkeley.edu/', 'Professional development', true, '2014-05-12 13:03:12.199', '2014-05-12 13:03:12.199');
+INSERT INTO links VALUES (779, 'bCourses', 'http://bcourses.berkeley.edu', 'Campus Learning Management System (LMS) powered by Canvas', true, '2014-05-12 13:03:12.235', '2014-05-12 13:03:12.235');
+INSERT INTO links VALUES (780, 'Campus Bookstore', 'http://www.bkstr.com/webapp/wcs/stores/servlet/StoreCatalogDisplay?storeId=10433', 'Text books and more', true, '2014-05-12 13:03:12.27', '2014-05-12 13:03:12.27');
+INSERT INTO links VALUES (781, 'Lab Safety', 'http://rac.berkeley.edu/compliancebook/labsafety.html', 'Lab Safety & Hazardous Materials Management', true, '2014-05-12 13:03:12.328', '2014-05-12 13:03:12.328');
+INSERT INTO links VALUES (782, 'Berkeley Sites (A-Z)', 'http://www.berkeley.edu/a-z/a.shtml', 'Navigating UC Berkeley', true, '2014-05-12 13:03:12.361', '2014-05-12 13:03:12.361');
+INSERT INTO links VALUES (783, 'Conduct Office', 'http://studentconduct.berkeley.edu', 'Student conduct office', true, '2014-05-12 13:03:12.417', '2014-05-12 13:03:12.417');
+INSERT INTO links VALUES (784, 'bCal', 'http://bcal.berkeley.edu', 'personal calandar', true, '2014-05-12 13:03:12.449', '2014-05-12 13:03:12.449');
+INSERT INTO links VALUES (785, 'bMail', 'http://bmail.berkeley.edu', 'email', true, '2014-05-12 13:03:12.482', '2014-05-12 13:03:12.482');
+INSERT INTO links VALUES (786, 'CalMail', 'http://calmail.berkeley.edu', 'email', true, '2014-05-12 13:03:12.514', '2014-05-12 13:03:12.514');
+INSERT INTO links VALUES (787, 'Imagine Services', 'http://imagine.berkeley.edu/', 'custom electronic document workflows', true, '2014-05-12 13:03:12.544', '2014-05-12 13:03:12.544');
+INSERT INTO links VALUES (788, 'Mail Services', 'http://mailservices.berkeley.edu/', 'United States Postal Service-incoming and outgoing mail', true, '2014-05-12 13:03:12.598', '2014-05-12 13:03:12.598');
+INSERT INTO links VALUES (789, 'BETS - equipment tracking', 'http://bets.berkeley.edu/BETS/home/BetsHome.cfm', 'Equipment Tracking System of inventorial and non-inventorial equipment', true, '2014-05-12 13:03:12.656', '2014-05-12 13:03:12.656');
+INSERT INTO links VALUES (790, 'Cal Answers', 'http://calanswers.berkeley.edu/', 'Provides reliable and consistent answers to critical campus questions', true, '2014-05-12 13:03:12.708', '2014-05-12 13:03:12.708');
+INSERT INTO links VALUES (791, 'Campus Shared Services', 'http://sharedservices.berkeley.edu/', 'Answers to questions and the ability to submit help requests', true, '2014-05-12 13:03:12.766', '2014-05-12 13:03:12.766');
+INSERT INTO links VALUES (792, 'New Faculty resources', 'http://teaching.berkeley.edu/new-faculty-resources', 'Hints, resources, and guidelines on productive teaching', true, '2014-05-12 13:03:12.796', '2014-05-12 13:03:12.796');
+INSERT INTO links VALUES (793, 'Computer Use Policy', 'https://security.berkeley.edu/policy/usepolicy.html', 'Rules, rights, and policies regarding computer facilities', true, '2014-05-12 13:03:12.823', '2014-05-12 13:03:12.823');
+INSERT INTO links VALUES (794, 'Student Policies & Procedures', 'http://sa.berkeley.edu/sa/student-policies-and-procedures', 'Rules and policies enforced on students', true, '2014-05-12 13:03:12.858', '2014-05-12 13:03:12.858');
+INSERT INTO links VALUES (795, 'Research Hub', 'https://hub.berkeley.edu', 'Tool for content management and collaboration such as managing research data and sharing documents', true, '2014-05-12 13:03:12.891', '2014-05-12 13:03:12.891');
+INSERT INTO links VALUES (796, 'CalShare', 'https://calshare.berkeley.edu/', 'Tool for creating and managing web sites for collaboration purposes', true, '2014-05-12 13:03:12.925', '2014-05-12 13:03:12.925');
+INSERT INTO links VALUES (799, 'Graduate Financial Support', 'http://www.grad.berkeley.edu/financial/', 'Resources to provide financial support for graduate students', true, '2014-05-12 13:03:13.072', '2014-05-12 13:03:13.072');
+INSERT INTO links VALUES (801, 'Office of the Chancellor', 'http://chancellor.berkeley.edu/', 'Meet Chancellor Nicholas B. Dirks', true, '2014-05-12 13:03:13.136', '2014-05-12 13:03:13.136');
+INSERT INTO links VALUES (802, 'Equity, Inclusion & Diversity', 'http://diversity.berkeley.edu/', 'Creating a fair and inclusive society for all individuals', true, '2014-05-12 13:03:13.169', '2014-05-12 13:03:13.169');
+INSERT INTO links VALUES (803, 'Administration & Finance', 'http://vcaf.berkeley.edu/divisions', 'Adminstration officials ', true, '2014-05-12 13:03:13.203', '2014-05-12 13:03:13.203');
+INSERT INTO links VALUES (804, 'Learning Resources', 'http://hrweb.berkeley.edu/learning', 'Supports the development of the workforce with learning and development programs', true, '2014-05-12 13:03:13.251', '2014-05-12 13:03:13.251');
+INSERT INTO links VALUES (805, 'Environmental Health & Safety', 'http://www.ehs.berkeley.edu/', 'Services to the campus community that promote health, safety, and environmental stewardship', true, '2014-05-12 13:03:13.281', '2014-05-12 13:03:13.281');
+INSERT INTO links VALUES (806, 'Grade book', 'http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html', 'A tool to enter, upload, and calculate student grades on bSpace', true, '2014-05-12 13:03:13.334', '2014-05-12 13:03:13.334');
+INSERT INTO links VALUES (807, 'Webcast Support', 'http://ets.berkeley.edu/about-webcastberkeley', 'Help with audio and video recordings of class lectures and events that made available through UC Berkeley''s channels', true, '2014-05-12 13:03:13.361', '2014-05-12 13:03:13.361');
+INSERT INTO links VALUES (808, 'bSpace Support', 'http://ets.berkeley.edu/bspace', 'A communication and collaboration program that supports teaching and learning', true, '2014-05-12 13:03:13.389', '2014-05-12 13:03:13.389');
+INSERT INTO links VALUES (809, 'Student Learning Center', 'http://slc.berkeley.edu', 'Resources such as tutoring and is open 24 hour to provide students with a place to study', true, '2014-05-12 13:03:13.416', '2014-05-12 13:03:13.416');
+INSERT INTO links VALUES (810, 'Faculty gateway', 'http://berkeley.edu/faculty/', 'Useful resources for faculty members ', true, '2014-05-12 13:03:13.442', '2014-05-12 13:03:13.442');
+INSERT INTO links VALUES (800, 'Student Affairs', 'http://sa.berkeley.edu/', 'Berkeley''s division responsible for many student life services including the Registrar, Admissions, Financial Aid, Housing & Dining, Conduct, Public Service Center, LEAD center, and ASUC auxiliary', true, '2014-05-12 13:03:13.102', '2014-05-30 23:27:20.746');
+INSERT INTO links VALUES (761, 'UHS - Tang Center', 'http://uhs.berkeley.edu/', 'Berkeley''s healthcare center', true, '2014-05-12 13:03:11.441', '2014-05-30 23:31:27.978');
+INSERT INTO links VALUES (811, 'Classroom Technology', 'http://ets.berkeley.edu/classroom-technology/', 'Provide reliable resources and technical support to the UCB campus', true, '2014-05-12 13:03:13.491', '2014-05-12 13:03:13.491');
+INSERT INTO links VALUES (812, 'YouTube - UC Berkeley', 'http://www.youtube.com/user/UCBerkeley', 'Videos relating to UC Berkeley on an external website', true, '2014-05-12 13:03:13.515', '2014-05-12 13:03:13.515');
+INSERT INTO links VALUES (813, 'Berkeley Research', 'http://vcresearch.berkeley.edu/', 'Research information and opportunities', true, '2014-05-12 13:03:13.541', '2014-05-12 13:03:13.541');
+INSERT INTO links VALUES (814, 'Graduate Division', 'http://www.grad.berkeley.edu/', 'Information and resources for prospective and graduate students', true, '2014-05-12 13:03:13.6', '2014-05-12 13:03:13.6');
+INSERT INTO links VALUES (816, 'Colleges & Schools', 'http://www.berkeley.edu/academics/school.shtml', 'Different departments (colleges) that majors fall under', true, '2014-05-12 13:03:13.666', '2014-05-12 13:03:13.666');
+INSERT INTO links VALUES (817, 'Cal Student Central', 'http://studentcentral.berkeley.edu/', 'A resourceful website with answers to the most frequently asked questions by students', true, '2014-05-12 13:03:13.729', '2014-05-12 13:03:13.729');
+INSERT INTO links VALUES (818, 'Personnel Policies', 'http://hrweb.berkeley.edu/er/policies', 'Employee relations - personnel policies', true, '2014-05-12 13:03:13.758', '2014-05-12 13:03:13.758');
+INSERT INTO links VALUES (820, 'Campus Directory - People Finder', 'http://directory.berkeley.edu', 'Campus directory of faculty, staff and students', true, '2014-05-12 13:03:13.867', '2014-05-12 13:03:13.867');
+INSERT INTO links VALUES (821, 'Public Service Center', 'http://publicservice.berkeley.edu', 'On and off campus community service engagement', true, '2014-05-12 13:03:13.904', '2014-05-12 13:03:13.904');
+INSERT INTO links VALUES (822, 'Events.Berkeley', 'http://events.berkeley.edu', 'Campus events calendar', true, '2014-05-12 13:03:13.964', '2014-05-12 13:03:13.964');
+INSERT INTO links VALUES (823, 'The Daily Californian (The DailyCal)', 'http://www.dailycal.org/', 'an independent student newspaper', true, '2014-05-12 13:03:13.995', '2014-05-12 13:03:13.995');
+INSERT INTO links VALUES (824, 'Campus Map', 'http://www.berkeley.edu/map/3dmap/3dmap.shtml', 'Locate campus buildings', true, '2014-05-12 13:03:14.056', '2014-05-12 13:03:14.056');
+INSERT INTO links VALUES (825, 'Parking & Transportation', 'http://pt.berkeley.edu/', 'Parking lots, transportation, car sharing, etc.', true, '2014-05-12 13:03:14.115', '2014-05-12 13:03:14.115');
+INSERT INTO links VALUES (826, 'Emergency information', 'http://emergency.berkeley.edu/', 'Go-to site for emergency response information', true, '2014-05-12 13:03:14.148', '2014-05-12 13:03:14.148');
+INSERT INTO links VALUES (827, 'Police & Safety', 'http://police.berkeley.edu', 'Campus police and safety', true, '2014-05-12 13:03:14.207', '2014-05-12 13:03:14.207');
+INSERT INTO links VALUES (828, 'Recreational Sports Facility', 'http://recsports.berkeley.edu/ ', 'Sports and fitness programs', true, '2014-05-12 13:03:14.236', '2014-05-12 13:03:14.236');
+INSERT INTO links VALUES (829, 'Cal Marketplace', 'http://calmarketplace.berkeley.edu/', 'everything at Cal you may want to buy, discover or visit', true, '2014-05-12 13:03:14.266', '2014-05-12 13:03:14.266');
+INSERT INTO links VALUES (830, 'KALX', 'http://kalx.berkeley.edu/', '90.7 MHz. Berkeley''s campus radio station', true, '2014-05-12 13:03:14.305', '2014-05-12 13:03:14.305');
+INSERT INTO links VALUES (831, 'ASUC', 'http://asuc.org/', 'Student government', true, '2014-05-12 13:03:14.368', '2014-05-12 13:03:14.368');
+INSERT INTO links VALUES (832, 'Graduate Assembly', 'https://ga.berkeley.edu/', 'Graduate student government', true, '2014-05-12 13:03:14.396', '2014-05-12 13:03:14.396');
+INSERT INTO links VALUES (833, 'CalLink (Campus Activities Link)', 'http://callink.berkeley.edu/', 'Official campus student groups', true, '2014-05-12 13:03:14.424', '2014-05-12 13:03:14.424');
+INSERT INTO links VALUES (834, 'Student Ombuds', 'http://sa.berkeley.edu/ombuds', 'Confidential help with campus issues, conflict situations, and more', true, '2014-05-12 13:03:14.457', '2014-05-12 13:03:14.457');
+INSERT INTO links VALUES (835, 'Resource Guide for Students', 'http://resource.berkeley.edu/', 'Comprehensive campus guide for students', true, '2014-05-12 13:03:14.484', '2014-05-12 13:03:14.484');
+INSERT INTO links VALUES (836, 'Career Center', 'http://career.berkeley.edu/', 'Cal jobs, internships & career counseling', true, '2014-05-12 13:03:14.535', '2014-05-12 13:03:14.535');
+INSERT INTO links VALUES (838, 'CalGreeks', 'http://www.calgreeks.com/', 'Fraternities, Sororities, and professional fraternities among the Greek Family', true, '2014-05-12 13:03:14.604', '2014-05-12 13:03:14.604');
+INSERT INTO links VALUES (839, 'Cal Band', 'http://calband.berkeley.edu/', 'UC Berkeley''s marching band', true, '2014-05-12 13:03:14.658', '2014-05-12 13:03:14.658');
+INSERT INTO links VALUES (840, 'Cal Performances', 'http://www.calperformances.org/', 'Information and tickets for Cal music, dance, and theater performances', true, '2014-05-12 13:03:14.687', '2014-05-12 13:03:14.687');
+INSERT INTO links VALUES (841, 'Career Center: Part-time Employment', 'https://career.berkeley.edu/Parttime/Parttime.stm', 'Links to part-time websites', true, '2014-05-12 13:03:14.715', '2014-05-12 13:03:14.715');
+INSERT INTO links VALUES (842, 'Class pass', 'http://pt.berkeley.edu/pay/transit/classpass/', 'AC Transit Pass to bus for free', true, '2014-05-12 13:03:14.744', '2014-05-12 13:03:14.744');
+INSERT INTO links VALUES (843, 'Career Center: Internships', 'https://career.berkeley.edu/Internships/Internships.stm', 'Resources and Information for Internships', true, '2014-05-12 13:03:14.767', '2014-05-12 13:03:14.767');
+INSERT INTO links VALUES (844, 'Career Center: Job Search Tools', 'https://career.berkeley.edu/Tools/Tools.stm', 'Resources on how to find a good job or internship ', true, '2014-05-12 13:03:14.79', '2014-05-12 13:03:14.79');
+INSERT INTO links VALUES (845, 'Callisto & CalJobs', 'https://career.berkeley.edu/CareerApps/Callisto/CallistoLogin.aspx', 'Official Berkeley website for all things job-related', true, '2014-05-12 13:03:14.812', '2014-05-12 13:03:14.812');
+INSERT INTO links VALUES (846, 'Transfer, Re-entry and Student Parent Center', 'http://trsp.berkeley.edu/', 'Resources specific to transfer, re-entering, and parent students', true, '2014-05-12 13:03:14.835', '2014-05-12 13:03:14.835');
+INSERT INTO links VALUES (847, 'Disabled Students Program', 'http://dsp.berkeley.edu/', 'Resources specific to disabled students', true, '2014-05-12 13:03:14.857', '2014-05-12 13:03:14.857');
+INSERT INTO links VALUES (848, 'New Student Services (includes CalSO)', 'http://nss.berkeley.edu/', 'Helping new undergrads get the most out of Cal', true, '2014-05-12 13:03:14.881', '2014-05-12 13:03:14.881');
+INSERT INTO links VALUES (849, 'Cal Spirit Groups', 'http://calspirit.berkeley.edu/', 'Cheerleading and Dance Group ', true, '2014-05-12 13:03:14.922', '2014-05-12 13:03:14.922');
+INSERT INTO links VALUES (850, 'CalBears Intercollegiate Athletics', 'http://www.calbears.com/', 'Berkeley''s official sport teams', true, '2014-05-12 13:03:14.975', '2014-05-12 13:03:14.975');
+INSERT INTO links VALUES (851, 'UC Berkeley museums', 'http://bnhm.berkeley.edu/', 'Berkeley''s national history museums ', true, '2014-05-12 13:03:15.009', '2014-05-12 13:03:15.009');
+INSERT INTO links VALUES (852, 'Emergency Preparedness', 'http://oep.berkeley.edu/', 'How to be prepared and ready for emergencies', true, '2014-05-12 13:03:15.04', '2014-05-12 13:03:15.04');
+INSERT INTO links VALUES (853, '511.org (Bay Area Transportation Planner)', 'http://www.511.org/', 'Calculates transportation options for traveling', true, '2014-05-12 13:03:15.069', '2014-05-12 13:03:15.069');
+INSERT INTO links VALUES (854, 'Campus Shuttles', 'http://pt.berkeley.edu/around/transit/routes/', 'Bus routes around the Berkeley campus (most are free)', true, '2014-05-12 13:03:15.098', '2014-05-12 13:03:15.098');
+INSERT INTO links VALUES (857, 'Newscenter', 'http://newscenter.berkeley.edu', 'News affiliated with UC Berkeley', true, '2014-05-12 13:03:15.183', '2014-05-12 13:03:15.183');
+INSERT INTO links VALUES (858, 'Campaign for Berkeley', 'http://campaign.berkeley.edu/', 'The campaign to raise money to help Berkeley''s programs and affiliates', true, '2014-05-12 13:03:15.214', '2014-05-12 13:03:15.214');
+INSERT INTO links VALUES (860, 'SARA - request system access', 'http://www.bai.berkeley.edu/BFS/systems/systemAccess.htm', 'Form that grants access to different systems for employees', true, '2014-05-12 13:03:15.308', '2014-05-12 13:03:15.308');
+INSERT INTO links VALUES (861, 'AirBears', 'http://ist.berkeley.edu/airbears/', 'Berkeley''s free internet wifi for Berkeley affiliates with a calnet and passphrase', true, '2014-05-12 13:03:15.335', '2014-05-12 13:03:15.335');
+INSERT INTO links VALUES (863, 'Payroll', 'http://controller.berkeley.edu/payroll/', 'Providing accurate paychecks to Berkeley employees', true, '2014-05-12 13:03:15.411', '2014-05-12 13:03:15.411');
+INSERT INTO links VALUES (856, 'The Berkeley Blog', 'http://blogs.berkeley.edu', 'Issues that are being discussed by members of Berkeley''s academic community ', true, '2014-05-12 13:03:15.154', '2014-05-30 23:10:30.044');
+INSERT INTO links VALUES (859, 'Blu', 'http://blu.berkeley.edu', 'Berkeley''s employee portal: work-related tools and information', true, '2014-05-12 13:03:15.277', '2014-05-30 23:11:26.962');
+INSERT INTO links VALUES (819, 'Cal 1 Card', 'http://services.housing.berkeley.edu/c1c/static/index.htm', 'The campus identification, and optional, debit and meal points card.', true, '2014-05-12 13:03:13.795', '2014-05-30 23:13:11.66');
+INSERT INTO links VALUES (862, 'Blu Card', 'http://businessservices.berkeley.edu/cards/blucard', 'A procurement card, issued to select employees, and used for purchasing work-related items and services', true, '2014-05-12 13:03:15.362', '2014-05-30 23:14:49.855');
+INSERT INTO links VALUES (815, 'Executive Vice Chancellor & Provost', 'http://evcp.chance.berkeley.edu/', 'Meet Executive Vice Chancellor and Provost, Claude M. Steele', true, '2014-05-12 13:03:13.633', '2014-05-30 23:30:10.068');
+INSERT INTO links VALUES (866, 'HR System', 'http://hrweb.berkeley.edu/hcm', 'Recording personal information and action for the Berkeley community', true, '2014-05-12 13:03:15.484', '2014-05-12 13:03:15.484');
+INSERT INTO links VALUES (867, 'BFS', 'http://www.bai.berkeley.edu/', 'Berkeley''s Financial System', true, '2014-05-12 13:03:15.508', '2014-05-12 13:03:15.508');
+INSERT INTO links VALUES (868, 'Software Central', 'http://ist.berkeley.edu/software-central/', 'Free software for Berkeley affiliates (ex. Adobe, Word, etc.)', true, '2014-05-12 13:03:15.533', '2014-05-12 13:03:15.533');
+INSERT INTO links VALUES (869, 'IST Support', 'http://ist.berkeley.edu/support/', 'Information Technology support for services and systems', true, '2014-05-12 13:03:15.558', '2014-05-12 13:03:15.558');
+INSERT INTO links VALUES (870, 'IST Knowledge Base', 'http://ist.berkeley.edu/support/kb', 'Contains answers to Berkeley computing and IT questions', true, '2014-05-12 13:03:15.586', '2014-05-12 13:03:15.586');
+INSERT INTO links VALUES (872, 'Billing Services', 'http://studentbilling.berkeley.edu/', 'Billing and payment options for students and parents', true, '2014-05-12 13:03:15.658', '2014-05-12 13:03:15.658');
+INSERT INTO links VALUES (874, 'MyFinAid', 'https://myfinaid.berkeley.edu/', 'Manage your Financial Aid Awards-grants, scholarships, work-study, loans, etc.', true, '2014-05-12 13:03:15.706', '2014-05-12 13:03:15.706');
+INSERT INTO links VALUES (877, 'Summer Session', 'http://summer.berkeley.edu/', 'Various programs and courses offered during summer for Berkeley students', true, '2014-05-12 13:03:15.826', '2014-05-12 13:03:15.826');
+INSERT INTO links VALUES (879, 'Schedule & Deadlines', 'http://summer.berkeley.edu/registration/schedule', 'Key dates and deadlines for summer sessions', true, '2014-05-12 13:03:15.902', '2014-05-12 13:03:15.902');
+INSERT INTO links VALUES (880, 'Withdrawing or Canceling?', 'http://registrar.berkeley.edu/canwd.html ', 'Learn more about what you need to do if you are planning to cancel, withdraw and readmit to UC Berkeley', true, '2014-05-12 13:03:15.925', '2014-05-12 13:03:15.925');
+INSERT INTO links VALUES (881, 'Tax 1098-T Form', 'http://studentbilling.berkeley.edu/taxpayer.htm', 'Start here to access your 1098-T form', true, '2014-05-12 13:03:15.947', '2014-05-12 13:03:15.947');
+INSERT INTO links VALUES (882, 'Payment Options', 'http://studentbilling.berkeley.edu/carsPaymentOptions.htm', 'Learn more about the options for making payment either electronically or by check to your CARS account', true, '2014-05-12 13:03:15.97', '2014-05-12 13:03:15.97');
+INSERT INTO links VALUES (883, 'e-bills', 'https://bearfacts.berkeley.edu/bearfacts/student/CARS/ebill.do?bfaction=accessEBill ', 'Pay your CARS bill online with either Electronic Billing (e-Bill) or Electronic Payment (e-Check)', true, '2014-05-12 13:03:15.992', '2014-05-12 13:03:15.992');
+INSERT INTO links VALUES (875, 'Student Budgets', 'http://financialaid.berkeley.edu/cost-attendance', 'Estimated living expense amounts for students', true, '2014-05-12 13:03:15.73', '2014-05-30 22:46:33.044');
+INSERT INTO links VALUES (871, 'Registration Fees', 'http://registrar.berkeley.edu/Registration/feesched.html', 'Required Berkeley fees to be a Registered Student', true, '2014-05-12 13:03:15.635', '2014-05-30 22:49:07.644');
+INSERT INTO links VALUES (884, 'Financial Aid & Scholarships Office', 'http://financialaid.berkeley.edu', 'Start here to learn about Financial Aid and for step-by-step guidance about financial aid and select scholarships at UC Berkeley', true, '2014-05-12 13:03:16.015', '2014-05-30 22:51:45.135');
+INSERT INTO links VALUES (873, 'FAFSA', 'https://fafsa.ed.gov/', 'Free Application for Federal Student Aid (FAFSA),annual form submission required to receive financial aid', true, '2014-05-12 13:03:15.683', '2014-05-30 22:54:14.846');
+INSERT INTO links VALUES (876, 'Have a loan?', 'http://studentbilling.berkeley.edu/exitDirect.htm', 'Getting ready to graduate? Learn about your responsibilities for paying back your loans through the Exit Loan Counseling requirement', true, '2014-05-12 13:03:15.78', '2014-05-30 22:59:00.23');
+INSERT INTO links VALUES (878, 'Work-Study', 'http://financialaid.berkeley.edu/work-study', 'A program that can help you lower your federal loan debt amount through work-study eligible jobs on campus', true, '2014-05-12 13:03:15.876', '2014-05-30 23:04:39.222');
+INSERT INTO links VALUES (865, 'Campus Deposit System (CDS)', 'https://cdsonline.berkeley.edu', 'Financial system used by departments to make cash deposits to their accounts', true, '2014-05-12 13:03:15.461', '2014-05-30 23:18:36.518');
+INSERT INTO links VALUES (751, 'Berkeley Student Cooperative', 'http://www.bsc.coop/', 'Berkeley''s co-operative student housing option, and an alternative to living in student dorms', true, '2014-05-12 13:03:10.844', '2014-05-30 23:34:03.522');
 
 
 --
 -- Name: links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral
 --
 
-SELECT pg_catalog.setval('links_id_seq', 703, true);
+SELECT pg_catalog.setval('links_id_seq', 884, true);
 
 
 --
 -- Data for Name: links_user_roles; Type: TABLE DATA; Schema: public; Owner: calcentral
 --
 
-INSERT INTO links_user_roles VALUES (528, 1);
-INSERT INTO links_user_roles VALUES (529, 1);
-INSERT INTO links_user_roles VALUES (530, 1);
-INSERT INTO links_user_roles VALUES (531, 1);
-INSERT INTO links_user_roles VALUES (532, 1);
-INSERT INTO links_user_roles VALUES (533, 1);
-INSERT INTO links_user_roles VALUES (533, 3);
-INSERT INTO links_user_roles VALUES (533, 2);
-INSERT INTO links_user_roles VALUES (534, 1);
-INSERT INTO links_user_roles VALUES (534, 3);
-INSERT INTO links_user_roles VALUES (534, 2);
-INSERT INTO links_user_roles VALUES (535, 1);
-INSERT INTO links_user_roles VALUES (536, 1);
-INSERT INTO links_user_roles VALUES (537, 1);
-INSERT INTO links_user_roles VALUES (538, 1);
-INSERT INTO links_user_roles VALUES (539, 1);
-INSERT INTO links_user_roles VALUES (539, 3);
-INSERT INTO links_user_roles VALUES (539, 2);
-INSERT INTO links_user_roles VALUES (540, 3);
-INSERT INTO links_user_roles VALUES (540, 2);
-INSERT INTO links_user_roles VALUES (541, 3);
-INSERT INTO links_user_roles VALUES (541, 2);
-INSERT INTO links_user_roles VALUES (542, 3);
-INSERT INTO links_user_roles VALUES (542, 2);
-INSERT INTO links_user_roles VALUES (543, 3);
-INSERT INTO links_user_roles VALUES (543, 2);
-INSERT INTO links_user_roles VALUES (544, 3);
-INSERT INTO links_user_roles VALUES (544, 2);
-INSERT INTO links_user_roles VALUES (545, 3);
-INSERT INTO links_user_roles VALUES (545, 2);
-INSERT INTO links_user_roles VALUES (546, 1);
-INSERT INTO links_user_roles VALUES (546, 3);
-INSERT INTO links_user_roles VALUES (546, 2);
-INSERT INTO links_user_roles VALUES (547, 1);
-INSERT INTO links_user_roles VALUES (548, 1);
-INSERT INTO links_user_roles VALUES (549, 3);
-INSERT INTO links_user_roles VALUES (549, 2);
-INSERT INTO links_user_roles VALUES (550, 2);
-INSERT INTO links_user_roles VALUES (551, 1);
-INSERT INTO links_user_roles VALUES (552, 1);
-INSERT INTO links_user_roles VALUES (552, 3);
-INSERT INTO links_user_roles VALUES (552, 2);
-INSERT INTO links_user_roles VALUES (553, 1);
-INSERT INTO links_user_roles VALUES (553, 3);
-INSERT INTO links_user_roles VALUES (553, 2);
-INSERT INTO links_user_roles VALUES (554, 1);
-INSERT INTO links_user_roles VALUES (554, 3);
-INSERT INTO links_user_roles VALUES (554, 2);
-INSERT INTO links_user_roles VALUES (555, 1);
-INSERT INTO links_user_roles VALUES (555, 3);
-INSERT INTO links_user_roles VALUES (555, 2);
-INSERT INTO links_user_roles VALUES (556, 1);
-INSERT INTO links_user_roles VALUES (556, 3);
-INSERT INTO links_user_roles VALUES (556, 2);
-INSERT INTO links_user_roles VALUES (557, 1);
-INSERT INTO links_user_roles VALUES (557, 3);
-INSERT INTO links_user_roles VALUES (557, 2);
-INSERT INTO links_user_roles VALUES (558, 1);
-INSERT INTO links_user_roles VALUES (558, 3);
-INSERT INTO links_user_roles VALUES (558, 2);
-INSERT INTO links_user_roles VALUES (559, 1);
-INSERT INTO links_user_roles VALUES (559, 3);
-INSERT INTO links_user_roles VALUES (559, 2);
-INSERT INTO links_user_roles VALUES (560, 1);
-INSERT INTO links_user_roles VALUES (560, 3);
-INSERT INTO links_user_roles VALUES (560, 2);
-INSERT INTO links_user_roles VALUES (561, 1);
-INSERT INTO links_user_roles VALUES (562, 1);
-INSERT INTO links_user_roles VALUES (563, 1);
-INSERT INTO links_user_roles VALUES (563, 3);
-INSERT INTO links_user_roles VALUES (563, 2);
-INSERT INTO links_user_roles VALUES (564, 1);
-INSERT INTO links_user_roles VALUES (565, 1);
-INSERT INTO links_user_roles VALUES (566, 1);
-INSERT INTO links_user_roles VALUES (567, 1);
-INSERT INTO links_user_roles VALUES (568, 1);
-INSERT INTO links_user_roles VALUES (569, 1);
-INSERT INTO links_user_roles VALUES (569, 3);
-INSERT INTO links_user_roles VALUES (569, 2);
-INSERT INTO links_user_roles VALUES (570, 1);
-INSERT INTO links_user_roles VALUES (570, 3);
-INSERT INTO links_user_roles VALUES (570, 2);
-INSERT INTO links_user_roles VALUES (571, 1);
-INSERT INTO links_user_roles VALUES (571, 3);
-INSERT INTO links_user_roles VALUES (571, 2);
-INSERT INTO links_user_roles VALUES (572, 1);
-INSERT INTO links_user_roles VALUES (572, 3);
-INSERT INTO links_user_roles VALUES (572, 2);
-INSERT INTO links_user_roles VALUES (573, 1);
-INSERT INTO links_user_roles VALUES (573, 3);
-INSERT INTO links_user_roles VALUES (573, 2);
-INSERT INTO links_user_roles VALUES (574, 1);
-INSERT INTO links_user_roles VALUES (574, 3);
-INSERT INTO links_user_roles VALUES (574, 2);
-INSERT INTO links_user_roles VALUES (575, 1);
-INSERT INTO links_user_roles VALUES (575, 3);
-INSERT INTO links_user_roles VALUES (575, 2);
-INSERT INTO links_user_roles VALUES (576, 1);
-INSERT INTO links_user_roles VALUES (576, 3);
-INSERT INTO links_user_roles VALUES (576, 2);
-INSERT INTO links_user_roles VALUES (577, 1);
-INSERT INTO links_user_roles VALUES (577, 3);
-INSERT INTO links_user_roles VALUES (577, 2);
-INSERT INTO links_user_roles VALUES (578, 1);
-INSERT INTO links_user_roles VALUES (578, 3);
-INSERT INTO links_user_roles VALUES (578, 2);
-INSERT INTO links_user_roles VALUES (579, 1);
-INSERT INTO links_user_roles VALUES (579, 3);
-INSERT INTO links_user_roles VALUES (579, 2);
-INSERT INTO links_user_roles VALUES (580, 1);
-INSERT INTO links_user_roles VALUES (580, 3);
-INSERT INTO links_user_roles VALUES (580, 2);
-INSERT INTO links_user_roles VALUES (582, 1);
-INSERT INTO links_user_roles VALUES (582, 3);
-INSERT INTO links_user_roles VALUES (583, 1);
-INSERT INTO links_user_roles VALUES (583, 3);
-INSERT INTO links_user_roles VALUES (583, 2);
-INSERT INTO links_user_roles VALUES (584, 1);
-INSERT INTO links_user_roles VALUES (585, 3);
-INSERT INTO links_user_roles VALUES (586, 3);
-INSERT INTO links_user_roles VALUES (587, 3);
-INSERT INTO links_user_roles VALUES (588, 3);
-INSERT INTO links_user_roles VALUES (589, 3);
-INSERT INTO links_user_roles VALUES (590, 3);
-INSERT INTO links_user_roles VALUES (591, 3);
-INSERT INTO links_user_roles VALUES (592, 3);
-INSERT INTO links_user_roles VALUES (593, 1);
-INSERT INTO links_user_roles VALUES (594, 1);
-INSERT INTO links_user_roles VALUES (594, 3);
-INSERT INTO links_user_roles VALUES (594, 2);
-INSERT INTO links_user_roles VALUES (595, 3);
-INSERT INTO links_user_roles VALUES (595, 2);
-INSERT INTO links_user_roles VALUES (596, 3);
-INSERT INTO links_user_roles VALUES (596, 2);
-INSERT INTO links_user_roles VALUES (597, 1);
-INSERT INTO links_user_roles VALUES (597, 3);
-INSERT INTO links_user_roles VALUES (597, 2);
-INSERT INTO links_user_roles VALUES (598, 1);
-INSERT INTO links_user_roles VALUES (598, 3);
-INSERT INTO links_user_roles VALUES (598, 2);
-INSERT INTO links_user_roles VALUES (599, 1);
-INSERT INTO links_user_roles VALUES (599, 3);
-INSERT INTO links_user_roles VALUES (599, 2);
-INSERT INTO links_user_roles VALUES (600, 1);
-INSERT INTO links_user_roles VALUES (600, 3);
-INSERT INTO links_user_roles VALUES (600, 2);
-INSERT INTO links_user_roles VALUES (601, 1);
-INSERT INTO links_user_roles VALUES (601, 3);
-INSERT INTO links_user_roles VALUES (601, 2);
-INSERT INTO links_user_roles VALUES (602, 1);
-INSERT INTO links_user_roles VALUES (602, 3);
-INSERT INTO links_user_roles VALUES (602, 2);
-INSERT INTO links_user_roles VALUES (603, 1);
-INSERT INTO links_user_roles VALUES (603, 3);
-INSERT INTO links_user_roles VALUES (603, 2);
-INSERT INTO links_user_roles VALUES (604, 1);
-INSERT INTO links_user_roles VALUES (604, 3);
-INSERT INTO links_user_roles VALUES (604, 2);
-INSERT INTO links_user_roles VALUES (605, 1);
-INSERT INTO links_user_roles VALUES (605, 3);
-INSERT INTO links_user_roles VALUES (605, 2);
-INSERT INTO links_user_roles VALUES (606, 1);
-INSERT INTO links_user_roles VALUES (606, 3);
-INSERT INTO links_user_roles VALUES (606, 2);
-INSERT INTO links_user_roles VALUES (607, 1);
-INSERT INTO links_user_roles VALUES (607, 3);
-INSERT INTO links_user_roles VALUES (607, 2);
-INSERT INTO links_user_roles VALUES (608, 1);
-INSERT INTO links_user_roles VALUES (608, 3);
-INSERT INTO links_user_roles VALUES (608, 2);
-INSERT INTO links_user_roles VALUES (609, 1);
-INSERT INTO links_user_roles VALUES (609, 3);
-INSERT INTO links_user_roles VALUES (609, 2);
-INSERT INTO links_user_roles VALUES (610, 1);
-INSERT INTO links_user_roles VALUES (610, 3);
-INSERT INTO links_user_roles VALUES (610, 2);
-INSERT INTO links_user_roles VALUES (611, 2);
-INSERT INTO links_user_roles VALUES (612, 1);
-INSERT INTO links_user_roles VALUES (612, 3);
-INSERT INTO links_user_roles VALUES (612, 2);
-INSERT INTO links_user_roles VALUES (613, 3);
-INSERT INTO links_user_roles VALUES (613, 2);
-INSERT INTO links_user_roles VALUES (614, 1);
-INSERT INTO links_user_roles VALUES (614, 3);
-INSERT INTO links_user_roles VALUES (614, 2);
-INSERT INTO links_user_roles VALUES (615, 1);
-INSERT INTO links_user_roles VALUES (615, 3);
-INSERT INTO links_user_roles VALUES (615, 2);
-INSERT INTO links_user_roles VALUES (616, 1);
-INSERT INTO links_user_roles VALUES (616, 3);
-INSERT INTO links_user_roles VALUES (616, 2);
-INSERT INTO links_user_roles VALUES (617, 1);
-INSERT INTO links_user_roles VALUES (617, 3);
-INSERT INTO links_user_roles VALUES (617, 2);
-INSERT INTO links_user_roles VALUES (618, 3);
-INSERT INTO links_user_roles VALUES (618, 2);
-INSERT INTO links_user_roles VALUES (619, 3);
-INSERT INTO links_user_roles VALUES (619, 2);
-INSERT INTO links_user_roles VALUES (620, 3);
-INSERT INTO links_user_roles VALUES (620, 2);
-INSERT INTO links_user_roles VALUES (621, 3);
-INSERT INTO links_user_roles VALUES (621, 2);
-INSERT INTO links_user_roles VALUES (622, 3);
-INSERT INTO links_user_roles VALUES (622, 2);
-INSERT INTO links_user_roles VALUES (623, 3);
-INSERT INTO links_user_roles VALUES (623, 2);
-INSERT INTO links_user_roles VALUES (624, 2);
-INSERT INTO links_user_roles VALUES (625, 3);
-INSERT INTO links_user_roles VALUES (625, 2);
-INSERT INTO links_user_roles VALUES (626, 1);
-INSERT INTO links_user_roles VALUES (626, 3);
-INSERT INTO links_user_roles VALUES (626, 2);
-INSERT INTO links_user_roles VALUES (627, 2);
-INSERT INTO links_user_roles VALUES (628, 1);
-INSERT INTO links_user_roles VALUES (628, 3);
-INSERT INTO links_user_roles VALUES (628, 2);
-INSERT INTO links_user_roles VALUES (629, 1);
-INSERT INTO links_user_roles VALUES (629, 3);
-INSERT INTO links_user_roles VALUES (629, 2);
-INSERT INTO links_user_roles VALUES (630, 1);
-INSERT INTO links_user_roles VALUES (630, 3);
-INSERT INTO links_user_roles VALUES (630, 2);
-INSERT INTO links_user_roles VALUES (631, 3);
-INSERT INTO links_user_roles VALUES (631, 2);
-INSERT INTO links_user_roles VALUES (632, 3);
-INSERT INTO links_user_roles VALUES (632, 2);
-INSERT INTO links_user_roles VALUES (633, 3);
-INSERT INTO links_user_roles VALUES (633, 2);
-INSERT INTO links_user_roles VALUES (634, 2);
-INSERT INTO links_user_roles VALUES (635, 3);
-INSERT INTO links_user_roles VALUES (635, 2);
-INSERT INTO links_user_roles VALUES (636, 3);
-INSERT INTO links_user_roles VALUES (636, 2);
-INSERT INTO links_user_roles VALUES (637, 3);
-INSERT INTO links_user_roles VALUES (637, 2);
-INSERT INTO links_user_roles VALUES (638, 3);
-INSERT INTO links_user_roles VALUES (638, 2);
-INSERT INTO links_user_roles VALUES (639, 3);
-INSERT INTO links_user_roles VALUES (639, 2);
-INSERT INTO links_user_roles VALUES (640, 3);
-INSERT INTO links_user_roles VALUES (640, 2);
-INSERT INTO links_user_roles VALUES (641, 3);
-INSERT INTO links_user_roles VALUES (641, 2);
-INSERT INTO links_user_roles VALUES (642, 1);
-INSERT INTO links_user_roles VALUES (642, 3);
-INSERT INTO links_user_roles VALUES (642, 2);
-INSERT INTO links_user_roles VALUES (643, 1);
-INSERT INTO links_user_roles VALUES (643, 3);
-INSERT INTO links_user_roles VALUES (643, 2);
-INSERT INTO links_user_roles VALUES (644, 1);
-INSERT INTO links_user_roles VALUES (644, 3);
-INSERT INTO links_user_roles VALUES (644, 2);
-INSERT INTO links_user_roles VALUES (645, 3);
-INSERT INTO links_user_roles VALUES (645, 2);
-INSERT INTO links_user_roles VALUES (646, 3);
-INSERT INTO links_user_roles VALUES (646, 2);
-INSERT INTO links_user_roles VALUES (647, 3);
-INSERT INTO links_user_roles VALUES (647, 2);
-INSERT INTO links_user_roles VALUES (648, 1);
-INSERT INTO links_user_roles VALUES (648, 3);
-INSERT INTO links_user_roles VALUES (648, 2);
-INSERT INTO links_user_roles VALUES (649, 1);
-INSERT INTO links_user_roles VALUES (649, 3);
-INSERT INTO links_user_roles VALUES (649, 2);
-INSERT INTO links_user_roles VALUES (650, 1);
-INSERT INTO links_user_roles VALUES (650, 3);
-INSERT INTO links_user_roles VALUES (650, 2);
-INSERT INTO links_user_roles VALUES (651, 1);
-INSERT INTO links_user_roles VALUES (651, 3);
-INSERT INTO links_user_roles VALUES (651, 2);
-INSERT INTO links_user_roles VALUES (652, 1);
-INSERT INTO links_user_roles VALUES (652, 3);
-INSERT INTO links_user_roles VALUES (652, 2);
-INSERT INTO links_user_roles VALUES (653, 1);
-INSERT INTO links_user_roles VALUES (653, 3);
-INSERT INTO links_user_roles VALUES (653, 2);
-INSERT INTO links_user_roles VALUES (654, 1);
-INSERT INTO links_user_roles VALUES (654, 3);
-INSERT INTO links_user_roles VALUES (654, 2);
-INSERT INTO links_user_roles VALUES (655, 1);
-INSERT INTO links_user_roles VALUES (655, 3);
-INSERT INTO links_user_roles VALUES (655, 2);
-INSERT INTO links_user_roles VALUES (656, 1);
-INSERT INTO links_user_roles VALUES (656, 3);
-INSERT INTO links_user_roles VALUES (656, 2);
-INSERT INTO links_user_roles VALUES (657, 1);
-INSERT INTO links_user_roles VALUES (658, 1);
-INSERT INTO links_user_roles VALUES (658, 3);
-INSERT INTO links_user_roles VALUES (658, 2);
-INSERT INTO links_user_roles VALUES (659, 1);
-INSERT INTO links_user_roles VALUES (659, 3);
-INSERT INTO links_user_roles VALUES (659, 2);
-INSERT INTO links_user_roles VALUES (660, 1);
-INSERT INTO links_user_roles VALUES (660, 3);
-INSERT INTO links_user_roles VALUES (660, 2);
-INSERT INTO links_user_roles VALUES (661, 1);
-INSERT INTO links_user_roles VALUES (661, 3);
-INSERT INTO links_user_roles VALUES (661, 2);
-INSERT INTO links_user_roles VALUES (662, 1);
-INSERT INTO links_user_roles VALUES (663, 1);
-INSERT INTO links_user_roles VALUES (663, 3);
-INSERT INTO links_user_roles VALUES (663, 2);
-INSERT INTO links_user_roles VALUES (664, 1);
-INSERT INTO links_user_roles VALUES (664, 3);
-INSERT INTO links_user_roles VALUES (664, 2);
-INSERT INTO links_user_roles VALUES (665, 1);
-INSERT INTO links_user_roles VALUES (665, 3);
-INSERT INTO links_user_roles VALUES (665, 2);
-INSERT INTO links_user_roles VALUES (666, 1);
-INSERT INTO links_user_roles VALUES (666, 3);
-INSERT INTO links_user_roles VALUES (666, 2);
-INSERT INTO links_user_roles VALUES (667, 1);
-INSERT INTO links_user_roles VALUES (667, 3);
-INSERT INTO links_user_roles VALUES (667, 2);
-INSERT INTO links_user_roles VALUES (668, 1);
-INSERT INTO links_user_roles VALUES (668, 3);
-INSERT INTO links_user_roles VALUES (668, 2);
-INSERT INTO links_user_roles VALUES (669, 1);
-INSERT INTO links_user_roles VALUES (669, 3);
-INSERT INTO links_user_roles VALUES (669, 2);
-INSERT INTO links_user_roles VALUES (670, 1);
-INSERT INTO links_user_roles VALUES (671, 1);
-INSERT INTO links_user_roles VALUES (671, 3);
-INSERT INTO links_user_roles VALUES (671, 2);
-INSERT INTO links_user_roles VALUES (672, 1);
-INSERT INTO links_user_roles VALUES (672, 3);
-INSERT INTO links_user_roles VALUES (672, 2);
-INSERT INTO links_user_roles VALUES (673, 1);
-INSERT INTO links_user_roles VALUES (673, 3);
-INSERT INTO links_user_roles VALUES (673, 2);
-INSERT INTO links_user_roles VALUES (674, 1);
-INSERT INTO links_user_roles VALUES (674, 3);
-INSERT INTO links_user_roles VALUES (674, 2);
-INSERT INTO links_user_roles VALUES (675, 1);
-INSERT INTO links_user_roles VALUES (675, 3);
-INSERT INTO links_user_roles VALUES (675, 2);
-INSERT INTO links_user_roles VALUES (676, 1);
-INSERT INTO links_user_roles VALUES (676, 3);
-INSERT INTO links_user_roles VALUES (676, 2);
-INSERT INTO links_user_roles VALUES (677, 1);
-INSERT INTO links_user_roles VALUES (678, 1);
-INSERT INTO links_user_roles VALUES (679, 1);
-INSERT INTO links_user_roles VALUES (680, 1);
-INSERT INTO links_user_roles VALUES (681, 1);
-INSERT INTO links_user_roles VALUES (682, 1);
-INSERT INTO links_user_roles VALUES (683, 1);
-INSERT INTO links_user_roles VALUES (684, 1);
-INSERT INTO links_user_roles VALUES (685, 1);
-INSERT INTO links_user_roles VALUES (686, 1);
-INSERT INTO links_user_roles VALUES (687, 1);
-INSERT INTO links_user_roles VALUES (688, 1);
-INSERT INTO links_user_roles VALUES (689, 1);
-INSERT INTO links_user_roles VALUES (689, 3);
-INSERT INTO links_user_roles VALUES (689, 2);
-INSERT INTO links_user_roles VALUES (690, 1);
-INSERT INTO links_user_roles VALUES (691, 1);
-INSERT INTO links_user_roles VALUES (692, 1);
-INSERT INTO links_user_roles VALUES (693, 1);
-INSERT INTO links_user_roles VALUES (694, 1);
-INSERT INTO links_user_roles VALUES (695, 3);
-INSERT INTO links_user_roles VALUES (695, 2);
-INSERT INTO links_user_roles VALUES (696, 1);
-INSERT INTO links_user_roles VALUES (697, 1);
-INSERT INTO links_user_roles VALUES (698, 1);
-INSERT INTO links_user_roles VALUES (699, 1);
-INSERT INTO links_user_roles VALUES (700, 1);
-INSERT INTO links_user_roles VALUES (701, 1);
-INSERT INTO links_user_roles VALUES (702, 1);
-INSERT INTO links_user_roles VALUES (703, 1);
+INSERT INTO links_user_roles VALUES (710, 1);
+INSERT INTO links_user_roles VALUES (710, 3);
+INSERT INTO links_user_roles VALUES (710, 2);
+INSERT INTO links_user_roles VALUES (711, 1);
+INSERT INTO links_user_roles VALUES (711, 3);
+INSERT INTO links_user_roles VALUES (711, 2);
+INSERT INTO links_user_roles VALUES (712, 1);
+INSERT INTO links_user_roles VALUES (712, 3);
+INSERT INTO links_user_roles VALUES (712, 2);
+INSERT INTO links_user_roles VALUES (713, 3);
+INSERT INTO links_user_roles VALUES (713, 2);
+INSERT INTO links_user_roles VALUES (714, 3);
+INSERT INTO links_user_roles VALUES (714, 2);
+INSERT INTO links_user_roles VALUES (715, 3);
+INSERT INTO links_user_roles VALUES (715, 2);
+INSERT INTO links_user_roles VALUES (716, 3);
+INSERT INTO links_user_roles VALUES (716, 2);
+INSERT INTO links_user_roles VALUES (717, 1);
+INSERT INTO links_user_roles VALUES (717, 3);
+INSERT INTO links_user_roles VALUES (717, 2);
+INSERT INTO links_user_roles VALUES (718, 1);
+INSERT INTO links_user_roles VALUES (718, 3);
+INSERT INTO links_user_roles VALUES (718, 2);
+INSERT INTO links_user_roles VALUES (719, 3);
+INSERT INTO links_user_roles VALUES (719, 2);
+INSERT INTO links_user_roles VALUES (720, 3);
+INSERT INTO links_user_roles VALUES (720, 2);
+INSERT INTO links_user_roles VALUES (721, 1);
+INSERT INTO links_user_roles VALUES (722, 1);
+INSERT INTO links_user_roles VALUES (723, 1);
+INSERT INTO links_user_roles VALUES (724, 1);
+INSERT INTO links_user_roles VALUES (724, 3);
+INSERT INTO links_user_roles VALUES (724, 2);
+INSERT INTO links_user_roles VALUES (725, 1);
+INSERT INTO links_user_roles VALUES (726, 1);
+INSERT INTO links_user_roles VALUES (726, 3);
+INSERT INTO links_user_roles VALUES (726, 2);
+INSERT INTO links_user_roles VALUES (727, 3);
+INSERT INTO links_user_roles VALUES (727, 2);
+INSERT INTO links_user_roles VALUES (728, 1);
+INSERT INTO links_user_roles VALUES (728, 3);
+INSERT INTO links_user_roles VALUES (728, 2);
+INSERT INTO links_user_roles VALUES (729, 1);
+INSERT INTO links_user_roles VALUES (729, 3);
+INSERT INTO links_user_roles VALUES (729, 2);
+INSERT INTO links_user_roles VALUES (730, 1);
+INSERT INTO links_user_roles VALUES (730, 3);
+INSERT INTO links_user_roles VALUES (730, 2);
+INSERT INTO links_user_roles VALUES (731, 1);
+INSERT INTO links_user_roles VALUES (731, 3);
+INSERT INTO links_user_roles VALUES (731, 2);
+INSERT INTO links_user_roles VALUES (732, 1);
+INSERT INTO links_user_roles VALUES (732, 3);
+INSERT INTO links_user_roles VALUES (732, 2);
+INSERT INTO links_user_roles VALUES (733, 3);
+INSERT INTO links_user_roles VALUES (733, 2);
+INSERT INTO links_user_roles VALUES (734, 3);
+INSERT INTO links_user_roles VALUES (735, 3);
+INSERT INTO links_user_roles VALUES (736, 1);
+INSERT INTO links_user_roles VALUES (736, 3);
+INSERT INTO links_user_roles VALUES (736, 2);
+INSERT INTO links_user_roles VALUES (737, 1);
+INSERT INTO links_user_roles VALUES (737, 3);
+INSERT INTO links_user_roles VALUES (737, 2);
+INSERT INTO links_user_roles VALUES (738, 1);
+INSERT INTO links_user_roles VALUES (738, 3);
+INSERT INTO links_user_roles VALUES (738, 2);
+INSERT INTO links_user_roles VALUES (739, 1);
+INSERT INTO links_user_roles VALUES (740, 1);
+INSERT INTO links_user_roles VALUES (741, 1);
+INSERT INTO links_user_roles VALUES (741, 3);
+INSERT INTO links_user_roles VALUES (741, 2);
+INSERT INTO links_user_roles VALUES (742, 1);
+INSERT INTO links_user_roles VALUES (742, 3);
+INSERT INTO links_user_roles VALUES (742, 2);
+INSERT INTO links_user_roles VALUES (743, 1);
+INSERT INTO links_user_roles VALUES (743, 3);
+INSERT INTO links_user_roles VALUES (743, 2);
+INSERT INTO links_user_roles VALUES (744, 1);
+INSERT INTO links_user_roles VALUES (744, 3);
+INSERT INTO links_user_roles VALUES (744, 2);
+INSERT INTO links_user_roles VALUES (745, 1);
+INSERT INTO links_user_roles VALUES (745, 3);
+INSERT INTO links_user_roles VALUES (745, 2);
+INSERT INTO links_user_roles VALUES (746, 1);
+INSERT INTO links_user_roles VALUES (747, 3);
+INSERT INTO links_user_roles VALUES (747, 2);
+INSERT INTO links_user_roles VALUES (748, 3);
+INSERT INTO links_user_roles VALUES (748, 2);
+INSERT INTO links_user_roles VALUES (749, 1);
+INSERT INTO links_user_roles VALUES (749, 3);
+INSERT INTO links_user_roles VALUES (749, 2);
+INSERT INTO links_user_roles VALUES (750, 1);
+INSERT INTO links_user_roles VALUES (751, 1);
+INSERT INTO links_user_roles VALUES (752, 1);
+INSERT INTO links_user_roles VALUES (753, 1);
+INSERT INTO links_user_roles VALUES (754, 1);
+INSERT INTO links_user_roles VALUES (755, 1);
+INSERT INTO links_user_roles VALUES (755, 3);
+INSERT INTO links_user_roles VALUES (755, 2);
+INSERT INTO links_user_roles VALUES (756, 1);
+INSERT INTO links_user_roles VALUES (756, 3);
+INSERT INTO links_user_roles VALUES (756, 2);
+INSERT INTO links_user_roles VALUES (757, 3);
+INSERT INTO links_user_roles VALUES (757, 2);
+INSERT INTO links_user_roles VALUES (758, 3);
+INSERT INTO links_user_roles VALUES (758, 2);
+INSERT INTO links_user_roles VALUES (759, 3);
+INSERT INTO links_user_roles VALUES (759, 2);
+INSERT INTO links_user_roles VALUES (760, 3);
+INSERT INTO links_user_roles VALUES (760, 2);
+INSERT INTO links_user_roles VALUES (761, 1);
+INSERT INTO links_user_roles VALUES (761, 3);
+INSERT INTO links_user_roles VALUES (761, 2);
+INSERT INTO links_user_roles VALUES (762, 1);
+INSERT INTO links_user_roles VALUES (763, 3);
+INSERT INTO links_user_roles VALUES (763, 2);
+INSERT INTO links_user_roles VALUES (764, 2);
+INSERT INTO links_user_roles VALUES (765, 1);
+INSERT INTO links_user_roles VALUES (765, 3);
+INSERT INTO links_user_roles VALUES (765, 2);
+INSERT INTO links_user_roles VALUES (766, 1);
+INSERT INTO links_user_roles VALUES (766, 3);
+INSERT INTO links_user_roles VALUES (766, 2);
+INSERT INTO links_user_roles VALUES (767, 1);
+INSERT INTO links_user_roles VALUES (767, 3);
+INSERT INTO links_user_roles VALUES (767, 2);
+INSERT INTO links_user_roles VALUES (768, 1);
+INSERT INTO links_user_roles VALUES (768, 3);
+INSERT INTO links_user_roles VALUES (768, 2);
+INSERT INTO links_user_roles VALUES (769, 1);
+INSERT INTO links_user_roles VALUES (769, 3);
+INSERT INTO links_user_roles VALUES (769, 2);
+INSERT INTO links_user_roles VALUES (770, 1);
+INSERT INTO links_user_roles VALUES (771, 1);
+INSERT INTO links_user_roles VALUES (771, 3);
+INSERT INTO links_user_roles VALUES (771, 2);
+INSERT INTO links_user_roles VALUES (772, 1);
+INSERT INTO links_user_roles VALUES (773, 1);
+INSERT INTO links_user_roles VALUES (774, 1);
+INSERT INTO links_user_roles VALUES (774, 3);
+INSERT INTO links_user_roles VALUES (774, 2);
+INSERT INTO links_user_roles VALUES (775, 1);
+INSERT INTO links_user_roles VALUES (775, 3);
+INSERT INTO links_user_roles VALUES (775, 2);
+INSERT INTO links_user_roles VALUES (776, 1);
+INSERT INTO links_user_roles VALUES (776, 3);
+INSERT INTO links_user_roles VALUES (776, 2);
+INSERT INTO links_user_roles VALUES (777, 1);
+INSERT INTO links_user_roles VALUES (777, 3);
+INSERT INTO links_user_roles VALUES (777, 2);
+INSERT INTO links_user_roles VALUES (778, 1);
+INSERT INTO links_user_roles VALUES (778, 3);
+INSERT INTO links_user_roles VALUES (778, 2);
+INSERT INTO links_user_roles VALUES (779, 1);
+INSERT INTO links_user_roles VALUES (779, 3);
+INSERT INTO links_user_roles VALUES (779, 2);
+INSERT INTO links_user_roles VALUES (780, 1);
+INSERT INTO links_user_roles VALUES (780, 3);
+INSERT INTO links_user_roles VALUES (781, 1);
+INSERT INTO links_user_roles VALUES (781, 3);
+INSERT INTO links_user_roles VALUES (781, 2);
+INSERT INTO links_user_roles VALUES (782, 1);
+INSERT INTO links_user_roles VALUES (782, 3);
+INSERT INTO links_user_roles VALUES (782, 2);
+INSERT INTO links_user_roles VALUES (783, 1);
+INSERT INTO links_user_roles VALUES (783, 3);
+INSERT INTO links_user_roles VALUES (783, 2);
+INSERT INTO links_user_roles VALUES (784, 1);
+INSERT INTO links_user_roles VALUES (784, 3);
+INSERT INTO links_user_roles VALUES (784, 2);
+INSERT INTO links_user_roles VALUES (785, 1);
+INSERT INTO links_user_roles VALUES (785, 3);
+INSERT INTO links_user_roles VALUES (785, 2);
+INSERT INTO links_user_roles VALUES (786, 1);
+INSERT INTO links_user_roles VALUES (786, 3);
+INSERT INTO links_user_roles VALUES (786, 2);
+INSERT INTO links_user_roles VALUES (787, 2);
+INSERT INTO links_user_roles VALUES (788, 3);
+INSERT INTO links_user_roles VALUES (788, 2);
+INSERT INTO links_user_roles VALUES (789, 2);
+INSERT INTO links_user_roles VALUES (790, 3);
+INSERT INTO links_user_roles VALUES (790, 2);
+INSERT INTO links_user_roles VALUES (791, 3);
+INSERT INTO links_user_roles VALUES (791, 2);
+INSERT INTO links_user_roles VALUES (792, 3);
+INSERT INTO links_user_roles VALUES (793, 1);
+INSERT INTO links_user_roles VALUES (793, 3);
+INSERT INTO links_user_roles VALUES (793, 2);
+INSERT INTO links_user_roles VALUES (794, 1);
+INSERT INTO links_user_roles VALUES (794, 3);
+INSERT INTO links_user_roles VALUES (794, 2);
+INSERT INTO links_user_roles VALUES (795, 1);
+INSERT INTO links_user_roles VALUES (795, 3);
+INSERT INTO links_user_roles VALUES (795, 2);
+INSERT INTO links_user_roles VALUES (796, 3);
+INSERT INTO links_user_roles VALUES (796, 2);
+INSERT INTO links_user_roles VALUES (797, 2);
+INSERT INTO links_user_roles VALUES (798, 1);
+INSERT INTO links_user_roles VALUES (798, 3);
+INSERT INTO links_user_roles VALUES (798, 2);
+INSERT INTO links_user_roles VALUES (799, 1);
+INSERT INTO links_user_roles VALUES (800, 1);
+INSERT INTO links_user_roles VALUES (800, 3);
+INSERT INTO links_user_roles VALUES (800, 2);
+INSERT INTO links_user_roles VALUES (801, 1);
+INSERT INTO links_user_roles VALUES (801, 3);
+INSERT INTO links_user_roles VALUES (801, 2);
+INSERT INTO links_user_roles VALUES (802, 1);
+INSERT INTO links_user_roles VALUES (802, 3);
+INSERT INTO links_user_roles VALUES (802, 2);
+INSERT INTO links_user_roles VALUES (803, 1);
+INSERT INTO links_user_roles VALUES (803, 3);
+INSERT INTO links_user_roles VALUES (803, 2);
+INSERT INTO links_user_roles VALUES (804, 3);
+INSERT INTO links_user_roles VALUES (804, 2);
+INSERT INTO links_user_roles VALUES (805, 1);
+INSERT INTO links_user_roles VALUES (806, 3);
+INSERT INTO links_user_roles VALUES (807, 3);
+INSERT INTO links_user_roles VALUES (808, 3);
+INSERT INTO links_user_roles VALUES (809, 1);
+INSERT INTO links_user_roles VALUES (810, 3);
+INSERT INTO links_user_roles VALUES (811, 3);
+INSERT INTO links_user_roles VALUES (812, 1);
+INSERT INTO links_user_roles VALUES (813, 1);
+INSERT INTO links_user_roles VALUES (813, 3);
+INSERT INTO links_user_roles VALUES (813, 2);
+INSERT INTO links_user_roles VALUES (814, 1);
+INSERT INTO links_user_roles VALUES (814, 3);
+INSERT INTO links_user_roles VALUES (814, 2);
+INSERT INTO links_user_roles VALUES (815, 1);
+INSERT INTO links_user_roles VALUES (815, 3);
+INSERT INTO links_user_roles VALUES (815, 2);
+INSERT INTO links_user_roles VALUES (816, 1);
+INSERT INTO links_user_roles VALUES (816, 3);
+INSERT INTO links_user_roles VALUES (816, 2);
+INSERT INTO links_user_roles VALUES (817, 1);
+INSERT INTO links_user_roles VALUES (818, 3);
+INSERT INTO links_user_roles VALUES (818, 2);
+INSERT INTO links_user_roles VALUES (819, 1);
+INSERT INTO links_user_roles VALUES (819, 3);
+INSERT INTO links_user_roles VALUES (819, 2);
+INSERT INTO links_user_roles VALUES (820, 1);
+INSERT INTO links_user_roles VALUES (820, 3);
+INSERT INTO links_user_roles VALUES (820, 2);
+INSERT INTO links_user_roles VALUES (821, 1);
+INSERT INTO links_user_roles VALUES (821, 3);
+INSERT INTO links_user_roles VALUES (821, 2);
+INSERT INTO links_user_roles VALUES (822, 1);
+INSERT INTO links_user_roles VALUES (822, 3);
+INSERT INTO links_user_roles VALUES (822, 2);
+INSERT INTO links_user_roles VALUES (823, 1);
+INSERT INTO links_user_roles VALUES (823, 3);
+INSERT INTO links_user_roles VALUES (823, 2);
+INSERT INTO links_user_roles VALUES (824, 1);
+INSERT INTO links_user_roles VALUES (824, 3);
+INSERT INTO links_user_roles VALUES (824, 2);
+INSERT INTO links_user_roles VALUES (825, 1);
+INSERT INTO links_user_roles VALUES (825, 3);
+INSERT INTO links_user_roles VALUES (825, 2);
+INSERT INTO links_user_roles VALUES (826, 1);
+INSERT INTO links_user_roles VALUES (826, 3);
+INSERT INTO links_user_roles VALUES (826, 2);
+INSERT INTO links_user_roles VALUES (827, 1);
+INSERT INTO links_user_roles VALUES (827, 3);
+INSERT INTO links_user_roles VALUES (827, 2);
+INSERT INTO links_user_roles VALUES (828, 1);
+INSERT INTO links_user_roles VALUES (828, 3);
+INSERT INTO links_user_roles VALUES (828, 2);
+INSERT INTO links_user_roles VALUES (829, 1);
+INSERT INTO links_user_roles VALUES (829, 3);
+INSERT INTO links_user_roles VALUES (829, 2);
+INSERT INTO links_user_roles VALUES (830, 1);
+INSERT INTO links_user_roles VALUES (830, 3);
+INSERT INTO links_user_roles VALUES (830, 2);
+INSERT INTO links_user_roles VALUES (831, 1);
+INSERT INTO links_user_roles VALUES (832, 1);
+INSERT INTO links_user_roles VALUES (833, 1);
+INSERT INTO links_user_roles VALUES (834, 1);
+INSERT INTO links_user_roles VALUES (835, 1);
+INSERT INTO links_user_roles VALUES (836, 1);
+INSERT INTO links_user_roles VALUES (836, 3);
+INSERT INTO links_user_roles VALUES (836, 2);
+INSERT INTO links_user_roles VALUES (837, 3);
+INSERT INTO links_user_roles VALUES (837, 2);
+INSERT INTO links_user_roles VALUES (838, 1);
+INSERT INTO links_user_roles VALUES (839, 1);
+INSERT INTO links_user_roles VALUES (839, 3);
+INSERT INTO links_user_roles VALUES (839, 2);
+INSERT INTO links_user_roles VALUES (840, 1);
+INSERT INTO links_user_roles VALUES (840, 3);
+INSERT INTO links_user_roles VALUES (840, 2);
+INSERT INTO links_user_roles VALUES (841, 1);
+INSERT INTO links_user_roles VALUES (842, 1);
+INSERT INTO links_user_roles VALUES (843, 1);
+INSERT INTO links_user_roles VALUES (844, 1);
+INSERT INTO links_user_roles VALUES (845, 1);
+INSERT INTO links_user_roles VALUES (846, 1);
+INSERT INTO links_user_roles VALUES (847, 1);
+INSERT INTO links_user_roles VALUES (848, 1);
+INSERT INTO links_user_roles VALUES (849, 1);
+INSERT INTO links_user_roles VALUES (850, 1);
+INSERT INTO links_user_roles VALUES (850, 3);
+INSERT INTO links_user_roles VALUES (850, 2);
+INSERT INTO links_user_roles VALUES (851, 1);
+INSERT INTO links_user_roles VALUES (851, 3);
+INSERT INTO links_user_roles VALUES (851, 2);
+INSERT INTO links_user_roles VALUES (852, 1);
+INSERT INTO links_user_roles VALUES (852, 3);
+INSERT INTO links_user_roles VALUES (852, 2);
+INSERT INTO links_user_roles VALUES (853, 1);
+INSERT INTO links_user_roles VALUES (853, 3);
+INSERT INTO links_user_roles VALUES (853, 2);
+INSERT INTO links_user_roles VALUES (854, 1);
+INSERT INTO links_user_roles VALUES (854, 3);
+INSERT INTO links_user_roles VALUES (854, 2);
+INSERT INTO links_user_roles VALUES (855, 1);
+INSERT INTO links_user_roles VALUES (855, 3);
+INSERT INTO links_user_roles VALUES (855, 2);
+INSERT INTO links_user_roles VALUES (856, 1);
+INSERT INTO links_user_roles VALUES (856, 3);
+INSERT INTO links_user_roles VALUES (856, 2);
+INSERT INTO links_user_roles VALUES (857, 1);
+INSERT INTO links_user_roles VALUES (857, 3);
+INSERT INTO links_user_roles VALUES (857, 2);
+INSERT INTO links_user_roles VALUES (858, 1);
+INSERT INTO links_user_roles VALUES (858, 3);
+INSERT INTO links_user_roles VALUES (858, 2);
+INSERT INTO links_user_roles VALUES (859, 3);
+INSERT INTO links_user_roles VALUES (859, 2);
+INSERT INTO links_user_roles VALUES (860, 3);
+INSERT INTO links_user_roles VALUES (860, 2);
+INSERT INTO links_user_roles VALUES (861, 1);
+INSERT INTO links_user_roles VALUES (861, 3);
+INSERT INTO links_user_roles VALUES (861, 2);
+INSERT INTO links_user_roles VALUES (862, 3);
+INSERT INTO links_user_roles VALUES (862, 2);
+INSERT INTO links_user_roles VALUES (863, 3);
+INSERT INTO links_user_roles VALUES (863, 2);
+INSERT INTO links_user_roles VALUES (864, 3);
+INSERT INTO links_user_roles VALUES (864, 2);
+INSERT INTO links_user_roles VALUES (865, 2);
+INSERT INTO links_user_roles VALUES (866, 3);
+INSERT INTO links_user_roles VALUES (866, 2);
+INSERT INTO links_user_roles VALUES (867, 3);
+INSERT INTO links_user_roles VALUES (867, 2);
+INSERT INTO links_user_roles VALUES (868, 3);
+INSERT INTO links_user_roles VALUES (868, 2);
+INSERT INTO links_user_roles VALUES (869, 1);
+INSERT INTO links_user_roles VALUES (869, 3);
+INSERT INTO links_user_roles VALUES (869, 2);
+INSERT INTO links_user_roles VALUES (870, 1);
+INSERT INTO links_user_roles VALUES (870, 3);
+INSERT INTO links_user_roles VALUES (870, 2);
+INSERT INTO links_user_roles VALUES (871, 1);
+INSERT INTO links_user_roles VALUES (872, 1);
+INSERT INTO links_user_roles VALUES (873, 1);
+INSERT INTO links_user_roles VALUES (874, 1);
+INSERT INTO links_user_roles VALUES (875, 1);
+INSERT INTO links_user_roles VALUES (876, 1);
+INSERT INTO links_user_roles VALUES (877, 1);
+INSERT INTO links_user_roles VALUES (878, 1);
+INSERT INTO links_user_roles VALUES (879, 1);
+INSERT INTO links_user_roles VALUES (880, 1);
+INSERT INTO links_user_roles VALUES (881, 1);
+INSERT INTO links_user_roles VALUES (882, 1);
+INSERT INTO links_user_roles VALUES (883, 1);
+INSERT INTO links_user_roles VALUES (884, 1);
 
 
 --
 -- Data for Name: user_auths; Type: TABLE DATA; Schema: public; Owner: calcentral
 --
 
+INSERT INTO user_auths VALUES (158, '1022796', true, false, true, '2014-05-22 21:52:49.751', '2014-05-22 21:52:49.751', false, false);
+INSERT INTO user_auths VALUES (159, '1078671', true, false, true, '2014-06-02 13:02:01.548', '2014-06-02 13:02:01.548', false, false);
+INSERT INTO user_auths VALUES (155, '1051063', false, false, true, '2014-01-06 23:21:28.171', '2014-01-06 23:21:28.171', false, true);
+INSERT INTO user_auths VALUES (157, '943220', false, false, true, '2014-02-11 23:41:46.792', '2014-02-11 23:41:46.792', false, true);
 INSERT INTO user_auths VALUES (2, '323487', true, false, true, '2013-03-04 17:06:18.281', '2013-03-04 17:06:18.281', false, false);
-INSERT INTO user_auths VALUES (3, '191779', true, false, true, '2013-03-04 17:06:18.288', '2013-03-04 17:06:18.288', false, false);
 INSERT INTO user_auths VALUES (4, '238382', true, false, true, '2013-03-04 17:06:18.296', '2013-03-04 17:06:18.296', false, false);
 INSERT INTO user_auths VALUES (5, '208861', true, false, true, '2013-03-04 17:06:18.304', '2013-03-04 17:06:18.304', false, false);
-INSERT INTO user_auths VALUES (6, '675750', true, false, true, '2013-03-04 17:06:18.312', '2013-03-04 17:06:18.312', false, false);
 INSERT INTO user_auths VALUES (8, '2040', true, false, true, '2013-03-04 17:06:18.328', '2013-03-04 17:06:18.328', false, false);
 INSERT INTO user_auths VALUES (9, '904715', true, false, true, '2013-03-04 17:06:18.335', '2013-03-04 17:06:18.335', false, false);
 INSERT INTO user_auths VALUES (10, '211159', true, false, true, '2013-03-04 17:06:18.343', '2013-03-04 17:06:18.343', false, false);
@@ -1471,24 +1425,23 @@ INSERT INTO user_auths VALUES (139, '322584', false, true, true, '2013-03-04 17:
 INSERT INTO user_auths VALUES (140, '322585', false, true, true, '2013-03-04 17:06:19.489', '2013-03-04 17:06:19.489', false, false);
 INSERT INTO user_auths VALUES (141, '322586', false, true, true, '2013-03-04 17:06:19.558', '2013-03-04 17:06:19.558', false, false);
 INSERT INTO user_auths VALUES (7, '322279', true, false, true, '2013-03-04 17:06:18.32', '2013-03-04 17:06:21.74', false, false);
-INSERT INTO user_auths VALUES (142, '12492', true, false, true, '2013-06-24 13:34:20.219', '2013-06-24 13:34:20.219', false, false);
 INSERT INTO user_auths VALUES (143, '53791', true, false, true, '2013-08-15 23:09:30.345', '2013-08-15 23:09:30.345', false, false);
-INSERT INTO user_auths VALUES (144, '163093', true, false, true, '2013-09-16 17:34:22.616', '2013-09-16 17:34:22.616', false, false);
 INSERT INTO user_auths VALUES (145, '1049291', true, false, true, '2013-09-16 17:35:01.896', '2013-09-16 17:35:01.896', false, false);
-INSERT INTO user_auths VALUES (146, '177473', true, false, true, '2013-09-16 17:35:47.59', '2013-09-16 17:35:47.59', false, false);
-INSERT INTO user_auths VALUES (147, '95509', true, false, true, '2013-09-16 17:35:58.498', '2013-09-16 17:35:58.498', false, false);
-INSERT INTO user_auths VALUES (148, '160965', true, false, true, '2013-09-17 20:27:15.383', '2013-09-17 20:27:15.383', false, false);
-INSERT INTO user_auths VALUES (149, '988628', false, false, true, '2013-09-19 18:10:14.663', '2013-09-19 18:10:14.663', false, false);
-INSERT INTO user_auths VALUES (152, '162721', true, false, true, '2013-10-01 23:58:44.14', '2013-10-01 23:58:44.14', false, false);
-INSERT INTO user_auths VALUES (153, '19609', true, false, true, '2013-10-01 23:59:42.527', '2013-10-01 23:59:42.527', false, false);
-INSERT INTO user_auths VALUES (154, '975226', true, false, true, '2013-10-02 00:00:05.933', '2013-10-02 00:00:05.933', false, false);
+INSERT INTO user_auths VALUES (144, '163093', false, false, true, '2013-09-16 17:34:22.616', '2013-09-16 17:34:22.616', false, true);
+INSERT INTO user_auths VALUES (146, '177473', false, false, true, '2013-09-16 17:35:47.59', '2013-09-16 17:35:47.59', false, true);
+INSERT INTO user_auths VALUES (147, '95509', false, false, true, '2013-09-16 17:35:58.498', '2013-09-16 17:35:58.498', false, true);
+INSERT INTO user_auths VALUES (148, '160965', false, false, true, '2013-09-17 20:27:15.383', '2013-09-17 20:27:15.383', false, true);
+INSERT INTO user_auths VALUES (152, '162721', false, false, true, '2013-10-01 23:58:44.14', '2013-10-01 23:58:44.14', false, true);
+INSERT INTO user_auths VALUES (153, '19609', false, false, true, '2013-10-01 23:59:42.527', '2013-10-01 23:59:42.527', false, true);
+INSERT INTO user_auths VALUES (154, '975226', false, false, true, '2013-10-02 00:00:05.933', '2013-10-02 00:00:05.933', false, true);
+INSERT INTO user_auths VALUES (142, '12492', false, false, true, '2013-06-24 13:34:20.219', '2014-06-04 18:37:57.922', false, true);
 
 
 --
 -- Name: user_auths_id_seq; Type: SEQUENCE SET; Schema: public; Owner: calcentral
 --
 
-SELECT pg_catalog.setval('user_auths_id_seq', 154, true);
+SELECT pg_catalog.setval('user_auths_id_seq', 159, true);
 
 
 --
@@ -1508,7 +1461,7 @@ SELECT pg_catalog.setval('user_roles_id_seq', 3, true);
 
 
 --
--- Name: fin_aid_years_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral_development; Tablespace:
+-- Name: fin_aid_years_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 ALTER TABLE ONLY fin_aid_years
@@ -1516,7 +1469,7 @@ ALTER TABLE ONLY fin_aid_years
 
 
 --
--- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
+-- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 ALTER TABLE ONLY link_categories
@@ -1524,7 +1477,7 @@ ALTER TABLE ONLY link_categories
 
 
 --
--- Name: link_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
+-- Name: link_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 ALTER TABLE ONLY link_sections
@@ -1532,7 +1485,7 @@ ALTER TABLE ONLY link_sections
 
 
 --
--- Name: links_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
+-- Name: links_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 ALTER TABLE ONLY links
@@ -1540,7 +1493,7 @@ ALTER TABLE ONLY links
 
 
 --
--- Name: user_auths_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
+-- Name: user_auths_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 ALTER TABLE ONLY user_auths
@@ -1548,7 +1501,7 @@ ALTER TABLE ONLY user_auths
 
 
 --
--- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace:
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 ALTER TABLE ONLY user_roles
@@ -1556,14 +1509,14 @@ ALTER TABLE ONLY user_roles
 
 
 --
--- Name: index_fin_aid_years_on_current_year; Type: INDEX; Schema: public; Owner: calcentral_development; Tablespace:
+-- Name: index_fin_aid_years_on_current_year; Type: INDEX; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_fin_aid_years_on_current_year ON fin_aid_years USING btree (current_year);
 
 
 --
--- Name: index_user_auths_on_uid; Type: INDEX; Schema: public; Owner: calcentral; Tablespace:
+-- Name: index_user_auths_on_uid; Type: INDEX; Schema: public; Owner: calcentral; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_user_auths_on_uid ON user_auths USING btree (uid);
