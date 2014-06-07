@@ -168,6 +168,8 @@ describe "MyTasks" do
     task_list_id, task_id = get_task_list_id_and_task_id
     Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key(@user_id), anything())
     Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key("json-#{@user_id}"), anything())
+    Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key("json-pseudo_#{@user_id}"), anything())
+    Rails.cache.should_receive(:delete).with(MyTasks::Merged.cache_key("pseudo_#{@user_id}"), anything())
     Rails.cache.should_receive(:delete).with(MyTasks::GoogleTasks.cache_key(@user_id), anything())
     response = my_tasks.update_task({"type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed", "id" => task_id}, task_list_id)
   end

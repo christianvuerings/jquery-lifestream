@@ -17,7 +17,10 @@ class ActAsController < ApplicationController
     return redirect_to root_path unless session[:user_id] && session[:original_user_id]
 
     #To avoid any potential stale data issues, we might have to be aggressive with cache invalidation.
-    Cache::UserCacheExpiry.notify session[:user_id]
+    pseudo_user = Calcentral::PSEUDO_USER_PREFIX + session[:user_id]
+    [pseudo_user, session[:user_id]].each do |cache_key|
+      Cache::UserCacheExpiry.notify cache_key
+    end
     logger.warn "ACT-AS: User #{session[:original_user_id]} acting as #{session[:user_id]} ends"
     session[:user_id] = session[:original_user_id]
     session[:original_user_id] = nil
