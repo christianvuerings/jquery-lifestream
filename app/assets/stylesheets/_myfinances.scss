@@ -126,6 +126,9 @@
       font-size: 12px;
       padding: 4px;
     }
+    th {
+      white-space: nowrap;
+    }
     .cc-widget-list-selected tr:first-child td {
       border-bottom: none;
     }
