@@ -40,6 +40,10 @@ module Mediacasts
       }
     end
 
+    def convert_to_https(url)
+      url.sub('http://', 'https://')
+    end
+
     def get_download_url(play_url)
       parsed_uri = Addressable::URI.parse(play_url)
       # Replace the path that starts with /media/
@@ -53,6 +57,7 @@ module Mediacasts
         # Older versions of the RSS have an empty link tag
         # so we need to use the enclosure tag instead
         url = i.xpath('enclosure/@url').text
+        url = convert_to_https(url)
         {
           :downloadUrl => get_download_url(url),
           :playUrl => url,

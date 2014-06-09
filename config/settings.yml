@@ -129,7 +129,7 @@ playlists_warehouse_proxy:
   password: secret
 
 audio_proxy:
-  base_url: 'http://wbe-itunes.berkeley.edu'
+  base_url: 'https://wbe-itunes.berkeley.edu'
 
 youtube_proxy:
   fake: false
