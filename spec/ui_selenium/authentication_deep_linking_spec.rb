@@ -45,6 +45,7 @@ describe 'Logging in with deep linking', :testui => true do
       my_academics_page.click_first_student_semester
       semester_page = @driver.current_url
       my_academics_page.click_logout_link
+      cal_net_auth_page.logout_conf_heading.when_visible(timeout=WebDriverUtils.page_load_timeout)
       @driver.get(semester_page)
       cal_net_auth_page.login(user, password)
       @driver.current_url.should eql(semester_page)
