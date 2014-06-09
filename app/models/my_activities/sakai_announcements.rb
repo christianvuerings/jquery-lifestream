@@ -15,7 +15,7 @@ module MyActivities
             summary: sakai_ann['summary'],
             type: 'announcement',
             date: format_date(sakai_ann['message_date']),
-            source_url: sakai_ann['source_url'],
+            sourceUrl: sakai_ann['source_url'],
             source: site[:name],
             emitter: site[:emitter]
           }

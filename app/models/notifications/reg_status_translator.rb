@@ -31,7 +31,7 @@ module Notifications
         :type => "alert",
         :date => format_date(timestamp),
         :url => "https://bearfacts.berkeley.edu/bearfacts/",
-        :source_url => "https://bearfacts.berkeley.edu/bearfacts/",
+        :sourceUrl => "https://bearfacts.berkeley.edu/bearfacts/",
         :emitter => "Bear Facts"
       }
     end

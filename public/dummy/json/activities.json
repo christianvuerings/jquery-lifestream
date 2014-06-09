@@ -11,7 +11,7 @@
         "dateTime": "2013-01-15T19:52:27+00:00",
         "dateString": "Today"
       },
-      "source_url": "https://warnme.berkeley.edu/",
+      "sourceUrl": "https://warnme.berkeley.edu/",
       "emitter": "bSpace"
     },
     {
@@ -25,7 +25,7 @@
         "dateTime": "2013-01-15T19:52:27+00:00",
         "dateString": "Today"
       },
-      "source_url": "https:// warnme.berkeley.edu/",
+      "sourceUrl": "https:// warnme.berkeley.edu/",
       "emitter": "bSpace"
     },
     {
@@ -39,7 +39,7 @@
         "dateTime": "2013-01-15T19:52:27+00:00",
         "dateString": "Today"
       },
-      "source_url": "https://warnme.berkeley.edu/",
+      "sourceUrl": "https://warnme.berkeley.edu/",
       "emitter": "bSpace"
     },
     {
@@ -53,7 +53,7 @@
         "dateTime": "2013-01-15T19:52:27+00:00",
         "dateString": "Today"
       },
-      "source_url": "https://bearfacts.berkeley.edu/",
+      "sourceUrl": "https://bearfacts.berkeley.edu/",
       "emitter": "Campus"
     },
     {
@@ -67,7 +67,7 @@
         "dateTime": "2012-12-30T19:52:27+00:00",
         "dateString": "12/30"
       },
-      "source_url": "http://studentbilling.berkeley.edu",
+      "sourceUrl": "http://studentbilling.berkeley.edu",
       "emitter": "Campus"
     },
     {
@@ -81,7 +81,7 @@
         "dateTime": "2013-12-29T19:52:27+00:00",
         "dateString": "12/29"
       },
-      "source_url": "https://ucberkeley.instructure.com/courses/833384",
+      "sourceUrl": "https://ucberkeley.instructure.com/courses/833384",
       "emitter": "bCourses"
     },
     {
@@ -95,7 +95,7 @@
         "dateTime": "2013-12-28T19:52:27+00:00",
         "dateString": "12/28"
       },
-      "source_url": "http://studentbilling.berkeley.edu/",
+      "sourceUrl": "http://studentbilling.berkeley.edu/",
       "emitter": "Campus"
     },
     {
@@ -109,7 +109,7 @@
         "dateTime": "2013-12-26T19:52:27+00:00",
         "dateString": "12/26"
       },
-      "source_url": "https://sakai.example.com/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
+      "sourceUrl": "https://sakai.example.com/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
       "emitter": "bSpace"
     },
     {
@@ -123,7 +123,7 @@
         "dateTime": "2013-12-18T19:52:27+00:00",
         "dateString": "12/18"
       },
-      "source_url": "https://telebears.berkeley.edu",
+      "sourceUrl": "https://telebears.berkeley.edu",
       "emitter": "Campus"
     },
     {
@@ -133,7 +133,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2012-2013"
     },
@@ -144,7 +144,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2012-2013"
     },
@@ -155,7 +155,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2012-2013"
     },
@@ -166,7 +166,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2012-2013"
     },
@@ -177,7 +177,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "http://students.berkeley.edu/finaid/undergraduates/types_mcap.htm",
+      "sourceUrl": "http://students.berkeley.edu/finaid/undergraduates/types_mcap.htm",
       "emitter": "Financial Aid",
       "term_year": "2012-2013"
     },
@@ -191,7 +191,7 @@
         "dateString": "4/18"
       },
       "summary": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "message",
@@ -207,7 +207,7 @@
         "dateString": "6/07"
       },
       "summary": "Your financial aid awards are not official because you were selected for Verification. These estimated, conditional awards will not pay to your CARS account. You must complete the Verification documents and submit them to the Financial Aid and Scholarships Office with the required documentation. If your verified household or financial information varies significantly from what you reported on your FAFSA, your awards are subject to change from your conditional offer. The verification documents will be mailed to your permanent address.",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "message",
@@ -219,7 +219,7 @@
       "title": "Eligible Non-Citizen Statement",
       "date": "",
       "summary": "You must verify your eligible non-citizen status by submitting the Eligible Non-Citizen Statement form with documentation. This documentation must be submitted, in person, to the Financial Aid and Scholarships Office.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/EligibleNonCitizen43-1213.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/EligibleNonCitizen43-1213.pdf",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "alert",
@@ -231,7 +231,7 @@
       "title": "Selective Service Verification - CF",
       "date": "",
       "summary": "The Department of Education could not confirm that you are registered with Selective Service. We must verify that you are registered, or are not required to register, before we can award you financial aid. You can register or confirm your registration on the Selective Service website at http://www.sss.gov/ or by calling 888-655-1825. Once you have documentation of your registration status, submit it with the Selective Service Verification form.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/SelServVerif62-1213.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/SelServVerif62-1213.pdf",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "alert",
@@ -243,7 +243,7 @@
       "title": "Social Security Number Certification",
       "date": "",
       "summary": "Your Social Security number did not match the information on file with the Social Security Administration. You must submit the Social Security Number Certification form to the Financial Aid and Scholarships Office in order to receive financial aid.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/SocialSecurityCert64-1213.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/SocialSecurityCert64-1213.pdf",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "alert",
@@ -255,7 +255,7 @@
       "title": "FAFSA Dependency Status Change",
       "date": "",
       "summary": "We were notified that you updated your FAFSA with new information that resulted in a change to your dependency status. You must complete the FAFSA Dependency Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSADependencyChange95-1213.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/FAFSADependencyChange95-1213.pdf",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "alert",
@@ -271,7 +271,7 @@
         "dateString": "9/13"
       },
       "summary": "We were notified that you updated your FAFSA with new information that resulted in a change to your Expected Family Contribution (EFC). You must complete the FAFSA Income or Asset Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAIncomeAssetChange96-1213.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAIncomeAssetChange96-1213.pdf",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "financial",
@@ -283,7 +283,7 @@
       "title": "FAFSA Household Change",
       "date": "",
       "summary": "We were notified that you updated your FAFSA with information that resulted in a change to your (or your parents') household size, number in college, and/or marital status. You must complete the FAFSA Household Information Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAHouseholdChange97-1213.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAHouseholdChange97-1213.pdf",
       "emitter": "Financial Aid",
       "term_year": "2012-2013",
       "type": "alert",
@@ -296,7 +296,7 @@
       "source": "Financial Aid",
       "type": "alert",
       "date": "",
-      "source_url": "http://www.fafsa.ed.gov",
+      "sourceUrl": "http://www.fafsa.ed.gov",
       "emitter": "Financial Aid",
       "term_year": "2013-2014"
     },
@@ -306,7 +306,7 @@
       "title": "Free Application for Federal Student Aid (FAFSA)",
       "date": "",
       "summary": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -318,7 +318,7 @@
       "title": "Verification Dependent",
       "date": "",
       "summary": "Your financial aid awards are not official because you were selected for Verification. These estimated, conditional awards will not pay to your CARS account. You must complete the Verification documents and submit them to the Financial Aid and Scholarships Office with the required documentation. If your verified household or financial information varies significantly from what you reported on your FAFSA, your awards are subject to change from your conditional offer. The verification documents will be mailed to your permanent address.",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -330,7 +330,7 @@
       "title": "FAFSA Dependency Status Change",
       "date": "",
       "summary": "We were notified that you updated your FAFSA with new information that resulted in a change to your dependency status. You must complete the FAFSA Dependency Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSADependencyChange95-1314Fill.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/FAFSADependencyChange95-1314Fill.pdf",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -342,7 +342,7 @@
       "title": "FAFSA Income or Asset Change",
       "date": "",
       "summary": "We were notified that you updated your FAFSA with new information that resulted in a change to your Expected Family Contribution (EFC). You must complete the FAFSA Income or Asset Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAIncomeAssetChange96-1314Fill.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAIncomeAssetChange96-1314Fill.pdf",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -354,7 +354,7 @@
       "title": "FAFSA Household Change",
       "date": "",
       "summary": "We were notified that you updated your FAFSA with information that resulted in a change to your (or your parents') household size, number in college, and/or marital status. You must complete the FAFSA Household Information Change form and submit the requested documentation to the Financial Aid and Scholarships Office.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAHouseholdChange97-1314Fill.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/FAFSAHouseholdChange97-1314Fill.pdf",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -366,7 +366,7 @@
       "title": "Defaulted Loans in Bankruptcy",
       "date": "",
       "summary": "The US Department of Education indicates that you have one or more defaulted federal loans in active bankruptcy status. You must complete the Defaulted Student Loans in Bankruptcy form and provide the required documentation.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/defaultedloansbankruptcyA3-1314Fill.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/defaultedloansbankruptcyA3-1314Fill.pdf",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -378,7 +378,7 @@
       "title": "Eligible Non-Citizen Statement",
       "date": "",
       "summary": "You must verify your eligible non-citizen status by submitting the Eligible Non-Citizen Statement form with documentation. This documentation must be submitted, in person, to the Cal Student Central office at 120 Sproul Hall.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/EligibleNonCitizenA6-1314Fill.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/EligibleNonCitizenA6-1314Fill.pdf",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -390,7 +390,7 @@
       "title": "Social Security Number Certification",
       "date": "",
       "summary": "Your Social Security number did not match the information on file with the Social Security Administration. You must submit the Social Security Number Certification form to the Financial Aid and Scholarships Office in order to receive financial aid.",
-      "source_url": "http://students.berkeley.edu/finaid/home/otherforms/SocialSecurityCertB2-1314Fill.pdf",
+      "sourceUrl": "http://students.berkeley.edu/finaid/home/otherforms/SocialSecurityCertB2-1314Fill.pdf",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -406,7 +406,7 @@
         "dateString": "12/10"
       },
       "summary": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "message",
@@ -418,7 +418,7 @@
       "title": "Quality Assurance Dependent",
       "date": "",
       "summary": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -430,7 +430,7 @@
       "title": "Quality Assurance Independent",
       "date": "",
       "summary": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "alert",
@@ -446,7 +446,7 @@
         "dateString": "4/18"
       },
       "summary": "",
-      "source_url": "https://myfinaid.berkeley.edu",
+      "sourceUrl": "https://myfinaid.berkeley.edu",
       "emitter": "Financial Aid",
       "term_year": "2013-2014",
       "type": "message",

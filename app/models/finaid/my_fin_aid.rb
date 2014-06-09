@@ -68,7 +68,7 @@ module Finaid
           title: title,
           date: date,
           summary: summary,
-          source_url: url,
+          sourceUrl: url,
           emitter: "Financial Aid",
           term_year: academic_year
         }
@@ -103,7 +103,7 @@ module Finaid
           source: "Financial Aid",
           type: diagnostic_type_from_category(category),
           date: "",
-          source_url: url,
+          sourceUrl: url,
           emitter: "Financial Aid",
           term_year: academic_year
         }

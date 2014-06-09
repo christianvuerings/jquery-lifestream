@@ -42,7 +42,7 @@ module MyActivities
       formatted_entry.merge!(process_source(entry, canvas_sites))
       formatted_entry[:emitter] = Canvas::Proxy::APP_NAME
       formatted_entry[:url] = entry["html_url"]
-      formatted_entry[:source_url] = entry["html_url"]
+      formatted_entry[:sourceUrl] = entry["html_url"]
       formatted_entry[:summary] = process_message(entry)
       formatted_entry[:summary] += process_score(entry)
       formatted_entry[:date] = format_date(date)
