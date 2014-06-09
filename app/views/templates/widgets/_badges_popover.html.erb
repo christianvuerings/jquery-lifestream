@@ -68,7 +68,7 @@
                         <span data-ng-switch-when="new" data-ng-bind-template="created by {{item.editor}}"></span>
                         <span data-ng-switch-default data-ng-bind-template="last {{item.changeState}}"></span>
                       </span>
-                      <span data-ng-bind-template=" &bull; {{api.date.moment(item.modified_time.epoch * 1000).fromNow()}}"></span>
+                      <span data-ng-bind-template=" &bull; {{api.date.moment(item.modifiedTime.epoch * 1000).fromNow()}}"></span>
                     </div>
                   </div>
                 </a>
@@ -81,7 +81,7 @@
                 <div class="cc-badgepopover-item-details-title cc-ellipsis">
                   <span class="cc-popover-link" data-ng-bind="item.title"></span>
                 </div>
-                <div class="cc-badgepopover-item-details-summary cc-ellipsis" data-ng-bind-template="{{item.changeState}} by {{item.editor}} &bull; {{api.date.moment(item.modified_time.epoch * 1000).fromNow()}}"></div>
+                <div class="cc-badgepopover-item-details-summary cc-ellipsis" data-ng-bind-template="{{item.changeState}} by {{item.editor}} &bull; {{api.date.moment(item.modifiedTime.epoch * 1000).fromNow()}}"></div>
               </a>
             </div>
           </div>

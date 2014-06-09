@@ -24,7 +24,7 @@ module MyActivities
           {
             id: '',
             source: block[:short_description] || '',
-            source_url: "https://bearfacts.berkeley.edu/bearfacts/",
+            sourceUrl: "https://bearfacts.berkeley.edu/bearfacts/",
             url: "https://bearfacts.berkeley.edu/bearfacts/",
             emitter: "Bear Facts"
           })

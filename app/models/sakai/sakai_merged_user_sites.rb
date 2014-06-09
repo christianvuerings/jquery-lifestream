@@ -22,8 +22,8 @@ module Sakai
             groups: site_to_groups[site_id],
             id: site_id,
             name: row['title'] || '',
-            short_description: row['short_desc'],
-            site_type: row['type'],
+            shortDescription: row['short_desc'],
+            siteType: row['type'],
             site_url: "#{url_root}/#{site_id}",
           }
           if row['type'] == 'course' && (term_name = row['term']) && (term = Berkeley::TermCodes.from_english(term_name))

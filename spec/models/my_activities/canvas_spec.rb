@@ -67,21 +67,21 @@ describe MyActivities::CanvasActivities do
       {
         id: '1',
         name: 'Course Code 1',
-        short_description: 'Course site name 1',
-        site_type: 'course',
+        shortDescription: 'Course site name 1',
+        siteType: 'course',
         emitter: Canvas::Proxy::APP_NAME
       },
       {
         id: '3',
         name: 'Group title 3',
-        site_type: 'group',
+        siteType: 'group',
         emitter: Canvas::Proxy::APP_NAME
       },
       {
         id: '2',
         source: 'Course Code 2',
         name: 'Course-linked group title',
-        site_type: 'group',
+        siteType: 'group',
         emitter: Canvas::Proxy::APP_NAME
       }
     ]

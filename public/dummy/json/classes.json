@@ -94,12 +94,12 @@
       "emitter": "Campus"
     },
     {
-      "short_description": "Contorting on Camera",
+      "shortDescription": "Contorting on Camera",
       "name": "FILM 202 / PHYS ED 11 22",
       "id": "1093198",
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/courses/1093198",
-      "site_type": "course",
+      "siteType": "course",
       "courses": [
         {
           "id": "phys_ed:11_022:2013-C"
@@ -107,12 +107,12 @@
       ]
     },
     {
-      "short_description": "Lessons from the Cambrian Explosion",
+      "shortDescription": "Lessons from the Cambrian Explosion",
       "name": "Bio 1a Lec 3",
       "id": "1093164",
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/courses/1093164",
-      "site_type": "course",
+      "siteType": "course",
       "courses": [
         {
           "id": "BIOLOGY:1A:2013-C"
@@ -125,7 +125,7 @@
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/groups/101261",
       "source": "Bio 1a Lec 3",
-      "site_type": "group",
+      "siteType": "group",
       "courses": [
         {
           "id": "BIOLOGY:1A:2013-C"
@@ -133,12 +133,12 @@
       ]
     },
     {
-      "short_description": "Monitor Psych 1A",
+      "shortDescription": "Monitor Psych 1A",
       "name": "Unofficial memberships",
       "id": "1093166",
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/courses/1093166",
-      "site_type": "course",
+      "siteType": "course",
       "term_yr": "2013",
       "term_cd": "C",
       "courses": [
@@ -152,7 +152,7 @@
         "7c4d4a5c-07c6-4ab8-a32c-78c6820f2596"
       ],
       "name": "BIOLOGY 1A DIS 03 Su13",
-      "short_description": "Talk about life",
+      "shortDescription": "Talk about life",
       "courses": [
         {
           "id": "BIOLOGY:1A:2013-C"

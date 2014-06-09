@@ -42,7 +42,7 @@ module MyActivities
       formatted_entry.merge!(process_source(entry, canvas_sites))
       formatted_entry[:emitter] = Canvas::Proxy::APP_NAME
       formatted_entry[:url] = entry["html_url"]
-      formatted_entry[:source_url] = entry["html_url"]
+      formatted_entry[:sourceUrl] = entry["html_url"]
       formatted_entry[:summary] = process_message(entry)
       formatted_entry[:summary] += process_score(entry)
       formatted_entry[:date] = format_date(date)
@@ -149,7 +149,7 @@ module MyActivities
       if entry['context_type'] == 'Group'
         idx = canvas_sites.index do |site|
           site[:id] == entry['group_id'].to_s &&
-            site[:site_type] == 'group' &&
+            site[:siteType] == 'group' &&
             site[:emitter] == Canvas::Proxy::APP_NAME
         end
         if idx
@@ -159,7 +159,7 @@ module MyActivities
       elsif entry['context_type'] == 'Course'
         idx = canvas_sites.index do |site|
           site[:id] == entry['course_id'].to_s &&
-            site[:site_type] == 'course' &&
+            site[:siteType] == 'course' &&
             site[:emitter] == Canvas::Proxy::APP_NAME
         end
         if idx

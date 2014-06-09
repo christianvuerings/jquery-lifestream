@@ -124,8 +124,8 @@ describe Finaid::MyFinAid do
       end
       it { subject.each { |entry| documented_types.should be_include(entry[:type]) } }
       it { subject.each { |entry| entry[:title].should be_present } }
-      it { subject.each { |entry| entry[:source_url].should be_present } }
-      it { subject.each { |entry| entry[:term_year].should be_present } }
+      it { subject.each { |entry| entry[:sourceUrl].should be_present } }
+      it { subject.each { |entry| entry[:termYear].should be_present } }
       it { subject.each { |entry| entry[:source].should eq('Financial Aid') } }
 
       describe 'alert types' do

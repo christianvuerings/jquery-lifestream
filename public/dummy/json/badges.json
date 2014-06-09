@@ -27,7 +27,7 @@
             "dateString": "4/17",
             "allDayEvent": true
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631878,
             "dateTime": "2013-04-10T22:11:18+00:00",
             "dateString": "4/10"
@@ -49,7 +49,7 @@
             "dateString": "4/28",
             "allDayEvent": true
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631878,
             "dateTime": "2013-04-10T22:11:18+00:00",
             "dateString": "4/10"
@@ -69,7 +69,7 @@
             "dateTime": "2013-04-17T11:00:00-07:00",
             "dateString": "4/17"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631861,
             "dateTime": "2013-04-10T22:11:01+00:00",
             "dateString": "4/10"
@@ -90,7 +90,7 @@
             "dateTime": "2013-04-24T11:00:00-07:00",
             "dateString": "4/24"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631861,
             "dateTime": "2013-04-10T22:11:01+00:00",
             "dateString": "4/10"
@@ -110,7 +110,7 @@
             "dateTime": "2013-04-19T14:00:00-07:00",
             "dateString": "4/19"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631738,
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
@@ -130,7 +130,7 @@
             "dateTime": "2013-04-22T14:00:00-07:00",
             "dateString": "4/22"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631738,
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
@@ -150,7 +150,7 @@
             "dateTime": "2013-04-17T14:00:00-07:00",
             "dateString": "4/17"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631738,
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
@@ -170,7 +170,7 @@
             "dateTime": "2013-04-24T14:00:00-07:00",
             "dateString": "4/24"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631738,
             "dateTime": "2013-04-10T22:08:58+00:00",
             "dateString": "4/10"
@@ -190,7 +190,7 @@
             "dateTime": "2013-04-18T15:30:00-07:00",
             "dateString": "4/18"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631715,
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
@@ -210,7 +210,7 @@
             "dateTime": "2013-04-23T15:30:00-07:00",
             "dateString": "4/23"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631715,
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
@@ -230,7 +230,7 @@
             "dateTime": "2013-04-16T15:30:00-07:00",
             "dateString": "4/16"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631715,
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
@@ -250,7 +250,7 @@
             "dateTime": "2013-04-25T15:30:00-07:00",
             "dateString": "4/25"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631715,
             "dateTime": "2013-04-10T22:08:35+00:00",
             "dateString": "4/10"
@@ -270,7 +270,7 @@
             "dateTime": "2013-04-19T12:00:00-07:00",
             "dateString": "4/19"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631665,
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
@@ -290,7 +290,7 @@
             "dateTime": "2013-04-22T12:00:00-07:00",
             "dateString": "4/22"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631665,
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
@@ -310,7 +310,7 @@
             "dateTime": "2013-04-17T12:00:00-07:00",
             "dateString": "4/17"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631665,
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
@@ -330,7 +330,7 @@
             "dateTime": "2013-04-24T12:00:00-07:00",
             "dateString": "4/24"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631665,
             "dateTime": "2013-04-10T22:07:45+00:00",
             "dateString": "4/10"
@@ -350,7 +350,7 @@
             "dateTime": "2013-04-18T14:00:00-07:00",
             "dateString": "4/18"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631634,
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
@@ -370,7 +370,7 @@
             "dateTime": "2013-04-23T14:00:00-07:00",
             "dateString": "4/23"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631634,
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
@@ -390,7 +390,7 @@
             "dateTime": "2013-04-16T14:00:00-07:00",
             "dateString": "4/16"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631634,
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
@@ -410,7 +410,7 @@
             "dateTime": "2013-04-25T14:00:00-07:00",
             "dateString": "4/25"
           },
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1365631634,
             "dateTime": "2013-04-10T22:07:14+00:00",
             "dateString": "4/10"
@@ -426,7 +426,7 @@
         {
           "title": "Assignment #1? or Assignment #2? or Assignment #3? or Assignment #4? or Assignment #5?",
           "link": "https://www.googleapis.com/drive/v2/files/1CRO3fkWnQrqm_-8M1pO5cB6opxXB7HWxUN4IPDqdzrI",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1363798261,
             "dateTime": "2013-03-20T16:51:01+00:00",
             "dateString": "3/20"
@@ -437,7 +437,7 @@
         {
           "title": "Group Work #1",
           "link": "https://www.googleapis.com/drive/v2/files/1PJExieJtoo5xf945FvmWbxJZaltkmtcqPzEcFs2o2P8",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1363715337,
             "dateTime": "2013-03-19T17:48:57+00:00",
             "dateString": "3/19"
@@ -448,7 +448,7 @@
         {
           "title": "Assignment #1",
           "link": "https://www.googleapis.com/drive/v2/files/1CRO3fkWnQrqm_-8M1pO5cB6opxXB7HWxUN4IPDqdzrI",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1363798261,
             "dateTime": "2013-03-20T16:51:01+00:00",
             "dateString": "3/20"
@@ -459,7 +459,7 @@
         {
           "title": "Group Work #1",
           "link": "https://www.googleapis.com/drive/v2/files/1PJExieJtoo5xf945FvmWbxJZaltkmtcqPzEcFs2o2P8",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1363715337,
             "dateTime": "2013-03-19T17:48:57+00:00",
             "dateString": "3/19"
@@ -475,7 +475,7 @@
         {
           "title": "Hospitals Profit From Surgical Errors, Study Finds: Course Name Example",
           "summary": "Since insurers pay more for patients with surgical complications, some hospitals",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1366151767,
             "dateTime": "2013-04-16T22:36:07+00:00",
             "dateString": "4/16"
@@ -486,7 +486,7 @@
         {
           "title": "F.D.A. Was Lax on Compounding, Its Leader Says: Course Name Example",
           "summary": "Asking Congress for more authority, Dr. Margaret A. Hamburg said her agency should",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1366151766,
             "dateTime": "2013-04-16T22:36:06+00:00",
             "dateString": "4/16"
@@ -497,7 +497,7 @@
         {
           "title": "The Lede: Neighbors Mourn Loss of 8-Year-Old: Course Name Example",
           "summary": "Bill Richard, the father of the 8-year-old boy who was killed Monday, offered thanks",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1366151766,
             "dateTime": "2013-04-16T22:36:06+00:00",
             "dateString": "4/16"
@@ -508,7 +508,7 @@
         {
           "title": "Investigation Under Way in Boston: Course Name Example",
           "summary": "Authorities were trying to identify suspects and a motive behind an attack that",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1366151765,
             "dateTime": "2013-04-16T22:36:05+00:00",
             "dateString": "4/16"
@@ -519,7 +519,7 @@
         {
           "title": "Justices Hear Case of Adopted Indian Child: Course Name Example",
           "summary": "The Supreme Court considered whether a 3-year-old should remain with her biological",
-          "modified_time": {
+          "modifiedTime": {
             "epoch": 1366151765,
             "dateTime": "2013-04-16T22:36:05+00:00",
             "dateString": "4/16"

@@ -35,7 +35,7 @@ describe MyClasses::Canvas do
         id: canvas_site_id,
         site_url: "something/#{canvas_site_id}",
         name: "CODE #{ccn}",
-        short_description: "A barrel of #{ccn} monkeys",
+        shortDescription: "A barrel of #{ccn} monkeys",
         term_yr: term_yr,
         term_cd: term_cd,
         emitter: Canvas::Proxy::APP_NAME
@@ -70,7 +70,7 @@ describe MyClasses::Canvas do
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:courses]).to eq [{id: course_id}]
           expect(site[:sections]).to be_nil
-          expect(site[:site_type]).to eq 'course'
+          expect(site[:siteType]).to eq 'course'
         end
       end
       # By default, CCN strings are filled out to five digits by prefixing zeroes.
@@ -87,7 +87,7 @@ describe MyClasses::Canvas do
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:courses]).to eq [{id: course_id}]
           expect(site[:sections]).to be_nil
-          expect(site[:site_type]).to eq 'course'
+          expect(site[:siteType]).to eq 'course'
         end
       end
       context 'when Canvas group site links to a matching course site' do
@@ -96,11 +96,11 @@ describe MyClasses::Canvas do
         let(:canvas_sites) {{courses: [canvas_site], groups: [group]}}
         its(:size) {should eq 2}
         it 'points back to campus course' do
-          site = subject.select{|s| s[:site_type] == 'group'}.first
+          site = subject.select{|s| s[:siteType] == 'group'}.first
           expect(site[:id]).to eq group_id
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq group_base[:name]
-          expect(site[:site_type]).to eq 'group'
+          expect(site[:siteType]).to eq 'group'
           expect(site[:source]).to eq canvas_site_base[:name]
           expect(site[:courses]).to eq [{id: course_id}]
         end
@@ -120,7 +120,7 @@ describe MyClasses::Canvas do
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:courses]).to be_empty
           expect(site[:sections]).to be_nil
-          expect(site[:site_type]).to eq 'course'
+          expect(site[:siteType]).to eq 'course'
         end
       end
     end

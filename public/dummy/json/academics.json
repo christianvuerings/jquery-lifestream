@@ -795,7 +795,7 @@
           "class_sites": [
             {
               "id": "11866397",
-              "short_description": "Confessions of a Biotician",
+              "shortDescription": "Confessions of a Biotician",
               "name": "BIO 123A Everyone",
               "emitter": "bCourses",
               "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397",

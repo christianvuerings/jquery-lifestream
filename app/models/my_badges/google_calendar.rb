@@ -57,7 +57,7 @@ module MyBadges
                 :title => entry['summary'],
                 :startTime => verify_and_format_date(entry['start']),
                 :endTime => verify_and_format_date(entry['end']),
-                :modified_time => format_date(entry['updated'].to_datetime),
+                :modifiedTime => format_date(entry['updated'].to_datetime),
                 :allDayEvent => false
               }
               consolidate_all_day_event_key!(event)
