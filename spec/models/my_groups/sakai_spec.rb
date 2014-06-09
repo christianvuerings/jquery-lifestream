@@ -8,7 +8,7 @@ describe MyGroups::Sakai do
       id: sakai_site_id,
       site_url: "something/#{sakai_site_id}",
       name: "CODE #{rand(999)}",
-      short_description: "A barrel of #{rand(99)} monkeys",
+      shortDescription: "A barrel of #{rand(99)} monkeys",
       emitter: Sakai::Proxy::APP_ID
     }
   end

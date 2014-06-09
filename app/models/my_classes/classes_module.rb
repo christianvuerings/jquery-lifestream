@@ -31,7 +31,7 @@ module MyClasses::ClassesModule
         emitter: course_site[:emitter],
         id: course_site[:id],
         name: course_site[:name],
-        short_description: course_site[:short_description],
+        shortDescription: course_site[:short_description],
         siteType: 'course',
         site_url: course_site[:site_url],
         term_cd: term_cd,

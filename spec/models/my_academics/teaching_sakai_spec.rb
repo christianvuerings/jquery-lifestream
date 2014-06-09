@@ -30,7 +30,7 @@ describe MyAcademics::TeachingSakai do
       id: sakai_site_id,
       site_url: "something/#{sakai_site_id}",
       name: "CODE #{ccn}",
-      short_description: "A barrel of #{ccn} monkeys",
+      shortDescription: "A barrel of #{ccn} monkeys",
       term_yr: term_yr,
       term_cd: term_cd,
       emitter: Sakai::Proxy::APP_ID

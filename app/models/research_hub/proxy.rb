@@ -30,7 +30,7 @@ module ResearchHub
           id: index,
           emitter: "researchhub",
           name: group_site["title"],
-          short_description: group_site["description"],
+          shortDescription: group_site["description"],
           site_url: "#{@settings.site_url}/#{group_site["shortName"]}/dashboard"
         }
       end

@@ -10,7 +10,7 @@ class MyGroups::Sakai
         emitter: group_site[:emitter],
         id: group_site[:id],
         name: group_site[:name],
-        short_description: group_site[:short_description],
+        shortDescription: group_site[:short_description],
         site_url: group_site[:site_url]
       }
     end

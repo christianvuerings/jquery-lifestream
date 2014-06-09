@@ -35,7 +35,7 @@ describe MyClasses::Canvas do
         id: canvas_site_id,
         site_url: "something/#{canvas_site_id}",
         name: "CODE #{ccn}",
-        short_description: "A barrel of #{ccn} monkeys",
+        shortDescription: "A barrel of #{ccn} monkeys",
         term_yr: term_yr,
         term_cd: term_cd,
         emitter: Canvas::Proxy::APP_NAME

@@ -67,7 +67,7 @@ describe MyActivities::CanvasActivities do
       {
         id: '1',
         name: 'Course Code 1',
-        short_description: 'Course site name 1',
+        shortDescription: 'Course site name 1',
         siteType: 'course',
         emitter: Canvas::Proxy::APP_NAME
       },

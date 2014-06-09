@@ -61,7 +61,7 @@ module Canvas
         id: course_id.to_s,
         name: course['course_code'],
         sections: sis_sections,
-        short_description: course['name'],
+        shortDescription: course['name'],
         site_url: "#{@url_root}/courses/#{course_id}",
         term_name: term_name,
         term_yr: term_hash[:term_yr],
