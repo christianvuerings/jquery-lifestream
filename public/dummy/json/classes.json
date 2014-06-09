@@ -99,7 +99,7 @@
       "id": "1093198",
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/courses/1093198",
-      "site_type": "course",
+      "siteType": "course",
       "courses": [
         {
           "id": "phys_ed:11_022:2013-C"
@@ -112,7 +112,7 @@
       "id": "1093164",
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/courses/1093164",
-      "site_type": "course",
+      "siteType": "course",
       "courses": [
         {
           "id": "BIOLOGY:1A:2013-C"
@@ -125,7 +125,7 @@
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/groups/101261",
       "source": "Bio 1a Lec 3",
-      "site_type": "group",
+      "siteType": "group",
       "courses": [
         {
           "id": "BIOLOGY:1A:2013-C"
@@ -138,7 +138,7 @@
       "id": "1093166",
       "emitter": "bCourses",
       "site_url": "https://notquitecanvas/courses/1093166",
-      "site_type": "course",
+      "siteType": "course",
       "term_yr": "2013",
       "term_cd": "C",
       "courses": [

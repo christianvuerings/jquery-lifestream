@@ -32,7 +32,7 @@ module MyClasses::ClassesModule
         id: course_site[:id],
         name: course_site[:name],
         short_description: course_site[:short_description],
-        site_type: 'course',
+        siteType: 'course',
         site_url: course_site[:site_url],
         term_cd: term_cd,
         term_yr: term_yr,

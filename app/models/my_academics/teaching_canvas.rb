@@ -58,7 +58,7 @@ module MyAcademics
         emitter: group_site[:emitter],
         id: group_site[:id],
         name: group_site[:name],
-        site_type: 'group',
+        siteType: 'group',
         site_url: group_site[:site_url],
         source: source
       }

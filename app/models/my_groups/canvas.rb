@@ -28,7 +28,7 @@ class MyGroups::Canvas
         id: course_site[:id],
         name: course_site[:name],
         short_description: course_site[:short_description],
-        site_type: 'course',
+        siteType: 'course',
         site_url: course_site[:site_url]
       }
     else
@@ -43,7 +43,7 @@ class MyGroups::Canvas
         emitter: group_site[:emitter],
         id: group_site[:id],
         name: group_site[:name],
-        site_type: 'group',
+        siteType: 'group',
         site_url: group_site[:site_url]
       }
     else

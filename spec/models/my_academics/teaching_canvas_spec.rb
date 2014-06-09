@@ -72,7 +72,7 @@ describe MyAcademics::TeachingCanvas do
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq canvas_site_base[:name]
           expect(site[:sections].first[:ccn]).to eq ccn.to_s
-          expect(site[:site_type]).to eq 'course'
+          expect(site[:siteType]).to eq 'course'
         end
       end
       # By default, CCN strings are filled out to five digits by prefixing zeroes.
@@ -89,7 +89,7 @@ describe MyAcademics::TeachingCanvas do
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq canvas_site_base[:name]
           expect(site[:sections].first[:ccn]).to eq ccn
-          expect(site[:site_type]).to eq 'course'
+          expect(site[:siteType]).to eq 'course'
         end
       end
       context 'when Canvas group site links to a matching course site' do
@@ -98,11 +98,11 @@ describe MyAcademics::TeachingCanvas do
         let(:canvas_sites) {{courses: [canvas_site], groups: [group]}}
         its(:size) {should eq 2}
         it 'is included with campus course' do
-          site = subject.select{|s| s[:site_type] == 'group'}.first
+          site = subject.select{|s| s[:siteType] == 'group'}.first
           expect(site[:id]).to eq group_id
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq group_base[:name]
-          expect(site[:site_type]).to eq 'group'
+          expect(site[:siteType]).to eq 'group'
           expect(site[:source]).to eq canvas_site_base[:name]
         end
       end
