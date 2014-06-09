@@ -58,8 +58,11 @@
            */
           var closeAll = function(clickEvent) {
             // Do not close the datepicker when you're selecting the month or year
-            if (clickEvent && clickEvent.target && clickEvent.target.className.indexOf('pika-select') !== -1) {
-              return;
+            if (clickEvent && clickEvent.target && clickEvent.target.className) {
+              var className = clickEvent.target.className;
+              if (className.indexOf('pika-select') !== -1 || className.indexOf('pika-next') !== -1 || className.indexOf('pika-prev') !== -1) {
+                return;
+              }
             }
             scope.pickerShown = false;
             scope.pickerInitialized = false;
