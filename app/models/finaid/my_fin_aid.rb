@@ -70,7 +70,7 @@ module Finaid
           summary: summary,
           sourceUrl: url,
           emitter: "Financial Aid",
-          term_year: academic_year
+          termYear: academic_year
         }
 
         begin
@@ -105,7 +105,7 @@ module Finaid
           date: "",
           sourceUrl: url,
           emitter: "Financial Aid",
-          term_year: academic_year
+          termYear: academic_year
         }
       end
     end
