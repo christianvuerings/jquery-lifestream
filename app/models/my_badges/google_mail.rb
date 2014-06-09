@@ -64,18 +64,18 @@ module MyBadges
             %w(title summary).each do |key|
               entry[key.to_sym] = get_node_value(key, raw_entry)
             end
-            entry[:modified_time] = get_node_value("modified", raw_entry)
+            entry[:modifiedTime] = get_node_value("modified", raw_entry)
             entry[:link] = "http://bmail.berkeley.edu/"
 
             author_set = get_nodeset('author', raw_entry.search('author'))
             entry[:editor] = get_node_value('name', author_set)
 
             #change modified into a proper date.
-            if entry[:modified_time]
+            if entry[:modifiedTime]
               begin
-                entry[:modified_time] = format_date DateTime.iso8601(entry[:modified_time])
+                entry[:modifiedTime] = format_date DateTime.iso8601(entry[:modifiedTime])
               rescue => e
-                Rails.logger.warn "#{self.class.name} Could not parse modified: #{entry[:modified_time]}"
+                Rails.logger.warn "#{self.class.name} Could not parse modified: #{entry[:modifiedTime]}"
                 next
               end
             end

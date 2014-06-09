@@ -47,7 +47,7 @@ module MyBadges
                   title: entry["title"],
                   link: entry["alternateLink"],
                   icon_class: process_icon(entry['iconLink']),
-                  modified_time: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
+                  modifiedTime: format_date(entry["modifiedDate"].to_datetime), #is_recent_message guards against bad dates.
                   editor: entry["lastModifyingUserName"],
                   changeState: handle_change_state(entry)
                 }

@@ -89,7 +89,7 @@ describe "MyBadges" do
         if source_key != "bcal"
           feed_items[:editor].blank?.should_not be_true
         end
-        %w(title modified_time link).each do |required_key|
+        %w(title modifiedTime link).each do |required_key|
           feed_items[required_key.to_sym].blank?.should_not be_true
         end
       end
