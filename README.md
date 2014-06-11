@@ -225,6 +225,7 @@ Places on the web where this plug-in got mentioned:
 * [Andref.it](http://andref.it/blog/2011/aggrega-la-tua-attivita-online-con-jquery-lifestream/) - Italian
 * [Bitconfig](http://bitconfig.com/lifestream/bitconfig_lifestream.html)
 * [BlogUpstairs](http://blogupstairs.com/framework/javascript-framework/jquery/jquery-lifestream-show-a-stream-of-your-online-activity-with-jquery/)
+* [ChurchMag](http://churchm.ag/jquery-lifestream/)
 * [Codevisually](http://codevisually.com/jquery-lifestream-create-a-stream-of-your-online-activity/)
 * [DailyJS](http://dailyjs.com/2011/06/21/jquery-roundup/)
 * [DesignBeep](http://designbeep.com/2011/06/02/17-fresh-and-functional-jquery-plugins-you-will-love/)
@@ -233,13 +234,16 @@ Places on the web where this plug-in got mentioned:
 * [Eire Media](http://repo.eire-media.com/go/)
 * [Elliptips](http://elliptips.info/2011/09/lifestream-votre-vie-virtuelle-sous-forme-de-timeline-en-jquery/) - French
 * [Erik Ostrom Blog](http://slapdash.erikostrom.com/post/9797738423/just-finally-added-something-to-my-ostensible-web)
-* [doejo](http://doejo.com/blog/jquery-lifestream-a-simple-way-to-track-your-online-activity-in-one-spot)
+* [Forrst](http://forrst.com/posts/jQuery_Lifestream_Create_a_stream_of_your_on-ruG)
 * [HTML.it](http://javascript.html.it/script/vedi/6468/le-nostre-attivita-su-internet-con-il-plugin-jquery-lifestream/) - Italian
 * [JavaScript Experiments](http://javascriptexperiments.blogspot.com/2012/03/my-lifestream-example.html)
+* [jQuery Plugins](http://jquery-plugins.net/jquery-lifestream-show-stream-of-your-online-activity)
 * [jQuery Rain](http://www.jqueryrain.com/2011/06/jquery-lifestream/)
-* [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
 * [jQuery this](http://www.jquerythisplugin.com/plugins/jquery-lifestream-your-social-feed/)
+* [jqueryitalia](http://twitter.com/jqueryitalia/status/77999618046169088)
+* [jQueryScript.Net](http://www.jqueryscript.net/other/Show-A-Stream-of-Your-Online-Activity-With-jQuery-lifestream.html)
 * [Lifestream Blog](http://lifestreamblog.com/create-a-dynamic-activity-stream-with-the-jquery-lifestream-script/)
+* [Maddyzone](http://tech-blog.maddyzone.com/plugins/lifestream-jquery-plugin)
 * [Script Tutorials](http://www.script-tutorials.com/10-interesting-jquery-plugins-november-2011/)
 * [Simong Gaeremynck Blog](http://blog.gaeremynck.com/jquery-lifestream-and-followmy-tv/)
 * [Slodive.com](http://slodive.com/web-development/jquery-plugins/)
@@ -248,12 +252,14 @@ Places on the web where this plug-in got mentioned:
 * [Spyrestudios](http://spyrestudios.com/31-fantastic-new-jquery-plugins-for-web-developers/)
 * [phpspot](http://phpspot.org/blog/archives/2011/06/jquerylifestrea.html) - Japanese
 * [ProgrammableWeb](http://www.programmableweb.com/mashup/jquery-lifestream) - Mashup of the Day on 17/06/2011
+* [Sitepoint](http://www.sitepoint.com/top-5-jquery-social-feed-plugins-2013/)
 * [Smashing Magazine](http://twitter.com/smashingmag/status/77993263981797376)
 * [Splashnology](http://www.splashnology.com/article/50-new-jquery-plugins-for-web-developers/4141/)
 * [Tactoom.com](http://tactoom.com/interest/Hardcore/4ed34793de3b117715002952)
 * [The Changelog](http://thechangelog.com/post/7262848148/jquery-lifestream-show-a-stream-of-your-online-activity)
 * [The Next Web](http://thenextweb.com/dd/2011/07/08/jquery-lifestream-makes-it-easy-to-pop-your-online-activity-onto-any-page/)
 * [Unheap](http://www.unheap.com/other/social-rss/lifestream/)
+* [Webhouse](http://www.webhouseit.com/jquery-lifestream-aggregriamo-le-nostre-attivita-online/)
 * [Weboptimize](http://www.aranda.se/2011/12/17/10-interesting-jquery-plugins/)
 * [YJL](http://blog.yjl.im/2012/02/jquery-lifestream-plugin.html)
 
