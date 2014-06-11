@@ -11,14 +11,14 @@
           // Templates for the player
           var templates = {
             audio: '<audio controls><source data-ng-src="' + audioUrl + '"></source>Your browser does not support the audio element.</audio>',
-            noAudio: '<div>Your browser does not support playing m4a files.</div>'
+            noAudio: '<div>Your browser does not support playing mp3 and m4a files.</div>'
           };
 
           var init = function() {
             elem.empty();
 
             var template = templates.audio;
-            if (apiService.util.canPlayM4A()) {
+            if (apiService.util.canPlayMp3AndM4a()) {
               template = templates.audio;
             } else {
               template = templates.noAudio;
