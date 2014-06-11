@@ -446,7 +446,7 @@ $.fn.lifestream.feeds.citeulike = function( config, callback ) {
   };
 
   $.ajax({
-    url: 'http://www.citeulike.org/json/user/' + config.user,
+    url: 'https://www.citeulike.org/json/user/' + config.user,
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseCiteulike(data));
