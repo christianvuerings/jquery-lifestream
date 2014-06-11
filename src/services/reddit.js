@@ -45,7 +45,7 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://www.reddit.com/user/" + config.user + ".json",
+    url: "https://pay.reddit.com/user/" + config.user + ".json",
     dataType: "jsonp",
     jsonp:"jsonp",
     success: function( data ) {
