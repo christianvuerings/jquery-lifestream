@@ -58,6 +58,13 @@ describe CacheController do
       expect(response.body).to be
       expect(response.body['warmed']).to be_true
     end
+
+    it 'should not take action when given bad parameters' do
+      HotPlate.should_not_receive(:request_warmups_for_all)
+      get :warm, {:uid => 'some_other_thing', :format => 'json'}
+      expect(response.status).to eq(400)
+      expect(response.body).to include('some_other_thing')
+    end
   end
 
 end
