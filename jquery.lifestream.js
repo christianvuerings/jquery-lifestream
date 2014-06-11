@@ -1,7 +1,7 @@
 /*!
  * jQuery Lifestream Plug-in
  * Show a stream of your online activity
- * @version   0.4.3
+ * @version   0.5.0
  * @author    Christian Vuerings et al.
  * @copyright Copyright 2014, Christian Vuerings - http://denbuzze.com
  * @license   https://github.com/christianv/jquery-lifestream/blob/master/LICENSE MIT
@@ -206,7 +206,7 @@ $.fn.lifestream.feeds.atom = function( config, callback ) {
    * Parse the input from atom feed
    */
   parseAtom = function( input ) {
-    var output = [], list = [], i = 0, j = 0, url = '';
+    var output = [], list = [], i = 0, j = 0;
     if(input.query && input.query.count && input.query.count > 0) {
       list = input.query.results.feed.entry;
       j = list.length;
@@ -2368,14 +2368,12 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 })(jQuery);(function($) {
   "use strict";
 
-  $.fn.lifestream.feeds.twitter = function( config, callback ) {
+  $.fn.lifestream.feeds.twitter = function(config, callback) {
     var template = $.extend({},
       {
         "posted": '{{html tweet}}'
       },
-      config.template),
-    jsonpCallbackName = 'jlsTwitterCallback' +
-      config.user.replace(/[^a-zA-Z0-9]+/g, ''),
+      config.template);
 
     /**
      * Add links to the twitter feed.
@@ -2384,7 +2382,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
      * @param {String} tweet A string of a tweet
      * @return {String} A linkified tweet
      */
-    linkify = function( tweet ) {
+    var linkify = function( tweet ) {
 
       var link = function( t ) {
         return t.replace(
@@ -2424,51 +2422,34 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
      * @param  {Object[]} items
      * @return {Object[]} Array of Twitter status messages.
      */
-    parseTwitter = function( items ) {
-      var output = [], i = 0, j = items.length;
+    parseTwitter = function(response) {
+      var output = [];
 
-      for( i; i < j; i++ ) {
-        var status = items[i];
+      if (!response.tweets) {
+        return output;
+      }
+
+      for(var i = 0; i < response.tweets.length; i++ ) {
+        var status = response.tweets[i];
 
         output.push({
-          "date": new Date(status.created_at * 1000), // unix time
+          "date": new Date(status.createdAt * 1000), // unix time
           "config": config,
           "html": $.tmpl( template.posted, {
             "tweet": linkify($('<div/>').html(status.text).text()),
             "complete_url": 'http://twitter.com/' + config.user +
-              "/status/" + status.id_str
+              "/status/" + status.id
           } ),
           "url": 'http://twitter.com/' + config.user
         });
       }
-
-      return output;
-    };
-
-    /**
-     * Global JSONP callback
-     * This should allow for better response caching by YQL.
-     * @param  {Object[]} data YQL response items
-     * @return {undefined}
-     */
-    window[jsonpCallbackName] = function(data) {
-      if ( data.query && data.query.count > 0 ) {
-        callback(parseTwitter(data.query.results.items));
-      }
+      callback(output);
     };
 
     $.ajax({
-      "url": $.fn.lifestream.createYqlUrl('USE ' +
-        '"http://arminrosu.github.io/twitter-open-data-table/table.xml" ' +
-        'AS twitter; SELECT * FROM twitter WHERE screen_name = "' +
-        config.user + '"'),
-      "cache": true,
-      'data': {
-        '_maxage': 300 // cache for 5 minutes
-      },
-      "dataType": 'jsonp',
-      "jsonpCallback": jsonpCallbackName // better caching
-    });
+      "url": 'https://twittery.herokuapp.com/' + config.user,
+      "cache": false
+    }).success(parseTwitter);
 
     // Expose the template.
     // We use this to check which templates are available
