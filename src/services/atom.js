@@ -11,7 +11,7 @@ $.fn.lifestream.feeds.atom = function( config, callback ) {
    * Parse the input from atom feed
    */
   parseAtom = function( input ) {
-    var output = [], list = [], i = 0, j = 0, url = '';
+    var output = [], list = [], i = 0, j = 0;
     if(input.query && input.query.count && input.query.count > 0) {
       list = input.query.results.feed.entry;
       j = list.length;
