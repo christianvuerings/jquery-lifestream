@@ -48,7 +48,7 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+    url: "https://gdata.youtube.com/feeds/api/users/" + config.user +
       "/favorites?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {
@@ -57,7 +57,7 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   });
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+    url: "https://gdata.youtube.com/feeds/api/users/" + config.user +
       "/uploads?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {

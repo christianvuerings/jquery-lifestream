@@ -8,7 +8,7 @@ $.fn.lifestream.feeds.forrst = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://forrst.com/api/v2/users/posts?username=" + config.user,
+    url: "https://forrst.com/api/v2/users/posts?username=" + config.user,
     dataType: "jsonp",
     success: function(  data  ) {
       var output = [], i=0, j;

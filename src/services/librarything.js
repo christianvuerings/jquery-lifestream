@@ -31,7 +31,7 @@ $.fn.lifestream.feeds.librarything = function( config, callback ) {
   };
 
   $.ajax({
-    url: 'http://www.librarything.com/api_getdata.php?booksort=entry_REV&userid=' + config.user,
+    url: 'https://www.librarything.com/api_getdata.php?booksort=entry_REV&userid=' + config.user,
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseLibraryThing(data));

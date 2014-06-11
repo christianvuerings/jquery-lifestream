@@ -437,7 +437,7 @@ $.fn.lifestream.feeds.citeulike = function( config, callback ) {
         output.push({
           date: new Date(item.date),
           config: config,
-          url: 'http://www.citeulike.org/user/' + config.user,
+          url: 'https://www.citeulike.org/user/' + config.user,
           html: $.tmpl( template.saved, item )
         });
       }
@@ -460,7 +460,8 @@ $.fn.lifestream.feeds.citeulike = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.dailymotion = function( config, callback ) {
 
   var template = $.extend({},
@@ -517,7 +518,7 @@ $.fn.lifestream.feeds.delicious = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://feeds.delicious.com/v2/json/" + config.user,
+    url: "https://feeds.delicious.com/v2/json/" + config.user,
     dataType: "jsonp",
     success: function( data ) {
       var output = [], i = 0, j;
@@ -543,7 +544,8 @@ $.fn.lifestream.feeds.delicious = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.deviantart = function( config, callback ) {
 
   var template = $.extend({},
@@ -660,7 +662,7 @@ $.fn.lifestream.feeds.dribbble = function( config, callback ) {
       config.template);
 
     $.ajax({
-      url: "http://api.dribbble.com/players/" + config.user + "/shots",
+      url: "https://api.dribbble.com/players/" + config.user + "/shots",
       dataType: "jsonp",
       success: function( data ) {
         var output = [], i = 0, j;
@@ -688,7 +690,8 @@ $.fn.lifestream.feeds.dribbble = function( config, callback ) {
     };
 
   };
-  })(jQuery);(function($) {
+  })(jQuery);
+(function($) {
 $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
 
   var template = $.extend({},
@@ -794,7 +797,7 @@ $.fn.lifestream.feeds.flickr = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://api.flickr.com/services/feeds/photos_public.gne?id=" +
+    url: "https://api.flickr.com/services/feeds/photos_public.gne?id=" +
       config.user + "&lang=en-us&format=json",
     dataType: "jsonp",
     jsonp: 'jsoncallback',
@@ -824,7 +827,8 @@ $.fn.lifestream.feeds.flickr = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.foomark = function( config, callback ) {
 
   var template = $.extend({},
@@ -922,7 +926,7 @@ $.fn.lifestream.feeds.forrst = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://forrst.com/api/v2/users/posts?username=" + config.user,
+    url: "https://forrst.com/api/v2/users/posts?username=" + config.user,
     dataType: "jsonp",
     success: function(  data  ) {
       var output = [], i=0, j;
@@ -948,7 +952,8 @@ $.fn.lifestream.feeds.forrst = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.foursquare = function( config, callback ) {
 
   var template = $.extend({},
@@ -1489,7 +1494,7 @@ $.fn.lifestream.feeds.librarything = function( config, callback ) {
   };
 
   $.ajax({
-    url: 'http://www.librarything.com/api_getdata.php?booksort=entry_REV&userid=' + config.user,
+    url: 'https://www.librarything.com/api_getdata.php?booksort=entry_REV&userid=' + config.user,
     dataType: 'jsonp',
     success: function( data ) {
       callback(parseLibraryThing(data));
@@ -1966,7 +1971,7 @@ $.fn.lifestream.feeds.reddit = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://www.reddit.com/user/" + config.user + ".json",
+    url: "https://pay.reddit.com/user/" + config.user + ".json",
     dataType: "jsonp",
     jsonp:"jsonp",
     success: function( data ) {
@@ -2552,7 +2557,7 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://" + language +
+    url: "https://" + language +
       ".wikipedia.org/w/api.php?action=query&ucuser=" +
       config.user + "&list=usercontribs&ucdir=older&format=json",
     dataType: "jsonp",
@@ -2589,7 +2594,8 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
 $.fn.lifestream.feeds.wordpress = function( config, callback ) {
 
   var template = $.extend({},
@@ -2694,7 +2700,7 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   };
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+    url: "https://gdata.youtube.com/feeds/api/users/" + config.user +
       "/favorites?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {
@@ -2703,7 +2709,7 @@ $.fn.lifestream.feeds.youtube = function( config, callback ) {
   });
 
   $.ajax({
-    url: "http://gdata.youtube.com/feeds/api/users/" + config.user +
+    url: "https://gdata.youtube.com/feeds/api/users/" + config.user +
       "/uploads?v=2&alt=jsonc",
     dataType: 'jsonp',
     success: function( data ) {

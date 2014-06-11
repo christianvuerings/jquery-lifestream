@@ -8,7 +8,7 @@ $.fn.lifestream.feeds.dribbble = function( config, callback ) {
       config.template);
 
     $.ajax({
-      url: "http://api.dribbble.com/players/" + config.user + "/shots",
+      url: "https://api.dribbble.com/players/" + config.user + "/shots",
       dataType: "jsonp",
       success: function( data ) {
         var output = [], i = 0, j;

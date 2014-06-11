@@ -10,7 +10,7 @@ $.fn.lifestream.feeds.wikipedia = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "http://" + language +
+    url: "https://" + language +
       ".wikipedia.org/w/api.php?action=query&ucuser=" +
       config.user + "&list=usercontribs&ucdir=older&format=json",
     dataType: "jsonp",
