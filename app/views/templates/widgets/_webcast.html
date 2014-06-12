@@ -31,9 +31,13 @@
                   <div data-cc-youtube-directive="selectedVideo.id"></div>
                 </div>
               </div>
-              <div data-ng-if="itunes.video" class="cc-widget-webcast-itunes">
-                <a data-ng-href="{{itunes.video}}"><i class="fa fa-apple cc-widget-webcast-apple"></i> iTunes U video</a>
-              </div>
+              <ul class="cc-widget-webcast-links" data-ng-if="itunes.video">
+                <li>
+                  <a data-ng-href="{{itunes.video}}">
+                    <i class="fa fa-apple cc-widget-webcast-apple"></i> iTunes U video
+                  </a>
+                </li>
+              </ul>
               <div data-ng-if="!videos && !itunes.video" class="cc-widget-webcast-error">
                 No video information available.
               </div>
@@ -48,7 +52,7 @@
                 </div>
               </div>
               <ul class="cc-widget-webcast-links">
-                <li class="cc-widget-webcast-download" data-ng-if="selectedAudio.downloadUrl">
+                <li data-ng-if="selectedAudio.downloadUrl">
                   <a data-ng-href="{{selectedAudio.downloadUrl}}">
                     <i class="fa fa-download cc-widget-webcast-icon-link"></i> Download audio
                   </a>
