@@ -43,7 +43,18 @@ body {
       margin-top: 10px;
       text-align: right;
       a {
-        padding-left: 21px;
+        border-left: 1px solid $cc-color-black;
+        padding-left: 7px;
+        padding-right: 5px;
+      }
+    }
+    .cc-footer-links-no-border {
+      padding-right: 3px;
+      a {
+        border-left: none;
+        font-size: 16px;
+        padding-left: 0;
+        padding-right: 0;
       }
     }
 
@@ -62,9 +73,11 @@ body {
         clear: both;
         float: left;
         a {
+          border-left: none;
           border-right: 1px solid $cc-color-button-selected;
           font-weight: normal;
-          padding: 0 10px 0;
+          padding-left: 2px;
+          padding-right: 5px;
           &:first-child {
             padding-left: 0;
           }
@@ -74,13 +87,21 @@ body {
           }
         }
       }
+      .cc-footer-links-no-border {
+        a {
+         border-right: none;
+         font-size: 16px;
+         padding-left: 0;
+        }
+      }
       .cc-footer-form {
         h3 {
           color: $cc-color-white;
         }
       }
+      .fa-facebook-square {
+        color: $cc-color-white !important;
+      }
     }
-
   }
 }
-
