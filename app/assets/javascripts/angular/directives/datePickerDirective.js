@@ -11,6 +11,10 @@
         // Keep track on whether the picker has been initialized before or not
         scope.pickerInitialized = false;
 
+        // Set the type attribute to button
+        // otherwise the datepicker might show when you hit enter to submit the form
+        elm.attr('type', 'button');
+
         var initializePicker = function() {
           scope.pickerInitialized = true;
 
