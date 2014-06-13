@@ -1,12 +1,12 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccFocusDirective', function($timeout) {
+  angular.module('calcentral.directives').directive('ccFocusDirective', function() {
     return {
       link: function(scope, elm, attrs) {
         scope.$watch(attrs.ccFocusDirective, function(value) {
           if (value === true) {
-            $timeout(function() {
+            scope.$evalAsync(function() {
               elm[0].focus();
             });
           }
