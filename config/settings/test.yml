@@ -49,6 +49,7 @@ features:
   cal1card: true
   profile_page: true
   audio: true
+  regstatus: true
 
 cache:
   store: "memory"

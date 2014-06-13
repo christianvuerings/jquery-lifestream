@@ -17,7 +17,7 @@
     <div class="cc-popover-title">
       <h4>Status</h4>
     </div>
-    <div class="cc-popover-noitems" data-ng-if="count === 0 && !statusLoading && studentInfo.regBlock.available && minimumAmountDue <= 0">
+    <div class="cc-popover-noitems" data-ng-if="count === 0 && !statusLoading && (studentInfo.regBlock.available || !apiService.user.profile.features.regstatus) && minimumAmountDue <= 0">
       <i class="cc-left fa fa-check-circle cc-icon-green"></i>
       <strong>No Active Alerts</strong>
     </div>
@@ -29,7 +29,7 @@
           data-cc-loading-process="Loading...">
         </div>
       </li>
-      <li class="cc-popover-item" data-ng-if="studentInfo.regStatus.needsAction">
+      <li class="cc-popover-item" data-ng-if="studentInfo.regStatus.needsAction && apiService.user.profile.features.regstatus">
         <a href="/academics">
           <div class="cc-launcher-status-description">
             <i class="cc-left fa fa-exclamation-circle"></i>

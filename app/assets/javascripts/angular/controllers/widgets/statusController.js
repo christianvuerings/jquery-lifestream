@@ -4,7 +4,7 @@
   /**
    * Status controller
    */
-  angular.module('calcentral.controllers').controller('StatusController', function(activityFactory, badgesFactory, financesFactory, $scope, $q) {
+  angular.module('calcentral.controllers').controller('StatusController', function(activityFactory, apiService, badgesFactory, financesFactory, $scope, $q) {
 
     // Keep track on whether the status has been loaded or not
     var hasLoaded = false;
@@ -16,7 +16,7 @@
 
       $scope.studentInfo = data.studentInfo;
 
-      if (data.studentInfo.regStatus.needsAction) {
+      if (data.studentInfo.regStatus.needsAction && apiService.user.profile.features.regstatus) {
         $scope.count++;
         $scope.hasAlerts = true;
       }
