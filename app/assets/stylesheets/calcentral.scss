@@ -101,6 +101,11 @@ form {
 
 }
 
+/* Audio */
+audio {
+  max-width: 100%;
+}
+
 /* Buttons */
 button {
   @include box-shadow(none);
