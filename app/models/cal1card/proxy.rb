@@ -11,7 +11,7 @@ module Cal1card
     end
 
     def get
-      self.class.smart_fetch_from_cache({id: @uid}) do
+      self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "An error occurred retrieving data for Cal 1 Card. Please try again later."}) do
         internal_get
       end
     end
@@ -35,9 +35,8 @@ module Cal1card
           )
         end
         if response.code >= 400
-          body = "Cal1Card is currently unavailable. Please try again later."
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
-            body: body,
+            body: "An error occurred retrieving data for Cal 1 Card. Please try again later.",
             statusCode: response.code
           })
         else
