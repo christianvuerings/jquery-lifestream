@@ -5,7 +5,7 @@
 
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccScrollToDirective', function($rootScope, $timeout, $window) {
+  angular.module('calcentral.directives').directive('ccScrollToDirective', function($rootScope, $window) {
 
     return {
       restrict: 'AC',
@@ -39,12 +39,12 @@
             }
 
             routeChange = $rootScope.$on('$routeChangeSuccess', function() {
-              $timeout(scrollTo, 0);
+              scope.$evalAsync(scrollTo, 0);
             });
           };
 
-          // We need to wrap this in a $timeout since we need to wait until the DOM has been rendered
-          return $timeout(scrollTo, 0);
+          // We need to wrap this in an evalAsync since we need to wait until the DOM has been rendered
+          return scope.$evalAsync(scrollTo, 0);
 
         };
       }
