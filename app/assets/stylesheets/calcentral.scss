@@ -341,6 +341,9 @@ button {
     option {
       width: 100%;
     }
+    &::-ms-expand {
+      display: none;
+    }
   }
 }
 
