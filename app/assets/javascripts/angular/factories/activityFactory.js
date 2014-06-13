@@ -4,9 +4,10 @@
 
   /**
    * Activity Factory - get data from the activity API
+   * @param {Object} apiService The API service
    * @param {Object} $http The $http service from Angular
    */
-  angular.module('calcentral.factories').factory('activityFactory', function($http) {
+  angular.module('calcentral.factories').factory('activityFactory', function(apiService, $http) {
 
     /**
      * Pare the the activity response
@@ -71,6 +72,9 @@
       var createSources = function(original) {
         var sources = [];
         original.map(function(item) {
+          if (!apiService.user.profile.features.regstatus && item.isRegstatusActivity) {
+            return false;
+          }
           if (sources.indexOf(item.source) === -1) {
             sources.push(item.source);
           }
@@ -99,6 +103,9 @@
             // the multiElementArray stores arrays of multiElementSource for
             // items captured by the filter below.
             if (!value.date) {
+              return false;
+            }
+            if (!apiService.user.profile.features.regstatus && value.isRegstatusActivity) {
               return false;
             }
             var multiElementSource = originalSource.filter(function(subValue, subIndex) {
@@ -161,16 +168,16 @@
         return undatedResults.concat(datedResults);
       };
 
-      data.length = activities.length;
       data.list = threadOnSource(activities);
       data.sources = createSources(activities);
+      data.length = data.list.length;
       data.typeToIcon = typeToIcon;
       return data;
     };
 
     var getActivity = function() {
       return $http.get('/api/my/activities').then(parseActivities);
-      // return $http.get('/dummy/json/activities.json');
+      // return $http.get('/dummy/json/activities.json').then(parseActivities);
     };
 
     var getFinaidActivity = function() {

@@ -85,3 +85,4 @@ features:
   profile_page: true
   reauthentication: false
   audio: true
+  regstatus: true
