@@ -97,6 +97,9 @@
       templateUrl: 'templates/canvas_embedded/course_add_user.html',
       controller: 'CanvasCourseAddUserController'
     }).
+    when('/canvas/embedded/course_mediacasts', {
+      templateUrl: 'templates/canvas_embedded/course_mediacasts.html'
+    }).
     when('/canvas/rosters/:canvasCourseId', {
       templateUrl: 'templates/canvas_embedded/roster.html'
     }).
