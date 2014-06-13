@@ -4,7 +4,10 @@
   /**
    * Webcast controller
    */
-  angular.module('calcentral.controllers').controller('WebcastController', function(apiService, $http, $location, $routeParams, $scope) {
+  angular.module('calcentral.controllers').controller('WebcastController', function(apiService, $http, $route, $routeParams, $scope) {
+    // Is this for an official campus class or for a Canvas course site?
+    var courseMode = 'campus';
+
     /**
      * Select the first options in the video / audio feed
      */
@@ -19,7 +22,7 @@
 
     var webcastUrl = function(courseId) {
       //return '/dummy/json/media.json';
-      if ($scope.courseMode === 'canvas') {
+      if (courseMode === 'canvas') {
         return '/api/canvas/media/' + courseId;
       } else {
         return '/api/media/' + courseId;
@@ -52,14 +55,13 @@
       $scope.switchSelectedOption(options[0]);
     };
 
-    if ($routeParams.canvasCourseId || ($location.path().indexOf('/canvas/embedded') !== -1)) {
-      $scope.courseMode = 'canvas'
+    if ($routeParams.canvasCourseId || $route.current.isEmbedded) {
+      courseMode = 'canvas';
       var canvasCourseId = $routeParams.canvasCourseId || 'embedded';
       apiService.util.setTitle('Course Mediacasts');
       getWebcasts(canvasCourseId);
       setSelectOptions();
     } else {
-      $scope.courseMode = 'campus'
       $scope.$watchCollection('[$parent.selectedCourse.sections, api.user.profile.features.videos]', function(returnValues) {
         if (returnValues[0] && returnValues[1] === true) {
           formatClassTitle();
