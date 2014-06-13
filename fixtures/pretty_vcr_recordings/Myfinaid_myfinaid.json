@@ -53,7 +53,7 @@
       },
       "recorded_at": "Wed, 28 Aug 2013 19:43:42 GMT"
     },
-		{
+    {
       "request": {
         "method": "get",
         "uri": "https://apis-qa.berkeley.edu/myfinaid/11667051/finaid?aidYear=2014",

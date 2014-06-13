@@ -11,7 +11,7 @@ describe Canvas::RefreshAllCampusData do
     DateTime.stub(:now).and_return(frozen_moment_in_time)
   end
 
-	it "establishes the csv import files" do
+  it "establishes the csv import files" do
     expect(subject.users_csv_filename).to be_an_instance_of String
     expect(subject.users_csv_filename).to eq "tmp/canvas/canvas-2014-01-01-users-incremental.csv"
     expect(subject.term_to_memberships_csv_filename).to be_an_instance_of Hash
