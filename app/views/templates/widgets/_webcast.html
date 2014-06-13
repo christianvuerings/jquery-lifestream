@@ -28,7 +28,7 @@
                   <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
                 </div>
                 <div class="cc-youtube-video">
-                  <div data-cc-youtube-directive="selectedVideo.id"></div>
+                  <div data-cc-youtube-directive="selectedVideo.id" data-cc-youtube-directive-title="{{selectedVideo.lecture}}"></div>
                 </div>
               </div>
               <ul class="cc-widget-webcast-links" data-ng-if="itunes.video">

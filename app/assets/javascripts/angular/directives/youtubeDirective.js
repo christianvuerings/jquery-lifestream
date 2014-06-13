@@ -10,10 +10,11 @@
           var videoid = value;
           var videourl = 'https://www.youtube.com/embed/' + videoid + '?version=3&f=playlists&app=youtube_gdata&showinfo=0&theme=light&modestbranding=1&autoplay=1&html5=1';
           var imageUrl = $sce.trustAsResourceUrl('https://img.youtube.com/vi/' + videoid + '/hqdefault.jpg');
+          var title = attrs.ccYoutubeDirectiveTitle ? ' - ' + attrs.ccYoutubeDirectiveTitle : '';
 
           // Templates for the player
           var templates = {
-            image: '<button id="cc-youtube-image-placeholder" class="cc-youtube-image-placeholder" tabindex="0"><span class="cc-visuallyhidden">Play video</span><img ng-src="' + imageUrl + '" alt=""></img><div class="cc-youtube-thumbnail-button"></div></button>',
+            image: '<button id="cc-youtube-image-placeholder" class="cc-youtube-image-placeholder" tabindex="0"><span class="cc-visuallyhidden">Play video' + title + '</span><img ng-src="' + imageUrl + '" alt=""></img><div class="cc-youtube-thumbnail-button"></div></button>',
             video: '<div id="cc-youtube-video-placeholder" class="cc-youtube-video-placeholder" tabindex="0"><iframe type="text/html" width="100%" height="100%" src=' + videourl + ' frameborder="0" allowfullscreen></iframe></div>'
           };
 
