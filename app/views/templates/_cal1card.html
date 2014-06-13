@@ -4,7 +4,8 @@
       <h2>Cal 1 Card</h2>
     </div>
     <div data-cc-spinner-directive>
-      <ul class="cc-widget-list">
+      <div class="cc-widget-text" data-ng-if="body" data-ng-bind="body"></div>
+      <ul class="cc-widget-list" data-ng-if="!body">
         <li class="cc-clearfix-container" data-ng-if="cal1cardLost === 'Lost'">
           <div class="cc-cal1card-header">
             <strong>Did you know?</strong>

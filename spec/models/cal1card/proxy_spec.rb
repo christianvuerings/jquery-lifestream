@@ -43,7 +43,7 @@ describe Cal1card::Proxy do
       before(:each) {
         stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_raise(Errno::ECONNREFUSED)
       }
-      its([:body]) { should eq("An unknown server error occurred") }
+      its([:body]) { should eq("An error occurred retrieving data for Cal 1 Card. Please try again later.") }
       its([:statusCode]) { should eq(503) }
     end
 
@@ -51,7 +51,7 @@ describe Cal1card::Proxy do
       before(:each) {
         stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_return(status: 506)
       }
-      its([:body]) { should eq("Cal1Card is currently unavailable. Please try again later.") }
+      its([:body]) { should eq("An error occurred retrieving data for Cal 1 Card. Please try again later.") }
       its([:statusCode]) { should eq(506) }
     end
   end
