@@ -4,8 +4,7 @@
   /**
    * Webcast controller
    */
-  angular.module('calcentral.controllers').controller('WebcastController', function($http, $scope) {
-
+  angular.module('calcentral.controllers').controller('WebcastController', function(apiService, $http, $routeParams, $scope) {
     /**
      * Select the first options in the video / audio feed
      */
@@ -18,8 +17,17 @@
       }
     };
 
+    var webcastUrl = function(courseId) {
+      //return '/dummy/json/media.json';
+      if ($scope.courseMode === 'canvas') {
+        return '/api/canvas/media/' + courseId;
+      } else {
+        return '/api/media/' + courseId;
+      }
+    };
+
     var getWebcasts = function(title) {
-      $http.get('/api/media/' + title).success(function(data) {
+      $http.get(webcastUrl(title)).success(function(data) {
         angular.extend($scope, data);
         selectFirstOptions();
       });
@@ -44,12 +52,20 @@
       $scope.switchSelectedOption(options[0]);
     };
 
-    $scope.$watchCollection('[$parent.selectedCourse.sections, api.user.profile.features.videos]', function(returnValues) {
-      if (returnValues[0] && returnValues[1] === true) {
-        formatClassTitle();
-        setSelectOptions();
-      }
-    });
+    if ($routeParams.canvasCourseId) {
+      apiService.util.setTitle('Course Mediacasts');
+      $scope.courseMode = 'canvas'
+      getWebcasts($routeParams.canvasCourseId);
+      setSelectOptions();
+    } else {
+      $scope.courseMode = 'campus'
+      $scope.$watchCollection('[$parent.selectedCourse.sections, api.user.profile.features.videos]', function(returnValues) {
+        if (returnValues[0] && returnValues[1] === true) {
+          formatClassTitle();
+          setSelectOptions();
+        }
+      });
+    }
 
   });
 

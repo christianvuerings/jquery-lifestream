@@ -79,8 +79,7 @@
       isPublic: true
     }).
     when('/canvas/embedded/rosters', {
-      templateUrl: 'templates/canvas_embedded/roster.html',
-      controller: 'RosterController'
+      templateUrl: 'templates/canvas_embedded/roster.html'
     }).
     when('/canvas/embedded/course_provision_account_navigation', {
       templateUrl: 'templates/canvas_embedded/course_provision.html',
@@ -112,6 +111,9 @@
     when('/canvas/course_add_user/:canvas_course_id', {
       templateUrl: 'templates/canvas_embedded/course_add_user.html',
       controller: 'CanvasCourseAddUserController'
+    }).
+    when('/canvas/course_mediacasts/:canvasCourseId', {
+      templateUrl: 'templates/canvas_embedded/course_mediacasts.html'
     }).
     // Redirect to a 404 page
     otherwise({
