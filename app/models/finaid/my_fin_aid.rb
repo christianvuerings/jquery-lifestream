@@ -77,7 +77,7 @@ module Finaid
           raw_status = document.css("Status").text.strip
           append_status(date, raw_status, result)
         rescue ArgumentError
-          logger.error "Unable to decode finAid status for document: #{document.inspect} date: #{date.inspect}, status: #{status.inspect}"
+          logger.error "Unable to decode finAid status for document: #{document.inspect} date: #{date.inspect}, status: #{raw_status.inspect}"
           next
         end
 
