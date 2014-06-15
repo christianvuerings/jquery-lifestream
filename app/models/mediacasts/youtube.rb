@@ -22,7 +22,7 @@ module Mediacasts
 
     def request_internal(params = {})
       return {} unless Settings.features.videos
-      response = FakeableProxy.wrap_request(APP_ID + "_" + "videos", @fake, {:match_requests_on => [:method, :path]}) {
+      response = ActiveSupport::Notifications.instrument('proxy', { url: @url, class: self.class }) do
         Faraday::Connection.new(
           :url => @url,
           :params => @params,
@@ -30,7 +30,7 @@ module Mediacasts
             :timeout => Settings.application.outgoing_http_timeout
           }
         ).get
-      }
+      end
       if response.status >= 400
         raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}")
       end
