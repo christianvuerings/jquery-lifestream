@@ -2,10 +2,10 @@
   <div data-ng-class="{'cc-footer-actingas':(api.user.profile.actingAsUid)}">
     <div data-ng-click="footer.showInfo=!footer.showInfo" data-cc-accessible-focus-directive class="cc-footer-berkeley">
       <div class="hide-for-small cc-left cc-print-show">
-        <%= render 'templates/svg/uc_berkeley_logo' %>
+        <div data-ng-include="'svg/uc_berkeley_logo.html'"></div>
       </div>
       <div class="hide-for-medium-up cc-print-hide">
-        <%= render 'templates/svg/uc_berkeley_logo_small' %>
+        <div data-ng-include="'svg/uc_berkeley_logo_small.html'"></div>
       </div>
       <div class="cc-footer-copyright">&copy; <span data-ng-bind="api.date.now | date:'yyyy'"></span> UC Regents</div>
     </div>
@@ -48,5 +48,4 @@
       </form>
     </div>
   </div>
-
 </footer>
