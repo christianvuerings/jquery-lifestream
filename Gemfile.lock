@@ -69,6 +69,10 @@ GEM
     angular-gem (1.2.16)
       coffee-script (~> 2.2.0)
       railties (>= 3.1)
+    angular-rails-templates (0.1.2)
+      railties (>= 3.1)
+      sprockets
+      tilt
     ansi (1.4.3)
     arel (4.0.2)
     autoparse (0.3.3)
@@ -471,6 +475,7 @@ DEPENDENCIES
   activeresource (~> 4.0.0)
   addressable (~> 2.3.4)
   angular-gem (= 1.2.16)
+  angular-rails-templates (~> 0.1.2)
   bootstrap-sass (~> 3.1.1)
   bundler (~> 1.6.1)
   cancan (~> 1.6.10)
