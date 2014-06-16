@@ -58,7 +58,7 @@
       controller: 'ProfileController'
     }).
     when('/finances/details', {
-      templateUrl: 'templates/cars_details.html',
+      templateUrl: 'cars_details.html',
       controller: 'MyFinancesController'
     }).
     when('/settings', {
