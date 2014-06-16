@@ -37,11 +37,11 @@
     // We actually need to duplicate the campus items, more info on
     // http://stackoverflow.com/questions/12524533
     when('/campus', {
-      templateUrl: 'templates/campus.html',
+      templateUrl: 'campus.html',
       controller: 'CampusController'
     }).
     when('/campus/:category', {
-      templateUrl: 'templates/campus.html',
+      templateUrl: 'campus.html',
       controller: 'CampusController'
     }).
     when('/dashboard', {
