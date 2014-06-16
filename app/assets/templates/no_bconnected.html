@@ -1,4 +1,3 @@
-<script type="text/ng-template" id="templates/no_bconnected.html">
 <p data-ng-show="mode === 'upnext' || mode === 'tasks'">
   <span data-ng-if="mode === 'tasks'">To manage your personal tasks</span><span data-ng-if="mode === 'upnext'">To see events from your bCal calendar</span>, <button data-ng-if="!api.user.profile['actingAsUid']" class="cc-button-link" data-ng-click="api.user.enableOAuth('Google')">Connect</button><span data-ng-if="api.user.profile['actingAsUid']">connect</span> CalCentral to your bConnected Google calendar account, then Accept. <button class="cc-button-link" data-ng-show="!showReminder" data-ng-click="showReminder=!showReminder">Show more</button>
 </p>
@@ -8,4 +7,3 @@
 </div>
 <p data-ng-if="showReminder">Why connect? From your Dashboard, you will be able to see when you have new bMail email messages and bCal calendar events, as well as your tasks and today's events.</p>
 <p data-ng-if="showReminder">Not ready? You can connect later using the <a href="/settings">Settings page</a>.</p>
-</script>
