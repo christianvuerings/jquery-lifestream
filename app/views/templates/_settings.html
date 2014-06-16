@@ -7,7 +7,7 @@
 
         <h2>Connected Services</h2>
         <div data-ng-repeat="service in connectedServices">
-          <div class="row cc-settings-service-row" data-ng-init="loopname='connected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
+          <div class="row cc-settings-service-row" data-ng-init="loopname='connected'" data-ng-include src="'settings_service_loop.html'"></div>
         </div>
 
       </div>
@@ -19,7 +19,7 @@
         <h2>Services to Connect</h2>
 
         <div data-ng-repeat="service in nonConnectedServices">
-          <div class="row cc-settings-service-row" data-ng-init="loopname='unconnected'" data-ng-include src="'templates/settings_service_loop.html'"></div>
+          <div class="row cc-settings-service-row" data-ng-init="loopname='unconnected'" data-ng-include src="'settings_service_loop.html'"></div>
         </div>
 
       </div>
