@@ -44,7 +44,7 @@
               <li
                 data-ng-repeat="task in overdueTasks"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
-                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+                <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
             <p data-ng-show="!overdueTasks.length" class="cc-widget-text">
@@ -58,7 +58,7 @@
               <li
                 data-ng-repeat="task in dueTodayTasks"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
-                  <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
             <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text">
@@ -72,7 +72,7 @@
               <li
                 data-ng-repeat="task in futureTasks"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
-                <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+                <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
             <p data-ng-show="!futureTasks.length" class="cc-widget-text">
@@ -89,7 +89,7 @@
           <li
             data-ng-repeat="task in unscheduledTasks"
             data-ng-class="{'cc-widget-list-selected': task.show}">
-            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+            <div data-ng-include src="'dashboard_task_loop.html'"></div>
           </li>
         </ul>
         <p data-ng-show="!unscheduledTasks.length" class="cc-widget-text">
@@ -104,7 +104,7 @@
           <li
             data-ng-repeat="task in completedTasks"
             data-ng-class="{'cc-widget-list-selected': task.show}">
-            <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+            <div data-ng-include src="'dashboard_task_loop.html'"></div>
           </li>
         </ul>
         <p data-ng-show="!completedTasks.length" class="cc-widget-text">
