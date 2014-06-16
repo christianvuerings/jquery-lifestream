@@ -19,7 +19,7 @@
       controller: 'AcademicsController'
     }).
     when('/academics/semester/:semesterSlug', {
-      templateUrl: 'templates/academics_semester.html',
+      templateUrl: 'academics_semester.html',
       controller: 'AcademicsController'
     }).
     when('/academics/semester/:semesterSlug/class/:classSlug', {
