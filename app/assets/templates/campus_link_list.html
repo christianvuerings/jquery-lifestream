@@ -1,0 +1,12 @@
+<div class="cc-list-link-container" data-ng-repeat="subcategory in subcategories">
+  <h3>{{subcategory}}</h3>
+
+  <ul class="cc-list-links">
+    <li data-ng-repeat="link in links | orderBy:'name' | campusLinksSubcategoryFilter:subcategory">
+      <a data-ng-href="{{link.url}}"
+        data-ng-click="api.analytics.trackExternalLink('Campus links', subcategory, link.url)"
+        title="{{link.description}}">{{link.name}}</a>
+    </li>
+  </ul>
+</div>
+<div class="cc-widget-text" data-ng-if="links.length === 0">There are no links available.</div>
