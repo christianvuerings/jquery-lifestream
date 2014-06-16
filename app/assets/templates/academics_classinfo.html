@@ -148,7 +148,7 @@
               <div class="cc-textbooks-bookstore" data-ng-if="!allSectionsHaveChoices">
                 You can buy textbooks at the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a>.
               </div>
-              <div ng-include="'templates/textbook.html'"></div>
+              <div ng-include="'textbook.html'"></div>
             </div>
             <div class="cc-error-message" data-ng-if="books.hasBooks === false" data-ng-bind="books.bookUnavailableError"></div>
             <div class="cc-error-message" data-ng-if="textbookError.body" data-ng-bind="textbookError.body">
