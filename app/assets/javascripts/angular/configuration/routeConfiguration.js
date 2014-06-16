@@ -62,7 +62,7 @@
       controller: 'MyFinancesController'
     }).
     when('/settings', {
-      templateUrl: 'templates/settings.html',
+      templateUrl: 'settings.html',
       controller: 'SettingsController'
     }).
     when('/tools', {
