@@ -27,7 +27,7 @@
       controller: 'AcademicsController'
     }).
     when('/academics/booklist', {
-      templateUrl: 'templates/academics_booklist.html',
+      templateUrl: 'academics_booklist.html',
       controller: 'AcademicsController'
     }).
     when('/academics/teaching-semester/:teachingSemesterSlug/class/:classSlug', {
