@@ -50,7 +50,7 @@
       fireUpdatedFeeds: true
     }).
     when('/finances', {
-      templateUrl: 'templates/myfinances.html',
+      templateUrl: 'myfinances.html',
       controller: 'MyFinancesController'
     }).
     when('/profile', {
@@ -121,7 +121,7 @@
     }).
     // Redirect to a 404 page
     otherwise({
-      templateUrl: 'templates/404.html',
+      templateUrl: '404.html',
       controller: 'ErrorController',
       isPublic: true
     });
