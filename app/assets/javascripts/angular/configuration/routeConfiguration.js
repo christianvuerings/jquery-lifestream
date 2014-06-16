@@ -70,7 +70,7 @@
       controller: 'ToolsController'
     }).
     when('/tools/styles', {
-      templateUrl: 'templates/tools_styles.html',
+      templateUrl: 'tools_styles.html',
       controller: 'StylesController'
     }).
     when('/uid_error', {
