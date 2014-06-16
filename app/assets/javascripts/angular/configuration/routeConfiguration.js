@@ -45,7 +45,7 @@
       controller: 'CampusController'
     }).
     when('/dashboard', {
-      templateUrl: 'templates/dashboard.html',
+      templateUrl: 'dashboard.html',
       controller: 'DashboardController',
       fireUpdatedFeeds: true
     }).
