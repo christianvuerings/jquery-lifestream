@@ -66,7 +66,7 @@
       controller: 'SettingsController'
     }).
     when('/tools', {
-      templateUrl: 'templates/tools_index.html',
+      templateUrl: 'tools_index.html',
       controller: 'ToolsController'
     }).
     when('/tools/styles', {
