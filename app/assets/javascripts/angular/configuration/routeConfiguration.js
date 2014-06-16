@@ -74,7 +74,7 @@
       controller: 'StylesController'
     }).
     when('/uid_error', {
-      templateUrl: 'templates/uid_error.html',
+      templateUrl: 'uid_error.html',
       controller: 'uidErrorController',
       isPublic: true
     }).
