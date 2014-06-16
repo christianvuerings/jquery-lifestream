@@ -91,6 +91,18 @@ $cc-color-splash-blue-dark: #025A86;
       width: 100%;
     }
   }
+  .cc-page-splash-image-waitlist {
+    background-image: asset-url("splash_waitlist_625x415.png");
+  }
+  .cc-page-splash-image-telebears {
+    background-image: asset-url("splash_telebears_625x415.png");
+  }
+  .cc-page-splash-image-bconnected {
+    background-image: asset-url("splash_bconnected_625x415.png");
+  }
+  .cc-page-splash-image-cfv {
+    background-image: asset-url("splash_cfv_625x415.png");
+  }
   .cc-page-splash-info {
     margin: 20px 10px 0;
   }
@@ -99,11 +111,17 @@ $cc-color-splash-blue-dark: #025A86;
     @include box-shadow(3px 3px 5px $cc-color-placeholder);
     margin-bottom: 20px;
   }
+  .cc-page-splash-info-image {
+    padding-bottom: 66.4%;
+  }
   .cc-page-splash-info-text {
     text-align: left;
   }
   .cc-page-splash-logo {
+    background-image: asset-url("svg/calcentral_logo_360x55.svg");
     margin: 20px auto;
+    max-width: 360px;
+    padding-bottom: 55px;
   }
   .cc-page-splash-logo-container {
     margin: 0 auto;
@@ -135,6 +153,7 @@ $cc-color-splash-blue-dark: #025A86;
     }
     .cc-page-splash-logo {
       max-width: 270px;
+      padding-bottom: 40px;
     }
   }
 

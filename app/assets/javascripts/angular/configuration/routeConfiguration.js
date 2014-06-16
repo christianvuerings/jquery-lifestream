@@ -10,7 +10,7 @@
 
     // List all the routes
     $routeProvider.when('/', {
-      templateUrl: 'templates/splash.html',
+      templateUrl: 'splash.html',
       controller: 'SplashController',
       isPublic: true
     }).
