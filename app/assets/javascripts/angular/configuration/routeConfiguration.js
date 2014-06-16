@@ -15,7 +15,7 @@
       isPublic: true
     }).
     when('/academics', {
-      templateUrl: 'templates/academics.html',
+      templateUrl: 'academics.html',
       controller: 'AcademicsController'
     }).
     when('/academics/semester/:semesterSlug', {
