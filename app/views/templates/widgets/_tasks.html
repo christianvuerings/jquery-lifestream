@@ -36,7 +36,7 @@
       </div>
 
       <div data-ng-switch-when="scheduled" role="tabpanel" aria-live="polite">
-        <div data-ng-include src="'templates/dashboard_task_noitems.html'" data-onload="tasksModeOpposite='unscheduled'"></div>
+        <div data-ng-include src="'dashboard_task_noitems.html'" data-onload="tasksModeOpposite='unscheduled'"></div>
         <div data-ng-hide="counts.scheduled === 0">
           <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
             <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
@@ -83,7 +83,7 @@
       </div>
 
       <div data-ng-switch-when="unscheduled" role="tabpanel" aria-live="polite">
-        <div data-ng-include src="'templates/dashboard_task_noitems.html'" data-onload="tasksModeOpposite='scheduled'"></div>
+        <div data-ng-include src="'dashboard_task_noitems.html'" data-onload="tasksModeOpposite='scheduled'"></div>
         <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> <span class="cc-right">Last Modified</span></h3>
         <ul class="cc-widget-tasks-list">
           <li
