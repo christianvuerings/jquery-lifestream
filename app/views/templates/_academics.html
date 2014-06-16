@@ -8,7 +8,7 @@
       </div>
 
       <div data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student"
-        data-ng-include src="'templates/academics_student_summary.html'"></div>
+        data-ng-include src="'academics_student_summary.html'"></div>
 
       <div class="medium-4 columns" data-ng-class="{'pull-8':(!api.user.profile.hasStudentHistory)}">
         <div class="cc-widget cc-widget-last" data-ng-if="api.user.profile.roles.faculty || teachingLength">
