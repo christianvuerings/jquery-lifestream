@@ -54,7 +54,7 @@
       controller: 'MyFinancesController'
     }).
     when('/profile', {
-      templateUrl: 'templates/profile.html',
+      templateUrl: 'profile.html',
       controller: 'ProfileController'
     }).
     when('/finances/details', {

@@ -32,6 +32,11 @@
   .cc-settings-section {
     margin-top: 30px;
   }
+  .cc-settings-service-bconnected-icon {
+    background-image: asset-url("icon_bconnected_32x32.png");
+    max-height: 32px;
+    max-width: 32px;
+  }
   .cc-settings-service-description {
     color: #797979;
   }
