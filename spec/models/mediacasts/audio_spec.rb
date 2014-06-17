@@ -16,13 +16,13 @@ describe Mediacasts::Audio do
 
     it "should get good playUrls" do
       proxy_response = proxy.get
-      play_url = "#{audio_base_url}/media/common/courses/spring_2014/media/english_117s_001/3c7be589-95d0-4a94-80b5-836b9f73e668_audio.m4a"
+      play_url = "#{audio_base_url}/media/common/courses/spring_2014/media/english_117s_001/3c7be589-95d0-4a94-80b5-836b9f73e668_audio.mp3"
       expect(proxy_response[:audio][0][:playUrl]).to eq play_url
     end
 
     it "should get correct downloadUrls" do
       proxy_response = proxy.get
-      download_url = "#{audio_base_url}/download/common/courses/spring_2014/media/english_117s_001/3c7be589-95d0-4a94-80b5-836b9f73e668_audio.m4a"
+      download_url = "#{audio_base_url}/download/common/courses/spring_2014/media/english_117s_001/3c7be589-95d0-4a94-80b5-836b9f73e668_audio.mp3"
       expect(proxy_response[:audio][0][:downloadUrl]).to eq download_url
     end
 
