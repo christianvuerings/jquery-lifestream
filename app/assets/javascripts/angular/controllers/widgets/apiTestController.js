@@ -46,8 +46,8 @@
       request.success(function() {
         runOnLastEndpoint(index);
       }).error(function() {
-          runOnLastEndpoint(index);
-        });
+        runOnLastEndpoint(index);
+      });
     };
 
     var initTestRoutes = function() {

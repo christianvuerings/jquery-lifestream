@@ -98,7 +98,7 @@
     var parseData = function(data) {
       var finances = angular.copy(data);
       for (var i in finances.summary) {
-        if (finances.summary.hasOwnProperty(i)){
+        if (finances.summary.hasOwnProperty(i)) {
           parseDate(finances.summary, i);
           parseAmount(finances.summary, i);
 
@@ -112,7 +112,7 @@
         parseTransBalanceAmount(element);
         parseTransStatus(element, finances.summary);
         for (var j in element) {
-          if (element.hasOwnProperty(j)){
+          if (element.hasOwnProperty(j)) {
 
             parseDate(element, j);
             parseAmount(element, j);
@@ -171,7 +171,7 @@
     var createTerms = function() {
       var terms = [];
       var addedTerms = [];
-      for (var i = 0; i < $scope.myfinances.activity.length; i++){
+      for (var i = 0; i < $scope.myfinances.activity.length; i++) {
         var item = $scope.myfinances.activity[i];
 
         if (addedTerms.indexOf(item.transTerm) === -1) {
@@ -211,7 +211,7 @@
      */
     var createCounts = function() {
       var openCount = 0;
-      for (var i = 0; i < $scope.myfinances.activity.length; i++){
+      for (var i = 0; i < $scope.myfinances.activity.length; i++) {
         var item = $scope.myfinances.activity[i];
 
         if (statuses.open.indexOf(item.transStatus) !== -1) {
@@ -251,7 +251,7 @@
 
     };
 
-    //http://jsfiddle.net/vojtajina/js64b/14/
+    // http://jsfiddle.net/vojtajina/js64b/14/
     $scope.sort = {
       column: 'transDate',
       descending: true

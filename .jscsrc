@@ -1,4 +1,6 @@
 {
+  "disallowDanglingUnderscores": true,
+  "disallowEmptyBlocks": true,
   "disallowKeywords": ["with"],
   "disallowKeywordsOnNewLine": ["else"],
   "disallowMixedSpacesAndTabs": true,
@@ -18,14 +20,22 @@
     "++",
     "--"
   ],
+  "disallowSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+  "disallowSpacesInFunctionDeclaration": {
+    "beforeOpeningRoundBrace": true
+  },
   "disallowSpacesInFunctionExpression": {
     "beforeOpeningRoundBrace": true
   },
   "disallowSpacesInsideArrayBrackets": true,
   "disallowSpacesInsideObjectBrackets": true,
   "disallowSpacesInsideParentheses": true,
+  "disallowTrailingComma": true,
   "disallowTrailingWhitespace": true,
   "excludeFiles": [
+    "app/assets/javascripts/application.js",
     "app/assets/javascripts/lib/analytics.js",
     "coverage/**",
     "public/dummy/js/videos.js"
@@ -96,6 +106,7 @@
     "!=",
     "!=="
   ],
+  "requireSpaceAfterLineComment": true,
   "requireSpaceBeforeBinaryOperators": [
     "+",
     "-",
@@ -107,11 +118,18 @@
     "!=",
     "!=="
   ],
+  "requireSpaceBeforeBlockStatements": true,
+  "requireSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
+  },
   "requireSpacesInConditionalExpression": {
     "afterTest": true,
     "beforeConsequent": true,
     "afterConsequent": true,
     "beforeAlternate": true
+  },
+  "requireSpacesInFunctionDeclaration": {
+    "beforeOpeningCurlyBrace": true
   },
   "requireSpacesInFunctionExpression": {
     "beforeOpeningCurlyBrace": true
@@ -121,6 +139,8 @@
     "checkRedundantParams": true,
     "requireParamTypes": true
   },
-  "validateLineBreaks": "LF"
+  "validateLineBreaks": "LF",
+  "validateIndentation": 2,
+  "validateQuoteMarks": "'"
 }
 

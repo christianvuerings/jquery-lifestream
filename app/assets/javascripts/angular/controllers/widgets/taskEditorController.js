@@ -68,7 +68,7 @@
       apiService.analytics.sendEvent('Tasks', 'Task edited', 'edited: ' + !!changedTask.title);
       $http.post('/api/my/tasks', changedTask).success($scope.editTaskCompleted).error(function() {
         apiService.analytics.sendEvent('Error', 'Task editing failure', 'edited: ' + !!changedTask.title);
-        //Some error notification would be helpful.
+        // Some error notification would be helpful.
       });
 
       $scope.disableEditor();

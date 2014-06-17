@@ -21,7 +21,7 @@
     };
 
     var webcastUrl = function(courseId) {
-      //return '/dummy/json/media.json';
+      // return '/dummy/json/media.json';
       if (courseMode === 'canvas') {
         return '/api/canvas/media/' + courseId;
       } else {

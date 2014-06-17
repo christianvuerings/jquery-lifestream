@@ -122,7 +122,7 @@
         scope.$watch(attr.ngBindHtml, function(value) {
           scope.completeText = value;
 
-          //Set the opened variable - default to false
+          // Set the opened variable - default to false
           scope.opened = false;
           update(scope, element, options);
         });

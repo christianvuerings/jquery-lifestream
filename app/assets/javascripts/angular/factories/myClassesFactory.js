@@ -45,7 +45,7 @@
         'other': []
       };
       angular.forEach(allClassesHash.campusClasses, function(value) {
-        //Unlikely to hit the 'Other' case but doesn't hurt to make it robust
+        // Unlikely to hit the 'Other' case but doesn't hurt to make it robust
         var role = value.role.toLowerCase() || '';
         if (role  === 'instructor' || role === 'student') {
           categorizedClasses[role].push(value);
@@ -78,7 +78,7 @@
     };
 
     var getClasses = function() {
-      //$http.get('/dummy/json/classes.json')
+      // $http.get('/dummy/json/classes.json')
       return $http.get('/api/my/classes').then(parseClasses);
     };
 
