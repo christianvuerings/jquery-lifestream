@@ -54,7 +54,7 @@
       }
     };
 
-    //Expose UIDs to view
+    // Expose UIDs to view
     $scope.admin.recentUIDs = UIDs[RECENT_UID_KEY];
     $scope.admin.savedUIDs = UIDs[SAVED_UID_KEY];
 
@@ -72,7 +72,8 @@
 
     $scope.admin.storeSavedUID = function(uid) {
       var current = UIDs[SAVED_UID_KEY];
-      if (current.indexOf(uid) < 0) { //Only store uid if it isn't already stored
+      // Only store uid if it isn't already stored
+      if (current.indexOf(uid) < 0) {
         storeUID(uid, SAVED_UID_KEY);
       }
     };

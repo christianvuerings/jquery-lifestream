@@ -131,7 +131,7 @@
       preventBubble: preventBubble,
       redirect: redirect,
       setTitle: setTitle,
-      supportsLocalStorage: supportsLocalStorage,
+      supportsLocalStorage: supportsLocalStorage
     };
 
   });

@@ -7,7 +7,7 @@
   angular.module('calcentral.filters').filter('campusLinksSubcategoryFilter', function() {
     return function(items, name) {
       var arrayToReturn = [];
-      for (var i = 0; i < items.length; i++){
+      for (var i = 0; i < items.length; i++) {
         var item = items[i];
         for (var j = 0; j < item.subCategories.length; j++) {
           if (item.subCategories[j] === name) {

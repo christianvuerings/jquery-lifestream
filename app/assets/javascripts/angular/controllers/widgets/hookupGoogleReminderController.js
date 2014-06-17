@@ -10,7 +10,7 @@
       $http.post('/api/google/dismiss_reminder').success(function() {
         apiService.analytics.sendEvent('Preferences', 'Dismiss bConnected reminder card');
         $scope.showReminderCard = false;
-        //force the user.profile to refresh since status has changed.
+        // Force the user.profile to refresh since status has changed.
         $scope.api.user.fetch();
       });
     };

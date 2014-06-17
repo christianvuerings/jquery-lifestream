@@ -232,7 +232,7 @@
     };
 
     var userIsAuthorized = function(courseUserRoles) {
-      if (courseUserRoles.globalAdmin || courseUserRoles.teacher || courseUserRoles.ta || courseUserRoles.designer){
+      if (courseUserRoles.globalAdmin || courseUserRoles.teacher || courseUserRoles.ta || courseUserRoles.designer) {
         return true;
       }
       return false;

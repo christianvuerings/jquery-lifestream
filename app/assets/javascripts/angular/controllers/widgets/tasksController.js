@@ -86,7 +86,7 @@
         $scope.updateTaskLists();
       }).error(function() {
         apiService.analytics.sendEvent('Error', 'Set completed failure', 'completed: ' + !!changedTask.completedDate);
-        //Some error notification would be helpful.
+        // Some error notification would be helpful.
       });
     };
 
@@ -100,7 +100,7 @@
         }
       }).error(function() {
         apiService.analytics.sendEvent('Error', 'Clear completed tasks failure', 'Clear completed tasks failure');
-        //Some error notification would be helpful.
+        // Some error notification would be helpful.
       });
     };
 
@@ -135,7 +135,7 @@
         apiService.analytics.sendEvent('Tasks', 'Delete', task);
       }).error(function() {
         apiService.analytics.sendEvent('Error', 'Delete task failure');
-        //Some error notification would be helpful.
+        // Some error notification would be helpful.
       });
 
     };

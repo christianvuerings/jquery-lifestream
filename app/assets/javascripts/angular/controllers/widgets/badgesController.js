@@ -40,7 +40,8 @@
 
     var dateFormats = {
       today: 'h:mm a',
-      todayAllDay: '', //no need for formatting due to the left calendar widget.
+      // No need for formatting due to the left calendar widget.
+      todayAllDay: '',
       notToday: '(MM/DD) h:mm a',
       notTodayAllDay: 'MM/DD(ddd)'
     };

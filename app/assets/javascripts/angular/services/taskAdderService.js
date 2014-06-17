@@ -4,47 +4,47 @@
 
   angular.module('calcentral.services').service('taskAdderService', function($http, $q, apiService) {
 
-    var _taskPanelState = {
+    var taskPanelState = {
       'isProcessing': false,
       'showAddTask': false,
       'newTask': {}
     };
 
     var getState = function() {
-      return _taskPanelState;
+      return taskPanelState;
     };
 
     var getTaskState = function() {
-      return _taskPanelState.newTask;
+      return taskPanelState.newTask;
     };
 
     var setTaskState = function(task) {
-      _taskPanelState.newTask.title = task.title;
-      _taskPanelState.newTask.notes = task.notes;
-      _taskPanelState.newTask.dueDate = task.dueDate;
+      taskPanelState.newTask.title = task.title;
+      taskPanelState.newTask.notes = task.notes;
+      taskPanelState.newTask.dueDate = task.dueDate;
     };
 
     var resetState = function() {
-      _taskPanelState.isProcessing = false;
-      _taskPanelState.showAddTask = false;
-      _taskPanelState.newTask.title = '';
-      _taskPanelState.newTask.notes = '';
-      _taskPanelState.newTask.dueDate = '';
-      _taskPanelState.newTask.focusInput = false;
+      taskPanelState.isProcessing = false;
+      taskPanelState.showAddTask = false;
+      taskPanelState.newTask.title = '';
+      taskPanelState.newTask.notes = '';
+      taskPanelState.newTask.dueDate = '';
+      taskPanelState.newTask.focusInput = false;
     };
 
     var toggleAddTask = function(value) {
       if (value) {
-        _taskPanelState.showAddTask = value;
+        taskPanelState.showAddTask = value;
       } else {
-        _taskPanelState.showAddTask = !_taskPanelState.showAddTask;
+        taskPanelState.showAddTask = !taskPanelState.showAddTask;
       }
-      apiService.analytics.sendEvent('Tasks', 'Add panel - ' + _taskPanelState.showAddTask ? 'Show' : 'Hide');
+      apiService.analytics.sendEvent('Tasks', 'Add panel - ' + taskPanelState.showAddTask ? 'Show' : 'Hide');
     };
 
     var addTask = function() {
       var rawTask = getTaskState();
-      _taskPanelState.isProcessing = true;
+      taskPanelState.isProcessing = true;
 
       var trackEvent = 'notes: ' + !!rawTask.notes + ' date: ' + !!rawTask.dueDate;
       apiService.analytics.sendEvent('Tasks', 'Add', trackEvent);

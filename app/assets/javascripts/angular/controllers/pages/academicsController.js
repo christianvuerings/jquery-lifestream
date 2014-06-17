@@ -494,7 +494,7 @@
         badgesFactory.getBadges().success(function(data) {
           $scope.studentInfo = data.studentInfo;
         });
-        //$http.get('/dummy/json/academics.json').success(parseAcademics);
+        // $http.get('/dummy/json/academics.json').success(parseAcademics);
       }
     });
 
