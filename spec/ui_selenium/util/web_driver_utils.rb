@@ -13,8 +13,9 @@ class WebDriverUtils
       Rails.logger.info('Browser is Safari')
       Selenium::WebDriver.for :safari
     end
-  rescue
-    puts 'No driver defined'
+  rescue => e
+    Rails.logger.error('Unable to initialize the designated WebDriver')
+    Rails.logger.error e.message + "\n" + e.backtrace.join("\n")
   end
 
   def self.base_url
