@@ -95,7 +95,7 @@ gem "cancan", "~> 1.6.10"
 ##################
 
 # Our very own library for angular dependency!
-gem "angular-gem", "1.2.16"
+gem "angular-gem", "1.2.18.1"
 
 # Datepicker
 gem "pikaday-gem", "~> 1.1.0.0"
