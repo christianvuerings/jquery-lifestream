@@ -32,6 +32,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.cc-image-responsive {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+}
+.cc-image-responsive-square {
+  padding-bottom: 100%;
+}
 .cc-italic {
   font-style: italic;
 }

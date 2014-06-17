@@ -1,0 +1,33 @@
+<div
+  class="cc-page-academics"
+  data-cc-spinner-directive
+  data-ng-show="canViewAcademics"
+>
+  <div data-ng-controller="BooklistController">
+    <h1 class="cc-heading-page-title cc-ellipsis cc-left cc-print-hide">
+      <a href="/academics">My Academics</a> &raquo;
+      <a data-ng-href="/academics/semester/{{semesterSlug}}" data-ng-bind="semesterName"></a> &raquo;
+      Book List
+    </h1>
+
+    <div class="cc-widget medium-8 columns cc-academics-page-left cc-clearfix">
+      <div class="cc-widget-title">
+        <div class="cc-left">
+          <h2>My Book List &raquo; <span data-ng-bind="semesterName"></span></h2>
+        </div>
+      </div>
+      <div data-cc-spinner-directive class="cc-academics-semester-books">
+        <div class="cc-widget-padding" data-ng-if="api.user.profile.features.textbooks && semesterBooks.hasBooks">
+          <div data-ng-repeat="courseBooks in semesterBooks" class="cc-clearfix-container">
+            <h3 class="cc-book-title" data-ng-bind="courseBooks.course"></h3>
+            <div data-ng-repeat="books in courseBooks">
+              <div ng-include="'textbook.html'"></div>
+              <div class="cc-error-message" data-ng-if="books.hasBooks === false" data-ng-bind="books.bookUnavailableError"></div>
+            </div>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<footer class="row" data-ng-controller="FooterController" data-ng-cloak role="complementary">
+  <div data-ng-class="{'cc-footer-actingas':(api.user.profile.actingAsUid)}">
+    <div data-ng-click="footer.showInfo=!footer.showInfo" data-cc-accessible-focus-directive class="cc-footer-berkeley">
+      <div class="hide-for-small cc-left cc-print-show">
+        <div data-ng-include="'svg/uc_berkeley_logo.html'"></div>
+      </div>
+      <div class="hide-for-medium-up cc-print-hide">
+        <div data-ng-include="'svg/uc_berkeley_logo_small.html'"></div>
+      </div>
+      <div class="cc-footer-copyright">&copy; <span data-ng-bind="api.date.now | date:'yyyy'"></span> UC Regents</div>
+    </div>
+
+    <div class="cc-footer-links cc-print-hide">
+      <span class="cc-footer-links-no-border">
+        <a href="http://twitter.com/CalCentral"><i class="fa fa-twitter-square"></i></a>
+        <a href="http://facebook.com/BerkeleyCalCentral"><i class="fa fa-facebook-square"></i></a>
+      </span>
+      <a href="//security.berkeley.edu/policy">Usage Policy</a>
+      <a href="https://ets.berkeley.edu/category/category-tags/calcentral">About</a>
+      <a href="https://ets.berkeley.edu/forms/request-calcentral-support-or-give-feedback">Feedback</a>
+      <a href="https://ets.berkeley.edu/calcentral">Help</a>
+    </div>
+  </div>
+
+  <div class="medium-12 columns" data-ng-if="footer.showInfo">
+    <ul>
+      <li>Hostname: <span data-ng-bind="hostname"></span></li>
+      <li>UID: <span data-ng-bind="api.user.profile.uid" id="cc-footer-uid"></span></li>
+      <li data-ng-if="api.user.profile.actingAsUid">Viewing as UID: <span id="cc-footer-actingas-uid" data-ng-bind="api.user.profile.actingAsUid"></span></li>
+      <li>Application Version: <span data-ng-bind="versions.application"></span></li>
+      <li>API Version: <span data-ng-bind="versions.api"></span></li>
+      <li>Current DB Schema: <span data-ng-bind="versions.currentDbSchema"></span></li>
+      <li>Previous Release DB Schema: <span data-ng-bind="versions.previousReleaseDbSchema"></span></li>
+      <li>Up Since: <span data-ng-bind="firstVisited"></span></li>
+      <li>Links: <a data-ng-href="https://github.com/ets-berkeley-edu/calcentral/commit/{{gitCommit}}">Git commit</a>, <a href="/tools/styles">Styles Reference</a></li>
+    </ul>
+    <button class="cc-button cc-button-blue" data-ng-click="deleteSelf=true">Opt out of CalCentral</button>
+    <div class="cc-footer-confirmation" data-ng-if="deleteSelf">Are you sure?
+      <button class="cc-button cc-button-blue" data-ng-click="api.user.optOut()">Yes</button>
+      <button class="cc-button" data-ng-click="deleteSelf=false">No</button>
+    </div>
+    <div data-ng-controller="BasicAuthController" data-ng-if="api.user.profile.isBasicAuthEnabled">
+      <form class="cc-footer-form" action="" method="post" data-ng-submit="basicauth.connect()">
+        <h3>Basic Auth</h3>
+        <p><input data-ng-model="basicauth.login" name="email" type="text" placeholder="Login (uid)" required /></p>
+        <p><input data-ng-model="basicauth.password" autocomplete="off" name="password" type="password" placeholder="Password" required /></p>
+        <p><button class="cc-button cc-button-blue" type="submit">Login</button></p>
+      </form>
+    </div>
+  </div>
+</footer>

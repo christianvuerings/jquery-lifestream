@@ -1,0 +1,97 @@
+<div class="cc-widget" data-ng-controller="CarsController">
+  <div class="cc-widget-title">
+    <h2 class="cc-left">Billing Summary</h2>
+    <a data-ng-if="!carsDetails && myfinances.activity && !myfinancesError" class="cc-right cc-widget-title-link" href="/finances/details">
+      <strong>Details</strong>
+    </a>
+  </div>
+
+  <div data-cc-spinner-directive>
+    <ul class="cc-widget-list cc-page-myfinances-account-summary-list" data-ng-show="myfinances.summary">
+      <li class="cc-page-myfinances-account-summary-item cc-clearfix-container cc-page-myfinances-dpp" data-ng-if="myfinances.summary.isOnDPP">
+        <div class="small-12 columns">
+          <strong>Deferred Payment Plan</strong>
+        </div>
+        <div class="cc-page-myfinances-dpp-amounts">
+          <div class="small-8 columns cc-print-width-auto">
+            DPP Balance <sup>1</sup>
+          </div>
+          <div class="small-4 columns cc-print-width-auto cc-print-right">
+            <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppBalance"></div>
+          </div>
+          <div class="small-8 columns cc-print-width-auto cc-print-clear" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
+            DPP Normal Installment Amount
+          </div>
+          <div class="small-4 columns cc-print-width-auto cc-print-right" data-ng-if="myfinances.summary.dppNormalInstallmentAmount !== '0.00'">
+            <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.dppNormalInstallmentAmount"></div>
+          </div>
+        </div>
+        <div class="small-12 columns cc-page-myfinances-dpp-note">
+          1: Reflected in charges with DPP listed in Activity
+        </div>
+      </li>
+      <li class="cc-page-myfinances-account-summary-item cc-clearfix-container">
+        <div class="small-8 columns cc-print-width-auto">
+          <strong data-ng-if="myfinances.summary.minimumAmountDueFloat >= 0">
+            Amount Due Now
+          </strong>
+          <strong data-ng-if="myfinances.summary.minimumAmountDueFloat < 0">
+            Credit Balance
+          </strong>
+          <div data-ng-if="myfinances.summary.totalPastDueAmountFloat > 0" class="cc-page-myfinances-red cc-page-myfinances-account-summary-subtitle">Includes Past Due Amount of <span data-cc-amount-directive="myfinances.summary.totalPastDueAmount"></span>
+          </div>
+        </div>
+        <div class="small-4 columns cc-print-width-auto cc-print-right">
+          <div class="cc-page-myfinances-amount">
+            <strong data-cc-amount-directive="myfinances.summary.minimumAmountDue"></strong>
+          </div>
+        </div>
+        <section class="cc-clearfix-container" data-ng-if="myfinances.summary.futureActivity !== '0.00'">
+          <div class="small-8 columns cc-print-width-auto cc-print-clear">
+            Charges Not Yet Due
+          </div>
+          <div class="small-4 columns cc-print-width-auto cc-print-right">
+            <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.futureActivity"></div>
+          </div>
+        </section>
+      </li>
+      <li data-ng-class="{'cc-widget-list-selected': myfinances.show}">
+        <div
+          class="cc-widget-list-hover cc-page-myfinances-account-summary-item"
+          data-ng-class="{'cc-widget-list-hover-opened':(myfinances.show)}"
+          data-cc-accessible-focus-directive
+          data-ng-click="api.widget.toggleShow($event, null, myfinances, 'My Finances - Summary')">
+
+          <div class="small-8 columns cc-print-width-auto">Account Balance
+            <div class="cc-page-myfinances-account-summary-subtitle cc-page-myfinances-light">includes charges not yet due</div>
+          </div>
+          <div class="small-4 columns cc-print-width-auto cc-print-right">
+            <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.accountBalance"></div>
+          </div>
+
+          <div class="cc-page-myfinances-light cc-print-show" data-ng-show="myfinances.show">
+            <div class="small-8 columns cc-print-clear cc-print-width-auto">
+              Last Statement Balance <span class="cc-page-myfinances-lighter">({{myfinances.summary.lastStatementDate | date:'MM/dd/yy'}})</span>
+            </div>
+            <div class="small-4 columns cc-print-width-auto cc-print-right">
+              <div class="cc-page-myfinances-amount" data-cc-amount-directive="myfinances.summary.lastStatementBalance"></div>
+            </div>
+          </div>
+          <div class="small-12 columns cc-page-myfinances-light cc-print-show" data-ng-show="myfinances.show">
+            <a href="https://bearfacts.berkeley.edu/bearfacts/student/CARS/ebill.do?bfaction=accessEBill">View Statements</a>
+          </div>
+        </div>
+      </li>
+      <li data-ng-if="myfinances.summary.accountBalanceFloat !== 0">
+        <div class="cc-page-myfinances-account-summary-buttons cc-print-hide">
+          <a class="cc-button" href="http://studentbilling.berkeley.edu/carsPaymentOptions.htm">Make Payment</a>
+        </div>
+      </li>
+    </ul>
+    <p data-ng-if="myfinancesError" class="cc-widget-text cc-page-myfinances-account-summary-error" data-ng-bind="myfinancesError.body">
+    </p>
+    <p data-ng-if="!myfinancesError && !myfinances.activity" class="cc-widget-text cc-page-myfinances-account-summary-error">
+      You are seeing this message because CalCentral does not have CARS billing data for your account. If you are a new student, your account may not have been assessed charges yet. Please try again later. Current or former students should contact us for further assistance using the Feedback link below.
+    </p>
+  </div>
+</div>

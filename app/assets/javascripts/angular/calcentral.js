@@ -23,7 +23,8 @@
     'calcentral.filters',
     'calcentral.services',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'templates'
   ]);
 
   // Bind calcentral to the window object so it's globally accessible

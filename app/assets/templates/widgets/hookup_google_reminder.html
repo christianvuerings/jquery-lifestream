@@ -1,0 +1,24 @@
+<div data-ng-controller="HookupGoogleReminderController">
+  <div class="cc-widget cc-widget-hookup-google-reminder" data-ng-if="showReminderCard">
+    <div class="cc-widget-title">
+      <h2>Setup</h2>
+    </div>
+    <div class="cc-widget-hookup-google-reminder-container">
+      <div class="cc-clearfix-container">
+        <h3 class="cc-left">Connect to bConnected</h3>
+        <div class="cc-left cc-widget-hookup-google-reminder-icons">
+          <div class="cc-left cc-icon cc-icon-22 cc-icon-mail"></div>
+          <div class="cc-left cc-icon cc-icon-22 cc-icon-calendar"></div>
+          <div class="cc-left cc-icon cc-icon-22 cc-icon-drive"></div>
+        </div>
+      </div>
+      <div class="cc-widget-hookup-google-reminder-content">
+        <div data-ng-include="'no_bconnected.html'" data-onload="mode='main'"></div>
+      </div>
+      <div class="cc-widget-hookup-google-reminder-content-buttons">
+        <button class="cc-button cc-button-blue" data-ng-disabled="api.user.profile['actingAsUid']" data-ng-click="api.user.enableOAuth('Google')">Connect</button>
+        <button class="cc-button" data-ng-click="dismissReminder()">Dismiss</button>
+      </div>
+    </div>
+  </div>
+</div>

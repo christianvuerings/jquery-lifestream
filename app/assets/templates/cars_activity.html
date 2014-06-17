@@ -1,0 +1,192 @@
+<div class="cc-widget cc-page-myfinances-account-activity cc-widget-last" data-ng-show="myfinances.activity.length" data-ng-controller="CarsController">
+  <div class="cc-widget-title">
+    <h2 class="cc-left">Activity</h2>
+    <button class="cc-button cc-right cc-page-myfinances-account-activity-print" data-ng-click="printPage()">
+      <i class="fa fa-print"></i> Print
+    </button>
+  </div>
+
+  <div data-cc-spinner-directive>
+    <form name="cc_page_myfinances_account_filter" class="cc-page-myfinances-account-filter">
+      <div class="row">
+        <div class="cc-page-myfinances-filter-label">
+          <div class="cc-left cc-page-myfinances-filter-element">
+            <label for="cc-page-myfinances-account-choices">
+              <strong>Filter: </strong>
+            </label>
+          </div>
+        </div>
+        <div class="cc-left cc-page-myfinances-filter-form">
+          <div class="cc-page-myfinances-filter-content">
+            <div class="cc-left cc-select cc-page-myfinances-filter-element">
+              <select id="cc-page-myfinances-account-choices" data-ng-model="choice" data-ng-options="c.value as c.label for c in choices" data-ng-change="choiceChange()">
+              </select>
+            </div>
+            <div class="cc-left cc-select cc-page-myfinances-filter-element" data-ng-if="choice === 'term'">
+              <select data-ng-model="search.transTerm" id="cc-page-myfinances-select-term" data-ng-options="t.value as t.label for t in myfinances.terms" data-ng-change="searchTerm = search.transTerm">
+              </select>
+            </div>
+            <div class="cc-left cc-page-myfinances-filter-element" data-ng-show="choice === 'daterange'">
+              <input type="text"
+                class="cc-page-myfinances-date-input"
+                data-ng-model="startDate"
+                name="cc_page_myfinances_date_start"
+                id="cc-page-myfinances-date-start"
+                placeholder="mm/dd/yyyy - Start"
+                data-cc-date-validator-directive />
+              <button class="cc-button-transparent cc-widget-tasks-addtask-calendar-icon" data-ng-click="api.util.preventBubble($event)" tabindex="-1" data-cc-datepicker-directive="cc-page-myfinances-date-start">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </div>
+            <div class="cc-left cc-page-myfinances-filter-element" data-ng-show="choice === 'daterange'">
+              <input type="text"
+                class="cc-page-myfinances-date-input"
+                data-ng-model="endDate"
+                name="cc_page_myfinances_date_end"
+                id="cc-page-myfinances-date-end"
+                placeholder="mm/dd/yyyy - End"
+                data-cc-date-validator-directive />
+              <button class="cc-button-transparent cc-widget-tasks-addtask-calendar-icon" data-ng-click="api.util.preventBubble($event)" tabindex="-1" data-cc-datepicker-directive="cc-page-myfinances-date-end">
+                <i class="fa fa-calendar"></i>
+              </button>
+            </div>
+            <div class="cc-left cc-page-myfinances-account-activity-search cc-page-myfinances-filter-element" data-ng-class="{'cc-print-hide':(!search.$)}">
+              <label class="cc-hidden cc-page-myfinances-print-label cc-print-show cc-left">
+                <strong>Search: </strong>
+              </label>
+              <input type="text" placeholder="Search..." data-ng-model="search.$">
+            </div>
+            <div class="cc-clearfix">
+              <p class="cc-alert cc-alert-text" role="alert" data-ng-show="cc_page_myfinances_account_filter.cc_page_myfinances_date_start.$error.ccDateValidator">
+                Please use mm/dd/yyyy date format for the start date.
+              </p>
+              <p class="cc-alert cc-alert-text" role="alert" data-ng-show="cc_page_myfinances_account_filter.cc_page_myfinances_date_end.$error.ccDateValidator">
+                Please use mm/dd/yyyy date format for the end date.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <p class="cc-widget-padding" data-ng-if="choice === 'balance' && myfinances.summary.accountBalanceFloat === 0 && counts.open === 0">
+      You do not owe anything at this time. Please select a different filter to view activity details.
+    </p>
+    <p class="cc-widget-padding" data-ng-if="choice === 'balance' && myfinances.summary.accountBalanceFloat < 0 && counts.open === 0">
+      You have an over-payment on your account. You do not owe anything at this time. Please select a different filter to view activity details.
+    </p>
+    <div class="cc-table cc-table-sortable cc-page-myfinances-table" data-ng-hide="choice === 'balance' && myfinances.summary.accountBalanceFloat <= 0  && counts.open === 0">
+      <table>
+        <thead>
+          <tr>
+            <th width="15%" data-ng-click="changeSorting('transDate')">
+              Date <i data-ng-class="getSortClass('transDate')"></i>
+            </th>
+            <th width="35%" data-ng-click="changeSorting('transDesc')">
+              Description <i data-ng-class="getSortClass('transDesc')"></i>
+            </th>
+            <th width="30%" data-ng-click="changeSorting('transBalanceAmountFloat')" class="cc-table-right cc-table-right-spacing">
+              <i data-ng-class="getSortClass('transBalanceAmountFloat')"></i> Amount
+            </th>
+            <th width="10%" data-ng-click="changeSorting('transType')" data-ng-if="!myfinances.summary.hasDPPTransactions">
+              Type <i data-ng-class="getSortClass('transType')"></i>
+            </th>
+            <th width="10%" data-ng-click="changeSorting('isDPP')" class="cc-table-center" data-ng-if="myfinances.summary.hasDPPTransactions">
+              DPP <i data-ng-class="getSortClass('isDPP')"></i>
+            </th>
+            <th width="15%" data-ng-click="changeSorting('isDueNow')" class="cc-table-center">Due
+              <i data-ng-class="getSortClass('isDueNow')"></i>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          class="cc-widget-table-hover"
+          data-cc-accessible-focus-directive
+          data-ng-class="{'cc-widget-table-hover-opened cc-widget-list-selected':(item.show)}"
+          data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
+           data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | filter:dateFilter | orderBy:sort.column:sort.descending">
+          <tr data-ng-class="{'cc-page-myfinances-red':(item.isPastDueDate === true), 'cc-page-myfinances-green':(item.transBalanceAmountFloat < 0), 'cc-page-myfinances-unapplied': (item.transStatus === 'Unapplied'), 'cc-page-myfinances-unapplied-award': (item.transStatus === 'Unapplied' && item.transType === 'Award')}">
+            <td class="cc-widget-table-hover-notriangle">
+              <span data-ng-bind="item.transDate | date:'MM/dd/yy'" class="hide-for-small"></span>
+              <span data-ng-bind="item.transDate | date:'MM/dd'" class="hide-for-medium-up"></span>
+            </td>
+            <td class="cc-widget-table-hover-notriangle">
+              <div data-ng-bind="item.transDesc" data-ng-class="{'cc-ellipsis':(!item.show)}"></div>
+            </td>
+            <td class="cc-widget-table-hover-notriangle cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount"></td>
+            <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type" data-ng-if="!myfinances.summary.hasDPPTransactions">
+              <span class="hide-for-small cc-print-show" data-ng-bind="item.transType"></span>
+              <div class="hide-for-medium-up cc-print-hide">
+                <i class="fa" data-ng-attr-title="{{item.transType}}"
+                   data-ng-class="{'fa-usd':(item.transType==='Adjustment'),'fa-plus':(item.transType !== 'Adjustment' && item.transBalanceAmountFloat > 0),'fa-minus':(item.transType !== 'Adjustment' && item.transBalanceAmountFloat < 0)}"></i>
+              </div>
+            </td>
+            <td class="cc-widget-table-hover-notriangle cc-table-center" data-ng-if="myfinances.summary.hasDPPTransactions">
+              <i class="fa" data-ng-class="{'fa-check':(item.isDPP)}" data-ng-if="item.isDPP">
+            </td>
+            <td class="cc-widget-table-hover-notriangle cc-table-center">
+              <i class="fa" data-ng-class="{'fa-exclamation-circle':(item.isDueNow === '1_past_due'),'fa-exclamation':(item.isDueNow === '2_current_due'),'fa-arrow-right':(item.isDueNow === '3_future_due')}" data-ng-if="item.isDueNow !== '4_closed'">
+            </td>
+          </tr>
+          <tr data-ng-if="item.show">
+            <td class="cc-widget-table-hover-notriangle"></td>
+            <td class="cc-widget-table-hover-notriangle" colspan="4">
+              <div class="row collapse">
+                <div data-ng-if="item.transId">
+                  <strong>Transaction #:</strong>
+                  <span data-ng-bind="item.transId"></span>
+                </div>
+                <div data-ng-if="item.originalAmount">
+                  <strong>Original Amount:</strong>
+                  <span class="cc-page-myfinances-amount" data-cc-amount-directive="item.originalAmount"></span>
+                </div>
+                <div data-ng-if="item.transDueDateShow && !(item.transStatus === 'Closed' && item.transType === 'Refund')">
+                  <strong>Due Date:</strong>
+                  <span data-ng-bind="item.transDueDateShow"></span>
+                </div>
+                <div data-ng-if="item.transPotentialDisbursementDate">
+                  <strong>Potential Disbursement Date:</strong>
+                  <span data-ng-bind="item.transPotentialDisbursementDate | date:'MM/dd/yy'"></span>
+                </div>
+                <div data-ng-if="item.transDept">
+                  <strong>Department:</strong>
+                  <a data-ng-bind="item.transDept" data-ng-click="api.util.preventBubble($event)" data-ng-href="{{item.transDeptUrl}}"></a>
+                </div>
+                <div data-ng-if="item.transTerm">
+                  <strong>Term:</strong>
+                  <span data-ng-bind="item.transTerm"></span>
+                </div>
+                <div data-ng-if="item.transType" data-ng-class="{'hide-for-medium-up':!myfinances.summary.hasDPPTransactions}">
+                  <strong>Type:</strong>
+                  <span data-ng-bind="item.transType"></span>
+                </div>
+                <div data-ng-if="item.transStatus === 'Unapplied' && item.transType === 'Award'">
+                  <strong>Unapplied award:</strong>
+                  Since this is an unapplied award this amount is not included in the account balance.
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cc-page-myfinances-footer cc-clearfix-container">
+      <div class="medium-12 columns">
+        <ul>
+          <li>
+            <i class="fa fa-exclamation"></i> Due now
+          </li>
+          <li>
+            <i class="fa fa-exclamation-circle"></i> Overdue
+          </li>
+          <li>
+            <i class="fa fa-arrow-right"></i> Due in the future
+          </li>
+          <li class="cc-page-myfinances-footer-updated">
+            Updated on <span data-ng-bind="myfinances.summary.lastUpdateDate | date:'MM/dd/yy'"></span> at 5am PST.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

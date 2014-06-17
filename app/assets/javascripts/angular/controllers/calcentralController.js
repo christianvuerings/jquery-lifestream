@@ -19,6 +19,7 @@
       apiService.events.fireApiEvents($rootScope.api);
       apiService.user.handleRouteChange();
       apiService.util.changeControllerName(current.controller);
+      apiService.util.hideOffCanvasMenu();
       apiService.auth.isLoggedInRedirect();
       apiService.updatedFeeds.initiate(current.$$route, $rootScope);
     });

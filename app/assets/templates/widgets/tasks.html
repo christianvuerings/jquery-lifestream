@@ -1,0 +1,116 @@
+<div class="cc-widget cc-widget-tasks" data-ng-controller="TasksController">
+  <div data-ng-controller="TaskAdderController">
+    <div class="cc-widget-title">
+      <h2 class="cc-left">To&nbsp;Do</h2>
+      <button
+          class="cc-button cc-right"
+          data-ng-class="{'cc-button-selected':(panelState.showAddTask)}"
+          data-ng-show="api.user.profile.hasGoogleAccessToken && (currentTaskMode!='completed' || !completedTasks.length)"
+          data-ng-click="toggleAddTask()">
+        <i class="fa fa-plus cc-button-plus-icon"></i>
+        <span>New Task</span>
+      </button>
+      <button class="cc-button cc-right" data-ng-show="completedTasks.length && currentTaskMode=='completed'" data-ng-click="clearCompletedTasks()">Delete completed tasks</button>
+    </div>
+    <div class="cc-widget-body">
+      <div data-ng-include src="'dashboard_task_editor.html'"></div>
+    </div>
+  </div>
+  <div data-cc-spinner-directive>
+    <div class="cc-widget-tasks-container" data-ng-switch data-on="currentTaskMode">
+
+      <div class="row collapse">
+        <div class="medium-10 medium-centered columns">
+          <ul class="cc-button-group cc-even-3" role="tablist">
+            <li data-ng-repeat="taskMode in taskModes">
+              <button class="cc-button"
+                data-ng-click="switchTasksMode(taskMode)"
+                data-ng-class="{'cc-button-selected':(currentTaskMode == taskMode)}"
+                aria-selected="{{currentTaskMode == taskMode}}"
+                role="tab"
+                data-ng-bind="taskMode">
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-ng-switch-when="scheduled" role="tabpanel" aria-live="polite">
+        <div data-ng-include src="'dashboard_task_noitems.html'" data-onload="tasksModeOpposite='unscheduled'"></div>
+        <div data-ng-hide="counts.scheduled === 0">
+          <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
+            <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
+            <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
+              <li
+                data-ng-repeat="task in overdueTasks"
+                data-ng-class="{'cc-widget-list-selected': task.show}">
+                <div data-ng-include src="'dashboard_task_loop.html'"></div>
+              </li>
+            </ul>
+            <p data-ng-show="!overdueTasks.length" class="cc-widget-text">
+              There are currently no {{currentTaskMode}} tasks/assignments that are overdue.
+            </p>
+          </div>
+
+          <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
+            <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
+            <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
+              <li
+                data-ng-repeat="task in dueTodayTasks"
+                data-ng-class="{'cc-widget-list-selected': task.show}">
+                  <div data-ng-include src="'dashboard_task_loop.html'"></div>
+              </li>
+            </ul>
+            <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text">
+              There are currently no {{currentTaskMode}} tasks/assignments that are due today.
+            </p>
+          </div>
+
+          <div class="cc-clearfix-container">
+            <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
+            <ul class="cc-widget-tasks-list">
+              <li
+                data-ng-repeat="task in futureTasks"
+                data-ng-class="{'cc-widget-list-selected': task.show}">
+                <div data-ng-include src="'dashboard_task_loop.html'"></div>
+              </li>
+            </ul>
+            <p data-ng-show="!futureTasks.length" class="cc-widget-text">
+              There are currently no {{currentTaskMode}} tasks/assignments that are due in the future.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div data-ng-switch-when="unscheduled" role="tabpanel" aria-live="polite">
+        <div data-ng-include src="'dashboard_task_noitems.html'" data-onload="tasksModeOpposite='scheduled'"></div>
+        <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> <span class="cc-right">Last Modified</span></h3>
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in unscheduledTasks"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+            <div data-ng-include src="'dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!unscheduledTasks.length" class="cc-widget-text">
+          There are currently no unscheduled tasks/assignments.
+        </p>
+      </div>
+
+      <div data-ng-switch-when="completed" role="tabpanel" aria-live="polite">
+        <h3 class="cc-widget-tasks-section-label">Total <span class="cc-widget-tasks-section-label-count" data-ng-bind="completedTasks.length"></span> <span class="cc-right">Completed</span></h3>
+
+        <ul class="cc-widget-tasks-list">
+          <li
+            data-ng-repeat="task in completedTasks"
+            data-ng-class="{'cc-widget-list-selected': task.show}">
+            <div data-ng-include src="'dashboard_task_loop.html'"></div>
+          </li>
+        </ul>
+        <p data-ng-show="!completedTasks.length" class="cc-widget-text">
+          There are currently no completed tasks/assignments.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled), 'cc-widget-list-hover-opened':(task.show)}"
+  data-cc-accessible-focus-directive
+  data-ng-click="api.widget.toggleShow($event, tasks, task, 'Tasks')"
+  data-ng-controller="TaskEditorController">
+
+  <span class="cc-visuallyhidden" data-ng-bind-template="Show {{task.show ? 'less' : 'more'}} information about {{task.title}}"></span>
+
+  <div
+    data-ng-hide="editorEnabled">
+
+    <div class="cc-widget-tasks-col cc-widget-tasks-col-title">
+      <div
+        class="cc-widget-tasks-status-{{task.status}}"
+        data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket == 'Overdue' && tasksMode != 'completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
+        <strong>{{task.title}}</strong>
+        <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-bcourses-name">
+          <span data-ng-bind="task.course_code"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cc-widget-tasks-col cc-widget-tasks-col-left">
+      <input type="checkbox"
+        id="cc-wdiget-tasks-checkbox-{{$index}}"
+        data-ng-click="api.util.preventBubble($event)"
+        data-ng-change="changeTaskState(task)"
+        data-ng-disabled="!!task.editorIsProcessing"
+        data-ng-false-value="needsAction"
+        data-ng-model="task.status"
+        data-ng-show="task.emitter=='Google'"
+        data-ng-true-value="completed"
+      >
+      <label for="cc-wdiget-tasks-checkbox-{{$index}}" data-ng-show="task.emitter!='bCourses'" class="cc-visuallyhidden">
+        <span data-ng-bind-template="mark {{task.title}} as"></span>
+        <span data-ng-bind="{true:'not'}[task.status=='completed']"></span>
+        completed
+      </label>
+
+      <div
+        class="cc-icon cc-icon-bcourses"
+        data-ng-show="task.emitter=='bCourses'">
+      </div>
+    </div>
+
+    <div
+      class="cc-widget-tasks-col cc-widget-tasks-col-date">
+      <span data-ng-show="task.bucket == 'Due Today'">TODAY</span>
+      <span data-ng-show="task.dueDate && task.bucket != 'Due Today' && tasksMode != 'completed'">
+        {{task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'}}
+      </span>
+      <div
+        data-ng-show="task.emitter=='bCourses' && task.dueDate.hasTime"
+        class="cc-widget-tasks-timestamp">
+          {{task.dueDate.epoch * 1000 | date:'h a'}}
+      </div>
+      <span data-ng-show="tasksMode=='completed'">{{task.completedDate.epoch * 1000 | dateInYearFilter:'MM/dd'}}</span>
+    </div>
+    <div
+      class="cc-widget-tasks-col cc-widget-tasks-col-date"
+      data-ng-show="task.updatedDate && task.bucket === 'Unscheduled'">
+      <span>
+        {{task.updatedDate.epoch * 1000 | dateInYearFilter:'MM/dd'}}
+      </span>
+    </div>
+  </div>
+
+  <div data-ng-show="task.show">
+    <div class="cc-widget-tasks-more" data-ng-hide="editorEnabled">
+      <div class="cc-clearfix" data-ng-show="task.completedDate && task.dueDate">Due Date:
+        <span data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>
+      </div>
+      <div data-ng-bind-html="task.notes | linky" class="cc-break-word cc-clearfix"></div>
+
+      <div class="cc-clearfix">
+        <a class="cc-button"
+        data-ng-show="task.emitter=='bCourses'"
+        data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.linkUrl)"
+        data-ng-href="{{task.linkUrl}}">
+          View in {{task.emitter}}
+          <span class="cc-visuallyhidden" data-ng-bind-template="- {{ task.title }}"></span>
+        </a>
+
+        <button class="cc-button cc-button-blue"
+        data-ng-show="task.emitter=='Google'"
+        data-ng-click="enableEditor()">Edit</button>
+
+        <button class="cc-button"
+        data-ng-show="task.emitter=='Google'"
+        data-ng-click="deleteTask(task)">Delete</button>
+      </div>
+      <div data-ng-show="task.isProcessing">
+        <em>Updating task...</em>
+      </div>
+      <div data-ng-show="task.isDeleting">
+        <em>Deleting task...</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="row collapse" data-ng-show="editorEnabled">
+    <div class="twelve columns">
+      <div data-ng-include src="'dashboard_task_editor.html'"></div>
+    </div>
+  </div>
+</div>

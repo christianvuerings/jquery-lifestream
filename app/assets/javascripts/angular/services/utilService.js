@@ -30,6 +30,15 @@
     };
 
     /**
+     * Hide the off canvas menu
+     */
+    var hideOffCanvasMenu = function() {
+      $rootScope.offCanvasMenu = {
+        show: false
+      };
+    };
+
+    /**
      * Check whether CalCentral is being loaded within an iframe
      */
     var isInIframe = !!window.parent.frames.length;
@@ -116,12 +125,13 @@
     return {
       canPlayMp3AndM4a: canPlayMp3AndM4a,
       changeControllerName: changeControllerName,
+      iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
+      hideOffCanvasMenu: hideOffCanvasMenu,
       preventBubble: preventBubble,
       redirect: redirect,
       setTitle: setTitle,
       supportsLocalStorage: supportsLocalStorage,
-      iframeScrollToTop: iframeScrollToTop
     };
 
   });

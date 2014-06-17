@@ -1,0 +1,16 @@
+<div class="cc-widget cc-widget-last cc-widget-activities" data-ng-controller="ActivityController">
+  <div class="cc-widget-title">
+    <div class="row collapse">
+      <div class="columns" data-ng-class="{true:'small-6',false:'small-12'}[!!activities.length]"><h2>Recent Activity</h2></div>
+      <div class="columns small-6" data-ng-show="activities.length">
+        <div class="cc-right cc-select">
+          <select data-ng-model="search.source" class="cc-ellipsis">
+            <option value="">All Activity</option>
+            <option value="{{source}}" data-ng-repeat="source in sources">{{source}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-ng-include="'widgets/activity_list.html'"></div>
+</div>

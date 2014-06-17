@@ -1,10 +1,10 @@
-<%= render 'templates/accessibilty' %>
-<%= render 'templates/ieold' %>
-<%= render 'templates/launcher' %>
+<div data-ng-include="'accessibility.html'"></div>
+<div data-ng-include="'ieold.html'"></div>
+<div data-ng-include="'launcher.html'"></div>
 
 <div class="cc-off-canvas-container">
   <div class="cc-offcanvas-left cc-print-hide" id="cc-navigation">
-    <%= render 'templates/navigation' %>
+    <div data-ng-include="'navigation.html'"></div>
   </div>
 
   <div class="cc-offcanvas-right">
@@ -13,11 +13,11 @@
     data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
     id="cc-main-content"
     role="main">
-      <%= render 'templates/alerts' %>
+      <div data-ng-include="'alerts.html'"></div>
       <div class="cc-clearfix-container" data-ng-view></div>
     </div>
-    <%= render 'templates/footer' %>
+    <div data-ng-include="'footer.html'"></div>
   </div>
 </div>
-<%= render 'templates/actingas' %>
+<div data-ng-include="'actingas.html'"></div>
 <%= render 'templates/all' %>

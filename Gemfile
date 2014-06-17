@@ -90,6 +90,10 @@ gem "pundit", "~> 0.2.2"
 
 gem "cancan", "~> 1.6.10"
 
+##################
+# Front-end Gems #
+##################
+
 # Our very own library for angular dependency!
 gem "angular-gem", "1.2.16"
 
@@ -106,6 +110,9 @@ gem "foundation-rails", "~> 5.2.2.0"
 # Closure Compiler Gem for JS compression
 # https://github.com/documentcloud/closure-compiler
 gem "closure-compiler", "~> 1.1.10"
+
+# so that Javascript minification will work on platforms lacking a JS runtime (Linux)
+gem 'therubyrhino', '~> 2.0.3'
 
 # Font awesome - an icon font
 # https://github.com/bokmann/font-awesome-rails
@@ -126,8 +133,9 @@ gem "ravenjs-gem", "~> 1.1.14"
 # https://github.com/jasonm/ngmin-rails
 gem "ngmin-rails", "~> 0.4.0"
 
-# so that Javascript minification will work on platforms lacking a JS runtime (Linux)
-gem 'therubyrhino', '~> 2.0.3'
+# Use your angular templates with rails' asset pipeline
+# https://github.com/pitr/angular-rails-templates
+gem "angular-rails-templates", "~> 0.1.2"
 
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6

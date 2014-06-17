@@ -1,0 +1,41 @@
+<div data-ng-repeat="booksCategory in books.bookDetails" ng-class="{'cc-textbooks-last-section':$last}" class="cc-clearfix-container cc-textbooks-category">
+  <h3 data-ng-if="booksCategory.books" data-ng-bind="booksCategory.type"></h3>
+  <p data-ng-if="booksCategory.hasChoices">
+    This section has a choice of titles. Please visit the <a href="http://www.bkstr.com/Home/10001-10433-1">Cal Student Store</a> to see them all.
+  </p>
+  <div data-ng-if="booksCategory.books && !booksCategory.hasChoices">
+    <div data-ng-repeat="book in booksCategory.books" ng-class="{'cc-textbooks-last':$last}" class="cc-textbooks-list">
+      <div class="small-4 columns rows" data-ng-if="book.image">
+        <img class="cc-textbooks-image" data-ng-attr-alt="Textbook cover for {{book.title}}" data-ng-src="{{book.image}}" width="110" height="180"></img>
+      </div>
+      <div class="small-8 columns rows cc-textbooks-details">
+        <h4 data-ng-bind="book.title"></h4>
+        <ul>
+          <li data-ng-if="book.author"><strong>Author: </strong><span data-ng-bind="book.author"></span></li>
+          <li data-ng-if="book.isbn"><strong>ISBN: </strong><span data-ng-bind="book.isbn"></li>
+          <li data-ng-if="book.edition"><strong>Edition: </strong><span data-ng-bind="book.edition"></li>
+          <li data-ng-if="book.publisher"><strong>Publisher: </strong><span data-ng-bind="book.publisher"></li>
+        </ul>
+        <ul class="cc-textbooks-links cc-print-hide">
+          <li data-ng-if="book.amazonLink">
+            <span class="cc-icon cc-icon-inline cc-icon-amazon"></span>
+            <a data-ng-href="{{book.amazonLink}}"><strong>Purchase</strong></a>
+          </li>
+          <li data-ng-if="book.cheggLink">
+            <span class="cc-icon cc-icon-inline cc-icon-chegg"></span>
+            <a data-ng-href="{{book.cheggLink}}"><strong>Rent</strong></a>
+          </li>
+          <li data-ng-if="book.googlebookLink">
+            <span class="cc-icon cc-icon-inline cc-icon-googlebook"></span>
+            <a data-ng-href="{{book.googlebookLink}}"><strong>Purchase</strong></a>
+          </li>
+          <li data-ng-if="book.oskicatLink">
+            <span class="cc-icon cc-icon-inline cc-icon-oskicat"></span>
+            <a data-ng-href="{{book.oskicatLink}}"><strong>Borrow</strong></a>
+          </li>
+        </ul>
+      </div>
+      <hr class="cc-textbook-category-separator">
+    </div>
+  </div>
+</div>

@@ -10,71 +10,71 @@
 
     // List all the routes
     $routeProvider.when('/', {
-      templateUrl: 'templates/splash.html',
+      templateUrl: 'splash.html',
       controller: 'SplashController',
       isPublic: true
     }).
     when('/academics', {
-      templateUrl: 'templates/academics.html',
+      templateUrl: 'academics.html',
       controller: 'AcademicsController'
     }).
     when('/academics/semester/:semesterSlug', {
-      templateUrl: 'templates/academics_semester.html',
+      templateUrl: 'academics_semester.html',
       controller: 'AcademicsController'
     }).
     when('/academics/semester/:semesterSlug/class/:classSlug', {
-      templateUrl: 'templates/academics_classinfo.html',
+      templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController'
     }).
     when('/academics/booklist', {
-      templateUrl: 'templates/academics_booklist.html',
+      templateUrl: 'academics_booklist.html',
       controller: 'AcademicsController'
     }).
     when('/academics/teaching-semester/:teachingSemesterSlug/class/:classSlug', {
-      templateUrl: 'templates/academics_classinfo.html',
+      templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController'
     }).
     // We actually need to duplicate the campus items, more info on
     // http://stackoverflow.com/questions/12524533
     when('/campus', {
-      templateUrl: 'templates/campus.html',
+      templateUrl: 'campus.html',
       controller: 'CampusController'
     }).
     when('/campus/:category', {
-      templateUrl: 'templates/campus.html',
+      templateUrl: 'campus.html',
       controller: 'CampusController'
     }).
     when('/dashboard', {
-      templateUrl: 'templates/dashboard.html',
+      templateUrl: 'dashboard.html',
       controller: 'DashboardController',
       fireUpdatedFeeds: true
     }).
     when('/finances', {
-      templateUrl: 'templates/myfinances.html',
+      templateUrl: 'myfinances.html',
       controller: 'MyFinancesController'
     }).
     when('/profile', {
-      templateUrl: 'templates/profile.html',
+      templateUrl: 'profile.html',
       controller: 'ProfileController'
     }).
     when('/finances/details', {
-      templateUrl: 'templates/cars_details.html',
+      templateUrl: 'cars_details.html',
       controller: 'MyFinancesController'
     }).
     when('/settings', {
-      templateUrl: 'templates/settings.html',
+      templateUrl: 'settings.html',
       controller: 'SettingsController'
     }).
     when('/tools', {
-      templateUrl: 'templates/tools_index.html',
+      templateUrl: 'tools_index.html',
       controller: 'ToolsController'
     }).
     when('/tools/styles', {
-      templateUrl: 'templates/tools_styles.html',
+      templateUrl: 'tools_styles.html',
       controller: 'StylesController'
     }).
     when('/uid_error', {
-      templateUrl: 'templates/uid_error.html',
+      templateUrl: 'uid_error.html',
       controller: 'uidErrorController',
       isPublic: true
     }).
@@ -121,7 +121,7 @@
     }).
     // Redirect to a 404 page
     otherwise({
-      templateUrl: 'templates/404.html',
+      templateUrl: '404.html',
       controller: 'ErrorController',
       isPublic: true
     });
