@@ -90,7 +90,7 @@
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/embedded/user_provision', {
-      templateUrl: 'templates/canvas_embedded/user_provision.html',
+      templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
     }).
     when('/canvas/embedded/course_add_user', {
@@ -109,7 +109,7 @@
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/user_provision', {
-      templateUrl: 'templates/canvas_embedded/user_provision.html',
+      templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
     }).
     when('/canvas/course_add_user/:canvas_course_id', {
