@@ -5,17 +5,17 @@
   angular.module('calcentral.services').service('utilService', function($location, $rootScope, $window) {
 
     /**
-     * Check whether the current browser can play mp3 and m4a files
+     * Check whether the current browser can play mp3 files
      * Based on Modernizr: http://git.io/DPOxlQ
      */
-    var canPlayMp3AndM4a = function() {
+    var canPlayMp3 = function() {
       var canPlay = false;
       var element = document.createElement('audio');
 
       try {
         var hasAudioElement = !!element.canPlayType;
         if (hasAudioElement) {
-          canPlay = element.canPlayType('audio/mpeg;') && (element.canPlayType('audio/x-m4a;') || element.canPlayType('audio/aac;'));
+          canPlay = element.canPlayType('audio/mpeg;');
         }
       } catch (e) { }
       return canPlay;
@@ -123,7 +123,7 @@
 
     // Expose methods
     return {
-      canPlayMp3AndM4a: canPlayMp3AndM4a,
+      canPlayMp3: canPlayMp3,
       changeControllerName: changeControllerName,
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
