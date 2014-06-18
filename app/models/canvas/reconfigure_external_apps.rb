@@ -9,7 +9,8 @@ module Canvas
         'course_provision_user_navigation' => 'lti_course_provision_user_navigation',
         'rosters' => 'lti_roster_photos',
         'user_provision' => 'lti_user_provision',
-        'course_add_user' => 'lti_course_add_user'
+        'course_add_user' => 'lti_course_add_user',
+        'course_mediacasts' => 'lti_course_mediacasts'
       }
     end
 
