@@ -98,7 +98,7 @@
       controller: 'CanvasCourseAddUserController'
     }).
     when('/canvas/embedded/course_mediacasts', {
-      templateUrl: 'templates/canvas_embedded/course_mediacasts.html',
+      templateUrl: 'canvas_embedded/course_mediacasts.html',
       isEmbedded: true
     }).
     when('/canvas/rosters/:canvasCourseId', {
@@ -117,7 +117,7 @@
       controller: 'CanvasCourseAddUserController'
     }).
     when('/canvas/course_mediacasts/:canvasCourseId', {
-      templateUrl: 'templates/canvas_embedded/course_mediacasts.html'
+      templateUrl: 'canvas_embedded/course_mediacasts.html'
     }).
     // Redirect to a 404 page
     otherwise({
