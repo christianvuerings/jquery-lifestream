@@ -82,11 +82,11 @@
       templateUrl: 'canvas_embedded/roster.html'
     }).
     when('/canvas/embedded/course_provision_account_navigation', {
-      templateUrl: 'templates/canvas_embedded/course_provision.html',
+      templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/embedded/course_provision_user_navigation', {
-      templateUrl: 'templates/canvas_embedded/course_provision.html',
+      templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/embedded/user_provision', {
@@ -105,7 +105,7 @@
       templateUrl: 'canvas_embedded/roster.html'
     }).
     when('/canvas/course_provision', {
-      templateUrl: 'templates/canvas_embedded/course_provision.html',
+      templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/user_provision', {
