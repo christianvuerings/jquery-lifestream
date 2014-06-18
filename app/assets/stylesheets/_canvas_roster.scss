@@ -38,6 +38,12 @@
       }
     }
   }
+  .cc-page-roster-image-unavailable {
+    background-image: asset-url("photo_unavailable_official_72x96.jpg");
+    height: 96px;
+    margin: 0 auto;
+    max-width: 72px;
+  }
 }
 .cc-button-selected-roster {
   z-index: 0;

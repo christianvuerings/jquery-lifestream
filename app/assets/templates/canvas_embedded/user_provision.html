@@ -1,0 +1,64 @@
+<div class="cc-page-user-provision">
+
+  <div class="cc-widget cc-widget-last">
+    <div class="cc-widget-title">
+      <h2>Add Users to bCourses</h2>
+    </div>
+    <div class="cc-widget-padding">
+
+      <form name="userImportForm" data-ng-submit="importUsers(raw_uids)">
+        <div class="row">
+          <div class="small-10 small-centered">
+
+            <div class="row">
+              <div class="small-4 columns">
+                <label for="cc-page-user-provision-uid-list">UID List</label>
+              </div>
+              <div class="small-8 columns">
+                <textarea id="cc-page-user-provision-uid-list" name="uids" data-ng-model="raw_uids" data-ng-list="/[- |\,\t\n\.]/"
+                  placeholder="Paste your list of UIDs here organized one UID per a line, or separated by spaces or commas."></textarea>
+
+                <small class="error" data-ng-show="checkPerformed && userImportForm.uids.$error.required">
+                  You must provide at least one UID.
+                </small>
+                <small class="error" data-ng-show="userImportForm.uids.$error.ccNumericList">
+                  The following items in your list are not numeric: <span data-ng-bind="invalidValues.join(', ')"></span>
+                </small>
+                <small class="error" data-ng-show="userImportForm.uids.$error.ccListLimit">
+                  Maximum IDs: 200. <span data-ng-bind="listLength"></span> IDs found in list.
+                </small>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="small-2 small-offset-4 columns">
+                <button type="submit" class="cc-button" data-ng-disabled="importProcessing">Import Users</button>
+              </div>
+              <div class="small-6 columns" data-ng-show="displayImportResult">
+                <div data-cc-spinner-directive>
+                  <div class="row">
+                    <div class="small-11 small-offset-1 columns">
+                      <div class="cc-page-user-provision-feedback">
+                        <div data-ng-show="status === 'error'">
+                          <i class="cc-left fa fa-exclamation-circle"></i>
+                          <strong>Error : <span data-ng-bind="error"></span></strong>
+                        </div>
+                        <div data-ng-show="status === 'success'">
+                          <i class="cc-left fa fa-check-circle cc-icon-green"></i>
+                          Success : The users specified were imported into bCourses.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,40 @@
+<div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
+
+  <form class="cc-roster-search" data-ng-hide="errorStatus">
+    <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
+
+    <div class="cc-select cc-left">
+      <select data-ng-model="search.sections">
+        <option value="">All Sections</option>
+        <option value="{{section.id}}" data-ng-repeat="section in sections">{{section.name}}</option>
+      </select>
+    </div>
+  </form>
+
+  <ul class="cc-page-roster-list">
+    <li data-ng-repeat="student in students | filter:search | orderBy:'last_name'">
+      <div data-ng-show="student.photo">
+        <a data-ng-href="{{student.profile_url}}">
+          <img data-ng-src="{{student.photo}}" width="72" height="96" />
+        </a>
+      </div>
+      <div data-ng-hide="student.photo">
+        <a data-ng-href="{{student.profile_url}}">
+          <div class="cc-image-responsive cc-page-roster-image-unavailable" title="Photo unavailable"></div>
+        </a>
+      </div>
+      <div class="cc-ellipsis" data-ng-bind="student.first_name"></div>
+      <div class="cc-ellipsis"><strong data-ng-bind="student.last_name"></strong></div>
+      <div data-ng-bind="student.student_id"></div>
+    </li>
+  </ul>
+
+  <p data-ng-show="errorStatus">
+    <i class="fa fa-exclamation-triangle"></i> You must be a teacher in this bCourses course to view official student rosters.
+  </p>
+
+  <p data-ng-hide="students">
+    <i class="fa fa-exclamation-circle cc-unavailable"></i> Students have not yet signed up for this class
+  </p>
+
+</div>

@@ -79,45 +79,45 @@
       isPublic: true
     }).
     when('/canvas/embedded/rosters', {
-      templateUrl: 'templates/canvas_embedded/roster.html'
+      templateUrl: 'canvas_embedded/roster.html'
     }).
     when('/canvas/embedded/course_provision_account_navigation', {
-      templateUrl: 'templates/canvas_embedded/course_provision.html',
+      templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/embedded/course_provision_user_navigation', {
-      templateUrl: 'templates/canvas_embedded/course_provision.html',
+      templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/embedded/user_provision', {
-      templateUrl: 'templates/canvas_embedded/user_provision.html',
+      templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
     }).
     when('/canvas/embedded/course_add_user', {
-      templateUrl: 'templates/canvas_embedded/course_add_user.html',
+      templateUrl: 'canvas_embedded/course_add_user.html',
       controller: 'CanvasCourseAddUserController'
     }).
     when('/canvas/embedded/course_mediacasts', {
-      templateUrl: 'templates/canvas_embedded/course_mediacasts.html',
+      templateUrl: 'canvas_embedded/course_mediacasts.html',
       isEmbedded: true
     }).
     when('/canvas/rosters/:canvasCourseId', {
-      templateUrl: 'templates/canvas_embedded/roster.html'
+      templateUrl: 'canvas_embedded/roster.html'
     }).
     when('/canvas/course_provision', {
-      templateUrl: 'templates/canvas_embedded/course_provision.html',
+      templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
     when('/canvas/user_provision', {
-      templateUrl: 'templates/canvas_embedded/user_provision.html',
+      templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
     }).
     when('/canvas/course_add_user/:canvas_course_id', {
-      templateUrl: 'templates/canvas_embedded/course_add_user.html',
+      templateUrl: 'canvas_embedded/course_add_user.html',
       controller: 'CanvasCourseAddUserController'
     }).
     when('/canvas/course_mediacasts/:canvasCourseId', {
-      templateUrl: 'templates/canvas_embedded/course_mediacasts.html'
+      templateUrl: 'canvas_embedded/course_mediacasts.html'
     }).
     // Redirect to a 404 page
     otherwise({
