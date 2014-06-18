@@ -400,14 +400,6 @@ After server restart, these properties will appear in each users' status feed. Y
 </div>
 ```
 
-or, depending on the feature, it may make more sense to disable it in erb (so that Angular controllers are never invoked at all):
-
-```erb
-<% if Settings.features.neato %>
-  <%= render 'templates/widgets/notifications' %>
-<% end %>
-```
-
 ## Keeping developer seed data updated
 
 `seeds.rb` is intended for use only on developer machines, so they have a semi-realistic copy of production lists of
