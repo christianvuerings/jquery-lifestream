@@ -57,7 +57,13 @@
 
     if ($routeParams.canvasCourseId || $route.current.isEmbedded) {
       courseMode = 'canvas';
-      var canvasCourseId = $routeParams.canvasCourseId || 'embedded';
+      var canvasCourseId;
+      if ($route.current.isEmbedded) {
+        canvasCourseId = 'embedded';
+        $scope.isEmbedded = true;
+      } else {
+        canvasCourseId = $routeParams.canvasCourseId;
+      }
       apiService.util.setTitle('Course Mediacasts');
       getWebcasts(canvasCourseId);
       setSelectOptions();
