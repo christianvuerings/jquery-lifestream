@@ -80,36 +80,17 @@ module Textbooks
     end
 
     def get
-      request_internal('Textbooks')
-    end
-
-    def request_internal(vcr_cassette)
       return {} unless Settings.features.textbooks
       required_books = []
       recommended_books = []
       optional_books = []
       statusCode = ''
-      url = ''
       bookstore_error_text = ''
 
       @ccns.each do |ccn|
-        path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
-        url = "#{Settings.textbooks_proxy.base_url}#{path}"
-        logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
-        response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {match_requests_on: [:method, :path]}) {
-          HTTParty.get(
-            url,
-            timeout: Settings.application.outgoing_http_timeout
-          )
-        }
-
-        if response.code >= 400
-          raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
-        end
-
+        response = request_bookstore_list(ccn)
         statusCode = response.code
         text_books = Nokogiri::HTML(response.body)
-        logger.debug "Remote server status #{response.code}; url = #{url}"
         text_books_items = text_books.xpath('//h2 | //ul')
 
         required_text_list = text_books_items.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
@@ -175,6 +156,22 @@ module Textbooks
         statusCode: statusCode
       }
 
+    end
+
+    def request_bookstore_list(ccn)
+      path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
+      url = "#{Settings.textbooks_proxy.base_url}#{path}"
+      logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
+      # VCR does not correctly record HTML responses.
+      response = HTTParty.get(
+        url,
+        timeout: Settings.application.outgoing_http_timeout
+      )
+      logger.debug "Remote server status #{response.code}; url = #{url}"
+      if response.code >= 400
+        raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
+      end
+      response
     end
 
   end
