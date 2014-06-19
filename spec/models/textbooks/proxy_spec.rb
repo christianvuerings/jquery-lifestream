@@ -67,6 +67,19 @@ describe Textbooks::Proxy do
       end
     end
 
+    context 'a required text with no ISBN' do
+      let(:ccns) { ['62120'] }
+      let(:slug) {'summer-2014'}
+      it 'provides a bookstore link to get the non-ISBN text' do
+        it_is_a_normal_server_response
+        it_has_at_least_one_title
+        necronomicon = subject[:books][:bookDetails][0][:books][1]
+        expect(necronomicon[:publisher]).to eq 'UNIVERSITY CUSTOM PUBLISHING'
+        expect(necronomicon[:isbn]).to be_nil
+        expect(necronomicon[:bookstoreLink]).to be_present
+      end
+    end
+
     # TODO We no longer have an example of a bookstore page with choices. When we find one, redo this test!
     # it "should return true for hasChoices when there are choices for a book"
 
