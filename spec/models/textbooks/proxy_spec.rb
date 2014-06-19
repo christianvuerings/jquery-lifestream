@@ -70,20 +70,28 @@ describe Textbooks::Proxy do
     # TODO We no longer have an example of a bookstore page with choices. When we find one, redo this test!
     # it "should return true for hasChoices when there are choices for a book"
 
-    context 'when the bookstore server has problems' do
-
-    end
   end
 
   describe '#get_as_json' do
     include_context 'it writes to the cache'
-    subject { Textbooks::Proxy.new({ccns: ['26262'], slug: 'fall-2014'}).get_as_json }
     it 'returns proper JSON' do
-      expect(subject).to be_present
-      parsed_response = JSON.parse(subject)
-      expect(parsed_response).to be
-      unless parsed_response['statusCode'] && parsed_response['statusCode'] >= 400
-        expect(parsed_response['books']).to be
+      json = Textbooks::Proxy.new({ccns: ['26262'], slug: 'fall-2014'}).get_as_json
+      expect(json).to be_present
+      parsed = JSON.parse(json)
+      expect(parsed).to be
+      unless parsed['statusCode'] && parsed['statusCode'] >= 400
+        expect(parsed['books']).to be
+      end
+    end
+    context 'when the bookstore server has problems' do
+      before do
+        stub_request(:any, /#{Regexp.quote(Settings.textbooks_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH)
+      end
+      it 'returns a error status code and message' do
+        json = Textbooks::Proxy.new({ccns: ['26262'], slug: 'fall-2014', fake: false}).get_as_json
+        parsed = JSON.parse(json)
+        expect(parsed['statusCode']).to be >= 400
+        expect(parsed['body']).to be_present
       end
     end
   end
