@@ -80,8 +80,18 @@ describe Textbooks::Proxy do
       end
     end
 
-    # TODO We no longer have an example of a bookstore page with choices. When we find one, redo this test!
-    # it "should return true for hasChoices when there are choices for a book"
+    context 'a choice of required texts' do
+      let(:ccns) { ['53798'] }
+      let(:slug) {'fall-2014'}
+      it 'provides a bookstore link to get the title with choices' do
+        it_is_a_normal_server_response
+        # it_has_at_least_one_title
+        choices = subject[:books][:bookDetails][0][:books][1]
+        expect(choices[:hasChoices]).to be_true
+        expect(choices[:title]).to be_present
+        expect(choices[:bookstoreLink]).to be_present
+      end
+    end
 
   end
 
