@@ -11,7 +11,6 @@ describe Textbooks::Proxy do
   def it_has_at_least_one_title
     feed = subject[:books]
     expect(feed[:hasBooks]).to be_true
-    expect(feed[:bookDetails][0][:hasChoices]).to be_false
     first_book = feed[:bookDetails][0][:books][0]
     expect(first_book[:title]).to be_present
     expect(first_book[:author]).to be_present
@@ -85,7 +84,7 @@ describe Textbooks::Proxy do
       let(:slug) {'fall-2014'}
       it 'provides a bookstore link to get the title with choices' do
         it_is_a_normal_server_response
-        # it_has_at_least_one_title
+        it_has_at_least_one_title
         choices = subject[:books][:bookDetails][0][:books][1]
         expect(choices[:hasChoices]).to be_true
         expect(choices[:title]).to be_present
