@@ -86,7 +86,6 @@ module Textbooks
       required_books = []
       recommended_books = []
       optional_books = []
-      statusCode = ''
       bookstore_error_text = ''
 
       @ccns.each do |ccn|
@@ -159,6 +158,9 @@ module Textbooks
     end
 
     def request_bookstore_list(ccn)
+      # We work from saved HTML since VCR does not correctly record bookstore responses.
+      return fake_list(ccn) if @fake
+
       path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
       url = "#{Settings.textbooks_proxy.base_url}#{path}"
       logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
@@ -171,6 +173,15 @@ module Textbooks
         raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
       end
       response.body
+    end
+
+    def fake_list(ccn)
+      path = Rails.root.join('fixtures', 'html', "textbooks-#{@term}-#{ccn}.html").to_s
+      logger.info "Fake = #@fake, getting data from HMTL fixture file #{path}"
+      unless File.exists?(path)
+        raise Errors::ProxyError.new("Unrecorded textbook response #{path}")
+      end
+      File.read(path)
     end
 
   end
