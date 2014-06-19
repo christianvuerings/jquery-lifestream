@@ -5,6 +5,16 @@ module Textbooks
 
     APP_ID = "textbooks"
 
+    def initialize(options = {})
+      @ccns = options[:ccns]
+      @slug = options[:slug]
+      @term = get_term(@slug)
+      # The first CCN is used as a cache key.
+      @ccn = @ccns[0]
+      super(Settings.textbooks_proxy, options)
+    end
+
+
     def google_book(isbn)
       google_book_url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
       google_response = ""
@@ -62,14 +72,6 @@ module Textbooks
       "#{term_hash[:term_yr]}#{term_hash[:term_cd]}"
     end
 
-    def initialize(options = {})
-      @ccns = options[:ccns]
-      @slug = options[:slug]
-      @term = get_term(@slug)
-      @ccn = @ccns[0]
-      super(Settings.textbooks_proxy, options)
-    end
-
     def get_as_json
       self.class.smart_fetch_from_cache(
         {id: "#{@ccn}-#{@slug}",
@@ -88,9 +90,8 @@ module Textbooks
       bookstore_error_text = ''
 
       @ccns.each do |ccn|
-        response = request_bookstore_list(ccn)
-        statusCode = response.code
-        text_books = Nokogiri::HTML(response.body)
+        xml = request_bookstore_list(ccn)
+        text_books = Nokogiri::HTML(xml)
         text_books_items = text_books.xpath('//h2 | //ul')
 
         required_text_list = text_books_items.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
@@ -152,8 +153,7 @@ module Textbooks
       book_response[:bookUnavailableError] = book_unavailable_error
       book_response[:hasBooks] = !(required_books.flatten.blank? && recommended_books.flatten.blank? && optional_books.flatten.blank?)
       {
-        books: book_response,
-        statusCode: statusCode
+        books: book_response
       }
 
     end
@@ -162,7 +162,6 @@ module Textbooks
       path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
       url = "#{Settings.textbooks_proxy.base_url}#{path}"
       logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
-      # VCR does not correctly record HTML responses.
       response = HTTParty.get(
         url,
         timeout: Settings.application.outgoing_http_timeout
@@ -171,7 +170,7 @@ module Textbooks
       if response.code >= 400
         raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
       end
-      response
+      response.body
     end
 
   end
