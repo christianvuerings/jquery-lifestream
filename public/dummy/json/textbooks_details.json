@@ -11,12 +11,12 @@
             "author": "Duckworth",
             "edition": "11th",
             "publisher": "Cengage Learning",
-            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001\u0026categoryId=9604\u0026langId=-1\u0026courseId_1=43784267\u0026storeId=10433\u0026demoKey=d\u0026orderItemStoreId=10433\u0026purpose=browse\u0026salesTrack=BL",
+            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001&categoryId=9604&langId=-1&courseId_1=43784267&storeId=10433&demoKey=d&orderItemStoreId=10433&purpose=browse&salesTrack=BL",
             "isbn": "9781285446202",
-            "amazonLink": "http://www.amazon.com/gp/search?index=books\u0026linkCode=qs\u0026keywords=9781285446202",
+            "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9781285446202",
             "cheggLink": "http://www.chegg.com/search/9781285446202",
-            "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i\u0026searcharg=9781285446202",
-            "googlebookLink": "http://books.google.com/books?id=0rLLngEACAAJ\u0026dq=isbn:9781285446202\u0026hl=\u0026source=gbs_api"
+            "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9781285446202",
+            "googlebookLink": "http://books.google.com/books?id=0rLLngEACAAJ&dq=isbn:9781285446202&hl=&source=gbs_api"
           },
           {
             "hasChoices": false,
@@ -25,7 +25,7 @@
             "author": "Rosenak",
             "edition": "N/A",
             "publisher": "UNIVERSITY CUSTOM PUBLISHING",
-            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001\u0026categoryId=9604\u0026langId=-1\u0026courseId_1=43784267\u0026storeId=10433\u0026demoKey=d\u0026orderItemStoreId=10433\u0026purpose=browse\u0026salesTrack=BL"
+            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001&categoryId=9604&langId=-1&courseId_1=43784267&storeId=10433&demoKey=d&orderItemStoreId=10433&purpose=browse&salesTrack=BL"
           },
           {
             "hasChoices": true,
@@ -34,11 +34,11 @@
             "author": "Stewart",
             "edition": "7th",
             "publisher": "Cengage Learning Custom Publishing",
-            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001\u0026categoryId=9604\u0026langId=-1\u0026courseId_1=44843797\u0026storeId=10433\u0026demoKey=d\u0026orderItemStoreId=10433\u0026purpose=browse\u0026salesTrack=BL",
+            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001&categoryId=9604&langId=-1&courseId_1=44843797&storeId=10433&demoKey=d&orderItemStoreId=10433&purpose=browse&salesTrack=BL",
             "isbn": "9781285340562",
-            "amazonLink": "http://www.amazon.com/gp/search?index=books\u0026linkCode=qs\u0026keywords=9781285340562",
+            "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9781285340562",
             "cheggLink": "http://www.chegg.com/search/9781285340562",
-            "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i\u0026searcharg=9781285340562",
+            "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9781285340562",
             "googlebookLink": ""
           }
         ]
