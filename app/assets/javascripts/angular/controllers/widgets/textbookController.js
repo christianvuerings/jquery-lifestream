@@ -22,6 +22,7 @@
         'slug': $scope.selectedSemester.slug
       };
 
+      // $http.get('/dummy/json/textbooks_details.json').success(function(data) {
       $http.get('/api/my/textbooks_details', {
         params: courseInfo
       }).success(function(data) {
