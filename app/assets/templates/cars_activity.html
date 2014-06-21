@@ -151,6 +151,18 @@
                   <strong>Department:</strong>
                   <a data-ng-bind="item.transDept" data-ng-click="api.util.preventBubble($event)" data-ng-href="{{item.transDeptUrl}}"></a>
                 </div>
+                <div data-ng-if="item.transPaymentMethod">
+                  <strong>Payment Method:</strong>
+                  <span data-ng-bind="item.transPaymentMethod"></span>
+                </div>
+                <div data-ng-if="item.transPaymentLastActionDate">
+                  <strong>Last Action Date:</strong>
+                  <span data-ng-bind="item.transPaymentLastActionDate | date:'MM/dd/yy'"></span>
+                </div>
+                <div data-ng-if="item.transPaymentLastAction">
+                  <strong>Last Action:</strong>
+                  <span data-ng-bind="item.transPaymentLastAction"></span>
+                </div>
                 <div data-ng-if="item.transTerm">
                   <strong>Term:</strong>
                   <span data-ng-bind="item.transTerm"></span>
