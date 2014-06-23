@@ -21,9 +21,9 @@ module MyBadges
     def internal_fetch_counts(params = {})
       google_proxy = GoogleApps::MailList.new(user_id: @uid)
       google_mail_results = google_proxy.mail_unread
-      Rails.logger.debug "#{self.class.name}: Processing #{google_mail_results} GMail XML results"
+      Rails.logger.debug "#{self.class.name}: Processing GMail XML results: #{google_mail_results.inspect}"
       response = {:count => 0, :items => []}
-      if google_mail_results && google_mail_results.response
+      if google_mail_results && google_mail_results.response && google_mail_results.response.status == 200
         nokogiri_xml = nil
 
         begin
@@ -37,6 +37,8 @@ module MyBadges
           response[:count] = get_count nokogiri_xml
           response[:items] = get_items nokogiri_xml
         end
+      else
+        Rails.logger.error "#{self.class.name}: Got an error response from Google. Status #{google_mail_results.response.status}, Body #{google_mail_results.response.body}"
       end
 
       response
