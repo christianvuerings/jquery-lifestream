@@ -113,7 +113,7 @@ describe 'My Finances landing page', :testui => true do
       it 'includes a link to Graduate Financial Support' do
         @my_finances_page.grad_fin_support_link
         @driver.switch_to.window @driver.window_handles.last
-        wait.until { @driver.find_element(:xpath => '//title[contains(.,"Financial Support for Graduate Students")]') }
+        wait.until { @driver.find_element(:xpath => '//title[contains(.,"Financial Support | Berkeley Graduate Division")]') }
         @driver.close
       end
       it 'includes a link to MyFinAid' do
