@@ -2,7 +2,7 @@ require 'mail'
 
 module MyBadges
   class GoogleCalendar
-    include MyBadges::BadgesModule, DatedFeed
+    include MyBadges::BadgesModule, DatedFeed, ClassLogger
     include Cache::UserCacheExpiry
 
     def initialize(uid)
@@ -30,7 +30,7 @@ module MyBadges
       return url_link unless @rewrite_url
       query_params = Rack::Utils.parse_query(URI.parse(url_link).query)
       if (eid = query_params["eid"]).blank?
-        Rails.logger.warn "#{self.class.name} unable to parse eid from htmlLink #{url_link}"
+        logger.warn "unable to parse eid from htmlLink #{url_link}"
         url_link
       else
         "https://calendar.google.com/a/berkeley.edu?eid=#{eid}"
@@ -64,7 +64,7 @@ module MyBadges
               event.merge! event_state_fields(entry)
               modified_entries[:items] << event
             rescue => e
-              Rails.logger.warn "#{self.class.name} could not process entry: #{entry} - #{e}"
+              logger.warn "could not process entry: #{entry} - #{e}"
               next
             end
           end
