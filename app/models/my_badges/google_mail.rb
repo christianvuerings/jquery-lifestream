@@ -38,9 +38,12 @@ module MyBadges
           response[:items] = get_items nokogiri_xml
         end
       else
-        Rails.logger.error "#{self.class.name}: Got an error response from Google. Status #{google_mail_results.response.status}, Body #{google_mail_results.response.body}"
+        if google_mail_results && google_mail_results.response
+          Rails.logger.error "#{self.class.name}: Got an error response from Google. Status #{google_mail_results.response.status}, Body #{google_mail_results.response.body}"
+        else
+          Rails.logger.error "#{self.class.name}: Got a nil response from Google: #{google_mail_results.inspect}"
+        end
       end
-
       response
     end
 
