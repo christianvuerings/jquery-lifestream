@@ -5,7 +5,7 @@ describe GoogleApps::EventsDelete do
 
   context "fake event deletion", if: Rails.env.test? do
     before(:each) do
-      fake_proxy = GoogleApps::EventsDelete.new(fake: true, fake_options: { match_requests_on: [:method, :path] })
+      fake_proxy = GoogleApps::EventsDelete.new(fake: true)
       GoogleApps::EventsDelete.stub(:new).and_return(fake_proxy)
     end
 

@@ -43,7 +43,7 @@ describe GoogleApps::EventsInsert do
 
   context "fake insert event test", if: Rails.env.test? do
     before(:each) do
-      fake_proxy = GoogleApps::EventsInsert.new(fake: true, fake_options: { match_requests_on: [:method, :path, :body] })
+      fake_proxy = GoogleApps::EventsInsert.new(fake: true)
       GoogleApps::EventsInsert.stub(:new).and_return(fake_proxy)
     end
 

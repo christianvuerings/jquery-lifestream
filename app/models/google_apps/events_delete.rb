@@ -1,5 +1,9 @@
 module GoogleApps
   class EventsDelete < Events
+    def initialize(options = {})
+      super(options.reverse_merge(fake_options: {match_requests_on: [:method, :path]}))
+    end
+
     def delete_event(event_id)
       request(api: self.class.api,
               params: {"calendarId" => "primary", "eventId" => "#{event_id}"},

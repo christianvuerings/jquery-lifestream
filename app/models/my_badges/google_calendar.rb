@@ -38,7 +38,7 @@ module MyBadges
     end
 
     def internal_fetch_counts(params = {})
-      google_proxy = GoogleApps::EventsList.new(user_id: @uid)
+      google_proxy = GoogleApps::EventsRecentItems.new(user_id: @uid)
       google_calendar_results = google_proxy.recent_items(params)
       modified_entries = {}
       modified_entries[:items] = []

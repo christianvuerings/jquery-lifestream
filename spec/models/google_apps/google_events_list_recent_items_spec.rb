@@ -12,7 +12,7 @@ describe 'GoogleEventsList (Recent Items)' do
   end
 
   it "should get real events list using the Tammi account", :testext => true do
-    proxy = GoogleApps::EventsList.new(
+    proxy = GoogleApps::EventsRecentItems.new(
       :access_token => Settings.google_proxy.test_user_access_token,
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
       :expiration_time => 0

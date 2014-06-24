@@ -88,7 +88,7 @@ describe MyEventsController do
       context "success scenarios" do
         before(:each) do
           described_class.any_instance.stub(:check_google_access).and_return(true)
-          fake_proxy = GoogleApps::EventsInsert.new(fake: true, fake_options: { match_requests_on: [:method, :path, :body] })
+          fake_proxy = GoogleApps::EventsInsert.new(fake: true)
           GoogleApps::EventsInsert.stub(:new).and_return(fake_proxy)
         end
         subject do

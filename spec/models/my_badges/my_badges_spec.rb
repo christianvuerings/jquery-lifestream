@@ -3,8 +3,8 @@ require "spec_helper"
 describe "MyBadges" do
   before(:each) do
     @user_id = rand(999999).to_s
-    @fake_drive_list = GoogleApps::DriveList.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
-    @fake_events_list = GoogleApps::EventsList.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
+    @fake_drive_list = GoogleApps::DriveList.new(:fake => true)
+    @fake_events_list = GoogleApps::EventsRecentItems.new(:fake => true)
     @fake_mail_list = GoogleApps::MailList.new(:fake => true)
     @real_drive_list = GoogleApps::DriveList.new(
       :access_token => Settings.google_proxy.test_user_access_token,
@@ -16,7 +16,7 @@ describe "MyBadges" do
   it "should be able to filter out entries older than one month" do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::DriveList.stub(:new).and_return(@fake_drive_list)
-    GoogleApps::EventsList.stub(:new).and_return(@fake_events_list)
+    GoogleApps::EventsRecentItems.stub(:new).and_return(@fake_events_list)
     User::Oauth2Data.stub(:get_google_email).and_return("tammi.chang.clc@gmail.com")
     badges = MyBadges::Merged.new @user_id
     filtered_feed = badges.get_feed
@@ -46,7 +46,7 @@ describe "MyBadges" do
   it "should be able to ignore entries with malformed fields" do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::DriveList.stub(:new).and_return(@fake_drive_list)
-    GoogleApps::EventsList.stub(:new).and_return(@fake_events_list)
+    GoogleApps::EventsRecentItems.stub(:new).and_return(@fake_events_list)
     GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
     MyBadges::GoogleDrive.any_instance.stub(:is_recent_message?).and_raise(ArgumentError, "foo")
     MyBadges::GoogleCalendar.any_instance.stub(:verify_and_format_date).and_raise(ArgumentError, "foo")
@@ -67,7 +67,7 @@ describe "MyBadges" do
   it "should have contain some of the same common item-keys across the different badge endpoints" do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::DriveList.stub(:new).and_return(@fake_drive_list)
-    GoogleApps::EventsList.stub(:new).and_return(@fake_events_list)
+    GoogleApps::EventsRecentItems.stub(:new).and_return(@fake_events_list)
     GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
     badges_feed = MyBadges::Merged.new(@user_id).get_feed[:badges]
 
