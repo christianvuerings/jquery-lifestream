@@ -4,8 +4,8 @@ describe MyBadgesController do
 
   before(:each) do
     @user_id = rand(99999).to_s
-    @fake_drive_list = GoogleApps::DriveList.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
-    @fake_events_list = GoogleApps::EventsList.new(:fake => true, :fake_options => {:match_requests_on => [:method, :path]})
+    @fake_drive_list = GoogleApps::DriveList.new(:fake => true)
+    @fake_events_list = GoogleApps::EventsRecentItems.new(:fake => true)
   end
 
   it "should be an empty badges feed on non-authenticated user" do
@@ -18,7 +18,7 @@ describe MyBadgesController do
   it "should be an non-empty badges feed on authenticated user" do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::DriveList.stub(:new).and_return(@fake_drive_list)
-    GoogleApps::EventsList.stub(:new).and_return(@fake_events_list)
+    GoogleApps::EventsRecentItems.stub(:new).and_return(@fake_events_list)
     session[:user_id] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
@@ -40,7 +40,34 @@ describe MyBadgesController do
     json_response["studentInfo"].present?.should be_true
     json_response["studentInfo"].is_a?(Hash).should be_true
     json_response["studentInfo"].keys.count.should == 3
+  end
 
+  context 'viewing-as' do
+    let(:user_id) { rand(99999).to_s }
+    let(:original_user_id) { rand(99999).to_s }
+    before do
+      session[:user_id] = user_id
+      expect(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
+      expect(Settings.app_alerts_proxy).to receive(:fake).at_least(:once).and_return(true)
+      expect(Settings.bearfacts_proxy).to receive(:fake).at_least(:once).and_return(true)
+    end
+    it 'should not return Google data from a cached real-user feed' do
+      get :get_feed
+      feed = JSON.parse(response.body)
+      expect(feed['alert']['title']).to be_present
+      expect(feed['studentInfo']['regBlock']).to be_present
+      ['bcal', 'bdrive', 'bmail'].each do |service|
+        expect(feed['badges'][service]['count']).to be > 0
+      end
+      session[:original_user_id] = original_user_id
+      get :get_feed
+      feed = JSON.parse(response.body)
+      expect(feed['alert']['title']).to be_present
+      expect(feed['studentInfo']['regBlock']).to be_present
+      ['bcal', 'bdrive', 'bmail'].each do |service|
+        expect(feed['badges'][service]['count']).to eq 0
+      end
+    end
   end
 
 end
