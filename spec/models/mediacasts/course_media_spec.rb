@@ -10,13 +10,6 @@ describe Mediacasts::CourseMedia do
     {:proxy_error_message => ""}
   end
 
-  let(:errors) do
-    {
-      :video_error_message => "There are no webcasts available."
-    }
-  end
-
-  let(:playlist_id) { 'abcdef' }
   let(:itunes_video_id) { '12345' }
   let(:fake_itunes_no_audio) do
     {
@@ -25,20 +18,52 @@ describe Mediacasts::CourseMedia do
     }
   end
 
+  let(:fake_recordings) do
+    [
+      {
+        :lecture => "Lecture 1: Massachusetts v. EPA and its Aftermath",
+        :youTubeId => "BmGjzCoTjMM"
+      },
+      {
+        :lecture => "Lecture 2: The Economics of Climate Change",
+        :youTubeId => "CrSfIoRDLL8"
+      },
+      {
+        :lecture => "Lecture 3: Insurance",
+        :youTubeId => "IdJke1w0JC8"
+      },
+      {
+        :lecture => "Lecture 4: Financing Adaptation",
+        :youTubeId => "JyEsim_d64Q"
+      }
+    ]
+  end
+
   let(:fake_playlist) do
     {
-      :playlist_id => playlist_id
+      :recordings => fake_recordings,
+      :audio_only => false
+    }
+  end
+
+  let(:fake_playlist_audio_only) do
+    {
+      :recordings => fake_recordings,
+      :audio_only => true
     }
   end
 
   let(:fake_playlist_no_videos) do
     {
-      :video_error_message => errors[:video_error_message]
+      :recordings => [],
+      :audio_only => false
     }
   end
 
   let(:fake_video_result) do
-    {:videos => ['video1', 'video2']}
+    {
+      :videos => fake_recordings.reverse
+    }
   end
 
   context "when serving mediacasts" do
@@ -65,15 +90,14 @@ describe Mediacasts::CourseMedia do
     context "when videos are disabled" do
       before { Settings.features.videos = false }
       after { Settings.features.videos = true }
-      it "should return empty hash" do
+      it "should return empty array" do
         result = subject.get_videos_as_json(fake_playlist)
         expect(result).to be_an_instance_of Hash
-        expect(result).to be_empty
+        expect(result[:videos]).to be_empty
       end
     end
 
     context "when videos are present" do
-      before { subject.should_receive(:get_youtube_videos).and_return(fake_video_result) }
       it "should return youtube videos" do
         result = subject.get_videos_as_json(fake_playlist)
         expect(result).to be_an_instance_of Hash
@@ -82,10 +106,18 @@ describe Mediacasts::CourseMedia do
     end
 
     context "when videos are not present" do
-      it "should return video error hash" do
+      it "should return an empty array" do
         result = subject.get_videos_as_json(fake_playlist_no_videos)
         expect(result).to be_an_instance_of Hash
-        expect(result[:videoErrorMessage]).to eq errors[:video_error_message]
+        expect(result[:videos]).to eq []
+      end
+    end
+
+    context "when audio_only is true" do
+      it "should return an empty response when audio_only is true" do
+        result = subject.get_videos_as_json(fake_playlist_audio_only)
+        expect(result).to be_an_instance_of Hash
+        expect(result[:videos]).to eq []
       end
     end
 
@@ -107,7 +139,7 @@ describe Mediacasts::CourseMedia do
 
   end
 
-  context 'retrieving the playlist id for a course' do
+  context 'retrieving the youtube id for a course' do
     context 'with a fake playlists proxy' do
       subject { Mediacasts::CourseMedia.new(2008, 'D', 'LAW', '2723') }
 
@@ -116,9 +148,11 @@ describe Mediacasts::CourseMedia do
       end
 
       context 'a normal return of fake data' do
-        it 'should return a specific playlist id that we know about' do
+        it 'should return a specific youtube id that we know about' do
           result = subject.get_playlist
-          expect(result[:playlist_id]).to eq "EC8DA9DAD111EAAD28"
+          expect(result[:recordings]).to be_an_instance_of Array
+          expect(result[:recordings]).to have(12).item
+          expect(result[:recordings][0]["youTubeId"]).to eq "t3_7rmSe80c"
         end
       end
     end
@@ -128,9 +162,13 @@ describe Mediacasts::CourseMedia do
       subject { Mediacasts::CourseMedia.new(2012, 'B', 'BIOLOGY', '1A') }
 
       context "normal return of real data", :testext => true do
-        it "should return playlist id" do
+        it "should return correct recordings" do
           result = subject.get_playlist
-          expect(result[:playlist_id]).to eq "ECCF8E59B3C769FB01"
+          expect(result[:recordings]).to be_an_instance_of Array
+          expect(result[:recordings]).to have(36).item
+          expect(result[:recordings][0]).to be_an_instance_of Hash
+          expect(result[:recordings][0]["youTubeId"]).to eq "7MZlVeLPXFY"
+          expect(result[:recordings][0]["lecture"]).to eq "Lecture 1: Course introduction - macromolecules"
         end
       end
 

@@ -57,13 +57,15 @@ module Mediacasts
     end
 
     def get_videos_as_json(playlist)
-      return {} unless Settings.features.videos
-      if !playlist[:video_error_message].blank?
-        return {
-          :videoErrorMessage => playlist[:video_error_message]
+      if !Settings.features.videos || playlist[:recordings].blank? || playlist[:audio_only]
+        {
+          :videos => []
+        }
+      else
+        {
+          :videos => playlist[:recordings].reverse
         }
       end
-      get_youtube_videos(playlist[:playlist_id])
     end
 
     def get_audio_as_json(playlist)
@@ -72,10 +74,6 @@ module Mediacasts
 
     def get_audio(audio_rss)
       Mediacasts::Audio.new({:audio_rss => audio_rss}).get
-    end
-
-    def get_youtube_videos(id)
-      Mediacasts::Youtube.new({:playlist_id => id}).get
     end
 
   end

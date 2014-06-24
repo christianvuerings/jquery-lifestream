@@ -10,7 +10,7 @@ describe Mediacasts::AllPlaylists do
     context 'a normal return of fake data' do
       it 'should return a lot of playlists' do
         result = subject.get
-        expect(result[:courses].keys.length).to eq 322
+        expect(result[:courses].keys.length).to eq 17
       end
     end
   end
