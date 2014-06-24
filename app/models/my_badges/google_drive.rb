@@ -1,6 +1,6 @@
 module MyBadges
   class GoogleDrive
-    include MyBadges::BadgesModule, DatedFeed
+    include MyBadges::BadgesModule, DatedFeed, ClassLogger
     include Cache::UserCacheExpiry
 
     def initialize(uid)
@@ -36,7 +36,7 @@ module MyBadges
       }
       processed_pages = 0
       google_drive_results.each_with_index do |response_page, index|
-        Rails.logger.info "Processing page ##{index} of drive_list results"
+        logger.info "Processing page ##{index} of drive_list results"
         next unless response_page && response_page.response.status == 200
         response_page.data["items"].each do |entry|
           begin
@@ -56,7 +56,7 @@ module MyBadges
               response[:count] += 1
             end
           rescue => e
-            Rails.logger.warn "#{e}: #{e.message}: #{entry["createdDate"]}, #{entry["modifiedDate"]}, #{entry["labels"].to_hash}"
+            logger.warn "#{e}: #{e.message}: #{entry["createdDate"]}, #{entry["modifiedDate"]}, #{entry["labels"].to_hash}"
             next
           end
         end
@@ -83,7 +83,7 @@ module MyBadges
         raise ArgumentError, 'icon does not exist in drive_icons' unless drive_icons_list.include?(file_baseclass)
         file_baseclass
       rescue => e
-        Rails.logger.warn "#{self.class.name} could not parse icon basename from link #{icon_link}: #{e}"
+        logger.warn "could not parse icon basename from link #{icon_link}: #{e}"
         ''
       end
     end
@@ -102,7 +102,7 @@ module MyBadges
         date_fields = [entry["createdDate"].to_s, entry["modifiedDate"].to_s]
         date_fields.map! {|x| Time.zone.parse(x).to_i }
       rescue => e
-        Rails.logger.warn "#{self.class.name}: Problems parsing createdDate: #{entry["createdDate"]} modifiedDate: #{entry["modifiedDate"]}"
+        logger.warn "Problems parsing createdDate: #{entry["createdDate"]} modifiedDate: #{entry["modifiedDate"]}"
         return false
       end
       @one_month_ago.to_i <= date_fields.max
