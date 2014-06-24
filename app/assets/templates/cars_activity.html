@@ -156,12 +156,16 @@
                   <span data-ng-bind="item.transPaymentMethod"></span>
                 </div>
                 <div data-ng-if="item.transPaymentLastActionDate">
-                  <strong>Last Action Date:</strong>
+                  <strong>Action Date:</strong>
                   <span data-ng-bind="item.transPaymentLastActionDate | date:'MM/dd/yy'"></span>
                 </div>
                 <div data-ng-if="item.transPaymentLastAction">
-                  <strong>Last Action:</strong>
+                  <strong>Action:</strong>
                   <span data-ng-bind="item.transPaymentLastAction"></span>
+                </div>
+                <div data-ng-if="item.transPaymentVoidDate">
+                  <strong>Date Voided:</strong>
+                  <span data-ng-bind="item.transPaymentVoidDate"></span>
                 </div>
                 <div data-ng-if="item.transTerm">
                   <strong>Term:</strong>
