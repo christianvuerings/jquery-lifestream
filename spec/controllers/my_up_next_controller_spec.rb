@@ -2,22 +2,39 @@ require "spec_helper"
 
 describe MyUpNextController do
 
-  before(:each) do
-    @user_id = rand(99999).to_s
+  context 'unauthenticated user' do
+    it 'returns an empty feed' do
+      get :get_feed
+      assert_response :success
+      expect(JSON.parse(response.body)).to eq({})
+    end
   end
 
-  it "should be an empty task feed on non-authenticated user" do
-    get :get_feed
-    assert_response :success
-    json_response = JSON.parse(response.body)
-    json_response.should == {}
+  context 'authenticated user' do
+    let(:user_id) { rand(99999).to_s }
+    before do
+      session[:user_id] = user_id
+    end
+    it 'returns a non-empty feed' do
+      get :get_feed
+      expect(JSON.parse(response.body)['items']).to be_instance_of(Array)
+    end
   end
 
-  it "should be an non-empty task feed on authenticated user" do
-    session[:user_id] = @user_id
-    get :get_feed
-    json_response = JSON.parse(response.body)
-    json_response.should_not == {}
-    json_response["items"].instance_of?(Array).should == true
+  context 'viewing-as' do
+    let(:user_id) { rand(99999).to_s }
+    let(:original_user_id) { rand(99999).to_s }
+    before do
+      session[:user_id] = user_id
+      expect(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
+    end
+    it 'should not return a cached real-user feed' do
+      get :get_feed
+      expect(JSON.parse(response.body)['items']).to be_present
+      session[:original_user_id] = original_user_id
+      get :get_feed
+      expect(JSON.parse(response.body)['items']).to be_empty
+    end
   end
+
 end
