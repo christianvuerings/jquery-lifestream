@@ -14,9 +14,16 @@ class CanvasRostersController < RostersController
 
   # GET /api/academics/rosters/canvas/embedded
   def get_feed
-    proxy = Canvas::CanvasRosters.new(session[:user_id], course_id: session[:canvas_course_id].to_i)
-    feed = proxy.get_feed
+    feed = Canvas::CanvasRosters.new(session[:user_id], course_id: session[:canvas_course_id].to_i).get_feed
     render :json => feed.to_json
+  end
+
+  # GET /canvas/:canvas_course_id/photo/:person_id
+  def photo
+    course_id = params[:canvas_course_id]
+    course_user_id = Integer(params[:person_id], 10)
+    @photo = Canvas::CanvasRosters.new(session[:user_id], course_id: course_id).photo_data_or_file(course_user_id)
+    serve_photo
   end
 
 end

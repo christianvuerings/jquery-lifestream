@@ -2,8 +2,9 @@ require "spec_helper"
 require "support/canvas_shared_examples"
 
 describe CanvasRostersController do
-  let(:user_id) { Settings.canvas_proxy.test_user_id }
-  let(:canvas_course_id) { "767330" }
+  let(:user_id)           { Settings.canvas_proxy.test_user_id }
+  let(:canvas_course_id)  { "767330" }
+  let(:student_id)        { rand(99999) }
   let(:roster_feed) do
     {
       "canvas_course" => {"id" => 27},
@@ -40,6 +41,8 @@ describe CanvasRostersController do
       ]
     }
   end
+  let(:photo_file) { {:data => '\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01'} }
+  let(:photo_data) { {:filename => File.join(Rails.root, 'app/assets/images', Rosters::Common::PHOTO_UNAVAILABLE_FILENAME) } }
 
   before do
     # emulate user authenticated via LTI Launch from a Canvas Course
@@ -84,10 +87,45 @@ describe CanvasRostersController do
     end
 
     context "when canvas course id not present in session" do
+      before { session[:canvas_course_id] = nil }
       it "should respond with http 403 without content" do
         get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
+      end
+    end
+
+  end
+
+  context "when serving course enrollee photo" do
+    it_should_behave_like "an api endpoint" do
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
+      let(:make_request) { get :photo, canvas_course_id: canvas_course_id, person_id: student_id }
+    end
+
+    it_should_behave_like "a user authenticated api endpoint" do
+      let(:make_request) { get :photo, canvas_course_id: canvas_course_id, person_id: student_id }
+    end
+
+    it "should return error if user is not authorized" do
+      allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(false)
+      get :photo, canvas_course_id: canvas_course_id, person_id: student_id
+      assert_response(403)
+    end
+
+    context "if photo data returned for enrollee" do
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:photo_data_or_file).and_return(photo_data) }
+      it "should return photo" do
+        get :photo, canvas_course_id: canvas_course_id, person_id: student_id
+        assert_response :success
+      end
+    end
+
+    context "if photo path returned for enrollee" do
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:photo_data_or_file).and_return(photo_file) }
+      it "should return photo" do
+        get :photo, canvas_course_id: canvas_course_id, person_id: student_id
+        assert_response :success
       end
     end
 
