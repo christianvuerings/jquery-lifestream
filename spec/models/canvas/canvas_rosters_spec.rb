@@ -139,27 +139,6 @@ describe Canvas::CanvasRosters do
     feed[:students].empty?.should be_true
   end
 
-  it "should give access to Canvas course instructors" do
-    user_id = rand(99999).to_s
-    teaching_site_id = rand(99999)
-    stub_teacher_status(user_id, teaching_site_id)
-    student_site_id = rand(99999)
-    student_proxy = double()
-    student_proxy.stub(:full_teachers_list).and_return(
-      [
-        {
-          'id' => rand(99999),
-          'login_id' => rand(99999).to_s
-        }
-      ]
-    )
-    Canvas::CourseTeachers.stub(:new).with(course_id: student_site_id).and_return(student_proxy)
-    model = Canvas::CanvasRosters.new(user_id, course_id: teaching_site_id)
-    model.user_authorized?.should be_true
-    model = Canvas::CanvasRosters.new(user_id, course_id: student_site_id)
-    model.user_authorized?.should be_false
-  end
-
   it "should show official photo links for students who are not waitlisted in all sections" do
     teacher_login_id = rand(99999).to_s
     course_id = rand(99999)
