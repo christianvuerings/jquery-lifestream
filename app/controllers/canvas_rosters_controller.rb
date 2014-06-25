@@ -9,7 +9,7 @@ class CanvasRostersController < RostersController
   def authorize_viewing_rosters
     raise Pundit::NotAuthorizedError, "Canvas Course ID not present in embedded rosters request: session user = #{session[:user_id]}" if session[:canvas_course_id].blank?
     canvas_course = Canvas::Course.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id].to_i)
-    authorize canvas_course, :is_canvas_course_teacher_or_assistant?
+    authorize canvas_course, :can_view_course_roster_photos?
   end
 
   # GET /api/academics/rosters/canvas/embedded

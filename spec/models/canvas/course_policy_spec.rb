@@ -86,6 +86,28 @@ describe Canvas::CoursePolicy do
     end
   end
 
+  describe "#can_view_course_roster_photos?" do
+    context "when user is a canvas course teacher" do
+      let(:invariable_course_user_hash) { course_teacher_hash }
+      it "returns true" do
+        expect(subject.can_view_course_roster_photos?).to be_true
+      end
+    end
+
+    context "when user is a canvas course teachers assistant" do
+      let(:invariable_course_user_hash) { course_ta_hash }
+      it "returns true" do
+        expect(subject.can_view_course_roster_photos?).to be_true
+      end
+    end
+
+    context "when user is not a canvas course teacher or assistant" do
+      it "returns false" do
+        expect(subject.can_view_course_roster_photos?).to be_false
+      end
+    end
+  end
+
   describe "#is_canvas_user?" do
     it_should_behave_like "a canvas user requirement" do
       let(:authorization_method) { subject.is_canvas_user? }

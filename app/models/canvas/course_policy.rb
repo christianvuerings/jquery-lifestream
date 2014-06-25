@@ -17,6 +17,10 @@ module Canvas
       is_canvas_course_user? || is_canvas_account_admin?
     end
 
+    def can_view_course_roster_photos?
+      is_canvas_course_teacher_or_assistant?
+    end
+
     def is_canvas_user?
       if canvas_user_profile.blank?
         logger.warn "UID #{@user.uid} not found in Canvas, attempting authorization for Canvas Course ID #{@record.canvas_course_id}"
