@@ -77,49 +77,40 @@ describe "Rosters::Campus" do
   end
 
   before do
-    CampusOracle::UserCourses.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))
-    CampusOracle::UserCourses.stub(:new).with(user_id: student_user_id).and_return(double(get_all_campus_courses: fake_campus_student))
-    CampusOracle::Queries.stub(:get_enrolled_students).with(ccn1, term_yr, term_cd).and_return(fake_students)
-    CampusOracle::Queries.stub(:get_enrolled_students).with(ccn2, term_yr, term_cd).and_return(fake_students)
+    allow(CampusOracle::UserCourses).to receive(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))
+    allow(CampusOracle::UserCourses).to receive(:new).with(user_id: student_user_id).and_return(double(get_all_campus_courses: fake_campus_student))
+    allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(ccn1, term_yr, term_cd).and_return(fake_students)
+    allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(ccn2, term_yr, term_cd).and_return(fake_students)
   end
 
   it "should return a list of officially enrolled students for a course ccn" do
-
     model = Rosters::Campus.new(user_id, course_id: campus_course_id)
     feed = model.get_feed
-    feed[:campus_course][:id].should == campus_course_id
-    feed[:sections].length.should == 2
-    feed[:sections][0][:name].should == "INFO #{catid} LEC 001"
-    feed[:students].length.should == 2
+    expect(feed[:campus_course][:id]).to eq campus_course_id
+    expect(feed[:sections].length).to eq 2
+    expect(feed[:sections][0][:name]).to eq "INFO #{catid} LEC 001"
+    expect(feed[:students].length).to eq 2
 
     student = feed[:students][0]
-    student[:id].should == enrolled_student_login_id
-    student[:student_id].should == enrolled_student_student_id
-    student[:first_name].blank?.should be_false
-    student[:last_name].blank?.should be_false
-    student[:sections].length.should == 2
-    student[:profile_url].blank?.should be_false
+    expect(student[:id]).to eq enrolled_student_login_id
+    expect(student[:student_id]).to eq enrolled_student_student_id
+    expect(student[:first_name].blank?).to be_false
+    expect(student[:last_name].blank?).to be_false
+    expect(student[:sections].length).to eq 2
+    expect(student[:profile_url].blank?).to be_false
   end
 
   it "should show official photo links for students who are not waitlisted in all sections" do
-
     model = Rosters::Campus.new(user_id, course_id: campus_course_id)
     feed = model.get_feed
-    feed[:sections].length.should == 2
-    feed[:students].length.should == 2
-    feed[:students].index {|student| student[:id] == enrolled_student_login_id &&
-        !student[:photo].end_with?(Rosters::Campus::PHOTO_UNAVAILABLE_FILENAME)
-    }.should_not be_nil
-    feed[:students].index {|student| student[:id] == waitlisted_student_login_id &&
+    expect(feed[:sections].length).to eq 2
+    expect(feed[:students].length).to eq 2
+    expect(feed[:students].index {|student| student[:id] == enrolled_student_login_id &&
+      !student[:photo].end_with?(Rosters::Campus::PHOTO_UNAVAILABLE_FILENAME)
+    }).to_not be_nil
+    expect(feed[:students].index {|student| student[:id] == waitlisted_student_login_id &&
         student[:photo].nil?
-    }.should_not be_nil
-  end
-
-  it "should give access to only to course instructors" do
-    model = Rosters::Campus.new(user_id, course_id: campus_course_id)
-    model.user_authorized?.should be_true
-    model = Rosters::Campus.new(student_user_id, course_id: campus_course_id)
-    model.user_authorized?.should be_false
+    }).to_not be_nil
   end
 
 end

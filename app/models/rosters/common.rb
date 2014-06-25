@@ -11,12 +11,8 @@ module Rosters
     end
 
     def get_feed
-      if user_authorized?
-        self.class.fetch_from_cache "#{@course_id}" do
-          get_feed_internal
-        end
-      else
-        nil
+      self.class.fetch_from_cache "#{@course_id}" do
+        get_feed_internal
       end
     end
 
