@@ -7,14 +7,14 @@ class CanvasRostersController < RostersController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def authorize_viewing_rosters
-    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in embedded rosters request: session user = #{session[:user_id]}" if session[:canvas_course_id].blank?
-    canvas_course = Canvas::Course.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id].to_i)
+    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in embedded rosters request: session user = #{session[:user_id]}" if canvas_course_id.blank?
+    canvas_course = Canvas::Course.new(:user_id => session[:user_id], :canvas_course_id => canvas_course_id)
     authorize canvas_course, :can_view_course_roster_photos?
   end
 
-  # GET /api/academics/rosters/canvas/embedded
+  # GET /api/academics/rosters/canvas/:canvas_course_id
   def get_feed
-    feed = Canvas::CanvasRosters.new(session[:user_id], course_id: session[:canvas_course_id].to_i).get_feed
+    feed = Canvas::CanvasRosters.new(session[:user_id], course_id: canvas_course_id).get_feed
     render :json => feed.to_json
   end
 
@@ -24,6 +24,11 @@ class CanvasRostersController < RostersController
     course_user_id = Integer(params[:person_id], 10)
     @photo = Canvas::CanvasRosters.new(session[:user_id], course_id: course_id).photo_data_or_file(course_user_id)
     serve_photo
+  end
+
+  def canvas_course_id
+    return session[:canvas_course_id].to_i if params[:canvas_course_id] == 'embedded'
+    params[:canvas_course_id].to_i
   end
 
 end

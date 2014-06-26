@@ -63,6 +63,21 @@ describe CanvasRostersController do
       let(:make_request) { get :get_feed }
     end
 
+    context "when canvas course requested via non-embedded session" do
+      before { session[:canvas_course_id] = nil }
+      it "should response with roster feed" do
+        get :get_feed, canvas_course_id: canvas_course_id
+        assert_response :success
+        json_response = JSON.parse(response.body)
+        expect(json_response["canvas_course"]).to be_an_instance_of Hash
+        expect(json_response["sections"]).to be_an_instance_of Array
+        expect(json_response["students"]).to be_an_instance_of Array
+        expect(json_response["canvas_course"]["id"]).to eq 27
+        expect(json_response["students"][0]["student_id"]).to eq "24899123"
+        expect(json_response["students"][1]["student_id"]).to eq "23973124"
+      end
+    end
+
     context "when user is authorized" do
       it "should respond with roster feed" do
         get :get_feed
