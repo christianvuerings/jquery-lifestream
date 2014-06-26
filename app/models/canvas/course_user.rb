@@ -34,6 +34,22 @@ module Canvas
       false
     end
 
+    def self.is_course_teacher?(canvas_course_user)
+      return false if canvas_course_user.blank?
+      canvas_course_user['enrollments'].each do |enrollment|
+        return true if enrollment['role'] == "TeacherEnrollment"
+      end
+      false
+    end
+
+    def self.is_course_teachers_assistant?(canvas_course_user)
+      return false if canvas_course_user.blank?
+      canvas_course_user['enrollments'].each do |enrollment|
+        return true if enrollment['role'] == "TaEnrollment"
+      end
+      false
+    end
+
     def roles
       profile = course_user
       roles_hash = {'teacher' => false, 'student' => false, 'observer' => false, 'designer' => false, 'ta' => false}

@@ -77,24 +77,5 @@ module Rosters
       feed
     end
 
-    def user_authorized?
-      all_courses = CampusOracle::UserCourses.new({user_id: @uid}).get_all_campus_courses
-      flag = false
-      all_courses.keys.each do |term|
-        semester_courses = all_courses[term]
-        match = semester_courses.index do |semester_course|
-          (semester_course[:id] == @campus_course_id) &&
-            (semester_course[:role] == 'Instructor')
-        end
-        if !match.nil?
-          flag = true
-        end
-      end
-      if !flag
-        logger.warn("Unauthorized request from user = #{@uid} for Campus course #{@campus_course_id}")
-      end
-      flag
-    end
-
   end
 end

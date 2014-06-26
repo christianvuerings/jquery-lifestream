@@ -67,19 +67,5 @@ module Canvas
       feed
     end
 
-    def user_authorized?
-      # TODO Canvas admins have permission to see the embedded tool, but this check will fail unless they are explicitly a teacher in the course site.
-      # Note that bSpace admins are currently permitted to see official photos.
-      # To support admins, we either need to trust the LTI param "roles" (will be "urn:lti:instrole:ims/lis/Administrator"),
-      # or we need to retrieve all account admins ("/api/v1/accounts/#{UC_ACCOUNT}/admins") and search the list.
-      # As a workaround, the admin can temporarily add themselves to the course site as an teacher.
-      teachers_list = Canvas::CourseTeachers.new(course_id: @canvas_course_id).full_teachers_list
-      match = teachers_list.index { |teacher| teacher['login_id'] == @uid }
-      if match.nil?
-        logger.warn("Unauthorized request from user = #{@uid} for Canvas course #{@canvas_course_id}")
-      end
-      !match.nil?
-    end
-
   end
 end
