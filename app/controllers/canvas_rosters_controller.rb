@@ -7,7 +7,7 @@ class CanvasRostersController < RostersController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def authorize_viewing_rosters
-    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in embedded rosters request: session user = #{session[:user_id]}" if canvas_course_id.blank?
+    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in embedded rosters request: session user = #{session[:user_id]}" if canvas_course_id == 0
     canvas_course = Canvas::Course.new(:user_id => session[:user_id], :canvas_course_id => canvas_course_id)
     authorize canvas_course, :can_view_course_roster_photos?
   end

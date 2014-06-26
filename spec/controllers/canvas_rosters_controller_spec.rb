@@ -56,11 +56,11 @@ describe CanvasRostersController do
 
     it_should_behave_like "an api endpoint" do
       before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
-      let(:make_request) { get :get_feed }
+      let(:make_request) { get :get_feed, canvas_course_id: 'embedded' }
     end
 
     it_should_behave_like "a user authenticated api endpoint" do
-      let(:make_request) { get :get_feed }
+      let(:make_request) { get :get_feed, canvas_course_id: 'embedded' }
     end
 
     context "when canvas course requested via non-embedded session" do
@@ -80,7 +80,7 @@ describe CanvasRostersController do
 
     context "when user is authorized" do
       it "should respond with roster feed" do
-        get :get_feed
+        get :get_feed, canvas_course_id: 'embedded'
         assert_response :success
         json_response = JSON.parse(response.body)
         expect(json_response["canvas_course"]).to be_an_instance_of Hash
@@ -94,16 +94,16 @@ describe CanvasRostersController do
 
     context "when user is not authorized" do
       before { allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(false) }
-      it "should respond with http 403 without content" do
-        get :get_feed
+      it "should respond with empty http 403" do
+        get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
       end
     end
 
-    context "when canvas course id not present in session" do
+    context "when canvas course id not present" do
       before { session[:canvas_course_id] = nil }
-      it "should respond with http 403 without content" do
+      it "should respond with empty http 403" do
         get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
