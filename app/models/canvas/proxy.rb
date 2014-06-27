@@ -4,7 +4,6 @@ module Canvas
   class Proxy < BaseProxy
     include ClassLogger, SafeJsonParser
     include Cache::UserCacheExpiry
-    extend Proxies::EnableForActAs
 
     attr_accessor :client
     APP_ID = "Canvas"

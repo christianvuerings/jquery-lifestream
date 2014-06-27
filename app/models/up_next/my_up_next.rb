@@ -17,7 +17,7 @@ module UpNext
       }
 
       # act-as block for non-fake users.
-      return up_next if (is_acting_as_nonfake_user?) && !GoogleApps::Proxy.allow_pseudo_user?
+      return up_next if is_acting_as_nonfake_user?
       return up_next if !GoogleApps::Proxy.access_granted?(@uid)
 
       results = fetch_events(@uid)

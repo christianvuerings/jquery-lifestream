@@ -1,7 +1,6 @@
 module CampusOracle
   class UserCourses < BaseProxy
     include Cache::UserCacheExpiry
-    extend Proxies::EnableForActAs
 
     APP_ID = "Campus"
 
