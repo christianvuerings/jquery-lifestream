@@ -53,18 +53,18 @@
   display: none;
 }
 
-#footer-links, #bCourses-footer-links {
+#footer-links {
   padding-left: 0;
 }
 
-#footer-links a, #bCourses-footer-links a {
+#footer-links a {
   border-left: 1px solid #5c5c5c;
   color: #5c5c5c;
   padding-left: 5px;
   padding-right: 2px;
 }
 
-#footer-links a:first-child, #bCourses-footer-links a:first-child  {
+#footer-links a:first-child {
   padding-left: 0;
 }
 
