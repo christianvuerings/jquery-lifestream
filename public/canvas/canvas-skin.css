@@ -53,22 +53,23 @@
   display: none;
 }
 
-#footer-links {
+.footer-links {
   padding-left: 0;
 }
 
-#footer-links a {
+.footer-links a {
   border-left: 1px solid #5c5c5c;
   color: #5c5c5c;
-  padding-left: 5px;
-  padding-right: 2px;
+  padding: 0 5px;
 }
 
-#footer-links a:first-child {
+.footer-links a:first-child {
   padding-left: 0;
+  border: 0;
+  padding-right: 5px;
 }
 
-#footer-links a[class=icon-twitter]:before, #footer-links a[class=icon-facebook-boxed]:before {
+.footer-links a[class=icon-twitter]:before, .footer-links a[class=icon-facebook-boxed]:before {
   font-size: 14px !important;
 }
 
@@ -76,7 +77,11 @@
   font-size: 12px;
   line-height: 12px;
   margin: 0;
-  padding: 10px 0 2px;
+  padding: 2px;
+}
+
+#footer p.bcourses-footer-message {
+  margin-bottom: 4px;
 }
 
 #footer p span {
