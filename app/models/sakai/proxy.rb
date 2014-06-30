@@ -1,7 +1,6 @@
 module Sakai
   # TODO collapse this class into SakaiData (probably).
   class Proxy < BaseProxy
-    extend Proxies::EnableForActAs
     include Cache::UserCacheExpiry
 
     APP_ID = "bSpace"

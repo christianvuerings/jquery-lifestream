@@ -25,7 +25,7 @@ class MyEventsController < ApplicationController
 
   private
   def check_google_access
-    return error_response if (is_acting_as_nonfake_user? && !GoogleApps::Proxy.allow_pseudo_user?)
+    return error_response if is_acting_as_nonfake_user?
     return error_response unless GoogleApps::Proxy.access_granted?(session[:user_id])
   end
 

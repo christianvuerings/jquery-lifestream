@@ -1,7 +1,6 @@
 module CampusOracle
   class UserAttributes < BaseProxy
     include Cache::UserCacheExpiry
-    extend Proxies::EnableForActAs
 
     def initialize(options = {})
       super(Settings.sakai_proxy, options)

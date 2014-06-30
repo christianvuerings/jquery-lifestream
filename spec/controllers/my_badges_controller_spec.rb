@@ -51,6 +51,20 @@ describe MyBadgesController do
       expect(Settings.app_alerts_proxy).to receive(:fake).at_least(:once).and_return(true)
       expect(Settings.bearfacts_proxy).to receive(:fake).at_least(:once).and_return(true)
     end
+    it 'should not give a real user a cached censored feed' do
+      session[:original_user_id] = original_user_id
+      get :get_feed
+      feed = JSON.parse(response.body)
+      ['bcal', 'bdrive', 'bmail'].each do |service|
+        expect(feed['badges'][service]['count']).to eq 0
+      end
+      session[:original_user_id] = nil
+      get :get_feed
+      feed = JSON.parse(response.body)
+      ['bcal', 'bdrive', 'bmail'].each do |service|
+        expect(feed['badges'][service]['count']).to be > 0
+      end
+    end
     it 'should not return Google data from a cached real-user feed' do
       get :get_feed
       feed = JSON.parse(response.body)
