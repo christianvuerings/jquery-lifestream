@@ -1,5 +1,5 @@
 module UpNext
-  class MyUpNext < UserSpecificModel
+  class MyUpNext < FilteredViewAsModel
     include DatedFeed
     include Cache::LiveUpdatesEnabled
 
@@ -15,9 +15,6 @@ module UpNext
         date: format_date(@begin_today),
         items: []
       }
-
-      # act-as block for non-fake users.
-      return up_next if is_acting_as_nonfake_user?
       return up_next if !GoogleApps::Proxy.access_granted?(@uid)
 
       results = fetch_events(@uid)
@@ -25,6 +22,11 @@ module UpNext
 
       Rails.logger.debug "#{self.class.name}::get_feed: #{up_next.inspect}"
       up_next
+    end
+
+    def filter_for_view_as(feed)
+      feed[:items] = []
+      feed
     end
 
     private

@@ -40,19 +40,6 @@ describe UpNext::MyUpNext do
     empty_feed[:items].empty?.should be_true
   end
 
-  it "should return an empty feed for act-as users" do
-    GoogleApps::Proxy.stub(:new).and_return(@fake_google_proxy)
-    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-    another_user = @user_id
-    while (another_user == @user_id)
-      another_user = rand(99999).to_s
-    end
-    empty_feed = UpNext::MyUpNext.new(@user_id, :original_user_id => another_user).get_feed
-    empty_feed[:items].empty?.should be_true
-    empty_feed[:date].should be_present
-    empty_feed[:date][:epoch].should > Time.new(1970, 1, 1).to_i
-  end
-
   it "should not include all-day events for tomorrow" do
     too_late = Time.zone.today.in_time_zone.to_datetime.end_of_day
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)

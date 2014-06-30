@@ -1,6 +1,12 @@
 module MyBadges
-  class Merged < UserSpecificModel
+  class Merged < FilteredViewAsModel
     include Cache::LiveUpdatesEnabled
+
+    GOOGLE_SOURCES = {
+      'bcal' => GoogleCalendar,
+      'bdrive' => GoogleDrive,
+      'bmail' => GoogleMail
+    }
 
     def initialize(uid, options={})
       super(uid, options)
@@ -17,21 +23,23 @@ module MyBadges
       feed
     end
 
+    def filter_for_view_as(feed)
+      filtered_badges = {}
+      GOOGLE_SOURCES.each_key do |key|
+        filtered_badges[key] = {
+          count: 0,
+          items: []
+        }
+      end
+      feed[:badges] = filtered_badges
+      feed
+    end
+
     def get_google_badges
       badges = {}
-      google_enabled = !is_acting_as_nonfake_user? && GoogleApps::Proxy.access_granted?(@uid)
-      {
-        'bcal' => GoogleCalendar,
-        'bdrive' => GoogleDrive,
-        'bmail' => GoogleMail
-      }.each do |key, provider|
-        if google_enabled
+      if GoogleApps::Proxy.access_granted?(@uid)
+        GOOGLE_SOURCES.each do |key, provider|
           badges[key] = provider.new(@uid).fetch_counts
-        else
-          badges[key] = {
-            count: 0,
-            items: []
-          }
         end
       end
       badges
