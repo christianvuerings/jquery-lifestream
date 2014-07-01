@@ -64,7 +64,7 @@
       } else {
         canvasCourseId = $routeParams.canvasCourseId;
       }
-      apiService.util.setTitle('Course Mediacasts');
+      apiService.util.setTitle('Course Webcasts');
       getWebcasts(canvasCourseId);
       setSelectOptions();
     } else {
