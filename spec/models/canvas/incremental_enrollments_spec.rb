@@ -4,7 +4,6 @@ describe Canvas::IncrementalEnrollments do
   let(:uid) { rand(999999).to_s }
   let(:course_id) { rand(999999).to_s }
   let(:section_id) { rand(999999).to_s }
-  let(:section_id) { rand(999999).to_s }
   let(:enrollments_csv)  { [] }
   let(:invariable_campus_row) { {
     'ldap_uid' => uid,
@@ -22,33 +21,37 @@ describe Canvas::IncrementalEnrollments do
 
   let(:canvas_section_enrollments) do
     [
-      {'id' => 1005431, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000022, 'name' => "Jeffrey Pinkerton", 'sortable_name' => "Pinkerton, Jeffrey", 'short_name' => 'Jeffrey Pinkerton', 'sis_user_id' => "21563987", 'sis_login_id' => "754320", 'login_id' => "754320" }},
-      {'id' => 1005432, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000026, 'name' => "Carlos J. Dick", 'sortable_name' => "Dick, Carlos", 'short_name' => 'Carlos Dick', 'sis_user_id' => "21563990", 'sis_login_id' => "754321", 'login_id' => "754321" }},
-      {'id' => 1005433, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000027, 'name' => "Roy Becerra", 'sortable_name' => "Becerra, Roy", 'short_name' => 'Roy Becerra', 'sis_user_id' => "UID:754322", 'sis_login_id' => "754322", 'login_id' => "754322" }},
-      {'id' => 1005434, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000028, 'name' => "Brad U. Kinder", 'sortable_name' => "Kinder, Brad", 'short_name' => 'Brad Kinder', 'sis_user_id' => "21563992", 'sis_login_id' => "754323", 'login_id' => "754323" }},
-      {'id' => 1005435, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000029, 'name' => "Franklin Rosenberg", 'sortable_name' => "Rosenberg, Franklin", 'short_name' => 'Franklin Rosenberg', 'sis_user_id' => "21563993", 'sis_login_id' => "754324", 'login_id' => "754324" }},
-      {'id' => 1005436, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Stephen K. Whalen", 'sortable_name' => "Whalen, Stephen", 'short_name' => 'Stephen K. Whalen', 'sis_user_id' => "UID:754325", 'sis_login_id' => "754325", 'login_id' => "754325" }},
-      {'id' => 1005437, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Ross Wagoner", 'sortable_name' => "Wagoner, Ross", 'short_name' => 'Ross Wagoner', 'sis_user_id' => "UID:754313", 'sis_login_id' => "754313", 'login_id' => "754313" }},
-      {'id' => 1005438, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000028, 'name' => "William Corgan", 'sortable_name' => "Corgan, William", 'short_name' => 'William Corgan', 'login_id' => "wcorgan@example.com" }},
-      {'id' => 1005439, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000029, 'name' => "Marcy Wretsky", 'sortable_name' => "Wretsky, Marcy", 'short_name' => 'Marcy Wretsky'}},
-      {'id' => 1005440, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Jim Iha", 'sortable_name' => "Iha, Jim", 'short_name' => 'Jim Iha', 'login_id' => "jiha@example.com" }},
+      {'id' => 1005431, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000022, 'name' => "Jeffrey Pinkerton", 'sortable_name' => "Pinkerton, Jeffrey", 'short_name' => 'Jeffrey Pinkerton', 'sis_user_id' => "21563987", 'sis_login_id' => "754320", 'login_id' => "754320" }},
+      {'id' => 1005432, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000026, 'name' => "Carlos J. Dick", 'sortable_name' => "Dick, Carlos", 'short_name' => 'Carlos Dick', 'sis_user_id' => "21563990", 'sis_login_id' => "754321", 'login_id' => "754321" }},
+      {'id' => 1005433, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000027, 'name' => "Roy Becerra", 'sortable_name' => "Becerra, Roy", 'short_name' => 'Roy Becerra', 'sis_user_id' => "UID:754322", 'sis_login_id' => "754322", 'login_id' => "754322" }},
+      {'id' => 1005434, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000028, 'name' => "Brad U. Kinder", 'sortable_name' => "Kinder, Brad", 'short_name' => 'Brad Kinder', 'sis_user_id' => "21563992", 'sis_login_id' => "754323", 'login_id' => "754323" }},
+      {'id' => 1005435, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000029, 'name' => "Franklin Rosenberg", 'sortable_name' => "Rosenberg, Franklin", 'short_name' => 'Franklin Rosenberg', 'sis_user_id' => "21563993", 'sis_login_id' => "754324", 'login_id' => "754324" }},
+      {'id' => 1005436, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000030, 'name' => "Stephen K. Whalen", 'sortable_name' => "Whalen, Stephen", 'short_name' => 'Stephen K. Whalen', 'sis_user_id' => "UID:754325", 'sis_login_id' => "754325", 'login_id' => "754325" }},
+      {'id' => 1005441, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000030, 'name' => "Ross Wagoner", 'sortable_name' => "Wagoner, Ross", 'short_name' => 'Ross Wagoner', 'sis_user_id' => "UID:754313", 'sis_login_id' => "754313", 'login_id' => "754313" }},
+      {'id' => 1005437, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => nil, 'user' => { 'id' => 4000029, 'name' => "Piper Chapman", 'sortable_name' => "Chapman, Piper", 'short_name' => 'Piper Chapman', 'sis_user_id' => "21563995", 'sis_login_id' => "754326", 'login_id' => "754326" }},
+      {'id' => 1005438, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => nil, 'user' => { 'id' => 4000028, 'name' => "William Corgan", 'sortable_name' => "Corgan, William", 'short_name' => 'William Corgan', 'login_id' => "wcorgan@example.com" }},
+      {'id' => 1005439, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => nil, 'user' => { 'id' => 4000029, 'name' => "Marcy Wretsky", 'sortable_name' => "Wretsky, Marcy", 'short_name' => 'Marcy Wretsky'}},
+      {'id' => 1005440, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => nil, 'user' => { 'id' => 4000030, 'name' => "Jim Iha", 'sortable_name' => "Iha, Jim", 'short_name' => 'Jim Iha', 'login_id' => "jiha@example.com" }},
+      {'id' => 1005442, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => nil, 'user' => { 'id' => 4000030, 'name' => "Tasha Jefferson", 'sortable_name' => "Jefferson, Tasha", 'short_name' => 'Tasha Jefferson', 'sis_user_id' => "UID:754327", 'sis_login_id' => "754327", 'login_id' => "754327" }},
     ]
   end
 
   let(:canvas_student_enrollments) do
     {
-      '754320' => {'id' => 1005431, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000022, 'name' => "Jeffrey Pinkerton", 'sortable_name' => "Pinkerton, Jeffrey", 'short_name' => 'Jeffrey Pinkerton', 'sis_user_id' => "21563987", 'sis_login_id' => "754320", 'login_id' => "754320" }},
-      '754321' => {'id' => 1005432, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000026, 'name' => "Carlos J. Dick", 'sortable_name' => "Dick, Carlos", 'short_name' => 'Carlos Dick', 'sis_user_id' => "UID:754321", 'sis_login_id' => "754321", 'login_id' => "754321" }},
-      '754323' => {'id' => 1005434, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "Waitlist Student", 'enrollment_state' => "active", 'user' => { 'id' => 4000028, 'name' => "Brad U. Kinder", 'sortable_name' => "Kinder, Brad", 'short_name' => 'Brad Kinder', 'sis_user_id' => "21563992", 'sis_login_id' => "754323", 'login_id' => "754323" }},
-      '754324' => {'id' => 1005435, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000029, 'name' => "Franklin Rosenberg", 'sortable_name' => "Rosenberg, Franklin", 'short_name' => 'Franklin Rosenberg', 'sis_user_id' => "21563993", 'sis_login_id' => "754324", 'login_id' => "754324" }},
+      '754320' => {'id' => 1005431, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000022, 'name' => "Jeffrey Pinkerton", 'sortable_name' => "Pinkerton, Jeffrey", 'short_name' => 'Jeffrey Pinkerton', 'sis_user_id' => "21563987", 'sis_login_id' => "754320", 'login_id' => "754320" }},
+      '754321' => {'id' => 1005432, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000026, 'name' => "Carlos J. Dick", 'sortable_name' => "Dick, Carlos", 'short_name' => 'Carlos Dick', 'sis_user_id' => "UID:754321", 'sis_login_id' => "754321", 'login_id' => "754321" }},
+      '754323' => {'id' => 1005434, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "Waitlist Student", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000028, 'name' => "Brad U. Kinder", 'sortable_name' => "Kinder, Brad", 'short_name' => 'Brad Kinder', 'sis_user_id' => "21563992", 'sis_login_id' => "754323", 'login_id' => "754323" }},
+      '754324' => {'id' => 1005435, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000029, 'name' => "Franklin Rosenberg", 'sortable_name' => "Rosenberg, Franklin", 'short_name' => 'Franklin Rosenberg', 'sis_user_id' => "21563993", 'sis_login_id' => "754324", 'login_id' => "754324" }},
+      '754326' => {'id' => 1005437, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment", 'enrollment_state' => "active", 'sis_import_id' => nil, 'user' => { 'id' => 4000029, 'name' => "Piper Chapman", 'sortable_name' => "Chapman, Piper", 'short_name' => 'Piper Chapman', 'sis_user_id' => "21563995", 'sis_login_id' => "754326", 'login_id' => "754326" }},
     }
   end
 
   let(:canvas_instructor_enrollments) do
     {
-      '754322' => {'id' => 1005433, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000027, 'name' => "Roy Becerra", 'sortable_name' => "Becerra, Roy", 'short_name' => 'Roy Becerra', 'sis_user_id' => "UID:754322", 'sis_login_id' => "754322", 'login_id' => "754322" }},
-      '754325' => {'id' => 1005436, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Stephen K. Whalen", 'sortable_name' => "Whalen, Stephen", 'short_name' => 'Stephen K. Whalen', 'sis_user_id' => "UID:754325", 'sis_login_id' => "754325", 'login_id' => "754325" }},
-      '754313' => {'id' => 1005437, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'user' => { 'id' => 4000030, 'name' => "Ross Wagoner", 'sortable_name' => "Wagoner, Ross", 'short_name' => 'Ross Wagoner', 'sis_user_id' => "UID:754313", 'sis_login_id' => "754313", 'login_id' => "754313" }},
+      '754322' => {'id' => 1005433, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000027, 'name' => "Roy Becerra", 'sortable_name' => "Becerra, Roy", 'short_name' => 'Roy Becerra', 'sis_user_id' => "UID:754322", 'sis_login_id' => "754322", 'login_id' => "754322" }},
+      '754325' => {'id' => 1005436, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000030, 'name' => "Stephen K. Whalen", 'sortable_name' => "Whalen, Stephen", 'short_name' => 'Stephen K. Whalen', 'sis_user_id' => "UID:754325", 'sis_login_id' => "754325", 'login_id' => "754325" }},
+      '754313' => {'id' => 1005441, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000030, 'name' => "Ross Wagoner", 'sortable_name' => "Wagoner, Ross", 'short_name' => 'Ross Wagoner', 'sis_user_id' => "UID:754313", 'sis_login_id' => "754313", 'login_id' => "754313" }},
+      '754327' => {'id' => 1005442, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => nil, 'user' => { 'id' => 4000030, 'name' => "Tasha Jefferson", 'sortable_name' => "Jefferson, Tasha", 'short_name' => 'Tasha Jefferson', 'sis_user_id' => "UID:754327", 'sis_login_id' => "754327", 'login_id' => "754327" }},
     }
   end
 
@@ -66,14 +69,16 @@ describe Canvas::IncrementalEnrollments do
       expect(result).to be_an_instance_of Hash
       expect(result[:students]).to be_an_instance_of Hash
       expect(result[:instructors]).to be_an_instance_of Hash
-      expect(result[:students].count).to eq 4
-      expect(result[:instructors].count).to eq 3
+      expect(result[:students].count).to eq 5
+      expect(result[:instructors].count).to eq 4
       expect(result[:students]['754320']['id']).to eq 1005431
       expect(result[:students]['754321']['id']).to eq 1005432
       expect(result[:students]['754323']['id']).to eq 1005434
       expect(result[:students]['754324']['id']).to eq 1005435
       expect(result[:instructors]['754322']['id']).to eq 1005433
       expect(result[:instructors]['754325']['id']).to eq 1005436
+      expect(result[:instructors]['754313']['id']).to eq 1005441
+      expect(result[:instructors]['754327']['id']).to eq 1005442
     end
 
     it "returns section enrollments without non-sis users" do
@@ -135,6 +140,7 @@ describe Canvas::IncrementalEnrollments do
         {"ldap_uid"=>"754325", "enroll_status"=>"E", "student_id"=>"21563378", "first_name"=>"Ray", "last_name"=>"Irvin", "email_address"=>"rayirvin@berkeley.edu", "affiliations"=>"EMPLOYEE-TYPE-ACADEMIC,STUDENT-TYPE-REGISTERED"},
       ]
     end
+
     before do
       allow(CampusOracle::Queries).to receive(:get_enrolled_students).and_return(campus_data_rows_enrolled_students)
       subject.refresh_students_in_section(campus_section, course_id, section_id, canvas_student_enrollments, enrollments_csv, known_users, users_csv)
@@ -142,28 +148,37 @@ describe Canvas::IncrementalEnrollments do
 
     it "makes no modifications to existing enrollments" do
       # UID 754320 is supposed to be left alone - Student ID: 21563987
-      expect(enrollments_csv.length).to eq(3)
+      # UID 754321 is supposed to be updated from staff to student ID, but the enrollment is left alone
+      expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563987"}.count).to eq 0
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "21563990"}.count).to eq 0
     end
 
     it "adds new student enrollments not detected in canvas enrollments list" do
       # UID 754322 is supposed to be new - Student ID: 23270877
       # UID 754325 is supposed to be new - Student ID: 21563378
-      expect(enrollments_csv.length).to eq(3)
+      expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "23270877"}.count).to eq 1
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563378"}.count).to eq 1
     end
 
     it "updates student enrollments with modified role" do
       # UID 754323 is supposed to be updated due to enrollment status change - Student ID: 21563992
-      expect(enrollments_csv.length).to eq(3)
+      expect(enrollments_csv.length).to eq(4)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "21563992"}.count).to eq 1
     end
 
-    it "excludes students not detected in campus enrollments list" do
+    it "drops sis based student enrollments not detected in campus enrollment list" do
       # UID 754324 is no longer officially enrolled - Student ID: 21563993
-      expect(enrollments_csv.length).to eq(3)
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "21563993"}.count).to eq 0
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "21563993"}.count).to eq 1
+      enrollments_csv_entry = enrollments_csv.select {|entry| entry["user_id"] == "21563993"}.first
+      expect(enrollments_csv_entry['status']).to eq "deleted"
+    end
+
+    it "excludes manually created student enrollments not detected in campus enrollments list" do
+      # UID 754326 is manually enrolled - Student ID: 21563995
+      expect(enrollments_csv.length).to eq(4)
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "21563995"}.count).to eq 0
     end
 
     it "updates all enrollments with sis student role" do
@@ -193,14 +208,17 @@ describe Canvas::IncrementalEnrollments do
 
     it "leaves makes no modifications to existing enrollments" do
       # LDAP UID 754322 - Roy Becerra, should be left alone
-      expect(enrollments_csv.length).to eq(2)
+      # LDAP UID 754313 - Ross Waggoner, should be left alone
+      expect(enrollments_csv.length).to eq(3)
       expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754322"}.count).to eq 0
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754313"}.count).to eq 0
     end
+
 
     it "adds new instructor enrollments not detected in canvas enrollments list" do
       # LDAP UID 754311 - Bryan Wagner, should be added
       # LDAP UID 754314 - Do Quang Hoa, should be added
-      expect(enrollments_csv.length).to eq(2)
+      expect(enrollments_csv.length).to eq(3)
       expected_enrollment_1 = enrollments_csv.select {|entry| entry["user_id"] == "UID:754311"}
       expected_enrollment_2 = enrollments_csv.select {|entry| entry["user_id"] == "UID:754314"}
       expect(expected_enrollment_1[0]).to be_an_instance_of Hash
@@ -209,12 +227,39 @@ describe Canvas::IncrementalEnrollments do
       expect(expected_enrollment_2[0]['role']).to eq "teacher"
     end
 
-    it "excludes instructors not detected in campus enrollments list" do
+    it "drops sis based instructor enrollments not detected in campus enrollment list" do
       # LDAP UID 754325 - Stephen K Whalen, is no longer officially assigned
-      expect(enrollments_csv.length).to eq(2)
-      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}.count).to eq 0
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}.count).to eq 1
+      expected_enrollment = enrollments_csv.select {|entry| entry["user_id"] == "UID:754325"}
+      expect(expected_enrollment[0]).to be_an_instance_of Hash
+      expect(expected_enrollment[0]['role']).to eq "teacher"
+      expect(expected_enrollment[0]['status']).to eq "deleted"
     end
 
+    it "excludes manually created instructor enrollments not detected in campus enrollments list" do
+      # LDAP UID 754327 - Tasha Jefferson, is not officially assigned but manually added
+      # '754327' => {'id' => 1005439, 'course_id' => 1050123, 'root_account_id' => 90245, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment", 'enrollment_state' => "active", 'sis_import_id' => 167, 'user' => { 'id' => 4000030, 'name' => "Tasha Jefferson", 'sortable_name' => "Jefferson, Tasha", 'short_name' => 'Tasha Jefferson', 'sis_user_id' => "UID:754327", 'sis_login_id' => "754327", 'login_id' => "754327" }},
+      expect(enrollments_csv.length).to eq(3)
+      expect(enrollments_csv.select {|entry| entry["user_id"] == "UID:754327"}.count).to eq 0
+    end
+
+  end
+
+  describe '#handle_missing_enrollment' do
+    context 'when enrollment originated from an SIS import' do
+      let(:missing_enrollment) { canvas_section_enrollments[0] }
+      it 'adds the enrollment to the CSV for deletion' do
+        expect(subject).to receive(:append_enrollment_deletion).with(course_id, section_id, 'student', '21563987', enrollments_csv).and_return(nil)
+        subject.handle_missing_enrollment(uid, course_id, section_id, missing_enrollment, enrollments_csv)
+      end
+    end
+    context 'when enrollment did not originate from an SIS import' do
+      let(:missing_enrollment) { canvas_section_enrollments[7] }
+      it 'does not add the enrollment to the CSV for deletion' do
+        expect(subject).to_not receive(:append_enrollment_deletion).with(course_id, section_id, 'teacher', 'UID:754313', enrollments_csv)
+        subject.handle_missing_enrollment(uid, course_id, section_id, missing_enrollment, enrollments_csv)
+      end
+    end
   end
 
   describe '#append_enrollment_and_user' do
