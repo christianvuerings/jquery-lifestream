@@ -53,7 +53,7 @@ describe Canvas::IncrementalEnrollments do
   end
 
   before do
-    Canvas::SectionEnrollments.any_instance.stub(:list_enrollments).and_return(canvas_section_enrollments)
+    allow_any_instance_of(Canvas::SectionEnrollments).to receive(:list_enrollments).and_return(canvas_section_enrollments)
   end
 
   describe '.canvas_section_enrollments' do
@@ -88,8 +88,8 @@ describe Canvas::IncrementalEnrollments do
 
     it "logs existence of non-sis user enrollments" do
       logger = double
-      Canvas::IncrementalEnrollments.stub(:logger).and_return(logger)
-      logger.should_receive(:warn).with("Canvas User IDs - 4000028, 4000029, 4000030 - enrolled in Canvas Section ID # 123456 without SIS User ID present").and_return(nil)
+      allow(Canvas::IncrementalEnrollments).to receive(:logger).and_return(logger)
+      expect(logger).to receive(:warn).with("Canvas User IDs - 4000028, 4000029, 4000030 - enrolled in Canvas Section ID # 123456 without SIS User ID present").and_return(nil)
       result = Canvas::IncrementalEnrollments.canvas_section_enrollments(123456)
     end
   end
@@ -107,8 +107,8 @@ describe Canvas::IncrementalEnrollments do
     let(:canvas_term_sections_csv_table) { CSV.parse(canvas_term_sections_csv_string, {headers: true}) }
 
     before do
-      Canvas::SectionsReport.any_instance.stub(:get_csv).and_return(canvas_term_sections_csv_table)
-      Canvas::IncrementalEnrollments.stub(:canvas_section_enrollments).and_return({:students => 'student_enrollments_array', :instructors => 'instructor_enrollments_array'})
+      allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(canvas_term_sections_csv_table)
+      allow(Canvas::IncrementalEnrollments).to receive(:canvas_section_enrollments).and_return({:students => 'student_enrollments_array', :instructors => 'instructor_enrollments_array'})
     end
 
     it 'triggers updates for student and instructor enrollments for term specified' do
@@ -136,7 +136,7 @@ describe Canvas::IncrementalEnrollments do
       ]
     end
     before do
-      CampusOracle::Queries.stub(:get_enrolled_students).and_return(campus_data_rows_enrolled_students)
+      allow(CampusOracle::Queries).to receive(:get_enrolled_students).and_return(campus_data_rows_enrolled_students)
       subject.refresh_students_in_section(campus_section, course_id, section_id, canvas_student_enrollments, enrollments_csv, known_users, users_csv)
     end
 
@@ -187,7 +187,7 @@ describe Canvas::IncrementalEnrollments do
     end
 
     before do
-      CampusOracle::Queries.stub(:get_section_instructors).and_return(campus_data_rows_enrolled_instructors)
+      allow(CampusOracle::Queries).to receive(:get_section_instructors).and_return(campus_data_rows_enrolled_instructors)
       subject.refresh_teachers_in_section(campus_section, course_id, section_id, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv)
     end
 
@@ -296,7 +296,7 @@ describe Canvas::IncrementalEnrollments do
   end
 
   describe "#canvas_student_enrollment_needs_update?" do
-    before { subject.stub(:derive_sis_user_id).and_return("2320123") }
+    before { allow(subject).to receive(:derive_sis_user_id).and_return("2320123") }
     let(:invariable_campus_student_enrollment) do
       {"ldap_uid"=>"123234", "enroll_status"=>"E", "first_name"=>"John", "last_name"=>"Doe", "email_address"=>"jdoe@example.com", "student_id"=>"2320123", "affiliations"=>"STUDENT-TYPE-REGISTERED"}
     end
