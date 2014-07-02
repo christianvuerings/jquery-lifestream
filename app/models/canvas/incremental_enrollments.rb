@@ -70,13 +70,17 @@ module Canvas
         end
       end
       # Handle enrollments remaining in Canvas enrollment list
-      canvas_student_enrollments.each { |uid, remaining_enrollment| handle_missing_enrollment(uid, remaining_enrollment) }
+      canvas_student_enrollments.each { |uid, remaining_enrollment| handle_missing_enrollment(uid, course_id, section_id, remaining_enrollment, enrollments_csv) }
     end
 
-    # Note remaining Canvas enrollments which are not in the current campus data,
-    # but do not delete them now. Instead, let the batch enrollment job take care of that.
-    def handle_missing_enrollment(uid, enrollment)
+    def handle_missing_enrollment(uid, course_id, section_id, enrollment, enrollments_csv)
       logger.info "No campus record for Canvas enrollment in #{enrollment['course_id']} #{enrollment['section_id']} for user #{uid} with role #{enrollment['role']}"
+      # Only drop enrollments if they originated from an SIS Import
+      if enrollment["sis_import_id"].present?
+        canvas_role = CANVAS_ROLE_TO_CANVAS_SIS_ROLE[enrollment['role']]
+        sis_user_id = enrollment['user']['sis_user_id']
+        append_enrollment_deletion(course_id, section_id, canvas_role, sis_user_id, enrollments_csv)
+      end
     end
 
     def refresh_teachers_in_section(campus_section, course_id, section_id, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv)
@@ -92,7 +96,7 @@ module Canvas
         end
       end
       # Handle enrollments remaining in Canvas enrollment list
-      canvas_instructor_enrollments.each { |uid, remaining_enrollment| handle_missing_enrollment(uid, remaining_enrollment) }
+      canvas_instructor_enrollments.each { |uid, remaining_enrollment| handle_missing_enrollment(uid, course_id, section_id, remaining_enrollment, enrollments_csv) }
     end
 
     # Adds/updates enrollments, for both students and teachers
