@@ -93,5 +93,23 @@ module MyAcademics
       bucket
     end
 
+    def add_other_site_membership(feed, course_site)
+      feed[:otherSiteMemberships] ||= []
+      term_slug = Berkeley::TermCodes.to_slug(course_site[:term_yr], course_site[:term_cd])
+      other_site_terms = feed[:otherSiteMemberships]
+      unless (idx = other_site_terms.index {|t| t[:slug] == term_slug})
+        other_site_terms << {
+          name: Berkeley::TermCodes.to_english(course_site[:term_yr], course_site[:term_cd]),
+          slug: term_slug,
+          termCode: course_site[:term_cd],
+          termYear: course_site[:term_yr],
+          sites: []
+        }
+        idx = other_site_terms.length - 1
+      end
+      other_sites = other_site_terms[idx][:sites]
+      other_sites << course_site_entry(course_site)
+    end
+
   end
 end

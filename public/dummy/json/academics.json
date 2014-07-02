@@ -668,6 +668,21 @@
           "dept": "BIOLOGY",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
+          "class_sites": [
+            {
+              "id": "11866397",
+              "shortDescription": "Confessions of a Biotician",
+              "name": "BIO 1A Everyone",
+              "emitter": "bCourses",
+              "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397"
+            },
+            {
+              "id": "de1f491a-525e-4848-952b-11866397",
+              "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
+              "emitter": "bSpace",
+              "name": "Bio 1A DIS 008 Su13"
+            }
+          ],
           "sections": [
             {
               "ccn": "07366",
@@ -927,6 +942,23 @@
             }
           ],
           "url": "/academics/teaching-semester/fall-2013/class/bio-123a"
+        }
+      ]
+    }
+  ],
+  "otherSiteMemberships": [
+    {
+      "name": "Summer 2013",
+      "slug": "summer-2013",
+      "termCode": "C",
+      "termYear": "2013",
+      "sites": [
+        {
+          "id": "1093166",
+          "shortDescription": "Psych GSI hangout",
+          "name": "Monitor Psych 1A",
+          "emitter": "bCourses",
+          "site_url": "https://ucberkeley.beta.instructure.com/courses/1093166"
         }
       ]
     }

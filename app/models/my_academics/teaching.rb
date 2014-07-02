@@ -22,12 +22,6 @@ module MyAcademics
       end
 
       if teaching_semesters.present?
-        [
-          MyAcademics::TeachingCanvas,
-          MyAcademics::TeachingSakai,
-        ].each do |site_provider|
-          site_provider.new(@uid).merge_sites(teaching_semesters)
-        end
         data[:teachingSemesters] = teaching_semesters
       end
     end
