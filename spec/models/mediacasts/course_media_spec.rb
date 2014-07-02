@@ -165,7 +165,7 @@ describe Mediacasts::CourseMedia do
         it "should return correct recordings" do
           result = subject.get_playlist
           expect(result[:recordings]).to be_an_instance_of Array
-          expect(result[:recordings]).to have(36).item
+          expect(result[:recordings].size).to be > 30
           expect(result[:recordings][0]).to be_an_instance_of Hash
           expect(result[:recordings][0]["youTubeId"]).to eq "7MZlVeLPXFY"
           expect(result[:recordings][0]["lecture"]).to eq "Lecture 1: Course introduction - macromolecules"
