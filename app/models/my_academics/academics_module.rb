@@ -67,7 +67,7 @@ module MyAcademics
         emitter: course_site[:emitter],
         id: course_site[:id],
         name: course_site[:name],
-        shortDescription: course_site[:short_description],
+        shortDescription: course_site[:shortDescription],
         siteType: 'course',
         site_url: course_site[:site_url]
       }
