@@ -115,7 +115,7 @@
   });
 
   /**
-   * We use this functionality to do dynamic height and add allowfullscreenus for iframes in bCourses
+   * We use this functionality to do dynamic height and add allowfullscreen for iframes in bCourses
    * The CalCentral iframe is sending over an event to the parent window in bCourses.
    * That event contains the height of the iframe
    * @param {Object} e Event that is sent over from the iframe
