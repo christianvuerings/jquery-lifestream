@@ -15,6 +15,8 @@ describe MyAcademics::Merged do
       MyAcademics::Teaching,
       MyAcademics::Exams,
       MyAcademics::Telebears,
+      MyAcademics::CanvasSites,
+      MyAcademics::SakaiSites
     ]
     model_classes.each do |klass|
       model = klass.new "61889"
