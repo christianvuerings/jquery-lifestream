@@ -18,7 +18,10 @@ describe Notifications::RegBlockCodeTranslator do
     result[:office].should == "Office of the Registrar - Registration"
     result[:reason].should == "Education Abroad"
     result[:type].should == "Administrative"
+    result = translator.translate_bearfacts_proxy("70", "LNS")
+    result[:office].should == "College of Letters and Science"
+    result[:reason].should == "Declaration of Major"
+    result[:type].should == "Academic"
   end
-
 
 end
