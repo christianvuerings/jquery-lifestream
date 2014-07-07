@@ -44,6 +44,10 @@ class ApiMyFinancialsPage
     (sprintf '%.2f', self.min_amt_due).to_s
   end
 
+  def total_current_balance
+    @parsed['summary']['totalCurrentBalance']
+  end
+
   def past_due_amt
     @parsed['summary']['totalPastDueAmount']
   end
