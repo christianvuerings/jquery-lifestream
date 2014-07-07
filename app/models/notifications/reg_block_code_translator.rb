@@ -439,7 +439,7 @@ module Notifications
         64 => 'Undeclared Senior',
         66 => 'Unauthorized Short Study',
         68 => 'Excess Units',
-        70 => 'Double Major',
+        70 => 'Declaration of Major',
         72 => 'Semester Out',
         74 => 'Reading and Composition',
       }
