@@ -95,7 +95,7 @@ module Textbooks
         xml = request_bookstore_list(ccn)
         text_books = Nokogiri::HTML(xml)
         text_books_items = text_books.xpath('//h2 | //ul')
-        bookstore_link = Settings.textbooks_proxy.base_url + text_books.xpath('.//a[@name="blwin1"]/@href').text
+        bookstore_link = bookstore_link(ccn)
 
         required_text_list = text_books_items.xpath('//h2[contains(text(), "Required")]/following::ul[1]')
         recommended_text_list = text_books_items.xpath('//h2[contains(text(), "Recommended")]/following::ul[1]')
@@ -161,12 +161,16 @@ module Textbooks
 
     end
 
+    def bookstore_link(ccn)
+      path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
+      "#{Settings.textbooks_proxy.base_url}#{path}"
+    end
+
     def request_bookstore_list(ccn)
       # We work from saved HTML since VCR does not correctly record bookstore responses.
       return fake_list(ccn) if @fake
 
-      path = "/webapp/wcs/stores/servlet/booklookServlet?bookstore_id-1=554&term_id-1=#{@term}&crn-1=#{ccn}"
-      url = "#{Settings.textbooks_proxy.base_url}#{path}"
+      url = bookstore_link(ccn)
       logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
       response = HTTParty.get(
         url,
