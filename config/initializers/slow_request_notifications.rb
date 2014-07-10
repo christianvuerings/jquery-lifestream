@@ -12,7 +12,7 @@ if Settings.logger.slow_request_threshold_in_ms.to_i > 0
     end
 
     if duration > Settings.logger.slow_request_threshold_in_ms.to_i
-      Rails.logger.error "SLOW PROXY #{payload[:path]}; view=#{view_time.to_i}ms db=#{db_time.to_i}ms total=#{duration.to_i}ms"
+      Rails.logger.error "SLOW REQUEST #{payload[:path]}; view=#{view_time.to_i}ms db=#{db_time.to_i}ms total=#{duration.to_i}ms"
     end
   end
 end
