@@ -297,7 +297,8 @@ module CampusOracle
       use_pooled_connection {
         sql = <<-SQL
         select sched.BUILDING_NAME, sched.ROOM_NUMBER, sched.MEETING_DAYS, sched.MEETING_START_TIME,
-        sched.MEETING_START_TIME_AMPM_FLAG, sched.MEETING_END_TIME, sched.MEETING_END_TIME_AMPM_FLAG
+        sched.MEETING_START_TIME_AMPM_FLAG, sched.MEETING_END_TIME, sched.MEETING_END_TIME_AMPM_FLAG,
+        sched.MULTI_ENTRY_CD
         from CALCENTRAL_CLASS_SCHEDULE_VW sched
         where sched.TERM_YR = #{term_yr.to_i}
           and sched.TERM_CD = #{connection.quote(term_cd)}

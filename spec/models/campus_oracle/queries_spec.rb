@@ -94,8 +94,8 @@ describe CampusOracle::Queries do
     transcripts = CampusOracle::Queries.get_transcript_grades('300939')
     transcripts.should_not be_nil
     if CampusOracle::Queries.test_data?
-      sections.length.should == 7
-      transcripts.length.should == 2
+      sections.length.should == 9
+      transcripts.length.should == 4
       expected_grades = {5 => 'B', 6 => 'C+'}
       expected_grades.keys.each do |idx|
         section = sections[idx]

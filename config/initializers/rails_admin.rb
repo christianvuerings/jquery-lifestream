@@ -10,7 +10,7 @@ class Ability
       can :access, :all
       can :dashboard, :all
       if user.policy.can_administrate?
-        can :manage, [User::Auth, Finaid::FinAidYear]
+        can :manage, [User::Auth, Finaid::FinAidYear, Calendar::User]
       end
       if user.policy.can_author?
         can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection, Links::UserRole]
@@ -60,7 +60,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole', 'Finaid::FinAidYear']
+  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole', 'Finaid::FinAidYear', 'Calendar::User']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -81,7 +81,7 @@ RailsAdmin.config do |config|
   #
 
   config.model 'Links::LinkSection' do
-    label "Section"
+    label 'Section'
 
     object_label_method do
       :link_section_label_method
@@ -108,7 +108,7 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Links::LinkCategory' do
-    label "Category"
+    label 'Category'
   end
 
   # Links::UserRole needs to be available so we can set perms on Links, but should not be in left nav
@@ -117,18 +117,22 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Links::Link' do
-    label "Link"
+    label 'Link'
   end
 
   config.model 'User::Auth' do
-    label "User Authorizations"
+    label 'User Authorizations'
   end
 
   config.model 'Finaid::FinAidYear' do
-    label "Financial Aid Transition Dates"
+    label 'Financial Aid Transition Dates'
   end
 
-  config.navigation_static_label = "Tools"
+  config.model 'Calendar::User' do
+    label 'Class Calendar Whitelist'
+  end
+
+  config.navigation_static_label = 'Tools'
 
   config.navigation_static_links = {
     'Expire Campus Links Cache' => '/api/my/campuslinks/expire'
