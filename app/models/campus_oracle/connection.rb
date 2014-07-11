@@ -22,6 +22,21 @@ module CampusOracle
       end
     end
 
+    def self.depts_clause(table, departments)
+      string = if departments.blank?
+                 ''
+               else
+                 clause = "and #{table}.dept_name IN ("
+                 departments.each_with_index do |dept, index|
+                   clause.concat("'#{dept}'")
+                   clause.concat(",") unless index == departments.length - 1
+                 end
+                 clause.concat(')')
+                 clause
+               end
+      string
+    end
+
     def self.stringify_ints!(results, additional_columns=[])
       columns = ["ldap_uid", "student_id", "term_yr", "catalog_root", "course_cntl_num", "student_ldap_uid"] + additional_columns
       if results.respond_to?(:to_ary)

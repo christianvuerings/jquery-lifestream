@@ -90,6 +90,8 @@ gem "pundit", "~> 0.2.2"
 
 gem "cancan", "~> 1.6.10"
 
+gem 'icalendar', '~> 2.1.0'
+
 ##################
 # Front-end Gems #
 ##################

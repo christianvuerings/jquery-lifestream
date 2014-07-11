@@ -10,6 +10,7 @@ module Berkeley
     # The campus DB tables store the first and last days of instruction for Fall and Spring,
     # and the start and end dates of the Summer Sessions.
     attr_reader :classes_start
+    # TODO classes_end really refers to the "End of Instruction" which is 1 week later than the end of classes.
     attr_reader :classes_end
     # The Academic Calendar shows Fall/Spring semesters beginning one week before classes.
     attr_reader :start

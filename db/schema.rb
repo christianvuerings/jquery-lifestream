@@ -11,10 +11,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2014051622054300) do
+ActiveRecord::Schema.define(version: 2014071109030303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "class_calendar_jobs", force: true do |t|
+    t.datetime "process_start_time"
+    t.datetime "process_end_time"
+    t.integer  "total_entry_count"
+    t.integer  "error_count"
+  end
+
+  create_table "class_calendar_log", force: true do |t|
+    t.integer  "year"
+    t.string   "term_cd"
+    t.integer  "ccn"
+    t.string   "multi_entry_cd"
+    t.integer  "job_id"
+    t.text     "event_data"
+    t.string   "event_id"
+    t.datetime "processed_at"
+    t.string   "response_status"
+    t.text     "response_body"
+    t.boolean  "has_error"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "class_calendar_log", ["event_id"], name: "index_class_calendar_log_on_event_id", using: :btree
+  add_index "class_calendar_log", ["job_id"], name: "index_class_calendar_log_on_job_id", using: :btree
+  add_index "class_calendar_log", ["year", "term_cd", "ccn", "multi_entry_cd"], name: "class_calendar_log_main_index", using: :btree
+
+  create_table "class_calendar_queue", force: true do |t|
+    t.integer  "year"
+    t.string   "term_cd"
+    t.integer  "ccn"
+    t.string   "multi_entry_cd"
+    t.text     "event_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "class_calendar_queue", ["year", "term_cd", "ccn", "multi_entry_cd"], name: "class_calendar_queue_main_index", using: :btree
+
+  create_table "class_calendar_users", force: true do |t|
+    t.string "uid"
+    t.string "alternate_email"
+  end
 
   create_table "fin_aid_years", force: true do |t|
     t.integer  "current_year",        null: false

@@ -54,7 +54,7 @@ module Oec
     def self.get_all_courses(course_cntl_nums = nil)
       result = []
       course_cntl_nums_clause = ''
-      this_depts_clause = depts_clause
+      this_depts_clause = depts_clause('c', Settings.oec.departments)
       if course_cntl_nums.present?
         course_cntl_nums_clause = self.ccns_in_chunks('c', course_cntl_nums.split(','))
         this_depts_clause = ''
@@ -144,21 +144,6 @@ module Oec
     end
 
     private
-
-    def self.depts_clause
-      string = if Settings.oec.departments.blank?
-                 ''
-               else
-                 clause = 'and c.dept_name IN ('
-                 Settings.oec.departments.each_with_index do |dept, index|
-                   clause.concat("'#{dept}'")
-                   clause.concat(",") unless index == Settings.oec.departments.length - 1
-                 end
-                 clause.concat(')')
-                 clause
-               end
-      string
-    end
 
     # Oracle has a limit of 1000 terms per expression, so do CCN filtering as a series of OR statements with up to
     # 1000 CCNs per chunk.
