@@ -15,6 +15,11 @@ module Calendar
       total = 0
       # TODO Handle update cases when event_id has already been recorded for this year-term-ccn combo.
       # TODO Use multi_entry_cd from schedule table as a PK when looking up logged entries to see if an insert or update is required.
+
+      # TODO figure out what happens if a student declines an event and the event is subsequently updated?
+      # Before updating, fetch existing event from Google and examine its attendees list for declines.
+      # TODO figure out how to make that performant and elegant.
+
       proxy = GoogleApps::EventsInsert.new(
         access_token: @settings.access_token,
         refresh_token: @settings.refresh_token,
