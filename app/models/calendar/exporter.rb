@@ -12,7 +12,7 @@ module Calendar
       job.process_start_time = DateTime.now
       logger.warn "class_calendar_jobs ID #{job.id}: Preparing to ship #{queue_entries.length} entries to Google"
       error_count = 0
-      success_count = 0
+      total = 0
       # TODO Handle update cases when event_id has already been recorded for this year-term-ccn combo.
       # TODO Use multi_entry_cd from schedule table as a PK when looking up logged entries to see if an insert or update is required.
       proxy = GoogleApps::EventsInsert.new(
@@ -36,19 +36,19 @@ module Calendar
         if response.body && (json = safe_json(response.body))
           log_entry.event_id = json['id']
         end
+        total += 1
         if log_entry.has_error
           error_count += 1
-        else
-          success_count += 1
         end
         log_entry.save
         queue_entry.delete unless log_entry.has_error
       end
 
-      job.total_entry_count = success_count
+      job.total_entry_count = total
       job.error_count = error_count
       job.process_end_time = DateTime.now
       job.save
+      true
     end
 
   end
