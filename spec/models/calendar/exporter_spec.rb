@@ -35,7 +35,7 @@ describe Calendar::Exporter do
         log_entries = Calendar::LoggedEntry.all
         saved = log_entries.first
         expect(saved).to be_present
-        expect(saved.job_id).to eq 1
+        expect(saved.job_id).to be >= 1
         expect(saved.event_id).to eq event_id
 
         job = Calendar::Job.all.first
