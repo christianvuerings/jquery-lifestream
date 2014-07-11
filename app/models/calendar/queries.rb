@@ -54,7 +54,8 @@ module Calendar
             and r.student_ldap_uid = p.ldap_uid
             and c.term_yr = #{term_yr.to_i}
             and c.term_cd = #{connection.quote(term_cd)}
-            and c.course_cntl_num = #{ccn.to_i} #{users_clause}
+            and c.course_cntl_num = #{ccn.to_i}
+            #{users_clause}
           order by p.ldap_uid
         SQL
         result = connection.select_all(sql)

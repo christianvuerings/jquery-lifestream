@@ -44,6 +44,7 @@ module Calendar
       rrule = Icalendar::Values::Recur.new ''
       rrule.by_day = byday
       rrule.frequency = 'WEEKLY'
+      # TODO should "until" be the end of classes or (as it is here) the end of instruction? end of classes is 1 week earlier.
       rrule.until = "#{@term.classes_end.utc.strftime Icalendar::Values::DateTime::FORMAT}Z"
       rrule = "RRULE:#{rrule.value_ical}"
       logger.info "Class Recurrence Rule: #{rrule}"
