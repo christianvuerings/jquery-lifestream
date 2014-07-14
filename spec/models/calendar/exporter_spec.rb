@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Calendar::Exporter do
 
   describe '#ship_entries' do
+    let(:exporter) { Calendar::Exporter.new }
 
     let!(:queue_entries) {
       entry = Calendar::QueuedEntry.new
@@ -14,7 +15,6 @@ describe Calendar::Exporter do
       entry.save
       [entry]
     }
-    let!(:exporter) { Calendar::Exporter.new }
 
     context 'when shipping entries to Google' do
       let!(:event_id) { random_id }

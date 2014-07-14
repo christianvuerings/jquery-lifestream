@@ -5,6 +5,14 @@ module Calendar
 
     def initialize
       @settings = Settings.class_calendar
+      @insert_proxy = GoogleApps::EventsInsert.new(
+        access_token: @settings.access_token,
+        refresh_token: @settings.refresh_token,
+        expiration_time: DateTime.now.to_i + 3599)
+      @update_proxy = GoogleApps::EventsUpdate.new(
+        access_token: @settings.access_token,
+        refresh_token: @settings.refresh_token,
+        expiration_time: DateTime.now.to_i + 3599)
     end
 
     def ship_entries(queue_entries=[])
@@ -13,23 +21,25 @@ module Calendar
       logger.warn "class_calendar_jobs ID #{job.id}: Preparing to ship #{queue_entries.length} entries to Google"
       error_count = 0
       total = 0
-      # TODO Handle update cases when event_id has already been recorded for this year-term-ccn combo.
-      # TODO Use multi_entry_cd from schedule table as a PK when looking up logged entries to see if an insert or update is required.
 
-      # TODO figure out what happens if a student declines an event and the event is subsequently updated?
-      # Before updating, fetch existing event from Google and examine its attendees list for declines.
-      # TODO figure out how to make that performant and elegant.
-
-      proxy = GoogleApps::EventsInsert.new(
-        access_token: @settings.access_token,
-        refresh_token: @settings.refresh_token,
-        expiration_time: DateTime.now.to_i + 3599)
       queue_entries.each do |queue_entry|
-        begin
-          response = proxy.insert_event(queue_entry.event_data)
-        rescue StandardError => e
-          error_count += 1
-          logger.fatal "Google proxy error: #{e.inspect}"
+        if queue_entry.event_id.blank?
+          logger.warn "inserting event into Google Calendar"
+          begin
+            response = @insert_proxy.insert_event(queue_entry.event_data)
+          rescue StandardError => e
+            error_count += 1
+            logger.fatal "Google proxy error: #{e.inspect}"
+          end
+        else
+          logger.warn "event ID #{queue_entry.event_id} already exists in Google Calendar; will update"
+          # TODO fetch the event from google and merge its attendees array (and their responseStatus fields) into our attendees list.
+          begin
+            response = @update_proxy.update_event(queue_entry.event_id, queue_entry.event_data)
+          rescue StandardError => e
+            error_count += 1
+            logger.fatal "Google proxy error: #{e.inspect}"
+          end
         end
 
         if response.present?
@@ -60,6 +70,7 @@ module Calendar
       job.error_count = error_count
       job.process_end_time = DateTime.now
       job.save
+      logger.warn "class_calendar_jobs ID #{job.id}: Export complete. Job total entry count: #{job.total_entry_count}; Error count: #{job.error_count}"
       true
     end
 
