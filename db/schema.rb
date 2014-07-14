@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2014071109030303) do
+ActiveRecord::Schema.define(version: 2014071409363636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2014071109030303) do
     t.text     "event_data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "event_id"
   end
 
   add_index "class_calendar_queue", ["year", "term_cd", "ccn", "multi_entry_cd"], name: "class_calendar_queue_main_index", using: :btree

@@ -43,11 +43,24 @@ describe Calendar::Preprocessor do
         user = Calendar::User.new
         user.uid = '300939'
         user.save
+
+        logged_entry = Calendar::LoggedEntry.new
+        logged_entry.year = 2013
+        logged_entry.term_cd = 'D'
+        logged_entry.ccn = 7309
+        logged_entry.multi_entry_cd = 'A'
+        logged_entry.job_id = 5
+        logged_entry.event_id = 'abcdef'
+        logged_entry.save
       end
       it_behaves_like 'it has a non-empty array of ClassCalendarQueue entries'
       it 'has tammis default alternateid from fake Oracle' do
+        p "subj = #{subject[0].inspect}"
         json = JSON.parse(subject[0].event_data)
         expect(json['attendees'][0]['email']).to eq 'tammi.chang.clc@gmail.com'
+      end
+      it 'returns the event_id of a logged entry from a previous run' do
+        expect(subject[0].event_id).to eq 'abcdef'
       end
     end
     context 'when the user whitelist has an enrolled student on it with an alternate email for test purposes', if: Calendar::Queries.test_data? do
