@@ -62,6 +62,8 @@ module Calendar
           entries << entry
         end
       end
+      # TODO now get all event_ids from the previous job that are not part of the entry set yet, and create DELETE records for each.
+      # figure out clean way to represent deletion.
       entries
     end
 
