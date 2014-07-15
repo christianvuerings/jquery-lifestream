@@ -3,30 +3,31 @@ require 'spec_helper'
 describe Calendar::LoggedEntry do
   describe '#lookup' do
     before do
-      first = Calendar::LoggedEntry.new
-      first.year = 2014
-      first.term_cd = 'B'
-      first.ccn = 1234
-      first.multi_entry_cd = 'A'
-      first.job_id = 1
-      first.event_id = 'foo'
-      first.save
-      second = Calendar::LoggedEntry.new
-      second.year = 2014
-      second.term_cd = 'B'
-      second.ccn = 1234
-      second.multi_entry_cd = 'A'
-      second.job_id = 2
-      second.event_id = 'abcdef'
-      second.save
+      Calendar::LoggedEntry.create(
+        {
+          year: 2014,
+          term_cd: 'B',
+          ccn: 1234,
+          multi_entry_cd: 'A',
+          job_id: 1,
+          event_id: 'foo'})
+      Calendar::LoggedEntry.create(
+        {
+          year: 2014,
+          term_cd: 'B',
+          ccn: 1234,
+          multi_entry_cd: 'A',
+          job_id: 2,
+          event_id: 'abcdef'})
     end
 
     it 'should return the second logged entry' do
-      queued = Calendar::QueuedEntry.new
-      queued.year = 2014
-      queued.term_cd = 'B'
-      queued.ccn = 1234
-      queued.multi_entry_cd = 'A'
+      queued = Calendar::QueuedEntry.create(
+        {
+          year: 2014,
+          term_cd: 'B',
+          ccn: 1234,
+          multi_entry_cd: 'A'})
 
       found = Calendar::LoggedEntry.lookup queued
       expect(found).to be
@@ -35,11 +36,12 @@ describe Calendar::LoggedEntry do
     end
 
     it 'should return nothing when logged entry is not found' do
-      queued = Calendar::QueuedEntry.new
-      queued.year = 2013
-      queued.term_cd = 'A'
-      queued.ccn = 1234
-      queued.multi_entry_cd = 'A'
+      queued = Calendar::QueuedEntry.create(
+        {
+          year: 2013,
+          term_cd: 'A',
+          ccn: 1234,
+          multi_entry_cd: 'A'})
 
       found = Calendar::LoggedEntry.lookup queued
       expect(found).to be_nil
