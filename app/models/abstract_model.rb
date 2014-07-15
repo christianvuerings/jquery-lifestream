@@ -13,15 +13,18 @@ class AbstractModel
     # If you do expensive work from initialize, it will happen even when this object is cached -- not desirable!
   end
 
+  # Bring the cache reasonably up-to-date. By default, "reasonably" means every time warming
+  # is requested. However, certain user-visible feeds may need to reduce traffic on data sources.
+  def warm_cache
+    get_feed_as_json(true)
+  end
+
   def get_feed(force_cache_write=false)
     key = instance_key
     self.class.fetch_from_cache(key, force_cache_write) do
       init
       feed = get_feed_internal
-      last_modified = notify_if_feed_changed(feed, key)
-      feed[:lastModified] = last_modified
-      feed[:feedName] = self.class.name
-      feed
+      feed.merge(feed_metadata(feed, key))
     end
   end
 
@@ -31,6 +34,14 @@ class AbstractModel
       feed = get_feed(force_cache_write)
       feed.to_json
     end
+  end
+
+  def feed_metadata(feed, key)
+    last_modified = notify_if_feed_changed(feed, key)
+    {
+      lastModified: last_modified,
+      feedName: self.class.name
+    }
   end
 
   def notify_if_feed_changed(feed, key)
