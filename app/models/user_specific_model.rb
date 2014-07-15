@@ -8,10 +8,6 @@ class UserSpecificModel < AbstractModel
     end
   end
 
-  def instance_key
-    @uid
-  end
-
   def is_acting_as_nonfake_user?
     current_user = User::Auth.get(@uid)
     @original_uid && @uid != @original_uid && !current_user.is_test_user
