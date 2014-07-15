@@ -15,6 +15,6 @@ namespace :calendar do
     Rails.logger.warn "Exporting #{entries.length} calendar entries to Google"
     exporter = Calendar::Exporter.new
     logged_entries = exporter.ship_entries entries
-    Rails.logger.warn "Export done; #{logged_entries.length} entries were shipped to Google."
+    Rails.logger.warn "Export complete."
   end
 end

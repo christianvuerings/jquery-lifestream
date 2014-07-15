@@ -30,9 +30,7 @@ describe Calendar::Preprocessor do
     end
     context 'when the user whitelist has a non-enrolled student on it' do
       before do
-        user = Calendar::User.new
-        user.uid = '1'
-        user.save
+        Calendar::User.create({uid: '1'})
       end
       it 'returns an empty array' do
         expect(subject).to be_empty
@@ -40,22 +38,29 @@ describe Calendar::Preprocessor do
     end
     context 'when the whitelist has an enrolled student on it', if: Calendar::Queries.test_data? do
       before do
-        user = Calendar::User.new
-        user.uid = '300939'
-        user.save
+        Calendar::User.create({uid: '300939'})
+
+        Calendar::LoggedEntry.create(
+          {
+            year: 2013,
+            term_cd: 'D',
+            ccn: 7309,
+            multi_entry_cd: 'A',
+            job_id: 5,
+            event_id: 'abcdef'})
       end
       it_behaves_like 'it has a non-empty array of ClassCalendarQueue entries'
       it 'has tammis default alternateid from fake Oracle' do
         json = JSON.parse(subject[0].event_data)
         expect(json['attendees'][0]['email']).to eq 'tammi.chang.clc@gmail.com'
       end
+      it 'returns the event_id of a logged entry from a previous run' do
+        expect(subject[0].event_id).to eq 'abcdef'
+      end
     end
     context 'when the user whitelist has an enrolled student on it with an alternate email for test purposes', if: Calendar::Queries.test_data? do
       before do
-        user = Calendar::User.new
-        user.uid = '300939'
-        user.alternate_email = 'ctweney@testg.berkeley.edu.test-google-a.com'
-        user.save
+        Calendar::User.create({uid: '300939', alternate_email: 'ctweney@testg.berkeley.edu.test-google-a.com'})
       end
       it_behaves_like 'it has a non-empty array of ClassCalendarQueue entries'
       it 'has the meeting place and times for a multi-scheduled Biology 1a' do

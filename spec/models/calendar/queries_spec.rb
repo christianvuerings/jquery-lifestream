@@ -3,8 +3,7 @@ require 'spec_helper'
 describe Calendar::Queries do
 
   let(:users) {
-    user = Calendar::User.new
-    user.uid = 300939
+    user = Calendar::User.create({uid: 300939})
     [user]
   }
 

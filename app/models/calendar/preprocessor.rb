@@ -54,10 +54,16 @@ module Calendar
             ]
           }
           entry.event_data = JSON.pretty_generate event_data
+          logged_entry = Calendar::LoggedEntry.lookup(entry)
+          if logged_entry.present?
+            entry.event_id = logged_entry.event_id
+          end
           logger.debug "Event data for ccn #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}, multi_entry_cd = #{sched['multi_entry_cd']}: #{entry.event_data}"
           entries << entry
         end
       end
+      # TODO now get all event_ids from the previous job that are not part of the entry set yet, and create DELETE records for each.
+      # figure out clean way to represent deletion.
       entries
     end
 

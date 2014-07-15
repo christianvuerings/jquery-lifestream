@@ -18,4 +18,9 @@ module SpecHelperModule
     proxy.stub(feed_method).and_return(response)
     proxy
   end
+
+  def random_id
+    Time.now.to_f.to_s.gsub(".", "")
+  end
+
 end
