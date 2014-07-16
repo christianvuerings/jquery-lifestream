@@ -14,7 +14,7 @@ describe Cache::UserCacheWarmer do
       klass.stub(:new).and_return(model)
       klass.stub(:get_feed).and_return({})
       model.should_receive(:get_feed).with(force_cache_write).once
-      model.should_receive(:get_feed_as_json).with(force_cache_write).once
+      model.should_receive(:get_feed_as_json).with(force_cache_write).and_call_original
     end
 
     Cache::UserCacheWarmer.do_warm @user_id
