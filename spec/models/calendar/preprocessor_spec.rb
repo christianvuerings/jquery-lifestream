@@ -105,7 +105,7 @@ describe Calendar::Preprocessor do
       end
       it 'has the meeting place and times for Biology 1a' do
         expect(JSON.parse(subject[2].event_data)['location']).to eq 'VALLEY LSB 2030'
-        expect(subject[2].multi_entry_cd).to eq ''
+        expect(subject[2].multi_entry_cd).to eq '-'
         expect(subject[2].transaction_type).to eq 'C'
       end
     end
