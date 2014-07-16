@@ -4,7 +4,7 @@ module Calendar
     self.table_name = 'class_calendar_log'
 
     attr_accessible :year, :term_cd, :ccn, :multi_entry_cd, :event_data, :event_id, :job_id,
-                    :processed_at, :response_status, :response_body, :has_error
+                    :processed_at, :response_status, :response_body, :has_error, :transaction_type
 
     def self.lookup(queued_entry)
       logged_entry = LoggedEntry.limit(1).order(job_id: :desc).where(

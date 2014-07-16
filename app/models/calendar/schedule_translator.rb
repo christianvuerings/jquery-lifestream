@@ -52,7 +52,12 @@ module Calendar
     end
 
     def times
-      if @schedule.blank? || @schedule['meeting_days'].blank?
+      if @schedule.blank? ||
+        @schedule['meeting_days'].blank? ||
+        @schedule['meeting_start_time'].blank? ||
+        @schedule['meeting_start_time_ampm_flag'].blank? ||
+        @schedule['meeting_end_time'].blank?
+        @schedule['meeting_end_time_ampm_flag'].blank?
         return nil
       end
 

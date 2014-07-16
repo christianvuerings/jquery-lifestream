@@ -2,25 +2,14 @@ require 'spec_helper'
 
 describe Calendar::Queries do
 
-  let(:users) {
-    user = Calendar::User.create({uid: 300939})
-    [user]
-  }
-
   describe '#get_all_courses' do
-    context 'with a non-empty whitelist' do
-      subject { Calendar::Queries.get_all_courses(users) }
+    context 'getting all courses regardless of enrollment' do
+      subject { Calendar::Queries.get_all_courses }
       it 'returns a list of courses in the configured departments' do
         expect(subject).to be
         if Calendar::Queries.test_data?
           expect(subject.length).to be >= 1
         end
-      end
-    end
-    context 'with an empty whitelist' do
-      subject { Calendar::Queries.get_all_courses([]) }
-      it 'returns an empty list' do
-        expect(subject).to be_empty
       end
     end
   end
@@ -30,8 +19,25 @@ describe Calendar::Queries do
     let(:term_yr) { 2013 }
     let(:term_cd) { 'D' }
     let(:ccn) { 7309 }
-    it 'returns a list of email addresses for whitelisted users in the specified course' do
-      expect(subject).to be
+
+    context 'with a user in the whitelist' do
+      let(:users) {
+        user = Calendar::User.create({uid: 300939})
+        [user]
+      }
+      it 'returns a list of email addresses for whitelisted users in the specified course' do
+        expect(subject).to be
+        if Calendar::Queries.test_data?
+          expect(subject.length).to be >= 1
+        end
+      end
+    end
+
+    context 'with an empty whitelist' do
+      subject { Calendar::Queries.get_whitelisted_students_in_course([], term_yr, term_cd, ccn) }
+      it 'returns an empty list' do
+        expect(subject).to be_empty
+      end
     end
   end
 end

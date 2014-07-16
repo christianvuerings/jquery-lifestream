@@ -34,6 +34,7 @@ describe Calendar::Exporter do
         expect(saved).to be_present
         expect(saved.job_id).to be >= 1
         expect(saved.event_id).to eq event_id
+        expect(saved.transaction_type).to eq 'C'
 
         job = Calendar::Job.all.first
         expect(job).to be_present
@@ -62,6 +63,7 @@ describe Calendar::Exporter do
         expect(saved.has_error).to be_true
         expect(saved.response_status).to be_nil
         expect(saved.response_body).to eq 'nil'
+        expect(saved.transaction_type).to eq 'C'
       end
     end
 

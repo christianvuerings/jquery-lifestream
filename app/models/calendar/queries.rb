@@ -2,35 +2,25 @@ module Calendar
   class Queries < CampusOracle::Connection
     include ActiveRecordHelper
 
-    def self.get_all_courses(users = [])
-      # fail safer: don't return results if whitelist is empty
-      if users.empty?
-        return []
-      end
+    def self.get_all_courses
       result = []
       this_depts_clause = depts_clause('c', Settings.class_calendar.departments)
-      users_clause = ''
-      if users.length > 0
-        users_clause = users_in_chunks users
-      end
       use_pooled_connection {
         sql = <<-SQL
       select
         c.term_yr, c.term_cd, c.course_cntl_num,
-        c.dept_name || ' ' || c.catalog_id || ' ' || c.instruction_format || ' ' || c.section_num AS course_name
-      from calcentral_course_info_vw c
-      where 1=1 #{terms_query_clause('c', Settings.class_calendar.current_terms_codes)} #{this_depts_clause}
-        and exists (
-          select r.course_cntl_num
-          from calcentral_class_roster_vw r
-          where r.enroll_status != 'D'
-            and r.term_yr = c.term_yr
-            and r.term_cd = c.term_cd
-            and r.course_cntl_num = c.course_cntl_num
-            #{users_clause}
-            and rownum < 2
-          )
-      order by c.course_cntl_num
+        c.dept_name || ' ' || c.catalog_id || ' ' || c.instruction_format || ' ' || c.section_num AS course_name,
+        sched.building_name, sched.room_number, sched.meeting_days, sched.meeting_start_time,
+        sched.meeting_start_time_ampm_flag, sched.meeting_end_time, sched.meeting_end_time_ampm_flag,
+        sched.multi_entry_cd
+      from calcentral_course_info_vw c, calcentral_class_schedule_vw sched
+      where c.term_yr = sched.term_yr
+        and c.term_cd = sched.term_cd
+        and c.course_cntl_num = sched.course_cntl_num
+        and (sched.print_cd is null or sched.print_cd <> 'C')
+        #{terms_query_clause('c', Settings.class_calendar.current_terms_codes)}
+        #{this_depts_clause}
+      order by c.course_cntl_num, sched.multi_entry_cd
         SQL
         result = connection.select_all(sql)
       }
@@ -38,11 +28,14 @@ module Calendar
     end
 
     def self.get_whitelisted_students_in_course(users = [], term_yr, term_cd, ccn)
-      result = []
-      users_clause = ''
-      if users.length > 0
-        users_clause = users_in_chunks users
+      # fail safer: don't return results if whitelist is empty
+      if users.empty?
+        return []
       end
+
+      result = []
+      users_clause = users_in_chunks users
+
       use_pooled_connection {
         sql = <<-SQL
           select p.ldap_uid, p.alternateid AS official_bmail_address
@@ -55,7 +48,7 @@ module Calendar
             and c.term_yr = #{term_yr.to_i}
             and c.term_cd = #{connection.quote(term_cd)}
             and c.course_cntl_num = #{ccn.to_i}
-            #{users_clause}
+        #{users_clause}
           order by p.ldap_uid
         SQL
         result = connection.select_all(sql)
