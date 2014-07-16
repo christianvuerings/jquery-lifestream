@@ -12,7 +12,7 @@ module Calendar
 
     def get_entries
       entries = []
-      courses = Calendar::Queries.get_all_courses @users
+      courses = Calendar::Queries.get_all_courses
       courses.each do |course|
         this_term_slug = Berkeley::TermCodes.to_slug(course['term_yr'], course['term_cd'])
         term = Berkeley::Terms.fetch.campus[this_term_slug]
@@ -20,50 +20,71 @@ module Calendar
           logger.error "Could not determine term #{this_term_slug} for course #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}"
           next
         end
-        logger.info "Preprocessing #{course['course_name']} ccn = #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}, term = #{term.slug}"
-        schedules = CampusOracle::Queries.get_section_schedules(course['term_yr'], course['term_cd'], course['course_cntl_num'])
-        schedules.each do |sched|
-          next unless sched.present?
-          schedule_translator = Calendar::ScheduleTranslator.new(sched, term)
-          rrule = schedule_translator.recurrence_rule
-          class_time = schedule_translator.times
-          next unless rrule.present?
-          entry = Calendar::QueuedEntry.new
-          entry.year = course['term_yr']
-          entry.term_cd = course['term_cd']
-          entry.ccn = course['course_cntl_num']
-          entry.multi_entry_cd = sched['multi_entry_cd']
-          location = "#{sched['building_name']} #{strip_leading_zeros(sched['room_number'])}"
-          event_data = {
-            summary: course['course_name'],
-            location: location,
-            start: {
-              dateTime: class_time[:start].rfc3339(3),
-              timeZone: Time.zone.tzinfo.name
-            },
-            end: {
-              dateTime: class_time[:end].rfc3339(3),
-              timeZone: Time.zone.tzinfo.name
-            },
-            attendees: attendees(course['term_yr'], course['term_cd'], course['course_cntl_num']),
-            guestsCanSeeOtherGuests: false,
-            guestsCanInviteOthers: false,
-            locked: true,
-            recurrence: [
-              rrule
-            ]
-          }
-          entry.event_data = JSON.pretty_generate event_data
-          logged_entry = Calendar::LoggedEntry.lookup(entry)
-          if logged_entry.present?
-            entry.event_id = logged_entry.event_id
+        logger.info "Preprocessing #{course['course_name']} ccn = #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}, multi_entry_cd = #{course['multi_entry_cd']}, term = #{term.slug}"
+
+        attendees = attendees(course['term_yr'], course['term_cd'], course['course_cntl_num'])
+        schedule_translator = Calendar::ScheduleTranslator.new(course, term)
+        rrule = schedule_translator.recurrence_rule
+        class_time = schedule_translator.times
+        location = "#{course['building_name']} #{strip_leading_zeros(course['room_number'])}"
+
+        entry = Calendar::QueuedEntry.new(
+          {
+            year: course['term_yr'],
+            term_cd: course['term_cd'],
+            ccn: course['course_cntl_num'],
+            multi_entry_cd: course['multi_entry_cd'].blank? ? '-' : course['multi_entry_cd'],
+            transaction_type: Calendar::QueuedEntry::CREATE_TRANSACTION})
+
+        logged_entry = Calendar::LoggedEntry.lookup(entry)
+        if logged_entry.present? && logged_entry.transaction_type != Calendar::QueuedEntry::DELETE_TRANSACTION
+          # this event has already been recorded in Google. Should we consider deleting it?
+          entry.event_id = logged_entry.event_id
+
+          if attendees.empty?
+            logger.info "Zero attendees, this will be a DELETE action"
+            entry.transaction_type = Calendar::QueuedEntry::DELETE_TRANSACTION
+          elsif rrule.blank?
+            logger.info "Blank recurrence rule, this will be a DELETE action"
+            entry.transaction_type = Calendar::QueuedEntry::DELETE_TRANSACTION
+          else
+            logger.info "This will be an UPDATE action"
+            entry.transaction_type = Calendar::QueuedEntry::UPDATE_TRANSACTION
           end
-          logger.debug "Event data for ccn #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}, multi_entry_cd = #{sched['multi_entry_cd']}: #{entry.event_data}"
-          entries << entry
         end
+
+        if attendees.empty?
+          # don't create events that have no attendees
+          next unless entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
+        end
+
+        event_data = {
+          summary: course['course_name'],
+          location: location,
+          attendees: attendees,
+          guestsCanSeeOtherGuests: false,
+          guestsCanInviteOthers: false,
+          locked: true,
+        }
+        if class_time.present? && rrule.present?
+          event_data.merge!(
+            {
+              start: {
+                dateTime: class_time[:start].rfc3339(3),
+                timeZone: Time.zone.tzinfo.name
+              },
+              end: {
+                dateTime: class_time[:end].rfc3339(3),
+                timeZone: Time.zone.tzinfo.name
+              },
+              recurrence: [
+                rrule
+              ]
+            })
+        end
+        entry.event_data = JSON.pretty_generate event_data
+        entries << entry
       end
-      # TODO now get all event_ids from the previous job that are not part of the entry set yet, and create DELETE records for each.
-      # figure out clean way to represent deletion.
       entries
     end
 

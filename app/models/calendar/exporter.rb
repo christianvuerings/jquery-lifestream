@@ -17,6 +17,10 @@ module Calendar
         access_token: @settings.access_token,
         refresh_token: @settings.refresh_token,
         expiration_time: DateTime.now.to_i + 3599)
+      @delete_proxy = GoogleApps::EventsDelete.new(
+        access_token: @settings.access_token,
+        refresh_token: @settings.refresh_token,
+        expiration_time: DateTime.now.to_i + 3599)
       @error_count = 0
       @total = 0
     end
@@ -24,19 +28,29 @@ module Calendar
     def ship_entries(queue_entries=[])
       job = Calendar::Job.create
       job.process_start_time = DateTime.now
-      logger.warn "class_calendar_jobs ID #{job.id}: Preparing to ship #{queue_entries.length} entries to Google"
+      logger.warn "Job #{job.id}: Preparing to ship #{queue_entries.length} entries to Google"
       @error_count = 0
       @total = 0
 
       queue_entries.each do |queue_entry|
+
+        # figure out if we should attempt to delete or update an existing event
         if queue_entry.event_id.present?
-          existing_attendees = []
-          event_on_google = @get_proxy.get_event(queue_entry.event_id)
-          if event_on_google.present?
-            if event_on_google.body && (existing_json = safe_json(event_on_google.body))
-              existing_attendees = existing_json['attendees']
+          if queue_entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
+            logger.warn "Deleting event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+            response = @delete_proxy.delete_event(queue_entry.event_id)
+          else
+            existing_attendees = []
+            event_on_google = @get_proxy.get_event(queue_entry.event_id)
+            if event_on_google.present?
+              if event_on_google.body && (existing_json = safe_json(event_on_google.body))
+                existing_attendees = existing_json['attendees']
+              end
+              response = update(queue_entry, existing_attendees)
+            else
+              # entry not found on Google, fall back to creating it
+              queue_entry.transaction_type = Calendar::QueuedEntry::CREATE_TRANSACTION
             end
-            response = update(queue_entry, existing_attendees)
           end
         end
 
@@ -45,8 +59,8 @@ module Calendar
         end
 
         if response.present?
-          event_id = nil
-          if response.body && (json = safe_json(response.body))
+          event_id = queue_entry.event_id
+          if event_id.blank? && response.body && (json = safe_json(response.body))
             event_id = json['id']
           end
           log_entry = Calendar::LoggedEntry.create(
@@ -57,6 +71,7 @@ module Calendar
               ccn: queue_entry.ccn,
               multi_entry_cd: queue_entry.multi_entry_cd,
               event_data: queue_entry.event_data,
+              transaction_type: queue_entry.transaction_type,
               processed_at: DateTime.now,
               response_status: response.status,
               response_body: response.body,
@@ -79,6 +94,7 @@ module Calendar
               ccn: queue_entry.ccn,
               multi_entry_cd: queue_entry.multi_entry_cd,
               event_data: queue_entry.event_data,
+              transaction_type: queue_entry.transaction_type,
               processed_at: DateTime.now,
               response_body: 'nil',
               has_error: true,
@@ -91,12 +107,12 @@ module Calendar
       job.error_count = @error_count
       job.process_end_time = DateTime.now
       job.save
-      logger.warn "class_calendar_jobs ID #{job.id}: Export complete. Job total entry count: #{job.total_entry_count}; Error count: #{job.error_count}"
+      logger.warn "Job #{job.id}: Export complete. Job total entry count: #{job.total_entry_count}; Error count: #{job.error_count}"
       true
     end
 
     def insert(queue_entry)
-      logger.warn "inserting event into Google Calendar"
+      logger.warn "Inserting event for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
       begin
         response = @insert_proxy.insert_event(queue_entry.event_data)
       rescue StandardError => e
@@ -106,7 +122,7 @@ module Calendar
     end
 
     def update(queue_entry, existing_attendees)
-      logger.warn "event ID #{queue_entry.event_id} already exists in Google Calendar; will update"
+      logger.warn "Updating event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
 
       merge_attendee_responses(queue_entry, existing_attendees)
 

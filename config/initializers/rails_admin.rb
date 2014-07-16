@@ -10,7 +10,7 @@ class Ability
       can :access, :all
       can :dashboard, :all
       if user.policy.can_administrate?
-        can :manage, [User::Auth, Finaid::FinAidYear, Calendar::User]
+        can :manage, [User::Auth, Finaid::FinAidYear, Calendar::User, Calendar::QueuedEntry, Calendar::LoggedEntry, Calendar::Job]
       end
       if user.policy.can_author?
         can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection, Links::UserRole]
@@ -60,7 +60,9 @@ RailsAdmin.config do |config|
   # config.excluded_models = ['OracleDatabase']
 
   # Include specific models (exclude the others):
-  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'User::Auth', 'Links::UserRole', 'Finaid::FinAidYear', 'Calendar::User']
+  config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'Links::UserRole',
+                            'Finaid::FinAidYear', 'User::Auth',
+                            'Calendar::User', 'Calendar::QueuedEntry', 'Calendar::LoggedEntry', 'Calendar::Job']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -130,6 +132,18 @@ RailsAdmin.config do |config|
 
   config.model 'Calendar::User' do
     label 'Class Calendar Whitelist'
+  end
+
+  config.model 'Calendar::Job' do
+    label 'Class Calendar Jobs'
+  end
+
+  config.model 'Calendar::QueuedEntry' do
+    label 'Class Calendar Queue'
+  end
+
+  config.model 'Calendar::LoggedEntry' do
+    label 'Class Calendar Log'
   end
 
   config.navigation_static_label = 'Tools'
