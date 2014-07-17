@@ -4,6 +4,7 @@ module Financials
 
     include ClassLogger, SafeJsonParser
     include Cache::UserCacheExpiry
+    include User::Student
 
     # APP_ID must be unique within the system, and is used by VCR and the front-end in various ways.
     APP_ID = 'CFV'
