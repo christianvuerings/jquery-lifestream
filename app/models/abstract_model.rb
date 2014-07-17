@@ -29,10 +29,13 @@ class AbstractModel
   end
 
   def get_feed_as_json(force_cache_write=false)
-    # cache the JSONified feed for maximum efficiency when we're called by a controller.
-    self.class.fetch_from_cache("json-#{instance_key}", force_cache_write) do
-      feed = get_feed(force_cache_write)
-      feed.to_json
+    if self.class.caches_json?
+      # cache the JSONified feed for maximum efficiency when we're called by a controller.
+      self.class.fetch_from_cache("json-#{instance_key}", force_cache_write) do
+        get_feed(force_cache_write).to_json
+      end
+    else
+      get_feed(force_cache_write).to_json
     end
   end
 
