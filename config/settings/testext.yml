@@ -3,6 +3,8 @@ application:
 logger:
   level: <%= ENV['LOGGER_LEVEL'] || DEBUG %>
   stdout: <%= ENV['LOGGER_STDOUT'] || 'only' %>
+ldap:
+  host: 'nds-test.berkeley.edu'
 terms:
   fake_now: 2013-10-11 04:20:00
 postgres:
