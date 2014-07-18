@@ -12,7 +12,7 @@ module Canvas
     end
 
     def list_enrollments(options = {})
-      default_options = {:cache => true}
+      default_options = {:cache => false}
       options.reverse_merge!(default_options)
 
       if options[:cache].present?
