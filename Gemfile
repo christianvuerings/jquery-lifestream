@@ -78,9 +78,9 @@ gem 'rails_admin', "0.6.2"
 gem "bootstrap-sass", "~> 3.1.1"
 
 # TorqueBox app server
-gem "torquebox", "~> 3.0.1"
-gem "torquebox-server", "~> 3.0.1"
-gem "torquebox-messaging", "~> 3.0.1"
+gem "torquebox", "~> 3.1.1"
+gem "torquebox-server", "~> 3.1.1"
+gem "torquebox-messaging", "~> 3.1.1"
 
 # for trying, and trying again, and then giving up.
 gem "retriable", "~> 1.4"
