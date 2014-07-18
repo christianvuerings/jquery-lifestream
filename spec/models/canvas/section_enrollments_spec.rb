@@ -102,18 +102,18 @@ describe Canvas::SectionEnrollments do
       expect(enrollments[0]['grades']['html_url']).to eq "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4000025"
     end
 
-    it "uses cache by default" do
-      Canvas::SectionEnrollments.should_receive(:fetch_from_cache).and_return([])
+    it "does not use cache by default" do
+      Canvas::SectionEnrollments.should_not_receive(:fetch_from_cache)
       enrollments = subject.list_enrollments
       expect(enrollments).to be_an_instance_of Array
-      expect(enrollments.count).to eq 0
+      expect(enrollments.count).to eq 20
     end
 
-    it "bypasses cache when cache option is false" do
-      Canvas::SectionEnrollments.should_not_receive(:fetch_from_cache)
-      enrollments = subject.list_enrollments(:cache => false)
+    it "uses cache when cache option is true" do
+      Canvas::SectionEnrollments.should_receive(:fetch_from_cache).and_return([])
+      enrollments = subject.list_enrollments(:cache => true)
       expect(enrollments).to be_an_instance_of Array
-      expect(enrollments.count).to eq 20
+      expect(enrollments.count).to eq 0
     end
   end
 
