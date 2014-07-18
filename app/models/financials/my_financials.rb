@@ -7,7 +7,7 @@ module Financials
     include User::Student
 
     # Due to the potential size of finance data, the JSON version of the feed is not cached separately.
-    def self.caches_json?
+    def self.caches_separate_json?
       false
     end
 
