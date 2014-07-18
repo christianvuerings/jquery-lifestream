@@ -122,6 +122,30 @@ describe Calendar::Preprocessor do
       end
 
     end
+    context 'when a course exists but it has no schedule' do
+      before do
+        Calendar::Queries.stub(:get_all_courses).and_return(
+          [{
+             'term_yr' => 2013,
+             'term_cd' => 'D',
+             'course_cntl_num' => 12345,
+             'course_name' => 'Testing 1A',
+             'multi_entry_cd' => '',
+             'building_name' => 'Dwinelle',
+             'room_number' => '117',
+             'meeting_days' => ''
+           }])
+        Calendar::Queries.stub(:get_whitelisted_students_in_course).and_return(
+          [{
+             'ldap_uid' => '1234',
+             'official_bmail_address' => 'foo@foo.com'
+           }])
+        Calendar::User.create({uid: '1234'})
+      end
+      it 'produces an empty list' do
+        expect(subject).to be_empty
+      end
+    end
   end
 
 end

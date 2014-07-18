@@ -37,8 +37,7 @@ module Calendar
         # figure out if we should attempt to delete or update an existing event
         if queue_entry.event_id.present?
           if queue_entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
-            logger.warn "Deleting event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
-            response = @delete_proxy.delete_event(queue_entry.event_id)
+            response = delete queue_entry
           else
             existing_attendees = []
             event_on_google = @get_proxy.get_event(queue_entry.event_id)
@@ -55,7 +54,7 @@ module Calendar
         end
 
         if response.blank?
-          response = insert(queue_entry)
+          response = insert queue_entry
         end
 
         if response.present?
@@ -82,7 +81,7 @@ module Calendar
           if log_entry.has_error
             @error_count += 1
           end
-          queue_entry.delete unless log_entry.has_error
+          queue_entry.delete
         else
           logger.error "Got a nil response creating or updating event"
           @error_count += 1
@@ -128,6 +127,17 @@ module Calendar
 
       begin
         response = @update_proxy.update_event(queue_entry.event_id, queue_entry.event_data)
+      rescue StandardError => e
+        logger.fatal "Google proxy error: #{e.inspect}"
+      end
+      response
+    end
+
+    def delete(queue_entry)
+      logger.warn "Deleting event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+
+      begin
+        response = @delete_proxy.delete_event(queue_entry.event_id)
       rescue StandardError => e
         logger.fatal "Google proxy error: #{e.inspect}"
       end

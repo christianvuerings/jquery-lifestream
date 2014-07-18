@@ -58,6 +58,12 @@ module Calendar
           next unless entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
         end
 
+        if class_time.blank? || rrule.blank?
+          # don't attempt to create an event that is missing times, but also log it as an error of concern
+          logger.error "Missing times and/or recurrence rule. Course dump: #{course.inspect}"
+          next unless entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
+        end
+
         event_data = {
           summary: course['course_name'],
           location: location,
