@@ -89,7 +89,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
     ```bash
     rvm get head
-    rvm install jruby-1.7.8
+    rvm install jruby-1.7.13
     cd ..
     cd calcentral
     # Answer "yes" again if it asks you to trust a new .rvmrc file.
