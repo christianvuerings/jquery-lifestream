@@ -29,9 +29,9 @@ class AbstractModel
   end
 
   def get_feed_as_json(force_cache_write=false)
-    if self.class.caches_json?
+    if self.class.caches_separate_json?
       # cache the JSONified feed for maximum efficiency when we're called by a controller.
-      self.class.fetch_from_cache("json-#{instance_key}", force_cache_write) do
+      self.class.fetch_from_cache(self.class.json_key(instance_key), force_cache_write) do
         get_feed(force_cache_write).to_json
       end
     else
@@ -81,16 +81,29 @@ class AbstractModel
     "user/#{key}/FeedChangedRateLimiter"
   end
 
-  def self.caches_json?
-    true
-  end
-
   def instance_key
     @id
   end
 
   def expire_cache
-    self.class.expire(@id)
+    self.class.expire(instance_key)
+  end
+
+  def self.caches_separate_json?
+    true
+  end
+
+  def self.json_key(id)
+    "json-#{id}"
+  end
+
+  def self.expire(id = nil)
+    super(id)
+    if caches_separate_json?
+      key = cache_key(json_key(id))
+      Rails.cache.delete(key, :force => true)
+      Rails.logger.debug "Expired cache_key #{key}"
+    end
   end
 
 end

@@ -118,24 +118,10 @@ module Cache
       key = cache_key id
       Rails.cache.delete(key, :force => true)
       Rails.logger.debug "Expired cache_key #{key}"
-      if caches_json?
-        key = json_key id
-        Rails.cache.delete(key, :force => true)
-        Rails.logger.debug "Expired cache_key #{key}"
-      end
     end
 
     def cache_key(id = nil)
       id.nil? ? self.name : "#{self.name}/#{id}"
-    end
-
-    def json_key(id = nil)
-      cache_key "json-#{id}"
-    end
-
-    # override to return true if your cacheable thing also caches a JSONified copy of its data.
-    def caches_json?
-      false
     end
 
   end
