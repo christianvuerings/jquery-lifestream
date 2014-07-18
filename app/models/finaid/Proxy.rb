@@ -2,6 +2,7 @@ module Finaid
   class Proxy < BaseProxy
 
     include ClassLogger
+    include User::Student
 
     APP_ID = "Myfinaid"
 
