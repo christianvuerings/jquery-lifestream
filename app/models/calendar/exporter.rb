@@ -150,21 +150,22 @@ module Calendar
       # if a user is on the Google list but not on our list, that means they've been dropped from the class, and we
       # don't need to do anything except post the new list of attendees without them.
       logger.debug "Existing attendees: #{existing_attendees.inspect}"
-      hash_of_responses = {}
-      existing_attendees.each do |attendee|
-        hash_of_responses[attendee['email']] = attendee
-      end
-
       new_data = safe_json(queue_entry.event_data)
       new_attendees = new_data['attendees']
-      new_attendees.each_with_index do |new_attendee, i|
-        email = new_attendee['email']
-        if hash_of_responses[email].present?
-          new_attendees[i] = hash_of_responses[email]
+      if existing_attendees.present? && new_attendees.present?
+        hash_of_responses = {}
+        existing_attendees.each do |attendee|
+          hash_of_responses[attendee['email']] = attendee
         end
-      end
+        new_attendees.each_with_index do |new_attendee, i|
+          email = new_attendee['email']
+          if hash_of_responses[email].present?
+            new_attendees[i] = hash_of_responses[email]
+          end
+        end
 
-      queue_entry.event_data = JSON.pretty_generate new_data
+        queue_entry.event_data = JSON.pretty_generate new_data
+      end
     end
 
   end
