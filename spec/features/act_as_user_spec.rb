@@ -5,7 +5,7 @@ feature "act_as_user" do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     @fake_events_list = GoogleApps::EventsList.new(fake: true)
     User::Auth.new_or_update_superuser! "238382"
-    User::Auth.new_or_update_test_user! "2040"
+    User::Auth.new_or_update_superuser! "2040"
     User::Auth.new_or_update_test_user! "1234"
     User::Auth.new_or_update_test_user! "9876"
     Settings.features.stub(:reauthentication).and_return(false)
@@ -90,16 +90,15 @@ feature "act_as_user" do
     # The switching back triggers a cache invalidation, while the warming thread is still running.
     Cache::UserCacheWarmer.stub(:warm).and_return(nil)
 
-
     login_with_cas "238382"
-    act_as_user '61889'
+    act_as_user '2040'
 
     page.driver.post '/api/my/record_first_login'
     page.status_code.should == 204
 
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response['uid'].should == '61889'
+    response['uid'].should == '2040'
     response['firstLoginAt'].should be_nil
 
     # visit "/settings"
@@ -182,7 +181,6 @@ feature "act_as_user" do
     Cache::UserCacheWarmer.stub(:warm).and_return(nil)
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::EventsList.stub(:new).and_return(@fake_events_list)
-    User::Auth.new_or_update_superuser! "2040"
     User::Data.stub(:where, :uid => '2040').and_return("tricking the first login check")
     %w(238382 2040 11002820).each do |user|
       login_with_cas user
