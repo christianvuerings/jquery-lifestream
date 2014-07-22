@@ -60,7 +60,10 @@ class UserApiController < ApplicationController
   private
 
   def acting_as?
-    session[:original_user_id] && (session[:user_id] != session[:original_user_id])
+    # This logic only differs from UserSpecificModel.session_indirectly_authenticated?(session)
+    # in treating test-users like everyone else.
+    # TODO Is it actually a requirement to block first-login, opt-out, etc. for test users?
+    session[:lti_authenticated_only] || (session[:original_user_id] && (session[:user_id] != session[:original_user_id]))
   end
 
   def acting_as_uid

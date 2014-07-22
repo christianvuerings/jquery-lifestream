@@ -14,7 +14,20 @@ class CanvasLtiController < ApplicationController
   end
 
   def authenticate_by_lti(lti)
-    session[:user_id] = lti.get_custom_param('canvas_user_login_id')
+    lti_user_id = lti.get_custom_param('canvas_user_login_id')
+    if (existing_user_id = session[:user_id])
+      if existing_user_id != lti_user_id
+        logger.error("LTI is authenticated as #{lti_user_id}; logging out existing CalCentral session for #{existing_user_id}")
+        reset_session
+        session[:lti_authenticated_only] = true
+      else
+        logger.debug("LTI user #{lti_user_id} already has a CalCentral session")
+      end
+    else
+      session[:lti_authenticated_only] = true
+      logger.debug("LTI user #{lti_user_id} was not already logged into CalCentral")
+    end
+    session[:user_id] = lti_user_id
     session[:canvas_user_id] = lti.get_custom_param('canvas_user_id')
     session[:canvas_course_id] = lti.get_custom_param('canvas_course_id')
   end

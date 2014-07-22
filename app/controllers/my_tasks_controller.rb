@@ -3,13 +3,13 @@ class MyTasksController < ApplicationController
   before_filter :api_authenticate
 
   def get_feed
-    render :json => MyTasks::Merged.new(session[:user_id], :original_user_id => session[:original_user_id]).get_feed_as_json
+    render :json => MyTasks::Merged.from_session(session).get_feed_as_json
   end
 
   def self.define_passthrough(endpoint)
     define_method endpoint do
       begin
-        my_tasks_model = MyTasks::Merged.new(session[:user_id], :original_user_id => session[:original_user_id])
+        my_tasks_model = MyTasks::Merged.from_session(session)
         render :json => my_tasks_model.send(endpoint, request.request_parameters).to_json
       rescue ArgumentError => e
         return render :json => {error: "Invalid Arguments", message: e.message}.to_json, :status => 400

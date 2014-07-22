@@ -5,16 +5,26 @@ class SessionsController < ApplicationController
 
   def lookup
     auth = request.env["omniauth.auth"]
+    auth_uid = auth['uid']
     if params[:renew] == 'true'
-      if session[:original_user_id] && session[:original_user_id] != auth['uid']
-        logger.warn "ACT-AS: Active user session for #{session[:original_user_id]} exists, but CAS is giving us a different UID: #{auth['uid']}. Logging user out."
+      if session[:original_user_id] && session[:original_user_id] != auth_uid
+        logger.warn "ACT-AS: Active user session for #{session[:original_user_id]} exists, but CAS is giving us a different UID: #{auth_uid}. Logging user out."
         logout
         return redirect_to Settings.cas_logout_url
       else
         cookies[:reauthenticated] = {:value => true, :expires => 8.hours.from_now}
       end
+    else
+      if session[:lti_authenticated_only] && session[:user_id] != auth_uid
+        logger.warn "LTI user session for #{session[:user_id]} exists, but CAS is giving us a different UID: #{auth_uid}. Logging user out."
+        logout
+        return redirect_to Settings.cas_logout_url
+      end
+      # On normal first-time authentication, start with a clean session. This will have the side-effect
+      # of clearing the LTI-authenticated-only flag if the user happened to visit bCourses first.
+      reset_session
     end
-    continue_login_success auth['uid']
+    continue_login_success auth_uid
   end
 
   def reauth_admin
