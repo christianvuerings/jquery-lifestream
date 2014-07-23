@@ -12,14 +12,14 @@ describe Calendar::ScheduleTranslator do
     context 'decoding Oracle meeting_days to RRULE' do
       let(:schedule) { {'meeting_days' => ' M W F'} }
       it 'produces a correct RRULE for MWF' do
-        expect(subject).to eq "RRULE:FREQ=WEEKLY;UNTIL=20131214T075959Z;BYDAY=MO,WE,FR"
+        expect(subject).to eq "RRULE:FREQ=WEEKLY;UNTIL=20131207T075959Z;BYDAY=MO,WE,FR"
       end
     end
 
     context 'decoding a class that meets every day' do
       let(:schedule) { {'meeting_days' => 'SMTWTFS'} }
       it 'produces a correct RRULE for all 7 days' do
-        expect(subject).to eq "RRULE:FREQ=WEEKLY;UNTIL=20131214T075959Z;BYDAY=SU,MO,TU,WE,TH,FR,SA"
+        expect(subject).to eq "RRULE:FREQ=WEEKLY;UNTIL=20131207T075959Z;BYDAY=SU,MO,TU,WE,TH,FR,SA"
       end
     end
 

@@ -87,7 +87,7 @@ describe Calendar::Preprocessor do
         expect(json['location']).to eq 'VALLEY LSB 2030, UC Berkeley'
         expect(json['start']['dateTime']).to eq '2013-09-02T16:00:00.000-07:00'
         expect(json['end']['dateTime']).to eq '2013-09-02T17:00:00.000-07:00'
-        expect(json['recurrence'][0]).to eq 'RRULE:FREQ=WEEKLY;UNTIL=20131214T075959Z;BYDAY=MO'
+        expect(json['recurrence'][0]).to eq 'RRULE:FREQ=WEEKLY;UNTIL=20131207T075959Z;BYDAY=MO'
         expect(json['attendees'].length).to eq 1
         expect(json['attendees'][0]['email']).to eq 'ctweney@testg.berkeley.edu.test-google-a.com'
         expect(subject[0].multi_entry_cd).to eq 'A'
@@ -97,7 +97,7 @@ describe Calendar::Preprocessor do
         expect(json['location']).to eq 'EVANS 60, UC Berkeley'
         expect(json['start']['dateTime']).to eq '2013-09-04T14:00:00.000-07:00'
         expect(json['end']['dateTime']).to eq '2013-09-04T15:00:00.000-07:00'
-        expect(json['recurrence'][0]).to eq 'RRULE:FREQ=WEEKLY;UNTIL=20131214T075959Z;BYDAY=WE'
+        expect(json['recurrence'][0]).to eq 'RRULE:FREQ=WEEKLY;UNTIL=20131207T075959Z;BYDAY=WE'
         expect(json['attendees'].length).to eq 1
         expect(json['attendees'][0]['email']).to eq 'ctweney@testg.berkeley.edu.test-google-a.com'
         expect(subject[1].multi_entry_cd).to eq 'B'
