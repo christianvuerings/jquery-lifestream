@@ -63,7 +63,7 @@ describe 'Calendar Integration Full Stack', testext: true do
       event_on_google = get_proxy.get_event event_id
       expect(event_on_google).to be
       json = JSON.parse(event_on_google.body)
-      expect(json['location']).to eq 'Dwinelle 117'
+      expect(json['location']).to eq 'Dwinelle 117, UC Berkeley'
 
       # EVENT UPDATES ------------------------------------------------------------------------------------
       # now change the class location
@@ -110,7 +110,7 @@ describe 'Calendar Integration Full Stack', testext: true do
       event_on_google = get_proxy.get_event event_id
       expect(event_on_google).to be
       json = JSON.parse(event_on_google.body)
-      expect(json['location']).to eq 'VLSB 100'
+      expect(json['location']).to eq 'VLSB 100, UC Berkeley'
 
       # EVENT DELETES ------------------------------------------------------------------------------------
       # now take the user off the whitelist

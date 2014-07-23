@@ -26,7 +26,7 @@ module Calendar
         schedule_translator = Calendar::ScheduleTranslator.new(course, term)
         rrule = schedule_translator.recurrence_rule
         class_time = schedule_translator.times
-        location = "#{course['building_name']} #{strip_leading_zeros(course['room_number'])}"
+        location = "#{course['building_name']} #{strip_leading_zeros(course['room_number'])}, UC Berkeley"
 
         entry = Calendar::QueuedEntry.new(
           {
