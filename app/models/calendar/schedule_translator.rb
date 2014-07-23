@@ -6,7 +6,7 @@ module Calendar
     def initialize(schedule, term)
       @schedule = schedule
       @term = term
-      logger.info "Schedule from Oracle: #{schedule}; term start: #{@term.classes_start}, term end: #{@term.classes_end}"
+      logger.info "Schedule from Oracle: #{schedule}; term start: #{@term.classes_start}, term end of classes: #{@term.classes_end}"
     end
 
     def recurrence_rule

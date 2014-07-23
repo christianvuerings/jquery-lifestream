@@ -17,6 +17,7 @@ describe Berkeley::Term do
     its(:name) {should eq 'Summer'}
     its(:classes_start) {should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime}
     its(:classes_end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
+    its(:instruction_end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
     its(:start) {should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime}
     its(:end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
     its(:to_english) {should eq 'Summer 2014'}
@@ -35,7 +36,8 @@ describe Berkeley::Term do
     its(:code) {should eq 'D'}
     its(:name) {should eq 'Fall'}
     its(:classes_start) {should eq Time.zone.parse('2014-08-28 00:00:00').to_datetime}
-    its(:classes_end) {should eq Time.zone.parse('2014-12-12 23:59:59').to_datetime}
+    its(:classes_end) {should eq Time.zone.parse('2014-12-05 23:59:59').to_datetime}
+    its(:instruction_end) {should eq Time.zone.parse('2014-12-12 23:59:59').to_datetime}
     its(:start) {should eq Time.zone.parse('2014-08-21 00:00:00').to_datetime}
     its(:end) {should eq Time.zone.parse('2014-12-19 23:59:59').to_datetime}
     its(:to_english) {should eq 'Fall 2014'}
@@ -54,7 +56,8 @@ describe Berkeley::Term do
     its(:code) {should eq 'B'}
     its(:name) {should eq 'Spring'}
     its(:classes_start) {should eq Time.zone.parse('2014-01-21 00:00:00').to_datetime}
-    its(:classes_end) {should eq Time.zone.parse('2014-05-09 23:59:59').to_datetime}
+    its(:classes_end) {should eq Time.zone.parse('2014-05-02 23:59:59').to_datetime}
+    its(:instruction_end) {should eq Time.zone.parse('2014-05-09 23:59:59').to_datetime}
     its(:start) {should eq Time.zone.parse('2014-01-14 00:00:00').to_datetime}
     its(:end) {should eq Time.zone.parse('2014-05-16 23:59:59').to_datetime}
     its(:to_english) {should eq 'Spring 2014'}
