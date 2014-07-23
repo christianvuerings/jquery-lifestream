@@ -11,8 +11,8 @@ class ApplicationController < ActionController::Base
   ensure_security_headers
   skip_before_filter :set_csp_header, :set_hsts_header, :set_x_content_type_options_header, :set_x_xss_protection_header
 
-  def authenticate
-    redirect_to url_for_path('/auth/cas') unless session[:user_id]
+  def authenticate(force = false)
+    redirect_to url_for_path('/auth/cas') unless !force && session[:user_id]
   end
 
   # TODO see if we can standardize empty responses. We have 2 forms: This one, which returns empty JSON and

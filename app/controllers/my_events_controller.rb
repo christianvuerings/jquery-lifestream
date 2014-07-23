@@ -25,15 +25,8 @@ class MyEventsController < ApplicationController
 
   private
   def check_google_access
-    return error_response if is_acting_as_nonfake_user?
+    return error_response if UserSpecificModel.session_indirectly_authenticated?(session)
     return error_response unless GoogleApps::Proxy.access_granted?(session[:user_id])
-  end
-
-  #TODO: de-duplicate by pushing MergedModel's method up into ApplicationController
-  def is_acting_as_nonfake_user?
-    session[:original_user_id] &&
-      current_user.uid != session[:original_user_id] &&
-      !current_user.is_test_user?
   end
 
   def error_response

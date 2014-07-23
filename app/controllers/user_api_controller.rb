@@ -60,7 +60,7 @@ class UserApiController < ApplicationController
   private
 
   def acting_as?
-    session[:original_user_id] && (session[:user_id] != session[:original_user_id])
+    UserSpecificModel.session_indirectly_authenticated?(session)
   end
 
   def acting_as_uid

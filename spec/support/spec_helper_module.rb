@@ -20,7 +20,7 @@ module SpecHelperModule
   end
 
   def random_id
-    Time.now.to_f.to_s.gsub(".", "")
+    rand(99999).to_s
   end
 
 end

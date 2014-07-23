@@ -6,7 +6,7 @@ module MyAcademics
     include DatedFeed
 
     def merge(data)
-      data[:regblocks] = Bearfacts::MyRegBlocks.new(@uid, original_uid: @original_uid).get_feed
+      data[:regblocks] = Bearfacts::MyRegBlocks.new(@uid).get_feed
     end
   end
 end
