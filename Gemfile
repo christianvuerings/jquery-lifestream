@@ -97,7 +97,7 @@ gem 'icalendar', '~> 2.1.0'
 ##################
 
 # Our very own library for angular dependency!
-gem "angular-gem", "1.2.18.1"
+gem "angular-gem", "1.2.20"
 
 # Datepicker
 gem "pikaday-gem", "~> 1.1.0.0"
