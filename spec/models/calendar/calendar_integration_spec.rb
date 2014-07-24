@@ -63,7 +63,7 @@ describe 'Calendar Integration Full Stack', testext: true do
       event_on_google = get_proxy.get_event event_id
       expect(event_on_google).to be
       json = JSON.parse(event_on_google.body)
-      expect(json['location']).to eq 'Dwinelle 117, UC Berkeley'
+      expect(json['location']).to eq '117 Dwinelle Hall, UC Berkeley'
 
       # EVENT UPDATES ------------------------------------------------------------------------------------
       # now change the class location
@@ -74,7 +74,7 @@ describe 'Calendar Integration Full Stack', testext: true do
            'course_cntl_num' => 12345,
            'course_name' => 'Testing 1A',
            'multi_entry_cd' => '',
-           'building_name' => 'VLSB',
+           'building_name' => 'FOOTHILL',
            'room_number' => '100',
            'meeting_days' => ' M W',
            'meeting_start_time' => '0200',
@@ -110,7 +110,7 @@ describe 'Calendar Integration Full Stack', testext: true do
       event_on_google = get_proxy.get_event event_id
       expect(event_on_google).to be
       json = JSON.parse(event_on_google.body)
-      expect(json['location']).to eq 'VLSB 100, UC Berkeley'
+      expect(json['location']).to eq '100 Foothill Student Housing, UC Berkeley'
 
       # EVENT DELETES ------------------------------------------------------------------------------------
       # now take the user off the whitelist
