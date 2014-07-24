@@ -26,9 +26,11 @@ module Calendar
         schedule_translator = Calendar::ScheduleTranslator.new(course, term)
         rrule = schedule_translator.recurrence_rule
         class_time = schedule_translator.times
-        building_translation = Berkeley::Buildings.get(course['building_name'])
-        building = building_translation.present? ? building_translation['display'] : course['building_name']
-        location = "#{strip_leading_zeros(course['room_number'])} #{building}, UC Berkeley"
+        if course['building_name'].present?
+          building_translation = Berkeley::Buildings.get(course['building_name'])
+          building = building_translation.present? ? building_translation['display'] : course['building_name']
+          location = "#{strip_leading_zeros(course['room_number'])} #{building}, UC Berkeley"
+        end
 
         entry = Calendar::QueuedEntry.new(
           {
