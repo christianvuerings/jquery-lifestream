@@ -71,6 +71,11 @@ canvas_proxy:
   test_user_id: "300846"
   test_user_access_token: "someMumboJumbo"
   mixed_sis_user_id: true
+ldap:
+  host: 'nds.berkeley.edu'
+  port: 636
+  application_bind: 'uid=someApp,ou=applications,dc=berkeley,dc=edu'
+  application_password: 'someMumboJumbo'
 google_proxy:
   client_id: 1
   client_secret: 'someMumboJumbo'

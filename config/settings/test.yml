@@ -7,6 +7,8 @@ application:
   layer: "test"
 canvas_proxy:
   fake: true
+ldap:
+  host: 'nds-test.berkeley.edu'
 google_proxy:
   fake: true
 financials_proxy:

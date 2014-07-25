@@ -1,10 +1,12 @@
 module Canvas
+  # Provides user provisioning to Canvas based on UID array provided by Add People tool
   class UserProvision < Csv
 
     def csv_filename_prefix
       @export_filename_prefix ||= "#{@export_dir}/user_provision-#{DateTime.now.strftime('%F')}-#{SecureRandom.hex(8)}"
     end
 
+    # Imports users into Canvas from Oracle view based on UID array
     def import_users(user_ids)
       raise ArgumentError, "User ID list is not an array" if user_ids.class != Array
       user_ids.each do |user_id|
