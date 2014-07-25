@@ -6,6 +6,12 @@ namespace :canvas do
     canvas_worker.run
   end
 
+  desc 'Add new guest user accounts, and update existing ones, within Canvas'
+  task :guest_user_sync => :environment do
+    canvas_worker = Canvas::Ldap.new
+    canvas_worker.update_guests
+  end
+
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and add new section memberships'
   task :incremental_refresh => :environment do
     canvas_worker = Canvas::RefreshAllCampusData.new 'incremental'
