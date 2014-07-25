@@ -1,6 +1,6 @@
 <div data-cc-spinner-directive="process.isLoading">
   <ul class="cc-widget-activities-list">
-    <li data-ng-repeat="activity in list | filter:search" data-ng-class="{'cc-widget-list-selected': activity.show, 'cc-widget-activities-list-undated': activity.isLastUndated}">
+    <li data-ng-repeat="activity in list | limitTo:activitiesLimit | filter:search" data-ng-class="{'cc-widget-list-selected': activity.show, 'cc-widget-activities-list-undated': activity.isLastUndated}">
       <div class="cc-widget-list-hover"
         data-ng-class="{'cc-widget-list-hover-opened':(activity.show)}"
         data-cc-accessible-focus-directive
@@ -64,8 +64,8 @@
       </div>
     </li>
   </ul>
-
-  <div data-ng-show="!activities.length" class="cc-widget-text">
+  <div data-cc-show-more-directive data-cc-show-more-list="list" data-cc-show-more-limit="activitiesLimit"></div>
+  <div data-ng-show="!list.length" class="cc-widget-text">
     You have no recent activity at this time.
   </div>
 </div>
