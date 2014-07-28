@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px"
-   height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">
-<g>
-  <polygon fill="#3777E3" points="42.669,238.875 85.333,164.959 256,164.959 213.333,238.875"/>
-  <polygon fill="#FFCF63" points="170.669,164.959 256,164.959 170.669,17.125 85.333,17.125"/>
-  <polygon fill="#11A861" points="0,164.959 42.669,238.875 128,91.042 85.333,17.125"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><path fill="#3777E3" d="M42.669 238.875l42.664-73.916h170.667l-42.667 73.916z"/><path fill="#FFCF63" d="M170.669 164.959h85.331l-85.331-147.834h-85.336z"/><path fill="#11A861" d="M0 164.959l42.669 73.916 85.331-147.833-42.667-73.917z"/></svg>
