@@ -27,7 +27,7 @@
         </div>
         <div class="cc-widget-padding">
           <h3 data-ng-if="selectedSemester.timeBucket === 'current'">Current</h3>
-          <div class="cc-table">
+          <div class="cc-table" data-ng-if="selectedCourses.length">
             <table>
               <thead>
                 <th scope="col" class="cc-table-right-spacing">Course Number</th>
@@ -35,7 +35,7 @@
                 <th scope="col">Grade Option</th>
                 <th class="cc-table-right" scope="col">Units</th>
               </thead>
-              <tbody data-ng-if="selectedCourses.length" data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
+              <tbody data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
                 <tr>
                   <td class="cc-table-right-spacing cc-academics-course-number">
                     <a data-ng-href="{{course.url}}"
@@ -50,15 +50,11 @@
                   <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
                 </tr>
               </tbody>
-              <tbody data-ng-if="(selectedSemester.timeBucket === 'current') && !selectedCourses.length">
-                <tr>
-                  <td>
-                    <p>You are not currently enrolled in any courses.</p>
-                  </td>
-                </tr>
-              </tbody>
             </table>
           </div>
+          <p data-ng-if="!selectedCourses.length">
+            You are not currently enrolled in any courses for <span data-ng-bind="selectedSemester.name"></span>
+          </p>
           <div data-ng-if="waitlistedCourses.length">
             <h3>Wait Lists</h3>
             <div class="cc-table">
