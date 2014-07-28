@@ -104,6 +104,9 @@ form {
 /* Audio */
 audio {
   max-width: 100%;
+  position: relative;
+  /* We need to set the z-index so it doesn't overlap with other elements */
+  z-index: 100;
 }
 
 /* Buttons */
