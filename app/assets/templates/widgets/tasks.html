@@ -5,7 +5,7 @@
       <button
           class="cc-button cc-right"
           data-ng-class="{'cc-button-selected':(panelState.showAddTask)}"
-          data-ng-show="api.user.profile.hasGoogleAccessToken && (currentTaskMode!='completed' || !completedTasks.length)"
+          data-ng-show="api.user.profile.hasGoogleAccessToken && (currentTaskMode!='completed' || !completedTasks.length) && !api.user.profile.actingAsUid"
           data-ng-click="toggleAddTask()">
         <i class="fa fa-plus cc-button-plus-icon"></i>
         <span>New Task</span>
