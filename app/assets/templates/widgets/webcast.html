@@ -31,7 +31,7 @@
               </div>
             </div>
             <ul class="cc-widget-webcast-links" data-ng-if="itunes.video">
-              <li>
+              <li class="cc-widget-webcast-itunes-link">
                 Also available at
                 <a data-ng-href="{{itunes.video}}">
                   <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
@@ -57,7 +57,7 @@
                   <i class="fa fa-download cc-widget-webcast-icon-link"></i> Download audio
                 </a>
               </li>
-              <li data-ng-if="itunes.audio">
+              <li data-ng-if="itunes.audio" class="cc-widget-webcast-itunes-link">
                 Also available at
                 <a data-ng-href="{{itunes.audio}}">
                   <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
