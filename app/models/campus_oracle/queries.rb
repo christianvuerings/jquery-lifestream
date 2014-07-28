@@ -301,6 +301,7 @@ module CampusOracle
         sched.MULTI_ENTRY_CD
         from CALCENTRAL_CLASS_SCHEDULE_VW sched
         where sched.TERM_YR = #{term_yr.to_i}
+          and sched.BUILDING_NAME is NOT NULL
           and sched.TERM_CD = #{connection.quote(term_cd)}
           and sched.COURSE_CNTL_NUM = #{ccn.to_i}
           and (sched.PRINT_CD is null or sched.PRINT_CD <> 'C')
