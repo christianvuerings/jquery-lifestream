@@ -10,7 +10,7 @@ describe GoogleApps::Userinfo do
     userinfo_proxy = GoogleApps::Userinfo.new :fake => true
     userinfo_proxy.class.api.should == "userinfo"
     response = userinfo_proxy.user_info
-    %w(email verified_email name id).each do |key|
+    %w(emails name id).each do |key|
       response.data[key].blank?.should_not be_true
     end
   end

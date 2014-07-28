@@ -16,7 +16,7 @@ describe "GoogleUserinfo" do
     }
     userinfo_proxy = GoogleApps::Userinfo.new proxy_opts
     response = userinfo_proxy.user_info
-    %w(email verified_email name id).each do |key|
+    %w(emails name id).each do |key|
       response.data[key].blank?.should_not be_true
     end
   end

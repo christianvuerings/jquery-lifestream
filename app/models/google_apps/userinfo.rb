@@ -6,8 +6,9 @@ module GoogleApps
     end
 
     def user_info
-      request(:api => "oauth2", :resource => "userinfo", :method => "get",
-              :headers => {"Content-Type" => "application/json"}, :vcr_id => "_userinfo").first
+      request(:api => 'plus', :resource => 'people', :method => 'get',
+              :headers => {'Content-Type' => 'application/json'}, :vcr_id => '_userinfo',
+              :params => { 'userId' => 'me'}).first
     end
 
   end
