@@ -14,7 +14,6 @@
 //= require_tree ./lib
 //= require raven
 //= require pikaday
-//= require placeholder
 //= require angular
 //= require angular-route
 //= require angular-sanitize
