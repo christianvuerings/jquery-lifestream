@@ -136,7 +136,7 @@
      * Stop acting as someone else
      */
     $scope.admin.stopActAs = function() {
-      $http.post('/stop_act_as').success(redirectToSettings);
+      $http.post('/stop_act_as').success(redirectToSettings).error(redirectToSettings);
     };
 
     var resetUserSearch = function() {
