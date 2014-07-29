@@ -66,6 +66,8 @@ class UserApiController < ApplicationController
   def acting_as_uid
     if session[:original_user_id] && session[:user_id]
       return session[:original_user_id]
+    elsif session[:lti_authenticated_only]
+      return 'LTI Authenticated'
     else
       return false
     end

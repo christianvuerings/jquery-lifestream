@@ -2,10 +2,6 @@ require "spec_helper"
 
 describe UserApiController do
 
-  before do
-    @user_id = rand(999999).to_s
-  end
-
   it "should not have a logged-in status" do
     get :mystatus
     assert_response :success
@@ -36,7 +32,7 @@ describe UserApiController do
         :staff => false
       }
     }))
-    session[:user_id] = @user_id
+    session[:user_id] = random_id
     get :mystatus
     json_response = JSON.parse(response.body)
     json_response["firstLoginAt"].should == nil
@@ -45,6 +41,37 @@ describe UserApiController do
     get :mystatus
     json_response = JSON.parse(response.body)
     json_response["firstLoginAt"].should_not be_nil
+  end
+
+  describe '#acting_as_uid' do
+    let (:user_id) { random_id }
+    before do
+      session[:user_id] = user_id
+      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {
+        'person_name' => "Joe Test",
+        :roles => {
+          :student => true,
+          :faculty => false,
+          :staff => false
+        }
+      }))
+    end
+    subject do
+      get :mystatus
+      JSON.parse(response.body)['actingAsUid']
+    end
+    context 'when normally authenticated' do
+      it {should be false}
+    end
+    context 'when viewing as' do
+      let(:original_user_id) { random_id }
+      before { session[:original_user_id] = original_user_id }
+      it {should eq original_user_id}
+    end
+    context 'when authenticated by LTI' do
+      before { session[:lti_authenticated_only] = true }
+      it {should eq 'LTI Authenticated'}
+    end
   end
 
 end
