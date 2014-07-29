@@ -242,7 +242,8 @@ GEM
     net-ssh (2.8.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    ngmin-rails (0.4.0)
+    ngannotate-rails (0.9.7)
+      execjs
       rails (>= 3.1)
     nio4r (1.0.0-java)
     nokogiri (1.5.11-java)
@@ -502,7 +503,7 @@ DEPENDENCIES
   minitest-reporters (~> 0.14.20)
   momentjs-rails (~> 2.5.1)
   net-ldap (= 0.6.1)
-  ngmin-rails (~> 0.4.0)
+  ngannotate-rails (~> 0.9.7)
   nokogiri (~> 1.5.9)
   omniauth-cas (~> 1.0.1)
   page-object (~> 0.9.8)
