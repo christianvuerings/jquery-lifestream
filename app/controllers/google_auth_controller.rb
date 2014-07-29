@@ -21,8 +21,7 @@ class GoogleAuthController < AuthController
         :controller => 'google_auth',
         :action => 'handle_callback')
     client.state = Base64.encode64 final_redirect
-    client.scope = ['https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email',
+    client.scope = ['profile', 'email', 
       'https://www.googleapis.com/auth/calendar',
       'https://www.googleapis.com/auth/tasks',
       'https://www.googleapis.com/auth/drive.readonly.metadata',

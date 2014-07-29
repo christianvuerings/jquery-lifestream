@@ -51,8 +51,8 @@ module User
         authenticated_entry = self.where(uid: user_id, app_id: GoogleApps::Proxy::APP_ID).first
         return unless authenticated_entry
         userinfo = GoogleApps::Userinfo.new(user_id: user_id).user_info
-        return unless userinfo && userinfo.response.status == 200
-        authenticated_entry.app_data["email"] = userinfo.data["email"]
+        return unless userinfo && userinfo.response.status == 200 && userinfo.data["emails"].present? && userinfo.data["emails"].length > 0
+        authenticated_entry.app_data["email"] = userinfo.data["emails"].first["value"]
         authenticated_entry.save
       }
     end

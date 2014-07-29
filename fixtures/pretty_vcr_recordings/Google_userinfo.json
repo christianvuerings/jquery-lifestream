@@ -1,84 +1,47 @@
-{
-  "http_interactions": [
-    {
-      "request": {
-        "method": "get",
-        "uri": "https://www.googleapis.com/oauth2/v2/userinfo",
-        "body": {
-          "encoding": "US-ASCII",
-          "string": ""
-        },
-        "headers": {
-          "Content-Type": [
-            "application/json"
-          ],
-          "User-Agent": [
-            "CalCentral/v1 google-api-ruby-client/0.6.2 Mac OS X/10.7.5"
-          ],
-          "Authorization": "",
-          "Cache-Control": [
-            "no-store"
-          ],
-          "x-sakai-token": null
-        }
+{"http_interactions": [
+  {
+    "request": {
+      "method": "get",
+      "uri": "https://www.googleapis.com/plus/v1/people/me",
+      "body": {
+        "encoding": "US-ASCII",
+        "string": ""
       },
-      "response": {
-        "status": {
-          "code": 200,
-          "message": null
-        },
-        "headers": {
-          "cache-control": [
-            "no-cache, no-store, max-age=0, must-revalidate"
-          ],
-          "pragma": [
-            "no-cache"
-          ],
-          "expires": [
-            "Fri, 01 Jan 1990 00:00:00 GMT"
-          ],
-          "date": [
-            "Mon, 25 Feb 2013 21:52:26 GMT"
-          ],
-          "content-type": [
-            "application/json; charset=UTF-8"
-          ],
-          "x-content-type-options": [
-            "nosniff"
-          ],
-          "x-frame-options": [
-            "SAMEORIGIN"
-          ],
-          "x-xss-protection": [
-            "1; mode=block"
-          ],
-          "server": [
-            "GSE"
-          ],
-          "transfer-encoding": [
-            "chunked"
-          ]
-        },
-        "body": {
-          "encoding": "US-ASCII",
-          "string": "",
-          "debug_json": {
-            "id": "114856790171836979104",
-            "email": "tammi.chang.clc@gmail.com",
-            "verified_email": true,
-            "name": "Tammi Chang",
-            "given_name": "Tammi",
-            "family_name": "Chang",
-            "link": "https://plus.google.com/114856790171836979104",
-            "gender": "female",
-            "birthday": "0000-01-01",
-            "locale": "en"
-          }
-        },
-        "http_version": null
+      "headers": {
+        "User-Agent": ["CalCentral/v1 google-api-ruby-client/0.7.1 Mac OS X/10.8.5 (gzip)"],
+        "Content-Type": ["application/json"],
+        "Accept-Encoding": ["gzip"],
+        "Authorization": "",
+        "Cache-Control": ["no-store"],
+        "Accept": ["*/*"],
+        "x-sakai-token": null
+      }
+    },
+    "response": {
+      "status": {
+        "code": 200,
+        "message": "OK"
       },
-      "recorded_at": "Mon, 25 Feb 2013 21:52:26 GMT"
-    }
-  ],
-  "recorded_with": "VCR 2.4.0"
-}
+      "headers": {
+        "Expires": ["Mon, 28 Jul 2014 22:25:25 GMT"],
+        "Date": ["Mon, 28 Jul 2014 22:25:25 GMT"],
+        "Cache-Control": ["private, max-age=0, must-revalidate, no-transform"],
+        "Etag": ["\"AtDvFRdo1nr9guODqwfbgdIwgiE/_rO2os0jeRUzCd-Q00uxeeX0XQY\""],
+        "Content-Type": ["application/json; charset=UTF-8"],
+        "Content-Encoding": ["gzip"],
+        "X-Content-Type-Options": ["nosniff"],
+        "X-Frame-Options": ["SAMEORIGIN"],
+        "X-Xss-Protection": ["1; mode=block"],
+        "Server": ["GSE"],
+        "Alternate-Protocol": ["443:quic"],
+        "Transfer-Encoding": ["chunked"]
+      },
+      "body": {
+        "encoding": "ASCII-8BIT",
+        "base64_string": "H4sIAAAAAAAAAHVR22obMRR8369Y1NdmL44dx4bSunYCfsiVmLo0pcjSWVmO\nVtrosokT/O+VtMYkgQgEYjRnzsw5r0mKHrikaJyiRjjzpQFtlERfPQ4Ws4Df\no4mdtee3VJVSj5i7mj0+VStG50+Mn+X/9FVPmWIDt4uXKT26KQr3DLAslje/\n71HUYSAp6KBUQY0FdOI15sJ48E+Spq/+pqjFwkGgWVzXPCNrLFlGBPnBAjcj\nqg6Vnmi3TeRhQpSTFnlwl6R/g6xabYDYuz3hTRgeI5Zl/3RwMhwV5bA8PT4Z\nDUdl0Y//lJtG4O0lrmPlXbCQToOF+C07PBhFFa65ODAPHB+UtyDfKXhru1Du\ntAjY2trGjPM8TDpjSjEBIVb+uS1eY3Zo/EFFrI/3Is6AJkpakDbqHS3pYv5I\nLx6mvyb55HDmb96TvN8b9LQhq3ZwkTdrZVW2adh38/JtUHRxuJlBhZ2wvqnV\nDvZZuLn29hcmrjTgARR+CK6ziqCbOOGaCKA/t9O4pHFaBrQFzSsOYRsVFgaS\nXfIfyIYJ4oQCAAA=\n"
+      },
+      "http_version": null
+    },
+    "recorded_at": "Mon, 28 Jul 2014 22:25:25 GMT"
+  }
+], "recorded_with": "VCR 2.5.0"}
