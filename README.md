@@ -200,6 +200,15 @@ jscs .
 
 This will check for any potential JavaScript issues and whether you formatted the code correctly.
 
+## LiveReload
+
+Enabling [LiveReload](http://livereload.com/) results in the browser refreshing without having to do a manual reload.
+
+1. [Install the LiveReload application](http://feedback.livereload.com/knowledgebase/articles/67441-how-do-i-start-using-livereload).
+1. [Install the browser extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions).
+1. Add the `calcentral` directory to the LiveReload application.
+1. Load CalCentral in the browser.
+1. Enable the LiveReload browser extension.
 
 ## Role-Aware Testing
 
