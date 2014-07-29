@@ -130,9 +130,9 @@ gem "momentjs-rails", "~> 2.5.1"
 # Raven.js - library for JS error logging
 gem "ravenjs-gem", "~> 1.1.16"
 
-# ngmin-rails
-# https://github.com/jasonm/ngmin-rails
-gem "ngmin-rails", "~> 0.4.0"
+# Use ngannotate in the Rails asset pipeline.
+# https://github.com/olov/ng-annotate
+gem 'ngannotate-rails', '~> 0.9.7'
 
 # Use your angular templates with rails' asset pipeline
 # https://github.com/pitr/angular-rails-templates
