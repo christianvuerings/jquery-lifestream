@@ -1,11 +1,16 @@
 require 'google/api_client'
 
 class GoogleAuthController < AuthController
-
+  include ClassLogger
+  before_filter :check_direct_authentication
   respond_to :json
 
   def app_id
     GoogleApps::Proxy::APP_ID
+  end
+
+  def check_direct_authentication
+    raise Pundit::NotAuthorizedError, 'User not directly authenticated' if UserSpecificModel.session_indirectly_authenticated?(session)
   end
 
   def get_client(final_redirect = '', force_domain = true)
@@ -21,7 +26,7 @@ class GoogleAuthController < AuthController
         :controller => 'google_auth',
         :action => 'handle_callback')
     client.state = Base64.encode64 final_redirect
-    client.scope = ['profile', 'email', 
+    client.scope = ['profile', 'email',
       'https://www.googleapis.com/auth/calendar',
       'https://www.googleapis.com/auth/tasks',
       'https://www.googleapis.com/auth/drive.readonly.metadata',
