@@ -77,11 +77,6 @@ Calcentral::Application.routes.draw do
   get '/api/stats' => 'stats#get_stats', :via => :get, :defaults => { :format => 'json' }
   get '/api/smoke_test_routes' => 'routes_list#smoke_test_routes', :as => :all_routes, :defaults => { :format => 'json' }
 
-  # Oauth endpoints: Canvas
-  get '/api/canvas/request_authorization' => 'canvas_auth#request_authorization'
-  get '/canvas/oAuthResponse' => 'canvas_auth#handle_callback'
-  post '/api/canvas/remove_authorization' => 'canvas_auth#remove_authorization', :via => :post
-
   # Oauth endpoints: Google
   get '/api/google/request_authorization'=> 'google_auth#request_authorization'
   get '/api/google/handle_callback' => 'google_auth#handle_callback'
