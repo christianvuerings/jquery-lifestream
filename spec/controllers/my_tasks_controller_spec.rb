@@ -86,29 +86,42 @@ describe MyTasksController do
     let(:original_user_id) { rand(99999).to_s }
     before do
       session[:user_id] = user_id
-      expect(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
-      expect(Settings.canvas_proxy).to receive(:fake).at_least(:once).and_return(true)
+      allow(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
+      allow(Settings.canvas_proxy).to receive(:fake).at_least(:once).and_return(true)
     end
-    it 'should not give a real user a cached censored feed' do
-      session[:original_user_id] = original_user_id
-      get :get_feed
-      feed = JSON.parse(response.body)
-      expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to be_nil
-      session[:original_user_id] = nil
-      get :get_feed
-      feed = JSON.parse(response.body)
-      expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to_not be_nil
+    context 'with real-user data cached' do
+      it 'should not give a real user a cached censored feed' do
+        session[:original_user_id] = original_user_id
+        get :get_feed
+        feed = JSON.parse(response.body)
+        expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to be_nil
+        session[:original_user_id] = nil
+        get :get_feed
+        feed = JSON.parse(response.body)
+        expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to_not be_nil
+      end
+      it 'should not return Google data from a cached real-user feed' do
+        get :get_feed
+        feed = JSON.parse(response.body)
+        expect(feed['tasks'].index {|t| t['emitter'] == 'bCourses'}).to_not be_nil
+        expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to_not be_nil
+        session[:original_user_id] = original_user_id
+        get :get_feed
+        feed = JSON.parse(response.body)
+        expect(feed['tasks'].index {|t| t['emitter'] == 'bCourses'}).to_not be_nil
+        expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to be_nil
+      end
     end
-    it 'should not return Google data from a cached real-user feed' do
-      get :get_feed
-      feed = JSON.parse(response.body)
-      expect(feed['tasks'].index {|t| t['emitter'] == 'bCourses'}).to_not be_nil
-      expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to_not be_nil
+    it 'should not add a Google task to the real user account' do
       session[:original_user_id] = original_user_id
-      get :get_feed
-      feed = JSON.parse(response.body)
-      expect(feed['tasks'].index {|t| t['emitter'] == 'bCourses'}).to_not be_nil
-      expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to be_nil
+      expect_any_instance_of(MyTasks::GoogleTasks).to receive(:insert_task).never
+      hash = {
+        'emitter' => 'Google',
+        'title' => 'test task'
+      }
+      post :insert_task, hash
+      json_response = JSON.parse(response.body)
+      expect(json_response['id']).to be_nil
     end
   end
 
