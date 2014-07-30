@@ -42,11 +42,12 @@
             <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
               <li
-                data-ng-repeat="task in overdueTasks"
+                data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
+            <div data-cc-show-more-directive data-cc-show-more-list="overdueTasks" data-cc-show-more-limit="overdueLimit"></div>
             <p data-ng-show="!overdueTasks.length" class="cc-widget-text">
               There are currently no {{currentTaskMode}} tasks/assignments that are overdue.
             </p>
@@ -56,11 +57,12 @@
             <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
               <li
-                data-ng-repeat="task in dueTodayTasks"
+                data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
+            <div data-cc-show-more-directive data-cc-show-more-list="dueTodayTasks" data-cc-show-more-limit="dueTodayLimit"></div>
             <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text">
               There are currently no {{currentTaskMode}} tasks/assignments that are due today.
             </p>
@@ -70,11 +72,12 @@
             <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
             <ul class="cc-widget-tasks-list">
               <li
-                data-ng-repeat="task in futureTasks"
+                data-ng-repeat="task in futureTasks | limitTo: futureLimit"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'dashboard_task_loop.html'"></div>
               </li>
             </ul>
+            <div data-cc-show-more-directive data-cc-show-more-list="futureTasks" data-cc-show-more-limit="futureLimit"></div>
             <p data-ng-show="!futureTasks.length" class="cc-widget-text">
               There are currently no {{currentTaskMode}} tasks/assignments that are due in the future.
             </p>
@@ -87,11 +90,12 @@
         <h3 class="cc-widget-tasks-section-label">Unscheduled <span class="cc-widget-tasks-section-label-count" data-ng-bind="unscheduledTasks.length"></span> <span class="cc-right">Last Modified</span></h3>
         <ul class="cc-widget-tasks-list">
           <li
-            data-ng-repeat="task in unscheduledTasks"
+            data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"
             data-ng-class="{'cc-widget-list-selected': task.show}">
             <div data-ng-include src="'dashboard_task_loop.html'"></div>
           </li>
         </ul>
+        <div data-cc-show-more-directive data-cc-show-more-list="unscheduledTasks" data-cc-show-more-limit="unscheduledLimit"></div>
         <p data-ng-show="!unscheduledTasks.length" class="cc-widget-text">
           There are currently no unscheduled tasks/assignments.
         </p>
@@ -102,11 +106,12 @@
 
         <ul class="cc-widget-tasks-list">
           <li
-            data-ng-repeat="task in completedTasks"
+            data-ng-repeat="task in completedTasks | limitTo:completedLimit"
             data-ng-class="{'cc-widget-list-selected': task.show}">
             <div data-ng-include src="'dashboard_task_loop.html'"></div>
           </li>
         </ul>
+        <div data-cc-show-more-directive data-cc-show-more-list="completedTasks" data-cc-show-more-limit="completedLimit"></div>
         <p data-ng-show="!completedTasks.length" class="cc-widget-text">
           There are currently no completed tasks/assignments.
         </p>
