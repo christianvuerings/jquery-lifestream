@@ -69,10 +69,12 @@ describe 'My Finances', :testui => true do
 
             # API DATA SANITY TESTS
             it 'shows an account balance that is equal to the sum of the amount due now plus the amount not yet due for UID ' + uid do
-              fin_api_page.account_balance.should eql(fin_api_page.min_amt_due + fin_api_page.future_activity)
+              BigDecimal.new(fin_api_page.account_balance_str).should eql(BigDecimal.new(fin_api_page.min_amt_due_str) +
+                BigDecimal.new(fin_api_page.future_activity_str))
             end
             it 'shows a minimum amount due now that is equal to the sum of the current balance plus the past due amount for UID ' + uid do
-              fin_api_page.min_amt_due.should eql(fin_api_page.total_current_balance + fin_api_page.past_due_amt)
+              BigDecimal.new(fin_api_page.min_amt_due_str).should eql(BigDecimal.new(fin_api_page.total_current_balance_str) +
+                BigDecimal.new(fin_api_page.past_due_amt_str))
             end
             if fin_api_page.account_balance >= 0
               it 'shows an account balance that is greater than or equal to the minimum amount due now for UID ' + uid do

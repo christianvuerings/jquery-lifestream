@@ -48,6 +48,10 @@ class ApiMyFinancialsPage
     @parsed['summary']['totalCurrentBalance']
   end
 
+  def total_current_balance_str
+    (sprintf '%.2f', self.total_current_balance).to_s
+  end
+
   def past_due_amt
     @parsed['summary']['totalPastDueAmount']
   end

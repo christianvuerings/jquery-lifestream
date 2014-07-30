@@ -163,7 +163,7 @@ describe 'My Finances landing page', :testui => true do
       it 'includes a link to Cal Student Central' do
         @my_finances_page.cal_student_central_link
         @driver.switch_to.window @driver.window_handles.last
-        wait.until { @driver.find_element(:xpath => '//title[contains(.,"Welcome | Cal Student Central")]') }
+        wait.until { @driver.find_element(:xpath => '//title[contains(.,"Welcome! | Cal Student Central")]') }
         @driver.close
       end
 
