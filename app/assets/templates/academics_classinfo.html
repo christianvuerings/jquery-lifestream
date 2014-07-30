@@ -145,7 +145,7 @@
         <div data-cc-spinner-directive>
           <div class="cc-widget-padding">
             <div data-ng-if="books.hasBooks">
-              <div ng-include="'textbook.html'"></div>
+              <div data-ng-include="'textbook.html'"></div>
             </div>
             <div class="cc-error-message" data-ng-if="books.hasBooks === false" data-ng-bind="books.bookUnavailableError"></div>
             <div class="cc-error-message" data-ng-if="textbookError.body" data-ng-bind="textbookError.body">

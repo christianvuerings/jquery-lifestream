@@ -12,20 +12,20 @@
           <img data-cc-image-loaded-directive="profilePictureLoading" alt="{{api.user.profile.fullName}}'s Profile Picture" data-ng-src="{{api.user.profile.profilePicture}}" width="105" height="140">
         </div>
         <div class="cc-widget-padding">
-          <div ng-show="api.user.profile.fullName">
-            <strong>Name: </strong> <span ng-bind="api.user.profile.fullName"></span>
+          <div data-ng-show="api.user.profile.fullName">
+            <strong>Name: </strong> <span data-ng-bind="api.user.profile.fullName"></span>
             <br/>
           </div>
-          <div ng-show="api.user.profile.preferred_name">
-            <strong>Preferred Name: </strong> <span ng-bind="api.user.profile.preferred_name"></span>
+          <div data-ng-show="api.user.profile.preferred_name">
+            <strong>Preferred Name: </strong> <span data-ng-bind="api.user.profile.preferred_name"></span>
             <br/>
           </div>
-          <div ng-show="api.user.profile.googleEmail">
-            <strong>Email: </strong> <span ng-bind="api.user.profile.googleEmail"></span>
+          <div data-ng-show="api.user.profile.googleEmail">
+            <strong>Email: </strong> <span data-ng-bind="api.user.profile.googleEmail"></span>
             <br/>
           </div>
-          <div ng-show="api.user.profile.canvasEmail">
-            <strong>Email: </strong> <span ng-bind="api.user.profile.canvasEmail"></span>
+          <div data-ng-show="api.user.profile.canvasEmail">
+            <strong>Email: </strong> <span data-ng-bind="api.user.profile.canvasEmail"></span>
             <br/>
           </div>
         </div>

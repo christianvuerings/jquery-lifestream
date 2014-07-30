@@ -21,7 +21,7 @@
           <div data-ng-repeat="courseBooks in semesterBooks" class="cc-clearfix-container">
             <h3 class="cc-book-title" data-ng-bind="courseBooks.course"></h3>
             <div data-ng-repeat="books in courseBooks">
-              <div ng-include="'textbook.html'"></div>
+              <div data-ng-include="'textbook.html'"></div>
               <div class="cc-error-message" data-ng-if="books.hasBooks === false" data-ng-bind="books.bookUnavailableError"></div>
             </div>
             <hr>

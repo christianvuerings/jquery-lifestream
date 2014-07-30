@@ -14,7 +14,7 @@
 
           // Templates for the player
           var templates = {
-            image: '<button id="cc-youtube-image-placeholder" class="cc-youtube-image-placeholder" tabindex="0"><span class="cc-visuallyhidden">Play video' + title + '</span><img ng-src="' + imageUrl + '" alt=""></img><div class="cc-youtube-thumbnail-button"></div></button>',
+            image: '<button id="cc-youtube-image-placeholder" class="cc-youtube-image-placeholder" tabindex="0"><span class="cc-visuallyhidden">Play video' + title + '</span><img data-ng-src="' + imageUrl + '" alt=""></img><div class="cc-youtube-thumbnail-button"></div></button>',
             video: '<div id="cc-youtube-video-placeholder" class="cc-youtube-video-placeholder" tabindex="0"><iframe type="text/html" width="100%" height="100%" src=' + videourl + ' frameborder="0" allowfullscreen></iframe></div>'
           };
 
