@@ -140,10 +140,53 @@ RailsAdmin.config do |config|
 
   config.model 'Calendar::QueuedEntry' do
     label 'Class Calendar Queue'
+    list do
+      field :year do
+        column_width 50
+      end
+      field :term_cd do
+        column_width 20
+      end
+      field :ccn do
+        column_width 50
+      end
+      field :multi_entry_cd do
+        column_width 20
+      end
+      field :transaction_type do
+        column_width 20
+      end
+    end
   end
 
   config.model 'Calendar::LoggedEntry' do
     label 'Class Calendar Log'
+    list do
+      field :year do
+        column_width 50
+      end
+      field :term_cd do
+        column_width 20
+      end
+      field :ccn do
+        column_width 50
+      end
+      field :multi_entry_cd do
+        column_width 20
+      end
+      field :transaction_type do
+        column_width 20
+      end
+      field :job_id do
+        column_width 50
+      end
+      field :has_error do
+        column_width 50
+        pretty_value do
+          value ? 'yes' : ''
+        end
+      end
+    end
   end
 
   config.navigation_static_label = 'Tools'
