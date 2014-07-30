@@ -26,10 +26,6 @@ class WebDriverUtils
     Settings.ui_selenium.calNetUrl
   end
 
-  def self.google_auth_url
-    Settings.ui_selenium.googleAuthUrl
-  end
-
   def self.page_load_timeout
     Settings.ui_selenium.pageLoadTimeout
   end
