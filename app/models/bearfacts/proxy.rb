@@ -3,6 +3,7 @@ module Bearfacts
 
     include ClassLogger
     include User::Student
+    include Cache::UserCacheExpiry
 
     APP_ID = "Bearfacts"
 
