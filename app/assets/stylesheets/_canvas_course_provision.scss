@@ -32,8 +32,8 @@
 
   .cc-page-button-grey {
     @include background(linear-gradient($bc-color-button-grey-gradient-1, $bc-color-button-grey-gradient-2));
-    color: $bc-color-button-grey-text;
     border: 1px solid $bc-color-button-grey-border;
+    color: $bc-color-button-grey-text;
   }
 
   .cc-page-provision-confirmation {
@@ -63,8 +63,8 @@
   }
 
   .cc-page-provision-select-rosters {
-    padding: 10px 0;
     border-top: 1px solid $bc-color-top-border;
+    padding: 10px 0;
   }
 
   .cc-page-provision-step-indent {
@@ -112,8 +112,8 @@
     overflow: hidden;
     li {
       border-left: 1px solid $cc-color-popover-border;
-      max-width: 250px;
       float: left;
+      max-width: 250px;
       padding: 15px;
       width: 50%;
       &:first-child {
@@ -140,8 +140,8 @@
     }
     ul {
       font-size: 15px;
-      margin: 5px 20px 5px;
       list-style: disc inside none;
+      margin: 5px 20px 5px;
     }
   }
 
@@ -212,8 +212,8 @@
     border: 2px solid #c6c7c7;
     border-radius: 5px;
     height: 25px;
-    position: relative;
     overflow: hidden;
+    position: relative;
   }
 
   .cc-page-provision-progress-bar-value {

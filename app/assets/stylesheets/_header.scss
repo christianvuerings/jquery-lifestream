@@ -136,10 +136,10 @@ body {
       }
 
       .bdrive-icon {
-        padding: 10px;
-        margin-top: 5px;
-        margin-right: 3px;
         float: left;
+        margin-right: 3px;
+        margin-top: 5px;
+        padding: 10px;
       }
       a, .cc-button-link {
         border-bottom: 1px solid $cc-color-popover-border;
@@ -167,15 +167,15 @@ body {
 
     .cc-popover-items {
       max-height: 300px;
+      -webkit-overflow-scrolling: touch;
       overflow-y: scroll;
       width: 100%;
-      -webkit-overflow-scrolling: touch;
     }
 
     .cc-badgepopover-item-calendar-container {
       .cc-badgepopover-item-calendar {
-        border: 1px solid $cc-color-popover-border;
         background-color: $cc-color-popover-calendar;
+        border: 1px solid $cc-color-popover-border;
         margin-right: 5px;
         text-align: center;
         width: 45px;

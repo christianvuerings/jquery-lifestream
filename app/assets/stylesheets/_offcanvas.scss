@@ -27,15 +27,16 @@
     }
   }
   .cc-offcanvas-left {
-    -webkit-transform: translatez(0);
     @include single-transition(margin, .2s, ease);
     float: left;
     margin-left: -100%;
+    -webkit-transform: translatez(0);
   }
   .cc-offcanvas-right {
-    -webkit-transform: translatez(0);
+
     @include single-transition(margin, .2s, ease);
     margin-left: 0;
+    -webkit-transform: translatez(0);
   }
   .cc-offcanvas-show {
     .cc-offcanvas-left {

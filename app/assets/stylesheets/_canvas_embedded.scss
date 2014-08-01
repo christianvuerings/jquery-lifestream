@@ -51,14 +51,14 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   .cc-notice-box {
-    color: $bc-color-white;
     background-color: $bc-color-notice-default;
     border: 0;
+    color: $bc-color-white;
     display: block;
-    padding: 10px;
-    margin-bottom: 8px;
     font-size: 13px;
     font-weight: bold;
+    margin-bottom: 8px;
+    padding: 10px;
     i {
       margin-right: 5px;
     }
@@ -113,21 +113,21 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   .cc-notice-success {
-    color: $bc-color-success-foreground;
     background-color: $bc-color-success-background;
     border: 1px solid $bc-color-success-border;
+    color: $bc-color-success-foreground;
   }
 
   .cc-notice-warning {
-    color: $bc-color-warning-foreground;
     background-color: $bc-color-warning-background;
     border: 1px solid $bc-color-warning-border;
+    color: $bc-color-warning-foreground;
   }
 
   .cc-notice-error {
-    color: $bc-color-error-foreground;
     background-color: $bc-color-error-background;
     border: 1px solid $bc-color-error-border;
+    color: $bc-color-error-foreground;
   }
 
 }

@@ -74,11 +74,11 @@ $cc-color-splash-blue-dark: #025a86;
     }
     &::before {
       @include background(linear-gradient($cc-color-white, $cc-color-white-transparant));
-      top: 0;
       content: " ";
       height: 40px;
       left: 0;
       position: absolute;
+      top: 0;
       width: 100%;
     }
     &::after {

@@ -39,18 +39,18 @@
 }
 .cc-widget-list-column-left {
   float: left;
+  margin-left: 4px;
   margin-right: 5px;
   min-height: 20px;
   width: 20px;
-  margin-left: 4px;
 }
 .cc-widget-list-selected {
   background: $cc-color-widget-more-background;
 }
 .cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link, .cc-widget-list-hover, .cc-widget-table-hover {
   overflow: hidden;
-  position: relative;
   padding: 10px 0px;
+  position: relative;
   &:hover, &:focus {
     background: $cc-color-blue-hover;
     cursor: pointer;
@@ -69,8 +69,8 @@
       border-top: 4px solid transparent;
       content: "";
       height: 0;
-      right: 7px;
       position: absolute;
+      right: 7px;
       top: 14px;
       width: 0;
     }
@@ -84,8 +84,8 @@
       border-top: 4px solid $body-font-color;
       content: "";
       height: 0;
-      right: 7px;
       position: absolute;
+      right: 7px;
       top: 17px;
       width: 0;
     }

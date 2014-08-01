@@ -33,9 +33,9 @@
   white-space: nowrap;
 }
 .cc-image-responsive {
+  background-position: top;
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: top;
 }
 .cc-image-responsive-square {
   padding-bottom: 100%;
@@ -74,8 +74,8 @@
     display: none !important;
   }
   &:after {
-    animation: spin 2s infinite linear;
     -webkit-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
     content: '\f110';
     display: block;
     font-family: FontAwesome;
@@ -107,8 +107,8 @@
   &:after, &:before {
     bottom: 100%;
     content: "";
-    right: 10%;
     position: absolute;
+    right: 10%;
   }
 
   // This allows us to create an arrow for the popover
@@ -146,14 +146,12 @@
   background-color: transparent;
   border: 0;
   overflow: hidden;
-  // IE 6/7 fallback
-  *text-indent: -9999px;
 
   &:before {
     content: "";
     display: block;
-    width: 0;
     height: 150%;
+    width: 0;
   }
 }
 .cc-hidden {
