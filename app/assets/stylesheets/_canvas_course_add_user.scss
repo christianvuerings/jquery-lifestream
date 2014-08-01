@@ -44,11 +44,11 @@
         p {
           margin: 0;
           padding: 0;
-        }
-        p.bc-help-tip-emphasize {
-          font-style: italic;
-          margin: 2px 0 0 30px;
-          padding: 0;
+          &.bc-help-tip-emphasize {
+            font-style: italic;
+            margin: 2px 0 0 30px;
+            padding: 0;
+          }
         }
       }
     }

@@ -13,13 +13,6 @@
   .cc-widget {
     width: 40%;
   }
-  .cc-page-campus-navigation h3 {
-    border-top: 1px solid #b9c8d0;
-    color: #b9c8d0;
-    font-size: 16px;
-    margin: 0;
-    padding: 10px 15px 0;
-  }
   ul {
     margin: 10px 0;
     padding-left: 0;
@@ -41,6 +34,13 @@
     padding-left: 0;
     padding-right: 0;
     margin-top: 1px;
+    h3 {
+      border-top: 1px solid #b9c8d0;
+      color: #b9c8d0;
+      font-size: 16px;
+      margin: 0;
+      padding: 10px 15px 0;
+    }
     li {
       &.active a, a:hover, a:focus {
         background: #61889e;
