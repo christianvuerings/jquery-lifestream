@@ -1,0 +1,13 @@
+exclude: 'app/assets/stylesheets/rails_admin/**'
+
+linters:
+  Comment:
+    exclude: 'app/assets/stylesheets/application.scss'
+  EmptyLineBetweenBlocks:
+    enabled: false
+  SelectorDepth:
+    enabled: false
+  SingleLinePerSelector:
+    enabled: false
+  StringQuotes:
+    enabled: false
