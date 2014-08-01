@@ -5,7 +5,7 @@ gem 'bundler', '~> 1.6.1'
 
 # The core framework
 # https://github.com/rails/rails
-gem "rails", "4.0.5"
+gem "rails", "4.1.4"
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
@@ -13,7 +13,7 @@ gem 'actionpack-xml_parser', '~>1.0.1'
 gem 'actionview-encoded_mail_to', '~>1.0.4'
 gem 'activerecord-session_store', '~>0.1.0'
 gem 'activeresource', '~>4.0.0'
-gem "protected_attributes", "~> 1.0.7"
+gem "protected_attributes", "~> 1.0.8"
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.3'
 
@@ -149,7 +149,7 @@ end
 group :development, :test , :testext do
   gem "rspec-rails", "~> 2.14.2"
   gem "rspec-mocks", "~> 2.14.6"
-  gem "minitest-reporters", "~> 0.14.20"
+  gem "minitest-reporters", "~> 1.0.5"
 
   # We need to specify the latest webdriver here, to support the latest firefox
   gem "selenium-webdriver", "~> 2.41.0"
