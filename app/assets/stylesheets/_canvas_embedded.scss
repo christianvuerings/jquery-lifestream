@@ -63,19 +63,19 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin-right: 5px;
     }
     .cc-close-button {
+      background-color: transparent;
+      font-size: 20px;
       &:hover {
         text-decoration: none;
       }
-      font-size: 20px;
-      background-color: transparent;
     }
     .cc-notice-close-button {
+      display: inline-block;
+      float: right;
       .small {
         margin: 0;
         padding: 0;
       }
-      display: inline-block;
-      float: right;
     }
   }
 
@@ -95,6 +95,8 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .cc-notice-text {
+      line-height: 18px;
+      margin-left: 45px;
       h4 {
         color: #333333;
         font-size: 16px;
@@ -102,8 +104,6 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         line-height: 20px;
         margin: 4px 0;
       }
-      margin-left: 45px;
-      line-height: 18px;
     }
 
   }
