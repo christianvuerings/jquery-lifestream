@@ -49,7 +49,7 @@
 }
 .cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link, .cc-widget-list-hover, .cc-widget-table-hover {
   overflow: hidden;
-  padding: 10px 0px;
+  padding: 10px 0;
   position: relative;
   &:hover, &:focus {
     background: $cc-color-blue-hover;
@@ -135,7 +135,7 @@
     color: $cc-color-medium-grey;
     font-family: Arial, sans-serif;
     font-size: 18px;
-    margin: 2px 0px;
+    margin: 2px 0;
     padding: 5px 15px;
     @media print {
       padding: 5px 10px;
