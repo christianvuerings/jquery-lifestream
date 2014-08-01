@@ -2,60 +2,34 @@ module Canvas
   class BatchEnrollments < Csv
     include ClassLogger
 
-    def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv)
-      canvas_sections_csv = Canvas::SectionsReport.new.get_csv(term)
-      return if canvas_sections_csv.empty?
-      canvas_sections_csv.each do |canvas_section|
-        if (section_id = canvas_section['section_id'])
-          if (course_id = canvas_section['course_id'])
-            if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id))
-              refresh_students_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
-              refresh_teachers_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
-            end
-          else
-            logger.warn("Canvas section has SIS ID but course does not: #{canvas_section}")
-          end
-        end
-      end
+    # TODO Since canvas_section_id is not used by this class, enrollment refresh could probably use more refactoring...
+    def refresh_enrollments_in_section(campus_section, course_id, section_id, teacher_role, canvas_section_id, enrollments_csv, known_users, users_csv)
+      refresh_students_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
+      refresh_teachers_in_section(campus_section, course_id, section_id, teacher_role, enrollments_csv, known_users, users_csv)
     end
 
     def refresh_students_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
       campus_data_rows = CampusOracle::Queries.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
       campus_data_rows.each do |campus_data_row|
-        append_enrollment_and_user(course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
-      end
-    end
-
-    def refresh_teachers_in_section(campus_section, course_id, section_id, enrollments_csv, known_users, users_csv)
-      campus_data_rows = CampusOracle::Queries.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
-      campus_data_rows.each do |campus_data_row|
-        append_teaching_and_user(course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
-      end
-    end
-
-    def append_enrollment_and_user(course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
-      if (role = ENROLL_STATUS_TO_CANVAS_SIS_ROLE[campus_data_row['enroll_status']])
-        uid = campus_data_row['ldap_uid']
-        enrollments_csv << {
-          'course_id' => course_id,
-          'user_id' => derive_sis_user_id(campus_data_row),
-          'role' => role,
-          'section_id' => section_id,
-          'status' => 'active'
-        }
-        unless known_users.include?(uid)
-          users_csv << canvas_user_from_campus_row(campus_data_row)
-          known_users << uid
+        if (role = ENROLL_STATUS_TO_CANVAS_SIS_ROLE[campus_data_row['enroll_status']])
+          append_enrollment_and_user(role, course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
         end
       end
     end
 
-    def append_teaching_and_user(course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
+    def refresh_teachers_in_section(campus_section, course_id, section_id, teacher_role, enrollments_csv, known_users, users_csv)
+      campus_data_rows = CampusOracle::Queries.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
+      campus_data_rows.each do |campus_data_row|
+        append_enrollment_and_user(teacher_role, course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
+      end
+    end
+
+    def append_enrollment_and_user(role, course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
       uid = campus_data_row['ldap_uid']
       enrollments_csv << {
         'course_id' => course_id,
         'user_id' => derive_sis_user_id(campus_data_row),
-        'role' => 'teacher',
+        'role' => role,
         'section_id' => section_id,
         'status' => 'active'
       }

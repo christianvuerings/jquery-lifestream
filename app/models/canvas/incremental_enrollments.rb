@@ -9,14 +9,15 @@ module Canvas
       'C' => 'StudentEnrollment'
     }
 
-    CANVAS_ROLE_TO_CANVAS_SIS_ROLE = {
+    CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE = {
       'StudentEnrollment' => 'student',
-      'Waitlist Student' => 'Waitlist Student',
-      'TeacherEnrollment' => 'teacher',
+      'TaEnrollment' => 'ta',
+      'TeacherEnrollment' => 'teacher'
     }
+    CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
     def self.canvas_section_enrollments(canvas_section_id)
-      raise ArgumentError, "canvas_section_id must be a Fixnum" if canvas_section_id.class != Fixnum
+      canvas_section_id = Integer(canvas_section_id, 10)
       canvas_section_enrollments = Canvas::SectionEnrollments.new(:section_id => canvas_section_id).list_enrollments
 
       # Filter out non-SIS user enrollments
@@ -34,39 +35,24 @@ module Canvas
       return {:students => canvas_student_enrollments_hash, :instructors => canvas_instructor_enrollments_hash}
     end
 
-    def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv)
-      canvas_sections_csv = Canvas::SectionsReport.new.get_csv(term)
-      return if canvas_sections_csv.empty?
-      canvas_sections_csv.each do |canvas_section|
-        if (section_id = canvas_section['section_id'])
-          if (course_id = canvas_section['course_id'])
-            canvas_section_id = Integer(canvas_section['canvas_section_id'], 10)
-            canvas_enrollments = self.class.canvas_section_enrollments(canvas_section_id)
-            if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id))
-              refresh_students_in_section(campus_section, course_id, section_id, canvas_enrollments[:students], enrollments_csv, known_users, users_csv)
-              refresh_teachers_in_section(campus_section, course_id, section_id, canvas_enrollments[:instructors], enrollments_csv, known_users, users_csv)
-            end
-          else
-            logger.warn("Canvas section has SIS ID but course does not: #{canvas_section}")
-          end
-        end
-      end
+    def refresh_enrollments_in_section(campus_section, course_id, section_id, teacher_role, canvas_section_id, enrollments_csv, known_users, users_csv)
+      canvas_enrollments = self.class.canvas_section_enrollments(canvas_section_id)
+      refresh_students_in_section(campus_section, course_id, section_id, canvas_enrollments[:students], enrollments_csv, known_users, users_csv)
+      refresh_teachers_in_section(campus_section, course_id, section_id, teacher_role, canvas_enrollments[:instructors], enrollments_csv, known_users, users_csv)
     end
 
     def refresh_students_in_section(campus_section, course_id, section_id, canvas_student_enrollments, enrollments_csv, known_users, users_csv)
       campus_data_rows = CampusOracle::Queries.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
       campus_data_rows.each do |campus_data_row|
         enrollee_uid = campus_data_row['ldap_uid'].to_s
-        # Append student for update if found. Remove from Canvas enrollment list
-        if canvas_student_enrollments.has_key?(enrollee_uid)
-          if canvas_student_enrollment_needs_update?(campus_data_row, canvas_student_enrollments[enrollee_uid])
-            append_enrollment_and_user('student', course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
-          end
-          # Remove from Canvas enrollment list
+        next unless (canvas_role = ENROLL_STATUS_TO_CANVAS_ROLE[campus_data_row['enroll_status']])
+        # No action needed if the student is already present with the same role, so remove it from the list.
+        if canvas_student_enrollments.has_key?(enrollee_uid) &&
+          canvas_student_enrollments[enrollee_uid]['role'] == canvas_role
           canvas_student_enrollments.delete(enrollee_uid)
-          # Otherwise add new enrollment
         else
-          append_enrollment_and_user('student', course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
+          # Otherwise add the new enrollment. Any existing enrollments with a different role will be removed later.
+          append_enrollment_and_user(api_role_to_csv_role(canvas_role), course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
         end
       end
       # Handle enrollments remaining in Canvas enrollment list
@@ -77,22 +63,23 @@ module Canvas
       logger.info "No campus record for Canvas enrollment in #{enrollment['course_id']} #{enrollment['section_id']} for user #{uid} with role #{enrollment['role']}"
       # Only drop enrollments if they originated from an SIS Import
       if enrollment["sis_import_id"].present?
-        canvas_role = CANVAS_ROLE_TO_CANVAS_SIS_ROLE[enrollment['role']]
         sis_user_id = enrollment['user']['sis_user_id']
-        append_enrollment_deletion(course_id, section_id, canvas_role, sis_user_id, enrollments_csv)
+        append_enrollment_deletion(course_id, section_id, api_role_to_csv_role(enrollment['role']), sis_user_id, enrollments_csv)
       end
     end
 
-    def refresh_teachers_in_section(campus_section, course_id, section_id, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv)
+    def refresh_teachers_in_section(campus_section, course_id, section_id, teacher_role, canvas_instructor_enrollments, enrollments_csv, known_users, users_csv)
+      canvas_api_role = CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE[teacher_role]
       campus_data_rows = CampusOracle::Queries.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
       campus_data_rows.each do |campus_data_row|
         enrollee_uid = campus_data_row['ldap_uid'].to_s
-        # Remove instructor from Canvas enrollment list if already present
-        if canvas_instructor_enrollments.has_key?(enrollee_uid)
+        # No action needed if the instructor is already present with the same role, so remove it from the list.
+        if canvas_instructor_enrollments.has_key?(enrollee_uid) &&
+          canvas_instructor_enrollments[enrollee_uid]['role'] == canvas_api_role
           canvas_instructor_enrollments.delete(enrollee_uid)
-          # Otherwise add new enrollment
         else
-          append_enrollment_and_user('instructor', course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
+          # Otherwise add the new enrollment. Any existing enrollments with a different role will be removed later.
+          append_enrollment_and_user(teacher_role, course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
         end
       end
       # Handle enrollments remaining in Canvas enrollment list
@@ -100,23 +87,12 @@ module Canvas
     end
 
     # Adds/updates enrollments, for both students and teachers
-    def append_enrollment_and_user(enrollment_type, course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
-      enrollment_types = ['student', 'instructor']
-      sentence_options = {:last_word_connector => ', or ', :two_words_connector => ' or '}
-      raise ArgumentError, "Enrollment type argument '#{enrollment_type}' invalid. Must be #{enrollment_types.to_sentence(sentence_options)}." unless enrollment_types.include?(enrollment_type)
-
-      if enrollment_type == 'student'
-        role = ENROLL_STATUS_TO_CANVAS_SIS_ROLE[campus_data_row['enroll_status']]
-        return nil unless role
-      elsif enrollment_type == 'instructor'
-        role = 'teacher'
-      end
-
+    def append_enrollment_and_user(canvas_role, course_id, section_id, campus_data_row, enrollments_csv, known_users, users_csv)
       uid = campus_data_row['ldap_uid']
       enrollments_csv << {
         'course_id' => course_id,
         'user_id' => derive_sis_user_id(campus_data_row),
-        'role' => role,
+        'role' => canvas_role,
         'section_id' => section_id,
         'status' => 'active'
       }
@@ -137,10 +113,13 @@ module Canvas
       }
     end
 
-    # Returns true if canvas student enrollment differs from campus enrollment state
-    def canvas_student_enrollment_needs_update?(campus_student_enrollment, canvas_student_enrollment)
-      return true if canvas_student_enrollment['role'] != ENROLL_STATUS_TO_CANVAS_ROLE[campus_student_enrollment['enroll_status']]
-      return false
+    # For certain built-in enrollment roles, the Canvas enrollments API shows the
+    # enrollment-type category (e.g., "StudentEnrollment") in place of the CSV-import-friendly
+    # role (e.g., "student"). This is probably a bug, but we need to deal with it.
+    # For customized enrollment roles, the "role" shown in the API is the same as used
+    # in CSV imports.
+    def api_role_to_csv_role(canvas_role)
+      CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE[canvas_role] || canvas_role
     end
 
   end
