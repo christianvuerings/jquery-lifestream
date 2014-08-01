@@ -4,7 +4,7 @@
   }
 }
 @media #{$small-only} {
-  /* Fixes a background color bug on small screens in the header */
+  // Fixes a background color bug on small screens in the header
   body {
     background-color: $cc-color-header;
   }

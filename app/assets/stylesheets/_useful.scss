@@ -1,10 +1,10 @@
-/* Useful mixins */
+// Useful mixins
 @mixin cc-column-sameheight {
   margin-bottom: -99969px;
   padding-bottom: 99999px;
 }
 
-/* Useful classes */
+// Useful classes
 .cc-alert {
   color: $cc-color-red !important;
 }
@@ -65,7 +65,7 @@
   text-transform: uppercase;
 }
 
-/* Spinner */
+// Spinner
 .cc-spinner {
   margin: 20px auto;
   max-height: 20px;
@@ -83,7 +83,7 @@
   }
 }
 
-/* Popover */
+// Popover
 .cc-popover {
   background: #ececec;
   border-radius: 5px;
@@ -111,10 +111,8 @@
     position: absolute;
   }
 
-  /*
-    This allows us to create an arrow for the popover
-    We also add a border by painting another arrow behind the first one
-   */
+  // This allows us to create an arrow for the popover
+  // We also add a border by painting another arrow behind the first one
   &:after {
     border-bottom: 10px solid $cc-color-popover-title-background;
     border-left: 10px solid transparent;
@@ -143,12 +141,12 @@
   }
 }
 
-/* Image replacement */
+// Image replacement
 .cc-ir {
   background-color: transparent;
   border: 0;
   overflow: hidden;
-  /* IE 6/7 fallback */
+  // IE 6/7 fallback
   *text-indent: -9999px;
 
   &:before {
@@ -161,7 +159,7 @@
 .cc-hidden {
   display: none;
 }
-/* Hide only visually, but have it available for screenreaders / accessibility: h5bp.com/v */
+// Hide only visually, but have it available for screenreaders / accessibility: h5bp.com/v
 .cc-visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);

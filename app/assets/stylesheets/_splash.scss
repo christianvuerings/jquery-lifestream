@@ -128,7 +128,7 @@ $cc-color-splash-blue-dark: #025A86;
     overflow: hidden;
   }
 
-  /* Mobile only */
+  // Mobile only
   @media #{$small-only} {
     h1 {
       font-size: 20px;

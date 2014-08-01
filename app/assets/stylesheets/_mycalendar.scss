@@ -1,8 +1,8 @@
-/* Icon */
+// Icon
 .cc-widget-mycalendar {
   @include user-select("none");
 
-  /* List */
+  // List
   .cc-widget-mycalendar-datelist {
     .cc-widget-mycalendar-datelist-time-allday {
       text-transform: uppercase;
@@ -22,7 +22,7 @@
   .cc-widget-mycalendar-header {
     color: #232323;
   }
-  /* Summary & location */
+  // Summary & location
   .cc-widget-mycalendar-datelist-location {
     font-size: 10px;
     margin-top: 2px;

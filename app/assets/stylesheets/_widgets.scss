@@ -2,10 +2,8 @@
   background: #fff;
   margin: 15px 15px 0 0;
 
-  /*
-    See https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css
-    For an explanation of this magic
-  */
+  // See https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css
+  // For an explanation of this magic
   &:before, &:after {
     content: " ";
     display: table;
@@ -150,7 +148,7 @@
 .cc-widget-title-sub {
   color: $cc-color-lighter-medium-grey;
   font-size: 13px;
-  /* Margin will only kick in when there is a float on the span */
+  // Margin will only kick in when there is a float on the span
   margin-top: 5px;
   text-transform: uppercase;
 }

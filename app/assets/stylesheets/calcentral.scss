@@ -2,20 +2,20 @@
 @import "compass/css3/hyphenation";
 @import "compass/css3/user-interface";
 
-/* CalCentral Specific */
+// CalCentral Specific
 @import "colors";
 
-/* HTML */
+// HTML
 html {
   -webkit-text-size-adjust: 100%;
 }
 
-/* Body */
+// Body
 body {
   background-color: $cc-color-main-background;
 }
 
-/* Headings */
+// Headings
 h1 {
   font-size: 32px;
 }
@@ -37,21 +37,21 @@ h3 {
   font-size: 16px;
 }
 
-/* Inset list items */
+// Inset list items
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-/* Anchor tag */
+// Anchor tag
 a {
   &:hover, &:focus {
     text-decoration: underline;
   }
 }
 
-/* Form */
+// Form
 form {
   background: $cc-color-widget-more-background;
   border: 1px solid #dedede;
@@ -101,15 +101,15 @@ form {
 
 }
 
-/* Audio */
+// Audio
 audio {
   max-width: 100%;
   position: relative;
-  /* We need to set the z-index so it doesn't overlap with other elements */
+  // We need to set the z-index so it doesn't overlap with other elements
   z-index: 100;
 }
 
-/* Buttons */
+// Buttons
 button {
   @include box-shadow(none);
   font-family: $body-font-family;
@@ -286,7 +286,7 @@ button {
   }
 }
 
-/* List */
+// List
 .cc-list-bullets {
   margin: 10px 10px 0 15px;
   li:before {
@@ -321,13 +321,13 @@ button {
   }
 }
 
-/* Error */
+// Error
 .cc-error-message {
   line-height: 1.6;
 }
 
-/* Select */
-/* We need to wrap a select in a <div> to have consistent styling */
+// Select
+// We need to wrap a select in a <div> to have consistent styling
 .cc-select {
   background: $cc-color-white;
   @include background(asset-data-url('svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($cc-color-white, $cc-color-button-regular));
@@ -355,12 +355,12 @@ button {
   }
 }
 
-/* Text */
+// Text
 .cc-text-light {
   color: $cc-color-lighter-medium-grey;
 }
 
-/* Message for oldIE */
+// Message for oldIE
 .cc-old-ie {
   margin-bottom: 20px !important;
   a {
@@ -372,12 +372,12 @@ button {
   }
 }
 
-/* Container */
+// Container
 .cc-container-main {
   background-color: $cc-color-main-background;
 }
 
-/* Row collapse bug by foundation */
+// Row collapse bug by foundation
 .row.collapse {
   .column, .columns {
     padding-left: 0;
@@ -385,89 +385,87 @@ button {
   }
 }
 
-/*
-Read more about why we're using @import instead of require at
-http://stackoverflow.com/questions/6269420
-*/
+// Read more about why we're using @import instead of require at
+// http://stackoverflow.com/questions/6269420
 
-/* Accessibility */
+// Accessibility
 @import "accessibility";
 
-/* Header */
+// Header
 @import "header";
-/* Top navigation */
+// Top navigation
 @import "navigation";
-/* Alerts */
+// Alerts
 @import "alerts";
-/* Footer */
+// Footer
 @import "footer";
 
-/* Logo */
+// Logo
 @import "logo";
-/* Icons */
+// Icons
 @import "icons";
-/* Widgets */
+// Widgets
 @import "widgets";
-/* Tables */
+// Tables
 @import "tables";
-/* Scrollbars */
+// Scrollbars
 @import "scrollbars";
-/* Useful */
+// Useful
 @import "useful";
-/* Date Picker */
+// Date Picker
 @import "datepicker";
-/* Act As */
+// Act As
 @import "actas";
-/* Updated Feeds */
+// Updated Feeds
 @import "updated_feeds";
 
-/* Academics */
+// Academics
 @import "academics";
 
-/* Textbooks */
+// Textbooks
 @import "textbooks";
 
-/* Webcasts */
+// Webcasts
 @import "webcast";
 
-/* Dashboard */
+// Dashboard
 @import "classes";
 @import "mycalendar";
 @import "activities";
 @import "tasks";
 @import "google_reminder";
 
-/* Campus */
+// Campus
 @import "campus";
 
-/* Canvas external apps */
+// Canvas external apps
 @import "canvas_embedded";
 @import "canvas_course_add_user";
 @import "canvas_course_provision";
 @import "canvas_user_provision";
 @import "canvas_roster";
 
-/* My Finances */
+// My Finances
 @import "cal1card";
 @import "myfinances";
 
-/* Settings */
+// Settings
 @import "settings";
 
-/* Splash */
+// Splash
 @import "splash";
 
-/* Status pages: 404/sorry */
+// Status pages: 404/sorry
 @import "status";
 
-/* Off Canvas */
+// Off Canvas
 @import "offcanvas";
 
-/* Demo Styles */
+// Demo Styles
 @import "styles-ref";
 
-/* Class Page Youtube Videos Styles */
+// Class Page Youtube Videos Styles
 @import "youtube_videos";
 
-/* Print Styles */
+// Print Styles
 @import "print";
