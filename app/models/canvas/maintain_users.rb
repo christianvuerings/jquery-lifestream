@@ -1,4 +1,7 @@
 module Canvas
+  # Updates users currently present within Canvas.
+  # Used by Canvas::RefreshAllCampusData to maintain officially enrolled students/faculty
+  # See Canvas::MaintainAllUsers for updates/additions of all active CalNet users within Canvas
   class MaintainUsers < Csv
     include ClassLogger
 
