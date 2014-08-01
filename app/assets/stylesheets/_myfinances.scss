@@ -11,7 +11,7 @@
   }
   .cc-page-myfinances-account-filter {
     background: transparent;
-    border: none;
+    border: 0;
     margin: 10px 15px 0;
     padding: 0;
     .cc-select {
@@ -131,7 +131,7 @@
       white-space: nowrap;
     }
     .cc-widget-list-selected tr:first-child td {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
   .cc-page-myfinances-type {
@@ -148,13 +148,13 @@
   }
   @media print {
     .cc-page-myfinances-account-activity-search input {
-      border: none;
+      border: 0;
     }
     .cc-page-myfinances-print-label {
       margin: 4px 0;
     }
     .cc-select {
-      border: none;
+      border: 0;
       select {
         padding-left: 0;
       }

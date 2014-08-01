@@ -51,7 +51,7 @@
     display: block;
     button {
       background: $cc-color-green-dark;
-      border: none;
+      border: 0;
       margin: 0;
       padding: 11px 11px 12px;
       &:hover, &:focus {

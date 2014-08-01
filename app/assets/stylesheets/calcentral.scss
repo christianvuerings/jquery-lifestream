@@ -162,7 +162,7 @@ button {
 }
 .cc-button-transparent {
   background: transparent;
-  border: none;
+  border: 0;
   color: $body-font-color !important;
   padding: 0;
   &:focus, &:hover {
@@ -232,7 +232,7 @@ button {
   padding: 0;
   &, &:hover, &:focus {
     background-color: transparent;
-    border: none;
+    border: 0;
     color: $primary-color;
     font-size: 13px;
     font-weight: normal;

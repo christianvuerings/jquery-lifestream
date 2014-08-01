@@ -223,7 +223,7 @@ body {
 
   .cc-header-icon {
     background: transparent;
-    border: none;
+    border: 0;
     border-radius: 5px;
     margin: 5px 5px 0 0;
     padding: 2px 3px;
@@ -274,7 +274,7 @@ body {
     border-top-right-radius: 0;
     right: 5px;
     &:before {
-      border: none;
+      border: 0;
     }
     h4 {
       white-space: nowrap;
