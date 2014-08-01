@@ -113,7 +113,7 @@ module Canvas
     end
 
     def refresh_sections_in_course(course_id, course_section_rows, campus_sections, enrollments_csv, known_users, users_csv)
-      section_to_instructor_role = instructor_role_for_sections(campus_sections)
+      section_to_instructor_role = instructor_role_for_sections(campus_sections, course_id)
       course_section_rows.each do |canvas_section|
         section_id = canvas_section['section_id']
         campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id)
@@ -127,7 +127,7 @@ module Canvas
     # instructors should be given the "teacher" role. However, it's important that *someone* play the
     # "teacher" role, and so if no primary sections are included, secondary-section instructors should
     # receive it.
-    def instructor_role_for_sections(campus_sections)
+    def instructor_role_for_sections(campus_sections, course_id)
       sections_map = {}
       terms_to_ccns = {}
       campus_sections.each do |sec|
@@ -144,6 +144,12 @@ module Canvas
       end
       section_types = sections_map.values
       secondary_section_role = section_types.include?('P') && section_types.include?('S') ? 'ta' : 'teacher'
+
+      # Project leadership has expressed curiosity about this.
+      if section_types.present? && !section_types.include?('P')
+        logger.info("Course site #{course_id} contains only secondary sections")
+      end
+
       sections_map.each_key do |sec|
         sections_map[sec] = (sections_map[sec] == 'P') ? 'teacher' : secondary_section_role
       end
