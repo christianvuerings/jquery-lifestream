@@ -23,7 +23,7 @@ body {
     width: 195px;
     &:focus, &:hover {
       border-bottom: 2px solid $cc-color-gold;
-      opacity: 0.9;
+      opacity: .9;
     }
   }
   @media print {

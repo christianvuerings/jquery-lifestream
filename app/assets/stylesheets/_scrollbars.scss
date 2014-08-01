@@ -16,16 +16,16 @@
     background-color: transparent
   }
   &::-webkit-scrollbar-track:enabled {
-    background-color: rgba(113,112,107,0.1);
+    background-color: rgba(113, 112, 107, .1);
     border-radius: 5px;
   }
   &::-webkit-scrollbar-thumb:vertical {
-    background-color: rgba(0,0,0,.2);
+    background-color: rgba(0, 0, 0, .2);
     border-radius: 5px;
     height: 50px;
   }
   &::-webkit-scrollbar-thumb:horizontal {
-    background-color: rgba(0,0,0,.2);
+    background-color: rgba(0, 0, 0, .2);
     border-radius: 5px;
     width: 50px;
   }
