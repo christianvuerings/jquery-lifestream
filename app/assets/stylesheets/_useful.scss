@@ -20,11 +20,11 @@
 }
 .cc-clearfix-container:before,
 .cc-clearfix-container:after {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 .cc-clearfix-container:after {
-    clear: both;
+  clear: both;
 }
 .cc-ellipsis {
   display: block;
