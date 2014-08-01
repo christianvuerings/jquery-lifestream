@@ -81,45 +81,48 @@ module Canvas
     def refresh_existing_term_sections(term, enrollments_csv, known_users, users_csv)
       canvas_sections_csv = Canvas::SectionsReport.new.get_csv(term)
       return if canvas_sections_csv.empty?
-      # Group Canvas sections CSV by course site. (CSV does not support "sort_by values_at"
-      # or comparisons to nil.)
+      # Instructure doesn't guarantee anything about sections-CSV ordering, but we need to group sections
+      # together by course site. Our first step is to sort the downloaded CSV file by SIS Course ID and
+      # SIS Section ID.
+      # We can't use the usual Ruby "sort_by values_at" shortcut because the CSV class doesn't support them.
+      # We also need to protect against comparisons to nil.
       canvas_sections_csv = canvas_sections_csv.sort do |a, b|
         [(a['course_id'] || ''), (a['section_id'] || '')] <=> [(b['course_id'] || ''), (b['section_id'] || '')]
       end
       working_course_id = nil
-      working_course_section_rows = []
+      working_course_csv_rows = []
       working_campus_sections = []
-      canvas_sections_csv.each do |canvas_section|
-        if (course_id = canvas_section['course_id']) &&  (section_id = canvas_section['section_id'])
+      canvas_sections_csv.each do |csv_row|
+        if (course_id = csv_row['course_id']) &&  (section_id = csv_row['section_id'])
           if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id))
             if course_id != working_course_id
               if working_course_id.present?
-                refresh_sections_in_course(working_course_id, working_course_section_rows, working_campus_sections,
+                refresh_sections_in_course(working_course_id, working_course_csv_rows, working_campus_sections,
                   enrollments_csv, known_users, users_csv)
               end
               working_course_id = course_id
-              working_course_section_rows = []
+              working_course_csv_rows = []
               working_campus_sections = []
             end
-            working_course_section_rows << canvas_section
+            working_course_csv_rows << csv_row
             working_campus_sections << campus_section
           end
         end
       end
       if working_course_id.present?
-        refresh_sections_in_course(working_course_id, working_course_section_rows, working_campus_sections,
+        refresh_sections_in_course(working_course_id, working_course_csv_rows, working_campus_sections,
           enrollments_csv, known_users, users_csv)
       end
     end
 
-    def refresh_sections_in_course(course_id, course_section_rows, campus_sections, enrollments_csv, known_users, users_csv)
+    def refresh_sections_in_course(course_id, course_section_csv_rows, campus_sections, enrollments_csv, known_users, users_csv)
       section_to_instructor_role = instructor_role_for_sections(campus_sections, course_id)
-      course_section_rows.each do |canvas_section|
-        section_id = canvas_section['section_id']
+      course_section_csv_rows.each do |csv_row|
+        section_id = csv_row['section_id']
         campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id)
         instructor_role = section_to_instructor_role[campus_section]
         @enrollments_maintainer.refresh_enrollments_in_section(campus_section, course_id, section_id,
-          instructor_role, canvas_section['canvas_section_id'], enrollments_csv, known_users, users_csv)
+          instructor_role, csv_row['canvas_section_id'], enrollments_csv, known_users, users_csv)
       end
     end
 
@@ -128,13 +131,24 @@ module Canvas
     # "teacher" role, and so if no primary sections are included, secondary-section instructors should
     # receive it.
     def instructor_role_for_sections(campus_sections, course_id)
+      # This will hold a map whose keys are term_yr/term_cd/ccn hashes and whose values are the role
+      # for instructors of that section.
       sections_map = {}
+      # Our campus data query for sections specifies CCNs in a specific term.
+      # At this level of code, we're working section-by-section and can't guarantee that all sections
+      # are in the same term. In real life, we expect them to be, but ensuring that and throwing an
+      # error when terms vary would be about as much work as dealing with them. Start by grouping
+      # CCNs by term.
       terms_to_ccns = {}
       campus_sections.each do |sec|
         term = sec.slice(:term_yr, :term_cd)
         terms_to_ccns[term] ||= []
         terms_to_ccns[term] << sec[:ccn]
       end
+      # For each term, ask campus data sources for the section types (primary or secondary).
+      # Since the list we get back from campus data may be in a different order from our starting
+      # list of sections, or may be missing some sections, we turn the result into a new list
+      # of term_yr/term_cd/ccn hashes.
       terms_to_ccns.each do |term, ccns|
         data_rows = CampusOracle::Queries.get_sections_from_ccns(term[:term_yr], term[:term_cd], ccns)
         data_rows.each do |row|
@@ -142,6 +156,8 @@ module Canvas
           sections_map[sec] = row['primary_secondary_cd']
         end
       end
+      # Now see if the course site's sections are of more than one section type. That will determine
+      # what role is given to secondary-section instructors.
       section_types = sections_map.values
       secondary_section_role = section_types.include?('P') && section_types.include?('S') ? 'ta' : 'teacher'
 
@@ -150,6 +166,7 @@ module Canvas
         logger.info("Course site #{course_id} contains only secondary sections")
       end
 
+      # Finalize the section-to-instructor-role hash.
       sections_map.each_key do |sec|
         sections_map[sec] = (sections_map[sec] == 'P') ? 'teacher' : secondary_section_role
       end
