@@ -202,6 +202,19 @@ describe CampusOracle::Queries do
     known_uids.empty?.should be_true
   end
 
+  it "should be able to get all active user records" do
+    if CampusOracle::Queries.test_data?
+      user_data = CampusOracle::Queries.get_all_active_people_attributes
+      expect(user_data).to be_an_instance_of Array
+      expect(user_data.count).to eq 144
+      uids = user_data.collect {|user| user['ldap_uid'] }
+      expect(uids.include?('212373')).to be_true
+      expect(uids.include?('95509')).to be_true
+      expect(uids.include?('592722')).to be_false
+      expect(uids.include?('313561')).to be_false
+    end
+  end
+
   it "should be able to look up Tammi's student info" do
     info = CampusOracle::Queries.get_student_info "300939"
     info.should_not be_nil

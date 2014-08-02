@@ -35,6 +35,19 @@ module CampusOracle
       stringify_ints! result
     end
 
+    def self.get_all_active_people_attributes
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
+        select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id
+        from calcentral_person_info_vw pi
+        where (affiliations LIKE '%-TYPE-%')
+        SQL
+        result = connection.select_all(sql)
+      }
+      stringify_ints! result
+    end
+
     def self.find_people_by_name(name_search_string, limit = 0)
       raise ArgumentError, "Search text argument must be a string" if name_search_string.class != String
       raise ArgumentError, "Limit argument must be a Fixnum" if limit.class != Fixnum
