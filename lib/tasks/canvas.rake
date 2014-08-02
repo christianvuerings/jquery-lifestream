@@ -12,6 +12,12 @@ namespace :canvas do
     canvas_worker.update_guests
   end
 
+  desc 'Performs incremental sync of all active CalNet users in Canvas'
+  task :all_user_sync => :environment do
+    canvas_worker = Canvas::MaintainAllUsers.new
+    canvas_worker.sync_all_active_users
+  end
+
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and add new section memberships'
   task :incremental_refresh => :environment do
     canvas_worker = Canvas::RefreshAllCampusData.new 'incremental'
