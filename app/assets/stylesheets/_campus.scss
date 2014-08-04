@@ -3,7 +3,7 @@
   h1 {
     font-size: 24px;
     font-weight: normal;
-    line-height: 0.9em;
+    line-height: .9em;
     margin-top: 0;
   }
   h2 {
@@ -12,13 +12,6 @@
   }
   .cc-widget {
     width: 40%;
-  }
-  .cc-page-campus-navigation h3 {
-    border-top: 1px solid #b9c8d0;
-    color: #b9c8d0;
-    font-size: 16px;
-    margin: 0;
-    padding: 10px 15px 0;
   }
   ul {
     margin: 10px 0;
@@ -38,9 +31,16 @@
   }
   .cc-page-campus-navigation {
     background: $cc-color-navigation-sub;
+    margin-top: 1px;
     padding-left: 0;
     padding-right: 0;
-    margin-top: 1px;
+    h3 {
+      border-top: 1px solid #b9c8d0;
+      color: #b9c8d0;
+      font-size: 16px;
+      margin: 0;
+      padding: 10px 15px 0;
+    }
     li {
       &.active a, a:hover, a:focus {
         background: #61889e;
@@ -53,7 +53,7 @@
       > a {
         color: $cc-color-lighter-grey;
         display: block;
-        margin: 1px 10px 0 10px;
+        margin: 1px 10px 0;
         padding: 2px 5px;
         position: relative;
         &:hover {
@@ -70,7 +70,7 @@
       width: 100%;
     }
     .cc-page-campus-navigation {
-      border-right: none;
+      border-right: 0;
     }
     .cc-page-campus-content {
       padding-left: 0;

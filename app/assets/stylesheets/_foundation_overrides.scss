@@ -1,11 +1,11 @@
-/* Foundation overrides */
+// Foundation overrides
 $base-font-size: 13px;
 $block-grid-default-spacing: 100px;
 $body-font-color: #474747;
 $body-font-family: Arial, sans-serif;
 $button-font-weight: bold;
 $button-margin-bottom: 2px;
-$form-spacing: 0.5rem;
+$form-spacing: .5rem;
 $header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $header-font-weight: 500;
 $primary-color: #2683bc;
@@ -29,12 +29,12 @@ $medium-only: "#{$screen} and (min-width:#{$medium-breakpoint})";
 
 // Foundation Components
 @import
-  "foundation/components/global",
-  "foundation/components/grid",
-  "foundation/components/visibility",
-  "foundation/components/type",
-  "foundation/components/buttons",
-  "foundation/components/forms",
-  "foundation/components/alert-boxes",
-  "foundation/components/panels",
-  "foundation/components/tables";
+"foundation/components/global",
+"foundation/components/grid",
+"foundation/components/visibility",
+"foundation/components/type",
+"foundation/components/buttons",
+"foundation/components/forms",
+"foundation/components/alert-boxes",
+"foundation/components/panels",
+"foundation/components/tables";

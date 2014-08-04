@@ -1,5 +1,5 @@
 body {
-  /* Masthead */
+  // Masthead
   .cc-masthead {
     background: $cc-color-header;
     height: 40px;
@@ -13,7 +13,7 @@ body {
   }
 }
 
-/* Header logo */
+// Header logo
 .cc-header-logo {
   float: left;
   a {
@@ -23,7 +23,7 @@ body {
     width: 195px;
     &:focus, &:hover {
       border-bottom: 2px solid $cc-color-gold;
-      opacity: 0.9;
+      opacity: .9;
     }
   }
   @media print {
@@ -36,7 +36,7 @@ body {
   }
 }
 
-/* Header icons */
+// Header icons
 .cc-header-icons {
   background: $cc-color-header;
   float: right;
@@ -136,10 +136,10 @@ body {
       }
 
       .bdrive-icon {
-        padding: 10px;
-        margin-top: 5px;
-        margin-right: 3px;
         float: left;
+        margin-right: 3px;
+        margin-top: 5px;
+        padding: 10px;
       }
       a, .cc-button-link {
         border-bottom: 1px solid $cc-color-popover-border;
@@ -167,15 +167,15 @@ body {
 
     .cc-popover-items {
       max-height: 300px;
+      -webkit-overflow-scrolling: touch;
       overflow-y: scroll;
       width: 100%;
-      -webkit-overflow-scrolling: touch;
     }
 
     .cc-badgepopover-item-calendar-container {
       .cc-badgepopover-item-calendar {
-        border: 1px solid $cc-color-popover-border;
         background-color: $cc-color-popover-calendar;
+        border: 1px solid $cc-color-popover-border;
         margin-right: 5px;
         text-align: center;
         width: 45px;
@@ -223,7 +223,7 @@ body {
 
   .cc-header-icon {
     background: transparent;
-    border: none;
+    border: 0;
     border-radius: 5px;
     margin: 5px 5px 0 0;
     padding: 2px 3px;
@@ -274,7 +274,7 @@ body {
     border-top-right-radius: 0;
     right: 5px;
     &:before {
-      border: none;
+      border: 0;
     }
     h4 {
       white-space: nowrap;

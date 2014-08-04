@@ -1,8 +1,8 @@
 .bc-page-course-add-user {
 
+  background: $cc-color-white;
   font-family: $header-font-family;
   font-weight: normal;
-  background: $cc-color-white;
   padding: 10px;
 
   h2 {
@@ -15,7 +15,7 @@
   p {
     font-size: 14px;
     line-height: 16px;
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
   }
 
   .bc-fa-black {
@@ -38,17 +38,17 @@
     }
     .bc-user-search-notice {
       font-size: 14px;
-      margin: 0 0 20px 0;
+      margin: 0 0 20px;
       .bc-help-tip {
         margin-top: 20px;
         p {
           margin: 0;
           padding: 0;
-        }
-        p.bc-help-tip-emphasize {
-          font-style: italic;
-          margin: 2px 0 0 30px;
-          padding: 0;
+          &.bc-help-tip-emphasize {
+            font-style: italic;
+            margin: 2px 0 0 30px;
+            padding: 0;
+          }
         }
       }
     }
@@ -60,7 +60,7 @@
 
   .bc-form {
     background: transparent;
-    border: none;
+    border: 0;
     padding: 2px 0;
 
     .bc-form-options {
@@ -79,7 +79,7 @@
     }
 
     .bc-label-horizontal {
-      margin-top:9px;
+      margin-top: 9px;
     }
 
     .bc-form-entity {
@@ -102,8 +102,8 @@
       font-weight: bold;
       line-height: normal;
       position: relative;
-      text-decoration: none;
       text-align: center;
+      text-decoration: none;
     }
 
   }

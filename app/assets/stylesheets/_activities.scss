@@ -1,4 +1,4 @@
-/* Activities widget */
+// Activities widget
 .cc-widget-activities {
 
   a {
@@ -21,7 +21,7 @@
     > li {
       border-bottom: 1px solid $cc-color-widget-background;
       &:last-child {
-        border-bottom: none;
+        border-bottom: 0;
       }
     }
     .cc-widget-activities-list-undated {
@@ -98,8 +98,8 @@
   .cc-widget-activities-text-column {
     line-height: 1.4;
     i {
-      font-size: 20px;
       color: #afc5d2;
+      font-size: 20px;
     }
     .fa-usd {
       margin-left: 2px;

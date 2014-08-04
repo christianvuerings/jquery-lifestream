@@ -22,12 +22,12 @@
   }
   .cc-widget-list li {
     padding: 10px 0;
-  }
-  .cc-widget-list li a {
-    padding: 8px 0 0;
-    &:focus, &:hover {
-      background: transparent;
-      text-decoration: underline;
+    a {
+      padding: 8px 0 0;
+      &:focus, &:hover {
+        background: transparent;
+        text-decoration: underline;
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-/* Footer */
+// Footer
 body {
   footer {
     background: $cc-color-main-background;
@@ -36,7 +36,7 @@ body {
     }
     .cc-footer-form {
       background: transparent;
-      border: none;
+      border: 0;
     }
     .cc-footer-links {
       float: right;
@@ -51,7 +51,7 @@ body {
     .cc-footer-links-no-border {
       padding-right: 3px;
       a {
-        border-left: none;
+        border-left: 0;
         font-size: 16px;
         padding-left: 0;
         padding-right: 0;
@@ -73,7 +73,7 @@ body {
         clear: both;
         float: left;
         a {
-          border-left: none;
+          border-left: 0;
           border-right: 1px solid $cc-color-button-selected;
           font-weight: normal;
           padding-left: 2px;
@@ -82,16 +82,16 @@ body {
             padding-left: 0;
           }
           &:last-child {
-            border-right: none;
+            border-right: 0;
             padding-right: 0;
           }
         }
       }
       .cc-footer-links-no-border {
         a {
-         border-right: none;
-         font-size: 16px;
-         padding-left: 0;
+          border-right: 0;
+          font-size: 16px;
+          padding-left: 0;
         }
       }
       .cc-footer-form {

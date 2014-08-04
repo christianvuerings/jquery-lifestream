@@ -1,4 +1,4 @@
-/* Status pages - 404/sorry */
+// Status pages - 404/sorry
 .cc-page-status {
   background: $cc-color-dark-blue;
   overflow: hidden;
@@ -9,7 +9,7 @@
     width: 635px;
     h3 {
       font-size: 20px;
-      margin: 0 0 15px 0;
+      margin: 0 0 15px;
       padding: 0;
     }
     .cc-page-status-button {
@@ -39,7 +39,7 @@
     img {
       display: none;
     }
-    .cc-page-status-container  {
+    .cc-page-status-container {
       margin: 0;
       width: 100%;
     }

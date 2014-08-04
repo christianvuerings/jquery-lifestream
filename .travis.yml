@@ -13,3 +13,5 @@ env:
 before_install:
   - "npm -g install jshint"
   - "npm -g install jscs"
+  - "gem install scss-lint"
+  - "scss-lint app/assets/stylesheets/"

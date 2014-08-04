@@ -1,8 +1,8 @@
-/* Icon */
+// Icon
 .cc-widget-mycalendar {
   @include user-select("none");
 
-  /* List */
+  // List
   .cc-widget-mycalendar-datelist {
     .cc-widget-mycalendar-datelist-time-allday {
       text-transform: uppercase;
@@ -16,13 +16,13 @@
     margin-bottom: 10px;
   }
   .cc-widget-mycalendar-indent {
-    margin-left: 5px;
     line-height: 1.3;
+    margin-left: 5px;
   }
   .cc-widget-mycalendar-header {
     color: #232323;
   }
-  /* Summary & location */
+  // Summary & location
   .cc-widget-mycalendar-datelist-location {
     font-size: 10px;
     margin-top: 2px;
@@ -30,7 +30,7 @@
   }
   .cc-widget-mycalendar-more {
     clear: both;
-    font-size: 0.9em;
+    font-size: .9em;
     margin-top: 5px;
     padding-left: 35px;
     p {

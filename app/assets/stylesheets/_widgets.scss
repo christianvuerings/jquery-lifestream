@@ -2,10 +2,8 @@
   background: #fff;
   margin: 15px 15px 0 0;
 
-  /*
-    See https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css
-    For an explanation of this magic
-  */
+  // See https://github.com/h5bp/html5-boilerplate/blob/master/css/main.css
+  // For an explanation of this magic
   &:before, &:after {
     content: " ";
     display: table;
@@ -26,7 +24,7 @@
   > li {
     border-bottom: 1px solid $cc-color-widget-background;
     &:last-child {
-      border-bottom: none;
+      border-bottom: 0;
     }
     > a {
       display: block;
@@ -41,18 +39,18 @@
 }
 .cc-widget-list-column-left {
   float: left;
+  margin-left: 4px;
   margin-right: 5px;
   min-height: 20px;
   width: 20px;
-  margin-left: 4px;
 }
 .cc-widget-list-selected {
   background: $cc-color-widget-more-background;
 }
 .cc-widget-list > li > a, .cc-widget-list .cc-widget-list-link, .cc-widget-list-hover, .cc-widget-table-hover {
   overflow: hidden;
+  padding: 10px 0;
   position: relative;
-  padding: 10px 0px;
   &:hover, &:focus {
     background: $cc-color-blue-hover;
     cursor: pointer;
@@ -71,8 +69,8 @@
       border-top: 4px solid transparent;
       content: "";
       height: 0;
-      right: 7px;
       position: absolute;
+      right: 7px;
       top: 14px;
       width: 0;
     }
@@ -86,8 +84,8 @@
       border-top: 4px solid $body-font-color;
       content: "";
       height: 0;
-      right: 7px;
       position: absolute;
+      right: 7px;
       top: 17px;
       width: 0;
     }
@@ -104,10 +102,10 @@
   margin-left: 0;
   margin-top: 5px;
   > li {
+    padding-top: 5px;
     a {
       display: block;
     }
-    padding-top: 5px;
     .cc-icon {
       float: left;
       margin-right: 5px;
@@ -137,7 +135,7 @@
     color: $cc-color-medium-grey;
     font-family: Arial, sans-serif;
     font-size: 18px;
-    margin: 2px 0px;
+    margin: 2px 0;
     padding: 5px 15px;
     @media print {
       padding: 5px 10px;
@@ -150,7 +148,7 @@
 .cc-widget-title-sub {
   color: $cc-color-lighter-medium-grey;
   font-size: 13px;
-  /* Margin will only kick in when there is a float on the span */
+  // Margin will only kick in when there is a float on the span
   margin-top: 5px;
   text-transform: uppercase;
 }

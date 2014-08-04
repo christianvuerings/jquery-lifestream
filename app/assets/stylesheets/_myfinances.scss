@@ -11,7 +11,7 @@
   }
   .cc-page-myfinances-account-filter {
     background: transparent;
-    border: none;
+    border: 0;
     margin: 10px 15px 0;
     padding: 0;
     .cc-select {
@@ -62,7 +62,7 @@
   }
   .cc-page-myfinances-filter-element {
     margin-top: 10px;
-    input[type="text"]{
+    input[type="text"] {
       margin: 0;
       max-width: 130px;
     }
@@ -91,7 +91,7 @@
     }
   }
   .cc-page-myfinances-green {
-    &, & td {
+    &, td {
       color: $cc-color-green;
     }
   }
@@ -106,7 +106,7 @@
     font-size: 11px;
   }
   .cc-page-myfinances-red {
-    &, & td {
+    &, td {
       color: $cc-color-red;
     }
   }
@@ -131,7 +131,7 @@
       white-space: nowrap;
     }
     .cc-widget-list-selected tr:first-child td {
-      border-bottom: none;
+      border-bottom: 0;
     }
   }
   .cc-page-myfinances-type {
@@ -144,17 +144,17 @@
   }
   .cc-page-myfinances-unapplied-award {
     font-weight: bold;
-    opacity: 0.6;
+    opacity: .6;
   }
   @media print {
     .cc-page-myfinances-account-activity-search input {
-      border: none;
+      border: 0;
     }
     .cc-page-myfinances-print-label {
       margin: 4px 0;
     }
     .cc-select {
-      border: none;
+      border: 0;
       select {
         padding-left: 0;
       }

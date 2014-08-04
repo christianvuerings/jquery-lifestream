@@ -1,4 +1,4 @@
-/* Print Stylesheet */
+// Print Stylesheet
 @media print {
   @page
   {
@@ -22,9 +22,7 @@
   abbr[title]:after {
     content: " (" attr(title) ")";
   }
-  /*
-   * Don't show links for images, or javascript/internal links
-   */
+  // Don't show links for images, or javascript/internal links
   a[href^="javascript:"]:after,
   a[href^="#"]:after {
     content: "";
@@ -53,7 +51,7 @@
     page-break-after: avoid;
   }
 
-  /* Fontawesome icons */
+  // Fontawesome icons
   .cc-icon-green, .cc-unavailable, .fa-stop, .fa-exclamation-circle, .fa-exclamation-triangle {
     color: $cc-color-black !important;
   }

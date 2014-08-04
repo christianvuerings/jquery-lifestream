@@ -1,10 +1,10 @@
-/* Useful mixins */
+// Useful mixins
 @mixin cc-column-sameheight {
   margin-bottom: -99969px;
   padding-bottom: 99999px;
 }
 
-/* Useful classes */
+// Useful classes
 .cc-alert {
   color: $cc-color-red !important;
 }
@@ -20,11 +20,11 @@
 }
 .cc-clearfix-container:before,
 .cc-clearfix-container:after {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 .cc-clearfix-container:after {
-    clear: both;
+  clear: both;
 }
 .cc-ellipsis {
   display: block;
@@ -33,9 +33,9 @@
   white-space: nowrap;
 }
 .cc-image-responsive {
+  background-position: top;
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: top;
 }
 .cc-image-responsive-square {
   padding-bottom: 100%;
@@ -65,7 +65,7 @@
   text-transform: uppercase;
 }
 
-/* Spinner */
+// Spinner
 .cc-spinner {
   margin: 20px auto;
   max-height: 20px;
@@ -74,8 +74,8 @@
     display: none !important;
   }
   &:after {
-    animation: spin 2s infinite linear;
     -webkit-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
     content: '\f110';
     display: block;
     font-family: FontAwesome;
@@ -83,11 +83,11 @@
   }
 }
 
-/* Popover */
+// Popover
 .cc-popover {
   background: #ececec;
   border-radius: 5px;
-  @include box-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+  @include box-shadow(0 5px 10px rgba(0, 0, 0, .2));
   padding: 0;
   position: absolute;
   z-index: 1;
@@ -107,14 +107,12 @@
   &:after, &:before {
     bottom: 100%;
     content: "";
-    right: 10%;
     position: absolute;
+    right: 10%;
   }
 
-  /*
-    This allows us to create an arrow for the popover
-    We also add a border by painting another arrow behind the first one
-   */
+  // This allows us to create an arrow for the popover
+  // We also add a border by painting another arrow behind the first one
   &:after {
     border-bottom: 10px solid $cc-color-popover-title-background;
     border-left: 10px solid transparent;
@@ -143,25 +141,23 @@
   }
 }
 
-/* Image replacement */
+// Image replacement
 .cc-ir {
   background-color: transparent;
   border: 0;
   overflow: hidden;
-  /* IE 6/7 fallback */
-  *text-indent: -9999px;
 
   &:before {
     content: "";
     display: block;
-    width: 0;
     height: 150%;
+    width: 0;
   }
 }
 .cc-hidden {
   display: none;
 }
-/* Hide only visually, but have it available for screenreaders / accessibility: h5bp.com/v */
+// Hide only visually, but have it available for screenreaders / accessibility: h5bp.com/v
 .cc-visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);

@@ -4,7 +4,7 @@
   }
 }
 @media #{$small-only} {
-  /* Fixes a background color bug on small screens in the header */
+  // Fixes a background color bug on small screens in the header
   body {
     background-color: $cc-color-header;
   }
@@ -15,7 +15,7 @@
     .cc-navigation-bar ul {
       float: left;
       width: 100%;
-      & > li > a {
+      > li > a {
         float: none;
         margin: 5px;
       }
@@ -27,15 +27,16 @@
     }
   }
   .cc-offcanvas-left {
-    -webkit-transform: translatez(0);
-    @include single-transition(margin, 0.2s, ease);
+    @include single-transition(margin, .2s, ease);
     float: left;
     margin-left: -100%;
+    -webkit-transform: translatez(0);
   }
   .cc-offcanvas-right {
-    -webkit-transform: translatez(0);
-    @include single-transition(margin, 0.2s, ease);
+
+    @include single-transition(margin, .2s, ease);
     margin-left: 0;
+    -webkit-transform: translatez(0);
   }
   .cc-offcanvas-show {
     .cc-offcanvas-left {
@@ -51,7 +52,7 @@
     display: block;
     button {
       background: $cc-color-green-dark;
-      border: none;
+      border: 0;
       margin: 0;
       padding: 11px 11px 12px;
       &:hover, &:focus {

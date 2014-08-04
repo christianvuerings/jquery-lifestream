@@ -1,4 +1,4 @@
-/* Tasks and Assigments widget */
+// Tasks and Assigments widget
 .cc-widget-tasks {
   .cc-button-group {
     margin-top: 10px;
@@ -19,8 +19,8 @@
     margin: 2px;
   }
   .cc-widget-text {
-    padding-bottom: 0;
     margin-bottom: 0;
+    padding-bottom: 0;
   }
   .cc-widget-tasks-bcourses-name {
     color: $cc-color-dark-grey;
@@ -30,10 +30,10 @@
     margin-bottom: 16px;
   }
   .cc-widget-tasks-button-top-margin {
-    margin-top: 15px;
     margin-bottom: 15px;
+    margin-top: 15px;
   }
-  /* d.alistapart.com/holygrail/example_3.html */
+  // d.alistapart.com/holygrail/example_3.html
   .cc-widget-tasks-col {
     float: left;
     position: relative;
@@ -91,7 +91,7 @@
       }
     }
     .cc-widget-tasks-form {
-      border: none;
+      border: 0;
       margin: 0;
     }
   }
@@ -110,7 +110,7 @@
   .cc-widget-tasks-no-items {
     p {
       margin-bottom: 0;
-      padding: 0 20px 5px 20px;
+      padding: 0 20px 5px;
     }
   }
   .cc-widget-tasks-no-items-first {
