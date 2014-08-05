@@ -1,9 +1,8 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccShowMoreDirective', function($compile, $parse) {
+  angular.module('calcentral.directives').directive('ccShowMoreDirective', function($parse) {
     return {
-      restrict: 'A',
       replace: true,
       link: function(scope, elem, attrs) {
 
@@ -30,11 +29,10 @@
             elem.empty();
 
             if (scope[attrs.ccShowMoreLimit] < listLength) {
-              scope.nextItemsCount = Math.min(incrementDefault, listLength - scope[attrs.ccShowMoreLimit]);
+              var nextItemsCount = Math.min(incrementDefault, listLength - scope[attrs.ccShowMoreLimit]);
 
-              var el = angular.element(showMoreButtonTemplate);
-              var compiledElement = $compile(el)(scope);
-              elem.append(compiledElement);
+              var el = angular.element(showMoreButtonTemplate.replace('{{nextItemsCount}}', nextItemsCount));
+              elem.append(el);
 
               el.on('click', function() {
                 scope[attrs.ccShowMoreLimit] += incrementDefault;
