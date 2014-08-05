@@ -1,4 +1,4 @@
-(function(angular) {
+(function(angular, naturalSort) {
 
   'use strict';
 
@@ -128,6 +128,7 @@
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
       hideOffCanvasMenu: hideOffCanvasMenu,
+      naturalSort: naturalSort,
       preventBubble: preventBubble,
       redirect: redirect,
       setTitle: setTitle,
@@ -136,4 +137,4 @@
 
   });
 
-}(window.angular));
+}(window.angular, window.naturalSort));
