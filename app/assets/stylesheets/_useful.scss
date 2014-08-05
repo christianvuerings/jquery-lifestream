@@ -66,20 +66,59 @@
 }
 
 // Spinner
+@-webkit-keyframes spin-normal {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes spin-normal {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@-webkit-keyframes spin-extra {
+  to {
+    transform: rotate(1.125turn);
+  }
+}
+@keyframes spin-extra {
+  to {
+    transform: rotate(1.125turn);
+  }
+}
+
 .cc-spinner {
-  margin: 20px auto;
-  max-height: 20px;
-  max-width: 20px;
+  display: block;
+  font-size: 8px;
+  height: 50px;
+  position: relative;
+  text-align: center;
   * {
     display: none !important;
   }
+  &:before,
   &:after {
-    -webkit-animation: spin 2s infinite linear;
-    animation: spin 2s infinite linear;
-    content: '\f110';
-    display: block;
-    font-family: FontAwesome;
-    font-size: 20px;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: .5em;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: .5em;
+  }
+  &:before {
+    -webkit-animation: spin-extra 1s infinite steps(8);
+    animation: spin-extra 1s infinite steps(8);
+    // 1 3 5 7
+    box-shadow: 0 1em #ccc, -1em 0 #ccc, 0 -1em #ccc, 1em 0 #444;
+    transform: rotate(45deg);
+  }
+  &:after {
+    -webkit-animation: spin-normal 1s infinite steps(8);
+    animation: spin-normal 1s infinite steps(8);
+    // 2 4 6 8
+    box-shadow: -1em 0 #ccc, 0 -1em #ccc, 1em 0 #888, 0 1em #000;
   }
 }
 
