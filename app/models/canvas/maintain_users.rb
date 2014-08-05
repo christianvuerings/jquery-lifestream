@@ -14,6 +14,38 @@ module Canvas
       matched
     end
 
+    # Updates SIS User ID for Canvas User
+    #
+    # Because there is no way to do a bulk download of user login objects, two Canvas requests are required to
+    # set each user's SIS user ID.
+    def self.change_sis_user_id(canvas_user_id, new_sis_user_id)
+      logins_proxy = Canvas::Logins.new
+      response = logins_proxy.user_logins(canvas_user_id)
+      if response && response.status == 200
+        user_logins = JSON.parse(response.body)
+        # We look for the login with a numeric "unique_id", and assume it is an LDAP UID.
+        user_logins.select! do |login|
+          begin
+            Integer(login['unique_id'], 10)
+            true
+          rescue ArgumentError
+            false
+          end
+        end
+        if user_logins.length > 1
+          logger.error("Multiple numeric logins found for Canvas user #{canvas_user_id}; will skip")
+        elsif user_logins.empty?
+          logger.warn("No LDAP UID login found for Canvas user #{canvas_user_id}; will skip")
+        else
+          login_id = user_logins[0]['id']
+          logger.warn("Changing SIS ID for user #{canvas_user_id} to #{new_sis_user_id}")
+          response = logins_proxy.change_sis_user_id(login_id, new_sis_user_id)
+          return true if response && response.status == 200
+        end
+      end
+      false
+    end
+
     # Appends account changes to the given CSV.
     # Appends all known user IDs to the input array.
     # Makes any necessary changes to SIS user IDs.
@@ -71,39 +103,10 @@ module Canvas
     def handle_changed_sis_user_ids(sis_id_changes)
       logger.warn("About to change #{sis_id_changes.length} SIS user IDs")
       sis_id_changes.each do |canvas_user_id, new_sis_id|
-        change_sis_user_id(canvas_user_id, new_sis_id)
+        self.class.change_sis_user_id(canvas_user_id, new_sis_id)
       end
     end
 
-    # Because there is no way to do a bulk download of user login objects, two Canvas requests are required to
-    # set each user's SIS user ID.
-    def change_sis_user_id(canvas_user_id, new_sis_user_id)
-      logins_proxy = Canvas::Logins.new
-      response = logins_proxy.user_logins(canvas_user_id)
-      if response && response.status == 200
-        user_logins = JSON.parse(response.body)
-        # We look for the login with a numeric "unique_id", and assume it is an LDAP UID.
-        user_logins.select! do |login|
-          begin
-            Integer(login['unique_id'], 10)
-            true
-          rescue ArgumentError
-            false
-          end
-        end
-        if user_logins.length > 1
-          logger.error("Multiple numeric logins found for Canvas user #{canvas_user_id}; will skip")
-        elsif user_logins.empty?
-          logger.warn("No LDAP UID login found for Canvas user #{canvas_user_id}; will skip")
-        else
-          login_id = user_logins[0]['id']
-          logger.warn("Changing SIS ID for user #{canvas_user_id} to #{new_sis_user_id}")
-          response = logins_proxy.change_sis_user_id(login_id, new_sis_user_id)
-          return true if response && response.status == 200
-        end
-      end
-      false
-    end
 
   end
 end

@@ -178,7 +178,7 @@ describe Canvas::MaintainUsers do
     end
   end
 
-  describe "#change_sis_user_id" do
+  describe ".change_sis_user_id" do
     let(:canvas_user_id) { rand(999999) }
     let(:matching_login_id) { rand(999999) }
     let(:new_sis_id) { "UID:#{rand(99999)}" }
@@ -210,7 +210,7 @@ describe Canvas::MaintainUsers do
           double().stub(:status).and_return(200)
       )
       Canvas::Logins.stub(:new).and_return(fake_logins_proxy)
-      subject.change_sis_user_id(canvas_user_id, new_sis_id)
+      Canvas::MaintainUsers.change_sis_user_id(canvas_user_id, new_sis_id)
     end
   end
 
@@ -220,11 +220,11 @@ describe Canvas::MaintainUsers do
     let(:sis_account_modified) { provisioned_account.merge({'first_name' => 'Jake'}) }
 
     it "returns true if accounts are identical" do
-      expect(subject.class.provisioned_account_eq_sis_account?(provisioned_account, sis_account)).to be_true
+      expect(Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account)).to be_true
     end
 
     it "returns false if accounts are not identical" do
-      expect(subject.class.provisioned_account_eq_sis_account?(provisioned_account, sis_account_modified)).to be_false
+      expect(Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account_modified)).to be_false
     end
   end
 
