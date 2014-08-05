@@ -12,6 +12,7 @@
 //
 //= require moment
 //= require_tree ./lib
+//= require naturalsort
 //= require raven
 //= require pikaday
 //= require angular

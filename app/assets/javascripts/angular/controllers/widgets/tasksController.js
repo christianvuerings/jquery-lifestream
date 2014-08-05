@@ -24,12 +24,38 @@
       $scope.counts.opposite = isScheduled ? $scope.counts.unscheduled : $scope.counts.scheduled;
     };
 
+    var sortByTitle = function(a, b) {
+      return apiService.util.naturalSort(a.title, b.title);
+    };
+
+    var sortByDate = function(a, b, date, reverse) {
+      if (a[date].epoch !== b[date].epoch) {
+        if (!reverse) {
+          return a[date].epoch - b[date].epoch;
+        } else {
+          return b[date].epoch - a[date].epoch;
+        }
+      } else {
+        return sortByTitle(a, b);
+      }
+    };
+
+    var sortByDueDate = function(a, b) {
+      return sortByDate(a, b, 'dueDate', false);
+    };
+    var sortByUpdatedDateReverse = function(a, b) {
+      return sortByDate(a, b, 'updatedDate', true);
+    };
+    var sortByCompletedDateReverse = function(a, b) {
+      return sortByDate(a, b, 'completedDate', true);
+    };
+
     $scope.updateTaskLists = function() {
-      $scope.overdueTasks = $filter('orderBy')($scope.tasks.filter(filterOverdue), 'dueDate.epoch');
-      $scope.dueTodayTasks = $filter('orderBy')($scope.tasks.filter(filterDueToday), 'dueDate.epoch');
-      $scope.futureTasks = $filter('orderBy')($scope.tasks.filter(filterFuture), 'dueDate.epoch');
-      $scope.unscheduledTasks = $filter('orderBy')($scope.tasks.filter(filterUnScheduled), 'updatedDate.epoch', true);
-      $scope.completedTasks = $filter('orderBy')($scope.tasks.filter(filterCompleted), 'completedDate.epoch', true);
+      $scope.overdueTasks = $scope.tasks.filter(filterOverdue).sort(sortByDueDate);
+      $scope.dueTodayTasks = $scope.tasks.filter(filterDueToday).sort(sortByTitle);
+      $scope.futureTasks = $scope.tasks.filter(filterFuture).sort(sortByDueDate);
+      $scope.unscheduledTasks = $scope.tasks.filter(filterUnScheduled).sort(sortByUpdatedDateReverse);
+      $scope.completedTasks = $scope.tasks.filter(filterCompleted).sort(sortByCompletedDateReverse);
       calculateCounts();
     };
 
