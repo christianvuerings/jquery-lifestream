@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2014072218044400) do
+ActiveRecord::Schema.define(version: 20140722180444) do
 
   create_table "canvas_synchronization", force: true do |t|
     t.datetime "last_guest_user_sync"
