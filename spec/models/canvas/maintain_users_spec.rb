@@ -214,4 +214,18 @@ describe Canvas::MaintainUsers do
     end
   end
 
+  describe ".provisioned_account_eq_sis_account?" do
+    let(:provisioned_account) { {'login_id' => '123', 'first_name' => 'John', 'last_name' => 'Smith', 'email' => 'johnsmith@example.com'} }
+    let(:sis_account) { provisioned_account }
+    let(:sis_account_modified) { provisioned_account.merge({'first_name' => 'Jake'}) }
+
+    it "returns true if accounts are identical" do
+      expect(subject.class.provisioned_account_eq_sis_account?(provisioned_account, sis_account)).to be_true
+    end
+
+    it "returns false if accounts are not identical" do
+      expect(subject.class.provisioned_account_eq_sis_account?(provisioned_account, sis_account_modified)).to be_false
+    end
+  end
+
 end

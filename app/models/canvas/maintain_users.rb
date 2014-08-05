@@ -5,6 +5,15 @@ module Canvas
   class MaintainUsers < Csv
     include ClassLogger
 
+    # Returns true if user hashes are identical
+    def self.provisioned_account_eq_sis_account?(provisioned_account, sis_account)
+      matched = provisioned_account['login_id'] == sis_account['login_id'] &&
+        provisioned_account['first_name'] == sis_account['first_name'] &&
+        provisioned_account['last_name'] == sis_account['last_name'] &&
+        provisioned_account['email'] == sis_account['email']
+      matched
+    end
+
     # Appends account changes to the given CSV.
     # Appends all known user IDs to the input array.
     # Makes any necessary changes to SIS user IDs.
@@ -50,19 +59,11 @@ module Canvas
           if old_account_data['user_id'] != new_account_data['user_id']
             sis_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
           end
-          unless provisioned_account_eq_sis_account?(old_account_data, new_account_data)
+          unless self.class.provisioned_account_eq_sis_account?(old_account_data, new_account_data)
             account_changes << new_account_data
           end
         end
       end
-    end
-
-    def provisioned_account_eq_sis_account?(provisioned_account, sis_account)
-      matched = provisioned_account['login_id'] == sis_account['login_id'] &&
-        provisioned_account['first_name'] == sis_account['first_name'] &&
-        provisioned_account['last_name'] == sis_account['last_name'] &&
-        provisioned_account['email'] == sis_account['email']
-      matched
     end
 
     # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
