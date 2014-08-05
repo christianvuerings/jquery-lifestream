@@ -14,6 +14,15 @@ module Canvas
       matched
     end
 
+    # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
+    # Otherwise, the generated CSV may include a new ID that does not match the existing ID for a user account.
+    def self.handle_changed_sis_user_ids(sis_id_changes)
+      logger.warn("About to change #{sis_id_changes.length} SIS user IDs")
+      sis_id_changes.each do |canvas_user_id, new_sis_id|
+        self.change_sis_user_id(canvas_user_id, new_sis_id)
+      end
+    end
+
     # Updates SIS User ID for Canvas User
     #
     # Because there is no way to do a bulk download of user login objects, two Canvas requests are required to
@@ -52,7 +61,7 @@ module Canvas
     def refresh_existing_user_accounts(known_uids, users_csv)
       sis_id_changes = {}
       check_all_user_accounts(known_uids, sis_id_changes, users_csv)
-      handle_changed_sis_user_ids(sis_id_changes)
+      self.class.handle_changed_sis_user_ids(sis_id_changes)
     end
 
     def check_all_user_accounts(known_uids, sis_id_changes, account_changes)
@@ -97,16 +106,6 @@ module Canvas
         end
       end
     end
-
-    # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
-    # Otherwise, the generated CSV may include a new ID that does not match the existing ID for a user account.
-    def handle_changed_sis_user_ids(sis_id_changes)
-      logger.warn("About to change #{sis_id_changes.length} SIS user IDs")
-      sis_id_changes.each do |canvas_user_id, new_sis_id|
-        self.class.change_sis_user_id(canvas_user_id, new_sis_id)
-      end
-    end
-
 
   end
 end
