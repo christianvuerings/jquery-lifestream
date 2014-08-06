@@ -68,6 +68,7 @@
 // Spinner
 @-webkit-keyframes spin-normal {
   to {
+    -webkit-transform: rotate(1turn);
     transform: rotate(1turn);
   }
 }
@@ -78,6 +79,7 @@
 }
 @-webkit-keyframes spin-extra {
   to {
+    -webkit-transform: rotate(1.125turn);
     transform: rotate(1.125turn);
   }
 }
@@ -112,6 +114,7 @@
     animation: spin-extra 1s infinite steps(8);
     // 1 3 5 7
     box-shadow: 0 1em #ccc, -1em 0 #ccc, 0 -1em #ccc, 1em 0 #444;
+    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
   }
   &:after {
