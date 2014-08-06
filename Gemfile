@@ -15,7 +15,7 @@ gem 'activerecord-session_store', '~>0.1.0'
 gem 'activeresource', '~>4.0.0'
 gem "protected_attributes", "~> 1.0.8"
 gem 'rails-observers', '~>0.1.2'
-gem 'rails-perftest', '~>0.0.3'
+gem 'rails-perftest', '~>0.0.4'
 
 gem "activerecord-jdbc-adapter", "~> 1.3.9"
 
@@ -60,7 +60,7 @@ gem "dalli", "~> 2.7.2"
 gem "log4r", "~> 1.1"
 
 # for easier non-DB-backed models
-gem "active_attr", "~> 0.8.3"
+gem "active_attr", "~> 0.8.4"
 
 # for production deployment
 gem "jruby-activemq", "~> 5.5.1"
@@ -78,7 +78,7 @@ gem 'link_header', "~> 0.0.7"
 # for simplified relational data management
 gem 'rails_admin', "0.6.2"
 
-gem "bootstrap-sass", "~> 3.1.1"
+gem "bootstrap-sass", "~> 3.2.0.1"
 
 # TorqueBox app server
 gem "torquebox", "~> 3.1.1"
@@ -103,7 +103,7 @@ gem 'icalendar', '~> 2.1.0'
 gem "angular-gem", "1.2.21"
 
 # Datepicker
-gem "pikaday-gem", "~> 1.1.0.0"
+gem "pikaday-gem", "~> 1.2.0"
 
 # CSS Framework - also includes Compass and SASS
 # https://github.com/zurb/foundation
@@ -125,7 +125,7 @@ gem "font-awesome-rails", "~> 4.1.0.0"
 
 # Moment.js
 # https://github.com/derekprior/momentjs-rails
-gem "momentjs-rails", "~> 2.5.1"
+gem "momentjs-rails", "~> 2.7.0"
 
 # Raven.js - library for JS error logging
 gem "ravenjs-gem", "~> 1.1.16"
@@ -166,9 +166,9 @@ group :development, :test , :testext do
   # https://rubygems.org/gems/capybara
   gem "capybara", "~> 2.1.0"
 
-  #Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
-  #from Ruby code, hiding some low-level action.
-  gem "headless", "~> 1.0.1"
+  # Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
+  # from Ruby code, hiding some low-level action.
+  gem "headless", "~> 1.0.2"
 
   # Spork can speed up multiple test runs.
   gem "spork-rails", "~> 4.0.0"
