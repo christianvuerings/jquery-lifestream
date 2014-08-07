@@ -17,7 +17,6 @@ module Calendar
       where c.term_yr = sched.term_yr
         and c.term_cd = sched.term_cd
         and c.course_cntl_num = sched.course_cntl_num
-        and (sched.print_cd is null or sched.print_cd <> 'C')
         #{terms_query_clause('c', Settings.class_calendar.current_terms_codes)}
         #{this_depts_clause}
       order by c.course_cntl_num, sched.multi_entry_cd

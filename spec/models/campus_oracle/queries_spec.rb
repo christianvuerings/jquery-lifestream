@@ -168,6 +168,7 @@ describe CampusOracle::Queries do
     data = CampusOracle::Queries.get_section_schedules("2013", "D", "16171")
     data.should_not be_nil
     if CampusOracle::Queries.test_data?
+      data.length.should == 2
       data[0]["building_name"].should == "WHEELER"
       data[1]["building_name"].should == "DWINELLE"
     end

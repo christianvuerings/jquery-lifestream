@@ -304,7 +304,6 @@ module CampusOracle
           and sched.BUILDING_NAME is NOT NULL
           and sched.TERM_CD = #{connection.quote(term_cd)}
           and sched.COURSE_CNTL_NUM = #{ccn.to_i}
-          and (sched.PRINT_CD is null or sched.PRINT_CD <> 'C')
         SQL
         result = connection.select_all(sql)
       }
