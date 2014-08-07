@@ -34,7 +34,7 @@ gem 'json', '~> 1.8.0'
 gem 'omniauth-cas', '~> 1.0.1'
 
 # LDAP
-gem 'net-ldap', '0.6.1'
+gem 'net-ldap', '~> 0.7.0'
 
 # secure_headers provides x-frame, csp and other http headers
 gem 'secure_headers', '~> 0.5.0'
@@ -44,7 +44,7 @@ gem 'faraday_middleware', '~> 0.9.1'
 gem 'httparty', '~> 0.13'
 
 # OAuth2 support
-gem 'signet', '~> 0.5'
+gem 'signet', '~> 0.5.1'
 gem 'google-api-client', '~> 0.7.1'
 
 # LTI support
@@ -93,7 +93,7 @@ gem 'pundit', '~> 0.2.2'
 
 gem 'cancan', '~> 1.6.10'
 
-gem 'icalendar', '~> 2.1.0'
+gem 'icalendar', '~> 2.1.1'
 
 ##################
 # Front-end Gems #
@@ -110,14 +110,14 @@ gem 'pikaday-gem', '~> 1.2.0'
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'compass-rails', '~> 2.0.0'
-gem 'foundation-rails', '~> 5.3.1.0'
+gem 'foundation-rails', '~> 5.3.3.0'
 
 # Closure Compiler Gem for JS compression
 # https://github.com/documentcloud/closure-compiler
-gem 'closure-compiler', '~> 1.1.10'
+gem 'closure-compiler', '~> 1.1.11'
 
 # so that Javascript minification will work on platforms lacking a JS runtime (Linux)
-gem 'therubyrhino', '~> 2.0.3'
+gem 'therubyrhino', '~> 2.0.4'
 
 # Font awesome - an icon font
 # https://github.com/bokmann/font-awesome-rails
@@ -125,7 +125,7 @@ gem 'font-awesome-rails', '~> 4.1.0.0'
 
 # Moment.js
 # https://github.com/derekprior/momentjs-rails
-gem 'momentjs-rails', '~> 2.7.0'
+gem 'momentjs-rails', '~> 2.8.1'
 
 # Raven.js - library for JS error logging
 gem 'ravenjs-gem', '~> 1.1.16'
