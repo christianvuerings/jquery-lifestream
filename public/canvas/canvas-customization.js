@@ -76,23 +76,25 @@
         $('#add-people-help').remove();
 
         // add help info to the dialog
-        var addPeopleHelp = '<div id="add-people-help">' +
-          '   <p>' +
-          '     <a class="element_toggler lead" aria-controls="add-people-help-details" aria-expanded="false" aria-label="Toggler toggle list visibility" role="button">' +
-          '       <i class="icon-question"></i> Need help adding someone to your site?' +
-          '     </a>' +
-          '   </p>' +
-          '   <div id="add-people-help-details" class="content-box pad-box-mini border border-trbl border-round" style="display: none;">' +
-          '     <dl>' +
-          '       <dt>UC Berkeley Faculty, Staff and Students</dt>' +
-          '         <dd>UC Berkeley faculty, staff and students <i>(regular and concurrent enrollment)</i> can be found in the CalNet Directory and be added to your site using their CalNet UID or official email address.</dd>' +
-          '       <dt>Guests</dt>' +
-          '         <dd>Peers from other institutions or guests from the community must be sponsored with a <a href="https://idc.berkeley.edu/guests/" target="_blank">CalNet Guest Account</a>. NOTE: concurrent enrollment students are considered students NOT guests.</dd>' +
-          '       <dt>More Information</dt>' +
-          '         <dd>Go to the <a href="http://ets.berkeley.edu/bcourses/faq/adding-people" target="_blank">bCourses FAQ</a> for more information about adding people to bCourse sites.</dd>' +
-          '     </dl>' +
-          '   </div>' +
-          '</div>';
+        var addPeopleHelp = [
+          '<div id="add-people-help">',
+          ' <p>',
+          '   <a class="element_toggler lead" aria-controls="add-people-help-details" aria-expanded="false" aria-label="Toggler toggle list visibility" role="button">',
+          '     <i class="icon-question"></i> Need help adding someone to your site?',
+          '   </a>',
+          ' </p>',
+          ' <div id="add-people-help-details" class="content-box pad-box-mini border border-trbl border-round" style="display: none;">',
+          '   <dl>',
+          '     <dt>UC Berkeley Faculty, Staff and Students</dt>',
+          '     <dd>UC Berkeley faculty, staff and students <i>(regular and concurrent enrollment)</i> can be found in the CalNet Directory and be added to your site using their CalNet UID or official email address.</dd>',
+          '     <dt>Guests</dt>',
+          '     <dd>Peers from other institutions or guests from the community must be sponsored with a <a href="https://idc.berkeley.edu/guests/" target="_blank">CalNet Guest Account</a>. NOTE: concurrent enrollment students are considered students NOT guests.</dd>',
+          '     <dt>More Information</dt>',
+          '     <dd>Go to the <a href="http://ets.berkeley.edu/bcourses/faq/adding-people" target="_blank">bCourses FAQ</a> for more information about adding people to bCourse sites.</dd>',
+          '   </dl>',
+          ' </div>',
+          '</div>'
+        ].join('');
         $('#create-users-step-1').prepend(addPeopleHelp);
 
       });
