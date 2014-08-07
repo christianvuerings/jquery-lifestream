@@ -135,7 +135,7 @@ gem 'natural-sort-js', '~> 0.7.0'
 
 # Use ngannotate in the Rails asset pipeline.
 # https://github.com/olov/ng-annotate
-gem 'ngannotate-rails', '~> 0.9.7'
+gem 'ngannotate-rails', '~> 0.9.9'
 
 # Use your angular templates with rails' asset pipeline
 # https://github.com/pitr/angular-rails-templates
@@ -155,7 +155,7 @@ group :development, :test , :testext do
   gem 'minitest-reporters', '~> 1.0.5'
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem 'selenium-webdriver', '~> 2.41.0'
+  gem 'selenium-webdriver', '~> 2.42.0'
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
@@ -164,7 +164,7 @@ group :development, :test , :testext do
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
   # https://rubygems.org/gems/capybara
-  gem 'capybara', '~> 2.1.0'
+  gem 'capybara', '~> 2.4.1'
 
   # Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
   # from Ruby code, hiding some low-level action.
@@ -182,7 +182,7 @@ end
 
 group :test do
   gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.9'
-  gem 'page-object', '~> 0.9.8'
+  gem 'page-object', '~> 1.0.2'
 end
 
 group :test, :testext do
@@ -190,7 +190,7 @@ group :test, :testext do
   # https://rubygems.org/gems/rspec_junit_formatter
   gem 'rspec_junit_formatter', '~> 0.1.2'
 
-  gem 'webmock', '~> 1.11.0'
+  gem 'webmock', '~> 1.18.0'
 end
 
 group :shell_debug do
