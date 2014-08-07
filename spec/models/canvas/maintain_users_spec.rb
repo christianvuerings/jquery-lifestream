@@ -178,7 +178,23 @@ describe Canvas::MaintainUsers do
     end
   end
 
-  describe "#change_sis_user_id" do
+  describe ".handle_changed_sis_user_ids" do
+    let(:sis_id_changes) do
+      {
+        "sis_login_id:UID:289021" => '1084726',
+        "sis_login_id:1084727" => 'UID:289022',
+        "sis_login_id:1084728" => 'UID:289023',
+      }
+    end
+    it 'sends call to change each sis user id update' do
+      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:UID:289021', '1084726').ordered
+      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084727', 'UID:289022').ordered
+      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
+      Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
+    end
+  end
+
+  describe ".change_sis_user_id" do
     let(:canvas_user_id) { rand(999999) }
     let(:matching_login_id) { rand(999999) }
     let(:new_sis_id) { "UID:#{rand(99999)}" }
@@ -210,7 +226,21 @@ describe Canvas::MaintainUsers do
           double().stub(:status).and_return(200)
       )
       Canvas::Logins.stub(:new).and_return(fake_logins_proxy)
-      subject.change_sis_user_id(canvas_user_id, new_sis_id)
+      Canvas::MaintainUsers.change_sis_user_id(canvas_user_id, new_sis_id)
+    end
+  end
+
+  describe ".provisioned_account_eq_sis_account?" do
+    let(:provisioned_account) { {'login_id' => '123', 'first_name' => 'John', 'last_name' => 'Smith', 'email' => 'johnsmith@example.com'} }
+    let(:sis_account) { provisioned_account }
+    let(:sis_account_modified) { provisioned_account.merge({'first_name' => 'Jake'}) }
+
+    it "returns true if accounts are identical" do
+      expect(Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account)).to be_true
+    end
+
+    it "returns false if accounts are not identical" do
+      expect(Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account_modified)).to be_false
     end
   end
 

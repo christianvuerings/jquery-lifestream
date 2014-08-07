@@ -16,6 +16,9 @@ module Canvas
     # Change the sis_user_id of that Login record to match the LDAP-or-student-ID scheme.
     #   PUT /api/v1/accounts/1/logins/1040 -F 'login[sis_user_id]'=new_sis_id
     #   {"account_id":1,"id":1040,"sis_user_id":"new_sis_id","unique_id":"anldapuid","user_id":1041}
+    #
+    # Note: The 'Password setting by admins' option in Account Settings must be enabled for this to work.
+    # This setting cannot be set by an Account Admin, but must be set by a Site Admin (Instructure staff)
 
     def change_sis_user_id(login_id, new_sis_user_id)
       url = "accounts/#{settings.account_id}/logins/#{login_id}?login[sis_user_id]=#{new_sis_user_id}"
