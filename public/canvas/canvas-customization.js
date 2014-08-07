@@ -58,7 +58,6 @@
 
     if (isViewingCoursePeople && canAddUsers) {
 
-      $('a#addUsers.btn.btn-primary').show();
       // add help info to the Add People dialog
       // wait until after the user presses the Add People button because the dialog isn't in the DOM yet
       $('a#addUsers.btn.btn-primary').click(function() {
