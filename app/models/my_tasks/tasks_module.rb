@@ -64,17 +64,5 @@ module MyTasks
       self.class.expire uid
     end
 
-    def push_if_feed_has_room!(formatted_entry, tasks_feed, future_count)
-      # Future bucket has a limit of 10 tasks
-      if formatted_entry["bucket"] == "Future"
-        if future_count < 10
-          tasks_feed.push(formatted_entry)
-          return 1
-        end
-      else
-        tasks_feed.push(formatted_entry)
-      end
-      0
-    end
   end
 end

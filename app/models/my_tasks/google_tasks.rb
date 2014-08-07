@@ -3,13 +3,11 @@ module MyTasks
   class GoogleTasks
     include MyTasks::TasksModule
     include Cache::UserCacheExpiry
-    attr_accessor :future_count
 
     def initialize(uid, starting_date)
       @uid = uid
       @starting_date = starting_date
       @now_time = Time.zone.now
-      @future_count = 0
     end
 
     def fetch_tasks
@@ -29,7 +27,7 @@ module MyTasks
         end
         all_tasks.sort! { |a, b| (a["dueDate"].nil? ? 0 : a["dueDate"]["epoch"]) <=> (b["dueDate"].nil? ? 0 : b["dueDate"]["epoch"]) }
         all_tasks.each do |formatted_entry|
-          @future_count += push_if_feed_has_room!(formatted_entry, filtered_tasks, @future_count)
+          filtered_tasks.push(formatted_entry)
         end
         filtered_tasks
       }

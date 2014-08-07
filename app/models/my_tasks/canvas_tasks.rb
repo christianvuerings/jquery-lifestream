@@ -1,13 +1,11 @@
 module MyTasks
   class CanvasTasks
     include MyTasks::TasksModule, SafeJsonParser
-    attr_accessor :future_count
 
     def initialize(uid, starting_date)
       @uid = uid
       @starting_date = starting_date
       @now_time = Time.zone.now
-      @future_count = 0
     end
 
     def fetch_tasks
@@ -66,7 +64,7 @@ module MyTasks
                 end
 
                 Rails.logger.debug "#{self.class.name} Putting Canvas todo with due_date #{formatted_entry["due_date"]} in #{bucket} bucket: #{formatted_entry}"
-                @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
+                tasks.push(formatted_entry)
               end
             end
           end
@@ -105,7 +103,7 @@ module MyTasks
                 end
 
                 Rails.logger.debug "#{self.class.name} Putting Canvas upcoming_events event with dueDate #{formatted_entry["dueDate"]} in #{bucket} bucket: #{formatted_entry}"
-                @future_count += push_if_feed_has_room!(formatted_entry, tasks, @future_count)
+                tasks.push(formatted_entry)
               end
             end
           end
