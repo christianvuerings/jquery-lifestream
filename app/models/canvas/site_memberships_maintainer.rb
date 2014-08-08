@@ -1,5 +1,6 @@
 module Canvas
   class SiteMembershipsMaintainer < Csv
+    include TorqueBox::Messaging::Backgroundable
     include ClassLogger
 
     # Roles indicated by Canvas Enrollments API
@@ -20,6 +21,23 @@ module Canvas
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
         enrollments_csv_output, users_csv_output, known_users, batch_mode)
       worker.refresh_sections_in_course
+    end
+
+    # Self-contained method suitable for running as a background job.
+    def self.import_memberships(sis_course_id, sis_section_ids, enrollments_csv_filename)
+      enrollments_rows = []
+      users_rows = []
+      known_users = []
+      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users, true)
+      worker.refresh_sections_in_course
+      logger.warn("Importing #{enrollments_rows.size} memberships for #{known_users.size} users to course site #{sis_course_id}")
+      enrollments_csv = worker.make_enrollments_csv(enrollments_csv_filename, enrollments_rows)
+      response = Canvas::SisImport.new.import_enrollments(enrollments_csv)
+      if response.blank?
+        logger.error("Enrollments import to course site #{sis_course_id} failed")
+      else
+        logger.info("Successfully imported enrollments to course site #{sis_course_id}")
+      end
     end
 
     def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
@@ -45,6 +63,8 @@ module Canvas
     end
 
     def canvas_section_enrollments(canvas_section_id)
+      # So far as CSV generation is concerned, ignoring current memberships is equivalent to not having any current
+      # memberships.
       if @batch_mode
         {}
       else
@@ -64,8 +84,8 @@ module Canvas
     def refresh_students_in_section(campus_section, section_id, canvas_section_enrollments)
       campus_data_rows = CampusOracle::Queries.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
       campus_data_rows.each do |campus_data_row|
-        next unless (canvas_role = ENROLL_STATUS_TO_CANVAS_API_ROLE[campus_data_row['enroll_status']])
-        update_section_enrollment_from_campus(canvas_role, section_id, campus_data_row, canvas_section_enrollments)
+        next unless (canvas_api_role = ENROLL_STATUS_TO_CANVAS_API_ROLE[campus_data_row['enroll_status']])
+        update_section_enrollment_from_campus(canvas_api_role, section_id, campus_data_row, canvas_section_enrollments)
       end
     end
 

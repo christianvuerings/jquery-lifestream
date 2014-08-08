@@ -74,6 +74,7 @@ describe Canvas::ProvideCourseSite do
       allow(subject).to receive(:add_instructor_to_sections).and_return(true)
       allow(subject).to receive(:retrieve_course_site_details).and_return(true)
       allow(subject).to receive(:expire_instructor_sites_cache).and_return(true)
+      allow(subject).to receive(:import_enrollments_in_background).and_return(true)
     end
 
     it "intercepts raised exceptions and updates status" do
@@ -95,6 +96,7 @@ describe Canvas::ProvideCourseSite do
       expect(subject).to receive(:add_instructor_to_sections).ordered.and_return(true)
       expect(subject).to receive(:retrieve_course_site_details).ordered.and_return(true)
       expect(subject).to receive(:expire_instructor_sites_cache).ordered.and_return(true)
+      expect(subject).to receive(:import_enrollments_in_background).ordered.and_return(true)
       subject.create_course_site(site_name, site_course_code, "fall-2013", ["1136", "1204"])
     end
 
@@ -426,6 +428,22 @@ describe Canvas::ProvideCourseSite do
     it "updates completed steps list" do
       subject.expire_instructor_sites_cache
       expect(subject.instance_eval { @completed_steps }).to eq ["Clearing bCourses course site cache"]
+    end
+  end
+
+  describe '#import_enrollments_in_background' do
+    let(:course_id) {random_id}
+    let(:section_ids) {[random_id, random_id]}
+    let(:section_definitions) {[{
+      'section_id' => section_ids[0]
+    }, {
+      'section_id' => section_ids[1]
+    }]}
+    let(:maintainer) {double}
+    it 'should forward to a background job handler' do
+      expect(Canvas::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
+      expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything)
+      subject.import_enrollments_in_background(course_id, section_definitions)
     end
   end
 

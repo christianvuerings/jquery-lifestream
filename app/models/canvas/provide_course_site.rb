@@ -58,6 +58,9 @@ module Canvas
       # TODO Expire user's Canvas-related caches to maintain UX consistency.
       @status = "Completed"
       save
+
+      # Start a background job to add current students and instructors to the new site.
+      import_enrollments_in_background(@import_data['sis_course_id'], @import_data['section_definitions'])
     rescue StandardError => error
       logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
       @status = 'Error'
@@ -164,6 +167,11 @@ module Canvas
       MyClasses::Merged.new(@uid).expire_cache
       MyAcademics::Merged.new(@uid).expire_cache
       complete_step("Clearing bCourses course site cache")
+    end
+
+    def import_enrollments_in_background(sis_course_id, canvas_section_rows)
+      Canvas::SiteMembershipsMaintainer.background.import_memberships(sis_course_id,
+        canvas_section_rows.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv")
     end
 
     def csv_filename_prefix
