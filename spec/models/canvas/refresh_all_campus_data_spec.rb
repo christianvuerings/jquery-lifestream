@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe Canvas::RefreshAllCampusData do
-
-  let(:current_sis_term_ids)                    { ["TERM:2013-D", "TERM:2014-B"] }
   subject { Canvas::RefreshAllCampusData.new('incremental') }
 
   before do
@@ -11,21 +9,20 @@ describe Canvas::RefreshAllCampusData do
     DateTime.stub(:now).and_return(frozen_moment_in_time)
   end
 
-  it "establishes the csv import files" do
-    expect(subject.users_csv_filename).to be_an_instance_of String
-    expect(subject.users_csv_filename).to eq "tmp/canvas/canvas-2014-01-01-users-incremental.csv"
-    expect(subject.term_to_memberships_csv_filename).to be_an_instance_of Hash
-    expect(subject.term_to_memberships_csv_filename['TERM:2013-D']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2013-D-enrollments-incremental.csv"
-    expect(subject.term_to_memberships_csv_filename['TERM:2014-B']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2014-B-enrollments-incremental.csv"
-  end
-
-  it "makes calls to each step of refresh in proper order" do
-    subject.should_receive(:make_csv_files).ordered.and_return(true)
-    subject.should_receive(:import_csv_files).ordered.and_return(true)
-    subject.run
-  end
-
-  describe '#make_csv_files' do
+  context 'with multiple terms' do
+    let(:current_sis_term_ids) { ["TERM:2013-D", "TERM:2014-B"] }
+    it "establishes the csv import files" do
+      expect(subject.users_csv_filename).to be_an_instance_of String
+      expect(subject.users_csv_filename).to eq "tmp/canvas/canvas-2014-01-01-users-incremental.csv"
+      expect(subject.term_to_memberships_csv_filename).to be_an_instance_of Hash
+      expect(subject.term_to_memberships_csv_filename['TERM:2013-D']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2013-D-enrollments-incremental.csv"
+      expect(subject.term_to_memberships_csv_filename['TERM:2014-B']).to eq "tmp/canvas/canvas-2014-01-01-TERM_2014-B-enrollments-incremental.csv"
+    end
+    it "makes calls to each step of refresh in proper order" do
+      subject.should_receive(:make_csv_files).ordered.and_return(true)
+      subject.should_receive(:import_csv_files).ordered.and_return(true)
+      subject.run
+    end
     it "should send call to populate incremental update csv for users and enrollments" do
       Canvas::MaintainUsers.any_instance.should_receive(:refresh_existing_user_accounts).once.and_return(nil)
       expect_any_instance_of(Canvas::RefreshAllCampusData).to receive(:refresh_existing_term_sections).twice.and_return(nil)
@@ -33,7 +30,8 @@ describe Canvas::RefreshAllCampusData do
     end
   end
 
-  describe '#refresh_existing_term_sections' do
+  describe 'term-specific work' do
+    let(:current_sis_term_ids) { ["TERM:2014-B"] }
     let(:ccn) { "#{random_id}" }
     let(:canvas_term_sections_csv_string) do
       [
@@ -45,50 +43,21 @@ describe Canvas::RefreshAllCampusData do
       ].join("\n")
     end
     let(:canvas_term_sections_csv_table) { CSV.parse(canvas_term_sections_csv_string, {headers: true}) }
-    let(:mock_worker) { double }
     before do
+      allow_any_instance_of(Canvas::MaintainUsers).to receive(:refresh_existing_user_accounts)
       allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(canvas_term_sections_csv_table)
-      expect(Canvas::IncrementalEnrollments).to receive(:new).and_return(mock_worker)
     end
-
-    context 'when a mix of primary and secondary sections' do
-      before do
-        allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B', ["1#{ccn}", "2#{ccn}"]).and_return([
-          {'course_cntl_num' => "1#{ccn}", 'primary_secondary_cd' => 'P'},
-          {'course_cntl_num' => "2#{ccn}", 'primary_secondary_cd' => 'S'}
-        ])
+    it 'passes well constructed parameters to the memberships maintainer' do
+      expect(Canvas::SiteMembershipsMaintainer).to receive(:new) do |course_id, csv_rows, enrollments_csv, users_csv, known_users, batch_mode|
+        expect(course_id).to eq "CRS:#{ccn}"
+        expect(csv_rows.size).to eq 2
+        expect(csv_rows[0]['section_id']).to eq "SEC:2014-B-2#{ccn}"
+        expect(csv_rows[1]['section_id']).to eq "SEC:2014-B-1#{ccn}"
+        expect(known_users).to eq []
+        expect(batch_mode).to be_false
+        double(refresh_sections_in_course: nil)
       end
-      it 'assigns TA role for secondary sections' do
-        expect(mock_worker).to receive(:refresh_enrollments_in_section).with(
-          Canvas::Proxy.sis_section_id_to_ccn_and_term("SEC:2014-B-1#{ccn}"),
-          "CRS:#{ccn}", "SEC:2014-B-1#{ccn}", 'teacher', "#{ccn}1", 'enrollments_csv', 'known_users', 'users_csv'
-        ).ordered.and_return(nil)
-        expect(mock_worker).to receive(:refresh_enrollments_in_section).with(
-          Canvas::Proxy.sis_section_id_to_ccn_and_term("SEC:2014-B-2#{ccn}"),
-          "CRS:#{ccn}", "SEC:2014-B-2#{ccn}", 'ta', "#{ccn}2", 'enrollments_csv', 'known_users', 'users_csv'
-        ).ordered.and_return(nil)
-        subject.refresh_existing_term_sections('TERM:2014-B', 'enrollments_csv', 'known_users', 'users_csv')
-      end
-    end
-
-    context 'when all secondary sections' do
-      before do
-        allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B', ["1#{ccn}", "2#{ccn}"]).and_return([
-          {'course_cntl_num' => "1#{ccn}", 'primary_secondary_cd' => 'S'},
-          {'course_cntl_num' => "2#{ccn}", 'primary_secondary_cd' => 'S'}
-        ])
-      end
-      it 'assigns teacher role for secondary sections' do
-        expect(mock_worker).to receive(:refresh_enrollments_in_section).with(
-          Canvas::Proxy.sis_section_id_to_ccn_and_term("SEC:2014-B-1#{ccn}"),
-          "CRS:#{ccn}", "SEC:2014-B-1#{ccn}", 'teacher', "#{ccn}1", 'enrollments_csv', 'known_users', 'users_csv'
-        ).ordered.and_return(nil)
-        expect(mock_worker).to receive(:refresh_enrollments_in_section).with(
-          Canvas::Proxy.sis_section_id_to_ccn_and_term("SEC:2014-B-2#{ccn}"),
-          "CRS:#{ccn}", "SEC:2014-B-2#{ccn}", 'teacher', "#{ccn}2", 'enrollments_csv', 'known_users', 'users_csv'
-        ).ordered.and_return(nil)
-        subject.refresh_existing_term_sections('TERM:2014-B', 'enrollments_csv', 'known_users', 'users_csv')
-      end
+      subject.make_csv_files
     end
 
   end
