@@ -10,6 +10,7 @@ module Canvas
     # Performs full active user synchronization task
     def sync_all_active_users
       prepare_sis_user_import
+      get_canvas_user_report_file
       load_active_users
       process_updated_users
       process_new_users
@@ -23,17 +24,20 @@ module Canvas
     end
 
     # Prepares Canvas report containing all users for iteration during processing
-    def canvas_user_report_file
-      filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H-%M-%S')}-users-report.csv"
-      csv_table = Canvas::UsersReport.new.get_csv
-      headers = csv_table.headers.join(',')
-      file = CSV.open(filename, 'wb', { :headers => headers, :write_headers => true})
-      logger.warn("Performing user update checks on #{csv_table.count} provisioned user accounts")
-      csv_table.each do |row|
-        file << row
-      end
-      file.close
-      file.path
+    def get_canvas_user_report_file
+      get_report = Proc.new {
+        filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H-%M-%S')}-users-report.csv"
+        csv_table = Canvas::UsersReport.new.get_csv
+        headers = csv_table.headers.join(',')
+        file = CSV.open(filename, 'wb', { :headers => headers, :write_headers => true})
+        logger.warn("Performing user update checks on #{csv_table.count} provisioned user accounts")
+        csv_table.each do |row|
+          file << row
+        end
+        file.close
+        file.path
+      }
+      @canvas_user_report_file_path ||= get_report.call
     end
 
     # Loads active LDAP people/guests from campus Oracle view
@@ -48,7 +52,7 @@ module Canvas
     # Adds updated users to SIS User import CSV, records users needing SIS User ID update.
     # Removes users existing in Canvas from active user list to leave new users remaining in @active_sis_users hash.
     def process_updated_users
-      CSV.foreach(canvas_user_report_file, :headers => :first_row) do |canvas_user|
+      CSV.foreach(get_canvas_user_report_file, :headers => :first_row) do |canvas_user|
         uid = canvas_user['login_id']
 
         # process only if found in campus data
@@ -75,6 +79,7 @@ module Canvas
         new_canvas_user = canvas_user_from_campus_row(new_user)
         add_user_to_import(new_canvas_user)
       end
+      @active_sis_users = nil
     end
 
     # Adds Canvas User hash to SIS User Import CSV

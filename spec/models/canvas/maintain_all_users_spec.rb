@@ -52,6 +52,7 @@ describe Canvas::MaintainAllUsers do
   describe "#sync_all_active_users" do
     it "calls user syncing methods in intended order" do
       expect(subject).to receive(:prepare_sis_user_import).ordered.and_return(true)
+      expect(subject).to receive(:get_canvas_user_report_file).ordered.and_return(true)
       expect(subject).to receive(:load_active_users).ordered.and_return(true)
       expect(subject).to receive(:process_updated_users).ordered.and_return(true)
       expect(subject).to receive(:process_new_users).ordered.and_return(true)
@@ -71,22 +72,34 @@ describe Canvas::MaintainAllUsers do
     end
   end
 
-  describe "#canvas_user_report_file" do
+  describe "#get_canvas_user_report_file" do
     it "returns path to file containing canvas user report CSV" do
-      result = subject.canvas_user_report_file
+      result = subject.get_canvas_user_report_file
       expect(result).to be_an_instance_of String
       expect(result).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
       expect(File.exists?(result)).to be_true
     end
 
     it "inserts all users into csv file" do
-      result = subject.canvas_user_report_file
+      result = subject.get_canvas_user_report_file
       expect(result).to be_an_instance_of String
       csv_array = CSV.read("tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv")
       expect(csv_array[0]).to eq ["canvas_user_id", "user_id", "login_id", "first_name", "last_name", "email", "status"]
       expect(csv_array[1][2]).to eq "946123"
       expect(csv_array[2][2]).to eq "946124"
       expect(csv_array[3][2]).to eq "946125"
+    end
+
+    it "returns existing file path if user report already obtained" do
+      expect_any_instance_of(Canvas::UsersReport).to receive(:get_csv).once.and_return(user_report_csv)
+      result_1 = subject.get_canvas_user_report_file
+      expect(result_1).to be_an_instance_of String
+      expect(result_1).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
+      expect(File.exists?(result_1)).to be_true
+      result_2 = subject.get_canvas_user_report_file
+      expect(result_2).to be_an_instance_of String
+      expect(result_2).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
+      expect(File.exists?(result_2)).to be_true
     end
   end
 
