@@ -24,16 +24,19 @@ module Canvas
 
     # Prepares Canvas report containing all users for iteration during processing
     def canvas_user_report_file
-      filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H-%M-%S')}-users-report.csv"
-      csv_table = Canvas::UsersReport.new.get_csv
-      headers = csv_table.headers.join(',')
-      file = CSV.open(filename, 'wb', { :headers => headers, :write_headers => true})
-      logger.warn("Performing user update checks on #{csv_table.count} provisioned user accounts")
-      csv_table.each do |row|
-        file << row
-      end
-      file.close
-      file.path
+      get_report = Proc.new {
+        filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H-%M-%S')}-users-report.csv"
+        csv_table = Canvas::UsersReport.new.get_csv
+        headers = csv_table.headers.join(',')
+        file = CSV.open(filename, 'wb', { :headers => headers, :write_headers => true})
+        logger.warn("Performing user update checks on #{csv_table.count} provisioned user accounts")
+        csv_table.each do |row|
+          file << row
+        end
+        file.close
+        file.path
+      }
+      @canvas_user_report_file_path ||= get_report.call
     end
 
     # Loads active LDAP people/guests from campus Oracle view

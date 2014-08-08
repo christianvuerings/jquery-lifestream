@@ -88,6 +88,18 @@ describe Canvas::MaintainAllUsers do
       expect(csv_array[2][2]).to eq "946124"
       expect(csv_array[3][2]).to eq "946125"
     end
+
+    it "returns existing file path if user report already obtained" do
+      expect_any_instance_of(Canvas::UsersReport).to receive(:get_csv).once.and_return(user_report_csv)
+      result_1 = subject.canvas_user_report_file
+      expect(result_1).to be_an_instance_of String
+      expect(result_1).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
+      expect(File.exists?(result_1)).to be_true
+      result_2 = subject.canvas_user_report_file
+      expect(result_2).to be_an_instance_of String
+      expect(result_2).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
+      expect(File.exists?(result_2)).to be_true
+    end
   end
 
   describe "#load_active_users" do
