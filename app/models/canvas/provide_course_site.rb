@@ -46,17 +46,12 @@ module Canvas
       identify_department_subaccount
       prepare_course_site_definition
       prepare_section_definitions
-      prepare_user_definitions unless is_admin_by_ccns
-      prepare_course_site_memberships unless is_admin_by_ccns
 
       # TODO Upload ZIP archives instead and do more detailed parsing of the import status.
       import_course_site(@import_data['course_site_definition'])
       import_sections(@import_data['section_definitions'])
-      import_users(@import_data['user_definitions']) unless is_admin_by_ccns
-      import_enrollments(@import_data['course_memberships']) unless is_admin_by_ccns
+      add_instructor_to_sections(@import_data['section_definitions']) unless is_admin_by_ccns
 
-      # TODO Perform initial import of official campus instructors for these sections.
-      # TODO Perform initial import of official campus student enrollments.
       retrieve_course_site_details
       expire_instructor_sites_cache
 
@@ -124,21 +119,6 @@ module Canvas
       complete_step("Prepared section definitions")
     end
 
-    def prepare_user_definitions
-      raise RuntimeError, "Unable to prepare user definition. User ID is not present." if @uid.blank?
-      # Add current instructor so that link to course site will work.
-      # TODO Can eliminate this step if we import all official instructors for the sections.
-      @import_data['user_definitions'] = accumulate_user_data([@uid], [])
-      complete_step("Prepared user definitions")
-    end
-
-    def prepare_course_site_memberships
-      raise RuntimeError, "Unable to prepare course site memberships. Section definitions are not present." if @import_data['section_definitions'].blank?
-      raise RuntimeError, "Unable to prepare course site memberships. User definitions are not present." if @import_data['user_definitions'].blank?
-      @import_data['course_memberships'] = generate_course_memberships(@import_data['section_definitions'], @import_data['user_definitions'][0])
-      complete_step("Prepared course site memberships")
-    end
-
     def import_course_site(canvas_course_row)
       @import_data['courses_csv_file'] = make_courses_csv("#{csv_filename_prefix}-course.csv", [canvas_course_row])
       response = Canvas::SisImport.new.import_courses(@import_data['courses_csv_file'])
@@ -159,28 +139,17 @@ module Canvas
       end
     end
 
-    def import_users(canvas_user_rows)
-      @import_data['users_csv_file'] = make_users_csv("#{csv_filename_prefix}-users.csv", canvas_user_rows)
-      response = Canvas::SisImport.new.import_users(@import_data['users_csv_file'])
-      if response.blank?
-        logger.error("Imported course and sections from #{@import_data['courses_csv_file']}, #{@import_data['sections_csv_file']} but users did not import from #{@import_data['users_csv_file']}")
-        raise RuntimeError, "Course site was created but members may be missing! User import failed."
-      else
-        logger.warn("Successfully imported users from: #{@import_data['users_csv_file']}")
-        complete_step("Imported users")
+    def add_instructor_to_sections(canvas_section_rows)
+      canvas_section_rows.each do |canvas_section|
+        response = Canvas::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment',
+          "sis_section_id:#{canvas_section['section_id']}")
+        if response.blank?
+          logger.error("Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{canvas_section['section_id']}")
+          raise RuntimeError, "Course site was created but the teacher could not be added!"
+        end
       end
-    end
-
-    def import_enrollments(canvas_enrollment_rows)
-      @import_data['enrollments_csv_file'] = make_enrollments_csv("#{csv_filename_prefix}-enrollments.csv", canvas_enrollment_rows)
-      response = Canvas::SisImport.new.import_enrollments(@import_data['enrollments_csv_file'])
-      if response.blank?
-        logger.error("Imported course, sections, and users from #{@import_data['courses_csv_file']}, #{@import_data['sections_csv_file']}, #{@import_data['users_csv_file']} but memberships did not import from #{@import_data['enrollments_csv_file']}")
-        raise RuntimeError, "Course site was created but members may not be enrolled! Enrollment import failed."
-      else
-        logger.warn("Successfully imported enrollments from: #{@import_data['enrollments_csv_file']}")
-        complete_step("Imported instructor enrollment")
-      end
+      logger.warn('Successfully added instructor to sections as a teacher')
+      complete_step('Added instructor to course site')
     end
 
     def retrieve_course_site_details
@@ -287,22 +256,6 @@ module Canvas
       end
       logger.warn("User #{@uid} tried to provision inaccessible CCNs: #{ccns.inspect}") if ccns.any?
       filtered
-    end
-
-    # We add the instructor as a teacher in the default section of the course. This should
-    # be enough to grant site access before a full campus data refresh is done.
-    def generate_course_memberships(section_rows, instructor_row)
-      enrollments = []
-      section_rows.each do |section_row|
-        enrollments << {
-          'course_id' => section_row['course_id'],
-          'user_id' => instructor_row['user_id'],
-          'role' => 'teacher',
-          'section_id' => section_row['section_id'],
-          'status' => 'active'
-        }
-      end
-      enrollments
     end
 
     def generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)

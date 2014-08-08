@@ -75,10 +75,6 @@ describe Canvas::CourseAddUser do
   end
 
   context "when obtaining course sections list" do
-    it "raises exception if course id is not an integer" do
-      expect { Canvas::CourseAddUser.course_sections_list('not an integer') }.to raise_error(ArgumentError, "Course ID must be a Fixnum")
-    end
-
     it "returns list of section ids and names" do
       result = Canvas::CourseAddUser.course_sections_list(767330)
       expect(result).to be_an_instance_of Array
@@ -106,10 +102,6 @@ describe Canvas::CourseAddUser do
 
     it "raises exception when role is not a string" do
       expect { Canvas::CourseAddUser.add_user_to_course_section("260506", 1, "864215") }.to raise_error(ArgumentError, "role must be a String")
-    end
-
-    it "raises exception when canvas_course_section_id is not a string" do
-      expect { Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", 864215) }.to raise_error(ArgumentError, "canvas_course_section_id must be a String")
     end
 
     it "adds user to canvas" do
