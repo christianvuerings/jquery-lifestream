@@ -16,16 +16,16 @@ module Canvas
     }
     CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
-    def self.process(sis_course_id, canvas_sections, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
-      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, canvas_sections,
+    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
+      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
         enrollments_csv_output, users_csv_output, known_users, batch_mode)
       worker.refresh_sections_in_course
     end
 
-    def initialize(sis_course_id, canvas_sections, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
+    def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
       super()
       @sis_course_id = sis_course_id
-      @canvas_sections = canvas_sections
+      @sis_section_ids = sis_section_ids
       @enrollments_csv_output = enrollments_csv_output
       @users_csv_output = users_csv_output
       @known_users = known_users
@@ -33,13 +33,14 @@ module Canvas
     end
 
     def refresh_sections_in_course
-      campus_sections = @canvas_sections.collect {|row| Canvas::Proxy.sis_section_id_to_ccn_and_term(row['section_id'])}
+      campus_sections = @sis_section_ids.collect {|section_id| Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id)}
       section_to_instructor_role = instructor_role_for_sections(campus_sections)
-      @canvas_sections.each do |csv_row|
-        sis_section_id = csv_row['section_id']
-        campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id)
-        instructor_role = section_to_instructor_role[campus_section]
-        refresh_enrollments_in_section(campus_section, sis_section_id, instructor_role, csv_row['canvas_section_id'])
+      @sis_section_ids.each do |sis_section_id|
+        if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id))
+          instructor_role = section_to_instructor_role[campus_section]
+          canvas_section_id = "sis_section_id:#{sis_section_id}"
+          refresh_enrollments_in_section(campus_section, sis_section_id, instructor_role, canvas_section_id)
+        end
       end
     end
 
@@ -47,8 +48,7 @@ module Canvas
       if @batch_mode
         {}
       else
-        canvas_section_id = Integer(canvas_section_id, 10)
-        canvas_section_enrollments = Canvas::SectionEnrollments.new(:section_id => canvas_section_id).list_enrollments
+        canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_section_id).list_enrollments
         canvas_section_enrollments.group_by {|e| e['user']['login_id']}
       end
     end

@@ -7,14 +7,10 @@ describe Canvas::SiteMembershipsMaintainer do
   let(:users_csv)  { [] }
   let(:known_users) { [] }
   let(:uid) { random_id }
-  let(:canvas_section_id) { random_id }
   let(:sis_section_id) {"SEC:2014-B-#{course_id}"}
-  let(:canvas_sections) { [{
-    'canvas_section_id' => canvas_section_id,
-    'section_id' => sis_section_id
-  }] }
+  let(:sis_section_ids) { [sis_section_id] }
   subject {
-    Canvas::SiteMembershipsMaintainer.process(course_id, canvas_sections, enrollments_csv, users_csv, known_users, batch_mode)
+    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode)
     enrollments_csv
   }
 
@@ -89,13 +85,7 @@ describe Canvas::SiteMembershipsMaintainer do
 
     describe 'teacher roles based on section types' do
       let(:ccn_to_uid) { {random_id => random_id, random_id => random_id} }
-      let(:canvas_sections) { [{
-        'canvas_section_id' => random_id,
-        'section_id' => "SEC:2014-B-#{ccn_to_uid.keys[0]}"
-      }, {
-        'canvas_section_id' => random_id,
-        'section_id' => "SEC:2014-B-#{ccn_to_uid.keys[1]}"
-      }]}
+      let(:sis_section_ids) { ["SEC:2014-B-#{ccn_to_uid.keys[0]}", "SEC:2014-B-#{ccn_to_uid.keys[1]}"] }
       before do
         allow(CampusOracle::Queries).to receive(:get_enrolled_students).and_return([])
         allow(CampusOracle::Queries).to receive(:get_section_instructors) do |term_yr, term_cd, ccn|
@@ -153,7 +143,7 @@ describe Canvas::SiteMembershipsMaintainer do
       }]
     end
     before do
-      expect(Canvas::SectionEnrollments).to receive(:new).with(section_id: canvas_section_id.to_i).and_return(double(
+      expect(Canvas::SectionEnrollments).to receive(:new).with(section_id: "sis_section_id:#{sis_section_id}").and_return(double(
         list_enrollments: canvas_section_enrollments
       ))
       expect(CampusOracle::Queries).to receive(:get_enrolled_students).
