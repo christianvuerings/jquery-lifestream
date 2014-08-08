@@ -27,41 +27,50 @@
           // apply modifications only on first button click
           if ($button.data('calcentral-modified') !== 'true') {
 
-            // increase the height of the Add People Dialog
-            $('#ui-id-2').height(450);
+            // apply modification after obtaining 'Find a Person to Add' tool LTI application ID
+            var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+            $.get(externalToolsUrl, function(externalToolsHash) {
+              var findAPersonToAddToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' + externalToolsHash['Add People'];
 
-            // first, modify the text above the user_list text area
-            $('#create-users-step-1 p:first').replaceWith('<p>Type or paste a list of email addresses or CalNet UIDs below:</p>');
+              // increase the height of the Add People Dialog
+              $('#ui-id-2').height(450);
 
-            // add the calnet directory link
-            $('<div class="pull-right" id="calnet-directory-link"><a href="http://directory.berkeley.edu" target="_blank"><i class="icon-search-address-book"></i>Search the CalNet Directory</a></div>').prependTo('#create-users-step-1 p:first');
+              // first, modify the text above the user_list text area
+              $('#create-users-step-1 p:first').replaceWith('<p>Type or paste a list of email addresses or CalNet UIDs below:</p>');
 
-            // make sure the calnet-guest-info div is removed so you never have more than one
-            $('#add-people-help').remove();
+              // add the calnet directory link
+              $('<div class="pull-right" id="calnet-directory-link"><a href="'+ findAPersonToAddToolHref +'"><i class="icon-search-address-book"></i>Find a Person to Add</a></div>').prependTo('#create-users-step-1 p:first');
 
-            // add help info to the dialog
-            var addPeopleHelp = [
-              '<div id="add-people-help">',
-              ' <p>',
-              '   <a class="element_toggler lead" aria-controls="add-people-help-details" aria-expanded="false" aria-label="Toggler toggle list visibility" role="button">',
-              '     <i class="icon-question"></i> Need help adding someone to your site?',
-              '   </a>',
-              ' </p>',
-              ' <div id="add-people-help-details" class="content-box pad-box-mini border border-trbl border-round" style="display: none;">',
-              '   <dl>',
-              '     <dt>UC Berkeley Faculty, Staff and Students</dt>',
-              '     <dd>UC Berkeley faculty, staff and students <i>(regular and concurrent enrollment)</i> can be found in the CalNet Directory and be added to your site using their CalNet UID or official email address.</dd>',
-              '     <dt>Guests</dt>',
-              '     <dd>Peers from other institutions or guests from the community must be sponsored with a <a href="https://idc.berkeley.edu/guests/" target="_blank">CalNet Guest Account</a>. NOTE: concurrent enrollment students are considered students NOT guests.</dd>',
-              '     <dt>More Information</dt>',
-              '     <dd>Go to the <a href="http://ets.berkeley.edu/bcourses/faq/adding-people" target="_blank">bCourses FAQ</a> for more information about adding people to bCourse sites.</dd>',
-              '   </dl>',
-              ' </div>',
-              '</div>'
-            ].join('');
-            $('#create-users-step-1').prepend(addPeopleHelp);
+              // make sure the calnet-guest-info div is removed so you never have more than one
+              $('#add-people-help').remove();
 
-            $button.data('calcentral-modified', 'true');
+              // add help info to the dialog
+              var addPeopleHelp = [
+                '<div id="add-people-help">',
+                ' <p>',
+                '   <a class="element_toggler lead" aria-controls="add-people-help-details" aria-expanded="false" aria-label="Toggler toggle list visibility" role="button">',
+                '     <i class="icon-question"></i> Need help adding someone to your site?',
+                '   </a>',
+                ' </p>',
+                ' <div id="add-people-help-details" class="content-box pad-box-mini border border-trbl border-round" style="display: none;">',
+                '   <dl>',
+                '     <dt>UC Berkeley Faculty, Staff and Students</dt>',
+                '     <dd>UC Berkeley faculty, staff and students <i>(regular and concurrent enrollment)</i> can be found in the <a href="http://directory.berkeley.edu/" target="_blank">CalNet Directory</a> and be added to your site using their CalNet UID or official email address.</dd>',
+                '     <dt>Guests</dt>',
+                '     <dd>Peers from other institutions or guests from the community must be sponsored with a <a href="https://idc.berkeley.edu/guests/" target="_blank">CalNet Guest Account</a>. Do NOT request a CalNet Guest Account for concurrent enrollment students.</dd>',
+                '     <dt>More Information</dt>',
+                '     <dd>Go to the <a href="http://ets.berkeley.edu/bcourses/faq/adding-people" target="_blank">bCourses FAQ</a> for more information about adding people to bCourse sites.</dd>',
+                '   </dl>',
+                ' </div>',
+                '</div>'
+              ].join('');
+              $('#create-users-step-1').prepend(addPeopleHelp);
+
+              $button.data('calcentral-modified', 'true');
+
+
+            });
+
           }
 
         });
