@@ -44,8 +44,24 @@
         };
 
         // Check when the list has changed
-        scope.$watch(moreList, function(list) {
+        var moreListWatch = scope.$watch(moreList, function(list) {
           if (list && list.length) {
+            watchMoreLimit(list.length);
+            // If there is an extra watch, we should use that instead and cancel the list watch
+            if (attrs.ccShowMoreWatch) {
+              moreListWatch();
+            }
+          }
+        });
+
+        // Sometimes we also need to watch for extra items
+        scope.$watch($parse(attrs.ccShowMoreWatch), function(watchValue) {
+          // Don't do anything when the value we're watching for is undefined
+          if (watchValue === undefined) {
+            return;
+          }
+          var list = scope[attrs.ccShowMoreList];
+          if (list && Array.isArray(list) && list.length) {
             watchMoreLimit(list.length);
           }
         });
