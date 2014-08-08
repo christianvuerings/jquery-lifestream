@@ -79,6 +79,7 @@ module Canvas
         new_canvas_user = canvas_user_from_campus_row(new_user)
         add_user_to_import(new_canvas_user)
       end
+      @active_sis_users = nil
     end
 
     # Adds Canvas User hash to SIS User Import CSV
