@@ -10,6 +10,7 @@ module Canvas
     # Performs full active user synchronization task
     def sync_all_active_users
       prepare_sis_user_import
+      get_canvas_user_report_file
       load_active_users
       process_updated_users
       process_new_users
@@ -23,7 +24,7 @@ module Canvas
     end
 
     # Prepares Canvas report containing all users for iteration during processing
-    def canvas_user_report_file
+    def get_canvas_user_report_file
       get_report = Proc.new {
         filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H-%M-%S')}-users-report.csv"
         csv_table = Canvas::UsersReport.new.get_csv
@@ -51,7 +52,7 @@ module Canvas
     # Adds updated users to SIS User import CSV, records users needing SIS User ID update.
     # Removes users existing in Canvas from active user list to leave new users remaining in @active_sis_users hash.
     def process_updated_users
-      CSV.foreach(canvas_user_report_file, :headers => :first_row) do |canvas_user|
+      CSV.foreach(get_canvas_user_report_file, :headers => :first_row) do |canvas_user|
         uid = canvas_user['login_id']
 
         # process only if found in campus data
