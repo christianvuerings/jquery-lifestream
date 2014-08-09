@@ -30,7 +30,7 @@
             // apply modification after obtaining 'Find a Person to Add' tool LTI application ID
             var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
             $.get(externalToolsUrl, function(externalToolsHash) {
-              var findAPersonToAddToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' + externalToolsHash['Add People'];
+              var findAPersonToAddToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' + externalToolsHash['Find a Person to Add'];
 
               // increase the height of the Add People Dialog
               $('#ui-id-2').height(450);

@@ -1,5 +1,5 @@
 module Canvas
-  # Provides user provisioning to Canvas based on UID array provided by Add People tool
+  # Provides user provisioning to Canvas based on UID array provided by 'Find a Person to Add' tool
   class UserProvision < Csv
 
     def csv_filename_prefix

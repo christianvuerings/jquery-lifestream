@@ -7,7 +7,7 @@
    */
   angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, $http, $routeParams, $scope) {
 
-    apiService.util.setTitle('Add People');
+    apiService.util.setTitle('Find a Person to Add');
 
     var resetSearchState = function() {
       $scope.selectedUser = null;

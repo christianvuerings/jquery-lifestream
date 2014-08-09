@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <h2>Add People</h2>
+  <h2>Find a Person to Add</h2>
 
   <div data-ng-hide="showError">
 
@@ -105,32 +105,28 @@
       <div class="bc-notice-left-margin">
         <button class="cc-button-link bc-user-search-notice-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">Need help finding someone?</button>
         <div class="bc-user-search-notice" data-ng-show="toggle.displayHelp">
-          <div class="bc-help-tip">
-            <p>
-              Use this search to find all users with CalNet IDs.
-            </p>
-            <p class="bc-help-tip-emphasize">
-              Any regularly enrolled student, concurrent enrollment student, faculty or
-              staff member at Berkeley has a <a href="https://wikihub.berkeley.edu/display/calnet/CalNet+Identity+and+Access+Management">CalNet ID</a>.
-            </p>
-          </div>
 
-          <div class="bc-help-tip">
-            <p>
-              Anyone else you wish to add to your site must be sponsored as a
-              <a href="https://ims.berkeley.edu/ims/user/ucbGuestAccessRequestForm.jsp?no_server_init">CalNet Guest</a>.
-            </p>
-            <p class="bc-help-tip-emphasize">
-              For example, when you want to add someone from the community or a peer from another institution.
-            </p>
-          </div>
+          <dl>
+            <dt>UC Berkeley Faculty, Staff and Students</dt>
+            <dd>
+              UC Berkeley faculty, staff and students <i>(regular and concurrent enrollment)</i> can be found in the
+              <a href="http://directory.berkeley.edu/" target="_blank">CalNet Directory</a>
+              and be added to your site using their CalNet UID or official email address.
+            </dd>
+            <dt>Guests</dt>
+            <dd>
+              Peers from other institutions or guests from the community must be sponsored with a
+              <a href="https://idc.berkeley.edu/guests/" target="_blank">CalNet Guest Account</a>.
+              Do NOT request a CalNet Guest Account for concurrent enrollment students.
+            </dd>
+            <dt>More Information</dt>
+            <dd>
+              Go to the
+              <a href="http://ets.berkeley.edu/bcourses/faq/adding-people" target="_blank">bCourses FAQ</a>
+              for more information about adding people to bCourse sites.
+            </dd>
+          </dl>
 
-          <div class="bc-help-tip">
-            <p>
-              Learn more in the
-              <a href="https://bcourses.berkeley.edu/courses/1048627/wiki/adding-a-user-manually-to-your-course">&ldquo;Adding a User Manually to your Course&rdquo;</a> help topic &gt;&gt;
-            </p>
-          </div>
         </div>
       </div>
     </div>
