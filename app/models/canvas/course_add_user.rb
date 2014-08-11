@@ -35,8 +35,8 @@ module Canvas
       raise ArgumentError, "role must be a String" if role.class != String
       Canvas::UserProvision.new.import_users([ldap_user_id])
       canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
-      canvas_section_enrolmments_proxy = Canvas::SectionEnrollments.new(:section_id => canvas_course_section_id)
-      canvas_section_enrolmments_proxy.enroll_user(canvas_user_profile['id'], role, 'active', false)
+      canvas_section_enrollments_proxy = Canvas::SectionEnrollments.new(:section_id => canvas_course_section_id)
+      canvas_section_enrollments_proxy.enroll_user(canvas_user_profile['id'], role, 'active', false)
       true
     end
 
