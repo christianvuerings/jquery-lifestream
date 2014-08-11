@@ -51,7 +51,7 @@ gem 'google-api-client', '~> 0.7.1'
 gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'
 
 # for VCR http recording tool
-gem 'vcr', '~> 2.5.0'
+gem 'vcr', '~> 2.9.2'
 
 # for memcached connection
 gem 'dalli', '~> 2.7.2'
@@ -90,7 +90,7 @@ gem 'torquebox-messaging', '~> 3.1.1'
 gem 'retriable', '~> 1.4'
 
 # authorization abstraction layer
-gem 'pundit', '~> 0.2.2'
+gem 'pundit', '~> 0.2.3'
 
 gem 'cancan', '~> 1.6.10'
 
@@ -160,7 +160,7 @@ group :development, :test , :testext do
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
-  gem 'simplecov', '~> 0.7.1', require: false
+  gem 'simplecov', '~> 0.9.0', require: false
 
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
@@ -189,7 +189,7 @@ end
 group :test, :testext do
   # RSpec results that Hudson + Bamboo + xml happy CI servers can read.
   # https://rubygems.org/gems/rspec_junit_formatter
-  gem 'rspec_junit_formatter', '~> 0.1.2'
+  gem 'rspec_junit_formatter', '~> 0.2.0'
 
   gem 'webmock', '~> 1.18.0'
 end
