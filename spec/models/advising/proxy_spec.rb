@@ -24,7 +24,6 @@ describe Advising::Proxy do
     end
     subject { fake_oski_proxy.get }
     it 'should return empty response' do
-      p "empty subj #{subject}"
       subject.should be_empty
     end
   end
