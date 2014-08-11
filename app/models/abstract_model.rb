@@ -1,6 +1,6 @@
 class AbstractModel
 
-  include ActiveAttr::Model, ClassLogger, DatedFeed
+  include ActiveAttr::Model, DatedFeed
   extend Cache::Cacheable
 
   def initialize(id, options={})
