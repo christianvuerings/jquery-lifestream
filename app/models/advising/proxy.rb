@@ -22,11 +22,18 @@ module Advising
 
     def internal_get
       return {} unless Settings.features.advising
+      student_id = lookup_student_id
+      if student_id.blank?
+        # don't continue if student id can't be found.
+        logger.info "Lookup of student_id for uid #@uid failed, cannot call Advising API"
+        return {}
+      end
+
       if @fake
         logger.info "Fake = #@fake, getting data from JSON fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
         json = File.read(Rails.root.join('fixtures', 'json', 'advising.json').to_s)
       else
-        url = "#{@settings.base_url}/student/#{lookup_student_id}"
+        url = "#{@settings.base_url}/student/#{student_id}"
         logger.info "Internal_get: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
         response = ActiveSupport::Notifications.instrument('proxy', {url: url, class: self.class}) do
           HTTParty.get(
