@@ -32,13 +32,12 @@ module Calendar
           location = "#{strip_leading_zeros(course['room_number'])} #{building}, UC Berkeley"
         end
 
-        entry = Calendar::QueuedEntry.new(
-          {
-            year: course['term_yr'],
-            term_cd: course['term_cd'],
-            ccn: course['course_cntl_num'],
-            multi_entry_cd: course['multi_entry_cd'].blank? ? '-' : course['multi_entry_cd'],
-            transaction_type: Calendar::QueuedEntry::CREATE_TRANSACTION})
+        entry = Calendar::QueuedEntry.where(
+          year: course['term_yr'],
+          term_cd: course['term_cd'],
+          ccn: course['course_cntl_num'],
+          multi_entry_cd: course['multi_entry_cd'].blank? ? '-' : course['multi_entry_cd']).first_or_initialize
+        entry.transaction_type = Calendar::QueuedEntry::CREATE_TRANSACTION
 
         logged_entry = Calendar::LoggedEntry.lookup(entry)
         if logged_entry.present? && logged_entry.transaction_type != Calendar::QueuedEntry::DELETE_TRANSACTION
