@@ -52,6 +52,7 @@ features:
   profile_page: true
   audio: true
   regstatus: true
+  advising: true
 
 cache:
   store: "memory"
@@ -70,3 +71,6 @@ cache:
     MyTasks::Merged: <%= 1.day %>
     UpNext::MyUpNext: <%= 1.day %>
     User::Api: <%= 1.day %>
+
+advising_proxy:
+  fake: true
