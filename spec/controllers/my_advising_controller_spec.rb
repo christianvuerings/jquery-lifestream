@@ -12,12 +12,14 @@ describe MyAdvisingController do
   context 'with an authenticated user' do
     before(:each) do
       Settings.advising_proxy.stub(:fake).and_return(true)
+      Advising::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
     end
     it 'should be an non-empty advising feed based on fake Oski recorded data' do
-      session[:user_id] = random_id
+      session[:user_id] = '61889'
       get :get_feed
       json_response = JSON.parse(response.body)
-      json_response.size.should == 8
+      json_response.size.should == 9
+      json_response["statusCode"].should == 200
     end
   end
 end

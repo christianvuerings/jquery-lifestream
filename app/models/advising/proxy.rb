@@ -53,10 +53,9 @@ module Advising
         end
         logger.debug "Advising remote response: #{response.inspect}"
       end
-      HashConverter.camelize(safe_json(json)).merge
-      ({
+      {
         statusCode: 200
-      })
+      }.merge(HashConverter.camelize(safe_json(json)))
     end
 
   end
