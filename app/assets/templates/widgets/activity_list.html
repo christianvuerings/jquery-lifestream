@@ -1,10 +1,10 @@
 <div data-cc-spinner-directive="process.isLoading">
   <ul class="cc-widget-activities-list">
-    <li data-ng-repeat="activity in list | limitTo:activitiesLimit | filter:search" data-ng-class="{'cc-widget-list-selected': activity.show, 'cc-widget-activities-list-undated': activity.isLastUndated}">
+    <li data-ng-repeat="activity in (filteredList = (list | filter:search)) | limitTo:activitiesLimit" data-ng-class="{'cc-widget-list-selected': activity.show, 'cc-widget-activities-list-undated': activity.isLastUndated}">
       <div class="cc-widget-list-hover"
         data-ng-class="{'cc-widget-list-hover-opened':(activity.show)}"
         data-cc-accessible-focus-directive
-        data-ng-click="api.widget.toggleShow($event, list, activity, 'Recent Activity')">
+        data-ng-click="api.widget.toggleShow($event, filteredList, activity, 'Recent Activity')">
         <div>
           <div class="cc-widget-activities-text-column">
             <i class="fa fa-{{typeToIcon[activity.type]}} cc-left"></i>
@@ -64,7 +64,7 @@
       </div>
     </li>
   </ul>
-  <div data-cc-show-more-directive data-cc-show-more-list="list | filter:search" data-cc-show-more-limit="activitiesLimit"></div>
+  <div data-cc-show-more-directive data-cc-show-more-list="filteredList" data-cc-show-more-watch="search.source" data-cc-show-more-limit="activitiesLimit"></div>
   <div data-ng-show="!list.length" class="cc-widget-text">
     You have no recent activity at this time.
   </div>
