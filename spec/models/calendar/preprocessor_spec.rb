@@ -77,6 +77,24 @@ describe Calendar::Preprocessor do
         expect(subject[0].transaction_type).to eq 'U'
       end
     end
+    context 'when a preprocess task has been run twice without running export', if: Calendar::Queries.test_data? do
+      let!(:old_entry_id) {
+        old_entry = Calendar::QueuedEntry.create(
+          {
+            year: 2013,
+            term_cd: 'D',
+            ccn: 7309,
+            multi_entry_cd: 'A',
+            event_id: 'abcdef'})
+        old_entry.id
+      }
+      before do
+        Calendar::User.create({uid: '300939'})
+      end
+      it 'has the same queued_entry_id as the previous run of preprocess' do
+        expect(subject[0].id).to eq old_entry_id
+      end
+    end
     context 'when the user whitelist has an enrolled student on it with an alternate email for test purposes', if: Calendar::Queries.test_data? do
       before do
         Calendar::User.create({uid: '300939', alternate_email: 'ctweney@testg.berkeley.edu.test-google-a.com'})
