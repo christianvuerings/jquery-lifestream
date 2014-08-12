@@ -1,0 +1,25 @@
+{
+  "sid": "333344444",
+  "name": "Angelica Jolie",
+  "caseloadAdviser": {
+    "firstName": "Rebecca",
+    "lastName": "Bernassi",
+    "email": "rebeccab@berkeley.edu",
+    "phone": ""
+  },
+  "pastAppointments": [],
+  "futureAppointments": [
+    {
+      "appointmentId": 1234567890,
+      "dateTime": 1426328040000,
+      "staff": {
+        "name": "Staff Name",
+        "position": "Staff Position"
+      },
+      "location": "Appointment Location",
+      "method": "phone",
+      "urlToEditAppointment": "http://ua.berkeley.edu/appointments/1234567890"
+    }
+  ],
+  "urlToMakeAppointment": "http://ua.berkeley.edu/appointments/new"
+}

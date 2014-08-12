@@ -1,0 +1,141 @@
+{
+  "sid": "44442222",
+  "name": "Derek Smith",
+  "caseloadAdviser": {
+    "firstName": "Rebecca",
+    "lastName": "Bernassi",
+    "email": "rebeccab@berkeley.edu",
+    "phone": "510-478-7898"
+  },
+  "pastAppointments": [
+    {
+      "dateTime": 1384243200000,
+      "staff": {
+        "name": "John Lee",
+        "position": "College Adviser, Unit I"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1382425200000,
+      "staff": {
+        "name": "Francisco Savior",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    },
+    {
+      "dateTime": 1366182000000,
+      "staff": {
+        "name": "Mark Harvard",
+        "position": "College Adviser, Unit III"
+      },
+      "location": "L&S Office of Undergraduate Advising"
+    }
+  ],
+  "futureAppointments": [
+    {
+      "appointmentId": 1234567880,
+      "dateTime": 1426329040000,
+      "staff": {
+        "name": "Flint",
+        "position": "College Adviser, Unit II"
+      },
+      "location": "Free Speech Cafe",
+      "method": "",
+      "urlToEditAppointment": "http://ua.berkeley.edu/appointments/1234567880"
+    },
+    {
+      "appointmentId": 1234567890,
+      "dateTime": 1426328040000,
+      "staff": {
+        "name": "Dai Smith",
+        "position": "College Adviser, Unit II"
+      },
+      "location": "",
+      "method": "skype",
+      "urlToEditAppointment": "http://ua.berkeley.edu/appointments/1234567890"
+    }
+  ],
+  "urlToMakeAppointment": "http://ua.berkeley.edu/appointments/new"
+}
