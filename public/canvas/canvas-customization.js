@@ -39,7 +39,7 @@
               $('#create-users-step-1 p:first').replaceWith('<p>Type or paste a list of email addresses or CalNet UIDs below:</p>');
 
               // add the calnet directory link
-              $('<div class="pull-right" id="calnet-directory-link"><a href="'+ findAPersonToAddToolHref +'"><i class="icon-search-address-book"></i>Find a Person to Add</a></div>').prependTo('#create-users-step-1 p:first');
+              $('<div class="pull-right" id="calnet-directory-link"><a href="' + findAPersonToAddToolHref + '"><i class="icon-search-address-book"></i>Find a Person to Add</a></div>').prependTo('#create-users-step-1 p:first');
 
               // make sure the calnet-guest-info div is removed so you never have more than one
               $('#add-people-help').remove();
@@ -55,7 +55,7 @@
                 ' <div id="add-people-help-details" class="content-box pad-box-mini border border-trbl border-round" style="display: none;">',
                 '   <dl>',
                 '     <dt>UC Berkeley Faculty, Staff and Students</dt>',
-                '     <dd>UC Berkeley faculty, staff and students <i>(regular and concurrent enrollment)</i> can be found in the <a href="http://directory.berkeley.edu/" target="_blank">CalNet Directory</a> and be added to your site using their CalNet UID or official email address.</dd>',
+                '     <dd>UC Berkeley faculty, staff and students <em>(regular and concurrent enrollment)</em> can be found in the <a href="http://directory.berkeley.edu/" target="_blank">CalNet Directory</a> and be added to your site using their CalNet UID or official email address.</dd>',
                 '     <dt>Guests</dt>',
                 '     <dd>Peers from other institutions or guests from the community must be sponsored with a <a href="https://idc.berkeley.edu/guests/" target="_blank">CalNet Guest Account</a>. Do NOT request a CalNet Guest Account for concurrent enrollment students.</dd>',
                 '     <dt>More Information</dt>',
@@ -67,8 +67,6 @@
               $('#create-users-step-1').prepend(addPeopleHelp);
 
               $button.data('calcentral-modified', 'true');
-
-
             });
 
           }
