@@ -39,7 +39,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-        select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id
+        select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
         from calcentral_person_info_vw pi
         where (affiliations LIKE '%-TYPE-%')
         SQL

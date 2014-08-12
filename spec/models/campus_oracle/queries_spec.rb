@@ -212,6 +212,12 @@ describe CampusOracle::Queries do
       expect(uids.include?('95509')).to be_true
       expect(uids.include?('592722')).to be_false
       expect(uids.include?('313561')).to be_false
+      expect(user_data[0]).to include('ldap_uid')
+      expect(user_data[0]).to include('first_name')
+      expect(user_data[0]).to include('last_name')
+      expect(user_data[0]).to include('email_address')
+      expect(user_data[0]).to include('student_id')
+      expect(user_data[0]).to include('affiliations')
     end
   end
 
