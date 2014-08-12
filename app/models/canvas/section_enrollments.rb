@@ -7,7 +7,6 @@ module Canvas
     def initialize(options = {})
       super(options)
       raise ArgumentError, "Section ID option required" unless options.has_key?(:section_id)
-      raise ArgumentError, "Section ID option must be a Fixnum" if options[:section_id].class != Fixnum
       @section_id = options[:section_id]
     end
 

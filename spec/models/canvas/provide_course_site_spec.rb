@@ -69,14 +69,12 @@ describe Canvas::ProvideCourseSite do
       allow(subject).to receive(:identify_department_subaccount).and_return(true)
       allow(subject).to receive(:prepare_course_site_definition).and_return(true)
       allow(subject).to receive(:prepare_section_definitions).and_return(true)
-      allow(subject).to receive(:prepare_user_definitions).and_return(true)
-      allow(subject).to receive(:prepare_course_site_memberships).and_return(true)
       allow(subject).to receive(:import_course_site).and_return(true)
       allow(subject).to receive(:import_sections).and_return(true)
-      allow(subject).to receive(:import_users).and_return(true)
-      allow(subject).to receive(:import_enrollments).and_return(true)
+      allow(subject).to receive(:add_instructor_to_sections).and_return(true)
       allow(subject).to receive(:retrieve_course_site_details).and_return(true)
       allow(subject).to receive(:expire_instructor_sites_cache).and_return(true)
+      allow(subject).to receive(:import_enrollments_in_background).and_return(true)
     end
 
     it "intercepts raised exceptions and updates status" do
@@ -93,14 +91,12 @@ describe Canvas::ProvideCourseSite do
       expect(subject).to receive(:identify_department_subaccount).ordered.and_return(true)
       expect(subject).to receive(:prepare_course_site_definition).ordered.and_return(true)
       expect(subject).to receive(:prepare_section_definitions).ordered.and_return(true)
-      expect(subject).to receive(:prepare_user_definitions).ordered.and_return(true)
-      expect(subject).to receive(:prepare_course_site_memberships).ordered.and_return(true)
       expect(subject).to receive(:import_course_site).ordered.and_return(true)
       expect(subject).to receive(:import_sections).ordered.and_return(true)
-      expect(subject).to receive(:import_users).ordered.and_return(true)
-      expect(subject).to receive(:import_enrollments).ordered.and_return(true)
+      expect(subject).to receive(:add_instructor_to_sections).ordered.and_return(true)
       expect(subject).to receive(:retrieve_course_site_details).ordered.and_return(true)
       expect(subject).to receive(:expire_instructor_sites_cache).ordered.and_return(true)
+      expect(subject).to receive(:import_enrollments_in_background).ordered.and_return(true)
       subject.create_course_site(site_name, site_course_code, "fall-2013", ["1136", "1204"])
     end
 
@@ -326,89 +322,6 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe "#prepare_user_definitions" do
-    it "raises exception if user id is not present" do
-      subject.instance_eval { @uid = nil }
-      expect { subject.prepare_user_definitions }.to raise_error(RuntimeError, "Unable to prepare user definition. User ID is not present.")
-    end
-
-    it "populates the user definitions" do
-      user_definitions = [
-        {
-          "user_id" => "UID:1234",
-          "login_id" => "1234",
-          "first_name" => "John",
-          "last_name" => "Smith",
-          "email" => "jsmith@example.com",
-          "status" => "active",
-        }
-      ]
-      subject.stub(:accumulate_user_data).and_return(user_definitions)
-      subject.prepare_user_definitions
-      section_definitions = subject.instance_eval { @import_data['user_definitions'] }
-      expect(section_definitions).to be_an_instance_of Array
-      expect(section_definitions[0]).to be_an_instance_of Hash
-      expect(section_definitions[0]['login_id']).to eq "1234"
-    end
-
-    it "updates completed steps list" do
-      subject.prepare_user_definitions
-      subject.instance_eval { @completed_steps }.should == ["Prepared user definitions"]
-    end
-  end
-
-  describe "#prepare_course_site_memberships" do
-    before do
-      subject.instance_eval do
-        @import_data['section_definitions'] = [
-          {
-            "status" => "active",
-            "name" => "MEC ENG 98 GRP 015",
-            "course_id" => "CRS:MEC_ENG-98-2013-D",
-            "section_id" => "SEC:2013-D-12345",
-          }
-        ]
-        @import_data['user_definitions'] = [
-          {
-            "user_id" => "UID:1234",
-            "login_id" => "1234",
-            "first_name" => "John",
-            "last_name" => "Smith",
-            "email" => "jsmith@example.com",
-            "status" => "active",
-          }
-        ]
-      end
-    end
-
-    it "raises exception if section definitions are not present" do
-      subject.instance_eval { @import_data['section_definitions'] = nil }
-      expect { subject.prepare_course_site_memberships }.to raise_error(RuntimeError, "Unable to prepare course site memberships. Section definitions are not present.")
-    end
-
-    it "raises exception if user definitions are not present" do
-      subject.instance_eval { @import_data['user_definitions'] = nil }
-      expect { subject.prepare_course_site_memberships }.to raise_error(RuntimeError, "Unable to prepare course site memberships. User definitions are not present.")
-    end
-
-    it "populates the course membership definitions" do
-      subject.prepare_course_site_memberships
-      course_memberships = subject.instance_eval { @import_data['course_memberships'] }
-      expect(course_memberships).to be_an_instance_of Array
-      expect(course_memberships[0]).to be_an_instance_of Hash
-      expect(course_memberships[0]["status"]).to eq "active"
-      expect(course_memberships[0]["role"]).to eq "teacher"
-      expect(course_memberships[0]["user_id"]).to eq "UID:1234"
-      expect(course_memberships[0]["course_id"]).to eq "CRS:MEC_ENG-98-2013-D"
-      expect(course_memberships[0]["section_id"]).to eq "SEC:2013-D-12345"
-    end
-
-    it "updates completed steps list" do
-      subject.prepare_course_site_memberships
-      expect(subject.instance_eval { @completed_steps }).to eq ["Prepared course site memberships"]
-    end
-  end
-
   describe "#import_course_site" do
     before do
       @course_row = {"course_id"=>"CRS:COMPSCI-47A-2013-D", "short_name"=>"COMPSCI 47A SLF 001", "long_name"=>"Completion of Work in Computer Science 61A", "account_id"=>"ACCT:COMPSCI", "term_id"=>"TERM:2013-D", "status"=>"active"}
@@ -468,62 +381,19 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe "#import_users" do
-    before do
-      @user_rows = [{"user_id"=>"UID:1234", "login_id"=>"1234", "first_name"=>"John", "last_name"=>"Smith", "email"=>"johnsmith@berkeley.edu", "status"=>"active"}]
-      @canvas_sis_import_proxy_stub = double
-      allow(@canvas_sis_import_proxy_stub).to receive(:import_users).and_return(true)
-      allow(subject).to receive(:make_users_csv).and_return("/csv/filepath")
-    end
-
-    it "raises exception if user imports fails" do
-      @canvas_sis_import_proxy_stub.stub(:import_users).and_return(nil)
-      allow(Canvas::SisImport).to receive(:new).and_return(@canvas_sis_import_proxy_stub)
-      expect { subject.import_users(@user_rows) }.to raise_error(RuntimeError, "Course site was created but members may be missing! User import failed.")
-    end
-
-    it "sets sections csv file path" do
-      Canvas::SisImport.stub(:new).and_return(@canvas_sis_import_proxy_stub)
-      subject.import_users(@user_rows)
-      filepath = subject.instance_eval { @import_data['users_csv_file'] }
-      filepath.should == "/csv/filepath"
-    end
-
-    it "updates completed steps list" do
-      Canvas::SisImport.stub(:new).and_return(@canvas_sis_import_proxy_stub)
-      subject.import_users(@user_rows)
-      expect(subject.instance_eval { @completed_steps }).to eq ["Imported users"]
-    end
-  end
-
-  describe "#import_enrollments" do
-    before do
-      @enrollment_rows = [
-        {"course_id"=>"CRS:COMPSCI-47A-2013-D", "user_id"=>"UID:1234", "role"=>"teacher", "section_id"=>"SEC:2013-D-26178", "status"=>"active"},
-        {"course_id"=>"CRS:COMPSCI-47A-2013-D", "user_id"=>"UID:1234", "role"=>"teacher", "section_id"=>"SEC:2013-D-26181", "status"=>"active"}
-      ]
-      @canvas_sis_import_proxy_stub = double
-      allow(@canvas_sis_import_proxy_stub).to receive(:import_enrollments).and_return(true)
-      allow(subject).to receive(:make_enrollments_csv).and_return("/csv/filepath")
-    end
-
-    it "raises exception if enrollment imports fails" do
-      @canvas_sis_import_proxy_stub.stub(:import_enrollments).and_return(nil)
-      allow(Canvas::SisImport).to receive(:new).and_return(@canvas_sis_import_proxy_stub)
-      expect { subject.import_enrollments(@enrollment_rows) }.to raise_error(RuntimeError, "Course site was created but members may not be enrolled! Enrollment import failed.")
-    end
-
-    it "sets sections csv file path" do
-      Canvas::SisImport.stub(:new).and_return(@canvas_sis_import_proxy_stub)
-      subject.import_enrollments(@enrollment_rows)
-      filepath = subject.instance_eval { @import_data['enrollments_csv_file'] }
-      expect(filepath).to eq "/csv/filepath"
-    end
-
-    it "updates completed steps list" do
-      allow(Canvas::SisImport).to receive(:new).and_return(@canvas_sis_import_proxy_stub)
-      subject.import_enrollments(@enrollment_rows)
-      expect(subject.instance_eval {@completed_steps}).to eq ["Imported instructor enrollment"]
+  describe '#add_instructor_to_sections' do
+    let(:section_ids) {[random_id, random_id]}
+    let(:section_definitions) {[{
+      'section_id' => section_ids[0]
+    }, {
+      'section_id' => section_ids[1]
+    }]}
+    it 'adds teacher enrollments to each new section' do
+      expect(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment',
+        "sis_section_id:#{section_ids[0]}").ordered.and_return({'type' => 'TeacherEnrollment'})
+      expect(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment',
+        "sis_section_id:#{section_ids[1]}").ordered.and_return({'type' => 'TeacherEnrollment'})
+      subject.add_instructor_to_sections(section_definitions)
     end
   end
 
@@ -558,6 +428,22 @@ describe Canvas::ProvideCourseSite do
     it "updates completed steps list" do
       subject.expire_instructor_sites_cache
       expect(subject.instance_eval { @completed_steps }).to eq ["Clearing bCourses course site cache"]
+    end
+  end
+
+  describe '#import_enrollments_in_background' do
+    let(:course_id) {random_id}
+    let(:section_ids) {[random_id, random_id]}
+    let(:section_definitions) {[{
+      'section_id' => section_ids[0]
+    }, {
+      'section_id' => section_ids[1]
+    }]}
+    let(:maintainer) {double}
+    it 'should forward to a background job handler' do
+      expect(Canvas::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
+      expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything)
+      subject.import_enrollments_in_background(course_id, section_definitions)
     end
   end
 
@@ -745,23 +631,6 @@ describe Canvas::ProvideCourseSite do
       second_course_sis_id = second_canvas_course['course_id']
       expect(second_course_sis_id.present?).to be_true
       expect(second_course_sis_id).to_not eq first_course_sis_id
-    end
-  end
-
-  describe "#generate_course_memberships" do
-    it "generates membership hashes for instructor within each section" do
-      section_rows = [
-        {"section_id"=>"SEC:2013-D-26123", "course_id"=>"CRS:COMPSCI-47A-2013-D", "name"=>"COMPSCI 47A SLF 001", "status"=>"active"},
-        {"section_id"=>"SEC:2013-D-26125", "course_id"=>"CRS:COMPSCI-47A-2013-D", "name"=>"COMPSCI 47B SLF 001", "status"=>"active"}
-      ]
-      instructor_row = {"user_id"=>"UID:1234", "login_id"=>"1234", "first_name"=>"John", "last_name"=>"Doe", "email"=>"johndoe@berkeley.edu", "status"=>"active"}
-      result = subject.generate_course_memberships(section_rows, instructor_row)
-      result.should be_an_instance_of Array
-      result.count.should == 2
-      result[0].should be_an_instance_of Hash
-      result[1].should be_an_instance_of Hash
-      result[0].should == {"course_id"=>"CRS:COMPSCI-47A-2013-D", "user_id"=>"UID:1234", "role"=>"teacher", "section_id"=>"SEC:2013-D-26123", "status"=>"active"}
-      result[1].should == {"course_id"=>"CRS:COMPSCI-47A-2013-D", "user_id"=>"UID:1234", "role"=>"teacher", "section_id"=>"SEC:2013-D-26125", "status"=>"active"}
     end
   end
 

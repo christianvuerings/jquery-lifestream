@@ -27,10 +27,6 @@ describe Canvas::SectionEnrollments do
     it "raises exception if section id option not present" do
       expect { Canvas::SectionEnrollments.new(:user_id => user_id) }.to raise_error(ArgumentError, "Section ID option required")
     end
-
-    it "raises exception if section id option is not an integer" do
-      expect { Canvas::SectionEnrollments.new(:user_id => user_id, :section_id => "#{canvas_section_id}") }.to raise_error(ArgumentError, "Section ID option must be a Fixnum")
-    end
   end
 
   context "when enrolling user into canvas course section" do
