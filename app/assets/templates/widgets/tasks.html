@@ -3,7 +3,7 @@
     <div class="cc-widget-title">
       <h2 class="cc-left">To&nbsp;Do</h2>
       <button
-          class="cc-button cc-right"
+          class="cc-button cc-right cc-widget-title-button"
           data-ng-class="{'cc-button-selected':(panelState.showAddTask)}"
           data-ng-show="api.user.profile.hasGoogleAccessToken && (currentTaskMode!='completed' || !completedTasks.length) && !api.user.profile.actingAsUid"
           data-ng-click="toggleAddTask()">

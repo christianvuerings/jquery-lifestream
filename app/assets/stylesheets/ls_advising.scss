@@ -1,0 +1,29 @@
+.cc-widget-lsadvising {
+  h3 {
+    margin-top: 15px;
+  }
+  .cc-widget-lsadvising-current {
+    padding: 0;
+    .cc-widget-lsadvising-current-time {
+      margin-right: 15px;
+      text-align: right;
+      width: 55px;
+    }
+    .cc-widget-lsadvising-current-more {
+      margin: 10px 5px 0;
+    }
+  }
+  .cc-widget-lsadvising-previous {
+    tr {
+      &:not(:last-child) td {
+        border-bottom: 1px solid $cc-color-widget-background;
+      }
+      td {
+        padding: 4px 2px 4px 0;
+      }
+    }
+  }
+  .cc-widget-lsadvising-heading-first {
+    margin-top: 0;
+  }
+}

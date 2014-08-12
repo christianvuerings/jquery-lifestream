@@ -1,0 +1,77 @@
+<div class="cc-widget cc-widget-lsadvising" data-ng-controller="LsAdvisingController">
+  <div class="cc-widget-title">
+    <h2 class="cc-left">Advising Appointments</h2>
+    <a data-ng-if="urlToMakeAppointment" class="cc-button cc-right cc-widget-title-button" data-ng-href="{{urlToMakeAppointment}}">
+      <i class="fa fa-plus cc-button-plus-icon"></i>
+      <span>New Appointment</span>
+    </a>
+  </div>
+
+  <div data-cc-spinner-directive>
+    <div class="cc-widget-padding">
+      <div data-ng-if="caseloadAdviser">
+        <h3 class="cc-widget-lsadvising-heading-first">College Advisor</h3>
+        <a data-ng-href="mailto:{{caseloadAdviser.email}}">
+          <span data-ng-bind-template="{{caseloadAdviser.firstName + ' ' + caseloadAdviser.lastName}}"></span>
+        </a>
+      </div>
+      <div data-ng-if="futureAppointments">
+        <h3>Current Appointments</h3>
+        <ul class="cc-widget-list cc-widget-lsadvising-current">
+          <li data-ng-repeat="appointment in futureAppointments">
+            <div class="cc-widget-list-hover"
+              data-ng-class="{'cc-widget-list-hover-opened cc-widget-list-selected':(appointment.show)}"
+              data-cc-accessible-focus-directive
+              data-ng-click="api.widget.toggleShow($event, futureAppointments, appointment, 'Current Appointment')">
+              <div class="cc-clearfix-container">
+                <div class="cc-widget-lsadvising-current-time cc-left">
+                  <strong data-ng-bind="appointment.dateTime | date:'MM/dd'"></strong><br />
+                  <span data-ng-bind="appointment.dateTime | date:'h:mm a'" class="cc-text-light"></span>
+                </div>
+                <div class="cc-widget-lsadvising-current-content cc-left">
+                  <strong data-ng-bind="appointment.staff.name"></strong>
+                  <div class="cc-text-light cc-uppercase">
+                    <span data-ng-bind="appointment.method"></span>
+                    <span data-ng-if="appointment.location && appointment.method"> - </span>
+                    <span data-ng-bind="appointment.location"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cc-clearfix cc-widget-lsadvising-current-more" data-ng-if="appointment.show">
+                 <a data-ng-if="appointment.urlToEditAppointment" data-ng-href="{{appointment.urlToEditAppointment}}" class="cc-button">
+                    Update Appointment
+                  </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div data-ng-if="pastAppointments">
+        <h3>Previous Appointments</h3>
+        <div class="cc-table cc-widget-lsadvising-previous">
+          <table>
+            <thead>
+              <th width="70px">Date</th>
+              <th width="120px">Advisor</th>
+              <th>Location</th>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat="appointment in pastAppointments | limitTo:pastAppointmentsLimit">
+                <td data-ng-bind="appointment.dateTime | date:'MM/dd/yy'"></td>
+                <td data-ng-bind="appointment.staff.name"></td>
+                <td data-ng-bind="appointment.location"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div data-cc-show-more-directive data-cc-show-more-list="pastAppointments" data-cc-show-more-limit="pastAppointmentsLimit"></div>
+      </div>
+
+      <div data-ng-if="!caseloadAdviser && !futureAppointments && !pastAppointments">
+       No current advisor or appointment. <a ng-href="{{urlToMakeAppointment}}">Create a new appointment</a>.
+      </div>
+    </div>
+  </div>
+</div>

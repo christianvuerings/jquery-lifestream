@@ -152,7 +152,8 @@ button {
   display: inline;
   font-size: 11px;
   font-weight: bold;
-  padding: 5px 10px;
+  line-height: 1;
+  padding: 6px 10px;
   &:focus, &:hover {
     background: $cc-color-button-hover;
     @include background(linear-gradient($cc-color-white, $cc-color-button-hover));
@@ -438,6 +439,8 @@ button {
 
 // Academics
 @import "academics";
+// L & S Advising
+@import "ls_advising";
 
 // Textbooks
 @import "textbooks";
