@@ -45,6 +45,8 @@
               $('#add-people-help').remove();
 
               // add help info to the dialog
+              // Note: This help text content is also maintained in the app/assets/templates/canvas_embedded/course_add_user.html
+              // template used by the 'Find a Person to Add' LTI tool.
               var addPeopleHelp = [
                 '<div id="add-people-help">',
                 ' <p>',
