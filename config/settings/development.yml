@@ -86,3 +86,7 @@ features:
   reauthentication: false
   audio: true
   regstatus: true
+  advising: true
+
+advising_proxy:
+  fake: true

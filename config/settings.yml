@@ -254,6 +254,7 @@ features:
   reauthentication: true
   audio: false
   regstatus: false
+  advising: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
@@ -288,3 +289,9 @@ ui_selenium:
   test_user_password: secret
   oski_username: secret
   oski_password: secret
+
+advising_proxy:
+  fake: false
+  base_url: 'https://ua.berkeley.edu/api'
+  username: secret
+  password: secret
