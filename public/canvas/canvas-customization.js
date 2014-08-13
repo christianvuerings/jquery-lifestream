@@ -17,10 +17,10 @@
     if (isViewingCoursePeople && canAddUsers) {
 
       // applies info alerts to 'People' popup event
-      var applyInfoAlert = function() {
+      var applyInfoAlert = function(clickable_element) {
         // add help info to the Add People dialog
         // wait until after the user presses the Add People button because the dialog isn't in the DOM yet
-        $('a#addUsers.btn.btn-primary').click(function(e) {
+        clickable_element.click(function(e) {
 
           var $button = $(e.target);
 
@@ -76,18 +76,29 @@
         });
       };
 
-      // look for 'Add People' button every 300 milliseconds
-      // apply info event to button click once found
+      // Checks for '+ People' button every 300 milliseconds. Applies info event to button once found.
       var findAddPeopleButtonLoop = window.setInterval(function() {
         var $addPeopleButton = $('a#addUsers.btn.btn-primary');
         if ($addPeopleButton.length) {
-          applyInfoAlert();
-          stopFindPeopleButtonLoop();
+          applyInfoAlert($addPeopleButton);
+          stopFindAddPeopleButtonLoop();
         }
       }, 300);
 
-      // halts check once link added after button
-      var stopFindPeopleButtonLoop = function() {
+      // Checks for 'Start Over' button every 300 milliseconds. Applies info event to button once found.
+      // Infinitely loops because event may need to be re-applied to button when re-added to DOM.
+      window.setInterval(function() {
+        var $startOverButton = $('button.btn.createUsersStartOver');
+        if ($startOverButton.length) {
+          if ($startOverButton.data('calcentral-event-applied') !== 'true') {
+            applyInfoAlert($startOverButton);
+            $startOverButton.data('calcentral-event-applied', 'true');
+          }
+        }
+      }, 300);
+
+      // halts check once event added to '+ People' button
+      var stopFindAddPeopleButtonLoop = function() {
         window.clearInterval(findAddPeopleButtonLoop);
       };
 
