@@ -52,7 +52,7 @@ module Textbooks
       info
     end
 
-    def parse_material(material)
+    def process_material(material)
       isbn = material['ean']
       google_info = google_book(isbn)
 
@@ -75,13 +75,13 @@ module Textbooks
       }
     end
 
-    def parse_response(response)
+    def process_response(response)
       books = []
 
       response.each do |item|
         if item['materials']
           item['materials'].each do |material|
-            books.push(parse_material(material))
+            books.push(process_material(material))
           end
         end
       end
@@ -106,7 +106,7 @@ module Textbooks
       return {} unless Settings.features.textbooks
 
       response = request_bookstore_list(@section_numbers)
-      books = parse_response(response)
+      books = process_response(response)
       book_unavailable_error = 'Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly.'
 
       {
