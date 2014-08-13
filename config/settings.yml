@@ -17,6 +17,7 @@ application:
   fake_proxies_enabled: true
   # timeout (in seconds) for outgoing http request establishment
   outgoing_http_timeout: 30
+  layer: development
 
 cas_server: 'https://auth.berkeley.edu/cas'
 cas_logout_url: 'https://auth.berkeley.edu/cas/logout'

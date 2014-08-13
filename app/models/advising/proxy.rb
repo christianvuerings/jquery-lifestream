@@ -40,7 +40,7 @@ module Advising
             url,
             basic_auth: {username: @settings.username, password: @settings.password},
             timeout: Settings.application.outgoing_http_timeout,
-            verify: Rails.env.production?
+            verify: Settings.application.layer == 'production'
           )
         end
         if response.code >= 400
