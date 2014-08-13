@@ -39,9 +39,9 @@
   max-width: 130px;
   position: relative;
   &:after {
-    padding-top: 130%;
-    display: block;
     content: '';
+    display: block;
+    padding-top: 130%;
   }
   .cc-textbooks-image-not-available-text {
     bottom: 0;
