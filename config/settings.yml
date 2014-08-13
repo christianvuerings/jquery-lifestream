@@ -126,7 +126,8 @@ financials_proxy:
 
 textbooks_proxy:
   fake: false
-  base_url: "http://www.bkstr.com"
+  base_url: "https://berkeley.textbooktech.com"
+  token: secret set per deployment layer
 
 playlists_warehouse_proxy:
   fake: false

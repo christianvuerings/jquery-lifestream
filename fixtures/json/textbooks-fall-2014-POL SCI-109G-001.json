@@ -1,0 +1,52 @@
+[
+  {
+    "school": "Berkeley",
+    "term": "FALL 2014",
+    "department": "POL SCI",
+    "course": "109G",
+    "section": "001",
+    "no_text_required": false,
+    "materials": [
+      {
+        "ean": "9780226793832",
+        "author": "TESLER",
+        "title": "OBABMA'S RACE (Required)",
+        "is_ebook": false,
+        "esub_duration": 0,
+        "new_price": 0,
+        "used_price": 0,
+        "rental_price": 0
+      },
+      {
+        "ean": "9780393923650",
+        "author": "SIDES",
+        "title": "CAMPAIGNS+ELECTIONS 2012 ELECTION UPD. (Required)",
+        "is_ebook": false,
+        "esub_duration": 0,
+        "new_price": 0,
+        "used_price": 0,
+        "rental_price": 0
+      },
+      {
+        "ean": "9780205779888",
+        "author": "FIORINA",
+        "title": "CULTURE WAR?:MYTH OF POLARIZED AMERICA (Required)",
+        "is_ebook": false,
+        "esub_duration": 0,
+        "new_price": 26.95,
+        "used_price": 0,
+        "rental_price": 0
+      },
+      {
+        "ean": "9780691146232",
+        "author": "BARTELS",
+        "title": "UNEQUAL DEMOCRACY (Required)",
+        "is_ebook": false,
+        "esub_duration": 0,
+        "new_price": 0,
+        "used_price": 0,
+        "rental_price": 0
+      }
+    ]
+  }
+]

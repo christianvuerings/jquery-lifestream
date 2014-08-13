@@ -1,3 +1,4 @@
+/* jshint camelcase: false */
 (function(angular) {
   'use strict';
 
@@ -11,14 +12,14 @@
      * @param  {Object} selectedCourse Selected Course Object
      */
     var getTextbooks = function(selectedCourse) {
-      var ccns = [];
-
-      for (var i = 0; i < selectedCourse.sections.length; i++) {
-        ccns[i] = selectedCourse.sections[i].ccn;
-      }
+      var sectionNumbers = selectedCourse.sections.map(function(section) {
+        return section.section_number;
+      });
 
       var courseInfo = {
-        'ccns[]': ccns,
+        'sectionNumbers[]': sectionNumbers,
+        'department': selectedCourse.dept,
+        'courseCatalog': selectedCourse.courseCatalog,
         'slug': $scope.selectedSemester.slug
       };
 
@@ -27,18 +28,6 @@
         params: courseInfo
       }).success(function(data) {
         angular.extend($scope, data);
-
-        if (data.books && data.books.hasBooks) {
-          $scope.allSectionsHaveChoices = true;
-          var bookDetails = data.books.bookDetails;
-
-          for (var i = 0; i < bookDetails.length; i++) {
-            if (!bookDetails[i].hasChoices) {
-              $scope.allSectionsHaveChoices = false;
-              break;
-            }
-          }
-        }
 
         if (data.statusCode && data.statusCode >= 400) {
           $scope.textbookError = data;

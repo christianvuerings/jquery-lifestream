@@ -1,50 +1,79 @@
 {
   "books": {
-    "bookDetails": [
+    "items": [
       {
-        "type": "Required",
-        "books": [
+        "author": "BUDINGER",
+        "image": "https://encrypted.google.com/books/images/frontcover/LNoeAQAAIAAJ?fife=w170-rw",
+        "title": "ETHICS OF EMERGING TECHNOLOGIES (Required)",
+        "isbn": "9780471692126",
+        "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9780471692126",
+        "cheggLink": "http://www.chegg.com/search/9780471692126",
+        "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9780471692126",
+        "googlebookLink": "http://books.google.com/books?id=LNoeAQAAIAAJ&dq=isbn:9780471692126&hl=&source=gbs_api",
+        "bookstoreInfo": [
           {
-            "hasChoices": false,
-            "title": "Creative Appr to Music Fund: Advantage Books",
-            "image": "https://images.efollett.com/books/978/128/544/9781285446202.jpg",
-            "author": "Duckworth",
-            "edition": "11th",
-            "publisher": "Cengage Learning",
-            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001&categoryId=9604&langId=-1&courseId_1=43784267&storeId=10433&demoKey=d&orderItemStoreId=10433&purpose=browse&salesTrack=BL",
-            "isbn": "9781285446202",
-            "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9781285446202",
-            "cheggLink": "http://www.chegg.com/search/9781285446202",
-            "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9781285446202",
-            "googlebookLink": "http://books.google.com/books?id=0rLLngEACAAJ&dq=isbn:9781285446202&hl=&source=gbs_api"
-          },
+            "dept": "EL ENG",
+            "course": "197",
+            "section": "001",
+            "term": "SUMMER 2014"
+          }
+        ]
+      },
+      {
+        "author": "PEDERSON",
+        "image": null,
+        "title": "CHEM 3A TEST/ANSWERS (CUSTOM (Required)",
+        "isbn": "9780738070872",
+        "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9780738070872",
+        "cheggLink": "http://www.chegg.com/search/9780738070872",
+        "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9780738070872",
+        "googlebookLink": null,
+        "bookstoreInfo": [
           {
-            "hasChoices": false,
-            "title": "Reader: Music 20 Anthology",
-            "image": "https://images.efollett.com/books/noBookImage.gif",
-            "author": "Rosenak",
-            "edition": "N/A",
-            "publisher": "UNIVERSITY CUSTOM PUBLISHING",
-            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001&categoryId=9604&langId=-1&courseId_1=43784267&storeId=10433&demoKey=d&orderItemStoreId=10433&purpose=browse&salesTrack=BL"
-          },
+            "dept": "EL ENG",
+            "course": "197",
+            "section": "001",
+            "term": "SUMMER 2014"
+          }
+        ]
+      },
+      {
+        "author": "VOLLHARDT",
+        "image": null,
+        "title": "ORGANIC CHEM PKG (W/ STUDY GUIDE & MODEL KIT) (Choose)",
+        "isbn": "9781464188800",
+        "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9781464188800",
+        "cheggLink": "http://www.chegg.com/search/9781464188800",
+        "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9781464188800",
+        "googlebookLink": null,
+        "bookstoreInfo": [
           {
-            "hasChoices": true,
-            "title": "BNDL: ACP MULTIVARIABLE CALCULUS ET FOR UCB",
-            "image": "https://images.efollett.com/books/noBookImage.gif",
-            "author": "Stewart",
-            "edition": "7th",
-            "publisher": "Cengage Learning Custom Publishing",
-            "bookstoreLink": "http://www.bkstr.com/webapp/wcs/stores/servlet/CourseMaterialsResultsView?catalogId=10001&categoryId=9604&langId=-1&courseId_1=44843797&storeId=10433&demoKey=d&orderItemStoreId=10433&purpose=browse&salesTrack=BL",
-            "isbn": "9781285340562",
-            "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9781285340562",
-            "cheggLink": "http://www.chegg.com/search/9781285340562",
-            "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9781285340562",
-            "googlebookLink": ""
+            "dept": "EL ENG",
+            "course": "197",
+            "section": "001",
+            "term": "SUMMER 2014"
+          }
+        ]
+      },
+      {
+        "author": "VOLLHARDT",
+        "image": null,
+        "title": "ORGANIC CHEM LOOSELEAF PKG (W/ STUDY GUIDE & MODEL KIT) (Required)",
+        "isbn": "9781464188817",
+        "amazonLink": "http://www.amazon.com/gp/search?index=books&linkCode=qs&keywords=9781464188817",
+        "cheggLink": "http://www.chegg.com/search/9781464188817",
+        "oskicatLink": "http://oskicat.berkeley.edu/search~S1/?searchtype=i&searcharg=9781464188817",
+        "googlebookLink": null,
+        "bookstoreInfo": [
+          {
+            "dept": "EL ENG",
+            "course": "197",
+            "section": "001",
+            "term": "SUMMER 2014"
           }
         ]
       }
     ],
-    "bookUnavailableError": "",
-    "hasBooks": true
+    "bookUnavailableError": "Currently, there is no textbook information for this course. Check again later for updates, or contact your instructor directly."
   }
 }
