@@ -9,50 +9,59 @@
     a {
       vertical-align: text-bottom;
     }
+    button, button:hover {
+      font-size: 11px;
+      line-height: 13px;
+      vertical-align: text-bottom;
+    }
   }
   ul {
     margin-bottom: 10px;
   }
 }
-.cc-textbooks-image {
-  padding: 7px 10px 0 0;
-}
 .cc-textbooks-bookstore {
   margin-bottom: 10px;
 }
-.cc-textbooks-category {
-  h3 {
-    color: $cc-color-textbooks-section;
-    font-family: Arial;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  h4 {
-    color: $cc-color-textbooks-title;
-    font-family: Arial;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 15px;
-  }
-  hr {
-    margin: 0;
-  }
+.cc-textbooks-bookstore-form {
+  background: transparent;
+  border: 0;
+  padding: 0;
 }
-.cc-textbooks-last-section {
-  .cc-textbooks-last {
-    hr {
-      display: none;
-    }
+.cc-textbooks-details {
+  margin-bottom: 10px;
+}
+.cc-textbooks-image {
+  padding: 4px 10px 0 0;
+}
+.cc-textbooks-image-not-available {
+  background: $cc-color-lighter-grey;
+  margin: 4px 10px 0 0;
+  max-width: 130px;
+  position: relative;
+  &:after {
+    padding-top: 130%;
+    display: block;
+    content: '';
+  }
+  .cc-textbooks-image-not-available-text {
+    bottom: 0;
+    font-size: 15px;
+    left: 0;
+    padding: 15px 5px 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
   }
 }
 .cc-textbooks-links li {
   float: left;
   width: 50%;
 }
-.cc-textbooks-links-only-bookstore li {
-  float: left;
-  width: 100%;
-}
-.cc-textbooks-details {
-  margin-bottom: 10px;
+.cc-textbooks-title {
+  color: $cc-color-textbooks-title;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 15px;
 }
