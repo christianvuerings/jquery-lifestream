@@ -74,6 +74,7 @@
 }
 @keyframes spin-normal {
   to {
+    -webkit-transform: rotate(1turn);
     transform: rotate(1turn);
   }
 }
@@ -85,6 +86,7 @@
 }
 @keyframes spin-extra {
   to {
+    -webkit-transform: rotate(1.125turn);
     transform: rotate(1.125turn);
   }
 }
