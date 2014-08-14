@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # bundler, for managing dependencies
-gem 'bundler', '~> 1.6.1'
+gem 'bundler', '~> 1.7.0'
 
 # The core framework
 # https://github.com/rails/rails
@@ -37,7 +37,7 @@ gem 'omniauth-cas', '~> 1.0.1'
 gem 'net-ldap', '~> 0.7.0'
 
 # secure_headers provides x-frame, csp and other http headers
-gem 'secure_headers', '~> 1.3.1'
+gem 'secure_headers', '~> 1.3.2'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
