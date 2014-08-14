@@ -44,7 +44,7 @@ describe MyClasses::Campus do
   end
 
   describe '#fetch' do
-    before {CampusOracle::UserCourses.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))}
+    before {CampusOracle::UserCourses::All.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))}
     subject { MyClasses::Campus.new(user_id).fetch }
     context 'when enrolled in a current class' do
       it_behaves_like 'a Classes list'

@@ -106,7 +106,7 @@ describe Berkeley::CoursePolicy do
   describe "#can_view_roster_photos?" do
     context "when user is an instructor in the course" do
       before do
-        allow_any_instance_of(CampusOracle::UserCourses).to receive(:get_all_campus_courses).and_return(instructor_courses)
+        allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return(instructor_courses)
       end
       it "returns true" do
         expect(subject.can_view_roster_photos?).to be_true
@@ -115,7 +115,7 @@ describe Berkeley::CoursePolicy do
 
     context "when user is not an instructor in the course" do
       before do
-        allow_any_instance_of(CampusOracle::UserCourses).to receive(:get_all_campus_courses).and_return(student_courses)
+        allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return(student_courses)
       end
       it "returns false" do
         expect(subject.can_view_roster_photos?).to be_false
@@ -125,7 +125,7 @@ describe Berkeley::CoursePolicy do
     context "when user is not associated with the course" do
       before do
         student_courses["2014-D"][0][:id] = "chem-1a-1994-B"
-        allow_any_instance_of(CampusOracle::UserCourses).to receive(:get_all_campus_courses).and_return(student_courses)
+        allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return(student_courses)
       end
       it "returns false" do
         expect(subject.can_view_roster_photos?).to be_false
@@ -134,7 +134,7 @@ describe Berkeley::CoursePolicy do
 
     context "when no courses associated with the user" do
       before do
-        allow_any_instance_of(CampusOracle::UserCourses).to receive(:get_all_campus_courses).and_return({})
+        allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return({})
       end
       it "returns false" do
         expect(subject.can_view_roster_photos?).to be_false

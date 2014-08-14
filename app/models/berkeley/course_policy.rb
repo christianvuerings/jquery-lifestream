@@ -15,7 +15,7 @@ module Berkeley
     end
 
     def is_course_instructor?
-      users_courses = CampusOracle::UserCourses.new({user_id: @user.uid}).get_all_campus_courses
+      users_courses = CampusOracle::UserCourses::All.new({user_id: @user.uid}).get_all_campus_courses
       record_course = users_courses.values.flatten.select {|c| c[:id] == @record.course_id }[0]
       return false if record_course.nil?
       if record_course[:role] != 'Instructor'

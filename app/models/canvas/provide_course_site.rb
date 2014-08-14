@@ -228,7 +228,7 @@ module Canvas
       my_academics = MyAcademics::Teaching.new(@uid)
       courses_list = []
       term = find_term(term_slug)
-      proxy = CampusOracle::UserCourses.new({user_id: @uid})
+      proxy = CampusOracle::UserCourses::SelectedSections.new({user_id: @uid})
       feed = proxy.get_selected_sections(term[:yr], term[:cd], ccns)
       feed.keys.each do |term_key|
         (term_yr, term_cd) = term_key.split("-")
