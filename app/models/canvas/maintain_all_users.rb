@@ -2,9 +2,10 @@ module Canvas
   # Updates and adds Canvas users based on differences detected in active CalNet user set and Canvas User Report
   class MaintainAllUsers < Csv
 
-    def initialize
+    def initialize(opts = {})
       super()
       @sis_user_id_updates = {}
+      @clear_sis_stickiness = opts[:clear_sis_stickiness]
     end
 
     # Performs full active user synchronization task
