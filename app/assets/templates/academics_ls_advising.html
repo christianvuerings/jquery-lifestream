@@ -69,9 +69,10 @@
         <div data-cc-show-more-directive data-cc-show-more-list="pastAppointments" data-cc-show-more-limit="pastAppointmentsLimit"></div>
       </div>
 
-      <div data-ng-if="!caseloadAdviser && !futureAppointments && !pastAppointments">
-       No current advisor or appointment. <a ng-href="{{urlToMakeAppointment}}">Create a new appointment</a>.
+      <div data-ng-if="!caseloadAdviser && !futureAppointments && !pastAppointments && !lsAdvisingError">
+       No current advisor or appointment. <a data-ng-if="urlToMakeAppointment" data-ng-href="{{urlToMakeAppointment}}">Create a new appointment</a>.
       </div>
+      <div class="cc-error-message" data-ng-if="lsAdvisingError.body" data-ng-bind="lsAdvisingError.body">
     </div>
   </div>
 </div>

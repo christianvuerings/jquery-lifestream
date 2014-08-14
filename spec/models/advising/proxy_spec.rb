@@ -54,7 +54,7 @@ describe Advising::Proxy do
         stub_request(:any, /.*#{advising_uri.hostname}.*/).to_raise(Errno::ECONNREFUSED)
         Advising::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
       end
-      its([:body]) { should eq('An error occurred retrieving data for Advisor Appointments. Please try again later.') }
+      its([:body]) { should eq('Failed to connect with your department\'s advising system.') }
       its([:statusCode]) { should eq(503) }
     end
 
@@ -63,7 +63,7 @@ describe Advising::Proxy do
         stub_request(:any, /.*#{advising_uri.hostname}.*/).to_return(status: 506)
         Advising::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
       end
-      its([:body]) { should eq('An error occurred retrieving data for Advisor Appointments. Please try again later.') }
+      its([:body]) { should eq('Failed to connect with your department\'s advising system.') }
       its([:statusCode]) { should eq(506) }
     end
   end
