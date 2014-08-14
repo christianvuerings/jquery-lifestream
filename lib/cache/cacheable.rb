@@ -102,16 +102,12 @@ module Cache
 
     def bearfacts_derived_expiration
       # Bearfacts data is refreshed daily at 0730, so we will always expire at 0800 sharp on the day after today.
-      # nb: memcached interprets expiration values greater than 30 days worth of seconds as a Unix timestamp. This
-      # logic may not work on caching systems other than memcached.
-      today = Time.zone.today.in_time_zone.to_datetime.advance(:hours => 8)
-      now = Time.zone.now
-      if now.to_i > today.to_time.to_i
-        tomorrow = today.advance(:days => 1)
-        tomorrow.to_time.to_i
-      else
-        today.to_time.to_i
+      next_8am = Time.zone.today.in_time_zone.to_datetime.advance(hours: 8)
+      now = Time.zone.now.to_i
+      if now > next_8am.to_i
+        next_8am = next_8am.advance(days: 1)
       end
+      next_8am.to_i - now
     end
 
     def expire(id = nil)
