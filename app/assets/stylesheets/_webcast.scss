@@ -5,6 +5,9 @@
   .cc-widget-webcast-button-group {
     width: 200px;
   }
+  .cc-widget-webcast-content {
+    max-width: 480px;
+  }
   .cc-widget-webcast-error {
     margin-top: 15px;
   }
@@ -20,8 +23,5 @@
   .cc-widget-webcast-select {
     margin-top: 15px;
     max-width: 300px;
-  }
-  .cc-youtube-video-placeholder {
-    max-width: 480px;
   }
 }
