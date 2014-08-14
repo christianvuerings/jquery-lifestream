@@ -3,7 +3,7 @@ module MyAcademics
     include AcademicsModule
 
     def merge(data)
-      proxy = CampusOracle::UserCourses.new({user_id: @uid})
+      proxy = CampusOracle::UserCourses::All.new({user_id: @uid})
       feed = proxy.get_all_campus_courses
 
       teaching_semesters = []

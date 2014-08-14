@@ -7,9 +7,9 @@ module MyAcademics
     end
 
     def merge(data)
-      proxy = CampusOracle::UserCourses.new({:user_id => @uid})
+      proxy = CampusOracle::UserCourses::All.new({:user_id => @uid})
       feed = proxy.get_all_campus_courses
-      transcripts = proxy.get_all_transcripts
+      transcripts = CampusOracle::UserCourses::Transcripts.new({:user_id => @uid}).get_all_transcripts
       semesters = []
 
       feed.keys.each do |term_key|

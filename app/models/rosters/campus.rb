@@ -13,7 +13,7 @@ module Rosters
       }
       campus_enrollment_map = {}
 
-      all_courses = CampusOracle::UserCourses.new({user_id: @uid}).get_all_campus_courses
+      all_courses = CampusOracle::UserCourses::All.new({user_id: @uid}).get_all_campus_courses
       selected_course = {}
 
       all_courses.keys.each do |term|
