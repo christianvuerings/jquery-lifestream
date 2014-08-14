@@ -24,6 +24,7 @@
     'calcentral.services',
     'ngRoute',
     'ngSanitize',
+    'ngTouch',
     'templates'
   ]);
 

@@ -10,6 +10,7 @@
   }
   .cc-off-canvas-container {
     background: $cc-color-navigation;
+    height: 100%;
     overflow: hidden;
     width: 100%;
     .cc-navigation-bar ul {
@@ -29,6 +30,7 @@
   .cc-offcanvas-left {
     @include single-transition(margin, .2s, ease);
     float: left;
+    height: 100%;
     margin-left: -100%;
     -webkit-transform: translatez(0);
   }
