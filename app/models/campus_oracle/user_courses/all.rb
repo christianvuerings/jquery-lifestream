@@ -7,7 +7,7 @@ module CampusOracle
       def get_all_campus_courses
         # Because this data structure is used by multiple top-level feeds, it's essential
         # that it be cached efficiently.
-        self.class.fetch_from_cache "all-courses-#{@uid}" do
+        self.class.fetch_from_cache @uid do
           campus_classes = {}
 
           if merge_explicit_instructing(campus_classes)
