@@ -88,9 +88,8 @@ module User
       current_user = User::Auth.get(@uid)
       is_google_reminder_dismissed = User::Oauth2Data.is_google_reminder_dismissed(@uid)
       is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
-      campus_courses_proxy = CampusOracle::UserCourses.new({:user_id => @uid})
-      has_student_history = campus_courses_proxy.has_student_history?
-      has_instructor_history = campus_courses_proxy.has_instructor_history?
+      has_student_history = CampusOracle::UserCourses::HasStudentHistory.new({:user_id => @uid}).has_student_history?
+      has_instructor_history = CampusOracle::UserCourses::HasInstructorHistory.new({:user_id => @uid}).has_instructor_history?
       roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
       {
         :profilePicture => Rails.application.routes.url_helpers.my_photo_path + ".jpg",
