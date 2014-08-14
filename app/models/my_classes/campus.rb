@@ -4,7 +4,7 @@ class MyClasses::Campus
   def fetch
     # Only include classes for current terms.
     classes = []
-    all_courses = CampusOracle::UserCourses.new(user_id: @uid).get_all_campus_courses
+    all_courses = CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
     semester_key = "#{current_term.year}-#{current_term.code}"
     if all_courses[semester_key]
       # Ask My Academics for the URL to this class info page in My Academics.

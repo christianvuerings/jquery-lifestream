@@ -77,8 +77,8 @@ describe "Rosters::Campus" do
   end
 
   before do
-    allow(CampusOracle::UserCourses).to receive(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))
-    allow(CampusOracle::UserCourses).to receive(:new).with(user_id: student_user_id).and_return(double(get_all_campus_courses: fake_campus_student))
+    allow(CampusOracle::UserCourses::All).to receive(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))
+    allow(CampusOracle::UserCourses::All).to receive(:new).with(user_id: student_user_id).and_return(double(get_all_campus_courses: fake_campus_student))
     allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(ccn1, term_yr, term_cd).and_return(fake_students)
     allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(ccn2, term_yr, term_cd).and_return(fake_students)
   end

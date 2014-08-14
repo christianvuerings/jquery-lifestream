@@ -88,11 +88,12 @@ describe User::Api do
         :staff => true
       }
     }))
-    fake_courses_proxy = CampusOracle::UserCourses.new({:fake => true})
-    fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
-    fake_courses_proxy.stub(:has_student_history?).and_return(false)
-    CampusOracle::UserCourses.stub(:new).and_return(fake_courses_proxy)
-
+    fake_instructor_proxy = CampusOracle::UserCourses::HasInstructorHistory.new({:fake => true})
+    fake_instructor_proxy.stub(:has_instructor_history?).and_return(false)
+    CampusOracle::UserCourses::HasInstructorHistory.stub(:new).and_return(fake_instructor_proxy)
+    fake_student_proxy = CampusOracle::UserCourses::HasStudentHistory.new({:fake => true})
+    fake_student_proxy.stub(:has_student_history?).and_return(false)
+    CampusOracle::UserCourses::HasStudentHistory.stub(:new).and_return(fake_student_proxy)
     user_data = User::Api.new("904715").get_feed
     user_data[:hasAcademicsTab].should be_false
   end
@@ -129,11 +130,12 @@ describe User::Api do
   it "should not explode when CampusOracle returns empty feeds" do
     CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
     }))
-    fake_courses_proxy = CampusOracle::UserCourses.new({:fake => true})
-    fake_courses_proxy.stub(:has_instructor_history?).and_return(false)
-    fake_courses_proxy.stub(:has_student_history?).and_return(false)
-    CampusOracle::UserCourses.stub(:new).and_return(fake_courses_proxy)
-
+    fake_instructor_proxy = CampusOracle::UserCourses::HasInstructorHistory.new({:fake => true})
+    fake_instructor_proxy.stub(:has_instructor_history?).and_return(false)
+    CampusOracle::UserCourses::HasInstructorHistory.stub(:new).and_return(fake_instructor_proxy)
+    fake_student_proxy = CampusOracle::UserCourses::HasStudentHistory.new({:fake => true})
+    fake_student_proxy.stub(:has_student_history?).and_return(false)
+    CampusOracle::UserCourses::HasStudentHistory.stub(:new).and_return(fake_student_proxy)
     user_data = User::Api.new("904715").get_feed
     user_data[:hasAcademicsTab].should_not be_true
   end

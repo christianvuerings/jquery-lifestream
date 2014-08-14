@@ -3,15 +3,15 @@ require "spec_helper"
 describe CampusOracle::UserCourses do
 
   it "should be accessible if non-null user" do
-    CampusOracle::UserCourses.access_granted?(nil).should be_false
-    CampusOracle::UserCourses.access_granted?('211159').should be_true
-    client = CampusOracle::UserCourses.new({user_id: '211159'})
+    CampusOracle::UserCourses::Base.access_granted?(nil).should be_false
+    CampusOracle::UserCourses::Base.access_granted?('211159').should be_true
+    client = CampusOracle::UserCourses::All.new({user_id: '211159'})
     client.get_all_campus_courses.should_not be_nil
   end
 
   it "should return pre-populated test enrollments for all semesters", :if => CampusOracle::Connection.test_data? do
     Settings.terms.stub(:oldest).and_return(nil)
-    client = CampusOracle::UserCourses.new({user_id: '300939'})
+    client = CampusOracle::UserCourses::All.new({user_id: '300939'})
     courses = client.get_all_campus_courses
     courses.empty?.should be_false
     courses["2012-B"].length.should == 2
@@ -46,7 +46,7 @@ describe CampusOracle::UserCourses do
   end
 
   it 'includes nested sections for instructors', :if => CampusOracle::Connection.test_data? do
-    client = CampusOracle::UserCourses.new({user_id: '238382'})
+    client = CampusOracle::UserCourses::All.new({user_id: '238382'})
     courses = client.get_all_campus_courses
     sections = courses['2013-D'].select {|c| c[:dept] == 'BIOLOGY' && c[:catid] == '1A'}.first[:sections]
     expect(sections.size).to eq 3
@@ -55,7 +55,7 @@ describe CampusOracle::UserCourses do
   end
 
   it 'does not duplicate nested sections for instructors', :if => CampusOracle::Connection.test_data? do
-    client = CampusOracle::UserCourses.new({user_id: '904715'})
+    client = CampusOracle::UserCourses::All.new({user_id: '904715'})
     courses = client.get_all_campus_courses
     sections = courses['2013-D'].select {|c| c[:dept] == 'BIOLOGY' && c[:catid] == '1A'}.first[:sections]
     expect(sections.size).to eq 3
@@ -64,7 +64,7 @@ describe CampusOracle::UserCourses do
   end
 
   it 'prefixes short CCNs with zeroes', :if => CampusOracle::Connection.test_data? do
-    client = CampusOracle::UserCourses.new({user_id: '238382'})
+    client = CampusOracle::UserCourses::SelectedSections.new({user_id: '238382'})
     courses = client.get_selected_sections(2013, 'D', [7309])
     sections = courses['2013-D'].first[:sections]
     expect(sections.size).to eq 1
@@ -72,7 +72,7 @@ describe CampusOracle::UserCourses do
   end
 
   it "should find waitlisted status in test enrollments", :if => CampusOracle::Connection.test_data? do
-    client = CampusOracle::UserCourses.new({user_id: '300939'})
+    client = CampusOracle::UserCourses::All.new({user_id: '300939'})
     courses = client.get_all_campus_courses
     courses["2014-C"].length.should == 1
     course_primary = courses["2014-C"][0][:sections][0]
@@ -83,12 +83,12 @@ describe CampusOracle::UserCourses do
   end
 
   it "should say that Tammi has student history", :if => CampusOracle::Connection.test_data? do
-    client = CampusOracle::UserCourses.new({user_id: '300939'})
+    client = CampusOracle::UserCourses::HasStudentHistory.new({user_id: '300939'})
     client.has_student_history?.should be_true
   end
 
   it "should say that our fake teacher has instructor history", :if => CampusOracle::Connection.test_data? do
-    client = CampusOracle::UserCourses.new({user_id: '238382'})
+    client = CampusOracle::UserCourses::HasInstructorHistory.new({user_id: '238382'})
     client.has_instructor_history?.should be_true
   end
 
@@ -137,7 +137,7 @@ describe CampusOracle::UserCourses do
       let(:feed) { {} }
       before {CampusOracle::Queries.stub(:get_enrolled_sections).and_return(fake_enrollments)}
       subject {
-        CampusOracle::UserCourses.new(user_id: user_id).merge_enrollments(feed)
+        CampusOracle::UserCourses::Base.new(user_id: user_id).merge_enrollments(feed)
         feed["#{term_yr}-#{term_cd}"]
       }
       its(:size) {should eq 1}
@@ -174,7 +174,7 @@ describe CampusOracle::UserCourses do
       'term_yr' => '2014',
       'term_cd' => 'B'
     }}
-    subject {CampusOracle::UserCourses.new(user_id: rand(99)).course_ids_from_row(row)}
+    subject {CampusOracle::UserCourses::Base.new(user_id: rand(99)).course_ids_from_row(row)}
     its([:slug]) {should eq "mec_eng_i_res-0109al"}
     its([:id]) {should eq "mec_eng_i_res-0109al-2014-B"}
     its([:course_code]) {should eq 'MEC ENG/I,RES 0109AL'}
