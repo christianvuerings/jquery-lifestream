@@ -13,7 +13,7 @@ module Advising
     end
 
     def get
-      self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: 'An error occurred retrieving data for Advisor Appointments. Please try again later.'}) do
+      self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: 'Failed to connect with your department\'s advising system.'}) do
         internal_get
       end
     end
@@ -45,7 +45,7 @@ module Advising
         end
         if response.code >= 400
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
-            body: 'An error occurred retrieving data for Advisor Appointments. Please try again later.',
+            body: 'Failed to connect with your department\'s advising system.',
             statusCode: response.code
           })
         else

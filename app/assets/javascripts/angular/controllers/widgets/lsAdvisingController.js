@@ -8,6 +8,10 @@
 
     lsAdvisingFactory.getAdvisingInfo().success(function(data) {
       angular.extend($scope, data);
+
+      if (data.statusCode && data.statusCode >= 400) {
+        $scope.lsAdvisingError = data;
+      }
     });
 
   });
