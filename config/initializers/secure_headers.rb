@@ -7,6 +7,7 @@ module Calcentral
     config.before_initialize do
       ::SecureHeaders::Configuration.configure do |config|
         config.x_frame_options = 'DENY'
+        config.x_xss_protection = {:value => 1, :mode => 'block'}
       end
 
     end

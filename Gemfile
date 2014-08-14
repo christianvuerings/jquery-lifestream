@@ -37,7 +37,7 @@ gem 'omniauth-cas', '~> 1.0.1'
 gem 'net-ldap', '~> 0.7.0'
 
 # secure_headers provides x-frame, csp and other http headers
-gem 'secure_headers', '~> 0.5.0'
+gem 'secure_headers', '~> 1.3.1'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
@@ -101,7 +101,7 @@ gem 'icalendar', '~> 2.1.1'
 ##################
 
 # Our very own library for angular dependency!
-gem 'angular-gem', '1.2.21'
+gem 'angular-gem', '1.2.22'
 
 # Datepicker
 gem 'pikaday-gem', '~> 1.2.0'
