@@ -55,6 +55,7 @@ module Canvas
       course_id_to_csv_rows.each do |course_id, csv_rows|
         if course_id.present?
           sis_section_ids = csv_rows.collect { |row| row['section_id'] }
+          sis_section_ids.delete_if {|section| section.nil? }
           Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_uids, @batch_mode)
         end
       end
