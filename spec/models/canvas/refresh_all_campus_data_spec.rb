@@ -50,10 +50,9 @@ describe Canvas::RefreshAllCampusData do
     it 'passes well constructed parameters to the memberships maintainer' do
       expect(Canvas::SiteMembershipsMaintainer).to receive(:new) do |course_id, section_ids, enrollments_csv, users_csv, known_users, batch_mode|
         expect(course_id).to eq "CRS:#{ccn}"
-        expect(section_ids.size).to eq 3
+        expect(section_ids.size).to eq 2
         expect(section_ids[0]).to eq "SEC:2014-B-2#{ccn}"
-        expect(section_ids[1]).to be_blank
-        expect(section_ids[2]).to eq "SEC:2014-B-1#{ccn}"
+        expect(section_ids[1]).to eq "SEC:2014-B-1#{ccn}"
         expect(known_users).to eq []
         expect(batch_mode).to be_false
         double(refresh_sections_in_course: nil)
@@ -61,6 +60,43 @@ describe Canvas::RefreshAllCampusData do
       subject.make_csv_files
     end
 
+  end
+
+  describe '#refresh_existing_term_sections' do
+    let(:current_sis_term_ids) { ["TERM:2014-D"] }
+    let(:sections_report_csv_header_string) { "canvas_section_id,section_id,canvas_course_id,course_id,name,status,start_date,end_date,canvas_account_id,account_id" }
+    let(:sections_report_csv_string) do
+      [
+        sections_report_csv_header_string,
+        "20,SEC:2014-D-25123,24,CRS:COMPSCI-9D-2014-D,COMPSCI 9D SLF 001,active,,,36,ACCT:COMPSCI",
+        "19,SEC:2014-D-25124,24,CRS:COMPSCI-9D-2014-D,COMPSCI 9D SLF 002,active,,,36,ACCT:COMPSCI",
+        "21,SEC:2014-D-25125,24,,COMPSCI 9D SLF 003,active,,,36,ACCT:COMPSCI",
+        "22,,24,CRS:COMPSCI-9D-2014-D,COMPSCI 9D SLF 003,active,,,36,ACCT:COMPSCI",
+      ].join("\n")
+    end
+    let(:sections_report_csv) { CSV.parse(sections_report_csv_string, :headers => :first_row) }
+    let(:empty_sections_report_csv) { CSV.parse(sections_report_csv_header_string + "\n", :headers => :first_row) }
+
+    context "when canvas sections csv is present" do
+      before { allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(sections_report_csv) }
+      it 'passes only sections with course_id and section_id to site membership maintainer process for each course' do
+        users_csv = subject.instance_eval { make_users_csv(@users_csv_filename) }
+        known_uids = []
+        term = subject.instance_eval { @term_to_memberships_csv_filename.keys[0] }
+        enrollments_csv = subject.instance_eval { @term_to_memberships_csv_filename.values[0] }
+        expected_course_id = 'CRS:COMPSCI-9D-2014-D'
+        expected_sis_section_ids = ['SEC:2014-D-25123', 'SEC:2014-D-25124']
+        expect(Canvas::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_uids, false).once
+        subject.refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv)
+      end
+    end
+
+    context "when canvas sections csv is empty" do
+      before { allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(empty_sections_report_csv) }
+      it 'does not perform any processing' do
+        expect(Canvas::SiteMembershipsMaintainer).to_not receive(:process)
+      end
+    end
   end
 
 end
