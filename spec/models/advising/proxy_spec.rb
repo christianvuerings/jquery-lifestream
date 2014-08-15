@@ -44,6 +44,21 @@ describe Advising::Proxy do
     its([:statusCode]) { should eq 200 }
   end
 
+  context 'server 404s' do
+    include_context 'it writes to the cache'
+    after(:each) { WebMock.reset! }
+    subject { real_oski_proxy.get }
+
+    context '404 error on remote server' do
+      before do
+        stub_request(:any, /.*#{advising_uri.hostname}.*/).to_return(status: 404)
+        Advising::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
+      end
+      its([:body]) { should eq('No advising data could be found for your account.') }
+      its([:statusCode]) { should eq(404) }
+    end
+  end
+
   context 'server errors' do
     include_context 'short-lived cache write of Hash on failures'
     after(:each) { WebMock.reset! }
