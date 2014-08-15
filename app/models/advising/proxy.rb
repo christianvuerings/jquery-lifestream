@@ -29,6 +29,8 @@ module Advising
         return {}
       end
 
+      status_code = 200
+
       if @fake
         logger.info "Fake = #@fake, getting data from JSON fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
         json = File.read(Rails.root.join('fixtures', 'json', 'advising.json').to_s)
@@ -43,18 +45,22 @@ module Advising
             verify: Settings.application.layer == 'production'
           )
         end
-        if response.code >= 400
+        status_code = response.code
+        if response.code >= 400 && response.code != 404
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
             body: 'Failed to connect with your department\'s advising system.',
             statusCode: response.code
           })
+        elsif response.code == 404
+          logger.debug "404 response from advising API for user #{@uid}"
+          json = '{"body": "No advising data could be found for your account."}'
         else
           json = response.body
         end
         logger.debug "Advising remote response: #{response.inspect}"
       end
       {
-        statusCode: 200
+        statusCode: status_code
       }.merge(HashConverter.camelize(safe_json(json)))
     end
 
