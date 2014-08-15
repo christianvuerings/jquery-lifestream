@@ -116,12 +116,7 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="medium-4 columns">
-      <div data-ng-include="'widgets/webcast.html'"></div>
-
-      <div class="cc-widget cc-widget-last" data-ng-if="selectedCourse.class_sites.length">
+      <div class="cc-widget" data-ng-if="selectedCourse.class_sites.length">
         <div class="cc-widget-title">
           <h2>Class Sites</h2>
         </div>
@@ -137,6 +132,10 @@
           </ul>
         </div>
       </div>
+    </div>
+
+    <div class="medium-4 columns">
+      <div data-ng-include="'widgets/webcast.html'"></div>
 
       <div data-ng-if="selectedSemester.timeBucket === 'current' || selectedSemester.timeBucket === 'future'" class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
         <div class="cc-widget-title">
