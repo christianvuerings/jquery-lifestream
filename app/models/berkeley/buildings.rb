@@ -150,6 +150,11 @@ module Berkeley
           "lat" => "37.872190000000003",
           "lon" => "-122.25724"
         },
+        "BLUE GYM" => {
+          "display" => "Blue Gym, Recreational Sports Facility",
+          "lat" => "37.869093",
+          "lon" => "-122.262155"
+        },
         "BLUM" => {
           "display" => "Blum Hall",
           "lat" => "37.874954",
@@ -404,6 +409,11 @@ module Berkeley
           "display" => "Clark Kerr Campus Building 1",
           "lat" => "37.864326",
           "lon" => "-122.248851"
+        },
+        "KERR FIELD" => {
+          "display" => "Kerr Field",
+          "lat" => "37.8653579",
+          "lon" => "-122.2479286"
         },
         "KOSHLAND" => {
           "display" => "Koshland Hall",
