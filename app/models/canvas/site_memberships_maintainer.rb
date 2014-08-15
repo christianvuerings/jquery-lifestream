@@ -99,6 +99,8 @@ module Canvas
 
     def update_section_enrollment_from_campus(canvas_api_role, sis_section_id, campus_data_row, old_canvas_enrollments)
       login_uid = campus_data_row['ldap_uid'].to_s
+      # Note: old_canvas_enrollments may originate from Canvas::TermEnrollmentsCsv
+      # Make sure to update this class to include fields this logic depends on from the Canvas Enrollments API
       if (user_enrollments = old_canvas_enrollments[login_uid])
         # If the user already has the same role, remove the old enrollment from the cleanup list.
         if (matching_enrollment = user_enrollments.select{|e| e['role'] == canvas_api_role}.first)
