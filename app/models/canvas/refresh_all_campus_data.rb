@@ -81,9 +81,5 @@ module Canvas
       end
     end
 
-    def csv_count(csv_filename)
-      CSV.read(csv_filename, {headers: true}).length
-    end
-
   end
 end

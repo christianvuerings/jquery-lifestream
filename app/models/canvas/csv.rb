@@ -88,5 +88,9 @@ module Canvas
       make_csv(filename, 'user_id,login_id,first_name,last_name,email,status', rows)
     end
 
+    def csv_count(csv_filename)
+      CSV.read(csv_filename, {headers: true}).length
+    end
+
   end
 end
