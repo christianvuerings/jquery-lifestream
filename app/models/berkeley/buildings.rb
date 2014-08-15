@@ -25,6 +25,21 @@ module Berkeley
       # TEMPxx buildings at end of hash are known campus locations with good coords
       # but no official db entries, to be integrated in future if useful.
       @buildings ||= {
+        "2121 ALLSTON" => {
+          "display" => "2121 Allston",
+          "lat" => "37.8697677",
+          "lon" => "-122.2668327"
+        },
+        "2195 HEARST" => {
+          "display" => "2195 Hearst",
+          "lat" => "37.8741509",
+          "lon" => "-122.2663898"
+        },
+        "2223 FULTON" => {
+          "display" => "2223 Fulton",
+          "lat" => "37.8687783",
+          "lon" => "-122.2658687"
+        },
         "2224 PIEDMNT" => {
           "display" => "2224 Piedmont",
           "lat" => "37.871296",
@@ -40,10 +55,60 @@ module Berkeley
           "lat" => "37.870983",
           "lon" => "-122.252694"
         },
+        "2251 COLLEGE" => {
+          "display" => "2251 College",
+          "lat" => "37.8692877",
+          "lon" => "-122.254584"
+        },
+        "2334BOWDITCH" => {
+          "display" => "2334 Bowditch",
+          "lat" => "37.8669519",
+          "lon" => "-122.2565397"
+        },
+        "2339 HASTE" => {
+          "display" => "2339 Haste",
+          "lat" => "37.8658494",
+          "lon" => "-122.2615313"
+        },
+        "2401BANCROFT" => {
+          "display" => "2401 Bancroft",
+          "lat" => "37.8684517",
+          "lon" => "-122.2614503"
+        },
+        "2420BOWDITCH" => {
+          "display" => "2420 Bowditch",
+          "lat" => "37.866835",
+          "lon" => "-122.2564653"
+        },
+        "2505CHANNING" => {
+          "display" => "2505 Channing",
+          "lat" => "37.8672071",
+          "lon" => "-122.2585933"
+        },
         "2515CHANNING" => {
           "display" => "2515 Channing",
           "lat" => "37.867409",
           "lon" => "-122.258284"
+        },
+        "2515 HILLGSS" => {
+          "display" => "2515 Hillegass",
+          "lat" => "37.8647924",
+          "lon" => "-122.2561816"
+        },
+        "2521CHANNING" => {
+          "display" => "2521 Channing",
+          "lat" => "37.8672348",
+          "lon" => "-122.2578788"
+        },
+        "2538A CHNING" => {
+          "display" => "2538A Channing",
+          "lat" => "37.866642",
+          "lon" => "-122.257316"
+        },
+        "2538CHANNING" => {
+          "display" => "2538 Channing",
+          "lat" => "37.866642",
+          "lon" => "-122.257316"
         },
         "BANCROFT" => {
           "display" => "Bancroft Studio (2401 Bancroft)",
@@ -85,6 +150,11 @@ module Berkeley
           "lat" => "37.872190000000003",
           "lon" => "-122.25724"
         },
+        "BLUE GYM" => {
+          "display" => "Blue Gym, Recreational Sports Facility",
+          "lat" => "37.869093",
+          "lon" => "-122.262155"
+        },
         "BLUM" => {
           "display" => "Blum Hall",
           "lat" => "37.874954",
@@ -92,8 +162,13 @@ module Berkeley
         },
         "BOALT" => {
           "display" => "Boalt Hall, School of Law",
-          "lat" => "37.86992",
-          "lon" => "-122.25341"
+          "lat" => "37.869831",
+          "lon" => "-122.25381"
+        },
+        "BOOTH AUD" => {
+          "display" => "Booth Auditorium, Boalt Hall",
+          "lat" => "37.869831",
+          "lon" => "-122.25381"
         },
         "BOT GARDEN" => {
           "display" => "Botanical Garden Conference Center",
@@ -174,6 +249,11 @@ module Berkeley
           "display" => "Dwinelle Annex",
           "lat" => "37.870350000000002",
           "lon" => "-122.26123"
+        },
+        "EDWARDS STD" => {
+          "display" => "Edwards Stadium",
+          "lat" => "37.868995",
+          "lon" => "-122.264837"
         },
         "ESHLEMAN" => {
           "display" => "Eshleman Hall",
@@ -329,6 +409,11 @@ module Berkeley
           "display" => "Clark Kerr Campus Building 1",
           "lat" => "37.864326",
           "lon" => "-122.248851"
+        },
+        "KERR FIELD" => {
+          "display" => "Kerr Field",
+          "lat" => "37.8653579",
+          "lon" => "-122.2479286"
         },
         "KOSHLAND" => {
           "display" => "Koshland Hall",
@@ -599,6 +684,11 @@ module Berkeley
           "display" => "Unit 2 Residence Hall - Wada",
           "lat" => "37.865783",
           "lon" => "-122.254862"
+        },
+        "UNIT III" => {
+          "display" => "Unit III",
+          "lat" => "37.8670468",
+          "lon" => "-122.2608778"
         },
         "UNIT III DIN" => {
           "display" => "Residence Hall Unit III Dining",
