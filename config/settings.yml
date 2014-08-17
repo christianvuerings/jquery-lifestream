@@ -255,7 +255,7 @@ features:
   profile_page: false
   reauthentication: true
   audio: false
-  regstatus: false
+  regstatus: true
   advising: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
