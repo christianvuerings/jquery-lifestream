@@ -19,7 +19,7 @@ module Canvas
 
     def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
-        enrollments_csv_output, users_csv_output, known_users, batch_mode)
+        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode)
       worker.refresh_sections_in_course
     end
 
@@ -28,7 +28,7 @@ module Canvas
       enrollments_rows = []
       users_rows = []
       known_users = []
-      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users, true)
+      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users, :batch_mode => true)
       worker.refresh_sections_in_course
       logger.warn("Importing #{enrollments_rows.size} memberships for #{known_users.size} users to course site #{sis_course_id}")
       enrollments_csv = worker.make_enrollments_csv(enrollments_csv_filename, enrollments_rows)
@@ -40,14 +40,17 @@ module Canvas
       end
     end
 
-    def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
+    def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, options = {})
+      default_options = { :batch_mode => false, :cached_enrollments => true }
+      options.reverse_merge!(default_options)
+
       super()
       @sis_course_id = sis_course_id
       @sis_section_ids = sis_section_ids
       @enrollments_csv_output = enrollments_csv_output
       @users_csv_output = users_csv_output
       @known_users = known_users
-      @batch_mode = batch_mode
+      @batch_mode = options[:batch_mode]
     end
 
     def refresh_sections_in_course
