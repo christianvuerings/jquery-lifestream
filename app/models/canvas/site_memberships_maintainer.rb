@@ -17,9 +17,9 @@ module Canvas
     }
     CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
-    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
+    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments = false)
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
-        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode)
+        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode, :cached_enrollments => cached_enrollments)
       worker.refresh_sections_in_course
     end
 
@@ -41,7 +41,7 @@ module Canvas
     end
 
     def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, options = {})
-      default_options = { :batch_mode => false, :cached_enrollments => true }
+      default_options = { :batch_mode => false, :cached_enrollments => false }
       options.reverse_merge!(default_options)
 
       super()
@@ -51,6 +51,8 @@ module Canvas
       @users_csv_output = users_csv_output
       @known_users = known_users
       @batch_mode = options[:batch_mode]
+      @cached_enrollments = options[:cached_enrollments]
+      @term_enrollments_csv_worker = Canvas::TermEnrollmentsCsv.new if @cached_enrollments
     end
 
     def refresh_sections_in_course
@@ -65,13 +67,18 @@ module Canvas
       end
     end
 
-    def canvas_section_enrollments(canvas_section_id)
+    def canvas_section_enrollments(canvas_sis_section_id)
       # So far as CSV generation is concerned, ignoring current memberships is equivalent to not having any current
       # memberships.
       if @batch_mode
         {}
       else
-        canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_section_id).list_enrollments
+        if @cached_enrollments
+          canvas_sis_section_id.gsub!(/sis_section_id:/, '')
+          canvas_section_enrollments = @term_enrollments_csv_worker.cached_canvas_section_enrollments(canvas_sis_section_id)
+        else
+          canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_sis_section_id).list_enrollments
+        end
         canvas_section_enrollments.group_by {|e| e['user']['login_id']}
       end
     end
