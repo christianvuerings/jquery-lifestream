@@ -53,15 +53,7 @@ module Canvas
       canvas_section_ids.each do |canvas_section_id|
         canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_section_id).list_enrollments
         canvas_section_enrollments.each do |enrollment|
-          summarized_enrollment = {
-            'canvas_section_id' => enrollment['course_section_id'],
-            'sis_section_id' => enrollment['sis_section_id'],
-            'canvas_user_id' => enrollment['user_id'],
-            'sis_login_id' => enrollment['user']['sis_login_id'],
-            'role' => enrollment['role'],
-            'sis_import_id' => enrollment['sis_import_id'],
-          }
-          enrollments_csv << summarized_enrollment
+          enrollments_csv << self.class.api_to_csv_enrollment(enrollment)
         end
       end
     end
@@ -72,21 +64,49 @@ module Canvas
 
     # Loads current term CSVs into memory
     def load_current_term_enrollments
-      puts "loading current term enrollments"
       @canvas_section_id_enrollments = {}
       term_set = term_enrollments_csv_filepaths(latest_term_enrollment_set_date)
       term_set.each do |term,filepath|
         term_csv = CSV.read(filepath, {headers: true})
         # section ids are not going to overlap acros terms, so merging is safe
-        @canvas_section_id_enrollments.merge!(term_csv.group_by {|row| row['canvas_section_id']})
+        @canvas_section_id_enrollments.merge!(term_csv.group_by {|row| row['sis_section_id']})
       end
       @canvas_section_id_enrollments
     end
 
-    # Provides enrollments for Canvas Section ID specified from latest Cached CSV Set
-    def cached_canvas_section_enrollments(canvas_section_id)
+    # Provides enrollments for Canvas SIS Section ID specified from latest Cached CSV Set
+    def cached_canvas_section_enrollments(canvas_sis_section_id)
       load_current_term_enrollments if @canvas_section_id_enrollments.empty?
-      @canvas_section_id_enrollments[canvas_section_id]
+      @canvas_section_id_enrollments[canvas_sis_section_id].collect {|e| self.class.csv_to_api_enrollment(e) }
+    end
+
+    # Converts Canvas Enrollments API hash to CSV hash
+    def self.api_to_csv_enrollment(api_enrollment)
+      api_enrollment_hash = api_enrollment.to_hash
+      {
+        'canvas_section_id' => api_enrollment_hash['course_section_id'],
+        'sis_section_id' => api_enrollment_hash['sis_section_id'],
+        'canvas_user_id' => api_enrollment_hash['user_id'],
+        'role' => api_enrollment_hash['role'],
+        'sis_import_id' => api_enrollment_hash['sis_import_id'],
+        'sis_login_id' => api_enrollment_hash['user']['sis_login_id'],
+      }
+    end
+
+    # Converts Canvas Enrollments API hash to CSV hash
+    def self.csv_to_api_enrollment(csv_enrollment)
+      csv_enrollment_hash = csv_enrollment.to_hash
+      {
+        'course_section_id' => csv_enrollment_hash['canvas_section_id'],
+        'sis_section_id' => csv_enrollment_hash['sis_section_id'],
+        'user_id' => csv_enrollment_hash['canvas_user_id'],
+        'role' => csv_enrollment_hash['role'],
+        'sis_import_id' => csv_enrollment_hash['sis_import_id'],
+        'user' => {
+          'sis_login_id' => csv_enrollment_hash['sis_login_id'],
+          'login_id' => csv_enrollment_hash['sis_login_id']
+        }
+      }
     end
 
   end
