@@ -23,4 +23,10 @@ module SpecHelperModule
     rand(99999).to_s
   end
 
+  def delete_files_if_exists(filepaths)
+    filepaths.to_a.each do |filepath|
+      File.delete(filepath) if File.exists?(filepath)
+    end
+  end
+
 end

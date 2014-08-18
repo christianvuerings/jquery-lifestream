@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815154903) do
+ActiveRecord::Schema.define(version: 20140815155903) do
 
   create_table "canvas_synchronization", force: true do |t|
     t.datetime "last_guest_user_sync"
+    t.datetime "latest_term_enrollment_csv_set"
   end
 
   create_table "class_calendar_jobs", force: true do |t|

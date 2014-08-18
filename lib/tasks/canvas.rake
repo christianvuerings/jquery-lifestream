@@ -18,6 +18,12 @@ namespace :canvas do
     canvas_worker.sync_all_active_users
   end
 
+  desc 'Exports Canvas enrollments to CSV files for each term'
+  task :export_enrollments_to_csv_set => :environment  do
+    canvas_worker = Canvas::TermEnrollmentsCsv.new
+    canvas_worker.export_enrollments_to_csv_set
+  end
+
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and add new section memberships'
   task :incremental_refresh => :environment do
     canvas_worker = Canvas::RefreshAllCampusData.new 'incremental'

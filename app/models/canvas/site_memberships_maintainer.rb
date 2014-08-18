@@ -17,9 +17,9 @@ module Canvas
     }
     CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
-    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
+    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments = false)
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
-        enrollments_csv_output, users_csv_output, known_users, batch_mode)
+        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode, :cached_enrollments => cached_enrollments)
       worker.refresh_sections_in_course
     end
 
@@ -28,7 +28,7 @@ module Canvas
       enrollments_rows = []
       users_rows = []
       known_users = []
-      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users, true)
+      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users, :batch_mode => true)
       worker.refresh_sections_in_course
       logger.warn("Importing #{enrollments_rows.size} memberships for #{known_users.size} users to course site #{sis_course_id}")
       enrollments_csv = worker.make_enrollments_csv(enrollments_csv_filename, enrollments_rows)
@@ -40,14 +40,19 @@ module Canvas
       end
     end
 
-    def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
+    def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, options = {})
+      default_options = { :batch_mode => false, :cached_enrollments => false }
+      options.reverse_merge!(default_options)
+
       super()
       @sis_course_id = sis_course_id
       @sis_section_ids = sis_section_ids
       @enrollments_csv_output = enrollments_csv_output
       @users_csv_output = users_csv_output
       @known_users = known_users
-      @batch_mode = batch_mode
+      @batch_mode = options[:batch_mode]
+      @cached_enrollments = options[:cached_enrollments]
+      @term_enrollments_csv_worker = Canvas::TermEnrollmentsCsv.new if @cached_enrollments
     end
 
     def refresh_sections_in_course
@@ -62,13 +67,19 @@ module Canvas
       end
     end
 
-    def canvas_section_enrollments(canvas_section_id)
+    def canvas_section_enrollments(canvas_sis_section_id)
       # So far as CSV generation is concerned, ignoring current memberships is equivalent to not having any current
       # memberships.
       if @batch_mode
         {}
       else
-        canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_section_id).list_enrollments
+        if @cached_enrollments
+          canvas_sis_section_id.gsub!(/sis_section_id:/, '')
+          logger.warn("Obtaining cached enrollments for #{canvas_sis_section_id}")
+          canvas_section_enrollments = @term_enrollments_csv_worker.cached_canvas_section_enrollments(canvas_sis_section_id)
+        else
+          canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_sis_section_id).list_enrollments
+        end
         canvas_section_enrollments.group_by {|e| e['user']['login_id']}
       end
     end
@@ -99,6 +110,8 @@ module Canvas
 
     def update_section_enrollment_from_campus(canvas_api_role, sis_section_id, campus_data_row, old_canvas_enrollments)
       login_uid = campus_data_row['ldap_uid'].to_s
+      # Note: old_canvas_enrollments may originate from Canvas::TermEnrollmentsCsv
+      # Make sure to update this class to include fields this logic depends on from the Canvas Enrollments API
       if (user_enrollments = old_canvas_enrollments[login_uid])
         # If the user already has the same role, remove the old enrollment from the cleanup list.
         if (matching_enrollment = user_enrollments.select{|e| e['role'] == canvas_api_role}.first)

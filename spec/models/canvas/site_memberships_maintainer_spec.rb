@@ -10,7 +10,7 @@ describe Canvas::SiteMembershipsMaintainer do
   let(:sis_section_id) {"SEC:2014-B-#{course_id}"}
   let(:sis_section_ids) { [sis_section_id] }
   subject {
-    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode)
+    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode, cached_enrollments)
     enrollments_csv
   }
 
@@ -18,8 +18,19 @@ describe Canvas::SiteMembershipsMaintainer do
     subject.select {|e| e['user_id'] == "UID:#{user_id}"}
   end
 
+  def it_adds_the_new_membership
+    expect(enrollments_for(uid)).to eq [{
+      'course_id' => course_id,
+      'user_id' => "UID:#{uid}",
+      'role' => csv_role,
+      'section_id' => sis_section_id,
+      'status' => 'active'
+    }]
+  end
+
   context 'batch mode' do
     let(:batch_mode) {true}
+    let(:cached_enrollments) {false}
     before do
       expect_any_instance_of(Canvas::SectionEnrollments).to receive(:list_enrollments).never
     end
@@ -125,6 +136,7 @@ describe Canvas::SiteMembershipsMaintainer do
 
   context 'incremental mode' do
     let(:batch_mode) {false}
+    let(:cached_enrollments) {false}
     let(:campus_data_row) { {
       'ldap_uid' => uid,
       'enroll_status' => 'E'
@@ -142,79 +154,94 @@ describe Canvas::SiteMembershipsMaintainer do
         }
       }]
     end
+
     before do
-      expect(Canvas::SectionEnrollments).to receive(:new).with(section_id: "sis_section_id:#{sis_section_id}").and_return(double(
-        list_enrollments: canvas_section_enrollments
-      ))
       expect(CampusOracle::Queries).to receive(:get_enrolled_students).
         with(course_id, '2014', 'B').and_return([campus_data_row])
       allow(CampusOracle::Queries).to receive(:get_section_instructors).and_return([])
     end
 
-    def it_adds_the_new_membership
-      expect(enrollments_for(uid)).to eq [{
-        'course_id' => course_id,
-        'user_id' => "UID:#{uid}",
-        'role' => csv_role,
-        'section_id' => sis_section_id,
-        'status' => 'active'
-      }]
-    end
+    context 'live enrollments comparison' do
 
-    context 'new site member' do
-      let(:existing_uid) { random_id }
-      let(:existing_api_role) {'Waitlist Student'}
-      let(:existing_state) {'active'}
-      context 'existing membership was manually added' do
-        let(:existing_import_id) { nil }
-        it 'leaves existing membership alone' do
-          it_adds_the_new_membership
-          expect(enrollments_for(existing_uid)).to be_empty
+      before do
+        expect(Canvas::SectionEnrollments).to receive(:new).with(section_id: "sis_section_id:#{sis_section_id}").and_return(double(
+          list_enrollments: canvas_section_enrollments
+        ))
+      end
+
+      context 'new site member' do
+        let(:existing_uid) { random_id }
+        let(:existing_api_role) {'Waitlist Student'}
+        let(:existing_state) {'active'}
+        context 'existing membership was manually added' do
+          let(:existing_import_id) { nil }
+          it 'leaves existing membership alone' do
+            it_adds_the_new_membership
+            expect(enrollments_for(existing_uid)).to be_empty
+          end
+        end
+        context 'existing membership was added by previous import' do
+          let(:existing_import_id) { rand(9999) }
+          it 'removes the existing membership' do
+            it_adds_the_new_membership
+            expect(enrollments_for(existing_uid).size).to eq 1
+            expect(enrollments_for(existing_uid).first['role']).to eq 'Waitlist Student'
+            expect(enrollments_for(existing_uid).first['status']).to eq 'deleted'
+          end
         end
       end
-      context 'existing membership was added by previous import' do
-        let(:existing_import_id) { rand(9999) }
-        it 'removes the existing membership' do
-          it_adds_the_new_membership
-          expect(enrollments_for(existing_uid).size).to eq 1
-          expect(enrollments_for(existing_uid).first['role']).to eq 'Waitlist Student'
-          expect(enrollments_for(existing_uid).first['status']).to eq 'deleted'
-        end
-      end
-    end
-    context 'known site member' do
-      let(:existing_uid) { uid }
-      let(:existing_api_role) {'Waitlist Student'}
-      let(:existing_state) {'active'}
-      context 'existing membership was manually added' do
-        let(:existing_import_id) { nil }
-        it 'ignores the existing membership record' do
-          it_adds_the_new_membership
-        end
-      end
-      context 'existing membership was added by previous import' do
-        let(:existing_import_id) { rand(9999) }
-        context 'previous membership was deleted' do
-          let(:existing_state) { 'deleted' }
+      context 'known site member' do
+        let(:existing_uid) { uid }
+        let(:existing_api_role) {'Waitlist Student'}
+        let(:existing_state) {'active'}
+        context 'existing membership was manually added' do
+          let(:existing_import_id) { nil }
           it 'ignores the existing membership record' do
             it_adds_the_new_membership
           end
         end
-        context 'no change to role' do
-          let(:existing_api_role) {'StudentEnrollment'}
-          it 'does nothing' do
-            expect(subject).to be_empty
+        context 'existing membership was added by previous import' do
+          let(:existing_import_id) { rand(9999) }
+          context 'previous membership was deleted' do
+            let(:existing_state) { 'deleted' }
+            it 'ignores the existing membership record' do
+              it_adds_the_new_membership
+            end
           end
-        end
-        context 'changed role' do
-          it 'adds the new role and deletes the old one' do
-            expect(subject.size).to eq 2
-            expect(subject.index {|e| e['user_id'] == "UID:#{uid}" && e['role'] == csv_role && e['status'] == 'active'}).to_not be_nil
-            expect(subject.index {|e| e['user_id'] == "UID:#{uid}" && e['role'] == 'Waitlist Student' && e['status'] == 'deleted'}).to_not be_nil
+          context 'no change to role' do
+            let(:existing_api_role) {'StudentEnrollment'}
+            it 'does nothing' do
+              expect(subject).to be_empty
+            end
+          end
+          context 'changed role' do
+            it 'adds the new role and deletes the old one' do
+              expect(subject.size).to eq 2
+              expect(subject.index {|e| e['user_id'] == "UID:#{uid}" && e['role'] == csv_role && e['status'] == 'active'}).to_not be_nil
+              expect(subject.index {|e| e['user_id'] == "UID:#{uid}" && e['role'] == 'Waitlist Student' && e['status'] == 'deleted'}).to_not be_nil
+            end
           end
         end
       end
     end
+
+    context 'cached enrollments comparison' do
+      let(:cached_enrollments) {true}
+      let(:cached_enrollments_hash) do
+        [
+          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906376", "role"=>"StudentEnrollment", "sis_import_id"=>"101", "user"=>{"sis_login_id"=>"7977", "login_id"=>"7977"}},
+          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906377", "role"=>"StudentEnrollment", "sis_import_id"=>"101", "user"=>{"sis_login_id"=>"7978", "login_id"=>"7978"}},
+        ]
+      end
+      before do
+        expect_any_instance_of(Canvas::SectionEnrollments).to receive(:list_enrollments).never
+        expect_any_instance_of(Canvas::TermEnrollmentsCsv).to receive(:cached_canvas_section_enrollments).with(sis_section_id).and_return(cached_enrollments_hash)
+      end
+      it 'calls for enrollments from cached enrollment set' do
+        expect(subject.count).to eq 1
+      end
+    end
+
   end
 
 end

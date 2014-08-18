@@ -39,15 +39,11 @@ describe Canvas::MaintainAllUsers do
   end
 
   after do
-    files = [
+    delete_files_if_exists([
       'tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv',
       'tmp/canvas/canvas-2014-07-23_09-00-06-sync-all-users.csv'
-    ]
-    files.each do |file|
-      File.delete(file) if File.exists?(file)
-    end
+    ])
   end
-
 
   describe "#sync_all_active_users" do
     it "calls user syncing methods in intended order" do
