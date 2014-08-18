@@ -76,7 +76,7 @@ module Canvas
       url = "accounts/#{settings.account_id}/reports/#{report_type}_csv/#{report_id}"
       status = nil
       sleep 5
-      tries = 40
+      tries = report_retrieval_attempts
       begin
         Retriable.retriable(on: Canvas::Report::ReportNotReadyException, tries: tries, interval: 20) do
           response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class, method: __method__ }) do
@@ -100,6 +100,10 @@ module Canvas
       end
       logger.debug "Report ID #{report_id} status = #{status}"
       status
+    end
+
+    def report_retrieval_attempts
+      40
     end
 
     class ReportNotReadyException < Exception
