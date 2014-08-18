@@ -29,10 +29,19 @@
       }
     };
 
+    var setSelectedOption = function() {
+      if (!$scope.videos.length && $scope.audio.length) {
+        $scope.switchSelectedOption($scope.selectOptions[1]);
+      } else {
+        $scope.switchSelectedOption($scope.selectOptions[0]);
+      }
+    };
+
     var getWebcasts = function(title) {
       $http.get(webcastUrl(title)).success(function(data) {
         angular.extend($scope, data);
         selectFirstOptions();
+        setSelectedOption();
       });
     };
 
@@ -52,7 +61,6 @@
     var setSelectOptions = function() {
       var options = ['Video', 'Audio'];
       $scope.selectOptions = options;
-      $scope.switchSelectedOption(options[0]);
     };
 
     if ($routeParams.canvasCourseId || $route.current.isEmbedded) {
