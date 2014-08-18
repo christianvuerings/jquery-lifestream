@@ -10,7 +10,7 @@ describe Canvas::SiteMembershipsMaintainer do
   let(:sis_section_id) {"SEC:2014-B-#{course_id}"}
   let(:sis_section_ids) { [sis_section_id] }
   subject {
-    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode, cached_enrollments)
+    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode, cached_enrollments_provider)
     enrollments_csv
   }
 
@@ -30,7 +30,7 @@ describe Canvas::SiteMembershipsMaintainer do
 
   context 'batch mode' do
     let(:batch_mode) {true}
-    let(:cached_enrollments) {false}
+    let(:cached_enrollments_provider) {nil}
     before do
       expect_any_instance_of(Canvas::SectionEnrollments).to receive(:list_enrollments).never
     end
@@ -136,7 +136,7 @@ describe Canvas::SiteMembershipsMaintainer do
 
   context 'incremental mode' do
     let(:batch_mode) {false}
-    let(:cached_enrollments) {false}
+    let(:cached_enrollments_provider) {nil}
     let(:campus_data_row) { {
       'ldap_uid' => uid,
       'enroll_status' => 'E'
@@ -225,8 +225,8 @@ describe Canvas::SiteMembershipsMaintainer do
       end
     end
 
-    context 'cached enrollments comparison' do
-      let(:cached_enrollments) {true}
+    context 'when cached enrollments provider present' do
+      let(:cached_enrollments_provider) { Canvas::TermEnrollmentsCsv.new }
       let(:cached_enrollments_hash) do
         [
           {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906376", "role"=>"StudentEnrollment", "sis_import_id"=>"101", "user"=>{"sis_login_id"=>"7977", "login_id"=>"7977"}},

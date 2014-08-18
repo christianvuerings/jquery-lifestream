@@ -17,9 +17,9 @@ module Canvas
     }
     CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
-    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments = false)
+    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments_provider = nil)
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
-        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode, :cached_enrollments => cached_enrollments)
+        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode, :cached_enrollments_provider => cached_enrollments_provider)
       worker.refresh_sections_in_course
     end
 
@@ -41,7 +41,7 @@ module Canvas
     end
 
     def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, options = {})
-      default_options = { :batch_mode => false, :cached_enrollments => false }
+      default_options = { :batch_mode => false, :cached_enrollments_provider => nil }
       options.reverse_merge!(default_options)
 
       super()
@@ -51,8 +51,7 @@ module Canvas
       @users_csv_output = users_csv_output
       @known_users = known_users
       @batch_mode = options[:batch_mode]
-      @cached_enrollments = options[:cached_enrollments]
-      @term_enrollments_csv_worker = Canvas::TermEnrollmentsCsv.new if @cached_enrollments
+      @term_enrollments_csv_worker = options[:cached_enrollments_provider]
     end
 
     def refresh_sections_in_course
@@ -73,7 +72,7 @@ module Canvas
       if @batch_mode
         {}
       else
-        if @cached_enrollments
+        if @term_enrollments_csv_worker
           canvas_sis_section_id.gsub!(/sis_section_id:/, '')
           logger.warn("Obtaining cached enrollments for #{canvas_sis_section_id}")
           canvas_section_enrollments = @term_enrollments_csv_worker.cached_canvas_section_enrollments(canvas_sis_section_id)
