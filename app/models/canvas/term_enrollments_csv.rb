@@ -64,6 +64,7 @@ module Canvas
 
     # Loads current term CSVs into memory
     def load_current_term_enrollments
+      logger.warn("Loading cached enrollments for #{latest_term_enrollment_set_date.strftime('%F')}")
       @canvas_section_id_enrollments = {}
       term_set = term_enrollments_csv_filepaths(latest_term_enrollment_set_date)
       term_set.each do |term,filepath|
@@ -71,11 +72,13 @@ module Canvas
         # section ids are not going to overlap acros terms, so merging is safe
         @canvas_section_id_enrollments.merge!(term_csv.group_by {|row| row['sis_section_id']})
       end
+      logger.warn("Enrollments loaded for terms #{term_set.keys.to_sentence}")
       @canvas_section_id_enrollments
     end
 
     # Provides enrollments for Canvas SIS Section ID specified from latest Cached CSV Set
     def cached_canvas_section_enrollments(canvas_sis_section_id)
+      logger.warn("Cached enrollments for #{canvas_sis_section_id} served")
       load_current_term_enrollments if @canvas_section_id_enrollments.empty?
       @canvas_section_id_enrollments[canvas_sis_section_id].collect {|e| self.class.csv_to_api_enrollment(e) }
     end

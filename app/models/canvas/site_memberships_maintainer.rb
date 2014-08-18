@@ -75,6 +75,7 @@ module Canvas
       else
         if @cached_enrollments
           canvas_sis_section_id.gsub!(/sis_section_id:/, '')
+          logger.warn("Obtaining cached enrollments for #{canvas_sis_section_id}")
           canvas_section_enrollments = @term_enrollments_csv_worker.cached_canvas_section_enrollments(canvas_sis_section_id)
         else
           canvas_section_enrollments = Canvas::SectionEnrollments.new(section_id: canvas_sis_section_id).list_enrollments
