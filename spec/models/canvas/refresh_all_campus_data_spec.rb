@@ -55,7 +55,7 @@ describe Canvas::RefreshAllCampusData do
         expect(section_ids[1]).to eq "SEC:2014-B-1#{ccn}"
         expect(known_users).to eq []
         expect(options[:batch_mode]).to be_false
-        expect(options[:cached_enrollments]).to be_true
+        expect(options[:cached_enrollments_provider]).to be_an_instance_of Canvas::TermEnrollmentsCsv
         double(refresh_sections_in_course: nil)
       end
       subject.make_csv_files
@@ -77,6 +77,7 @@ describe Canvas::RefreshAllCampusData do
     end
     let(:sections_report_csv) { CSV.parse(sections_report_csv_string, :headers => :first_row) }
     let(:empty_sections_report_csv) { CSV.parse(sections_report_csv_header_string + "\n", :headers => :first_row) }
+    let(:cached_enrollments_provider) { Canvas::TermEnrollmentsCsv.new }
 
     context "when canvas sections csv is present" do
       before { allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(sections_report_csv) }
@@ -87,8 +88,8 @@ describe Canvas::RefreshAllCampusData do
         enrollments_csv = subject.instance_eval { @term_to_memberships_csv_filename.values[0] }
         expected_course_id = 'CRS:COMPSCI-9D-2014-D'
         expected_sis_section_ids = ['SEC:2014-D-25123', 'SEC:2014-D-25124']
-        expect(Canvas::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_uids, false, true).once
-        subject.refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv)
+        expect(Canvas::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_uids, false, cached_enrollments_provider).once
+        subject.refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv, cached_enrollments_provider)
       end
     end
 

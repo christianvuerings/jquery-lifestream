@@ -31,9 +31,10 @@ module Canvas
       known_uids = []
       Canvas::MaintainUsers.new.refresh_existing_user_accounts(known_uids, users_csv)
       original_user_count = known_uids.length
+      cached_enrollments_provider = Canvas::TermEnrollmentsCsv.new
       @term_to_memberships_csv_filename.each do |term, csv_filename|
         enrollments_csv = make_enrollments_csv(csv_filename)
-        refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv)
+        refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv, cached_enrollments_provider)
         enrollments_csv.close
         enrollments_count = csv_count(csv_filename)
         logger.warn("Will upload #{enrollments_count} Canvas enrollment records for #{term}")
@@ -47,7 +48,7 @@ module Canvas
       @users_csv_filename = nil if (updated_user_count + new_user_count) == 0
     end
 
-    def refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv)
+    def refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv, cached_enrollments_provider)
       canvas_sections_csv = Canvas::SectionsReport.new.get_csv(term)
       return if canvas_sections_csv.empty?
       # Instructure doesn't guarantee anything about sections-CSV ordering, but we need to group sections
@@ -58,7 +59,7 @@ module Canvas
           sis_section_ids = csv_rows.collect { |row| row['section_id'] }
           sis_section_ids.delete_if {|section| section.nil? }
           # Process using cached enrollment data. See Canvas::TermEnrollmentsCsv
-          Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_uids, @batch_mode, true)
+          Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_uids, @batch_mode, cached_enrollments_provider)
         end
       end
     end
