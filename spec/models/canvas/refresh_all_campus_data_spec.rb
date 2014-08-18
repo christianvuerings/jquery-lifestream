@@ -55,6 +55,7 @@ describe Canvas::RefreshAllCampusData do
         expect(section_ids[1]).to eq "SEC:2014-B-1#{ccn}"
         expect(known_users).to eq []
         expect(options[:batch_mode]).to be_false
+        expect(options[:cached_enrollments]).to be_true
         double(refresh_sections_in_course: nil)
       end
       subject.make_csv_files
@@ -86,7 +87,7 @@ describe Canvas::RefreshAllCampusData do
         enrollments_csv = subject.instance_eval { @term_to_memberships_csv_filename.values[0] }
         expected_course_id = 'CRS:COMPSCI-9D-2014-D'
         expected_sis_section_ids = ['SEC:2014-D-25123', 'SEC:2014-D-25124']
-        expect(Canvas::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_uids, false).once
+        expect(Canvas::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_uids, false, true).once
         subject.refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv)
       end
     end
