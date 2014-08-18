@@ -242,8 +242,6 @@ describe Canvas::TermEnrollmentsCsv do
       subject.export_enrollments_to_csv_set
       result = subject.load_current_term_enrollments
       expect(result).to be_an_instance_of Hash
-      # ["1412606", "1412607", "1413864", "1413865"]
-      # ["SEC:2014-C-25128", "SEC:2014-C-25129", "SEC:2014-C-24111", "SEC:2014-C-24112"]
       expect(result.keys).to eq ["SEC:2014-C-25128", "SEC:2014-C-25129", "SEC:2014-C-24111", "SEC:2014-C-24112"]
       result.each do |canvas_section_id,csv_rows|
         expect(csv_rows).to be_an_instance_of Array
