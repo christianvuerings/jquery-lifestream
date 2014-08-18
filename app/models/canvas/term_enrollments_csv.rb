@@ -73,6 +73,7 @@ module Canvas
         @canvas_section_id_enrollments.merge!(term_csv.group_by {|row| row['sis_section_id']})
       end
       logger.warn("Enrollments loaded for terms #{term_set.keys.to_sentence}")
+      logger.warn("#{@canvas_section_id_enrollments.keys.count} sections loaded")
       @canvas_section_id_enrollments
     end
 
@@ -80,7 +81,9 @@ module Canvas
     def cached_canvas_section_enrollments(canvas_sis_section_id)
       logger.warn("Cached enrollments for #{canvas_sis_section_id} served")
       load_current_term_enrollments if @canvas_section_id_enrollments.empty?
-      @canvas_section_id_enrollments[canvas_sis_section_id].collect {|e| self.class.csv_to_api_enrollment(e) }
+      enrollments = @canvas_section_id_enrollments[canvas_sis_section_id]
+      return [] if enrollments.nil?
+      enrollments.collect {|e| self.class.csv_to_api_enrollment(e) }
     end
 
     # Converts Canvas Enrollments API hash to CSV hash
