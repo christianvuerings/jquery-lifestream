@@ -37,7 +37,7 @@ gem 'omniauth-cas', '~> 1.0.1'
 gem 'net-ldap', '~> 0.7.0'
 
 # secure_headers provides x-frame, csp and other http headers
-gem 'secure_headers', '~> 1.3.2'
+gem 'secure_headers', '~> 1.3.3'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
@@ -136,7 +136,7 @@ gem 'natural-sort-js', '~> 0.7.0'
 
 # Use ngannotate in the Rails asset pipeline.
 # https://github.com/olov/ng-annotate
-gem 'ngannotate-rails', '~> 0.9.9'
+gem 'ngannotate-rails', '~> 0.9.11'
 
 # Use your angular templates with rails' asset pipeline
 # https://github.com/pitr/angular-rails-templates
