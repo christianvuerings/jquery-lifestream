@@ -1,10 +1,15 @@
 class AuthenticationStatePolicy
   attr_reader :user, :record
 
-  # This assumes that the @user instance variable (ApplicationController's "current_user") is an
-  # AuthenticationState. By default, the @record is ignored here and reserved for use by Policy subclasses.
-  def initialize(user, record)
-    @user = user
+  # This Pundit policy class handles authorization decisions which depend solely upon the current user's
+  # authentication state, equivalent to ApplicationController's "current_user". It should be used as the
+  # superclass for all other Pundit policies.
+  #
+  # By design, it ignores the "@record" initialization parameter so that it can be reserved for use by
+  # more specific Policy subclasses.
+  def initialize(authentication_state, record)
+    # Pundit convention is to store the current_user parameter in an instance variable named "@user".
+    @user = authentication_state
     @record = record
   end
 

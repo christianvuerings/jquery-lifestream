@@ -9,8 +9,6 @@ class AuthenticationState
     @lti_authenticated_only = session_state[:lti_authenticated_only]
   end
 
-  # This assumes that the @user instance variable (ApplicationController's "current_user") is an
-  # AuthenticationState. By default, the @record is ignored here and reserved for use by Policy subclasses.
   def directly_authenticated?
     user_id && !lti_authenticated_only &&
       (original_user_id.blank? ||
