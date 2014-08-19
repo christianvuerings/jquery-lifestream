@@ -39,20 +39,7 @@ module Textbooks
       return google_response
     end
 
-    def bookstore_info
-      info = []
-      @section_numbers.each do |section_number|
-        info.push({
-          dept: @dept,
-          course: @course_catalog,
-          section: section_number,
-          term: @term
-        })
-      end
-      info
-    end
-
-    def process_material(material)
+    def process_material(material, sections_with_books)
       isbn = material['ean']
       google_info = google_book(isbn)
 
@@ -71,17 +58,34 @@ module Textbooks
         oskicatLink: oskicat_url + isbn,
         googlebookLink: google_info[:link],
         # Bookstore
-        bookstoreInfo: bookstore_info()
+        bookstoreInfo: sections_with_books
       }
+    end
+
+    def get_sections_with_books(response)
+      sections = []
+      response.each do |item|
+        if item['materials']
+          sections.push({
+            section: item['section'],
+            dept: item['department'],
+            course: item['course'],
+            term: item['term'],
+          })
+        end
+      end
+      sections
     end
 
     def process_response(response)
       books = []
 
+      sections_with_books = get_sections_with_books(response)
+
       response.each do |item|
         if item['materials']
           item['materials'].each do |material|
-            books.push(process_material(material))
+            books.push(process_material(material, sections_with_books))
           end
         end
       end
