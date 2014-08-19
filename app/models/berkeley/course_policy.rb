@@ -1,14 +1,8 @@
 module Berkeley
   # Pundit Policy used with Berkeley::Course to handle authorizations.
   # Used indirectly by #authorize helper provided by Pundit gem.
-  class CoursePolicy
+  class CoursePolicy < AuthenticationStatePolicy
     include ClassLogger
-    attr_reader :user, :record
-
-    def initialize(user, record=nil)
-      @user = user
-      @record = record
-    end
 
     def can_view_roster_photos?
       is_course_instructor?

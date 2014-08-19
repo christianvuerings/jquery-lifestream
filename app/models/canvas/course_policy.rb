@@ -1,13 +1,7 @@
 # Pundit Policy used with Canvas::Course to handle authorizations. Used indirectly by #authorize helper provided by Pundit gem.
 module Canvas
-  class CoursePolicy
+  class CoursePolicy < AuthenticationStatePolicy
     include ClassLogger
-    attr_reader :user, :record
-
-    def initialize(user, record=nil)
-      @user = user
-      @record = record
-    end
 
     def can_add_users?
       (is_canvas_user? && is_canvas_course_user? && is_canvas_course_admin?) || is_canvas_account_admin?
