@@ -6,5 +6,9 @@ module Canvas
       get_provisioning_csv('users')
     end
 
+    def report_retrieval_attempts
+      360
+    end
+
   end
 end
