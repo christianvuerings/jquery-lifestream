@@ -22,36 +22,36 @@ describe Canvas::TermEnrollmentsCsv do
 
   # Define example Section Enrollment API responses for stubbing
   let(:section_enrollment1) do
-    {"course_id"=>24, "course_section_id"=>20, "type"=>"StudentEnrollment", "user_id"=>165, "role"=>"StudentEnrollment", "sis_import_id"=>185, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "sis_section_id"=>"SEC:2014-D-25123", "user"=>{ "sis_login_id"=>"1000123"}}
+    {"course_id"=>24, "course_section_id"=>20, "type"=>"StudentEnrollment", "user_id"=>165, "role"=>"StudentEnrollment", "sis_import_id"=>185, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "enrollment_state" => "active", "sis_section_id"=>"SEC:2014-D-25123", "user"=>{ "sis_login_id"=>"1000123", "login_id"=>"1000123", "sis_user_id"=>"24716840" }}
   end
   let(:section_enrollment2) do
-    {"course_id"=>24, "course_section_id"=>19, "type"=>"StudentEnrollment", "user_id"=>166, "role"=>"StudentEnrollment", "sis_import_id"=>nil, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "sis_section_id"=>"SEC:2014-D-25124", "user"=>{ "sis_login_id"=>"1000124" }}
+    {"course_id"=>24, "course_section_id"=>19, "type"=>"StudentEnrollment", "user_id"=>166, "role"=>"StudentEnrollment", "sis_import_id"=>nil, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "enrollment_state" => "active", "sis_section_id"=>"SEC:2014-D-25124", "user"=>{ "sis_login_id"=>"1000124", "login_id"=>"1000124", "sis_user_id"=>"24716841" }}
   end
   let(:section_enrollment3) do
-    {"course_id"=>24, "course_section_id"=>21, "type"=>"StudentEnrollment", "user_id"=>167, "role"=>"StudentEnrollment", "sis_import_id"=>185, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "sis_section_id"=>"SEC:2014-D-25125", "user"=>{ "sis_login_id"=>"1000125" }}
+    {"course_id"=>24, "course_section_id"=>21, "type"=>"StudentEnrollment", "user_id"=>167, "role"=>"StudentEnrollment", "sis_import_id"=>185, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "enrollment_state" => "active", "sis_section_id"=>"SEC:2014-D-25125", "user"=>{ "sis_login_id"=>"1000125", "login_id"=>"1000125", "sis_user_id"=>"24716842" }}
   end
   let(:section_enrollment4) do
-    {"course_id"=>24, "course_section_id"=>22, "type"=>"StudentEnrollment", "user_id"=>168, "role"=>"StudentEnrollment", "sis_import_id"=>185, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "sis_section_id"=>"SEC:2014-D-25126", "user"=>{ "sis_login_id"=>"1000126" }}
+    {"course_id"=>24, "course_section_id"=>22, "type"=>"StudentEnrollment", "user_id"=>168, "role"=>"StudentEnrollment", "sis_import_id"=>185, "sis_course_id"=>"CRS:COMPSCI-9D-2014-D", "course_integration_id"=>nil, "enrollment_state" => "active", "sis_section_id"=>"SEC:2014-D-25126", "user"=>{ "sis_login_id"=>"1000126", "login_id"=>"1000126", "sis_user_id"=>"24716843" }}
   end
 
   # Define example CSV file contents for stubbing
-  let(:section_enrollments_csv_header_string) { 'canvas_section_id,sis_section_id,canvas_user_id,sis_login_id,role,sis_import_id' }
+  let(:section_enrollments_csv_header_string) { 'course_id,canvas_section_id,sis_section_id,canvas_user_id,sis_login_id,sis_user_id,role,sis_import_id,enrollment_state' }
   let(:term1_section_enrollments_csv_string) do
     [
       section_enrollments_csv_header_string,
-      '1412606,SEC:2014-C-25128,4906376,7977,StudentEnrollment,101',
-      '1412606,SEC:2014-C-25128,4906377,7978,StudentEnrollment,101',
-      '1412607,SEC:2014-C-25129,4906376,7977,StudentEnrollment,',
-      '1412607,SEC:2014-C-25129,4906377,7978,StudentEnrollment,101',
+      '1209,1412606,SEC:2014-C-25128,4906376,7977,115223,StudentEnrollment,101,active',
+      '1209,1412606,SEC:2014-C-25128,4906377,7978,115224,StudentEnrollment,101,active',
+      '1209,1412607,SEC:2014-C-25129,4906376,7977,115225,StudentEnrollment,,active',
+      '1209,1412607,SEC:2014-C-25129,4906377,7978,115226,StudentEnrollment,101,active',
     ].join("\n")
   end
   let(:term2_section_enrollments_csv_string) do
     [
       section_enrollments_csv_header_string,
-      '1413864,SEC:2014-C-24111,4906376,7977,StudentEnrollment,101',
-      '1413864,SEC:2014-C-24111,4906377,7978,StudentEnrollment,101',
-      '1413865,SEC:2014-C-24112,4906376,7977,StudentEnrollment,101',
-      '1413865,SEC:2014-C-24112,4906377,7978,StudentEnrollment,',
+      '1278,1413864,SEC:2014-C-24111,4906376,7977,109812,StudentEnrollment,101,active',
+      '1278,1413864,SEC:2014-C-24111,4906377,7978,109813,StudentEnrollment,101,active',
+      '1278,1413865,SEC:2014-C-24112,4906376,7977,109814,StudentEnrollment,101,invited',
+      '1278,1413865,SEC:2014-C-24112,4906377,7978,109815,StudentEnrollment,,active',
     ].join("\n")
   end
   let(:term1_sections_report_csv) { CSV.parse(term1_section_enrollments_csv_string, :headers => :first_row) }
@@ -94,12 +94,15 @@ describe Canvas::TermEnrollmentsCsv do
     it "converts Canvas API Enrollment hash to CSV hash" do
       result = subject.class.api_to_csv_enrollment(section_enrollment1)
       expect(result).to be_an_instance_of Hash
+      expect(result['course_id']).to eq 24
       expect(result['canvas_section_id']).to eq 20
       expect(result['sis_section_id']).to eq "SEC:2014-D-25123"
       expect(result['canvas_user_id']).to eq 165
       expect(result['role']).to eq 'StudentEnrollment'
       expect(result['sis_import_id']).to eq 185
       expect(result['sis_login_id']).to eq "1000123"
+      expect(result['sis_user_id']).to eq "24716840"
+      expect(result['enrollment_state']).to eq "active"
     end
   end
 
@@ -108,11 +111,14 @@ describe Canvas::TermEnrollmentsCsv do
       cached_csv_hash = subject.class.api_to_csv_enrollment(section_enrollment1)
       result = subject.class.csv_to_api_enrollment(cached_csv_hash)
       expect(result).to be_an_instance_of Hash
+      expect(result['course_id']).to eq 24
       expect(result['course_section_id']).to eq 20
       expect(result['sis_section_id']).to eq "SEC:2014-D-25123"
       expect(result['user_id']).to eq 165
       expect(result['role']).to eq 'StudentEnrollment'
       expect(result['sis_import_id']).to eq 185
+      expect(result['enrollment_state']).to eq "active"
+      expect(result['user']['sis_user_id']).to eq "24716840"
       expect(result['user']['sis_login_id']).to eq "1000123"
       expect(result['user']['login_id']).to eq "1000123"
     end
@@ -227,7 +233,7 @@ describe Canvas::TermEnrollmentsCsv do
       export_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-2014-01-01-TERM_2013-D-term-enrollments-export.csv")
       expect(export_csv).to be_an_instance_of CSV
       export_csv << [5,'SEC:2013-D-26109',165,'23828759','StudentEnrollment',185]
-      expect(export_csv.headers).to eq ["canvas_section_id", "sis_section_id", "canvas_user_id", "sis_login_id", "role", "sis_import_id"]
+      expect(export_csv.headers).to eq ["course_id", "canvas_section_id", "sis_section_id", "canvas_user_id", "sis_login_id", "sis_user_id", "role", "sis_import_id", "enrollment_state"]
       export_csv.close
     end
   end
@@ -264,20 +270,26 @@ describe Canvas::TermEnrollmentsCsv do
     let(:csv_enrollments_hash) { {
       'SEC:2014-C-12345' => [
         {
+          'course_id' => "209901",
           'canvas_section_id' => "1413864",
           'sis_section_id' => "SEC:2014-C-12345",
           'canvas_user_id' => "4906376",
           'role' => "StudentEnrollment",
           'sis_import_id' => "101",
+          'sis_user_id' => "12890",
           'sis_login_id' => "7977",
+          'enrollment_state' => 'active',
         },
         {
+          'course_id' => "209901",
           'canvas_section_id' => "1413864",
           'sis_section_id' => "SEC:2014-C-12345",
           'canvas_user_id' => "4906377",
           'role' => "StudentEnrollment",
           'sis_import_id' => "101",
+          'sis_user_id' => "12891",
           'sis_login_id' => "7978",
+          'enrollment_state' => 'active',
         },
       ]
     } }
@@ -293,24 +305,31 @@ describe Canvas::TermEnrollmentsCsv do
       result = subject.cached_canvas_section_enrollments('SEC:2014-C-12345')
       expect(result).to eq [
         {
+          "course_id"=>"209901",
           "course_section_id"=>"1413864",
           "sis_section_id"=>"SEC:2014-C-12345",
           "user_id"=>"4906376",
           "role"=>"StudentEnrollment",
           "sis_import_id"=>"101",
+          "enrollment_state" => 'active',
           "user"=>{
+            "sis_user_id"=>"12890",
             "sis_login_id"=>"7977",
             "login_id"=>"7977"
           }
         },
         {
+          "course_id"=>"209901",
           "course_section_id"=>"1413864",
           "sis_section_id"=>"SEC:2014-C-12345",
           "user_id"=>"4906377",
           "role"=>"StudentEnrollment",
           "sis_import_id"=>"101",
+          "enrollment_state" => 'active',
           "user"=>{
-            "sis_login_id"=>"7978", "login_id"=>"7978"
+            "sis_user_id"=>"12891",
+            "sis_login_id"=>"7978",
+            "login_id"=>"7978"
           }
         }
       ]
@@ -331,6 +350,8 @@ describe Canvas::TermEnrollmentsCsv do
       expect(result.count).to eq 2
       expect(result[0]).to be_an_instance_of Hash
       expect(result[1]).to be_an_instance_of Hash
+      expect(result[0]['course_id']).to eq "1278"
+      expect(result[1]['course_id']).to eq "1278"
       expect(result[0]['course_section_id']).to eq "1413864"
       expect(result[1]['course_section_id']).to eq "1413864"
       expect(result[0]['sis_section_id']).to eq "SEC:2014-C-24111"
@@ -339,8 +360,12 @@ describe Canvas::TermEnrollmentsCsv do
       expect(result[1]['user_id']).to eq "4906377"
       expect(result[0]['role']).to eq "StudentEnrollment"
       expect(result[1]['role']).to eq "StudentEnrollment"
+      expect(result[0]['enrollment_state']).to eq "active"
+      expect(result[1]['enrollment_state']).to eq "active"
       expect(result[0]['sis_import_id']).to eq "101"
       expect(result[1]['sis_import_id']).to eq "101"
+      expect(result[0]['user']['sis_user_id']).to eq "109812"
+      expect(result[1]['user']['sis_user_id']).to eq "109813"
       expect(result[0]['user']['sis_login_id']).to eq "7977"
       expect(result[1]['user']['sis_login_id']).to eq "7978"
       expect(result[0]['user']['login_id']).to eq "7977"
