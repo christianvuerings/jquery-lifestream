@@ -59,7 +59,7 @@ module Canvas
     end
 
     def make_enrollment_export_csv(filepath)
-      make_csv(filepath, 'canvas_section_id,sis_section_id,canvas_user_id,sis_login_id,role,sis_import_id', nil)
+      make_csv(filepath, 'course_id,canvas_section_id,sis_section_id,canvas_user_id,sis_login_id,sis_user_id,role,sis_import_id,enrollment_state', nil)
     end
 
     # Loads current term CSVs into memory
@@ -90,12 +90,15 @@ module Canvas
     def self.api_to_csv_enrollment(api_enrollment)
       api_enrollment_hash = api_enrollment.to_hash
       {
+        'course_id' => api_enrollment_hash['course_id'],
         'canvas_section_id' => api_enrollment_hash['course_section_id'],
         'sis_section_id' => api_enrollment_hash['sis_section_id'],
         'canvas_user_id' => api_enrollment_hash['user_id'],
         'role' => api_enrollment_hash['role'],
         'sis_import_id' => api_enrollment_hash['sis_import_id'],
+        'sis_user_id' => api_enrollment_hash['user']['sis_user_id'],
         'sis_login_id' => api_enrollment_hash['user']['sis_login_id'],
+        'enrollment_state' => api_enrollment_hash['enrollment_state'],
       }
     end
 
@@ -103,12 +106,15 @@ module Canvas
     def self.csv_to_api_enrollment(csv_enrollment)
       csv_enrollment_hash = csv_enrollment.to_hash
       {
+        'course_id' => csv_enrollment_hash['course_id'],
         'course_section_id' => csv_enrollment_hash['canvas_section_id'],
         'sis_section_id' => csv_enrollment_hash['sis_section_id'],
         'user_id' => csv_enrollment_hash['canvas_user_id'],
         'role' => csv_enrollment_hash['role'],
         'sis_import_id' => csv_enrollment_hash['sis_import_id'],
+        'enrollment_state' => csv_enrollment_hash['enrollment_state'],
         'user' => {
+          'sis_user_id' => csv_enrollment_hash['sis_user_id'],
           'sis_login_id' => csv_enrollment_hash['sis_login_id'],
           'login_id' => csv_enrollment_hash['sis_login_id']
         }
