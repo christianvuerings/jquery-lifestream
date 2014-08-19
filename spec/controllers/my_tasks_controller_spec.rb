@@ -6,6 +6,7 @@ describe MyTasksController do
     @user_id = rand(99999).to_s
     @fake_google_clear_tasks_proxy = GoogleApps::ClearTaskList.new(fake: true)
     @fake_google_delete_tasks_proxy = GoogleApps::DeleteTask.new({fake: true})
+    allow(Settings.features).to receive(:reauthentication).and_return(false)
   end
 
   it "should be an empty task feed on non-authenticated user" do
@@ -120,8 +121,7 @@ describe MyTasksController do
         'title' => 'test task'
       }
       post :insert_task, hash
-      json_response = JSON.parse(response.body)
-      expect(json_response['id']).to be_nil
+      expect(response.status).to eq 403
     end
   end
 

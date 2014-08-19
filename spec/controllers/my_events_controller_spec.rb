@@ -7,6 +7,9 @@ describe MyEventsController do
     start: { epoch: 1380013560 },
     end: { epoch: 1380017160 }
   } }
+  before do
+    allow(Settings.features).to receive(:reauthentication).and_return(false)
+  end
 
   shared_examples "failure response" do
     it { should_not be_success }

@@ -23,14 +23,14 @@ module Canvas
 
     def is_canvas_user?
       if canvas_user_profile.blank?
-        logger.warn "UID #{@user.uid} not found in Canvas, attempting authorization for Canvas Course ID #{@record.canvas_course_id}"
+        logger.warn "UID #{@user.user_id} not found in Canvas, attempting authorization for Canvas Course ID #{@record.canvas_course_id}"
         return false
       end
       true
     end
 
     def is_canvas_account_admin?
-      Canvas::Admins.new.admin_user?(@user.uid)
+      Canvas::Admins.new.admin_user?(@user.user_id)
     end
 
     def is_canvas_course_teacher_or_assistant?
@@ -56,7 +56,7 @@ module Canvas
     private
 
     def canvas_user_profile
-      Canvas::SisUserProfile.new(user_id: @user.uid).get
+      Canvas::SisUserProfile.new(user_id: @user.user_id).get
     end
 
     def canvas_course_user

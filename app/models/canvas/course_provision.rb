@@ -71,8 +71,7 @@ module Canvas
     end
 
     def user_admin?
-      policy = User::Auth.get(@uid).policy
-      @uid.present? && policy.can_administrate_globally?
+      @is_admin ||= @uid.present? && AuthenticationState.new(user_id: @uid).policy.can_administrate_canvas?
     end
 
     def user_authorized?

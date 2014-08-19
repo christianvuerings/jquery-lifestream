@@ -16,10 +16,6 @@ module User
       user_auth
     end
 
-    def policy(record=nil)
-      User::AuthPolicy.new(self, record)
-    end
-
     def self.new_or_update_superuser!(uid)
       use_pooled_connection {
         Retriable.retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do

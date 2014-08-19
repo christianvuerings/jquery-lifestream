@@ -16,7 +16,7 @@ describe Canvas::PublicAuthorizer do
 
     before do
       allow_any_instance_of(Canvas::UserProfile).to receive(:login_id).and_return(uid)
-      allow_any_instance_of(User::AuthPolicy).to receive(:can_create_canvas_course_site?).and_return(true)
+      allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_course_site?).and_return(true)
     end
 
     context "when canvas user login id not present" do
@@ -28,7 +28,7 @@ describe Canvas::PublicAuthorizer do
 
     context "when canvas user login id is present" do
       context "when user is not authorized to create course site" do
-        before { allow_any_instance_of(User::AuthPolicy).to receive(:can_create_canvas_course_site?).and_return(false) }
+        before { allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_course_site?).and_return(false) }
         it 'returns false' do
           expect(subject.can_create_course_site?).to eq false
         end

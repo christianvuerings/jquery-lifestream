@@ -25,7 +25,7 @@ class MyEventsController < ApplicationController
 
   private
   def check_google_access
-    return error_response if UserSpecificModel.session_indirectly_authenticated?(session)
+    return error_response unless current_user.policy.access_google?
     return error_response unless GoogleApps::Proxy.access_granted?(session[:user_id])
   end
 

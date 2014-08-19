@@ -5,8 +5,9 @@ class ActAsController < ApplicationController
   skip_before_filter :check_reauthentication, :only => [:stop_act_as]
 
   def start
-    return redirect_to root_path unless valid_params?(current_user, params[:uid])
-    logger.warn "ACT-AS: User #{session[:user_id]} acting as #{params[:uid]} begin"
+    authorize current_user, :can_view_as?
+    return redirect_to root_path unless valid_params?(params[:uid])
+    logger.warn "ACT-AS: User #{current_user.real_user_id} acting as #{params[:uid]} begin"
     session[:original_user_id] = session[:user_id] unless session[:original_user_id]
     session[:user_id] = params[:uid]
 
@@ -27,30 +28,19 @@ class ActAsController < ApplicationController
 
   private
 
-  def valid_params?(current_user, act_as_uid)
-    if current_user.blank? || act_as_uid.blank?
-      logger.warn "ACT-AS: User #{current_user.uid} FAILED to login to #{act_as_uid}, either cannot be blank!"
+  def valid_params?(act_as_uid)
+    if act_as_uid.blank?
+      logger.warn "ACT-AS: User #{current_user.real_user_id} FAILED to login to #{act_as_uid}, cannot be blank!"
       return false
     end
 
     # Ensure that uids are numeric
     begin
-      [current_user.uid, act_as_uid].each do |param|
-        Integer(param, 10)
-      end
+      Integer(act_as_uid, 10)
     rescue ArgumentError
-      logger.warn "ACT-AS: User #{current_user.uid} FAILED to login to #{act_as_uid}, values must be integers"
+      logger.warn "ACT-AS: User #{current_user.user_id} FAILED to login to #{act_as_uid}, values must be integers"
       return false
     end
-
-    if session[:original_user_id]
-      auth_user_id = session[:original_user_id]
-    else
-      auth_user_id = current_user.uid
-    end
-
-    policy = User::Auth.get(auth_user_id).policy
-    policy.can_act_as?
   end
 
 end

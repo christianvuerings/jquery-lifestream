@@ -181,7 +181,7 @@ describe User::Api do
     subject { User::Api.new(@random_id).get_feed }
     it "should pass the superuser status" do
       subject[:isSuperuser].should be_true
-      subject[:isViewer].should be_false
+      subject[:isViewer].should be_true
     end
   end
 
@@ -189,6 +189,7 @@ describe User::Api do
     before {
       user = User::Auth.new(uid: @random_id)
       user.is_viewer = true
+      user.active = true
       user.save
     }
     subject { User::Api.new(@random_id).get_feed }
