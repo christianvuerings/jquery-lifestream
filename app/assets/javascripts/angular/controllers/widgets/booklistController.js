@@ -5,14 +5,14 @@
   /**
    * Textbook controller
    */
-  angular.module('calcentral.controllers').controller('BooklistController', function($http, $scope, $q) {
+  angular.module('calcentral.controllers').controller('BooklistController', function($http, $routeParams, $scope, $q) {
     $scope.semesterBooks = [];
     var requests = [];
 
-    var getCurrentSemester = function(semesters) {
+    var getSemester = function(semesters) {
       for (var i = 0; i < semesters.length; i++) {
         var semester = semesters[i];
-        if (semester.timeBucket === 'current') {
+        if (semester.slug === $routeParams.semesterSlug) {
           return semester;
         }
       }
@@ -50,7 +50,7 @@
     };
 
     var getSemesterTextbooks = function(semesters) {
-      var semester = getCurrentSemester(semesters);
+      var semester = getSemester(semesters);
       addToRequests(semester);
 
       $scope.semesterName = semester.name;

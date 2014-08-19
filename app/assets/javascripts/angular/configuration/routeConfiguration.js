@@ -26,7 +26,7 @@
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController'
     }).
-    when('/academics/booklist', {
+    when('/academics/booklist/:semesterSlug', {
       templateUrl: 'academics_booklist.html',
       controller: 'AcademicsController'
     }).
