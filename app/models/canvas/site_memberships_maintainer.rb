@@ -137,7 +137,7 @@ module Canvas
       remaining_enrollments.each do |enrollment|
         # Only look at enrollments which are active and were due to an SIS import.
         if enrollment['sis_import_id'].present? && enrollment['enrollment_state'] == 'active'
-          logger.info "No campus record for Canvas enrollment in #{enrollment['course_id']} #{enrollment['section_id']} for user #{uid} with role #{enrollment['role']}"
+          logger.info "No campus record for Canvas enrollment in #{enrollment['course_id']} #{enrollment['course_section_id']} for user #{uid} with role #{enrollment['role']}"
           append_enrollment_deletion(section_id, api_role_to_csv_role(enrollment['role']), enrollment['user']['sis_user_id'])
         end
       end
