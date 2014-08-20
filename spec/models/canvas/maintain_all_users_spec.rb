@@ -166,7 +166,7 @@ describe Canvas::MaintainAllUsers do
     it "imports user csv if users present" do
       subject.prepare_sis_user_import
       subject.add_user_to_import(new_canvas_user)
-      expect_any_instance_of(Canvas::SisImport).to receive(:import_users).with("tmp/canvas/canvas-2014-07-23_09-00-06-sync-all-users.csv").and_return(true)
+      expect_any_instance_of(Canvas::SisImport).to receive(:import_users).with("tmp/canvas/canvas-2014-07-23_09-00-06-sync-all-users.csv", '').and_return(true)
       subject.import_sis_user_csv
     end
 
@@ -175,6 +175,17 @@ describe Canvas::MaintainAllUsers do
       expect_any_instance_of(Canvas::SisImport).to_not receive(:import_users)
       subject.import_sis_user_csv
     end
+
+    context "when clear stickiness enabled" do
+      subject { Canvas::MaintainAllUsers.new(:clear_sis_stickiness => true) }
+      it "imports user csv with clear stickiness parameters" do
+        subject.prepare_sis_user_import
+        subject.add_user_to_import(new_canvas_user)
+        expect_any_instance_of(Canvas::SisImport).to receive(:import_users).with("tmp/canvas/canvas-2014-07-23_09-00-06-sync-all-users.csv", '&override_sis_stickiness=1&clear_sis_stickiness=1').and_return(true)
+        subject.import_sis_user_csv
+      end
+    end
+
   end
 
 end
