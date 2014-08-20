@@ -44,17 +44,35 @@ module Canvas
     def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
       super()
       @sis_course_id = sis_course_id
-      @sis_section_ids = sis_section_ids
+      @sis_sections = filter_sections(sis_section_ids)
       @enrollments_csv_output = enrollments_csv_output
       @users_csv_output = users_csv_output
       @known_users = known_users
       @batch_mode = batch_mode
     end
 
+    def filter_sections(sis_section_ids)
+      campus_sections = sis_section_ids.collect do |sis_section_id|
+        campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id)
+        if campus_section.present?
+          campus_section.merge!({'sis_section_id' => sis_section_id})
+        else
+          logger.warn("Invalid section ID identified: #{sis_section_id}")
+        end
+        campus_section
+      end
+      campus_sections.select {|sec| sec.present? }
+    end
+
+    def sis_section_ids
+      @sis_sections.collect {|section| section['sis_section_id']}
+    end
+
     def refresh_sections_in_course
-      campus_sections = @sis_section_ids.collect {|section_id| Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id)}
-      section_to_instructor_role = instructor_role_for_sections(campus_sections)
-      @sis_section_ids.each do |sis_section_id|
+      logger.debug("Refreshing sections: #{sis_section_ids.to_sentence}")
+      section_to_instructor_role = instructor_role_for_sections(@sis_sections)
+      @sis_sections.each do |sis_section|
+        sis_section_id = sis_section['sis_section_id']
         if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id))
           instructor_role = section_to_instructor_role[campus_section]
           canvas_section_id = "sis_section_id:#{sis_section_id}"
