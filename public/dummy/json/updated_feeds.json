@@ -63,14 +63,6 @@
       "dateString": "11/19"
     }
   },
-  "Bearfacts::MyRegBlocks": {
-    "hash": "bdc0a25364c9c3f116b78ab39647021ddb966934",
-    "timestamp": {
-      "epoch": 1384887169,
-      "dateTime": "2013-11-19T10:52:49-08:00",
-      "dateString": "11/19"
-    }
-  },
   "MyAcademics::Merged": {
     "hash": "9404af1dce85b347ce871dbee3b555aecc0afb6a",
     "timestamp": {

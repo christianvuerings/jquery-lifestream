@@ -2,7 +2,7 @@ module MyActivities
   class RegBlocks
 
     def self.append!(uid, activities)
-      blocks_feed = Bearfacts::MyRegBlocks.new(uid).get_feed
+      blocks_feed = Bearfacts::Regblocks.new({user_id: uid}).get
       if blocks_feed[:errored] || blocks_feed[:noStudentId]
         return activities
       end

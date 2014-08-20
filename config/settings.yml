@@ -192,7 +192,6 @@ cache:
     Canvas::CourseStudents: <%= 15.minutes %>
     Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
-    Bearfacts::MyRegBlocks: 0
 
     Berkeley::Terms: <%= 4.hours %>
     Finaid::TimeRange: <%= 4.hours %>
