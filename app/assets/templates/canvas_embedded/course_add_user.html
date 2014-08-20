@@ -83,7 +83,6 @@
                   <select id="search-type" data-ng-model="search_type" data-ng-change="updateSearchTextType()" class="bc-form-entity">
                     <option value="name">Last Name, First Name</option>
                     <option value="email">Email</option>
-                    <option value="student_id">Student ID</option>
                     <option value="ldap_user_id">CalNet UID</option>
                   </select>
                 </div>
@@ -142,7 +141,6 @@
                 <tr>
                   <th>&nbsp;</th>
                   <th>Name</th>
-                  <th>Student ID</th>
                   <th>Calnet UID</th>
                   <th>Email</th>
                 </tr>
@@ -153,7 +151,6 @@
                     <input type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
                   </td>
                   <td data-ng-bind="user.first_name + ' ' + user.last_name"></td>
-                  <td data-ng-bind="user.student_id"></td>
                   <td data-ng-bind="user.ldap_uid"></td>
                   <td data-ng-bind="user.email_address"></td>
                 </tr>

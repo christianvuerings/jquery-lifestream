@@ -35,9 +35,7 @@
     };
 
     var setSearchTypeNotice = function() {
-      if ($scope.search_type === 'student_id') {
-        $scope.searchTypeNotice = 'Student IDs must be an exact match.';
-      } else if ($scope.search_type === 'ldap_user_id') {
+      if ($scope.search_type === 'ldap_user_id') {
         $scope.searchTypeNotice = 'CalNet UIDs must be an exact match.';
       } else {
         $scope.searchTypeNotice = '';
@@ -92,7 +90,7 @@
     };
 
     $scope.updateSearchTextType = function() {
-      $scope.searchTextType = (['student_id', 'ldap_user_id'].indexOf($scope.search_type) === -1) ? 'text' : 'number';
+      $scope.searchTextType = (['ldap_user_id'].indexOf($scope.search_type) === -1) ? 'text' : 'number';
     };
 
     $scope.searchUsers = function() {
