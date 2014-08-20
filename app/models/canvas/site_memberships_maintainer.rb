@@ -55,11 +55,14 @@ module Canvas
     end
 
     def refresh_sections_in_course
+      logger.debug("Refreshing sections: #{@sis_section_ids.to_sentence}")
       campus_sections = @sis_section_ids.collect {|section_id| Canvas::Proxy.sis_section_id_to_ccn_and_term(section_id)}
       section_to_instructor_role = instructor_role_for_sections(campus_sections)
       @sis_section_ids.each do |sis_section_id|
         if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id))
+          logger.debug("Refreshing section: #{sis_section_id}")
           instructor_role = section_to_instructor_role[campus_section]
+          logger.debug("Instructor role detected for section: #{instructor_role}")
           canvas_section_id = "sis_section_id:#{sis_section_id}"
           refresh_enrollments_in_section(campus_section, sis_section_id, instructor_role, canvas_section_id)
         end
@@ -88,11 +91,14 @@ module Canvas
       refresh_students_in_section(campus_section, section_id, canvas_enrollments)
       refresh_teachers_in_section(campus_section, section_id, teacher_role, canvas_enrollments)
       # Handle enrollments remaining in Canvas enrollment list
+      logger.debug("Deleting remaining enrollments for Section ID #{section_id} - count: #{canvas_enrollments.count}")
       canvas_enrollments.each { |uid, remaining_enrollments| handle_missing_enrollments(uid, section_id, remaining_enrollments) }
     end
 
     def refresh_students_in_section(campus_section, section_id, canvas_section_enrollments)
+      logger.debug("Refreshing students in section: #{section_id}")
       campus_data_rows = CampusOracle::Queries.get_enrolled_students(campus_section[:ccn], campus_section[:term_yr], campus_section[:term_cd])
+      logger.debug("#{campus_data_rows.count} student enrollments found for #{section_id}")
       campus_data_rows.each do |campus_data_row|
         next unless (canvas_api_role = ENROLL_STATUS_TO_CANVAS_API_ROLE[campus_data_row['enroll_status']])
         update_section_enrollment_from_campus(canvas_api_role, section_id, campus_data_row, canvas_section_enrollments)
@@ -100,8 +106,10 @@ module Canvas
     end
 
     def refresh_teachers_in_section(campus_section, section_id, teacher_role, canvas_section_enrollments)
+      logger.debug("Refreshing teachers in section: #{section_id}")
       canvas_api_role = CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE[teacher_role]
       campus_data_rows = CampusOracle::Queries.get_section_instructors(campus_section[:term_yr], campus_section[:term_cd], campus_section[:ccn])
+      logger.debug("#{campus_data_rows.count} instructor enrollments found for #{section_id}")
       campus_data_rows.each do |campus_data_row|
         update_section_enrollment_from_campus(canvas_api_role, section_id, campus_data_row, canvas_section_enrollments)
       end
@@ -112,8 +120,10 @@ module Canvas
       # Note: old_canvas_enrollments may originate from Canvas::TermEnrollmentsCsv
       # Make sure to update this class to include fields this logic depends on from the Canvas Enrollments API
       if (user_enrollments = old_canvas_enrollments[login_uid])
+        logger.debug("#{user_enrollments.count} Enrollments found for UID #{login_uid}")
         # If the user already has the same role, remove the old enrollment from the cleanup list.
         if (matching_enrollment = user_enrollments.select{|e| e['role'] == canvas_api_role}.first)
+          logger.debug("Matching enrollment found for UID #{login_uid} in role #{canvas_api_role}")
           sis_imported = matching_enrollment['sis_import_id'].present?
           user_enrollments.delete(matching_enrollment)
           # If the user's membership was due to an earlier SIS import, no action is needed.
@@ -122,8 +132,10 @@ module Canvas
           # membership stickiness from manual to SIS import.
         end
       else
+        logger.debug("Adding UID #{login_uid} as new user")
         add_user_if_new(campus_data_row)
       end
+      logger.debug("Adding UID #{login_uid} to SIS Section: #{sis_section_id} as role: #{canvas_api_role}")
       @enrollments_csv_output << {
         'course_id' => @sis_course_id,
         'user_id' => derive_sis_user_id(campus_data_row),

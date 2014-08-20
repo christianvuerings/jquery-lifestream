@@ -55,12 +55,14 @@ module Canvas
       # together by course site.
       course_id_to_csv_rows = canvas_sections_csv.group_by {|row| row['course_id']}
       course_id_to_csv_rows.each do |course_id, csv_rows|
+        logger.debug("Refreshing Course ID #{course_id}")
         if course_id.present?
           sis_section_ids = csv_rows.collect { |row| row['section_id'] }
           sis_section_ids.delete_if {|section| section.nil? }
           # Process using cached enrollment data. See Canvas::TermEnrollmentsCsv
           Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_uids, @batch_mode, cached_enrollments_provider)
         end
+        logger.debug("Finished processing refresh for Course ID #{course_id}")
       end
     end
 
