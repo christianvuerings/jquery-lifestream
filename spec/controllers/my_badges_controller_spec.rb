@@ -6,6 +6,7 @@ describe MyBadgesController do
     @user_id = rand(99999).to_s
     @fake_drive_list = GoogleApps::DriveList.new(:fake => true)
     @fake_events_list = GoogleApps::EventsRecentItems.new(:fake => true)
+    allow(Settings.features).to receive(:reauthentication).and_return(false)
   end
 
   it "should be an empty badges feed on non-authenticated user" do

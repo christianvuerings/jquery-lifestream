@@ -8,8 +8,8 @@ class MyTasksController < ApplicationController
 
   def self.define_filtered_passthrough(endpoint)
     define_method endpoint do
+      check_google_access
       begin
-        raise ArgumentError if UserSpecificModel.session_indirectly_authenticated?(session)
         my_tasks_model = MyTasks::Merged.from_session(session)
         render :json => my_tasks_model.send(endpoint, request.request_parameters).to_json
       rescue ArgumentError => e

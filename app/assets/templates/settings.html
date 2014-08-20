@@ -27,7 +27,7 @@
   <a class="cc-settings-dashboard-link" href="/dashboard">&laquo; Take me to my Dashboard
   </a>
 
-  <div data-ng-show="api.user.profile.isSuperuser || api.user.profile.isViewer || api.user.profile.actingAsUid" data-ng-controller="AdminController">
+  <div data-ng-show="api.user.profile.isViewer || api.user.profile.actingAsUid" data-ng-controller="AdminController">
     <h2>Admin</h2>
     <h3>View as</h3>
     <form data-ng-submit="admin.actAsSomeone()">

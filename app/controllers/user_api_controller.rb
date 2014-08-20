@@ -23,17 +23,17 @@ class UserApiController < ApplicationController
     if session[:user_id]
       # wrap User::Visit.record_session inside a cache lookup so that we have to write User::Visit records less often.
       self.class.fetch_from_cache session[:user_id] do
-        User::Visit.record session[:user_id] unless acting_as?
+        User::Visit.record session[:user_id] if current_user.directly_authenticated?
         true
       end
       status.merge!({
         :isBasicAuthEnabled => Settings.developer_auth.enabled,
         :isLoggedIn => true,
         :features => Settings.features.marshal_dump,
-        :actingAsUid => acting_as_uid,
+        :actingAsUid => current_user.real_user_id,
         :youtubeSplashId => Settings.youtube_splash_id
       })
-      status.merge!(User::Api.new(session[:user_id]).get_feed)
+      status.merge!(User::Api.from_session(session).get_feed)
     else
       status.merge!({
         :isBasicAuthEnabled => Settings.developer_auth.enabled,
@@ -46,31 +46,15 @@ class UserApiController < ApplicationController
   end
 
   def record_first_login
-    User::Api.new(session[:user_id]).record_first_login unless acting_as?
+    User::Api.from_session(session).record_first_login if current_user.directly_authenticated?
     render :nothing => true, :status => 204
   end
 
   def delete
     if session[:user_id]
-      User::Api.delete(session[:user_id]) unless acting_as?
+      User::Api.delete(session[:user_id]) if current_user.directly_authenticated?
     end
     render :nothing => true, :status => 204
-  end
-
-  private
-
-  def acting_as?
-    UserSpecificModel.session_indirectly_authenticated?(session)
-  end
-
-  def acting_as_uid
-    if session[:original_user_id] && session[:user_id]
-      return session[:original_user_id]
-    elsif session[:lti_authenticated_only]
-      return 'LTI Authenticated'
-    else
-      return false
-    end
   end
 
 end

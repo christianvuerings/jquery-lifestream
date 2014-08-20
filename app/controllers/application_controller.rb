@@ -31,23 +31,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def is_admin?
-    (real_user && real_user.is_superuser==true)
-  end
-
   def reauthenticate
     delete_reauth_cookie
     redirect_to url_for_path("/auth/cas?renew=true")
   end
 
+  # This method does not handle the reauthentication check for "ccadmin" authoring. That is
+  # enforced by "config/initializers/rails_admin.rb".
   def check_reauthentication
     unless !!session[:user_id]
       delete_reauth_cookie
       return
     end
     return unless Settings.features.reauthentication
-    return unless is_admin?
-    reauthenticate if acting_as? && !cookies[:reauthenticated]
+    reauthenticate if current_user.viewing_as? && !cookies[:reauthenticated]
   end
 
   def delete_reauth_cookie
@@ -55,24 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= User::Auth.get(session[:user_id])
-  end
-
-  def acting_as?
-    !!((session[:original_user_id] && session[:user_id]) && (session[:original_user_id] != session[:user_id]))
-  end
-
-  def real_uid
-    (acting_as?) ? session[:original_user_id] : session[:user_id]
-  end
-
-  def real_user
-    return false unless real_uid
-    @real_user ||= User::Auth.get(real_uid)
-  end
-
-  def act_as_uid
-    return (acting_as?) ? session[:user_id] : nil
+    @current_user ||= AuthenticationState.new(session)
   end
 
   # override of Rails default behavior:
@@ -92,6 +72,10 @@ class ApplicationController < ActionController::Base
     else
       {}
     end
+  end
+
+  def check_google_access
+    authorize current_user, :access_google?
   end
 
   def user_not_authorized(error)

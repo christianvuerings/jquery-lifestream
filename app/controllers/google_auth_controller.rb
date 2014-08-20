@@ -2,15 +2,11 @@ require 'google/api_client'
 
 class GoogleAuthController < AuthController
   include ClassLogger
-  before_filter :check_direct_authentication
+  before_filter :check_google_access
   respond_to :json
 
   def app_id
     GoogleApps::Proxy::APP_ID
-  end
-
-  def check_direct_authentication
-    raise Pundit::NotAuthorizedError, 'User not directly authenticated' if UserSpecificModel.session_indirectly_authenticated?(session)
   end
 
   def get_client(final_redirect = '', force_domain = true)

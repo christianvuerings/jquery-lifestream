@@ -1,40 +1,57 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe BootstrapController do
+  let(:user_id) { random_id }
 
-  before(:each){ @user_id = rand(99999).to_s }
-
-  context "for unauthorized users" do
-    it "should not make a warmup request" do
-      LiveUpdatesWarmer.should_not_receive(:warmup_request).with(session[:user_id])
+  context 'when not authenticated' do
+    it 'should not make a warmup request' do
+      expect(LiveUpdatesWarmer).to receive(:warmup_request).never
       get :index
     end
   end
 
-  context "for authorized users" do
-    before(:each){ session[:user_id] = @user_id }
-
-    it "should make a warmup request" do
-      LiveUpdatesWarmer.should_receive(:warmup_request).with(session[:user_id]).once
+  context 'when authenticated' do
+    before do
+      session[:user_id] = user_id
+    end
+    it 'makes a warmup request' do
+      expect(LiveUpdatesWarmer).to receive(:warmup_request).with(user_id).once
       get :index
     end
   end
 
-  context "reauthentication" do
-    before(:each) {
-      ApplicationController.any_instance.stub(:is_admin?).and_return(true)
-      Settings.features.stub(:reauthentication).and_return(true)
-      session[:user_id] = @user_id
-    }
-    context "for admin users acting as another user" do
-      it "should redirect to /auth/cas?renew=true the first time they try to act as" do
-        ApplicationController.any_instance.stub(:acting_as?).and_return(true)
-        controller.stub(:cookies).and_return({:reauthenticated => nil})
-        get :index
-        expect(response).to redirect_to('/auth/cas?renew=true')
+  describe 'reauthentication' do
+    let(:original_user_id) {nil}
+    before do
+      expect(Settings.features).to receive(:reauthentication).and_return(true)
+      session[:user_id] = user_id
+      session[:original_user_id] = original_user_id
+    end
+    context 'when viewing as' do
+      let(:original_user_id) {random_id}
+      context 'when not already reauthenticated' do
+        it 'should redirect to reauthenticate' do
+          # controller.stub(:cookies).and_return({:reauthenticated => nil})
+          get :index
+          expect(response).to redirect_to('/auth/cas?renew=true')
+        end
       end
-
+      context 'when already reauthenticated' do
+        before do
+          allow(controller).to receive(:cookies).and_return({reauthenticated: true})
+        end
+        it 'should not redirect' do
+          get :index
+          expect(response).not_to redirect_to('/auth/cas?renew=true')
+        end
+      end
     end
-
+    context 'when not viewing as' do
+      it 'should not redirect' do
+        get :index
+        expect(response).not_to redirect_to('/auth/cas?renew=true')
+      end
+    end
   end
+
 end

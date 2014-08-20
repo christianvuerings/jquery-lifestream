@@ -1,7 +1,7 @@
 # RailsAdmin config file.
-# See github.com/sferik/rails_admin for more informations
+# See github.com/sferik/rails_admin for more information.
 
-# simple adapter class from our User::UserAuthPolicy (which is pundit-based) to CanCan, which is greatly preferred by rails_admin.
+# simple adapter class from our AuthenticationStatePolicy (which is pundit-based) to CanCan, which is greatly preferred by rails_admin.
 class Ability
   include CanCan::Ability
 
@@ -31,15 +31,16 @@ RailsAdmin.config do |config|
   # We're not using Devise or Warden for RailsAdmin authentication; check for superuser in authorize_with instead.
   config.authenticate_with {
     if cookies[:reauthenticated] || !!Settings.features.reauthentication == false
-      policy = User::Auth.get(session[:user_id]).policy
+      policy = AuthenticationState.new(session).policy
       redirect_to main_app.root_path unless policy.can_author?
     else
       redirect_to main_app.reauth_admin_path
     end
   }
 
+  # Because CanCan is not inheriting current_user from ApplicationController, we redefine it.
   config.current_user_method {
-    User::Auth.get(session[:user_id])
+    AuthenticationState.new(session)
   }
 
   config.authorize_with :cancan

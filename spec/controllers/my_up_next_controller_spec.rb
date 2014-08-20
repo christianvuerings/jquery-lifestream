@@ -27,6 +27,7 @@ describe MyUpNextController do
     before do
       session[:user_id] = user_id
       expect(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
+      allow(Settings.features).to receive(:reauthentication).and_return(false)
     end
     it 'should not give a real user a cached censored feed' do
       session[:original_user_id] = original_user_id

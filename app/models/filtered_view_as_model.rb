@@ -10,11 +10,11 @@ class FilteredViewAsModel < UserSpecificModel
   end
 
   def get_feed_as_json(force_cache_write=false)
-    if indirectly_authenticated?
+    if directly_authenticated?
+      super(force_cache_write)
+    else
       feed = get_feed(force_cache_write)
       filter_for_view_as(feed).to_json
-    else
-      super(force_cache_write)
     end
   end
 

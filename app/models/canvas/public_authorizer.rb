@@ -11,8 +11,8 @@ module Canvas
         authorization = false
         campus_uid = Canvas::UserProfile.new(:canvas_user_id => @canvas_user_id).login_id
         if campus_uid
-          user = User::Auth.get(campus_uid.to_s)
-          policy = User::AuthPolicy.new(user,user)
+          user = AuthenticationState.new(user_id: campus_uid)
+          policy = user.policy
           authorization = policy.can_create_canvas_course_site?
         end
         authorization

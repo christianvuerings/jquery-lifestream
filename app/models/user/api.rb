@@ -2,10 +2,7 @@ module User
   class Api < UserSpecificModel
     include ActiveRecordHelper
     include Cache::LiveUpdatesEnabled
-
-    def initialize(uid)
-      super(uid)
-    end
+    include ClassLogger
 
     def init
       use_pooled_connection {
@@ -33,7 +30,7 @@ module User
     end
 
     def self.delete(uid)
-      logger.info "#{self.class.name} removing user #{uid} from User::Data"
+      logger.info "Removing user #{uid} from User::Data"
       user = nil
       use_pooled_connection {
         user = User::Data.where(:uid => uid).first
@@ -56,7 +53,7 @@ module User
       use_pooled_connection {
         Retriable.retriable(:on => ActiveRecord::RecordNotUnique, :tries => 5) do
           @calcentral_user_data = User::Data.where(uid: @uid).first_or_create do |record|
-            Rails.logger.debug "#{self.class.name} recording first login for #{@uid}"
+            logger.debug "Recording first login for #{@uid}"
             record.preferred_name = @override_name
             record.first_login_at = @first_login_at
           end
@@ -85,7 +82,7 @@ module User
     def get_feed_internal
       google_mail = User::Oauth2Data.get_google_email(@uid)
       canvas_mail = User::Oauth2Data.get_canvas_email(@uid)
-      current_user = User::Auth.get(@uid)
+      current_user_policy = authentication_state.policy
       is_google_reminder_dismissed = User::Oauth2Data.is_google_reminder_dismissed(@uid)
       is_google_reminder_dismissed = is_google_reminder_dismissed && is_google_reminder_dismissed.present?
       has_student_history = CampusOracle::UserCourses::HasStudentHistory.new({:user_id => @uid}).has_student_history?
@@ -93,8 +90,8 @@ module User
       roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
       {
         :profilePicture => Rails.application.routes.url_helpers.my_photo_path + ".jpg",
-        :isSuperuser => current_user.is_superuser?,
-        :isViewer => current_user.is_viewer?,
+        :isSuperuser => current_user_policy.can_administrate?,
+        :isViewer => current_user_policy.can_view_as?,
         :firstLoginAt => @first_login_at,
         :first_name => @first_name,
         :fullName => @first_name + ' ' + @last_name,
