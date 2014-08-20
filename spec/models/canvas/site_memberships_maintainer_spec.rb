@@ -8,7 +8,7 @@ describe Canvas::SiteMembershipsMaintainer do
   let(:known_users) { [] }
   let(:uid) { random_id }
   let(:sis_section_id) {"SEC:2014-B-#{course_id}"}
-  let(:sis_section_ids) { [sis_section_id] }
+  let(:sis_section_ids) { [sis_section_id, "2014-D-04124", 'bababooey'] }
   subject {
     Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode, cached_enrollments_provider)
     enrollments_csv
