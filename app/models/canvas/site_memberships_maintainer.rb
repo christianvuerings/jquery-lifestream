@@ -18,6 +18,7 @@ module Canvas
     CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
     def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false)
+      logger.info("Processing refresh of enrollments for SIS Course ID '#{sis_course_id}'")
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
         enrollments_csv_output, users_csv_output, known_users, batch_mode)
       worker.refresh_sections_in_course
