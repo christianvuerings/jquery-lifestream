@@ -47,22 +47,24 @@ module Canvas
         :uri => "#{@settings.url_root}/api/v1/#{api_path}"
       )
       logger.info "Making request with @fake = #{@fake}, options = #{fetch_options}, cache expiration #{self.class.expires_in}"
-      FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) do
-        if (nonstandard_connection = fetch_options[:non_oauth_connection])
-          response = nonstandard_connection.get(fetch_options[:uri])
-        else
-          response = @client.fetch_protected_resource(fetch_options)
-        end
-        # Canvas proxy returns nil for error response.
-        if response.status >= 400
-          if existence_check && response.status == 404
-            logger.debug("404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}")
-            return nil
+      ActiveSupport::Notifications.instrument('proxy', {url: fetch_options[:uri], class: self.class}) do
+        FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) do
+          if (nonstandard_connection = fetch_options[:non_oauth_connection])
+            response = nonstandard_connection.get(fetch_options[:uri])
+          else
+            response = @client.fetch_protected_resource(fetch_options)
           end
-          raise Errors::ProxyError.new(
-                  "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}", nil, nil)
-        else
-          response
+          # Canvas proxy returns nil for error response.
+          if response.status >= 400
+            if existence_check && response.status == 404
+              logger.debug("404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}")
+              return nil
+            end
+            raise Errors::ProxyError.new(
+                    "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}", nil, nil)
+          else
+            response
+          end
         end
       end
     end
