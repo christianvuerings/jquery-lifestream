@@ -100,7 +100,6 @@ module GoogleApps
     private
 
     def request_transaction(page_params, num_requests)
-      logger.fatal "params = #{page_params.inspect}"
       result_page = ActiveSupport::Notifications.instrument('proxy', {class: self.class}) do
         FakeableProxy.wrap_request("#{APP_ID}#{page_params[:vcr_id]}", @fake, @fake_options) do
           begin
