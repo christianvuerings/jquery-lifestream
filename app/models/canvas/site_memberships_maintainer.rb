@@ -58,11 +58,7 @@ module Canvas
     def filter_sections(sis_section_ids)
       campus_sections = sis_section_ids.collect do |sis_section_id|
         campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id)
-        if campus_section.present?
-          campus_section.merge!({'sis_section_id' => sis_section_id})
-        else
-          logger.warn("Invalid section ID identified: #{sis_section_id}")
-        end
+        campus_section.merge!({'sis_section_id' => sis_section_id}) if campus_section.present?
         campus_section
       end
       campus_sections.select {|sec| sec.present? }
