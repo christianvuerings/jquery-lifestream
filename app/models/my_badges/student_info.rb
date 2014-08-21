@@ -20,7 +20,7 @@ module MyBadges
     end
 
     def get_reg_blocks
-      blocks_feed = Bearfacts::MyRegBlocks.new(@uid).get_feed
+      blocks_feed = Bearfacts::Regblocks.new({user_id: @uid}).get
       response = blocks_feed.slice(:empty, :errored, :noStudentId).merge({
         needsAction: blocks_feed[:activeBlocks].present?,
         activeBlocks: blocks_feed[:activeBlocks].present? ? blocks_feed[:activeBlocks].length : 0
