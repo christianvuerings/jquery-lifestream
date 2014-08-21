@@ -59,29 +59,31 @@ module GoogleApps
     end
 
     def simple_request(request_params, vcr_id)
-      FakeableProxy.wrap_request("#{GoogleApps::Proxy::APP_ID}#{vcr_id}", @fake, @fake_options) {
-        begin
-          logger.info "Fake = #@fake; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-          client = GoogleApps::Client.client.dup
-          if request_params[:authenticated]
-            client.authorization = @authorization
+      ActiveSupport::Notifications.instrument('proxy', {url: request_params[:uri], class: self.class}) do
+        FakeableProxy.wrap_request("#{GoogleApps::Proxy::APP_ID}#{vcr_id}", @fake, @fake_options) {
+          begin
+            logger.info "Fake = #@fake; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+            client = GoogleApps::Client.client.dup
+            if request_params[:authenticated]
+              client.authorization = @authorization
+            end
+            response = client.execute(
+              :http_method => request_params[:http_method],
+              :uri => request_params[:uri],
+              :authenticated => request_params[:authenticated]
+            )
+            if response.blank?
+              logger.error "Got a blank response from Google: #{response.inspect}"
+            elsif response.status >= 400
+              logger.error "Got an error response from Google. Status #{response.status}, Body #{response.body}"
+            end
+            response
+          rescue => e
+            logger.fatal "#{e.to_s} - Unable to send request transaction"
+            nil
           end
-          response = client.execute(
-            :http_method => request_params[:http_method],
-            :uri => request_params[:uri],
-            :authenticated => request_params[:authenticated]
-          )
-          if response.blank?
-            logger.error "Got a blank response from Google: #{response.inspect}"
-          elsif response.status >= 400
-            logger.error "Got an error response from Google. Status #{response.status}, Body #{response.body}"
-          end
-          response
-        rescue => e
-          logger.fatal "#{e.to_s} - Unable to send request transaction"
-          nil
-        end
-      }
+        }
+      end
     end
 
     protected
@@ -98,14 +100,17 @@ module GoogleApps
     private
 
     def request_transaction(page_params, num_requests)
-      result_page = FakeableProxy.wrap_request("#{APP_ID}#{page_params[:vcr_id]}", @fake, @fake_options) {
-        begin
-          GoogleApps::Client.request_page(@authorization, page_params)
-        rescue => e
-          logger.fatal "#{e.to_s} - Unable to send request transaction"
-          nil
+      result_page = ActiveSupport::Notifications.instrument('proxy', {class: self.class}) do
+        FakeableProxy.wrap_request("#{APP_ID}#{page_params[:vcr_id]}", @fake, @fake_options) do
+          begin
+            GoogleApps::Client.request_page(@authorization, page_params)
+          rescue => e
+            logger.fatal "#{e.to_s} - Unable to send request transaction"
+            nil
+          end
         end
-      }
+      end
+
       if result_page.blank?
         logger.error "Got a blank response from Google: #{result_page.inspect}"
       elsif result_page.status >= 400
