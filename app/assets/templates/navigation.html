@@ -5,8 +5,8 @@
     <li data-ng-class="{true:'active'}[controllerName=='AcademicsController']" data-ng-if="api.user.profile.hasAcademicsTab">
       <a href="/academics" data-ng-click="offCanvasMenu.show=false"><i class="fa fa-book"></i>My Academics</a>
     </li>
-    <li data-ng-class="{true:'active'}[controllerName=='CampusController']"><a href="/campus" data-ng-click="offCanvasMenu.show=false"><i class="fa fa-th-large"></i>My Campus</a></li>
     <li data-ng-class="{true:'active'}[controllerName=='MyFinancesController']" data-ng-if="api.user.profile.hasFinancialsTab"><a href="/finances" data-ng-click="offCanvasMenu.show=false"><i class="fa fa-usd"></i>My Finances</a></li>
+    <li data-ng-class="{true:'active'}[controllerName=='CampusController']"><a href="/campus" data-ng-click="offCanvasMenu.show=false"><i class="fa fa-th-large"></i>My Campus</a></li>
   </ul>
   <div class="cc-updated-feeds" data-ng-cloak data-ng-controller="UpdatedFeedsController" data-ng-show="controllerName === 'DashboardController'">
     <div data-ng-show="hasUpdates">
