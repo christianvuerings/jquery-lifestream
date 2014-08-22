@@ -66,7 +66,7 @@ describe Canvas::Ldap do
       client = subject.client
       args = {}
       args[:base] = Canvas::Ldap::GUEST_DN
-      args[:filter] = Net::LDAP::Filter.eq('uid', '2000230')
+      args[:filter] = Net::LDAP::Filter.eq('uid', '11000023')
       results = client.search(args)
       expect(results).to be_an_instance_of Array
       expect(results.count).to eq 1
@@ -74,10 +74,10 @@ describe Canvas::Ldap do
       expect(results[0][:givenname]).to be_an_instance_of Net::BER::BerIdentifiedArray
       expect(results[0][:sn]).to be_an_instance_of Net::BER::BerIdentifiedArray
       expect(results[0][:mail]).to be_an_instance_of Net::BER::BerIdentifiedArray
-      expect(results[0][:uid][0]).to eq "2000230"
-      expect(results[0][:givenname][0]).to eq "Karl-g1"
-      expect(results[0][:sn][0]).to eq "Grose-g1"
-      expect(results[0][:mail][0]).to eq "karl.grose@gromar.org"
+      expect(results[0][:uid][0]).to eq "11000023"
+      expect(results[0][:givenname][0]).to eq "RickGuest"
+      expect(results[0][:sn][0]).to eq "Jaffe"
+      expect(results[0][:mail][0]).to eq "rjaffe@lmi.net"
     end
   end
 
