@@ -36,12 +36,16 @@ class AuthenticationState
   end
 
   def real_user_id
-    if original_user_id && user_id
-      return original_user_id
-    elsif lti_authenticated_only
-      return LTI_AUTHENTICATED_ONLY
+    if user_id.present?
+      if original_user_id.present?
+        return original_user_id
+      elsif lti_authenticated_only
+        return LTI_AUTHENTICATED_ONLY
+      else
+        return user_id
+      end
     else
-      return false
+      return nil
     end
   end
 

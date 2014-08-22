@@ -14,6 +14,8 @@ class SessionsController < ApplicationController
           logger.warn "ACT-AS: Active user session for #{session[:original_user_id]} exists, but CAS is giving us a different UID: #{auth_uid}. Logging user out."
           logout
           return redirect_to Settings.cas_logout_url
+        else
+          create_reauth_cookie
         end
       elsif session[:user_id] != auth_uid
         # If we're reauthenticating for any other reason, then the CAS-provided UID should
@@ -21,7 +23,7 @@ class SessionsController < ApplicationController
         logger.warn "REAUTHENTICATION: Active user session for #{session[:user_id]} exists, but CAS is giving us a different UID: #{auth_uid}. Starting new session."
         reset_session
       else
-        cookies[:reauthenticated] = {:value => true, :expires => 8.hours.from_now}
+        create_reauth_cookie
       end
     else
       if session[:lti_authenticated_only] && session[:user_id] != auth_uid
@@ -34,6 +36,10 @@ class SessionsController < ApplicationController
       reset_session
     end
     continue_login_success auth_uid
+  end
+
+  def create_reauth_cookie
+    cookies[:reauthenticated] = {:value => true, :expires => 8.hours.from_now}
   end
 
   def reauth_admin

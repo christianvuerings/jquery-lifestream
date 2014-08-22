@@ -30,7 +30,8 @@ class UserApiController < ApplicationController
         :isBasicAuthEnabled => Settings.developer_auth.enabled,
         :isLoggedIn => true,
         :features => Settings.features.marshal_dump,
-        :actingAsUid => current_user.real_user_id,
+        # Note the misleading field name.
+        :actingAsUid => (current_user.directly_authenticated? ? false : current_user.real_user_id),
         :youtubeSplashId => Settings.youtube_splash_id
       })
       status.merge!(User::Api.from_session(session).get_feed)
