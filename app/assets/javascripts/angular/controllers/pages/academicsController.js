@@ -469,8 +469,8 @@
       accumulateUnits($scope.selectedCourses, selectedSemesterTotals);
       $scope.estimatedGpa = selectedSemesterTotals.score / selectedSemesterTotals.units;
       $scope.estimatedCumulativeGpa =
-          ( ( $scope.gpaUnits.cumulativeGpa * $scope.gpaUnits.totalUnitsAttempted ) + selectedSemesterTotals.score ) /
-          ( $scope.gpaUnits.totalUnitsAttempted + selectedSemesterTotals.units );
+          (($scope.gpaUnits.cumulativeGpa * $scope.gpaUnits.totalUnitsAttempted) + selectedSemesterTotals.score) /
+          ($scope.gpaUnits.totalUnitsAttempted + selectedSemesterTotals.units);
     };
 
     // Wait until user profile is fully loaded before hitting academics data
