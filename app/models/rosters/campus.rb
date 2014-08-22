@@ -69,7 +69,7 @@ module Rosters
         campus_student[:section_ccns].each do |section_ccn|
           campus_student[:sections].push({id: section_ccn})
         end
-        if campus_student[:enroll_status] == 'E'
+        if campus_student[:enroll_status] == 'E' && CampusOracle::Queries.get_photo(id)
           campus_student[:photo] = "/campus/#{@campus_course_id}/photo/#{id}"
         end
         feed[:students] << campus_student

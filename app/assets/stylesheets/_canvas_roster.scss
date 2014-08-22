@@ -39,10 +39,20 @@
     }
   }
   .cc-page-roster-image-unavailable {
-    background-image: asset-url("photo_unavailable_official_72x96.jpg");
+    background-image: asset-url("svg/photo_unavailable_official_72x96.svg");
     height: 96px;
     margin: 0 auto;
     max-width: 72px;
+  }
+  @media print {
+    .cc-page-roster-image-unavailable:before {
+      content: asset-url("svg/photo_unavailable_official_72x96.svg");
+    }
+    .cc-page-roster-list {
+      a[href]:after {
+        content: "";
+      }
+    }
   }
 }
 .cc-button-selected-roster {

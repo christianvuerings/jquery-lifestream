@@ -58,7 +58,7 @@ module Canvas
             campus_student[:profile_url] = canvas_enrollments[0]['html_url']
           end
           campus_student[:login_id] = login_id
-          if campus_student[:enroll_status] == 'E'
+          if campus_student[:enroll_status] == 'E' && CampusOracle::Queries.get_photo(login_id)
             campus_student[:photo] = "/canvas/#{@canvas_course_id}/photo/#{canvas_student['id']}"
           end
           feed[:students] << campus_student

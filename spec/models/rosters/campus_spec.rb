@@ -105,9 +105,6 @@ describe "Rosters::Campus" do
     feed = model.get_feed
     expect(feed[:sections].length).to eq 2
     expect(feed[:students].length).to eq 2
-    expect(feed[:students].index {|student| student[:id] == enrolled_student_login_id &&
-      !student[:photo].end_with?(Rosters::Campus::PHOTO_UNAVAILABLE_FILENAME)
-    }).to_not be_nil
     expect(feed[:students].index {|student| student[:id] == waitlisted_student_login_id &&
         student[:photo].nil?
     }).to_not be_nil

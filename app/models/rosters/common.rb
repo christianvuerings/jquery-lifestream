@@ -1,8 +1,6 @@
 module Rosters
   class Common < AbstractModel
 
-    PHOTO_UNAVAILABLE_FILENAME = 'photo_unavailable_official_72x96.jpg'
-
     def initialize(uid, options={})
       @uid = uid
       @course_id = options[:course_id]
@@ -31,9 +29,6 @@ module Rosters
           end
         end
       end
-      {
-        filename: File.join(Rails.root, 'app/assets/images', PHOTO_UNAVAILABLE_FILENAME)
-      }
     end
   end
 end

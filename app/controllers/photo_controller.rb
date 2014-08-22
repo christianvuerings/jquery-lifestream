@@ -11,12 +11,6 @@ class PhotoController < ApplicationController
         type: 'image/jpeg',
         disposition: 'inline'
       )
-    else 
-      send_file(
-        File.join(Rails.root, 'app/assets/images', 'photo_unavailable_official_72x96.jpg'),
-        type: 'image/jpeg',
-        disposition: 'inline'
-      )
     end
   end
 
