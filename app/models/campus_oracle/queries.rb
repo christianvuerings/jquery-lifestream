@@ -170,8 +170,11 @@ module CampusOracle
       use_pooled_connection {
         sql = <<-SQL
       select roster.student_ldap_uid ldap_uid, roster.enroll_status,
-        person.first_name, person.last_name, person.student_email_address, person.student_id, person.affiliations
+        person.first_name, person.last_name, person.student_email_address, person.student_id, person.affiliations,
+        ph.bytes photo_bytes
       from calcentral_class_roster_vw roster, calcentral_student_info_vw person
+      left join  calcentral_student_photo_vw ph
+        on ph.student_ldap_uid = person.student_ldap_uid
       where roster.term_yr = #{term_yr.to_i}
         and roster.term_cd = #{connection.quote(term_cd)}
         and roster.course_cntl_num = #{ccn.to_i}

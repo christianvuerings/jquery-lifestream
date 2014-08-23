@@ -230,9 +230,6 @@ describe Canvas::CanvasRosters do
     feed = model.get_feed
     feed[:sections].length.should == 2
     feed[:students].length.should == 2
-    feed[:students].index {|student| student[:id] == enrolled_student_canvas_id &&
-        !student[:photo].end_with?(Canvas::CanvasRosters::PHOTO_UNAVAILABLE_FILENAME)
-    }.should_not be_nil
     feed[:students].index {|student| student[:id] == waitlisted_student_canvas_id &&
         student[:photo].nil?
     }.should_not be_nil
@@ -327,11 +324,9 @@ describe Canvas::CanvasRosters do
     enrolled_photo[:size].should == 42
     enrolled_photo[:filename].should be_nil
     waitlisted_photo = model.photo_data_or_file(waitlisted_student_canvas_id)
-    waitlisted_photo[:data].should be_nil
-    waitlisted_photo[:filename].end_with?(Canvas::CanvasRosters::PHOTO_UNAVAILABLE_FILENAME).should be_true
+    waitlisted_photo.should be_nil
     unofficial_photo = model.photo_data_or_file(unofficial_student_canvas_id)
-    unofficial_photo[:data].should be_nil
-    unofficial_photo[:filename].end_with?(Canvas::CanvasRosters::PHOTO_UNAVAILABLE_FILENAME).should be_true
+    unofficial_photo.should be_nil
   end
 
   def stub_teacher_status(teacher_login_id, canvas_course_id)

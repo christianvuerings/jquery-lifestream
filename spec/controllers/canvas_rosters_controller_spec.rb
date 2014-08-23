@@ -42,7 +42,6 @@ describe CanvasRostersController do
     }
   end
   let(:photo_file) { {:data => '\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01'} }
-  let(:photo_data) { {:filename => File.join(Rails.root, 'app/assets/images', Rosters::Common::PHOTO_UNAVAILABLE_FILENAME) } }
 
   before do
     # emulate user authenticated via LTI Launch from a Canvas Course
@@ -126,14 +125,6 @@ describe CanvasRostersController do
       allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(false)
       get :photo, canvas_course_id: canvas_course_id, person_id: student_id
       assert_response(403)
-    end
-
-    context "if photo data returned for enrollee" do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:photo_data_or_file).and_return(photo_data) }
-      it "should return photo" do
-        get :photo, canvas_course_id: canvas_course_id, person_id: student_id
-        assert_response :success
-      end
     end
 
     context "if photo path returned for enrollee" do

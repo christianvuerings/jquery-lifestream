@@ -20,7 +20,6 @@ describe CampusRostersController do
     }
   end
   let(:photo_file) { {:data => '\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01'} }
-  let(:photo_data) { {:filename => File.join(Rails.root, 'app/assets/images', Rosters::Common::PHOTO_UNAVAILABLE_FILENAME) } }
 
   before do
     session[:user_id] = user_id
@@ -70,14 +69,6 @@ describe CampusRostersController do
       allow_any_instance_of(Berkeley::CoursePolicy).to receive(:can_view_roster_photos?).and_return(false)
       get :photo, campus_course_id: campus_course_id, person_id: student_id
       assert_response(403)
-    end
-
-    context "if photo data returned for enrollee" do
-      before { allow_any_instance_of(Rosters::Campus).to receive(:photo_data_or_file).and_return(photo_data) }
-      it "should return photo" do
-        get :photo, campus_course_id: campus_course_id, person_id: student_id
-        assert_response :success
-      end
     end
 
     context "if photo path returned for enrollee" do
