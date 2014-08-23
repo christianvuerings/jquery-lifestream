@@ -230,18 +230,37 @@ describe Canvas::MaintainUsers do
     end
   end
 
-  describe ".provisioned_account_eq_sis_account?" do
+  describe '.provisioned_account_eq_sis_account?' do
     let(:provisioned_account) { {'login_id' => '123', 'first_name' => 'John', 'last_name' => 'Smith', 'email' => 'johnsmith@example.com'} }
-    let(:sis_account) { provisioned_account }
-    let(:sis_account_modified) { provisioned_account.merge({'first_name' => 'Jake'}) }
+    subject {Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account)}
 
-    it "returns true if accounts are identical" do
-      expect(Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account)).to be_true
+    context 'when accounts are identical' do
+      let(:sis_account) { provisioned_account }
+      it {should be_true}
     end
 
-    it "returns false if accounts are not identical" do
-      expect(Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account_modified)).to be_false
+    context 'when username checks are enabled' do
+      let(:sis_account) { provisioned_account.merge({'first_name' => 'Jake'}) }
+      before do
+        allow(Settings.canvas_proxy).to receive(:maintain_user_names).and_return(true)
+      end
+      it {should be_false}
     end
+
+    context 'when username checks are disabled' do
+      before do
+        allow(Settings.canvas_proxy).to receive(:maintain_user_names).and_return(false)
+      end
+      context 'when all that differs is the name' do
+        let(:sis_account) { provisioned_account.merge({'first_name' => 'Jake', 'last_name' => 'Smythe'}) }
+        it {should be_true}
+      end
+      context 'when the email address changes' do
+        let(:sis_account) { provisioned_account.merge({'email' => 'js@example.com'}) }
+        it {should be_false}
+      end
+    end
+
   end
 
 end
