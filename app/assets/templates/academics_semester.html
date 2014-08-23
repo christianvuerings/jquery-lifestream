@@ -239,8 +239,8 @@
             <table data-ng-if="selectedSemester.timeBucket === 'current'">
               <tbody>
                 <tr>
-                  <td><strong>Current GPA: </strong></td>
-                  <td><strong data-ng-bind="(currentCumulativeGpa | number:2) || 'N/A'"></strong></td>
+                  <td><strong>Current cumulative GPA: </strong></td>
+                  <td><strong data-ng-bind="gpaUnits.cumulativeGpa || 'N/A'"></strong></td>
                 </tr>
               </tbody>
             </table>
@@ -278,11 +278,11 @@
               <tbody>
                 <tr>
                   <td colspan="2"><strong>Estimated semester GPA:</strong></td>
-                  <td><strong data-ng-bind="(estimatedGpa | number:2) || 'N/A'"></strong></td>
+                  <td><strong data-ng-bind="(estimatedGpa | number:3) || 'N/A'"></strong></td>
                 </tr>
                 <tr data-ng-if="selectedSemester.timeBucket === 'current'">
                   <td colspan="2"><strong>Estimated cumulative GPA:</strong></td>
-                  <td><strong data-ng-bind="(estimatedCumulativeGpa | number:2) || 'N/A'"></strong></td>
+                  <td><strong data-ng-bind="(estimatedCumulativeGpa | number:3) || 'N/A'"></strong></td>
                 </tr>
               </tbody>
             </table>

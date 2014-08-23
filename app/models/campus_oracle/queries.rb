@@ -359,7 +359,7 @@ module CampusOracle
       result = {}
       use_pooled_connection {
         sql = <<-SQL
-        select s.cum_gpa, s.tot_units, s.first_reg_term_cd, s.first_reg_term_yr,
+        select s.cum_gpa, s.tot_units, s.lgr_tot_attempt_unit, s.first_reg_term_cd, s.first_reg_term_yr,
           s.ug_grad_flag, s.affiliations
         from calcentral_student_info_vw s
         where s.student_ldap_uid=#{ldap_uid.to_i}

@@ -416,20 +416,10 @@
       return accumulator;
     };
 
-    var gpaCalculate = function() {
-      var totals = {
-        'score': 0,
-        'units': 0
-      };
-      accumulateUnits($scope.selectedCourses, totals);
-      $scope.estimatedGpa = totals.score / totals.units;
-    };
-
     $scope.gpaUpdateCourse = function(course, estimatedGrade) {
       // Update course object on scope and recalculate overall GPA
       course.estimatedGrade = estimatedGrade;
       gpaCalculate();
-      cumulativeGpaCalculate($scope.allCourses, 'estimated');
     };
 
     $scope.gpaInit = function() {
@@ -468,22 +458,19 @@
       }
       $scope.semesterHasTranscripts = hasTranscripts;
       gpaCalculate();
-      cumulativeGpaCalculate($scope.previousCourses, 'current');
-      cumulativeGpaCalculate($scope.allCourses, 'estimated');
     };
 
-    var cumulativeGpaCalculate = function(courses, gpaType) {
+    var gpaCalculate = function() {
       // Recalculate GPA on every dropdown change.
-      var totals = {
+      var selectedSemesterTotals = {
         'score': 0,
         'units': 0
       };
-      accumulateUnits(courses, totals);
-      if (gpaType === 'estimated') {
-        $scope.estimatedCumulativeGpa = totals.score / totals.units;
-      } else {
-        $scope.currentCumulativeGpa = totals.score / totals.units;
-      }
+      accumulateUnits($scope.selectedCourses, selectedSemesterTotals);
+      $scope.estimatedGpa = selectedSemesterTotals.score / selectedSemesterTotals.units;
+      $scope.estimatedCumulativeGpa =
+          (($scope.gpaUnits.cumulativeGpa * $scope.gpaUnits.totalUnitsAttempted) + selectedSemesterTotals.score) /
+          ($scope.gpaUnits.totalUnitsAttempted + selectedSemesterTotals.units);
     };
 
     // Wait until user profile is fully loaded before hitting academics data
