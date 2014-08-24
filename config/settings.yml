@@ -72,6 +72,8 @@ canvas_proxy:
   test_user_id: "300846"
   test_user_access_token: "someMumboJumbo"
   mixed_sis_user_id: true
+  # Set to false to disable synchronization of obfuscated names in Dev/QA.
+  maintain_user_names: true
 ldap:
   host: 'nds.berkeley.edu'
   port: 636

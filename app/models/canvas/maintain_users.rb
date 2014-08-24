@@ -8,9 +8,11 @@ module Canvas
     # Returns true if user hashes are identical
     def self.provisioned_account_eq_sis_account?(provisioned_account, sis_account)
       matched = provisioned_account['login_id'] == sis_account['login_id'] &&
-        provisioned_account['first_name'] == sis_account['first_name'] &&
-        provisioned_account['last_name'] == sis_account['last_name'] &&
         provisioned_account['email'] == sis_account['email']
+      if matched && Settings.canvas_proxy.maintain_user_names
+        matched = provisioned_account['first_name'] == sis_account['first_name'] &&
+          provisioned_account['last_name'] == sis_account['last_name']
+      end
       matched
     end
 
