@@ -7,7 +7,7 @@ module CampusOracle
       use_pooled_connection {
         log_access(connection, connection_handler, name)
         sql = <<-SQL
-      select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, pi.first_name, pi.last_name,
+      select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name,
         pi.person_name, pi.email_address, pi.affiliations,
         reg.reg_status_cd, reg.educ_level, reg.admin_cancel_flag, reg.acad_blk_flag, reg.admin_blk_flag,
         reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.cal_residency_flag
@@ -26,7 +26,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-        select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations
         from calcentral_person_info_vw pi
         where pi.ldap_uid in (#{up_to_1000_ldap_uids.collect { |id| id.to_i }.join(', ')})
         SQL
@@ -39,7 +39,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-        select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations
+        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations
         from calcentral_person_info_vw pi
         where (affiliations LIKE '%-TYPE-%')
         SQL
@@ -61,16 +61,16 @@ module CampusOracle
         select outr.*
         from (
           select  pi.ldap_uid,
-                  pi.first_name,
-                  pi.last_name,
+                  trim(pi.first_name) as first_name,
+                  trim(pi.last_name) as last_name,
                   pi.email_address,
                   pi.student_id,
                   pi.affiliations,
                   row_number() over(order by 1) row_number,
                   count(*) over() result_count
           from calcentral_person_info_vw pi
-          where lower( concat(concat(pi.last_name, ','), pi.first_name) ) like '#{clean_search_string.downcase}%'
-          order by pi.last_name
+          where lower( concat(concat(trim(pi.last_name), ','), trim(pi.first_name)) ) like '#{clean_search_string.downcase}%'
+          order by trim(pi.last_name)
         ) outr #{limit_clause}
         SQL
         result = connection.select_all(sql)
@@ -89,8 +89,8 @@ module CampusOracle
         select outr.*
         from (
           select  pi.ldap_uid,
-                  pi.first_name,
-                  pi.last_name,
+                  trim(pi.first_name) as first_name,
+                  trim(pi.last_name) as last_name,
                   pi.email_address,
                   pi.student_id,
                   pi.affiliations,
@@ -98,7 +98,7 @@ module CampusOracle
                   count(*) over() result_count
           from calcentral_person_info_vw pi
           where lower(pi.email_address) like '%#{clean_search_string.downcase}%'
-          order by pi.last_name
+          order by trim(pi.last_name)
         ) outr #{limit_clause}
         SQL
         result = connection.select_all(sql)
@@ -112,7 +112,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
+      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
       from calcentral_person_info_vw pi
       where pi.student_id = #{student_id_string}
       and rownum <= 1
@@ -128,7 +128,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select pi.ldap_uid, pi.first_name, pi.last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
+      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
       from calcentral_person_info_vw pi
       where pi.ldap_uid = #{user_id_string}
       and rownum <= 1
@@ -170,7 +170,7 @@ module CampusOracle
       use_pooled_connection {
         sql = <<-SQL
       select roster.student_ldap_uid ldap_uid, roster.enroll_status,
-        person.first_name, person.last_name, person.student_email_address, person.student_id, person.affiliations,
+        trim(person.first_name) as first_name, trim(person.last_name) as last_name, person.student_email_address, person.student_id, person.affiliations,
         ph.bytes photo_bytes
       from calcentral_class_roster_vw roster, calcentral_student_info_vw person
       left join  calcentral_student_photo_vw ph
@@ -331,7 +331,7 @@ module CampusOracle
       use_pooled_connection {
         sql = <<-SQL
         select p.person_name, p.ldap_uid, bci.instructor_func,
-          p.first_name, p.last_name, p.email_address, p.student_id, p.affiliations
+          trim(p.first_name) as first_name, trim(p.last_name) as last_name, p.email_address, p.student_id, p.affiliations
         from calcentral_course_instr_vw bci
         join calcentral_person_info_vw p on p.ldap_uid = bci.instructor_ldap_uid
         where bci.instructor_ldap_uid = p.ldap_uid
