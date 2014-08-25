@@ -45,7 +45,9 @@
      * e.g. /, /dashboard, /settings
      */
     var trackPageview = function() {
-      sendEvent('pageview', $location.path());
+      if (isGaAvailable) {
+        $window.ga('send', 'pageview', $location.path());
+      }
     };
 
     // Whenever we're changing the content loaded, we need to track which page we're viewing.
