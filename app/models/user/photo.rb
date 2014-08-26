@@ -9,4 +9,4 @@ module User
     end
 
   end
-end   
+end
