@@ -1,7 +1,7 @@
 /*!
  * jQuery Lifestream Plug-in
  * Show a stream of your online activity
- * @version   0.5.1
+ * @version   0.5.2
  * @author    Christian Vuerings et al.
  * @copyright Copyright 2014, Christian Vuerings - http://denbuzze.com
  * @license   https://github.com/christianv/jquery-lifestream/blob/master/LICENSE MIT
@@ -2401,8 +2401,8 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
         return t.replace(
           /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
           function( m, m1, m2 ) {
-            return m1 + '<a href="http://search.twitter.com/search?q=%23' +
-            m2 + '">#' + m2 + '</a>';
+            return m1 + '<a href="https://twitter.com/hashtag/' +
+            m2 + '?src=hash">#' + m2 + '</a>';
           }
         );
       };
