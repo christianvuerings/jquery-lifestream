@@ -1,0 +1,25 @@
+.cc-widget-profile {
+  .cc-widget-profile-picture {
+    padding: 0 10px 10px 0;
+  }
+  .cc-widget-profile-content {
+    margin-left: 87px;
+    padding-bottom: 10px;
+  }
+  .cc-widget-profile-content-gpa {
+    font-size: 18px;
+    padding: 8px 0;
+  }
+  .cc-widget-profile-picture-not-available {
+    background: $cc-color-shadow-color;
+    display: block;
+    font-size: 80px;
+    height: 96px;
+    padding-top: 10px;
+    text-align: center;
+    width: 72px;
+    i {
+      color: $cc-color-white;
+    }
+  }
+}
