@@ -295,6 +295,6 @@ ui_selenium:
 
 advising_proxy:
   fake: false
-  base_url: 'https://ua.berkeley.edu/api'
+  base_url: 'https://bhive.berkeley.edu/api'
   username: secret
   password: secret

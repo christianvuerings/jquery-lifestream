@@ -123,7 +123,7 @@
       },
       "location": "Free Speech Cafe",
       "method": "",
-      "urlToEditAppointment": "http://ua.berkeley.edu/appointments/1234567880"
+      "urlToEditAppointment": "http://bhive.berkeley.edu/appointments/1234567880"
     },
     {
       "appointmentId": 1234567890,
@@ -134,8 +134,8 @@
       },
       "location": "",
       "method": "skype",
-      "urlToEditAppointment": "http://ua.berkeley.edu/appointments/1234567890"
+      "urlToEditAppointment": "http://bhive.berkeley.edu/appointments/1234567890"
     }
   ],
-  "urlToMakeAppointment": "http://ua.berkeley.edu/appointments/new"
+  "urlToMakeAppointment": "http://bhive.berkeley.edu/appointments/new"
 }
