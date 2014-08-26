@@ -4,11 +4,13 @@
   /**
    * Photo controller
    */
-  angular.module('calcentral.controllers').controller('ProfileController', function(apiService, $scope) {
-
-    apiService.util.setTitle('Profile');
+  angular.module('calcentral.controllers').controller('ProfileController', function(photoFactory, $scope) {
 
     $scope.profilePictureLoading = true;
+
+    photoFactory.hasPhoto().success(function(data) {
+      $scope.hasPhoto = data.hasPhoto;
+    });
 
   });
 
