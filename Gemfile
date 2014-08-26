@@ -111,7 +111,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'compass-rails', '~> 2.0.0'
-gem 'foundation-rails', '~> 5.3.3.0'
+gem 'foundation-rails', '~> 5.4.1.0'
 
 # Closure Compiler Gem for JS compression
 # https://github.com/documentcloud/closure-compiler
