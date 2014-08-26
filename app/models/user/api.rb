@@ -89,7 +89,6 @@ module User
       has_instructor_history = CampusOracle::UserCourses::HasInstructorHistory.new({:user_id => @uid}).has_instructor_history?
       roles = (@campus_attributes && @campus_attributes[:roles]) ? @campus_attributes[:roles] : {}
       {
-        :profilePicture => Rails.application.routes.url_helpers.my_photo_path + ".jpg",
         :isSuperuser => current_user_policy.can_administrate?,
         :isViewer => current_user_policy.can_view_as?,
         :firstLoginAt => @first_login_at,
