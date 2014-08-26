@@ -90,7 +90,7 @@ gem 'torquebox-messaging', '~> 3.1.1'
 gem 'retriable', '~> 1.4'
 
 # authorization abstraction layer
-gem 'pundit', '~> 0.2.3'
+gem 'pundit', '~> 0.3.0'
 
 gem 'cancan', '~> 1.6.10'
 
