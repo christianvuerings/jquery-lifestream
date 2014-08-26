@@ -204,24 +204,6 @@
   .cc-academics-semesters {
     padding: 20px 0 0 15px;
   }
-  .cc-academics-semesters-telebears {
-    h4 {
-      font-size: 13px;
-      font-weight: bold;
-    }
-    .cc-academics-adviser-more-info {
-      padding-top: 6px;
-    }
-    .cc-academics-semesters-telebears-header {
-      margin-top: 25px;
-    }
-    .cc-telebears-date-padding {
-      padding-left: 20px;
-    }
-    .cc-telebears-phase-center {
-      text-align: center;
-    }
-  }
   .cc-academics-semester-title-link {
     margin-top: 7px;
   }
@@ -232,11 +214,9 @@
     }
   }
   .cc-academics-status-and-blocks {
-    border: 2px solid $cc-color-shadow-color;
-    margin-bottom: 10px;
-    margin-top: 20px;
-    padding: 0 10px 10px;
-
+    .cc-academics-status-and-blocks-status-table tbody tr:nth-child(even) td {
+      padding-bottom: 10px;
+    }
     .cc-widget-list-hover, .cc-widget-table-hover {
       padding: 0;
       i {
@@ -247,9 +227,6 @@
         line-height: 1.3;
         margin: 5px 0;
       }
-    }
-    .cc-unavailable {
-      padding-right: 5px;
     }
   }
   .cc-academics-subtitle {

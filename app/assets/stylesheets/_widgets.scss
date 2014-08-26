@@ -12,8 +12,10 @@
     clear: both;
   }
 }
-.cc-widget-last {
-  margin-right: 0;
+.cc-column-last {
+  .cc-widget {
+    margin-right: 0;
+  }
 }
 .cc-widget-list {
   font-size: 12px;
@@ -145,7 +147,7 @@
     margin: 7px 15px 0 0;
   }
   .cc-widget-title-link {
-    margin: 14px 15px 0 0;
+    margin: 12px 15px 0 0;
   }
 }
 .cc-widget-title-sub {
