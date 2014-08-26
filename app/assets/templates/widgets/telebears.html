@@ -1,0 +1,37 @@
+<div class="cc-academics-telebears cc-widget">
+  <div class="cc-widget-title">
+    <h2>Tele-BEARS</h2>
+  </div>
+  <div class="cc-widget-padding cc-clearfix-container">
+    <div>
+      <h3 class="cc-left cc-telebears-title">Tele-BEARS for {{ telebears.term }} {{ telebears.year }}
+      <strong class="cc-academics-adviser-more-info"><a data-ng-href="{{telebears.url}}">More Info</a></strong></h3>
+    </div>
+    <div data-ng-include src="'adviser_message.html'"></div>
+    <div>
+      <div class="cc-telebears-phases" data-ng-repeat="phase in telebears.phases">
+        <h4 data-ng-bind-template="Tele-BEARS Phase {{phase.period}}"></h4>
+        <ul>
+          <li>
+            <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">Start</strong></div>
+            <div class="columns medium-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:'EEE MMM d | h:mm a'"></div>
+          </li>
+          <li>
+            <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
+            <div class="columns medium-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:'EEE MMM d | h:mm a'"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <button class="cc-button cc-left" data-ng-if="api.user.profile.hasGoogleAccessToken" data-ng-click="addTelebearsAppointment(telebears.phases)">
+      Add Appointments to bCal
+    </button>
+    <div
+      class="cc-academics-telebears-indicator cc-left"
+      data-cc-loading-directive="telebearsAppointmentLoading"
+      data-cc-loading-process="Adding..."
+      data-cc-loading-success="Events added."
+      data-cc-loading-error="Events not added. Try again later.">
+    </div>
+  </div>
+</div>

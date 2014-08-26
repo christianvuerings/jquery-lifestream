@@ -1,0 +1,110 @@
+<div class="cc-widget cc-widget-profile" data-ng-controller="ProfileController">
+  <div class="cc-widget-title">
+    <h2>Profile</h2>
+  </div>
+
+  <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!collegeAndLevel.standing">
+    <div data-ng-if="collegeAndLevel.errored">
+      There was a problem reaching campus services.
+      Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
+    </div>
+    <div data-ng-if="collegeAndLevel.empty || collegeAndLevel.noStudentId">
+      <h3>Standing</h3>
+      <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
+        You are not currently considered an active student.
+      </p>
+      <div data-ng-if="api.user.profile.roles.student">
+        <p data-ng-if="api.user.profile.roles.registered">
+          You are registered as a student but not currently considered active by all campus services.
+        </p>
+        <p data-ng-if="!api.user.profile.roles.registered">
+          You are not currently officially registered as a student.
+        </p>
+        <p data-ng-if="semesters.length || studentInfo.regStatus.code !== null || requirements.length">
+          Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
+        </p>
+        <div class="cc-academics-nocontent" data-ng-if="!semesters.length && studentInfo.regStatus.code === null && !requirements.length">
+          <p>More information will display here when your academic status changes. Check back often for information about:</p>
+          <ul class="cc-list-bullets">
+            <li>Class enrollments, including waitlist information.</li>
+            <li>Your academic status, including standing, GPA, units, major, college, and more.</li>
+            <li>Your registration status, including any blocks limiting your access to campus services.</li>
+            <li>Course information, including class and exam schedules, class locations, textbooks, and webcasts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc-widget-padding" data-ng-if="collegeAndLevel.standing">
+
+    <div class="cc-left cc-widget-profile-picture">
+      <div data-ng-if="hasPhoto">
+        <img data-cc-image-loaded-directive="profilePictureLoading" alt="{{api.user.profile.fullName}}'s Profile Picture" data-ng-src="/api/my/photo" width="72" height="96">
+      </div>
+      <div data-ng-if="!hasPhoto" class="cc-widget-profile-picture-not-available">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
+
+    <div class="cc-widget-profile-content">
+      <div>
+        <strong data-ng-bind="api.user.profile.fullName"></strong>
+      </div>
+
+      <div class="cc-widget-profile-content-gpa" data-ng-if="gpaUnits.cumulativeGpa !== null">
+        <span data-ng-bind="gpaUnits.cumulativeGpa"></span>
+        GPA
+      </div>
+
+      <div data-ng-repeat="college in collegeAndLevel.colleges">
+        <span class="cc-text-light" data-ng-bind="college.college"></span><br />
+        <span data-ng-bind="college.major"></span>
+      </div>
+    </div>
+
+    <div class="cc-table cc-table-top-border">
+      <table>
+        <thead>
+          <tr>
+            <th width="87px">General</th>
+            <th width="40%" class="cc-table-subheader" scope="col">Standing</th>
+            <th class="cc-table-subheader" scope="col" data-ng-if="gpaUnits.totalUnits !== null">Units</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td><strong data-ng-bind="collegeAndLevel.standing"></strong></td>
+            <td data-ng-if="gpaUnits.totalUnits !== null"><strong data-ng-bind="gpaUnits.totalUnits"></strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cc-table cc-table-top-border">
+      <table>
+        <thead>
+          <tr>
+            <th width="87px">Level</th>
+            <th width="40%" class="cc-table-subheader" scope="col">
+              <span data-ng-if="isUndergraduate">Including AP</span>
+              <span data-ng-if="!isUndergraduate">Current</span>
+            </th>
+            <th data-ng-if="isUndergraduate" class="cc-table-subheader" scope="col">
+              <span>Not Including AP</span>
+              <span data-ng-if="!isUndergraduate">Current</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td><strong data-ng-bind="collegeAndLevel.level"></strong></td>
+            <td data-ng-if="isUndergraduate"><strong data-ng-bind="collegeAndLevel.nonApLevel"></strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
