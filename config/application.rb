@@ -1,5 +1,13 @@
-# disable restrictions on Java cryptography strength as early as possible.
-java.lang.Class.for_name('javax.crypto.JceSecurity').get_declared_field('isRestricted').tap{|f| f.accessible = true; f.set nil, false}
+# disable restrictions on Java cryptography strength as early as possible, if we're in a Java env that allows it.
+begin
+  klazz = java.lang.Class.for_name('javax.crypto.JceSecurity')
+  field = klazz.get_declared_field('isRestricted')
+  if field
+    field.tap { |f| f.accessible = true; f.set nil, false }
+  end
+rescue StandardError
+  # Java env does not have isRestricted field, so skip
+end
 
 begin
   require 'fcntl'
