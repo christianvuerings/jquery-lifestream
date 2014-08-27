@@ -26,4 +26,20 @@ class UserUtils
     Settings.ui_selenium.test_user_password
   end
 
+  def self.qa_username
+    Settings.ui_selenium.ets_qa_ldap_username
+  end
+
+  def self.qa_password
+    Settings.ui_selenium.ets_qa_ldap_password
+  end
+
+  def self.qa_gmail_username
+    Settings.ui_selenium.ets_qa_gmail_username
+  end
+
+  def self.qa_gmail_password
+    Settings.ui_selenium.ets_qa_gmail_password
+  end
+
 end
