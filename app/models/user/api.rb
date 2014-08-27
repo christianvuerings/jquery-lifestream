@@ -104,6 +104,7 @@ module User
           has_instructor_history || has_student_history
         ),
         :hasFinancialsTab => (roles[:student] || roles[:exStudent]),
+        :hasPhoto => User::Photo.has_photo?(@uid),
         :googleEmail => google_mail,
         :canvasEmail => canvas_mail,
         :last_name => @last_name,

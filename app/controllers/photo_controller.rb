@@ -14,10 +14,4 @@ class PhotoController < ApplicationController
     end
   end
 
-  def has_photo
-    render :json => {
-      hasPhoto: !!User::Photo.fetch(session[:user_id])
-    }
-  end
-
 end

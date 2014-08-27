@@ -8,5 +8,9 @@ module User
       end
     end
 
+    def self.has_photo?(uid)
+      !!User::Photo.fetch(uid)
+    end
+
   end
 end

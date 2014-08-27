@@ -39,10 +39,10 @@
   <div class="cc-widget-padding" data-ng-if="collegeAndLevel.standing">
 
     <div class="cc-left cc-widget-profile-picture">
-      <div data-ng-if="hasPhoto">
+      <div data-ng-if="api.user.profile.hasPhoto">
         <img data-cc-image-loaded-directive="profilePictureLoading" alt="{{api.user.profile.fullName}}'s Profile Picture" data-ng-src="/api/my/photo" width="72" height="96">
       </div>
-      <div data-ng-if="!hasPhoto" class="cc-widget-profile-picture-not-available">
+      <div data-ng-if="!api.user.profile.hasPhoto" class="cc-widget-profile-picture-not-available">
         <i class="fa fa-user"></i>
       </div>
     </div>
