@@ -6,6 +6,7 @@ module Canvas
     def initialize(options = {})
       super(options)
       @multipart_conn = multipart_conn
+      @dry_run_import = Settings.canvas_proxy.dry_run_import
     end
 
     def multipart_conn
@@ -41,8 +42,13 @@ module Canvas
     end
 
     def import_with_check(csv_file_path, vcr_id, extra_params = '')
-      response = post_sis_import(csv_file_path, vcr_id, extra_params)
-      import_successful?(response)
+      if @dry_run_import.present?
+        logger.warn("DRY RUN MODE: Would import CSV file #{csv_file_path}")
+        true
+      else
+        response = post_sis_import(csv_file_path, vcr_id, extra_params)
+        import_successful?(response)
+      end
     end
 
     def post_sis_import(csv_file_path, vcr_id, extra_params)
