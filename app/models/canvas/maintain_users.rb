@@ -19,9 +19,13 @@ module Canvas
     # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
     # Otherwise, the generated CSV may include a new ID that does not match the existing ID for a user account.
     def self.handle_changed_sis_user_ids(sis_id_changes)
-      logger.warn("About to change #{sis_id_changes.length} SIS user IDs")
-      sis_id_changes.each do |canvas_user_id, new_sis_id|
-        self.change_sis_user_id(canvas_user_id, new_sis_id)
+      if Settings.canvas_proxy.dry_run_import.present?
+        logger.warn("DRY RUN MODE: Would change #{sis_id_changes.length} SIS user IDs #{sis_id_changes.inspect}")
+      else
+        logger.warn("About to change #{sis_id_changes.length} SIS user IDs")
+        sis_id_changes.each do |canvas_user_id, new_sis_id|
+          self.change_sis_user_id(canvas_user_id, new_sis_id)
+        end
       end
     end
 

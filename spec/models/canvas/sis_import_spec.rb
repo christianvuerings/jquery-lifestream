@@ -95,4 +95,14 @@ describe Canvas::SisImport do
     end
   end
 
+  context 'in dry-run mode' do
+    before do
+      allow(Settings.canvas_proxy).to receive(:dry_run_import).and_return('anything')
+    end
+    it 'does not tell Canvas to import the CSV files' do
+      expect_any_instance_of(Canvas::SisImport).to receive(:post_sis_import).never
+      subject.import_users('bogus.csv')
+    end
+  end
+
 end

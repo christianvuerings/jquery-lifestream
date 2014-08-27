@@ -192,6 +192,15 @@ describe Canvas::MaintainUsers do
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
       Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
     end
+    context 'in dry-run mode' do
+      before do
+        allow(Settings.canvas_proxy).to receive(:dry_run_import).and_return('anything')
+      end
+      it 'does not tell Canvas to change the sis_user_ids' do
+        expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).never
+        Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
+      end
+    end
   end
 
   describe ".change_sis_user_id" do
