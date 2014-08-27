@@ -1,0 +1,30 @@
+<div class="cc-widget cc-widget-university-requirements" data-ng-if="requirements">
+  <div class="cc-widget-title">
+    <h2>University Requirements</h2>
+  </div>
+
+  <div class="cc-widget-padding">
+    <div class="cc-table">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" width="140px">Requirement</th>
+            <th scope="col">Met</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="requirement in requirements">
+            <th data-ng-bind="requirement.name" scope="row" class="cc-table-subheader"></th>
+            <td>
+              <i class="cc-icon fa" data-ng-class="{'fa-check-circle cc-icon-green':(requirement.status === 'met'), 'fa fa-exclamation-triangle cc-icon-gold':(requirement.status !== 'met')}"></i>
+              <span class="cc-visuallyhidden" data-ng-bind="requirement.name"></span>
+
+              <span data-ng-if="requirement.status === 'met'">Completed</span>
+              <a href="http://registrar.berkeley.edu/Default.aspx?PageID=ugdegreereq.html" data-ng-if="requirement.status !== 'met'">Incomplete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

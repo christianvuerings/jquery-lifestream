@@ -4,9 +4,7 @@
   /**
    * Photo controller
    */
-  angular.module('calcentral.controllers').controller('ProfileController', function(apiService, $scope) {
-
-    apiService.util.setTitle('Profile');
+  angular.module('calcentral.controllers').controller('ProfileController', function($scope) {
 
     $scope.profilePictureLoading = true;
 

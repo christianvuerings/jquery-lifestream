@@ -1,0 +1,52 @@
+<div class="cc-widget cc-academics-status-and-blocks" data-ng-if="!regblocks.noStudentId || studentInfo.regStatus.code !== null">
+
+  <div class="cc-widget-title">
+    <h2><span data-ng-if="studentInfo.regStatus.code !== null">Status and </span>Blocks</h2>
+  </div>
+
+  <div class="cc-widget-padding">
+    <div class="cc-table" data-ng-if="studentInfo.regStatus.code !== null">
+      <h4>Status</h4>
+      <table class="cc-academics-status-and-blocks-status-table">
+        <thead>
+          <tr>
+            <th scope="col" width="130px">Type</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-if="api.user.profile.features.regstatus">
+            <th class="cc-table-subheader" scope="row">Registration</td>
+            <td>
+              <i class="cc-icon fa"
+                 data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[studentInfo.regStatus.summary=='Registered']">
+              </i>
+              <span data-ng-bind="studentInfo.regStatus.summary"></span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" data-ng-bind-html="studentInfo.regStatus.explanation"></td>
+          </tr>
+          <tr>
+            <th class="cc-table-subheader" scope="row">California Residency</td>
+            <td>
+              <i class="cc-icon fa"
+                 data-ng-class="{true:'fa-exclamation-circle cc-icon-red',false:'fa-check-circle cc-icon-green'}[studentInfo.californiaResidency.needsAction]"></i>
+              <span data-ng-bind="studentInfo.californiaResidency.summary"></span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" data-cc-compile-directive="studentInfo.californiaResidency.explanation"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div data-ng-if="!regblocks.errored" data-ng-include src="'academics_regblocks.html'"></div>
+    <div data-ng-if="regblocks.errored">
+      <div class="row collapse">
+        <div class="medium-6 columns end"><i class="fa fa-exclamation-triangle cc-icon-red cc-errored"></i>Block message is currently unavailable.</div>
+      </div>
+    </div>
+  </div>
+</div>

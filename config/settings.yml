@@ -189,6 +189,7 @@ cache:
     MyTasks::Merged: 0
     UpNext::MyUpNext: 0
     User::Api: 0
+    User::Photo: <%= 24.hours %>
     UserApiController: <%= 4.hours %>
     Canvas::Lti: <%= 5.minutes %>
     Canvas::CourseStudents: <%= 15.minutes %>
@@ -253,7 +254,6 @@ features:
   videos: false
   app_alerts: false
   cal1card: false
-  profile_page: false
   reauthentication: true
   audio: false
   regstatus: true

@@ -1,4 +1,4 @@
-<div class="cc-widget cc-page-myfinances-account-activity cc-widget-last" data-ng-show="myfinances.activity.length" data-ng-controller="CarsController">
+<div class="cc-widget cc-page-myfinances-account-activity" data-ng-show="myfinances.activity.length" data-ng-controller="CarsController">
   <div class="cc-widget-title">
     <h2 class="cc-left">Activity</h2>
     <button class="cc-button cc-right cc-widget-title-button" data-ng-click="printPage()">
@@ -124,7 +124,7 @@
               <i class="fa" data-ng-class="{'fa-check':(item.isDPP)}" data-ng-if="item.isDPP">
             </td>
             <td class="cc-widget-table-hover-notriangle cc-table-center">
-              <i class="fa" data-ng-class="{'fa-exclamation-circle':(item.isDueNow === '1_past_due'),'fa-exclamation':(item.isDueNow === '2_current_due'),'fa-arrow-right':(item.isDueNow === '3_future_due')}" data-ng-if="item.isDueNow !== '4_closed'">
+              <i class="fa" data-ng-class="{'fa-exclamation-circle cc-icon-red':(item.isDueNow === '1_past_due'),'fa-exclamation':(item.isDueNow === '2_current_due'),'fa-arrow-right':(item.isDueNow === '3_future_due')}" data-ng-if="item.isDueNow !== '4_closed'">
             </td>
           </tr>
           <tr data-ng-if="item.show">
@@ -193,7 +193,7 @@
             <i class="fa fa-exclamation"></i> Due now
           </li>
           <li>
-            <i class="fa fa-exclamation-circle"></i> Overdue
+            <i class="fa fa-exclamation-circle cc-icon-red"></i> Overdue
           </li>
           <li>
             <i class="fa fa-arrow-right"></i> Due in the future

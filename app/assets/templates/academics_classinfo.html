@@ -27,7 +27,7 @@
 
   <div data-ng-switch-when="Class Info" role="tabpanel" aria-live="polite">
 
-    <div class="medium-4 columns cc-academics-page-left">
+    <div class="medium-4 columns cc-academics-row-margin">
       <div class="cc-widget">
         <div class="cc-widget-title">
           <h2>Class information</h2>
@@ -134,10 +134,10 @@
       </div>
     </div>
 
-    <div class="medium-4 columns">
+    <div class="medium-4 columns cc-column-last">
       <div data-ng-include="'widgets/webcast.html'"></div>
 
-      <div data-ng-if="selectedSemester.timeBucket === 'current' || selectedSemester.timeBucket === 'future'" class="cc-widget cc-widget-last" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
+      <div data-ng-if="selectedSemester.timeBucket === 'current' || selectedSemester.timeBucket === 'future'" class="cc-widget" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
         <div class="cc-widget-title">
           <h2>Textbooks</h2>
         </div>

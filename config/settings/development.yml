@@ -82,7 +82,6 @@ features:
   videos: true
   app_alerts: true
   cal1card: true
-  profile_page: true
   reauthentication: false
   audio: true
   advising: true

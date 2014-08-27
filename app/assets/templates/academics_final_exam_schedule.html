@@ -1,0 +1,23 @@
+<div class="cc-widget">
+  <div class="cc-widget-title">
+    <h2>Final Exam Schedule</h2>
+  </div>
+  <div class="cc-academics-subtitle">
+    <h3>Enrollments</h3>
+  </div>
+  <div class="cc-widget-padding" data-ng-if="examScheduleLength">
+    <div data-ng-repeat="(day, dayData) in examSchedule" class="cc-academics-exam-block">
+      <div class="row collapse">
+        <div class="small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
+      </div>
+      <div class="row collapse" data-ng-repeat="exam in dayData">
+        <div class="medium-2 small-2 columns" data-ng-bind="exam.time"></div>
+        <div class="medium-4 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_code"></div>
+        <div class="medium-6 small-4 columns end">
+          <div data-cc-map-link-builder-directive></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cc-widget-text" data-ng-hide="examScheduleLength">No exam schedules listed.</div>
+</div>

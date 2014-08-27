@@ -16,7 +16,7 @@
     <span class="cc-academics-next cc-academics-prev-next-disabled" data-ng-hide="nextSemester.slug">Next semester</span>
   </div>
 
-  <div class="medium-8 columns cc-academics-page-left cc-clearfix" data-ng-hide="selectedStudentSemester && !selectedCourses.length && selectedSemester.timeBucket === 'future'">
+  <div class="medium-8 columns cc-academics-row-margin cc-clearfix" data-ng-hide="selectedStudentSemester && !selectedCourses.length && selectedSemester.timeBucket === 'future'">
     <div class="cc-widget">
       <div class="cc-widget-title">
         <h2>Classes</h2>
@@ -113,71 +113,14 @@
       </div>
     </div>
 
-    <div class="cc-widget" data-ng-if="selectedSemester.timeBucket === 'current'">
-      <div class="cc-widget-title">
-        <h2>Final Exam Schedule</h2>
-      </div>
-      <div class="cc-academics-subtitle">
-        <h3>Enrollments</h3>
-      </div>
-      <div class="cc-widget-padding" data-ng-if="examScheduleLength">
-        <div data-ng-repeat="(day, dayData) in examSchedule" class="cc-academics-exam-block">
-          <div class="row collapse">
-            <div class="small-12 columns cc-academics-column-labels" data-ng-bind="day * 1000 | date:'EEE MMM d'"></div>
-          </div>
-          <div class="row collapse" data-ng-repeat="exam in dayData">
-            <div class="medium-2 small-2 columns" data-ng-bind="exam.time"></div>
-            <div class="medium-4 small-6 columns cc-academics-empasize" data-ng-bind="exam.course_code"></div>
-            <div class="medium-6 small-4 columns end">
-              <div data-cc-map-link-builder-directive></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="cc-widget-text" data-ng-hide="examScheduleLength">No exam schedules listed.</div>
-    </div>
+    <div data-ng-include="'academics_final_exam_schedule.html'" data-ng-if="selectedSemester.timeBucket === 'current'"></div>
+
   </div>
 
-  <div class="medium-4 columns" data-ng-class="{'pull-8 cc-clearfix':(!selectedCourses.length && selectedSemester.timeBucket === 'future')}">
-    <div class="cc-academics-telebears cc-widget cc-widget-last" data-ng-if="telebears.slug === selectedSemester.slug">
-      <div class="cc-widget-title">
-        <h2>Appointments</h2>
-      </div>
-      <div class="cc-widget-padding cc-clearfix-container">
-        <div>
-          <h3 class="cc-left cc-telebears-title">Tele-BEARS for {{ telebears.term }} {{ telebears.year }}
-          <strong class="cc-academics-adviser-more-info"><a data-ng-href="{{telebears.url}}">More Info</a></strong></h3>
-        </div>
-        <div data-ng-include src="'adviser_message.html'"></div>
-        <div>
-          <div class="cc-telebears-phases" data-ng-repeat="phase in telebears.phases">
-            <h4 data-ng-bind-template="Tele-BEARS Phase {{phase.period}}"></h4>
-            <ul>
-              <li>
-                <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">Start</strong></div>
-                <div class="columns medium-10 small-9" data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:'EEE MMM d | h:mm a'"></div>
-              </li>
-              <li>
-                <div class="columns medium-2 small-3"><strong class="cc-telebears-time-tag">End</strong></div>
-                <div class="columns medium-10 small-9" data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:'EEE MMM d | h:mm a'"></div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <button class="cc-button cc-left" data-ng-if="api.user.profile.hasGoogleAccessToken" data-ng-click="addTelebearsAppointment(telebears.phases)">
-          Add Appointments to bCal
-        </button>
-        <div
-          class="cc-academics-telebears-indicator cc-left"
-          data-cc-loading-directive="telebearsAppointmentLoading"
-          data-cc-loading-process="Adding..."
-          data-cc-loading-success="Events added."
-          data-cc-loading-error="Events not added. Try again later.">
-        </div>
-      </div>
-    </div>
+  <div class="medium-4 columns cc-column-last" data-ng-class="{'pull-8 cc-clearfix':(!selectedCourses.length && selectedSemester.timeBucket === 'future')}">
+    <div data-ng-include="'widgets/telebears.html'" data-ng-if="telebears.slug === selectedSemester.slug"></div>
 
-    <div data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket === 'past') && !selectedSemester.gradingInProgress" class="cc-widget cc-widget-interesting cc-widget-last">
+    <div data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket === 'past') && !selectedSemester.gradingInProgress" class="cc-widget cc-widget-interesting">
       <div class="cc-widget-title">
         <h2>Final Grades</h2>
       </div>
@@ -228,7 +171,7 @@
     </div>
 
     <div data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket !== 'future') && ((selectedSemester.timeBucket !== 'past') || selectedSemester.gradingInProgress)"
-         class="cc-widget cc-widget-interesting cc-widget-last">
+         class="cc-widget cc-widget-interesting">
       <div class="cc-widget-title">
         <h2>GPA Calculator</h2>
       </div>
