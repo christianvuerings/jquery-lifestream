@@ -294,7 +294,7 @@ ui_selenium:
   test_user_password: secret
   oski_username: secret
   oski_password: secret
- ets_qa_ldap_username: secret
+  ets_qa_ldap_username: secret
   ets_qa_ldap_password: secret
   ets_qa_gmail_username: secret
   ets_qa_gmail_password: secret
