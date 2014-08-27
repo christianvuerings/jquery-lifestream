@@ -77,7 +77,7 @@ gem 'nokogiri', '~> 1.5.9', :platforms => :jruby
 gem 'link_header', '~> 0.0.7'
 
 # for simplified relational data management
-gem 'rails_admin', '0.6.2'
+gem 'rails_admin', '0.6.3'
 
 gem 'bootstrap-sass', '~> 3.2.0.1'
 
@@ -90,7 +90,7 @@ gem 'torquebox-messaging', '~> 3.1.1'
 gem 'retriable', '~> 1.4'
 
 # authorization abstraction layer
-gem 'pundit', '~> 0.2.3'
+gem 'pundit', '~> 0.3.0'
 
 gem 'cancan', '~> 1.6.10'
 
@@ -101,7 +101,7 @@ gem 'icalendar', '~> 2.1.1'
 ##################
 
 # Our very own library for angular dependency!
-gem 'angular-gem', '1.2.22'
+gem 'angular-gem', '1.2.23'
 
 # Datepicker
 gem 'pikaday-gem', '~> 1.2.0'
@@ -111,7 +111,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'compass-rails', '~> 2.0.0'
-gem 'foundation-rails', '~> 5.3.3.0'
+gem 'foundation-rails', '~> 5.4.1.0'
 
 # Closure Compiler Gem for JS compression
 # https://github.com/documentcloud/closure-compiler
