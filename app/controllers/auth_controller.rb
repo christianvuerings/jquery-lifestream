@@ -1,5 +1,6 @@
 class AuthController < ApplicationController
   include ActiveRecordHelper
+  include ClassLogger
 
   before_filter :authenticate
 
@@ -23,17 +24,17 @@ class AuthController < ApplicationController
     end
     client ||= get_client final_redirect
     url = client.authorization_uri.to_s
-    Rails.logger.debug "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
+    logger.debug "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
     redirect_to url
   end
 
   def handle_callback
     client = get_client
-    Rails.logger.debug "Handling Oauth2 authorization callback for user #{session[:user_id]}"
+    logger.debug "Handling Oauth2 authorization callback for user #{session[:user_id]}"
     if params[:code] && params[:error].blank?
       client.code = params[:code]
       client.fetch_access_token!
-      Rails.logger.debug "Saving #{app_id} token for user #{session[:user_id]}"
+      logger.warn "Saving #{app_id} access token for user #{session[:user_id]}"
       User::Oauth2Data.new_or_update(
           session[:user_id],
           app_id,
@@ -47,7 +48,7 @@ class AuthController < ApplicationController
       )
       connected_token_callback session[:user_id]
     else
-      Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
+      logger.warn "Deleting #{app_id} access token for user #{session[:user_id]} because auth callback had an error. Error: #{params[:error]}"
       User::Oauth2Data.remove(session[:user_id], app_id)
     end
 
@@ -61,7 +62,7 @@ class AuthController < ApplicationController
   end
 
   def remove_authorization
-    Rails.logger.debug "Deleting #{app_id} token for user #{session[:user_id]}"
+    logger.warn "Deleting #{app_id} access token for user #{session[:user_id]} at the user's request."
     User::Oauth2Data.remove(session[:user_id], app_id)
     expire
     render :nothing => true, :status => 204

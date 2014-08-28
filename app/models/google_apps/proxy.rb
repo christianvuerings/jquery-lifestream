@@ -129,8 +129,8 @@ module GoogleApps
     end
 
     def revoke_invalid_token!(request_response)
-      if @uid && request_response.response.status == 401 && request_response.error_message == "Invalid Credentials"
-        logger.info "Will delete access token for #{@uid} due to 401 Unauthorized from Google"
+      if @uid && request_response.response.status == 401 && request_response.error_message == 'Invalid Credentials'
+        logger.warn "Deleting Google access token for #{@uid} due to 401 Unauthorized (Invalid Credentials) from Google"
         User::Oauth2Data.remove(@uid, APP_ID)
       end
     end
