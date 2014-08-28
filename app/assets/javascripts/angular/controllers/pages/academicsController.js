@@ -275,15 +275,33 @@
       return classes;
     };
 
+    var pastSemestersCount = function(semesters) {
+      var count = 0;
+
+      if (semesters && semesters.length) {
+        for (var i = 0; i < semesters.length; i++) {
+          if (semesters[i].timeBucket === 'past') {
+            count++;
+          }
+        }
+      }
+
+      return count;
+    };
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
       $scope.semesters = data.semesters;
 
+      $scope.pastSemestersCount = pastSemestersCount(data.semesters);
+      $scope.pastSemestersLimit = data.semesters.length - $scope.pastSemestersCount + 1;
+
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
       $scope.teachingLength = Object.keys($scope.teaching).length;
+      $scope.teachingLimit = 1;
 
       // Get selected semester from URL params and extract data from semesters array
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
