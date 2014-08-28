@@ -122,7 +122,7 @@ gem 'therubyrhino', '~> 2.0.4'
 
 # Font awesome - an icon font
 # https://github.com/bokmann/font-awesome-rails
-gem 'font-awesome-rails', '~> 4.1.0.0'
+gem 'font-awesome-rails', '~> 4.2.0.0'
 
 # Moment.js
 # https://github.com/derekprior/momentjs-rails
