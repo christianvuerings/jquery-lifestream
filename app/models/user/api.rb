@@ -30,7 +30,7 @@ module User
     end
 
     def self.delete(uid)
-      logger.info "Removing user #{uid} from User::Data"
+      logger.warn "Removing all stored user data for user #{uid}"
       user = nil
       use_pooled_connection {
         user = User::Data.where(:uid => uid).first
