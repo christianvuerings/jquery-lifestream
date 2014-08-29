@@ -14,13 +14,7 @@ module EtsBlog
           if @fake
             raw_xml = File.read(Rails.root.join('fixtures', 'xml', 'release_notes_feed.xml').to_s)
           else
-            response = ActiveSupport::Notifications.instrument('proxy', {url: @settings.feed_url, class: self.class}) do
-              HTTParty.get(
-                @settings.feed_url,
-                timeout: Settings.application.outgoing_http_timeout,
-                verify: verify_ssl?
-              )
-            end
+            response = get_response @settings.feed_url
             raw_xml = response.body
           end
 
