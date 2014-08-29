@@ -294,15 +294,19 @@
 
       $scope.semesters = data.semesters;
 
-      $scope.pastSemestersCount = pastSemestersCount(data.semesters);
-      $scope.pastSemestersLimit = data.semesters.length - $scope.pastSemestersCount + 1;
+      if (data.semesters) {
+        $scope.pastSemestersCount = pastSemestersCount(data.semesters);
+        $scope.pastSemestersLimit = data.semesters.length - $scope.pastSemestersCount + 1;
+      }
 
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
       $scope.teachingLength = Object.keys($scope.teaching).length;
-      $scope.pastSemestersTeachingCount = pastSemestersCount(data.teachingSemesters);
-      $scope.pastSemestersTeachingLimit = data.teachingSemesters.length - $scope.pastSemestersTeachingCount + 1;
+      if (data.teachingSemesters) {
+        $scope.pastSemestersTeachingCount = pastSemestersCount(data.teachingSemesters);
+        $scope.pastSemestersTeachingLimit = data.teachingSemesters.length - $scope.pastSemestersTeachingCount + 1;
+      }
 
       // Get selected semester from URL params and extract data from semesters array
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
