@@ -11,7 +11,7 @@
         As your status changes, check back for information on class activity, sections, schedules, enrollments, websites, videos, and textbooks.
       </p>
     </div>
-    <div class="cc-academics-teaching-semester" data-ng-if="teachingLength" data-ng-repeat="semester in teachingSemesters">
+    <div class="cc-academics-teaching-semester" data-ng-if="teachingLength" data-ng-repeat="semester in teachingSemesters | limitTo:pastSemestersTeachingLimit">
       <h3><a data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
       <div class="cc-academics-teaching-class" data-ng-repeat="class in semester.classes">
         <div class="cc-academics-teaching-course-number">
@@ -19,6 +19,11 @@
         </div>
         <div class="cc-text-light" data-ng-bind="class.title"></div>
       </div>
+    </div>
+    <div data-ng-show="pastSemestersTeachingCount > 1 && pastSemestersTeachingLimit !== 100">
+      <button class="cc-button cc-widget-show-more" data-ng-click="pastSemestersTeachingLimit = 100">
+        Show Previous Semesters
+      </button>
     </div>
   </div>
 </div>
