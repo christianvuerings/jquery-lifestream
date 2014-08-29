@@ -14,13 +14,13 @@
         <table data-ng-if="semester.classes">
           <thead>
             <tr>
-              <th width="25%" scope="col">Class</th>
+              <th width="30%" scope="col">Class</th>
               <th width="60%" scope="col">Title</th>
               <th width="20%" scope="col" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.timeBucket === 'past')}">
                 <span data-ng-if="semester.timeBucket !== 'past'">Units</span>
                 <span data-ng-if="semester.timeBucket === 'past'" title="Units">Un.</span>
               </th>
-              <th width="25%" scope="col" data-ng-if="semester.timeBucket === 'past'" title="Grades">Gr.</th>
+              <th width="10%" scope="col" data-ng-if="semester.timeBucket === 'past'" title="Grades">Gr.</th>
             </tr>
           </thead>
           <tbody data-ng-if="semester.timeBucket !== 'past'" data-ng-repeat="class in semester.classes">

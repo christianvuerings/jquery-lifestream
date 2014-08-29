@@ -214,8 +214,13 @@
     }
   }
   .cc-academics-status-and-blocks {
-    .cc-academics-status-and-blocks-status-table tbody tr:nth-child(even) td {
-      padding-bottom: 10px;
+    .cc-academics-status-and-blocks-status-table {
+      margin-bottom: 20px;
+      tbody tr:nth-child(odd) {
+        td, th {
+          padding-top: 10px;
+        }
+      }
     }
     .cc-widget-list-hover, .cc-widget-table-hover {
       padding: 0;
