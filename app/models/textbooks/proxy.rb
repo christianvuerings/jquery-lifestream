@@ -24,7 +24,8 @@ module Textbooks
         class: self.class }) do
           HTTParty.get(
             google_book_url,
-            timeout: Settings.application.outgoing_http_timeout
+            timeout: Settings.application.outgoing_http_timeout,
+            verify: verify_ssl?
         )
       end
 

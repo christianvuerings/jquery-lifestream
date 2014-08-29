@@ -30,8 +30,8 @@ module Cal1card
           HTTParty.get(
             url,
             basic_auth: {username: @settings.username, password: @settings.password},
-          timeout: Settings.application.outgoing_http_timeout,
-          verify: Rails.env.production?
+            timeout: Settings.application.outgoing_http_timeout,
+            verify: verify_ssl?
           )
         end
         if response.code >= 400

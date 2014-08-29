@@ -21,7 +21,8 @@ module Financials
           HTTParty.get(
             url,
             digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password},
-            timeout: Settings.application.outgoing_http_timeout
+            timeout: Settings.application.outgoing_http_timeout,
+            verify: verify_ssl?
           )
         }
       end
