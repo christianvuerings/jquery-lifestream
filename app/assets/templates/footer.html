@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="medium-12 columns" data-ng-if="footer.showInfo">
+  <div class="medium-12 columns" data-ng-show="footer.showInfo">
     <ul>
       <li>Hostname: <span data-ng-bind="hostname"></span></li>
       <li>UID: <span data-ng-bind="api.user.profile.uid" id="cc-footer-uid"></span></li>
