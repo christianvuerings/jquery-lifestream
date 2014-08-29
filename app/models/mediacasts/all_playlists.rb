@@ -34,7 +34,8 @@ module Mediacasts
           HTTParty.get(
             @settings.base_url,
             basic_auth: {username: @settings.username, password: @settings.password},
-            timeout: Settings.application.outgoing_http_timeout
+            timeout: Settings.application.outgoing_http_timeout,
+            verify: verify_ssl?
         )
         end
         if response.code >= 400

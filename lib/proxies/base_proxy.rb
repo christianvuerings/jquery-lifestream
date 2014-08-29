@@ -10,4 +10,8 @@ class BaseProxy
     @uid = options[:user_id]
   end
 
+  def verify_ssl?
+    Settings.application.layer == 'production'
+  end
+
 end

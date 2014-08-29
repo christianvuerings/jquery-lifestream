@@ -42,7 +42,7 @@ module Advising
             url,
             basic_auth: {username: @settings.username, password: @settings.password},
             timeout: Settings.application.outgoing_http_timeout,
-            verify: Settings.application.layer == 'production'
+            verify: verify_ssl?
           )
         end
         status_code = response.code

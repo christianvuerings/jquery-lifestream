@@ -2,7 +2,6 @@ module EtsBlog
   class Alerts < BaseProxy
 
     include DatedFeed
-    require 'open-uri'
 
     def initialize(options = {})
       super(Settings.app_alerts_proxy, options)
@@ -34,14 +33,14 @@ module EtsBlog
         return nil
       end
       node_list = xml_doc['xml']['node']
-      nodes = (node_list.is_a? Array) ? node_list : [ node_list ]
+      nodes = (node_list.is_a? Array) ? node_list : [node_list]
       nodes.each do |node|
         node_entry = {
           :title => node['Title'],
           :url => node['Link'],
-          :timestamp => format_date( Time.zone.at( node['PostDate'].to_i ).to_datetime  )
+          :timestamp => format_date(Time.zone.at(node['PostDate'].to_i).to_datetime)
         }
-        node_entry[:teaser] =  node['Teaser'] if node['Teaser'].present?
+        node_entry[:teaser] = node['Teaser'] if node['Teaser'].present?
         next unless valid_result?(node_entry)
         results << node_entry
       end
@@ -53,12 +52,20 @@ module EtsBlog
       if @fake == true
         xml = File.read(xml_source)
       else
-        xml = open(xml_source).base_uri.read
+        response = ActiveSupport::Notifications.instrument('proxy', {url: xml_source, class: self.class}) do
+          HTTParty.get(
+            xml_source,
+            timeout: Settings.application.outgoing_http_timeout,
+            verify: verify_ssl?
+          )
+        end
+        xml = response.body
       end
+      xml
     end
 
     def xml_source
-      url ||= (@fake) ? Rails.root.join('fixtures', 'xml', 'app_alerts_feed.xml').to_s : @settings.feed_url
+      @fake ? Rails.root.join('fixtures', 'xml', 'app_alerts_feed.xml').to_s : @settings.feed_url
     end
 
     def valid_result?(r=nil)
