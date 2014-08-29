@@ -301,7 +301,8 @@
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
       $scope.teachingLength = Object.keys($scope.teaching).length;
-      $scope.teachingLimit = 1;
+      $scope.pastSemestersTeachingCount = pastSemestersCount(data.teachingSemesters);
+      $scope.pastSemestersTeachingLimit = data.teachingSemesters.length - $scope.pastSemestersTeachingCount + 1;
 
       // Get selected semester from URL params and extract data from semesters array
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
