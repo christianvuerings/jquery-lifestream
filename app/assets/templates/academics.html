@@ -1,4 +1,3 @@
-
 <div
   class="cc-page-academics"
   data-cc-spinner-directive>
@@ -22,7 +21,7 @@
 
       <div data-ng-include="'academics_final_exam_schedule.html'" data-ng-if="examScheduleLength"></div>
 
-      <div data-ng-include="'academics_ls_advising.html'" data-ng-if="api.user.profile.features.advising && collegeAndLevel.colleges[0].college === 'College of Letters & Science'"></div>
+      <div data-ng-include="'academics_ls_advising.html'" data-ng-if="api.user.profile.features.advising && isLSStudent"></div>
 
       <div data-ng-include="'academics_university_requirements.html'" data-ng-if="requirements && isUndergraduate"></div>
     </div>

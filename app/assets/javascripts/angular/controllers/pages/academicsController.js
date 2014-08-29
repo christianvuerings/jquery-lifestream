@@ -289,6 +289,19 @@
       return count;
     };
 
+    var isLSStudent = function(collegeAndLevel) {
+
+      if (!collegeAndLevel || !collegeAndLevel.colleges) {
+        return false;
+      }
+
+      for (var i = 0; i < collegeAndLevel.colleges.length; i++) {
+        if (collegeAndLevel.colleges[i].college === 'College of Letters & Science') {
+          return true;
+        }
+      }
+    };
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
@@ -299,6 +312,7 @@
         $scope.pastSemestersLimit = data.semesters.length - $scope.pastSemestersCount + 1;
       }
 
+      $scope.isLSStudent = isLSStudent($scope.collegeAndLevel);
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
