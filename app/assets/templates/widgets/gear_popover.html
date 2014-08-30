@@ -1,7 +1,8 @@
 <div class="cc-popover-container cc-popover-gear">
   <button class="cc-header-icon cc-header-icon-font"
   data-ng-click="api.util.preventBubble($event);api.popover.toggle('cc-popover-menu')"
-  data-ng-class="{true:'cc-header-icon-selected'}[api.popover.status('cc-popover-menu')]">
+  data-ng-class="{true:'cc-header-icon-selected'}[api.popover.status('cc-popover-menu')]"
+  title="Settings">
     <i class="fa fa-cog"></i>
     <span class="cc-visuallyhidden" data-ng-hide="api.popover.status('cc-popover-menu')">Show</span>
     <span class="cc-visuallyhidden" data-ng-show="api.popover.status('cc-popover-menu')">Hide</span>
