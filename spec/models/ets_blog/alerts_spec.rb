@@ -103,7 +103,7 @@ describe EtsBlog::Alerts do
       fake_proxy.get_latest.should be_nil
     end
     it "should log a SocketError exception" do
-      Rails.logger.should_receive(:error).with(/SocketError/)
+      Rails.logger.should_receive(:error).with(/SocketError/).at_least(:once)
       real_failing_proxy.stub(:xml_source).and_return(bad_url)
       real_failing_proxy.get_latest.should be_nil
     end

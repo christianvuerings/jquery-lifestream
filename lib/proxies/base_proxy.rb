@@ -14,6 +14,7 @@ class BaseProxy
     Settings.application.layer == 'production'
   end
 
+  # HTTParty is our preferred HTTP connectivity lib. Use this get_response method wherever possible.
   def get_response(url, additional_options={})
     ActiveSupport::Notifications.instrument('proxy', {url: url, class: self.class}) do
       HTTParty.get(
