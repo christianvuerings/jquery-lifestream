@@ -9,10 +9,6 @@ module CampusOracle
       @section_id = "#{@term_yr}:#{@term_cd}:#{@ccn}"
     end
 
-    def self.expires_in
-      self.bearfacts_derived_expiration
-    end
-
     def get_section_data
       self.class.fetch_from_cache @section_id do
         feed = {}

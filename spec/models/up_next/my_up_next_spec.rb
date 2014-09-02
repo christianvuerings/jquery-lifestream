@@ -63,12 +63,4 @@ describe UpNext::MyUpNext do
     dead_feed[:date][:epoch].should > Time.new(1970, 1, 1).to_i
   end
 
-  context "cache expiration" do
-    before(:each){ @instance = UpNext::MyUpNext.new(@user_id) }
-    it "should expire tomorrow at midnight" do
-      midnight_tomorrow = Time.zone.today.in_time_zone.advance(:days=>1).at_midnight.to_i
-      @instance.class.expires_in.should == midnight_tomorrow
-    end
-  end
-
 end
