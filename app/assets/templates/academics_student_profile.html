@@ -58,8 +58,8 @@
       </div>
 
       <div data-ng-repeat="college in collegeAndLevel.colleges">
-        <span class="cc-text-light" data-ng-bind="college.college"></span><br />
-        <span data-ng-bind="college.major"></span>
+        <div class="cc-text-light" data-ng-if="college.college" data-ng-bind="college.college"></div>
+        <div data-ng-bind="college.major"></div>
       </div>
     </div>
 
