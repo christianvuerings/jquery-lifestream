@@ -23,18 +23,11 @@ module Mediacasts
           :audio => []
         }
       end
-      response = ActiveSupport::Notifications.instrument('proxy', { url: @audio_rss, class: self.class }) do
-        Faraday::Connection.new(
-          :url => @audio_rss,
-          :request => {
-            :timeout => Settings.application.outgoing_http_timeout
-          }
-        ).get
+      response = get_response(@audio_rss)
+      if response.code >= 400
+        raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}")
       end
-      if response.status >= 400
-        raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}")
-      end
-      logger.debug "Remote server status #{response.status}, Body = #{response.body}"
+      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
       {
         :audio => filter_audio(response.body)
       }

@@ -52,13 +52,7 @@ module EtsBlog
       if @fake == true
         xml = File.read(xml_source)
       else
-        response = ActiveSupport::Notifications.instrument('proxy', {url: xml_source, class: self.class}) do
-          HTTParty.get(
-            xml_source,
-            timeout: Settings.application.outgoing_http_timeout,
-            verify: verify_ssl?
-          )
-        end
+        response = get_response xml_source
         xml = response.body
       end
       xml

@@ -22,22 +22,19 @@ module CalLink
 
       response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
         FakeableProxy.wrap_request(APP_ID + "_organization", @fake, {:match_requests_on => [:method, :path, self.method(:custom_query_matcher).to_proc, :body]}) {
-          Faraday::Connection.new(
-            :url => url,
-            :params => params,
-            :request => {
-              :timeout => Settings.application.outgoing_http_timeout
-            }
-          ).get
+          get_response(
+            url,
+            query: params
+          )
         }
       end
-      if response.status >= 400
-        raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}; url = #{url}")
+      if response.code >= 400
+        raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}")
       end
-      Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
+      Rails.logger.debug "#{self.class.name}: Remote server status #{response.code}, Body = #{response.body}"
       {
         :body => safe_json(response.body),
-        :statusCode => response.status
+        :statusCode => response.code
       }
     end
 

@@ -26,14 +26,10 @@ module Cal1card
       else
         url = "#{@settings.feed_url}?uid=#{@uid}"
         logger.info "Internal_get: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        response =  ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
-          HTTParty.get(
-            url,
-            basic_auth: {username: @settings.username, password: @settings.password},
-            timeout: Settings.application.outgoing_http_timeout,
-            verify: verify_ssl?
-          )
-        end
+        response = get_response(
+          url,
+          basic_auth: {username: @settings.username, password: @settings.password}
+        )
         if response.code >= 400
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
             body: "An error occurred retrieving data for Cal 1 Card. Please try again later.",

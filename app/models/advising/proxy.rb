@@ -37,14 +37,10 @@ module Advising
       else
         url = "#{@settings.base_url}/student/#{student_id}"
         logger.info "Internal_get: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        response = ActiveSupport::Notifications.instrument('proxy', {url: url, class: self.class}) do
-          HTTParty.get(
-            url,
-            basic_auth: {username: @settings.username, password: @settings.password},
-            timeout: Settings.application.outgoing_http_timeout,
-            verify: verify_ssl?
-          )
-        end
+        response = get_response(
+          url,
+          basic_auth: {username: @settings.username, password: @settings.password}
+        )
         status_code = response.code
         if response.code >= 400 && response.code != 404
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {

@@ -51,32 +51,24 @@ module Bearfacts
       else
         url = "#{Settings.bearfacts_proxy.base_url}#{path}"
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
-        response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
-          FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
-            token_params = {token: Settings.bearfacts_proxy.token}
-            if (Settings.bearfacts_proxy.app_id.present? && Settings.bearfacts_proxy.app_key.present?)
-              token_params.merge!({app_id: Settings.bearfacts_proxy.app_id,
-                                   app_key: Settings.bearfacts_proxy.app_key, })
-            end
+        response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
+          token_params = {token: Settings.bearfacts_proxy.token}
+          if (Settings.bearfacts_proxy.app_id.present? && Settings.bearfacts_proxy.app_key.present?)
+            token_params.merge!({app_id: Settings.bearfacts_proxy.app_id,
+                                 app_key: Settings.bearfacts_proxy.app_key, })
+          end
 
-            Faraday::Connection.new(
-              :url => url,
-              :params => params.merge(token_params),
-              :ssl => {:verify => false},
-              :request => {
-                :timeout => Settings.application.outgoing_http_timeout
-              }
-            ).get
-          }
-        end
-        if response.status >= 400
-          raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}; url = #{url}")
+          get_response(url, query: params.merge(token_params))
+        }
+
+        if response.code >= 400
+          raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}")
         end
 
-        logger.debug "Remote server status #{response.status}, Body = #{response.body}"
+        logger.debug "Remote server status #{response.code}, Body = #{response.body}"
         return {
           body: response.body,
-          statusCode: response.status
+          statusCode: response.code
         }
       end
     end

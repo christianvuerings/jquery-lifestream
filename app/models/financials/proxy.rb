@@ -15,18 +15,12 @@ module Financials
       url = "#{Settings.financials_proxy.base_url}/student/#{@student_id}"
       logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
 
-      # HTTParty is our preferred HTTP library. FakeableProxy provides the (deprecated) VCR response recording system.
-      response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
-        FakeableProxy.wrap_request(APP_ID + "_financials", @fake, {match_requests_on: [:method, :path]}) {
-          HTTParty.get(
-            url,
-            digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password},
-            timeout: Settings.application.outgoing_http_timeout,
-            verify: verify_ssl?
-          )
-        }
-      end
-      response
+      FakeableProxy.wrap_request(APP_ID + "_financials", @fake, {match_requests_on: [:method, :path]}) {
+        get_response(
+          url,
+          digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password}
+        )
+      }
     end
 
   end

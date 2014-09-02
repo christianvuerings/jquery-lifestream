@@ -40,22 +40,18 @@ module Finaid
                                  app_key: @settings.app_key, })
           end
 
-          Faraday::Connection.new(
-            :url => url,
-            :params => params.merge(query_params),
-            :ssl => {:verify => false},
-            :request => {
-              :timeout => Settings.application.outgoing_http_timeout
-            }
-          ).get
+          get_response(
+            url,
+            query: params.merge(query_params)
+          )
         }
-        if response.status >= 400
-          raise Errors::ProxyError.new("Connection failed: #{response.status} #{response.body}", nil)
+        if response.code >= 400
+          raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}", nil)
         end
-        logger.debug "Remote server status #{response.status}, Body = #{response.body}"
+        logger.debug "Remote server status #{response.code}, Body = #{response.body}"
         return {
           :body => response.body,
-          :statusCode => response.status
+          :statusCode => response.code
         }
       end
     end
