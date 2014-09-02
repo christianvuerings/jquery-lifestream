@@ -87,7 +87,7 @@
         <thead>
           <tr>
             <th width="87px">Level</th>
-            <th width="40%" class="cc-table-subheader" scope="col">
+            <th data-ng-attr-width="{{ isUndergraduate && '40%' }}" class="cc-table-subheader" scope="col">
               <span data-ng-if="isUndergraduate">Including AP</span>
               <span data-ng-if="!isUndergraduate">Current</span>
             </th>
