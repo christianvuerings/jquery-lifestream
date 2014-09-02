@@ -181,17 +181,17 @@ cache:
     failure: <%= 30.seconds %>
     Cache::FeedUpdateWhiteboard: <%= 5.minutes %>
     LiveUpdatesWarmer: <%= 2.minutes %>
-    MyAcademics::Merged: 0
-    MyActivities::Merged: 0
-    MyBadges::Merged: 0
-    MyCampusLinksController: 0
-    MyClasses::Merged: 0
-    Finaid::MyFinAid: 0
-    Cal1card::MyCal1card: 0
-    MyGroups::Merged: 0
-    MyTasks::Merged: 0
-    UpNext::MyUpNext: 0
-    User::Api: 0
+    MyAcademics::Merged: NEXT_08_00
+    MyActivities::Merged: <%= 8.hours %>
+    MyBadges::Merged: NEXT_00_00
+    MyCampusLinksController: NEXT_08_00
+    MyClasses::Merged: NEXT_08_00
+    Finaid::MyFinAid: NEXT_08_00
+    Cal1card::MyCal1card: NEXT_08_00
+    MyGroups::Merged: NEXT_08_00
+    MyTasks::Merged: NEXT_00_00
+    UpNext::MyUpNext: NEXT_00_00
+    User::Api: NEXT_08_00
     User::Photo: <%= 24.hours %>
     UserApiController: <%= 4.hours %>
     Canvas::Lti: <%= 5.minutes %>
@@ -199,8 +199,11 @@ cache:
     Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
 
-    Berkeley::Terms: <%= 4.hours %>
+    Berkeley::Terms: NEXT_08_00
     Finaid::TimeRange: <%= 4.hours %>
+
+    CampusOracle::CourseSections: NEXT_08_00
+    CampusOracle::UserAttributes: NEXT_08_00
 
     Canvas::MergedUserSites: <%= 15.minutes %>
     Canvas::UserCourses: <%= 30.minutes %>

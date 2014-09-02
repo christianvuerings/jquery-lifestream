@@ -31,10 +31,6 @@ module UpNext
 
     private
 
-    def self.expires_in
-      Time.zone.today.in_time_zone.advance(:days => 1).at_midnight.to_i
-    end
-
     def parse_date(hash)
       if hash["date"]
         date = Date.parse(hash["date"].to_s).in_time_zone.to_datetime

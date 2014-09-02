@@ -6,10 +6,6 @@ module CampusOracle
       super(Settings.sakai_proxy, options)
     end
 
-    def self.expires_in
-      self.bearfacts_derived_expiration
-    end
-
     def get_feed
       # Because this data structure is used by multiple top-level feeds, it's essential
       # that it be cached efficiently.

@@ -97,17 +97,28 @@ module Cache
     def expires_in
       expirations = Settings.cache.expiration.marshal_dump
       exp = expirations[self.name.to_sym] || expirations[:default]
+      exp = parse_expiration_setting(exp)
       [exp, Settings.cache.maximum_expires_in].min
+    end
+
+    def parse_expiration_setting(exp)
+      if exp.is_a?(String) && (parsed = /NEXT_(?<hour>\d+)_(?<minute>\d+)/.match(exp))
+        hour = parsed[:hour]
+        next_time = Time.zone.today.in_time_zone.to_datetime.advance(hours: parsed[:hour].to_i,
+          minutes: parsed[:minute].to_i)
+        now = Time.zone.now.to_i
+        if now > next_time.to_i
+          next_time = next_time.advance(days: 1)
+        end
+        next_time.to_i - now
+      else
+        exp
+      end
     end
 
     def bearfacts_derived_expiration
       # Bearfacts data is refreshed daily at 0730, so we will always expire at 0800 sharp on the day after today.
-      next_8am = Time.zone.today.in_time_zone.to_datetime.advance(hours: 8)
-      now = Time.zone.now.to_i
-      if now > next_8am.to_i
-        next_8am = next_8am.advance(days: 1)
-      end
-      next_8am.to_i - now
+      parse_expiration_setting('NEXT_08_00')
     end
 
     def expire(id = nil)

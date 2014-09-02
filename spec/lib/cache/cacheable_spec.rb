@@ -157,5 +157,34 @@ describe Cache::Cacheable do
     end
   end
 
+  describe '#expires_in' do
+    before do
+      allow(Time).to receive(:now).and_return(Time.zone.parse(fake_now).to_time)
+      allow(Settings.cache.expiration).to receive(:marshal_dump).and_return({TestCacheable: fake_setting})
+    end
+    describe 'next day' do
+      let(:fake_setting) {'NEXT_00_01'}
+      let(:fake_now) {'2014-09-02 11:01'}
+      it 'returns the start of the next day' do
+        expect(TestCacheable.expires_in).to eq 13.hours.to_i
+      end
+    end
+    describe 'next campus refresh' do
+      let(:fake_setting) {'NEXT_08_00'}
+      context 'early in morning' do
+        let(:fake_now) {'2014-09-02 06:00'}
+        it 'returns later today' do
+          expect(TestCacheable.expires_in).to eq 2.hours.to_i
+        end
+      end
+      context 'later in day' do
+        let(:fake_now) {'2014-09-02 09:00'}
+        it 'returns tomorrow morning' do
+          expect(TestCacheable.expires_in).to eq 23.hours.to_i
+        end
+      end
+    end
+  end
+
 end
 
