@@ -3,10 +3,10 @@
   <table>
     <thead>
       <tr>
-        <th scope="col" width="20%">Type</th>
-        <th scope="col" width="20%">Reason</th>
+        <th scope="col" width="25%">Type</th>
+        <th scope="col" width="30%">Reason</th>
         <th scope="col" width="20%">Office</th>
-        <th scope="col" width="40%">Blocked</th>
+        <th scope="col" width="25%">Blocked</th>
       </tr>
     </thead>
     <tbody data-ng-repeat="block in regblocks.activeBlocks | orderBy:'blockedDate.epoch':true">
@@ -15,7 +15,7 @@
           data-cc-accessible-focus-directive
           data-ng-click="api.widget.toggleShow($event, regblocks.activeBlocks, block, 'Active Blocks')">
         <td><i class="fa fa-exclamation-circle cc-icon-red"></i><span data-ng-bind="block.type"></span></td>
-        <td class="cc-ellipsis" data-ng-bind="block.reason"></td>
+        <td data-ng-class="{'cc-ellipsis':(!block.show)}" data-ng-bind="block.reason"></td>
         <td data-ng-bind="block.office || '&nbsp;'"></td>
         <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy'"></td>
       </tr>
