@@ -52,7 +52,7 @@
         <strong data-ng-bind="api.user.profile.fullName"></strong>
       </div>
 
-      <div class="cc-widget-profile-content-gpa" data-ng-if="gpaUnits.cumulativeGpa !== null">
+      <div class="cc-widget-profile-content-gpa" data-ng-if="gpaUnits.cumulativeGpa !== null && gpaUnits.cumulativeGpa > 0">
         <span data-ng-bind="gpaUnits.cumulativeGpa"></span>
         GPA
       </div>
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <div class="cc-table cc-table-top-border">
+    <div class="cc-table cc-table-top-border cc-clearfix">
       <table>
         <thead>
           <tr>
