@@ -1,3 +1,4 @@
-app/assets/javascripts/lib/analytics.js
+app/assets/javascripts/angularlib/**
+app/assets/javascripts/lib/**
 coverage/**
 public/dummy/js/videos.js

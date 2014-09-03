@@ -18,7 +18,7 @@
 //= require angular
 //= require angular-route
 //= require angular-sanitize
-//= require angular-touch
+//= require ./angularlib/swipeDirective
 //= require angular-rails-templates
 //= require_tree ../templates
 //= require_tree .
