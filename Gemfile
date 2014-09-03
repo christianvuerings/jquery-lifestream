@@ -79,7 +79,7 @@ gem 'link_header', '~> 0.0.7'
 # for simplified relational data management
 gem 'rails_admin', '0.6.3'
 
-gem 'bootstrap-sass', '~> 3.2.0.1'
+gem 'bootstrap-sass', '~> 3.2.0.2'
 
 # TorqueBox app server
 gem 'torquebox', '~> 3.1.1'
@@ -111,7 +111,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'compass-rails', '~> 2.0.0'
-gem 'foundation-rails', '~> 5.4.2.0'
+gem 'foundation-rails', '~> 5.4.3.0'
 
 # Closure Compiler Gem for JS compression
 # https://github.com/documentcloud/closure-compiler
