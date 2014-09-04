@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to update all users within Canvas from People/Guest Oracle view
+# Exports Section Enrollments from Canvas to CSV for cached queries
 
 # Make sure the normal shell environment is in place, since it may not be
 # when running as a cron job.
