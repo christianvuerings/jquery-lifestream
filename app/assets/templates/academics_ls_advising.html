@@ -1,9 +1,9 @@
 <div class="cc-widget cc-widget-lsadvising" data-ng-controller="LsAdvisingController">
   <div class="cc-widget-title">
-    <h2 class="cc-left">Advising Appointments</h2>
+    <h2 class="cc-left">L&amp;S Advising</h2>
     <a data-ng-if="urlToMakeAppointment" class="cc-button cc-right cc-widget-title-button" data-ng-href="{{urlToMakeAppointment}}">
       <i class="fa fa-plus cc-button-plus-icon"></i>
-      <span>New</span>
+      <span>New Appointment</span>
     </a>
   </div>
 
@@ -54,14 +54,12 @@
           <table>
             <thead>
               <th width="70px">Date</th>
-              <th width="120px">Advisor</th>
-              <th>Location</th>
+              <th>Advisor</th>
             </thead>
             <tbody>
               <tr data-ng-repeat="appointment in pastAppointments | limitTo:pastAppointmentsLimit">
                 <td data-ng-bind="appointment.dateTime | date:'MM/dd/yy'"></td>
                 <td data-ng-bind="appointment.staff.name"></td>
-                <td data-ng-bind="appointment.location"></td>
               </tr>
             </tbody>
           </table>
