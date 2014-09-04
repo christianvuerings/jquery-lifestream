@@ -55,11 +55,11 @@ describe Oec::Courses do
             "instruction_format" => "LEC",
             "section_num" => "001",
             "primary_secondary_cd" => "",
-            "evaluate" => "Y",
-            "evaluation_type" => "GSI",
-            "modular_course" => "N",
-            "start_date" => "28-AUG-14",
-            "end_date" => "12-DEC-14",
+            "evaluate" => nil,
+            "evaluation_type" => nil,
+            "modular_course" => nil,
+            "start_date" => nil,
+            "end_date" => nil,
             "course_title_short" => "XLIST 101"
           }])
     }

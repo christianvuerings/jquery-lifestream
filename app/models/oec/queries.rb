@@ -77,11 +77,11 @@ module Oec
         c.section_num,
         c.primary_secondary_cd,
         c.course_title_short,
-        ' ' AS evaluate,
-        ' ' AS evaluation_type,
-        ' ' AS modular_course,
-        ' ' AS start_date,
-        ' ' AS end_date
+        null AS evaluate,
+        null AS evaluation_type,
+        null AS modular_course,
+        null AS start_date,
+        null AS end_date
       from calcentral_course_info_vw c
       left outer join calcentral_cross_listing_vw x ON ( x.term_yr = c.term_yr and x.term_cd = c.term_cd and x.course_cntl_num = c.course_cntl_num )
       where 1=1 #{terms_query_clause('c', Settings.oec.current_terms_codes)} #{this_depts_clause} #{course_cntl_nums_clause}
