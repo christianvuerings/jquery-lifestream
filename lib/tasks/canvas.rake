@@ -13,8 +13,10 @@ namespace :canvas do
   end
 
   desc 'Performs incremental sync of all active CalNet users in Canvas'
-  task :all_user_sync => :environment do
-    canvas_worker = Canvas::MaintainAllUsers.new
+  task :all_user_sync, [:clear_stickiness] => :environment do |t, args|
+    maintain_all_users_options = {}
+    maintain_all_users_options[:clear_sis_stickiness] = true if args[:clear_stickiness]
+    canvas_worker = Canvas::MaintainAllUsers.new(maintain_all_users_options)
     canvas_worker.sync_all_active_users
   end
 

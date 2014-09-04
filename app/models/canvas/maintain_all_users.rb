@@ -2,9 +2,13 @@ module Canvas
   # Updates and adds Canvas users based on differences detected in active CalNet user set and Canvas User Report
   class MaintainAllUsers < Csv
 
-    def initialize
+    def initialize(options = {})
+      default_options = { :clear_sis_stickiness => false }
+      options.reverse_merge!(default_options)
+
       super()
       @sis_user_id_updates = {}
+      @clear_sis_stickiness = options[:clear_sis_stickiness]
     end
 
     # Performs full active user synchronization task
@@ -65,6 +69,7 @@ module Canvas
           end
 
           unless Canvas::MaintainUsers.provisioned_account_eq_sis_account?(canvas_user, active_campus_user)
+            logger.debug("Updating user #{canvas_user} with #{active_campus_user}")
             add_user_to_import(active_campus_user)
           end
           @active_sis_users.delete(uid)
@@ -92,8 +97,10 @@ module Canvas
       csv_filepath = @sis_user_import.path
       user_count = CSV.read(csv_filepath, {headers: true}).length
       if user_count > 0
-        logger.warn("Importing SIS User Import CSV with #{user_count} updates")
-        Canvas::SisImport.new.import_users(csv_filepath)
+        params = ''
+        params = '&override_sis_stickiness=1&clear_sis_stickiness=1' if @clear_sis_stickiness
+        logger.warn("Importing SIS User Import CSV with #{user_count} updates - Params: #{params}")
+        Canvas::SisImport.new.import_users(csv_filepath, params)
       end
     end
 

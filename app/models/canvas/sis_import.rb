@@ -33,8 +33,8 @@ module Canvas
       import_with_check(csv_file_path, '_sis_import_sections')
     end
 
-    def import_users(csv_file_path)
-      import_with_check(csv_file_path, '_sis_import_users')
+    def import_users(csv_file_path, extra_params = '')
+      import_with_check(csv_file_path, '_sis_import_users', extra_params)
     end
 
     def import_batch_term_enrollments(term_id, csv_file_path)
