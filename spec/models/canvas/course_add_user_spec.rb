@@ -25,6 +25,23 @@ describe Canvas::CourseAddUser do
     ]
   end
 
+  let(:person_hash) { {
+    "ldap_uid"=>"1044850",
+    "first_name"=>"Bryan",
+    "last_name"=>"Cranston",
+    "email_address"=>"bryan.cranston@example.com",
+    "student_id"=>"2212340",
+    "affiliations"=>"STUDENT-TYPE-REGISTERED"
+  } }
+
+  let(:people_array) {
+    people = []
+    (0...5).each do |num|
+      people << person_hash
+    end
+    people
+  }
+
   let(:canvas_course_sections_list_response) do
     sections_list_response = double()
     sections_list_response.stub(:body).and_return(canvas_course_sections_list.to_json)
@@ -46,31 +63,60 @@ describe Canvas::CourseAddUser do
     end
 
     it "raises exception if search type is not supported" do
-      expect { Canvas::CourseAddUser.search_users('John Doe', 'phone_number') }.to raise_error(ArgumentError, "Search type argument 'phone_number' invalid. Must be name, email, student_id, or ldap_user_id")
+      expect { Canvas::CourseAddUser.search_users('John Doe', 'phone_number') }.to raise_error(ArgumentError, "Search type argument 'phone_number' invalid. Must be name, email, or ldap_user_id")
     end
 
-    it "searches users by name" do
-      CampusOracle::Queries.should_receive(:find_people_by_name).with('John Doe', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
-      result = Canvas::CourseAddUser.search_users('John Doe', 'name')
-      expect(result).to be_an_instance_of Array
+    context "when searching by name" do
+      it "searches users by name" do
+        CampusOracle::Queries.should_receive(:find_people_by_name).with('John Doe', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
+        people = Canvas::CourseAddUser.search_users('John Doe', 'name')
+        expect(people).to be_an_instance_of Array
+      end
+
+      it "does not include student id in the results" do
+        CampusOracle::Queries.should_receive(:find_people_by_name).with('John Doe', Canvas::CourseAddUser::SEARCH_LIMIT).and_return(people_array)
+        people = Canvas::CourseAddUser.search_users('John Doe', 'name')
+        people.each do |person|
+          expect(person).to be_an_instance_of Hash
+          expect(person.has_key?('student_id')).to be_false
+        end
+      end
     end
 
-    it "searches users by email" do
-      CampusOracle::Queries.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
-      result = Canvas::CourseAddUser.search_users('johndoe@ber', 'email')
-      expect(result).to be_an_instance_of Array
+    context "when searching by email" do
+      it "searches users by email" do
+        CampusOracle::Queries.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
+        people = Canvas::CourseAddUser.search_users('johndoe@ber', 'email')
+        expect(people).to be_an_instance_of Array
+      end
+
+      it "does not include student id in the results" do
+        CampusOracle::Queries.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
+        people = Canvas::CourseAddUser.search_users('johndoe@ber', 'email')
+        expect(people).to be_an_instance_of Array
+        people.each do |person|
+          expect(person).to be_an_instance_of Hash
+          expect(person.has_key?('student_id')).to be_false
+        end
+      end
     end
 
-    it "searches users by student id" do
-      CampusOracle::Queries.should_receive(:find_people_by_student_id).with('105070').and_return([])
-      result = Canvas::CourseAddUser.search_users('105070', 'student_id')
-      expect(result).to be_an_instance_of Array
-    end
+    context "when searching by LDAP user id" do
+      it "searches users by LDAP user id" do
+        CampusOracle::Queries.should_receive(:find_people_by_uid).with('100374').and_return([])
+        people = Canvas::CourseAddUser.search_users('100374', 'ldap_user_id')
+        expect(people).to be_an_instance_of Array
+      end
 
-    it "searches users by LDAP user id" do
-      CampusOracle::Queries.should_receive(:find_people_by_uid).with('100374').and_return([])
-      result = Canvas::CourseAddUser.search_users('100374', 'ldap_user_id')
-      expect(result).to be_an_instance_of Array
+      it "does not include student id in the results" do
+        CampusOracle::Queries.should_receive(:find_people_by_uid).with('100374').and_return([])
+        people = Canvas::CourseAddUser.search_users('100374', 'ldap_user_id')
+        expect(people).to be_an_instance_of Array
+        people.each do |person|
+          expect(person).to be_an_instance_of Hash
+          expect(person.has_key?('student_id')).to be_false
+        end
+      end
     end
   end
 

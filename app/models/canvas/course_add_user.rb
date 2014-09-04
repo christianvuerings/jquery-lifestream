@@ -1,7 +1,7 @@
 module Canvas
   class CourseAddUser
 
-    SEARCH_TYPES = ['name', 'email', 'student_id', 'ldap_user_id']
+    SEARCH_TYPES = ['name', 'email', 'ldap_user_id']
 
     SEARCH_LIMIT = 20
 
@@ -12,14 +12,17 @@ module Canvas
       raise ArgumentError, "Search type argument '#{search_type}' invalid. Must be #{SEARCH_TYPES.to_sentence(sentence_options)}" unless SEARCH_TYPES.include?(search_type)
       case search_type
         when 'name'
-          CampusOracle::Queries.find_people_by_name(search_text, SEARCH_LIMIT)
+          people = CampusOracle::Queries.find_people_by_name(search_text, SEARCH_LIMIT)
         when 'email'
-          CampusOracle::Queries.find_people_by_email(search_text, SEARCH_LIMIT)
-        when 'student_id'
-          CampusOracle::Queries.find_people_by_student_id(search_text)
+          people = CampusOracle::Queries.find_people_by_email(search_text, SEARCH_LIMIT)
         when 'ldap_user_id'
-          CampusOracle::Queries.find_people_by_uid(search_text)
+          people = CampusOracle::Queries.find_people_by_uid(search_text)
       end
+      people.collect! do |person|
+        person.delete('student_id')
+        person
+      end
+      people
     end
 
     def self.course_sections_list(course_id)
