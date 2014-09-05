@@ -63,7 +63,7 @@ module Oec
       use_pooled_connection {
         sql = <<-SQL
       select
-        c.term_yr || '-' || c.term_cd || '-' || c.course_cntl_num AS course_id,
+        c.term_yr || '-' || c.term_cd || '-' || lpad(c.course_cntl_num, 5, '0') AS course_id,
         c.dept_name || ' ' || c.catalog_id || ' ' || c.instruction_format || ' ' || c.section_num || ' ' || c.course_title_short AS course_name,
         c.cross_listed_flag,
         (
@@ -76,7 +76,12 @@ module Oec
         c.instruction_format,
         c.section_num,
         c.primary_secondary_cd,
-        c.course_title_short
+        c.course_title_short,
+        null AS evaluate,
+        null AS evaluation_type,
+        null AS modular_course,
+        null AS start_date,
+        null AS end_date
       from calcentral_course_info_vw c
       left outer join calcentral_cross_listing_vw x ON ( x.term_yr = c.term_yr and x.term_cd = c.term_cd and x.course_cntl_num = c.course_cntl_num )
       where 1=1 #{terms_query_clause('c', Settings.oec.current_terms_codes)} #{this_depts_clause} #{course_cntl_nums_clause}
@@ -100,7 +105,7 @@ module Oec
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select distinct bci.term_yr || '-' || bci.term_cd || '-' || bci.course_cntl_num AS course_id,
+      select distinct bci.term_yr || '-' || bci.term_cd || '-' || lpad(bci.course_cntl_num, 5, '0') AS course_id,
         bci.instructor_ldap_uid AS ldap_uid, bci.instructor_func
       from calcentral_course_instr_vw bci, calcentral_course_info_vw c, calcentral_class_roster_vw r
       where
@@ -125,7 +130,7 @@ module Oec
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select distinct r.term_yr || '-' || r.term_cd || '-' || r.course_cntl_num AS course_id,
+      select distinct r.term_yr || '-' || r.term_cd || '-' || lpad(r.course_cntl_num, 5, '0') AS course_id,
         r.student_ldap_uid AS ldap_uid
       from calcentral_course_info_vw c, calcentral_class_roster_vw r
       where

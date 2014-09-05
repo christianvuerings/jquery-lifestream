@@ -20,7 +20,12 @@ describe Oec::Courses do
             "CATALOG_ID" => row[5],
             "INSTRUCTION_FORMAT" => row[6],
             "SECTION_NUM" => row[7],
-            "PRIMARY_SECONDARY_CD" => row[8]
+            "PRIMARY_SECONDARY_CD" => row[8],
+            "EVALUATE" => row[9],
+            "EVALUATION_TYPE" => row[10],
+            "MODULAR_COURSE" => row[11],
+            "START_DATE" => row[12],
+            "END_DATE" => row[13]
           }
         end
       end
@@ -50,6 +55,11 @@ describe Oec::Courses do
             "instruction_format" => "LEC",
             "section_num" => "001",
             "primary_secondary_cd" => "",
+            "evaluate" => nil,
+            "evaluation_type" => nil,
+            "modular_course" => nil,
+            "start_date" => nil,
+            "end_date" => nil,
             "course_title_short" => "XLIST 101"
           }])
     }
