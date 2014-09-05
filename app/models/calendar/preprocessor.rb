@@ -74,6 +74,7 @@ module Calendar
           guestsCanSeeOtherGuests: false,
           guestsCanInviteOthers: false,
           locked: true,
+          visibility: 'private'
         }
         if class_time.present? && rrule.present?
           event_data.merge!(
