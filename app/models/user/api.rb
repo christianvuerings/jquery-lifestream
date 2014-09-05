@@ -39,7 +39,7 @@ module User
         end
       }
       if !user.blank?
-        # The nice way to do this is to also revoke their tokens by sending revoke request to the remote services
+        GoogleApps::Revoke.new(user_id: uid).revoke
         use_pooled_connection {
           User::Oauth2Data.destroy_all(:uid => uid)
           Notifications::Notification.destroy_all(:uid => uid)
