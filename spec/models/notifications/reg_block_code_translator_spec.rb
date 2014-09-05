@@ -20,7 +20,7 @@ describe Notifications::RegBlockCodeTranslator do
     result[:type].should == "Administrative"
     result = translator.translate_bearfacts_proxy("70", "LNS")
     result[:office].should == "College of Letters and Science"
-    result[:reason].should == "Declaration of Major"
+    result[:reason].should == "Double Major"
     result[:type].should == "Academic"
   end
 
