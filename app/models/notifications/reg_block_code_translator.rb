@@ -355,31 +355,19 @@ module Notifications
       <p>If you believe our records are inaccurate, please call us at (510) 642-1483.</p>
       EOS
 
-      declaration_of_major = <<-EOS
-      <p>Your registration has been blocked for next term by the College of Letters & Science because you have not yet
-      declared a major. Academic Senate regulations require that all students in the College of Letters and Science declare a
-      major by the beginning of their junior year.  Failure to do so upon reaching senior status might adversely affect progress
-      toward your degree. Our records indicate that you will reach senior status after completion of current term and have not
-      yet declared a major.</p>
-      <p>Next steps to clear this block:</p>
+      double_major = <<-EOS
+      <p>Your registration has been blocked for next term by the College of Letters & Science because you have declared as a
+      double major and you are in your final eligible semester</p>
+      <p>Next steps:</p>
       <ul>
-      <li>Contact your intended major department immediately and declare your major. Once you've declared a major, visit us in
-      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to have your block released.</li>
-      <li>If you are unable to declare at this time, contact your intended major department immediately and fill out the
-      <a href="http://ls-advise.berkeley.edu/fp/09Intent_Declare.pdf">Conditions to Declare form</a>. Once you have completed
-      this form visit us in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your
-      continued enrollment with a college adviser.</li>
-      <li>If you are having difficulty deciding on a major, please contact our office at
-      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your situation with a
-      college adviser.</li>
-      <li>If you believe that our information is incorrect, please call (510) 642-1483 or visit
-      <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> so that your record may be updated.</li>
+      <li>No action is required.</li>
+      <li>This is a standard block on your record as an approved double major that is placed against the semester following
+      your final eligible semester, and will restrict you from enrolling in classes {next term}.  Reference
+      <a href="http://ls-advise.berkeley.edu/major/double.html">Double Majors and Simultaneous Degrees</a></li>
       </ul>
+      <p>If you believe that our information is incorrect, or you would like to discuss your situation with an advisor,
+      please call (510) 642-1483 or visit <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
       <p><a href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
-      <p>Your prompt attention to this matter will benefit your academic progress since it affects your ability to enroll in
-      classes and be officially registered with the University. Being official registered impacts your ability to use campus
-      services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center), receive
-      final grades, or obtain official campus transcripts.</p>
       EOS
 
       {
@@ -410,7 +398,7 @@ module Notifications
         '64' => undeclared_senior,
         '66' => unauth_short_study,
         '68' => excess_units,
-        '70' => declaration_of_major,
+        '70' => double_major,
         '74' => {
           'CED' => rnc_ced,
           'ENGIN' => rnc_engin,
@@ -439,7 +427,7 @@ module Notifications
         64 => 'Undeclared Senior',
         66 => 'Unauthorized Short Study',
         68 => 'Excess Units',
-        70 => 'Declaration of Major',
+        70 => 'Double Major',
         72 => 'Semester Out',
         74 => 'Reading and Composition',
       }
