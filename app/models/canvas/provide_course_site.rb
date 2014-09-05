@@ -338,6 +338,7 @@ module Canvas
     end
 
     def subaccount_for_department(department)
+      department.gsub!(/\//, '_')
       subaccount = "ACCT:#{department}"
       if !Canvas::ExistenceCheck.new.account_defined?(subaccount)
         # There is no programmatic way to create a subaccount in Canvas.

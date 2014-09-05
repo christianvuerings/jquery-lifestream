@@ -771,6 +771,12 @@ describe Canvas::ProvideCourseSite do
       expect(result).to eq "ACCT:COMPSCI"
     end
 
+    it "should replace forwards slashes with underscores in the subaccount name" do
+      allow_any_instance_of(Canvas::ExistenceCheck).to receive(:account_defined?).and_return(true)
+      result = subject.subaccount_for_department('MALAY/I')
+      expect(result).to eq "ACCT:MALAY_I"
+    end
+
     it "should raise exception if the subaccount does not exist in Canvas" do
       allow_any_instance_of(Canvas::ExistenceCheck).to receive(:account_defined?).and_return(false)
       expect { subject.subaccount_for_department('COMPSCI') }.to raise_error(RuntimeError, 'Could not find bCourses account for department COMPSCI')
