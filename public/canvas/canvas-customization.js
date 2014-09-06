@@ -62,9 +62,17 @@
               '</div>'
             ].join('');
             $('#create-users-step-1').prepend(addPeopleHelp);
+
+            // replace example input
+            var exampleInputText = "student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu";
+            $('#user_list_textarea').attr('placeholder', exampleInputText);
           });
 
         });
+      };
+
+      var applyErrorModification = function(errorExample) {
+        errorExample.html('Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu');
       };
 
       // Calls modification method on provided elements if found and only once
@@ -92,6 +100,7 @@
         applyModifications($addPeopleButton, applyInfoAlert);
         applyModifications($startOverButton, applyInfoAlert);
         applyModifications($addMoreUsersButton, applyInfoAlert);
+        applyModifications($userErrorExample, applyErrorModification);
       }, 300);
 
     }
