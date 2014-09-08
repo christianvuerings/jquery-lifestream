@@ -24,4 +24,12 @@ describe Notifications::RegBlockCodeTranslator do
     result[:type].should == "Academic"
   end
 
+  it 'deals with leading zeroes' do
+    result = subject.translate_bearfacts_proxy('08', 'LIBRARY')
+    expect(result[:office]).to eq 'Library'
+    expect(result[:reason]).to eq 'Library Fine'
+    expect(result[:type]).to eq 'Financial'
+    expect(result[:message]).to include('blocked by the Library')
+  end
+
 end
