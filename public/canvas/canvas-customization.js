@@ -20,7 +20,7 @@
       var applyInfoAlert = function(clickable_element) {
         // add help info to the Add People dialog
         // wait until after the user presses the Add People button because the dialog isn't in the DOM yet
-        clickable_element.click(function(e) {
+        clickable_element.click(function() {
 
           // apply modification after obtaining 'Find a Person to Add' tool LTI application ID
           var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
@@ -64,7 +64,7 @@
             $('#create-users-step-1').prepend(addPeopleHelp);
 
             // replace example input
-            var exampleInputText = "student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu";
+            var exampleInputText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
             $('#user_list_textarea').attr('placeholder', exampleInputText);
           });
 
@@ -75,15 +75,15 @@
         var $inputExamples = $errorsElement.find('small');
         var $createUsersErroredUsers = $errorsElement.find('ul.createUsersErroredUsers');
         $inputExamples.html('Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu');
-        var guestUserNotice = "<strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNET ID, they must first be sponsored. ";
-        var faqLink = "For more information, see <a target=\"_blank\" href=\"http://ets.berkeley.edu/bcourses/faq-page/7\">Adding People to bCourses</a>. ";
+        var guestUserNotice = '<strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNET ID, they must first be sponsored. ';
+        var faqLink = 'For more information, see <a target="_blank" href="http://ets.berkeley.edu/bcourses/faq-page/7">Adding People to bCourses</a>. ';
         $createUsersErroredUsers.after(guestUserNotice + faqLink);
       };
 
       // Calls modification method on provided elements if found and only once
       var applyModifications = function(elements, modifierFunction) {
         if (elements.length) {
-          elements.each(function(index) {
+          elements.each(function() {
             var $element = $(this);
             if ($element.data('calcentral-modified') !== 'true') {
               modifierFunction($element);
