@@ -365,7 +365,7 @@ module Notifications
       your final eligible semester, and will restrict you from enrolling in classes {next term}.  Reference
       <a href="http://ls-advise.berkeley.edu/major/double.html">Double Majors and Simultaneous Degrees</a></li>
       </ul>
-      <p>If you believe that our information is incorrect, or you would like to discuss your situation with an advisor,
+      <p>If you believe that our information is incorrect, or you would like to discuss your situation with a college advisor,
       please call (510) 642-1483 or visit <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a>.</p>
       <p><a href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
       EOS
