@@ -48,7 +48,7 @@
         </ul>
       </div>
 
-      <div data-ng-if="pastAppointments">
+      <div data-ng-if="pastAppointments.length && showPastAppointments">
         <h3>Previous Appointments</h3>
         <div class="cc-table cc-widget-lsadvising-previous">
           <table>
@@ -57,15 +57,16 @@
               <th>Advisor</th>
             </thead>
             <tbody>
-              <tr data-ng-repeat="appointment in pastAppointments | limitTo:pastAppointmentsLimit">
+              <tr data-ng-repeat="appointment in pastAppointments">
                 <td data-ng-bind="appointment.dateTime | date:'MM/dd/yy'"></td>
                 <td data-ng-bind="appointment.staff.name"></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div data-cc-show-more-directive data-cc-show-more-list="pastAppointments" data-cc-show-more-limit="pastAppointmentsLimit"></div>
       </div>
+
+      <div data-ng-if="pastAppointments.length" data-cc-show-infinite-directive data-cc-show-infinite-variable="showPastAppointments" data-cc-show-infinite-text="Previous Appointments"></div>
 
       <div data-ng-if="!caseloadAdviser && !futureAppointments.length && !pastAppointments.length && !lsAdvisingError">
        No current advisor or appointment. <a data-ng-if="urlToMakeAppointment" data-ng-href="{{urlToMakeAppointment}}">Create a new appointment</a>.
