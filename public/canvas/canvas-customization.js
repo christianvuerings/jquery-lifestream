@@ -71,8 +71,13 @@
         });
       };
 
-      var applyErrorModification = function(errorExample) {
-        errorExample.html('Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu');
+      var applyErrorModification = function($errorsElement) {
+        var $inputExamples = $errorsElement.find('small');
+        var $createUsersErroredUsers = $errorsElement.find('ul.createUsersErroredUsers');
+        $inputExamples.html('Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu');
+        var guestUserNotice = "<strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNET ID, they must first be sponsored. ";
+        var faqLink = "For more information, see <a target=\"_blank\" href=\"http://ets.berkeley.edu/bcourses/faq-page/7\">Adding People to bCourses</a>. ";
+        $createUsersErroredUsers.after(guestUserNotice + faqLink);
       };
 
       // Calls modification method on provided elements if found and only once
@@ -95,12 +100,12 @@
         var $addPeopleButton = $('a#addUsers.btn.btn-primary');
         var $startOverButton = $('button.btn.createUsersStartOver');
         var $addMoreUsersButton = $('button.btn.createUsersStartOverFrd');
-        var $userErrorExample = $('#user_email_errors small');
+        var $userErrors = $('#user_email_errors');
 
         applyModifications($addPeopleButton, applyInfoAlert);
         applyModifications($startOverButton, applyInfoAlert);
         applyModifications($addMoreUsersButton, applyInfoAlert);
-        applyModifications($userErrorExample, applyErrorModification);
+        applyModifications($userErrors, applyErrorModification);
       }, 300);
 
     }
