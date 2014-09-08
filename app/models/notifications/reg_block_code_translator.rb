@@ -371,21 +371,21 @@ module Notifications
       EOS
 
       {
-        '7' => ll_text,
-        '8' => lf_text,
-        '16' => cars_text,
-        '18' => housing_text,
-        '40' => admissions_ugrad,
-        '42' => admissions_grad,
-        '44' => status_lapse,
-        '46' => education_abroad,
-        '48' => misconduct,
-        '52' => {
+        7 => ll_text,
+        8 => lf_text,
+        16 => cars_text,
+        18 => housing_text,
+        40 => admissions_ugrad,
+        42 => admissions_grad,
+        44 => status_lapse,
+        46 => education_abroad,
+        48 => misconduct,
+        52 => {
           'OR' => student_health_registrar,
           'TANG' => student_health_uhs
         },
-        '53' => student_health_hb,
-        '60' => {
+        53 => student_health_hb,
+        60 => {
           'GRAD' => academic_grad,
           'CNR' => academic_cnr,
           'BUSADM' => academic_busadm,
@@ -394,12 +394,12 @@ module Notifications
           'CHEM' => academic_chem,
           'LAW' => academic_law,
         },
-        '62' => minimum_progress,
-        '64' => undeclared_senior,
-        '66' => unauth_short_study,
-        '68' => excess_units,
-        '70' => double_major,
-        '74' => {
+        62 => minimum_progress,
+        64 => undeclared_senior,
+        66 => unauth_short_study,
+        68 => excess_units,
+        70 => double_major,
+        74 => {
           'CED' => rnc_ced,
           'ENGIN' => rnc_engin,
           'CHEM' => rnc_chem,
@@ -462,7 +462,7 @@ module Notifications
 
     def self.translate_to_message(reason_code, office)
       @message_translation_hash ||= init_message_translation_hash
-      response = @message_translation_hash[reason_code]
+      response = @message_translation_hash[reason_code.to_i]
       if response.kind_of?(Hash)
         response = response[office]
       end
