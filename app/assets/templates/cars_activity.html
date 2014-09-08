@@ -105,31 +105,31 @@
           data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
            data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | filter:dateFilter | orderBy:sort.column:sort.descending">
           <tr data-ng-class="{'cc-page-myfinances-red':(item.isPastDueDate === true), 'cc-page-myfinances-green':(item.transBalanceAmountFloat < 0), 'cc-page-myfinances-unapplied': (item.transStatus === 'Unapplied'), 'cc-page-myfinances-unapplied-award': (item.transStatus === 'Unapplied' && item.transType === 'Award')}">
-            <td class="cc-widget-table-hover-notriangle">
+            <td>
               <span data-ng-bind="item.transDate | date:'MM/dd/yy'" class="hide-for-small"></span>
               <span data-ng-bind="item.transDate | date:'MM/dd'" class="hide-for-medium-up"></span>
             </td>
-            <td class="cc-widget-table-hover-notriangle">
+            <td>
               <div data-ng-bind="item.transDesc" data-ng-class="{'cc-ellipsis':(!item.show)}"></div>
             </td>
-            <td class="cc-widget-table-hover-notriangle cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount"></td>
-            <td class="cc-widget-table-hover-notriangle cc-page-myfinances-type" data-ng-if="!myfinances.summary.hasDPPTransactions">
+            <td class="cc-page-myfinances-amount cc-table-right cc-table-right-spacing" data-cc-amount-directive="item.transBalanceAmount"></td>
+            <td class="cc-page-myfinances-type" data-ng-if="!myfinances.summary.hasDPPTransactions">
               <span class="hide-for-small cc-print-show" data-ng-bind="item.transType"></span>
               <div class="hide-for-medium-up cc-print-hide">
                 <i class="fa" data-ng-attr-title="{{item.transType}}"
                    data-ng-class="{'fa-usd':(item.transType==='Adjustment'),'fa-plus':(item.transType !== 'Adjustment' && item.transBalanceAmountFloat > 0),'fa-minus':(item.transType !== 'Adjustment' && item.transBalanceAmountFloat < 0)}"></i>
               </div>
             </td>
-            <td class="cc-widget-table-hover-notriangle cc-table-center" data-ng-if="myfinances.summary.hasDPPTransactions">
+            <td class="cc-table-center" data-ng-if="myfinances.summary.hasDPPTransactions">
               <i class="fa" data-ng-class="{'fa-check':(item.isDPP)}" data-ng-if="item.isDPP">
             </td>
-            <td class="cc-widget-table-hover-notriangle cc-table-center">
+            <td class="cc-table-center">
               <i class="fa" data-ng-class="{'fa-exclamation-circle cc-icon-red':(item.isDueNow === '1_past_due'),'fa-exclamation':(item.isDueNow === '2_current_due'),'fa-arrow-right':(item.isDueNow === '3_future_due')}" data-ng-if="item.isDueNow !== '4_closed'">
             </td>
           </tr>
           <tr data-ng-if="item.show">
-            <td class="cc-widget-table-hover-notriangle"></td>
-            <td class="cc-widget-table-hover-notriangle" colspan="4">
+            <td></td>
+            <td colspan="4">
               <div class="row collapse">
                 <div data-ng-if="item.transId">
                   <strong>Transaction #:</strong>
