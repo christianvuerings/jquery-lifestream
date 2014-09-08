@@ -16,6 +16,8 @@
 
     if (isViewingCoursePeople && canAddUsers) {
 
+      var exampleInputText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
+
       // applies info alerts to 'People' popup event
       var applyInfoAlert = function(clickable_element) {
         // add help info to the Add People dialog
@@ -64,7 +66,6 @@
             $('#create-users-step-1').prepend(addPeopleHelp);
 
             // replace example input
-            var exampleInputText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
             $('#user_list_textarea').attr('placeholder', exampleInputText);
           });
 
@@ -74,7 +75,7 @@
       var applyErrorModification = function($errorsElement) {
         var $inputExamples = $errorsElement.find('small');
         var $createUsersErroredUsers = $errorsElement.find('ul.createUsersErroredUsers');
-        $inputExamples.html('Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu');
+        $inputExamples.html('Examples: ' + exampleInputText);
         var guestUserNotice = '<strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNET ID, they must first be sponsored. ';
         var faqLink = 'For more information, see <a target="_blank" href="http://ets.berkeley.edu/bcourses/faq-page/7">Adding People to bCourses</a>. ';
         $createUsersErroredUsers.after(guestUserNotice + faqLink);
