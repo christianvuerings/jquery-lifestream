@@ -412,11 +412,6 @@
 
     $scope.hideDisclaimer = true;
 
-    $scope.toggleBlockHistory = function() {
-      $scope.showBlockHistory = !$scope.showBlockHistory;
-      apiService.analytics.sendEvent('Block history', 'Show history panel - ' + $scope.showBlockHistory ? 'Show' : 'Hide');
-    };
-
     $scope.gradeOptions = gradeOptions;
 
     var findWeight = function(grade) {

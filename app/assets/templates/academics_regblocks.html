@@ -47,39 +47,34 @@
   </div>
 </div>
 
-<div class="cc-academics-showhide-block-history">
-  <p class="cc-academics-nolink cc-academics-emphasize"
-     data-ng-if="!regblocks.inactiveBlocks.length">No block history
-  </p>
-  <div data-ng-if="regblocks.inactiveBlocks.length">
-    <button
-      class="cc-button cc-button-blue"
-      data-ng-click="toggleBlockHistory()">
-      <span data-ng-if="!showBlockHistory">Show block history</span>
-      <span data-ng-if="showBlockHistory">Hide block history</span>
-    </button>
+<p class="cc-academics-no-block-history cc-academics-emphasize"
+   data-ng-if="!regblocks.inactiveBlocks.length">No block history
+</p>
+
+<div data-ng-if="showBlockHistory" class="cc-academics-block-history">
+  <h3>Active Blocks</h3>
+  <div class="cc-table">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col" width="15%">Type</th>
+          <th scope="col" width="30%">Reason</th>
+          <th scope="col" width="15%">Office</th>
+          <th scope="col" width="20%">Blocked</th>
+          <th scope="col" width="20%">Cleared</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="block in regblocks.inactiveBlocks | orderBy:'blockedDate.epoch':true">
+          <td data-ng-bind="block.type || '&nbsp;'"></td>
+          <td data-ng-bind="block.reason || '&nbsp;'"></td>
+          <td data-ng-bind="block.office || '&nbsp;'"></td>
+          <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+          <td data-ng-bind="block.clearedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<div class="cc-table">
-  <table class="cc-academics-block-history" data-ng-if="showBlockHistory">
-    <thead>
-      <tr>
-        <th scope="col" width="15%">Type</th>
-        <th scope="col" width="30%">Reason</th>
-        <th scope="col" width="15%">Office</th>
-        <th scope="col" width="20%">Blocked</th>
-        <th scope="col" width="20%">Cleared</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr data-ng-repeat="block in regblocks.inactiveBlocks | orderBy:'blockedDate.epoch':true">
-        <td data-ng-bind="block.type || '&nbsp;'"></td>
-        <td data-ng-bind="block.reason || '&nbsp;'"></td>
-        <td data-ng-bind="block.office || '&nbsp;'"></td>
-        <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
-        <td data-ng-bind="block.clearedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<div data-ng-if="regblocks.inactiveBlocks.length" data-cc-show-infinite-directive data-cc-show-infinite-variable="showBlockHistory" data-cc-show-infinite-text="Block History"></div>
