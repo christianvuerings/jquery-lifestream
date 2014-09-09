@@ -20,7 +20,7 @@
         <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy'"></td>
       </tr>
       <tr data-ng-if="block.show">
-        <td data-ng-bind-html="block.message" colspan="4"></td>
+        <td data-cc-compile-directive="block.message" colspan="4"></td>
       </tr>
       <tr data-ng-if="block.show">
         <td colspan="4">
