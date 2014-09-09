@@ -51,7 +51,7 @@ gem 'google-api-client', '~> 0.7.1'
 gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'
 
 # for VCR http recording tool
-gem 'vcr', '~> 2.9.2'
+gem 'vcr', '~> 2.9.3'
 
 # for memcached connection
 gem 'dalli', '~> 2.7.2'
