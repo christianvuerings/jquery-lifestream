@@ -144,7 +144,9 @@
 
     $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyBadges::Merged']) {
-        fetch();
+        fetch({
+          refreshCache: true
+        });
       }
     });
 
