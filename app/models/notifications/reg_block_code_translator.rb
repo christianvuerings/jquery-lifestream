@@ -362,7 +362,7 @@ module Notifications
       <ul>
       <li>No action is required.</li>
       <li>This is a standard block on your record as an approved double major that is placed against the semester following
-      your final eligible semester, and will restrict you from enrolling in classes {next term}.  Reference
+      your final eligible semester, and will restrict you from enrolling in classes for the next term.  Reference
       <a href="http://ls-advise.berkeley.edu/major/double.html">Double Majors and Simultaneous Degrees</a></li>
       </ul>
       <p>If you believe that our information is incorrect, or you would like to discuss your situation with a college advisor,
