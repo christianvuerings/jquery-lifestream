@@ -73,9 +73,17 @@
       };
 
       var applyErrorModification = function($errorsElement) {
-        var $inputExamples = $errorsElement.find('small');
+        // apply custom error message
+        var $errorMessage = $errorsElement.find('p').first();
+        var $customErrorMessageContent = [
+          'These users had errors and will not be added. Please ensure they are formatted correctly.<br>',
+          '<small>Examples: student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu</small>',
+          '<br>'
+        ].join('');
+        $errorMessage.html($customErrorMessageContent);
+
+        // append note for guest user addition
         var $createUsersErroredUsers = $errorsElement.find('ul.createUsersErroredUsers');
-        $inputExamples.html('Examples: ' + exampleInputText);
         var guestUserNotice = '<strong>NOTE</strong>: If you are attempting to add a guest to your site who does NOT have a CalNET ID, they must first be sponsored. ';
         var faqLink = 'For more information, see <a target="_blank" href="http://ets.berkeley.edu/bcourses/faq-page/7">Adding People to bCourses</a>. ';
         $createUsersErroredUsers.after(guestUserNotice + faqLink);
