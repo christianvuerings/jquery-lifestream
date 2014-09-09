@@ -24,8 +24,7 @@
     </div>
   </section>
 
-  <a class="cc-settings-dashboard-link" href="/dashboard">&laquo; Take me to my Dashboard
-  </a>
+  <a class="cc-settings-dashboard-link" href="/dashboard">&laquo; Take me to my Dashboard</a>
 
   <div data-ng-show="api.user.profile.isViewer || api.user.profile.actingAsUid" data-ng-controller="AdminController">
     <h2>Admin</h2>
@@ -36,7 +35,7 @@
           <label for="cc-settings-act-as-uid">UID</label>
         </div>
         <div class="small-9 columns">
-          <input id="cc-settings-act-as-uid" data-ng-model="admin.actAs.uid" type="number" data-cc-select-on-click-directive />
+          <input id="cc-settings-act-as-uid" data-ng-model="admin.actAs.uid" data-ng-pattern="api.util.uidPattern" type="number" data-cc-select-on-click-directive />
         </div>
       </div>
       <div class="row">
@@ -70,7 +69,7 @@
     <form data-ng-submit="admin.uidToSidLookup()">
       <div class="row">
         <div class="small-9 small-offset-3 columns">
-          <input id="cc-settings-id" placeholder="Enter UID or SID here" data-ng-model="admin.id" type="number"/>
+          <input id="cc-settings-id" data-ng-pattern="api.util.uidPattern" placeholder="Enter UID or SID here" data-ng-model="admin.id" type="number"/>
         </div>
       </div>
       <div class="row">

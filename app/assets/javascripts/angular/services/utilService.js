@@ -121,6 +121,8 @@
       }
     };
 
+    var uidPattern = /^[0-9]{1,9}$/;
+
     // Expose methods
     return {
       canPlayMp3: canPlayMp3,
@@ -132,7 +134,8 @@
       preventBubble: preventBubble,
       redirect: redirect,
       setTitle: setTitle,
-      supportsLocalStorage: supportsLocalStorage
+      supportsLocalStorage: supportsLocalStorage,
+      uidPattern: uidPattern
     };
 
   });
