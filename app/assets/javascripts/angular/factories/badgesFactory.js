@@ -4,12 +4,20 @@
 
   /**
    * Badges Factory - get data from the badges API
+   * @param {Object} $cacheFactory The $cacheFactory service from Angular
    * @param {Object} $http The $http service from Angular
    */
-  angular.module('calcentral.factories').factory('badgesFactory', function($http) {
+  angular.module('calcentral.factories').factory('badgesFactory', function($cacheFactory, $http) {
 
-    var getBadges = function() {
-      return $http.get('/api/my/badges');
+    var url = '/api/my/badges';
+
+    var getBadges = function(options) {
+      if (options && options.refreshCache) {
+        $cacheFactory.get('$http').remove(url);
+      }
+      return $http.get(url, {
+        cache: true
+      });
     };
 
     return {
