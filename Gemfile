@@ -111,7 +111,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'compass-rails', '~> 2.0.0'
-gem 'foundation-rails', '~> 5.4.3.0'
+gem 'foundation-rails', '~> 5.4.3.1'
 
 # Closure Compiler Gem for JS compression
 # https://github.com/documentcloud/closure-compiler
@@ -156,7 +156,7 @@ group :development, :test , :testext do
   gem 'minitest-reporters', '~> 1.0.5'
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem 'selenium-webdriver', '~> 2.42.0'
+  gem 'selenium-webdriver', '~> 2.43.0'
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
