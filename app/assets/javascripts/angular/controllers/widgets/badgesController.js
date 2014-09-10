@@ -120,8 +120,8 @@
       return rawData;
     };
 
-    var fetch = function() {
-      badgesFactory.getBadges().success(function(data) {
+    var fetch = function(options) {
+      badgesFactory.getBadges(options).success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         decorateBadges(processCalendarEvents(data.badges || {}));
         $scope.studentInfo = data.studentInfo;

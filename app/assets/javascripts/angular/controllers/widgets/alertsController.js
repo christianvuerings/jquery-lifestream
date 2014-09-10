@@ -6,8 +6,8 @@
    */
   angular.module('calcentral.controllers').controller('AlertsController', function(badgesFactory, $scope) {
 
-    var fetch = function() {
-      badgesFactory.getBadges().success(function(data) {
+    var fetch = function(options) {
+      badgesFactory.getBadges(options).success(function(data) {
         $scope.alert = data.alert;
       });
     };
