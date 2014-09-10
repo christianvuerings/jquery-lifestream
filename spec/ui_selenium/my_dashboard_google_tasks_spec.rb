@@ -19,7 +19,6 @@ describe 'The My Dashboard task manager', :testui => true do
     tomorrow = today + 1
     task_wait = WebDriverUtils.google_task_timeout
     wait_for_task = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.google_task_timeout)
-    wait_for_page = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
 
     before(:all) do
       @driver = WebDriverUtils.driver
@@ -28,9 +27,11 @@ describe 'The My Dashboard task manager', :testui => true do
       splash_page.click_sign_in_button(@driver)
       cal_net_auth_page = CalNetPages::CalNetAuthPage.new(@driver)
       cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
+      settings_page = CalCentralPages::SettingsPage.new(@driver)
+      settings_page.load_page(@driver)
+      settings_page.disconnect_bconnected(@driver)
       google_page = GooglePage.new(@driver)
-      google_page.connect_gmail_account(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
-      CalCentralPages::MyDashboardPage.load_page(@driver)
+      google_page.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
       @to_do_card = CalCentralPages::MyDashboardPage::MyDashboardToDoCard.new(@driver)
       @to_do_card.scheduled_tasks_tab_element.when_present(timeout=WebDriverUtils.page_load_timeout)
     end

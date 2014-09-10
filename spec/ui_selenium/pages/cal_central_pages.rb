@@ -13,6 +13,15 @@ module CalCentralPages
   link(:my_campus_link, :text => 'My Campus')
   link(:my_finances_link, :text => 'My Finances')
 
+  # Email Badge
+  button(:email_badge, :xpath => '//button[@title="bMail"]')
+  div(:email_count, :xpath => '//button[@title="bMail"]/div[@data-ng-bind="badge.count"]')
+  h4(:unread_email_heading, :xpath => '//h4[text()="Unread bMail Messages"]')
+  link(:email_one_link, :xpath => '//button[@title="bMail"]/following-sibling::div//a[@data-ng-href="http://bmail.berkeley.edu/"]')
+  div(:email_one_sender, :xpath => '//button[@title="bMail"]/following-sibling::div//div[@data-ng-bind="item.editor"]')
+  span(:email_one_subject, :xpath => '//button[@title="bMail"]/following-sibling::div//span[@data-ng-bind="item.title"]')
+  span(:email_one_summary, :xpath => '//button[@title="bMail"]/following-sibling::div//span[@data-ng-bind="item.summary"]')
+
   # Settings, Log Out
   link(:gear_link, :xpath => '//i[@class="fa fa-cog"]')
   button(:settings_link, :xpath => '//button[@data-ng-click="api.popover.clickThrough(\'Gear - Settings\');api.util.redirect(\'settings\')"]')
@@ -49,6 +58,19 @@ module CalCentralPages
     Rails.logger.info('Clicking My Finances link')
     my_finances_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     my_finances_link
+  end
+
+  def click_email_badge
+    Rails.logger.info('Clicking email badge on Dashboard')
+    email_badge_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+    email_badge
+  end
+
+  def show_unread_email
+    if !unread_email_heading_element.visible?
+      email_badge
+      unread_email_heading_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+    end
   end
 
   def click_settings_link

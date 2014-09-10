@@ -11,6 +11,10 @@ module CalCentralPages
 
     h1(:page_heading, :xpath => '//h1[contains(.,"Settings")]')
 
+    # bConnected
+    button(:disconnect_button, :xpath => '//button[@data-ng-click="api.user.removeOAuth(service)"]')
+    button(:connect_button, :xpath => '//button[@data-ng-click="api.user.enableOAuth(\'Google\')"]')
+
     # View-as
     text_field(:view_as_input, :id => 'cc-settings-act-as-uid')
     button(:view_as_button, :xpath => '//button[@type="submit"]')
@@ -20,6 +24,20 @@ module CalCentralPages
     def load_page(driver)
       driver.get(WebDriverUtils.base_url + '/settings')
       page_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+    end
+
+    def disconnect_bconnected(driver)
+      Rails.logger.info('Checking if user is connected to Google')
+      if disconnect_button_element.visible?
+        Rails.logger.info('Disconnecting from Google')
+        disconnect_button
+        wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
+        wait.until { driver.find_element(:xpath => '//button[@data-ng-click="api.user.enableOAuth(\'Google\')"]') }
+        Rails.logger.info('Pausing so the token is revoked')
+        sleep(WebDriverUtils.google_oauth_timeout)
+      else
+        Rails.logger.info('User not connected')
+      end
     end
 
     def view_as_user(driver, uid)
@@ -35,6 +53,5 @@ module CalCentralPages
       stop_viewing_as_button_element.when_visible(timeout=5)
       stop_viewing_as_button
     end
-
   end
 end
