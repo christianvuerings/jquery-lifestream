@@ -65,6 +65,7 @@ class GooglePage
     wait.until { auth_calendar_element.present? }
     wait.until { auth_drive_element.present? }
     wait.until { auth_tasks_element.present? }
+    wait.until { approve_access_button_element.present? }
     wait.until { approve_access_button_element.enabled? }
     approve_access_button
   end
