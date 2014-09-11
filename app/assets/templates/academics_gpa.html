@@ -1,0 +1,78 @@
+<div class="cc-widget cc-widget-interesting" data-ng-controller="AcademicsGpaController">
+  <div class="cc-widget-title">
+    <h2>GPA Calculator</h2>
+  </div>
+  <div class="cc-widget-padding">
+    <div>
+      <h4>Estimate your grades for <span data-ng-bind="selectedSemester.name"></span></h4>
+      <div class="cc-table" data-ng-if="selectedCourses.length">
+        <table data-ng-if="selectedSemester.timeBucket === 'current'">
+          <tbody>
+            <tr>
+              <td><strong>Current cumulative GPA: </strong></td>
+              <td><strong data-ng-bind="gpaUnits.cumulativeGpa || 'N/A'"></strong></td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <thead>
+            <th scope="col" width="60%">Class</th>
+            <th scope="col" class="cc-table-right cc-table-right-spacing">Units</th>
+            <th scope="col">Grade</th>
+          </thead>
+          <tbody data-ng-repeat="course in selectedCourses">
+            <tr data-ng-repeat="estimated in course.estimatedTranscript">
+              <td data-ng-bind="course.course_code"></td>
+              <td class="cc-table-right cc-table-right-spacing" data-ng-bind="estimated.units | number:1"></td>
+              <td data-ng-if="!estimated.units">--</td>
+              <td>
+                <span data-ng-if="estimated.units === '0' && selectedSemester.timeBucket === 'current'" data-ng-bind="estimated.gradeOption"></span>
+                <select
+                  data-ng-if="estimated.units && !estimated.grade && estimated.units !== '0'"
+                  data-ng-model="estimated.estimatedGrade"
+                  data-ng-change="gpaUpdateCourse(estimated, estimated.estimatedGrade)"
+                  data-ng-options="g.weight as g.grade for g in gradeOptions"
+                >
+                </select>
+              </td>
+            </tr>
+            <tr data-ng-repeat="transcript in course.transcript">
+              <td data-ng-bind="course.course_code"></td>
+              <td class="cc-table-right cc-table-right-spacing" data-ng-bind="transcript.units | number:1"></td>
+              <td data-ng-if="!transcript.units">--</td>
+              <td>
+                <span data-ng-bind="transcript.grade"></span>
+              </td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td colspan="2"><strong>Estimated semester GPA:</strong></td>
+              <td><strong data-ng-bind="(estimatedGpa | number:3) || 'N/A'"></strong></td>
+            </tr>
+            <tr data-ng-if="selectedSemester.timeBucket === 'current'">
+              <td colspan="2"><strong>Estimated cumulative GPA:</strong></td>
+              <td><strong data-ng-bind="(estimatedCumulativeGpa | number:3) || 'N/A'"></strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row collapse cc-academics-calculator-disclaimer" data-ng-if="selectedCourses.length">
+        <div class="small-12 columns">
+          <p>This calculator provides a "best guess" calculation of your GPA based on available data<span data-ng-show="!showDisclaimer">...</span>
+            <span data-ng-show="showDisclaimer">
+              and may not reflect your actual GPA. For a more accurate assessment of your GPA, please contact your advisor.<br /><br />
+              When grades are available, your actual grade will replace the popup menu for that class.<br /><br />
+              The estimated cumulative GPA calculation does not consider repeated courses.
+            </span>
+            <button class="cc-button-link" data-ng-show="!showDisclaimer" data-ng-click="showDisclaimer = !showDisclaimer">Show more</button>
+            <button class="cc-button-link" data-ng-show="showDisclaimer" data-ng-click="showDisclaimer = !showDisclaimer">Show less</button>
+          </p>
+        </div>
+      </div>
+      <div data-ng-show="!selectedCourses.length">
+        <p>To calculate your GPA, you must be enrolled in one or more classes for the selected semester.</p>
+      </div>
+    </div>
+  </div>
+</div>
