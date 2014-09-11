@@ -59,11 +59,11 @@ class GooglePage
     log_into_google(gmail_user, gmail_pass)
     wait_until(timeout=WebDriverUtils.page_load_timeout, 'Auth page does not include expected content') { auth_mail_element.present? }
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
-    wait.until { auth_address_element.visible? }
-    wait.until { auth_profile_element.visible? }
-    wait.until { auth_calendar_element.visible? }
-    wait.until { auth_drive_element.visible? }
-    wait.until { auth_tasks_element.visible? }
+    wait.until { auth_address_element.present? }
+    wait.until { auth_profile_element.present? }
+    wait.until { auth_calendar_element.present? }
+    wait.until { auth_drive_element.present? }
+    wait.until { auth_tasks_element.present? }
     wait.until { approve_access_button_element.enabled? }
     approve_access_button
   end

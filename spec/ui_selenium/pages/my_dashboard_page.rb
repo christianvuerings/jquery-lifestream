@@ -22,8 +22,6 @@ module CalCentralPages
     def load_page(driver)
       Rails.logger.info('Loading My Dashboard page')
       driver.get(WebDriverUtils.base_url + '/dashboard')
-      wait_for_page_to_load = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-      wait_for_page_to_load.until { driver.title == 'Dashboard | CalCentral' }
     end
 
     def click_live_update_button(timeout)
