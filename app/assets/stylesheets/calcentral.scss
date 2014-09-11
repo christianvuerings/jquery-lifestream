@@ -377,6 +377,9 @@ button {
 .cc-text-light {
   color: $cc-color-lighter-medium-grey;
 }
+.cc-text-small {
+  font-size: 12px;
+}
 
 // Message for oldIE
 .cc-old-ie {
@@ -443,6 +446,8 @@ button {
 @import "profile";
 // L & S Advising
 @import "ls_advising";
+// Exam Schedule
+@import "exam_schedule";
 
 // Textbooks
 @import "textbooks";

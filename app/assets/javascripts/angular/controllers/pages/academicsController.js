@@ -9,26 +9,6 @@
 
     apiService.util.setTitle('My Academics');
 
-    /**
-     * We're putting the exams in buckets per date
-     */
-    var parseExamSchedule = function(examSchedule) {
-
-      if (!examSchedule) {
-        return;
-      }
-
-      var response = {};
-      angular.forEach(examSchedule, function(element) {
-        if (!response[element.date.epoch]) {
-          response[element.date.epoch] = [];
-        }
-        response[element.date.epoch].push(element);
-      });
-      $scope.examSchedule = response;
-      $scope.examScheduleLength = Object.keys(response).length;
-    };
-
     var checkPageExists = function(page) {
       if (!page) {
         apiService.util.redirect('404');
@@ -314,10 +294,7 @@
         }
       }
 
-      parseExamSchedule(data.examSchedule);
-
       $scope.telebears = data.telebears;
-
     };
 
     $scope.currentSelection = 'Class Info';
