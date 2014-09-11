@@ -10,6 +10,7 @@ module CalCentralPages
 
     include PageObject
     include CalCentralPages
+    include ClassLogger
 
     # TO DO
     h2(:to_do_heading, :xpath => '//h2[contains(.,"To Do")]')
@@ -111,19 +112,19 @@ module CalCentralPages
     # TASK TABS
 
     def click_scheduled_tasks_tab
-      Rails.logger.info('Clicking the scheduled tasks tab')
+      logger.info('Clicking the scheduled tasks tab')
       scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       scheduled_tasks_tab
     end
 
     def click_unscheduled_tasks_tab
-      Rails.logger.info('Clicking the unscheduled tasks tab')
+      logger.info('Clicking the unscheduled tasks tab')
       unsched_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       unsched_tasks_tab
     end
 
     def click_completed_tasks_tab
-      Rails.logger.info('Clicking the completed tasks tab')
+      logger.info('Clicking the completed tasks tab')
       completed_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       completed_tasks_tab
     end
@@ -131,7 +132,7 @@ module CalCentralPages
     # ADD NEW TASK
 
     def click_new_task_button
-      Rails.logger.info('Clicking new task button')
+      logger.info('Clicking new task button')
       new_task_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       new_task_button
     end
@@ -139,27 +140,27 @@ module CalCentralPages
     def edit_new_task(title, date, note)
       new_task_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unless title.nil?
-        Rails.logger.info('Task title is ' + title)
+        logger.info('Task title is ' + title)
         self.new_task_title_input = title
       end
       unless date.nil?
-        Rails.logger.info('Task date is ' + date)
+        logger.info('Task date is ' + date)
         self.new_task_date_input = date
       end
       unless note.nil?
-        Rails.logger.info('Task note is ' + note)
+        logger.info('Task note is ' + note)
         self.new_task_notes_input = note
       end
     end
 
     def click_add_task_button
-      Rails.logger.info('Clicking add task button')
+      logger.info('Clicking add task button')
       add_new_task_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       add_new_task_button
     end
 
     def click_cancel_new_task_button
-      Rails.logger.info('Clicking cancel task button')
+      logger.info('Clicking cancel task button')
       cancel_new_task_button
     end
 
@@ -171,7 +172,7 @@ module CalCentralPages
     end
 
     def click_overdue_task_one_edit_button
-      Rails.logger.info('Clicking edit button for the first overdue task')
+      logger.info('Clicking edit button for the first overdue task')
       overdue_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       overdue_task_one_edit_button
     end
@@ -179,33 +180,33 @@ module CalCentralPages
     def edit_overdue_task_one(title, date, note)
       overdue_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unless title.nil?
-        Rails.logger.info('Task title is ' + title)
+        logger.info('Task title is ' + title)
         self.overdue_task_one_title_input = title
       end
       unless date.nil?
-        Rails.logger.info('Task date is ' + date)
+        logger.info('Task date is ' + date)
         self.overdue_task_one_date_input = date
       end
       unless note.nil?
-        Rails.logger.info('Task note is ' + note)
+        logger.info('Task note is ' + note)
         self.overdue_task_one_notes_input = note
       end
     end
 
     def save_overdue_task_one_edits
-      Rails.logger.info('Clicking save button for the first overdue task')
+      logger.info('Clicking save button for the first overdue task')
       overdue_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       overdue_task_one_save_button
     end
 
     def cancel_overdue_task_one_edits
-      Rails.logger.info('Clicking cancel button for the first overdue task')
+      logger.info('Clicking cancel button for the first overdue task')
       overdue_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       overdue_task_one_cancel_button
     end
 
     def complete_overdue_task_one
-      Rails.logger.info('Completing first overdue task')
+      logger.info('Completing first overdue task')
       overdue_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       check_overdue_task_one_cbx
       sleep(3)
@@ -230,7 +231,7 @@ module CalCentralPages
     end
 
     def click_today_task_one_edit_button
-      Rails.logger.info('Clicking edit button for the first task due today')
+      logger.info('Clicking edit button for the first task due today')
       today_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       today_task_one_edit_button
     end
@@ -238,33 +239,33 @@ module CalCentralPages
     def edit_today_task_one(title, date, note)
       today_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unless title.nil?
-        Rails.logger.info('Task title is ' + title)
+        logger.info('Task title is ' + title)
         self.today_task_one_title_input = title
       end
       unless date.nil?
-        Rails.logger.info('Task date is ' + date)
+        logger.info('Task date is ' + date)
         self.today_task_one_date_input = date
       end
       unless note.nil?
-        Rails.logger.info('Task note is ' + note)
+        logger.info('Task note is ' + note)
         self.today_task_one_notes_input = note
       end
     end
 
     def save_today_task_one_edits
-      Rails.logger.info('Clicking save button for the first task due today')
+      logger.info('Clicking save button for the first task due today')
       today_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       today_task_one_save_button
     end
 
     def cancel_today_task_one_edits
-      Rails.logger.info('Clicking cancel button for the first task due today')
+      logger.info('Clicking cancel button for the first task due today')
       today_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       today_task_one_cancel_button
     end
 
     def complete_today_task_one
-      Rails.logger.info('Completing first task due today')
+      logger.info('Completing first task due today')
       today_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       check_today_task_one_cbx
       sleep(3)
@@ -289,7 +290,7 @@ module CalCentralPages
     end
 
     def click_future_task_one_edit_button
-      Rails.logger.info('Clicking edit button for the first future task')
+      logger.info('Clicking edit button for the first future task')
       future_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       future_task_one_edit_button
     end
@@ -297,33 +298,33 @@ module CalCentralPages
     def edit_future_task_one(title, date, note)
       future_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unless title.nil?
-        Rails.logger.info('Task title is ' + title)
+        logger.info('Task title is ' + title)
         self.future_task_one_title_input = title
       end
       unless date.nil?
-        Rails.logger.info('Task date is ' + date)
+        logger.info('Task date is ' + date)
         self.future_task_one_date_input = date
       end
       unless note.nil?
-        Rails.logger.info('Task note is ' + note)
+        logger.info('Task note is ' + note)
         self.future_task_one_notes_input = note
       end
     end
 
     def save_future_task_one_edits
-      Rails.logger.info('Clicking save button for the first future task')
+      logger.info('Clicking save button for the first future task')
       future_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       future_task_one_save_button
     end
 
     def cancel_future_task_one_edits
-      Rails.logger.info('Clicking cancel button for the first future task')
+      logger.info('Clicking cancel button for the first future task')
       future_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       future_task_one_cancel_button
     end
 
     def complete_future_task_one
-      Rails.logger.info('Completing first future task')
+      logger.info('Completing first future task')
       future_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       check_future_task_one_cbx
       sleep(3)
@@ -348,7 +349,7 @@ module CalCentralPages
     end
 
     def click_unsched_task_one_edit_button
-      Rails.logger.info('Clicking edit button for the first unscheduled task')
+      logger.info('Clicking edit button for the first unscheduled task')
       unsched_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unsched_task_one_edit_button
     end
@@ -356,33 +357,33 @@ module CalCentralPages
     def edit_unsched_task_one(title, date, note)
       unsched_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unless title.nil?
-        Rails.logger.info('New title is ' + title)
+        logger.info('New title is ' + title)
         self.unsched_task_one_title_input = title
       end
       unless date.nil?
-        Rails.logger.info('New date is ' + date)
+        logger.info('New date is ' + date)
         self.unsched_task_one_date_input = date
       end
       unless note.nil?
-        Rails.logger.info('Task note is ' + note)
+        logger.info('Task note is ' + note)
         self.unsched_task_one_notes_input = note
       end
     end
 
     def save_unsched_task_one_edits
-      Rails.logger.info('Clicking save button for the first unscheduled task')
+      logger.info('Clicking save button for the first unscheduled task')
       unsched_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unsched_task_one_save_button
     end
 
     def cancel_unsched_task_one_edits
-      Rails.logger.info('Clicking cancel button for the first unscheduled task')
+      logger.info('Clicking cancel button for the first unscheduled task')
       unsched_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unsched_task_one_cancel_button
     end
 
     def complete_unsched_task_one
-      Rails.logger.info('Completing first unscheduled task')
+      logger.info('Completing first unscheduled task')
       unsched_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       check_unsched_task_one_cbx
       sleep(3)
@@ -402,7 +403,7 @@ module CalCentralPages
     # COMPLETED TASKS
 
     def uncomplete_task_one
-      Rails.logger.info('Un-completing the first completed task')
+      logger.info('Un-completing the first completed task')
       completed_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       uncheck_completed_task_one_cbx
       sleep(3)
@@ -420,7 +421,7 @@ module CalCentralPages
     end
 
     def delete_all_tasks(driver)
-      Rails.logger.info('Deleting all existing tasks')
+      logger.info('Deleting all existing tasks')
       load_page(driver)
       self.delete_all_unscheduled_tasks(driver)
       self.delete_all_today_tasks(driver)

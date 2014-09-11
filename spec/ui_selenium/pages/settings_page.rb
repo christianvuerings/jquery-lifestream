@@ -8,6 +8,7 @@ module CalCentralPages
 
     include PageObject
     include CalCentralPages
+    include ClassLogger
 
     h1(:page_heading, :xpath => '//h1[contains(.,"Settings")]')
 
@@ -27,16 +28,16 @@ module CalCentralPages
     end
 
     def disconnect_bconnected(driver)
-      Rails.logger.info('Checking if user is connected to Google')
+      logger.info('Checking if user is connected to Google')
       if disconnect_button_element.visible?
-        Rails.logger.info('Disconnecting from Google')
+        logger.info('Disconnecting from Google')
         disconnect_button
         wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
         wait.until { driver.find_element(:xpath => '//button[@data-ng-click="api.user.enableOAuth(\'Google\')"]') }
-        Rails.logger.info('Pausing so the token is revoked')
+        logger.info('Pausing so the token is revoked')
         sleep(WebDriverUtils.google_oauth_timeout)
       else
-        Rails.logger.info('User not connected')
+        logger.info('User not connected')
       end
     end
 

@@ -293,6 +293,7 @@ ui_selenium:
   googleTaskTimeout: 6
   pageEventTimeout: 3
   pageLoadTimeout: 10
+  liveUpdateTimeoutDelta: 180
   finResourcesLinksTimeout: 10
   financialsTimeout: 5
   test_user_password: secret

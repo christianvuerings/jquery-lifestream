@@ -8,6 +8,7 @@ module CalCentralPages
 
     include PageObject
     include CalCentralPages
+    include ClassLogger
 
     wait_for_expected_title('Campus - Academic Departments | CalCentral', WebDriverUtils.page_load_timeout)
 
@@ -15,7 +16,7 @@ module CalCentralPages
     h3(:administrative_heading, :xpath => '//h3[text()="Administrative"]')
 
     def load_page(driver)
-      Rails.logger.info('Loading the My Campus page')
+      logger.info('Loading the My Campus page')
       driver.get(WebDriverUtils.base_url + '/campus')
     end
 

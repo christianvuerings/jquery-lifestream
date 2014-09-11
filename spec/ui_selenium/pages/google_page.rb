@@ -5,6 +5,7 @@ require_relative '../util/web_driver_utils'
 class GooglePage
 
   include PageObject
+  include ClassLogger
 
   # LOGIN / LOGOUT
   link(:remove_account_link, :id => 'remove-link')
@@ -54,7 +55,7 @@ class GooglePage
   link(:back_to_tasks, :xpath => '//span[contains(.,"Back to list")]')
 
   def connect_calcentral_to_google(driver, gmail_user, gmail_pass)
-    Rails.logger.info('Connecting Google account to CalCentral')
+    logger.info('Connecting Google account to CalCentral')
     driver.get(WebDriverUtils.base_url + WebDriverUtils.google_auth_url)
     log_into_google(gmail_user, gmail_pass)
     wait_until(timeout=WebDriverUtils.page_load_timeout, 'Auth page does not include expected content') { auth_mail_element.present? }
@@ -69,17 +70,17 @@ class GooglePage
   end
 
   def load_gmail(driver)
-    Rails.logger.info('Loading Gmail')
+    logger.info('Loading Gmail')
     driver.get('https://mail.google.com')
   end
 
   def load_calendar(driver)
-    Rails.logger.info('Loading Google calendar')
+    logger.info('Loading Google calendar')
     driver.get('https://calendar.google.com')
   end
 
   def log_into_google(gmail_user, gmail_pass)
-    Rails.logger.info('Logging into Google')
+    logger.info('Logging into Google')
     if remove_account_link_element.visible?
       remove_account_link
     end
@@ -93,14 +94,14 @@ class GooglePage
   end
 
   def log_out_google(driver, gmail_user)
-    Rails.logger.info('Logging out of Google')
+    logger.info('Logging out of Google')
     driver.find_element(:xpath, '//a[contains(@title,"' + gmail_user + '")]').click
     sign_out_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     sign_out_link
   end
 
   def send_email(driver, recipient, subject, body)
-    Rails.logger.info('Sending an email with the subject ' + subject)
+    logger.info('Sending an email with the subject ' + subject)
     compose_email_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     compose_email_button
     new_message_heading_element.when_present(timeout=WebDriverUtils.page_event_timeout)
@@ -117,7 +118,7 @@ class GooglePage
   end
 
   def send_invite(driver, event, invitee)
-    Rails.logger.info('Creating event with the subject ' + event)
+    logger.info('Creating event with the subject ' + event)
     create_event_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     create_event_button
     event_title_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
@@ -133,7 +134,7 @@ class GooglePage
   end
 
   def create_unsched_task(driver, title)
-    Rails.logger.info('Creating task with title "' + title + '"')
+    logger.info('Creating task with title "' + title + '"')
     toggle_tasks_visibility_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     if !tasks_heading_element.visible?
       toggle_tasks_visibility

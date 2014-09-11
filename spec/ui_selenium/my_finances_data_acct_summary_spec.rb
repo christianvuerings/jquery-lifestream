@@ -16,6 +16,8 @@ describe 'My Finances', :testui => true do
 
   if ENV["UI_TEST"]
 
+    include ClassLogger
+
     begin
       driver = WebDriverUtils.driver
       output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
@@ -23,19 +25,19 @@ describe 'My Finances', :testui => true do
         FileUtils.mkdir_p(output_dir)
       end
       test_output = Rails.root.join(output_dir, 'my_finances_data_acct_summary.csv')
-      Rails.logger.info('Opening output CSV')
+      logger.info('Opening output CSV')
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Finances Tab', 'CARS Data', 'Acct Bal', 'Amt Due Now', 'Past Due', 'Future Activity',
                           'On DPP', 'Norm Install', 'DPP Past Due']
       end
-      Rails.logger.info('Reading input CSV')
+      logger.info('Reading input CSV')
       uids_csv = File.read(WebDriverUtils.live_users)
-      Rails.logger.info('Parsing UIDs')
+      logger.info('Parsing UIDs')
       uids = CSV.parse(uids_csv, :headers => true)
 
       uids.each do |row|
         uid = "#{row['uid']}"
-        Rails.logger.info('UID is ' + uid)
+        logger.info('UID is ' + uid)
         has_finances_tab = false
         has_cars_data = false
         acct_bal = false
@@ -202,13 +204,13 @@ describe 'My Finances', :testui => true do
                               is_dpp, has_dpp_balance, is_dpp_past_due]
           end
         rescue => e
-          Rails.logger.error e.message + "\n" + e.backtrace.join("\n")
+          logger.error e.message + "\n" + e.backtrace.join("\n")
         end
       end
     rescue => e
-      Rails.logger.error e.message + "\n" + e.backtrace.join("\n ")
+      logger.error e.message + "\n" + e.backtrace.join("\n ")
     ensure
-      Rails.logger.info('Quitting the browser')
+      logger.info('Quitting the browser')
       driver.quit
     end
   end

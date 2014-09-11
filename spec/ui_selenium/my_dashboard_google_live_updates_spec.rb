@@ -13,6 +13,8 @@ require_relative 'pages/google_page'
 describe 'My Dashboard bConnected live updates', :testui => true do
 
   if ENV["UI_TEST"]
+    
+    include ClassLogger
 
     id = Time.now.to_i.to_s
 
@@ -35,11 +37,11 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       @to_do_card.click_unscheduled_tasks_tab
       @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       @initial_task_count = @to_do_card.unsched_task_count.to_i
-      Rails.logger.info('Unscheduled task count is ' + @initial_task_count.to_s)
+      logger.info('Unscheduled task count is ' + @initial_task_count.to_s)
       @dashboard = CalCentralPages::MyDashboardPage.new(@driver)
       @dashboard.email_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       @initial_mail_count = @dashboard.email_count.to_i
-      Rails.logger.info('Unread email count is ' + @initial_mail_count.to_s)
+      logger.info('Unread email count is ' + @initial_mail_count.to_s)
 
       # As test user, send email to self and create new unscheduled task
       @google.load_gmail(@driver)

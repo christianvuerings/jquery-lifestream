@@ -10,6 +10,7 @@ module CalCentralPages
       include PageObject
       include CalCentralPages
       include MyFinancesPages
+      include ClassLogger
 
       wait_for_expected_title('My Finances | CalCentral', WebDriverUtils.page_load_timeout)
       h1(:page_heading, :xpath => '//h1[text()="My Finances"]')
@@ -42,7 +43,7 @@ module CalCentralPages
       h2(:fin_messages_heading, :xpath => '//h2[text()="Financial Messages"]')
 
       def load_page(driver)
-        Rails.logger.info('Loading My Finances landing page')
+        logger.info('Loading My Finances landing page')
         driver.get(WebDriverUtils.base_url + '/finances')
       end
 
