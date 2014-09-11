@@ -20,10 +20,6 @@
         <div class="cc-text-light" data-ng-bind="class.title"></div>
       </div>
     </div>
-    <div data-ng-show="pastSemestersTeachingCount > 1 && pastSemestersTeachingLimit !== 100">
-      <button class="cc-button cc-widget-show-more" data-ng-click="pastSemestersTeachingLimit = 100">
-        Show Previous Semesters
-      </button>
-    </div>
+    <div data-ng-if="pastSemestersTeachingCount > 1" data-cc-show-infinite-directive data-cc-show-infinite-limit="pastSemestersTeachingLimit"></div>
   </div>
 </div>
