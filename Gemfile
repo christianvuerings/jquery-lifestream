@@ -126,7 +126,7 @@ gem 'font-awesome-rails', '~> 4.2.0.0'
 
 # Moment.js
 # https://github.com/derekprior/momentjs-rails
-gem 'momentjs-rails', '~> 2.8.1'
+gem 'momentjs-rails', '~> 2.8.3'
 
 # Raven.js - library for JS error logging
 gem 'ravenjs-gem', '~> 1.1.16'
