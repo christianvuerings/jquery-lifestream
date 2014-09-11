@@ -7,9 +7,10 @@ require_relative '../util/web_driver_utils'
 class ApiMyFinancialsPage
 
   include PageObject
+  include ClassLogger
 
   def get_json(driver)
-    Rails.logger.info('Parsing JSON from /api/my/financials')
+    logger.info('Parsing JSON from /api/my/financials')
     driver.get(WebDriverUtils.base_url + '/api/my/financials')
     body = driver.find_element(:xpath, '//pre').text
     @parsed = JSON.parse(body)
@@ -17,7 +18,7 @@ class ApiMyFinancialsPage
 
   def has_cars_data?
     if @parsed['statusCode'] == 400 || @parsed['statusCode'] == 404
-      Rails.logger.info('User has no CARS data')
+      logger.info('User has no CARS data')
       return false
     end
     true

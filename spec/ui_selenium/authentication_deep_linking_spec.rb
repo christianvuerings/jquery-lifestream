@@ -28,7 +28,7 @@ describe 'Logging in with deep linking', :testui => true do
     end
 
     it 'works for My Dashboard' do
-      my_dashboard_page = CalCentralPages::MyDashboardPage::MyDashboardToDoCard.new(@driver)
+      my_dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
       my_dashboard_page.load_page(@driver)
       cal_net_auth_page = CalNetPages::CalNetAuthPage.new(@driver)
       cal_net_auth_page.login(user, password)

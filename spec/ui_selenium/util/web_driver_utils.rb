@@ -42,6 +42,10 @@ class WebDriverUtils
     Settings.ui_selenium.finResourcesLinksTimeout
   end
 
+  def self.google_oauth_timeout
+    Settings.ui_selenium.googleOauthTimeout
+  end
+
   def self.google_task_timeout
     Settings.ui_selenium.googleTaskTimeout
   end
@@ -50,8 +54,15 @@ class WebDriverUtils
     Settings.ui_selenium.pageEventTimeout
   end
 
+  def self.mail_live_update_timeout
+    Settings.cache.expiration.marshal_dump["MyBadges::GoogleMail".to_sym] + Settings.ui_selenium.liveUpdateTimeoutDelta
+  end
+
+  def self.tasks_live_update_timeout
+    Settings.cache.expiration.marshal_dump["MyTasks::GoogleTasks".to_sym] + Settings.ui_selenium.liveUpdateTimeoutDelta
+  end
+
   def self.live_users
     File.join(CalcentralConfig.local_dir, "uids.csv")
   end
-
 end

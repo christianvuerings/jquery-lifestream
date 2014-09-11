@@ -8,6 +8,7 @@ module CalCentralPages
 
     include PageObject
     include CalCentralPages
+    include ClassLogger
 
     wait_for_expected_title('My Academics | CalCentral')
 
@@ -15,12 +16,12 @@ module CalCentralPages
     link(:first_student_semester_link, :xpath => '//div[@class="cc-academics-semesters"]//a')
 
     def load_page(driver)
-      Rails.logger.info('Loading My Academics page')
+      logger.info('Loading My Academics page')
       driver.get(WebDriverUtils.base_url + '/academics')
     end
 
     def click_first_student_semester
-      Rails.logger.info('Clicking the first student semester link')
+      logger.info('Clicking the first student semester link')
       first_student_semester_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       first_student_semester_link
     end

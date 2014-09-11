@@ -292,9 +292,11 @@ ui_selenium:
   # Alternative browsers for Selenium tests: chrome, safari, ie
   webDriver: firefox
 
-  googleTaskTimeout: 5
+  googleOauthTimeout: 20
+  googleTaskTimeout: 6
   pageEventTimeout: 3
-  pageLoadTimeout: 8
+  pageLoadTimeout: 10
+  liveUpdateTimeoutDelta: 180
   finResourcesLinksTimeout: 10
   financialsTimeout: 5
   test_user_password: secret

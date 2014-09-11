@@ -8,6 +8,7 @@ module CalCentralPages
 
     include PageObject
     include CalCentralPages
+    include ClassLogger
 
     wait_for_expected_title('My Finances | CalCentral', WebDriverUtils.page_load_timeout)
     h1(:page_heading, :xpath => '//h1[text()="My Finances"]')
@@ -30,13 +31,13 @@ module CalCentralPages
     link(:make_payment_link, :xpath => '//a[@href="http://studentbilling.berkeley.edu/carsPaymentOptions.htm"]')
 
     def wait_for_billing_summary_card(driver)
-      Rails.logger.debug('Waiting for billing summary card to load')
+      logger.debug('Waiting for billing summary card to load')
       wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
       wait.until { driver.find_element(:xpath => '//ul[@data-ng-show="myfinances.summary"]') }
     end
 
     def wait_for_billing_summary(driver)
-      Rails.logger.debug('Waiting for billing summary to load, spinner is still going')
+      logger.debug('Waiting for billing summary to load, spinner is still going')
       !10.times{ break unless (driver.find_element(:xpath, '//h2[contains(.,"Billing Summary")]/../following-sibling::div[@class="cc-spinner"]').displayed? rescue false); sleep 1 }
     end
 
