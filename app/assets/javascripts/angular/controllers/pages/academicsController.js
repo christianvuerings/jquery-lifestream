@@ -223,6 +223,24 @@
       }
     };
 
+    var isLawStudent = function(collegeAndLevel) {
+      if (!collegeAndLevel || !collegeAndLevel.colleges
+          || collegeAndLevel.standing === 'Undergraduate') {
+        return false;
+      }
+
+      law_student = false;
+      for (var i = 0; i < collegeAndLevel.colleges.length; i++) {
+        if (collegeAndLevel.colleges[i].college === 'School of Law') {
+          law_student = true;
+        } else {
+          // Ensures function returns true only if student's only college is Law
+          return false;
+        }
+      }
+      return law_student;
+    };
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
