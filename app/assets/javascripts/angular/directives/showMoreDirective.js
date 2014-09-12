@@ -16,6 +16,8 @@
         // List of items in the ng-repeat
         var moreList = $parse(attrs.ccShowMoreList);
 
+        var increment = scope[attrs.ccShowMoreIncrement] ? parseInt(scope[attrs.ccShowMoreIncrement], 10) : incrementDefault;
+
         // Watch the limit variable
         var watchMoreLimit = function(listLength) {
 
@@ -29,13 +31,13 @@
             elem.empty();
 
             if (scope[attrs.ccShowMoreLimit] < listLength) {
-              var nextItemsCount = Math.min(incrementDefault, listLength - scope[attrs.ccShowMoreLimit]);
+              var nextItemsCount = Math.min(increment, listLength - scope[attrs.ccShowMoreLimit]);
 
               var el = angular.element(showMoreButtonTemplate.replace('{{nextItemsCount}}', nextItemsCount));
               elem.append(el);
 
               el.on('click', function() {
-                scope[attrs.ccShowMoreLimit] += incrementDefault;
+                scope[attrs.ccShowMoreLimit] += increment;
                 scope.$apply();
               });
             }

@@ -103,7 +103,7 @@
           data-cc-accessible-focus-directive
           data-ng-class="{'cc-widget-table-hover-opened cc-widget-list-selected':(item.show)}"
           data-ng-click="api.widget.toggleShow($event, myfinances.activity, item, 'My Finances - Transaction')"
-           data-ng-repeat="item in myfinances.activity | filter:search | filter:statusFilter | filter:dateFilter | orderBy:sort.column:sort.descending">
+           data-ng-repeat="item in (filteredList = (myfinances.activity | filter:search | filter:statusFilter | filter:dateFilter | orderBy:sort.column:sort.descending)) | limitTo: activityLimit">
           <tr data-ng-class="{'cc-page-myfinances-red':(item.isPastDueDate === true), 'cc-page-myfinances-green':(item.transBalanceAmountFloat < 0), 'cc-page-myfinances-unapplied': (item.transStatus === 'Unapplied'), 'cc-page-myfinances-unapplied-award': (item.transStatus === 'Unapplied' && item.transType === 'Award')}">
             <td>
               <span data-ng-bind="item.transDate | date:'MM/dd/yy'" class="hide-for-small"></span>
@@ -184,6 +184,10 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="cc-clearfix-container">
+      <div data-cc-show-more-directive data-cc-show-more-list="filteredList" data-cc-show-more-increment="activityIncrement" data-cc-show-more-watch="filteredList.length" data-cc-show-more-limit="activityLimit"></div>
     </div>
 
     <div class="cc-page-myfinances-footer cc-clearfix-container">

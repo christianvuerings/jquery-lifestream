@@ -75,6 +75,7 @@
   }
   .cc-page-myfinances-footer {
     border-top: 2px solid $cc-color-widget-background;
+    margin-top: 20px;
     padding: 10px 15px;
     ul li {
       float: left;
@@ -115,7 +116,7 @@
     }
   }
   .cc-page-myfinances-table {
-    margin: 20px 10px 30px;
+    margin: 20px 10px 10px;
     table {
       table-layout: fixed;
     }
