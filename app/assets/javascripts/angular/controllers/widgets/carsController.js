@@ -27,6 +27,9 @@
     }];
     $scope.choice = $scope.choices[0].value;
 
+    $scope.activityIncrement = 50;
+    $scope.activityLimit = 100;
+
     var startDate = '';
     var endDate = '';
 
