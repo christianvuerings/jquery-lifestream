@@ -241,6 +241,11 @@
       return law_student;
     };
 
+    $scope.transcriptLink = "https://telebears.berkeley.edu/tranreq/";
+    if (isLawStudent($scope.collegeAndLevel)) {
+      $scope.transcriptLink = "http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php";
+    }
+
     var parseAcademics = function(data) {
       angular.extend($scope, data);
 
@@ -252,6 +257,7 @@
       }
 
       $scope.isLSStudent = isLSStudent($scope.collegeAndLevel);
+      $scope.isLawStudent = isLawStudent($scope.collegeAndLevel);
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
