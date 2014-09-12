@@ -55,20 +55,31 @@
     <table>
       <thead>
         <tr>
-          <th scope="col" width="15%">Type</th>
-          <th scope="col" width="30%">Reason</th>
-          <th scope="col" width="15%">Office</th>
-          <th scope="col" width="20%">Blocked</th>
-          <th scope="col" width="20%">Cleared</th>
+          <th scope="col">Type</th>
+          <th scope="col">Blocked</th>
+          <th scope="col">Cleared</th>
         </tr>
       </thead>
-      <tbody>
-        <tr data-ng-repeat="block in regblocks.inactiveBlocks | orderBy:'blockedDate.epoch':true">
+      <tbody data-ng-repeat="block in regblocks.inactiveBlocks | orderBy:'blockedDate.epoch':true">
+        <tr class="cc-widget-table-hover"
+          data-ng-class="{'cc-widget-table-hover-opened':(block.show)}"
+          data-cc-accessible-focus-directive
+          data-ng-click="api.widget.toggleShow($event, regblocks.inactiveBlocks, block, 'Inactive Blocks')">
           <td data-ng-bind="block.type || '&nbsp;'"></td>
-          <td data-ng-bind="block.reason || '&nbsp;'"></td>
-          <td data-ng-bind="block.office || '&nbsp;'"></td>
           <td data-ng-bind="block.blockedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
           <td data-ng-bind="block.clearedDate.epoch * 1000 | date:'MM/dd/yy' || '&nbsp;'"></td>
+        </tr>
+        <tr data-ng-if="block.show">
+          <td colspan="3">
+            <div class="cc-academics-block-history-block-show">
+              <div data-ng-if="block.reason">
+                <strong>Reason:</strong> <span data-ng-bind="block.reason"></span>
+              </div>
+              <div data-ng-if="block.reason">
+                <strong>Office:</strong> <span data-ng-bind="block.office"></span>
+              </div>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
