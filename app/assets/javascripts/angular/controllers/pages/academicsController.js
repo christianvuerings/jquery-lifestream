@@ -224,12 +224,12 @@
     };
 
     var isLawStudent = function(collegeAndLevel) {
-      if (!collegeAndLevel || !collegeAndLevel.colleges
-          || collegeAndLevel.standing === 'Undergraduate') {
+      if (!collegeAndLevel || !collegeAndLevel.colleges ||
+          collegeAndLevel.standing === 'Undergraduate') {
         return false;
       }
 
-      law_student = false;
+      var law_student = false;
       for (var i = 0; i < collegeAndLevel.colleges.length; i++) {
         if (collegeAndLevel.colleges[i].college === 'School of Law') {
           law_student = true;
@@ -241,9 +241,9 @@
       return law_student;
     };
 
-    $scope.transcriptLink = "https://telebears.berkeley.edu/tranreq/";
+    $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
     if (isLawStudent($scope.collegeAndLevel)) {
-      $scope.transcriptLink = "http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php";
+      $scope.transcriptLink = 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php';
     }
 
     var parseAcademics = function(data) {
