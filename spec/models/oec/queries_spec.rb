@@ -32,6 +32,17 @@ describe Oec::Queries do
     it { should_not be_nil }
   end
 
+  context "looking up course evaluations", :testext => true do
+    subject { Oec::Queries.get_all_course_evaluations }
+    it { should_not be_nil }
+    it { subject[0]["course_id"].should_not be_nil }
+  end
+
+  context "looking up course evaluations with crosslistings", :testext => true do
+    subject { Oec::Queries.get_all_course_evaluations("7309, 7366") }
+    it { should_not be_nil }
+  end
+
   context "looking up students in 2000 courses", :testext => true do
     subject { Oec::Queries.get_all_students(('7000'..'9000').to_a) }
     it { should_not be_nil }
