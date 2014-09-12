@@ -1,14 +1,13 @@
 <div class="cc-widget cc-widget-lsadvising" data-ng-controller="LsAdvisingController">
   <div class="cc-widget-title">
     <h2 class="cc-left">L&amp;S Advising</h2>
-    <a data-ng-if="urlToMakeAppointment" class="cc-button cc-right cc-widget-title-button" data-ng-href="{{urlToMakeAppointment}}">
-      <i class="fa fa-plus cc-button-plus-icon"></i>
-      <span>New Appointment</span>
-    </a>
   </div>
 
   <div data-cc-spinner-directive>
     <div class="cc-widget-padding">
+      <p data-ng-if="urlToMakeAppointment">
+        You may schedule a <a data-ng-href="{{urlToMakeAppointment}}">new appointment</a> with an advisor.
+      </p>
       <div data-ng-if="caseloadAdviser">
         <h3 class="cc-widget-lsadvising-heading-first">College Advisor</h3>
         <a data-ng-href="mailto:{{caseloadAdviser.email}}">
