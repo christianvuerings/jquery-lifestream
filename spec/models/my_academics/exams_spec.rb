@@ -11,7 +11,7 @@ describe "MyAcademics::Exams" do
 
     feed[:examSchedule].should_not be_nil
     feed[:examSchedule][0][:course_code].should == "Psychology C120"
-    feed[:examSchedule][0][:time].should == "8:00A"
+    feed[:examSchedule][0][:time].should == "8:00 AM"
     feed[:examSchedule][0][:location][:rawLocation].should == "390 HEARST MIN"
     feed[:examSchedule][0][:location]["roomNumber"].should == "390"
     feed[:examSchedule][0][:location]["display"].should == "Hearst Memorial Mining Building"

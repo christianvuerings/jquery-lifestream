@@ -1,0 +1,13 @@
+.cc-widget-exam-schedule {
+  .cc-widget-exam-schedule-content {
+    margin-left: 85px;
+  }
+  .cc-widget-exam-schedule-item:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  .cc-widget-exam-schedule-time {
+    margin-right: 15px;
+    text-align: right;
+    width: 80px;
+  }
+}

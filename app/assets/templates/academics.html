@@ -19,7 +19,7 @@
     <div class="medium-4 columns cc-column-last">
       <div data-ng-include="'widgets/telebears.html'" data-ng-if="telebears.slug"></div>
 
-      <div data-ng-include="'academics_final_exam_schedule.html'" data-ng-if="examScheduleLength"></div>
+      <div data-ng-include="'academics_final_exam_schedule.html'" data-ng-if="examSchedule.length"></div>
 
       <div data-ng-include="'academics_ls_advising.html'" data-ng-if="api.user.profile.features.advising && isLSStudent"></div>
 

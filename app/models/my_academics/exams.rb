@@ -21,7 +21,8 @@ module MyAcademics
           Rails.logger.warn "#{self.class.name} Error parsing date in final exams feed for user #{@uid}: #{e.message}. Exam data is #{exam_data.to_s}"
           next
         end
-        time = "#{to_time(exam_data.css("startTime"))}#{to_text(exam_data.css("startTimeAmPmFlag"))}"
+        ampm = to_text(exam_data.css("startTimeAmPmFlag")) == 'A' ? 'AM' : 'PM'
+        time = "#{to_time(exam_data.css("startTime"))} #{ampm}"
         raw_location = to_text exam.css("location")
         location = {
           :rawLocation => raw_location
