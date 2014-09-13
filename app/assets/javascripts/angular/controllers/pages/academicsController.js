@@ -229,21 +229,13 @@
         return false;
       }
 
-      var law_student = false;
-      for (var i = 0; i < collegeAndLevel.colleges.length; i++) {
-        if (collegeAndLevel.colleges[i].college === 'School of Law') {
-          law_student = true;
-        } else {
-          // Ensures function returns true only if student's only college is Law
-          return false;
-        }
-      }
-      return law_student;
+      return collegeAndLevel.colleges[0].college === 'School of Law';
     };
 
-    $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
     if (isLawStudent($scope.collegeAndLevel)) {
       $scope.transcriptLink = 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php';
+    } else {
+      $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
     }
 
     var parseAcademics = function(data) {
@@ -257,7 +249,6 @@
       }
 
       $scope.isLSStudent = isLSStudent($scope.collegeAndLevel);
-      $scope.isLawStudent = isLawStudent($scope.collegeAndLevel);
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
