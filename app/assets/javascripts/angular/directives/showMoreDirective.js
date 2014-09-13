@@ -62,6 +62,7 @@
           if (watchValue === undefined) {
             return;
           }
+          moreListWatch();
           var list = scope[attrs.ccShowMoreList];
           if (list && Array.isArray(list) && list.length) {
             watchMoreLimit(list.length);
