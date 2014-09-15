@@ -68,6 +68,7 @@ describe User::Api do
     User::Oauth2Data.should_receive(:destroy_all)
     Notifications::Notification.should_receive(:destroy_all)
     Cache::UserCacheExpiry.should_receive(:notify)
+    Calendar::User.should_receive(:delete_all)
 
     User::Api.delete @random_id
 
