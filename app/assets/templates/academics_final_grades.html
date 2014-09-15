@@ -1,0 +1,49 @@
+<div class="cc-widget cc-widget-interesting" data-ng-controller="AcademicsFinalGradesController">
+  <div class="cc-widget-title">
+    <h2>Final Grades</h2>
+  </div>
+  <div class="cc-widget-padding">
+    <div>
+      <div data-ng-if="semesterHasTranscripts">
+        <h4>Grades for <span data-ng-bind="selectedSemester.name"></span></h4>
+        <div class="cc-table">
+          <table>
+            <thead>
+              <th scope="col" width="60%">Class</th>
+              <th scope="col" class="cc-table-right cc-table-right-spacing">Units</th>
+              <th scope="col">Grade</th>
+            </thead>
+            <tbody data-ng-repeat="course in selectedCourses">
+              <tr data-ng-repeat="transcript in course.transcript">
+                <td data-ng-bind="course.course_code"></td>
+                <td class="cc-table-right cc-table-right-spacing" data-ng-bind="transcript.units | number:1"></td>
+                <td data-ng-if="!transcript.units">--</td>
+                <td>
+                  <span data-ng-bind="transcript.grade"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div data-ng-if="!semesterHasTranscripts">
+        <h4>No grade data available for <span data-ng-bind="selectedSemester.name"></span></h4>
+      </div>
+      <div class="row collapse cc-academics-calculator-disclaimer" data-ng-if="selectedCourses.length">
+        <div class="small-12 columns">
+          <p>This unofficial list of grades is based on available data<span data-ng-show="!showDisclaimer">...</span>
+            <span data-ng-show="showDisclaimer">
+              and may not reflect your full transcript.
+              Current students can view an unofficial transcript on <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a> by selecting <em>All Grades</em>.
+              <span data-ng-if="api.user.profile.roles.exStudent">
+                Students who have graduated may request transcripts online through an <a href="https://www.credentials-inc.com/CGI-BIN/dvcgitp.pgm?ALUMTRO001312">alumni service</a>.
+              </span>
+            </span>
+            <button class="cc-button-link" data-ng-show="!showDisclaimer" data-ng-click="showDisclaimer = !showDisclaimer">Show more</button>
+            <button class="cc-button-link" data-ng-show="showDisclaimer" data-ng-click="showDisclaimer = !showDisclaimer">Show less</button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
