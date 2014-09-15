@@ -38,7 +38,6 @@ describe 'The My Dashboard task manager', :testui => true do
 
     before(:each) do
       @to_do_card.delete_all_tasks(@driver)
-      sleep(1)
     end
 
     after(:all) do
@@ -46,54 +45,6 @@ describe 'The My Dashboard task manager', :testui => true do
     end
 
     context 'when adding a task' do
-      it 'allows a user to create overdue tasks' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Overdue Task', yesterday.strftime("%m/%d/%Y"), 'Get this done yesterday')
-        @to_do_card.click_add_task_button
-        @to_do_card.overdue_task_one_title_element.when_visible(timeout=task_wait)
-        @to_do_card.overdue_task_one_title.should eql('Overdue Task')
-        @to_do_card.overdue_task_one_date.should eql(yesterday.strftime("%m/%d"))
-        @to_do_card.toggle_overdue_task_one_detail
-        @to_do_card.overdue_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.overdue_task_one_notes.should eql('Get this done yesterday')
-      end
-
-      it 'allows a user to create tasks due today' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Today Task', today.strftime("%m/%d/%Y"), 'Get this done today')
-        @to_do_card.click_add_task_button
-        @to_do_card.today_task_one_title_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_title.should eql('Today Task')
-        @to_do_card.today_task_one_date.should eql(today.strftime("%m/%d"))
-        @to_do_card.toggle_today_task_one_detail
-        @to_do_card.today_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_notes.should eql('Get this done today')
-      end
-
-      it 'allows a user to create tasks due in the future' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Future Task', tomorrow.strftime("%m/%d/%Y"), 'Get this done tomorrow')
-        @to_do_card.click_add_task_button
-        @to_do_card.future_task_one_title_element.when_visible(timeout=task_wait)
-        @to_do_card.future_task_one_title.should eql('Future Task')
-        @to_do_card.future_task_one_date.should eql(tomorrow.strftime("%m/%d"))
-        @to_do_card.toggle_future_task_one_detail
-        @to_do_card.future_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.future_task_one_notes.should eql('Get this done tomorrow')
-      end
-
-      it 'allows a user to create unscheduled tasks' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Unscheduled Task', nil, 'Get this done someday')
-        @to_do_card.click_add_task_button
-        @to_do_card.click_unscheduled_tasks_tab
-        @to_do_card.unsched_task_one_title_element.when_visible(timeout=task_wait)
-        @to_do_card.unsched_task_one_title.should eql('Unscheduled Task')
-        @to_do_card.unsched_task_one_date.should eql(today.strftime("%m/%d"))
-        @to_do_card.toggle_unsched_task_one_detail
-        @to_do_card.unsched_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.unsched_task_one_notes.should eql('Get this done someday')
-      end
 
       it 'allows a user to create only one task at a time' do
         @to_do_card.click_new_task_button
@@ -463,7 +414,6 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.edit_new_task('Overdue to be completed', yesterday.strftime("%m/%d/%Y"), nil)
         @to_do_card.click_add_task_button
         @to_do_card.complete_overdue_task_one
-        @to_do_card.overdue_task_one_element.when_not_visible(timeout=task_wait)
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.completed_task_one_title.should eql('Overdue to be completed')
@@ -474,7 +424,6 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.edit_new_task('Today to be completed', today.strftime("%m/%d/%Y"), nil)
         @to_do_card.click_add_task_button
         @to_do_card.complete_today_task_one
-        @to_do_card.today_task_one_element.when_not_visible(timeout=task_wait)
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.completed_task_one_title.should eql('Today to be completed')
@@ -485,7 +434,6 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.edit_new_task('Future to be completed', tomorrow.strftime("%m/%d/%Y"), nil)
         @to_do_card.click_add_task_button
         @to_do_card.complete_future_task_one
-        @to_do_card.future_task_one_element.when_not_visible(timeout=task_wait)
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.completed_task_one_title.should eql('Future to be completed')
@@ -497,7 +445,6 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_add_task_button
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.complete_unsched_task_one
-        @to_do_card.unsched_task_one_element.when_not_visible(timeout=task_wait)
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.completed_task_one_title.should eql('Unscheduled to be completed')
@@ -508,12 +455,11 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.edit_new_task('Today to be completed', today.strftime("%m/%d/%Y"), nil)
         @to_do_card.click_add_task_button
         @to_do_card.complete_today_task_one
-        @to_do_card.today_task_one_element.when_not_visible(timeout=task_wait)
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.completed_task_one_title.should eql('Today to be completed')
         @to_do_card.uncomplete_task_one
-        @to_do_card.completed_task_one_element.when_not_visible(timeout=task_wait)
+        @to_do_card.completed_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.today_task_one_title.should eql('Today to be completed')
