@@ -6,7 +6,9 @@
    */
   angular.module('calcentral.controllers').controller('CampusController', function($routeParams, $scope, apiService, campusLinksFactory) {
 
-    campusLinksFactory.getLinks($routeParams.category).then(function(data) {
+    campusLinksFactory.getLinks({
+      category: $routeParams.category
+    }).then(function(data) {
       angular.extend($scope, data);
 
       if (data.currentTopCategory) {

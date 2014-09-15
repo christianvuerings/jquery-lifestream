@@ -7,6 +7,9 @@
    */
   angular.module('calcentral.factories').factory('campusLinksFactory', function(apiService, $http) {
 
+    // Data contains "links" and "navigation"
+    var linkDataUrl = '/api/my/campuslinks';
+
     /**
      * Add to the subcategories list if it doesn't exist yet
      * @param {String} subcategory The subcategory you want to add
@@ -128,20 +131,21 @@
       return data;
     };
 
-    var getLinks = function(categoryId) {
+    var getLinks = function(options) {
 
-      // Data contains "links" and "navigation"
-      var linkDataUrl = '/api/my/campuslinks';
+      apiService.util.clearCache(options, linkDataUrl);
 
       // We need to make sure to load the user data first since that contains the roles information
       return apiService.user.fetch()
         // Load the campus links
         .then(function() {
-          return $http.get(linkDataUrl);
+          return $http.get(linkDataUrl, {
+            cache: true
+          });
         })
         // Parse the campus links
         .then(function(response) {
-          return parseCampusLinks(response, categoryId);
+          return parseCampusLinks(response, options.category);
         });
     };
 

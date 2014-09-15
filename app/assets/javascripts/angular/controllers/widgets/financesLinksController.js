@@ -6,8 +6,9 @@
    */
   angular.module('calcentral.controllers').controller('FinancesLinksController', function(campusLinksFactory, $scope) {
 
-    var category = 'finances';
-    campusLinksFactory.getLinks(category).then(function(data) {
+    campusLinksFactory.getLinks({
+      category: 'finances'
+    }).then(function(data) {
       angular.extend($scope, data);
     });
 

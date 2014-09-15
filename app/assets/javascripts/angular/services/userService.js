@@ -11,6 +11,7 @@
       isAuthenticatedAndHasGoogle: false,
       profile: false
     };
+    var statusUrl = '/api/my/status';
 
     // Private methods that are only exposed for testing but shouldn't be used within the views
 
@@ -72,9 +73,15 @@
 
     /**
      * Get the actual user information
+     * @param {Object} options Options that need to be passed through
      */
-    var fetch = function() {
-      return $http.get('/api/my/status').then(function(xhr) {
+    var fetch = function(options) {
+
+      utilService.clearCache(options, statusUrl);
+
+      return $http.get(statusUrl, {
+        cache: true
+      }).then(function(xhr) {
         return handleUserLoaded(xhr.data);
       });
     };
