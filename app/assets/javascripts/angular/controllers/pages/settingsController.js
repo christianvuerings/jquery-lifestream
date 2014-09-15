@@ -14,7 +14,7 @@
       $scope.connectedServices = services.filter(function(element) {
         return profile['has' + element + 'AccessToken'];
       });
-      $scope.nonConnectedServices = services.filter(function(element) {
+      $scope.disConnectedServices = services.filter(function(element) {
         return !profile['has' + element + 'AccessToken'];
       });
     };
