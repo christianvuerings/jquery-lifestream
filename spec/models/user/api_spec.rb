@@ -40,6 +40,7 @@ describe User::Api do
     user_data = User::Api.new(@random_id).get_feed
     user_data[:preferred_name].should == @default_name
     user_data[:hasCanvasAccount].should_not be_nil
+    user_data[:isCalendarOptedIn].should_not be_nil
   end
   it "should return whether the user is registered with Canvas" do
     Canvas::Proxy.stub(:has_account?).and_return(true, false)
