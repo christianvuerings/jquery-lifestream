@@ -11,7 +11,9 @@
         apiService.analytics.sendEvent('Preferences', 'Dismiss bConnected reminder card');
         $scope.showReminderCard = false;
         // Force the user.profile to refresh since status has changed.
-        $scope.api.user.fetch();
+        $scope.api.user.fetch({
+          refreshCache: true
+        });
       });
     };
 

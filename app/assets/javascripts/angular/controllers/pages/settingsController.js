@@ -29,7 +29,9 @@
     // 1) We get the user status, which says you have a canvas token
     // 2) We fetch the user's canvas classes and get a 400 back
     // 3) Now we need to update the user status
-    $scope.api.user.fetch();
+    $scope.api.user.fetch({
+      refreshCache: true
+    });
 
   });
 
