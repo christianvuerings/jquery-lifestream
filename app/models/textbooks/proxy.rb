@@ -25,7 +25,7 @@ module Textbooks
         item = response['items'][0]
         google_response = {
           link: item['volumeInfo']['infoLink'],
-          image: "https://encrypted.google.com/books/images/frontcover/#{item['id']}?fife=w170-rw"
+          image: item['volumeInfo']['imageLinks'] ? "https://encrypted.google.com/books/images/frontcover/#{item['id']}?fife=w170-rw" : nil
         }
       end
 
