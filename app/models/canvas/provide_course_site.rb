@@ -49,10 +49,10 @@ module Canvas
 
       # TODO Upload ZIP archives instead and do more detailed parsing of the import status.
       import_course_site(@import_data['course_site_definition'])
+      retrieve_course_site_details
       import_sections(@import_data['section_definitions'])
       add_instructor_to_sections(@import_data['section_definitions']) unless is_admin_by_ccns
 
-      retrieve_course_site_details
       expire_instructor_sites_cache
 
       # TODO Expire user's Canvas-related caches to maintain UX consistency.
