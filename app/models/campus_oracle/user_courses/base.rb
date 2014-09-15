@@ -84,6 +84,7 @@ module CampusOracle
           previous_item[:sections] << row_to_section_data(row)
           nil
         else
+          course_name = row['course_title'].present? ? row['course_title'] : row['course_title_short']
           course_item.merge!({
                                term_yr: row['term_yr'],
                                term_cd: row['term_cd'],
@@ -92,7 +93,7 @@ module CampusOracle
                                catid: row['catalog_id'],
                                course_catalog: row['catalog_id'],
                                emitter: 'Campus',
-                               name: row['course_title'],
+                               name: course_name,
                                sections: [
                                  row_to_section_data(row)
                                ]

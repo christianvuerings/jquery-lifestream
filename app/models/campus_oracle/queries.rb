@@ -190,7 +190,7 @@ module CampusOracle
       result = {}
       use_pooled_connection {
         sql = <<-SQL
-      select course_title, dept_name, catalog_id, term_yr, term_cd
+      select course_title, course_title_short, dept_name, catalog_id, term_yr, term_cd
       from calcentral_course_info_vw
       where term_yr = #{term_yr.to_i}
         and term_cd = #{connection.quote(term_cd)}
@@ -205,7 +205,7 @@ module CampusOracle
       result = {}
       use_pooled_connection {
         sql = <<-SQL
-      select course_title, dept_name, catalog_id, term_yr, term_cd, course_cntl_num, primary_secondary_cd, section_num, instruction_format,
+      select course_title, course_title_short, dept_name, catalog_id, term_yr, term_cd, course_cntl_num, primary_secondary_cd, section_num, instruction_format,
         catalog_root, catalog_prefix, catalog_suffix_1, catalog_suffix_2
       from calcentral_course_info_vw
       where term_yr = #{term_yr.to_i}
@@ -226,7 +226,7 @@ module CampusOracle
       use_pooled_connection {
         sql = <<-SQL
       select d.dept_description, c.term_yr, c.term_cd, c.course_cntl_num, r.enroll_status, r.wait_list_seq_num, r.unit, r.pnp_flag,
-        c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
+        c.course_title, c.course_title_short, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
         c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.enroll_limit, c.cred_cd
       from calcentral_class_roster_vw r
       join calcentral_course_info_vw c on (
@@ -271,7 +271,7 @@ module CampusOracle
       use_pooled_connection {
         sql = <<-SQL
       select d.dept_description, c.term_yr, c.term_cd, c.course_cntl_num, c.course_option,
-        c.course_title, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
+        c.course_title, c.course_title_short, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
         c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
       from calcentral_course_instr_vw i
       join calcentral_course_info_vw c on c.term_yr = i.term_yr and c.term_cd = i.term_cd and c.course_cntl_num = i.course_cntl_num

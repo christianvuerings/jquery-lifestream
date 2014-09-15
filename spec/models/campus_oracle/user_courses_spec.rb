@@ -180,4 +180,28 @@ describe CampusOracle::UserCourses do
     its([:course_code]) {should eq 'MEC ENG/I,RES 0109AL'}
   end
 
+  describe '#row_to_feed_item' do
+    let(:row) {{
+      'catalog_id' => "0109AL",
+      'dept_name' => 'MEC ENG/I,RES',
+      'term_yr' => '2014',
+      'term_cd' => 'B',
+      'course_title' => course_title,
+      'course_title_short' => '17TH-18TH CENTURY'
+    }}
+    subject {CampusOracle::UserCourses::Base.new(user_id: random_id).row_to_feed_item(row, {})}
+    context 'course has a nice long title' do
+      let(:course_title) {'Museum Internship'}
+      it 'uses the official title' do
+        expect(subject[:name]).to eq course_title
+      end
+    end
+    context 'course has a null COURSE_TITLE column' do
+      let(:course_title) {nil}
+      it 'uses the official title' do
+        expect(subject[:name]).to eq row['course_title_short']
+      end
+    end
+  end
+
 end

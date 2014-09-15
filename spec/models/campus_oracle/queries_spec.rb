@@ -67,6 +67,7 @@ describe CampusOracle::Queries do
     if CampusOracle::Queries.test_data?
       # we will only have predictable data in our fake Oracle db.
       course["course_title"].should == "General Biology Lecture"
+      course['course_title_short'].should eq 'GENERAL BIOLOGY LEC'
       course["dept_name"].should == "BIOLOGY"
       course["catalog_id"].should == "1A"
     end
@@ -81,6 +82,7 @@ describe CampusOracle::Queries do
         c['dept_name'] == "BIOLOGY" &&
         c['catalog_id'] == "1A" &&
         c['course_title'] == "General Biology Lecture" &&
+        c['course_title_short'] == 'GENERAL BIOLOGY LEC' &&
         c['primary_secondary_cd'] == 'P' &&
         c['instruction_format'] == 'LEC' &&
         c['section_num'] == '003'
