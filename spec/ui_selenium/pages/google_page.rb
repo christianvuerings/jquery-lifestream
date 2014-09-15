@@ -26,8 +26,8 @@ class GooglePage
 
   # EMAIL
   button(:compose_email_button, :xpath => '//div[text()="COMPOSE"]')
-  h2(:new_message_heading, :xpath => '//h2[contains(.,"New Message")]')
-  div(:recipient, :xpath => 'div[text()="Recipients"]')
+  link(:new_message_heading, :xpath => '//h2[contains(.,"New Message")]')
+  link(:recipient, :xpath => 'div[text()="Recipients"]')
   text_area(:to, :xpath => '//textarea[@aria-label="To"]')
   text_area(:subject, :name => 'subjectbox')
   button(:send_email_button, :xpath => '//div[text()="Send"]')
@@ -58,16 +58,21 @@ class GooglePage
     logger.info('Connecting Google account to CalCentral')
     driver.get(WebDriverUtils.base_url + WebDriverUtils.google_auth_url)
     log_into_google(gmail_user, gmail_pass)
-    wait_until(timeout=WebDriverUtils.page_load_timeout, 'Auth page does not include expected content') { auth_mail_element.present? }
-    wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
-    wait.until { auth_address_element.present? }
-    wait.until { auth_profile_element.present? }
-    wait.until { auth_calendar_element.present? }
-    wait.until { auth_drive_element.present? }
-    wait.until { auth_tasks_element.present? }
-    wait.until { approve_access_button_element.present? }
-    wait.until { approve_access_button_element.enabled? }
-    approve_access_button
+    if driver.current_url.include? 'oauth2'
+      logger.info('Google permissions page loaded as expected')
+      wait_until(timeout=WebDriverUtils.page_load_timeout, 'Auth page does not include expected content') { auth_mail_element.present? }
+      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
+      wait.until { auth_address_element.present? }
+      wait.until { auth_profile_element.present? }
+      wait.until { auth_calendar_element.present? }
+      wait.until { auth_drive_element.present? }
+      wait.until { auth_tasks_element.present? }
+      wait.until { approve_access_button_element.present? }
+      wait.until { approve_access_button_element.enabled? }
+      approve_access_button
+    else
+      logger.warn('Google permissions page did not load')
+    end
   end
 
   def load_gmail(driver)
@@ -106,8 +111,11 @@ class GooglePage
     compose_email_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     compose_email_button
     new_message_heading_element.when_present(timeout=WebDriverUtils.page_event_timeout)
-    new_message_heading_element.click
-    new_message_heading_element.click
+    new_message_heading
+    new_message_heading
+    if self.recipient_element.visible?
+      self.recipient
+    end
     to_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     self.to = recipient
     self.subject = subject
@@ -141,6 +149,8 @@ class GooglePage
       toggle_tasks_visibility
       tasks_heading_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     end
+    wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
+    wait.until { driver.find_element(:xpath, '//h2[contains(.,"Tasks")]/following-sibling::div//iframe') }
     driver.switch_to.frame driver.find_element(:xpath, '//h2[contains(.,"Tasks")]/following-sibling::div//iframe')
     add_task_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     add_task

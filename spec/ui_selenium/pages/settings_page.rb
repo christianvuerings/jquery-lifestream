@@ -30,11 +30,11 @@ module CalCentralPages
     def disconnect_bconnected(driver)
       logger.info('Checking if user is connected to Google')
       if disconnect_button_element.visible?
-        logger.info('Disconnecting from Google')
+        logger.info('User is connected, so disconnecting from Google')
         disconnect_button
         wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
         wait.until { driver.find_element(:xpath => '//button[@data-ng-click="api.user.enableOAuth(\'Google\')"]') }
-        logger.info('Pausing so the token is revoked')
+        logger.info('Pausing so that OAuth token is revoked')
         sleep(WebDriverUtils.google_oauth_timeout)
       else
         logger.info('User not connected')
