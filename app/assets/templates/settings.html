@@ -1,24 +1,24 @@
 <div class="medium-12 columns cc-settings">
   <h1>Settings for {{api.user.profile.fullName}}</h1>
 
-  <section data-ng-show='connectedServices.length' class="cc-settings-section">
+  <section data-ng-if='connectedServices.length' class="cc-settings-section row collapse">
     <div class="medium-10 medium-centered columns">
 
       <h2>Connected Services</h2>
       <div data-ng-repeat="service in connectedServices">
-        <div class="row cc-settings-service-row" data-ng-init="loopname='connected'" data-ng-include src="'settings_service_loop.html'"></div>
+        <div class="row collapse cc-settings-service-row" data-ng-init="loopname='connected'" data-ng-include src="'settings_service_loop.html'"></div>
       </div>
 
     </div>
   </section>
 
-  <section data-ng-show='nonConnectedServices.length' class="cc-settings-section">
+  <section data-ng-if='disConnectedServices.length' class="cc-settings-section row collapse">
     <div class="medium-10 medium-centered columns">
 
       <h2>Services to Connect</h2>
 
-      <div data-ng-repeat="service in nonConnectedServices">
-        <div class="row cc-settings-service-row" data-ng-init="loopname='unconnected'" data-ng-include src="'settings_service_loop.html'"></div>
+      <div data-ng-repeat="service in disConnectedServices">
+        <div class="row collapse cc-settings-service-row" data-ng-init="loopname='disconnected'" data-ng-include src="'settings_service_loop.html'"></div>
       </div>
 
     </div>

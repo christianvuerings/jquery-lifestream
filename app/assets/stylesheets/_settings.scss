@@ -30,23 +30,29 @@
     margin: 40px 0 30px;
   }
   .cc-settings-section {
-    margin-top: 30px;
+    margin-top: 30px !important;
   }
   .cc-settings-service-bconnected-icon {
     background-image: asset-url("icon_bconnected_32x32.png");
     max-height: 32px;
     max-width: 32px;
   }
-  .cc-settings-service-description {
-    color: #797979;
-  }
-  .cc-settings-service-description-block {
-    padding-left: 0;
+  .cc-settings-service-icon {
+    margin: 0 auto;
   }
   .cc-settings-service-row {
     border-top: 1px solid $cc-color-light-grey;
     margin-bottom: 20px;
     padding-top: 10px;
+  }
+  .cc-settings-service-sure-buttons {
+    display: inline;
+  }
+  .cc-settings-service-sure-disclaimer {
+    margin-top: 5px;
+  }
+  .cc-settings-service-sure-question {
+    margin-right: 10px;
   }
   .cc-settings-table {
     margin: 20px 10px 30px;
@@ -65,6 +71,13 @@
   @media #{$small-only} {
     .cc-settings-service {
       font-size: 13px;
+    }
+    .cc-settings-service-sure-buttons {
+      display: block;
+    }
+    .cc-settings-service-sure-question {
+      display: block;
+      margin-bottom: 5px;
     }
   }
 }

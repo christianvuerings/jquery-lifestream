@@ -1,29 +1,47 @@
 <!-- Dont show the icon column on small screens -->
 <div class="medium-1 columns hide-for-small">
-  <div class="cc-settings-service-bconnected-icon cc-image-responsive cc-image-responsive-square" data-ng-show="service === 'Google'"></div>
+  <div class="cc-settings-service-bconnected-icon cc-settings-service-icon cc-image-responsive cc-image-responsive-square"></div>
 </div>
 
-<div class="medium-9 small-8 columns cc-settings-service-description-block">
-  <div data-ng-show="service === 'Google'">
-    <strong>bConnected</strong><br />
-    <span class="cc-settings-service-description" data-ng-show="!api.user.profile.googleEmail || !api.user.profile.hasGoogleAccessToken">
-      Connect your Google Apps for Education account in order to access your drive, mail and calendar.<br />Be sure you have logged out of any personal Google accounts before you perform this operation.
-    </span>
-    <span class="cc-settings-service-description" data-ng-show="api.user.profile.googleEmail && api.user.profile.hasGoogleAccessToken" data-ng-bind-template="Connected as: {{api.user.profile.googleEmail}}"></span>
+<div class="medium-7 small-6 columns">
+  <strong>bConnected</strong><br />
+  <span class="cc-settings-service-description" data-ng-if="!api.user.profile.googleEmail || !api.user.profile.hasGoogleAccessToken">
+    Connect your Google Apps for Education account in order to access your drive, mail and calendar.<br />Be sure you have logged out of any personal Google accounts before you perform this operation.
+  </span>
+  <div data-ng-if="api.user.profile.googleEmail && api.user.profile.hasGoogleAccessToken" class="cc-text-light">
+    Connected as:
+    <span class="cc-ellipsis hide-for-medium-up" data-ng-bind="api.user.profile.googleEmail"></span>
+    <span class="cc-hide-for-small" data-ng-bind="api.user.profile.googleEmail"></span>
   </div>
 </div>
 
-<div class="medium-2 small-4 columns" data-ng-show="loopname == 'connected'">
-  <button data-ng-show="api.user.profile['has' + service + 'AccessToken']"
-    data-ng-disabled="api.user.profile['actingAsUid']"
-    class="cc-button" data-ng-click="api.user.removeOAuth(service)">
-    Disconnect <span class="cc-visuallyhidden" data-ng-bind-template="{{service}} access"></span>
-  </button>
+<div class="medium-4 small-6 columns" data-ng-if="loopname === 'connected'">
+  <div class="cc-text-center">
+    <button
+      data-ng-click="showValidation = true"
+      data-ng-disabled="api.user.profile['actingAsUid']"
+      data-ng-show="!showValidation"
+      class="cc-button">
+      Disconnect <span class="cc-visuallyhidden">Google access</span>
+    </button>
+  </div>
+  <div data-ng-show="showValidation">
+    <strong class="cc-settings-service-sure-question">Are you sure?</strong>
+    <div class="cc-settings-service-sure-buttons">
+      <button class="cc-button cc-button-blue" data-ng-click="api.user.removeOAuth(service)">Yes</button>
+      <button class="cc-button" data-ng-click="showValidation = false">No</button>
+    </div>
+    <p class="cc-settings-service-sure-disclaimer">
+      Disconnecting bConnected will remove your class schedule from your calendar.
+    </p>
+  </div>
 </div>
-<div class="medium-2 small-4 columns" data-ng-show="loopname == 'unconnected'">
-  <button data-ng-show="service == 'Google'"
-    data-ng-disabled="api.user.profile['actingAsUid']"
-    class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth('Google')">
-    Connect <span class="cc-visuallyhidden">Google Access</span>
-  </button>
+<div class="medium-4 small-6 columns" data-ng-if="loopname === 'disconnected'">
+  <div class="cc-text-center">
+    <button
+      data-ng-disabled="api.user.profile['actingAsUid']"
+      class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth(service)">
+      Connect <span class="cc-visuallyhidden">Google Access</span>
+    </button>
+  </div>
 </div>
