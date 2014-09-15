@@ -33,6 +33,7 @@ module User
       logger.warn "Removing all stored user data for user #{uid}"
       user = nil
       use_pooled_connection {
+        Calendar::User.delete_all({uid: uid})
         user = User::Data.where(:uid => uid).first
         if !user.blank?
           user.delete

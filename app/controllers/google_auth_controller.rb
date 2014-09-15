@@ -55,6 +55,7 @@ class GoogleAuthController < ApplicationController
   def remove_authorization
     logger.warn "Deleting #{app_id} access token for user #{session[:user_id]} at the user's request."
     GoogleApps::Revoke.new(user_id: session[:user_id]).revoke
+    Calendar::User.delete_all({uid: session[:user_id]})
     User::Oauth2Data.remove(session[:user_id], app_id)
     expire
     render :nothing => true, :status => 204

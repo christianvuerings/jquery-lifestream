@@ -36,7 +36,7 @@ describe UserApiController do
       expect(json_response['uid']).to eq user_id
       expect(json_response['preferred_name']).to be_present
       expect(json_response['features']).to be_present
-      visit = User::Visit.where(:uid=>session[:user_id])[0]
+      visit = User::Visit.where(:uid => session[:user_id])[0]
       expect(visit.last_visit_at).to be_present
     end
   end
@@ -60,16 +60,16 @@ describe UserApiController do
       JSON.parse(response.body)['actingAsUid']
     end
     context 'when normally authenticated' do
-      it {should be false}
+      it { should be false }
     end
     context 'when viewing as' do
       let(:original_user_id) { random_id }
       before { session[:original_user_id] = original_user_id }
-      it {should eq original_user_id}
+      it { should eq original_user_id }
     end
     context 'when authenticated by LTI' do
       before { session[:lti_authenticated_only] = true }
-      it {should eq 'Authenticated through LTI'}
+      it { should eq 'Authenticated through LTI' }
     end
   end
 
@@ -85,24 +85,110 @@ describe UserApiController do
         end
       end
     end
-    subject do
-      get :mystatus
-      JSON.parse(response.body)['isSuperuser']
-    end
-    context 'when normally authenticated' do
-      let(:original_user_id) { nil }
-      it {should be_true}
-    end
-    context 'when viewing as' do
-      let(:original_user_id) { random_id }
-      it {should be_false}
-    end
-    context 'when authenticated by LTI' do
-      let(:original_user_id) { nil }
-      before { session[:lti_authenticated_only] = true }
-      it {should be_false}
+    context 'getting status as a superuser' do
+      subject do
+        get :mystatus
+        JSON.parse(response.body)['isSuperuser']
+      end
+      context 'when normally authenticated' do
+        let(:original_user_id) { nil }
+        it { should be_true }
+      end
+      context 'when viewing as' do
+        let(:original_user_id) { random_id }
+        it { should be_false }
+      end
+      context 'when authenticated by LTI' do
+        let(:original_user_id) { nil }
+        before { session[:lti_authenticated_only] = true }
+        it { should be_false }
+      end
     end
 
+    context 'altering another users data as a superuser should not be possible' do
+
+      context 'recording first login' do
+        subject do
+          before { User::Api.should_not_receive(:from_session) }
+          get :record_first_login
+          context 'when viewing as' do
+            let(:original_user_id) { random_id }
+            expect(response.status).to eq 204
+          end
+          context 'when authenticated by LTI' do
+            let(:original_user_id) { nil }
+            before { session[:lti_authenticated_only] = true }
+            it { should eq 403 }
+          end
+        end
+      end
+
+      context 'opting out of calcentral entirely' do
+        before { User::Api.should_not_receive(:delete) }
+        subject do
+          post :delete
+          response.status
+        end
+        context 'when viewing as' do
+          let(:original_user_id) { random_id }
+          it { should eq 403 }
+        end
+        context 'when authenticated by LTI' do
+          let(:original_user_id) { nil }
+          before { session[:lti_authenticated_only] = true }
+          it { should eq 403 }
+        end
+      end
+
+      context 'opting into the calendar integration' do
+        before { Calendar::User.should_not_receive(:first_or_create) }
+        subject do
+          post :calendar_opt_in
+          response.status
+        end
+        context 'when viewing as' do
+          let(:original_user_id) { random_id }
+          it { should eq 403 }
+        end
+        context 'when authenticated by LTI' do
+          let(:original_user_id) { nil }
+          before { session[:lti_authenticated_only] = true }
+          it { should eq 403 }
+        end
+      end
+      context 'opting out of the calendar integration' do
+        before { Calendar::User.should_not_receive(:delete_all) }
+        subject do
+          post :calendar_opt_out
+          response.status
+        end
+        context 'when viewing as' do
+          let(:original_user_id) { random_id }
+          it { should eq 403 }
+        end
+        context 'when authenticated by LTI' do
+          let(:original_user_id) { nil }
+          before { session[:lti_authenticated_only] = true }
+          it { should eq 403 }
+        end
+      end
+    end
+  end
+
+  describe '#calendar_opt_in' do
+    it 'should handle an opt-in' do
+      Calendar::User.should_receive(:first_or_create)
+      post :calendar_opt_in
+      expect(response.status).to eq 204
+    end
+  end
+
+  describe '#calendar_opt_out' do
+    it 'should handle an opt-out' do
+      Calendar::User.should_receive(:delete_all)
+      post :calendar_opt_out
+      expect(response.status).to eq 204
+    end
   end
 
 end
