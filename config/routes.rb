@@ -13,6 +13,8 @@ Calcentral::Application.routes.draw do
   get '/api/my/status' => 'user_api#mystatus', :as => :mystatus, :defaults => { :format => 'json' }
   post '/api/my/record_first_login' => 'user_api#record_first_login', :as => :record_first_login, :defaults => { :format => 'json' }, :via => :post
   post '/api/my/opt_out'=> 'user_api#delete', :via => :post
+  post '/api/my/calendar/opt_in' => 'user_api#calendar_opt_in', :via => :post
+  post '/api/my/calendar/opt_out' => 'user_api#calendar_opt_out', :via => :post
 
   # Feeds of read-only content
   get '/api/my/classes' => 'my_classes#get_feed', :as => :my_classes, :defaults => { :format => 'json' }
