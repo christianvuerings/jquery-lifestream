@@ -10,6 +10,10 @@
 
     var services = ['Google'];
 
+    var refreshIsCalendarOptedIn = function(profile) {
+      $scope.isCalendarOptedIn = profile.isCalendarOptedIn;
+    };
+
     var refreshServices = function(profile) {
       $scope.connectedServices = services.filter(function(element) {
         return profile['has' + element + 'AccessToken'];
@@ -21,6 +25,7 @@
 
     $scope.$on('calcentral.api.user.profile', function(event, profile) {
       if (profile) {
+        refreshIsCalendarOptedIn(profile);
         refreshServices(profile);
       }
     });
