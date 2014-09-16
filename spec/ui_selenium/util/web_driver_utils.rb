@@ -63,6 +63,6 @@ class WebDriverUtils
   end
 
   def self.live_users
-    File.join(CalcentralConfig.local_dir, "uids.csv")
+    File.join(CalcentralConfig.local_dir, "uids.json")
   end
 end
