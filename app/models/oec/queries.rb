@@ -2,7 +2,7 @@ module Oec
   class Queries < CampusOracle::Connection
     include ActiveRecordHelper
 
-    def self.get_all_course_evaluations(course_cntl_nums = nil)
+    def self.get_all_courses(course_cntl_nums = nil)
       result = []
       course_cntl_nums_clause = ''
       this_depts_clause = depts_clause('c', Settings.oec.departments)

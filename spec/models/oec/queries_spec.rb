@@ -15,14 +15,14 @@ describe Oec::Queries do
     it { subject[0]["ldap_uid"].should_not be_nil }
   end
 
-  context "looking up course evaluations", :testext => true do
-    subject { Oec::Queries.get_all_course_evaluations }
+  context "looking up courses", :testext => true do
+    subject { Oec::Queries.get_all_courses }
     it { should_not be_nil }
     it { subject[0]["course_id"].should_not be_nil }
   end
 
-  context "looking up course evaluations with crosslistings", :testext => true do
-    subject { Oec::Queries.get_all_course_evaluations("7309, 7366") }
+  context "looking up courses with crosslistings", :testext => true do
+    subject { Oec::Queries.get_all_courses("7309, 7366") }
     it { should_not be_nil }
   end
 
