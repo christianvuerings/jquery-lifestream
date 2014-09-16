@@ -6,8 +6,6 @@ feature "act_as_user" do
     @fake_events_list = GoogleApps::EventsList.new(fake: true)
     User::Auth.new_or_update_superuser! "238382"
     User::Auth.new_or_update_superuser! "2040"
-    User::Auth.new_or_update_test_user! "1234"
-    User::Auth.new_or_update_test_user! "9876"
     Settings.features.stub(:reauthentication).and_return(false)
   end
 
@@ -177,7 +175,7 @@ feature "act_as_user" do
     response["uid"].should == "238382"
   end
 
-  scenario "making sure act_as doesn't expose google data for non-fake users", :testext => true do
+  scenario "making sure act_as doesn't expose google data", :testext => true do
     Cache::UserCacheWarmer.stub(:warm).and_return(nil)
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::EventsList.stub(:new).and_return(@fake_events_list)
@@ -195,12 +193,5 @@ feature "act_as_user" do
     visit "/api/my/up_next"
     response = JSON.parse(page.body)
     response["items"].empty?.should be_true
-    User::Data.stub(:where, :uid => '11002820').and_return("tricking the first login check")
-    act_as_user "11002820"
-    User::Auth.new_or_update_test_user! "11002820"
-    User::Data.unstub(:where)
-    visit "/api/my/up_next"
-    response = JSON.parse(page.body)
-    response["items"].empty?.should be_false
   end
 end

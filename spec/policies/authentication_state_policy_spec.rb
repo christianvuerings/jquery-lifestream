@@ -10,16 +10,14 @@ describe AuthenticationStatePolicy do
   let(:author_uid) {random_id}
   let(:viewer_uid) {random_id}
   let(:average_joe_uid) {random_id}
-  let(:test_user_uid) {random_id}
   let(:inactive_superuser_uid) {random_id}
   let(:auth_map) do
     {
-      superuser_uid => {uid: superuser_uid, is_superuser: true, is_test_user: false, is_author: false, is_viewer: false, active: true},
-      author_uid => {uid: author_uid, is_superuser: false, is_test_user: false, is_author: true, is_viewer: false, active: true},
-      viewer_uid => {uid: viewer_uid, is_superuser: false, is_test_user: false, is_author: false, is_viewer: true, active: true},
-      average_joe_uid => {uid: average_joe_uid, is_superuser: false, is_test_user: false, is_author: false, is_viewer: false, active: true},
-      test_user_uid => {uid: test_user_uid, is_superuser: false, is_test_user: true, is_author: false, is_viewer: false, active: true},
-      inactive_superuser_uid => {uid: inactive_superuser_uid, is_superuser: true, is_test_user: false, is_author: false, is_viewer: false, active: false}
+      superuser_uid => {uid: superuser_uid, is_superuser: true, is_author: false, is_viewer: false, active: true},
+      author_uid => {uid: author_uid, is_superuser: false, is_author: true, is_viewer: false, active: true},
+      viewer_uid => {uid: viewer_uid, is_superuser: false, is_author: false, is_viewer: true, active: true},
+      average_joe_uid => {uid: average_joe_uid, is_superuser: false, is_author: false, is_viewer: false, active: true},
+      inactive_superuser_uid => {uid: inactive_superuser_uid, is_superuser: true, is_author: false, is_viewer: false, active: false}
     }
   end
   before do
@@ -39,11 +37,6 @@ describe AuthenticationStatePolicy do
       let(:user_id) {superuser_uid}
       let(:original_user_id) {viewer_uid}
       its(:access_google?) { should be_false }
-    end
-    context 'as a test user' do
-      let(:user_id) {test_user_uid}
-      let(:original_user_id) {viewer_uid}
-      its(:access_google?) { should be_true }
     end
     context 'in embedded app' do
       let(:user_id) {superuser_uid}

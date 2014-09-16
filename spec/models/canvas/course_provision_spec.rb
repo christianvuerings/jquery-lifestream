@@ -61,9 +61,6 @@ describe Canvas::CourseProvision do
   }
   before do
     User::Auth.new_or_update_superuser!(superuser_id)
-    [user_id, instructor_id, canvas_admin_id].each do |id|
-      User::Auth.new_or_update_test_user!(id)
-    end
     allow_any_instance_of(Canvas::Admins).to receive(:admin_user?) {|uid| uid == canvas_admin_id }
     allow(Canvas::ProvideCourseSite).to receive(:new) do |uid|
       double(

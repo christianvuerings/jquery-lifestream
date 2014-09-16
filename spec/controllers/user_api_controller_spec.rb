@@ -79,9 +79,9 @@ describe UserApiController do
       allow(User::Auth).to receive(:get) do |uid|
         case uid
           when user_id
-            double(is_superuser?: true, is_viewer?: false, is_test_user?: false, active?: true)
+            double(is_superuser?: true, is_viewer?: false, active?: true)
           when original_user_id
-            double(is_superuser?: false, is_viewer?: true, is_test_user?: false, active?: true)
+            double(is_superuser?: false, is_viewer?: true, active?: true)
         end
       end
     end
