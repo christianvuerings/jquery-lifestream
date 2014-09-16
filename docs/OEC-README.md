@@ -7,11 +7,11 @@
 
 ## Rake tasks
 
-* `rake oec:course_evaluations`
-    1. This will generate a course_evaluations-{timestamp}.csv in tmp/oec.
+* `rake oec:courses`
+    1. This will generate a courses-{timestamp}.csv in tmp/oec.
     2. Send that file to Daphne.
     3. Daphne will filter out unwanted courses and give you back the filtered CSV.
-    4. Copy the filtered CSV to tmp/oec/course_evaluations.csv
+    4. Copy the filtered CSV to tmp/oec/courses.csv
 
 * `rake oec:students`
     1. This will generate 2 new CSV files in tmp/oec: One for students, and one for students' relationships to courses, all based on the CCNs found in courses.csv from the previous step.
@@ -29,13 +29,13 @@ bundle install
 
 * Generate courses file:
 ```
-RAILS_ENV=production rake oec:course_evaluations
-cp tmp/oec/course_evaluations-{timestamp}.csv tmp/oec/course_evaluations.csv
+RAILS_ENV=production rake oec:courses
+cp tmp/oec/courses-{timestamp}.csv tmp/oec/courses.csv
 ```
 
-* Now securely transfer course_evaluations.csv and attach to JIRA
-* Justin will modify course_evaluations.csv and attach updated file to JIRA
-* Then overwrite tmp/oec/course_evaluations.csv with the version from Justin
+* Now securely transfer courses.csv and attach to JIRA
+* Justin will modify courses.csv and attach updated file to JIRA
+* Then overwrite tmp/oec/courses.csv with the version from Justin
 
 * Generating student files
 ```

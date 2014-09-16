@@ -1,9 +1,9 @@
 namespace :oec do
 
-  desc 'Export course_evaluations.csv file'
-  task :course_evaluations => :environment do
+  desc 'Export courses.csv file'
+  task :courses => :environment do
     timestamp = DateTime.now.strftime('%FT%T.%L%z')
-    Oec::CourseEvaluations.new.export(timestamp)
+    Oec::Courses.new.export(timestamp)
     Rails.logger.warn "OEC CSV export completed. Timestamp: #{timestamp}"
   end
 

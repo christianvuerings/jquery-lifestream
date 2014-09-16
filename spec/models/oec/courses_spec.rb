@@ -1,17 +1,17 @@
 require "spec_helper"
 
-describe Oec::CourseEvaluations do
+describe Oec::Courses do
 
   let!(:random_time) { Time.now.to_f.to_s.gsub(".", "") }
 
   context "exported file in tmp directory" do
-    let!(:spec_file) { CSV.read("fixtures/oec/course_evaluations.csv") }
+    let!(:spec_file) { CSV.read("fixtures/oec/courses.csv") }
 
     before(:each) {
-      all_course_evaluations_query = []
+      all_courses_query = []
       spec_file.each_with_index do |row, index|
         if index > 0
-          all_course_evaluations_query << {
+          all_courses_query << {
             "COURSE_ID" => row[0],
             "COURSE_NAME" => row[1],
             "CROSS_LISTED_FLAG" => row[2],
@@ -35,10 +35,10 @@ describe Oec::CourseEvaluations do
           }
         end
       end
-      Oec::Queries.stub(:get_all_course_evaluations).and_return(all_course_evaluations_query)
+      Oec::Queries.stub(:get_all_courses).and_return(all_courses_query)
     }
 
-    let!(:export) { Oec::CourseEvaluations.new.export(random_time) }
+    let!(:export) { Oec::Courses.new.export(random_time) }
 
     subject { CSV.read(export[:filename]) }
     it {
