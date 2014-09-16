@@ -12,8 +12,7 @@ class AuthenticationState
   def directly_authenticated?
     user_id && !lti_authenticated_only &&
       (original_user_id.blank? ||
-        (user_id == original_user_id) ||
-        user_auth.is_test_user?)
+        (user_id == original_user_id))
   end
 
   def original_user_auth

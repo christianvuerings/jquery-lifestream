@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815155903) do
+ActiveRecord::Schema.define(version: 20140916213448) do
 
   create_table "canvas_synchronization", force: true do |t|
     t.datetime "last_guest_user_sync"
@@ -139,7 +139,6 @@ ActiveRecord::Schema.define(version: 20140815155903) do
   create_table "user_auths", force: true do |t|
     t.string   "uid",                          null: false
     t.boolean  "is_superuser", default: false, null: false
-    t.boolean  "is_test_user", default: false, null: false
     t.boolean  "active",       default: false, null: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
