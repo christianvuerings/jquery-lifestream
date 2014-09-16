@@ -16,6 +16,26 @@
     // Private methods that are only exposed for testing but shouldn't be used within the views
 
     /**
+     * Opt in for a student to see the course schedule on the calendar
+     */
+    var calendarOptIn = function() {
+      $http.post('/api/my/calendar/opt_in').success(function() {
+        analyticsService.sendEvent('Calendar Courses', 'Enable');
+        fetch();
+      });
+    };
+
+    /**
+     * Opt out for a student to see the course schedule on the calendar
+     */
+    var calendarOptOut = function() {
+      $http.post('/api/my/calendar/opt_out').success(function() {
+        analyticsService.sendEvent('Calendar Courses', 'Remove');
+        fetch();
+      });
+    };
+
+    /**
      * Redirect user to the dashboard when you're on the splash page
      */
     var redirectToDashboard = function() {
@@ -149,6 +169,8 @@
 
     // Expose methods
     return {
+      calendarOptIn: calendarOptIn,
+      calendarOptOut: calendarOptOut,
       enableOAuth: enableOAuth,
       events: events,
       fetch: fetch,
