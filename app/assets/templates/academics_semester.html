@@ -122,7 +122,7 @@
 
     <div data-ng-include="'academics_final_grades.html'" data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket === 'past') && !selectedSemester.gradingInProgress"></div>
 
-    <div data-ng-include="'academics_gpa.html'" data-ng-if="selectedStudentSemester && (selectedSemester.timeBucket !== 'future') && ((selectedSemester.timeBucket !== 'past') || selectedSemester.gradingInProgress)"></div>
+    <div data-ng-include="'academics_gpa.html'" data-ng-if="(selectedStudentSemester && (selectedSemester.timeBucket !== 'future') && ((selectedSemester.timeBucket !== 'past') || selectedSemester.gradingInProgress)) && !isLawStudent"></div>
 
   </div>
 </div>
