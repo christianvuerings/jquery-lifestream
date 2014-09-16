@@ -46,7 +46,6 @@
           </li>
         </ul>
       </div>
-
       <div data-ng-if="pastAppointments.length && showPastAppointments">
         <h3>Previous Appointments</h3>
         <div class="cc-table cc-widget-lsadvising-previous">
@@ -66,11 +65,6 @@
       </div>
 
       <div data-ng-if="pastAppointments.length" data-cc-show-infinite-directive data-cc-show-infinite-variable="showPastAppointments" data-cc-show-infinite-text="Previous Appointments"></div>
-
-      <div data-ng-if="!caseloadAdviser && !futureAppointments.length && !pastAppointments.length && !lsAdvisingError">
-       No current advisor or appointment. <a data-ng-if="urlToMakeAppointment" data-ng-href="{{urlToMakeAppointment}}">Create a new appointment</a>.
-      </div>
-      <div class="cc-error-message" data-ng-if="lsAdvisingError.body" data-ng-bind="lsAdvisingError.body">
     </div>
   </div>
 </div>
