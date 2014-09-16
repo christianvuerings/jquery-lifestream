@@ -60,7 +60,12 @@ class UserApiController < ApplicationController
     end
   end
 
+  def expire
+    Cache::UserCacheExpiry.notify session[:user_id]
+  end
+
   def calendar_opt_in
+    expire
     if session[:user_id] && current_user.directly_authenticated?
       Calendar::User.first_or_create({uid: session[:user_id]})
       render :nothing => true, :status => 204
@@ -70,6 +75,7 @@ class UserApiController < ApplicationController
   end
 
   def calendar_opt_out
+    expire
     if session[:user_id] && current_user.directly_authenticated?
       Calendar::User.delete_all({uid: session[:user_id]})
       render :nothing => true, :status => 204
