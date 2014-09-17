@@ -42,6 +42,7 @@ describe Canvas::CoursePolicy do
   end
   let(:course_teacher_hash)   { course_user_hash.merge({'enrollments' => [{'type' => 'TeacherEnrollment', 'role' => 'TeacherEnrollment'}]}) }
   let(:course_ta_hash)        { course_user_hash.merge({'enrollments' => [{'type' => 'TaEnrollment', 'role' => 'TaEnrollment'}]}) }
+  let(:course_observer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'ObserverEnrollment', 'role' => 'ObserverEnrollment'}]}) }
   let(:course_designer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'DesignerEnrollment', 'role' => 'DesignerEnrollment'}]}) }
   let(:invariable_course_user_hash) { course_user_hash }
   subject { Canvas::CoursePolicy.new(user, course) }
@@ -84,6 +85,58 @@ describe Canvas::CoursePolicy do
         expect(subject.can_add_users?).to be_false
       end
     end
+  end
+
+  describe "#can_export_grades?" do
+    it_should_behave_like "a canvas user requirement" do
+      let(:authorization_method) { subject.can_export_grades? }
+    end
+
+    context "when user is a primary account admin" do
+      before do
+        canvas_admins = double()
+        canvas_admins.stub(:admin_user?).and_return(true)
+        allow(Canvas::Admins).to receive(:new).and_return(canvas_admins)
+      end
+      it "should return true" do
+        expect(subject.can_export_grades?).to be_true
+      end
+    end
+
+    context "when user is a course teacher" do
+      let(:invariable_course_user_hash) { course_teacher_hash }
+      it "should return true" do
+        expect(subject.can_export_grades?).to be_true
+      end
+    end
+
+    context "when user is only a designer" do
+      let(:invariable_course_user_hash) { course_designer_hash }
+      it "should return false" do
+        expect(subject.can_export_grades?).to be_false
+      end
+    end
+
+    context "when user is a teachers assistant" do
+      let(:invariable_course_user_hash) { course_ta_hash }
+      it "should return false" do
+        expect(subject.can_export_grades?).to be_false
+      end
+    end
+
+    context "when user is only an observer" do
+      let(:invariable_course_user_hash) { course_observer_hash }
+      it "should return true" do
+        expect(subject.can_export_grades?).to be_false
+      end
+    end
+
+    context "when user is only a student" do
+      it "should return false" do
+        expect(subject.can_export_grades?).to be_false
+      end
+    end
+
   end
 
   describe "#can_view_course_roster_photos?" do
