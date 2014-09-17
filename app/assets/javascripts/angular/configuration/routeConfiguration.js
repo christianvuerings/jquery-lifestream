@@ -97,6 +97,10 @@
       templateUrl: 'canvas_embedded/course_mediacasts.html',
       isEmbedded: true
     }).
+    when('/canvas/embedded/course_grade_export', {
+      templateUrl: 'canvas_embedded/course_grade_export.html',
+      controller: 'CanvasCourseGradeExportController'
+    }).
     when('/canvas/rosters/:canvasCourseId', {
       templateUrl: 'canvas_embedded/roster.html'
     }).

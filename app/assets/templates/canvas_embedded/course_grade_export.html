@@ -1,0 +1,20 @@
+<div class="cc-page-course-grade-export">
+
+  <div data-ng-if="userAuthorized">
+
+    <div class="cc-page-course-grade-export-container">
+      <a href="/api/academics/canvas/download_egrades.csv" target="_self" class="button">Download eGrades</a>
+
+      <div class="cc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
+        <a data-ng-click="goToGradebook()">Back to Gradebook</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div data-ng-if="showError" class="cc-page-course-grade-export-unauthorized">
+    <i class="fa fa-warning"></i>
+    <span data-ng-bind="errorStatus"></span>
+  </div>
+
+</div>
