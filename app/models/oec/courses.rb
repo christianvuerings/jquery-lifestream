@@ -10,7 +10,7 @@ module Oec
     end
 
     def append_records(output)
-      visited_row_list = []
+      visited_row_list = Set.new
       Oec::Queries.get_all_courses.each do |course|
         row = record_to_csv_row(course)
         # No practical way to combine these fields in SQL, so we'll do it here in Ruby.
@@ -33,7 +33,6 @@ module Oec
 
     def append_row(output, row, visited_row_list)
       # The above non-practical way to identify cross-listings requires a non-practical way to avoid duplicate rows.
-      # Poor performance of array lookup is acceptable.
       row_as_string = row.to_s
       unless visited_row_list.include?(row_as_string)
         output << row
