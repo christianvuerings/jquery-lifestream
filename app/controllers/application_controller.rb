@@ -55,6 +55,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= AuthenticationState.new(session)
   end
 
+  def expire_current_user
+    Cache::UserCacheExpiry.notify current_user.real_user_id
+  end
+
   # override of Rails default behavior:
   # reset session AND return 401 when CSRF token validation fails
   def handle_unverified_request
