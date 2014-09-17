@@ -68,15 +68,25 @@
         <thead>
           <tr>
             <th width="87px">General</th>
-            <th width="40%" class="cc-table-subheader" scope="col">Standing</th>
-            <th class="cc-table-subheader" scope="col" data-ng-if="gpaUnits.totalUnits !== null">Units</th>
+            <th class="cc-table-subheader" scope="col">Standing</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td></td>
             <td><strong data-ng-bind="collegeAndLevel.standing"></strong></td>
-            <td data-ng-if="gpaUnits.totalUnits !== null"><strong data-ng-bind="gpaUnits.totalUnits"></strong></td>
+          </tr>
+        </tbody>
+        <thead data-ng-if="gpaUnits.totalUnits !== null">
+          <tr>
+            <th></th>
+            <th class="cc-table-subheader" scope="col">Units</th>
+          </tr>
+        </thead>
+        <tbody data-ng-if="gpaUnits.totalUnits !== null">
+          <tr>
+            <td></td>
+            <td><strong data-ng-bind="gpaUnits.totalUnits"></strong></td>
           </tr>
         </tbody>
       </table>
@@ -87,12 +97,8 @@
         <thead>
           <tr>
             <th width="87px">Level</th>
-            <th data-ng-attr-width="{{ isUndergraduate && '40%' }}" class="cc-table-subheader" scope="col">
+            <th class="cc-table-subheader" scope="col">
               <span data-ng-if="isUndergraduate">Including AP</span>
-              <span data-ng-if="!isUndergraduate">Current</span>
-            </th>
-            <th data-ng-if="isUndergraduate" class="cc-table-subheader" scope="col">
-              <span>Not Including AP</span>
               <span data-ng-if="!isUndergraduate">Current</span>
             </th>
           </tr>
@@ -101,7 +107,20 @@
           <tr>
             <td></td>
             <td><strong data-ng-bind="collegeAndLevel.level"></strong></td>
-            <td data-ng-if="isUndergraduate"><strong data-ng-bind="collegeAndLevel.nonApLevel"></strong></td>
+          </tr>
+        </tbody>
+        <thead data-ng-if="isUndergraduate">
+          <tr>
+            <th></th>
+            <th class="cc-table-subheader" scope="col">
+              <span>Not Including AP</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody data-ng-if="isUndergraduate">
+          <tr>
+            <td></td>
+            <td><strong data-ng-bind="collegeAndLevel.nonApLevel"></strong></td>
           </tr>
         </tbody>
       </table>
