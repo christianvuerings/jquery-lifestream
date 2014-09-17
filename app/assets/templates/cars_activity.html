@@ -187,6 +187,9 @@
     </div>
 
     <div class="cc-clearfix-container">
+      <div class="cc-hidden cc-print-show cc-text-center" data-ng-if="filteredList.length">
+        Displaying <span data-ng-bind="activityLimit <= filteredList.length ? activityLimit : filteredList.length"></span> of <span data-ng-bind="filteredList.length"></span> transactions
+      </div>
       <div data-cc-show-more-directive data-cc-show-more-list="filteredList" data-cc-show-more-increment="activityIncrement" data-cc-show-more-watch="filteredList.length" data-cc-show-more-limit="activityLimit"></div>
     </div>
 
