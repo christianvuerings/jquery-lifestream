@@ -80,4 +80,8 @@ class CanvasLtiController < ApplicationController
     respond_to :xml
   end
 
+  def lti_course_grade_export
+    respond_to :xml
+  end
+
 end
