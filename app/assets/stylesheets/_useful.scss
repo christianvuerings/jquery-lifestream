@@ -12,6 +12,11 @@
 .cc-alert {
   color: $cc-color-red !important;
 }
+.cc-alert-box {
+  background-color: $alert-color;
+  color: $cc-color-white;
+  padding: 15px;
+}
 .cc-break-word {
   word-wrap: break-word;
   @include hyphens(auto);
