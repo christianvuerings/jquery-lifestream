@@ -10,6 +10,7 @@ module Oec
     end
 
     def append_records(output)
+      visited_row_list = Set.new
       Oec::Queries.get_all_courses.each do |course|
         row = record_to_csv_row(course)
         # No practical way to combine these fields in SQL, so we'll do it here in Ruby.
@@ -20,13 +21,22 @@ module Oec
             cross_list_row = record_to_csv_row(crosslist)
             cross_list_row["CROSS_LISTED_NAME"] = "#{crosslist["course_title_short"]} (#{crosslist["cross_listed_name"]})"
             cross_list_row.delete "COURSE_TITLE_SHORT"
-            output << cross_list_row
+            append_row(output, cross_list_row, visited_row_list)
           end
           row.delete "COURSE_TITLE_SHORT"
         else
           row.delete "COURSE_TITLE_SHORT"
-          output << row
+          append_row(output, row, visited_row_list)
         end
+      end
+    end
+
+    def append_row(output, row, visited_row_list)
+      # The above non-practical way to identify cross-listings requires a non-practical way to avoid duplicate rows.
+      row_as_string = row.to_s
+      unless visited_row_list.include?(row_as_string)
+        output << row
+        visited_row_list << row_as_string
       end
     end
 

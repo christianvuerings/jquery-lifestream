@@ -43,6 +43,10 @@ describe Oec::Courses do
     subject { CSV.read(export[:filename]) }
     it {
       should_not be_nil
+      # Duplicate row in the file is ignored
+      should have_exactly(11).items
+      # Delete dupe and compare
+      spec_file.delete_at(6)
       should eq(spec_file)
     }
   end
