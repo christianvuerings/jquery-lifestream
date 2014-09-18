@@ -1,4 +1,4 @@
-<div class="cc-styles-reference">
+<div class="cc-styles-reference cc-clearfix-container">
   <h1>CalCentral Live Styles Reference</h1>
 
   <p>
@@ -16,9 +16,9 @@
   <p>Colors defined as variables in calcentral.scss. This grid does not necessarily represent all colors in use on the site (feel free to suggest that some colors be added to this list).</p>
 
   <div
-    class="panel cc-left"
+    class="cc-left cc-styles-panel"
     data-ng-repeat="color in colorvars | orderBy:'hex'"
     style="background-color:{{color.hex}}">
-    <p data-ng-class="{'cc-styles-contrast-text':(color.lightdark)}">${{color.name}}<br />{{color.hex}}</p>
+    <div data-ng-class="{'cc-styles-contrast-text':(color.lightdark)}">${{color.name}}<br />{{color.hex}}</div>
   </div>
 </div>

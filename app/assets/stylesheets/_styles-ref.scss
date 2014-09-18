@@ -4,6 +4,11 @@
   .cc-styles-contrast-text {
     color: #e3e3e3;
   }
+  .cc-styles-panel {
+    border: 1px solid $cc-color-list-border;
+    margin-bottom: 15px;
+    padding: 15px;
+  }
   .cc-styles-section {
     border-bottom: 1px solid $cc-color-medium-grey;
     border-top: 1px solid $cc-color-medium-grey;
