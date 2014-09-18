@@ -194,4 +194,17 @@ feature "act_as_user" do
     response = JSON.parse(page.body)
     response["items"].empty?.should be_true
   end
+
+  scenario "make sure you cannot act as an invalid user" do
+    Cache::UserCacheWarmer.stub(:warm).and_return(nil)
+    invalid_uid = "89923458987947"
+    login_with_cas "238382"
+    suppress_rails_logging {
+      act_as_user invalid_uid
+    }
+    visit "/api/my/status"
+    response = JSON.parse(page.body)
+    response["isLoggedIn"].should be_true
+    response["uid"].should == "238382"
+  end
 end
