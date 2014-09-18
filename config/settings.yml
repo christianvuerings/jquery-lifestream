@@ -181,6 +181,7 @@ cache:
     failure: <%= 30.seconds %>
     Cache::FeedUpdateWhiteboard: <%= 5.minutes %>
     LiveUpdatesWarmer: <%= 2.minutes %>
+    BackgroundJobsCheck: <%= 29.days %>
     MyAcademics::Merged: NEXT_08_00
     MyActivities::Merged: <%= 8.hours %>
     MyBadges::Merged: NEXT_00_00
@@ -250,6 +251,9 @@ developer_auth:
 hot_plate:
   last_visit_cutoff: <%= 10.days %>
   enabled: true
+
+background_jobs_check:
+  time_between_pings: <%= 5.minutes %>
 
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:

@@ -35,5 +35,12 @@ TorqueBox.configure do
     processor Cache::FeedUpdateWhiteboard
   end
 
+  # Check the health of the background-job processor and the cache.
+  service BackgroundJobsCheck
+  topic '/topics/background_jobs_check' do
+    durable false
+    processor BackgroundJobsCheck
+  end
+
 end
 
