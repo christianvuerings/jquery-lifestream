@@ -13,6 +13,7 @@ describe Oec::Courses do
         if index > 0
           all_courses_query << {
             "COURSE_ID" => row[0],
+            "course_id" => row[0],
             "COURSE_NAME" => row[1],
             "CROSS_LISTED_FLAG" => row[2],
             "CROSS_LISTED_NAME" => row[3],
@@ -22,6 +23,7 @@ describe Oec::Courses do
             "SECTION_NUM" => row[7],
             "PRIMARY_SECONDARY_CD" => row[8],
             "LDAP_UID" => row[9],
+            "ldap_uid" => row[9],
             "FIRST_NAME" => row[10],
             "LAST_NAME" => row[11],
             "EMAIL_ADDRESS" => row[12],
