@@ -250,6 +250,9 @@
     if (e && e.data && e.data.scrollToTop) {
       window.scrollTo(0, 0);
     }
+    if (e && e.data && e.data.parentLocation) {
+      window.location = e.data.parentLocation;
+    }
   };
 
 })(window, window.document, window.$);
