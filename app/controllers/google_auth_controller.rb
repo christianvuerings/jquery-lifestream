@@ -14,7 +14,7 @@ class GoogleAuthController < ApplicationController
       client = get_client(final_redirect, force_domain = false)
     end
     client ||= get_client final_redirect
-    url = client.authorization_uri.to_s
+    url = client.authorization_uri(approval_prompt: 'force').to_s
     logger.debug "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
     redirect_to url
   end
