@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('utilService', function($cacheFactory, $location, $rootScope, $window) {
+  angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $window) {
 
     /**
      * Check whether the current browser can play mp3 files
@@ -27,17 +27,6 @@
      */
     var changeControllerName = function(name) {
       $rootScope.controllerName = name;
-    };
-
-    /**
-     * Clear the cache for a specific URL
-     * @param {Object} options list of options that are being passed through
-     * @param {String} url URL where the cache needs to be cleared
-     */
-    var clearCache = function(options, url) {
-      if (options && options.refreshCache) {
-        $cacheFactory.get('$http').remove(url);
-      }
     };
 
     /**
@@ -138,7 +127,6 @@
     return {
       canPlayMp3: canPlayMp3,
       changeControllerName: changeControllerName,
-      clearCache: clearCache,
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
       hideOffCanvasMenu: hideOffCanvasMenu,

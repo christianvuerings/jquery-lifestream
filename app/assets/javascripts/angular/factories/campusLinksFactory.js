@@ -133,7 +133,7 @@
 
     var getLinks = function(options) {
 
-      apiService.util.clearCache(options, linkDataUrl);
+      apiService.http.clearCache(options, linkDataUrl);
 
       // We need to make sure to load the user data first since that contains the roles information
       return apiService.user.fetch()

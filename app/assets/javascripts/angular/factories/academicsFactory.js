@@ -5,18 +5,14 @@
   /**
    * Academics Factory - get data from the academics API
    * @param {Object} apiService CalCentral API service
-   * @param {Object} $http The $http service from Angular
    */
-  angular.module('calcentral.factories').factory('academicsFactory', function(apiService, $http) {
+  angular.module('calcentral.factories').factory('academicsFactory', function(apiService) {
 
     var url = '/api/my/academics';
+    // var url = '/dummy/json/academics.json';
 
     var getAcademics = function(options) {
-      // return $http.get('/dummy/json/academics.json');
-      apiService.util.clearCache(options, url);
-      return $http.get(url, {
-        cache: true
-      });
+      return apiService.http.request(options, url);
     };
 
     return {

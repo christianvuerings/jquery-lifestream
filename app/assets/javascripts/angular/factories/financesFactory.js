@@ -4,12 +4,14 @@
 
   /**
    * Finances Factory - get data from the badges API
-   * @param {Object} $http The $http service from Angular
+   * @param {Object} apiService CalCentral API Service
    */
-  angular.module('calcentral.factories').factory('financesFactory', function($http) {
+  angular.module('calcentral.factories').factory('financesFactory', function(apiService) {
 
-    var getFinances = function() {
-      return $http.get('/api/my/financials');
+    var url = '/api/my/financials';
+
+    var getFinances = function(options) {
+      return apiService.http.request(options, url);
     };
 
     return {
