@@ -4,13 +4,15 @@
 
   /**
    * Cal1Card Factory - get data from the cal1card API
-   * @param {Object} $http The $http service from Angular
+   * @param {Object} apiService CalCentral API Service
    */
-  angular.module('calcentral.factories').factory('cal1CardFactory', function($http) {
+  angular.module('calcentral.factories').factory('cal1CardFactory', function(apiService) {
 
-    var getCal1Card = function() {
-      return $http.get('/api/my/cal1card');
-      // return $http.get('/dummy/json/cal1card.json');
+    var url = '/api/my/cal1card';
+    // var url = '/dummy/json/cal1card.json';
+
+    var getCal1Card = function(options) {
+      return apiService.http.request(options, url);
     };
 
     return {

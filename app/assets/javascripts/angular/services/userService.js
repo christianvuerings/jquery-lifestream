@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, utilService) {
+  angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService) {
 
     var profile = {};
     var events = {
@@ -97,7 +97,7 @@
      */
     var fetch = function(options) {
 
-      utilService.clearCache(options, statusUrl);
+      httpService.clearCache(options, statusUrl);
 
       return $http.get(statusUrl, {
         cache: true
