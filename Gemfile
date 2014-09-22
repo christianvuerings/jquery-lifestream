@@ -136,7 +136,7 @@ gem 'natural-sort-js', '~> 0.7.0'
 
 # Use ngannotate in the Rails asset pipeline.
 # https://github.com/olov/ng-annotate
-gem 'ngannotate-rails', '~> 0.9.11'
+gem 'ngannotate-rails', '~> 0.10.1'
 
 # Use your angular templates with rails' asset pipeline
 # https://github.com/pitr/angular-rails-templates
