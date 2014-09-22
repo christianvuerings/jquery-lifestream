@@ -113,7 +113,8 @@ module User
         :last_name => @last_name,
         :preferred_name => self.preferred_name,
         :roles => @campus_attributes[:roles],
-        :uid => @uid
+        :uid => @uid,
+        :sid => @campus_attributes['student_id']
       }
     end
 
