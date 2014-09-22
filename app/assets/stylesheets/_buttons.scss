@@ -1,0 +1,178 @@
+// Buttons
+button {
+  @include box-shadow(none);
+  font-family: $body-font-family;
+  &:hover, &:focus {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  &:active {
+    @include box-shadow(none);
+  }
+}
+
+.button {
+  background-color: $cc-color-button;
+  &.medium {
+    font-size: 13px;
+    font-weight: normal;
+    padding: 7px 12px;
+  }
+  &.selected {
+    @include background(linear-gradient(#7ec9df, #35b5d4));
+  }
+  &.button.small {
+    font-size: 13px;
+    padding: 4px 6px;
+  }
+  &.tiny {
+    font-size: 11px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}
+
+.cc-button {
+  background: $cc-color-white;
+  @include background(linear-gradient($cc-color-white, $cc-color-button-regular));
+  border: 1px solid $cc-color-button-border;
+  border-radius: 5px;
+  color: $cc-color-medium-grey;
+  cursor: pointer;
+  display: inline;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 6px 10px;
+  &:focus, &:hover {
+    background: $cc-color-button-hover;
+    @include background(linear-gradient($cc-color-white, $cc-color-button-hover));
+    color: $cc-color-medium-grey;
+    text-decoration: none;
+  }
+}
+.cc-button-transparent {
+  background: transparent;
+  border: 0;
+  color: $body-font-color !important;
+  padding: 0;
+  &:focus, &:hover {
+    background: transparent;
+    i {
+      color: $cc-color-lighter-medium-grey !important;
+    }
+  }
+}
+.cc-button-blue {
+  background: $cc-color-button-action;
+  border: 1px solid transparent;
+  color: $cc-color-white;
+  &:focus, &:hover {
+    background: $cc-color-button-action-hover;
+    color: $cc-color-white;
+  }
+  &.cc-button-large {
+    background: $cc-color-button-action-large-bottom;
+    @include background(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-bottom));
+    &:focus, &:hover {
+      @include background(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-hover));
+    }
+  }
+}
+.cc-button[disabled] {
+  background: $cc-color-button-disabled-background !important;
+  border: 1px solid $cc-color-button-disabled !important;
+  color: $cc-color-button-disabled !important;
+  cursor: auto !important;
+  opacity: 1 !important;
+  &:focus, &:hover {
+    background: $cc-color-button-disabled-background !important;
+    color: $cc-color-button-disabled !important;
+  }
+}
+.cc-button-blue[disabled] {
+  background: $cc-color-button-action-disabled-background !important;
+  &:focus, &:hover {
+    background: $cc-color-button-action-disabled-background !important;
+  }
+}
+
+.cc-button-large {
+  font-size: 16px;
+  font-weight: normal;
+  padding: 8px 10px;
+}
+.cc-button-selected {
+  background: $cc-color-button-selected;
+  @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
+  color: $cc-color-white;
+  z-index: 1;
+  &:focus, &:hover {
+    background: $cc-color-button-selected;
+    @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
+    color: $cc-color-white;
+  }
+  i {
+    color: $cc-color-white;
+  }
+}
+.cc-button-plus-icon {
+  color: $cc-color-green-plus;
+}
+.cc-button-link {
+  padding: 0;
+  &, &:hover, &:focus {
+    background-color: transparent;
+    border: 0;
+    color: $primary-color;
+    font-size: 13px;
+    font-weight: normal;
+  }
+}
+
+.cc-button-group {
+  li {
+    float: left;
+    margin: 0 0 0 -1px;
+    &:first-child {
+      margin: 0;
+      .cc-button {
+        border-bottom-left-radius: 5px;
+        border-top-left-radius: 5px;
+      }
+    }
+    &:last-child {
+      .cc-button {
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+    }
+  }
+  .cc-button {
+    border-radius: 0;
+    width: 100%;
+  }
+  .cc-button-rounded {
+    border-radius: 5px;
+  }
+}
+.cc-even-1 {
+  li {
+    width: 100%;
+  }
+}
+.cc-even-2 {
+  li {
+    width: 50%;
+  }
+}
+.cc-even-3 {
+  li {
+    width: 33.33333%;
+  }
+}
+.cc-even-4 {
+  li {
+    width: 25%;
+  }
+}

@@ -1,0 +1,147 @@
+// HTML
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+// Body
+body {
+  background-color: $cc-color-main-background;
+}
+
+// Reset
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $cc-color-heading;
+  font-family: $header-font-family;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  margin-top: 3px;
+  text-rendering: optimizeLegibility;
+}
+
+p {
+  font-weight: normal;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-rendering: optimizeLegibility;
+}
+
+ul, ol, dl {
+  line-height: 1.6;
+  list-style-position: outside;
+  margin-bottom: 20px;
+}
+
+ul li ul, ul li ol {
+  margin-bottom: 0;
+  margin-left: 20px;
+}
+
+// Headings
+h1 {
+  font-size: 22px;
+}
+.cc-heading-page-title {
+  color: $cc-color-medium-grey;
+  font-weight: normal;
+  margin: 10px 0 0 10px;
+  @media #{$small-only} {
+    margin-bottom: 15px;
+  }
+}
+h2 {
+  font-size: 18px;
+}
+h3 {
+  font-size: 16px;
+}
+
+// Inset list items
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Anchor tag
+a {
+  color: $primary-color;
+  text-decoration: none;
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
+}
+
+// Form
+form {
+  background: $cc-color-widget-more-background;
+  border: 1px solid #dedede;
+  padding: 10px 5px;
+
+  input[type="number"],
+  input[type="password"],
+  input[type="text"],
+  textarea {
+    -webkit-appearance: none;
+    background: $cc-color-white;
+    border: 1px solid $cc-color-button-border;
+    border-radius: 0;
+    box-shadow: inset 0 1px 2px $cc-color-lighter-grey;
+    font-family: Arial;
+    font-size: 12px;
+    margin: 0 0 8px;
+    padding: 3px;
+    width: 100%;
+    &:focus {
+      border: 1px solid $cc-color-lighter-medium-grey;
+    }
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    margin-right: 10px;
+    margin-top: 5px;
+    text-align: right;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  // Placeholder selector duplication intentional, re: http://bit.ly/ZnuZFo
+  input:-moz-placeholder {
+    color: $cc-color-placeholder;
+  }
+  input:-ms-input-placeholder {
+    color: $cc-color-placeholder;
+  }
+  ::-moz-placeholder {
+    color: $cc-color-placeholder;
+  }
+
+  // On iOS devices we want to avoid zooming in when a text input is selected
+  // http://stackoverflow.com/questions/2989263
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    select, textarea, input[type="number"], input[type="password"], input[type="text"] {
+      &:focus {
+        font-size: 16px !important;
+      }
+    }
+  }
+
+}
+
+// Audio
+audio {
+  max-width: 100%;
+  position: relative;
+  // We need to set the z-index so it doesn't overlap with other elements
+  z-index: 100;
+}

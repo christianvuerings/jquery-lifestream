@@ -1,0 +1,45 @@
+// Select
+// We need to wrap a select in a <div> to have consistent styling
+// Based on http://jsbin.com/maxufesi/1
+.cc-select {
+  background: $cc-color-white;
+  @include background(linear-gradient($cc-color-white, $cc-color-button-regular));
+  border: 1px solid $cc-color-button-border;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  &:before {
+    @include background(asset-data-url('svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($cc-color-white, $cc-color-button-regular));
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    z-index: -1;
+  }
+  select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: $cc-color-medium-grey;
+    cursor: pointer;
+    font-size: 11px;
+    margin: 0;
+    padding: 4px 25px 5px 10px;
+    width: 100%;
+    &::-ms-expand {
+      display: none;
+    }
+  }
+}
+:-moz-any(.cc-select):before {
+  background-color: #fff;
+  pointer-events: none;
+  z-index: 1;
+}
