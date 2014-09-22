@@ -1,5 +1,5 @@
 <div class="medium-12 columns cc-settings">
-  <h1>Settings for {{api.user.profile.fullName}}</h1>
+  <h1 class="cc-heading-page-title">Settings for {{api.user.profile.fullName}}</h1>
 
   <section data-ng-if='connectedServices.length' class="cc-settings-section row collapse">
     <div class="medium-10 medium-centered columns">
@@ -49,7 +49,7 @@
 
       <div class="row cc-settings-recent-uids" data-ng-repeat="uidDiv in admin.uidDivs">
         <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && uidDiv.UIDs.length">
-          <h6>{{uidDiv.title}} (<button type="button" class="cc-button-link" data-ng-click="uidDiv.clearAllUIDs()">clear all</button>)</h6>
+          <h4>{{uidDiv.title}} (<button type="button" class="cc-button-link" data-ng-click="uidDiv.clearAllUIDs()">clear all</button>)</h4>
           <ul>
             <li data-ng-repeat="UID in uidDiv.UIDs track by $index">
               <button type="submit" class="cc-button-link" data-ng-click="uidDiv.updateUIDField(UID)" data-ng-bind="UID"></button>

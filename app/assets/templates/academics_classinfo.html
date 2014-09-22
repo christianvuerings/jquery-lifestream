@@ -146,8 +146,8 @@
             <div data-ng-if="books.items.length">
               <div data-ng-include="'textbook.html'"></div>
             </div>
-            <div class="cc-error-message" data-ng-if="!books.items.length" data-ng-bind="books.bookUnavailableError"></div>
-            <div class="cc-error-message" data-ng-if="textbookError.body" data-ng-bind="textbookError.body">
+            <div class="cc-text-line-height" data-ng-if="!books.items.length" data-ng-bind="books.bookUnavailableError"></div>
+            <div class="cc-text-line-height" data-ng-if="textbookError.body" data-ng-bind="textbookError.body">
             </div>
           </div>
         </div>

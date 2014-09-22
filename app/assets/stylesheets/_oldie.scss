@@ -1,0 +1,11 @@
+// Message for oldIE
+.cc-old-ie {
+  margin-bottom: 20px !important;
+  a {
+    color: $cc-color-white;
+    text-decoration: underline;
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+}

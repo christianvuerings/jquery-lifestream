@@ -1,0 +1,33 @@
+.cc-list-bullets {
+  margin: 10px 10px 0 15px;
+  li:before {
+    color: #61889d;
+    content: '\25A0';
+    float: left;
+    margin-left: -16px;
+    margin-top: -2px;
+    padding-right: 8px;
+  }
+}
+.cc-list-links {
+  margin: 10px 0;
+  a {
+    display: block;
+    margin-left: 16px;
+    &:before {
+      color: #61889d;
+      content: '\25A0';
+      float: left;
+      margin-left: -16px;
+      margin-top: -2px;
+      padding-right: 8px;
+    }
+  }
+}
+.cc-list-link-container {
+  padding: 0 15px;
+  h3 {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+}
