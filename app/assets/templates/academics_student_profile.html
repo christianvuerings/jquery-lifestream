@@ -112,9 +112,7 @@
         <thead data-ng-if="isUndergraduate">
           <tr>
             <th></th>
-            <th class="cc-table-subheader" scope="col">
-              <span>Not Including AP</span>
-            </th>
+            <th class="cc-table-subheader" scope="col">Not Including AP</th>
           </tr>
         </thead>
         <tbody data-ng-if="isUndergraduate">
@@ -124,6 +122,36 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="api.user.profile.uid || api.user.profile.sid">
+      <table>
+        <thead>
+          <tr>
+            <th width="87px">ID Number</th>
+            <th class="cc-table-subheader" scope="col">User ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td><strong data-ng-bind="api.user.profile.uid"></strong></td>
+          </tr>
+        </tbody>
+        <thead data-ng-if="api.user.profile.sid">
+          <tr>
+            <th></th>
+            <th class="cc-table-subheader" scope="col">Student ID</th>
+          </tr>
+        </thead>
+        <tbody data-ng-if="api.user.profile.sid">
+          <tr>
+            <td></td>
+            <td><strong data-ng-bind="api.user.profile.sid"></strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     </div>
   </div>
 </div>
