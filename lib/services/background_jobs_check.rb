@@ -102,7 +102,7 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
       if @cluster_nodes.include?(node_id)
         node_id
       else
-        logger.fatal "Message processor is running on unknown host #{node_id}"
+        logger.fatal "Message processor is running on host #{node_id}, which is not in the cache.servers configuration!"
         nil
       end
     else
