@@ -3,7 +3,6 @@ require 'spec_helper'
 describe BackgroundJobsCheck do
   before do
     allow(Settings.cache).to receive(:servers).and_return(cache_servers)
-    # Settings.background_jobs_check.time_between_pings
     allow(ServerRuntime).to receive(:get_settings).and_return({'hostname' => hostname})
     allow(DateTime).to receive(:now).and_return(fake_now)
   end
@@ -53,12 +52,13 @@ describe BackgroundJobsCheck do
     end
     let(:success_cache_hash) do
       {
-        'BackgroundJobsCheck/cluster' => fake_now.advance(minutes: -1),
-        'BackgroundJobsCheck/dev-01' => fake_now.advance(minutes: -1),
-        'BackgroundJobsCheck/dev-02' => fake_now.advance(minutes: -1),
-        'BackgroundJobsCheck/dev-03' => fake_now.advance(minutes: -1)
+        'BackgroundJobsCheck/cluster' => ping_time,
+        'BackgroundJobsCheck/dev-01' => ping_time,
+        'BackgroundJobsCheck/dev-02' => ping_time,
+        'BackgroundJobsCheck/dev-03' => ping_time
       }
     end
+    let(:ping_time) { fake_now.advance(minutes: -1) }
     context 'the last check was handled by all nodes within a reasonable time' do
       let(:cache_hash) { success_cache_hash }
       it 'reports success' do
@@ -69,23 +69,37 @@ describe BackgroundJobsCheck do
         expect(feed['last_ping']).to be_present
       end
     end
+    context 'a node is missing its most recent check but within the normal lag range' do
+      let(:cache_hash) { success_cache_hash.merge('BackgroundJobsCheck/dev-03' => ping_time.advance(minutes: -10)) }
+      it 'reports success' do
+        feed = subject.get_feed
+        expect(feed['status']).to eq 'OK'
+        expect(feed['last_ping']).to be_present
+        expect(feed['dev-01']).to eq 'OK'
+        expect(feed['dev-02']).to eq 'OK'
+        expect(feed['dev-03']).to eq 'OK'
+      end
+    end
     context 'a node recorded its most recent check longer ago than expected' do
-      let(:cache_hash) { success_cache_hash.merge('BackgroundJobsCheck/dev-03' => fake_now.advance(minutes: -11)) }
-      it 'reports a late node is' do
+      let(:ping_time) { fake_now.advance(minutes: -4) }
+      let(:cache_hash) { success_cache_hash.merge('BackgroundJobsCheck/dev-03' => ping_time.advance(minutes: -10)) }
+      it 'reports a late node' do
         feed = subject.get_feed
         expect(feed['status']).to eq 'PARTIAL'
         expect(feed['last_ping']).to be_present
         expect(feed['dev-01']).to eq 'OK'
         expect(feed['dev-02']).to eq 'OK'
-        expect(feed['dev-03']).to match /^LATE/
+        expect(feed['dev-03']).to eq 'LATE'
       end
     end
     context 'a node recorded its most recent check much longer ago than expected' do
-      let(:cache_hash) { success_cache_hash.merge('BackgroundJobsCheck/dev-03' => fake_now.advance(minutes: -31)) }
+      let(:cache_hash) { success_cache_hash.merge('BackgroundJobsCheck/dev-03' => ping_time.advance(minutes: -30)) }
       it 'reports a dead node' do
         feed = subject.get_feed
         expect(feed['status']).to eq 'PARTIAL'
-        expect(feed['dev-03']).to match /^NOT RUNNING/
+        expect(feed['dev-01']).to eq 'OK'
+        expect(feed['dev-02']).to eq 'OK'
+        expect(feed['dev-03']).to eq 'NOT RUNNING'
       end
     end
     context 'a node has not recorded any checks' do
@@ -96,7 +110,7 @@ describe BackgroundJobsCheck do
         expect(feed['last_ping']).to be_present
         expect(feed['dev-01']).to eq 'OK'
         expect(feed['dev-02']).to eq 'OK'
-        expect(feed['dev-03']).to match /^MISSING/
+        expect(feed['dev-03']).to eq 'MISSING'
       end
     end
     context 'no checks have been done yet' do
@@ -108,14 +122,8 @@ describe BackgroundJobsCheck do
       end
     end
     context 'no checks requested for a long while' do
-      let(:cache_hash) do
-        {
-          'BackgroundJobsCheck/cluster' => fake_now.advance(hours: -1),
-          'BackgroundJobsCheck/dev-01' => fake_now.advance(hours: -1),
-          'BackgroundJobsCheck/dev-02' => fake_now.advance(hours: -1),
-          'BackgroundJobsCheck/dev-03' => fake_now.advance(hours: -1)
-        }
-      end
+      let(:ping_time) {fake_now.advance(hours: -1) }
+      let(:cache_hash) { success_cache_hash }
       it 'reports an error' do
         feed = subject.get_feed
         expect(feed['status']).to eq 'NOT RUNNING'

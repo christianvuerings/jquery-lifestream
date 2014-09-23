@@ -42,9 +42,7 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
 
   def check_in(new_timestamp)
     if (id = current_node_id)
-      self.class.smart_fetch_from_cache({id: id, force_write: true}) do
-        new_timestamp
-      end
+      self.class.write_cache(new_timestamp, id)
     end
   end
 
@@ -53,17 +51,23 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
     last_ping = Rails.cache.read(self.class.cache_key 'cluster')
     if last_ping
       non_fatal_skip = -2 * @time_between_pings
+      within_normal_lag = (last_ping >= DateTime.now.advance(minutes: -2))
       if last_ping > DateTime.now.advance(seconds: non_fatal_skip)
         @cluster_nodes.each do |node_id|
           node_check_in = Rails.cache.read(self.class.cache_key node_id)
           if node_check_in.blank?
-            logger.warn("Node #{node_id} has not checked in")
+            logger.error("Node #{node_id} has not checked in")
             node_state = 'MISSING'
           elsif node_check_in == last_ping
             node_state = 'OK'
           elsif node_check_in > last_ping.advance(seconds: non_fatal_skip)
-            logger.info("Node #{node_id} logged its last checkin at #{node_check_in}")
-            node_state = 'LATE'
+            if within_normal_lag
+              logger.info("Node #{node_id} logged its last checkin at #{node_check_in}")
+              node_state = 'OK'
+            else
+              logger.warn("Node #{node_id} logged its last checkin at #{node_check_in}")
+              node_state = 'LATE'
+            end
           else
             logger.error("Node #{node_id} logged its last checkin at #{node_check_in}")
             node_state = 'NOT RUNNING'
@@ -108,9 +112,7 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
 
   def request_ping
     new_timestamp = DateTime.now
-    self.class.smart_fetch_from_cache({id: 'cluster', force_write: true}) do
-      new_timestamp
-    end
+    self.class.write_cache(new_timestamp, 'cluster')
     topic = TorqueBox.fetch('/topics/background_jobs_check')
     topic.publish(new_timestamp)
   end

@@ -97,6 +97,13 @@ module Cache
       id.nil? ? self.name : "#{self.name}/#{id}"
     end
 
+    def write_cache(value, id = nil)
+      Rails.cache.write(cache_key(id),
+        value,
+        :expires_in => self.expires_in,
+        :force => true)
+    end
+
   end
 
 end
