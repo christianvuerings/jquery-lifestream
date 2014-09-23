@@ -15,7 +15,7 @@ gem 'activerecord-session_store', '~>0.1.0'
 gem 'activeresource', '~>4.0.0'
 gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
-gem 'rails-perftest', '~>0.0.4'
+gem 'rails-perftest', '~>0.0.5'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.10'
 
