@@ -47,7 +47,7 @@ class ActAsController < ApplicationController
       logger.warn "ACT-AS: User #{current_user.real_user_id} FAILED to login to #{act_as_uid}, act_as_uid not found"
       return false
     end
-    return true
+    true
   end
 
 end
