@@ -178,7 +178,7 @@ end
 group :development do
   # Automatically reloads your browser when 'view' files are modified.
   # https://github.com/guard/guard-livereload
-  gem 'guard-livereload', '~> 2.3.0', require: false
+  gem 'guard-livereload', '~> 2.3.1', require: false
 end
 
 group :test do
