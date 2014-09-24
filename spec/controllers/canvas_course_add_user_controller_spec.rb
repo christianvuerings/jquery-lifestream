@@ -269,7 +269,7 @@ describe CanvasCourseAddUserController do
   end
 
   context "when adding user to course" do
-    before { Canvas::CourseAddUser.stub(:add_user_to_course_section).and_return(true) }
+    before { allow(Canvas::CourseAddUser).to receive(:add_user_to_course_section).and_return(true) }
 
     it_should_behave_like "an api endpoint" do
       before { subject.stub(:add_user).and_raise(RuntimeError, "Something went wrong") }
@@ -284,15 +284,38 @@ describe CanvasCourseAddUserController do
       let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
-    it "adds user to course section" do
-      post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: "864215"
-      expect(response.status).to eq(200)
-      json_response = JSON.parse(response.body)
-      expect(json_response['user_added']).to be_an_instance_of Hash
-      expect(json_response['user_added']['ldap_user_id']).to eq "260506"
-      expect(json_response['user_added']['role_id']).to eq "StudentEnrollment"
-      expect(json_response['user_added']['section_id']).to eq "864215"
+    context "when role specified is authorized" do
+      let(:ta_roles) { [
+        {'id' => 'StudentEnrollment', 'name' => 'Student'},
+        {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+      ] }
+      before { allow(Canvas::CourseAddUser).to receive(:granting_roles).and_return(ta_roles) }
+
+      it "adds user to course section" do
+        post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: "864215"
+        expect(response.status).to eq(200)
+        json_response = JSON.parse(response.body)
+        expect(json_response['user_added']).to be_an_instance_of Hash
+        expect(json_response['user_added']['ldap_user_id']).to eq "260506"
+        expect(json_response['user_added']['role_id']).to eq "StudentEnrollment"
+        expect(json_response['user_added']['section_id']).to eq "864215"
+      end
     end
+
+    context "when role specified is not authorized" do
+      let(:ta_roles) { [
+        {'id' => 'StudentEnrollment', 'name' => 'Student'},
+        {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+      ] }
+      before { allow(Canvas::CourseAddUser).to receive(:granting_roles).and_return(ta_roles) }
+
+      it "denies unauthorized roles" do
+        post :add_user, ldap_user_id: "260506", role_id: "TaEnrollment", section_id: "864215"
+        expect(response.status).to eq 403
+        expect(response.body).to eq " "
+      end
+    end
+
   end
 
 end
