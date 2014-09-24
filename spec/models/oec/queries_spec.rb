@@ -32,12 +32,6 @@ describe Oec::Queries do
     it { should be_empty }
   end
 
-  context "looking up secondary cross listings in ccn pool" do
-    subject { Oec::Queries.get_secondary_cross_listings([test_ccn]) }
-    it { should_not be_nil }
-    it { subject[0]["course_id"].should_not be_nil }
-  end
-
   context "looking up courses", :testext => true do
     subject { Oec::Queries.get_all_courses }
     it { should_not be_nil }
