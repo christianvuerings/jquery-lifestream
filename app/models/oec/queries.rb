@@ -64,7 +64,7 @@ module Oec
             l.term_yr = c.term_yr
             and l.term_cd = c.term_cd
             #{self.query_in_chunks('l.course_cntl_num', secondary_ccn_array) if secondary_ccn_array.present?}
-            #{'and false' unless secondary_ccn_array.present?}
+            #{'and 0=1' unless secondary_ccn_array.present?}
         )
         and r.enroll_status != 'D'
         and exists (
