@@ -45,29 +45,6 @@
     // Initialize upon load
     $scope.resetForm();
     $scope.search_type = 'name';
-    $scope.userRoles = [
-      {
-        id: 'StudentEnrollment',
-        name: 'Student'
-      },
-      {
-        id: 'TeacherEnrollment',
-        name: 'Teacher'
-      },
-      {
-        id: 'TaEnrollment',
-        name: 'TA'
-      },
-      {
-        id: 'DesignerEnrollment',
-        name: 'Designer'
-      },
-      {
-        id: 'ObserverEnrollment',
-        name: 'Observer'
-      }
-    ];
-    $scope.selectedRole = $scope.userRoles[0];
 
     var invalidSearchForm = function() {
       if ($scope.search_text === '') {
@@ -162,6 +139,9 @@
     var checkAuthorization = function() {
       canvasCourseAddUserFactory.courseUserRoles($routeParams.canvas_course_id).success(function(data) {
         $scope.courseUserRoles = data.roles;
+        $scope.grantingRoles = data.grantingRoles;
+        $scope.selectedRole = $scope.grantingRoles[0];
+
         $scope.canvasCourseId = data.courseId;
         $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
         if ($scope.userAuthorized) {
