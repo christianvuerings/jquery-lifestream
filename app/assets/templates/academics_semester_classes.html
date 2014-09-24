@@ -1,0 +1,95 @@
+<div class="cc-widget">
+  <div class="cc-widget-title">
+    <h2><span data-ng-bind="widgetSemesterName + ' '"></span>Classes</h2>
+  </div>
+  <div data-ng-if="selectedStudentSemester || ((selectedSemester.timeBucket === 'current') && !selectedTeachingSemester)">
+    <div class="cc-academics-subtitle">
+      <h3>Enrollments</h3>
+    </div>
+    <div class="cc-widget-padding">
+      <h3 data-ng-if="selectedSemester.timeBucket === 'current'">Current</h3>
+      <div class="cc-table" data-ng-if="selectedCourses.length">
+        <table>
+          <thead>
+            <th scope="col" class="cc-table-right-spacing">Course Number</th>
+            <th scope="col">Title</th>
+            <th scope="col">Grade Option</th>
+            <th class="cc-table-right" scope="col">Units</th>
+          </thead>
+          <tbody data-ng-repeat="course in enrolledCourses" data-ng-class-even="'cc-academics-even'">
+            <tr>
+              <td class="cc-table-right-spacing cc-academics-course-number">
+                <a data-ng-href="{{course.url}}"
+                   data-ng-bind="course.course_code">
+                </a>
+                <div data-ng-repeat="section in course.sections">
+                  <span data-ng-bind="section.section_label"></span>
+                </div>
+              </td>
+              <td data-ng-bind="course.title"></td>
+              <td data-ng-bind="course.gradeOption"></td>
+              <td class="cc-table-right" data-ng-bind="course.units | number:1"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p data-ng-if="!selectedCourses.length">
+        You are not currently enrolled in any courses for <span data-ng-bind="selectedSemester.name"></span>
+      </p>
+      <div data-ng-if="waitlistedCourses.length">
+        <h3>Wait Lists</h3>
+        <div class="cc-table">
+          <table>
+            <thead>
+              <th>Course Number &amp; Section</th>
+              <th>Title</th>
+              <th>Waitlist Position / Class Size</th>
+            </thead>
+            <tbody data-ng-repeat="course in waitlistedCourses">
+              <tr data-ng-repeat="section in course.sections">
+                <td>
+                  <a data-ng-href="{{course.url}}"
+                     data-ng-bind="course.course_code">
+                  </a>
+                  <span data-ng-bind="section.section_label"></span>
+                </td>
+                <td data-ng-bind="course.title"></td>
+                <td>
+                  <strong data-ng-bind="section.waitlistPosition"></strong> on list of class of <strong data-ng-bind="section.enroll_limit"></strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div data-ng-if="selectedTeachingSemester">
+    <div class="cc-academics-subtitle">
+      <h3>Teaching</h3>
+    </div>
+    <div class="cc-widget-padding">
+      <div class="cc-table">
+        <table>
+          <thead>
+            <th scope="col" class="cc-table-right-spacing">Course Number</th>
+            <th scope="col">Title</th>
+          </thead>
+          <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
+            <tr data-ng-class-even="'cc-academics-even'">
+              <td class="cc-table-right-spacing cc-academics-course-number">
+                <a data-ng-href="{{course.url}}"
+                   data-ng-bind="course.course_code">
+                </a>
+                <div data-ng-repeat="section in course.sections">
+                  <span data-ng-bind="section.section_label"></span>
+                </div>
+              </td>
+              <td data-ng-bind="course.title"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

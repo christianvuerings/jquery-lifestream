@@ -1,6 +1,6 @@
 <div class="cc-widget cc-widget-exam-schedule">
   <div class="cc-widget-title">
-    <h2>Final Exam Schedule</h2>
+    <h2><span data-ng-bind="widgetSemesterName + ' '"></span>Final Exam Schedule</h2>
   </div>
   <div class="cc-widget-padding" data-ng-if="examSchedule.length">
     <div data-ng-repeat="exam in examSchedule" class="cc-widget-exam-schedule-item cc-clearfix-container">
