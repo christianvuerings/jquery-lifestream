@@ -37,7 +37,8 @@ module Oec
       stringify_ints! result
     end
 
-    # Cross listings of 'secondary' sections (unidentified by calcentral_cross_listing_vw)
+    # This SQL query defines informally cross-listed sections as secondary sections which share a meeting time and place
+    # and which include enrolled students.
     def self.get_secondary_cross_listings(secondary_ccn_array = [])
       select_list = self.get_all_courses_select_list(false)
       result = []
