@@ -11,33 +11,41 @@ describe Oec::Courses do
       all_courses_query = []
       spec_file.each_with_index do |row, index|
         if index > 0
+          course_id = row[0]
+          split_course_id = course_id.split('-')
+          cross_listings = row[3]
           all_courses_query << {
-            "COURSE_ID" => row[0],
-            "course_id" => row[0],
-            "COURSE_NAME" => row[1],
-            "CROSS_LISTED_FLAG" => row[2],
-            "CROSS_LISTED_NAME" => row[3],
-            "DEPT_NAME" => row[4],
-            "CATALOG_ID" => row[5],
-            "INSTRUCTION_FORMAT" => row[6],
-            "SECTION_NUM" => row[7],
-            "PRIMARY_SECONDARY_CD" => row[8],
-            "LDAP_UID" => row[9],
+            "term_yr" => split_course_id[0],
+            "term_cd" => split_course_id[1],
+            "course_cntl_num" => split_course_id[2].split('_')[0],
+            "course_id" => course_id,
+            "course_name" => row[1],
+            "cross_listed_flag" => row[2],
+            "cross_listed_name" => cross_listings.present? ? cross_listings[/\((.*)\)/,1] : nil,
+            "course_title_short" => cross_listings.present? ? cross_listings[/(.*?)\s\(/,1] : nil,
+            "dept_name" => row[4],
+            "catalog_id" => row[5],
+            "instruction_format" => row[6],
+            "section_num" => row[7],
+            "primary_secondary_cd" => row[8],
             "ldap_uid" => row[9],
-            "FIRST_NAME" => row[10],
-            "LAST_NAME" => row[11],
-            "EMAIL_ADDRESS" => row[12],
-            "INSTRUCTOR_FUNC" => row[13],
-            "BLUE_ROLE" => row[14],
-            "EVALUATE" => row[15],
-            "EVALUATION_TYPE" => row[16],
-            "MODULAR_COURSE" => row[17],
-            "START_DATE" => row[18],
-            "END_DATE" => row[19]
+            "first_name" => row[10],
+            "last_name" => row[11],
+            "email_address" => row[12],
+            "instructor_func" => row[13],
+            "blue_role" => row[14],
+            "evaluate" => row[15],
+            "evaluation_type" => row[16],
+            "modular_course" => row[17],
+            "start_date" => row[18],
+            "end_date" => row[19]
           }
         end
       end
-      Oec::Queries.stub(:get_all_courses).and_return(all_courses_query)
+      expect(Oec::Queries).to receive(:get_all_courses).with('54432, 87672').exactly(2).times.and_return([all_courses_query[8], all_courses_query[9]])
+      expect(Oec::Queries).to receive(:get_all_courses).with('54441, 87675').exactly(2).times.and_return([all_courses_query[10], all_courses_query[11]])
+      expect(Oec::Queries).to receive(:get_all_courses).with('72198, 87690').exactly(2).times.and_return([all_courses_query[12], all_courses_query[13]])
+      expect(Oec::Queries).to receive(:get_all_courses).and_return(all_courses_query)
     }
 
     let!(:export) { Oec::Courses.new.export(random_time) }
@@ -45,11 +53,13 @@ describe Oec::Courses do
     subject { CSV.read(export[:filename]) }
     it {
       should_not be_nil
-      # Duplicate row in the file is ignored
-      should have_exactly(11).items
-      # Delete dupe and compare
-      spec_file.delete_at(6)
-      should eq(spec_file)
+      should have_exactly(9).items
+      expected_course_ids = ['COURSE_ID', '2013-D-87672', '2013-D-54432', '2013-D-87675', '2013-D-54441', '2013-D-87690', '2013-D-72198', '2013-D-87693', '2013-D-02567']
+      subject.each do |entry|
+        expected_course_ids.count(entry[0]).should eql(1)
+        expected_course_ids.delete(entry[0])
+      end
+      expected_course_ids.count.should eql(0)
     }
   end
 
