@@ -46,7 +46,7 @@ echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: About to start primed-cache load test on $LOAD_TEST_AGENT ..." | $LOGIT
 
-ssh $LOAD_TEST_AGENT "cd tsung && ./automated_tsung.sh calcentral-dev" | $LOGIT
+ssh $LOAD_TEST_AGENT "cd tsung && ./automated_tsung.sh calcentral-dev-cached" | $LOGIT
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
