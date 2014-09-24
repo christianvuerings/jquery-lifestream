@@ -5,7 +5,7 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, $http, $routeParams, $scope) {
+  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, canvasCourseAddUserFactory, $routeParams, $scope) {
 
     apiService.util.setTitle('Find a Person to Add');
 
@@ -45,29 +45,6 @@
     // Initialize upon load
     $scope.resetForm();
     $scope.search_type = 'name';
-    $scope.userRoles = [
-      {
-        id: 'StudentEnrollment',
-        name: 'Student'
-      },
-      {
-        id: 'TeacherEnrollment',
-        name: 'Teacher'
-      },
-      {
-        id: 'TaEnrollment',
-        name: 'TA'
-      },
-      {
-        id: 'DesignerEnrollment',
-        name: 'Designer'
-      },
-      {
-        id: 'ObserverEnrollment',
-        name: 'Observer'
-      }
-    ];
-    $scope.selectedRole = $scope.userRoles[0];
 
     var invalidSearchForm = function() {
       if ($scope.search_text === '') {
@@ -104,17 +81,7 @@
       $scope.showUsersArea = true;
       $scope.isLoading = true;
 
-      var searchUsersUri = '/api/academics/canvas/course_add_user/search_users';
-      var feedParams = {
-        'canvas_course_id': $scope.canvas_course_id,
-        'search_text': $scope.search_text,
-        'search_type': $scope.search_type
-      };
-      $http({
-        url: searchUsersUri,
-        method: 'GET',
-        params: feedParams
-      }).success(function(data) {
+      canvasCourseAddUserFactory.searchUsers($scope.canvas_course_id, $scope.search_text, $scope.search_type).success(function(data) {
         $scope.userSearchResults = data.users;
         if (data.users.length > 0) {
           $scope.userSearchResultsCount = Math.floor(data.users[0].result_count);
@@ -150,17 +117,8 @@
       var submittedUser = $scope.selectedUser;
       var submittedSection = $scope.selectedSection;
       var submittedRole = $scope.selectedRole;
-      var addUserUri = '/api/academics/canvas/course_add_user/add_user';
-      var addUserParams = {
-        ldap_user_id: submittedUser.ldap_uid,
-        section_id: submittedSection.id,
-        role_id: submittedRole.id
-      };
-      $http({
-        url: addUserUri,
-        method: 'POST',
-        params: addUserParams
-      }).success(function(data) {
+
+      canvasCourseAddUserFactory.addUser(submittedUser.ldap_uid, submittedSection.id, submittedRole.id).success(function(data) {
         $scope.user_added = data.user_added;
         $scope.user_added.fullName = submittedUser.first_name + ' ' + submittedUser.last_name;
         $scope.user_added.role_name = submittedRole.name;
@@ -176,21 +134,14 @@
         $scope.additionFailureMessage = true;
         $scope.isLoading = false;
       });
-
     };
 
     var checkAuthorization = function() {
-      var courseUserRolesUri = '/api/academics/canvas/course_user_roles';
-      var courseUserRolesParams = {};
-      if ($routeParams.canvas_course_id) {
-        courseUserRolesParams.canvas_course_id = $routeParams.canvas_course_id;
-      }
-      $http({
-        url: courseUserRolesUri,
-        method: 'GET',
-        params: courseUserRolesParams
-      }).success(function(data) {
+      canvasCourseAddUserFactory.courseUserRoles($routeParams.canvas_course_id).success(function(data) {
         $scope.courseUserRoles = data.roles;
+        $scope.grantingRoles = data.grantingRoles;
+        $scope.selectedRole = $scope.grantingRoles[0];
+
         $scope.canvasCourseId = data.courseId;
         $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
         if ($scope.userAuthorized) {
@@ -212,11 +163,7 @@
     };
 
     var getCourseSections = function() {
-      var courseSectionsUri = '/api/academics/canvas/course_add_user/course_sections';
-      $http({
-        url: courseSectionsUri,
-        method: 'GET'
-      }).success(function(data) {
+      canvasCourseAddUserFactory.courseSections().success(function(data) {
         $scope.courseSections = data.course_sections;
         $scope.selectedSection = $scope.courseSections[0];
       }).error(function(data) {

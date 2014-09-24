@@ -43,5 +43,22 @@ module Canvas
       true
     end
 
+    def self.granting_roles(course_user_roles, global_admin = false)
+      user_roles = course_user_roles.to_hash.select {|key,role| role }.keys
+      granted_roles = []
+      ta_roles = [
+        {'id' => 'StudentEnrollment', 'name' => 'Student'},
+        {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+      ]
+      privileged_roles = [
+        {'id' => 'DesignerEnrollment', 'name' => 'Designer'},
+        {'id' => 'TaEnrollment', 'name' => 'TA'},
+        {'id' => 'TeacherEnrollment', 'name' => 'Teacher'},
+      ]
+      granted_roles += ta_roles if user_roles.include?('ta') || user_roles.include?('teacher') || user_roles.include?('designer') || global_admin
+      granted_roles += privileged_roles if user_roles.include?('teacher') || user_roles.include?('designer') || global_admin
+      return granted_roles
+    end
+
   end
 end

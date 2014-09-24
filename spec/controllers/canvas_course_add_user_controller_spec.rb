@@ -8,6 +8,10 @@ describe CanvasCourseAddUserController do
     {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241907, 'type' => "StudentEnrollment", 'role' => "StudentEnrollment"}
   end
 
+  let(:ta_enrollment_hash) do
+    {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241907, 'type' => "TaEnrollment", 'role' => "TaEnrollment"}
+  end
+
   let(:teacher_enrollment_hash) do
     {'course_id' => 767330, 'course_section_id' => 1312468, 'id' => 20241908, 'type' => "TeacherEnrollment", 'role' => "TeacherEnrollment"}
   end
@@ -35,15 +39,15 @@ describe CanvasCourseAddUserController do
     session[:user_id] = "12345"
     session[:canvas_user_id] = "43232321"
     session[:canvas_course_id] = "767330"
-    Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_user_hash)
-    Canvas::Admins.any_instance.stub(:admin_user?).and_return(true)
-    Canvas::CourseAddUser.stub(:course_sections_list).and_return(course_sections_list)
+    allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_user_hash)
+    allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(true)
+    allow(Canvas::CourseAddUser).to receive(:course_sections_list).and_return(course_sections_list)
   end
 
   context "when serving course user role information" do
 
     it_should_behave_like "an api endpoint" do
-      before { subject.stub(:course_user_roles).and_raise(RuntimeError, "Something went wrong") }
+      before { allow(subject).to receive(:course_user_roles).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :course_user_roles }
     end
 
@@ -56,8 +60,8 @@ describe CanvasCourseAddUserController do
       context "when user is student" do
         let(:canvas_course_student_hash) { canvas_course_user_hash.merge({'enrollments' => [student_enrollment_hash]}) }
         before do
-          Canvas::Admins.any_instance.stub(:admin_user?).and_return(false)
-          Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_student_hash)
+          allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
+          allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_student_hash)
         end
         it "returns course user details" do
           get :course_user_roles
@@ -73,13 +77,56 @@ describe CanvasCourseAddUserController do
           expect(roles['designer']).to be_false
           expect(roles['ta']).to be_false
         end
+
+        it "returns no granting roles" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['grantingRoles']).to eq []
+        end
       end
 
-      context "when user is canvas course admin" do
+      context "when user is teachers assistant" do
+        let(:canvas_course_ta_hash) { canvas_course_user_hash.merge({'enrollments' => [ta_enrollment_hash]}) }
+        before do
+          allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
+          allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_ta_hash)
+        end
+
+        it "returns course user details" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['roles']).to be_an_instance_of Hash
+          roles = response_json['roles']
+          expect(roles).to be_an_instance_of Hash
+          expect(roles['globalAdmin']).to be_false
+          expect(roles['teacher']).to be_false
+          expect(roles['student']).to be_false
+          expect(roles['observer']).to be_false
+          expect(roles['designer']).to be_false
+          expect(roles['ta']).to be_true
+        end
+
+        it "returns student and observer granting roles" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['grantingRoles']).to be_an_instance_of Array
+          expect(response_json['grantingRoles']).to_not include({'id' => "TeacherEnrollment", "name" => "Teacher"})
+          expect(response_json['grantingRoles']).to_not include({'id' => "TaEnrollment", "name" => "TA"})
+          expect(response_json['grantingRoles']).to_not include({'id' => "DesignerEnrollment", "name" => "Designer"})
+          expect(response_json['grantingRoles']).to include({'id' => "StudentEnrollment", "name" => "Student"})
+          expect(response_json['grantingRoles']).to include({'id' => "ObserverEnrollment", "name" => "Observer"})
+        end
+
+      end
+
+      context "when user is canvas course teacher" do
         let(:canvas_course_teacher_hash) { canvas_course_user_hash.merge({'enrollments' => [teacher_enrollment_hash]}) }
         before do
-          Canvas::Admins.any_instance.stub(:admin_user?).and_return(false)
-          Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_teacher_hash)
+          allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
+          allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_teacher_hash)
         end
 
         it "returns course user details" do
@@ -96,12 +143,24 @@ describe CanvasCourseAddUserController do
           expect(roles['designer']).to be_false
           expect(roles['ta']).to be_false
         end
+
+        it "returns all granting roles" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['grantingRoles']).to be_an_instance_of Array
+          expect(response_json['grantingRoles']).to include({'id' => "TeacherEnrollment", "name" => "Teacher"})
+          expect(response_json['grantingRoles']).to include({'id' => "TaEnrollment", "name" => "TA"})
+          expect(response_json['grantingRoles']).to include({'id' => "DesignerEnrollment", "name" => "Designer"})
+          expect(response_json['grantingRoles']).to include({'id' => "StudentEnrollment", "name" => "Student"})
+          expect(response_json['grantingRoles']).to include({'id' => "ObserverEnrollment", "name" => "Observer"})
+        end
       end
 
       context "when user is canvas account admin" do
         before do
-          Canvas::Admins.any_instance.stub(:admin_user?).and_return(true)
-          Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(nil)
+          allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(true)
+          allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(nil)
         end
         it "returns canvas admin user details" do
           get :course_user_roles
@@ -117,6 +176,19 @@ describe CanvasCourseAddUserController do
           expect(roles['designer']).to be_false
           expect(roles['ta']).to be_false
         end
+
+        it "returns all granting roles" do
+          get :course_user_roles
+          expect(response.status).to eq(200)
+          response_json = JSON.parse(response.body)
+          expect(response_json['grantingRoles']).to be_an_instance_of Array
+          expect(response_json['grantingRoles']).to include({'id' => "TeacherEnrollment", "name" => "Teacher"})
+          expect(response_json['grantingRoles']).to include({'id' => "TaEnrollment", "name" => "TA"})
+          expect(response_json['grantingRoles']).to include({'id' => "DesignerEnrollment", "name" => "Designer"})
+          expect(response_json['grantingRoles']).to include({'id' => "StudentEnrollment", "name" => "Student"})
+          expect(response_json['grantingRoles']).to include({'id' => "ObserverEnrollment", "name" => "Observer"})
+        end
+
       end
 
     end
@@ -125,11 +197,11 @@ describe CanvasCourseAddUserController do
 
   context "when performing user search" do
     before do
-      Canvas::CourseAddUser.stub(:search_users).and_return(users_found)
+      allow(Canvas::CourseAddUser).to receive(:search_users).and_return(users_found)
     end
 
     it_should_behave_like "an api endpoint" do
-      before { subject.stub(:search_users).and_raise(RuntimeError, "Something went wrong") }
+      before { allow(subject).to receive(:search_users).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :search_users, search_text: "John Doe", search_type: "name" }
     end
 
@@ -154,7 +226,7 @@ describe CanvasCourseAddUserController do
     end
 
     it "returns user search results" do
-      Canvas::CourseAddUser.should_receive(:search_users).with('John Doe', 'name').and_return(users_found)
+      expect(Canvas::CourseAddUser).to receive(:search_users).with('John Doe', 'name').and_return(users_found)
       get :search_users, search_text: "John Doe", search_type: "name"
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -197,7 +269,7 @@ describe CanvasCourseAddUserController do
   end
 
   context "when adding user to course" do
-    before { Canvas::CourseAddUser.stub(:add_user_to_course_section).and_return(true) }
+    before { allow(Canvas::CourseAddUser).to receive(:add_user_to_course_section).and_return(true) }
 
     it_should_behave_like "an api endpoint" do
       before { subject.stub(:add_user).and_raise(RuntimeError, "Something went wrong") }
@@ -212,15 +284,38 @@ describe CanvasCourseAddUserController do
       let(:make_request) { post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: 864215 }
     end
 
-    it "adds user to course section" do
-      post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: "864215"
-      expect(response.status).to eq(200)
-      json_response = JSON.parse(response.body)
-      expect(json_response['user_added']).to be_an_instance_of Hash
-      expect(json_response['user_added']['ldap_user_id']).to eq "260506"
-      expect(json_response['user_added']['role_id']).to eq "StudentEnrollment"
-      expect(json_response['user_added']['section_id']).to eq "864215"
+    context "when role specified is authorized" do
+      let(:ta_roles) { [
+        {'id' => 'StudentEnrollment', 'name' => 'Student'},
+        {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+      ] }
+      before { allow(Canvas::CourseAddUser).to receive(:granting_roles).and_return(ta_roles) }
+
+      it "adds user to course section" do
+        post :add_user, ldap_user_id: "260506", role_id: "StudentEnrollment", section_id: "864215"
+        expect(response.status).to eq(200)
+        json_response = JSON.parse(response.body)
+        expect(json_response['user_added']).to be_an_instance_of Hash
+        expect(json_response['user_added']['ldap_user_id']).to eq "260506"
+        expect(json_response['user_added']['role_id']).to eq "StudentEnrollment"
+        expect(json_response['user_added']['section_id']).to eq "864215"
+      end
     end
+
+    context "when role specified is not authorized" do
+      let(:ta_roles) { [
+        {'id' => 'StudentEnrollment', 'name' => 'Student'},
+        {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+      ] }
+      before { allow(Canvas::CourseAddUser).to receive(:granting_roles).and_return(ta_roles) }
+
+      it "denies unauthorized roles" do
+        post :add_user, ldap_user_id: "260506", role_id: "TaEnrollment", section_id: "864215"
+        expect(response.status).to eq 403
+        expect(response.body).to eq " "
+      end
+    end
+
   end
 
 end
