@@ -47,6 +47,10 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
   end
 
   def get_feed
+    # TEMPORARY LOGGING
+    logger.warn "Service list = #{TorqueBox::Service.list}"
+    logger.warn "Topic list = #{TorqueBox::Messaging::Topic.list}"
+
     feed = {}
     last_ping = Rails.cache.read(self.class.cache_key 'cluster')
     if last_ping
