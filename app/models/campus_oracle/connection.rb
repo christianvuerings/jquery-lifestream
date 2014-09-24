@@ -22,11 +22,11 @@ module CampusOracle
       end
     end
 
-    def self.depts_clause(table, departments)
+    def self.depts_clause(table, departments, inclusive = true)
       string = if departments.blank?
                  ''
                else
-                 clause = "and #{table}.dept_name IN ("
+                 clause = "and #{table}.dept_name #{'NOT' unless inclusive} IN ("
                  departments.each_with_index do |dept, index|
                    clause.concat("'#{dept}'")
                    clause.concat(",") unless index == departments.length - 1
