@@ -69,6 +69,9 @@ describe 'My Finances', :testui => true do
               end
 
               # API DATA SANITY TESTS
+              it 'shows an account balance that is equal to the sum of the open transactions for UID ' + uid do
+                fin_api_page.account_balance_str.should eql(fin_api_page.open_transactions_sum_str)
+              end
               it 'shows an account balance that is equal to the sum of the amount due now plus the amount not yet due for UID ' + uid do
                 BigDecimal.new(fin_api_page.account_balance_str).should eql(BigDecimal.new(fin_api_page.min_amt_due_str) +
                                                                                 BigDecimal.new(fin_api_page.future_activity_str))
@@ -90,12 +93,24 @@ describe 'My Finances', :testui => true do
 
               # ACCOUNT BALANCE
               my_fin_acct_bal = my_finances_page.account_balance
+              my_fin_zero_bal_text = my_finances_page.zero_balance_text?
+              my_fin_credit_bal_text = my_finances_page.credit_balance_text?
               if fin_api_page.account_balance > 0
                 acct_bal = 'Positive'
+                my_fin_balance_transactions = my_finances_page.visible_transactions_sum_str
+                it 'shows the open charges for UID ' + uid do
+                  my_fin_balance_transactions.should eql(fin_api_page.account_balance_str)
+                end
               elsif fin_api_page.account_balance == 0
                 acct_bal = 'Zero'
+                it 'shows a zero balance message for UID ' + uid do
+                  my_fin_zero_bal_text.should be_true
+                end
               elsif fin_api_page.account_balance < 0
                 acct_bal = 'Negative'
+                it 'shows a credit balance message for UID ' + uid do
+                  my_fin_credit_bal_text.should be_true
+                end
               end
               it 'shows the right account balance for UID ' + uid do
                 my_fin_acct_bal.should eql(fin_api_page.account_balance_str)

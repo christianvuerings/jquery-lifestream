@@ -93,8 +93,23 @@ class ApiMyFinancialsPage
     (sprintf '%.2f', self.dpp_norm_install_amt).to_s
   end
 
-  def transaction_type
-    @parsed['activity']['transType']
+  def transactions
+    @parsed['activity']
+  end
+
+  def open_transactions
+    transactions.select do |item|
+      ((item['transStatus'] == 'Current' || item['transStatus'] == 'Past due' || item['transStatus'] == 'Future' || item['transStatus'] == 'Installment') && !item['transDisputedFlag']) ||
+      (item['transType'] == 'Payment' && item['transStatus'] == 'Unapplied')
+    end
+  end
+
+  def open_transactions_sum
+    open_transactions.inject(BigDecimal.new('0')) { |acc, bal| acc + BigDecimal.new(bal['transBalance'].to_s) }
+  end
+
+  def open_transactions_sum_str
+    (sprintf '%.2f', self.open_transactions_sum).to_s
   end
 
 end
