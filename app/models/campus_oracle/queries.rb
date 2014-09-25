@@ -314,7 +314,7 @@ module CampusOracle
         sql = <<-SQL
         select sched.BUILDING_NAME, sched.ROOM_NUMBER, sched.MEETING_DAYS, sched.MEETING_START_TIME,
         sched.MEETING_START_TIME_AMPM_FLAG, sched.MEETING_END_TIME, sched.MEETING_END_TIME_AMPM_FLAG,
-        sched.MULTI_ENTRY_CD
+        sched.MULTI_ENTRY_CD, sched.COURSE_CNTL_NUM, sched.PRINT_CD
         from CALCENTRAL_CLASS_SCHEDULE_VW sched
         where sched.TERM_YR = #{term_yr.to_i}
           and sched.BUILDING_NAME is NOT NULL
@@ -323,6 +323,7 @@ module CampusOracle
         SQL
         result = connection.select_all(sql)
       }
+      result = filter_multi_entry_codes result
       stringify_ints! result
     end
 

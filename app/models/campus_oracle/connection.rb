@@ -77,5 +77,28 @@ module CampusOracle
       end
     end
 
+    def self.filter_multi_entry_codes(results)
+      # if a course has multiple schedule entries, and the first one's PRINT_CD = "A",
+      # then do not display other rows for that course.
+      # page 15 of the Class Scheduler User's Guide explains the rationale for this horror:
+      # http://registrar.berkeley.edu/DisplayMedia.aspx?ID=Class_Sched_Users_Guide.pdf
+      filtered_rows = []
+      current_ccn = nil
+      current_ccns_first_print_cd = nil
+      is_first_row = false
+      results.each do |row|
+        if current_ccn != row['course_cntl_num']
+          current_ccn = row['course_cntl_num']
+          current_ccns_first_print_cd = row['print_cd']
+          is_first_row = true
+        end
+        if is_first_row || current_ccns_first_print_cd != 'A'
+          filtered_rows << row
+        end
+        is_first_row = false
+      end
+      filtered_rows
+    end
+
   end
 end

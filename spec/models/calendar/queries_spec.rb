@@ -11,6 +11,12 @@ describe Calendar::Queries do
           expect(subject.length).to be >= 1
         end
       end
+      it 'should respect business rule about print_cd of A in class schedule data' do
+        if Calendar::Queries.test_data?
+          p "Subject = #{subject}"
+          expect(subject.length).to eq 4
+        end
+      end
     end
   end
 
