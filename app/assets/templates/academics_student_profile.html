@@ -52,7 +52,7 @@
         <strong data-ng-bind="api.user.profile.fullName"></strong>
       </div>
 
-      <div class="cc-widget-profile-content-gpa" data-ng-if="gpaUnits.cumulativeGpa !== null && gpaUnits.cumulativeGpa > 0 && !isLawStudent">
+      <div class="cc-widget-profile-content-gpa" data-ng-if="gpaUnits.cumulativeGpa !== null && gpaUnits.cumulativeGpa > 0 && !api.user.profile.isLawStudent">
         <span data-ng-bind="gpaUnits.cumulativeGpa"></span>
         GPA
       </div>
