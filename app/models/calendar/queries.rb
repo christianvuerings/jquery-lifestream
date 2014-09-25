@@ -19,7 +19,7 @@ module Calendar
         and c.course_cntl_num = sched.course_cntl_num
         #{terms_query_clause('c', Settings.class_calendar.current_terms_codes)}
         #{this_depts_clause}
-      order by c.course_cntl_num, sched.multi_entry_cd
+      order by c.course_cntl_num, sched.print_cd, sched.multi_entry_cd
         SQL
         result = connection.select_all(sql)
       }
