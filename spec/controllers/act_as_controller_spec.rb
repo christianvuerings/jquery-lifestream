@@ -16,8 +16,8 @@ describe ActAsController do
   end
 
   describe '#start' do
-    let(:target_uid) {random_id}
-    let(:real_user_id) {random_id}
+    let(:target_uid) {'978966'}
+    let(:real_user_id) {'1021845'}
     let(:real_active) {true}
     before do
       allow(Settings.features).to receive(:reauthentication).and_return(false)
@@ -33,7 +33,7 @@ describe ActAsController do
         it_succeeds
       end
       it 'switches targets' do
-        session[:user_id] = random_id
+        session[:user_id] = '211159'
         session[:original_user_id] = real_user_id
         it_succeeds
       end

@@ -15,7 +15,7 @@ gem 'activerecord-session_store', '~>0.1.0'
 gem 'activeresource', '~>4.0.0'
 gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
-gem 'rails-perftest', '~>0.0.4'
+gem 'rails-perftest', '~>0.0.5'
 
 gem 'activerecord-jdbc-adapter', '~> 1.3.10'
 
@@ -94,7 +94,7 @@ gem 'pundit', '~> 0.3.0'
 
 gem 'cancan', '~> 1.6.10'
 
-gem 'icalendar', '~> 2.1.2'
+gem 'icalendar', '~> 2.2.0'
 
 ##################
 # Front-end Gems #
@@ -160,7 +160,7 @@ group :development, :test , :testext do
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
-  gem 'simplecov', '~> 0.9.0', require: false
+  gem 'simplecov', '~> 0.9.1', require: false
 
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
@@ -178,7 +178,7 @@ end
 group :development do
   # Automatically reloads your browser when 'view' files are modified.
   # https://github.com/guard/guard-livereload
-  gem 'guard-livereload', '~> 2.3.0', require: false
+  gem 'guard-livereload', '~> 2.3.1', require: false
 end
 
 group :test do

@@ -105,6 +105,27 @@
       return classes;
     };
 
+    // Selects the semester of most pressing interest. Choose the current semester if available.
+    // Otherwise choose the next semester in the future, if available.
+    // Otherwise,choose the most recent semester.
+    var chooseDefaultSemester = function(semesters) {
+      var oldestFutureSemester = false;
+      for (var i = 0; i < semesters.length; i++) {
+        if (semesters[i].timeBucket === 'current') {
+          return semesters[i];
+        } else if (semesters[i].timeBucket === 'future') {
+          oldestFutureSemester = semesters[i];
+        } else {
+          if (oldestFutureSemester) {
+            return oldestFutureSemester;
+          } else {
+            return semesters[i];
+          }
+        }
+      }
+      return oldestFutureSemester;
+    };
+
     var findTeachingSemester = function(semesters, semester) {
       for (var i = 0; i < semesters.length; i++) {
         if (semester.slug === semesters[i].slug) {
@@ -229,6 +250,54 @@
       $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
     }
 
+    var fillSemesterSpecificPage = function(semesterSlug, data) {
+      var isOnlyInstructor = !!$routeParams.teachingSemesterSlug;
+      var selectedStudentSemester = findSemester(data.semesters, semesterSlug, selectedStudentSemester);
+      var selectedTeachingSemester = findSemester(data.teachingSemesters, semesterSlug, selectedTeachingSemester);
+      var selectedSemester = (selectedStudentSemester || selectedTeachingSemester);
+      if (!checkPageExists(selectedSemester)) {
+        return;
+      }
+      updatePrevNextSemester([data.semesters, data.teachingSemesters], selectedSemester);
+
+      $scope.selectedSemester = selectedSemester;
+      if (selectedStudentSemester && !$routeParams.classSlug) {
+        $scope.selectedCourses = selectedStudentSemester.classes;
+        if (!isOnlyInstructor) {
+          $scope.allCourses = getAllClasses(data.semesters);
+          $scope.previousCourses = getPreviousClasses(data.semesters);
+          $scope.enrolledCourses = getClassesSections(selectedStudentSemester.classes, false);
+          $scope.waitlistedCourses = getClassesSections(selectedStudentSemester.classes, true);
+        }
+      }
+      $scope.selectedStudentSemester = selectedStudentSemester;
+      $scope.selectedTeachingSemester = selectedTeachingSemester;
+
+      // Get selected course from URL params and extract data from selected semester schedule
+      if ($routeParams.classSlug) {
+        $scope.isInstructorOrGsi = isOnlyInstructor;
+        var classSemester = selectedStudentSemester;
+        if (isOnlyInstructor) {
+          classSemester = selectedTeachingSemester;
+        }
+        for (var i = 0; i < classSemester.classes.length; i++) {
+          var course = classSemester.classes[i];
+          if (course.slug === $routeParams.classSlug) {
+            initMultiplePrimaries(course);
+            $scope.selectedCourse = course;
+            if (isOnlyInstructor) {
+              $scope.campusCourseId = course.course_id;
+            }
+            break;
+          }
+        }
+        if (!checkPageExists($scope.selectedCourse)) {
+          return;
+        }
+        $scope.selectedCourseCountInstructors = countSectionItem($scope.selectedCourse, 'instructors');
+        $scope.selectedCourseCountSchedules = countSectionItem($scope.selectedCourse, 'schedules');
+      }
+    };
 
     var parseAcademics = function(data) {
       angular.extend($scope, data);
@@ -253,52 +322,12 @@
       // Get selected semester from URL params and extract data from semesters array
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
       if (semesterSlug) {
-        var isOnlyInstructor = !!$routeParams.teachingSemesterSlug;
-        var selectedStudentSemester = findSemester(data.semesters, semesterSlug, selectedStudentSemester);
-        var selectedTeachingSemester = findSemester(data.teachingSemesters, semesterSlug, selectedTeachingSemester);
-        var selectedSemester = (selectedStudentSemester || selectedTeachingSemester);
-        if (!checkPageExists(selectedSemester)) {
-          return;
-        }
-        updatePrevNextSemester([data.semesters, data.teachingSemesters], selectedSemester);
-
-        $scope.selectedSemester = selectedSemester;
-        if (selectedStudentSemester && !$routeParams.classSlug) {
-          $scope.selectedCourses = selectedStudentSemester.classes;
-          if (!isOnlyInstructor) {
-            $scope.allCourses = getAllClasses(data.semesters);
-            $scope.previousCourses = getPreviousClasses(data.semesters);
-            $scope.enrolledCourses = getClassesSections(selectedStudentSemester.classes, false);
-            $scope.waitlistedCourses = getClassesSections(selectedStudentSemester.classes, true);
-          }
-        }
-        $scope.selectedStudentSemester = selectedStudentSemester;
-        $scope.selectedTeachingSemester = selectedTeachingSemester;
-
-        // Get selected course from URL params and extract data from selected semester schedule
-        if ($routeParams.classSlug) {
-          $scope.isInstructorOrGsi = isOnlyInstructor;
-          var classSemester = selectedStudentSemester;
-          if (isOnlyInstructor) {
-            classSemester = selectedTeachingSemester;
-          }
-          for (var i = 0; i < classSemester.classes.length; i++) {
-            var course = classSemester.classes[i];
-            if (course.slug === $routeParams.classSlug) {
-              initMultiplePrimaries(course);
-              $scope.selectedCourse = course;
-              if (isOnlyInstructor) {
-                $scope.campusCourseId = course.course_id;
-              }
-              break;
-            }
-          }
-          if (!checkPageExists($scope.selectedCourse)) {
-            return;
-          }
-          $scope.selectedCourseCountInstructors = countSectionItem($scope.selectedCourse, 'instructors');
-          $scope.selectedCourseCountSchedules = countSectionItem($scope.selectedCourse, 'schedules');
-        }
+        fillSemesterSpecificPage(semesterSlug, data);
+      } else if ($scope.teachingLength && (!data.semesters || (data.semesters.length === 0))) {
+        // Show the current semester, or the most recent semester, since otherwise the instructor
+        // landing page will be grimly bare.
+        $scope.selectedTeachingSemester = chooseDefaultSemester(data.teachingSemesters);
+        $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
       }
 
       $scope.telebears = data.telebears;

@@ -6,6 +6,11 @@
       <h1 class="cc-heading-page-title">My Academics</h1>
     </div>
 
+    <div class="medium-8 columns cc-academics-row-margin" data-ng-if="selectedTeachingSemester && !api.user.profile.hasStudentHistory && !api.user.profile.roles.student">
+      <div data-ng-include="'academics_semester_classes.html'"></div>
+      <div data-ng-include="'academics_final_exam_schedule.html'" data-ng-if="selectedTeachingSemester.timeBucket === 'current'"></div>
+    </div>
+
     <div class="medium-4 columns cc-academics-row-margin" data-ng-if="api.user.profile.hasStudentHistory || api.user.profile.roles.student">
       <div data-ng-include src="'academics_student_profile.html'"></div>
       <div data-ng-include src="'academics_status_and_blocks.html'"></div>

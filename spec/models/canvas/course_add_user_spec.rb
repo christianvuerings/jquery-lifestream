@@ -163,4 +163,54 @@ describe Canvas::CourseAddUser do
     end
   end
 
+  context "when serving the roles a user may select when adding a new user" do
+    let(:no_course_user_roles) { {"teacher"=>false, "student"=>false, "observer"=>false, "designer"=>false, "ta"=>false} }
+    let(:student_course_user_roles) { no_course_user_roles.merge({'student' => true}) }
+    let(:observer_course_user_roles) { no_course_user_roles.merge({'observer' => true}) }
+    let(:ta_course_user_roles) { no_course_user_roles.merge({'ta' => true}) }
+    let(:teacher_course_user_roles) { no_course_user_roles.merge({'teacher' => true}) }
+    let(:designer_course_user_roles) { no_course_user_roles.merge({'designer' => true}) }
+    let(:privileged_roles) { [
+      {'id' => 'StudentEnrollment', 'name' => 'Student'},
+      {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+      {'id' => 'DesignerEnrollment', 'name' => 'Designer'},
+      {'id' => 'TaEnrollment', 'name' => 'TA'},
+      {'id' => 'TeacherEnrollment', 'name' => 'Teacher'},
+    ] }
+    let(:ta_roles) { [
+      {'id' => 'StudentEnrollment', 'name' => 'Student'},
+      {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+    ] }
+
+    it "returns all roles when the user is indicated to be a global admin" do
+      result = Canvas::CourseAddUser.granting_roles(no_course_user_roles, true)
+      expect(result).to eq privileged_roles
+    end
+
+    it "returns all roles when the user is a teacher" do
+      result = Canvas::CourseAddUser.granting_roles(teacher_course_user_roles)
+      expect(result).to eq privileged_roles
+    end
+
+    it "returns all roles when the user is a designer" do
+      result = Canvas::CourseAddUser.granting_roles(designer_course_user_roles)
+      expect(result).to eq privileged_roles
+    end
+
+    it "returns only student and observer roles when the user is only a teachers assistant" do
+      result = Canvas::CourseAddUser.granting_roles(ta_course_user_roles)
+      expect(result).to eq ta_roles
+    end
+
+    it "returns no roles when the user is only a student" do
+      result = Canvas::CourseAddUser.granting_roles(student_course_user_roles)
+      expect(result).to eq []
+    end
+
+    it "returns no roles when the user is only an observer" do
+      result = Canvas::CourseAddUser.granting_roles(observer_course_user_roles)
+      expect(result).to eq []
+    end
+  end
+
 end

@@ -41,6 +41,13 @@ class ActAsController < ApplicationController
       logger.warn "ACT-AS: User #{current_user.user_id} FAILED to login to #{act_as_uid}, values must be integers"
       return false
     end
+
+    # Ensure uid is in our database
+    if CampusOracle::Queries.find_people_by_uid(act_as_uid).blank?
+      logger.warn "ACT-AS: User #{current_user.real_user_id} FAILED to login to #{act_as_uid}, act_as_uid not found"
+      return false
+    end
+    true
   end
 
 end

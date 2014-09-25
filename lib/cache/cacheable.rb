@@ -1,6 +1,7 @@
 module Cache
 
   module Cacheable
+    include ResponseWrapper
 
     # thin wrapper around Rails.cache.fetch. Reads the value of key from cache if it exists, otherwise executes
     # the passed block and caches the result. Set force_write=true to make it always execute the block and write
@@ -27,11 +28,8 @@ module Cache
     # and nothing will be cached.
     def smart_fetch_from_cache(opts={}, &block)
       id = opts[:id]
-      user_message_on_exception = opts[:user_message_on_exception] || "An unknown server error occurred"
-      return_nil_on_generic_error = opts[:return_nil_on_generic_error]
-      jsonify = opts[:jsonify]
-      force_write = opts[:force_write]
       key = cache_key id
+      force_write = opts[:force_write]
       Rails.logger.debug "#{self.name} cache_key will be #{key}, expiration #{self.expires_in}"
       unless force_write
         entry = Rails.cache.read key
@@ -40,52 +38,20 @@ module Cache
           return (entry == NilClass) ? nil : entry
         end
       end
-      begin
-        entry = block.call
-        entry = entry.to_json if jsonify
-      rescue => e
-        # when an exception occurs, write with a short expiration time, log an error, and return the body with error info
-        response = handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
-        response = response.to_json if jsonify
+      wrapped_response = handling_exceptions(key, opts, &block)
+      response = wrapped_response[:response]
+      cached_entry = (response.nil?) ? NilClass : response
+      if wrapped_response[:exception]
         Rails.logger.debug "#{self.name} Error occurred; writing entry to cache with short lifespan: #{key}"
-        cached_response = (response.nil?) ? NilClass : response
-        Rails.cache.write(key,
-                          cached_response,
-                          :expires_in => Settings.cache.expiration.failure,
-                          :force => true)
-        return response
+        expiration = Settings.cache.expiration.failure
+      else
+        Rails.logger.debug "#{self.name} Writing entry to cache: #{key}"
+        expiration = self.expires_in
       end
-      Rails.logger.debug "#{self.name} Writing entry to cache: #{key}"
-      cached_entry = (entry.nil?) ? NilClass : entry
       Rails.cache.write(key,
                         cached_entry,
-                        :expires_in => self.expires_in,
+                        :expires_in => expiration,
                         :force => true)
-      entry
-    end
-
-    def handle_exception(e, id, return_nil_on_generic_error, user_message_on_exception)
-      key = cache_key id
-      if e.is_a?(Errors::ProxyError)
-        log_message = e.log_message
-        response = e.response
-        if e.wrapped_exception
-          log_message += " #{e.wrapped_exception.class} #{e.wrapped_exception.message}."
-        end
-      else
-        log_message = " #{e.class} #{e.message}"
-        if return_nil_on_generic_error
-          response = nil
-        else
-          response = {
-            :body => user_message_on_exception,
-            :statusCode => 503
-          }
-        end
-      end
-      log_message += " Associated cache key: #{key}"
-
-      Rails.logger.error(log_message + "\n" + e.backtrace.join("\n "))
       response
     end
 
@@ -129,6 +95,13 @@ module Cache
 
     def cache_key(id = nil)
       id.nil? ? self.name : "#{self.name}/#{id}"
+    end
+
+    def write_cache(value, id = nil)
+      Rails.cache.write(cache_key(id),
+        value,
+        :expires_in => self.expires_in,
+        :force => true)
     end
 
   end
