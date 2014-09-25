@@ -320,7 +320,7 @@ module CampusOracle
           and sched.BUILDING_NAME is NOT NULL
           and sched.TERM_CD = #{connection.quote(term_cd)}
           and sched.COURSE_CNTL_NUM = #{ccn.to_i}
-        order by sched.PRINT_CD
+        order by sched.PRINT_CD asc nulls last
         SQL
         result = connection.select_all(sql)
       }
