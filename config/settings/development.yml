@@ -85,6 +85,7 @@ features:
   reauthentication: false
   audio: true
   advising: true
+  background_jobs_check: true
 
 advising_proxy:
   fake: true
