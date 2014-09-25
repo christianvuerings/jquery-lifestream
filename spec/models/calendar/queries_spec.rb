@@ -13,7 +13,6 @@ describe Calendar::Queries do
       end
       it 'should respect business rule about print_cd of A in class schedule data' do
         if Calendar::Queries.test_data?
-          p "Subject = #{subject}"
           expect(subject.length).to eq 4
         end
       end
