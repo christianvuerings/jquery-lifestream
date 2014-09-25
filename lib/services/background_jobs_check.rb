@@ -11,7 +11,8 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
   end
 
   def on_message(body)
-    check_in(body)
+    logger.info "Message received on #{current_node_id}"
+    check_in(body) if body.present?
   end
 
   def on_error(exception)
@@ -57,6 +58,7 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
           node_check_in = Rails.cache.read(self.class.cache_key node_id)
           if node_check_in.blank?
             logger.error("Node #{node_id} has not checked in")
+            kick_the_box(node_id)
             node_state = 'MISSING'
           elsif node_check_in == last_ping
             node_state = 'OK'
@@ -83,6 +85,7 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
           status = 'NOT RUNNING'
         end
       else
+        logger.error("Last cluster ping was #{last_ping}")
         status = 'NOT RUNNING'
       end
     else
@@ -110,11 +113,17 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
     end
   end
 
+  def kick_the_box(missing_node)
+    if current_node_id == missing_node
+      logger.warn "Sending empty message on node #{missing_node}"
+      Messaging.publish('/topics/background_jobs_check', {})
+    end
+  end
+
   def request_ping
     new_timestamp = DateTime.now
     self.class.write_cache(new_timestamp, 'cluster')
-    topic = TorqueBox.fetch('/topics/background_jobs_check')
-    topic.publish(new_timestamp)
+    Messaging.publish('/topics/background_jobs_check', new_timestamp)
   end
 
 end

@@ -269,6 +269,7 @@ features:
   audio: false
   regstatus: true
   advising: false
+  background_jobs_check: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
