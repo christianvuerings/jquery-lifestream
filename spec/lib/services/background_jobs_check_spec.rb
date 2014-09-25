@@ -49,6 +49,7 @@ describe BackgroundJobsCheck do
       allow(Rails.cache).to receive(:read) do |key|
         cache_hash[key]
       end
+      allow(Messaging).to receive(:publish).with('/topics/background_jobs_check', {})
     end
     let(:success_cache_hash) do
       {
@@ -105,7 +106,6 @@ describe BackgroundJobsCheck do
     context 'a node has not recorded any checks' do
       let(:cache_hash) { success_cache_hash.merge('BackgroundJobsCheck/dev-03' => nil) }
       it 'reports a missing node' do
-        expect(Messaging).to receive(:publish).with('/topics/background_jobs_check', {})
         feed = subject.get_feed
         expect(feed['status']).to eq 'PARTIAL'
         expect(feed['last_ping']).to be_present
