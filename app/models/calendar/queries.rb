@@ -12,17 +12,18 @@ module Calendar
         c.dept_name || ' ' || c.catalog_id || ' ' || c.instruction_format || ' ' || c.section_num AS course_name,
         sched.building_name, sched.room_number, sched.meeting_days, sched.meeting_start_time,
         sched.meeting_start_time_ampm_flag, sched.meeting_end_time, sched.meeting_end_time_ampm_flag,
-        sched.multi_entry_cd
+        sched.multi_entry_cd, sched.print_cd, c.course_cntl_num
       from calcentral_course_info_vw c, calcentral_class_schedule_vw sched
       where c.term_yr = sched.term_yr
         and c.term_cd = sched.term_cd
         and c.course_cntl_num = sched.course_cntl_num
         #{terms_query_clause('c', Settings.class_calendar.current_terms_codes)}
         #{this_depts_clause}
-      order by c.course_cntl_num, sched.multi_entry_cd
+      order by c.course_cntl_num, sched.print_cd asc nulls last, sched.multi_entry_cd
         SQL
         result = connection.select_all(sql)
       }
+      result = filter_multi_entry_codes result
       stringify_ints! result
     end
 

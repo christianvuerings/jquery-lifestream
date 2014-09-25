@@ -176,6 +176,14 @@ describe CampusOracle::Queries do
     end
   end
 
+  it 'should respect business rule about print_cd of A in class schedule data' do
+    data = CampusOracle::Queries.get_section_schedules("2013", "D", "12345")
+    data.should_not be_nil
+    if CampusOracle::Queries.test_data?
+      data.length.should == 1
+    end
+  end
+
   it "should return instructor data given a course control number" do
     data = CampusOracle::Queries.get_section_instructors("2013", "D", "7309")
     data.should_not be_nil
