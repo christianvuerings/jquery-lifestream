@@ -11,7 +11,9 @@
     var services = ['Google'];
 
     var refreshIsCalendarOptedIn = function(profile) {
-      $scope.isCalendarOptedIn = profile.isCalendarOptedIn;
+      $scope.settings = {
+        isCalendarOptedIn: profile.isCalendarOptedIn
+      };
     };
 
     var refreshServices = function(profile) {
