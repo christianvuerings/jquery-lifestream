@@ -370,6 +370,17 @@ module Notifications
       <p><a href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
       EOS
 
+      harassment_training = <<-EOS
+      <p>Your registration as an official Berkeley student is blocked by the Dean of Students office because you have not
+      completed your Sexual Assault Training requirement. Though you may enroll in classes for the current term, until this
+      block is cleared you cannot enroll in classes for the next term, use campus services (e.g. library, RSF, Class Pass,
+      Career Center), receive final grades, or obtain formal campus transcripts.</p>
+      <p>To clear this block, please complete the required training and follow the instructions on the
+      <a href="http://survivorsupport.berkeley.edu/education-requirement">Sexual Assault and Violence</a>
+      information page.</p>
+      <p>Note: It will take up to 48 hours for the block to clear upon completion of the Harassment Training.</p>
+      EOS
+
       {
         7 => ll_text,
         8 => lf_text,
@@ -385,6 +396,7 @@ module Notifications
           'TANG' => student_health_uhs
         },
         53 => student_health_hb,
+        58 => harassment_training,
         60 => {
           'GRAD' => academic_grad,
           'CNR' => academic_cnr,
@@ -422,6 +434,7 @@ module Notifications
         50 => 'Miscellaneous',
         52 => 'Student Health',
         53 => 'Student Health - HB',
+        58 => 'Harassment Training',
         60 => 'Academic',
         62 => 'Minimum Progress',
         64 => 'Undeclared Senior',
@@ -456,6 +469,8 @@ module Notifications
         'CHEM' => 'College of Chemistry',
         'LNS' => 'College of Letters and Science',
         'LAW' => 'School of Law',
+        'JA' => 'Dean of Students',
+        # TODO Remove the next line once the abbreviation has been replaced by 'JA'
         'JUD AFF' => 'Judicial Affairs',
       }
     end

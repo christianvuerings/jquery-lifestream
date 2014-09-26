@@ -22,6 +22,10 @@ describe Notifications::RegBlockCodeTranslator do
     result[:office].should == "College of Letters and Science"
     result[:reason].should == "Double Major"
     result[:type].should == "Academic"
+    result = translator.translate_bearfacts_proxy("58", "JA")
+    result[:office].should == "Dean of Students"
+    result[:reason].should == "Harassment Training"
+    result[:type].should == "Administrative"
   end
 
   it 'deals with leading zeroes' do
