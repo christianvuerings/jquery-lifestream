@@ -43,3 +43,12 @@
   pointer-events: none;
   z-index: 1;
 }
+
+@media print {
+  .cc-select {
+    border-radius: 0;
+    &:before {
+      background: $cc-color-white;
+    }
+  }
+}
