@@ -458,7 +458,7 @@ module Notifications
         'OR' => 'Office of the Registrar - Registration',
         'OUARS' => 'Office of the Registrar - Admissions',
         'GRAD' => 'Graduate Division',
-        'GRADADM' => 'Graduate Admissions',
+        'GRAD ADM' => 'Graduate Admissions',
         'NATIVE' => 'Native American Studies',
         'CHICANO' => 'Chicano Studies',
         'ASIAN' => 'Asian American Studies',
