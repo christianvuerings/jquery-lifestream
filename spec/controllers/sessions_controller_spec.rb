@@ -29,7 +29,6 @@ describe SessionsController do
     it 'will create reauth cookie if original user_id not found in session' do
       expect(controller).to receive(:cookies).and_return cookie_hash
       session[:user_id] = user_id
-      session[:user_id] = user_id
 
       get :lookup, renew: 'true'
 
