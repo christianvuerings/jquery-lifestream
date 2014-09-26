@@ -141,7 +141,7 @@ describe UserApiController do
       end
 
       context 'opting into the calendar integration' do
-        before { Calendar::User.should_not_receive(:first_or_create) }
+        before { Calendar::User.should_not_receive(:find_or_create_by) }
         subject do
           post :calendar_opt_in
           response.status
@@ -157,7 +157,10 @@ describe UserApiController do
         end
       end
       context 'opting out of the calendar integration' do
-        before { Calendar::User.should_not_receive(:delete_all) }
+        before {
+          Calendar::User.should_not_receive(:where)
+          Calendar::User.should_not_receive(:delete_all)
+        }
         subject do
           post :calendar_opt_out
           response.status
@@ -177,7 +180,6 @@ describe UserApiController do
 
   describe '#calendar_opt_in' do
     it 'should handle an opt-in' do
-      Calendar::User.should_receive(:first_or_create)
       post :calendar_opt_in
       expect(response.status).to eq 204
     end
@@ -185,7 +187,6 @@ describe UserApiController do
 
   describe '#calendar_opt_out' do
     it 'should handle an opt-out' do
-      Calendar::User.should_receive(:delete_all)
       post :calendar_opt_out
       expect(response.status).to eq 204
     end
