@@ -1,6 +1,4 @@
 require "spec_helper"
-require "support/shared_examples"
-require "support/canvas_shared_examples"
 
 describe CanvasCourseAddUserController do
 
