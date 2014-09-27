@@ -16,9 +16,9 @@
   <div data-ng-if="api.user.profile.roles.student">
     <input type="checkbox"
         id="cc-settings-service-calendar-optin"
-        data-ng-change="isCalendarOptedIn ? api.user.calendarOptIn() : api.user.calendarOptOut()"
+        data-ng-change="settings.isCalendarOptedIn ? api.user.calendarOptIn() : api.user.calendarOptOut()"
         data-ng-disabled="!api.user.profile.hasGoogleAccessToken"
-        data-ng-model="isCalendarOptedIn"
+        data-ng-model="settings.isCalendarOptedIn"
       />
     <label data-ng-class="{'cc-text-light':(!api.user.profile.hasGoogleAccessToken)}" for="cc-settings-service-calendar-optin">Add my class schedule to bConnected calendars</label>
   </div>
@@ -40,7 +40,7 @@
       <button class="cc-button cc-button-blue" data-ng-click="api.user.removeOAuth(service)">Yes</button>
       <button class="cc-button" data-ng-click="showValidation = false">No</button>
     </div>
-    <p class="cc-settings-service-sure-disclaimer" data-ng-if="api.user.profile.roles.student">
+    <p class="cc-settings-service-sure-disclaimer" data-ng-if="api.user.profile.roles.student && settings.isCalendarOptedIn">
       Disconnecting bConnected will remove your class schedule from your calendar.
     </p>
   </div>
