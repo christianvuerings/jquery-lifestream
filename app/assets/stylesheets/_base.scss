@@ -126,16 +126,6 @@ form {
     color: $cc-color-placeholder;
   }
 
-  // On iOS devices we want to avoid zooming in when a text input is selected
-  // http://stackoverflow.com/questions/2989263
-  @media screen and (-webkit-min-device-pixel-ratio:0) {
-    select, textarea, input[type="number"], input[type="password"], input[type="text"] {
-      &:focus {
-        font-size: 16px !important;
-      }
-    }
-  }
-
 }
 
 // Audio
