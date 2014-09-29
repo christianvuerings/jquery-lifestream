@@ -121,6 +121,17 @@
       }
     };
 
+    /**
+     * Change location of parent window
+     */
+    var iframeParentLocation = function(location) {
+      if (isInIframe) {
+        iframePostMessage({
+          parentLocation: location
+        });
+      }
+    };
+
     var uidPattern = /^[0-9]{1,9}$/;
 
     // Expose methods
@@ -129,6 +140,7 @@
       changeControllerName: changeControllerName,
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
+      iframeParentLocation: iframeParentLocation,
       hideOffCanvasMenu: hideOffCanvasMenu,
       naturalSort: naturalSort,
       preventBubble: preventBubble,
