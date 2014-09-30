@@ -28,13 +28,21 @@ namespace :calcentral_dev do
     run "cd #{script_folder}; ./update-build.sh"
     transaction do
       servers.each_with_index do |server, index|
-        if (index == 0)
+        if index == 0
           logger.debug "---- Server: #{server.host} running migrate in transaction on offline app servers"
           run "cd #{script_folder}; ./migrate.sh", :hosts => server
         end
       end
     end
-    run "cd #{script_folder}; ./init.d/calcentral start"
+    servers.each_with_index do |server, index|
+      run "cd #{script_folder}; ./init.d/calcentral start", :hosts => server
+      if index < (servers.length - 1)
+        # Allow time for Torquebox to quiesce before adding a node to the cluster. This appears to
+        # be needed to ensure that message processing is properly spread across the cluster, although
+        # that constraint is undocumented. See CLC-4318.
+        sleep 120
+      end
+    end
   end
 end
 
