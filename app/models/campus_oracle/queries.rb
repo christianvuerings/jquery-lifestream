@@ -35,17 +35,18 @@ module CampusOracle
       stringify_ints! result
     end
 
-    def self.get_all_active_people_attributes
-      result = []
+    def self.get_all_active_people_uids
+      uids = []
       use_pooled_connection {
         sql = <<-SQL
-        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations
+        select pi.ldap_uid
         from calcentral_person_info_vw pi
         where (affiliations LIKE '%-TYPE-%')
         SQL
-        result = connection.select_all(sql)
+        uids = connection.select_all(sql)
       }
-      stringify_ints! result
+      stringify_ints! uids
+      uids.collect {|uid| uid['ldap_uid'] }
     end
 
     def self.find_people_by_name(name_search_string, limit = 0)
