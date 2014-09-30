@@ -132,6 +132,14 @@
       }
     };
 
+    /**
+     * Replaces '/' and '%2F' with '_slash_' to appease Apache. See CLC-4279.
+     * We can remove this once Apache is updated and allows 'AllowEncodedSlashes NoDecode'
+     */
+    var encodeSlash = function(string) {
+      return string.replace(/\/|%2F/g, '_slash_');
+    };
+
     var uidPattern = /^[0-9]{1,9}$/;
 
     // Expose methods
@@ -147,7 +155,8 @@
       redirect: redirect,
       setTitle: setTitle,
       supportsLocalStorage: supportsLocalStorage,
-      uidPattern: uidPattern
+      uidPattern: uidPattern,
+      encodeSlash: encodeSlash
     };
 
   });
