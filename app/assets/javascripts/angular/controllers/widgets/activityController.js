@@ -5,11 +5,11 @@
    * Activity controller
    */
   angular.module('calcentral.controllers').controller('ActivityController', function(activityFactory, apiService, dateService, taskAdderService, $scope) {
-    var getMyActivity = function() {
+    var getMyActivity = function(options) {
       $scope.process = {
         isLoading: true
       };
-      activityFactory.getActivity().then(function(data) {
+      activityFactory.getActivity(options).then(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
         $scope.process.isLoading = false;
@@ -32,7 +32,9 @@
 
     $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyActivities::Merged']) {
-        getMyActivity();
+        getMyActivity({
+          refreshCache: true
+        });
       }
     });
     getMyActivity();
