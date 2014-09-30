@@ -146,6 +146,7 @@
     return {
       canPlayMp3: canPlayMp3,
       changeControllerName: changeControllerName,
+      encodeSlash: encodeSlash,
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
       iframeParentLocation: iframeParentLocation,
@@ -155,8 +156,7 @@
       redirect: redirect,
       setTitle: setTitle,
       supportsLocalStorage: supportsLocalStorage,
-      uidPattern: uidPattern,
-      encodeSlash: encodeSlash
+      uidPattern: uidPattern
     };
 
   });
