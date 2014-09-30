@@ -45,12 +45,21 @@
       });
     };
 
+    // Replaces '/' and '%2F' with '_slash_' to appease Apache. See CLC-4279.
+    // We can remove this once Apache is updated and allows 'AllowEncodedSlashes NoDecode'
+    var encodeSlash = function(string) {
+      return string.replace(/\/|%2F/g, '_slash_');
+    };
+
     var formatClassTitle = function() {
       var courseYear = encodeURIComponent($scope.selectedSemester.termYear);
       var courseSemester = encodeURIComponent($scope.selectedSemester.termCode);
       var courseDepartment = encodeURIComponent($scope.selectedCourse.dept);
       var courseCatalog = encodeURIComponent($scope.selectedCourse.courseCatalog);
-      var title = courseYear + '/' + courseSemester + '/' + courseDepartment + '/' + courseCatalog;
+      var title = encodeSlash(courseYear) + '/' +
+                  encodeSlash(courseSemester) + '/' +
+                  encodeSlash(courseDepartment) + '/' +
+                  encodeSlash(courseCatalog);
       getWebcasts(title);
     };
 
