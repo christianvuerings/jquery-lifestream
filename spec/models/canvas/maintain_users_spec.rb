@@ -181,13 +181,13 @@ describe Canvas::MaintainUsers do
   describe ".handle_changed_sis_user_ids" do
     let(:sis_id_changes) do
       {
-        "sis_login_id:UID:289021" => '1084726',
+        "sis_login_id:1084726" => '289021',
         "sis_login_id:1084727" => 'UID:289022',
         "sis_login_id:1084728" => 'UID:289023',
       }
     end
     it 'sends call to change each sis user id update' do
-      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:UID:289021', '1084726').ordered
+      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084726', '289021').ordered
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084727', 'UID:289022').ordered
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
       Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
