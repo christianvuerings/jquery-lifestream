@@ -11,8 +11,16 @@ module Mediacasts
     end
 
     def initialize(year, term, dept, catalog_id)
+      dept = decode_slash(dept)
+      catalog_id = decode_slash(catalog_id)
       id = self.class.course_id(year, term, dept, catalog_id)
       super(id)
+    end
+
+    # Replaces '_slash_' with '/' since front-end encodes slashes. See CLC-4279.
+    # We can remove this once Apache is updated and allows 'AllowEncodedSlashes NoDecode'
+    def decode_slash(string)
+      string.gsub('_slash_', '/')
     end
 
     def get_feed
