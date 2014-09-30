@@ -56,8 +56,8 @@
       var courseSemester = encodeURIComponent($scope.selectedSemester.termCode);
       var courseDepartment = encodeURIComponent($scope.selectedCourse.dept);
       var courseCatalog = encodeURIComponent($scope.selectedCourse.courseCatalog);
-      var title = encodeSlash(courseYear) + '/' +
-                  encodeSlash(courseSemester) + '/' +
+      var title = courseYear + '/' +
+                  courseSemester + '/' +
                   encodeSlash(courseDepartment) + '/' +
                   encodeSlash(courseCatalog);
       getWebcasts(title);
