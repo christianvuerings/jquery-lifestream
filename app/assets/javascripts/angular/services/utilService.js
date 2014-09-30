@@ -129,12 +129,21 @@
       }
     };
 
+    /**
+     * Replaces '/' and '%2F' with '_slash_' to appease Apache. See CLC-4279.
+     * We can remove this once Apache is updated and allows 'AllowEncodedSlashes NoDecode'
+     */
+    var encodeSlash = function(string) {
+      return string.replace(/\/|%2F/g, '_slash_');
+    };
+
     var uidPattern = /^[0-9]{1,9}$/;
 
     // Expose methods
     return {
       canPlayMp3: canPlayMp3,
       changeControllerName: changeControllerName,
+      encodeSlash: encodeSlash,
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
       iframeParentLocation: iframeParentLocation,
