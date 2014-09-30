@@ -1,5 +1,4 @@
 (function(angular) {
-
   'use strict';
 
   /**
@@ -7,7 +6,6 @@
    * @param {Object} $http The $http service from Angular
    */
   angular.module('calcentral.factories').factory('myClassesFactory', function($http) {
-
     var addSubclasses = function(classesHash) {
       for (var j = 0; j < classesHash.otherClasses.length; j++) {
         for (var k = 0; k < classesHash.otherClasses[j].courses.length; k++) {
@@ -85,7 +83,5 @@
     return {
       getClasses: getClasses
     };
-
   });
-
 }(window.angular));

@@ -1,5 +1,4 @@
 (function(angular) {
-
   'use strict';
 
   angular.module('calcentral.services').service('apiService', function(
@@ -14,7 +13,6 @@
       userService,
       utilService,
       widgetService) {
-
     // API
     var api = {
       analytics: analyticsService,
@@ -31,7 +29,5 @@
     };
 
     return api;
-
   });
-
 }(window.angular));

@@ -10,7 +10,6 @@
    * @returns {boolean} Whether the request is for the same domain.
    */
   var isSameDomain = function(requestUrl, locationUrl) {
-
     var DEFAULT_PORTS = {'http': 80, 'https': 443, 'ftp': 21};
     var IS_SAME_DOMAIN_URL_MATCH = /^(([^:]+):)?\/\/(\w+:{0,1}\w*@)?([\w\.-]*)?(:([0-9]+))?(.*)$/;
     var URL_MATCH = /^([^:]+):\/\/(\w+:{0,1}\w*@)?([\w\.-]*)(:([0-9]+))?(\/[^\?#]*)?(\?([^#]*))?(#(.*))?$/;
@@ -51,13 +50,11 @@
       restrict: 'E',
       priority: 200, // We need to run this after ngHref has changed
       link: function(scope, element, attr) {
-
         /**
          * We update the anchor tag
          * @param {String} url The URL of the anchor tag.
          */
         var updateAnchorTag = function(url) {
-
           // We only want to change anchor tags that link to a different domain
           // Since this gets executed a couple of times, we add a class to the screenreader message & check for it
           if (!isSameDomain(url, location.href) && !element[0].querySelector('.cc-outbound-link')) {
@@ -74,7 +71,6 @@
          * Check whether the href attribute has changed
          */
         var observe = function(value) {
-
           // Check whether the element actually has an href
           if (value) {
             updateAnchorTag(value);
@@ -85,5 +81,4 @@
       }
     };
   });
-
 })(window.angular);

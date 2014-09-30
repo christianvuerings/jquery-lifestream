@@ -5,7 +5,6 @@
    * Activity controller
    */
   angular.module('calcentral.controllers').controller('FinaidActivityController', function(activityFactory, apiService, $scope) {
-
     var getFinaidActivity = function() {
       $scope.process = {
         isLoading: true
@@ -20,7 +19,5 @@
     $scope.mode = 'finaidActivity';
 
     getFinaidActivity();
-
   });
-
 })(window.angular);

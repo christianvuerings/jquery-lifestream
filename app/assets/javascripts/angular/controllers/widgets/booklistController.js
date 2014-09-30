@@ -66,7 +66,5 @@
         getSemesterTextbooks(returnValues[0]);
       }
     });
-
   });
-
 })(window.angular);

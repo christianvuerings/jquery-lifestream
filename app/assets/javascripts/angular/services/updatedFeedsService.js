@@ -1,9 +1,7 @@
 (function(angular) {
-
   'use strict';
 
   angular.module('calcentral.services').service('updatedFeedsService', function($http, $timeout, userService) {
-
     var events = {
       updateServices: {},
       servicesWithUpdates: {}
@@ -49,7 +47,6 @@
      * @param {Boolean} autoRefresh Whether or not to automatically update the feeds or not
      */
     var parseUpdatedFeeds = function(data, autoRefresh) {
-
       // When there is no data, don't do anything.
       if (!data) {
         return;
@@ -57,14 +54,12 @@
 
       for (var service in data) {
         if (data.hasOwnProperty(service) && toUpdateServices.indexOf(service) !== -1) {
-
           // We need to check whether the timestamps are different or not
           if (data[service] &&
             feedsLoadedData[service] &&
             data[service].timestamp  &&
             feedsLoadedData[service].timestamp &&
             data[service].timestamp.epoch > feedsLoadedData[service].timestamp.epoch) {
-
             events.servicesWithUpdates[service] = data[service];
           }
         }
@@ -139,7 +134,6 @@
      * This will check whether the current route should poll or not
      */
     var initiate = function(route, scope) {
-
       var isLoggedInWatch = scope.$watch('api.user.profile.isLoggedIn', function(isLoggedIn) {
         if (isLoggedIn) {
           // Refresh the services, we only want to do this on certain pages
@@ -151,7 +145,6 @@
           isLoggedInWatch();
         }
       });
-
     };
 
     /**
@@ -165,7 +158,5 @@
       refreshFeeds: refreshFeeds,
       startPolling: startPolling
     };
-
   });
-
 })(window.angular);

@@ -5,7 +5,6 @@
    * My Classes controller
    */
   angular.module('calcentral.controllers').controller('MyClassesController', function(apiService, myClassesFactory, $scope) {
-
     var sortOtherByName = function(a, b) {
       var name1 = a.name.toLowerCase();
       var name2 = b.name.toLowerCase();
@@ -63,5 +62,4 @@
     });
     getMyClasses();
   });
-
 })(window.angular);

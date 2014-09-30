@@ -1,9 +1,7 @@
 (function(angular) {
-
   'use strict';
 
   angular.module('calcentral.services').factory('httpService', function($cacheFactory, $http) {
-
     /**
      * Clear the cache for a specific URL
      * @param {Object} options list of options that are being passed through
@@ -31,7 +29,5 @@
       clearCache: clearCache,
       request: request
     };
-
   });
-
 }(window.angular));

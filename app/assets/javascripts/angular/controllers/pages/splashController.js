@@ -5,7 +5,6 @@
    * Splash controller
    */
   angular.module('calcentral.controllers').controller('SplashController', function($filter, $http, $scope, apiService) {
-
     apiService.util.setTitle('Home');
 
     $http.get('/api/blog').success(function(data) {
@@ -20,7 +19,5 @@
         $scope.splashNote = data.entries[0];
       }
     });
-
   });
-
 })(window.angular);

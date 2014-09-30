@@ -5,7 +5,6 @@
    * My Up Next controller
    */
   angular.module('calcentral.controllers').controller('UpNextController', function(apiService, $http, $scope) {
-
     /**
      * Make sure that we're not showing wrong date information to the user.
      * This will make sure that the date that is shown in the UI is the
@@ -30,7 +29,5 @@
       }
     });
     getUpNext();
-
   });
-
 })(window.angular);

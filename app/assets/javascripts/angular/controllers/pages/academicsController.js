@@ -6,7 +6,6 @@
    * Academics controller
    */
   angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, apiService, badgesFactory, $http, $routeParams, $scope) {
-
     apiService.util.setTitle('My Academics');
 
     var checkPageExists = function(page) {
@@ -136,7 +135,6 @@
     };
 
     var parseTeaching = function(teachingSemesters) {
-
       if (!teachingSemesters) {
         return {};
       }
@@ -164,7 +162,6 @@
         }
       }
       return teaching;
-
     };
 
     var countSectionItem = function(selectedCourse, sectionItem) {
@@ -232,7 +229,6 @@
     };
 
     var isLSStudent = function(collegeAndLevel) {
-
       if (!collegeAndLevel || !collegeAndLevel.colleges) {
         return false;
       }
@@ -360,6 +356,5 @@
         });
       }
     });
-
   });
 })(window.angular);

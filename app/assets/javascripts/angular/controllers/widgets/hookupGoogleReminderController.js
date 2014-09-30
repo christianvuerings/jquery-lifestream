@@ -5,7 +5,6 @@
    * Hookup Google Reminder controller
    */
   angular.module('calcentral.controllers').controller('HookupGoogleReminderController', function($http, $scope, apiService) {
-
     $scope.dismissReminder = function() {
       $http.post('/api/google/dismiss_reminder').success(function() {
         apiService.analytics.sendEvent('Preferences', 'Dismiss bConnected reminder card');
@@ -25,7 +24,5 @@
         $scope.showReminderCard = false;
       }
     });
-
   });
-
 })(window.angular);

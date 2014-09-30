@@ -5,7 +5,6 @@
    * Tasks controller
    */
   angular.module('calcentral.controllers').controller('TasksController', function(apiService, $filter, $http, $scope) {
-
     // Initial mode for Tasks view
     $scope.currentTaskMode = 'scheduled';
     $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
@@ -149,7 +148,6 @@
       };
 
       $http.post('/api/my/tasks/delete/' + task.id, deltask).success(function() {
-
         // task.$index is duplicated between buckets, so need to iterate through ALL tasks
         for (var i = 0; i < $scope.tasks.length; i++) {
           if ($scope.tasks[i].id === task.id) {
@@ -163,7 +161,6 @@
         apiService.analytics.sendEvent('Error', 'Delete task failure');
         // Some error notification would be helpful.
       });
-
     };
 
     var filterOverdue = function(task) {
@@ -185,7 +182,5 @@
     var filterCompleted = function(task) {
       return (task.status === 'completed');
     };
-
   });
-
 })(window.angular);

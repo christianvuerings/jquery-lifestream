@@ -1,12 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
    * Task editor controller
    */
   angular.module('calcentral.controllers').controller('TaskEditorController', function($http, $scope, apiService) {
-
     $scope.editorEnabled = false;
 
     $scope.enableEditor = function() {
@@ -72,8 +70,6 @@
       });
 
       $scope.disableEditor();
-
     };
   });
-
 })(window.angular);

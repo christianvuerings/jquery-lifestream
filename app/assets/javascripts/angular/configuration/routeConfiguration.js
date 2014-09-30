@@ -2,12 +2,10 @@
  * Configure the routes for CalCentral
  */
 (function(angular) {
-
   'use strict';
 
   // Set the configuration
   angular.module('calcentral.config').config(function($routeProvider) {
-
     // List all the routes
     $routeProvider.when('/', {
       templateUrl: 'splash.html',
@@ -125,7 +123,5 @@
       controller: 'ErrorController',
       isPublic: true
     });
-
   });
-
 })(window.angular);

@@ -23,7 +23,6 @@
            * @param {String} mode 'image' or 'video'
            */
           var launch = function(mode) {
-
             // Remove both placeholders
             angular.element(document.querySelector('#cc-youtube-image-placeholder')).remove();
             angular.element(document.querySelector('#cc-youtube-video-placeholder')).remove();
@@ -62,11 +61,8 @@
           if (videoid) {
             launch('image');
           }
-
         });
       }
     };
-
   });
-
 })(window.angular);

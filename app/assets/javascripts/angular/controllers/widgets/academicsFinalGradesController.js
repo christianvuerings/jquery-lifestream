@@ -6,7 +6,6 @@
    * Academics GPA controller
    */
   angular.module('calcentral.controllers').controller('AcademicsFinalGradesController', function($scope) {
-
     var hasTranscripts = function() {
       // On page load, set default values and calculate starter GPA
       var response = false;
@@ -24,5 +23,4 @@
 
     $scope.semesterHasTranscripts = hasTranscripts();
   });
-
 })(window.angular);
