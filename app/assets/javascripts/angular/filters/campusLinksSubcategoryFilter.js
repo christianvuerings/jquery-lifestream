@@ -19,5 +19,4 @@
       return arrayToReturn;
     };
   });
-
 }(window.angular));

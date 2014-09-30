@@ -5,7 +5,6 @@
    * CalCentral main controller
    */
   angular.module('calcentral.controllers').controller('CalcentralController', function($rootScope, apiService) {
-
     // Expose the API service
     $rootScope.api = apiService;
 
@@ -23,7 +22,5 @@
       apiService.auth.isLoggedInRedirect();
       apiService.updatedFeeds.initiate(current.$$route, $rootScope);
     });
-
   });
-
 })(window, window.angular);

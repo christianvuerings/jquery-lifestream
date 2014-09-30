@@ -1,5 +1,4 @@
 (function(angular) {
-
   'use strict';
 
   /**
@@ -7,7 +6,6 @@
    * @param {Object} $http The $http service from Angular
    */
   angular.module('calcentral.factories').factory('rosterFactory', function($http) {
-
     /**
      * Get the roster information
      * @param {String} mode 'canvas' or 'campus'
@@ -21,7 +19,5 @@
     return {
       getRoster: getRoster
     };
-
   });
-
 }(window.angular));

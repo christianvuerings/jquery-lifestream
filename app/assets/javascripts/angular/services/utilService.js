@@ -1,9 +1,7 @@
 (function(angular, naturalSort) {
-
   'use strict';
 
   angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $window) {
-
     /**
      * Check whether the current browser can play mp3 files
      * Based on Modernizr: http://git.io/DPOxlQ
@@ -65,7 +63,6 @@
      * Prevent a click event from bubbling up to its parents
      */
     var preventBubble = function($event) {
-
       // We don't need to do anything when you hit the enter key.
       // In that instance the event will be undefined.
       if (!$event) {
@@ -149,7 +146,5 @@
       supportsLocalStorage: supportsLocalStorage,
       uidPattern: uidPattern
     };
-
   });
-
 }(window.angular, window.naturalSort));

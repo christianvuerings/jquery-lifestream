@@ -5,7 +5,6 @@
    * Basic Authentication controller
    */
   angular.module('calcentral.controllers').controller('BasicAuthController', function($http, $scope) {
-
     $scope.basicauth = {
       user: null
     };
@@ -29,7 +28,5 @@
         $http.defaults.headers.common.Authorization = 'Basic ' + btoa($scope.basicauth.login + ':' + $scope.basicauth.password);
       }
     });
-
   });
-
 })(window.angular);

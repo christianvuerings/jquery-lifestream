@@ -5,7 +5,6 @@
    * Settings controller
    */
   angular.module('calcentral.controllers').controller('SettingsController', function($scope, apiService) {
-
     apiService.util.setTitle('Settings');
 
     var services = ['Google'];
@@ -39,7 +38,5 @@
     $scope.api.user.fetch({
       refreshCache: true
     });
-
   });
-
 })(window.angular);

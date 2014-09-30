@@ -5,7 +5,6 @@
    * API Test controller
    */
   angular.module('calcentral.controllers').controller('ApiTestController', function($http, $scope) {
-
     // Crude way of testing against the http.success responses due to insufficient status codes.
     var responseDictionary = {
       '/api/blog/release_notes/latest': 'entries',
@@ -83,6 +82,5 @@
         initTestRoutes();
       }
     });
-
   });
 })(window.angular);

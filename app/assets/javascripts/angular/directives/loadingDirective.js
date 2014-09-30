@@ -4,7 +4,6 @@
   angular.module('calcentral.directives').directive('ccLoadingDirective', [function() {
     return {
       link: function(scope, elm, attrs) {
-
         var ccLoadingClass = 'cc-loading';
         var ccLoadingClasses = 'cc-loading-error cc-loading-process cc-loading-success';
 
@@ -50,5 +49,4 @@
       }
     };
   }]);
-
 })(window.angular);

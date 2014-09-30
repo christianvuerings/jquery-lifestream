@@ -5,7 +5,6 @@
     return {
       replace: true,
       link: function(scope, elem, attrs) {
-
         // Defaults
         var incrementDefault = 10;
         var limitDefault = 10;
@@ -20,10 +19,8 @@
 
         // Watch the limit variable
         var watchMoreLimit = function(listLength) {
-
           // The limit of the ngRepeat limitTo
           scope.$watch(attrs.ccShowMoreLimit, function() {
-
             // First time this will probably be undefined, we need to update it to a correct limit
             scope[attrs.ccShowMoreLimit] = scope[attrs.ccShowMoreLimit] || limitDefault;
 
@@ -41,7 +38,6 @@
                 scope.$apply();
               });
             }
-
           });
         };
 
@@ -68,9 +64,7 @@
             watchMoreLimit(list.length);
           }
         });
-
       }
     };
   });
-
 })(window.angular);

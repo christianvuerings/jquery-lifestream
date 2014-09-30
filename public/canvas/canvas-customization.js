@@ -7,7 +7,6 @@
    * on the 'People' page within a course, show additional info to support adding guests
    */
   var addPeopleInfoAlert = function() {
-
     var isViewingCoursePeople = window.ENV &&
       window.ENV.COURSE_ROOT_URL &&
       window.location.pathname === window.ENV.COURSE_ROOT_URL + '/users';
@@ -15,7 +14,6 @@
     var canAddUsers = window.ENV && window.ENV.permissions && window.ENV.permissions.add_users;
 
     if (isViewingCoursePeople && canAddUsers) {
-
       var exampleInputText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
 
       // applies info alerts to 'People' popup event
@@ -23,7 +21,6 @@
         // add help info to the Add People dialog
         // wait until after the user presses the Add People button because the dialog isn't in the DOM yet
         clickable_element.click(function() {
-
           // apply modification after obtaining 'Find a Person to Add' tool LTI application ID
           var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
           $.get(externalToolsUrl, function(externalToolsHash) {
@@ -68,7 +65,6 @@
             // replace example input
             $('#user_list_textarea').attr('placeholder', exampleInputText);
           });
-
         });
       };
 
@@ -116,7 +112,6 @@
         applyModifications($addMoreUsersButton, applyInfoAlert);
         applyModifications($userErrors, applyErrorModification);
       }, 300);
-
     }
   };
 
@@ -177,11 +172,8 @@
       // ensure gradebook context
       var url = '/courses/' + courseId + '/gradebook';
       if (url.indexOf(window.location.pathname) !== -1) {
-
         // add link for eGrades Export LTI tool
-
         $.get(externalToolsUrl(), function(externalToolsHash) {
-
           // form link to external tool
           var gradesExportLtiId = externalToolsHash['eGrades Export'];
           var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
@@ -197,7 +189,6 @@
           ].join('');
           $downloadScoresListItem.after(downloadEGradesItem);
         });
-
       }
     }
   };
@@ -254,5 +245,4 @@
       window.location = e.data.parentLocation;
     }
   };
-
 })(window, window.document, window.$);

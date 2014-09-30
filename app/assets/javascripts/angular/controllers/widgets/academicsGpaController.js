@@ -6,7 +6,6 @@
    * Academics GPA controller
    */
   angular.module('calcentral.controllers').controller('AcademicsGpaController', function($scope) {
-
     var gradeOptions = [
       {
         grade: 'A+',
@@ -148,7 +147,5 @@
     };
 
     gpaInit();
-
   });
-
 })(window.angular);

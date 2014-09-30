@@ -293,5 +293,4 @@ function makeSwipeDirective(directiveName, direction, eventName) {
 // Left is negative X-coordinate, right is positive.
 makeSwipeDirective('ngSwipeLeft', -1, 'swipeleft');
 makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
-
 })(window, window.angular);

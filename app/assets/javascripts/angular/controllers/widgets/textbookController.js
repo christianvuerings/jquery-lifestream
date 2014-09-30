@@ -6,7 +6,6 @@
    * Textbook controller
    */
   angular.module('calcentral.controllers').controller('TextbookController', function($http, $scope) {
-
     /**
      * Get Textbooks for the selected course
      * @param  {Object} selectedCourse Selected Course Object
@@ -40,7 +39,5 @@
         getTextbooks(returnValues[0]);
       }
     });
-
   });
-
 })(window.angular);

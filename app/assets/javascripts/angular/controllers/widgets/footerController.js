@@ -5,7 +5,6 @@
    * Footer controller
    */
   angular.module('calcentral.controllers').controller('FooterController', function($http, $scope) {
-
     $scope.footer = {
       showInfo: false
     };
@@ -21,7 +20,5 @@
         loadServerInformation();
       }
     });
-
   });
-
 })(window.angular);

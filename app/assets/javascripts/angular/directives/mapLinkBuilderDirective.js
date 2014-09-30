@@ -2,11 +2,9 @@
   'use strict';
 
   angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function($compile) {
-
     return {
       restrict: 'A',
       link: function(scope, elm) {
-
         if (!scope || !scope.exam || !scope.exam.location) {
           return;
         }
@@ -40,5 +38,4 @@
       }
     };
   });
-
 })(window.angular);

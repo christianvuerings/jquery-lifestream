@@ -6,7 +6,6 @@
    * Canvas course provisioning LTI app controller
    */
   angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, $http, $scope, $timeout) {
-
     apiService.util.setTitle('bCourses Course Provision');
 
     var statusProcessor = function() {
@@ -257,7 +256,5 @@
         $scope.fetchFeed();
       }
     });
-
   });
-
 })(window.angular);

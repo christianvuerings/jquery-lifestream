@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('calcentral.directives').directive('ccTruncateDirective',  function($filter, $sanitize) {
-
     // Set the default options
     var defaultOptions = {
       cssButtonClass: 'cc-button-link',
@@ -56,7 +55,6 @@
      * @param {Object} options The options that were being passed through
      */
     var update = function(scope, element, options) {
-
       // Do nothing when there is no text to truncate
       if (!scope.completeText) {
         return;
@@ -102,13 +100,11 @@
           update(scope, element, options);
         });
       }
-
     };
 
     return {
       replace: true,
       link: function(scope, element, attr) {
-
         // Do the same as regular AngularJS html binding
         element
           .addClass('ng-binding')
@@ -129,5 +125,4 @@
       }
     };
   });
-
 })(window.angular);

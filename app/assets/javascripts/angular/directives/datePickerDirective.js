@@ -3,11 +3,9 @@
 
   angular.module('calcentral.directives').directive('ccDatepickerDirective', function($document) {
     return {
-
       // Restrict the directive to attributes
       restrict: 'A',
       link: function(scope, elm, attrs) {
-
         // Keep track on whether the picker has been initialized before or not
         scope.pickerInitialized = false;
 
@@ -29,7 +27,6 @@
             field: inputElement, // The element that should open when we hit the datepicker button.
             format: 'MM/DD/YYYY',
             onSelect: function() {
-
               // We need to set the view value
               // so validation happens correctly every time
               angularInputElement.controller('ngModel').$setViewValue(inputElement.value);
@@ -61,7 +58,6 @@
            * @param {Object} clickEvent Event containing the click information
            */
           var closeAll = function(clickEvent) {
-
             // Do not close the datepicker when you're selecting the month or year
             if (clickEvent && clickEvent.target && (clickEvent.target.className || clickEvent.target.tagName)) {
               var className = clickEvent.target.className;
@@ -92,7 +88,6 @@
           scope.pickerShown = !scope.pickerShown;
 
           if (scope.pickerInitialized) {
-
             // We need this extra $apply since otherwise the watchshown() method won't be actived
             scope.$apply();
 
@@ -102,9 +97,7 @@
 
           initializePicker();
         });
-
       }
     };
   });
-
 })(window.angular, window.Pikaday);

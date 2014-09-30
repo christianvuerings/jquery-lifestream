@@ -1,5 +1,4 @@
 (function(angular) {
-
   'use strict';
 
   /**
@@ -7,7 +6,6 @@
    * @param {Object} apiService CalCentral API service
    */
   angular.module('calcentral.factories').factory('academicsFactory', function(apiService) {
-
     var url = '/api/my/academics';
     // var url = '/dummy/json/academics.json';
 
@@ -18,7 +16,5 @@
     return {
       getAcademics: getAcademics
     };
-
   });
-
 }(window.angular));

@@ -1,5 +1,4 @@
 (function(angular) {
-
   'use strict';
 
   /**
@@ -37,7 +36,5 @@
         $scope.addEditTask.focusInput = true;
       }
     }, true);
-
   });
-
 })(window.angular);

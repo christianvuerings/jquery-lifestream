@@ -5,7 +5,6 @@
    * My Groups controller
    */
   angular.module('calcentral.controllers').controller('MyGroupsController', function($http, $routeParams, $scope, apiService) {
-
     var getMyGroups = function() {
       $http.get('/api/my/groups').success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
@@ -20,5 +19,4 @@
     });
     getMyGroups();
   });
-
 })(window.angular);

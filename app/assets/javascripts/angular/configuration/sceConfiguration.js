@@ -2,12 +2,10 @@
  * Set the SCE configuration for CalCentral
  */
 (function(calcentral) {
-
   'use strict';
 
   // Set the configuration
   calcentral.config(['$sceDelegateProvider', function($sceDelegateProvider) {
-
     $sceDelegateProvider.resourceUrlWhitelist([
       'self',
       // Youtube
@@ -21,7 +19,5 @@
       'http://wbe-itunes.berkeley.edu/**',
       'https://wbe-itunes.berkeley.edu/**'
     ]);
-
   }]);
-
 })(window.calcentral);

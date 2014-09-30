@@ -5,7 +5,6 @@
    * Admin controller
    */
   angular.module('calcentral.controllers').controller('AdminController', function(apiService, $http, $scope) {
-
     /**
      * Store recently entered UIDs
      */
@@ -162,7 +161,5 @@
         }
       });
     };
-
   });
-
 })(window, window.angular);

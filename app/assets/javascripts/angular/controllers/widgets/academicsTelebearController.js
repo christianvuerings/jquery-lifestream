@@ -5,7 +5,6 @@
    * Academics Tele-BEARS controller
    */
   angular.module('calcentral.controllers').controller('AcademicsTelebearsController', function(apiService, $http, $scope, $q) {
-
     $scope.addTelebearsAppointment = function(phasesArray) {
       var phases = [];
       $scope.telebearsAppointmentLoading = 'Process';
@@ -28,7 +27,5 @@
         $scope.telebearsAppointmentLoading = 'Error';
       });
     };
-
   });
-
 })(window.angular);

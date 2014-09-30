@@ -1,5 +1,4 @@
 (function(angular) {
-
   'use strict';
 
   /**
@@ -8,7 +7,6 @@
    * @param {Object} $http The $http service from Angular
    */
   angular.module('calcentral.factories').factory('activityFactory', function(apiService, $http) {
-
     /**
      * Pare the the activity response
      * @param {Object} activityResponse The response from the server
@@ -188,7 +186,5 @@
       getActivity: getActivity,
       getFinaidActivity: getFinaidActivity
     };
-
   });
-
 }(window.angular));

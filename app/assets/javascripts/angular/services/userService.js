@@ -1,9 +1,7 @@
 (function(angular) {
-
   'use strict';
 
   angular.module('calcentral.services').service('userService', function($http, $location, $route, analyticsService, httpService, utilService) {
-
     var profile = {};
     var events = {
       isLoaded: false,
@@ -96,7 +94,6 @@
      * @param {Object} options Options that need to be passed through
      */
     var fetch = function(options) {
-
       httpService.clearCache(options, statusUrl);
 
       return $http.get(statusUrl, {
@@ -184,7 +181,5 @@
       signIn: signIn,
       signOut: signOut
     };
-
   });
-
 }(window.angular));

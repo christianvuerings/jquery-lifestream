@@ -1,12 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
    * Campus Links Factory - get links from the campuslinks API
    */
   angular.module('calcentral.factories').factory('campusLinksFactory', function(apiService, $http) {
-
     // Data contains "links" and "navigation"
     var linkDataUrl = '/api/my/campuslinks';
 
@@ -97,7 +95,6 @@
      * @return {String} The category name
      */
     var getCategoryName = function(categoryId, navigation) {
-
       // We want to explicitly check for undefined here
       // since other values need to result in a 404.
       if (categoryId === undefined) {
@@ -132,7 +129,6 @@
     };
 
     var getLinks = function(options) {
-
       apiService.http.clearCache(options, linkDataUrl);
 
       // We need to make sure to load the user data first since that contains the roles information
@@ -152,7 +148,5 @@
     return {
       getLinks: getLinks
     };
-
   });
-
 }(window.angular));

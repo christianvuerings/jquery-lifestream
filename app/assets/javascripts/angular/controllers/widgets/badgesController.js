@@ -6,7 +6,6 @@
    */
 
   angular.module('calcentral.controllers').controller('BadgesController', function(apiService, badgesFactory, dateService, errorService, $scope) {
-
     var defaults = {
       'bcal': {
         'count': '...',
@@ -149,7 +148,5 @@
         });
       }
     });
-
   });
-
 })(window.angular);
