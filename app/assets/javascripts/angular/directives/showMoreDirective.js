@@ -43,7 +43,7 @@
 
         // Check when the list has changed
         var moreListWatch = scope.$watch(moreList, function(list) {
-          if (list && list.length) {
+          if (list && Array.isArray(list)) {
             watchMoreLimit(list.length);
             // If there is an extra watch, we should use that instead and cancel the list watch
             if (attrs.ccShowMoreWatch) {
@@ -60,7 +60,7 @@
           }
           moreListWatch();
           var list = scope[attrs.ccShowMoreList];
-          if (list && Array.isArray(list) && list.length) {
+          if (list && Array.isArray(list)) {
             watchMoreLimit(list.length);
           }
         });
