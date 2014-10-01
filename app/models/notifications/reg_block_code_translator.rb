@@ -381,6 +381,15 @@ module Notifications
       <p>Note: It will take up to 48 hours for the block to clear upon completion of the Harassment Training.</p>
       EOS
 
+      miscellaneous = <<-EOS
+      <p>Your registration as an official Berkeley student is blocked by the Office of the Registrar. Though you may enroll
+      in classes for the current term, until this block is cleared you cannot enroll in classes for the next term,
+      use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career
+      Center, etc.), receive final grades, or obtain official campus transcripts.</p>
+      <p>To clear this block, visit <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a> at 120 Sproul
+      Hall, or call (510) 664-9181.</p>
+      EOS
+
       {
         7 => ll_text,
         8 => lf_text,
@@ -391,6 +400,7 @@ module Notifications
         44 => status_lapse,
         46 => education_abroad,
         48 => misconduct,
+        50 => miscellaneous,
         52 => {
           'OR' => student_health_registrar,
           'TANG' => student_health_uhs
