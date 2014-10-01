@@ -2,23 +2,18 @@ module Canvas
   # Updates and adds Canvas users based on differences detected in active CalNet user set and Canvas User Report
   class MaintainAllUsers < Csv
 
-    def initialize(options = {})
-      default_options = { :clear_sis_stickiness => false }
-      options.reverse_merge!(default_options)
+    require 'set'
 
+    def initialize(options = {})
       super()
-      @sis_user_id_updates = {}
-      @clear_sis_stickiness = options[:clear_sis_stickiness]
     end
 
     # Performs full active user synchronization task
     def sync_all_active_users
       prepare_sis_user_import
       get_canvas_user_report_file
-      load_active_users
-      process_updated_users
+      load_new_active_users
       process_new_users
-      Canvas::MaintainUsers.handle_changed_sis_user_ids(@sis_user_id_updates)
       import_sis_user_csv
     end
 
@@ -44,52 +39,23 @@ module Canvas
       @canvas_user_report_file_path ||= get_report.call
     end
 
-    # Loads active LDAP people/guests from campus Oracle view
-    def load_active_users
-      @active_sis_users = {}
-      CampusOracle::Queries.get_all_active_people_attributes.each do |person|
-        @active_sis_users[person['ldap_uid']] = person
+    def load_new_active_users
+      new_uid_groups = split_uid_array(new_active_user_uids)
+      @new_active_sis_users = []
+      new_uid_groups.each do |uid_group|
+        @new_active_sis_users.concat(CampusOracle::Queries.get_basic_people_attributes(uid_group))
       end
-    end
-
-    # Compares users in Canvas with state in campus data set for updates.
-    # Adds updated users to SIS User import CSV, records users needing SIS User ID update.
-    # Removes users existing in Canvas from active user list to leave new users remaining in @active_sis_users hash.
-    def process_updated_users
-      CSV.foreach(get_canvas_user_report_file, :headers => :first_row) do |canvas_user|
-        uid = canvas_user['login_id']
-
-        # process only if found in campus data
-        if @active_sis_users[uid]
-          active_campus_user = canvas_user_from_campus_row(@active_sis_users[uid])
-
-          # if SIS User ID has changed
-          if canvas_user['user_id'] != active_campus_user['user_id']
-            @sis_user_id_updates["sis_login_id:#{canvas_user['login_id']}"] = active_campus_user['user_id']
-          end
-
-          unless Canvas::MaintainUsers.provisioned_account_eq_sis_account?(canvas_user, active_campus_user)
-            logger.debug("Updating user #{canvas_user} with #{active_campus_user}")
-            add_user_to_import(active_campus_user)
-          end
-          @active_sis_users.delete(uid)
-        end
-      end
+      @new_active_sis_users
     end
 
     # Add remaining users not detected in Canvas to SIS User Import
     def process_new_users
-      logger.warn("#{@active_sis_users.length} new user accounts detected. Adding to SIS User Import CSV")
-      @active_sis_users.values.each do |new_user|
+      logger.warn("#{@new_active_sis_users.length} new user accounts detected. Adding to SIS User Import CSV")
+      @new_active_sis_users.each do |new_user|
         new_canvas_user = canvas_user_from_campus_row(new_user)
         add_user_to_import(new_canvas_user)
       end
-      @active_sis_users = nil
-    end
-
-    # Adds Canvas User hash to SIS User Import CSV
-    def add_user_to_import(canvas_user)
-      @sis_user_import << canvas_user
+      @new_active_sis_users = nil
     end
 
     def import_sis_user_csv
@@ -97,11 +63,34 @@ module Canvas
       csv_filepath = @sis_user_import.path
       user_count = CSV.read(csv_filepath, {headers: true}).length
       if user_count > 0
-        params = ''
-        params = '&override_sis_stickiness=1&clear_sis_stickiness=1' if @clear_sis_stickiness
-        logger.warn("Importing SIS User Import CSV with #{user_count} updates - Params: #{params}")
-        Canvas::SisImport.new.import_users(csv_filepath, params)
+        logger.warn("Importing SIS User Import CSV with #{user_count} updates")
+        Canvas::SisImport.new.import_users(csv_filepath)
       end
+    end
+
+    # Split UID array into sets of 1000
+    def split_uid_array(uid_array)
+      return [uid_array] if uid_array.count < 1001
+      split_array = []
+      while uid_array.count > 0  do
+        split_array << uid_array.slice!(0, 1000)
+      end
+      return split_array
+    end
+
+    # Loads array of new active LDAP people/guests from campus Oracle view
+    def new_active_user_uids
+      all_active_sis_user_uids = CampusOracle::Queries.get_all_active_people_uids.to_set
+      all_current_canvas_uids = []
+      CSV.foreach(get_canvas_user_report_file, :headers => :first_row) do |canvas_user|
+        all_current_canvas_uids << canvas_user['login_id']
+      end
+      all_active_sis_user_uids.subtract(all_current_canvas_uids).to_a
+    end
+
+    # Adds Canvas User hash to SIS User Import CSV
+    def add_user_to_import(canvas_user)
+      @sis_user_import << canvas_user
     end
 
   end

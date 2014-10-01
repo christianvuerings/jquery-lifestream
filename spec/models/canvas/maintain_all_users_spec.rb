@@ -1,4 +1,5 @@
 require "spec_helper"
+require "set"
 
 describe Canvas::MaintainAllUsers do
 
@@ -7,35 +8,40 @@ describe Canvas::MaintainAllUsers do
     csv_string += "123,22729403,946123,John,Smith,john.smith@berkeley.edu,active\n"
     csv_string += "124,UID:946124,946124,Jane,Smith,janesmith@gmail.com,active\n"
     csv_string += "125,22729405,946125,Charmaine,D'Silva,charmainedsilva@berkeley.edu,active\n"
-    csv_string += "126,22729407,946127,Brian,Warner,bwarner@example.com,active"
+    csv_string += "126,22729407,946126,Brian,Warner,bwarner@example.com,active"
     csv_string
   end
 
   # Email addresss changes for Charmaine D'Silva
   # SIS User ID changes for Jane Smith
+  let(:sis_active_uids) { ["946122","946123","946124","946125","946126","946127"].to_set }
   let(:sis_active_people) do
     [
-      {"ldap_uid"=>"946123", "first_name"=>"John", "last_name"=>"Smith", "email_address"=>"john.smith@berkeley.edu", "student_id"=>"22729403"},
-      {"ldap_uid"=>"946124", "first_name"=>"Jane", "last_name"=>"Smith", "email_address"=>"janesmith@gmail.com", "student_id"=>"22729404"},
-      {"ldap_uid"=>"946125", "first_name"=>"Charmaine", "last_name"=>"D'Silva", "email_address"=>"charmainedsilva@example.com", "student_id"=>"22729405"},
-      {"ldap_uid"=>"946126", "first_name"=>"Dwight", "last_name"=>"Schrute", "email_address"=>"dschrute@schrutefarms.com", "student_id"=>nil},
+      {"ldap_uid"=>"946122", "first_name"=>"Charmaine", "last_name"=>"D'Silva", "email_address"=>"charmainedsilva@example.com", "student_id"=>"22729405"},
+      {"ldap_uid"=>"946127", "first_name"=>"Dwight", "last_name"=>"Schrute", "email_address"=>"dschrute@schrutefarms.com", "student_id"=>nil},
     ]
   end
 
   let(:user_report_csv) { CSV.parse(user_report_csv_string, {headers: true}) }
   let(:fake_now_datetime) { DateTime.strptime('2014-07-23T09:00:06+07:00', '%Y-%m-%dT%H:%M:%S%z') }
-  let(:new_canvas_user) { {"user_id"=>"UID:946126", "login_id"=>"946126", "password"=>nil, "first_name"=>"Dwight", "last_name"=>"Schrute", "email"=>"dschrute@schrutefarms.com", "status"=>"active"} }
+  let(:new_canvas_users) do
+    [
+      {"user_id"=>"22729405", "login_id"=>"946122", "password"=>nil, "first_name"=>"Charmaine", "last_name"=>"D'Silva", "email"=>"charmainedsilva@example.com", "status"=>"active"},
+      {"user_id"=>"UID:946127", "login_id"=>"946127", "password"=>nil, "first_name"=>"Dwight", "last_name"=>"Schrute", "email"=>"dschrute@schrutefarms.com", "status"=>"active"}
+    ]
+  end
 
   before do
     allow(DateTime).to receive(:now).and_return(fake_now_datetime)
     allow_any_instance_of(Canvas::UsersReport).to receive(:get_csv).and_return(user_report_csv)
-    allow(CampusOracle::Queries).to receive(:get_all_active_people_attributes).and_return(sis_active_people)
+    allow(CampusOracle::Queries).to receive(:get_all_active_people_uids).and_return(sis_active_uids)
+    allow(CampusOracle::Queries).to receive(:get_basic_people_attributes).and_return(sis_active_people)
 
     # have to mock the responses due to dependency on Campus Oracle data
-    allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[0]).and_return('22729403')
-    allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[1]).and_return('22729404')
-    allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[2]).and_return('22729405')
-    allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[3]).and_return('UID:946126')
+    allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[0]).and_return('22729405')
+    allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[1]).and_return('UID:946127')
+    # allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[2]).and_return('22729405')
+    # allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[3]).and_return('UID:946126')
   end
 
   after do
@@ -49,11 +55,8 @@ describe Canvas::MaintainAllUsers do
     it "calls user syncing methods in intended order" do
       expect(subject).to receive(:prepare_sis_user_import).ordered.and_return(true)
       expect(subject).to receive(:get_canvas_user_report_file).ordered.and_return(true)
-      expect(subject).to receive(:load_active_users).ordered.and_return(true)
-      expect(subject).to receive(:process_updated_users).ordered.and_return(true)
+      expect(subject).to receive(:load_new_active_users).ordered.and_return(true)
       expect(subject).to receive(:process_new_users).ordered.and_return(true)
-      sis_user_id_updates = subject.instance_eval { @sis_user_id_updates }
-      expect(Canvas::MaintainUsers).to receive(:handle_changed_sis_user_ids).with(sis_user_id_updates).ordered.and_return(true)
       expect(subject).to receive(:import_sis_user_csv).ordered.and_return(true)
       subject.sync_all_active_users
     end
@@ -99,74 +102,38 @@ describe Canvas::MaintainAllUsers do
     end
   end
 
-  describe "#load_active_users" do
-    it "generates uid indexed set of active users from sis source" do
-      subject.load_active_users
-      result = subject.instance_eval { @active_sis_users }
-      expect(result).to be_an_instance_of Hash
-      expect(result["946123"]).to be_an_instance_of Hash
-      expect(result["946124"]).to be_an_instance_of Hash
-      expect(result["946125"]).to be_an_instance_of Hash
-      expect(result["946126"]).to be_an_instance_of Hash
-      expect(result["946123"]['first_name']).to eq "John"
-      expect(result["946123"]['last_name']).to eq "Smith"
-    end
-  end
-
-  describe "#process_updated_users" do
-    it "adds updated users to sis user import" do
-      expect(subject).to receive(:add_user_to_import).once.with({"user_id"=>"22729405", "login_id"=>"946125", "password"=>nil, "first_name"=>"Charmaine", "last_name"=>"D'Silva", "email"=>"charmainedsilva@example.com", "status"=>"active"})
-      subject.load_active_users
-      subject.process_updated_users
-    end
-
-    it "removes existing users from active users hash" do
-      subject.prepare_sis_user_import
-      subject.load_active_users
-      subject.process_updated_users
-      new_users = subject.instance_eval { @active_sis_users }
-      expect(new_users).to be_an_instance_of Hash
-      expect(new_users.length).to eq 1
-      expect(new_users['946126']).to be_an_instance_of Hash
-      expect(new_users['946126']['first_name']).to eq "Dwight"
-      expect(new_users['946126']['last_name']).to eq "Schrute"
-    end
-
-    it "creates set of sis user id updates" do
-      subject.prepare_sis_user_import
-      subject.load_active_users
-      subject.process_updated_users
-      sis_user_updates = subject.instance_eval { @sis_user_id_updates }
-      expect(sis_user_updates).to be_an_instance_of Hash
-      expect(sis_user_updates.length).to eq 1
-      expect(sis_user_updates['sis_login_id:946124']).to eq '22729404'
+  describe "#load_new_active_users" do
+    it "loads new active users into array" do
+      expect(CampusOracle::Queries).to receive(:get_basic_people_attributes).with(['946122','946127']).and_return(sis_active_people)
+      result = subject.load_new_active_users
+      loaded_users = subject.instance_eval { @new_active_sis_users }
+      expect(loaded_users).to be_an_instance_of Array
+      expect(loaded_users.count).to eq 2
+      expect(loaded_users[0]).to be_an_instance_of Hash
+      expect(loaded_users[1]).to be_an_instance_of Hash
+      expect(loaded_users[0]['ldap_uid']).to eq "946122"
+      expect(loaded_users[0]['first_name']).to eq "Charmaine"
+      expect(loaded_users[1]['ldap_uid']).to eq "946127"
+      expect(loaded_users[1]['first_name']).to eq "Dwight"
     end
   end
 
   describe "#process_new_users" do
-    it "adds users in active_sis_users hash to sis user import csv" do
+    it "adds users in new_active_sis_user_uids set to sis user import csv" do
       subject.prepare_sis_user_import
-      subject.load_active_users
-      subject.process_updated_users
-      expect(subject).to receive(:add_user_to_import).with(new_canvas_user)
+      subject.get_canvas_user_report_file
+      subject.load_new_active_users
+      expect(subject).to receive(:add_user_to_import).with(new_canvas_users[0]).ordered.and_return(true)
+      expect(subject).to receive(:add_user_to_import).with(new_canvas_users[1]).ordered.and_return(true)
       subject.process_new_users
-    end
-  end
-
-  describe "#add_user_to_import" do
-    it "adds the user to the sis import csv file" do
-      subject.prepare_sis_user_import
-      sis_import_file = subject.instance_eval { @sis_user_import }
-      expect(sis_import_file).to receive(:<<).with(new_canvas_user)
-      subject.add_user_to_import(new_canvas_user)
     end
   end
 
   describe "#import_sis_user_csv" do
     it "imports user csv if users present" do
       subject.prepare_sis_user_import
-      subject.add_user_to_import(new_canvas_user)
-      expect_any_instance_of(Canvas::SisImport).to receive(:import_users).with("tmp/canvas/canvas-2014-07-23_09-00-06-sync-all-users.csv", '').and_return(true)
+      subject.add_user_to_import(new_canvas_users[0])
+      expect_any_instance_of(Canvas::SisImport).to receive(:import_users).with("tmp/canvas/canvas-2014-07-23_09-00-06-sync-all-users.csv").and_return(true)
       subject.import_sis_user_csv
     end
 
@@ -175,17 +142,62 @@ describe Canvas::MaintainAllUsers do
       expect_any_instance_of(Canvas::SisImport).to_not receive(:import_users)
       subject.import_sis_user_csv
     end
+  end
 
-    context "when clear stickiness enabled" do
-      subject { Canvas::MaintainAllUsers.new(:clear_sis_stickiness => true) }
-      it "imports user csv with clear stickiness parameters" do
-        subject.prepare_sis_user_import
-        subject.add_user_to_import(new_canvas_user)
-        expect_any_instance_of(Canvas::SisImport).to receive(:import_users).with("tmp/canvas/canvas-2014-07-23_09-00-06-sync-all-users.csv", '&override_sis_stickiness=1&clear_sis_stickiness=1').and_return(true)
-        subject.import_sis_user_csv
-      end
+  describe "#new_active_user_uids" do
+    it "returns array new active user UIDs" do
+      result = subject.new_active_user_uids
+      expect(result).to be_an_instance_of Array
+      expect(result.include?("946122")).to be_true
+      expect(result.include?("946127")).to be_true
+      expect(result.include?("946123")).to be_false
+      expect(result.include?("946124")).to be_false
+      expect(result.include?("946125")).to be_false
+      expect(result.include?("946126")).to be_false
+    end
+  end
+
+  describe "#split_uid_array" do
+    it "returns argument in array when less than 1000 uids" do
+      input_array = (2051..3050).to_a
+      expect(input_array.count).to eq 1000
+      result = subject.split_uid_array(input_array)
+      expect(result.count).to eq 1
+      expect(result[0]).to eq input_array
+
+      input_array = (2051..2061).to_a
+      expect(input_array.count).to eq 11
+      result = subject.split_uid_array(input_array)
+      expect(result.count).to eq 1
+      expect(result[0]).to eq input_array
     end
 
+    it "returns array split into groups of 1000 or less uids" do
+      input_array = (2051..5025).to_a
+      result = subject.split_uid_array(input_array)
+      expect(result).to be_an_instance_of Array
+      expect(result.count).to eq 3
+      expect(result[0].count).to eq 1000
+      expect(result[1].count).to eq 1000
+      expect(result[2].count).to eq 975
+
+      input_array = (2051..4080).to_a
+      result = subject.split_uid_array(input_array)
+      expect(result).to be_an_instance_of Array
+      expect(result.count).to eq 3
+      expect(result[0].count).to eq 1000
+      expect(result[1].count).to eq 1000
+      expect(result[2].count).to eq 30
+    end
+  end
+
+  describe "#add_user_to_import" do
+    it "adds the user to the sis import csv file" do
+      subject.prepare_sis_user_import
+      sis_import_file = subject.instance_eval { @sis_user_import }
+      expect(sis_import_file).to receive(:<<).with(new_canvas_users[0])
+      subject.add_user_to_import(new_canvas_users[0])
+    end
   end
 
 end
