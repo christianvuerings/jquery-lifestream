@@ -13,7 +13,7 @@ namespace :canvas do
   end
 
   desc 'Performs incremental sync of new active CalNet users in Canvas'
-  task :all_user_sync => :environment do |t, args|
+  task :new_user_sync => :environment do |t, args|
     canvas_worker = Canvas::AddNewUsers.new
     canvas_worker.sync_new_active_users
   end
