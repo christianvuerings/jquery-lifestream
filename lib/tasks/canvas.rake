@@ -12,12 +12,10 @@ namespace :canvas do
     canvas_worker.update_guests
   end
 
-  desc 'Performs incremental sync of all active CalNet users in Canvas'
-  task :all_user_sync, [:clear_stickiness] => :environment do |t, args|
-    maintain_all_users_options = {}
-    maintain_all_users_options[:clear_sis_stickiness] = true if args[:clear_stickiness]
-    canvas_worker = Canvas::MaintainAllUsers.new(maintain_all_users_options)
-    canvas_worker.sync_all_active_users
+  desc 'Performs incremental sync of new active CalNet users in Canvas'
+  task :all_user_sync => :environment do |t, args|
+    canvas_worker = Canvas::AddNewUsers.new
+    canvas_worker.sync_new_active_users
   end
 
   desc 'Exports Canvas enrollments to CSV files for each term'

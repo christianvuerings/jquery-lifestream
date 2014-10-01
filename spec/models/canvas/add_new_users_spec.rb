@@ -1,7 +1,7 @@
 require "spec_helper"
 require "set"
 
-describe Canvas::MaintainAllUsers do
+describe Canvas::AddNewUsers do
 
   let(:user_report_csv_string) do
     csv_string = "canvas_user_id,user_id,login_id,first_name,last_name,email,status\n"
@@ -51,14 +51,14 @@ describe Canvas::MaintainAllUsers do
     ])
   end
 
-  describe "#sync_all_active_users" do
+  describe "#sync_new_active_users" do
     it "calls user syncing methods in intended order" do
       expect(subject).to receive(:prepare_sis_user_import).ordered.and_return(true)
       expect(subject).to receive(:get_canvas_user_report_file).ordered.and_return(true)
       expect(subject).to receive(:load_new_active_users).ordered.and_return(true)
       expect(subject).to receive(:process_new_users).ordered.and_return(true)
       expect(subject).to receive(:import_sis_user_csv).ordered.and_return(true)
-      subject.sync_all_active_users
+      subject.sync_new_active_users
     end
   end
 

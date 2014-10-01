@@ -1,6 +1,6 @@
 module Canvas
-  # Updates and adds Canvas users based on differences detected in active CalNet user set and Canvas User Report
-  class MaintainAllUsers < Csv
+  # Adds Canvas users based on differences detected in active CalNet user set and Canvas User Report
+  class AddNewUsers < Csv
 
     require 'set'
 
@@ -8,8 +8,8 @@ module Canvas
       super()
     end
 
-    # Performs full active user synchronization task
-    def sync_all_active_users
+    # Performs full new user detection and addition task
+    def sync_new_active_users
       prepare_sis_user_import
       get_canvas_user_report_file
       load_new_active_users
