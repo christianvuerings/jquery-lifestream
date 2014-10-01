@@ -32,13 +32,7 @@
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController'
     }).
-    // We actually need to duplicate the campus items, more info on
-    // http://stackoverflow.com/questions/12524533
-    when('/campus', {
-      templateUrl: 'campus.html',
-      controller: 'CampusController'
-    }).
-    when('/campus/:category', {
+    when('/campus/:category?', {
       templateUrl: 'campus.html',
       controller: 'CampusController'
     }).
