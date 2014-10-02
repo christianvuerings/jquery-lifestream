@@ -1,18 +1,25 @@
 module Notifications
   class RegBlockCodeTranslator
+    include ClassLogger
+
+    def initialize(student_id = nil)
+      @student_id = student_id
+    end
+
     def translate_bearfacts_proxy(reason_code, office)
       office_code = office.strip
       Rails.cache.fetch("global/BearfactsRegBlock/reason_code/#{reason_code}_#{office_code}", :expires_in => 0) {
         {
-          message: self.class.translate_to_message(reason_code, office_code),
-          office: self.class.translate_office_code(office_code),
-        }.merge(self.class.translate_to_type_and_reason(reason_code))
+          message: translate_to_message(reason_code, office_code),
+          office: translate_office_code(office_code),
+        }.merge(translate_to_type_and_reason(reason_code))
       }
     end
 
     private
 
-    def self.init_message_translation_hash
+    def self.message_translation_hash
+      return @message_translation_hash if defined? @message_translation_hash
       lf_text = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by the Library due to
       outstanding bills of $200 or more.  Until this block is cleared, you cannot register for classes,
@@ -390,7 +397,7 @@ module Notifications
       Hall, or call (510) 664-9181.</p>
       EOS
 
-      {
+      @message_translation_hash = {
         7 => ll_text,
         8 => lf_text,
         16 => cars_text,
@@ -430,8 +437,8 @@ module Notifications
       }
     end
 
-    def self.init_reason_translation_hash
-      {
+    def self.reason_translation_hash
+      @reason_translation_hash ||= {
         7 => 'Long-Term Loan',
         8 => 'Library Fine',
         16 => 'CARS',
@@ -456,8 +463,8 @@ module Notifications
       }
     end
 
-    def self.init_office_translation_hash
-      {
+    def self.office_translation_hash
+      @office_translation_hash ||= {
         'LIBRARY' => 'Library',
         'TANG' => 'Tang Student Health Services',
         'SUMMER' => 'Summer Session Office',
@@ -485,14 +492,13 @@ module Notifications
       }
     end
 
-    def self.translate_to_message(reason_code, office)
-      @message_translation_hash ||= init_message_translation_hash
-      response = @message_translation_hash[reason_code.to_i]
+    def translate_to_message(reason_code, office)
+      response = self.class.message_translation_hash[reason_code.to_i]
       if response.kind_of?(Hash)
         response = response[office]
       end
       if response.blank?
-        Rails.logger.warn "#{self.name} undefined message for reason_code #{reason_code}, office_code: #{office}"
+        logger.warn "Undefined message for reason_code #{reason_code}, office_code #{office}, student ID #{@student_id}"
         response = <<-EOS
         <p>You have received an unknown or invalid Block type and reason code #{reason_code} from office code #{office}.
         To clear this block, contact Cal Student Central at 120 Sproul Hall, or call (510) 664-9181.</p>
@@ -501,7 +507,7 @@ module Notifications
       response.strip
     end
 
-    def self.translate_to_type_and_reason(reason_code)
+    def translate_to_type_and_reason(reason_code)
       begin
         code = Integer(reason_code.strip, 10)
         block_type = ''
@@ -513,10 +519,9 @@ module Notifications
           block_type = 'Academic'
         end
 
-        @reason_translation_hash ||= init_reason_translation_hash
-        reason = @reason_translation_hash[code]
+        reason = self.class.reason_translation_hash[code]
         if reason.blank?
-          Rails.logger.warn "#{self.name} unknown reason type for #{code}"
+          logger.warn "Unknown reason type for #{code}, student ID #{@student_id}"
           reason = 'Unknown'
         end
 
@@ -526,7 +531,7 @@ module Notifications
         }
 
       rescue ArgumentError => e
-        Rails.logger.warn "#{self.name}: Unable to translate translate_type_and_reason for #{reason_code}"
+        logger.warn "Unable to translate translate_type_and_reason for #{reason_code}, student ID #{@student_id}"
         {
           reason: 'Unknown',
           type: 'Unknown',
@@ -535,12 +540,11 @@ module Notifications
 
     end
 
-    def self.translate_office_code(office_code)
+    def translate_office_code(office_code)
       return 'Library' if office_code.blank?
-      @office_translation_hash ||= init_office_translation_hash
-      office = @office_translation_hash[office_code]
+      office = self.class.office_translation_hash[office_code]
       if office.blank?
-        Rails.logger.warn "#{self.name}: Unknown office code #{office_code}"
+        logger.warn "Unknown office code #{office_code}, student ID #{@student_id}"
         office = 'Bearfacts'
       end
       office

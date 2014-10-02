@@ -36,4 +36,10 @@ describe Notifications::RegBlockCodeTranslator do
     expect(result[:message]).to include('blocked by the Library')
   end
 
+  it 'logs student ID with confusing reason codes' do
+    student_id = 'some_crazy_thing'
+    expect(Rails.logger).to receive(:warn).with(/some_crazy_thing/).at_least(:once).and_call_original
+    Notifications::RegBlockCodeTranslator.new(student_id).translate_bearfacts_proxy("foo", "baz")
+  end
+
 end
