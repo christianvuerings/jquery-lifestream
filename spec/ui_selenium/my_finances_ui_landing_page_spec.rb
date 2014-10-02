@@ -14,7 +14,7 @@ require_relative 'pages/settings_page'
 
 describe 'My Finances landing page', :testui => true do
 
-  if ENV["UI_TEST"]
+  if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'
 
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
 
