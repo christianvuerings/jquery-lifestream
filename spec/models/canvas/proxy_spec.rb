@@ -15,6 +15,11 @@ describe Canvas::Proxy do
       expect(result[:term_cd]).to eq 'B'
       expect(result[:ccn]).to eq '25573'
     end
+    it 'is not confused by leading zeroes' do
+      result_plain = subject.class.sis_section_id_to_ccn_and_term('SEC:2014-B-1234')
+      result_fancy = subject.class.sis_section_id_to_ccn_and_term('SEC:2014-B-01234')
+      expect(result_fancy).to eq result_plain
+    end
   end
 
   it "should see an account list as admin" do

@@ -103,7 +103,7 @@ module Canvas
         {
           term_yr: parsed[:term_yr],
           term_cd: parsed[:term_cd],
-          ccn: parsed[:ccn]
+          ccn: parsed[:ccn].to_i.to_s
         }
       end
     end
