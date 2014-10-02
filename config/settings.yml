@@ -294,6 +294,7 @@ ui_selenium:
   baseUrl: https://calcentral-dev.berkeley.edu
   calNetUrl: https://auth-test.berkeley.edu
   googleAuthUrl: /api/google/request_authorization?force_domain=false
+  layer: development
 
   # Alternative browsers for Selenium tests: chrome, safari, ie
   webDriver: firefox
