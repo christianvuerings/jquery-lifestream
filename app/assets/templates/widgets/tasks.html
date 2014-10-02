@@ -39,7 +39,7 @@
         <div data-ng-include src="'dashboard_task_noitems.html'" data-onload="tasksModeOpposite='unscheduled'"></div>
         <div data-ng-hide="counts.scheduled === 0">
           <div class="cc-clearfix-container cc-widget-tasks-bottom-margin">
-            <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
+            <h3 class="cc-widget-tasks-section-label"><span data-ng-class="{'cc-widget-tasks-section-label-red': overdueTasks.length}">Overdue</span> <span class="cc-widget-tasks-section-label-count" data-ng-class="{'cc-widget-tasks-section-label-count-red': overdueTasks.length}" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
               <li
                 data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"
