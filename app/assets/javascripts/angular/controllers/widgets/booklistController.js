@@ -5,7 +5,7 @@
   /**
    * Textbook controller
    */
-  angular.module('calcentral.controllers').controller('BooklistController', function($http, $routeParams, $scope, $q) {
+  angular.module('calcentral.controllers').controller('BooklistController', function(textbookFactory, $routeParams, $scope, $q) {
     $scope.semesterBooks = [];
     var requests = [];
 
@@ -19,7 +19,10 @@
     };
 
     var getTextbook = function(courseInfo, courseNumber) {
-      return $http.get('/api/my/textbooks_details', {params: courseInfo}).success(function(books) {
+      return textbookFactory.getTextbooks({
+        params: courseInfo
+      })
+      .success(function(books) {
         books.course = courseNumber;
         $scope.semesterBooks.push(books);
         $scope.semesterBooks.sort(function(a, b) {

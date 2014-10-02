@@ -4,7 +4,6 @@
 
   /**
    * Canvas Course Add User Factory - Interface for 'Find a Person to Add' tool API endpoints
-   * @param {Object} $http The $http service from Angular
    */
   angular.module('calcentral.factories').factory('canvasCourseAddUserFactory', function($http) {
     var searchUsers = function(canvasCourseId, searchText, searchType) {

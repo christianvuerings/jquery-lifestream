@@ -2,8 +2,7 @@
   'use strict';
 
   /**
-   * Activity Factory - get data from the activity API
-   * @param {Object} apiService The API service
+   * Activity Factory
    */
   angular.module('calcentral.factories').factory('activityFactory', function(apiService) {
     // var activityUrl = '/dummy/json/activities.json';

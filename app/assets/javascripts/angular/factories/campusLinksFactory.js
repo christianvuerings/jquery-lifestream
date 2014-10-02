@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Campus Links Factory - get links from the campuslinks API
+   * Campus Links Factory
    */
   angular.module('calcentral.factories').factory('campusLinksFactory', function(apiService, $http) {
     // Data contains "links" and "navigation"

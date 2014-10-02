@@ -4,7 +4,7 @@
   /**
    * Campus controller
    */
-  angular.module('calcentral.controllers').controller('CampusController', function($routeParams, $scope, apiService, campusLinksFactory) {
+  angular.module('calcentral.controllers').controller('CampusController', function(apiService, campusLinksFactory, $routeParams, $scope) {
     campusLinksFactory.getLinks({
       category: $routeParams.category
     }).then(function(data) {

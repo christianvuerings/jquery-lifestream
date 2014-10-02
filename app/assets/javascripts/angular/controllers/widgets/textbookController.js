@@ -5,7 +5,7 @@
   /**
    * Textbook controller
    */
-  angular.module('calcentral.controllers').controller('TextbookController', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('TextbookController', function(textbookFactory, $scope) {
     /**
      * Get Textbooks for the selected course
      * @param  {Object} selectedCourse Selected Course Object
@@ -22,10 +22,10 @@
         'slug': $scope.selectedSemester.slug
       };
 
-      // $http.get('/dummy/json/textbooks_details.json').success(function(data) {
-      $http.get('/api/my/textbooks_details', {
+      textbookFactory.getTextbooks({
         params: courseInfo
-      }).success(function(data) {
+      })
+      .success(function(data) {
         angular.extend($scope, data);
 
         if (data.statusCode && data.statusCode >= 400) {

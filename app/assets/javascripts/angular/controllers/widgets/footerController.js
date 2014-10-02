@@ -4,13 +4,13 @@
   /**
    * Footer controller
    */
-  angular.module('calcentral.controllers').controller('FooterController', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('FooterController', function(serverInfoFactory, $scope) {
     $scope.footer = {
       showInfo: false
     };
 
     var loadServerInformation = function() {
-      $http.get('/api/server_info').success(function(data) {
+      serverInfoFactory.getServerInfo().success(function(data) {
         angular.extend($scope, data);
       });
     };

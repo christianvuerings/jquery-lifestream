@@ -4,7 +4,7 @@
   /**
    * CalCentral main controller
    */
-  angular.module('calcentral.controllers').controller('CalcentralController', function($rootScope, apiService) {
+  angular.module('calcentral.controllers').controller('CalcentralController', function(apiService, $rootScope) {
     // Expose the API service
     $rootScope.api = apiService;
 
