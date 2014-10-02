@@ -29,7 +29,8 @@ module Canvas
     def make_csv_files
       users_csv = make_users_csv(@users_csv_filename)
       known_uids = []
-      Canvas::MaintainUsers.new.refresh_existing_user_accounts(known_uids, users_csv)
+      user_maintainer = Canvas::MaintainUsers.new(known_uids, users_csv)
+      user_maintainer.refresh_existing_user_accounts
       original_user_count = known_uids.length
       cached_enrollments_provider = Canvas::TermEnrollmentsCsv.new
       @term_to_memberships_csv_filename.each do |term, csv_filename|

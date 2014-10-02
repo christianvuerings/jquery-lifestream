@@ -2,11 +2,12 @@ require "spec_helper"
 
 describe Canvas::MaintainUsers do
 
+  let(:known_uids) { [] }
+  let(:account_changes) { [] }
+  subject { Canvas::MaintainUsers.new(known_uids, account_changes) }
+
   describe "#categorize_user_accounts" do
-    let(:known_uids) { [] }
-    let(:sis_id_changes) { {} }
-    let(:account_changes) { [] }
-    before { subject.categorize_user_account(existing_account, campus_rows, known_uids, sis_id_changes, account_changes) }
+    before { subject.categorize_user_account(existing_account, campus_rows) }
 
     context 'when email changes' do
       let(:uid) { rand(999999).to_s }
@@ -32,7 +33,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'finds email change' do
         expect(account_changes.length).to eq(1)
-        expect(sis_id_changes.length).to eq(0)
+        expect(subject.sis_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(1)
         new_account = account_changes[0]
         expect(new_account['email']).to eq('new@example.edu')
@@ -66,9 +67,9 @@ describe Canvas::MaintainUsers do
       ] }
       it 'finds SIS ID change' do
         expect(account_changes.length).to eq(0)
-        expect(sis_id_changes.length).to eq(1)
+        expect(subject.sis_id_changes.length).to eq(1)
         expect(known_uids.length).to eq(1)
-        expect(sis_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq(changed_sis_id_student_id)
+        expect(subject.sis_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq(changed_sis_id_student_id)
       end
     end
 
@@ -97,7 +98,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'just notes the UID' do
         expect(account_changes.length).to eq(0)
-        expect(sis_id_changes.length).to eq(0)
+        expect(subject.sis_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(1)
       end
     end
@@ -127,7 +128,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'skips the record' do
         expect(account_changes.length).to eq(0)
-        expect(sis_id_changes.length).to eq(0)
+        expect(subject.sis_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(0)
       end
     end

@@ -61,16 +61,24 @@ module Canvas
       false
     end
 
+    attr_accessor :sis_id_changes
+
+    def initialize(known_uids, sis_user_import_csv)
+      super()
+      @known_uids = known_uids
+      @user_import_csv = sis_user_import_csv
+      @sis_id_changes = {}
+    end
+
     # Appends account changes to the given CSV.
     # Appends all known user IDs to the input array.
     # Makes any necessary changes to SIS user IDs.
-    def refresh_existing_user_accounts(known_uids, users_csv)
-      sis_id_changes = {}
-      check_all_user_accounts(known_uids, sis_id_changes, users_csv)
-      self.class.handle_changed_sis_user_ids(sis_id_changes)
+    def refresh_existing_user_accounts
+      check_all_user_accounts
+      self.class.handle_changed_sis_user_ids(@sis_id_changes)
     end
 
-    def check_all_user_accounts(known_uids, sis_id_changes, account_changes)
+    def check_all_user_accounts
       # As the size of the CSV grows, it will become more efficient to use CSV.foreach.
       # For now, however, we ingest the entire download.
       users_csv = Canvas::UsersReport.new.get_csv
@@ -79,35 +87,35 @@ module Canvas
         users_csv.each do |account_row|
           accounts_batch << account_row
           if accounts_batch.length == 1000
-            compare_to_campus(accounts_batch, known_uids, sis_id_changes, account_changes)
+            compare_to_campus(accounts_batch)
             accounts_batch = []
           end
         end
-        compare_to_campus(accounts_batch, known_uids, sis_id_changes, account_changes)
+        compare_to_campus(accounts_batch)
       end
     end
 
-    def compare_to_campus(accounts_batch, known_uids, sis_id_changes, account_changes)
+    def compare_to_campus(accounts_batch)
       campus_user_rows = CampusOracle::Queries.get_basic_people_attributes(accounts_batch.collect { |r| r['login_id'] })
       accounts_batch.each do |existing_account|
-        categorize_user_account(existing_account, campus_user_rows, known_uids, sis_id_changes, account_changes)
+        categorize_user_account(existing_account, campus_user_rows)
       end
     end
 
-    def categorize_user_account(existing_account, campus_user_rows, known_uids, sis_id_changes, account_changes)
+    def categorize_user_account(existing_account, campus_user_rows)
       # Convert from CSV::Row for easier manipulation.
       old_account_data = existing_account.to_hash
       login_id = old_account_data['login_id']
       if (ldap_uid = Integer(login_id, 10) rescue nil)
         campus_row = campus_user_rows.select { |r| r['ldap_uid'].to_i == ldap_uid }.first
         if campus_row.present?
-          known_uids << login_id
+          @known_uids << login_id
           new_account_data = canvas_user_from_campus_row(campus_row)
           if old_account_data['user_id'] != new_account_data['user_id']
-            sis_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
+            @sis_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
           end
           unless self.class.provisioned_account_eq_sis_account?(old_account_data, new_account_data)
-            account_changes << new_account_data
+            @user_import_csv << new_account_data
           end
         end
       end
