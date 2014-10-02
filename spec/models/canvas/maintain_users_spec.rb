@@ -33,7 +33,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'finds email change' do
         expect(account_changes.length).to eq(1)
-        expect(subject.sis_id_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(1)
         new_account = account_changes[0]
         expect(new_account['email']).to eq('new@example.edu')
@@ -67,9 +67,9 @@ describe Canvas::MaintainUsers do
       ] }
       it 'finds SIS ID change' do
         expect(account_changes.length).to eq(0)
-        expect(subject.sis_id_changes.length).to eq(1)
+        expect(subject.sis_user_id_changes.length).to eq(1)
         expect(known_uids.length).to eq(1)
-        expect(subject.sis_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq(changed_sis_id_student_id)
+        expect(subject.sis_user_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq(changed_sis_id_student_id)
       end
     end
 
@@ -98,7 +98,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'just notes the UID' do
         expect(account_changes.length).to eq(0)
-        expect(subject.sis_id_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(1)
       end
     end
@@ -128,7 +128,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'skips the record' do
         expect(account_changes.length).to eq(0)
-        expect(subject.sis_id_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(0)
       end
     end
@@ -180,7 +180,7 @@ describe Canvas::MaintainUsers do
   end
 
   describe ".handle_changed_sis_user_ids" do
-    let(:sis_id_changes) do
+    let(:sis_user_id_changes) do
       {
         "sis_login_id:1084726" => '289021',
         "sis_login_id:1084727" => 'UID:289022',
@@ -191,7 +191,7 @@ describe Canvas::MaintainUsers do
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084726', '289021').ordered
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084727', 'UID:289022').ordered
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
-      Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
+      Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_user_id_changes)
     end
     context 'in dry-run mode' do
       before do
@@ -199,7 +199,7 @@ describe Canvas::MaintainUsers do
       end
       it 'does not tell Canvas to change the sis_user_ids' do
         expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).never
-        Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
+        Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_user_id_changes)
       end
     end
   end

@@ -18,12 +18,12 @@ module Canvas
 
     # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
     # Otherwise, the generated CSV may include a new ID that does not match the existing ID for a user account.
-    def self.handle_changed_sis_user_ids(sis_id_changes)
+    def self.handle_changed_sis_user_ids(sis_user_id_changes)
       if Settings.canvas_proxy.dry_run_import.present?
-        logger.warn("DRY RUN MODE: Would change #{sis_id_changes.length} SIS user IDs #{sis_id_changes.inspect}")
+        logger.warn("DRY RUN MODE: Would change #{sis_user_id_changes.length} SIS user IDs #{sis_user_id_changes.inspect}")
       else
-        logger.warn("About to change #{sis_id_changes.length} SIS user IDs")
-        sis_id_changes.each do |canvas_user_id, new_sis_id|
+        logger.warn("About to change #{sis_user_id_changes.length} SIS user IDs")
+        sis_user_id_changes.each do |canvas_user_id, new_sis_id|
           self.change_sis_user_id(canvas_user_id, new_sis_id)
         end
       end
@@ -61,13 +61,13 @@ module Canvas
       false
     end
 
-    attr_accessor :sis_id_changes
+    attr_accessor :sis_user_id_changes
 
     def initialize(known_uids, sis_user_import_csv)
       super()
       @known_uids = known_uids
       @user_import_csv = sis_user_import_csv
-      @sis_id_changes = {}
+      @sis_user_id_changes = {}
     end
 
     # Appends account changes to the given CSV.
@@ -75,7 +75,7 @@ module Canvas
     # Makes any necessary changes to SIS user IDs.
     def refresh_existing_user_accounts
       check_all_user_accounts
-      self.class.handle_changed_sis_user_ids(@sis_id_changes)
+      self.class.handle_changed_sis_user_ids(@sis_user_id_changes)
     end
 
     def check_all_user_accounts
@@ -112,7 +112,7 @@ module Canvas
           @known_uids << login_id
           new_account_data = canvas_user_from_campus_row(campus_row)
           if old_account_data['user_id'] != new_account_data['user_id']
-            @sis_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
+            @sis_user_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
           end
           unless self.class.provisioned_account_eq_sis_account?(old_account_data, new_account_data)
             @user_import_csv << new_account_data
