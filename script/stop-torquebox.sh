@@ -22,11 +22,11 @@ do
     then
       # first try to kill politely
       kill -s SIGTERM $TORQUEBOX_PID 2>/dev/null
-      sleep 1
     else
       echo "`date`: CalCentral server $TORQUEBOX_PID did not respond to SIGTERM, sending kill -9..." | $LOGIT
       kill -9 $TORQUEBOX_PID 2>/dev/null
     fi
+    sleep 1
   done
 done
 # Protect against process-not-found exit statuses
