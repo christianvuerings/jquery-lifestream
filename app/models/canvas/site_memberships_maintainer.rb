@@ -57,7 +57,7 @@ module Canvas
 
     def filter_sections(sis_section_ids)
       campus_sections = sis_section_ids.collect do |sis_section_id|
-        campus_section = safe_sis_section_id_to_ccn_and_term(sis_section_id)
+        campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id)
         campus_section.merge!({'sis_section_id' => sis_section_id}) if campus_section.present?
         campus_section
       end
@@ -73,7 +73,7 @@ module Canvas
       section_to_instructor_role = instructor_role_for_sections(@sis_sections)
       @sis_sections.each do |sis_section|
         sis_section_id = sis_section['sis_section_id']
-        if (campus_section = safe_sis_section_id_to_ccn_and_term(sis_section_id))
+        if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id))
           logger.debug("Refreshing section: #{sis_section_id}")
           instructor_role = section_to_instructor_role[campus_section]
           logger.debug("Instructor role detected for section: #{instructor_role}")
@@ -243,19 +243,6 @@ module Canvas
         sections_map[sec] = (sections_map[sec] == 'P') ? 'teacher' : secondary_section_role
       end
       sections_map
-    end
-
-    # TODO Replace current sis_section_id_to_ccn_and_term with this.
-    # Strips leading zeros from CCNs since they may or may not be there and are not needed
-    # for queries against campus data.
-    def safe_sis_section_id_to_ccn_and_term(sis_term_id)
-      if (parsed = /SEC:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])-(?<ccn>\d+).*/.match(sis_term_id))
-        {
-          term_yr: parsed[:term_yr],
-          term_cd: parsed[:term_cd],
-          ccn: parsed[:ccn].to_i.to_s
-        }
-      end
     end
 
   end
