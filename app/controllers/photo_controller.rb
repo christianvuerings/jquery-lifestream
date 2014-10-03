@@ -11,6 +11,8 @@ class PhotoController < ApplicationController
         type: 'image/jpeg',
         disposition: 'inline'
       )
+    else
+      render :nothing => true, :status => 200
     end
   end
 
