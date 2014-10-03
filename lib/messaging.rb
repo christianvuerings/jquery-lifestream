@@ -17,13 +17,15 @@ class Messaging
   private
 
   def self.get_queue(name)
-    @queues ||= {}
-    @queues[name] ||= TorqueBox::Messaging::Queue.new(name)
+    TorqueBox.fetch(name)
+    # @queues ||= {}
+    # @queues[name] ||= TorqueBox::Messaging::Queue.new(name)
   end
 
   def self.get_topic(name)
-    @topics ||= {}
-    @topics[name] ||= TorqueBox::Messaging::Topic.new(name)
+    TorqueBox.fetch(name)
+    # @topics ||= {}
+    # @topics[name] ||= TorqueBox::Messaging::Topic.new(name)
   end
 
 end
