@@ -191,7 +191,7 @@ group :test, :testext do
   # https://rubygems.org/gems/rspec_junit_formatter
   gem 'rspec_junit_formatter', '~> 0.2.0'
 
-  gem 'webmock', '~> 1.18.0'
+  gem 'webmock', '~> 1.19.0'
 end
 
 group :shell_debug do
