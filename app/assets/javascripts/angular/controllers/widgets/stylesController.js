@@ -4,7 +4,7 @@
   /**
    * Styles controller
    */
-  angular.module('calcentral.controllers').controller('StylesController', function($scope, $http, $location, $anchorScroll) {
+  angular.module('calcentral.controllers').controller('StylesController', function(toolsFactory, $anchorScroll, $location, $scope) {
     // Handle in-page links, via http://stackoverflow.com/a/14717011/8438
     $scope.scrollTo = function(id) {
       $location.hash(id);
@@ -34,7 +34,7 @@
       return (brightness <= 0.6);
     };
 
-    $http.get('/api/tools/styles').success(function(data) {
+    toolsFactory.getStyles().success(function(data) {
       $scope.colorvars = data.colors;
 
       // Set lightdark class for each color

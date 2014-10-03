@@ -5,7 +5,7 @@
   /**
    * Academics controller
    */
-  angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, apiService, badgesFactory, $http, $routeParams, $scope) {
+  angular.module('calcentral.controllers').controller('AcademicsController', function(academicsFactory, apiService, badgesFactory, $routeParams, $scope) {
     apiService.util.setTitle('My Academics');
 
     var checkPageExists = function(page) {

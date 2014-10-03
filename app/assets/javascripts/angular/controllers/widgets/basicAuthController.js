@@ -4,13 +4,13 @@
   /**
    * Basic Authentication controller
    */
-  angular.module('calcentral.controllers').controller('BasicAuthController', function($http, $scope) {
+  angular.module('calcentral.controllers').controller('BasicAuthController', function(basicAuthFactory, $scope) {
     $scope.basicauth = {
       user: null
     };
 
     $scope.basicauth.connect = function() {
-      $http.get('/basic_auth_login').success(function(data, status) {
+      basicAuthFactory.login().success(function(data, status) {
         if (status < 200 || status >= 300) {
           return;
         }
@@ -24,9 +24,7 @@
     };
 
     $scope.$watch('basicauth.login + basicauth.password', function() {
-      if (window.btoa) {
-        $http.defaults.headers.common.Authorization = 'Basic ' + btoa($scope.basicauth.login + ':' + $scope.basicauth.password);
-      }
+      basicAuthFactory.updateHeaders($scope.basicauth);
     });
   });
 })(window.angular);

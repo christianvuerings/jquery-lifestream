@@ -4,7 +4,7 @@
   /**
    * Admin controller
    */
-  angular.module('calcentral.controllers').controller('AdminController', function(apiService, $http, $scope) {
+  angular.module('calcentral.controllers').controller('AdminController', function(adminFactory, apiService, $scope) {
     /**
      * Store recently entered UIDs
      */
@@ -128,26 +128,26 @@
       var user = {
         uid: uid
       };
-      $http.post('/act_as', user).success(redirectToSettings);
+      adminFactory.actAs(user).success(redirectToSettings);
     };
 
     /**
      * Stop acting as someone else
      */
     $scope.admin.stopActAs = function() {
-      $http.post('/stop_act_as').success(redirectToSettings).error(redirectToSettings);
+      adminFactory.stopActAs().success(redirectToSettings).error(redirectToSettings);
     };
 
     var resetUserSearch = function() {
       $scope.admin.users = [];
       $scope.admin.errorStatus = '';
-      $scope.admin.id = '';
     };
 
     $scope.admin.uidToSidLookup = function() {
-      var searchUsersUri = '/api/search_users/' + $scope.admin.id;
       resetUserSearch();
-      $http.get(searchUsersUri).success(function(data) {
+      adminFactory.userLookup({
+        id: $scope.admin.id
+      }).success(function(data) {
         if (data.users.length > 0) {
           $scope.admin.users = data.users;
         } else {

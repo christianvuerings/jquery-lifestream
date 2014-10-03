@@ -4,7 +4,7 @@
   /**
    * Settings controller
    */
-  angular.module('calcentral.controllers').controller('SettingsController', function($scope, apiService) {
+  angular.module('calcentral.controllers').controller('SettingsController', function(apiService, $scope) {
     apiService.util.setTitle('Settings');
 
     var services = ['Google'];

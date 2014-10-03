@@ -4,7 +4,7 @@
   /**
    * Webcast controller
    */
-  angular.module('calcentral.controllers').controller('WebcastController', function(apiService, $http, $route, $routeParams, $scope) {
+  angular.module('calcentral.controllers').controller('WebcastController', function(apiService, webcastFactory, $route, $routeParams, $scope) {
     // Is this for an official campus class or for a Canvas course site?
     var courseMode = 'campus';
 
@@ -38,7 +38,9 @@
     };
 
     var getWebcasts = function(title) {
-      $http.get(webcastUrl(title)).success(function(data) {
+      webcastFactory.getWebcasts({
+        url: webcastUrl(title)
+      }).success(function(data) {
         angular.extend($scope, data);
         selectFirstOptions();
         setSelectedOption();

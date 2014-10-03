@@ -47,8 +47,8 @@
       ];
     };
 
-    var getMyClasses = function() {
-      myClassesFactory.getClasses().then(function(data) {
+    var getMyClasses = function(options) {
+      myClassesFactory.getClasses(options).then(function(data) {
         apiService.updatedFeeds.feedLoaded(data.feed);
         bindScopes(data.classes);
         angular.extend($scope, data);
@@ -57,7 +57,9 @@
 
     $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyClasses::Merged']) {
-        getMyClasses();
+        getMyClasses({
+          refreshCache: true
+        });
       }
     });
     getMyClasses();

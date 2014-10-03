@@ -2,8 +2,7 @@
   'use strict';
 
   /**
-   * Roster Factory - get data from the roster API
-   * @param {Object} $http The $http service from Angular
+   * Roster Factory
    */
   angular.module('calcentral.factories').factory('rosterFactory', function($http) {
     /**

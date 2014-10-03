@@ -4,7 +4,7 @@
   /**
    * CARS controller
    */
-  angular.module('calcentral.controllers').controller('CarsController', function(apiService, financesFactory, $filter, $http, $routeParams, $scope) {
+  angular.module('calcentral.controllers').controller('CarsController', function(apiService, financesFactory, $filter, $routeParams, $scope) {
     var sortTermsIndex = {
       'Fall': 0,
       'Summer': 1,
