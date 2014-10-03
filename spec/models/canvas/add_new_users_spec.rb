@@ -40,8 +40,6 @@ describe Canvas::AddNewUsers do
     # have to mock the responses due to dependency on Campus Oracle data
     allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[0]).and_return('22729405')
     allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[1]).and_return('UID:946127')
-    # allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[2]).and_return('22729405')
-    # allow(subject).to receive(:derive_sis_user_id).with(sis_active_people[3]).and_return('UID:946126')
   end
 
   after do
