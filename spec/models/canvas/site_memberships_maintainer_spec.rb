@@ -9,8 +9,9 @@ describe Canvas::SiteMembershipsMaintainer do
   let(:uid) { random_id }
   let(:sis_section_id) {"SEC:2014-B-#{course_id}"}
   let(:sis_section_ids) { [sis_section_id, "2014-D-04124", 'bababooey'] }
+  let(:sis_user_id_changes) { Hash.new }
   subject {
-    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode, cached_enrollments_provider)
+    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode, cached_enrollments_provider, sis_user_id_changes)
     enrollments_csv
   }
 
@@ -230,8 +231,8 @@ describe Canvas::SiteMembershipsMaintainer do
       let(:cached_enrollments_provider) { Canvas::TermEnrollmentsCsv.new }
       let(:cached_enrollments_hash) do
         [
-          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906376", "role"=>"StudentEnrollment", "sis_import_id"=>"101", "user"=>{"sis_login_id"=>"7977", "login_id"=>"7977"}},
-          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906377", "role"=>"StudentEnrollment", "sis_import_id"=>"101", "user"=>{"sis_login_id"=>"7978", "login_id"=>"7978"}},
+          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906376", "role"=>"StudentEnrollment", "enrollment_state" => "active", "sis_import_id"=>"101", "user"=>{"sis_user_id" => "UID:7977", "sis_login_id"=>"7977", "login_id"=>"7977"}},
+          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906377", "role"=>"StudentEnrollment", "enrollment_state" => "active", "sis_import_id"=>"101", "user"=>{"sis_user_id" => "UID:7978", "sis_login_id"=>"7978", "login_id"=>"7978"}},
         ]
       end
       before do
@@ -239,7 +240,20 @@ describe Canvas::SiteMembershipsMaintainer do
         expect_any_instance_of(Canvas::TermEnrollmentsCsv).to receive(:cached_canvas_section_enrollments).with(sis_section_id).and_return(cached_enrollments_hash)
       end
       it 'calls for enrollments from cached enrollment set' do
-        expect(subject.count).to eq 1
+        expect(subject.count).to eq 3
+        expect(subject[0]['user_id']).to eq "UID:#{uid}"
+        expect(subject[1]['user_id']).to eq "UID:7977"
+        expect(subject[2]['user_id']).to eq "UID:7978"
+      end
+
+      context "when new sis user id present for dropped enrollment" do
+        let(:sis_user_id_changes) { { "sis_login_id:7978" => "2018903" } }
+        it 'uses new sis user id' do
+          expect(subject.count).to eq 3
+          expect(subject[0]['user_id']).to eq "UID:#{uid}"
+          expect(subject[1]['user_id']).to eq "UID:7977"
+          expect(subject[2]['user_id']).to eq "2018903"
+        end
       end
     end
 
