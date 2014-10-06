@@ -14,15 +14,6 @@ module User
       @first_name ||= @campus_attributes['first_name'] || ""
       @last_name ||= @campus_attributes['last_name'] || ""
       @override_name ||= @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
-
-      # set law_student to true if user's only college is School of Law
-      profile_feed = Bearfacts::Profile.new({:user_id => @uid}).get
-      doc = profile_feed[:xml_doc]
-      @law_student = false
-      if !(doc.blank? || doc.css("studentGeneralProfile").blank?)
-        general_profile = doc.css("studentGeneralProfile")
-        @law_student = general_profile.css("collegePrimary").text.strip.eql? "LAW"
-      end
     end
 
     def preferred_name
@@ -102,7 +93,6 @@ module User
       {
         :isSuperuser => current_user_policy.can_administrate?,
         :isViewer => current_user_policy.can_view_as?,
-        :isLawStudent => @law_student,
         :firstLoginAt => @first_login_at,
         :first_name => @first_name,
         :fullName => @first_name + ' ' + @last_name,

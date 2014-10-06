@@ -244,12 +244,6 @@
       }
     };
 
-    if ($scope.api.user.profile.isLawStudent) {
-      $scope.transcriptLink = 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php';
-    } else {
-      $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
-    }
-
     var fillSemesterSpecificPage = function(semesterSlug, data) {
       var isOnlyInstructor = !!$routeParams.teachingSemesterSlug;
       var selectedStudentSemester = findSemester(data.semesters, semesterSlug, selectedStudentSemester);
@@ -347,6 +341,11 @@
         academicsFactory.getAcademics().success(parseAcademics);
         badgesFactory.getBadges().success(function(data) {
           $scope.studentInfo = data.studentInfo;
+          if ($scope.studentInfo.isLawStudent) {
+            $scope.transcriptLink = 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php';
+          } else {
+            $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
+          }
         });
       }
     });

@@ -30,12 +30,28 @@ describe 'MyBadges::StudentInfo' do
     result.has_key?(:californiaResidency).should be_true
     result.has_key?(:regStatus).should be_true
     result.has_key?(:regBlock).should be_true
+    result.has_key?(:isLawStudent).should be_true
   end
 
   it 'should create camelCased regBlocks for oski' do
     result = MyBadges::StudentInfo.new('61889').get_reg_blocks
     result.has_key?(:needsAction).should be_true
     result.has_key?(:activeBlocks).should be_true
+  end
+
+  context 'for Law student users' do
+    let! (:law_proxy) { Bearfacts::Profile.new({user_id: '212381', fake: true}) }
+    before do
+      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(99999997)
+      Bearfacts::Profile.stub(:new).and_return(law_proxy)
+    end
+
+    subject { MyBadges::StudentInfo.new('212381').get }
+
+    it 'should set isLawStudent to true' do
+      subject[:isLawStudent].should be_present
+      subject[:isLawStudent].should be_true
+    end
   end
 
   context 'offline bearfacts regblock' do
