@@ -29,7 +29,7 @@ module Canvas
         csv_table = Canvas::UsersReport.new.get_csv
         headers = csv_table.headers.join(',')
         file = CSV.open(filename, 'wb', { :headers => headers, :write_headers => true})
-        logger.warn("Performing user update checks on #{csv_table.count} provisioned user accounts")
+        logger.warn("Canvas user report obtained containing data on #{csv_table.count} user accounts")
         csv_table.each do |row|
           file << row
         end
