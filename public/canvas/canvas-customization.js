@@ -237,6 +237,10 @@
   window.onmessage = function(e) {
     if (e && e.data && e.data.height) {
       document.getElementById('tool_content').style.height = e.data.height + 'px';
+      var tool_wrappers = document.getElementsByClassName('tool_content_wrapper');
+      if (tool_wrappers && tool_wrappers.length > 0 && tool_wrappers[0].style) {
+        tool_wrappers[0].style.height = '';
+      }
     }
     if (e && e.data && e.data.scrollToTop) {
       window.scrollTo(0, 0);
