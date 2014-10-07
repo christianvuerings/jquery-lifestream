@@ -166,7 +166,7 @@ describe 'My Finances', :testui => true do
               end
 
               # LAST STATEMENT BALANCE
-              my_finances_page.click_account_balance(driver)
+              my_finances_page.show_last_statement_bal
               my_fin_last_bal = my_finances_page.last_statement_balance
               it 'shows the right last statement balance for UID ' + uid do
                 my_fin_last_bal.should eql(fin_api_page.last_statement_balance_str)

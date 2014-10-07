@@ -62,6 +62,24 @@ describe 'My Finances landing page', :testui => true do
       it 'shows CARS amount due now' do
         @my_finances_page.amt_due_now_element?.should be_true
       end
+      it 'allows a user to show or hide the last statement balance' do
+        @my_finances_page.show_last_statement_bal
+        @my_finances_page.hide_last_statement_bal
+      end
+      it 'includes a link to view last statements' do
+        @my_finances_page.show_last_statement_bal
+        @my_finances_page.view_statements_link
+        @driver.switch_to.window @driver.window_handles.last
+        wait.until { @driver.find_element(:xpath => '//title[contains(.,"BearFacts | ")]') }
+        @driver.close
+      end
+      it 'includes a link to make a payment for non-zero balances' do
+        unless @my_finances_page.account_balance_element == '  $ 0.00'
+          @my_finances_page.make_payment_link
+          @driver.switch_to.window @driver.window_handles.last
+          wait.until { @driver.find_element(:xpath => '//title[contains(.,"CARS Payment Options")]') }
+        end
+      end
     end
 
     context 'Financial Resources card' do
@@ -77,7 +95,7 @@ describe 'My Finances landing page', :testui => true do
       it 'includes a link to e-bills' do
         @my_finances_page.ebills_link
         @driver.switch_to.window @driver.window_handles.last
-        wait.until { @driver.find_element(:xpath => '//title[contains(.,"BearFacts | Welcome to Bear Facts for Students")]') }
+        wait.until { @driver.find_element(:xpath => '//title[contains(.,"BearFacts | ")]') }
         @driver.close
       end
       it 'includes a link to Payment Options' do
