@@ -60,9 +60,5 @@ module MyTasks
       end
     end
 
-    def expire_cache(uid)
-      self.class.expire uid
-    end
-
   end
 end

@@ -164,8 +164,8 @@ module Canvas
     def expire_instructor_sites_cache
       Canvas::UserCourses.expire(@uid)
       Canvas::MergedUserSites.expire(@uid)
-      MyClasses::Merged.new(@uid).expire_cache
-      MyAcademics::Merged.new(@uid).expire_cache
+      MyClasses::Merged.expire(@uid)
+      MyAcademics::Merged.expire(@uid)
       complete_step("Clearing bCourses course site cache")
     end
 
