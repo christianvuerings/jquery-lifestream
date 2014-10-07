@@ -1,5 +1,5 @@
 module Mediacasts
-  class CourseMedia < AbstractModel
+  class CourseMedia
 
     def self.course_id(year, term, dept, catalog_id)
       # allow lookups by either term_cd or term name
@@ -13,8 +13,7 @@ module Mediacasts
     def initialize(year, term, dept, catalog_id)
       dept = decode_slash(dept)
       catalog_id = decode_slash(catalog_id)
-      id = self.class.course_id(year, term, dept, catalog_id)
-      super(id)
+      @id = self.class.course_id(year, term, dept, catalog_id)
     end
 
     # Replaces '_slash_' with '/' since front-end encodes slashes. See CLC-4279.
