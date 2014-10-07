@@ -1,5 +1,6 @@
 module Rosters
-  class Common < AbstractModel
+  class Common
+    extend Cache::Cacheable
 
     def initialize(uid, options={})
       @uid = uid
