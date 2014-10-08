@@ -2,3 +2,4 @@ app/assets/javascripts/angularlib/**
 app/assets/javascripts/lib/**
 coverage/**
 public/dummy/js/videos.js
+vendor/**

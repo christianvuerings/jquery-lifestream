@@ -47,7 +47,8 @@
     "app/assets/javascripts/angularlib/**",
     "app/assets/javascripts/lib/**",
     "coverage/**",
-    "public/dummy/js/videos.js"
+    "public/dummy/js/videos.js",
+    "vendor/**"
   ],
   "requireBlocksOnNewline": true,
   "requireCommaBeforeLineBreak": true,
