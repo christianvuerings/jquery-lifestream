@@ -58,13 +58,13 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.edit_new_task('Cancel Task', today.strftime("%m/%d/%Y"), nil)
         @to_do_card.click_cancel_new_task_button
         @to_do_card.cancel_new_task_button_element.when_not_visible(timeout=task_wait)
-        @to_do_card.today_task_one?.should be_false
+        @to_do_card.today_task_one?.should be_falsey
       end
 
       it 'requires that a new task have a title' do
         @to_do_card.click_new_task_button
         @to_do_card.edit_new_task(nil, today.strftime("%m/%d/%Y"), nil)
-        @to_do_card.add_new_task_button_element.enabled?.should be_false
+        @to_do_card.add_new_task_button_element.enabled?.should be_falsey
         @to_do_card.click_cancel_new_task_button
       end
 
@@ -72,7 +72,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_new_task_button
         @to_do_card.edit_new_task('Bad Date Task', '08/08/14', nil)
         @to_do_card.new_task_date_validation_error_element.when_visible(timeout=task_wait)
-        @to_do_card.add_new_task_button_element.enabled?.should be_false
+        @to_do_card.add_new_task_button_element.enabled?.should be_falsey
         @to_do_card.new_task_date_validation_error.should include('Please use mm/dd/yyyy date format')
       end
 
@@ -113,7 +113,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.edit_today_task_one('', nil, nil)
-        @to_do_card.today_task_one_save_button_element.enabled?.should be_false
+        @to_do_card.today_task_one_save_button_element.enabled?.should be_falsey
       end
 
       it 'allows a user to make an unscheduled task overdue' do
@@ -186,7 +186,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.edit_today_task_one(nil, '08/11/14', '')
-        @to_do_card.today_task_one_save_button_element.enabled?.should be_false
+        @to_do_card.today_task_one_save_button_element.enabled?.should be_falsey
         @to_do_card.today_task_date_validation_error_element.when_visible(timeout=task_wait)
         @to_do_card.today_task_date_validation_error.should include('Please use mm/dd/yyyy date format')
       end

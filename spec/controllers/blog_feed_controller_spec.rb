@@ -12,11 +12,11 @@ describe BlogFeedController do
     assert_response :success
     response.status.should == 200
     json_response = JSON.parse(response.body)
-    json_response.is_a?(Hash).should be_true
-    json_response["alert"].is_a?(Hash).should be_true if @alert_ok
+    json_response.is_a?(Hash).should be_truthy
+    json_response["alert"].is_a?(Hash).should be_truthy if @alert_ok
     json_response["alert"].should be_nil if @alert_ko
-    json_response["entries"].present?.should be_true
-    json_response["entries"].is_a?(Array).should be_true
+    json_response["entries"].present?.should be_truthy
+    json_response["entries"].is_a?(Array).should be_truthy
     json_response["entries"].count.should > 0
   end
 

@@ -20,14 +20,14 @@ describe "MyBadges" do
     User::Oauth2Data.stub(:get_google_email).and_return("tammi.chang.clc@gmail.com")
     badges = MyBadges::Merged.new @user_id
     filtered_feed = badges.get_feed
-    filtered_feed[:badges].empty?.should_not be_true
+    filtered_feed[:badges].empty?.should_not be_truthy
     filtered_feed[:badges]["bdrive"][:count].should == 4
     MyBadges::GoogleDrive.any_instance.stub(:is_recent_message?).and_return(true)
     badges.expire_cache
     MyBadges::GoogleDrive.expire @user_id
     badges = MyBadges::Merged.new @user_id
     mangled_feed = badges.get_feed
-    mangled_feed[:badges].empty?.should_not be_true
+    mangled_feed[:badges].empty?.should_not be_truthy
     mangled_feed[:badges]["bdrive"][:count].should == 10
     mangled_feed[:badges]["bdrive"][:items].size.should == 10
     mangled_feed[:badges]["bcal"][:count].should == 6
@@ -53,7 +53,7 @@ describe "MyBadges" do
     badges = MyBadges::Merged.new @user_id
     suppress_rails_logging {
       filtered_feed =  badges.get_feed
-      filtered_feed[:badges].empty?.should_not be_true
+      filtered_feed[:badges].empty?.should_not be_truthy
       filtered_feed[:badges].each do |key, value|
         if key == "bmail"
           value[:count].should_not == 0
@@ -72,25 +72,25 @@ describe "MyBadges" do
     badges_feed = MyBadges::Merged.new(@user_id).get_feed[:badges]
 
     badges_feed.each do |source_key, source_value|
-      source_value[:count].blank?.should_not be_true
-      source_value[:items].kind_of?(Enumerable).should be_true
+      source_value[:count].blank?.should_not be_truthy
+      source_value[:items].kind_of?(Enumerable).should be_truthy
       source_value[:items].each do |feed_items|
         if %w(bcal bdrive).include? source_key
-          feed_items[:changeState].blank?.should_not be_true
+          feed_items[:changeState].blank?.should_not be_truthy
         end
         if source_key == "bcal"
           %w(startTime endTime).each do |required_key|
-            feed_items[required_key.to_sym].blank?.should_not be_true
+            feed_items[required_key.to_sym].blank?.should_not be_truthy
           end
           if feed_items[:changeState] == "new"
-            feed_items[:editor].blank?.should_not be_true
+            feed_items[:editor].blank?.should_not be_truthy
           end
         end
         if source_key != "bcal"
-          feed_items[:editor].blank?.should_not be_true
+          feed_items[:editor].blank?.should_not be_truthy
         end
         %w(title modifiedTime link).each do |required_key|
-          feed_items[required_key.to_sym].blank?.should_not be_true
+          feed_items[required_key.to_sym].blank?.should_not be_truthy
         end
       end
     end
@@ -110,7 +110,7 @@ describe "MyBadges" do
   it "should ignore non png icons for bdrive" do
     proxy = MyBadges::GoogleDrive.new(@user_id)
     icon_class_result = proxy.send(:process_icon, "http://www.google.com/lol_cat.gif")
-    icon_class_result.present?.should_not be_true
+    icon_class_result.present?.should_not be_truthy
   end
 
 end

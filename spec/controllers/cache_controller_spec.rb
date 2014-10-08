@@ -17,7 +17,7 @@ describe CacheController do
       Rails.cache.should_not_receive(:clear)
       get :clear, {:format => 'json'}
       expect(response.status).to eq(403)
-      expect(response.body.blank?).to be_true
+      expect(response.body.blank?).to be_truthy
     end
 
     it 'should not allow non-admin users to warmup caches' do
@@ -25,7 +25,7 @@ describe CacheController do
       HotPlate.should_not_receive(:request_warmups_for_all)
       get :warm, {:uid => '1234', :format => 'json'}
       expect(response.status).to eq(403)
-      expect(response.body.blank?).to be_true
+      expect(response.body.blank?).to be_truthy
     end
   end
 
@@ -40,7 +40,7 @@ describe CacheController do
       get :clear, {:format => 'json'}
       expect(response.status).to eq(200)
       expect(response.body).to be
-      expect(response.body['cache_cleared']).to be_true
+      expect(response.body['cache_cleared']).to be_truthy
     end
 
     it 'should allow superusers users to warmup a single users cache' do
@@ -48,7 +48,7 @@ describe CacheController do
       get :warm, {:uid => '1234', :format => 'json'}
       expect(response.status).to eq(200)
       expect(response.body).to be
-      expect(response.body['warmed']).to be_true
+      expect(response.body['warmed']).to be_truthy
     end
 
     it 'should allow superusers to warmup everyones cache' do
@@ -56,7 +56,7 @@ describe CacheController do
       get :warm, {:uid => 'all', :format => 'json'}
       expect(response.status).to eq(200)
       expect(response.body).to be
-      expect(response.body['warmed']).to be_true
+      expect(response.body['warmed']).to be_truthy
     end
 
     it 'should not take action when given bad parameters' do

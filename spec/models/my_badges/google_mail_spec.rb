@@ -21,7 +21,7 @@ describe "MyBadges::bMail" do
     unread = merged.get_feed
     unread[:badges].each do |k,v|
       unread[:badges][k][:count].should == 0
-      unread[:badges][k][:items].empty?.should be_true
+      unread[:badges][k][:items].empty?.should be_truthy
     end
   end
 

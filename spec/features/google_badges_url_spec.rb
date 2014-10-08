@@ -13,11 +13,11 @@ feature 'MyBadges urls:' do
     }
     visit url
     sleep 5 #waiting for redirect
-    current_url.include?(truthy_match).should be_true
+    current_url.include?(truthy_match).should be_truthy
     malformed_link = url[0..-2] + "ohnoes"
     visit malformed_link
     sleep 5 #waiting for redirect
-    current_url.include?(malformed_link).should be_false
+    current_url.include?(malformed_link).should be_falsey
   end
 
   before(:all) do
@@ -80,6 +80,6 @@ feature 'MyBadges urls:' do
       end
     end
     #makes sure something was tested.
-    found_matching_item.should_not be_false
+    found_matching_item.should_not be_falsey
   end
 end

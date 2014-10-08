@@ -45,7 +45,7 @@ describe Canvas::Ldap do
       expect(results[0][:sn].count).to eq 1
       expect(results[0][:mail].count).to eq 1
       expect(results[0][:uid][0]).to eq "212373"
-      expect(results[0][:berkeleyedutestidflag][0]).to be_true
+      expect(results[0][:berkeleyedutestidflag][0]).to be_truthy
       expect(results[0][:displayname][0]).to eq "AFF-GUEST TEST"
       expect(results[0][:berkeleyedufirstname][0]).to eq "AFF-GUEST"
       expect(results[0][:berkeleyedulastname][0]).to eq "TEST"

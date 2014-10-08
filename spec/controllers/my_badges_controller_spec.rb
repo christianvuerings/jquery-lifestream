@@ -25,12 +25,12 @@ describe MyBadgesController do
     json_response = JSON.parse(response.body)
 
     if json_response["alert"].present?
-      json_response["alert"].is_a?(Hash).should be_true
+      json_response["alert"].is_a?(Hash).should be_truthy
       json_response["alert"].keys.count.should >= 3
     end
 
-    json_response["badges"].present?.should be_true
-    json_response["badges"].is_a?(Hash).should be_true
+    json_response["badges"].present?.should be_truthy
+    json_response["badges"].is_a?(Hash).should be_truthy
     json_response["badges"].keys.count.should == 3
 
     existing_badges = %w(bcal bdrive bmail)
@@ -38,8 +38,8 @@ describe MyBadgesController do
       json_response["badges"][badge]["count"].should_not be_nil
     end
 
-    json_response["studentInfo"].present?.should be_true
-    json_response["studentInfo"].is_a?(Hash).should be_true
+    json_response["studentInfo"].present?.should be_truthy
+    json_response["studentInfo"].is_a?(Hash).should be_truthy
     json_response["studentInfo"].keys.count.should == 3
   end
 

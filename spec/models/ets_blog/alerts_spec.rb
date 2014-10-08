@@ -54,7 +54,7 @@ describe EtsBlog::Alerts do
       alert[:title].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
       alert[:teaser].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
       alert[:url].should == 'http://ets-dev.berkeley.edu/news/calcentral-scheduled-upgrade-test-announce-only'
-      alert[:timestamp].is_a?(Hash).should be_true
+      alert[:timestamp].is_a?(Hash).should be_truthy
       alert[:timestamp][:epoch].should == 1393257625
     end
     it "handling multi-byte diacritical strings in the reponse" do

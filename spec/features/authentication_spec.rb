@@ -7,12 +7,12 @@ feature "authentication" do
     login_with_cas "238382"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "238382"
     logout_of_cas
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_false
+    response["isLoggedIn"].should be_falsey
   end
 
   scenario "Failing authentication" do
@@ -34,6 +34,6 @@ feature "authentication" do
     current_path.should eq("/uid_error")
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_false
+    response["isLoggedIn"].should be_falsey
   end
 end

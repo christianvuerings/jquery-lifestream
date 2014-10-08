@@ -109,7 +109,7 @@ describe Berkeley::CoursePolicy do
         allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return(instructor_courses)
       end
       it "returns true" do
-        expect(subject.can_view_roster_photos?).to be_true
+        expect(subject.can_view_roster_photos?).to be_truthy
       end
     end
 
@@ -118,7 +118,7 @@ describe Berkeley::CoursePolicy do
         allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return(student_courses)
       end
       it "returns false" do
-        expect(subject.can_view_roster_photos?).to be_false
+        expect(subject.can_view_roster_photos?).to be_falsey
       end
     end
 
@@ -128,7 +128,7 @@ describe Berkeley::CoursePolicy do
         allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return(student_courses)
       end
       it "returns false" do
-        expect(subject.can_view_roster_photos?).to be_false
+        expect(subject.can_view_roster_photos?).to be_falsey
       end
     end
 
@@ -137,7 +137,7 @@ describe Berkeley::CoursePolicy do
         allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return({})
       end
       it "returns false" do
-        expect(subject.can_view_roster_photos?).to be_false
+        expect(subject.can_view_roster_photos?).to be_falsey
       end
     end
   end

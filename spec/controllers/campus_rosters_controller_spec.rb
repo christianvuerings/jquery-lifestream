@@ -48,9 +48,9 @@ describe CampusRostersController do
       get :get_feed, campus_course_id: campus_course_id
       assert_response :success
       response_json = JSON.parse(response.body)
-      expect(response_json.has_key?('campus_course')).to be_true
-      expect(response_json.has_key?('sections')).to be_true
-      expect(response_json.has_key?('students')).to be_true
+      expect(response_json.has_key?('campus_course')).to be_truthy
+      expect(response_json.has_key?('sections')).to be_truthy
+      expect(response_json.has_key?('students')).to be_truthy
     end
 
   end

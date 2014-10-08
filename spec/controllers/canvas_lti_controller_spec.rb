@@ -30,7 +30,7 @@ describe CanvasLtiController do
       end
       it_behaves_like 'an LTI authentication'
       it 'notes that the authentication is valid only for LTI' do
-        expect(session[:lti_authenticated_only]).to be_true
+        expect(session[:lti_authenticated_only]).to be_truthy
       end
     end
     context 'when the user is already logged into CalCentral' do
@@ -40,7 +40,7 @@ describe CanvasLtiController do
       end
       it_behaves_like 'an LTI authentication'
       it 'does not flag the authentication' do
-        expect(session[:lti_authenticated_only]).to be_false
+        expect(session[:lti_authenticated_only]).to be_falsey
       end
     end
     context 'when the user does not match an existing CalCentral login' do
@@ -52,7 +52,7 @@ describe CanvasLtiController do
       it_behaves_like 'an LTI authentication'
       it 'wipes the session first' do
         expect(session[:some_random_junk]).to be_nil
-        expect(session[:lti_authenticated_only]).to be_true
+        expect(session[:lti_authenticated_only]).to be_truthy
       end
     end
   end

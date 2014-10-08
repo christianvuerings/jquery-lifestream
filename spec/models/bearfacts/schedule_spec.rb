@@ -12,7 +12,7 @@ describe Bearfacts::Schedule do
   it "should fail gracefully on a user whose student_id can't be found" do
     client = Bearfacts::Schedule.new({:user_id => "0", :fake => true})
     response = client.get
-    response[:noStudentId].should be_true
+    response[:noStudentId].should be_truthy
   end
 
   it "should get Oski Bear's schedule from a real server", :testext => true do

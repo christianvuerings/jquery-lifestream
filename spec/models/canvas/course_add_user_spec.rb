@@ -78,7 +78,7 @@ describe Canvas::CourseAddUser do
         people = Canvas::CourseAddUser.search_users('John Doe', 'name')
         people.each do |person|
           expect(person).to be_an_instance_of Hash
-          expect(person.has_key?('student_id')).to be_false
+          expect(person.has_key?('student_id')).to be_falsey
         end
       end
     end
@@ -96,7 +96,7 @@ describe Canvas::CourseAddUser do
         expect(people).to be_an_instance_of Array
         people.each do |person|
           expect(person).to be_an_instance_of Hash
-          expect(person.has_key?('student_id')).to be_false
+          expect(person.has_key?('student_id')).to be_falsey
         end
       end
     end
@@ -114,7 +114,7 @@ describe Canvas::CourseAddUser do
         expect(people).to be_an_instance_of Array
         people.each do |person|
           expect(person).to be_an_instance_of Hash
-          expect(person.has_key?('student_id')).to be_false
+          expect(person.has_key?('student_id')).to be_falsey
         end
       end
     end
@@ -153,13 +153,13 @@ describe Canvas::CourseAddUser do
     it "adds user to canvas" do
       expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(["260506"]).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
-      expect(result).to be_true
+      expect(result).to be_truthy
     end
 
     it "adds user to canvas course section using canvas user id" do
       expect_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
-      expect(result).to be_true
+      expect(result).to be_truthy
     end
   end
 

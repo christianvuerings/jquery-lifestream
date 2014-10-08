@@ -3,8 +3,8 @@ require "spec_helper"
 describe CampusOracle::UserCourses do
 
   it "should be accessible if non-null user" do
-    CampusOracle::UserCourses::Base.access_granted?(nil).should be_false
-    CampusOracle::UserCourses::Base.access_granted?('211159').should be_true
+    CampusOracle::UserCourses::Base.access_granted?(nil).should be_falsey
+    CampusOracle::UserCourses::Base.access_granted?('211159').should be_truthy
     client = CampusOracle::UserCourses::All.new({user_id: '211159'})
     client.get_all_campus_courses.should_not be_nil
   end
@@ -13,31 +13,31 @@ describe CampusOracle::UserCourses do
     Settings.terms.stub(:oldest).and_return(nil)
     client = CampusOracle::UserCourses::All.new({user_id: '300939'})
     courses = client.get_all_campus_courses
-    courses.empty?.should be_false
+    courses.empty?.should be_falsey
     courses["2012-B"].length.should == 2
     courses["2013-D"].length.should == 2
     courses["2013-D"].each do |course|
-      course[:id].blank?.should be_false
-      course[:slug].blank?.should be_false
+      course[:id].blank?.should be_falsey
+      course[:slug].blank?.should be_falsey
       course[:emitter].should == 'Campus'
-      course[:name].blank?.should be_false
+      course[:name].blank?.should be_falsey
       expect(course[:courseCodeSection]).to be_blank
       expect(course[:cred_cd]).to be_blank
       expect(course[:pnp_flag]).to be_blank
       expect(course[:unit]).to be_blank
-      ['Student', 'Instructor'].include?(course[:role]).should be_true
+      ['Student', 'Instructor'].include?(course[:role]).should be_truthy
       sections = course[:sections]
       sections.length.should be > 0
       sections.each do |section|
         if section[:ccn] == "16171"
-          section[:instruction_format].blank?.should be_false
-          section[:section_number].blank?.should be_false
-          section[:is_primary_section].should be_true
+          section[:instruction_format].blank?.should be_falsey
+          section[:section_number].blank?.should be_falsey
+          section[:is_primary_section].should be_truthy
           section.should be_has_key(:cred_cd)
           section[:pnp_flag].should eq 'N '
           section[:unit].should eq 3
           section[:instructors].length.should == 1
-          section[:instructors][0][:name].present?.should be_true
+          section[:instructors][0][:name].present?.should be_truthy
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
           section[:schedules][0][:buildingName].should == "WHEELER"
         end
@@ -84,12 +84,12 @@ describe CampusOracle::UserCourses do
 
   it "should say that Tammi has student history", :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses::HasStudentHistory.new({user_id: '300939'})
-    client.has_student_history?.should be_true
+    client.has_student_history?.should be_truthy
   end
 
   it "should say that our fake teacher has instructor history", :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses::HasInstructorHistory.new({user_id: '238382'})
-    client.has_instructor_history?.should be_true
+    client.has_instructor_history?.should be_truthy
   end
 
   describe '#merge_enrollments' do

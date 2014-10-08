@@ -38,8 +38,8 @@ describe MyAcademics::Semesters do
       it { subject[2][:classes][0][:sections][0][:instruction_format].should eq "LEC" }
       it { subject[2][:classes][0][:sections][0][:section_number].should eq "003" }
       it { subject[2][:classes][0][:sections][0][:section_label].should eq "LEC 003" }
-      it { subject[2][:classes][0][:sections][0][:instructors][0][:name].present?.should be_true }
-      it { subject[2][:classes][0][:sections][0][:is_primary_section].should be_true }
+      it { subject[2][:classes][0][:sections][0][:instructors][0][:name].present?.should be_truthy }
+      it { subject[2][:classes][0][:sections][0][:is_primary_section].should be_truthy }
       it { subject[2][:classes][0][:sections][0][:units].to_s.should eq "5.0" }
       it { subject[3][:classes][0][:transcript][0][:grade].should eq "B" }
       it { subject[3][:classes][0][:transcript][0][:units].to_s.should eq "4.0" }
@@ -63,7 +63,7 @@ describe MyAcademics::Semesters do
     end
     context 'semester just ended' do
       let(:fake_now) {DateTime.parse('2014-05-30')}
-      it {should be_true}
+      it {should be_truthy}
     end
     context 'current semester' do
       let(:fake_now) {DateTime.parse('2014-05-10')}

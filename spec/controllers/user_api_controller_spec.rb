@@ -32,7 +32,7 @@ describe UserApiController do
     it 'should show status' do
       get :mystatus
       json_response = JSON.parse(response.body)
-      expect(json_response['isLoggedIn']).to be_true
+      expect(json_response['isLoggedIn']).to be_truthy
       expect(json_response['uid']).to eq user_id
       expect(json_response['preferred_name']).to be_present
       expect(json_response['features']).to be_present
@@ -92,16 +92,16 @@ describe UserApiController do
       end
       context 'when normally authenticated' do
         let(:original_user_id) { nil }
-        it { should be_true }
+        it { should be_truthy }
       end
       context 'when viewing as' do
         let(:original_user_id) { random_id }
-        it { should be_false }
+        it { should be_falsey }
       end
       context 'when authenticated by LTI' do
         let(:original_user_id) { nil }
         before { session[:lti_authenticated_only] = true }
-        it { should be_false }
+        it { should be_falsey }
       end
     end
 

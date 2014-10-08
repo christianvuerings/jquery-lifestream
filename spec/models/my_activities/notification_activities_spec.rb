@@ -33,7 +33,7 @@ describe MyActivities::NotificationActivities do
       regstatus_items = subject.select {|notification| notification[:source] == 'Bear Facts'}
       regstatus_items.should_not be_empty
     end
-    it { subject.each {|notification| documented_types.include?(notification[:type]).should be_true }}
+    it { subject.each {|notification| documented_types.include?(notification[:type]).should be_truthy }}
   end
 
   context "should successfully handle badly translated responses from notifications" do

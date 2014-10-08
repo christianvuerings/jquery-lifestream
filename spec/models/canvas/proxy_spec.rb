@@ -66,7 +66,7 @@ describe Canvas::Proxy do
       proxy = Canvas::UserActivityStream.new(:fake => true)
       response = proxy.user_activity
       user_activity = JSON.parse(response.body)
-      user_activity.kind_of?(Array).should be_true
+      user_activity.kind_of?(Array).should be_truthy
       user_activity.size.should == 20
       required_fields = %w(created_at updated_at id type html_url)
       user_activity.each do |entry|
@@ -77,7 +77,7 @@ describe Canvas::Proxy do
         }.to_not raise_error
         entry["id"].is_a?(Integer).should == true
         category_specific_id_exists = entry["course_id"] || entry["group_id"] || entry["conversation_id"]
-        category_specific_id_exists.blank?.should_not be_true
+        category_specific_id_exists.blank?.should_not be_truthy
       end
     ensure
       VCR.eject_cassette
@@ -106,7 +106,7 @@ describe Canvas::Proxy do
       sections = JSON.parse(sections_response.body)
       sections.should_not be_nil
       sections.each do |section|
-        section['id'].blank?.should be_false
+        section['id'].blank?.should be_falsey
       end
     end
   end

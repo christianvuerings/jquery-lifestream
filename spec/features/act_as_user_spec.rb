@@ -21,14 +21,14 @@ feature "act_as_user" do
     User::Data.unstub(:where)
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "2040"
     suppress_rails_logging {
      stop_act_as_user
     }
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "238382"
   end
 
@@ -134,32 +134,32 @@ feature "act_as_user" do
     act_as_user "2040"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "2040"
 
     act_as_user "978966"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "978966"
 
     act_as_user "211159"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "211159"
 
     # make sure you can act-as someone with no user_auth record
     act_as_user "904715"
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "904715"
 
     stop_act_as_user
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "238382"
   end
 
@@ -171,7 +171,7 @@ feature "act_as_user" do
     }
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "238382"
   end
 
@@ -184,15 +184,15 @@ feature "act_as_user" do
       login_with_cas user
       visit "/api/my/up_next"
       response = JSON.parse(page.body)
-      response["items"].empty?.should be_false
-      Rails.cache.exist?(UpNext::MyUpNext.cache_key(user)).should be_true
+      response["items"].empty?.should be_falsey
+      Rails.cache.exist?(UpNext::MyUpNext.cache_key(user)).should be_truthy
     end
     login_with_cas "238382"
     act_as_user "2040"
     User::Data.unstub(:where)
     visit "/api/my/up_next"
     response = JSON.parse(page.body)
-    response["items"].empty?.should be_true
+    response["items"].empty?.should be_truthy
   end
 
   scenario "make sure you cannot act as an invalid user" do
@@ -204,7 +204,7 @@ feature "act_as_user" do
     }
     visit "/api/my/status"
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_true
+    response["isLoggedIn"].should be_truthy
     response["uid"].should == "238382"
   end
 end

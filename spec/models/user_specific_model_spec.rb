@@ -23,21 +23,21 @@ describe UserSpecificModel do
       let(:fake_session) {{
         user_id: random_id
       }}
-      it {should be_true}
+      it {should be_truthy}
     end
     context 'when viewing as' do
       let(:fake_session) {{
         user_id: random_id,
         original_user_id: random_id
       }}
-      it {should be_false}
+      it {should be_falsey}
     end
     context 'when only authenticated from an external app' do
       let(:fake_session) {{
         user_id: random_id,
         lti_authenticated_only: true
       }}
-      it {should be_false}
+      it {should be_falsey}
     end
   end
 

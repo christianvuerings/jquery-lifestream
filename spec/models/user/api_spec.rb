@@ -45,10 +45,10 @@ describe User::Api do
   it "should return whether the user is registered with Canvas" do
     Canvas::Proxy.stub(:has_account?).and_return(true, false)
     user_data = User::Api.new(@random_id).get_feed
-    user_data[:hasCanvasAccount].should be_true
+    user_data[:hasCanvasAccount].should be_truthy
     Rails.cache.clear
     user_data = User::Api.new(@random_id).get_feed
-    user_data[:hasCanvasAccount].should be_false
+    user_data[:hasCanvasAccount].should be_falsey
   end
   it "should have a null first_login time for a new user" do
     user_data = User::Api.new(@random_id).get_feed
@@ -78,7 +78,7 @@ describe User::Api do
 
   it "should say random student gets the academics tab", if: CampusOracle::Queries.test_data? do
     user_data = User::Api.new(@random_id).get_feed
-    user_data[:hasAcademicsTab].should be_true
+    user_data[:hasAcademicsTab].should be_truthy
   end
 
   it "should say a staff member with no academic history does not get the academics tab", if: CampusOracle::Queries.test_data? do
@@ -97,7 +97,7 @@ describe User::Api do
     fake_student_proxy.stub(:has_student_history?).and_return(false)
     CampusOracle::UserCourses::HasStudentHistory.stub(:new).and_return(fake_student_proxy)
     user_data = User::Api.new("904715").get_feed
-    user_data[:hasAcademicsTab].should be_false
+    user_data[:hasAcademicsTab].should be_falsey
   end
 
   describe "my finances tab" do
@@ -116,15 +116,15 @@ describe User::Api do
     subject {User::Api.new(@random_id).get_feed[:hasFinancialsTab]}
     context 'an active student' do
       let(:test_roles) {student_roles[:active]}
-      it {should be_true}
+      it {should be_truthy}
     end
     context 'a non-student' do
       let(:test_roles) {student_roles[:non]}
-      it {should be_false}
+      it {should be_falsey}
     end
     context 'an ex-student' do
       let(:test_roles) {student_roles[:expired]}
-      it {should be_true}
+      it {should be_truthy}
     end
   end
 
@@ -139,7 +139,7 @@ describe User::Api do
     fake_student_proxy.stub(:has_student_history?).and_return(false)
     CampusOracle::UserCourses::HasStudentHistory.stub(:new).and_return(fake_student_proxy)
     user_data = User::Api.new("904715").get_feed
-    user_data[:hasAcademicsTab].should_not be_true
+    user_data[:hasAcademicsTab].should_not be_truthy
   end
 
   context "proper cache handling" do
@@ -182,8 +182,8 @@ describe User::Api do
     before { User::Auth.new_or_update_superuser!(@random_id) }
     subject { User::Api.new(@random_id).get_feed }
     it "should pass the superuser status" do
-      subject[:isSuperuser].should be_true
-      subject[:isViewer].should be_true
+      subject[:isSuperuser].should be_truthy
+      subject[:isViewer].should be_truthy
     end
   end
 
@@ -196,8 +196,8 @@ describe User::Api do
     }
     subject { User::Api.new(@random_id).get_feed }
     it "should pass the viewer status" do
-      subject[:isSuperuser].should be_false
-      subject[:isViewer].should be_true
+      subject[:isSuperuser].should be_falsey
+      subject[:isViewer].should be_truthy
     end
   end
 

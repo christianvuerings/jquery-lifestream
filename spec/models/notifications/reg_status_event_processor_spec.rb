@@ -10,7 +10,7 @@ describe Notifications::RegStatusEventProcessor do
 
   context "empty payload" do
     subject { @processor.process(empty_payload, Time.now.to_datetime) }
-    it { should be_false }
+    it { should be_falsey }
   end
 
   it "should not handle an event topic it doesn't know how to handle" do

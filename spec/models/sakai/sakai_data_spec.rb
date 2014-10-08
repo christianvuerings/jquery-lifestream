@@ -12,12 +12,12 @@ describe Sakai::SakaiData do
   end
 
   it "should find a known user" do
-    live_sakai_user_id.blank?.should be_false
+    live_sakai_user_id.blank?.should be_falsey
   end
 
   it "should not find an unknown user" do
     sakai_user_id = Sakai::SakaiData.get_sakai_user_id('nosuchuser')
-    sakai_user_id.blank?.should be_true
+    sakai_user_id.blank?.should be_truthy
   end
 
   it "should read hidden site preferences if any" do
@@ -30,7 +30,7 @@ describe Sakai::SakaiData do
     sites.should_not be_nil
     sites.size.should be > 0 if Sakai::SakaiData.test_data?
     sites.each do |site|
-      site['site_id'].blank?.should be_false
+      site['site_id'].blank?.should be_falsey
     end
   end
 
@@ -43,7 +43,7 @@ describe Sakai::SakaiData do
         announcements = Sakai::SakaiData.get_announcements(site_id, start_range, end_range)
         announcements.should_not be_nil
         announcements.each do |announcement|
-          announcement['message_id'].blank?.should be_false
+          announcement['message_id'].blank?.should be_falsey
         end
       end
     end
