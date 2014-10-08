@@ -1,5 +1,5 @@
 language: ruby
-bundler_args: --without development --deployment --jobs=4 --retry=5
+bundler_args: --without development testext production --deployment --jobs=4 --retry=5
 cache: bundler
 
 rvm:
