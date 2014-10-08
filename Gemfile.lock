@@ -1,3 +1,11 @@
+PATH
+  remote: ccadmin
+  specs:
+    ccadmin (0.6.5)
+      bootstrap-sass (~> 3.2.0.2)
+      rails (~> 4.1.6)
+      rails_admin (= 0.6.5)
+
 GIT
   remote: https://github.com/instructure/ims-lti.git
   revision: b909e936a3c8ed13fec527d0dfe3c177431d2932
@@ -470,6 +478,7 @@ DEPENDENCIES
   cancan (~> 1.6.10)
   capistrano (~> 2.15.4)
   capybara (~> 2.4.3)
+  ccadmin!
   closure-compiler (~> 1.1.11)
   coffee-rails (~> 4.0.1)
   compass-rails (~> 2.0.0)
@@ -502,7 +511,6 @@ DEPENDENCIES
   rails (= 4.1.6)
   rails-observers (~> 0.1.2)
   rails-perftest (~> 0.0.5)
-  rails_admin (= 0.6.5)
   ravenjs-gem (~> 1.1.16)
   retriable (~> 1.4)
   rspec-its (~> 1.0.1)
