@@ -9,7 +9,7 @@ describe Canvas::SisImport do
     status["progress"].should == 100
     status["workflow_state"].should == "imported"
 
-    fake_proxy.import_was_successful?(status).should be_true
+    fake_proxy.import_was_successful?(status).should be_truthy
   end
 
   describe "#import_was_successful" do
@@ -46,7 +46,7 @@ describe Canvas::SisImport do
         let(:sis_import_status_json) { JSON.parse(sis_import_status_hash.to_json) }
         it "returns true" do
           result = fake_proxy.import_was_successful?(sis_import_status_json)
-          expect(result).to be_true
+          expect(result).to be_truthy
         end
       end
 
@@ -71,7 +71,7 @@ describe Canvas::SisImport do
 
         it "returns true" do
           result = fake_proxy.import_was_successful?(sis_import_status_json)
-          expect(result).to be_true
+          expect(result).to be_truthy
         end
       end
     end
@@ -90,7 +90,7 @@ describe Canvas::SisImport do
       end
       it "returns false" do
         result = fake_proxy.import_was_successful?(sis_import_status_json)
-        expect(result).to be_false
+        expect(result).to be_falsey
       end
     end
   end

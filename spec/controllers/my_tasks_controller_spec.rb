@@ -59,7 +59,7 @@ describe MyTasksController do
     hash = {"task_id" => pre_recorded_task_id, "emitter" => "Google"}
     post :delete_task, hash
     json_response = JSON.parse(response.body)
-    json_response["task_deleted"].should be_true
+    json_response["task_deleted"].should be_truthy
   end
 
   it "should fail on deleting a canvas task" do
@@ -68,7 +68,7 @@ describe MyTasksController do
     hash = {"task_id" => "gobblygook", "emitter" => "bCourses"}
     post :delete_task, hash
     json_response = JSON.parse(response.body)
-    json_response["task_deleted"].should be_false
+    json_response["task_deleted"].should be_falsey
   end
 
   it "should return a 400 error on some ArgumentError with the task model object" do

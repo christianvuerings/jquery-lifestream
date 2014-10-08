@@ -21,7 +21,7 @@ describe User::Oauth2Data do
   it "should not store plaintext access tokens" do
     allow_any_instance_of(User::Oauth2Data).to receive(:decrypt_tokens).and_return(nil)
     oauth2 = User::Oauth2Data.new(uid: "test-user", app_id: "test-app", access_token: "test-token")
-    expect(oauth2.save).to be_true
+    expect(oauth2.save).to be_truthy
     access_token = User::Oauth2Data.get("test-user", "test-app")["access_token"]
     expect(access_token).to_not eq "test-token"
   end
@@ -29,7 +29,7 @@ describe User::Oauth2Data do
   it "should return decrypted access tokens" do
     oauth2 = User::Oauth2Data.new(uid: "test-user", app_id: "test-app", access_token: "test-token")
     expect(Cache::UserCacheExpiry).to receive(:notify).once
-    expect(oauth2.save).to be_true
+    expect(oauth2.save).to be_truthy
     access_token = User::Oauth2Data.get("test-user", "test-app")["access_token"]
     expect(access_token).to eq "test-token"
   end
@@ -69,7 +69,7 @@ describe User::Oauth2Data do
   it "should be able to get and update google email for authenticated users" do
     User::Oauth2Data.new_or_update(@random_id, GoogleApps::Proxy::APP_ID, "new-token",
                              "some-token", 1)
-    User::Oauth2Data.get_google_email(@random_id).blank?.should be_true
+    User::Oauth2Data.get_google_email(@random_id).blank?.should be_truthy
     allow_any_instance_of(GoogleApps::Userinfo).to receive(:user_info).and_return(@fake_google_userinfo)
     User::Oauth2Data.update_google_email!(@random_id)
     expect(User::Oauth2Data.get_google_email(@random_id)).to eq "tammi.chang.clc@gmail.com"
@@ -79,18 +79,18 @@ describe User::Oauth2Data do
     allow_any_instance_of(Canvas::SisUserProfile).to receive(:sis_user_profile).and_return(@canvas_404)
     User::Oauth2Data.new_or_update(@random_id, Canvas::Proxy::APP_ID, "new-token",
                              "some-token", 1)
-    User::Oauth2Data.get_canvas_email(@random_id).blank?.should be_true
+    User::Oauth2Data.get_canvas_email(@random_id).blank?.should be_truthy
     User::Oauth2Data.update_canvas_email!(@random_id)
-    User::Oauth2Data.get_canvas_email(@random_id).blank?.should be_true
+    User::Oauth2Data.get_canvas_email(@random_id).blank?.should be_truthy
   end
 
   it "should successfully update a canvas email " do
     allow(Canvas::SisUserProfile).to receive(:new).and_return(@fake_canvas_user_profile)
     User::Oauth2Data.new_or_update(@random_id, Canvas::Proxy::APP_ID, "new-token",
                              "some-token", 1)
-    expect(User::Oauth2Data.get_canvas_email(@random_id).blank?).to be_true
+    expect(User::Oauth2Data.get_canvas_email(@random_id).blank?).to be_truthy
     User::Oauth2Data.update_canvas_email!(@random_id)
-    expect(User::Oauth2Data.get_canvas_email(@random_id).blank?).to be_false
+    expect(User::Oauth2Data.get_canvas_email(@random_id).blank?).to be_falsey
   end
 
   it "should simulate a non-responsive google", :testext => true do
@@ -106,15 +106,15 @@ describe User::Oauth2Data do
   it "should invalidate cache when tokens are deleted" do
     oauth2 = User::Oauth2Data.new(uid: "test-user", app_id: "test-app", access_token: "test-token")
     expect(Cache::UserCacheExpiry).to receive(:notify).exactly(2).times
-    expect(oauth2.save).to be_true
+    expect(oauth2.save).to be_truthy
     User::Oauth2Data.destroy_all(:uid => "test-user", :app_id => "test-app")
     access_token = User::Oauth2Data.get("test-user", "test-app")["access_token"]
     expect(access_token).to be_nil
   end
 
   it "should remove dismiss_reminder app_data when a new google token is stored" do
-    expect(User::Oauth2Data.dismiss_google_reminder(@random_id)).to be_true
-    expect(User::Oauth2Data.is_google_reminder_dismissed(@random_id)).to be_true
+    expect(User::Oauth2Data.dismiss_google_reminder(@random_id)).to be_truthy
+    expect(User::Oauth2Data.is_google_reminder_dismissed(@random_id)).to be_truthy
     User::Oauth2Data.new_or_update(@random_id, GoogleApps::Proxy::APP_ID, 'top', 'secret')
     expect(User::Oauth2Data.is_google_reminder_dismissed(@random_id)).to be_empty
   end

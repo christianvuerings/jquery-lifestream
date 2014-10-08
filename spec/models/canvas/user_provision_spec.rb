@@ -45,7 +45,7 @@ describe Canvas::UserProvision do
     it "passes transformed UID list to Canvas::SisImport#import_users as CSV definitions" do
       Canvas::SisImport.any_instance.should_receive(:import_users).with("tmp/canvas/user_provision-2013-11-05-f76d1b860dcc152c-users.csv").and_return(true)
       result = subject.import_users(['1234','1235'])
-      expect(result).to be_true
+      expect(result).to be_truthy
     end
 
     it "raises exception if user import failed" do

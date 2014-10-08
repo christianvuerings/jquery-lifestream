@@ -12,7 +12,7 @@ describe Bearfacts::Exams do
   it "should fail gracefully on a user whose student_id can't be found" do
     client = Bearfacts::Exams.new({:user_id => "0", :fake => true})
     response = client.get
-    response[:noStudentId].should be_true
+    response[:noStudentId].should be_truthy
   end
 
   it "should get Oski Bear's exams from a real server", :testext => true do

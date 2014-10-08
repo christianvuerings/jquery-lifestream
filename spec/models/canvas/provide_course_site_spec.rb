@@ -498,16 +498,16 @@ describe Canvas::ProvideCourseSite do
       feed = terms_feed[0][:classes]
       expect(feed.length).to eq 2
       bio1a = feed.select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]
-      expect(bio1a.empty?).to be_false
+      expect(bio1a.empty?).to be_falsey
       expect(bio1a[:title]).to eq "General Biology Lecture"
       expect(bio1a[:role]).to eq "Instructor"
       expect(bio1a[:sections].length).to eq 3
-      expect(bio1a[:sections][0][:is_primary_section]).to be_true
-      expect(bio1a[:sections][1][:is_primary_section]).to be_false
-      expect(bio1a[:sections][2][:is_primary_section]).to be_false
+      expect(bio1a[:sections][0][:is_primary_section]).to be_truthy
+      expect(bio1a[:sections][1][:is_primary_section]).to be_falsey
+      expect(bio1a[:sections][2][:is_primary_section]).to be_falsey
 
       cogsci = feed.select {|course| course[:course_code] == 'COG SCI C147'}[0]
-      expect(cogsci.empty?).to be_false
+      expect(cogsci.empty?).to be_falsey
       expect(cogsci[:title]).to eq "Language Disorders"
     end
   end
@@ -607,7 +607,7 @@ describe Canvas::ProvideCourseSite do
     it "should generate a Course import CSV row for the selected courses" do
       allow_any_instance_of(Canvas::ExistenceCheck).to receive(:course_defined?).and_return(false)
       canvas_course = subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
-      expect(canvas_course['course_id'].present?).to be_true
+      expect(canvas_course['course_id'].present?).to be_truthy
       expect(canvas_course['course_id']).to eq "CRS:ENGIN-7-2013-D"
       expect(canvas_course['short_name']).to eq 'ENGIN 7'
       expect(canvas_course['long_name']).to eq 'Introduction to Computer Programming for Scientists and Engineers'
@@ -629,7 +629,7 @@ describe Canvas::ProvideCourseSite do
       end
       second_canvas_course = subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
       second_course_sis_id = second_canvas_course['course_id']
-      expect(second_course_sis_id.present?).to be_true
+      expect(second_course_sis_id.present?).to be_truthy
       expect(second_course_sis_id).to_not eq first_course_sis_id
     end
   end
@@ -714,7 +714,7 @@ describe Canvas::ProvideCourseSite do
         campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(row['section_id'])
         expect(campus_section[:term_yr]).to eq term_yr
         expect(campus_section[:term_cd]).to eq term_cd
-        expect(ccns.include?(campus_section[:ccn])).to be_true
+        expect(ccns.include?(campus_section[:ccn])).to be_truthy
       end
       expect(canvas_sections_list[0]['name']).to eq 'ENGIN 7 LEC 002'
       expect(canvas_sections_list[1]['name']).to eq 'ENGIN 7 DIS 102'
@@ -755,7 +755,7 @@ describe Canvas::ProvideCourseSite do
 
       second_canvas_section = subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)[0]
       second_canvas_section_id = second_canvas_section['section_id']
-      expect(second_canvas_section_id.present?).to be_true
+      expect(second_canvas_section_id.present?).to be_truthy
       expect(second_canvas_section_id).to_not eq first_canvas_section_id
       campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(second_canvas_section_id)
       expect(campus_section[:term_yr]).to eq term_yr
@@ -826,9 +826,9 @@ describe Canvas::ProvideCourseSite do
       expect(sections.length).to eq 2
       expect(sections[0][:ccn].to_i).to eq 7309
       expect(sections[0][:section_label]).to eq 'LEC 003'
-      expect(sections[0][:is_primary_section]).to be_true
+      expect(sections[0][:is_primary_section]).to be_truthy
       expect(sections[1][:ccn].to_i).to eq 7366
-      expect(sections[1][:is_primary_section]).to be_false
+      expect(sections[1][:is_primary_section]).to be_falsey
       cog_sci_class = classes_list[1]
       sections = cog_sci_class[:sections]
       expect(sections.length).to eq 1

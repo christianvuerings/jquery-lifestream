@@ -7,7 +7,7 @@ describe Bearfacts::Regblocks do
 
     its([:activeBlocks]) { should_not be_empty }
     its([:inactiveBlocks]) { should_not be_empty }
-    its([:errored]) { should be_false }
+    its([:errored]) { should be_falsey }
     it 'has an active status and non-nil type on active blocks' do
       subject[:activeBlocks].each do |block|
         block[:status].should == 'Active'
@@ -25,7 +25,7 @@ describe Bearfacts::Regblocks do
   context 'with a non-student input' do
     subject { Bearfacts::Regblocks.new({user_id: '0', fake: true}).get }
     it 'should fail gracefully on a user whose student_id cannot be found' do
-      subject[:noStudentId].should be_true
+      subject[:noStudentId].should be_truthy
     end
   end
 

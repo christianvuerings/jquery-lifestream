@@ -6,10 +6,10 @@ describe CampusOracle::UserAttributes do
   shared_examples_for 'a parser for roles' do |expected_roles|
     it 'only sets expected roles' do
       expected_roles.each do |role|
-        expect(subject[:roles][role]).to be_true
+        expect(subject[:roles][role]).to be_truthy
       end
       subject[:roles].each do |role, value|
-        expect(value).to be_false unless expected_roles.include?(role)
+        expect(value).to be_falsey unless expected_roles.include?(role)
       end
     end
   end
@@ -19,7 +19,7 @@ describe CampusOracle::UserAttributes do
       let(:uid) {300847}
       it 'includes expected feed values' do
         expect(subject[:reg_status][:summary]).to eq 'Not Registered'
-        expect(subject[:reg_status][:needsAction]).to be_true
+        expect(subject[:reg_status][:needsAction]).to be_truthy
         expect(subject[:education_level]).to eq 'Masters'
         expect(subject[:california_residency][:summary]).to eq 'Non-Resident'
       end

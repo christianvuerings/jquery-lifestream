@@ -74,7 +74,7 @@ describe Canvas::AddNewUsers do
       result = subject.get_canvas_user_report_file
       expect(result).to be_an_instance_of String
       expect(result).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
-      expect(File.exists?(result)).to be_true
+      expect(File.exists?(result)).to be_truthy
     end
 
     it "inserts all users into csv file" do
@@ -92,11 +92,11 @@ describe Canvas::AddNewUsers do
       result_1 = subject.get_canvas_user_report_file
       expect(result_1).to be_an_instance_of String
       expect(result_1).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
-      expect(File.exists?(result_1)).to be_true
+      expect(File.exists?(result_1)).to be_truthy
       result_2 = subject.get_canvas_user_report_file
       expect(result_2).to be_an_instance_of String
       expect(result_2).to eq "tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv"
-      expect(File.exists?(result_2)).to be_true
+      expect(File.exists?(result_2)).to be_truthy
     end
   end
 
@@ -146,12 +146,12 @@ describe Canvas::AddNewUsers do
     it "returns array new active user UIDs" do
       result = subject.new_active_user_uids
       expect(result).to be_an_instance_of Array
-      expect(result.include?("946122")).to be_true
-      expect(result.include?("946127")).to be_true
-      expect(result.include?("946123")).to be_false
-      expect(result.include?("946124")).to be_false
-      expect(result.include?("946125")).to be_false
-      expect(result.include?("946126")).to be_false
+      expect(result.include?("946122")).to be_truthy
+      expect(result.include?("946127")).to be_truthy
+      expect(result.include?("946123")).to be_falsey
+      expect(result.include?("946124")).to be_falsey
+      expect(result.include?("946125")).to be_falsey
+      expect(result.include?("946126")).to be_falsey
     end
   end
 

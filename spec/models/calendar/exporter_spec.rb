@@ -28,7 +28,7 @@ describe Calendar::Exporter do
 
       subject { exporter.ship_entries(queue_entries) }
       it 'should have sent entries to Google' do
-        expect(subject).to be_true
+        expect(subject).to be_truthy
         log_entries = Calendar::LoggedEntry.all
         saved = log_entries.first
         expect(saved).to be_present
@@ -52,7 +52,7 @@ describe Calendar::Exporter do
 
       subject { exporter.ship_entries(queue_entries) }
       it 'should have a recorded an error with a nil response body' do
-        expect(subject).to be_true
+        expect(subject).to be_truthy
         job = Calendar::Job.all.first
         expect(job).to be_present
         expect(job.total_entry_count).to eq 0
@@ -60,7 +60,7 @@ describe Calendar::Exporter do
         log_entries = Calendar::LoggedEntry.all
         saved = log_entries.first
         expect(saved).to be_present
-        expect(saved.has_error).to be_true
+        expect(saved.has_error).to be_truthy
         expect(saved.response_status).to be_nil
         expect(saved.response_body).to eq 'nil'
         expect(saved.transaction_type).to eq 'C'
@@ -76,7 +76,7 @@ describe Calendar::Exporter do
 
       subject { exporter.ship_entries(queue_entries) }
       it 'should have a recorded an error' do
-        expect(subject).to be_true
+        expect(subject).to be_truthy
         job = Calendar::Job.all.first
         expect(job).to be_present
         expect(job.total_entry_count).to eq 0

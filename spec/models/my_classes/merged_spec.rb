@@ -17,8 +17,8 @@ describe MyClasses::Merged do
       subject { MyClasses::Merged.new(user_id).get_feed[:classes] }
       it 'contains at least one class for the instructor' do
         instructing_classes = subject.select {|entry| entry[:role] == "Instructor" }
-        expect(instructing_classes.empty?).to be_false
-        instructing_classes.each {|c| expect(c[:site_url].blank?).to be_false}
+        expect(instructing_classes.empty?).to be_falsey
+        instructing_classes.each {|c| expect(c[:site_url].blank?).to be_falsey}
       end
     end
   end

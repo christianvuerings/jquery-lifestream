@@ -10,11 +10,11 @@ describe GoogleApps::DriveList do
     drive_list_proxy = GoogleApps::DriveList.new :fake => true
     drive_list_proxy.class.api.should == "drive"
     response = drive_list_proxy.drive_list
-    response.kind_of?(Enumerable).should be_true
+    response.kind_of?(Enumerable).should be_truthy
     response.each do |response_page|
       response_page.status.should == 200
       response_page.data["kind"].should == "drive#fileList"
-      response_page.data["items"].kind_of?(Array).should be_true
+      response_page.data["items"].kind_of?(Array).should be_truthy
     end
   end
 

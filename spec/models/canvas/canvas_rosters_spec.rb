@@ -91,10 +91,10 @@ describe Canvas::CanvasRosters do
     student = feed[:students][0]
     student[:id].should == official_student_in_canvas_id
     student[:student_id].should == official_student_in_canvas_student_id
-    student[:first_name].blank?.should be_false
-    student[:last_name].blank?.should be_false
+    student[:first_name].blank?.should be_falsey
+    student[:last_name].blank?.should be_falsey
     student[:sections].length.should == 2
-    student[:profile_url].blank?.should be_false
+    student[:profile_url].blank?.should be_falsey
   end
 
   # A course-enabled LTI tool will be enabled even when a course site has no
@@ -136,7 +136,7 @@ describe Canvas::CanvasRosters do
     feed[:sections][0][:id].should == section_id
     feed[:sections][0][:name].should == 'not-an-official-section'
     feed[:sections][0][:sis_id].should be_nil
-    feed[:students].empty?.should be_true
+    feed[:students].empty?.should be_truthy
   end
 
   it "should show official photo links for students who are not waitlisted in all sections" do

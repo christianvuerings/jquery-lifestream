@@ -8,7 +8,7 @@ describe "MyAcademics::Requirements" do
 
     feed = {}
     MyAcademics::Requirements.new("61889").merge(feed)
-    feed.empty?.should be_false
+    feed.empty?.should be_falsey
 
     oski_requirements = feed[:requirements]
     oski_requirements.length.should == 4

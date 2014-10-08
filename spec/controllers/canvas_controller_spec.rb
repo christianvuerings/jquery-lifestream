@@ -43,7 +43,7 @@ describe CanvasController do
         get :user_can_create_course_site, :canvas_user_id => canvas_user_id
         expect(response.status).to eq(200)
         response_json = JSON.parse(response.body)
-        expect(response_json['canCreateCourseSite']).to be_false
+        expect(response_json['canCreateCourseSite']).to be_falsey
       end
     end
 
@@ -53,7 +53,7 @@ describe CanvasController do
         get :user_can_create_course_site, :canvas_user_id => canvas_user_id
         expect(response.status).to eq(200)
         response_json = JSON.parse(response.body)
-        expect(response_json['canCreateCourseSite']).to be_true
+        expect(response_json['canCreateCourseSite']).to be_truthy
       end
     end
 

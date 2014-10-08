@@ -51,7 +51,7 @@ describe 'Calendar Integration Full Stack', testext: true do
 
       # export the queue (1 attendee; event CREATE)
       exported = Calendar::Exporter.new.ship_entries entries
-      expect(exported).to be_true
+      expect(exported).to be_truthy
 
       first_job = Calendar::Job.limit(1).order(id: :desc).first
       expect(first_job.error_count).to eq 0
@@ -97,7 +97,7 @@ describe 'Calendar Integration Full Stack', testext: true do
 
       # now export again
       exported = Calendar::Exporter.new.ship_entries entries
-      expect(exported).to be_true
+      expect(exported).to be_truthy
 
       second_job = Calendar::Job.limit(1).order(id: :desc).first
       expect(second_job.error_count).to eq 0
@@ -132,7 +132,7 @@ describe 'Calendar Integration Full Stack', testext: true do
 
       # now export again
       exported = Calendar::Exporter.new.ship_entries entries
-      expect(exported).to be_true
+      expect(exported).to be_truthy
 
       third_job = Calendar::Job.limit(1).order(id: :desc).first
       expect(third_job.error_count).to eq 0

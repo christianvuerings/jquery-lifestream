@@ -212,7 +212,7 @@ describe "MyTasks" do
     response = my_tasks_model.update_task({"type" => "sometype", "emitter" => GoogleApps::Proxy::APP_ID, "status" => "completed", "id" => "1"}, "1")
     response.should == {}
     valid_feed = my_tasks_model.get_feed
-    valid_feed["tasks"].select {|entry| entry["emitter"] == "Google"}.empty?.should be_true
+    valid_feed["tasks"].select {|entry| entry["emitter"] == "Google"}.empty?.should be_truthy
   end
 
   it "should not explode on Canvas feeds that have invalid json" do

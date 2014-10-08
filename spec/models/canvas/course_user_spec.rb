@@ -83,34 +83,34 @@ describe Canvas::CourseUser do
   context "when checking if user is course admin" do
     context "if canvas user argument is blank" do
       it "returns false" do
-        expect(subject.class.is_course_admin?(nil)).to be_false
+        expect(subject.class.is_course_admin?(nil)).to be_falsey
       end
     end
 
     context "if canvas user has no matching admin role" do
       it "returns false" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_false
+        expect(subject.class.is_course_admin?(canvas_course_user)).to be_falsey
       end
     end
 
     context "if canvas user has teacher role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'TeacherEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_true
+        expect(subject.class.is_course_admin?(canvas_course_user)).to be_truthy
       end
     end
 
     context "if canvas user has teacher assistant role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'TaEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_true
+        expect(subject.class.is_course_admin?(canvas_course_user)).to be_truthy
       end
     end
 
     context "if canvas user has designer role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'DesignerEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_true
+        expect(subject.class.is_course_admin?(canvas_course_user)).to be_truthy
       end
     end
   end
@@ -118,14 +118,14 @@ describe Canvas::CourseUser do
   context "when checking if user is course teacher" do
     context "if canvas user argument is blank" do
       it "returns false" do
-        expect(subject.class.is_course_teacher?(nil)).to be_false
+        expect(subject.class.is_course_teacher?(nil)).to be_falsey
       end
     end
 
     context "if canvas user has teacher role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'TeacherEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_teacher?(canvas_course_user)).to be_true
+        expect(subject.class.is_course_teacher?(canvas_course_user)).to be_truthy
       end
     end
   end
@@ -133,14 +133,14 @@ describe Canvas::CourseUser do
   context "when checking if user is course teachers assistant" do
     context "if canvas user argument is blank" do
       it "returns false" do
-        expect(subject.class.is_course_teachers_assistant?(nil)).to be_false
+        expect(subject.class.is_course_teachers_assistant?(nil)).to be_falsey
       end
     end
 
     context "if canvas user has teacher role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'TaEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_teachers_assistant?(canvas_course_user)).to be_true
+        expect(subject.class.is_course_teachers_assistant?(canvas_course_user)).to be_truthy
       end
     end
   end

@@ -20,6 +20,6 @@ describe Canvas::Proxy do
     )
     response = proxy.user_activity
     user_activity = JSON.parse(response.body)
-    user_activity.kind_of?(Array).should be_true
+    user_activity.kind_of?(Array).should be_truthy
   end
 end

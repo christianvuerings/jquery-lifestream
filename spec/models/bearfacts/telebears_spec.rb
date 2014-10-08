@@ -12,7 +12,7 @@ describe Bearfacts::Telebears do
 
   context "should indicate a non-student" do
     subject { live_non_student }
-    its([:noStudentId]) { should be_true }
+    its([:noStudentId]) { should be_truthy }
   end
 
   context "live oski has a valid telebears date", testext: true do

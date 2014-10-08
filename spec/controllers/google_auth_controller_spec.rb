@@ -12,7 +12,7 @@ describe GoogleAuthController do
       post :dismiss_reminder, { :format => 'json' }
       response.status.should eq(200)
       json_response = JSON.parse(response.body)
-      json_response['result'].should be_true
+      json_response['result'].should be_truthy
     end
 
     it "should not store a dismiss_reminder key-value when there's an existing token" do
@@ -20,7 +20,7 @@ describe GoogleAuthController do
       post :dismiss_reminder, { :format => 'json' }
       response.status.should eq(200)
       json_response = JSON.parse(response.body)
-      json_response['result'].should be_false
+      json_response['result'].should be_falsey
     end
   end
 

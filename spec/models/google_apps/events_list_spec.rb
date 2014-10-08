@@ -39,7 +39,7 @@ describe 'Events(events_list)' do
     User::Oauth2Data.new_or_update(@random_id, GoogleApps::Proxy::APP_ID,
                              Settings.google_proxy.test_user_access_token, Settings.google_proxy.test_user_refresh_token, 0)
     proxy = GoogleApps::EventsList.new(:user_id => @random_id)
-    GoogleApps::Proxy.access_granted?(@random_id).should be_true
+    GoogleApps::Proxy.access_granted?(@random_id).should be_truthy
     old_token = proxy.authorization.access_token
     response = proxy.events_list.first
     response.data["kind"].should == "calendar#events"
@@ -51,10 +51,10 @@ describe 'Events(events_list)' do
                              "bogus_token", "bogus_refresh_token", 0)
     suppress_rails_logging do
       proxy = GoogleApps::EventsList.new(:user_id => @random_id)
-      GoogleApps::Proxy.access_granted?(@random_id).should be_true
+      GoogleApps::Proxy.access_granted?(@random_id).should be_truthy
       proxy.authorization.stub(:expired?).and_return(false)
       response_array = proxy.events_list.first
-      GoogleApps::Proxy.access_granted?(@random_id).should be_false
+      GoogleApps::Proxy.access_granted?(@random_id).should be_falsey
     end
   end
 end

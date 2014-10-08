@@ -246,7 +246,7 @@ describe Canvas::MaintainUsers do
 
     context 'when accounts are identical' do
       let(:sis_account) { provisioned_account }
-      it {should be_true}
+      it {should be_truthy}
     end
 
     context 'when username checks are enabled' do
@@ -254,7 +254,7 @@ describe Canvas::MaintainUsers do
       before do
         allow(Settings.canvas_proxy).to receive(:maintain_user_names).and_return(true)
       end
-      it {should be_false}
+      it {should be_falsey}
     end
 
     context 'when username checks are disabled' do
@@ -263,11 +263,11 @@ describe Canvas::MaintainUsers do
       end
       context 'when all that differs is the name' do
         let(:sis_account) { provisioned_account.merge({'first_name' => 'Jake', 'last_name' => 'Smythe'}) }
-        it {should be_true}
+        it {should be_truthy}
       end
       context 'when the email address changes' do
         let(:sis_account) { provisioned_account.merge({'email' => 'js@example.com'}) }
-        it {should be_false}
+        it {should be_falsey}
       end
     end
 

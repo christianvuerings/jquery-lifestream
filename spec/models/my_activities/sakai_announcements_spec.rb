@@ -17,7 +17,7 @@ describe MyActivities::SakaiAnnouncements, :if => Sakai::SakaiData.test_data? do
     subject.each do |act|
       act[:emitter].should == 'bSpace'
       act[:type].should == 'announcement'
-      act[:source].blank?.should be_false
+      act[:source].blank?.should be_falsey
     end
   end
 end

@@ -23,8 +23,8 @@ describe SessionsController do
 
       @response.status.should eq 302
       cookie_hash[:reauthenticated].should be_nil
-      session.empty?.should be_true
-      cookie_hash.empty?.should be_true
+      session.empty?.should be_truthy
+      cookie_hash.empty?.should be_truthy
     end
     it 'will create reauth cookie if original user_id not found in session' do
       expect(controller).to receive(:cookies).and_return cookie_hash
@@ -34,9 +34,9 @@ describe SessionsController do
 
       cookie_hash[:reauthenticated].should_not be_nil
       reauth_cookie = cookie_hash[:reauthenticated]
-      reauth_cookie[:value].should be_true
-      (reauth_cookie[:expires] > Date.today).should be_true
-      session.empty?.should be_false
+      reauth_cookie[:value].should be_truthy
+      (reauth_cookie[:expires] > Date.today).should be_truthy
+      session.empty?.should be_falsey
       session[:user_id].should eql user_id
     end
     it 'will reset session when CAS uid does not match uid in session' do
@@ -49,9 +49,9 @@ describe SessionsController do
 
       reauth_cookie = cookie_hash[:reauthenticated]
       reauth_cookie.should_not be_nil
-      reauth_cookie[:value].should be_true
-      (reauth_cookie[:expires] > Date.today).should be_true
-      session.empty?.should be_false
+      reauth_cookie[:value].should be_truthy
+      (reauth_cookie[:expires] > Date.today).should be_truthy
+      session.empty?.should be_falsey
       session[:user_id].should eql user_id
     end
     it 'will redirect to CAS logout, despite LTI user session, when CAS user_id is an unexpected value' do
@@ -62,8 +62,8 @@ describe SessionsController do
       # No 'renew' param
       get :lookup
 
-      session.empty?.should be_true
-      cookie_hash.empty?.should be_true
+      session.empty?.should be_truthy
+      cookie_hash.empty?.should be_truthy
     end
   end
 

@@ -14,9 +14,9 @@ describe Calendar::Preprocessor do
         expect(json['start']['dateTime']).to be
         expect(json['end']['dateTime']).to be
         expect(json['attendees']).to be
-        expect(json['guestsCanSeeOtherGuests']).to be_false
-        expect(json['guestsCanInviteOthers']).to be_false
-        expect(json['locked']).to be_true
+        expect(json['guestsCanSeeOtherGuests']).to be_falsey
+        expect(json['guestsCanInviteOthers']).to be_falsey
+        expect(json['locked']).to be_truthy
         expect(json['visibility']).to eq 'private'
         expect(json['recurrence'].length).to eq 1
       end
