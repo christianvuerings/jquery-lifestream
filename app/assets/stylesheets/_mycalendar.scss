@@ -4,6 +4,9 @@
 
   // List
   .cc-widget-mycalendar-datelist {
+    .cc-widget-mycalendar-datelist-summary {
+      padding-right: 15px;
+    }
     .cc-widget-mycalendar-datelist-time-allday {
       text-transform: uppercase;
     }
@@ -32,7 +35,7 @@
     clear: both;
     font-size: .9em;
     margin-top: 5px;
-    padding-left: 35px;
+    padding-left: 41px;
     p {
       margin-bottom: 10px;
     }
