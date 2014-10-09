@@ -54,6 +54,19 @@ describe 'MyBadges::StudentInfo' do
     end
   end
 
+  context 'offline bearfacts isLawStudent' do
+    before do
+      stub_request(:any, /.+regblocks.*/).to_raise(Faraday::Error::ConnectionFailed)
+      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
+    end
+
+    subject { MyBadges::StudentInfo.new(random_uid).get }
+
+    it 'should default isLawStudent to false' do
+      subject[:isLawStudent].should be_false
+    end
+  end
+
   context 'offline bearfacts regblock' do
     before do
       stub_request(:any, /.+regblocks.*/).to_raise(Faraday::Error::ConnectionFailed)

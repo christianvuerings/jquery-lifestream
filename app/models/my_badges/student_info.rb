@@ -11,17 +11,6 @@ module MyBadges
     def get
       campus_attributes = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
 
-      # set law_student to true if user's only college is School of Law
-      feed = {}
-      MyAcademics::CollegeAndLevel.new(@uid).merge(feed)
-      law_student = false
-      if !feed.empty?
-        colleges = feed[:collegeAndLevel][:colleges]
-        if !colleges.nil?
-          law_student = colleges[0][:college].eql? "School of Law"
-        end
-      end
-
       result = {
         :californiaResidency => campus_attributes[:california_residency],
         :isLawStudent => law_student,
@@ -29,6 +18,20 @@ module MyBadges
         :regBlock => get_reg_blocks
       }
       return result
+    end
+
+
+    # Set isLawStudent to true iff user's only college is School of Law
+    def law_student
+      college_feed = {}
+      MyAcademics::CollegeAndLevel.new(@uid).merge(college_feed)
+      if !(college_feed.empty? || college_feed[:empty])
+        colleges = college_feed[:collegeAndLevel][:colleges]
+        if !colleges.nil?
+          return colleges[0][:college].eql? "School of Law"
+        end
+      end
+      return false
     end
 
     def get_reg_blocks
