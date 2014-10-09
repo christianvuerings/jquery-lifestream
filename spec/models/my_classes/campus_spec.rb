@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe MyClasses::Campus do
   let(:user_id) {rand(99999).to_s}
@@ -20,7 +20,7 @@ describe MyClasses::Campus do
     dept: 'ECON',
     course_code: "ECON #{catid}",
     emitter: 'Campus',
-    name: "Retire in Only 85 Years",
+    name: 'Retire in Only 85 Years',
     role: 'Student',
     sections: fake_sections
   }}
@@ -37,7 +37,7 @@ describe MyClasses::Campus do
         expect(course[:emitter]).to eq CampusOracle::UserCourses::APP_ID
         expect(course[:catid]).to eq fake_campus_course[:catid]
         expect(course[:course_code]).to eq fake_campus_course[:course_code]
-        expect(course[:site_url].blank?).to be_false
+        expect(course[:site_url].blank?).to be_falsey
         expect(course[:sections]).to_not be_empty
       end
     end

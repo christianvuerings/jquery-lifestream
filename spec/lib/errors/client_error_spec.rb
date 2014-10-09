@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Errors::ClientError do
-  it "should exist" do
-    expect { defined?(Errors::ClientError) }.to be_truthy
+  it 'should exist' do
+    expect(defined?(Errors::ClientError)).to be_truthy
   end
 end
