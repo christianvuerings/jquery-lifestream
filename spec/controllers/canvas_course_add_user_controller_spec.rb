@@ -1,6 +1,4 @@
 require "spec_helper"
-require "support/shared_examples"
-require "support/canvas_shared_examples"
 
 describe CanvasCourseAddUserController do
 
@@ -70,12 +68,12 @@ describe CanvasCourseAddUserController do
           expect(response_json['roles']).to be_an_instance_of Hash
           roles = response_json['roles']
           expect(roles).to be_an_instance_of Hash
-          expect(roles['globalAdmin']).to be_false
-          expect(roles['teacher']).to be_false
-          expect(roles['student']).to be_true
-          expect(roles['observer']).to be_false
-          expect(roles['designer']).to be_false
-          expect(roles['ta']).to be_false
+          expect(roles['globalAdmin']).to be_falsey
+          expect(roles['teacher']).to be_falsey
+          expect(roles['student']).to be_truthy
+          expect(roles['observer']).to be_falsey
+          expect(roles['designer']).to be_falsey
+          expect(roles['ta']).to be_falsey
         end
 
         it "returns no granting roles" do
@@ -100,12 +98,12 @@ describe CanvasCourseAddUserController do
           expect(response_json['roles']).to be_an_instance_of Hash
           roles = response_json['roles']
           expect(roles).to be_an_instance_of Hash
-          expect(roles['globalAdmin']).to be_false
-          expect(roles['teacher']).to be_false
-          expect(roles['student']).to be_false
-          expect(roles['observer']).to be_false
-          expect(roles['designer']).to be_false
-          expect(roles['ta']).to be_true
+          expect(roles['globalAdmin']).to be_falsey
+          expect(roles['teacher']).to be_falsey
+          expect(roles['student']).to be_falsey
+          expect(roles['observer']).to be_falsey
+          expect(roles['designer']).to be_falsey
+          expect(roles['ta']).to be_truthy
         end
 
         it "returns student and observer granting roles" do
@@ -136,12 +134,12 @@ describe CanvasCourseAddUserController do
           expect(response_json['roles']).to be_an_instance_of Hash
           roles = response_json['roles']
           expect(roles).to be_an_instance_of Hash
-          expect(roles['globalAdmin']).to be_false
-          expect(roles['teacher']).to be_true
-          expect(roles['student']).to be_false
-          expect(roles['observer']).to be_false
-          expect(roles['designer']).to be_false
-          expect(roles['ta']).to be_false
+          expect(roles['globalAdmin']).to be_falsey
+          expect(roles['teacher']).to be_truthy
+          expect(roles['student']).to be_falsey
+          expect(roles['observer']).to be_falsey
+          expect(roles['designer']).to be_falsey
+          expect(roles['ta']).to be_falsey
         end
 
         it "returns all granting roles" do
@@ -169,12 +167,12 @@ describe CanvasCourseAddUserController do
           expect(response_json['roles']).to be_an_instance_of Hash
           roles = response_json['roles']
           expect(roles).to be_an_instance_of Hash
-          expect(roles['globalAdmin']).to be_true
-          expect(roles['teacher']).to be_false
-          expect(roles['student']).to be_false
-          expect(roles['observer']).to be_false
-          expect(roles['designer']).to be_false
-          expect(roles['ta']).to be_false
+          expect(roles['globalAdmin']).to be_truthy
+          expect(roles['teacher']).to be_falsey
+          expect(roles['student']).to be_falsey
+          expect(roles['observer']).to be_falsey
+          expect(roles['designer']).to be_falsey
+          expect(roles['ta']).to be_falsey
         end
 
         it "returns all granting roles" do

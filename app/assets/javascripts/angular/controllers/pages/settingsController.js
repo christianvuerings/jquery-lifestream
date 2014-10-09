@@ -4,14 +4,15 @@
   /**
    * Settings controller
    */
-  angular.module('calcentral.controllers').controller('SettingsController', function($scope, apiService) {
-
+  angular.module('calcentral.controllers').controller('SettingsController', function(apiService, $scope) {
     apiService.util.setTitle('Settings');
 
     var services = ['Google'];
 
     var refreshIsCalendarOptedIn = function(profile) {
-      $scope.isCalendarOptedIn = profile.isCalendarOptedIn;
+      $scope.settings = {
+        isCalendarOptedIn: profile.isCalendarOptedIn
+      };
     };
 
     var refreshServices = function(profile) {
@@ -37,7 +38,5 @@
     $scope.api.user.fetch({
       refreshCache: true
     });
-
   });
-
 })(window.angular);

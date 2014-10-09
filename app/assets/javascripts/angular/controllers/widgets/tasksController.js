@@ -4,8 +4,7 @@
   /**
    * Tasks controller
    */
-  angular.module('calcentral.controllers').controller('TasksController', function(apiService, $filter, $http, $scope) {
-
+  angular.module('calcentral.controllers').controller('TasksController', function(apiService, tasksFactory, $filter, $scope) {
     // Initial mode for Tasks view
     $scope.currentTaskMode = 'scheduled';
     $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
@@ -59,8 +58,8 @@
       calculateCounts();
     };
 
-    $scope.getTasks = function() {
-      return $http.get('/api/my/tasks').success(function(data) {
+    var getTasks = function(options) {
+      return tasksFactory.getTasks(options).success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
         if ($scope.tasks) {
@@ -71,10 +70,12 @@
 
     $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyTasks::Merged']) {
-        $scope.getTasks();
+        getTasks({
+          refreshCache: true
+        });
       }
     });
-    $scope.getTasks();
+    getTasks();
 
     var toggleStatus = function(task) {
       if (task.status === 'completed') {
@@ -106,7 +107,7 @@
       }
 
       apiService.analytics.sendEvent('Tasks', 'Set completed', 'completed: ' + !!changedTask.completedDate);
-      $http.post('/api/my/tasks', changedTask).success(function(data) {
+      tasksFactory.update(changedTask).success(function(data) {
         task.editorIsProcessing = false;
         angular.extend(task, data);
         $scope.updateTaskLists();
@@ -118,11 +119,13 @@
 
     $scope.clearCompletedTasks = function() {
       apiService.analytics.sendEvent('Tasks', 'Clear completed tasks', 'Clear completed tasks');
-      $http.post('/api/my/tasks/clear_completed', {
+      tasksFactory.clearCompletedTasks({
         emitter: 'Google'
       }).success(function(data) {
         if (data.tasksCleared) {
-          $scope.getTasks();
+          getTasks({
+            refreshCache: true
+          });
         }
       }).error(function() {
         apiService.analytics.sendEvent('Error', 'Clear completed tasks failure', 'Clear completed tasks failure');
@@ -148,8 +151,7 @@
         'emitter': 'Google'
       };
 
-      $http.post('/api/my/tasks/delete/' + task.id, deltask).success(function() {
-
+      tasksFactory.remove(deltask).success(function() {
         // task.$index is duplicated between buckets, so need to iterate through ALL tasks
         for (var i = 0; i < $scope.tasks.length; i++) {
           if ($scope.tasks[i].id === task.id) {
@@ -163,7 +165,6 @@
         apiService.analytics.sendEvent('Error', 'Delete task failure');
         // Some error notification would be helpful.
       });
-
     };
 
     var filterOverdue = function(task) {
@@ -185,7 +186,5 @@
     var filterCompleted = function(task) {
       return (task.status === 'completed');
     };
-
   });
-
 })(window.angular);

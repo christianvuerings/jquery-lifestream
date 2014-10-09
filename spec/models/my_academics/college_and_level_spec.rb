@@ -8,7 +8,7 @@ describe "MyAcademics::CollegeAndLevel" do
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("61889").merge(feed)
-    feed.empty?.should be_false
+    feed.empty?.should be_falsey
 
     oski_college = feed[:collegeAndLevel]
     oski_college.should_not be_nil
@@ -28,7 +28,7 @@ describe "MyAcademics::CollegeAndLevel" do
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("300940").merge(feed)
-    feed.empty?.should be_false
+    feed.empty?.should be_falsey
 
     colleges = feed[:collegeAndLevel][:colleges]
     colleges.size.should == 2
@@ -45,7 +45,7 @@ describe "MyAcademics::CollegeAndLevel" do
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("212379").merge(feed)
-    feed.empty?.should be_false
+    feed.empty?.should be_falsey
 
     colleges = feed[:collegeAndLevel][:colleges]
     colleges.size.should == 3
@@ -63,7 +63,7 @@ describe "MyAcademics::CollegeAndLevel" do
 
     feed = {}
     MyAcademics::CollegeAndLevel.new("212381").merge(feed)
-    feed.empty?.should be_false
+    feed.empty?.should be_falsey
 
     colleges = feed[:collegeAndLevel][:colleges]
     colleges.size.should == 2
@@ -82,7 +82,7 @@ describe "MyAcademics::CollegeAndLevel" do
     end
     it 'indicates a server failure' do
       MyAcademics::CollegeAndLevel.new(uid).merge(feed)
-      expect(feed[:collegeAndLevel][:errored]).to be_true
+      expect(feed[:collegeAndLevel][:errored]).to be_truthy
     end
  end
 
@@ -100,15 +100,15 @@ describe "MyAcademics::CollegeAndLevel" do
     end
     context 'when ex-student with empty BearFacts student profile' do
       let(:xml_body) {nil}
-      its([:errored]) {should be_false}
-      its([:empty]) {should be_true}
+      its([:errored]) {should be_falsey}
+      its([:empty]) {should be_truthy}
     end
     context 'when Bearfacts student profile lacks key data' do
       let(:xml_body) {
         "<studentProfile xmlns=\"urn:berkeley.edu/babl\" termName=\"Spring\" termYear=\"2014\" asOfDate=\"May 27, 2014 12:00 AM\"><studentType>STUDENT</studentType><noProfileDataFlag>false</noProfileDataFlag><studentGeneralProfile><studentName><firstName>OWPRQTOPEW</firstName><lastName>SEBIRTFEIWB</lastName></studentName></studentGeneralProfile></studentProfile>"
       }
-      its([:errored]) {should be_false}
-      its([:empty]) {should be_true}
+      its([:errored]) {should be_falsey}
+      its([:empty]) {should be_truthy}
     end
   end
 

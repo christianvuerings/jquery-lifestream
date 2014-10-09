@@ -65,7 +65,7 @@ describe 'My Finances', :testui => true do
             if fin_api_page.has_cars_data?
               has_cars_data = true
               it 'does not show a no-data message for UID ' + uid do
-                my_fin_no_cars_msg.should be_false
+                my_fin_no_cars_msg.should be_falsey
               end
 
               # API DATA SANITY TESTS
@@ -146,7 +146,7 @@ describe 'My Finances', :testui => true do
               my_fin_pmt_link = my_finances_page.make_payment_link?
               if fin_api_page.account_balance != 0
                 it 'shows make payment link for UID ' + uid do
-                  my_fin_pmt_link.should be_true
+                  my_fin_pmt_link.should be_truthy
                 end
               end
 
@@ -168,7 +168,7 @@ describe 'My Finances', :testui => true do
                   my_fin_dpp_bal.should eql(fin_api_page.dpp_balance_str)
                 end
                 it 'shows DPP informational text for UID ' + uid do
-                  my_fin_dpp_text.should be_true
+                  my_fin_dpp_text.should be_truthy
                 end
                 if fin_api_page.dpp_balance > 0
                   has_dpp_balance = true
@@ -178,7 +178,7 @@ describe 'My Finances', :testui => true do
                   end
                 else
                   it 'shows no DPP normal installment amount for UID ' + uid do
-                    my_fin_dpp_install_element.should be_false
+                    my_fin_dpp_install_element.should be_falsey
                   end
                 end
                 if fin_api_page.is_dpp_past_due?
@@ -186,15 +186,15 @@ describe 'My Finances', :testui => true do
                 end
               else
                 it 'shows no DPP balance for UID ' + uid do
-                  my_fin_dpp_bal_element.should be_false
+                  my_fin_dpp_bal_element.should be_falsey
                 end
                 it 'shows no DPP informational text for UID ' + uid do
-                  my_fin_dpp_text.should be_false
+                  my_fin_dpp_text.should be_falsey
                 end
               end
             else
               it 'shows a no-data message for UID ' + uid do
-                my_fin_no_cars_msg.should be_true
+                my_fin_no_cars_msg.should be_truthy
               end
             end
 

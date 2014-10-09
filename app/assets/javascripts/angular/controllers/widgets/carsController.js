@@ -4,8 +4,7 @@
   /**
    * CARS controller
    */
-  angular.module('calcentral.controllers').controller('CarsController', function(apiService, financesFactory, $filter, $http, $routeParams, $scope) {
-
+  angular.module('calcentral.controllers').controller('CarsController', function(apiService, financesFactory, $filter, $routeParams, $scope) {
     var sortTermsIndex = {
       'Fall': 0,
       'Summer': 1,
@@ -116,7 +115,6 @@
         parseTransStatus(element, finances.summary);
         for (var j in element) {
           if (element.hasOwnProperty(j)) {
-
             parseDate(element, j);
             parseAmount(element, j);
             if (j === 'transDueDate') {
@@ -230,10 +228,8 @@
      * Get the student's financial information
      */
     var getCarsInfo = function() {
-
       // Data contains all the financial information for the current student
       financesFactory.getFinances().success(function(data) {
-
         angular.extend($scope, data);
 
         if (data && data.summary && data.activity) {
@@ -247,11 +243,9 @@
         if (data.statusCode && data.statusCode >= 400) {
           $scope.myfinancesError = data;
         }
-
       }).error(function(data) {
         angular.extend($scope, data);
       });
-
     };
 
     // http://jsfiddle.net/vojtajina/js64b/14/
@@ -358,7 +352,5 @@
     };
 
     getCarsInfo();
-
   });
-
 })(window.angular);

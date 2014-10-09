@@ -42,6 +42,7 @@ describe Canvas::CoursePolicy do
   end
   let(:course_teacher_hash)   { course_user_hash.merge({'enrollments' => [{'type' => 'TeacherEnrollment', 'role' => 'TeacherEnrollment'}]}) }
   let(:course_ta_hash)        { course_user_hash.merge({'enrollments' => [{'type' => 'TaEnrollment', 'role' => 'TaEnrollment'}]}) }
+  let(:course_observer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'ObserverEnrollment', 'role' => 'ObserverEnrollment'}]}) }
   let(:course_designer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'DesignerEnrollment', 'role' => 'DesignerEnrollment'}]}) }
   let(:invariable_course_user_hash) { course_user_hash }
   subject { Canvas::CoursePolicy.new(user, course) }
@@ -51,7 +52,7 @@ describe Canvas::CoursePolicy do
     context "when no canvas user found for current user" do
       before { allow_any_instance_of(Canvas::SisUserProfile).to receive(:get).and_return(nil) }
       it "returns false" do
-        expect(authorization_method).to be_false
+        expect(authorization_method).to be_falsey
       end
     end
   end
@@ -68,42 +69,94 @@ describe Canvas::CoursePolicy do
         allow(Canvas::Admins).to receive(:new).and_return(canvas_admins)
       end
       it "should return true" do
-        expect(subject.can_add_users?).to be_true
+        expect(subject.can_add_users?).to be_truthy
       end
     end
 
     context "when user is a course admin" do
       let(:invariable_course_user_hash) { course_teacher_hash }
       it "should return true" do
-        expect(subject.can_add_users?).to be_true
+        expect(subject.can_add_users?).to be_truthy
       end
     end
 
     context "when user is only a student" do
       it "should return false" do
-        expect(subject.can_add_users?).to be_false
+        expect(subject.can_add_users?).to be_falsey
       end
     end
+  end
+
+  describe "#can_export_grades?" do
+    it_should_behave_like "a canvas user requirement" do
+      let(:authorization_method) { subject.can_export_grades? }
+    end
+
+    context "when user is a primary account admin" do
+      before do
+        canvas_admins = double()
+        canvas_admins.stub(:admin_user?).and_return(true)
+        allow(Canvas::Admins).to receive(:new).and_return(canvas_admins)
+      end
+      it "should return true" do
+        expect(subject.can_export_grades?).to be_truthy
+      end
+    end
+
+    context "when user is a course teacher" do
+      let(:invariable_course_user_hash) { course_teacher_hash }
+      it "should return true" do
+        expect(subject.can_export_grades?).to be_truthy
+      end
+    end
+
+    context "when user is only a designer" do
+      let(:invariable_course_user_hash) { course_designer_hash }
+      it "should return false" do
+        expect(subject.can_export_grades?).to be_falsey
+      end
+    end
+
+    context "when user is a teachers assistant" do
+      let(:invariable_course_user_hash) { course_ta_hash }
+      it "should return false" do
+        expect(subject.can_export_grades?).to be_falsey
+      end
+    end
+
+    context "when user is only an observer" do
+      let(:invariable_course_user_hash) { course_observer_hash }
+      it "should return true" do
+        expect(subject.can_export_grades?).to be_falsey
+      end
+    end
+
+    context "when user is only a student" do
+      it "should return false" do
+        expect(subject.can_export_grades?).to be_falsey
+      end
+    end
+
   end
 
   describe "#can_view_course_roster_photos?" do
     context "when user is a canvas course teacher" do
       let(:invariable_course_user_hash) { course_teacher_hash }
       it "returns true" do
-        expect(subject.can_view_course_roster_photos?).to be_true
+        expect(subject.can_view_course_roster_photos?).to be_truthy
       end
     end
 
     context "when user is a canvas course teachers assistant" do
       let(:invariable_course_user_hash) { course_ta_hash }
       it "returns true" do
-        expect(subject.can_view_course_roster_photos?).to be_true
+        expect(subject.can_view_course_roster_photos?).to be_truthy
       end
     end
 
     context "when user is not a canvas course teacher or assistant" do
       it "returns false" do
-        expect(subject.can_view_course_roster_photos?).to be_false
+        expect(subject.can_view_course_roster_photos?).to be_falsey
       end
     end
   end
@@ -115,7 +168,7 @@ describe Canvas::CoursePolicy do
 
     context "if canvas user does exist" do
       it "returns true" do
-        expect(subject.is_canvas_course_user?).to be_true
+        expect(subject.is_canvas_course_user?).to be_truthy
       end
     end
   end
@@ -128,14 +181,14 @@ describe Canvas::CoursePolicy do
     context "if canvas user is a teacher" do
       it "returns true" do
         allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(true)
-        expect(subject.is_canvas_course_teacher_or_assistant?).to be_true
+        expect(subject.is_canvas_course_teacher_or_assistant?).to be_truthy
       end
     end
 
     context "if canvas user is a teachers assistant" do
       it "returns true" do
         allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(true)
-        expect(subject.is_canvas_course_teacher_or_assistant?).to be_true
+        expect(subject.is_canvas_course_teacher_or_assistant?).to be_truthy
       end
     end
 
@@ -143,7 +196,7 @@ describe Canvas::CoursePolicy do
       it "returns false" do
         allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(false)
         allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(false)
-        expect(subject.is_canvas_course_teacher_or_assistant?).to be_false
+        expect(subject.is_canvas_course_teacher_or_assistant?).to be_falsey
       end
     end
   end
@@ -156,14 +209,14 @@ describe Canvas::CoursePolicy do
     context "if canvas user is a teacher" do
       it "returns true" do
         allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(true)
-        expect(subject.is_canvas_course_teacher?).to be_true
+        expect(subject.is_canvas_course_teacher?).to be_truthy
       end
     end
 
     context "if canvas user is not a teacher" do
       it "returns false" do
         allow(Canvas::CourseUser).to receive(:is_course_teacher?).and_return(false)
-        expect(subject.is_canvas_course_teacher?).to be_false
+        expect(subject.is_canvas_course_teacher?).to be_falsey
       end
     end
   end
@@ -176,14 +229,14 @@ describe Canvas::CoursePolicy do
     context "if canvas user is a teachers assistant" do
       it "returns true" do
         allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(true)
-        expect(subject.is_canvas_course_teachers_assistant?).to be_true
+        expect(subject.is_canvas_course_teachers_assistant?).to be_truthy
       end
     end
 
     context "if canvas user is not a teachers assistant" do
       it "returns false" do
         allow(Canvas::CourseUser).to receive(:is_course_teachers_assistant?).and_return(false)
-        expect(subject.is_canvas_course_teachers_assistant?).to be_false
+        expect(subject.is_canvas_course_teachers_assistant?).to be_falsey
       end
     end
   end
@@ -193,11 +246,11 @@ describe Canvas::CoursePolicy do
       canvas_admins = double()
       allow(canvas_admins).to receive(:admin_user?).and_return(true)
       allow(Canvas::Admins).to receive(:new).and_return(canvas_admins)
-      expect(subject.is_canvas_account_admin?).to be_true
+      expect(subject.is_canvas_account_admin?).to be_truthy
     end
 
     it "returns false when user is not a canvas root account administrator" do
-      expect(subject.is_canvas_account_admin?).to be_false
+      expect(subject.is_canvas_account_admin?).to be_falsey
     end
   end
 
@@ -206,13 +259,13 @@ describe Canvas::CoursePolicy do
     context "if user is not a member of the course" do
       before { allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(nil) }
       it "returns false" do
-        expect(subject.is_canvas_course_user?).to be_false
+        expect(subject.is_canvas_course_user?).to be_falsey
       end
     end
 
     context "if user is a member of the course" do
       it "returns true" do
-        expect(subject.is_canvas_course_user?).to be_true
+        expect(subject.is_canvas_course_user?).to be_truthy
       end
     end
   end
@@ -220,28 +273,28 @@ describe Canvas::CoursePolicy do
   describe "#is_canvas_course_admin" do
     context "if user is a student within the course" do
       it "returns false" do
-        expect(subject.is_canvas_course_admin?).to be_false
+        expect(subject.is_canvas_course_admin?).to be_falsey
       end
     end
 
     context "if user is a teacher within the course" do
       let(:invariable_course_user_hash) { course_teacher_hash }
       it "returns true" do
-        expect(subject.is_canvas_course_admin?).to be_true
+        expect(subject.is_canvas_course_admin?).to be_truthy
       end
     end
 
     context "if user is a teachers assistant within the course" do
       let(:invariable_course_user_hash) { course_ta_hash }
       it "returns true" do
-        expect(subject.is_canvas_course_admin?).to be_true
+        expect(subject.is_canvas_course_admin?).to be_truthy
       end
     end
 
     context "if user is a designer within the course" do
       let(:invariable_course_user_hash) { course_designer_hash }
       it "returns true" do
-        expect(subject.is_canvas_course_admin?).to be_true
+        expect(subject.is_canvas_course_admin?).to be_truthy
       end
     end
   end

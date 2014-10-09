@@ -1,13 +1,13 @@
 (function(angular) {
-
   'use strict';
 
   /**
-   * Activity Factory - get data from the activity API
-   * @param {Object} apiService The API service
-   * @param {Object} $http The $http service from Angular
+   * Activity Factory
    */
-  angular.module('calcentral.factories').factory('activityFactory', function(apiService, $http) {
+  angular.module('calcentral.factories').factory('activityFactory', function(apiService) {
+    // var activityUrl = '/dummy/json/activities.json';
+    var activityUrl = '/api/my/activities';
+    var finaidUrl = '/api/my/finaid';
 
     /**
      * Pare the the activity response
@@ -175,20 +175,17 @@
       return data;
     };
 
-    var getActivity = function() {
-      return $http.get('/api/my/activities').then(parseActivities);
-      // return $http.get('/dummy/json/activities.json').then(parseActivities);
+    var getActivity = function(options) {
+      return apiService.http.request(options, activityUrl).then(parseActivities);
     };
 
-    var getFinaidActivity = function() {
-      return $http.get('/api/my/finaid').then(parseActivities);
+    var getFinaidActivity = function(options) {
+      return apiService.http.request(options, finaidUrl).then(parseActivities);
     };
 
     return {
       getActivity: getActivity,
       getFinaidActivity: getFinaidActivity
     };
-
   });
-
 }(window.angular));

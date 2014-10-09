@@ -1,11 +1,8 @@
 (function(angular) {
-
   'use strict';
 
   angular.module('calcentral.services').factory('httpErrorInterceptorService', function($q, errorService) {
-
     return {
-
       // Basic idea from http://stackoverflow.com/questions/11971213
 
       /**
@@ -29,9 +26,6 @@
         // otherwise
         return $q.reject(response);
       }
-
     };
-
   });
-
 }(window.angular));

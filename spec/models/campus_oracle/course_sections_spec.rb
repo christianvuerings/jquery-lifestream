@@ -28,10 +28,10 @@ describe "CampusOracle::CourseSections" do
     it "should return pre-populated test sections", :if => Sakai::SakaiData.test_data? do
       client = CampusOracle::CourseSections.new({term_yr: '2013', term_cd: 'D', ccn: '16171'})
       data = client.get_section_data
-      data.empty?.should be_false
+      data.empty?.should be_falsey
 
       data[:instructors].length.should == 1
-      data[:instructors][0][:name].present?.should be_true
+      data[:instructors][0][:name].present?.should be_truthy
       data[:instructors][0][:uid].should == "238382"
       data[:schedules].length.should == 2
       data[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"

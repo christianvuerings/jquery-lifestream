@@ -7,6 +7,8 @@
   "disallowMultipleLineBreaks": true,
   "disallowMultipleLineStrings": true,
   "disallowMultipleVarDecl": true,
+  "disallowNewlineBeforeBlockStatements": true,
+  "disallowPaddingNewlinesInBlocks": true,
   "disallowSpaceAfterObjectKeys": true,
   "disallowSpaceAfterPrefixUnaryOperators": [
     "++",
@@ -21,6 +23,12 @@
     "--"
   ],
   "disallowSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+  "disallowSpacesInNamedFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+  "disallowSpacesInFunction": {
     "beforeOpeningRoundBrace": true
   },
   "disallowSpacesInFunctionDeclaration": {
@@ -39,21 +47,12 @@
     "app/assets/javascripts/angularlib/**",
     "app/assets/javascripts/lib/**",
     "coverage/**",
-    "public/dummy/js/videos.js"
+    "public/dummy/js/videos.js",
+    "vendor/**"
   ],
   "requireBlocksOnNewline": true,
   "requireCommaBeforeLineBreak": true,
-  "requireCurlyBraces": [
-    "if",
-    "else",
-    "for",
-    "while",
-    "do",
-    "try",
-    "catch",
-    "case",
-    "default"
-  ],
+  "requireCurlyBraces": true,
   "requireDotNotation": true,
   "requireLineFeedAtFileEnd": true,
   "requireOperatorBeforeLineBreak": [
@@ -86,15 +85,18 @@
     "!=="
   ],
   "requireSpaceAfterKeywords": [
+    "do",
+    "for",
     "if",
     "else",
-    "for",
-    "while",
-    "do",
     "switch",
-    "return",
+    "case",
     "try",
-    "catch"
+    "catch",
+    "void",
+    "while",
+    "with",
+    "return"
   ],
   "requireSpaceAfterBinaryOperators": [
     "+",
@@ -108,19 +110,13 @@
     "!=="
   ],
   "requireSpaceAfterLineComment": true,
-  "requireSpaceBeforeBinaryOperators": [
-    "+",
-    "-",
-    "/",
-    "*",
-    "=",
-    "==",
-    "===",
-    "!=",
-    "!=="
-  ],
+  "requireSpaceBeforeBinaryOperators": true,
   "requireSpaceBeforeBlockStatements": true,
+  "requireSpaceBeforeObjectValues": true,
   "requireSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireSpacesInNamedFunctionExpression": {
     "beforeOpeningCurlyBrace": true
   },
   "requireSpacesInConditionalExpression": {
@@ -128,6 +124,9 @@
     "beforeConsequent": true,
     "afterConsequent": true,
     "beforeAlternate": true
+  },
+  "requireSpacesInFunction": {
+    "beforeOpeningCurlyBrace": true
   },
   "requireSpacesInFunctionDeclaration": {
     "beforeOpeningCurlyBrace": true
@@ -142,6 +141,7 @@
   },
   "validateLineBreaks": "LF",
   "validateIndentation": 2,
+  "validateParameterSeparator": ", ",
   "validateQuoteMarks": "'"
 }
 

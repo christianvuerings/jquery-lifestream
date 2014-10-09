@@ -137,6 +137,20 @@ describe Mediacasts::CourseMedia do
       end
     end
 
+    context "when course title has a _slash_" do
+      it "should decode _slash_ to /" do
+        subject = Mediacasts::CourseMedia.new(2014, 'D', 'MALAY_slash_I', '1A')
+        expect(subject.instance_eval {@id}).to eq '2014-D-MALAY/I-1A'
+      end
+    end
+
+    context "when course title has no _slash_" do
+      it "should do nothing to title" do
+        subject = Mediacasts::CourseMedia.new(2014, 'D', 'COMPSCI', '61A')
+        expect(subject.instance_eval {@id}).to eq '2014-D-COMPSCI-61A'
+      end
+    end
+
   end
 
   context 'retrieving the youtube id for a course' do

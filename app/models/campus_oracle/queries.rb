@@ -35,17 +35,18 @@ module CampusOracle
       stringify_ints! result
     end
 
-    def self.get_all_active_people_attributes
-      result = []
+    def self.get_all_active_people_uids
+      uids = []
       use_pooled_connection {
         sql = <<-SQL
-        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations
+        select pi.ldap_uid
         from calcentral_person_info_vw pi
         where (affiliations LIKE '%-TYPE-%')
         SQL
-        result = connection.select_all(sql)
+        uids = connection.select_all(sql)
       }
-      stringify_ints! result
+      stringify_ints! uids
+      uids.collect {|uid| uid['ldap_uid'] }
     end
 
     def self.find_people_by_name(name_search_string, limit = 0)
@@ -314,15 +315,17 @@ module CampusOracle
         sql = <<-SQL
         select sched.BUILDING_NAME, sched.ROOM_NUMBER, sched.MEETING_DAYS, sched.MEETING_START_TIME,
         sched.MEETING_START_TIME_AMPM_FLAG, sched.MEETING_END_TIME, sched.MEETING_END_TIME_AMPM_FLAG,
-        sched.MULTI_ENTRY_CD
+        sched.MULTI_ENTRY_CD, sched.COURSE_CNTL_NUM, sched.PRINT_CD
         from CALCENTRAL_CLASS_SCHEDULE_VW sched
         where sched.TERM_YR = #{term_yr.to_i}
           and sched.BUILDING_NAME is NOT NULL
           and sched.TERM_CD = #{connection.quote(term_cd)}
           and sched.COURSE_CNTL_NUM = #{ccn.to_i}
+        order by sched.PRINT_CD asc nulls last
         SQL
         result = connection.select_all(sql)
       }
+      result = filter_multi_entry_codes result
       stringify_ints! result
     end
 

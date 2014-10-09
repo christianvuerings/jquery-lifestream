@@ -13,7 +13,7 @@ describe RoutesListController do
   it "should not list any routes for not logged in users" do
     get :smoke_test_routes
     expect(response.status).to eq(403)
-    expect(response.body.blank?).to be_true
+    expect(response.body.blank?).to be_truthy
   end
 
   it "should not list any routes for non-superusers" do
@@ -21,7 +21,7 @@ describe RoutesListController do
     session[:user_id] = @user_id
     get :smoke_test_routes
     expect(response.status).to eq(403)
-    expect(response.body.blank?).to be_true
+    expect(response.body.blank?).to be_truthy
   end
 
   it 'should not list any routes for viewers' do
@@ -38,7 +38,7 @@ describe RoutesListController do
     session[:original_user_id] = viewer_id
     get :smoke_test_routes
     expect(response.status).to eq(403)
-    expect(response.body.blank?).to be_true
+    expect(response.body.blank?).to be_truthy
   end
 
   it "should list some /api/ routes for superusers" do
@@ -47,9 +47,9 @@ describe RoutesListController do
     get :smoke_test_routes
     assert_response :success
     json_response = JSON.parse(response.body)
-    json_response['routes'].present?.should be_true
+    json_response['routes'].present?.should be_truthy
     bad_entries = json_response['routes'].select {|route| !route.start_with? '/api/' }
-    expect(bad_entries.empty?).to be_true
+    expect(bad_entries.empty?).to be_truthy
   end
 
 end

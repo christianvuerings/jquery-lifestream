@@ -11,7 +11,7 @@ describe Canvas::PublicAuthorizer do
 
     # Note: This method serves a public interface, and must return an exact TRUE or FALSE value, not
     # a value that is interpretted as "truthy" (not nil or false), or falsey (nil, negative number, etc.)
-    # The assertions below should not use be_false or be_true.
+    # The assertions below should not use be_falsey or be_truthy.
     # https://www.relishapp.com/rspec/rspec-expectations/v/2-2/docs/matchers/be-matchers
 
     before do

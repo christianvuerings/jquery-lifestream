@@ -27,21 +27,6 @@ module MyAcademics
         phases: phases.compact,
         url: "http://registrar.berkeley.edu/tbfaqs.html"
       }
-
-      # now make sure the semester of this Telebears appointment is represented in the feed, even if it has no classes.
-      this_semester_in_feed = false
-      data[:semesters] ||= []
-      data[:semesters].each do |semester|
-        if semester[:slug] == slug
-          this_semester_in_feed = true
-          break
-        end
-      end
-
-      unless this_semester_in_feed
-        data[:semesters].unshift(semester_info(year.to_s, Berkeley::TermCodes.to_code(term)))
-      end
-
     end
 
     private

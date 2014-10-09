@@ -7,20 +7,20 @@ describe "User::Auth" do
   end
 
   it "should not be a superuser by default" do
-    User::Auth.get(@user_id).is_superuser.should be_false
+    User::Auth.get(@user_id).is_superuser.should be_falsey
   end
 
   it "should have superuser when given permission" do
     User::Auth.new_or_update_superuser!(@user_id)
-    User::Auth.get(@user_id).is_superuser.should be_true
+    User::Auth.get(@user_id).is_superuser.should be_truthy
   end
 
   it "anonymous user should have no permissions but still be active" do
     anon = User::Auth.get nil
-    anon.is_superuser?.should be_false
-    anon.is_author?.should be_false
-    anon.is_viewer?.should be_false
-    anon.active?.should be_true
+    anon.is_superuser?.should be_falsey
+    anon.is_author?.should be_falsey
+    anon.is_viewer?.should be_falsey
+    anon.active?.should be_truthy
   end
 
 end

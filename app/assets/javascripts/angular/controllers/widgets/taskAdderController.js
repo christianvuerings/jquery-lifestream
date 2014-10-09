@@ -1,11 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
    * Task adder controller
    */
-  angular.module('calcentral.controllers').controller('TaskAdderController', function($scope, errorService, taskAdderService) {
+  angular.module('calcentral.controllers').controller('TaskAdderController', function(errorService, taskAdderService, $scope) {
     $scope.addEditTask = taskAdderService.getTaskState();
     $scope.addTaskPanelState = taskAdderService.getState();
 
@@ -37,7 +36,5 @@
         $scope.addEditTask.focusInput = true;
       }
     }, true);
-
   });
-
 })(window.angular);

@@ -2,12 +2,10 @@
  * Configure the routes for CalCentral
  */
 (function(angular) {
-
   'use strict';
 
   // Set the configuration
   angular.module('calcentral.config').config(function($routeProvider) {
-
     // List all the routes
     $routeProvider.when('/', {
       templateUrl: 'splash.html',
@@ -34,13 +32,7 @@
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController'
     }).
-    // We actually need to duplicate the campus items, more info on
-    // http://stackoverflow.com/questions/12524533
-    when('/campus', {
-      templateUrl: 'campus.html',
-      controller: 'CampusController'
-    }).
-    when('/campus/:category', {
+    when('/campus/:category?', {
       templateUrl: 'campus.html',
       controller: 'CampusController'
     }).
@@ -97,6 +89,10 @@
       templateUrl: 'canvas_embedded/course_mediacasts.html',
       isEmbedded: true
     }).
+    when('/canvas/embedded/course_grade_export', {
+      templateUrl: 'canvas_embedded/course_grade_export.html',
+      controller: 'CanvasCourseGradeExportController'
+    }).
     when('/canvas/rosters/:canvasCourseId', {
       templateUrl: 'canvas_embedded/roster.html'
     }).
@@ -121,7 +117,5 @@
       controller: 'ErrorController',
       isPublic: true
     });
-
   });
-
 })(window.angular);

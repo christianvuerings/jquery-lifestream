@@ -4,8 +4,7 @@
   /**
    * Academics Tele-BEARS controller
    */
-  angular.module('calcentral.controllers').controller('AcademicsTelebearsController', function(apiService, $http, $scope, $q) {
-
+  angular.module('calcentral.controllers').controller('AcademicsTelebearsController', function(apiService, telebearsFactory, $scope, $q) {
     $scope.addTelebearsAppointment = function(phasesArray) {
       var phases = [];
       $scope.telebearsAppointmentLoading = 'Process';
@@ -20,7 +19,7 @@
           }
         };
         apiService.analytics.sendEvent('Telebears', 'Add Appointment', 'Phase: ' + payload.summary);
-        phases.push($http.post('/api/my/event', payload));
+        phases.push(telebearsFactory.addAppointment(payload));
       }
       $q.all(phases).then(function() {
         $scope.telebearsAppointmentLoading = 'Success';
@@ -28,7 +27,5 @@
         $scope.telebearsAppointmentLoading = 'Error';
       });
     };
-
   });
-
 })(window.angular);

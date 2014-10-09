@@ -5,7 +5,6 @@
    * Status controller
    */
   angular.module('calcentral.controllers').controller('StatusController', function(activityFactory, apiService, badgesFactory, financesFactory, $scope, $q) {
-
     // Keep track on whether the status has been loaded or not
     var hasLoaded = false;
 
@@ -64,7 +63,6 @@
 
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated && !hasLoaded) {
-
         // Make sure to only load this once
         hasLoaded = true;
 
@@ -85,7 +83,5 @@
         $q.all(getBadges, getFinances, getFinaidActivity).then(finishLoading);
       }
     });
-
   });
-
 })(window.angular);

@@ -17,10 +17,10 @@ describe MyActivities::CanvasActivities do
       activity[:id].blank?.should_not == true
       activity[:user_id].should == @user_id
       activity[:date][:epoch].is_a?(Integer).should == true
-      activity[:source].blank?.should_not be_true
+      activity[:source].blank?.should_not be_truthy
       activity[:emitter].should == Canvas::Proxy::APP_NAME
       activity[:type].blank?.should_not == true
-      documented_types.include?(activity[:type]).should be_true
+      documented_types.include?(activity[:type]).should be_truthy
     end
   end
 

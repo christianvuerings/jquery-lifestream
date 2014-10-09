@@ -8,7 +8,7 @@ describe 'User::Data' do
         "Java::OrgPostgresqlUtil::PSQLException: Connection refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.: select 1"
     )
     is_ok = User::Data.database_alive?
-    is_ok.should be_false
+    is_ok.should be_falsey
   end
 
   it "should attempt to recover from DB outage when DB is available" do

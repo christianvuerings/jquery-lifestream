@@ -46,7 +46,7 @@ describe CampusOracle::Queries do
     students.should be_an_instance_of Array
     if CampusOracle::Queries.test_data?
       # we will only have predictable enrollments in our fake Oracle db.
-      students.empty?.should be_false
+      students.empty?.should be_falsey
       expect(students[0]['ldap_uid']).to eq "300939"
       expect(students[0]['enroll_status']).to eq "E"
       expect(students[0]['first_name']).to eq "STUDENT"
@@ -56,8 +56,8 @@ describe CampusOracle::Queries do
       expect(students[0]['affiliations']).to eq "STUDENT-TYPE-REGISTERED"
     end
     students.each do |student_row|
-      student_row["enroll_status"].blank?.should be_false
-      student_row["student_id"].blank?.should be_false
+      student_row["enroll_status"].blank?.should be_falsey
+      student_row["student_id"].blank?.should be_falsey
     end
   end
 
@@ -144,7 +144,7 @@ describe CampusOracle::Queries do
   it 'finds all active secondary sections for the course' do
     sections = CampusOracle::Queries.get_course_secondary_sections(2013, 'D', 'BIOLOGY', '1A')
     # This is a real course offering and should show up in live DBs.
-    expect(sections.empty?).to be_false
+    expect(sections.empty?).to be_falsey
     if CampusOracle::Queries.test_data?
       expect(sections.size).to eq(2)
       # Should not include canceled section.
@@ -154,7 +154,7 @@ describe CampusOracle::Queries do
 
   it "should check whether the db is alive" do
     alive = CampusOracle::Queries.database_alive?
-    alive.should be_true
+    alive.should be_truthy
   end
 
   it "should report DB outage" do
@@ -163,7 +163,7 @@ describe CampusOracle::Queries do
         "Java::JavaSql::SQLRecoverableException: IO Error: The Network Adapter could not establish the connection: select 1 from DUAL"
     )
     is_ok = CampusOracle::Queries.database_alive?
-    is_ok.should be_false
+    is_ok.should be_falsey
   end
 
   it "should return class schedule data" do
@@ -173,6 +173,14 @@ describe CampusOracle::Queries do
       data.length.should == 2
       data[0]["building_name"].should == "WHEELER"
       data[1]["building_name"].should == "DWINELLE"
+    end
+  end
+
+  it 'should respect business rule about print_cd of A in class schedule data' do
+    data = CampusOracle::Queries.get_section_schedules("2013", "D", "12345")
+    data.should_not be_nil
+    if CampusOracle::Queries.test_data?
+      data.length.should == 1
     end
   end
 
@@ -201,25 +209,18 @@ describe CampusOracle::Queries do
     user_data.each do |row|
       known_uids.delete(row['ldap_uid'])
     end
-    known_uids.empty?.should be_true
+    known_uids.empty?.should be_truthy
   end
 
-  it "should be able to get all active user records" do
+  it "should be able to get all active user uids" do
     if CampusOracle::Queries.test_data?
-      user_data = CampusOracle::Queries.get_all_active_people_attributes
-      expect(user_data).to be_an_instance_of Array
-      expect(user_data.count).to eq 144
-      uids = user_data.collect {|user| user['ldap_uid'] }
-      expect(uids.include?('212373')).to be_true
-      expect(uids.include?('95509')).to be_true
-      expect(uids.include?('592722')).to be_false
-      expect(uids.include?('313561')).to be_false
-      expect(user_data[0]).to include('ldap_uid')
-      expect(user_data[0]).to include('first_name')
-      expect(user_data[0]).to include('last_name')
-      expect(user_data[0]).to include('email_address')
-      expect(user_data[0]).to include('student_id')
-      expect(user_data[0]).to include('affiliations')
+      uids = CampusOracle::Queries.get_all_active_people_uids
+      expect(uids).to be_an_instance_of Array
+      expect(uids.count).to eq 144
+      expect(uids.include?('212373')).to be_truthy
+      expect(uids.include?('95509')).to be_truthy
+      expect(uids.include?('592722')).to be_falsey
+      expect(uids.include?('313561')).to be_falsey
     end
   end
 
@@ -238,44 +239,44 @@ describe CampusOracle::Queries do
             'student_id' => 1,
             'affiliations' => 'AFFILIATE-TYPE-GENERAL,EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED'
         }
-    ).should be_false
+    ).should be_falsey
     CampusOracle::Queries.is_student?(
         {
             'student_id' => 2,
             'affiliations' => 'STUDENT-TYPE-REGISTERED,EMPLOYEE-TYPE-STAFF'
         }
-    ).should be_true
+    ).should be_truthy
     CampusOracle::Queries.is_student?(
         {
             'affiliations' => 'STUDENT-TYPE-REGISTERED,EMPLOYEE-TYPE-STAFF'
         }
-    ).should be_false
+    ).should be_falsey
     CampusOracle::Queries.is_student?(
         {
             'student_id' => 3,
             'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-TYPE-NOT REGISTERED'
         }
-    ).should be_true
+    ).should be_truthy
   end
 
   it "should find a grad student that used to be an undergrad", if: CampusOracle::Queries.test_data? do
-    CampusOracle::Queries.is_previous_ugrad?("212388").should be_true
-    CampusOracle::Queries.is_previous_ugrad?("212389").should be_true #grad student expired, previous ugrad
-    CampusOracle::Queries.is_previous_ugrad?("212390").should be_false #grad student, but not previous ugrad
-    CampusOracle::Queries.is_previous_ugrad?("300939").should be_true #ugrad only
+    CampusOracle::Queries.is_previous_ugrad?("212388").should be_truthy
+    CampusOracle::Queries.is_previous_ugrad?("212389").should be_truthy #grad student expired, previous ugrad
+    CampusOracle::Queries.is_previous_ugrad?("212390").should be_falsey #grad student, but not previous ugrad
+    CampusOracle::Queries.is_previous_ugrad?("300939").should be_truthy #ugrad only
   end
 
   context 'with default academic terms', if: CampusOracle::Queries.test_data? do
     let(:academic_terms) {Berkeley::Terms.fetch.campus.values}
     it "should say an instructor has instructional history" do
-      CampusOracle::Queries.has_instructor_history?("238382", academic_terms).should be_true
+      CampusOracle::Queries.has_instructor_history?("238382", academic_terms).should be_truthy
     end
     it "should say a student has student history" do
-      CampusOracle::Queries.has_student_history?("300939", academic_terms).should be_true
+      CampusOracle::Queries.has_student_history?("300939", academic_terms).should be_truthy
     end
     it "should say a staff member does not have instructional or student history" do
-      CampusOracle::Queries.has_instructor_history?("2040", academic_terms).should be_false
-      CampusOracle::Queries.has_student_history?("2040", academic_terms).should be_false
+      CampusOracle::Queries.has_instructor_history?("2040", academic_terms).should be_falsey
+      CampusOracle::Queries.has_student_history?("2040", academic_terms).should be_falsey
     end
   end
 
@@ -433,14 +434,14 @@ describe CampusOracle::Queries do
     end
 
     it "returns true if string is successfully converted to an integer" do
-      expect(CampusOracle::Queries.is_integer_string?("189023")).to be_true
+      expect(CampusOracle::Queries.is_integer_string?("189023")).to be_truthy
     end
 
     it "returns false if string is not successfully converted to an integer" do
-      expect(CampusOracle::Queries.is_integer_string?("18dfsd9023")).to be_false
-      expect(CampusOracle::Queries.is_integer_string?("254AbCdE")).to be_false
-      expect(CampusOracle::Queries.is_integer_string?("98,()@")).to be_false
-      expect(CampusOracle::Queries.is_integer_string?("2390.023")).to be_false
+      expect(CampusOracle::Queries.is_integer_string?("18dfsd9023")).to be_falsey
+      expect(CampusOracle::Queries.is_integer_string?("254AbCdE")).to be_falsey
+      expect(CampusOracle::Queries.is_integer_string?("98,()@")).to be_falsey
+      expect(CampusOracle::Queries.is_integer_string?("2390.023")).to be_falsey
     end
   end
 

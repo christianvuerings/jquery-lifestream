@@ -1,12 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
    * Task editor controller
    */
-  angular.module('calcentral.controllers').controller('TaskEditorController', function($http, $scope, apiService) {
-
+  angular.module('calcentral.controllers').controller('TaskEditorController', function(apiService, tasksFactory, $scope) {
     $scope.editorEnabled = false;
 
     $scope.enableEditor = function() {
@@ -34,7 +32,7 @@
       $scope.editorEnabled = false;
     };
 
-    $scope.editTaskCompleted = function(data) {
+    var editTaskCompleted = function(data) {
       angular.extend($scope.task, data);
 
       // Extend won't remove already existing sub-objects. If we've returned from Google
@@ -66,14 +64,12 @@
       }
 
       apiService.analytics.sendEvent('Tasks', 'Task edited', 'edited: ' + !!changedTask.title);
-      $http.post('/api/my/tasks', changedTask).success($scope.editTaskCompleted).error(function() {
+      tasksFactory.update(changedTask).success(editTaskCompleted).error(function() {
         apiService.analytics.sendEvent('Error', 'Task editing failure', 'edited: ' + !!changedTask.title);
         // Some error notification would be helpful.
       });
 
       $scope.disableEditor();
-
     };
   });
-
 })(window.angular);

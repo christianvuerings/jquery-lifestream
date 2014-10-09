@@ -15,7 +15,7 @@ describe AbstractModel do
         @cache_keys = Set.new
         allow(Rails.cache).to receive(:delete) do |key, options|
           @cache_keys << key
-          expect(options[:force]).to be_true
+          expect(options[:force]).to be_truthy
         end
       end
       context 'with separate JSON cache' do

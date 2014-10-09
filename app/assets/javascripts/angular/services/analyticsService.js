@@ -1,9 +1,7 @@
 (function(angular, calcentralConfig) {
-
   'use strict';
 
   angular.module('calcentral.services').service('analyticsService', function($rootScope, $window, $location) {
-
     // See whether GA is available
     var isGaAvailable = $window && $window.ga;
 
@@ -60,7 +58,5 @@
       sendEvent: sendEvent,
       trackExternalLink: trackExternalLink
     };
-
   });
-
 }(window.angular, window.calcentralConfig));

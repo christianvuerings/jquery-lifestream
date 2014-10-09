@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('calcentral.directives').directive('ccAmountDirective', [function() {
-
     var isNumber = function(number) {
       return !isNaN(parseFloat(number)) && isFinite(number);
     };
@@ -13,9 +12,7 @@
 
     return {
       link: function(scope, element, attr) {
-
         scope.$watch(attr.ccAmountDirective, function ccAmountWatchAction(value) {
-
           // Only do something when it's a number
           if (!isNumber(value)) {
             element.text('');
@@ -35,7 +32,5 @@
         });
       }
     };
-
   }]);
-
 })(window.angular);

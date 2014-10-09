@@ -7,6 +7,10 @@ module Canvas
       (is_canvas_user? && is_canvas_course_user? && is_canvas_course_admin?) || is_canvas_account_admin?
     end
 
+    def can_export_grades?
+      (is_canvas_user? && is_canvas_course_user? && is_canvas_course_teacher?) || is_canvas_account_admin?
+    end
+
     def can_view_course?
       is_canvas_course_user? || is_canvas_account_admin?
     end

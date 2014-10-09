@@ -7,7 +7,6 @@
    * on the 'People' page within a course, show additional info to support adding guests
    */
   var addPeopleInfoAlert = function() {
-
     var isViewingCoursePeople = window.ENV &&
       window.ENV.COURSE_ROOT_URL &&
       window.location.pathname === window.ENV.COURSE_ROOT_URL + '/users';
@@ -15,7 +14,6 @@
     var canAddUsers = window.ENV && window.ENV.permissions && window.ENV.permissions.add_users;
 
     if (isViewingCoursePeople && canAddUsers) {
-
       var exampleInputText = 'student@berkeley.edu, 323494, 1032343, guest@example.com, 11203443, gsi@berkeley.edu';
 
       // applies info alerts to 'People' popup event
@@ -23,7 +21,6 @@
         // add help info to the Add People dialog
         // wait until after the user presses the Add People button because the dialog isn't in the DOM yet
         clickable_element.click(function() {
-
           // apply modification after obtaining 'Find a Person to Add' tool LTI application ID
           var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
           $.get(externalToolsUrl, function(externalToolsHash) {
@@ -68,7 +65,6 @@
             // replace example input
             $('#user_list_textarea').attr('placeholder', exampleInputText);
           });
-
         });
       };
 
@@ -116,7 +112,6 @@
         applyModifications($addMoreUsersButton, applyInfoAlert);
         applyModifications($userErrors, applyErrorModification);
       }, 300);
-
     }
   };
 
@@ -167,12 +162,51 @@
   };
 
   /**
+   * Adds eGrade Export to Canvas Gradebook feature
+   */
+  var addEGradeExportOption = function() {
+    // obtain course context id
+    if (window.ENV && window.ENV.GRADEBOOK_OPTIONS && window.ENV.GRADEBOOK_OPTIONS.context_id) {
+      var courseId = window.ENV.GRADEBOOK_OPTIONS.context_id;
+
+      // ensure gradebook context
+      var url = '/courses/' + courseId + '/gradebook';
+      if (url.indexOf(window.location.pathname) !== -1) {
+        // add link for eGrades Export LTI tool
+        $.get(externalToolsUrl(), function(externalToolsHash) {
+          // form link to external tool
+          var gradesExportLtiId = externalToolsHash['eGrades Export'];
+          var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
+
+          // add 'Download eGrades (.csv)' option to gradebook drop down menu
+          var $downloadScoresListItem = $('a#download_csv').parent();
+          var downloadEGradesItem = [
+            '<li class="ui-menu-item" role="presentation">',
+            '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
+            'Download eGrades (.csv)',
+            '</a>',
+            '</li>'
+          ].join('');
+          $downloadScoresListItem.after(downloadEGradesItem);
+        });
+      }
+    }
+  };
+
+  /**
    * Obtains hostname for this script from embedded script element
    */
   var calcentralRootUrl = function() {
     var parser = document.createElement('a');
     parser.href = $('script[src$="/canvas/canvas-customization.js"]')[0].src;
     return parser.protocol + '//' + parser.host;
+  };
+
+  /**
+   * Provides URL for External Tools API
+   */
+  var externalToolsUrl = function() {
+    return calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
   };
 
   /**
@@ -191,6 +225,7 @@
 
     authorizeViewAddCourseButton();
     addPeopleInfoAlert();
+    addEGradeExportOption();
   });
 
   /**
@@ -202,10 +237,16 @@
   window.onmessage = function(e) {
     if (e && e.data && e.data.height) {
       document.getElementById('tool_content').style.height = e.data.height + 'px';
+      var tool_wrappers = document.getElementsByClassName('tool_content_wrapper');
+      if (tool_wrappers && tool_wrappers.length > 0 && tool_wrappers[0].style) {
+        tool_wrappers[0].style.height = '';
+      }
     }
     if (e && e.data && e.data.scrollToTop) {
       window.scrollTo(0, 0);
     }
+    if (e && e.data && e.data.parentLocation) {
+      window.location = e.data.parentLocation;
+    }
   };
-
 })(window, window.document, window.$);

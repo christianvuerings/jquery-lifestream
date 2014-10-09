@@ -1,5 +1,4 @@
 (function(win, angular) {
-
   'use strict';
 
   /**
@@ -30,5 +29,4 @@
 
   // Bind calcentral to the window object so it's globally accessible
   win.calcentral = calcentral;
-
 })(window, window.angular);

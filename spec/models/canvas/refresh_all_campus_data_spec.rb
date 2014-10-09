@@ -88,8 +88,9 @@ describe Canvas::RefreshAllCampusData do
         enrollments_csv = subject.instance_eval { @term_to_memberships_csv_filename.values[0] }
         expected_course_id = 'CRS:COMPSCI-9D-2014-D'
         expected_sis_section_ids = ['SEC:2014-D-25123', 'SEC:2014-D-25124']
-        expect(Canvas::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_uids, false, cached_enrollments_provider).once
-        subject.refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv, cached_enrollments_provider)
+        sis_user_id_changes = { "sis_login_id:7978" => "2018903" }
+        expect(Canvas::SiteMembershipsMaintainer).to receive(:process).with(expected_course_id, expected_sis_section_ids, enrollments_csv, users_csv, known_uids, false, cached_enrollments_provider, sis_user_id_changes).once
+        subject.refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv, cached_enrollments_provider, sis_user_id_changes)
       end
     end
 

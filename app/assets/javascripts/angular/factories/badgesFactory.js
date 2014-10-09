@@ -1,13 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
-   * Badges Factory - get data from the badges API
-   * @param {Object} apiService CalCentral API Service
+   * Badges Factory
    */
   angular.module('calcentral.factories').factory('badgesFactory', function(apiService) {
-
     var url = '/api/my/badges';
 
     var getBadges = function(options) {
@@ -17,7 +14,5 @@
     return {
       getBadges: getBadges
     };
-
   });
-
 }(window.angular));

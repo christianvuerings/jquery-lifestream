@@ -1,12 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
    * API event service - broadcasts API events
    */
   angular.module('calcentral.services').service('apiEventService', function($rootScope) {
-
     /**
      * Broadcast an API event
      * in order for an API to broadcast events, it need to have an 'events' property
@@ -50,7 +48,5 @@
     return {
       fireApiEvents: fireApiEvents
     };
-
   });
-
 }(window.angular));

@@ -17,10 +17,10 @@ module Canvas
     }
     CANVAS_SIS_ROLE_TO_CANVAS_API_ROLE = CANVAS_API_ROLE_TO_CANVAS_SIS_ROLE.invert
 
-    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments_provider = nil)
+    def self.process(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, batch_mode = false, cached_enrollments_provider = nil, sis_user_id_changes = {})
       logger.info("Processing refresh of enrollments for SIS Course ID '#{sis_course_id}'")
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids,
-        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode, :cached_enrollments_provider => cached_enrollments_provider)
+        enrollments_csv_output, users_csv_output, known_users, :batch_mode => batch_mode, :cached_enrollments_provider => cached_enrollments_provider, :sis_user_id_changes => sis_user_id_changes)
       worker.refresh_sections_in_course
     end
 
@@ -42,7 +42,7 @@ module Canvas
     end
 
     def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, options = {})
-      default_options = { :batch_mode => false, :cached_enrollments_provider => nil }
+      default_options = { :batch_mode => false, :cached_enrollments_provider => nil, :sis_user_id_changes => {} }
       options.reverse_merge!(default_options)
 
       super()
@@ -53,11 +53,12 @@ module Canvas
       @known_users = known_users
       @batch_mode = options[:batch_mode]
       @term_enrollments_csv_worker = options[:cached_enrollments_provider]
+      @sis_user_id_changes = options[:sis_user_id_changes]
     end
 
     def filter_sections(sis_section_ids)
       campus_sections = sis_section_ids.collect do |sis_section_id|
-        campus_section = safe_sis_section_id_to_ccn_and_term(sis_section_id)
+        campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id)
         campus_section.merge!({'sis_section_id' => sis_section_id}) if campus_section.present?
         campus_section
       end
@@ -73,7 +74,7 @@ module Canvas
       section_to_instructor_role = instructor_role_for_sections(@sis_sections)
       @sis_sections.each do |sis_section|
         sis_section_id = sis_section['sis_section_id']
-        if (campus_section = safe_sis_section_id_to_ccn_and_term(sis_section_id))
+        if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id))
           logger.debug("Refreshing section: #{sis_section_id}")
           instructor_role = section_to_instructor_role[campus_section]
           logger.debug("Instructor role detected for section: #{instructor_role}")
@@ -164,7 +165,8 @@ module Canvas
         # Only look at enrollments which are active and were due to an SIS import.
         if enrollment['sis_import_id'].present? && enrollment['enrollment_state'] == 'active'
           logger.info "No campus record for Canvas enrollment in Course ID: #{enrollment['course_id']}, Section ID: #{enrollment['course_section_id']} for user #{uid} with role #{enrollment['role']}"
-          append_enrollment_deletion(section_id, api_role_to_csv_role(enrollment['role']), enrollment['user']['sis_user_id'])
+          sis_user_id = enrollment['user']['sis_user_id'] unless sis_user_id = @sis_user_id_changes["sis_login_id:#{uid}"]
+          append_enrollment_deletion(section_id, api_role_to_csv_role(enrollment['role']), sis_user_id)
         end
       end
     end
@@ -243,19 +245,6 @@ module Canvas
         sections_map[sec] = (sections_map[sec] == 'P') ? 'teacher' : secondary_section_role
       end
       sections_map
-    end
-
-    # TODO Replace current sis_section_id_to_ccn_and_term with this.
-    # Strips leading zeros from CCNs since they may or may not be there and are not needed
-    # for queries against campus data.
-    def safe_sis_section_id_to_ccn_and_term(sis_term_id)
-      if (parsed = /SEC:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])-(?<ccn>\d+).*/.match(sis_term_id))
-        {
-          term_yr: parsed[:term_yr],
-          term_cd: parsed[:term_cd],
-          ccn: parsed[:ccn].to_i.to_s
-        }
-      end
     end
 
   end

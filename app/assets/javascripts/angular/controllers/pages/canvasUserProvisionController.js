@@ -6,7 +6,6 @@
    * Canvas user provisioning LTI app controller
    */
   angular.module('calcentral.controllers').controller('CanvasUserProvisionController', function(apiService, $http, $scope) {
-
     apiService.util.setTitle('bCourses User Provision');
 
     $scope.importUsers = function(list) {
@@ -69,9 +68,6 @@
           $scope.userImportForm.uids.$setValidity('ccNumericList', false);
         }
       }
-
     };
-
   });
-
 })(window.angular);

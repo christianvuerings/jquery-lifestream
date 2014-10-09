@@ -15,7 +15,7 @@ describe MyEventsController do
     it { should_not be_success }
     it { subject.status.should eq(400) }
     it { subject.content_type.should eq("application/json") }
-    it { JSON.parse(subject.body)[:status].should be_false }
+    it { JSON.parse(subject.body)[:status].should be_falsey }
   end
 
   context "#create" do
@@ -101,7 +101,7 @@ describe MyEventsController do
           expect(subject).to be_success
           expect(subject.status).to eq(200)
           expect(subject.content_type).to eq("application/json")
-          expect(JSON.parse(subject.body)["status"]).to be_true
+          expect(JSON.parse(subject.body)["status"]).to be_truthy
           expect(JSON.parse(subject.body)["summary"]).to eq("Fancy event")
           expect(JSON.parse(subject.body)["id"]).to be_present
         end

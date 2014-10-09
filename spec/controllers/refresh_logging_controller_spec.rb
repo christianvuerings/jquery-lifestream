@@ -12,7 +12,7 @@ describe RefreshLoggingController do
     CalcentralLogging.should_not_receive(:refresh_logging_level)
     get :refresh_logging, { :format => 'json' }
     expect(response.status).to eq(403)
-    expect(response.body.blank?).to be_true
+    expect(response.body.blank?).to be_truthy
   end
 
   it "should not attempt to change log settings to a new bad config value" do
@@ -45,6 +45,6 @@ describe RefreshLoggingController do
     get :refresh_logging, { :format => 'json' }
     expect(response.status).to eq(200)
     json_response = JSON.parse(response.body)
-    expect(json_response.blank?).to be_false
+    expect(json_response.blank?).to be_falsey
   end
 end

@@ -2,11 +2,12 @@ require "spec_helper"
 
 describe Canvas::MaintainUsers do
 
+  let(:known_uids) { [] }
+  let(:account_changes) { [] }
+  subject { Canvas::MaintainUsers.new(known_uids, account_changes) }
+
   describe "#categorize_user_accounts" do
-    let(:known_uids) { [] }
-    let(:sis_id_changes) { {} }
-    let(:account_changes) { [] }
-    before { subject.categorize_user_account(existing_account, campus_rows, known_uids, sis_id_changes, account_changes) }
+    before { subject.categorize_user_account(existing_account, campus_rows) }
 
     context 'when email changes' do
       let(:uid) { rand(999999).to_s }
@@ -32,7 +33,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'finds email change' do
         expect(account_changes.length).to eq(1)
-        expect(sis_id_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(1)
         new_account = account_changes[0]
         expect(new_account['email']).to eq('new@example.edu')
@@ -66,9 +67,9 @@ describe Canvas::MaintainUsers do
       ] }
       it 'finds SIS ID change' do
         expect(account_changes.length).to eq(0)
-        expect(sis_id_changes.length).to eq(1)
+        expect(subject.sis_user_id_changes.length).to eq(1)
         expect(known_uids.length).to eq(1)
-        expect(sis_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq(changed_sis_id_student_id)
+        expect(subject.sis_user_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq(changed_sis_id_student_id)
       end
     end
 
@@ -97,7 +98,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'just notes the UID' do
         expect(account_changes.length).to eq(0)
-        expect(sis_id_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(1)
       end
     end
@@ -127,7 +128,7 @@ describe Canvas::MaintainUsers do
       ] }
       it 'skips the record' do
         expect(account_changes.length).to eq(0)
-        expect(sis_id_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(0)
       end
     end
@@ -179,18 +180,18 @@ describe Canvas::MaintainUsers do
   end
 
   describe ".handle_changed_sis_user_ids" do
-    let(:sis_id_changes) do
+    let(:sis_user_id_changes) do
       {
-        "sis_login_id:UID:289021" => '1084726',
+        "sis_login_id:1084726" => '289021',
         "sis_login_id:1084727" => 'UID:289022',
         "sis_login_id:1084728" => 'UID:289023',
       }
     end
     it 'sends call to change each sis user id update' do
-      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:UID:289021', '1084726').ordered
+      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084726', '289021').ordered
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084727', 'UID:289022').ordered
       expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
-      Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
+      Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_user_id_changes)
     end
     context 'in dry-run mode' do
       before do
@@ -198,7 +199,7 @@ describe Canvas::MaintainUsers do
       end
       it 'does not tell Canvas to change the sis_user_ids' do
         expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).never
-        Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_id_changes)
+        Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_user_id_changes)
       end
     end
   end
@@ -245,7 +246,7 @@ describe Canvas::MaintainUsers do
 
     context 'when accounts are identical' do
       let(:sis_account) { provisioned_account }
-      it {should be_true}
+      it {should be_truthy}
     end
 
     context 'when username checks are enabled' do
@@ -253,7 +254,7 @@ describe Canvas::MaintainUsers do
       before do
         allow(Settings.canvas_proxy).to receive(:maintain_user_names).and_return(true)
       end
-      it {should be_false}
+      it {should be_falsey}
     end
 
     context 'when username checks are disabled' do
@@ -262,11 +263,11 @@ describe Canvas::MaintainUsers do
       end
       context 'when all that differs is the name' do
         let(:sis_account) { provisioned_account.merge({'first_name' => 'Jake', 'last_name' => 'Smythe'}) }
-        it {should be_true}
+        it {should be_truthy}
       end
       context 'when the email address changes' do
         let(:sis_account) { provisioned_account.merge({'email' => 'js@example.com'}) }
-        it {should be_false}
+        it {should be_falsey}
       end
     end
 

@@ -1,13 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
-   * Academics Factory - get data from the academics API
-   * @param {Object} apiService CalCentral API service
+   * Academics Factory
    */
   angular.module('calcentral.factories').factory('academicsFactory', function(apiService) {
-
     var url = '/api/my/academics';
     // var url = '/dummy/json/academics.json';
 
@@ -18,7 +15,5 @@
     return {
       getAcademics: getAcademics
     };
-
   });
-
 }(window.angular));

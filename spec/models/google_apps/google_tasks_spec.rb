@@ -67,7 +67,7 @@ describe "GoogleTaskList" do
     # Clear completed tasks from tasklist
     clear_completed_tasklist_proxy = GoogleApps::ClearTaskList.new proxy_opts
     clear_completed_response = clear_completed_tasklist_proxy.clear_task_list test_task_list_id
-    clear_completed_response.should be_true
+    clear_completed_response.should be_truthy
     get_tasks_proxy = GoogleApps::TasksList.new proxy_opts
     response = get_tasks_proxy.tasks_list(optional_params={:tasklist => test_task_list_id}).first
     response.data["kind"].should == "tasks#tasks"
@@ -78,7 +78,7 @@ describe "GoogleTaskList" do
     #Delete task
     delete_proxy = GoogleApps::DeleteTask.new proxy_opts
     response = delete_proxy.delete_task(test_task_list_id, new_task_id)
-    response.should be_true
+    response.should be_truthy
 
     # Delete task list
     delete_proxy = GoogleApps::DeleteTaskList.new proxy_opts

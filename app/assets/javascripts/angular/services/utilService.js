@@ -1,9 +1,7 @@
 (function(angular, naturalSort) {
-
   'use strict';
 
   angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $window) {
-
     /**
      * Check whether the current browser can play mp3 files
      * Based on Modernizr: http://git.io/DPOxlQ
@@ -65,7 +63,6 @@
      * Prevent a click event from bubbling up to its parents
      */
     var preventBubble = function($event) {
-
       // We don't need to do anything when you hit the enter key.
       // In that instance the event will be undefined.
       if (!$event) {
@@ -121,14 +118,35 @@
       }
     };
 
+    /**
+     * Change location of parent window
+     */
+    var iframeParentLocation = function(location) {
+      if (isInIframe) {
+        iframePostMessage({
+          parentLocation: location
+        });
+      }
+    };
+
+    /**
+     * Replaces '/' and '%2F' with '_slash_' to appease Apache. See CLC-4279.
+     * We can remove this once Apache is updated and allows 'AllowEncodedSlashes NoDecode'
+     */
+    var encodeSlash = function(string) {
+      return string.replace(/\/|%2F/g, '_slash_');
+    };
+
     var uidPattern = /^[0-9]{1,9}$/;
 
     // Expose methods
     return {
       canPlayMp3: canPlayMp3,
       changeControllerName: changeControllerName,
+      encodeSlash: encodeSlash,
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
+      iframeParentLocation: iframeParentLocation,
       hideOffCanvasMenu: hideOffCanvasMenu,
       naturalSort: naturalSort,
       preventBubble: preventBubble,
@@ -137,7 +155,5 @@
       supportsLocalStorage: supportsLocalStorage,
       uidPattern: uidPattern
     };
-
   });
-
 }(window.angular, window.naturalSort));

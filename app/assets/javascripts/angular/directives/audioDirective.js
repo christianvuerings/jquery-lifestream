@@ -7,7 +7,6 @@
       replace: true,
       link: function(scope, elem, attrs) {
         scope.$watch(attrs.ccAudioDirective, function(audioUrl) {
-
           // Templates for the player
           var templates = {
             audio: '<audio controls><source data-ng-src="' + audioUrl + '"></source>Your browser does not support the audio element.</audio>',
@@ -33,11 +32,8 @@
           if (audioUrl) {
             init();
           }
-
         });
       }
     };
-
   });
-
 })(window.angular);

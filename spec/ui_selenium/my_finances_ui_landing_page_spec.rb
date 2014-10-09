@@ -14,7 +14,7 @@ require_relative 'pages/settings_page'
 
 describe 'My Finances landing page', :testui => true do
 
-  if ENV["UI_TEST"]
+  if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'
 
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
 
@@ -45,28 +45,28 @@ describe 'My Finances landing page', :testui => true do
 
     context 'card headings' do
       it 'include Cal 1 Card' do
-        @my_finances_page.cal_1_card_heading?.should be_true
+        @my_finances_page.cal_1_card_heading?.should be_truthy
       end
       it 'include Financial Aid Messages' do
-        @my_finances_page.fin_messages_heading?.should be_true
+        @my_finances_page.fin_messages_heading?.should be_truthy
       end
     end
 
     context 'Billing Summary card' do
       it 'includes the heading Billing Summary' do
-        @my_finances_page.billing_summary_heading?.should be_true
+        @my_finances_page.billing_summary_heading?.should be_truthy
       end
       it 'shows CARS account balance amount' do
-        @my_finances_page.account_balance_element?.should be_true
+        @my_finances_page.account_balance_element?.should be_truthy
       end
       it 'shows CARS amount due now' do
-        @my_finances_page.amt_due_now_element?.should be_true
+        @my_finances_page.amt_due_now_element?.should be_truthy
       end
     end
 
     context 'Financial Resources card' do
       it 'includes the heading Financial Resources' do
-        @my_finances_page.fin_resources_heading?.should be_true
+        @my_finances_page.fin_resources_heading?.should be_truthy
       end
       it 'includes a link to Billing Services' do
         @my_finances_page.student_billing_svcs_link

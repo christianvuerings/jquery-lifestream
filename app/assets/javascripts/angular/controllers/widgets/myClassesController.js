@@ -5,7 +5,6 @@
    * My Classes controller
    */
   angular.module('calcentral.controllers').controller('MyClassesController', function(apiService, myClassesFactory, $scope) {
-
     var sortOtherByName = function(a, b) {
       var name1 = a.name.toLowerCase();
       var name2 = b.name.toLowerCase();
@@ -48,8 +47,8 @@
       ];
     };
 
-    var getMyClasses = function() {
-      myClassesFactory.getClasses().then(function(data) {
+    var getMyClasses = function(options) {
+      myClassesFactory.getClasses(options).then(function(data) {
         apiService.updatedFeeds.feedLoaded(data.feed);
         bindScopes(data.classes);
         angular.extend($scope, data);
@@ -58,10 +57,11 @@
 
     $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
       if (services && services['MyClasses::Merged']) {
-        getMyClasses();
+        getMyClasses({
+          refreshCache: true
+        });
       }
     });
     getMyClasses();
   });
-
 })(window.angular);

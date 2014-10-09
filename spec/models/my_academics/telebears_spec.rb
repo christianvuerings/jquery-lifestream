@@ -58,11 +58,9 @@ describe MyAcademics::Telebears do
       it { subject[:telebears][:term].should eq("Fall") }
       it { subject[:telebears][:year].should eq(2013) }
       it { subject[:telebears][:slug].should eq("fall-2013") }
-      it { subject[:telebears][:adviserCodeRequired][:required].should be_true }
+      it { subject[:telebears][:adviserCodeRequired][:required].should be_truthy }
       it { subject[:telebears][:adviserCodeRequired][:message].should_not be_include("CalSO") }
       it { subject[:telebears][:phases].length.should eq(2)}
-      it { subject[:semesters].length.should eq(1) }
-      it { subject[:semesters][0][:slug].should eq("fall-2013") }
     end
 
     context "fake oski feed, timezone & server specifice setting tests", testext: true do
@@ -91,7 +89,7 @@ describe MyAcademics::Telebears do
       subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
 
       it { subject[:telebears][:term].should eq("Fall") }
-      it { subject[:telebears][:adviserCodeRequired][:required].should be_false }
+      it { subject[:telebears][:adviserCodeRequired][:required].should be_falsey }
       it { subject[:telebears][:phases].length.should eq(2)}
     end
 
@@ -105,7 +103,7 @@ describe MyAcademics::Telebears do
       subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
 
       it { subject[:telebears][:term].should eq("Fall") }
-      it { subject[:telebears][:adviserCodeRequired][:required].should be_true }
+      it { subject[:telebears][:adviserCodeRequired][:required].should be_truthy }
       it { subject[:telebears][:adviserCodeRequired][:message].should be_include("CalSO") }
       it { subject[:telebears][:phases].length.should eq(2)}
     end
@@ -121,7 +119,7 @@ describe MyAcademics::Telebears do
       subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
 
       it { subject[:telebears][:term].should eq("Fall") }
-      it { subject[:telebears][:adviserCodeRequired][:required].should be_false }
+      it { subject[:telebears][:adviserCodeRequired][:required].should be_falsey }
       it { subject[:telebears][:phases].length.should eq(2)}
     end
 

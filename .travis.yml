@@ -1,4 +1,6 @@
-bundler_args: --without development testext production
+language: ruby
+bundler_args: --without development testext production --deployment --jobs=4 --retry=5
+cache: bundler
 
 rvm:
   - "jruby-19mode"
@@ -10,8 +12,4 @@ matrix:
 env:
   - JRUBY_OPTS="--client -Xcext.enabled=false -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN
 
-before_install:
-  - "npm -g install jshint"
-  - "npm -g install jscs"
-  - "gem install scss-lint"
-  - "scss-lint app/assets/stylesheets/"
+before_script: "./script/front-end-test.sh"

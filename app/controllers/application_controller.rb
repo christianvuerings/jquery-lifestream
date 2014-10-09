@@ -92,6 +92,11 @@ class ApplicationController < ActionController::Base
     render json: { :error => error.message }.to_json, status: 500
   end
 
+  def handle_exception(error)
+    Rails.logger.error "#{error.class} raised with UID: #{session[:user_id]} in #{controller_name}\##{action_name}: #{error.message}"
+    render text: error.message, status: 500
+  end
+
   def handle_client_error(error)
     case error.class.to_s
       when 'Errors::BadRequestError'

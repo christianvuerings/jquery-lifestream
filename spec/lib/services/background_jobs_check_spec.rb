@@ -49,6 +49,7 @@ describe BackgroundJobsCheck do
       allow(Rails.cache).to receive(:read) do |key|
         cache_hash[key]
       end
+      allow(Messaging).to receive(:publish).with('/topics/background_jobs_check', {})
     end
     let(:success_cache_hash) do
       {

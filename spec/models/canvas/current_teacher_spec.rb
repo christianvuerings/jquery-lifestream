@@ -52,26 +52,26 @@ describe Canvas::CurrentTeacher do
 
     context "when uid is unavailable" do
       subject { Canvas::CurrentTeacher.new(nil) }
-      its(:user_currently_teaching?) { should be_false }
+      its(:user_currently_teaching?) { should be_falsey }
     end
 
     context "when user is instructing in current canvas terms", if: CampusOracle::Queries.test_data? do
       subject { Canvas::CurrentTeacher.new(summer_2014_instructor_uid) }
-      its(:user_currently_teaching?) { should be_true }
+      its(:user_currently_teaching?) { should be_truthy }
     end
 
     context "when user is not instructing in current canvas terms", if: CampusOracle::Queries.test_data? do
       subject { Canvas::CurrentTeacher.new(spring_2012_instructor_uid) }
-      its(:user_currently_teaching?) { should be_false }
+      its(:user_currently_teaching?) { should be_falsey }
     end
 
     context "when response is cached", if: CampusOracle::Queries.test_data? do
       subject { Canvas::CurrentTeacher.new(summer_2014_instructor_uid) }
       it "does not make calls to dependent objects" do
-        expect(subject.user_currently_teaching?).to be_true
+        expect(subject.user_currently_teaching?).to be_truthy
         expect(Canvas::Proxy).to_not receive(:canvas_current_terms)
         expect(CampusOracle::Queries).to_not receive(:has_instructor_history?)
-        expect(subject.user_currently_teaching?).to be_true
+        expect(subject.user_currently_teaching?).to be_truthy
       end
     end
   end

@@ -1,13 +1,10 @@
 (function(angular) {
-
   'use strict';
 
   /**
-   * Roster Factory - get data from the roster API
-   * @param {Object} $http The $http service from Angular
+   * Roster Factory
    */
   angular.module('calcentral.factories').factory('rosterFactory', function($http) {
-
     /**
      * Get the roster information
      * @param {String} mode 'canvas' or 'campus'
@@ -21,7 +18,5 @@
     return {
       getRoster: getRoster
     };
-
   });
-
 }(window.angular));

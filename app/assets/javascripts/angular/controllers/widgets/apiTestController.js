@@ -4,8 +4,7 @@
   /**
    * API Test controller
    */
-  angular.module('calcentral.controllers').controller('ApiTestController', function($http, $scope) {
-
+  angular.module('calcentral.controllers').controller('ApiTestController', function(apiTestFactory, $scope) {
     // Crude way of testing against the http.success responses due to insufficient status codes.
     var responseDictionary = {
       '/api/blog/release_notes/latest': 'entries',
@@ -31,19 +30,22 @@
     };
 
     var hitEndpoint = function(index) {
-      var request = $http.get($scope.apiTest.data[index].route);
-      request.success(function(data) {
+      apiTestFactory.request({
+        url: $scope.apiTest.data[index].route,
+        refreshCache: true
+      })
+      .success(function(data) {
         var route = responseDictionary[$scope.apiTest.data[index].route];
         if (route) {
           $scope.apiTest.data[index].status = data[route] ? 'success' : 'failed';
         } else {
           $scope.apiTest.data[index].status = 'success';
         }
-      });
-      request.error(function() {
+      })
+      .error(function() {
         $scope.apiTest.data[index].status = 'failed';
-      });
-      request.success(function() {
+      })
+      .success(function() {
         runOnLastEndpoint(index);
       }).error(function() {
         runOnLastEndpoint(index);
@@ -51,7 +53,9 @@
     };
 
     var initTestRoutes = function() {
-      $http.get('/api/smoke_test_routes').success(function(data) {
+      apiTestFactory.smokeTest({
+        refreshCache: true
+      }).success(function(data) {
         var output = [];
         angular.forEach(data.routes, function(value) {
           output.push({
@@ -83,6 +87,5 @@
         initTestRoutes();
       }
     });
-
   });
 })(window.angular);

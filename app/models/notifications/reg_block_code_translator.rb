@@ -1,18 +1,25 @@
 module Notifications
   class RegBlockCodeTranslator
+    include ClassLogger
+
+    def initialize(student_id = nil)
+      @student_id = student_id
+    end
+
     def translate_bearfacts_proxy(reason_code, office)
       office_code = office.strip
       Rails.cache.fetch("global/BearfactsRegBlock/reason_code/#{reason_code}_#{office_code}", :expires_in => 0) {
         {
-          message: self.class.translate_to_message(reason_code, office_code),
-          office: self.class.translate_office_code(office_code),
-        }.merge(self.class.translate_to_type_and_reason(reason_code))
+          message: translate_to_message(reason_code, office_code),
+          office: translate_office_code(office_code),
+        }.merge(translate_to_type_and_reason(reason_code))
       }
     end
 
     private
 
-    def self.init_message_translation_hash
+    def self.message_translation_hash
+      return @message_translation_hash if defined? @message_translation_hash
       lf_text = <<-EOS
       <p>Your registration as an official Berkeley student is blocked by the Library due to
       outstanding bills of $200 or more.  Until this block is cleared, you cannot register for classes,
@@ -370,7 +377,27 @@ module Notifications
       <p><a href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
       EOS
 
-      {
+      harassment_training = <<-EOS
+      <p>Your registration as an official Berkeley student is blocked by the Dean of Students office because you have not
+      completed your Sexual Assault Training requirement. Though you may enroll in classes for the current term, until this
+      block is cleared you cannot enroll in classes for the next term, use campus services (e.g. library, RSF, Class Pass,
+      Career Center), receive final grades, or obtain formal campus transcripts.</p>
+      <p>To clear this block, please complete the required training and follow the instructions on the
+      <a href="http://survivorsupport.berkeley.edu/education-requirement">Sexual Assault and Violence</a>
+      information page.</p>
+      <p>Note: It will take up to 48 hours for the block to clear upon completion of the Harassment Training.</p>
+      EOS
+
+      miscellaneous = <<-EOS
+      <p>Your registration as an official Berkeley student is blocked by the Office of the Registrar. Though you may enroll
+      in classes for the current term, until this block is cleared you cannot enroll in classes for the next term,
+      use campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career
+      Center, etc.), receive final grades, or obtain official campus transcripts.</p>
+      <p>To clear this block, visit <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a> at 120 Sproul
+      Hall, or call (510) 664-9181.</p>
+      EOS
+
+      @message_translation_hash = {
         7 => ll_text,
         8 => lf_text,
         16 => cars_text,
@@ -380,11 +407,13 @@ module Notifications
         44 => status_lapse,
         46 => education_abroad,
         48 => misconduct,
+        50 => miscellaneous,
         52 => {
           'OR' => student_health_registrar,
           'TANG' => student_health_uhs
         },
         53 => student_health_hb,
+        58 => harassment_training,
         60 => {
           'GRAD' => academic_grad,
           'CNR' => academic_cnr,
@@ -408,8 +437,8 @@ module Notifications
       }
     end
 
-    def self.init_reason_translation_hash
-      {
+    def self.reason_translation_hash
+      @reason_translation_hash ||= {
         7 => 'Long-Term Loan',
         8 => 'Library Fine',
         16 => 'CARS',
@@ -422,6 +451,7 @@ module Notifications
         50 => 'Miscellaneous',
         52 => 'Student Health',
         53 => 'Student Health - HB',
+        58 => 'Harassment Training',
         60 => 'Academic',
         62 => 'Minimum Progress',
         64 => 'Undeclared Senior',
@@ -433,8 +463,8 @@ module Notifications
       }
     end
 
-    def self.init_office_translation_hash
-      {
+    def self.office_translation_hash
+      @office_translation_hash ||= {
         'LIBRARY' => 'Library',
         'TANG' => 'Tang Student Health Services',
         'SUMMER' => 'Summer Session Office',
@@ -445,7 +475,7 @@ module Notifications
         'OR' => 'Office of the Registrar - Registration',
         'OUARS' => 'Office of the Registrar - Admissions',
         'GRAD' => 'Graduate Division',
-        'GRADADM' => 'Graduate Admissions',
+        'GRAD ADM' => 'Graduate Admissions',
         'NATIVE' => 'Native American Studies',
         'CHICANO' => 'Chicano Studies',
         'ASIAN' => 'Asian American Studies',
@@ -456,18 +486,19 @@ module Notifications
         'CHEM' => 'College of Chemistry',
         'LNS' => 'College of Letters and Science',
         'LAW' => 'School of Law',
+        'JA' => 'Dean of Students',
+        # TODO Remove the next line once the abbreviation has been replaced by 'JA'
         'JUD AFF' => 'Judicial Affairs',
       }
     end
 
-    def self.translate_to_message(reason_code, office)
-      @message_translation_hash ||= init_message_translation_hash
-      response = @message_translation_hash[reason_code.to_i]
+    def translate_to_message(reason_code, office)
+      response = self.class.message_translation_hash[reason_code.to_i]
       if response.kind_of?(Hash)
         response = response[office]
       end
       if response.blank?
-        Rails.logger.warn "#{self.name} undefined message for reason_code #{reason_code}, office_code: #{office}"
+        logger.warn "Undefined message for reason_code #{reason_code}, office_code #{office}, student ID #{@student_id}"
         response = <<-EOS
         <p>You have received an unknown or invalid Block type and reason code #{reason_code} from office code #{office}.
         To clear this block, contact Cal Student Central at 120 Sproul Hall, or call (510) 664-9181.</p>
@@ -476,7 +507,7 @@ module Notifications
       response.strip
     end
 
-    def self.translate_to_type_and_reason(reason_code)
+    def translate_to_type_and_reason(reason_code)
       begin
         code = Integer(reason_code.strip, 10)
         block_type = ''
@@ -488,10 +519,9 @@ module Notifications
           block_type = 'Academic'
         end
 
-        @reason_translation_hash ||= init_reason_translation_hash
-        reason = @reason_translation_hash[code]
+        reason = self.class.reason_translation_hash[code]
         if reason.blank?
-          Rails.logger.warn "#{self.name} unknown reason type for #{code}"
+          logger.warn "Unknown reason type for #{code}, student ID #{@student_id}"
           reason = 'Unknown'
         end
 
@@ -501,7 +531,7 @@ module Notifications
         }
 
       rescue ArgumentError => e
-        Rails.logger.warn "#{self.name}: Unable to translate translate_type_and_reason for #{reason_code}"
+        logger.warn "Unable to translate translate_type_and_reason for #{reason_code}, student ID #{@student_id}"
         {
           reason: 'Unknown',
           type: 'Unknown',
@@ -510,12 +540,11 @@ module Notifications
 
     end
 
-    def self.translate_office_code(office_code)
+    def translate_office_code(office_code)
       return 'Library' if office_code.blank?
-      @office_translation_hash ||= init_office_translation_hash
-      office = @office_translation_hash[office_code]
+      office = self.class.office_translation_hash[office_code]
       if office.blank?
-        Rails.logger.warn "#{self.name}: Unknown office code #{office_code}"
+        logger.warn "Unknown office code #{office_code}, student ID #{@student_id}"
         office = 'Bearfacts'
       end
       office

@@ -22,9 +22,9 @@ describe Sakai::SiteAnnouncements do
     client.message_max_length.should be > 0
     announcements = client.get_announcements
     announcements.each do |announcement|
-      announcement['message_id'].blank?.should be_false
+      announcement['message_id'].blank?.should be_falsey
       announcement['message_date'].should_not be_nil
-      announcement['source_url'].blank?.should be_false
+      announcement['source_url'].blank?.should be_falsey
       announcement['summary'].length.should be <= client.message_max_length
     end
   end

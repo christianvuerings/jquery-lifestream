@@ -4,7 +4,8 @@ module Bearfacts
     include DatedFeed
 
     def get
-      blocks_feed = request("/student/#{lookup_student_id}/reg/regblocks", "regblocks")
+      student_id = lookup_student_id
+      blocks_feed = request("/student/#{student_id}/reg/regblocks", "regblocks")
 
       feed = blocks_feed.except(:xml_doc)
       doc = blocks_feed[:xml_doc]
@@ -29,7 +30,7 @@ module Bearfacts
         type = to_text block.css("blockType")
         status = to_text block.css("status")
         office = to_text block.css("office")
-        translated_codes = Notifications::RegBlockCodeTranslator.new().translate_bearfacts_proxy(block.css('reasonCode').text, block.css('office').text)
+        translated_codes = Notifications::RegBlockCodeTranslator.new(student_id).translate_bearfacts_proxy(block.css('reasonCode').text, block.css('office').text)
         reason = translated_codes[:reason]
         message = translated_codes[:message]
         block_type = translated_codes[:type]

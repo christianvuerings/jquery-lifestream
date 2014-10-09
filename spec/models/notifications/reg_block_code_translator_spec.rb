@@ -22,6 +22,10 @@ describe Notifications::RegBlockCodeTranslator do
     result[:office].should == "College of Letters and Science"
     result[:reason].should == "Double Major"
     result[:type].should == "Academic"
+    result = translator.translate_bearfacts_proxy("58", "JA")
+    result[:office].should == "Dean of Students"
+    result[:reason].should == "Harassment Training"
+    result[:type].should == "Administrative"
   end
 
   it 'deals with leading zeroes' do
@@ -30,6 +34,12 @@ describe Notifications::RegBlockCodeTranslator do
     expect(result[:reason]).to eq 'Library Fine'
     expect(result[:type]).to eq 'Financial'
     expect(result[:message]).to include('blocked by the Library')
+  end
+
+  it 'logs student ID with confusing reason codes' do
+    student_id = 'some_crazy_thing'
+    expect(Rails.logger).to receive(:warn).with(/some_crazy_thing/).at_least(:once).and_call_original
+    Notifications::RegBlockCodeTranslator.new(student_id).translate_bearfacts_proxy("foo", "baz")
   end
 
 end

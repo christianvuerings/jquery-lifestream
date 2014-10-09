@@ -37,7 +37,7 @@ describe UpNext::MyUpNext do
     GoogleApps::Proxy.stub(:new).and_return(@fake_google_proxy)
     GoogleApps::Proxy.stub(:access_granted?).and_return(false)
     empty_feed = UpNext::MyUpNext.new(@user_id).get_feed
-    empty_feed[:items].empty?.should be_true
+    empty_feed[:items].empty?.should be_truthy
   end
 
   it "should not include all-day events for tomorrow" do

@@ -2,7 +2,6 @@
   'use strict';
 
   angular.module('calcentral.directives').directive('ccShowInfiniteDirective', function($parse) {
-
     var setTextScope = function(scope, infiniteText) {
       if (!infiniteText) {
         scope.showText = 'Show More';
@@ -39,10 +38,8 @@
             var limit = scope.showList ? 'Infinity' : scope.limit;
             $parse(attrs.ccShowInfiniteLimit).assign(scope.$parent, limit);
           }
-
         };
       }
     };
   });
-
 })(window.angular);

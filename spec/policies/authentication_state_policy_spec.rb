@@ -31,106 +31,106 @@ describe AuthenticationStatePolicy do
   describe '#access_google?' do
     context 'as self' do
       let(:user_id) {average_joe_uid}
-      its(:access_google?) { should be_true }
+      its(:access_google?) { should be_truthy }
     end
     context 'as someone else' do
       let(:user_id) {superuser_uid}
       let(:original_user_id) {viewer_uid}
-      its(:access_google?) { should be_false }
+      its(:access_google?) { should be_falsey }
     end
     context 'in embedded app' do
       let(:user_id) {superuser_uid}
       let(:lti_authenticated_only) {true}
-      its(:access_google?) { should be_false }
+      its(:access_google?) { should be_falsey }
     end
   end
 
   describe '#can_administrate?' do
     context 'superuser as self' do
       let(:user_id) {superuser_uid}
-      its(:can_administrate?) { should be_true }
+      its(:can_administrate?) { should be_truthy }
     end
     context 'inactive superuser' do
       let(:user_id) {inactive_superuser_uid}
-      its(:can_administrate?) { should be_false }
+      its(:can_administrate?) { should be_falsey }
     end
     context 'viewer as self' do
       let(:user_id) {viewer_uid}
-      its(:can_administrate?) { should be_false }
+      its(:can_administrate?) { should be_falsey }
     end
     context 'author as self' do
       let(:user_id) {author_uid}
-      its(:can_administrate?) { should be_false }
+      its(:can_administrate?) { should be_falsey }
     end
     context 'superuser as someone else' do
       let(:user_id) {average_joe_uid}
       let(:original_user_id) {superuser_uid}
-      its(:can_administrate?) { should be_false }
+      its(:can_administrate?) { should be_falsey }
     end
     context 'viewing as superuser' do
       let(:user_id) {superuser_uid}
       let(:original_user_id) {viewer_uid}
-      its(:can_administrate?) { should be_false }
+      its(:can_administrate?) { should be_falsey }
     end
     context 'in embedded app' do
       let(:user_id) {superuser_uid}
       let(:lti_authenticated_only) {true}
-      its(:can_administrate?) { should be_false }
+      its(:can_administrate?) { should be_falsey }
     end
   end
 
   describe '#can_author?' do
     context 'superuser as self' do
       let(:user_id) {superuser_uid}
-      its(:can_author?) { should be_true }
+      its(:can_author?) { should be_truthy }
     end
     context 'inactive superuser' do
       let(:user_id) {inactive_superuser_uid}
-      its(:can_author?) { should be_false }
+      its(:can_author?) { should be_falsey }
     end
     context 'viewer as self' do
       let(:user_id) {viewer_uid}
-      its(:can_author?) { should be_false }
+      its(:can_author?) { should be_falsey }
     end
     context 'author as self' do
       let(:user_id) {author_uid}
-      its(:can_author?) { should be_true }
+      its(:can_author?) { should be_truthy }
     end
     context 'in embedded app' do
       let(:user_id) {author_uid}
       let(:lti_authenticated_only) {true}
-      its(:can_author?) { should be_false }
+      its(:can_author?) { should be_falsey }
     end
   end
 
   describe '#can_view_as?' do
     context 'superuser as self' do
       let(:user_id) {superuser_uid}
-      its(:can_view_as?) { should be_true }
+      its(:can_view_as?) { should be_truthy }
     end
     context 'inactive superuser' do
       let(:user_id) {inactive_superuser_uid}
-      its(:can_view_as?) { should be_false }
+      its(:can_view_as?) { should be_falsey }
     end
     context 'viewer as self' do
       let(:user_id) {viewer_uid}
-      its(:can_view_as?) { should be_true }
+      its(:can_view_as?) { should be_truthy }
     end
     context 'author as self' do
       let(:user_id) {author_uid}
-      its(:can_view_as?) { should be_false }
+      its(:can_view_as?) { should be_falsey }
     end
     # This is a little quirky, but we want to allow easy view-as switching even while mimicking
     # someone else.
     context 'viewer as someone else' do
       let(:user_id) {average_joe_uid}
       let(:original_user_id) {viewer_uid}
-      its(:can_view_as?) { should be_true }
+      its(:can_view_as?) { should be_truthy }
     end
     context 'in embedded app' do
       let(:user_id) {viewer_uid}
       let(:lti_authenticated_only) {true}
-      its(:can_view_as?) { should be_false }
+      its(:can_view_as?) { should be_falsey }
     end
   end
 
@@ -138,10 +138,10 @@ describe AuthenticationStatePolicy do
     let(:user_id) {average_joe_uid}
     it 'returns true when user is a canvas root account administrator' do
       allow(Canvas::Admins).to receive(:new).and_return(double(admin_user?: true))
-      expect(subject.can_administrate_canvas?).to be_true
+      expect(subject.can_administrate_canvas?).to be_truthy
     end
     it 'returns false when user is not a canvas root account administrator' do
-      expect(subject.can_administrate_canvas?).to be_false
+      expect(subject.can_administrate_canvas?).to be_falsey
     end
   end
 
@@ -150,19 +150,19 @@ describe AuthenticationStatePolicy do
     subject { AuthenticationState.new(session_state).policy.can_create_canvas_course_site? }
     context 'when user is not teaching courses in current or future semester' do
       before { allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return(false) }
-      it { should be_false }
+      it { should be_falsey }
     end
     context 'when user is teaching courses in a current term' do
       before { allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return(true) }
-      it { should be_true }
+      it { should be_truthy }
     end
     context 'when user is a canvas root account administrator' do
       before { allow(Canvas::Admins).to receive(:new).and_return(double(admin_user?: true)) }
-      it { should be_true }
+      it { should be_truthy }
     end
     context 'when user is a calcentral administrator' do
       let(:user_id) {superuser_uid}
-      it { should be_true }
+      it { should be_truthy }
     end
   end
 

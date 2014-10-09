@@ -16,7 +16,7 @@ describe "MyAcademics::Exams" do
     feed[:examSchedule][0][:location]["roomNumber"].should == "390"
     feed[:examSchedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
     # Make sure the date epoch matches the expected date.
-    Time.at(feed[:examSchedule][0][:date][:epoch]).to_s.start_with?('2013-05-14').should be_true
+    Time.at(feed[:examSchedule][0][:date][:epoch]).to_s.start_with?('2013-05-14').should be_truthy
     # making sure sorting works in right order
     feed[:examSchedule][0][:date][:epoch].should < feed[:examSchedule][1][:date][:epoch]
     feed[:examSchedule][1][:date][:epoch].should < feed[:examSchedule][2][:date][:epoch]
