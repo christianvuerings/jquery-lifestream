@@ -18,14 +18,10 @@ class Messaging
 
   def self.get_queue(name)
     TorqueBox.fetch(name)
-    # @queues ||= {}
-    # @queues[name] ||= TorqueBox::Messaging::Queue.new(name)
   end
 
   def self.get_topic(name)
     TorqueBox.fetch(name)
-    # @topics ||= {}
-    # @topics[name] ||= TorqueBox::Messaging::Topic.new(name)
   end
 
 end
