@@ -151,8 +151,9 @@ group :development, :testext, :production do
 end
 
 group :development, :test , :testext do
-  gem 'rspec-rails', '~> 2.99.0'
-  gem 'rspec-mocks', '~> 2.99.0'
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec-mocks', '~> 3.1.0'
+  gem 'rspec-support', '~> 3.1.2'
   gem 'rspec-its', '~> 1.0.1'
   gem 'rspec-collection_matchers', '~> 1.0.0'
   gem 'minitest-reporters', '~> 1.0.5'
