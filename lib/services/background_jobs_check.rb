@@ -51,7 +51,6 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
     feed = {}
     last_ping = Rails.cache.read(self.class.cache_key 'cluster')
     if last_ping
-      kick_the_box
       non_fatal_skip = -2 * @time_between_pings
       within_normal_lag = (last_ping >= DateTime.now.advance(minutes: -2))
       if last_ping > DateTime.now.advance(seconds: non_fatal_skip)
@@ -111,11 +110,6 @@ class BackgroundJobsCheck < TorqueBox::Messaging::MessageProcessor
     else
       @cluster_nodes[0]
     end
-  end
-
-  def kick_the_box
-    logger.warn "Sending empty message on node #{current_node_id}"
-    Messaging.publish('/topics/background_jobs_check', {})
   end
 
   def request_ping

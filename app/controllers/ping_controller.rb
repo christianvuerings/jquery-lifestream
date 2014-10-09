@@ -37,7 +37,7 @@ class PingController < ApplicationController
   def background_jobs_check
     Rails.cache.fetch(
       "server_background_jobs_check",
-      :expires_in => 30.seconds) {
+      :expires_in => Settings.background_jobs_check.time_between_pings) {
       BackgroundJobsCheck.new.get_feed
     }
   end
