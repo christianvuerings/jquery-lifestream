@@ -240,21 +240,6 @@
       }
     };
 
-    var isLawStudent = function(collegeAndLevel) {
-      if (!collegeAndLevel || !collegeAndLevel.colleges ||
-          collegeAndLevel.standing === 'Undergraduate') {
-        return false;
-      }
-
-      return collegeAndLevel.colleges[0].college === 'School of Law';
-    };
-
-    if (isLawStudent($scope.collegeAndLevel)) {
-      $scope.transcriptLink = 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php';
-    } else {
-      $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
-    }
-
     var fillSemesterSpecificPage = function(semesterSlug, data) {
       var isOnlyInstructor = !!$routeParams.teachingSemesterSlug;
       var selectedStudentSemester = findSemester(data.semesters, semesterSlug, selectedStudentSemester);
@@ -315,7 +300,6 @@
       }
 
       $scope.isLSStudent = isLSStudent($scope.collegeAndLevel);
-      $scope.isLawStudent = isLawStudent($scope.collegeAndLevel);
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
       $scope.teaching = parseTeaching(data.teachingSemesters);
@@ -353,6 +337,11 @@
         academicsFactory.getAcademics().success(parseAcademics);
         badgesFactory.getBadges().success(function(data) {
           $scope.studentInfo = data.studentInfo;
+          if ($scope.studentInfo.isLawStudent) {
+            $scope.transcriptLink = 'http://www.law.berkeley.edu/php-programs/registrar/forms/transcriptrequestform.php';
+          } else {
+            $scope.transcriptLink = 'https://telebears.berkeley.edu/tranreq/';
+          }
         });
       }
     });

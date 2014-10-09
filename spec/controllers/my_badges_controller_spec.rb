@@ -40,7 +40,7 @@ describe MyBadgesController do
 
     json_response["studentInfo"].present?.should be_truthy
     json_response["studentInfo"].is_a?(Hash).should be_truthy
-    json_response["studentInfo"].keys.count.should == 3
+    json_response["studentInfo"].keys.count.should == 4
   end
 
   context 'viewing-as' do
