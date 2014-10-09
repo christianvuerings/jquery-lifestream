@@ -66,6 +66,14 @@ Spork.prefork do
     # config.mock_with :flexmock
     # config.mock_with :rr
 
+    # The following config turns deprecation warnings into errors, giving you the full backtrace
+    config.raise_errors_for_deprecations!
+    config.infer_spec_type_from_file_location!
+    config.mock_with :rspec do |mocks|
+      mocks.yield_receiver_to_any_instance_implementation_blocks = false
+      mocks.patch_marshal_to_support_partial_doubles = true
+    end
+
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

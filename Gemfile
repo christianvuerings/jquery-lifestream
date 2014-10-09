@@ -154,6 +154,7 @@ group :development, :test , :testext do
   gem 'rspec-rails', '~> 2.99.0'
   gem 'rspec-mocks', '~> 2.99.0'
   gem 'rspec-its', '~> 1.0.1'
+  gem 'rspec-collection_matchers', '~> 1.0.0'
   gem 'minitest-reporters', '~> 1.0.5'
 
   # We need to specify the latest webdriver here, to support the latest firefox

@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe ResearchHub::Proxy do
   let(:user_id) { rand(99999).to_s }
@@ -12,7 +12,7 @@ describe ResearchHub::Proxy do
         expect(group[:id]).to be_present
         expect(group[:name]).to be_present
         expect(group[:site_url]).to be_present
-        expect(group[:emitter]).to eq("researchhub")
+        expect(group[:emitter]).to eq('researchhub')
       end
     end
   end
@@ -23,7 +23,7 @@ describe ResearchHub::Proxy do
   end
 
   context 'exception on connecting' do
-    let(:open_uri_read) {mock 'open'}
+    let(:open_uri_read) {double 'open'}
     before {open_uri_read.stub(:read).and_raise(OpenSSL::SSL::SSLError, 'certificate verify failed')}
     subject { ResearchHub::Proxy.new({:user_id => user_id}) }
     it 'returns an empty array' do

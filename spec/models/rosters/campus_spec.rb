@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Rosters::Campus" do
+describe 'Rosters::Campus' do
   let(:term_yr) {'2014'}
   let(:term_cd) {'B'}
   let(:user_id) {rand(99999).to_s}
@@ -23,7 +23,7 @@ describe "Rosters::Campus" do
         dept: 'INFO',
         course_code: "INFO #{catid}",
         emitter: 'Campus',
-        name: "Data Rules Everything Around Me",
+        name: 'Data Rules Everything Around Me',
         role: 'Instructor',
         sections: [{
           ccn: ccn1,
@@ -47,7 +47,7 @@ describe "Rosters::Campus" do
         dept: 'INFO',
         course_code: "INFO #{catid}",
         emitter: 'Campus',
-        name: "Fake Course Name",
+        name: 'Fake Course Name',
         role: 'Student',
         sections: [{
           ccn: ccn1,
@@ -83,7 +83,7 @@ describe "Rosters::Campus" do
     allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(ccn2, term_yr, term_cd).and_return(fake_students)
   end
 
-  it "should return a list of officially enrolled students for a course ccn" do
+  it 'should return a list of officially enrolled students for a course ccn' do
     model = Rosters::Campus.new(user_id, course_id: campus_course_id)
     feed = model.get_feed
     expect(feed[:campus_course][:id]).to eq campus_course_id
@@ -94,13 +94,13 @@ describe "Rosters::Campus" do
     student = feed[:students][0]
     expect(student[:id]).to eq enrolled_student_login_id
     expect(student[:student_id]).to eq enrolled_student_student_id
-    expect(student[:first_name].blank?).to be_false
-    expect(student[:last_name].blank?).to be_false
+    expect(student[:first_name].blank?).to be_falsey
+    expect(student[:last_name].blank?).to be_falsey
     expect(student[:sections].length).to eq 2
-    expect(student[:profile_url].blank?).to be_false
+    expect(student[:profile_url].blank?).to be_falsey
   end
 
-  it "should show official photo links for students who are not waitlisted in all sections" do
+  it 'should show official photo links for students who are not waitlisted in all sections' do
     model = Rosters::Campus.new(user_id, course_id: campus_course_id)
     feed = model.get_feed
     expect(feed[:sections].length).to eq 2

@@ -54,7 +54,7 @@ describe Canvas::RefreshAllCampusData do
         expect(section_ids[0]).to eq "SEC:2014-B-2#{ccn}"
         expect(section_ids[1]).to eq "SEC:2014-B-1#{ccn}"
         expect(known_users).to eq []
-        expect(options[:batch_mode]).to be_false
+        expect(options[:batch_mode]).to be_falsey
         expect(options[:cached_enrollments_provider]).to be_an_instance_of Canvas::TermEnrollmentsCsv
         double(refresh_sections_in_course: nil)
       end
