@@ -190,9 +190,9 @@ group :test do
 end
 
 group :test, :testext do
-  # RSpec results that Hudson + Bamboo + xml happy CI servers can read.
-  # https://rubygems.org/gems/rspec_junit_formatter
-  gem 'rspec_junit_formatter', '~> 0.2.0'
+  # RSpec results that Hudson + Bamboo + xml happy CI servers can read. See https://rubygems.org/gems/rspec_junit_formatter
+  # TODO: Use gem 'rspec_junit_formatter', '~> 0.2.x' when deprecated concern of CLC-3565 is resolved.
+  gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
 
   gem 'webmock', '~> 1.19.0'
 end
