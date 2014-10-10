@@ -1,8 +1,11 @@
-# TODO collapse this class into Cal1card::Proxy (maybe)
 module Cal1card
   class MyCal1card < UserSpecificModel
-
     include Cache::LiveUpdatesEnabled
+    include Cache::LiveUpdatingProxy
+
+    def default_message_on_exception
+      'An error occurred retrieving data for Cal 1 Card. Please try again later.'
+    end
 
     def get_feed_internal
       feed = {}

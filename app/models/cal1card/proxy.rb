@@ -1,8 +1,6 @@
 module Cal1card
   class Proxy < BaseProxy
-
     include ClassLogger
-    include Cache::UserCacheExpiry
 
     APP_ID = "Cal1Card"
 
@@ -11,15 +9,6 @@ module Cal1card
     end
 
     def get
-      self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "An error occurred retrieving data for Cal 1 Card. Please try again later."}) do
-        internal_get
-      end
-    end
-
-    private
-
-    def internal_get
-      return {} unless Settings.features.cal1card
       if @fake
         logger.info "Fake = #@fake, getting data from XML fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
         xml = File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml').to_s)
@@ -44,6 +33,8 @@ module Cal1card
         statusCode: 200
       })
     end
+
+    private
 
     def convert_xml(xml)
       hash = Hash.from_xml(xml)
