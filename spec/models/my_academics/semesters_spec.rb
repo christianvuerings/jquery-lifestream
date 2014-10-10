@@ -49,7 +49,7 @@ describe MyAcademics::Semesters do
 
     context 'with constrained semester range' do
       before {Settings.terms.stub(:oldest).and_return('fall-2013')}
-      its(:length) {should eq 3}
+      its(:length) {expect eq 3}
     end
   end
 

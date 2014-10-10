@@ -45,7 +45,6 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
-  require 'rspec/autorun'
   require 'capybara/rspec'
   require 'capybara/rails'
   require 'webmock/rspec'
@@ -66,12 +65,18 @@ Spork.prefork do
     # config.mock_with :flexmock
     # config.mock_with :rr
 
-    # The following config turns deprecation warnings into errors, giving you the full backtrace
+    # RSpec 3 upgrade: Deprecation warnings will be errors BUT we support deprecated 'should'.
     config.raise_errors_for_deprecations!
     config.infer_spec_type_from_file_location!
     config.mock_with :rspec do |mocks|
       mocks.yield_receiver_to_any_instance_implementation_blocks = false
       mocks.patch_marshal_to_support_partial_doubles = true
+    end
+    config.expect_with :rspec do |c|
+      c.syntax = [:should, :expect]
+    end
+    config.mock_with :rspec do |c|
+      c.syntax = [:should, :expect]
     end
 
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
