@@ -88,13 +88,14 @@ module Oec
       use_pooled_connection {
         sql = <<-SQL
         select distinct person.first_name, person.last_name,
+          person.first_name || ' ' || person.last_name AS full_name,
           person.email_address, person.ldap_uid
         from calcentral_person_info_vw person, calcentral_class_roster_vw r, calcentral_course_info_vw c
         where
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
           #{self.query_in_chunks('c.course_cntl_num', course_cntl_nums)}
-          and r.enroll_status != 'D'
+          and (r.enroll_status = 'E' OR r.enroll_status = 'C')
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
           and r.course_cntl_num = c.course_cntl_num
@@ -158,6 +159,7 @@ module Oec
         c.course_title_short,
         p.first_name,
         p.last_name,
+        p.first_name || ' ' || p.last_name AS full_name,
         p.email_address,
         i.instructor_func,
         '23' AS blue_role,

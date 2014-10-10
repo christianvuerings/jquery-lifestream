@@ -1,22 +1,22 @@
-LDAP_UID,FIRST_NAME,LAST_NAME,EMAIL_ADDRESS
-10795,Devora,Volz,volz@berkeley.edu
-11042,Keven,Beauchamp,beauchamp@berkeley.edu
-11658,Yevette,Gran,gran@berkeley.edu
-11149,Nannette,Dana,dana@berkeley.edu
-10481,Ira,Guimond,guimond@berkeley.edu
-11540,Andrew,Norcross,norcross@berkeley.edu
-10930,Zenaida,Releford,releford@berkeley.edu
-10710,Kristan,Emmert,emmert@berkeley.edu
-10168,Stephenie,Jansen,jansen@berkeley.edu
-10530,Marianela,Maciel,maciel@berkeley.edu
-11524,Sharee,Backhaus,backhaus@berkeley.edu
-11733,Heidi,Griswold,griswold@berkeley.edu
-10921,Elizabeth,Donner,donner@berkeley.edu
-11491,Arnette,Bowyer,bowyer@berkeley.edu
-10721,Katerine,Fortune,fortune@berkeley.edu
-10364,Porter,Ladd,ladd@berkeley.edu
-10157,Anisa,Leclair,leclair@berkeley.edu
-10731,Beaulah,Hamburg,hamburg@berkeley.edu
-10122,Wallace,Laffin,laffin@berkeley.edu
-10873,Karie,Christiansen,christiansen@berkeley.edu
-11891,Branda,Mericle,mericle@berkeley.edu
+LDAP_UID,FIRST_NAME,LAST_NAME,FULL_NAME,EMAIL_ADDRESS
+10795,Devora,Volz,Devora Volz,volz@berkeley.edu
+11042,Keven,Beauchamp,Keven Beauchamp,beauchamp@berkeley.edu
+11658,Yevette,Gran,Yevette Gran,gran@berkeley.edu
+11149,Nannette,Dana,Nannette Dana,dana@berkeley.edu
+10481,Ira,Guimond,Ira Guimond,guimond@berkeley.edu
+11540,Andrew,Norcross,Andrew Norcross,norcross@berkeley.edu
+10930,Zenaida,Releford,Zenaida Releford,releford@berkeley.edu
+10710,Kristan,Emmert,Kristan Emmert,emmert@berkeley.edu
+10168,Stephenie,Jansen,Stephenie Jansen,jansen@berkeley.edu
+10530,Marianela,Maciel,Marianela Maciel,maciel@berkeley.edu
+11524,Sharee,Backhaus,Sharee Backhaus,backhaus@berkeley.edu
+11733,Heidi,Griswold,Heidi Griswold,griswold@berkeley.edu
+10921,Elizabeth,Donner,Elizabeth Donner,donner@berkeley.edu
+11491,Arnette,Bowyer,Arnette Bowyer,bowyer@berkeley.edu
+10721,Katerine,Fortune,Katerine Fortune,fortune@berkeley.edu
+10364,Porter,Ladd,Porter Ladd,ladd@berkeley.edu
+10157,Anisa,Leclair,Anisa Leclair,leclair@berkeley.edu
+10731,Beaulah,Hamburg,Beaulah Hamburg,hamburg@berkeley.edu
+10122,Wallace,Laffin,Wallace Laffin,laffin@berkeley.edu
+10873,Karie,Christiansen,Karie Christiansen,christiansen@berkeley.edu
+11891,Branda,Mericle,Branda Mericle,mericle@berkeley.edu
