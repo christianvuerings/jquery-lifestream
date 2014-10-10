@@ -2,6 +2,8 @@ module User
   class Api < UserSpecificModel
     include ActiveRecordHelper
     include Cache::LiveUpdatesEnabled
+    include Cache::FreshenOnWarm
+    include Cache::JsonCacher
     include ClassLogger
 
     def init

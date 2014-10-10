@@ -1,9 +1,12 @@
 require 'my_tasks/param_validator'
 
 module MyTasks
-  class Merged < FilteredViewAsModel
+  class Merged < UserSpecificModel
     include MyTasks::ParamValidator
     include Cache::LiveUpdatesEnabled
+    include Cache::FreshenOnWarm
+    include Cache::JsonCacher
+    include Cache::FilteredViewAsFeed
 
     attr_reader :enabled_sources
 

@@ -1,7 +1,10 @@
 module UpNext
-  class MyUpNext < FilteredViewAsModel
+  class MyUpNext < UserSpecificModel
     include DatedFeed
     include Cache::LiveUpdatesEnabled
+    include Cache::FreshenOnWarm
+    include Cache::JsonCacher
+    include Cache::FilteredViewAsFeed
 
     attr_reader :begin_today, :next_day
 

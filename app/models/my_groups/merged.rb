@@ -1,6 +1,8 @@
 class MyGroups::Merged  < UserSpecificModel
 
   include Cache::LiveUpdatesEnabled
+  include Cache::FreshenOnWarm
+  include Cache::JsonCacher
 
   def get_feed_internal
     groups = []
