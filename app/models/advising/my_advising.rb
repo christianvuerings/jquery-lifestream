@@ -1,8 +1,11 @@
-# TODO collapse this class into Advising::Proxy (maybe)
 module Advising
   class MyAdvising < UserSpecificModel
-
     include Cache::LiveUpdatesEnabled
+    include Cache::LiveUpdatingProxy
+
+    def default_message_on_exception
+      'Failed to connect with your department\'s advising system.'
+    end
 
     def get_feed_internal
       feed = {}
