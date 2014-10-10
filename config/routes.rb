@@ -57,7 +57,8 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/course_user_roles' => 'canvas_course_add_user#course_user_roles', :defaults => { :format => 'json' }
   get '/api/academics/canvas/external_tools' => 'canvas#external_tools', :defaults => { :format => 'json' }
   get '/api/academics/canvas/user_can_create_course_site' => 'canvas#user_can_create_course_site', :defaults => { :format => 'json' }
-  get '/api/academics/canvas/download_egrades' => 'canvas_course_grade_export#download_egrades_csv', :defaults => { :format => 'csv' }
+  get '/api/academics/canvas/egrade_export/download' => 'canvas_course_grade_export#download_egrades_csv', :defaults => { :format => 'csv' }
+  get '/api/academics/canvas/egrade_export/options' => 'canvas_course_grade_export#export_options', :defaults => { :format => 'json' }
   get '/api/academics/rosters/canvas/:canvas_course_id' => 'canvas_rosters#get_feed', :as => :canvas_roster, :defaults => { :format => 'json' }
   get '/api/academics/rosters/campus/:campus_course_id' => 'campus_rosters#get_feed', :as => :campus_roster, :defaults => { :format => 'json' }
   get '/canvas/:canvas_course_id/photo/:person_id' => 'canvas_rosters#photo', :defaults => { :format => 'jpeg' }, :action => 'show'
