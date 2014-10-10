@@ -1,37 +1,17 @@
 module Financials
   # This model class caches a JSON translation of CFV data fetched by Financials::Proxy.
-  # Inheriting from UserSpecificModel means it participates in the live-updates cache
-  # invalidation and warmup cycle.
+  # Including LiveUpdatesEnabled means it participates in the live-updates cache invalidation and warmup cycle.
+  # Due to the potential size of finance data, the JSON version of the feed is not cached separately.
   class MyFinancials < UserSpecificModel
-    include Cache::LiveUpdatesEnabled, Cache::UserCacheExpiry, SafeJsonParser
+    include Cache::LiveUpdatesEnabled
+    include Cache::LiveUpdatingProxy
+    include SafeJsonParser
     include User::Student
-
-    # Due to the potential size of finance data, the JSON version of the feed is not cached separately.
-    def self.caches_separate_json?
-      false
-    end
-
-    def warm_cache
-      get_feed(false)
-    end
 
     # Calling to_json on a large finances structure can take a very long time, and so
     # a JSON-fied version of the feed is cached and returned instead.
-    def get_feed(force_cache_write=false)
-      # smart_fetch_from_cache provides helpful services like special cache handling for exceptions.
-      self.class.smart_fetch_from_cache({
-        force_write: force_cache_write,
-        id: @uid,
-        user_message_on_exception: user_message_on_exception
-      }) do
-        feed = get_feed_internal
-        status_code = feed[:statusCode]
-        feed_json = feed.to_json
-        if (status_code >= 400) && (status_code != 404)
-          raise Errors::ProxyError.new("Connection failed for UID #{@uid}: #{status_code} #{feed[:body]}", feed_json)
-        end
-        feed_json
-      end
+    def self.jsonify_feed
+      true
     end
 
     def get_feed_internal
@@ -44,7 +24,11 @@ module Financials
         response = Financials::Proxy.new(user_id: @uid, student_id: student_id).get
         feed = parse_response(response)
       end
-      feed.merge(feed_metadata(feed, instance_key))
+      status_code = feed[:statusCode]
+      if (status_code >= 400) && (status_code != 404)
+        raise Errors::ProxyError.new("Connection failed for UID #{@uid}: #{status_code} #{feed[:body]}", feed)
+      end
+      feed
     end
 
     def parse_response(response)
@@ -93,7 +77,7 @@ module Financials
       }
     end
 
-    def user_message_on_exception
+    def default_message_on_exception
       'My Finances is currently unavailable. Please try again later.'
     end
 
