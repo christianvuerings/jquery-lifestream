@@ -1,3 +1,11 @@
+PATH
+  remote: ccadmin
+  specs:
+    ccadmin (0.6.5)
+      bootstrap-sass (~> 3.2.0.2)
+      rails (~> 4.1.6)
+      rails_admin (= 0.6.5)
+
 GIT
   remote: https://github.com/instructure/ims-lti.git
   revision: b909e936a3c8ed13fec527d0dfe3c177431d2932
@@ -6,14 +14,6 @@ GIT
       builder
       oauth (~> 0.4.5)
       uuid
-
-PATH
-  remote: ccadmin
-  specs:
-    ccadmin (0.6.5)
-      bootstrap-sass (~> 3.2.0.2)
-      rails (~> 4.1.6)
-      rails_admin (= 0.6.5)
 
 GEM
   remote: https://rubygems.org/
