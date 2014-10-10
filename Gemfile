@@ -10,7 +10,7 @@ gem 'rails', '4.1.6'
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
 gem 'actionpack-xml_parser', '~>1.0.1'
-gem 'actionview-encoded_mail_to', '~>1.0.4'
+gem 'actionview-encoded_mail_to', '~>1.0.5'
 gem 'activerecord-session_store', '~>0.1.0'
 gem 'activeresource', '~>4.0.0'
 gem 'protected_attributes', '~> 1.0.8'
@@ -152,7 +152,7 @@ end
 
 group :development, :test , :testext do
   gem 'rspec-rails', '~> 3.1.0'
-  gem 'rspec-mocks', '~> 3.1.0'
+  gem 'rspec-mocks', '~> 3.1.3'
   gem 'rspec-support', '~> 3.1.2'
   gem 'rspec-its', '~> 1.0.1'
   gem 'rspec-collection_matchers', '~> 1.0.0'
