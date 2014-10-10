@@ -3,6 +3,7 @@ module Finaid
   class MyFinAid < UserSpecificModel
     include ClassLogger
     include Cache::LiveUpdatesEnabled
+    include Cache::JsonCacher
 
     def get_feed_internal
       feed = {
@@ -18,7 +19,11 @@ module Finaid
       begin
         append_activities!(activities)
       rescue => e
-        self.class.handle_exception(e, @uid, "Remote server unreachable", true)
+        self.class.handle_exception(e, self.class.cache_key(@uid), {
+          id: @uid,
+          user_message_on_exception: "Remote server unreachable",
+          return_nil_on_generic_error: true
+        })
       end
     end
 
