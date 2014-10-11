@@ -8,11 +8,11 @@ module Oec
     end
 
     def base_file_name
-      "students"
+      'students'
     end
 
     def headers
-      'LDAP_UID,FIRST_NAME,LAST_NAME,EMAIL_ADDRESS'
+      'LDAP_UID,FIRST_NAME,LAST_NAME,FULL_NAME,EMAIL_ADDRESS'
     end
 
     def append_records(output)

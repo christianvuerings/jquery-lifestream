@@ -1,11 +1,9 @@
-require "spec_helper"
-
 describe Oec::Courses do
 
-  let!(:random_time) { Time.now.to_f.to_s.gsub(".", "") }
+  let!(:random_time) { Time.now.to_f.to_s.gsub('.', '') }
 
-  context "exported file in tmp directory" do
-    let!(:spec_file) { CSV.read("fixtures/oec/courses.csv") }
+  context 'exported file in tmp directory' do
+    let!(:spec_file) { CSV.read('fixtures/oec/courses.csv') }
 
     before(:each) {
       all_courses_query = []
@@ -15,30 +13,31 @@ describe Oec::Courses do
           split_course_id = course_id.split('-')
           cross_listings = row[3]
           all_courses_query << {
-            "term_yr" => split_course_id[0],
-            "term_cd" => split_course_id[1],
-            "course_cntl_num" => split_course_id[2].split('_')[0],
-            "course_id" => course_id,
-            "course_name" => row[1],
-            "cross_listed_flag" => row[2],
-            "cross_listed_name" => cross_listings.present? ? cross_listings[/\((.*)\)/,1] : nil,
-            "course_title_short" => cross_listings.present? ? cross_listings[/(.*?)\s\(/,1] : nil,
-            "dept_name" => row[4],
-            "catalog_id" => row[5],
-            "instruction_format" => row[6],
-            "section_num" => row[7],
-            "primary_secondary_cd" => row[8],
-            "ldap_uid" => row[9],
-            "first_name" => row[10],
-            "last_name" => row[11],
-            "email_address" => row[12],
-            "instructor_func" => row[13],
-            "blue_role" => row[14],
-            "evaluate" => row[15],
-            "evaluation_type" => row[16],
-            "modular_course" => row[17],
-            "start_date" => row[18],
-            "end_date" => row[19]
+            'term_yr' => split_course_id[0],
+            'term_cd' => split_course_id[1],
+            'course_cntl_num' => split_course_id[2].split('_')[0],
+            'course_id' => course_id,
+            'course_name' => row[1],
+            'cross_listed_flag' => row[2],
+            'cross_listed_name' => cross_listings.present? ? cross_listings[/\((.*)\)/,1] : nil,
+            'course_title_short' => cross_listings.present? ? cross_listings[/(.*?)\s\(/,1] : nil,
+            'dept_name' => row[4],
+            'catalog_id' => row[5],
+            'instruction_format' => row[6],
+            'section_num' => row[7],
+            'primary_secondary_cd' => row[8],
+            'ldap_uid' => row[9],
+            'first_name' => row[10],
+            'last_name' => row[11],
+            'full_name' => row[12],
+            'email_address' => row[13],
+            'instructor_func' => row[14],
+            'blue_role' => row[15],
+            'evaluate' => row[16],
+            'evaluation_type' => row[17],
+            'modular_course' => row[18],
+            'start_date' => row[19],
+            'end_date' => row[20]
           }
         end
       end

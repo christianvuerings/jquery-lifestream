@@ -8,7 +8,7 @@ module Oec
     end
 
     def base_file_name
-      "course_students"
+      'course_students'
     end
 
     def headers
@@ -25,7 +25,7 @@ module Oec
       if @gsi_ccns.length > 0
         Oec::Queries.get_all_course_students(@gsi_ccns).each do |record|
           row = record_to_csv_row(record)
-          row["COURSE_ID"] = "#{row["COURSE_ID"]}_GSI"
+          row['COURSE_ID'] = "#{row['COURSE_ID']}_GSI"
           output << row
         end
       end
