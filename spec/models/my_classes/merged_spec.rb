@@ -27,7 +27,7 @@ describe MyClasses::Merged do
     let(:user_cache_key) {MyClasses::Merged.cache_key(user_id)}
     before {Rails.cache.write(user_cache_key, 'myclasses cached user value')}
     it 'clears user cache' do
-      MyClasses::Merged.expire(user_id).expire_cache
+      MyClasses::Merged.new(user_id).expire_cache
       expect(Rails.cache.fetch(user_cache_key)).to eq nil
     end
   end
