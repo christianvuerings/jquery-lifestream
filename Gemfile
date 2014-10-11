@@ -77,7 +77,7 @@ gem 'nokogiri', '~> 1.5.9', :platforms => :jruby
 gem 'link_header', '~> 0.0.7'
 
 # for simplified relational data management
-gem 'ccadmin', path: 'ccadmin'
+gem 'rails_admin', '0.6.5'
 
 gem 'bootstrap-sass', '~> 3.2.0.2'
 
