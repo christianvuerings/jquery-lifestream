@@ -3,23 +3,21 @@ require "spec_helper"
 describe Cal1card::MyCal1card do
 
   let!(:oski_uid) { "61889" }
-  let!(:fake_proxy) { Cal1card::Proxy.new({user_id: oski_uid, fake: true}) }
-  let!(:real_oski_proxy) { Cal1card::Proxy.new({user_id: '61889', fake: false}) }
-  before(:each) { Cal1card::Proxy.stub(:new).and_return(fake_proxy) }
+  let!(:fake_proxy) { Cal1card::MyCal1card.new(oski_uid, {fake: true}) }
+  let!(:real_oski_proxy) { Cal1card::MyCal1card.new(oski_uid, {fake: false}) }
+  before(:each) { Cal1card::MyCal1card.stub(:new).and_return(fake_proxy) }
   subject { Cal1card::MyCal1card.new(oski_uid).get_feed }
 
-  context "happy path" do
+  context "happy path with fake data" do
     include_context 'Live Updates cache'
     it {
       should_not be_nil
-      subject[:cal1cardStatus].should_not be_nil
+      subject[:cal1cardStatus].should == 'OK'
+      subject[:debit].should == '0.8'
+      subject[:mealpoints].should == '359.11'
+      subject[:mealpointsPlan].should == 'Resident Meal Plan Points'
       subject[:statusCode].should eq 200
     }
-  end
-
-  context "it should not explode on a null proxy response" do
-    before(:each) { fake_proxy.stub(:get).and_return(nil) }
-    it { subject.length.should == 2 }
   end
 
   context "it should respect a disabled feature flag" do
@@ -31,7 +29,7 @@ describe Cal1card::MyCal1card do
   context "server errors" do
     include_context 'short-lived Live Updates cache'
     let (:cal1card_uri) { URI.parse(Settings.cal1card_proxy.feed_url) }
-    before(:each) { Cal1card::Proxy.stub(:new).and_return(real_oski_proxy) }
+    before(:each) { Cal1card::MyCal1card.stub(:new).and_return(real_oski_proxy) }
     after(:each) { WebMock.reset! }
 
     context "unreachable remote server (connection errors)" do
