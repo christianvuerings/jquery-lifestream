@@ -2,7 +2,7 @@ module MyBadges
   class Merged < UserSpecificModel
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
     include Cache::FilteredViewAsFeed
 
     GOOGLE_SOURCES = {

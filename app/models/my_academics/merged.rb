@@ -3,7 +3,7 @@ module MyAcademics
 
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
 
     def get_feed_internal
       feed = {}

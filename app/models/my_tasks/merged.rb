@@ -5,7 +5,7 @@ module MyTasks
     include MyTasks::ParamValidator
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
     include Cache::FilteredViewAsFeed
 
     attr_reader :enabled_sources

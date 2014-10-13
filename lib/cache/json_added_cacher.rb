@@ -1,6 +1,6 @@
-# Cache the JSONified feed for maximum efficiency when we're called by a controller.
+# Cache the JSONified feed (as well as the raw feed) for maximum efficiency when we're called by a controller.
 module Cache
-  module JsonCacher
+  module JsonAddedCacher
 
     def self.included base
       base.extend ClassMethods

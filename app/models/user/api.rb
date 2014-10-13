@@ -3,7 +3,7 @@ module User
     include ActiveRecordHelper
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
     include ClassLogger
 
     def init

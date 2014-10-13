@@ -3,7 +3,7 @@ module MyActivities
 
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
 
     attr_accessor :site_proxies
     attr_accessor :proxies

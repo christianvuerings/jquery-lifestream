@@ -1,7 +1,7 @@
 module Cal1card
   class MyCal1card < UserSpecificModel
     include Cache::LiveUpdatesEnabled
-    include Cache::LiveUpdatingProxy
+    include Cache::FeedExceptionsHandled
 
     def default_message_on_exception
       'An error occurred retrieving data for Cal 1 Card. Please try again later.'

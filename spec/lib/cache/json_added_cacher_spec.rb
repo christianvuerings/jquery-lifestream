@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Cache::JsonCacher do
+describe Cache::JsonAddedCacher do
   class JsonCachingTestClass
     include Cache::CachedFeed
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
     def get_feed_internal
       {}
     end

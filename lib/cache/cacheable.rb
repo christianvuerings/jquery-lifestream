@@ -15,8 +15,10 @@ module Cache
         :force => force_write
       ) do
         if block_given?
-          new_value = yield
-          new_value.nil? ? NilClass : new_value
+          response = yield
+          response = process_response_before_caching(response, {id: id, force_write: force_write})
+          cached_entry = response.nil? ? NilClass : response
+          cached_entry
         end
       end
       (value == NilClass) ? nil : value
@@ -40,7 +42,6 @@ module Cache
       end
       wrapped_response = handling_exceptions(key, opts, &block)
       response = wrapped_response[:response]
-      cached_entry = (response.nil?) ? NilClass : response
       if wrapped_response[:exception]
         Rails.logger.debug "#{self.name} Error occurred; writing entry to cache with short lifespan: #{key}"
         expiration = Settings.cache.expiration.failure
@@ -48,10 +49,17 @@ module Cache
         Rails.logger.debug "#{self.name} Writing entry to cache: #{key}"
         expiration = self.expires_in
       end
+      response = process_response_before_caching(response, opts)
+      cached_entry = (response.nil?) ? NilClass : response
       Rails.cache.write(key,
                         cached_entry,
                         :expires_in => expiration,
                         :force => true)
+      response
+    end
+
+    # Override to cache JSON, decorate the response with metadata, etc.
+    def process_response_before_caching(response, opts)
       response
     end
 

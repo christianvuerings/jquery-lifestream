@@ -5,7 +5,8 @@ module Cache
     def self.included(klass)
       @classes ||= []
       @classes << klass
-      klass.extend Cache::Cacheable, ClassMethods
+      klass.extend Cache::Cacheable
+      klass.extend ClassMethods
       klass.class_eval do
         include ClassLogger, DatedFeed
       end
@@ -35,16 +36,16 @@ module Cache
       get_feed(freshen_on_warm)
     end
 
-    def get_feed(force_cache_write=false)
-      key = instance_key
-      self.class.fetch_from_cache(key, force_cache_write) do
-        init
-        feed = get_feed_internal
-        feed.merge(self.class.feed_metadata(feed, key))
-      end
-    end
-
     module ClassMethods
+
+      # Decorate the basic feed with Live Updates metadata.
+      def process_response_before_caching(response, opts)
+        if response.respond_to?(:merge)
+          response = response.merge(self.feed_metadata(response, opts[:id]))
+        end
+        super(response, opts)
+      end
+
       def feed_metadata(feed, key)
         last_modified = notify_if_feed_changed(feed, key)
         {

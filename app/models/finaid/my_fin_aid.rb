@@ -3,7 +3,7 @@ module Finaid
   class MyFinAid < UserSpecificModel
     include ClassLogger
     include Cache::LiveUpdatesEnabled
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
 
     def get_feed_internal
       feed = {

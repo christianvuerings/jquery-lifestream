@@ -16,7 +16,7 @@ describe Cache::LiveUpdatesEnabled do
   end
   class JsonLiveUpdatesTestClass < UserSpecificModel
     include Cache::LiveUpdatesEnabled
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
     def get_feed_internal
       {}
     end

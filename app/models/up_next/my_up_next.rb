@@ -3,7 +3,7 @@ module UpNext
     include DatedFeed
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
-    include Cache::JsonCacher
+    include Cache::JsonAddedCacher
     include Cache::FilteredViewAsFeed
 
     attr_reader :begin_today, :next_day

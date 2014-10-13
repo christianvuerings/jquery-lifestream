@@ -1,7 +1,7 @@
 module Advising
   class MyAdvising < UserSpecificModel
     include Cache::LiveUpdatesEnabled
-    include Cache::LiveUpdatingProxy
+    include Cache::FeedExceptionsHandled
 
     def default_message_on_exception
       'Failed to connect with your department\'s advising system.'

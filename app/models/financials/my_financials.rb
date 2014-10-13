@@ -1,20 +1,15 @@
 module Financials
   # This model class caches a JSON translation of CFV data fetched by Financials::Proxy.
   # Including LiveUpdatesEnabled means it participates in the live-updates cache invalidation and warmup cycle.
-  # Including LiveUpdatesProxy indicates that it only keeps one copy of cached data, rather than separate
-  # copies for the API endpoint and for the original CFV data, and that it uses a shorter-lived cache to
-  # deal with temporary CFV server problems
+  # Including FeedExceptionsHandled makes it use a shorter-lived cache to deal with temporary CFV server problems.
+  # Including JsonifiedFeed indicates that it only keeps one copy of cached data, rather than separate
+  # copies for the API endpoint and for the original CFV data.
   class MyFinancials < UserSpecificModel
     include Cache::LiveUpdatesEnabled
-    include Cache::LiveUpdatingProxy
+    include Cache::FeedExceptionsHandled
+    include Cache::JsonifiedFeed
     include SafeJsonParser
     include User::Student
-
-    # Calling to_json on a large finances structure can take a very long time, and so
-    # only a JSON-fied version of the feed is cached and returned.
-    def self.jsonify_feed
-      true
-    end
 
     def get_feed_internal
       student_id = lookup_student_id
