@@ -1,9 +1,12 @@
 require 'my_tasks/param_validator'
 
 module MyTasks
-  class Merged < FilteredViewAsModel
+  class Merged < UserSpecificModel
     include MyTasks::ParamValidator
     include Cache::LiveUpdatesEnabled
+    include Cache::FreshenOnWarm
+    include Cache::JsonAddedCacher
+    include Cache::FilteredViewAsFeed
 
     attr_reader :enabled_sources
 
@@ -46,7 +49,7 @@ module MyTasks
       response = source.update_task(params, task_list_id)
       if response != {}
         expire_cache
-        source.expire_cache @uid
+        source.class.expire @uid
       end
       response
     end
@@ -58,7 +61,7 @@ module MyTasks
       response = source.insert_task(params, task_list_id)
       if response != {}
         expire_cache
-        source.expire_cache @uid
+        source.class.expire @uid
       end
       response
     end
@@ -70,7 +73,7 @@ module MyTasks
       response = source.clear_completed_tasks(task_list_id)
       if response[:tasksCleared] != false
         expire_cache
-        source.expire_cache @uid
+        source.class.expire @uid
       end
       response
     end
@@ -82,7 +85,7 @@ module MyTasks
       response = source.delete_task(params, task_list_id)
       if response != {}
         expire_cache
-        source.expire_cache @uid
+        source.class.expire @uid
       end
       response
     end

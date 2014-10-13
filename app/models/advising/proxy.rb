@@ -4,7 +4,6 @@ module Advising
     include SafeJsonParser
     include ClassLogger
     include User::Student
-    include Cache::UserCacheExpiry
 
     APP_ID = 'Advising'
 
@@ -13,15 +12,6 @@ module Advising
     end
 
     def get
-      self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: 'Failed to connect with your department\'s advising system.'}) do
-        internal_get
-      end
-    end
-
-    private
-
-    def internal_get
-      return {} unless Settings.features.advising
       student_id = lookup_student_id
       if student_id.blank?
         # don't continue if student id can't be found.

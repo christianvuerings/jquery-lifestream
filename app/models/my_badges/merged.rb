@@ -1,6 +1,9 @@
 module MyBadges
-  class Merged < FilteredViewAsModel
+  class Merged < UserSpecificModel
     include Cache::LiveUpdatesEnabled
+    include Cache::FreshenOnWarm
+    include Cache::JsonAddedCacher
+    include Cache::FilteredViewAsFeed
 
     GOOGLE_SOURCES = {
       'bcal' => GoogleCalendar,

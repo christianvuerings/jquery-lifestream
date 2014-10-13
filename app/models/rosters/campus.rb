@@ -1,7 +1,5 @@
 module Rosters
   class Campus < Common
-    include ActiveAttr::Model, ClassLogger, SafeJsonParser
-    extend Cache::Cacheable
 
     def get_feed_internal
       feed = {

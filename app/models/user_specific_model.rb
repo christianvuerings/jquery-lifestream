@@ -1,4 +1,6 @@
-class UserSpecificModel < AbstractModel
+class UserSpecificModel
+  include ActiveAttr::Model
+  include ClassLogger
   attr_reader :authentication_state
 
   def self.from_session(session_state)
@@ -9,9 +11,13 @@ class UserSpecificModel < AbstractModel
   end
 
   def initialize(uid, options={})
-    super(uid, options)
     @uid = uid
+    @options = options
     @authentication_state = AuthenticationState.new(@options.merge(user_id: @uid))
+  end
+
+  def instance_key
+    @uid
   end
 
   def directly_authenticated?

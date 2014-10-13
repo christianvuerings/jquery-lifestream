@@ -189,7 +189,6 @@ cache:
     MyCampusLinksController: NEXT_08_00
     MyClasses::Merged: NEXT_08_00
     Finaid::MyFinAid: NEXT_08_00
-    Cal1card::MyCal1card: NEXT_08_00
     MyGroups::Merged: NEXT_08_00
     MyTasks::Merged: NEXT_00_00
     UpNext::MyUpNext: NEXT_00_00
@@ -200,6 +199,7 @@ cache:
     Canvas::CourseStudents: <%= 15.minutes %>
     Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasCourseProvisioningJobs: <%= 24.hours %>
+    Advising::MyAdvising: <%= 2.hours %>
 
     Berkeley::Terms: NEXT_08_00
     Finaid::TimeRange: <%= 4.hours %>
