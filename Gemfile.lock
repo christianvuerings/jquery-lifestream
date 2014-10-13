@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/sj26/rspec_junit_formatter.git
-  revision: 850d57cc5bd4f88dd1d4ffb245d57f222cd9e04f
-  specs:
-    rspec_junit_formatter (0.2.0)
-      builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
-
-GIT
   remote: https://github.com/instructure/ims-lti.git
   revision: b909e936a3c8ed13fec527d0dfe3c177431d2932
   specs:
@@ -15,6 +6,15 @@ GIT
       builder
       oauth (~> 0.4.5)
       uuid
+
+GIT
+  remote: https://github.com/sj26/rspec_junit_formatter.git
+  revision: 850d57cc5bd4f88dd1d4ffb245d57f222cd9e04f
+  specs:
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
 
 GEM
   remote: https://rubygems.org/
@@ -114,13 +114,13 @@ GEM
     chunky_png (1.3.1)
     closure-compiler (1.1.11)
     coderay (1.1.0)
-    coffee-rails (4.0.1)
+    coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
-    coffee-script (2.2.0)
+    coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.0)
+    coffee-script-source (1.8.0)
     columnize (0.3.6)
     compass (0.12.4)
       chunky_png (~> 1.2)
@@ -143,7 +143,7 @@ GEM
       http_parser.rb (~> 0.6.0)
     erubis (2.7.0)
     eventmachine (1.0.3-java)
-    execjs (2.0.2)
+    execjs (2.2.1)
     extlib (0.9.16)
     faker (1.4.2)
       i18n (~> 0.5)
@@ -224,7 +224,7 @@ GEM
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.3)
-    minitest (5.4.1)
+    minitest (5.4.2)
     minitest-reporters (1.0.5)
       ansi
       builder
@@ -480,7 +480,7 @@ DEPENDENCIES
   capistrano (~> 2.15.4)
   capybara (~> 2.4.3)
   closure-compiler (~> 1.1.11)
-  coffee-rails (~> 4.0.1)
+  coffee-rails (~> 4.1.0)
   compass-rails (~> 2.0.0)
   dalli (~> 2.7.2)
   faraday (~> 0.9.0)
