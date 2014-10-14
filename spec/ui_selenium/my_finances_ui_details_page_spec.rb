@@ -44,7 +44,7 @@ describe 'My Finances details page', :testui => true do
       end
       it 'allow a user to filter for open charges containing a specified string' do
         if @fin_api_page.open_charges.length > 0
-          transaction = @fin_api_page.open_transactions[1]
+          transaction = @fin_api_page.open_transactions.last
           search_string = @fin_api_page.trans_id(transaction)
           @my_finances_details_page.select_transactions_filter('Balance')
           @my_finances_details_page.enter_search_string(search_string)
@@ -59,7 +59,7 @@ describe 'My Finances details page', :testui => true do
         wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.all_transactions.length }
       end
       it 'allow a user to filter all transactions by a specified string' do
-        transaction = @fin_api_page.all_transactions[1]
+        transaction = @fin_api_page.all_transactions.last
         search_string = @fin_api_page.trans_id(transaction)
         @my_finances_details_page.select_transactions_filter('All Transactions')
         @my_finances_details_page.enter_search_string(search_string)
@@ -67,7 +67,7 @@ describe 'My Finances details page', :testui => true do
         @my_finances_details_page.show_more_button?.should be_false
       end
       it 'allow a user to filter all transactions by a specific term' do
-        transaction = @fin_api_page.all_transactions[1]
+        transaction = @fin_api_page.all_transactions.last
         term = @fin_api_page.trans_term(transaction)
         @my_finances_details_page.select_transactions_filter('Term')
         @my_finances_details_page.select_term_filter(term)
@@ -75,7 +75,7 @@ describe 'My Finances details page', :testui => true do
         wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.term_transactions(term).length }
       end
       it 'allow a user to filter all transactions by a specific term and a specified string' do
-        transaction = @fin_api_page.all_transactions[1]
+        transaction = @fin_api_page.all_transactions.last
         search_string = @fin_api_page.trans_id(transaction)
         search_term = @fin_api_page.trans_term(transaction)
         @my_finances_details_page.select_transactions_filter('Term')
@@ -85,7 +85,7 @@ describe 'My Finances details page', :testui => true do
         @my_finances_details_page.show_more_button?.should be_false
       end
       it 'allow a user to filter all transactions by a date range' do
-        transaction = @fin_api_page.all_transactions[1]
+        transaction = @fin_api_page.all_transactions.last
         date = Time.parse(@fin_api_page.trans_date(transaction)).strftime('%m/%d/%Y')
         @my_finances_details_page.select_transactions_filter('Date Range')
         @my_finances_details_page.enter_search_start_date(date)
@@ -94,7 +94,7 @@ describe 'My Finances details page', :testui => true do
         wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.date_range_transactions(date, date).length }
       end
       it 'allow a user to filter all transactions by a start date only' do
-        transaction = @fin_api_page.all_transactions[1]
+        transaction = @fin_api_page.all_transactions.last
         date = Time.parse(@fin_api_page.trans_date(transaction)).strftime('%m/%d/%Y')
         end_of_time = ('12/31/2100')
         @my_finances_details_page.select_transactions_filter('Date Range')
@@ -105,7 +105,7 @@ describe 'My Finances details page', :testui => true do
         wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.date_range_transactions(date, end_of_time).length }
       end
       it 'allow a user to filter all transactions by an end date only' do
-        transaction = @fin_api_page.all_transactions[1]
+        transaction = @fin_api_page.all_transactions.last
         date = Time.parse(@fin_api_page.trans_date(transaction))
         end_date = date.strftime('%m/%d/%Y')
         beginning_of_time = '01/01/2000'
@@ -117,7 +117,7 @@ describe 'My Finances details page', :testui => true do
         wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.date_range_transactions(beginning_of_time, end_date).length }
       end
       it 'allow a user to filter all transactions by a date range and a specified string' do
-        transaction = @fin_api_page.all_transactions[1]
+        transaction = @fin_api_page.all_transactions.last
         date = Time.parse(@fin_api_page.trans_date(transaction)).strftime('%m/%d/%Y')
         search_string = @fin_api_page.trans_id(transaction)
         @my_finances_details_page.select_transactions_filter('Date Range')
