@@ -1,9 +1,13 @@
 <div class="cc-page-course-grade-export">
 
-  <div data-ng-if="userAuthorized">
+  <div data-ng-if="appState === 'ready'">
 
     <div class="cc-page-course-grade-export-container">
-      <a href="/api/academics/canvas/download_egrades.csv" target="_self" class="button">Download eGrades</a>
+      <p>
+        Select Section: <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
+      </p>
+
+      <a data-ng-href="/api/academics/canvas/egrade_export/download.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}" target="_self" class="button">Download eGrades</a>
 
       <div class="cc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
         <a data-ng-click="goToGradebook()">Back to Gradebook</a>
@@ -12,9 +16,43 @@
 
   </div>
 
-  <div data-ng-if="showError" class="cc-page-course-grade-export-unauthorized">
-    <i class="fa fa-warning"></i>
-    <span data-ng-bind="errorStatus"></span>
+  <div data-ng-if="appState === 'error'" class="cc-page-course-grade-export-unauthorized">
+
+    <!-- Standard Error -->
+    <div data-ng-if="errorStatus">
+      <p>
+        <i class="fa fa-warning"></i>
+        <span data-ng-bind="errorStatus"></span>
+      </p>
+      <p data-ng-if="contactSupport">Please contact <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> for further assistance.</p>
+      <p data-ng-if="unexpectedContactSupport">If this is not expected, please contact <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> for further assistance.</p>
+    </div>
+
+    <!-- No Number Grades Present -->
+    <div data-ng-if="!errorStatus && noNumberGrades">
+      <p>
+        <i class="fa fa-warning"></i>
+        No final grades are detected for students in this course. For more information on grading please see <a href="http://guides.instructure.com/m/4152/l/54996-what-are-grades-and-the-gradebook">What are Grades and the Gradebook?</a>.
+      </p>
+      <p>After grades have been made available for students in this course, please feel free to try again.</p>
+    </div>
+
+    <!-- No Letter Grades Present -->
+    <div data-ng-if="!errorStatus && noLetterGrades">
+      <p>
+        <i class="fa fa-warning"></i>
+        The letter grades required for eGrade exports are currently not available for this course.
+      </p>
+      <p>
+        Please edit the <a data-ng-click="goToCourseDetails()">course details</a> for this course site
+        to enable the appropriate course grading scheme, and then return here to try again.
+      </p>
+      <p>
+        For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
+      </p>
+    </div>
+
+
   </div>
 
 </div>
