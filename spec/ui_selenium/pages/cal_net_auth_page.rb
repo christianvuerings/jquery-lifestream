@@ -12,7 +12,7 @@ module CalNetPages
 
     h2(:page_heading, :xpath => '//h2[contains(.,"CalNet Authentication Service")]')
     h3(:login_message, :xpath => '//h3[@class="login-message"]')
-    h3(:logout_conf_heading, :xpath => '//h3[contains(.,"Logout Successful")]')
+    h2(:logout_conf_heading, :xpath => '//h2[contains(.,"Logout Successful")]')
     text_field(:username, :id => 'username')
     text_field(:password, :id => 'password')
     button(:submit, :value => 'Sign In')
