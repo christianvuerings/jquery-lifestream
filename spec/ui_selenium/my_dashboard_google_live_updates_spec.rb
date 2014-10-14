@@ -59,14 +59,14 @@ describe 'My Dashboard bConnected live updates', :testui => true do
     context 'for Google mail' do
 
       it 'shows a user an updated count of email messages' do
-        @dashboard.email_count.should eql((@initial_mail_count + 1).to_s)
+        expect(@dashboard.email_count).to eql((@initial_mail_count + 1).to_s)
       end
 
       it 'shows a user a snippet of a new email message' do
         @dashboard.show_unread_email
-        @dashboard.email_one_sender.should eql("me")
-        @dashboard.email_one_subject.should eql('Test email ' + id)
-        @dashboard.email_one_summary.should eql('This is the subject of test email ' + id)
+        expect(@dashboard.email_one_sender).to eql("me")
+        expect(@dashboard.email_one_subject).to eql('Test email ' + id)
+        expect(@dashboard.email_one_summary).to eql('This is the subject of test email ' + id)
       end
     end
 
@@ -75,13 +75,13 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       it 'shows a user an updated count of tasks' do
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-        @to_do_card.unsched_task_count.should eql((@initial_task_count + 1).to_s)
+        expect(@to_do_card.unsched_task_count).to eql((@initial_task_count + 1).to_s)
       end
 
       it 'shows a user the content of a new task' do
         @to_do_card.click_unscheduled_tasks_tab
-        @to_do_card.unsched_task_one_title.should eql('Test task ' + id)
-        @to_do_card.unsched_task_one_date.should eql(Date.today.strftime("%m/%d"))
+        expect(@to_do_card.unsched_task_one_title).to eql('Test task ' + id)
+        expect(@to_do_card.unsched_task_one_date).to eql(Date.today.strftime("%m/%d"))
       end
     end
   end

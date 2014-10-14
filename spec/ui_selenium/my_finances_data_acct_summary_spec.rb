@@ -65,29 +65,29 @@ describe 'My Finances', :testui => true do
             if fin_api_page.has_cars_data?
               has_cars_data = true
               it 'does not show a no-data message for UID ' + uid do
-                my_fin_no_cars_msg.should be_falsey
+                expect(my_fin_no_cars_msg).to be false
               end
 
               # API DATA SANITY TESTS
               it 'shows an account balance that is equal to the sum of the open transactions for UID ' + uid do
-                fin_api_page.account_balance_str.should eql(fin_api_page.open_transactions_sum_str)
+                expect(fin_api_page.account_balance_str).to eql(fin_api_page.open_transactions_sum_str)
               end
               it 'shows an account balance that is equal to the sum of the amount due now plus the amount not yet due for UID ' + uid do
-                BigDecimal.new(fin_api_page.account_balance_str).should eql(BigDecimal.new(fin_api_page.min_amt_due_str) +
+                expect(BigDecimal.new(fin_api_page.account_balance_str)).to eql(BigDecimal.new(fin_api_page.min_amt_due_str) +
                                                                                 BigDecimal.new(fin_api_page.future_activity_str))
               end
               if fin_api_page.account_balance >= 0
                 it 'shows an account balance that is greater than or equal to the minimum amount due now for UID ' + uid do
-                  fin_api_page.account_balance.should be >= fin_api_page.min_amt_due
+                  expect(fin_api_page.account_balance).to be >= fin_api_page.min_amt_due
                 end
                 it 'shows an account balance that is greater than or equal to the past due amount for UID ' + uid do
-                  fin_api_page.account_balance.should be >= fin_api_page.past_due_amt
+                  expect(fin_api_page.account_balance).to be >= fin_api_page.past_due_amt
                 end
                 it 'shows an account balance that is greater than or equal to the amount not yet due for UID ' + uid do
-                  fin_api_page.account_balance.should be >= fin_api_page.future_activity
+                  expect(fin_api_page.account_balance).to be >= fin_api_page.future_activity
                 end
                 it 'shows an account balance that is greater than or equal to the DPP balance for UID ' + uid do
-                  fin_api_page.account_balance.should be >= fin_api_page.dpp_balance
+                  expect(fin_api_page.account_balance).to be >= fin_api_page.dpp_balance
                 end
               end
 
@@ -99,21 +99,21 @@ describe 'My Finances', :testui => true do
                 acct_bal = 'Positive'
                 my_fin_balance_transactions = my_finances_page.visible_transactions_sum_str
                 it 'shows the open charges for UID ' + uid do
-                  my_fin_balance_transactions.should eql(fin_api_page.open_charges_sum_str)
+                  expect(my_fin_balance_transactions).to eql(fin_api_page.open_charges_sum_str)
                 end
               elsif fin_api_page.account_balance == 0
                 acct_bal = 'Zero'
                 it 'shows a zero balance message for UID ' + uid do
-                  my_fin_zero_bal_text.should be_true
+                  expect(my_fin_zero_bal_text).to be true
                 end
               elsif fin_api_page.account_balance < 0
                 acct_bal = 'Negative'
                 it 'shows a credit balance message for UID ' + uid do
-                  my_fin_credit_bal_text.should be_true
+                  expect(my_fin_credit_bal_text).to be true
                 end
               end
               it 'shows the right account balance for UID ' + uid do
-                my_fin_acct_bal.should eql(fin_api_page.account_balance_str)
+                expect(my_fin_acct_bal).to eql(fin_api_page.account_balance_str)
               end
 
               # AMOUNT DUE NOW
@@ -121,22 +121,22 @@ describe 'My Finances', :testui => true do
               if fin_api_page.min_amt_due > 0
                 amt_due_now = 'Positive'
                 it 'shows the label Amount Due Now for UID ' + uid do
-                  my_fin_amt_due_label.should include('Amount Due Now')
+                  expect(my_fin_amt_due_label).to include('Amount Due Now')
                 end
               elsif fin_api_page.min_amt_due == 0
                 amt_due_now = 'Zero'
                 it 'shows the label Amount Due Now for UID ' + uid do
-                  my_fin_amt_due_label.should include('Amount Due Now')
+                  expect(my_fin_amt_due_label).to include('Amount Due Now')
                 end
               elsif fin_api_page.min_amt_due < 0
                 amt_due_now = 'Negative'
                 it 'shows the label Credit Balance for UID ' + uid do
-                  my_fin_amt_due_label.should include('Credit Balance')
+                  expect(my_fin_amt_due_label).to include('Credit Balance')
                 end
               end
               my_fin_amt_due_now = my_finances_page.amt_due_now
               it 'shows the right amount due now for UID ' + uid do
-                my_fin_amt_due_now.should eql(fin_api_page.min_amt_due_str)
+                expect(my_fin_amt_due_now).to eql(fin_api_page.min_amt_due_str)
               end
 
               # PAST DUE AMOUNT
@@ -144,7 +144,7 @@ describe 'My Finances', :testui => true do
                 has_past_due_amt = true
                 my_fin_past_due_bal = my_finances_page.past_due_amt
                 it 'shows the past due amount for UID ' + uid do
-                  my_fin_past_due_bal.should eql(fin_api_page.past_due_amt_str)
+                  expect(my_fin_past_due_bal).to eql(fin_api_page.past_due_amt_str)
                 end
               end
 
@@ -153,7 +153,7 @@ describe 'My Finances', :testui => true do
                 has_future_activity = true
                 my_fin_future_activity = my_finances_page.charges_not_due
                 it 'shows the charges not yet due for UID ' + uid do
-                  my_fin_future_activity.should eql(fin_api_page.future_activity_str)
+                  expect(my_fin_future_activity).to eql(fin_api_page.future_activity_str)
                 end
               end
 
@@ -161,7 +161,7 @@ describe 'My Finances', :testui => true do
               my_fin_pmt_link = my_finances_page.make_payment_link?
               if fin_api_page.account_balance != 0
                 it 'shows make payment link for UID ' + uid do
-                  my_fin_pmt_link.should be_truthy
+                  expect(my_fin_pmt_link).to be true
                 end
               end
 
@@ -169,7 +169,7 @@ describe 'My Finances', :testui => true do
               my_finances_page.show_last_statement_bal
               my_fin_last_bal = my_finances_page.last_statement_balance
               it 'shows the right last statement balance for UID ' + uid do
-                my_fin_last_bal.should eql(fin_api_page.last_statement_balance_str)
+                expect(my_fin_last_bal).to eql(fin_api_page.last_statement_balance_str)
               end
 
               # DPP
@@ -180,20 +180,20 @@ describe 'My Finances', :testui => true do
                 is_dpp = true
                 my_fin_dpp_bal = my_finances_page.dpp_balance
                 it 'shows DPP balance for UID ' + uid do
-                  my_fin_dpp_bal.should eql(fin_api_page.dpp_balance_str)
+                  expect(my_fin_dpp_bal).to eql(fin_api_page.dpp_balance_str)
                 end
                 it 'shows DPP informational text for UID ' + uid do
-                  my_fin_dpp_text.should be_truthy
+                  expect(my_fin_dpp_text).to be true
                 end
                 if fin_api_page.dpp_balance > 0
                   has_dpp_balance = true
                   my_fin_dpp_install = my_finances_page.dpp_normal_install
                   it 'shows DPP normal installment amount for UID ' + uid do
-                    my_fin_dpp_install.should eql(fin_api_page.dpp_norm_install_amt_str)
+                    expect(my_fin_dpp_install).to eql(fin_api_page.dpp_norm_install_amt_str)
                   end
                 else
                   it 'shows no DPP normal installment amount for UID ' + uid do
-                    my_fin_dpp_install_element.should be_falsey
+                    expect(my_fin_dpp_install_element).to be false
                   end
                 end
                 if fin_api_page.is_dpp_past_due?
@@ -201,15 +201,15 @@ describe 'My Finances', :testui => true do
                 end
               else
                 it 'shows no DPP balance for UID ' + uid do
-                  my_fin_dpp_bal_element.should be_falsey
+                  expect(my_fin_dpp_bal_element).to be false
                 end
                 it 'shows no DPP informational text for UID ' + uid do
-                  my_fin_dpp_text.should be_falsey
+                  expect(my_fin_dpp_text).to be false
                 end
               end
             else
               it 'shows a no-data message for UID ' + uid do
-                my_fin_no_cars_msg.should be_truthy
+                expect(my_fin_no_cars_msg).to be true
               end
             end
 

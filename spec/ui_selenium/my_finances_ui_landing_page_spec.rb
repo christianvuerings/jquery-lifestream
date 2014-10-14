@@ -45,22 +45,22 @@ describe 'My Finances landing page', :testui => true do
 
     context 'card headings' do
       it 'include Cal 1 Card' do
-        @my_finances_page.cal_1_card_heading?.should be_truthy
+        expect(@my_finances_page.cal_1_card_heading?).to be true
       end
       it 'include Financial Aid Messages' do
-        @my_finances_page.fin_messages_heading?.should be_truthy
+        expect(@my_finances_page.fin_messages_heading?).to be true
       end
     end
 
     context 'Billing Summary card' do
       it 'includes the heading Billing Summary' do
-        @my_finances_page.billing_summary_heading?.should be_truthy
+        expect(@my_finances_page.billing_summary_heading?).to be true
       end
       it 'shows CARS account balance amount' do
-        @my_finances_page.account_balance_element?.should be_truthy
+        expect(@my_finances_page.account_balance_element?).to be true
       end
       it 'shows CARS amount due now' do
-        @my_finances_page.amt_due_now_element?.should be_truthy
+        expect(@my_finances_page.amt_due_now_element?).to be true
       end
       it 'allows a user to show or hide the last statement balance' do
         @my_finances_page.show_last_statement_bal
@@ -84,7 +84,7 @@ describe 'My Finances landing page', :testui => true do
 
     context 'Financial Resources card' do
       it 'includes the heading Financial Resources' do
-        @my_finances_page.fin_resources_heading?.should be_truthy
+        expect(@my_finances_page.fin_resources_heading?).to be true
       end
       it 'includes a link to Billing Services' do
         @my_finances_page.student_billing_svcs_link
