@@ -12,6 +12,8 @@ class ApiMyFinancialsPage
   def get_json(driver)
     logger.info('Parsing JSON from /api/my/financials')
     driver.get(WebDriverUtils.base_url + '/api/my/financials')
+    wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
+    wait.until { driver.find_element(:xpath => '//pre[contains(.,"Financials::MyFinancials")]') }
     body = driver.find_element(:xpath, '//pre').text
     @parsed = JSON.parse(body)
   end
@@ -93,8 +95,139 @@ class ApiMyFinancialsPage
     (sprintf '%.2f', self.dpp_norm_install_amt).to_s
   end
 
-  def transaction_type
-    @parsed['activity']['transType']
+  def trans_amt_str(item)
+    (sprintf '%.2f', item['transAmount'])
   end
 
+  def trans_balance_str(item)
+    (sprintf '%.2f', item['transBalance'])
+  end
+
+  def trans_date(item)
+    item['transDate']
+  end
+
+  def trans_dept(item)
+    item['transDept']
+  end
+
+  def trans_dept_url(item)
+    item['transDeptUrl']
+  end
+
+  def trans_desc(item)
+    item['transDesc']
+  end
+
+  def trans_due_date(item)
+    item['transDueDate']
+  end
+
+  def trans_id(item)
+    item['transId']
+  end
+
+  def trans_status(item)
+    item['transStatus']
+  end
+
+  def trans_type(item)
+    item['transType']
+  end
+
+  def trans_term(item)
+    item['transTerm']
+  end
+
+  def trans_disburse_date(item)
+    item['transPotentialDisbursementDate']
+  end
+
+  def trans_disputed(item)
+    item['transDisputedFlag']
+  end
+
+  def trans_refund_method(item)
+    item['transPaymentMethod']
+  end
+
+  def trans_refund_last_action_date(item)
+    item['transPaymentLastActionDate']
+  end
+
+  def trans_refund_last_action(item)
+    item['transPaymentLastAction']
+  end
+
+  def trans_refund_void_date(item)
+    item['transPaymentVoidDate']
+  end
+
+  def all_transactions
+    @parsed['activity']
+  end
+
+  def all_transactions_by_type(type)
+    all_transactions.select do |item|
+      trans_type(item) == type
+    end
+  end
+
+  def open_transactions
+    all_transactions.select do |item|
+      (trans_status(item) == 'Current' || trans_status(item) == 'Past due' || trans_status(item) == 'Future' || trans_status(item) == 'Installment') && !trans_disputed(item) ||
+          (trans_type(item) == 'Payment' && trans_status(item) == 'Unapplied')
+    end
+  end
+
+  def open_transactions_sum
+    open_transactions.inject(BigDecimal.new('0')) { |acc, bal| acc + BigDecimal.new(trans_balance_str(bal).to_s) }
+  end
+
+  def open_transactions_sum_str
+    (sprintf '%.2f', self.open_transactions_sum).to_s
+  end
+
+  def open_charges
+    all_transactions_by_type('Charge') & open_transactions
+  end
+
+  def past_due_charges
+    open_charges.select do |item|
+      trans_status(item) == 'Past due'
+    end
+  end
+
+  def current_charges
+    open_charges.select do |item|
+      trans_status(item) == 'Current'
+    end
+  end
+
+  def future_charges
+    open_charges.select do |item|
+      trans_status(item) == 'Future'
+    end
+  end
+
+  def open_charges_sum_str
+    sum = open_charges.inject(BigDecimal.new('0')) { |acc, bal| acc + BigDecimal.new(trans_balance_str(bal).to_s) }
+    (sprintf '%.2f', sum).to_s
+  end
+
+  def term_transactions(term)
+    all_transactions.select do |item|
+      trans_term(item) == term
+    end
+  end
+
+  def date_range_transactions(start_date, end_date)
+    all_transactions.select do |item|
+      Time.strptime(start_date, '%m/%d/%Y') <= Time.parse(trans_date(item)) && Time.strptime(end_date, '%m/%d/%Y') >= Time.parse(trans_date(item))
+    end
+  end
+
+  def last_update_date_str
+    @parsed['summary']['lastUpdateDate']
+  end
 end

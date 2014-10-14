@@ -27,7 +27,9 @@ module CalCentralPages
     span(:past_due_amt_element, :xpath => '//span[@data-cc-amount-directive="myfinances.summary.totalPastDueAmount"]')
     div(:charges_not_due_element, :xpath => '//div[@data-cc-amount-directive="myfinances.summary.futureActivity"]')
     div(:account_balance_element, :xpath => '//div[@data-cc-amount-directive="myfinances.summary.accountBalance"]')
+    link(:toggle_last_statement_bal, :xpath => '//div[@data-ng-click="api.widget.toggleShow($event, null, myfinances, \'My Finances - Summary\')"]')
     div(:last_statement_bal_element, :xpath => '//div[@data-cc-amount-directive="myfinances.summary.lastStatementBalance"]')
+    link(:view_statements_link, :xpath => '//a[contains(text(),"View Statements")]')
     link(:make_payment_link, :xpath => '//a[@href="http://studentbilling.berkeley.edu/carsPaymentOptions.htm"]')
 
     def wait_for_billing_summary_card(driver)
@@ -52,9 +54,18 @@ module CalCentralPages
       false
     end
 
-    def click_account_balance(driver)
-      driver.find_element(:xpath, '//div[@data-ng-click="api.widget.toggleShow($event, null, myfinances, \'My Finances - Summary\')"]').click
-      last_statement_bal_element_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+    def show_last_statement_bal
+      unless last_statement_bal_element_element.visible?
+        toggle_last_statement_bal
+        last_statement_bal_element_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+      end
+    end
+
+    def hide_last_statement_bal
+      if last_statement_bal_element_element.visible?
+        toggle_last_statement_bal
+        last_statement_bal_element_element.when_not_visible(timeout=WebDriverUtils.page_event_timeout)
+      end
     end
 
     def click_details_link
