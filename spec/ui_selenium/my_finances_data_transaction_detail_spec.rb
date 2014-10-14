@@ -65,7 +65,7 @@ describe 'My Finances Details', :testui => true do
               api_all_transactions = fin_api_page.all_transactions
               my_finances_all_transactions = my_finances_page.visible_transaction_count
               it "shows all the transactions for UID #{uid}" do
-                my_finances_all_transactions.should eql(api_all_transactions.length)
+                expect(my_finances_all_transactions).to eql(api_all_transactions.length)
               end
               my_finances_page.select_transactions_filter('Date Range')
 
@@ -97,40 +97,40 @@ describe 'My Finances Details', :testui => true do
                   api_adj_dept = fin_api_page.trans_dept(adjustment)
                   api_adj_term = fin_api_page.trans_term(adjustment)
                   it "shows the adjustment date for UID #{uid}" do
-                    my_fin_adj_date.should eql(api_adj_date)
+                    expect(my_fin_adj_date).to eql(api_adj_date)
                   end
                   it "shows the adjustment description for UID #{uid}" do
-                    my_fin_adj_desc.should eql(api_adj_desc)
+                    expect(my_fin_adj_desc).to eql(api_adj_desc)
                   end
                   it "shows the adjustment amount for UID #{uid}" do
-                    my_fin_adj_amt.should eql(api_adj_amt)
+                    expect(my_fin_adj_amt).to eql(api_adj_amt)
                   end
                   it "shows the adjustment transaction ID for UID #{uid}" do
-                    my_fin_adj_id.should eql("Transaction #: #{api_adj_id}")
+                    expect(my_fin_adj_id).to eql("Transaction #: #{api_adj_id}")
                   end
                   it "shows the adjustment due date for UID #{uid}" do
-                    my_fin_adj_due_date.should eql("Due Date: #{api_adj_due_date}")
+                    expect(my_fin_adj_due_date).to eql("Due Date: #{api_adj_due_date}")
                   end
                   it "shows the adjustment department for UID #{uid}" do
-                    my_fin_adj_dept.should include("Department: #{api_adj_dept}")
+                    expect(my_fin_adj_dept).to include("Department: #{api_adj_dept}")
                   end
                   it "shows the adjustment term for UID #{uid}" do
-                    my_fin_adj_term.should eql("Term: #{api_adj_term}")
+                    expect(my_fin_adj_term).to eql("Term: #{api_adj_term}")
                   end
                   it "shows no adjustment potential disbursement date for UID #{uid}" do
-                    my_fin_has_adj_disburse.should be_false
+                    expect(my_fin_has_adj_disburse).to be false
                   end
                   it "shows no adjustment refund method for UID #{uid}" do
-                    my_fin_adj_ref_method.should be_false
+                    expect(my_fin_adj_ref_method).to be false
                   end
                   it "shows no adjustment refund date for UID #{uid}" do
-                    my_fin_adj_ref_date.should be_false
+                    expect(my_fin_adj_ref_date).to be false
                   end
                   it "shows no adjustment refund action for UID #{uid}" do
-                    my_fin_adj_ref_action.should be_false
+                    expect(my_fin_adj_ref_action).to be false
                   end
                   it "shows no adjustment refund void date for UID #{uid}" do
-                    my_fin_adj_ref_void.should be_false
+                    expect(my_fin_adj_ref_void).to be false
                   end
                 end
               end
@@ -164,50 +164,50 @@ describe 'My Finances Details', :testui => true do
                   api_award_term = fin_api_page.trans_term(award)
                   api_award_status = fin_api_page.trans_status(award)
                   it "shows he award date for UID #{uid}" do
-                    my_fin_award_date.should eql(api_award_date)
+                    expect(my_fin_award_date).to eql(api_award_date)
                   end
                   it "shows the award description for UID #{uid}" do
-                    my_fin_award_desc.should eql(api_award_desc)
+                    expect(my_fin_award_desc).to eql(api_award_desc)
                   end
                   it "shows the award amount for UID #{uid}" do
-                    my_fin_award_amt.should eql(api_award_amt)
+                    expect(my_fin_award_amt).to eql(api_award_amt)
                   end
                   it "shows the award transaction ID for UID #{uid}" do
-                    my_fin_award_id.should eql("Transaction #: #{api_award_id}")
+                    expect(my_fin_award_id).to eql("Transaction #: #{api_award_id}")
                   end
                   it "shows no award due date for UID #{uid}" do
-                    my_fin_award_has_due_date.should be_false
+                    expect(my_fin_award_has_due_date).to be false
                   end
                   it "shows the award department for UID #{uid}" do
-                    my_fin_award_dept.should include("Department: #{api_award_dept}")
+                    expect(my_fin_award_dept).to include("Department: #{api_award_dept}")
                   end
                   it "shows the award term for UID #{uid}" do
-                    my_fin_award_term.should eql("Term: #{api_award_term}")
+                    expect(my_fin_award_term).to eql("Term: #{api_award_term}")
                   end
                   if api_award_status == 'Unapplied'
                     has_unapplied_award = true
                     it "shows the unapplied award text for UID #{uid}" do
-                      my_fin_award_has_unapplied.should be_true
+                      expect(my_fin_award_has_unapplied).to be true
                     end
                   else
                     it "shows no unapplied award text for UID #{uid}" do
-                      my_fin_award_has_unapplied.should be_false
+                      expect(my_fin_award_has_unapplied).to be false
                     end
                   end
                   it "shows no award potential disbursement date for UID #{uid}" do
-                    my_fin_award_has_disburse.should be_false
+                    expect(my_fin_award_has_disburse).to be false
                   end
                   it "shows no award refund method for UID #{uid}" do
-                    my_fin_has_award_ref_method.should be_false
+                    expect(my_fin_has_award_ref_method).to be false
                   end
                   it "shows no award refund date for UID #{uid}" do
-                    my_fin_has_award_ref_date.should be_false
+                    expect(my_fin_has_award_ref_date).to be false
                   end
                   it "shows no award refund action for UID #{uid}" do
-                    my_fin_has_award_ref_action.should be_false
+                    expect(my_fin_has_award_ref_action).to be false
                   end
                   it "shows no award refund void date for UID #{uid}" do
-                    my_fin_has_award_ref_void.should be_false
+                    expect(my_fin_has_award_ref_void).to be false
                   end
                 end
               end
@@ -244,64 +244,64 @@ describe 'My Finances Details', :testui => true do
                   api_charge_dept = fin_api_page.trans_dept(charge)
                   api_charge_term = fin_api_page.trans_term(charge)
                   it "shows the charge date for UID #{uid}" do
-                    my_fin_charge_date.should eql(api_charge_date)
+                    expect(my_fin_charge_date).to eql(api_charge_date)
                   end
                   it "shows the charge description for UID #{uid}" do
-                    my_fin_charge_desc.should eql(api_charge_desc)
+                    expect(my_fin_charge_desc).to eql(api_charge_desc)
                   end
                   if fin_api_page.trans_status(charge) == 'Installment' || (api_charge_bal.to_f > 0 && api_charge_bal.to_f != api_charge_amt.to_f)
                     has_partial_payment = true
                     my_finances_orig_amt = my_finances_page.trans_orig_amt.delete('$, ')
                     it "shows the charge balance as the charge amount for UID #{uid}" do
-                      my_fin_charge_amt.should eql(api_charge_bal)
+                      expect(my_fin_charge_amt).to eql(api_charge_bal)
                     end
                     it "shows the charge amount as the original amount for UID #{uid}" do
-                      my_finances_orig_amt.should include("OriginalAmount:#{api_charge_amt}")
+                      expect(my_finances_orig_amt).to include("OriginalAmount:#{api_charge_amt}")
                     end
                   else
                     it "shows the charge amount for UID #{uid}" do
-                      my_fin_charge_amt.should eql(api_charge_amt)
+                      expect(my_fin_charge_amt).to eql(api_charge_amt)
                     end
                   end
                   if fin_api_page.trans_status(charge) == 'Past Due'
                     it "shows a past due charge icon for UID #{uid}" do
-                      my_fin_charge_due_past.should be_true
+                      expect(my_fin_charge_due_past).to be true
                     end
                   elsif fin_api_page.trans_status(charge) == 'Current'
                     it "shows a charge due now icon for UID #{uid}" do
-                      my_fin_charge_due_now.should be_true
+                      expect(my_fin_charge_due_now).to be true
                     end
                   elsif fin_api_page.trans_status(charge) == 'Future'
                     it "shows a charge due in the future icon for UID #{uid}" do
-                      my_fin_charge_due_future.should be_true
+                      expect(my_fin_charge_due_future).to be true
                     end
                   end
                   it "shows the charge transaction ID for UID #{uid}" do
-                    my_fin_charge_id.should eql("Transaction #: #{api_charge_id}")
+                    expect(my_fin_charge_id).to eql("Transaction #: #{api_charge_id}")
                   end
                   it "shows the charge due date for UID #{uid}" do
-                    my_fin_charge_due_date.should eql("Due Date: #{api_charge_due_date}")
+                    expect(my_fin_charge_due_date).to eql("Due Date: #{api_charge_due_date}")
                   end
                   it "shows the charge department URL for UID #{uid}" do
-                    my_fin_charge_dept.should include("Department: #{api_charge_dept}")
+                    expect(my_fin_charge_dept).to include("Department: #{api_charge_dept}")
                   end
                   it "shows the charge term for UID #{uid}" do
-                    my_fin_charge_term.should eql("Term: #{api_charge_term}")
+                    expect(my_fin_charge_term).to eql("Term: #{api_charge_term}")
                   end
                   it "shows no charge potential disbursement date for UID #{uid}" do
-                    my_fin_has_charge_disburse.should be_false
+                    expect(my_fin_has_charge_disburse).to be false
                   end
                   it "shows no charge refund method for UID #{uid}" do
-                    my_fin_has_charge_ref_method.should be_false
+                    expect(my_fin_has_charge_ref_method).to be false
                   end
                   it "shows no charge refund date for UID #{uid}" do
-                    my_fin_has_charge_ref_date.should be_false
+                    expect(my_fin_has_charge_ref_date).to be false
                   end
                   it "shows no charge refund action for UID #{uid}" do
-                    my_fin_has_charge_ref_action.should be_false
+                    expect(my_fin_has_charge_ref_action).to be false
                   end
                   it "shows no charge refund void date for UID #{uid}" do
-                    my_fin_has_charge_ref_void.should be_false
+                    expect(my_fin_has_charge_ref_void).to be false
                   end
                 end
               end
@@ -334,55 +334,55 @@ describe 'My Finances Details', :testui => true do
                   api_payment_dept = fin_api_page.trans_dept(payment)
                   api_payment_disburse = fin_api_page.trans_disburse_date(payment)
                   it "shows the payment date for UID #{uid}" do
-                    my_fin_payment_date.should eql(api_payment_date)
+                    expect(my_fin_payment_date).to eql(api_payment_date)
                   end
                   it "shows the payment description for UID #{uid}" do
-                    my_fin_payment_desc.should eql(api_payment_desc)
+                    expect(my_fin_payment_desc).to eql(api_payment_desc)
                   end
                   it "shows the payment amount for UID #{uid}" do
-                    my_fin_payment_amt.should eql(api_payment_amt)
+                    expect(my_fin_payment_amt).to eql(api_payment_amt)
                   end
                   it "shows the payment transaction ID for UID #{uid}" do
-                    my_fin_payment_id.should eql("Transaction #: #{api_payment_id}")
+                    expect(my_fin_payment_id).to eql("Transaction #: #{api_payment_id}")
                   end
                   it "shows no payment due date for UID #{uid}" do
-                    my_fin_payment_due_date.should be_false
+                    expect(my_fin_payment_due_date).to be false
                   end
                   if api_payment_dept == ''
                     it "shows no payment department for UID #{uid}" do
-                      my_fin_payment_has_dept.should be_false
+                      expect(my_fin_payment_has_dept).to be false
                     end
                   else
                     my_fin_payment_dept = my_finances_page.trans_dept
                     it "shows the payment department for UID #{uid}" do
-                      my_fin_payment_dept.should include("Department: #{api_payment_dept}")
+                      expect(my_fin_payment_dept).to include("Department: #{api_payment_dept}")
                     end
                   end
                   it "shows the payment term for UID #{uid}" do
-                    my_fin_payment_term.should eql("Term: #{api_payment_term}")
+                    expect(my_fin_payment_term).to eql("Term: #{api_payment_term}")
                   end
                   if api_payment_disburse == ''
                     it "shows no payment potential disbursement date for UID #{uid}" do
-                      my_fin_has_payment_disburse.should be_false
+                      expect(my_fin_has_payment_disburse).to be false
                     end
                   else
                     has_potential_disburse = true
                     my_fin_payment_disburse = my_finances_page.trans_disburse_date
                     it "shows the payment potential disbursement date for UID #{uid}" do
-                      my_fin_payment_disburse.should eql("Potential Disbursement Date: #{api_payment_disburse}")
+                      expect(my_fin_payment_disburse).to eql("Potential Disbursement Date: #{api_payment_disburse}")
                     end
                   end
                   it "shows no payment refund method for UID #{uid}" do
-                    my_fin_has_payment_ref_method.should be_false
+                    expect(my_fin_has_payment_ref_method).to be false
                   end
                   it "shows no payment refund date for UID #{uid}" do
-                    my_fin_has_payment_ref_date.should be_false
+                    expect(my_fin_has_payment_ref_date).to be false
                   end
                   it "shows no payment refund action for UID #{uid}" do
-                    my_fin_has_payment_ref_action.should be_false
+                    expect(my_fin_has_payment_ref_action).to be false
                   end
                   it "shows no payment refund void date for UID #{uid}" do
-                    my_fin_has_payment_ref_void.should be_false
+                    expect(my_fin_has_payment_ref_void).to be false
                   end
                 end
               end
@@ -418,69 +418,69 @@ describe 'My Finances Details', :testui => true do
                   api_ref_action = fin_api_page.trans_refund_last_action(refund)
                   api_ref_void_date = fin_api_page.trans_refund_void_date(refund)
                   it "shows the refund date for UID #{uid}" do
-                    my_fin_ref_date.should eql(api_ref_date)
+                    expect(my_fin_ref_date).to eql(api_ref_date)
                   end
                   it "shows the refund description for UID #{uid}" do
-                    my_fin_ref_desc.should eql(api_ref_desc)
+                    expect(my_fin_ref_desc).to eql(api_ref_desc)
                   end
                   it "shows the refund amount for UID #{uid}" do
-                    my_fin_ref_amt.should eql(api_ref_amt)
+                    expect(my_fin_ref_amt).to eql(api_ref_amt)
                   end
                   it "shows the refund transaction ID for UID #{uid}" do
-                    my_fin_ref_id.should eql("Transaction #: #{api_ref_id}")
+                    expect(my_fin_ref_id).to eql("Transaction #: #{api_ref_id}")
                   end
                   it "shows no refund due date for UID #{uid}" do
-                    my_fin_ref_due_date.should be_false
+                    expect(my_fin_ref_due_date).to be false
                   end
                   it "shows the refund department URL for UID #{uid}" do
-                    my_fin_ref_dept.should include("Department: #{api_ref_dept}")
+                    expect(my_fin_ref_dept).to include("Department: #{api_ref_dept}")
                   end
                   it "shows the refund term for UID #{uid}" do
-                    my_fin_ref_term.should eql("Term: #{api_ref_term}")
+                    expect(my_fin_ref_term).to eql("Term: #{api_ref_term}")
                   end
                   it "shows no potential disbursement date for UID #{uid}" do
-                    my_fin_has_ref_disburse.should be_false
+                    expect(my_fin_has_ref_disburse).to be false
                   end
                   if api_ref_method == ''
                     it "shows no refund payment method for UID #{uid}" do
-                      my_fin_has_ref_method.should be_false
+                      expect(my_fin_has_ref_method).to be false
                     end
                   else
                     my_fin_refund_method = my_finances_page.trans_ref_method
                     it "shows the refund payment method for UID #{uid}" do
-                      my_fin_refund_method.should eql("Payment Method: #{api_ref_method}")
+                      expect(my_fin_refund_method).to eql("Payment Method: #{api_ref_method}")
                     end
                   end
                   if api_ref_action_date == ''
                     it "shows no refund action date for UID #{uid}" do
-                      my_fin_has_ref_date.should be_false
+                      expect(my_fin_has_ref_date).to be false
                     end
                   else
                     my_fin_ref_action_date = my_finances_page.trans_ref_date
                     api_date = (Time.parse(api_ref_action_date)).strftime('%m/%d/%y')
                     it "shows the refund action date for UID #{uid}" do
-                      my_fin_ref_action_date.should eql ("Action Date: #{api_date}")
+                      expect(my_fin_ref_action_date).to eql ("Action Date: #{api_date}")
                     end
                   end
                   if api_ref_action == ''
                     it "shows no refund action for UID #{uid}" do
-                      my_fin_has_ref_action.should be_false
+                      expect(my_fin_has_ref_action).to be false
                     end
                   else
                     my_fin_refund_action = my_finances_page.trans_ref_action
                     it "shows the refund action for UID #{uid}" do
-                      my_fin_refund_action.should eql("Action: #{api_ref_action}")
+                      expect(my_fin_refund_action).to eql("Action: #{api_ref_action}")
                     end
                   end
                   if api_ref_void_date == ''
                     it "shows no refund void date for UID #{uid}" do
-                      my_fin_has_ref_void.should be_false
+                      expect(my_fin_has_ref_void).to be false
                     end
                   else
                     my_fin_refund_void = my_finances_page.trans_ref_void
                     api_ref_void_date = (Time.parse(api_ref_void_date)).strftime('%m/%d/%y')
                     it "shows the refund void date for UID #{uid}" do
-                      my_fin_refund_void.should eql("Date Voided: #{api_ref_void_date}")
+                      expect(my_fin_refund_void).to eql("Date Voided: #{api_ref_void_date}")
                     end
                   end
                 end
@@ -513,40 +513,40 @@ describe 'My Finances Details', :testui => true do
                   api_waiver_dept = fin_api_page.trans_dept(waiver)
                   api_waiver_term = fin_api_page.trans_term(waiver)
                   it "shows the waiver date date for UID #{uid}" do
-                    my_fin_waiver_date.should eql(api_waiver_date)
+                    expect(my_fin_waiver_date).to eql(api_waiver_date)
                   end
                   it "shows the waiver description for UID #{uid}" do
-                    my_fin_waiver_desc.should eql(api_waiver_desc)
+                    expect(my_fin_waiver_desc).to eql(api_waiver_desc)
                   end
                   it "shows the waiver amount for UID #{uid}" do
-                    my_fin_waiver_amt.should eql(api_waiver_amt)
+                    expect(my_fin_waiver_amt).to eql(api_waiver_amt)
                   end
                   it "shows the waiver transaction ID for UID #{uid}" do
-                    my_fin_waiver_id.should eql("Transaction #: #{api_waiver_id}")
+                    expect(my_fin_waiver_id).to eql("Transaction #: #{api_waiver_id}")
                   end
                   it "shows no waiver due date for UID #{uid}" do
-                    my_fin_waiver_due_date.should be_false
+                    expect(my_fin_waiver_due_date).to be false
                   end
                   it "shows the waiver department URL for UID #{uid}" do
-                    my_fin_waiver_dept.should include("Department: #{api_waiver_dept}")
+                    expect(my_fin_waiver_dept).to include("Department: #{api_waiver_dept}")
                   end
                   it "shows the waiver term for UID #{uid}" do
-                    my_fin_waiver_term.should eql("Term: #{api_waiver_term}")
+                    expect(my_fin_waiver_term).to eql("Term: #{api_waiver_term}")
                   end
                   it "shows no waiver potential disbursement date for UID #{uid}" do
-                    my_fin_waiver_has_disburse.should be_false
+                    expect(my_fin_waiver_has_disburse).to be false
                   end
                   it "shows no waiver refund method for UID #{uid}" do
-                    my_fin_waiver_has_ref_method.should be_false
+                    expect(my_fin_waiver_has_ref_method).to be false
                   end
                   it "shows no waiver refund action date for UID #{uid}" do
-                    my_fin_waiver_has_ref_date.should be_false
+                    expect(my_fin_waiver_has_ref_date).to be false
                   end
                   it "shows no waiver refund action for UID #{uid}" do
-                    my_fin_waiver_has_ref_action.should be_false
+                    expect(my_fin_waiver_has_ref_action).to be false
                   end
                   it "shows no waiver refund void for UID #{uid}" do
-                    my_fin_waiver_has_ref_void.should be_false
+                    expect(my_fin_waiver_has_ref_void).to be false
                   end
                 end
               end
@@ -559,7 +559,6 @@ describe 'My Finances Details', :testui => true do
 
           rescue => e
             logger.error e.message + "\n" + e.backtrace.join("\n")
-
           end
         end
       end

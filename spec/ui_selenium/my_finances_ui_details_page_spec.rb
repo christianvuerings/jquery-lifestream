@@ -49,7 +49,7 @@ describe 'My Finances details page', :testui => true do
           @my_finances_details_page.select_transactions_filter('Balance')
           @my_finances_details_page.enter_search_string(search_string)
           wait.until { @my_finances_details_page.visible_transaction_count == 1 }
-          @my_finances_details_page.show_more_button?.should be_false
+          expect(@my_finances_details_page.show_more_button?).to be false
         end
       end
       it 'allow a user to see all transactions' do
@@ -64,7 +64,7 @@ describe 'My Finances details page', :testui => true do
         @my_finances_details_page.select_transactions_filter('All Transactions')
         @my_finances_details_page.enter_search_string(search_string)
         wait.until { @my_finances_details_page.visible_transaction_count == 1 }
-        @my_finances_details_page.show_more_button?.should be_false
+        expect(@my_finances_details_page.show_more_button?).to be false
       end
       it 'allow a user to filter all transactions by a specific term' do
         transaction = @fin_api_page.all_transactions.last
@@ -82,7 +82,7 @@ describe 'My Finances details page', :testui => true do
         @my_finances_details_page.select_term_filter(search_term)
         @my_finances_details_page.enter_search_string(search_string)
         wait.until { @my_finances_details_page.visible_transaction_count == 1 }
-        @my_finances_details_page.show_more_button?.should be_false
+        expect(@my_finances_details_page.show_more_button?).to be false
       end
       it 'allow a user to filter all transactions by a date range' do
         transaction = @fin_api_page.all_transactions.last
@@ -125,7 +125,7 @@ describe 'My Finances details page', :testui => true do
         @my_finances_details_page.enter_search_end_date(date)
         @my_finances_details_page.enter_search_string(search_string)
         wait.until { @my_finances_details_page.visible_transaction_count == 1 }
-        @my_finances_details_page.show_more_button?.should be_false
+        expect(@my_finances_details_page.show_more_button?).to be false
       end
       it 'filter transactions by balance due by default' do
         @my_finances_details_page.load_page(@driver)
@@ -135,21 +135,21 @@ describe 'My Finances details page', :testui => true do
         @my_finances_details_page.select_transactions_filter('All Transactions')
         @my_finances_details_page.enter_search_string('XXXXXXXXXXXXXXX')
         wait.until { @my_finances_details_page.visible_transaction_count == 0 }
-        @my_finances_details_page.show_more_button?.should be_false
+        expect(@my_finances_details_page.show_more_button?).to be false
       end
       it 'show no results when filtered by a date range that does not exist among transactions' do
         @my_finances_details_page.select_transactions_filter('Date Range')
         @my_finances_details_page.enter_search_start_date('01/01/1900')
         @my_finances_details_page.enter_search_end_date('12/31/1900')
         wait.until { @my_finances_details_page.visible_transaction_count == 0 }
-        @my_finances_details_page.show_more_button?.should be_false
+        expect(@my_finances_details_page.show_more_button?).to be false
       end
       it 'show no results when filtered by an illogical date range' do
         @my_finances_details_page.select_transactions_filter('Date Range')
         @my_finances_details_page.enter_search_start_date('01/01/1900')
         @my_finances_details_page.enter_search_end_date('01/01/1902')
         wait.until { @my_finances_details_page.visible_transaction_count == 0 }
-        @my_finances_details_page.show_more_button?.should be_false
+        expect(@my_finances_details_page.show_more_button?).to be false
       end
       it 'show a validation error if a date range is in the wrong date format' do
         @my_finances_details_page.select_transactions_filter('Date Range')
@@ -214,7 +214,7 @@ describe 'My Finances details page', :testui => true do
 
     it 'shows the last update date' do
       api_date = Time.strptime(@fin_api_page.last_update_date_str, '%Y-%m-%d')
-      @my_finances_details_page.last_update_date.should eql(api_date.strftime('%m/%d/%y'))
+      expect(@my_finances_details_page.last_update_date).to eql(api_date.strftime('%m/%d/%y'))
     end
   end
 end

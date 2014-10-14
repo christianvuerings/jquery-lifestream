@@ -49,7 +49,7 @@ describe 'Logging in with deep linking', :testui => true do
       cal_net_auth_page.logout_conf_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       @driver.get(semester_page)
       cal_net_auth_page.login(user, password)
-      @driver.current_url.should eql(semester_page)
+      expect(@driver.current_url).to eql(semester_page)
     end
 
     it 'works for My Campus' do

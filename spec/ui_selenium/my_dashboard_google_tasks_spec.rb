@@ -58,13 +58,13 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.edit_new_task('Cancel Task', today.strftime("%m/%d/%Y"), nil)
         @to_do_card.click_cancel_new_task_button
         @to_do_card.cancel_new_task_button_element.when_not_visible(timeout=task_wait)
-        @to_do_card.today_task_one?.should be_falsey
+        expect(@to_do_card.today_task_one?).to be false
       end
 
       it 'requires that a new task have a title' do
         @to_do_card.click_new_task_button
         @to_do_card.edit_new_task(nil, today.strftime("%m/%d/%Y"), nil)
-        @to_do_card.add_new_task_button_element.enabled?.should be_falsey
+        expect(@to_do_card.add_new_task_button_element.enabled?).to be false
         @to_do_card.click_cancel_new_task_button
       end
 
@@ -72,8 +72,8 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_new_task_button
         @to_do_card.edit_new_task('Bad Date Task', '08/08/14', nil)
         @to_do_card.new_task_date_validation_error_element.when_visible(timeout=task_wait)
-        @to_do_card.add_new_task_button_element.enabled?.should be_falsey
-        @to_do_card.new_task_date_validation_error.should include('Please use mm/dd/yyyy date format')
+        expect(@to_do_card.add_new_task_button_element.enabled?).to be false
+        expect(@to_do_card.new_task_date_validation_error).to include('Please use mm/dd/yyyy date format')
       end
 
       it 'allows a user to create a task without a note' do
@@ -83,7 +83,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.today_task_one_notes_input_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_notes_input.should eql('')
+        expect(@to_do_card.today_task_one_notes_input).to eql('')
       end
     end
 
@@ -95,7 +95,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_add_task_button
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_present(timeout=task_wait)
-        @to_do_card.today_task_one_title.should eql('Original Title')
+        expect(@to_do_card.today_task_one_title).to eql('Original Title')
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.edit_today_task_one('Edited Title', nil, nil)
@@ -109,11 +109,11 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_add_task_button
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_title.should eql('Task Must Have a Title')
+        expect(@to_do_card.today_task_one_title).to eql('Task Must Have a Title')
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.edit_today_task_one('', nil, nil)
-        @to_do_card.today_task_one_save_button_element.enabled?.should be_falsey
+        expect(@to_do_card.today_task_one_save_button_element.enabled?).to be false
       end
 
       it 'allows a user to make an unscheduled task overdue' do
@@ -128,8 +128,8 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.unsched_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.overdue_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.overdue_task_one_title.should eql('Unscheduled task that will be due yesterday')
-        @to_do_card.overdue_task_one_date.should eql(yesterday.strftime("%m/%d"))
+        expect(@to_do_card.overdue_task_one_title).to eql('Unscheduled task that will be due yesterday')
+        expect(@to_do_card.overdue_task_one_date).to eql(yesterday.strftime("%m/%d"))
       end
 
       it 'allows a user to make an unscheduled task due today' do
@@ -144,8 +144,8 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.unsched_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_title.should eql('Unscheduled task that will be due today')
-        @to_do_card.today_task_one_date.should eql(today.strftime("%m/%d"))
+        expect(@to_do_card.today_task_one_title).to eql('Unscheduled task that will be due today')
+        expect(@to_do_card.today_task_one_date).to eql(today.strftime("%m/%d"))
       end
 
       it 'allows a user to make an unscheduled task due in the future' do
@@ -160,8 +160,8 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.unsched_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.future_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.future_task_one_title.should eql('Unscheduled task that will be scheduled for tomorrow')
-        @to_do_card.future_task_one_date.should eql(tomorrow.strftime("%m/%d"))
+        expect(@to_do_card.future_task_one_title).to eql('Unscheduled task that will be scheduled for tomorrow')
+        expect(@to_do_card.future_task_one_date).to eql(tomorrow.strftime("%m/%d"))
       end
 
       it 'allows a user to make an overdue task unscheduled' do
@@ -175,8 +175,8 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.overdue_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.unsched_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.unsched_task_one_title.should eql('Overdue task that will be unscheduled')
-        @to_do_card.unsched_task_one_date.should eql(today.strftime("%m/%d"))
+        expect(@to_do_card.unsched_task_one_title).to eql('Overdue task that will be unscheduled')
+        expect(@to_do_card.unsched_task_one_date).to eql(today.strftime("%m/%d"))
       end
 
       it 'requires that an edited task have a valid date format' do
@@ -186,9 +186,9 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.edit_today_task_one(nil, '08/11/14', '')
-        @to_do_card.today_task_one_save_button_element.enabled?.should be_falsey
+        expect(@to_do_card.today_task_one_save_button_element.enabled?).to be false
         @to_do_card.today_task_date_validation_error_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_date_validation_error.should include('Please use mm/dd/yyyy date format')
+        expect(@to_do_card.today_task_date_validation_error).to include('Please use mm/dd/yyyy date format')
       end
 
       it 'allows a user to add notes to an existing task' do
@@ -201,7 +201,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.save_unsched_task_one_edits
         @to_do_card.toggle_unsched_task_one_detail
         @to_do_card.unsched_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.unsched_task_one_notes.should eql('A note for the note-less task')
+        expect( @to_do_card.unsched_task_one_notes).to eql('A note for the note-less task')
       end
 
       it 'allows a user to edit notes on an existing task' do
@@ -257,19 +257,19 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.save_today_task_one_edits
         @to_do_card.toggle_overdue_task_one_detail
         wait_for_task.until { @to_do_card.overdue_task_one_title == 'Overdue task edited' }
-        @to_do_card.overdue_task_one_date.should eql((yesterday - 1).strftime("%m/%d"))
+        expect(@to_do_card.overdue_task_one_date).to eql((yesterday - 1).strftime("%m/%d"))
         @to_do_card.overdue_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.overdue_task_one_notes.should eql('Overdue task notes edited')
+        expect(@to_do_card.overdue_task_one_notes).to eql('Overdue task notes edited')
         @to_do_card.toggle_today_task_one_detail
         wait_for_task.until { @to_do_card.today_task_one_title == 'Today task edited' }
-        @to_do_card.today_task_one_date.should eql(today.strftime("%m/%d"))
+        expect(@to_do_card.today_task_one_date).to eql(today.strftime("%m/%d"))
         @to_do_card.today_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_notes.should eql('Today task notes edited')
+        expect(@to_do_card.today_task_one_notes).to eql('Today task notes edited')
         @to_do_card.toggle_future_task_one_detail
         wait_for_task.until { @to_do_card.future_task_one_title == 'Future task edited' }
-        @to_do_card.future_task_one_date.should eql((tomorrow + 1).strftime("%m/%d"))
+        expect(@to_do_card.future_task_one_date).to eql((tomorrow + 1).strftime("%m/%d"))
         @to_do_card.future_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.future_task_one_notes.should eql('Future task notes edited')
+        expect(@to_do_card.future_task_one_notes).to eql('Future task notes edited')
       end
 
       it 'allows a user to cancel the edit of an existing task' do
@@ -282,9 +282,9 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.cancel_today_task_one_edits
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.today_task_one_notes_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_title.should eql('The original task title')
-        @to_do_card.today_task_one_date.should eql(today.strftime("%m/%d"))
-        @to_do_card.today_task_one_notes.should eql('The original task notes')
+        expect(@to_do_card.today_task_one_title).to eql('The original task title')
+        expect(@to_do_card.today_task_one_date).to eql(today.strftime("%m/%d"))
+        expect(@to_do_card.today_task_one_notes).to eql('The original task notes')
       end
     end
 
@@ -299,9 +299,9 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.overdue_show_more_button
         end
         wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"][' + i.to_s + ']') }
-        @to_do_card.overdue_task_count.should eql(i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//strong').text.should eql('task ' + i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text.should eql(date.strftime("%m/%d"))
+        expect(@to_do_card.overdue_task_count).to eql(i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//strong').text).to eql('task ' + i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text).to eql(date.strftime("%m/%d"))
       end
     end
 
@@ -316,9 +316,9 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.today_show_more_button
         end
         wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']') }
-        @to_do_card.today_task_count.should eql(i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']//strong').text.should eql('task ' + i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text.should eql(date.strftime("%m/%d"))
+        expect(@to_do_card.today_task_count).to eql(i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']//strong').text).to eql('task ' + i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text).to eql(date.strftime("%m/%d"))
       end
     end
 
@@ -334,9 +334,9 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.future_show_more_button
         end
         wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']') }
-        @to_do_card.future_task_count.should eql(i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']//strong').text.should eql('task ' + i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text.should eql(date.strftime("%m/%d"))
+        expect(@to_do_card.future_task_count).to eql(i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']//strong').text).to eql('task ' + i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text).to eql(date.strftime("%m/%d"))
       end
     end
 
@@ -351,9 +351,9 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.unsched_show_more_button
         end
         wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"][' + i.to_s + ']') }
-        @to_do_card.unsched_task_count.should eql(i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//strong').text.should eql('task ' + i.to_s)
-        @driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//div[@data-ng-show="task.updatedDate && task.bucket === \'Unscheduled\'"]/span').text.should eql(today.strftime("%m/%d"))
+        expect(@to_do_card.unsched_task_count).to eql(i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//strong').text).to eql('task ' + i.to_s)
+        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//div[@data-ng-show="task.updatedDate && task.bucket === \'Unscheduled\'"]/span').text).to eql(today.strftime("%m/%d"))
       end
     end
 
@@ -390,21 +390,21 @@ describe 'The My Dashboard task manager', :testui => true do
       end
       @to_do_card.click_completed_tasks_tab
       @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-      @to_do_card.completed_task_count.should eql('12')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][1]//strong').text.should include('unscheduled task 3')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][2]//strong').text.should include('unscheduled task 2')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][3]//strong').text.should include('unscheduled task 1')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][4]//strong').text.should include('future task 3')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][5]//strong').text.should include('future task 2')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][6]//strong').text.should include('future task 1')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][7]//strong').text.should include('today task 3')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][8]//strong').text.should include('today task 2')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][9]//strong').text.should include('today task 1')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][10]//strong').text.should include('overdue task 3')
+      expect(@to_do_card.completed_task_count).to eql('12')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][1]//strong').text).to include('unscheduled task 3')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][2]//strong').text).to include('unscheduled task 2')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][3]//strong').text).to include('unscheduled task 1')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][4]//strong').text).to include('future task 3')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][5]//strong').text).to include('future task 2')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][6]//strong').text).to include('future task 1')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][7]//strong').text).to include('today task 3')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][8]//strong').text).to include('today task 2')
+      expect( @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][9]//strong').text).to include('today task 1')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][10]//strong').text).to include('overdue task 3')
       @to_do_card.completed_show_more_button
       @to_do_card.completed_show_more_button_element.when_not_visible(timeout=task_wait)
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][11]//strong').text.should include('overdue task 2')
-      @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][12]//strong').text.should include('overdue task 1')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][11]//strong').text).to include('overdue task 2')
+      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][12]//strong').text).to include('overdue task 1')
     end
 
     context 'when completing tasks' do
@@ -416,7 +416,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.complete_overdue_task_one
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.completed_task_one_title.should eql('Overdue to be completed')
+        expect(@to_do_card.completed_task_one_title).to eql('Overdue to be completed')
       end
 
       it 'allows the user to mark a current task as completed' do
@@ -426,7 +426,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.complete_today_task_one
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.completed_task_one_title.should eql('Today to be completed')
+        expect(@to_do_card.completed_task_one_title).to eql('Today to be completed')
       end
 
       it 'allows the user to mark a future task as completed' do
@@ -436,7 +436,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.complete_future_task_one
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.completed_task_one_title.should eql('Future to be completed')
+        expect(@to_do_card.completed_task_one_title).to eql('Future to be completed')
       end
 
       it 'allows the user to mark an unscheduled task as completed' do
@@ -447,7 +447,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.complete_unsched_task_one
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.completed_task_one_title.should eql('Unscheduled to be completed')
+        expect(@to_do_card.completed_task_one_title).to eql('Unscheduled to be completed')
       end
 
       it 'allows the user to mark a completed tasks as un-completed' do
@@ -457,12 +457,12 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.complete_today_task_one
         @to_do_card.click_completed_tasks_tab
         @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.completed_task_one_title.should eql('Today to be completed')
+        expect(@to_do_card.completed_task_one_title).to eql('Today to be completed')
         @to_do_card.uncomplete_task_one
         @to_do_card.completed_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
-        @to_do_card.today_task_one_title.should eql('Today to be completed')
+        expect(@to_do_card.today_task_one_title).to eql('Today to be completed')
       end
     end
   end
