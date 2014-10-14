@@ -36,10 +36,25 @@ module CalCentralPages
 
       table(:transaction_table, :xpath => '//div[@class="cc-table cc-table-sortable cc-page-myfinances-table"]/table')
       link(:transaction_table_row_one, :xpath => '//div[@class="cc-table cc-table-sortable cc-page-myfinances-table"]/table/tbody')
+
+      span(:trans_date, :xpath => '//span[@data-ng-bind="item.transDate | date:\'MM/dd/yy\'"]')
+      div(:trans_desc, :xpath => '//div[@data-ng-bind="item.transDesc"]')
+      td(:trans_amt, :xpath => '//td[@data-cc-amount-directive="item.transBalanceAmount"]')
+      span(:trans_type, :xpath => '//span[@data-ng-bind="item.transType"]')
+      image(:trans_due_future_icon, :xpath => '//i[@class="fa ng-scope fa-arrow-right"]')
+      image(:trans_due_now_icon, :xpath => '//i[@class="fa ng-scope fa-exclamation"]')
+      image(:trans_due_past_icon, :xpath => '//i[@class="fa ng-scope fa-exclamation-circle cc-icon-red"]')
       div(:trans_id, :xpath => '//div[@data-ng-if="item.transId"]')
+      div(:trans_orig_amt, :xpath => '//div[@data-ng-if="item.originalAmount"]')
       div(:trans_due_date, :xpath => '//div[@data-ng-if="item.transDueDateShow && !(item.transStatus === \'Closed\' && item.transType === \'Refund\')"]')
       div(:trans_dept, :xpath => '//div[@data-ng-if="item.transDept"]')
       div(:trans_term, :xpath => '//div[@data-ng-if="item.transTerm"]')
+      div(:trans_disburse_date, :xpath => 'div[@data-ng-if="item.transPotentialDisbursementDate"]')
+      div(:trans_ref_method, :xpath => '//div[@data-ng-if="item.transPaymentMethod"]')
+      div(:trans_ref_date, :xpath => '//div[@data-ng-if="item.transPaymentLastActionDate"]')
+      div(:trans_ref_action, :xpath => '//div[@data-ng-if="item.transPaymentLastAction"]')
+      div(:trans_ref_void, :xpath => '//div[@data-ng-if="item.transPaymentVoidDate"]')
+      div(:trans_unapplied, :xpath => '//div[@data-ng-if="item.transStatus === \'Unapplied\' && item.transType === \'Award\'"]')
 
       paragraph(:zero_balance_text, :xpath => '//p[contains(text(),"You do not owe anything at this time. Please select a different filter to view activity details.")]')
       paragraph(:credit_balance_text, :xpath => '//p[contains(text(),"You have an over-payment on your account. You do not owe anything at this time. Please select a different filter to view activity details.")]')
@@ -47,7 +62,6 @@ module CalCentralPages
       button(:show_more_button, :xpath => '//button[@class="cc-button cc-widget-show-more"]')
 
       span(:last_update_date, :xpath => '//span[@data-ng-bind="myfinances.summary.lastUpdateDate | date:\'MM/dd/yy\'"]')
-
 
       def load_page(driver)
         logger.info('Loading My Finances details page')
@@ -111,34 +125,51 @@ module CalCentralPages
         trans_types.drop(1)
       end
 
+      def keep_showing_more
+        while show_more_button_element.visible?
+          show_more_button
+        end
+      end
+
+      def toggle_first_trans_detail
+        transaction_table_row_one
+      end
+
       # TRANSACTION FILTERING
 
       def select_transactions_filter(filter)
-        logger.info('Filtering by ' + filter)
+        logger.debug('Filtering by ' + filter)
+        wait_until(timeout=WebDriverUtils.page_event_timeout, nil) { self.activity_filter_select != '' }
         self.activity_filter_select = filter
       end
 
       def select_term_filter(term)
-        logger.info('Filtering by ' + term)
+        logger.debug('Filtering by ' + term)
         self.activity_filter_term_select = term
       end
 
       def enter_search_start_date(date)
-        logger.info('Search start date is ' + date)
+        logger.debug('Search start date is ' + date)
         search_start_date_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         self.search_start_date_input = date
       end
 
       def enter_search_end_date(date)
-        logger.info('Search end date is ' + date)
+        logger.debug('Search end date is ' + date)
         search_end_date_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         self.search_end_date_input = date
       end
 
       def enter_search_string(string)
-        logger.info('Searching for "' + string + '"')
+        logger.debug('Searching for "' + string + '"')
         search_string_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         self.search_string_input = string
+      end
+
+      def search_by_dates_and_string(start_date, end_date, string)
+        enter_search_start_date(start_date)
+        enter_search_end_date(end_date)
+        enter_search_string(string)
       end
 
       # TRANSACTION SORTING
@@ -204,13 +235,6 @@ module CalCentralPages
         sort_by_trans_type
         if sort_ascending?
           sort_by_trans_type
-        end
-      end
-
-      def keep_showing_more
-        logger.info('Clicking the show more button if it is present')
-        while show_more_button_element.visible?
-          show_more_button
         end
       end
     end

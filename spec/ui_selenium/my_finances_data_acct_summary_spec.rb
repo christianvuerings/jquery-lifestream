@@ -99,7 +99,7 @@ describe 'My Finances', :testui => true do
                 acct_bal = 'Positive'
                 my_fin_balance_transactions = my_finances_page.visible_transactions_sum_str
                 it 'shows the open charges for UID ' + uid do
-                  my_fin_balance_transactions.should eql(fin_api_page.account_balance_str)
+                  my_fin_balance_transactions.should eql(fin_api_page.open_charges_sum_str)
                 end
               elsif fin_api_page.account_balance == 0
                 acct_bal = 'Zero'
