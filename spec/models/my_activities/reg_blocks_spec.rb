@@ -66,4 +66,13 @@ describe MyActivities::RegBlocks do
       activities.should eq('foo')
     end
   end
+
+  context 'nil body from proxy' do
+    before { allow_any_instance_of(Bearfacts::Regblocks).to receive(:get).and_return({}) }
+    it 'should not do anything' do
+      activities = []
+      MyActivities::RegBlocks.append!(oski_uid, activities)
+      expect(activities).to eq []
+    end
+  end
 end

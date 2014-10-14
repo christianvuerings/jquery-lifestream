@@ -4,13 +4,15 @@ module MyActivities
     def self.append!(uid, activities)
       blocks_feed = Bearfacts::Regblocks.new({user_id: uid}).get
       if blocks_feed[:errored] || blocks_feed[:noStudentId]
-        return activities
+        return
       end
 
       %w(activeBlocks inactiveBlocks).each do |block_category|
-        blocks_feed[block_category.to_sym].each do |block|
-          notification = process_block!(block)
-          activities << notification if notification.present?
+        if (blocks = blocks_feed[block_category.to_sym])
+          blocks.each do |block|
+            notification = process_block!(block)
+            activities << notification if notification.present?
+          end
         end
       end
     end
