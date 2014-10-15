@@ -16,9 +16,11 @@ module Oec
     end
 
     def append_records(output)
-      Oec::Queries.get_all_course_students(@ccns).each do |record|
-        row = record_to_csv_row(record)
-        output << row
+      if @ccns.length > 0
+        Oec::Queries.get_all_course_students(@ccns).each do |record|
+          row = record_to_csv_row(record)
+          output << row
+        end
       end
 
       # now add in courses with _GSI suffix (might duplicate some of the ones already in the file, but that's ok.)

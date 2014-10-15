@@ -31,13 +31,13 @@ describe Oec::Queries do
   end
 
   context 'looking up courses', :testext => true do
-    subject { Oec::Queries.get_all_courses }
+    subject { Oec::Queries.get_courses(nil, 'MATH') }
     it { should_not be_nil }
     it { subject[0]['course_id'].should_not be_nil }
   end
 
   context 'looking up courses with crosslistings', :testext => true do
-    subject { Oec::Queries.get_all_courses('7309, 7366') }
+    subject { Oec::Queries.get_courses('7309, 7366') }
     it { should_not be_nil }
   end
 

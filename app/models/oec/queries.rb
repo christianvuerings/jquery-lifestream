@@ -2,9 +2,9 @@ module Oec
   class Queries < CampusOracle::Connection
     include ActiveRecordHelper
 
-    def self.get_all_courses(course_cntl_nums = nil)
+    def self.get_courses(course_cntl_nums = nil, dept = nil)
       course_cntl_nums_clause = course_cntl_nums.present? ? self.query_in_chunks('c.course_cntl_num', course_cntl_nums.split(',')) : ''
-      this_depts_clause = course_cntl_nums.present? ? '' : depts_clause('c', Settings.oec.departments)
+      this_depts_clause = course_cntl_nums.present? ? '' : depts_clause('c', [ dept ])
       select_list = self.get_all_courses_select_list
       result = []
       use_pooled_connection {
@@ -30,7 +30,7 @@ module Oec
             and r.course_cntl_num = c.course_cntl_num
             and rownum < 2
           )
-      order by c.course_cntl_num, p.ldap_uid
+      order by c.catalog_id, c.course_cntl_num, p.ldap_uid
         SQL
         result = connection.select_all(sql)
       }
@@ -76,7 +76,7 @@ module Oec
             and r.course_cntl_num = c.course_cntl_num
             and rownum < 2
           )
-      order by c.course_cntl_num, p.ldap_uid
+      order by c.catalog_id, c.course_cntl_num, p.ldap_uid
         SQL
         result = connection.select_all(sql)
       }
