@@ -25,10 +25,10 @@
         data-ng-click="api.util.preventBubble($event)"
         data-ng-change="changeTaskState(task)"
         data-ng-disabled="!!task.editorIsProcessing"
-        data-ng-false-value="needsAction"
+        data-ng-false-value="'needsAction'"
         data-ng-model="task.status"
         data-ng-show="task.emitter=='Google'"
-        data-ng-true-value="completed"
+        data-ng-true-value="'completed'"
       >
       <label for="cc-widget-tasks-checkbox-{{$index}}" data-ng-show="task.emitter!='bCourses'" class="cc-visuallyhidden">
         <span data-ng-bind-template="mark {{task.title}} as"></span>
