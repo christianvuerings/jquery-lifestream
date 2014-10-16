@@ -64,12 +64,12 @@
 
         if ($scope.sectionTerms.length > 1) {
           $scope.appState = 'error';
-          $scope.errorStatus = "This course site contains sections from multiple terms. Only sections from a single term should be present.";
+          $scope.errorStatus = 'This course site contains sections from multiple terms. Only sections from a single term should be present.';
           $scope.contactSupport = true;
         }
       } else {
         $scope.appState = 'error';
-        $scope.errorStatus = "No sections found in this course representing an official campus term.";
+        $scope.errorStatus = 'No sections found in this course representing an official campus term.';
         $scope.unexpectedContactSupport = true;
       }
     };
@@ -82,7 +82,9 @@
       }
       if (!gradeTypesPresent.letter_grades_present) {
         $scope.appState = 'error';
-        if ($scope.noNumberGrades !== true) $scope.noLetterGrades = true;
+        if ($scope.noNumberGrades !== true) {
+          $scope.noLetterGrades = true;
+        }
       }
     };
 
@@ -93,17 +95,25 @@
         $scope.selectedSection = $scope.officialSections[0];
       } else {
         $scope.appState = 'error';
-        $scope.errorStatus = "None of the sections within this course site are associated with UC Berkeley course catalog sections.";
+        $scope.errorStatus = 'None of the sections within this course site are associated with UC Berkeley course catalog sections.';
         $scope.contactSupport = true;
       }
     };
 
     var getExportOptions = function() {
       canvasCourseGradeExportFactory.exportOptions().success(function(data) {
-        if ($scope.appState !== 'error') loadSectionTerms(data.section_terms);
-        if ($scope.appState !== 'error') loadGradeTypes(data.grade_types_present);
-        if ($scope.appState !== 'error') loadOfficialSections(data.official_sections);
-        if ($scope.appState !== 'error') $scope.appState = 'ready';
+        if ($scope.appState !== 'error') {
+          loadSectionTerms(data.section_terms);
+        }
+        if ($scope.appState !== 'error') {
+          loadGradeTypes(data.grade_types_present);
+        }
+        if ($scope.appState !== 'error') {
+          loadOfficialSections(data.official_sections);
+        }
+        if ($scope.appState !== 'error') {
+          $scope.appState = 'ready';
+        }
       }).error(function(data) {
         $scope.showError = true;
         $scope.errorStatus = data;
