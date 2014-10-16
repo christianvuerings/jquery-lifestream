@@ -365,3 +365,4 @@ describe Canvas::Egrades do
   end
 
 end
+

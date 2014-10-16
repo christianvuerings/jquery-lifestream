@@ -111,5 +111,3 @@ module Canvas
   end
 end
 
-
-
