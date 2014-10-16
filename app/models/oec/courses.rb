@@ -1,8 +1,13 @@
 module Oec
   class Courses < Export
 
+    def initialize(dept_name)
+      super()
+      @dept_name = dept_name
+    end
+
     def base_file_name
-      'courses'
+      "#{@dept_name.gsub(/\s/, '_')}_courses"
     end
 
     def headers
@@ -12,12 +17,12 @@ module Oec
     def append_records(output)
       visited_row_set = Set.new
       secondary_ccn_array = []
-      Oec::Queries.get_all_courses.each do |course|
+      Oec::Queries.get_courses(nil, @dept_name).each do |course|
         row = record_to_csv_row(course)
         # No practical way to combine these fields in SQL, so we'll do it here in Ruby.
         if course['cross_listed_name'].present?
           # get all the cross listings of this course, even if they're in departments not part of our filter.
-          cross_listings = Oec::Queries.get_all_courses(course['cross_listed_name'])
+          cross_listings = Oec::Queries.get_courses(course['cross_listed_name'])
           cross_listings.each do |crosslist|
             cross_list_row = record_to_csv_row(crosslist)
             cross_list_row['CROSS_LISTED_NAME'] = "#{crosslist['course_title_short']} (#{crosslist['cross_listed_name']})"

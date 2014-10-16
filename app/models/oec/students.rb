@@ -16,8 +16,10 @@ module Oec
     end
 
     def append_records(output)
-      Oec::Queries.get_all_students(@ccns).each do |student|
-        output << record_to_csv_row(student)
+      if @ccns.length > 0
+        Oec::Queries.get_all_students(@ccns).each do |student|
+          output << record_to_csv_row(student)
+        end
       end
     end
 
