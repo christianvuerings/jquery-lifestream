@@ -53,6 +53,7 @@
           $scope.errorStatus = data.error;
         } else {
           $scope.errorStatus = 'Authorization Check Failed';
+          $scope.contactSupport = true;
         }
       });
     };
