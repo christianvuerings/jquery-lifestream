@@ -15,7 +15,12 @@
     }
   }
 
-  .cc-page-course-grade-export-unauthorized {
+  .cc-page-course-grade-export-error-display {
     padding: 20px;
+
+    .cc-page-course-grade-export-warning {
+      color: $bc-color-notice-warning;
+    }
+
   }
 }

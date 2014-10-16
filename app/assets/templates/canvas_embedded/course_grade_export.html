@@ -16,7 +16,7 @@
 
   </div>
 
-  <div data-ng-if="appState === 'error'" class="cc-page-course-grade-export-unauthorized">
+  <div data-ng-if="appState === 'error'" class="cc-page-course-grade-export-error-display">
 
     <!-- Standard Error -->
     <div data-ng-if="errorStatus">
@@ -40,12 +40,17 @@
     <!-- No Letter Grades Present -->
     <div data-ng-if="!errorStatus && noLetterGrades">
       <p>
-        <i class="fa fa-warning"></i>
-        The letter grades required for eGrade exports are currently not available for this course.
+        <i class="fa fa-warning cc-page-course-grade-export-warning"></i>
+        ACTION REQUIRED!
       </p>
       <p>
-        Please edit the <a data-ng-click="goToCourseDetails()">course details</a> for this course site
-        to enable the appropriate course grading scheme, and then return here to try again.
+        Letter grades are required by the eGrades system. A grading scheme must be applied to calculate
+        student letter grades.
+      </p>
+      <p>
+        Please edit and enable the grading scheme in the <a data-ng-click="goToCourseDetails()">course details</a> page for this course site.
+        You may need to choose an alternative grading scheme for your course site other than the default scheme. Once this
+        step is completed, return here and try again.
       </p>
       <p>
         For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
