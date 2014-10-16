@@ -34,7 +34,7 @@ Calcentral::Application.configure do
   # config.assets.compile = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   # We need to leave this to false since otherwise it takes 25 seconds to compile
   # https://jira.media.berkeley.edu/jira/browse/CLC-1585
