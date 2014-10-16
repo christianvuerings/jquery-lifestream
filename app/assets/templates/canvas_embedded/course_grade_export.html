@@ -7,7 +7,7 @@
         Select Section: <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
       </p>
 
-      <a data-ng-href="/api/academics/canvas/egrade_export/download.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}" target="_self" class="button">Download eGrades</a>
+      <a data-ng-href="/api/academics/canvas/egrade_export/download.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}" target="_self" class="cc-button cc-page-course-grade-export-download-button">Download eGrades</a>
 
       <div class="cc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
         <a data-ng-click="goToGradebook()">Back to Gradebook</a>
