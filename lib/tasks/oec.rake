@@ -13,7 +13,7 @@ namespace :oec do
   task :students => :environment do
     timestamp = DateTime.now.strftime('%FT%T.%L%z')
     Settings.oec.departments.each do |dept_name|
-      reader = Oec::FileReader.new("tmp/oec/#{dept_name.sub(/\s/, '_')}_courses.csv")
+      reader = Oec::FileReader.new("tmp/oec/#{dept_name.gsub(/\s/, '_')}_courses.csv")
       [Oec::Students, Oec::CourseStudents].each do |klass|
         klass.new(reader.ccns, reader.gsi_ccns).export(timestamp)
       end

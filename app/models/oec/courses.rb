@@ -7,7 +7,7 @@ module Oec
     end
 
     def base_file_name
-      "#{@dept_name.sub(/\s/, '_')}_courses"
+      "#{@dept_name.gsub(/\s/, '_')}_courses"
     end
 
     def headers
