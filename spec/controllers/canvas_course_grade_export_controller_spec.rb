@@ -84,19 +84,19 @@ describe CanvasCourseGradeExportController do
   describe "when serving egrades download" do
 
     it_should_behave_like "an endpoint" do
-      let(:make_request) { get :download_egrades_csv, :format => :csv }
+      let(:make_request) { get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234' }
       let(:error_text) { "Something went wrong" }
-      before { allow_any_instance_of(Canvas::Egrades).to receive(:official_student_grades).and_raise(RuntimeError, error_text) }
+      before { allow_any_instance_of(Canvas::Egrades).to receive(:official_student_grades_csv).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like "an authenticated endpoint" do
-      let(:make_request) { get :download_egrades_csv, :format => :csv }
+      let(:make_request) { get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234' }
     end
 
     context "when the canvas course id is not present in the session" do
       before { session[:canvas_course_id] = nil }
       it "returns 403 error" do
-        get :download_egrades_csv, :format => :csv
+        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(403)
         expect(response.body).to eq " "
       end
@@ -105,7 +105,7 @@ describe CanvasCourseGradeExportController do
     context "when user is not authorized to download egrades csv" do
       before { allow_any_instance_of(Canvas::CoursePolicy).to receive(:can_export_grades?).and_return(false) }
       it "returns 403 error" do
-        get :download_egrades_csv, :format => :csv
+        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(403)
         expect(response.body).to eq " "
       end
