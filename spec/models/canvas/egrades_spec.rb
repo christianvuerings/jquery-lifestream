@@ -177,8 +177,8 @@ describe Canvas::Egrades do
       it "indicates no number or letter grades" do
         result = subject.grade_types_present
         expect(result).to be_an_instance_of Hash
-        expect(result[:number_grades_present]).to be_false
-        expect(result[:letter_grades_present]).to be_false
+        expect(result[:number_grades_present]).to eq false
+        expect(result[:letter_grades_present]).to eq false
       end
     end
 
@@ -190,8 +190,8 @@ describe Canvas::Egrades do
       it "indicates number grades, yet no letter grades are present" do
         result = subject.grade_types_present
         expect(result).to be_an_instance_of Hash
-        expect(result[:number_grades_present]).to be_true
-        expect(result[:letter_grades_present]).to be_false
+        expect(result[:number_grades_present]).to eq true
+        expect(result[:letter_grades_present]).to eq false
       end
     end
 
@@ -200,8 +200,8 @@ describe Canvas::Egrades do
       it "indicates letter and number grades as present" do
         result = subject.grade_types_present
         expect(result).to be_an_instance_of Hash
-        expect(result[:number_grades_present]).to be_true
-        expect(result[:letter_grades_present]).to be_true
+        expect(result[:number_grades_present]).to eq true
+        expect(result[:letter_grades_present]).to eq true
       end
     end
   end
@@ -273,7 +273,7 @@ describe Canvas::Egrades do
         filtered_out_keys = ['course_title', 'course_title_short', 'catalog_root', 'catalog_prefix', 'catalog_suffix_1', 'catalog_suffix_2']
         filtered_out_keys.each do |filtered_out_key|
           result.each do |section|
-            expect(section.include?(filtered_out_key)).to be_false
+            expect(section).to_not include(filtered_out_key)
           end
         end
       end
