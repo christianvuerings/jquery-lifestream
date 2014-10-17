@@ -2,11 +2,7 @@ namespace :oec do
 
   desc 'Export courses.csv file'
   task :courses => :environment do
-    timestamp = DateTime.now.strftime('%FT%T.%L%z')
-    Settings.oec.departments.each do |dept_name|
-      Oec::Courses.new(dept_name).export(timestamp)
-    end
-    Rails.logger.warn "OEC CSV export completed. Timestamp: #{timestamp}"
+    Oec::CoursesWrapper.new(Settings.oec.departments).create_csv_file_per_dept
   end
 
   desc 'Generate student files based on courses.csv input'
@@ -17,8 +13,8 @@ namespace :oec do
       [Oec::Students, Oec::CourseStudents].each do |klass|
         klass.new(reader.ccns, reader.gsi_ccns).export(timestamp)
       end
-      Rails.logger.warn "OEC students export completed. Timestamp: #{timestamp}"
     end
+    Rails.logger.warn "OEC students export completed. Timestamp: #{timestamp}"
   end
 
 end
