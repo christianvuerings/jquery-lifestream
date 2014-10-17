@@ -46,7 +46,8 @@ describe 'Logging in with deep linking', :testui => true do
       my_academics_page.click_first_student_semester
       semester_page = @driver.current_url
       my_academics_page.click_logout_link
-      cal_net_auth_page.logout_conf_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
+      wait.until { cal_net_auth_page.text.include? 'Logout Successful' }
       @driver.get(semester_page)
       cal_net_auth_page.login(user, password)
       expect(@driver.current_url).to eql(semester_page)
