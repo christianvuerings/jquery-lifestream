@@ -2,7 +2,8 @@ namespace :oec do
 
   desc 'Export courses.csv file'
   task :courses => :environment do
-    Oec::CoursesWrapper.new(Settings.oec.departments).create_csv_file_per_dept
+    timestamp = Oec::CoursesWrapper.new.create_csv_file_per_dept
+    Rails.logger.warn "OEC courses export completed. Timestamp: #{timestamp}"
   end
 
   desc 'Generate student files based on courses.csv input'

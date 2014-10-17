@@ -1,10 +1,6 @@
 module Oec
   class CoursesWrapper
 
-    def initialize(departments)
-      @departments = departments
-    end
-
     def create_csv_file_per_dept
       timestamp = DateTime.now.strftime '%FT%T.%L%z'
       Settings.oec.departments.each do |dept_name|
@@ -12,6 +8,7 @@ module Oec
       end
       post_process_biology timestamp
       Rails.logger.warn "OEC CSV export completed. Timestamp: #{timestamp}"
+      timestamp
     end
 
     def post_process_biology(timestamp)
