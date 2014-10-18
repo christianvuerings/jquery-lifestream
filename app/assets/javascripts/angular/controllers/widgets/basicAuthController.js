@@ -14,7 +14,6 @@
         if (status < 200 || status >= 300) {
           return;
         }
-        $scope.basicauth.user = data;
         window.location = '/';
       });
     };
