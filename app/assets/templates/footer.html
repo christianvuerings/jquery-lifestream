@@ -46,7 +46,7 @@
       <button class="cc-button" data-ng-click="deleteSelf=false">No</button>
     </div>
     <div data-ng-controller="BasicAuthController" data-ng-if="api.user.profile.isBasicAuthEnabled">
-      <form class="cc-footer-form" action="" method="post" data-ng-submit="basicauth.connect()">
+      <form class="cc-footer-form" data-ng-submit="basicauth.connect()">
         <h3>Basic Auth</h3>
         <p><input data-ng-model="basicauth.login" name="email" type="text" placeholder="Login (uid)" required /></p>
         <p><input data-ng-model="basicauth.password" autocomplete="off" name="password" type="password" placeholder="Password" required /></p>
