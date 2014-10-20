@@ -5,13 +5,22 @@
     padding: 20px;
     width: 190px;
 
+    .cc-page-course-grade-export-download-button {
+      padding: 10px 24px;
+    }
+
     .cc-page-course-grade-export-grade-link {
       margin: 15px 0;
       text-align: center;
     }
   }
 
-  .cc-page-course-grade-export-unauthorized {
+  .cc-page-course-grade-export-error-display {
     padding: 20px;
+
+    .cc-page-course-grade-export-warning {
+      color: $bc-color-notice-warning;
+    }
+
   }
 }
