@@ -178,16 +178,18 @@
           var gradesExportLtiId = externalToolsHash['eGrades Export'];
           var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
 
-          // add 'Download eGrades (.csv)' option to gradebook drop down menu
-          var $downloadScoresListItem = $('a#download_csv').parent();
-          var downloadEGradesItem = [
-            '<li class="ui-menu-item" role="presentation">',
-            '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
-            'Download eGrades (.csv)',
-            '</a>',
-            '</li>'
-          ].join('');
-          $downloadScoresListItem.after(downloadEGradesItem);
+          if (gradesExportLtiId !== undefined) {
+            // add 'Download eGrades (.csv)' option to gradebook drop down menu
+            var $downloadScoresListItem = $('a#download_csv').parent();
+            var downloadEGradesItem = [
+              '<li class="ui-menu-item" role="presentation">',
+              '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
+              'Download eGrades (.csv)',
+              '</a>',
+              '</li>'
+            ].join('');
+            $downloadScoresListItem.after(downloadEGradesItem);
+          }
         });
       }
     }
