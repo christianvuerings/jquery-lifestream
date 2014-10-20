@@ -104,13 +104,13 @@
     var getExportOptions = function() {
       canvasCourseGradeExportFactory.exportOptions().success(function(data) {
         if ($scope.appState !== 'error') {
-          loadSectionTerms(data.section_terms);
+          loadSectionTerms(data.sectionTerms);
         }
         if ($scope.appState !== 'error') {
-          loadGradeTypes(data.grade_types_present);
+          loadGradeTypes(data.gradeTypesPresent);
         }
         if ($scope.appState !== 'error') {
-          loadOfficialSections(data.official_sections);
+          loadOfficialSections(data.officialSections);
         }
         if ($scope.appState !== 'error') {
           $scope.appState = 'ready';

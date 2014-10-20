@@ -49,7 +49,7 @@ describe CanvasCourseGradeExportController do
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
-      official_sections = json_response['official_sections']
+      official_sections = json_response['officialSections']
       expect(official_sections).to be_an_instance_of Array
       expect(official_sections.count).to eq 2
       expect(official_sections[0]['course_cntl_num']).to eq "22280"
@@ -61,7 +61,7 @@ describe CanvasCourseGradeExportController do
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
-      grade_types_present = json_response['grade_types_present']
+      grade_types_present = json_response['gradeTypesPresent']
       expect(grade_types_present).to be_an_instance_of Hash
       expect(grade_types_present['number_grades_present']).to eq true
       expect(grade_types_present['letter_grades_present']).to eq false
@@ -72,7 +72,7 @@ describe CanvasCourseGradeExportController do
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
-      section_terms = json_response['section_terms']
+      section_terms = json_response['sectionTerms']
       expect(section_terms.count).to eq 2
       expect(section_terms[0]['term_cd']).to eq "C"
       expect(section_terms[0]['term_yr']).to eq "2014"
