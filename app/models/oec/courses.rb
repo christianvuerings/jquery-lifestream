@@ -18,13 +18,13 @@ module Oec
       visited_row_set = Set.new
       secondary_ccn_array = []
       Oec::Queries.get_courses(nil, @dept_name).each do |course|
-        row = record_to_csv_row(course)
+        row = record_to_csv_row course
         # No practical way to combine these fields in SQL, so we'll do it here in Ruby.
         if course['cross_listed_name'].present?
           # get all the cross listings of this course, even if they're in departments not part of our filter.
-          cross_listings = Oec::Queries.get_courses(course['cross_listed_name'])
+          cross_listings = Oec::Queries.get_courses course['cross_listed_name']
           cross_listings.each do |crosslist|
-            cross_list_row = record_to_csv_row(crosslist)
+            cross_list_row = record_to_csv_row crosslist
             cross_list_row['CROSS_LISTED_NAME'] = "#{crosslist['course_title_short']} (#{crosslist['cross_listed_name']})"
             cross_list_row.delete 'COURSE_TITLE_SHORT'
             append_row(output, cross_list_row, visited_row_set, crosslist)
@@ -38,7 +38,7 @@ module Oec
         end
       end
       Oec::Queries.get_secondary_cross_listings(secondary_ccn_array).each do |course|
-        row = record_to_csv_row(course)
+        row = record_to_csv_row course
         append_row(output, row, visited_row_set, course)
       end
     end
