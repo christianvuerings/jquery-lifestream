@@ -41,13 +41,12 @@ describe 'Logging in with deep linking', :testui => true do
       my_academics_page.load_page(@driver)
       cal_net_auth_page = CalNetPages::CalNetAuthPage.new(@driver)
       cal_net_auth_page.login(user, password)
-      my_academics_page.page_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+      my_academics_page.page_heading_element.when_visible(timeout=WebDriverUtils.academics_timeout)
       my_academics_page.wait_for_expected_title?
       my_academics_page.click_first_student_semester
       semester_page = @driver.current_url
       my_academics_page.click_logout_link
-      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-      wait.until { cal_net_auth_page.text.include? 'Logout Successful' }
+      cal_net_auth_page.logout_conf_heading_element.when_present(timeout=WebDriverUtils.page_load_timeout)
       @driver.get(semester_page)
       cal_net_auth_page.login(user, password)
       expect(@driver.current_url).to eql(semester_page)

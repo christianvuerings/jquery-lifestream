@@ -30,6 +30,7 @@ class GooglePage
   link(:recipient, :xpath => 'div[text()="Recipients"]')
   text_area(:to, :xpath => '//textarea[@aria-label="To"]')
   text_area(:subject, :name => 'subjectbox')
+  text_area(:body, :xpath => '//div[@aria-label="Message Body"]')
   button(:send_email_button, :xpath => '//div[text()="Send"]')
   link(:mail_sent_link, :id => "link_vsm")
 
@@ -119,9 +120,7 @@ class GooglePage
     to_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     self.to = recipient
     self.subject = subject
-    driver.switch_to.frame driver.find_element(:xpath, '//div[@aria-label="Message Body"]/iframe')
-    driver.find_element(:xpath, '//body').send_keys body
-    driver.switch_to.default_content
+    self.body = body
     send_email_button
     mail_sent_link_element.when_present(timeout=WebDriverUtils.page_event_timeout)
   end
