@@ -225,7 +225,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.3)
     minitest (5.4.2)
-    minitest-reporters (1.0.5)
+    minitest-reporters (1.0.6)
       ansi
       builder
       minitest (>= 5.0)
@@ -351,7 +351,7 @@ GEM
       ruby-debug-base (~> 0.10.5.rc9.0)
     ruby-debug-base (0.10.5.rc9-java)
       linecache (~> 0.46)
-    ruby-progressbar (1.5.1)
+    ruby-progressbar (1.6.0)
     rubyzip (1.1.6)
     rvm-capistrano (1.3.4)
       capistrano (>= 2.0.0)
@@ -497,7 +497,7 @@ DEPENDENCIES
   json (~> 1.8.0)
   link_header (~> 0.0.7)
   log4r (~> 1.1)
-  minitest-reporters (~> 1.0.5)
+  minitest-reporters (~> 1.0.6)
   momentjs-rails (~> 2.8.3)
   natural-sort-js (~> 0.7.0)
   net-ldap (~> 0.8.0)
