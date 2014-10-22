@@ -168,7 +168,7 @@ group :development, :test , :testext do
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
   # https://rubygems.org/gems/capybara
-  gem 'capybara', '~> 2.4.3'
+  gem 'capybara', '~> 2.4.4'
 
   # Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
   # from Ruby code, hiding some low-level action.
