@@ -17,13 +17,13 @@ gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.5'
 
-gem 'activerecord-jdbc-adapter', '~> 1.3.10'
+gem 'activerecord-jdbc-adapter', '~> 1.3.11'
 
 # Postgresql adapter
-gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.10'
+gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.11'
 
 # H2 adapter
-gem 'activerecord-jdbch2-adapter', '~> 1.3.10'
+gem 'activerecord-jdbch2-adapter', '~> 1.3.11'
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -37,7 +37,7 @@ gem 'omniauth-cas', '~> 1.0.1'
 gem 'net-ldap', '~> 0.8.0'
 
 # secure_headers provides x-frame, csp and other http headers
-gem 'secure_headers', '~> 1.3.3'
+gem 'secure_headers', '~> 1.3.4'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
@@ -156,7 +156,7 @@ group :development, :test , :testext do
   gem 'rspec-support', '~> 3.1.2'
   gem 'rspec-its', '~> 1.0.1'
   gem 'rspec-collection_matchers', '~> 1.0.0'
-  gem 'minitest-reporters', '~> 1.0.5'
+  gem 'minitest-reporters', '~> 1.0.6'
 
   # We need to specify the latest webdriver here, to support the latest firefox
   gem 'selenium-webdriver', '~> 2.43.0'
@@ -168,7 +168,7 @@ group :development, :test , :testext do
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website
   # https://rubygems.org/gems/capybara
-  gem 'capybara', '~> 2.4.3'
+  gem 'capybara', '~> 2.4.4'
 
   # Headless is a Ruby interface for Xvfb. It allows you to create a headless display straight
   # from Ruby code, hiding some low-level action.
@@ -185,7 +185,7 @@ group :development do
 end
 
 group :test do
-  gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.10'
+  gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.11'
   gem 'page-object', '~> 1.0.2'
 end
 
