@@ -37,7 +37,7 @@ gem 'omniauth-cas', '~> 1.0.1'
 gem 'net-ldap', '~> 0.8.0'
 
 # secure_headers provides x-frame, csp and other http headers
-gem 'secure_headers', '~> 1.3.3'
+gem 'secure_headers', '~> 1.3.4'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
