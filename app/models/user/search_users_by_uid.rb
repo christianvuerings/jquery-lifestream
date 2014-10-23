@@ -1,5 +1,6 @@
 module User
-  class SearchUsersByUid < AbstractModel
+  class SearchUsersByUid
+    extend Cache::Cacheable
 
     def initialize(options={})
       @id = options[:id]
