@@ -194,7 +194,7 @@ group :test, :testext do
   # TODO: Use gem 'rspec_junit_formatter', '~> 0.2.x' when deprecated concern of CLC-3565 is resolved.
   gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
 
-  gem 'webmock', '~> 1.19.0'
+  gem 'webmock', '~> 1.20.0'
 end
 
 group :shell_debug do
