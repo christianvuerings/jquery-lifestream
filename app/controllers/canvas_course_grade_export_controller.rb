@@ -28,7 +28,7 @@ class CanvasCourseGradeExportController < ApplicationController
     course_sections = egrades_worker.official_sections
     grade_types_present = egrades_worker.grade_types_present
     section_terms = egrades_worker.section_terms
-    render json: { :official_sections => course_sections, :grade_types_present => grade_types_present, :section_terms => section_terms }.to_json
+    render json: { :officialSections => course_sections, :gradeTypesPresent => grade_types_present, :sectionTerms => section_terms }.to_json
   end
 
   private
