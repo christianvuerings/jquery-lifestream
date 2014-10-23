@@ -225,7 +225,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.3)
     minitest (5.4.2)
-    minitest-reporters (1.0.6)
+    minitest-reporters (1.0.7)
       ansi
       builder
       minitest (>= 5.0)
@@ -497,7 +497,7 @@ DEPENDENCIES
   json (~> 1.8.0)
   link_header (~> 0.0.7)
   log4r (~> 1.1)
-  minitest-reporters (~> 1.0.6)
+  minitest-reporters (~> 1.0.7)
   momentjs-rails (~> 2.8.3)
   natural-sort-js (~> 0.7.0)
   net-ldap (~> 0.8.0)
