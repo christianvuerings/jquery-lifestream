@@ -225,7 +225,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.3)
     minitest (5.4.2)
-    minitest-reporters (1.0.6)
+    minitest-reporters (1.0.7)
       ansi
       builder
       minitest (>= 5.0)
@@ -447,7 +447,7 @@ GEM
     vcr (2.9.3)
     watir-webdriver (0.6.10)
       selenium-webdriver (>= 2.18.0)
-    webmock (1.19.0)
+    webmock (1.20.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
     websocket (1.2.1)
@@ -497,7 +497,7 @@ DEPENDENCIES
   json (~> 1.8.0)
   link_header (~> 0.0.7)
   log4r (~> 1.1)
-  minitest-reporters (~> 1.0.6)
+  minitest-reporters (~> 1.0.7)
   momentjs-rails (~> 2.8.3)
   natural-sort-js (~> 0.7.0)
   net-ldap (~> 0.8.0)
@@ -533,4 +533,4 @@ DEPENDENCIES
   torquebox-messaging (~> 3.1.1)
   torquebox-server (~> 3.1.1)
   vcr (~> 2.9.3)
-  webmock (~> 1.19.0)
+  webmock (~> 1.20.0)

@@ -156,7 +156,7 @@ group :development, :test , :testext do
   gem 'rspec-support', '~> 3.1.2'
   gem 'rspec-its', '~> 1.0.1'
   gem 'rspec-collection_matchers', '~> 1.0.0'
-  gem 'minitest-reporters', '~> 1.0.6'
+  gem 'minitest-reporters', '~> 1.0.7'
 
   # We need to specify the latest webdriver here, to support the latest firefox
   gem 'selenium-webdriver', '~> 2.43.0'
@@ -194,7 +194,7 @@ group :test, :testext do
   # TODO: Use gem 'rspec_junit_formatter', '~> 0.2.x' when deprecated concern of CLC-3565 is resolved.
   gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
 
-  gem 'webmock', '~> 1.19.0'
+  gem 'webmock', '~> 1.20.0'
 end
 
 group :shell_debug do
