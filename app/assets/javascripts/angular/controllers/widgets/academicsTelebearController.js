@@ -10,7 +10,7 @@
       $scope.telebearsAppointmentLoading = 'Process';
       for (var i = 0; i < phasesArray.length; i++) {
         var payload = {
-          'summary': phasesArray[i].period,
+          'summary': 'Tele-BEARS phase ' + phasesArray[i].period + ' appointment',
           'start': {
             'epoch': phasesArray[i].startTime.epoch
           },
