@@ -64,16 +64,23 @@ describe 'Status and Blocks information', :testui => true do
               dashboard_page = CalCentralPages::MyDashboardPage.new(driver)
               dashboard_page.load_page(driver)
               dashboard_page.wait_for_status_popover
+              has_no_standing = academics_api_page.has_no_standing
               has_popover = dashboard_page.status_icon_element.visible?
-              it "is available via a person icon in the header for UID #{uid}" do
-                expect(has_popover).to be true
+              if has_no_standing
+                it "is not available via a person icon in the header for UID #{uid}" do
+                  expect(has_popover).to be false
+                end
+              else
+                it "is available via a person icon in the header for UID #{uid}" do
+                  expect(has_popover).to be true
+                end
               end
+
               if has_popover
                 dashboard_page.open_status_popover
 
                 # REGISTRATION STATUS
                 has_reg_alert = dashboard_page.reg_status_alert_element.visible?
-                logger.info("Has reg alert is #{has_reg_alert}")
                 if api_reg_status_type == 'Registered'
                   is_registered = true
                   it "does not show a registration alert for UID #{uid}" do
@@ -119,14 +126,12 @@ describe 'Status and Blocks information', :testui => true do
                 end
 
                 # CALIFORNIA RESIDENCY
-                academics_page.load_page(driver)
-                academics_page.reg_status_summary_element.when_visible(timeout=WebDriverUtils.academics_timeout)
                 acad_res_status = academics_page.res_status_summary
                 it "shows residency status of '#{acad_res_status}' for UID #{uid}" do
                   expect(acad_res_status).to eql(api_res_status)
                 end
                 if acad_res_status == 'Resident'
-                  is_resident == true
+                  is_resident = true
                 end
                 if api_res_needs_action == true
                   has_red_res_status_icon = academics_page.res_status_icon_red?
@@ -134,7 +139,7 @@ describe 'Status and Blocks information', :testui => true do
                     expect(has_red_res_status_icon).to be true
                   end
                 else
-                  has_green_res_status_icon = academics_page.reg_status_icon_green?
+                  has_green_res_status_icon = academics_page.res_status_icon_green?
                   it "shows a green residency status icon on My Academics for UID #{uid}" do
                     expect(has_green_res_status_icon).to be true
                   end
@@ -199,8 +204,6 @@ describe 'Status and Blocks information', :testui => true do
                 end
 
                 # BLOCK HISTORY
-                academics_page.load_page(driver)
-                academics_page.active_blocks_heading_element.when_visible(timeout=WebDriverUtils.academics_timeout)
                 has_show_block_history_button = academics_page.show_block_history_button?
                 if academics_api_page.inactive_blocks.length > 0
                   has_block_history = true

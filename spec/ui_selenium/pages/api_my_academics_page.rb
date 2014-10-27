@@ -16,6 +16,10 @@ class ApiMyAcademicsPage
     @parsed = JSON.parse(body)
   end
 
+  def has_no_standing
+    @parsed['collegeAndLevel']['empty']
+  end
+
   def active_blocks
     @parsed['regblocks']['activeBlocks']
   end
