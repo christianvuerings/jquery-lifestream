@@ -52,7 +52,6 @@ class ApiMyAcademicsPage
     types = []
     active_blocks.select do |item|
       type = block_type(item)
-      logger.info("Block date in the API is #{type}")
       types.push(type)
     end
     types
@@ -62,7 +61,6 @@ class ApiMyAcademicsPage
     reasons = []
     active_blocks.select do |item|
       reason = block_reason(item)
-      logger.info("Block reason in the API is #{reason}")
       reasons.push(reason)
     end
     reasons
@@ -72,7 +70,6 @@ class ApiMyAcademicsPage
     offices = []
     active_blocks.select do |item|
       office = block_office(item)
-      logger.info("Block office in the API is #{office}")
       offices.push(office)
     end
     offices
@@ -82,7 +79,6 @@ class ApiMyAcademicsPage
     dates = []
     active_blocks.select do |item|
       date = (Time.strptime(block_date(item), '%m/%d/%Y')).strftime('%m/%d/%y')
-      logger.info("Block date in the API is #{date}")
       dates.push(date)
     end
     dates
@@ -92,7 +88,6 @@ class ApiMyAcademicsPage
     types = []
     inactive_blocks.select do |item|
       type = block_type(item)
-      logger.info("Block type in the API is #{type}")
       types.push(type)
     end
     types
@@ -102,7 +97,6 @@ class ApiMyAcademicsPage
     dates = []
     inactive_blocks.select do |item|
       date = (Time.strptime(block_date(item), '%m/%d/%Y')).strftime('%m/%d/%y')
-      logger.info("Block date in the API is #{date}")
       dates.push(date)
     end
     dates
@@ -112,7 +106,6 @@ class ApiMyAcademicsPage
     dates = []
     inactive_blocks.select do |item|
       date = (Time.strptime(block_cleared_date(item), '%m/%d/%Y')).strftime('%m/%d/%y')
-      logger.info("Block cleared date in the API is #{date}")
       dates.push(date)
     end
     dates
