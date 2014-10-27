@@ -23,6 +23,25 @@ module CalCentralPages
   span(:email_one_subject, :xpath => '//button[@title="bMail"]/following-sibling::div//span[@data-ng-bind="item.title"]')
   span(:email_one_summary, :xpath => '//button[@title="bMail"]/following-sibling::div//span[@data-ng-bind="item.summary"]')
 
+  # Status Popover
+  list_item(:status_loading, :xpath => '//li[@data-ng-show="statusLoading"]')
+  button(:status_icon, :xpath => '//button[@title="Show your status"]')
+  span(:status_alert_count, :xpath => '//span[@data-ng-if="hasAlerts"]/span[@data-ng-bind="count"]')
+  h4(:status_popover_heading, :xpath => '//div[@class="cc-popover-title"]/h4')
+  div(:no_status_alert, :xpath => '//div[@class="cc-popover-noitems ng-scope"]')
+  image(:no_status_alert_icon, :xpath => '//div[@class="cc-popover-noitems ng-scope"]/i[@class="cc-left fa fa-check-circle cc-icon-green"]')
+  div(:reg_status_alert, :xpath => '//li[@data-ng-if="studentInfo.regStatus.needsAction && api.user.profile.features.regstatus"]//div')
+  link(:reg_status_alert_link, :xpath => '//li[@data-ng-if="studentInfo.regStatus.needsAction && api.user.profile.features.regstatus"]/a')
+  image(:reg_status_alert_icon, :xpath => '//li[@data-ng-if="studentInfo.regStatus.needsAction && api.user.profile.features.regstatus"]//i[@class="cc-left fa fa-exclamation-circle cc-icon-red"]')
+  div(:block_status_alert, :xpath => '//li[@data-ng-if="studentInfo.regBlock.needsAction || studentInfo.regBlock.errored"]//div')
+  span(:block_status_alert_number, :xpath => '//li[@data-ng-if="studentInfo.regBlock.needsAction || studentInfo.regBlock.errored"]//span[@data-ng-bind="studentInfo.regBlock.activeBlocks"]')
+  link(:block_status_alert_link, :xpath => '//li[@data-ng-if="studentInfo.regBlock.needsAction || studentInfo.regBlock.errored"]//a')
+  image(:block_status_alert_icon, :xpath => '//li[@data-ng-if="studentInfo.regBlock.needsAction || studentInfo.regBlock.errored"]//i[@class="cc-left fa fa-exclamation-circle cc-icon-red"]')
+  div(:amount_due_status_alert, :xpath => '//li[@data-ng-if="minimumAmountDue && minimumAmountDue > 0"]//div')
+  link(:amount_due_status_alert_link, :xpath => '//li[@data-ng-if="minimumAmountDue && minimumAmountDue > 0"]//a')
+  image(:amount_due_status_alert_icon, :xpath => '//li[@data-ng-if="minimumAmountDue && minimumAmountDue > 0"]//i[@class="cc-left fa fa-exclamation-triangle cc-icon-gold"]')
+  image(:amount_overdue_status_alert_icon, :xpath => '//li[@data-ng-if="minimumAmountDue && minimumAmountDue > 0"]//i[@class="cc-left fa fa-exclamation-circle cc-icon-red"]')
+
   # Settings, Log Out
   link(:gear_link, :xpath => '//i[@class="fa fa-cog"]')
   button(:settings_link, :xpath => '//button[@data-ng-click="api.popover.clickThrough(\'Gear - Settings\');api.util.redirect(\'settings\')"]')
@@ -72,6 +91,29 @@ module CalCentralPages
       email_badge
       unread_email_heading_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     end
+  end
+
+  def wait_for_status_popover
+    if status_loading_element.visible?
+      status_loading_element.when_not_visible(timeout=WebDriverUtils.page_event_timeout)
+    end
+  end
+
+  def open_status_popover
+    status_icon_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+    unless status_popover_heading_element.visible?
+      status_icon
+    end
+  end
+
+  def click_reg_status_alert
+    reg_status_alert_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+    reg_status_alert_link
+  end
+
+  def click_block_status_alert
+    block_status_alert_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+    block_status_alert_link
   end
 
   def click_settings_link

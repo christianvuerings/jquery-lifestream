@@ -201,7 +201,7 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.save_unsched_task_one_edits
         @to_do_card.toggle_unsched_task_one_detail
         @to_do_card.unsched_task_one_notes_element.when_visible(timeout=task_wait)
-        expect( @to_do_card.unsched_task_one_notes).to eql('A note for the note-less task')
+        expect(@to_do_card.unsched_task_one_notes).to eql('A note for the note-less task')
       end
 
       it 'allows a user to edit notes on an existing task' do
