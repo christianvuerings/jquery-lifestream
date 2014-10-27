@@ -8,11 +8,7 @@
   angular.module('calcentral.controllers').controller('AcademicsGpaController', function($scope) {
     var gradeOptions = [
       {
-        grade: 'A+',
-        weight: 4
-      },
-      {
-        grade: 'A',
+        grade: 'A/A+',
         weight: 4
       },
       {
