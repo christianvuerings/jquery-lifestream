@@ -1,7 +1,5 @@
-require 'spec_helper'
 require 'selenium-webdriver'
 require 'page-object'
-require 'json'
 require_relative '../util/web_driver_utils'
 
 class ApiMyFinancialsPage
