@@ -8,10 +8,10 @@ describe Canvas::Egrades do
 
   let(:canvas_course_students_list) do
     [
-      {:sis_login_id => "872584", :sis_user_id => "2004491", :final_score => 34.9, :final_grade => "F"},
-      {:sis_login_id => "4000123", :sis_user_id => "UID:4000123", :final_score => 89.5, :final_grade => "B"},
-      {:sis_login_id => "872527", :sis_user_id => "2004445", :final_score => 99.5, :final_grade => "A+"},
-      {:sis_login_id => "872529", :sis_user_id => "2004421", :final_score => 69.6, :final_grade => "D-"},
+      {:sis_login_id => "872584", :sis_user_id => "2004491", :final_score => 34.9, :final_grade => "F", :pnp_flag => "N"},
+      {:sis_login_id => "4000123", :sis_user_id => "UID:4000123", :final_score => 89.5, :final_grade => "B", :pnp_flag => "N"},
+      {:sis_login_id => "872527", :sis_user_id => "2004445", :final_score => 99.5, :final_grade => "A+", :pnp_flag => "Y"},
+      {:sis_login_id => "872529", :sis_user_id => "2004421", :final_score => 69.6, :final_grade => "D-", :pnp_flag => "N"},
     ]
   end
 
@@ -32,6 +32,10 @@ describe Canvas::Egrades do
       expect(official_grades_csv[0]['grade']).to eq "F"
       expect(official_grades_csv[0]['comment']).to eq ""
 
+      expect(official_grades_csv[2]['uid']).to eq "872527"
+      expect(official_grades_csv[2]['grade']).to eq "A+"
+      expect(official_grades_csv[2]['comment']).to eq "Opted for P/NP Grade"
+
       expect(official_grades_csv[3]['uid']).to eq "872529"
       expect(official_grades_csv[3]['grade']).to eq "D-"
       expect(official_grades_csv[3]['comment']).to eq ""
@@ -41,9 +45,9 @@ describe Canvas::Egrades do
   context "when serving official student grades" do
     let(:primary_section_enrollees) do
       [
-        {"ldap_uid"=>"872584", "enroll_status"=>"E", "first_name"=>"Angela", "last_name"=>"Martin", "student_email_address"=>"amartin@berkeley.edu", "student_id"=>"2004491", "affiliations"=>"STUDENT-STATUS-EXPIRED"},
-        {"ldap_uid"=>"872527", "enroll_status"=>"E", "first_name"=>"Kelly", "last_name"=>"Kapoor", "student_email_address"=>"kellylovesryan@berkeley.edu", "student_id"=>"2004445", "affiliations"=>"STUDENT-TYPE-REGISTERED"},
-        {"ldap_uid"=>"872529", "enroll_status"=>"E", "first_name"=>"Darryl", "last_name"=>"Philbin", "student_email_address"=>"darrylp@berkeley.edu", "student_id"=>"2004421", "affiliations"=>"STUDENT-TYPE-REGISTERED"},
+        {"ldap_uid"=>"872584", "enroll_status"=>"E", "pnp_flag" => "N", "first_name"=>"Angela", "last_name"=>"Martin", "student_email_address"=>"amartin@berkeley.edu", "student_id"=>"2004491", "affiliations"=>"STUDENT-STATUS-EXPIRED"},
+        {"ldap_uid"=>"872527", "enroll_status"=>"E", "pnp_flag" => "N", "first_name"=>"Kelly", "last_name"=>"Kapoor", "student_email_address"=>"kellylovesryan@berkeley.edu", "student_id"=>"2004445", "affiliations"=>"STUDENT-TYPE-REGISTERED"},
+        {"ldap_uid"=>"872529", "enroll_status"=>"E", "pnp_flag" => "Y", "first_name"=>"Darryl", "last_name"=>"Philbin", "student_email_address"=>"darrylp@berkeley.edu", "student_id"=>"2004421", "affiliations"=>"STUDENT-TYPE-REGISTERED"},
       ]
     end
 
@@ -58,6 +62,15 @@ describe Canvas::Egrades do
       expect(result[0][:sis_login_id]).to eq "872584"
       expect(result[1][:sis_login_id]).to eq "872527"
       expect(result[2][:sis_login_id]).to eq "872529"
+    end
+
+    it "includes pass/no-pass indicator" do
+      result = subject.official_student_grades('C', '2014', '7309')
+      expect(result).to be_an_instance_of Array
+      expect(result.count).to eq 3
+      expect(result[0][:pnp_flag]).to eq "N"
+      expect(result[1][:pnp_flag]).to eq "N"
+      expect(result[2][:pnp_flag]).to eq "Y"
     end
   end
 
