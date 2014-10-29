@@ -4,7 +4,6 @@
   "isLoggedIn": true,
   "features": {
     "my_fin_aid": true,
-    "activity_to_task": true,
     "research": false,
     "textbooks": true,
     "videos": true,

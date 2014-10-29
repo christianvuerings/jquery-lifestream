@@ -32,8 +32,6 @@
             More info
             <span class="cc-visuallyhidden">View more info about {{ activity.title }} in {{ activity.source }}</span>
           </a>
-          <button class="cc-button" data-ng-if="mode === 'activity' && addTask && api.user.profile.features.activity_to_task && api.user.profile.hasGoogleAccessToken"
-                  data-ng-click="addTask(activity)">Make task</button>
         </div>
         <div class="cc-widget-activities-sub-text-margin" data-ng-show="activity.show && activity.elements">
           <ul class="cc-widget-activities-sub-activity-list">
@@ -54,8 +52,6 @@
                     More info
                     <span class="cc-visuallyhidden">View more info about {{ subActivity.title }} in {{ subActivity.source }}</span>
                   </a>
-                  <button class="cc-button" data-ng-if="mode === 'activity' && addTask && api.user.profile.features.activity_to_task && api.user.profile.hasGoogleAccessToken"
-                          data-ng-click="addTask(subActivity)">Make task</button>
                 </div>
               </div>
             </li>

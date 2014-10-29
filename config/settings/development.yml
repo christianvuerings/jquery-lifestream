@@ -77,7 +77,6 @@ hot_plate:
 
 features:
   my_fin_aid: true
-  activity_to_task: true
   textbooks: true
   videos: true
   app_alerts: true
