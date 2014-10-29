@@ -49,6 +49,7 @@ describe CampusOracle::Queries do
       students.empty?.should be_falsey
       expect(students[0]['ldap_uid']).to eq "300939"
       expect(students[0]['enroll_status']).to eq "E"
+      expect(students[0]['pnp_flag']).to eq "N"
       expect(students[0]['first_name']).to eq "STUDENT"
       expect(students[0]['last_name']).to eq "TEST-300939"
       expect(students[0]['student_email_address']).to eq "test-300939@berkeley.edu"

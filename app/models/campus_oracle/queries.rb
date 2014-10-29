@@ -170,7 +170,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select roster.student_ldap_uid ldap_uid, roster.enroll_status,
+      select roster.student_ldap_uid ldap_uid, roster.enroll_status, trim(roster.pnp_flag) as pnp_flag,
         trim(person.first_name) as first_name, trim(person.last_name) as last_name, person.student_email_address, person.student_id, person.affiliations,
         ph.bytes photo_bytes
       from calcentral_class_roster_vw roster, calcentral_student_info_vw person
