@@ -41,10 +41,19 @@ module CalCentralPages
 
       # FINANCIAL MESSAGES CARD
       h2(:fin_messages_heading, :xpath => '//h2[text()="Financial Messages"]')
+      div(:no_messages_message, :xpath => '//div[contains(text(),"You have no recent activity at this time.")]')
+      unordered_list(:fin_messages_list, :xpath => '//ul[@class="cc-widget-activities-list"]')
+      elements(:all_finaid_messages, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li')
+      elements(:undated_finaid_messages, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li[@data-ng-class="{\'cc-widget-list-selected\': activity.show, \'cc-widget-activities-list-undated\': activity.isLastUndated}"]')
+      elements(:dated_finaid_messages, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li[@]')
 
       def load_page(driver)
         logger.info('Loading My Finances landing page')
         driver.get(WebDriverUtils.base_url + '/finances')
+      end
+
+      def wait_for_fin_aid
+        fin_messages_list_element.when_visible(timeout=WebDriverUtils.fin_aid_timeout)
       end
 
       def wait_for_fin_resources_links

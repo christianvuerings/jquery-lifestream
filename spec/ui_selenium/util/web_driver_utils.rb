@@ -38,6 +38,10 @@ class WebDriverUtils
     Settings.ui_selenium.financialsTimeout
   end
 
+  def self.fin_aid_timeout
+    Settings.ui_selenium.finAidTimeout
+  end
+
   def self.fin_resources_links_timeout
     Settings.ui_selenium.finResourcesLinksTimeout
   end
