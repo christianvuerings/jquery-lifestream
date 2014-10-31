@@ -31,10 +31,10 @@ gem 'json', '~> 1.8.0'
 
 # CAS Strategy for OmniAuth
 # https://rubygems.org/gems/omniauth-cas
-gem 'omniauth-cas', '~> 1.0.1'
+gem 'omniauth-cas', '~> 1.1.0'
 
 # LDAP
-gem 'net-ldap', '~> 0.8.0'
+gem 'net-ldap', '~> 0.9.0'
 
 # secure_headers provides x-frame, csp and other http headers
 gem 'secure_headers', '~> 1.3.4'
@@ -79,7 +79,7 @@ gem 'link_header', '~> 0.0.7'
 # for simplified relational data management
 gem 'rails_admin', '0.6.5'
 
-gem 'bootstrap-sass', '~> 3.2.0.2'
+gem 'bootstrap-sass', '~> 3.3.0.1'
 
 # TorqueBox app server
 gem 'torquebox', '~> 3.1.1'
@@ -108,7 +108,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 
 # CSS Framework - also includes Compass and SASS
 # https://github.com/zurb/foundation
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 4.0.4'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'compass-rails', '~> 2.0.0'
 gem 'foundation-rails', '~> 5.4.5.0'
@@ -154,7 +154,7 @@ group :development, :test , :testext do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'rspec-mocks', '~> 3.1.3'
   gem 'rspec-support', '~> 3.1.2'
-  gem 'rspec-its', '~> 1.0.1'
+  gem 'rspec-its', '~> 1.1.0'
   gem 'rspec-collection_matchers', '~> 1.0.0'
   gem 'minitest-reporters', '~> 1.0.7'
 
