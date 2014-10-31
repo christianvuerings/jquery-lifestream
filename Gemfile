@@ -31,7 +31,7 @@ gem 'json', '~> 1.8.0'
 
 # CAS Strategy for OmniAuth
 # https://rubygems.org/gems/omniauth-cas
-gem 'omniauth-cas', '~> 1.0.1'
+gem 'omniauth-cas', '~> 1.1.0'
 
 # LDAP
 gem 'net-ldap', '~> 0.9.0'
