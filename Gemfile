@@ -108,7 +108,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 
 # CSS Framework - also includes Compass and SASS
 # https://github.com/zurb/foundation
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 4.0.4'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'compass-rails', '~> 2.0.0'
 gem 'foundation-rails', '~> 5.4.5.0'
