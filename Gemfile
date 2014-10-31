@@ -5,7 +5,7 @@ gem 'bundler', '~> 1.7.0'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.1.6'
+gem 'rails', '4.1.7'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
