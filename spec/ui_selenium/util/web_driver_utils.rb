@@ -40,6 +40,9 @@ class WebDriverUtils
 
   def self.academics_timeout
     Settings.ui_selenium.academicsTimeout
+
+  def self.fin_aid_timeout
+    Settings.ui_selenium.finAidTimeout
   end
 
   def self.fin_resources_links_timeout
