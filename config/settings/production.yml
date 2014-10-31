@@ -6,7 +6,6 @@ application:
   protocol: "https://"
   layer: "production"
   fake_proxies_enabled: false
-  serve_static_assets: false
 campusdb:
   adapter: jdbc
   driver: oracle.jdbc.OracleDriver
