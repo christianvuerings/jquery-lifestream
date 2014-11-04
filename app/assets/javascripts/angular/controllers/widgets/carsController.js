@@ -97,6 +97,23 @@
       }
     };
 
+    var addSearchAmounts = function(element, j) {
+      element[j + 'Search'] = [
+        '$' + element[j],
+        '$ ' + element[j]
+      ];
+
+      if (element[j + 'Float'] < 0) {
+        var absolute = element[j].replace('-', '');
+        element[j + 'Search'].push(
+          '-$' + absolute,
+          '-$ ' + absolute,
+          '- $' + absolute,
+          '- $ ' + absolute
+        );
+      }
+    };
+
     var parseData = function(data) {
       var finances = angular.copy(data);
       for (var i in finances.summary) {
@@ -122,6 +139,7 @@
             }
             if (j === 'transBalanceAmount') {
               parseToFloat(element, j);
+              addSearchAmounts(element, j);
             }
           }
         }
