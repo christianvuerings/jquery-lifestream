@@ -41,7 +41,7 @@ describe GoogleApps::EventsBatchInsert do
     it { subject.data.error.should_not be_blank }
   end
 
-  context "fake insert event test", if: Rails.env.test? do
+  context "fake insert event test", ignore: true do #  if: Rails.env.test? do
     before(:each) do
       fake_proxy = GoogleApps::EventsBatchInsert.new(fake: true)
       GoogleApps::EventsBatchInsert.stub(:new).and_return(fake_proxy)

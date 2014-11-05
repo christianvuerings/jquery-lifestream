@@ -2,6 +2,9 @@ module GoogleApps
   require 'google/api_client'
 
   class Client
+
+    include ClassLogger
+
     class << self
       def client
         @client ||= Google::APIClient.new(options={:application_name => "CalCentral", :application_version => "v1", :auto_refresh_token => true, :retries => 3})
@@ -11,7 +14,7 @@ module GoogleApps
         begin
           discover_api(api).send(resource.to_sym).send(method.to_sym)
         rescue => e
-          Rails.logger.fatal "#{name}: #{e.to_s} - Unable to resolve resource method"
+          logger.fatal "#{name}: #{e.to_s} - Unable to resolve resource method"
           nil
         end
       end
@@ -24,20 +27,22 @@ module GoogleApps
         new_auth(token_hash["access_token"], token_hash)
       end
 
-      def request_page(authorization, page_params)
+      def generate_request_hash(page_params)
         request_hash = {
           :api_method => page_params[:resource_method]
         }
         request_hash[:parameters] = page_params[:params] unless page_params[:params].blank?
         request_hash[:body] = page_params[:body] unless page_params[:body].blank?
         request_hash[:headers] = page_params[:headers] unless page_params[:headers].blank?
-        request_hash[:authorization] = @authorization
+        request_hash
+      end
 
+      def request_page(authorization, page_params)
+        request_hash = generate_request_hash page_params
         client = GoogleApps::Client.client.dup
-        request = client.generate_request(options=request_hash)
         client.authorization = authorization
-
-        Rails.logger.debug "Google request is #{request.inspect}"
+        request = client.generate_request(options=request_hash)
+        logger.debug "Google request is #{request.inspect}"
         client.execute(request)
       end
 
