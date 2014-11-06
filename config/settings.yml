@@ -309,6 +309,7 @@ ui_selenium:
   financialsTimeout: 5
   academicsTimeout: 15
   finAidTimeout: 12
+  finAidTimeout: 20
   test_user_password: secret
   oski_username: secret
   oski_password: secret
