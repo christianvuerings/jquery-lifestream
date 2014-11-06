@@ -6,6 +6,10 @@ module Canvas
     # Unlike other Canvas proxies, this can make requests to multiple Canvas servers.
     def initialize(options = {})
       super(options)
+      default_options = {canvas_account_id: @settings.account_id }
+      options.reverse_merge!(default_options)
+      @canvas_account_id = options[:canvas_account_id]
+
       if (canvas_url_root = options[:url_root])
         @settings.url_root = canvas_url_root
       end
@@ -17,7 +21,7 @@ module Canvas
       params = 'per_page=100'
       while params do
         response = request_uncached(
-          "accounts/#{settings.account_id}/external_tools?#{params}",
+          "accounts/#{@canvas_account_id}/external_tools?#{params}",
           "_external_tools"
         )
         break unless (response && response.status == 200 && list = safe_json(response.body))
@@ -41,7 +45,7 @@ module Canvas
     end
 
     def reset_external_tool(tool_id, config_url)
-      canvas_url = "accounts/#{settings.account_id}/external_tools/#{tool_id}?config_type=by_url&config_url=#{config_url}"
+      canvas_url = "accounts/#{@canvas_account_id}/external_tools/#{tool_id}?config_type=by_url&config_url=#{config_url}"
       request_uncached(canvas_url, '_reset_external_tool', {
         method: :put
       })
