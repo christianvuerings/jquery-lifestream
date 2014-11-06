@@ -510,6 +510,65 @@ describe Canvas::ProvideCourseSite do
       expect(cogsci.empty?).to be_falsey
       expect(cogsci[:title]).to eq "Language Disorders"
     end
+
+    context 'cross-listed courses', :if => CampusOracle::Connection.test_data? do
+      let(:uid) {'212388'}
+      subject {Canvas::ProvideCourseSite.new('212388').candidate_courses_list[0][:classes]}
+      it 'groups cross-listed courses' do
+        expect(subject.size).to eq 2
+        crosslisted_course = subject[0]
+        expect(crosslisted_course[:title]).to eq 'Introduction to the Study of Buddhism'
+        expect(crosslisted_course[:course_code]).to be_blank
+        expect(crosslisted_course[:crossListingHash]).to be_present
+        crosslisted_sections = crosslisted_course[:sections]
+        expect(crosslisted_sections.size).to eq 6
+        expect(crosslisted_sections.select {|s| s[:courseCode].blank?}).to be_empty
+        non_crosslisted_course = subject[1]
+        expect(non_crosslisted_course[:course_code]).to be_present
+        expect(non_crosslisted_course[:crossListingHash]).to be_blank
+      end
+      it 'merges class sites for cross-listed courses' do
+        allow_any_instance_of(MyAcademics::CanvasSites).to receive(:merge) do |data|
+          data[:teachingSemesters][0][:classes].each do |course|
+            case course[:course_code]
+              when 'BUDDSTD C50'
+                course[:class_sites] = [
+                  {
+                    id: 'thebigun',
+                    sections: [{ccn: '07853'}, {ccn: '07856'}]
+                  }
+                ]
+              when 'COG SCI C500'
+                course[:class_sites] = [
+                  {
+                    id: 'indie',
+                    sections: [{ccn: '83000'}]
+                  }
+                ]
+              when 'S,SEASN C52'
+                course[:class_sites] = [
+                  {
+                    id: 'onesecondary',
+                    sections: [{ccn: '83214'}]
+                  },
+                  {
+                    id: 'thebigun',
+                    sections: [{ccn: '83212'}, {ccn: '83485'}]
+                  }
+                ]
+            end
+          end
+        end
+        crosslisted_sites = subject[0][:class_sites]
+        expect(crosslisted_sites.size).to eq 2
+        singleton_site = crosslisted_sites.select {|s| s[:id] == 'onesecondary'}.first
+        expect(singleton_site[:sections].size).to eq 1
+        merged_site = crosslisted_sites.select {|s| s[:id] == 'thebigun'}.first
+        expect(merged_site[:sections].size).to eq 4
+        non_crosslisted_sites = subject[1][:class_sites]
+        expect(non_crosslisted_sites.size).to eq 1
+      end
+    end
   end
 
   describe "#filter_courses_by_ccns" do
@@ -684,11 +743,13 @@ describe Canvas::ProvideCourseSite do
            :role => "Instructor",
            :sections =>
                [{:ccn => ccns[0],
+                 courseCode: 'ENGIN 7',
                  :instruction_format => "LEC",
                  :is_primary_section => true,
                  :section_label => "LEC 002",
                  :section_number => "002"},
                 {:ccn => ccns[1],
+                  courseCode: 'ENGIN 7',
                  :instruction_format => "DIS",
                  :is_primary_section => false,
                  :section_label => "DIS 102",
@@ -699,6 +760,7 @@ describe Canvas::ProvideCourseSite do
            :role => "Instructor",
            :sections =>
                [{:ccn => ccns[2],
+                 courseCode: 'MEC ENG 98',
                  :instruction_format => "GRP",
                  :is_primary_section => true,
                  :section_label => "GRP 015",

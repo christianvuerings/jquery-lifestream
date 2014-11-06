@@ -79,6 +79,30 @@ module CampusOracle
         end
       end
 
+      def merge_cross_listing_hashes(campus_classes)
+        campus_classes.values.each do |semester|
+          cross_listed_sections = []
+          semester.each do |course|
+            if course[:role] == 'Instructor'
+              course[:sections].each do |section|
+                if section[:is_primary_section] && section[:cross_listed_flag] == 'Y'
+                  cross_listed_sections.append section
+                end
+              end
+            end
+          end
+          if cross_listed_sections.present?
+            term_yr = semester.first[:term_yr]
+            term_cd = semester.first[:term_cd]
+            cross_listing_hashes = CampusOracle::Queries.get_cross_listings(term_yr, term_cd,
+              cross_listed_sections.collect {|s| s[:ccn]})
+            cross_listed_sections.each do |s|
+              s[:cross_listing_hash] = cross_listing_hashes[s[:ccn].to_i]
+            end
+          end
+        end
+      end
+
       def row_to_feed_item(row, previous_item)
         unless (course_item = new_course_item(row, previous_item))
           previous_item[:sections] << row_to_section_data(row)
@@ -145,6 +169,7 @@ module CampusOracle
           section_data[:unit] = row['unit']
           section_data[:pnp_flag] = row['pnp_flag']
           section_data[:cred_cd] = row['cred_cd']
+          section_data[:cross_listed_flag] = row['cross_listed_flag']
         end
         # This only applies to enrollment records and will be skipped for instructors.
         if row['enroll_status'] == 'W'

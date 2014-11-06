@@ -273,7 +273,7 @@ module CampusOracle
         sql = <<-SQL
       select d.dept_description, c.term_yr, c.term_cd, c.course_cntl_num, c.course_option,
         c.course_title, c.course_title_short, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
-        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.cross_listed_flag
       from calcentral_course_instr_vw i
       join calcentral_course_info_vw c on c.term_yr = i.term_yr and c.term_cd = i.term_cd and c.course_cntl_num = i.course_cntl_num
       join calcentral_dept_vw d on (
@@ -288,6 +288,23 @@ module CampusOracle
         result = connection.select_all(sql)
       }
       stringify_ints! result
+    end
+
+    def self.get_cross_listings(term_yr, term_cd, ccns)
+      result = {}
+      query_result = []
+      use_pooled_connection {
+        sql = <<-SQL
+      select cl.course_cntl_num, cl.crosslist_hash
+      from calcentral_cross_listing_vw cl where cl.term_yr = #{term_yr.to_i} and cl.term_cd = #{connection.quote(term_cd)} and
+        cl.course_cntl_num in (#{ccns.collect { |id| id.to_i }.join(', ')})
+        SQL
+        query_result = connection.select_all(sql)
+      }
+      query_result.each do |row|
+        result[row['course_cntl_num'].to_i] = row['crosslist_hash'].to_i if row['crosslist_hash'].present?
+      end
+      result
     end
 
     def self.get_course_secondary_sections(term_yr, term_cd, department, catalog_id)

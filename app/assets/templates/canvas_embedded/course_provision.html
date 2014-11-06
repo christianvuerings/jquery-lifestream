@@ -96,7 +96,7 @@
                   <div>
                     <ul class="cc-page-provision-margin">
                       <li data-ng-repeat="course in currentCourses" class="cc-page-provision-form-course cc-page-provision-roster-area">
-                        <strong>{{course.title}} ({{course.course_code}})</strong>
+                        <strong>{{course.title}}</strong><strong data-ng-if="course.course_code"> ({{course.course_code}})</strong>
                         <div class="cc-page-provision-form-select-all-option" data-ng-show="course.sections.length > 1">
                           Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
                         </div>
@@ -108,7 +108,7 @@
                                      data-ng-model="section.selected">
                               <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
                                 class="cc-page-provision-section-label"
-                                data-ng-bind-template="{{course.course_code}} {{section.section_label}} ({{section.ccn}})">
+                                data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
                               </label>
                             </div>
                           </li>
@@ -126,7 +126,7 @@
                                        data-ng-model="section.selected">
                                 <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
                                   class="cc-page-provision-section-label cc-page-provision-section-sited-label"
-                                  data-ng-bind-template="{{course.course_code}} {{section.section_label}} ({{section.ccn}})">
+                                  data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
                                 </label>
                                 <div data-ng-repeat="site in section.sites" class="cc-page-provision-section-sites">
                                 <i class="fa fa-cogs cc-page-provision-section-sited-icon"></i>
@@ -160,7 +160,7 @@
             </div>
             <ul class="cc-page-provision-roster-list">
               <li data-ng-repeat="section in selectedSections()">
-                <span data-ng-bind="section.courseTitle"></span> - <span data-ng-bind="section.section_label"></span> (<span data-ng-bind="section.ccn"></span>)
+                <span data-ng-bind="section.courseTitle"></span> - <span data-ng-bind="section.courseCode"></span> <span data-ng-bind="section.section_label"></span> (<span data-ng-bind="section.ccn"></span>)
               </li>
             </ul>
           </div>

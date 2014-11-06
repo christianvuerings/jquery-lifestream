@@ -122,7 +122,6 @@
         angular.forEach(course.sections, function(section) {
           if (section.selected) {
             section.courseTitle = course.title;
-            section.courseCode = course.course_code;
             section.courseCatalog = course.course_catalog;
             selectedSections.push(section);
           }

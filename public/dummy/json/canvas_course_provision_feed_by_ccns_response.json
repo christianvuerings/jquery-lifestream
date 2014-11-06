@@ -23,6 +23,7 @@
           "title": "General Biology and the Cambrian Biota",
           "sections": [
             {
+              "courseCode": "BIO 123A",
               "ccn": "27607",
               "instruction_format": "LEC",
               "section_label": "LEC 003",

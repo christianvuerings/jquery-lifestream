@@ -11,6 +11,7 @@ module CampusOracle
           campus_classes = {}
 
           if merge_explicit_instructing(campus_classes)
+            merge_cross_listing_hashes(campus_classes)
             merge_nested_instructing(campus_classes)
           end
           merge_enrollments(campus_classes)
