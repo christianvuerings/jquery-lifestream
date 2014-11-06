@@ -116,7 +116,7 @@ class ApiMyFinAidPage
   def all_message_source_urls_sorted
     urls = []
     all_messages_sorted.each do |message|
-      url = source_url(message)
+      url = source_url(message).gsub(/\/\s*\z/,"")
       urls.push(url)
     end
     urls
