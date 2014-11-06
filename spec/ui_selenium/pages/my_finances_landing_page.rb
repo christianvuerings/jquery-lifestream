@@ -44,6 +44,7 @@ module CalCentralPages
       div(:no_messages, :xpath => '//div[@data-ng-show="!list.length"]')
       unordered_list(:fin_messages_list, :xpath => '//ul[@class="cc-widget-activities-list"]')
       elements(:finaid_message, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li')
+      elements(:finaid_message_sub_activity, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li//li[@data-ng-repeat="subActivity in activity.elements"]')
       elements(:finaid_message_title, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//strong[@class="ng-binding"][1]')
       elements(:finaid_message_source, :span, :xpath => '//ul[@class="cc-widget-activities-list"]/li//span[@data-ng-bind="activity.source"]')
       elements(:finaid_message_toggle, :link, :xpath => '//ul[@class="cc-widget-activities-list"]/li//div[@data-ng-click="api.widget.toggleShow($event, filteredList, activity, \'Recent Activity\')"]')
@@ -88,7 +89,10 @@ module CalCentralPages
             icon = 'info'
           elsif icon_type == 'fa fa-check-circle cc-left'
             icon = 'message'
-          else icon = nil
+          elsif icon_type == 'fa fa-usd cc-left'
+            icon = 'financial'
+          else
+            icon = nil
           end
           icons.push(icon)
         end
