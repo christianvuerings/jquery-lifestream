@@ -21,29 +21,36 @@ module Canvas
       canvas_hosts_to_calcentrals.each do |mapping|
         canvas_host = mapping[:host]
         calcentral_host = mapping[:calcentral]
-        proxy = Canvas::ExternalTools.new({url_root: canvas_host})
-        external_tools_list = proxy.external_tools_list
-        external_tools_list.each do |tool_config|
-          tool_url = tool_config['url']
-          if (parsed_url = url_regex.match(tool_url))
-            current_app_host = parsed_url[:app_host]
-            app_name = parsed_url[:app]
-            if current_app_host == calcentral_host
-              logger.debug("App #{app_name} on #{canvas_host} already points to #{calcentral_host}")
-            else
-              if app_to_xml[app_name]
-                logger.warn("Resetting app #{app_name} on #{canvas_host} to #{calcentral_host}")
-                tool_id = tool_config['id']
-                app_config_url = "#{reachable_xml_host}/canvas/#{app_to_xml[app_name]}.xml?app_host=#{calcentral_host}"
-                proxy.reset_external_tool(tool_id, app_config_url)
+
+        refresh_accounts.each do |canvas_account_id|
+          proxy = Canvas::ExternalTools.new(url_root: canvas_host, canvas_account_id: canvas_account_id)
+          external_tools_list = proxy.external_tools_list
+          external_tools_list.each do |tool_config|
+            tool_url = tool_config['url']
+            if (parsed_url = url_regex.match(tool_url))
+              current_app_host = parsed_url[:app_host]
+              app_name = parsed_url[:app]
+              if current_app_host == calcentral_host
+                logger.debug("App #{app_name} on #{canvas_host} already points to #{calcentral_host}")
               else
-                logger.warn("No known XML for app #{app_name} on #{canvas_host}, skipping")
+                if app_to_xml[app_name]
+                  logger.warn("Resetting app #{app_name} on #{canvas_host} to #{calcentral_host}")
+                  tool_id = tool_config['id']
+                  app_config_url = "#{reachable_xml_host}/canvas/#{app_to_xml[app_name]}.xml?app_host=#{calcentral_host}"
+                  proxy.reset_external_tool(tool_id, app_config_url)
+                else
+                  logger.warn("No known XML for app #{app_name} on #{canvas_host}, skipping")
+                end
               end
             end
           end
         end
 
       end
+    end
+
+    def refresh_accounts
+      [Settings.canvas_proxy.account_id] + Settings.canvas_proxy.lti_sub_accounts
     end
 
   end

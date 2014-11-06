@@ -65,6 +65,8 @@ canvas_proxy:
   url_root: "http://localhost:12345"
   fake: false
   account_id: '90242'
+  lti_sub_accounts:
+    - '129410'
   export_directory: 'tmp/canvas'
   lti_key: 'someMumboJumbo'
   lti_secret: 'someMumboJumbo'
