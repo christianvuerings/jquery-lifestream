@@ -26,6 +26,10 @@ class ApiMyFinAidPage
     item['summary']
   end
 
+  def source(item)
+    item['source']
+  end
+
   def type(item)
     item['type']
   end
@@ -46,6 +50,14 @@ class ApiMyFinAidPage
     item['termYear']
   end
 
+  def status(item)
+    item['status']
+  end
+
+  def source_url(item)
+    item['sourceUrl']
+  end
+
   def all_activity
     @parsed['activities']
   end
@@ -53,14 +65,12 @@ class ApiMyFinAidPage
   def undated_messages
     dateless_messages =  all_activity.select { |item| date(item) == '' }
     sorted_messages = dateless_messages.sort_by { |item| title(item)}
-    sorted_messages.each { |item| logger.info("Message: #{title(item)}") }
   end
 
   def dated_messages
     dateful_messages = all_activity.select { |item| date(item) != ''}
     sorted_messages = dateful_messages.sort_by { |item| date_epoch(item) }
     sorted_messages.reverse!
-    sorted_messages.each { |item| logger.info("Message: #{date_str(item)}") }
   end
 
   def all_messages_sorted
@@ -68,16 +78,75 @@ class ApiMyFinAidPage
   end
 
   def all_message_titles_sorted
-    message_titles = []
-
+    titles = []
+    all_messages_sorted.each do |message|
+      title = title(message)
+      titles.push(title)
+    end
+    titles
   end
 
   def all_message_summaries_sorted
+    summaries = []
+    all_messages_sorted.each do |message|
+      summary = summary(message).gsub(/\s+/, "")
+      summaries.push(summary)
+    end
+    summaries
+  end
 
+  def all_message_sources_sorted
+    sources = []
+    all_messages_sorted.each do |message|
+      source = source(message)
+      sources.push(source)
+    end
+    sources
+  end
+
+  def all_message_dates_sorted
+    dates = []
+    all_messages_sorted.each do |message|
+      date = date_str(message)
+      dates.push(date)
+    end
+    dates
+  end
+
+  def all_message_source_urls_sorted
+    urls = []
+    all_messages_sorted.each do |message|
+      url = source_url(message)
+      urls.push(url)
+    end
+    urls
   end
 
   def all_message_types_sorted
+    types = []
+    all_messages_sorted.each do |message|
+      type = type(message)
+      types.push(type)
+    end
+    types
+  end
 
+  def all_message_years_sorted
+    years = []
+    all_messages_sorted.each do |message|
+      year = term_year(message)
+      years.push(year)
+    end
+    years
+  end
+
+  def all_message_statuses_sorted
+    statuses = []
+    all_messages_sorted.each do |message|
+      status = self.status(message)
+      statuses.push(status)
+    end
+    statuses
   end
 
 end
