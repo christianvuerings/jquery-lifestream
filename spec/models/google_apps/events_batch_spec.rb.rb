@@ -50,7 +50,7 @@ describe 'Batch CRUD of Google events' do
   let(:real_get_proxy) { GoogleApps::EventsBatchGet.new(token_info) }
   let(:real_update_proxy) { GoogleApps::EventsBatchUpdate.new(token_info) }
 
-  context 'real insert event test' do # , testext: true do
+  context 'real insert event test', testext: true do
 
     context 'invalid payload' do
       subject { real_insert_proxy.insert_event(invalid_payload, nil) }
