@@ -2,6 +2,16 @@ require "spec_helper"
 
 describe Canvas::ExternalTools do
 
+  it "should use root canvas account by default" do
+    account_id = subject.instance_eval { @canvas_account_id }
+    expect(account_id).to eq Settings.canvas_proxy.account_id
+  end
+
+  it "supports alternative canvas account id" do
+    account_id = Canvas::ExternalTools.new(:canvas_account_id => '1234').instance_eval { @canvas_account_id }
+    expect(account_id).to eq '1234'
+  end
+
   it "should return external tools list" do
     list = subject.external_tools_list
     expect(list).to be_an_instance_of Array
