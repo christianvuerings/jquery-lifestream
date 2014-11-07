@@ -41,7 +41,7 @@ gem 'secure_headers', '~> 1.3.4'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
-gem 'httparty', '~> 0.13'
+gem 'httparty', '~> 0.13.3'
 
 # OAuth2 support
 gem 'signet', '~> 0.5.1'

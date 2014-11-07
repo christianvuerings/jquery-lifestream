@@ -188,7 +188,7 @@ GEM
     hike (1.2.3)
     hitimes (1.2.2-java)
     http_parser.rb (0.6.0-java)
-    httparty (0.13.1)
+    httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.6.11)
@@ -490,7 +490,7 @@ DEPENDENCIES
   google-api-client (~> 0.7.1)
   guard-livereload (~> 2.3.1)
   headless (~> 1.0.2)
-  httparty (~> 0.13)
+  httparty (~> 0.13.3)
   icalendar (~> 2.2.0)
   ims-lti!
   jruby-activemq (~> 5.5.1)
