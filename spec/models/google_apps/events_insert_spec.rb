@@ -58,7 +58,7 @@ describe GoogleApps::EventsInsert do
     end
   end
 
-  context "real insert event test" do # , testext: true do
+  context "real insert event test", testext: true do
     before(:each) do
       token_info = {
         access_token: Settings.google_proxy.test_user_access_token,
