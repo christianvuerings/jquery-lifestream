@@ -63,6 +63,15 @@ describe CampusOracle::UserCourses do
     expect(sections.collect{|s| s[:ccn]}).to eq ['07309', '07366', '07372']
   end
 
+  it 'includes cross-listing data for instructors', :if => CampusOracle::Connection.test_data? do
+    client = CampusOracle::UserCourses::All.new({user_id: '212388'})
+    courses = client.get_all_campus_courses['2013-D']
+    crosslisteds = courses.select {|c| c[:name] == 'Introduction to the Study of Buddhism'}
+    expect(crosslisteds.size).to eq 2
+    expect(crosslisteds[0][:sections][0][:cross_listing_hash]).to be_present
+    expect(crosslisteds[0][:sections][0][:cross_listing_hash]).to eq crosslisteds[1][:sections][0][:cross_listing_hash]
+  end
+
   it 'prefixes short CCNs with zeroes', :if => CampusOracle::Connection.test_data? do
     client = CampusOracle::UserCourses::SelectedSections.new({user_id: '238382'})
     courses = client.get_selected_sections(2013, 'D', [7309])

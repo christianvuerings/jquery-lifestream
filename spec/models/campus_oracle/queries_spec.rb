@@ -136,6 +136,15 @@ describe CampusOracle::Queries do
     it { subject.all? { |section| section.has_key?("cred_cd") } }
   end
 
+  it 'finds cross-listed course data', if: Sakai::SakaiData.test_data? do
+    cross_listing_hash = CampusOracle::Queries.get_cross_listings(2013, 'D', [
+      '7853', '7856', '7859', '83212', '83214', '83485'
+    ])
+    expect(cross_listing_hash.size).to eq 2
+    expect(cross_listing_hash[7853]).to be_present
+    expect(cross_listing_hash[7853]).to eq cross_listing_hash[83212]
+  end
+
   it "should find where a person is teaching" do
     sections = CampusOracle::Queries.get_instructing_sections('238382')
     sections.should_not be_nil
