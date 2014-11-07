@@ -1,0 +1,117 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucb.beta.example.com/api/v1/accounts/90242/account_authorization_configs",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "must-revalidate, private, max-age=0"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Fri, 31 Oct 2014 21:08:03 GMT"
+          ],
+          "etag": [
+            "\"da78b6abcfc6129c2f732c9c76fa68d3\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "_csrf_token=jEusPko35Y%2Bz6Ewngu5vtY2YaOdOE%2FXfvVpcUgAAOPTleOBYDQexzteeOUjwvD7Xzv8lswErkZX%2BLRNgNk5%2Fsw%3D%3D; path=/, canvas_session=yZByZrC1eRgXWkngAVerKQ.EeKGl7o3NB7jL7C-3XT1x7Uee0IuW4mfWJognmhTS4-mX4CDAkIDBv4TM7jLU7wZ-6jmjN0HS1l3rtEDQdhvf3-IM1Tk40b-9zhgTNEkfD5XPKZ7yHqe-VFRFw0kW61W.Ah5ERX4Ejz5ppl5MOw6QaETEdSU.VFP6Mw; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;g=yGkEvpxAPyTeKLHaHOxZqJNjMXbA5ZV86ZZ6139o;s=19;c=cluster19;z=us-east-1b;b=990360;m=990424;u=0.08;y=0.00;d=0.07;"
+          ],
+          "x-canvas-user-id": [
+            "190000004868640"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-rack-cache": [
+            "miss"
+          ],
+          "x-request-context-id": [
+            "eced27e0-436f-0132-8f59-02f88540aa71"
+          ],
+          "x-runtime": [
+            "0.196848"
+          ],
+          "x-session-id": [
+            "19633d86c9fda1ed8be8c583ca7a894b"
+          ],
+          "x-ua-compatible": [
+            "IE=Edge,chrome=1"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "x-sakai-token": [
+
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "id": 720,
+              "position": 1,
+              "auth_type": "cas",
+              "auth_base": "https://auth.example.com/cas",
+              "log_in_url": null,
+              "login_handle_name": "LDAP UID",
+              "unknown_user_url": ""
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 31 Oct 2014 21:08:03 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.9.3"
+}

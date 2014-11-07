@@ -30,6 +30,21 @@ namespace :canvas do
     canvas_worker.run
   end
 
+  desc 'Reconfigure CAS URL (TEST_CAS_URL="https://auth-test.example.com/cas" DEV_TEST_CANVASES="https://ucb.beta.example.com,https://ucb.test.example.com")'
+  task :reconfigure_auth_url => :environment do
+    test_cas_url = ENV["TEST_CAS_URL"]
+    dev_test_canvases_string = ENV["DEV_TEST_CANVASES"]
+    if test_cas_url.blank?
+      Rails.logger.error('Must specify TEST_CAS_URL="https://auth-test.example.com/cas"')
+    elsif dev_test_canvases_string.blank?
+      Rails.logger.error('Must specify DEV_TEST_CANVASES="https://ucb.beta.example.com,https://ucb.test.example.com"')
+    else
+      non_production_canvases = dev_test_canvases_string.split(',')
+      Canvas::ReconfigureAuthorizationConfigs.reconfigure(test_cas_url, non_production_canvases)
+      Rails.logger.info("Reconfiguration complete for #{dev_test_canvases_string}")
+    end
+  end
+
   desc 'Reconfigure Canvas external apps (CALCENTRAL_XML_HOST="https://cc.example.com" CANVAS_HOSTS_TO_CALCENTRALS="https://ucb.beta.example.com=cc-dev.example.com,https://ucb.test.example.com=cc-qa.example.com")'
   task :reconfigure_external_apps => :environment do
     reachable_xml_host = ENV["CALCENTRAL_XML_HOST"]

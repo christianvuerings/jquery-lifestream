@@ -30,7 +30,7 @@ export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
-echo "`date`: About to run the reconfiguration script..." | $LOGIT
+echo "`date`: About to run the external LTI application reconfiguration script..." | $LOGIT
 
 cd deploy
 
