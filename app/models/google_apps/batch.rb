@@ -9,11 +9,15 @@ module GoogleApps
     end
 
     def run_batch
-      results = []
-      return results if @requests.blank?
+      if @requests.blank?
+        logger.debug 'No results to run in batch!'
+        return []
+      end
 
+      results = []
       client = GoogleApps::Client.client
       client.authorization = @authorization
+      i = 0
 
       @requests.each_slice(500) do |slice|
         batch = Google::APIClient::BatchRequest.new
@@ -36,6 +40,8 @@ module GoogleApps
         client.authorization.fetch_access_token!
         update_access_tokens!
 
+        i += 1
+        logger.warn "Running batch slice #{i}; #{@requests.length} total requests in batch"
         client.execute batch
       end
 

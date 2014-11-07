@@ -41,6 +41,7 @@ module Calendar
               record_response(job, queue_entry, response)
             })
           else
+            # get existing event so we can read its attendees, which may have changed on the google side.
             @get_proxy.queue_event(queue_entry.event_id, Proc.new { |response|
               if response.present? && response.status == 404
                 # entry not found on Google, fall back to creating it

@@ -66,17 +66,20 @@ describe 'Batch CRUD of Google events' do
 
         event_ids = []
 
+        # delete is called back from get
         delete_proc = Proc.new { |result|
           insert_id = result.data['id']
           real_delete_proxy.queue_event(insert_id)
         }
 
+        # get is called back from update
         get_proc = Proc.new { |result|
           event_id = result.data['id']
           event_ids << event_id
           real_get_proxy.queue_event(event_id, delete_proc)
         }
 
+        # update is called back from insert
         update_proc = Proc.new { |result|
           event_id = result.data['id']
           body = valid_payload
@@ -100,8 +103,6 @@ describe 'Batch CRUD of Google events' do
         # now update them
         update_response = real_update_proxy.run_batch
         expect(update_response.length).to eq 2
-        puts "update response 0 = #{update_response[0].inspect}"
-        puts "update response 1 = #{update_response[1].inspect}"
         expect(update_response[0].status).to eq 200
 
         # now get the 2 events
