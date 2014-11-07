@@ -9,7 +9,10 @@ module GoogleApps
     end
 
     def run_batch
+      # TODO deal with batches more than 1000 entries in a way that's transparent to users of this proxy.
       results = []
+      return results if @requests.blank?
+
       batch = Google::APIClient::BatchRequest.new
 
       @requests.each do |request_params|
