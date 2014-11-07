@@ -41,7 +41,7 @@ gem 'secure_headers', '~> 1.3.4'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
-gem 'httparty', '~> 0.13'
+gem 'httparty', '~> 0.13.3'
 
 # OAuth2 support
 gem 'signet', '~> 0.5.1'
@@ -101,7 +101,7 @@ gem 'icalendar', '~> 2.2.0'
 ##################
 
 # Our very own library for angular dependency!
-gem 'angular-gem', '1.3.0'
+gem 'angular-gem', '1.3.2'
 
 # Datepicker
 gem 'pikaday-gem', '~> 1.2.0'
@@ -159,7 +159,7 @@ group :development, :test , :testext do
   gem 'minitest-reporters', '~> 1.0.7'
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem 'selenium-webdriver', '~> 2.43.0'
+  gem 'selenium-webdriver', '~> 2.44.0'
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
@@ -194,7 +194,7 @@ group :test, :testext do
   # TODO: Use gem 'rspec_junit_formatter', '~> 0.2.x' when deprecated concern of CLC-3565 is resolved.
   gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
 
-  gem 'webmock', '~> 1.20.0'
+  gem 'webmock', '~> 1.20.3'
 end
 
 group :shell_debug do
