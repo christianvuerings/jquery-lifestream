@@ -41,6 +41,10 @@ module CalCentralPages
   link(:amount_due_status_alert_link, :xpath => '//li[@data-ng-if="minimumAmountDue && minimumAmountDue > 0"]//a')
   image(:amount_due_status_alert_icon, :xpath => '//li[@data-ng-if="minimumAmountDue && minimumAmountDue > 0"]//i[@class="cc-left fa fa-exclamation-triangle cc-icon-gold"]')
   image(:amount_overdue_status_alert_icon, :xpath => '//li[@data-ng-if="minimumAmountDue && minimumAmountDue > 0"]//i[@class="cc-left fa fa-exclamation-circle cc-icon-red"]')
+  div(:finaid_status_alert, :xpath => '//li[@data-ng-if="countUndatedFinaid > 0"]//div')
+  link(:finaid_status_alert_link, :xpath => '//li[@data-ng-if="countUndatedFinaid > 0"]//a')
+  image(:finaid_status_alert_icon, :xpath => '//li[@data-ng-if="countUndatedFinaid > 0"]//i[@class="cc-left fa fa-exclamation-circle cc-icon-red"]')
+  span(:finaid_status_alert_count, :xpath => '//li[@data-ng-if="countUndatedFinaid > 0"]//span[@data-ng-bind="countUndatedFinaid"]')
 
   # Settings, Log Out
   link(:gear_link, :xpath => '//i[@class="fa fa-cog"]')
