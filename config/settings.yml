@@ -303,7 +303,7 @@ ui_selenium:
   googleOauthTimeout: 20
   googleTaskTimeout: 10
   pageEventTimeout: 3
-  pageLoadTimeout: 10
+  pageLoadTimeout: 12
   liveUpdateTimeoutDelta: 180
   finResourcesLinksTimeout: 10
   financialsTimeout: 5

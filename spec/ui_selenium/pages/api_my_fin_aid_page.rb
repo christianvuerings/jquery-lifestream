@@ -63,13 +63,13 @@ class ApiMyFinAidPage
   end
 
   def undated_messages
-    dateless_messages =  all_activity.select { |item| date(item) == '' }
-    sorted_messages = dateless_messages.sort_by { |item| title(item)}
+    dateless_messages = all_activity.select { |item| date(item) == '' }
+    dateless_messages.sort_by { |item| title(item) }
   end
 
   def dated_messages
-    dateful_messages = all_activity.select { |item| date(item) != ''}
-    sorted_messages = dateful_messages.sort_by { |item| date_epoch(item) }
+    dated_messages = all_activity.select { |item| date(item) != '' }
+    sorted_messages = dated_messages.sort_by { |item| date_epoch(item) }
     sorted_messages.reverse!
   end
 
@@ -108,7 +108,9 @@ class ApiMyFinAidPage
     dates = []
     all_messages_sorted.each do |message|
       date = date_str(message)
-      dates.push(date)
+      unless date == nil
+        dates.push(date)
+      end
     end
     dates
   end
@@ -116,7 +118,7 @@ class ApiMyFinAidPage
   def all_message_source_urls_sorted
     urls = []
     all_messages_sorted.each do |message|
-      url = source_url(message).gsub(/\/\s*\z/,"")
+      url = source_url(message).gsub(/\/\s*\z/, "")
       urls.push(url)
     end
     urls
@@ -129,6 +131,16 @@ class ApiMyFinAidPage
       types.push(type)
     end
     types
+  end
+
+  def all_undated_alert_messages
+    undated_alerts = []
+    undated_messages.each do |message|
+      if type(message) == 'alert'
+        undated_alerts.push(message)
+      end
+    end
+    undated_alerts
   end
 
   def all_message_years_sorted

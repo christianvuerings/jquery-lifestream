@@ -126,7 +126,9 @@ module CalCentralPages
           rescue
             date = nil
           end
-          dates.push(date)
+          unless date == nil
+            dates.push(date)
+          end
         end
         dates
       end
@@ -134,7 +136,7 @@ module CalCentralPages
       def all_fin_aid_message_links
         links = []
         finaid_message_link_elements.each do |msg|
-          link_url = msg.attribute('href').gsub(/\/\s*\z/,"")
+          link_url = msg.attribute('href').gsub(/\/\s*\z/, "")
           links.push(link_url)
         end
         links

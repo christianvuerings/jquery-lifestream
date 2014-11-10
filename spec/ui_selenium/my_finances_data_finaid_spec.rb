@@ -14,9 +14,6 @@ require_relative 'pages/my_finances_landing_page'
 
 describe 'My Finances', :testui => true do
 
-  #   TODO: VERIFY STATUS POPOVER CONTENTS (MUST HAVE ALERTS, WITH ICON AND TITLE... NEED PUT BACK IN INNER LOOP)
-  #   TODO: FIX HAS_DATE
-
   if ENV["UI_TEST"]
 
     include ClassLogger
@@ -30,8 +27,8 @@ describe 'My Finances', :testui => true do
       test_output = Rails.root.join(output_dir, 'my_finances_data_finaid.csv')
       logger.info('Opening output CSV')
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'Finances Tab', 'Has Messages', 'Has Dupe Messages', 'Has Alert Msg', 'Has Info Msg',
-                          'Has Message Msg', 'Has Dated Msg', 'Error Occurred']
+        user_info_csv << ['UID', 'Finances Tab', 'Has Messages', 'Has Dupe Messages', 'Has Popover Alert', 'Has Alert Msg',
+                          'Has Info Msg', 'Has Message Msg', 'Has Financial Msg', 'Has Dated Msg', 'Error Occurred']
       end
       logger.info('Loading test users')
       test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
@@ -39,13 +36,15 @@ describe 'My Finances', :testui => true do
       test_users.each do |user|
         if user['finAid']
           uid = user['uid'].to_s
-          logger.info('UID is ' + uid)
+          logger.info("UID is #{uid}")
           has_finances_tab = false
           has_messages = false
           has_dupe_messages = false
+          has_popover_alert = false
           has_alert = false
           has_info = false
           has_message = false
+          has_financial = false
           has_date = false
           threw_error = false
 
@@ -102,6 +101,12 @@ describe 'My Finances', :testui => true do
                   if fin_api_message_types.include?('message')
                     has_message = true
                   end
+                  if fin_api_message_types.include?('financial')
+                    has_financial = true
+                  end
+                  if fin_api_message_dates.length > 0
+                    has_date = true
+                  end
                   it "shows undated message titles in alphabetical order followed by dated message titles in descending date order for UID #{uid}" do
                     expect(my_fin_message_titles).to eql(fin_api_message_titles)
                   end
@@ -111,14 +116,40 @@ describe 'My Finances', :testui => true do
                   it "shows the message source for UID #{uid}" do
                     expect(my_fin_message_sources).to eql(fin_api_message_sources)
                   end
-                  if fin_api_message_dates.include?(!nil)
-                    has_date = true
-                  end
                   it "shows the message date for each dated message for UID #{uid}" do
                     expect(my_fin_message_dates).to eql(fin_api_message_dates)
                   end
                   it "shows the message status for UID #{uid}" do
                     expect(my_fin_message_statuses).to eql(fin_api_message_statuses)
+                  end
+
+                  # Status popover
+                  has_popover = my_finances_page.status_icon_element.visible?
+                  if has_popover
+                    my_finances_page.open_status_popover
+                    has_popover_alert = my_finances_page.finaid_status_alert_element.visible?
+                    if has_alert
+                      popover_fin_aid_count = my_finances_page.finaid_status_alert_count
+                      fin_api_alert_count = finaid_api_page.all_undated_alert_messages.length.to_s
+                      has_red_fin_aid_icon = my_finances_page.finaid_status_alert_icon_element.visible?
+                      has_fin_aid_link = my_finances_page.finaid_status_alert_link_element.visible?
+                      it "shows Fin Aid alert message in the status popover for UID #{uid}" do
+                        expect(has_popover_alert).to be true
+                      end
+                      it "shows the right number of Fin Aid alerts in the status popover for UID #{uid}" do
+                        expect(popover_fin_aid_count).to eql(fin_api_alert_count)
+                      end
+                      it "shows a red Fin Aid alert icon in the status popover for UID #{uid}" do
+                        expect(has_red_fin_aid_icon).to be true
+                      end
+                      it "offers a link from the status popover to the My Finances page for UID #{uid}" do
+                        expect(has_fin_aid_link).to be true
+                      end
+                    else
+                      it "shows no Fin Aid alert message in the status popover for UID #{uid}" do
+                        expect(has_popover_alert).to be false
+                      end
+                    end
                   end
 
                   finaid_api_page.all_messages_sorted.each do |message|
@@ -148,7 +179,8 @@ describe 'My Finances', :testui => true do
             threw_error = true
           ensure
             CSV.open(test_output, 'a+') do |user_info_csv|
-              user_info_csv << [uid, has_finances_tab, has_messages, has_dupe_messages, has_alert, has_info, has_message, has_date, threw_error]
+              user_info_csv << [uid, has_finances_tab, has_messages, has_dupe_messages, has_popover_alert, has_alert, has_info, has_message,
+                                has_financial, has_date, threw_error]
             end
           end
         end
