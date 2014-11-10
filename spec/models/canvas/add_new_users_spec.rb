@@ -51,12 +51,26 @@ describe Canvas::AddNewUsers do
 
   describe "#sync_new_active_users" do
     it "calls user syncing methods in intended order" do
+      active_people = sis_active_people
+      subject.instance_eval { @new_active_sis_users = active_people }
       expect(subject).to receive(:prepare_sis_user_import).ordered.and_return(true)
       expect(subject).to receive(:get_canvas_user_report_file).ordered.and_return(true)
       expect(subject).to receive(:load_new_active_users).ordered.and_return(true)
       expect(subject).to receive(:process_new_users).ordered.and_return(true)
       expect(subject).to receive(:import_sis_user_csv).ordered.and_return(true)
       subject.sync_new_active_users
+    end
+
+    context "when no new users loaded for import" do
+      it "does not attempt to process or import new users" do
+        subject.instance_eval { @new_active_sis_users = [] }
+        expect(subject).to receive(:prepare_sis_user_import).ordered.and_return(true)
+        expect(subject).to receive(:get_canvas_user_report_file).ordered.and_return(true)
+        expect(subject).to receive(:load_new_active_users).ordered.and_return(true)
+        expect(subject).to_not receive(:process_new_users)
+        expect(subject).to_not receive(:import_sis_user_csv)
+        subject.sync_new_active_users
+      end
     end
   end
 

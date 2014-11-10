@@ -13,8 +13,12 @@ module Canvas
       prepare_sis_user_import
       get_canvas_user_report_file
       load_new_active_users
-      process_new_users
-      import_sis_user_csv
+      if @new_active_sis_users.count > 0
+        process_new_users
+        import_sis_user_csv
+      else
+        logger.warn("No new user accounts detected. New user processing completed.")
+      end
     end
 
     def prepare_sis_user_import
