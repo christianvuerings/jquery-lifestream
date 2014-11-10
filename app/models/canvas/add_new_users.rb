@@ -40,8 +40,9 @@ module Canvas
     end
 
     def load_new_active_users
-      new_uid_groups = split_uid_array(new_active_user_uids)
       @new_active_sis_users = []
+      new_uid_groups = split_uid_array(new_active_user_uids)
+      return @new_active_sis_users if new_uid_groups[0].count == 0
       new_uid_groups.each do |uid_group|
         @new_active_sis_users.concat(CampusOracle::Queries.get_basic_people_attributes(uid_group))
       end

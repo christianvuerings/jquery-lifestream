@@ -114,6 +114,14 @@ describe Canvas::AddNewUsers do
       expect(loaded_users[1]['ldap_uid']).to eq "946127"
       expect(loaded_users[1]['first_name']).to eq "Dwight"
     end
+
+    it "loads empty array when no new active users" do
+      allow(subject).to receive(:new_active_user_uids).and_return([])
+      expect(CampusOracle::Queries).to_not receive(:get_basic_people_attributes)
+      result = subject.load_new_active_users
+      loaded_users = subject.instance_eval { @new_active_sis_users }
+      expect(loaded_users).to eq []
+    end
   end
 
   describe "#process_new_users" do
