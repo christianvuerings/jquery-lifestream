@@ -13,8 +13,12 @@ module Canvas
       prepare_sis_user_import
       get_canvas_user_report_file
       load_new_active_users
-      process_new_users
-      import_sis_user_csv
+      if @new_active_sis_users.count > 0
+        process_new_users
+        import_sis_user_csv
+      else
+        logger.warn("No new user accounts detected. New user processing completed.")
+      end
     end
 
     def prepare_sis_user_import
@@ -40,8 +44,9 @@ module Canvas
     end
 
     def load_new_active_users
-      new_uid_groups = split_uid_array(new_active_user_uids)
       @new_active_sis_users = []
+      new_uid_groups = split_uid_array(new_active_user_uids)
+      return @new_active_sis_users if new_uid_groups[0].count == 0
       new_uid_groups.each do |uid_group|
         @new_active_sis_users.concat(CampusOracle::Queries.get_basic_people_attributes(uid_group))
       end
