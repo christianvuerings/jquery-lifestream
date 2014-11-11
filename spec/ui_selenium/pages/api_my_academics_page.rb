@@ -16,6 +16,8 @@ class ApiMyAcademicsPage
     @parsed = JSON.parse(body)
   end
 
+  # BLOCKS
+
   def has_no_standing
     @parsed['collegeAndLevel']['empty']
   end
@@ -113,5 +115,57 @@ class ApiMyAcademicsPage
       dates.push(date)
     end
     dates
+  end
+
+  # TELE-BEARS
+
+  def has_tele_bears
+    begin
+      tele_bears_phases.length > 0
+      true
+    rescue
+      false
+    end
+  end
+
+  def tele_bears_term_year
+    @parsed['telebears']['term'] + ' ' + @parsed['telebears']['year'].to_s
+  end
+
+  def tele_bears_code_required
+    @parsed['telebears']['adviserCodeRequired']['required']
+  end
+
+  def tele_bears_code_message
+    @parsed['telebears']['adviserCodeRequired']['message']
+  end
+
+  def tele_bears_phases
+    @parsed['telebears']['phases']
+  end
+
+  def tele_bears_phase_period(phase)
+    phase['period']
+  end
+
+  def tele_bears_date_time(epoch)
+    date = (Time.strptime(epoch, '%s')).strftime("%a %b %-d")
+    time = (Time.strptime(epoch, '%s')).strftime("%-l:%M %p")
+    if time == '12:00 PM'
+      date_time = date + ' | ' + 'Noon'
+    else
+      date_time = date + ' | ' + time
+    end
+    date_time
+  end
+
+  def tele_bears_phase_start(phase)
+    epoch = phase['startTime']['epoch'].to_s
+    tele_bears_date_time(epoch)
+  end
+
+  def tele_bears_phase_end(phase)
+    epoch = phase['endTime']['epoch'].to_s
+    tele_bears_date_time(epoch)
   end
 end

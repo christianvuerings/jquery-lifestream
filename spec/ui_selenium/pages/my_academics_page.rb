@@ -20,6 +20,17 @@ module CalCentralPages
       driver.get(WebDriverUtils.base_url + '/academics')
     end
 
+    def has_student_semester_link(driver, semester)
+      begin
+        driver.find_element(:xpath, '//div[@data-ng-if="api.user.profile.hasStudentHistory && semesters.length"]//a[contains(.,"' + semester + '")]')
+        logger.info("User has link for #{semester}")
+        true
+      rescue
+        logger.info("User has no link for #{semester}")
+        false
+      end
+    end
+
     def click_first_student_semester
       logger.info('Clicking the first student semester link')
       first_student_semester_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
