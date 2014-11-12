@@ -22,7 +22,7 @@ module CalCentralPages
 
     def has_student_semester_link(driver, semester)
       begin
-        driver.find_element(:xpath, '//div[@data-ng-if="api.user.profile.hasStudentHistory && semesters.length"]//a[contains(.,"' + semester + '")]')
+        driver.find_element(:xpath, "//div[@data-ng-if='api.user.profile.hasStudentHistory && semesters.length']//a[contains(.,'#{semester}')]")
         logger.info("User has link for #{semester}")
         true
       rescue
