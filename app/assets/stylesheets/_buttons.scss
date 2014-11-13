@@ -33,8 +33,7 @@ button {
 }
 
 .cc-button {
-  background: $cc-color-white;
-  @include background(linear-gradient($cc-color-white, $cc-color-button-regular));
+  @include background-with-css2-fallback(linear-gradient($cc-color-white, $cc-color-button-regular), $cc-color-white);
   border: 1px solid $cc-color-button-border;
   border-radius: 5px;
   color: $cc-color-medium-grey;
@@ -45,8 +44,7 @@ button {
   line-height: 1;
   padding: 6px 10px;
   &:focus, &:hover {
-    background: $cc-color-button-hover;
-    @include background(linear-gradient($cc-color-white, $cc-color-button-hover));
+    @include background-with-css2-fallback(linear-gradient($cc-color-white, $cc-color-button-hover), $cc-color-button-hover);
     color: $cc-color-medium-grey;
     text-decoration: none;
   }
@@ -72,8 +70,7 @@ button {
     color: $cc-color-white;
   }
   &.cc-button-large {
-    background: $cc-color-button-action-large-bottom;
-    @include background(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-bottom));
+    @include background-with-css2-fallback(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-bottom), $cc-color-button-action-large-bottom);
     &:focus, &:hover {
       @include background(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-hover));
     }
@@ -103,13 +100,11 @@ button {
   padding: 8px 10px;
 }
 .cc-button-selected {
-  background: $cc-color-button-selected;
-  @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
+  @include background-with-css2-fallback(linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected);
   color: $cc-color-white;
   z-index: 1;
   &:focus, &:hover {
-    background: $cc-color-button-selected;
-    @include background(linear-gradient($cc-color-button-grey, $cc-color-button-selected));
+    @include background-with-css2-fallback(linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected);
     color: $cc-color-white;
   }
   i {

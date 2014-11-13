@@ -81,80 +81,78 @@ body {
     padding: 10px;
   }
 
-  .cc-popover-items {
-    .cc-popover-item {
-      .icon-10-audio-list {
-        background-image: asset-data-url('drive_icons/icon_10_audio_list.png');
-      }
-      .icon-10-excel-list {
-        background-image: asset-data-url('drive_icons/icon_10_excel_list.png');
-      }
-      .icon-10-generic-list {
-        background-image: asset-data-url('drive_icons/icon_10_generic_list.png');
-      }
-      .icon-10-pdf-list {
-        background-image: asset-data-url('drive_icons/icon_10_pdf_list.png');
-      }
-      .icon-10-powerpoint-list {
-        background-image: asset-data-url('drive_icons/icon_10_powerpoint_list.png');
-      }
-      .icon-10-script-list {
-        background-image: asset-data-url('drive_icons/icon_10_script_list.png');
-      }
-      .icon-10-word-list {
-        background-image: asset-data-url('drive_icons/icon_10_word_list.png');
-      }
-      .icon-11-collection-list {
-        background-image: asset-data-url('drive_icons/icon_11_collection_list.png');
-      }
-      .icon-11-document-list {
-        background-image: asset-data-url('drive_icons/icon_11_document_list.png');
-      }
-      .icon-11-drawing-list {
-        background-image: asset-data-url('drive_icons/icon_11_drawing_list.png');
-      }
-      .icon-11-form-list {
-        background-image: asset-data-url('drive_icons/icon_11_form_list.png');
-      }
-      .icon-11-image-list {
-        background-image: asset-data-url('drive_icons/icon_11_image_list.png');
-      }
-      .icon-11-presentation-list {
-        background-image: asset-data-url('drive_icons/icon_11_presentation_list.png');
-      }
-      .icon-11-script-list {
-        background-image: asset-data-url('drive_icons/icon_11_script_list.png');
-      }
-      .icon-11-shared-collection-list {
-        background-image: asset-data-url('drive_icons/icon_11_shared_collection_list.png');
-      }
-      .icon-11-spreadsheet-list {
-        background-image: asset-data-url('drive_icons/icon_11_spreadsheet_list.png');
-      }
-      .icon-11-video-list {
-        background-image: asset-data-url('drive_icons/icon_11_video_list.png');
-      }
+  .cc-popover-item {
+    .icon-10-audio-list {
+      background-image: asset-data-url('drive_icons/icon_10_audio_list.png');
+    }
+    .icon-10-excel-list {
+      background-image: asset-data-url('drive_icons/icon_10_excel_list.png');
+    }
+    .icon-10-generic-list {
+      background-image: asset-data-url('drive_icons/icon_10_generic_list.png');
+    }
+    .icon-10-pdf-list {
+      background-image: asset-data-url('drive_icons/icon_10_pdf_list.png');
+    }
+    .icon-10-powerpoint-list {
+      background-image: asset-data-url('drive_icons/icon_10_powerpoint_list.png');
+    }
+    .icon-10-script-list {
+      background-image: asset-data-url('drive_icons/icon_10_script_list.png');
+    }
+    .icon-10-word-list {
+      background-image: asset-data-url('drive_icons/icon_10_word_list.png');
+    }
+    .icon-11-collection-list {
+      background-image: asset-data-url('drive_icons/icon_11_collection_list.png');
+    }
+    .icon-11-document-list {
+      background-image: asset-data-url('drive_icons/icon_11_document_list.png');
+    }
+    .icon-11-drawing-list {
+      background-image: asset-data-url('drive_icons/icon_11_drawing_list.png');
+    }
+    .icon-11-form-list {
+      background-image: asset-data-url('drive_icons/icon_11_form_list.png');
+    }
+    .icon-11-image-list {
+      background-image: asset-data-url('drive_icons/icon_11_image_list.png');
+    }
+    .icon-11-presentation-list {
+      background-image: asset-data-url('drive_icons/icon_11_presentation_list.png');
+    }
+    .icon-11-script-list {
+      background-image: asset-data-url('drive_icons/icon_11_script_list.png');
+    }
+    .icon-11-shared-collection-list {
+      background-image: asset-data-url('drive_icons/icon_11_shared_collection_list.png');
+    }
+    .icon-11-spreadsheet-list {
+      background-image: asset-data-url('drive_icons/icon_11_spreadsheet_list.png');
+    }
+    .icon-11-video-list {
+      background-image: asset-data-url('drive_icons/icon_11_video_list.png');
+    }
 
-      .bdrive-icon {
-        float: left;
-        margin-right: 3px;
-        margin-top: 5px;
-        padding: 10px;
-      }
-      a, .cc-button-link {
-        border-bottom: 1px solid $cc-color-popover-border;
-        color: $body-font-color;
-        display: block;
-        line-height: 1.3;
-        margin: 0;
-        overflow: hidden;
-        padding: 5px 10px;
-        &:hover, &:focus {
-          background: $cc-color-popover-hover;
-          text-decoration: none;
-          i {
-            color: $cc-color-popover-icon-hover;
-          }
+    .bdrive-icon {
+      float: left;
+      margin-right: 3px;
+      margin-top: 5px;
+      padding: 10px;
+    }
+    a, .cc-button-link {
+      border-bottom: 1px solid $cc-color-popover-border;
+      color: $body-font-color;
+      display: block;
+      line-height: 1.3;
+      margin: 0;
+      overflow: hidden;
+      padding: 5px 10px;
+      &:hover, &:focus {
+        background: $cc-color-popover-hover;
+        text-decoration: none;
+        i {
+          color: $cc-color-popover-icon-hover;
         }
       }
     }
