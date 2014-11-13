@@ -5,9 +5,15 @@ linters:
     exclude: 'app/assets/stylesheets/application.scss'
   EmptyLineBetweenBlocks:
     enabled: false
+  NestingDepth:
+    max_depth: 5
   SelectorDepth:
     enabled: false
   SingleLinePerSelector:
     enabled: false
   StringQuotes:
+    enabled: false
+  QualifyingElement:
+    enabled: false
+  VendorPrefixes:
     enabled: false

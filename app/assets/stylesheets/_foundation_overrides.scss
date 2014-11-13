@@ -28,9 +28,8 @@ $medium-up: "#{$screen} and (min-width:#{$medium-breakpoint})";
 $medium-only: "#{$screen} and (min-width:#{$medium-breakpoint})";
 
 // Foundation Components
-@import
-"foundation/components/global",
-"foundation/components/grid",
-"foundation/components/visibility",
-"foundation/components/forms",
-"foundation/components/tables";
+@import "foundation/components/global";
+@import "foundation/components/grid";
+@import "foundation/components/visibility";
+@import "foundation/components/forms";
+@import "foundation/components/tables";
