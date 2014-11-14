@@ -6,10 +6,10 @@ class WebDriverUtils
     if Settings.ui_selenium.webDriver == 'firefox'
       Rails.logger.info('Browser is Firefox')
       Selenium::WebDriver.for :firefox
-    elsif Settings.ui_selenium.webDriver['webDriver'] == 'chrome'
+    elsif Settings.ui_selenium.webDriver == 'chrome'
       Rails.logger.info('Browser is Chrome')
       Selenium::WebDriver.for :chrome
-    elsif Settings.ui_selenium.webDriver['webDriver'] == 'safari'
+    elsif Settings.ui_selenium.webDriver == 'safari'
       Rails.logger.info('Browser is Safari')
       Selenium::WebDriver.for :safari
     end
