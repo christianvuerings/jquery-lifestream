@@ -298,7 +298,7 @@ ui_selenium:
   layer: development
 
   # Alternative browsers for Selenium tests: chrome, safari, ie
-  webDriver: safari
+  webDriver: firefox
 
   googleOauthTimeout: 20
   googleTaskTimeout: 10
