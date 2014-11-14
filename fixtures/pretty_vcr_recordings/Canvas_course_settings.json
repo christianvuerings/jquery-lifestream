@@ -1,0 +1,113 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucb.beta.example.com/api/v1/courses/1121/settings",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "must-revalidate, private, max-age=0"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Fri, 14 Nov 2014 21:27:43 GMT"
+          ],
+          "etag": [
+            "\"1f950aa80be51c08da0cba7df88e47f4\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "_csrf_token=LULF4tBwT9ip%2BGOnVz2MBzJ4JLZqK0rVa%2BdchQP81EBPLa7JgDImkeW5B%2FAxbflPdQ9gjyZADOwA1jn1cIm%2BEw%3D%3D; path=/, canvas_session=60AOPzmLorGR8SBQ1nqWyg.SxUc1cAh6B80mK4ShDg8o794Qc93PnFHwgtHLEI9tgvp0oeIAV46ICdFpdTld3dqN-RMATIddlVoXtogREBeG008xbOuo8R4239K9wqUs0kGpmAh1JWiI13rhaF1AlPz.ltHcR3nr1HbD-l9ZU7NKAV0KZvs.VGZz0A; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;g=yGkEvpxAPyTeKLHaHOxZqJNjMXbA5ZV86ZZ6139o;s=19;c=cluster19;z=us-east-1b;b=913548;m=913612;u=0.05;y=0.00;d=0.06;"
+          ],
+          "x-canvas-user-id": [
+            "190000004868640"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-rack-cache": [
+            "miss"
+          ],
+          "x-request-context-id": [
+            "fe8727c0-4e72-0132-02a7-02f88540aa71"
+          ],
+          "x-runtime": [
+            "0.146503"
+          ],
+          "x-session-id": [
+            "3a0f59fc44358f348ca91b1c71ca486b"
+          ],
+          "x-ua-compatible": [
+            "IE=Edge,chrome=1"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "x-sakai-token": [
+
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "allow_student_discussion_topics": true,
+            "allow_student_forum_attachments": false,
+            "allow_student_discussion_editing": true,
+            "grading_standard_enabled": true,
+            "grading_standard_id": 0
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 14 Nov 2014 21:27:44 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.9.3"
+}
