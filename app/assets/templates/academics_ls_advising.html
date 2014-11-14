@@ -24,7 +24,7 @@
               data-ng-click="api.widget.toggleShow($event, futureAppointments, appointment, 'Current Appointment')">
               <div class="cc-clearfix-container">
                 <div class="cc-widget-lsadvising-current-time cc-left">
-                  <strong data-ng-bind="appointment.dateTime | date:'MM/dd'"></strong><br />
+                  <strong data-ng-bind="appointment.dateTime | dateInYearFilter:'MM/dd':'MM/dd/yy'"></strong><br />
                   <span data-ng-bind="appointment.dateTime | date:'h:mm a'" class="cc-text-light"></span>
                 </div>
                 <div class="cc-widget-lsadvising-current-content">
