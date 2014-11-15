@@ -167,58 +167,6 @@ describe Canvas::Egrades do
     end
   end
 
-  context "when providing indicator of grade types present" do
-    let(:student_enrollments) do
-      [
-        {:canvas_course_id=>1164764, :canvas_user_id=>4862319, :sis_user_id=>"UID:4000123", :sis_login_id=>"4000123", :name=>"Ted Andrew Greenwald", :final_score=>34.9, :final_grade=>"F"},
-        {:canvas_course_id=>1164764, :canvas_user_id=>4861899, :sis_user_id=>"UID:4000169", :sis_login_id=>"4000169", :name=>"Harold Arnold DACUS", :final_score=>nil, :final_grade=>nil},
-        {:canvas_course_id=>1164764, :canvas_user_id=>4862320, :sis_user_id=>"UID:4000309", :sis_login_id=>"4000309", :name=>"Michael David Ward", :final_score=>nil, :final_grade=>nil},
-        {:canvas_course_id=>1164764, :canvas_user_id=>4872048, :sis_user_id=>"UID:4000189", :sis_login_id=>"4000189", :name=>"Melissa W. Gafford", :final_score=>89.9, :final_grade=>"B+"},
-        {:canvas_course_id=>1164764, :canvas_user_id=>4862328, :sis_user_id=>"UID:4000199", :sis_login_id=>"4000199", :name=>"Robert Vannatta", :final_score=>69.5, :final_grade=>"D-"},
-        {:canvas_course_id=>1164764, :canvas_user_id=>4869114, :sis_user_id=>"20629333", :sis_login_id=>"4000272", :name=>"LAURA CLARICE EISENBERG", :final_score=>10.5, :final_grade=>"F-"}
-      ]
-    end
-    before { allow(subject).to receive(:canvas_course_students).and_return(invariable_student_enrollments) }
-    context "when number grades not present" do
-      let(:invariable_student_enrollments) do
-        student_enrollments.each do |enrollment|
-          enrollment[:final_score] = nil
-          enrollment[:final_grade] = nil
-        end
-        student_enrollments
-      end
-      it "indicates no number or letter grades" do
-        result = subject.grade_types_present
-        expect(result).to be_an_instance_of Hash
-        expect(result[:number_grades_present]).to eq false
-        expect(result[:letter_grades_present]).to eq false
-      end
-    end
-
-    context "when letter grades not present" do
-      let(:invariable_student_enrollments) do
-        student_enrollments.each {|enrollment| enrollment[:final_grade] = nil }
-        student_enrollments
-      end
-      it "indicates number grades, yet no letter grades are present" do
-        result = subject.grade_types_present
-        expect(result).to be_an_instance_of Hash
-        expect(result[:number_grades_present]).to eq true
-        expect(result[:letter_grades_present]).to eq false
-      end
-    end
-
-    context "when letter and number grades present" do
-      let(:invariable_student_enrollments) { student_enrollments }
-      it "indicates letter and number grades as present" do
-        result = subject.grade_types_present
-        expect(result).to be_an_instance_of Hash
-        expect(result[:number_grades_present]).to eq true
-        expect(result[:letter_grades_present]).to eq true
-      end
-    end
-  end
-
   context "when providing official sections" do
     let(:sections) do
       [
