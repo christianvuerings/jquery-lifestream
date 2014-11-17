@@ -163,7 +163,7 @@
           if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
             newCourse.admin_acting_as = $scope.admin_acting_as;
           } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
-            newCourse.admin_by_ccns = $scope.admin_by_ccns;
+            newCourse.admin_by_ccns = $scope.admin_by_ccns.match(/\w+/g);
             newCourse.admin_term_slug = $scope.currentAdminSemester;
           }
         }
@@ -193,7 +193,7 @@
           feedUrl = '/api/academics/canvas/course_provision_as/' + $scope.admin_acting_as;
         } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
           feedParams = {
-            'admin_by_ccns[]': $scope.admin_by_ccns,
+            'admin_by_ccns[]': $scope.admin_by_ccns.match(/\w+/g),
             'admin_term_slug': $scope.currentAdminSemester
           };
         }

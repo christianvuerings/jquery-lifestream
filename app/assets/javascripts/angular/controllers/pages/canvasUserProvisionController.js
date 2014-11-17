@@ -9,6 +9,7 @@
     apiService.util.setTitle('bCourses User Provision');
 
     $scope.importUsers = function(list) {
+      list = list.match(/\w+/g);
       checkListValidity(list);
       if (!$scope.userImportForm.$invalid) {
         $scope.displayImportResult = true;
