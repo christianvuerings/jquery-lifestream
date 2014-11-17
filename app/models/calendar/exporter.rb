@@ -36,7 +36,7 @@ module Calendar
       queue_entries.each do |queue_entry|
         if queue_entry.event_id.present?
           if queue_entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
-            logger.warn "Deleting event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+            logger.info "Deleting event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
             @delete_proxy.queue_event(queue_entry.event_id, Proc.new { |response|
               record_response(job, queue_entry, response)
             })
@@ -51,7 +51,7 @@ module Calendar
                 if response.present? && response.body && (existing_json = safe_json(response.body))
                   existing_attendees = existing_json['attendees']
                 end
-                logger.warn "Updating event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+                logger.info "Updating event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
                 merge_attendee_responses(queue_entry, existing_attendees)
                 @update_proxy.queue_event(queue_entry.event_id, queue_entry.event_data, Proc.new { |update_response|
                   record_response(job, queue_entry, response)
@@ -70,7 +70,7 @@ module Calendar
       queue_entries.each do |queue_entry|
         if queue_entry.transaction_type == Calendar::QueuedEntry::CREATE_TRANSACTION
           @insert_proxy.queue_event(queue_entry.event_data, Proc.new { |response|
-            logger.warn "Inserting event for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+            logger.info "Inserting event for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
             record_response(job, queue_entry, response)
           })
         end
