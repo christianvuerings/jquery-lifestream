@@ -31,58 +31,71 @@ module Calendar
       logger.warn "Job #{job.id}: Preparing to ship #{queue_entries.length} entries to Google"
       @error_count = 0
       @total = 0
+      @slice_count = 0
 
-      # first queue up deletes and updates
-      queue_entries.each do |queue_entry|
-        if queue_entry.event_id.present?
-          if queue_entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
-            logger.info "Deleting event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
-            @delete_proxy.queue_event(queue_entry.event_id, Proc.new { |response|
-              record_response(job, queue_entry, response)
-            })
-          else
-            # get existing event so we can read its attendees, which may have changed on the google side.
-            @get_proxy.queue_event(queue_entry.event_id, Proc.new { |response|
-              if response.present? && response.status == 404
-                # entry not found on Google, fall back to creating it
-                queue_entry.transaction_type = Calendar::QueuedEntry::CREATE_TRANSACTION
-              else
-                existing_attendees = []
-                if response.present? && response.body && (existing_json = safe_json(response.body))
-                  existing_attendees = existing_json['attendees']
+      queue_entries.each_slice(@settings.slice_size) do |slice|
+        @slice_count += 1
+
+        if @slice_count > 1
+          logger.warn "Sleeping #{@settings.slice_pause_duration}s before processing slice #{@slice_count}"
+          sleep @settings.slice_pause_duration
+        end
+
+        logger.warn "Processing slice #{@slice_count}, slice size #{@settings.slice_size}, total entry count #{queue_entries.length}"
+
+        # first queue up deletes and updates
+        slice.each do |queue_entry|
+          if queue_entry.event_id.present?
+            if queue_entry.transaction_type == Calendar::QueuedEntry::DELETE_TRANSACTION
+              logger.info "Deleting event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+              @delete_proxy.queue_event(queue_entry.event_id, Proc.new { |response|
+                record_response(job, queue_entry, response)
+              })
+            else
+              # get existing event so we can read its attendees, which may have changed on the google side.
+              @get_proxy.queue_event(queue_entry.event_id, Proc.new { |response|
+                if response.present? && response.status == 404
+                  # entry not found on Google, fall back to creating it
+                  queue_entry.transaction_type = Calendar::QueuedEntry::CREATE_TRANSACTION
+                else
+                  existing_attendees = []
+                  if response.present? && response.body && (existing_json = safe_json(response.body))
+                    existing_attendees = existing_json['attendees']
+                  end
+                  logger.info "Updating event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+                  merge_attendee_responses(queue_entry, existing_attendees)
+                  @update_proxy.queue_event(queue_entry.event_id, queue_entry.event_data, Proc.new { |update_response|
+                    record_response(job, queue_entry, response)
+                  })
                 end
-                logger.info "Updating event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
-                merge_attendee_responses(queue_entry, existing_attendees)
-                @update_proxy.queue_event(queue_entry.event_id, queue_entry.event_data, Proc.new { |update_response|
-                  record_response(job, queue_entry, response)
-                })
-              end
+              })
+            end
+          end
+        end
+
+        run_batch @delete_proxy
+        run_batch @get_proxy
+        run_batch @update_proxy
+
+        # now queue up creates
+        slice.each do |queue_entry|
+          if queue_entry.transaction_type == Calendar::QueuedEntry::CREATE_TRANSACTION
+            @insert_proxy.queue_event(queue_entry.event_data, Proc.new { |response|
+              logger.info "Inserting event for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
+              record_response(job, queue_entry, response)
             })
           end
         end
+
+        run_batch @insert_proxy
+
       end
-
-      run_batch @delete_proxy
-      run_batch @get_proxy
-      run_batch @update_proxy
-
-      # now queue up creates
-      queue_entries.each do |queue_entry|
-        if queue_entry.transaction_type == Calendar::QueuedEntry::CREATE_TRANSACTION
-          @insert_proxy.queue_event(queue_entry.event_data, Proc.new { |response|
-            logger.info "Inserting event for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
-            record_response(job, queue_entry, response)
-          })
-        end
-      end
-
-      run_batch @insert_proxy
 
       job.total_entry_count = @total
       job.error_count = @error_count
       job.process_end_time = DateTime.now
       job.save
-      logger.warn "Job #{job.id}: Export complete. Job total entry count: #{job.total_entry_count}; Error count: #{job.error_count}"
+      logger.warn "Job #{job.id}: Export complete. Job total entry count: #{job.total_entry_count}; Error count: #{job.error_count}; Slice count: #{@slice_count}"
       true
 
     end

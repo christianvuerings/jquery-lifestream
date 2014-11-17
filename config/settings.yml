@@ -283,6 +283,8 @@ oec:
   departments: [ 'STAT', 'SPANISH', 'PORTUG', 'CHEM' ]
 
 class_calendar:
+  slice_size: 10000
+  slice_pause_duration: 600
   access_token: secret
   refresh_token: secret
   current_terms_codes: [{
