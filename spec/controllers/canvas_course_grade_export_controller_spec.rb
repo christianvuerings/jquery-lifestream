@@ -26,9 +26,17 @@ describe CanvasCourseGradeExportController do
         {"dept_name"=>"CHEM", "catalog_id"=>"3BL", "term_yr"=>"2014", "term_cd"=>"C", "course_cntl_num"=>"22345", "primary_secondary_cd"=>"S", "section_num"=>"208", "instruction_format"=>"LAB"}
       ]
     end
+    let(:course_settings) do
+      {
+        'grading_standard_enabled' => true,
+        'grading_standard_id' => 0
+      }
+    end
+
     let(:grade_types) { {:number_grades_present => true, :letter_grades_present => false} }
     let(:section_terms) { [{:term_cd => 'C', :term_yr => '2014'}, {:term_cd => 'D', :term_yr => '2015'}] }
     before do
+      allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
       allow_any_instance_of(Canvas::Egrades).to receive(:official_sections).and_return(official_course_sections)
       allow_any_instance_of(Canvas::Egrades).to receive(:grade_types_present).and_return(grade_types)
       allow_any_instance_of(Canvas::Egrades).to receive(:section_terms).and_return(section_terms)
@@ -56,15 +64,12 @@ describe CanvasCourseGradeExportController do
       expect(official_sections[1]['course_cntl_num']).to eq "22345"
     end
 
-    it "provides exported grade type states" do
+    it "provides grading standard enabled boolean" do
       get :export_options
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
-      grade_types_present = json_response['gradeTypesPresent']
-      expect(grade_types_present).to be_an_instance_of Hash
-      expect(grade_types_present['number_grades_present']).to eq true
-      expect(grade_types_present['letter_grades_present']).to eq false
+      expect(json_response['gradingStandardEnabled']).to eq true
     end
 
     it "provides official section terms existing within course" do

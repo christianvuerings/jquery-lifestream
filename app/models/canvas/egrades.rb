@@ -66,16 +66,6 @@ module Canvas
       grade
     end
 
-    # Indicates if current Canvas grades include letter and/or numeric grades
-    def grade_types_present
-      grade_indicators = { :number_grades_present => false, :letter_grades_present => false }
-      canvas_course_students.each do |student|
-        grade_indicators[:number_grades_present] = true if student[:final_score].present?
-        grade_indicators[:letter_grades_present] = true if student[:final_grade].present?
-      end
-      grade_indicators
-    end
-
     # Provides official sections associated with Canvas course
     def official_sections
       sec_ids = official_section_identifiers

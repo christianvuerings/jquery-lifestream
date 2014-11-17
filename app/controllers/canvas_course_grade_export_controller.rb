@@ -24,11 +24,14 @@ class CanvasCourseGradeExportController < ApplicationController
   end
 
   def export_options
+    course_settings_worker = Canvas::CourseSettings.new(:course_id => session[:canvas_course_id].to_i)
+    course_settings = course_settings_worker.settings(:cache => false)
+    grading_standard_enabled = course_settings['grading_standard_enabled']
+
     egrades_worker = Canvas::Egrades.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id].to_i)
     course_sections = egrades_worker.official_sections
-    grade_types_present = egrades_worker.grade_types_present
     section_terms = egrades_worker.section_terms
-    render json: { :officialSections => course_sections, :gradeTypesPresent => grade_types_present, :sectionTerms => section_terms }.to_json
+    render json: { :officialSections => course_sections, :gradingStandardEnabled => grading_standard_enabled, :sectionTerms => section_terms }.to_json
   end
 
   private

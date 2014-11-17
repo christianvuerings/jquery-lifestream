@@ -28,17 +28,8 @@
       <p data-ng-if="unexpectedContactSupport">If this is not expected, please contact <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> for further assistance.</p>
     </div>
 
-    <!-- No Number Grades Present -->
-    <div data-ng-if="!errorStatus && noNumberGrades">
-      <p>
-        <i class="fa fa-warning"></i>
-        No final grades are detected for students in this course. For more information on grading please see <a href="http://guides.instructure.com/m/4152/l/54996-what-are-grades-and-the-gradebook">What are Grades and the Gradebook?</a>.
-      </p>
-      <p>After grades have been made available for students in this course, please feel free to try again.</p>
-    </div>
-
-    <!-- No Letter Grades Present -->
-    <div data-ng-if="!errorStatus && noLetterGrades">
+    <!-- No Grading Standard Enabled -->
+    <div data-ng-if="!errorStatus && noGradingStandardEnabled">
       <p>
         <i class="fa fa-warning cc-page-course-grade-export-warning"></i>
         ACTION REQUIRED!

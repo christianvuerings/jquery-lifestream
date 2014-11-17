@@ -75,17 +75,11 @@
       }
     };
 
-    /* Load and initialize application based on grade types present */
-    var loadGradeTypes = function(gradeTypesPresent) {
-      if (!gradeTypesPresent.number_grades_present) {
+    /* Load and initialize application based on grading standard state for course */
+    var handleGradingStandardState = function(gradingStandardEnabled) {
+      if (!gradingStandardEnabled) {
         $scope.appState = 'error';
-        $scope.noNumberGrades = true;
-      }
-      if (!gradeTypesPresent.letter_grades_present) {
-        $scope.appState = 'error';
-        if ($scope.noNumberGrades !== true) {
-          $scope.noLetterGrades = true;
-        }
+        $scope.noGradingStandardEnabled = true;
       }
     };
 
@@ -107,7 +101,7 @@
           loadSectionTerms(data.sectionTerms);
         }
         if ($scope.appState !== 'error') {
-          loadGradeTypes(data.gradeTypesPresent);
+          handleGradingStandardState(data.gradingStandardEnabled);
         }
         if ($scope.appState !== 'error') {
           loadOfficialSections(data.officialSections);
