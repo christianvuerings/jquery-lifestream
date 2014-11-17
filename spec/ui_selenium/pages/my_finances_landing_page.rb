@@ -73,7 +73,7 @@ module CalCentralPages
       def all_fin_aid_message_titles
         titles = []
         finaid_message_title_elements.each do |msg|
-          title = msg.text
+          title = msg.text.gsub(/\s+/, "")
           titles.push(title)
         end
         titles
