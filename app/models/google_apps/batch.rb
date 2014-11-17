@@ -41,7 +41,7 @@ module GoogleApps
         update_access_tokens!
 
         i += 1
-        logger.warn "Running batch slice #{i}; #{@requests.length} total requests in batch"
+        logger.info "Running batch slice #{i}; #{@requests.length} total requests in batch"
         client.execute batch
       end
 
