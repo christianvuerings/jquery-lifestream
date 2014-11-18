@@ -322,7 +322,37 @@ describe Canvas::Egrades do
       end
 
     end
+  end
 
+  context "when indicating if a course site has official sections" do
+    let(:section_identifiers) {
+      [
+        {:term_yr => '2014', :term_cd => 'C', :ccn => '7309'},
+        {:term_yr => '2014', :term_cd => 'C', :ccn => '6211'},
+      ]
+    }
+    before { allow(subject).to receive(:official_section_identifiers).and_return(section_identifiers) }
+
+    it "uses cache by default" do
+      expect(Canvas::Egrades).to receive(:fetch_from_cache).with("#{canvas_course_id}").and_return(false)
+      result = subject.is_official_course?
+      expect(result).to eq false
+    end
+
+    it "bypasses cache when cache option is false" do
+      expect(Canvas::Egrades).to_not receive(:fetch_from_cache).with("#{canvas_course_id}")
+      result = subject.is_official_course?(:cache => false)
+      expect(result).to eq true
+    end
+
+    it "returns true when course site has official sections" do
+      expect(subject.is_official_course?).to eq true
+    end
+
+    it "returns false when course site does not contain official sections" do
+      expect(subject).to receive(:official_section_identifiers).and_return([])
+      expect(subject.is_official_course?).to eq false
+    end
   end
 
 end

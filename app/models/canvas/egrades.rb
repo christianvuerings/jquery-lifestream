@@ -5,6 +5,7 @@ module Canvas
   # #official_student_grades provides only the grades for the students officially enrolled in the section term/ccn specified.
   #
   class Egrades
+    extend Cache::Cacheable
 
     def initialize(options = {})
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
@@ -99,6 +100,22 @@ module Canvas
         course_sections.compact
       }
       @official_section_ids ||= get_official_section_identifiers.call
+    end
+
+    # Returns true if course site contains official sections
+    def is_official_course?(options = {})
+      default_options = {:cache => true}
+      options.reverse_merge!(default_options)
+
+      get_official_course_status = Proc.new {
+        (official_section_identifiers.count > 0) ? true : false
+      }
+
+      if options[:cache].present?
+        self.class.fetch_from_cache("#{@canvas_course_id}") { get_official_course_status.call }
+      else
+        get_official_course_status.call
+      end
     end
 
   end
