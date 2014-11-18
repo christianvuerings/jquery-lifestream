@@ -1,7 +1,7 @@
 class CanvasCourseGradeExportController < ApplicationController
 
-  before_filter :api_authenticate_401
-  before_filter :authorize_exporting_grades
+  before_filter :api_authenticate_401, :except => [:is_official_course]
+  before_filter :authorize_exporting_grades, :except => [:is_official_course]
   rescue_from StandardError, with: :handle_exception
   rescue_from Errors::ClientError, with: :handle_client_error
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -32,6 +32,13 @@ class CanvasCourseGradeExportController < ApplicationController
     course_sections = egrades_worker.official_sections
     section_terms = egrades_worker.section_terms
     render json: { :officialSections => course_sections, :gradingStandardEnabled => grading_standard_enabled, :sectionTerms => section_terms }.to_json
+  end
+
+  def is_official_course
+    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in session" if session[:canvas_course_id].blank?
+    egrades_worker = Canvas::Egrades.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id])
+    is_official_course = egrades_worker.is_official_course?
+    render json: { :is_official_course => is_official_course }.to_json
   end
 
   private

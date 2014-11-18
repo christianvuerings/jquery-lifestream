@@ -172,4 +172,30 @@ describe CanvasCourseGradeExportController do
 
   end
 
+  describe "when indicating if a course site has official sections" do
+    before { allow_any_instance_of(Canvas::Egrades).to receive(:is_official_course?).and_return(true) }
+    it_should_behave_like "an endpoint" do
+      let(:make_request) { get :is_official_course, :format => :csv, :canvas_course_id => '1234' }
+      let(:error_text) { "Something went wrong" }
+      before { allow(Canvas::Egrades).to receive(:new).and_raise(RuntimeError, error_text) }
+    end
+
+    context "when the canvas course id is not present in the session" do
+      before { session[:canvas_course_id] = nil }
+      it "returns 403 error" do
+        get :is_official_course, :format => :csv, :canvas_course_id => '1234'
+        expect(response.status).to eq(403)
+        expect(response.body).to eq " "
+      end
+    end
+
+    it "indicates if the course site has official sections" do
+      get :is_official_course, :format => :csv, :canvas_course_id => '1234'
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response).to be_an_instance_of Hash
+      expect(json_response['is_official_course']).to eq true
+    end
+  end
+
 end
