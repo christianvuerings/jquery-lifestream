@@ -58,13 +58,13 @@ describe Canvas::CourseUser do
       end
 
       it "uses cache by default" do
-        Canvas::CourseUser.should_receive(:fetch_from_cache).and_return({})
+        expect(Canvas::CourseUser).to receive(:fetch_from_cache).and_return({})
         user = subject.course_user
         expect(user).to be_an_instance_of Hash
       end
 
       it "bypasses cache when cache option is false" do
-        Canvas::CourseUser.should_not_receive(:fetch_from_cache)
+        expect(Canvas::CourseUser).to_not receive(:fetch_from_cache)
         user = subject.course_user(:cache => false)
         expect(user).to be_an_instance_of Hash
         expect(user['id']).to eq 4321321
@@ -72,7 +72,7 @@ describe Canvas::CourseUser do
     end
 
     context "if course user does not exist in canvas" do
-      before { Canvas::CourseUser.any_instance.should_receive(:request_uncached).and_return(nil) }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:request_uncached).and_return(nil) }
       it "returns nil" do
         user = subject.course_user
         expect(user).to be_nil
@@ -147,7 +147,7 @@ describe Canvas::CourseUser do
 
   context "when returning course user roles" do
     context "if course user exists in canvas" do
-      before { Canvas::CourseUser.any_instance.should_receive(:course_user).and_return({'enrollments' => [{'role' => 'StudentEnrollment'},{'role' => 'DesignerEnrollment'}]}) }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return({'enrollments' => [{'role' => 'StudentEnrollment'},{'role' => 'DesignerEnrollment'}]}) }
       it "returns roles hash" do
         course_user_roles = subject.roles
         expect(course_user_roles).to be_an_instance_of Hash
@@ -160,7 +160,7 @@ describe Canvas::CourseUser do
     end
 
     context "if course user does not exist in canvas" do
-      before { Canvas::CourseUser.any_instance.should_receive(:request_uncached).and_return(nil) }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:request_uncached).and_return(nil) }
       it "returns roles hash" do
         course_user_roles = subject.roles
         expect(course_user_roles).to be_an_instance_of Hash
@@ -173,7 +173,7 @@ describe Canvas::CourseUser do
     end
 
     context "if course user enrollments are empty" do
-      before { Canvas::CourseUser.any_instance.should_receive(:course_user).and_return({'enrollments' => []}) }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return({'enrollments' => []}) }
       it "returns roles hash" do
         course_user_roles = subject.roles
         expect(course_user_roles).to be_an_instance_of Hash
