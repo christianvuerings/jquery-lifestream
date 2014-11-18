@@ -47,18 +47,35 @@ describe Canvas::ExternalTools do
   end
 
   context "when returning a public list of external tools" do
-    it "should return a list with only id and name" do
-      filtered_list = subject.public_list
+    let(:fake_global_apps) {[
+      {'id' => 123, 'name' => 'Global App #1'},
+      {'id' => 124, 'name' => 'Global App #2'}
+    ]}
+    let(:fake_official_apps) {[
+      {'id' => 128, 'name' => 'Official Courses App #1'},
+      {'id' => 129, 'name' => 'Official Courses App #2'}
+    ]}
+    let(:fake_global_apps_proxy) { double(:external_tools_list => fake_global_apps) }
+    let(:fake_official_apps_proxy) { double(:external_tools_list => fake_official_apps) }
+
+    it "should return global and official lists containing only id and name" do
+      expect(Canvas::ExternalTools).to receive(:new).with(:canvas_account_id => Settings.canvas_proxy.account_id).and_return(fake_global_apps_proxy)
+      expect(Canvas::ExternalTools).to receive(:new).with(:canvas_account_id => Settings.canvas_proxy.official_courses_account_id).and_return(fake_official_apps_proxy)
+      filtered_list = Canvas::ExternalTools.public_list
       expect(filtered_list).to be_an_instance_of Hash
-      filtered_list.each do |name, id|
-        expect(name).to be_an_instance_of String
-        expect(id).to be_an_instance_of Fixnum
-      end
+      expect(filtered_list.keys).to eq [:global_tools, :official_course_tools]
+      expect(filtered_list[:global_tools]['Global App #1']).to eq 123
+      expect(filtered_list[:global_tools]['Global App #2']).to eq 124
+      expect(filtered_list[:official_course_tools]['Official Courses App #1']).to eq 128
+      expect(filtered_list[:official_course_tools]['Official Courses App #2']).to eq 129
     end
+
     it 'includes a cached JSON endpoint for maximal efficiency' do
+      allow(Canvas::ExternalTools).to receive(:new).with(:canvas_account_id => Settings.canvas_proxy.account_id).and_return(fake_global_apps_proxy)
+      allow(Canvas::ExternalTools).to receive(:new).with(:canvas_account_id => Settings.canvas_proxy.official_courses_account_id).and_return(fake_official_apps_proxy)
       expect(Rails.cache).to receive(:write).once
-      raw_feed = subject.public_list
-      json_feed = subject.public_list_as_json
+      raw_feed = Canvas::ExternalTools.public_list
+      json_feed = Canvas::ExternalTools.public_list_as_json
       expect(json_feed).to eq raw_feed.to_json
     end
   end

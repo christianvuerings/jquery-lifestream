@@ -3,6 +3,28 @@ module Canvas
 
     include SafeJsonParser
 
+    # The publicly accessible feed does have to be cached.
+    def self.public_list_as_json
+      fetch_from_cache do
+        Canvas::ExternalTools.public_list.to_json
+      end
+    end
+
+    def self.public_list
+      list_template = {
+        :global_tools => Settings.canvas_proxy.account_id,
+        :official_course_tools => Settings.canvas_proxy.official_courses_account_id
+      }
+      public_list = {}
+      list_template.each do |key, account_id|
+        external_tool_worker = self.new(:canvas_account_id => account_id)
+        public_list[key] = external_tool_worker.external_tools_list.each_with_object({}) do |tool, hash|
+          hash[tool['name']] = tool['id']
+        end
+      end
+      public_list
+    end
+
     # Unlike other Canvas proxies, this can make requests to multiple Canvas servers.
     def initialize(options = {})
       super(options)
@@ -29,19 +51,6 @@ module Canvas
         params = next_page_params(response)
       end
       all_tools
-    end
-
-    # The publicly accessible feed does have to be cached.
-    def public_list_as_json
-      self.class.fetch_from_cache do
-        public_list.to_json
-      end
-    end
-
-    def public_list
-      external_tools_list.each_with_object({}) do |tool, hash|
-        hash[tool['name']] = tool['id']
-      end
     end
 
     def reset_external_tool(tool_id, config_url)
