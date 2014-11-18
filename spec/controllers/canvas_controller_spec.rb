@@ -7,8 +7,16 @@ describe CanvasController do
   let(:uid) { '1234' }
 
   context "when serving index of external applications within canvas" do
+    before do
+      public_external_tools = {
+        :global_tools => ['Global App 1' => 66, 'Global App 2' => 67],
+        :official_course_tools => ['Official App 1' => 92, 'Official App 2' => 93]
+      }
+      allow(Canvas::ExternalTools).to receive(:public_list_as_json).and_return(public_external_tools)
+    end
+
     it_should_behave_like "an api endpoint" do
-      before { allow(Canvas::ExternalTools).to receive(:new).and_raise(RuntimeError, "Something went wrong") }
+      before { allow(Canvas::ExternalTools).to receive(:public_list_as_json).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :external_tools }
     end
 
@@ -17,10 +25,7 @@ describe CanvasController do
       expect(response.status).to eq(200)
       response_json = JSON.parse(response.body)
       expect(response_json).to be_an_instance_of Hash
-      response_json.each do |name, id|
-        expect(name).to be_an_instance_of String
-        expect(id).to be_an_instance_of Fixnum
-      end
+      expect(response_json.keys).to eq ['global_tools', 'official_course_tools']
     end
 
     it "should set cross origin access control headers" do
