@@ -172,23 +172,29 @@
       // ensure gradebook context
       var url = '/courses/' + courseId + '/gradebook';
       if (url.indexOf(window.location.pathname) !== -1) {
-        // add link for eGrades Export LTI tool
-        $.get(externalToolsUrl(), function(externalToolsHash) {
-          // form link to external tool
-          var gradesExportLtiId = externalToolsHash['eGrades Export'];
-          var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
+        // if course site contains official course sections
+        $.get(officialCourseUrl(courseId), function(officialCourseResponse) {
+          if (officialCourseResponse.isOfficialCourse === true) {
+            // add link for eGrades Export LTI tool
+            $.get(externalToolsUrl(), function(externalToolsHash) {
+              // form link to external tool
+              var officialCoursesExternalToolHash = externalToolsHash.officialCourseTools;
+              var gradesExportLtiId = officialCoursesExternalToolHash['eGrades Export'];
+              var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
 
-          if (gradesExportLtiId !== undefined) {
-            // add 'Download eGrades (.csv)' option to gradebook drop down menu
-            var $downloadScoresListItem = $('a#download_csv').parent();
-            var downloadEGradesItem = [
-              '<li class="ui-menu-item" role="presentation">',
-              '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
-              'Download eGrades (.csv)',
-              '</a>',
-              '</li>'
-            ].join('');
-            $downloadScoresListItem.after(downloadEGradesItem);
+              if (gradesExportLtiId !== undefined) {
+                // add 'Download eGrades (.csv)' option to gradebook drop down menu
+                var $downloadScoresListItem = $('a#download_csv').parent();
+                var downloadEGradesItem = [
+                  '<li class="ui-menu-item" role="presentation">',
+                  '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
+                  'Download eGrades (.csv)',
+                  '</a>',
+                  '</li>'
+                ].join('');
+                $downloadScoresListItem.after(downloadEGradesItem);
+              }
+            });
           }
         });
       }
@@ -209,6 +215,13 @@
    */
   var externalToolsUrl = function() {
     return calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+  };
+
+  /**
+   * Provides URL for Official Course API
+   */
+  var officialCourseUrl = function(courseId) {
+    return calcentralRootUrl() + '/api/academics/canvas/egrade_export/is_official_course.json?canvas_course_id=' + courseId;
   };
 
   /**
