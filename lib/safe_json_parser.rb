@@ -2,6 +2,10 @@ module SafeJsonParser
 
   module ClassMethods
     def safe_json(str)
+      if str.blank?
+        Rails.logger.error "[#{self.name}] Encountered an empty JSON string"
+        return nil
+      end
       begin
         return JSON.parse str
       rescue JSON::ParserError => e

@@ -12,7 +12,6 @@ describe MyAdvisingController do
   context 'with an authenticated user' do
     before(:each) do
       Settings.advising_proxy.stub(:fake).and_return(true)
-      Advising::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
     end
     it 'should be an non-empty advising feed based on fake Oski recorded data' do
       session[:user_id] = '61889'

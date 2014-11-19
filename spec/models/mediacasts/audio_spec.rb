@@ -35,9 +35,9 @@ describe Mediacasts::Audio do
       before(:each) {
         stub_request(:any, rss_url).to_return(status: 506)
       }
-      it "should return a 500 status code" do
+      it "should return a 503 status code" do
         proxy_response = proxy.get
-        expect(proxy_response[:statusCode]).to eq 500
+        expect(proxy_response[:statusCode]).to eq 503
       end
     end
 
