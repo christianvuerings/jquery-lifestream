@@ -34,6 +34,13 @@ class CanvasCourseGradeExportController < ApplicationController
     render json: { :officialSections => course_sections, :gradingStandardEnabled => grading_standard_enabled, :sectionTerms => section_terms }.to_json
   end
 
+  before_filter :set_cross_origin_access_control_headers, :only => [:is_official_course]
+  def set_cross_origin_access_control_headers
+    headers['Access-Control-Allow-Origin'] = "#{Settings.canvas_proxy.url_root}"
+    headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS, HEAD'
+    headers['Access-Control-Max-Age'] = '86400'
+  end
+
   def is_official_course
     raise Pundit::NotAuthorizedError, "Canvas Course ID not present in params" if params[:canvas_course_id].blank?
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => params[:canvas_course_id])
