@@ -16,7 +16,7 @@ class CanvasCourseGradeExportController < ApplicationController
     raise Errors::BadRequestError, "term_yr required" unless params[:term_yr]
     raise Errors::BadRequestError, "ccn required" unless params[:ccn]
     canvas_course_id = session[:canvas_course_id].to_i
-    egrades_worker = Canvas::Egrades.new(:user_id => session[:user_id], :canvas_course_id => canvas_course_id)
+    egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
     official_student_grades = egrades_worker.official_student_grades_csv(params[:term_cd], params[:term_yr], params[:ccn])
     respond_to do |format|
       format.csv { render csv: official_student_grades.to_s, filename: "course_#{canvas_course_id}_grades" }
@@ -28,15 +28,15 @@ class CanvasCourseGradeExportController < ApplicationController
     course_settings = course_settings_worker.settings(:cache => false)
     grading_standard_enabled = course_settings['grading_standard_enabled']
 
-    egrades_worker = Canvas::Egrades.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id].to_i)
+    egrades_worker = Canvas::Egrades.new(:canvas_course_id => session[:canvas_course_id].to_i)
     course_sections = egrades_worker.official_sections
     section_terms = egrades_worker.section_terms
     render json: { :officialSections => course_sections, :gradingStandardEnabled => grading_standard_enabled, :sectionTerms => section_terms }.to_json
   end
 
   def is_official_course
-    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in session" if session[:canvas_course_id].blank?
-    egrades_worker = Canvas::Egrades.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id])
+    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in params" if params[:canvas_course_id].blank?
+    egrades_worker = Canvas::Egrades.new(:canvas_course_id => params[:canvas_course_id])
     is_official_course = egrades_worker.is_official_course?
     render json: { :isOfficialCourse => is_official_course }.to_json
   end
@@ -44,7 +44,7 @@ class CanvasCourseGradeExportController < ApplicationController
   private
 
   def canvas_course
-    canvas_course = Canvas::Course.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id].to_i)
+    canvas_course = Canvas::Course.new(:canvas_course_id => session[:canvas_course_id].to_i)
   end
 
 end
