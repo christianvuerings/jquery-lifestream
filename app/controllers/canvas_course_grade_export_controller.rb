@@ -38,7 +38,7 @@ class CanvasCourseGradeExportController < ApplicationController
     raise Pundit::NotAuthorizedError, "Canvas Course ID not present in session" if session[:canvas_course_id].blank?
     egrades_worker = Canvas::Egrades.new(:user_id => session[:user_id], :canvas_course_id => session[:canvas_course_id])
     is_official_course = egrades_worker.is_official_course?
-    render json: { :is_official_course => is_official_course }.to_json
+    render json: { :isOfficialCourse => is_official_course }.to_json
   end
 
   private
