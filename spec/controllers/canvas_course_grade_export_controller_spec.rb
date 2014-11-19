@@ -194,7 +194,7 @@ describe CanvasCourseGradeExportController do
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
-      expect(json_response['is_official_course']).to eq true
+      expect(json_response['isOfficialCourse']).to eq true
     end
   end
 

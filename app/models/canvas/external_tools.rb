@@ -12,8 +12,8 @@ module Canvas
 
     def self.public_list
       list_template = {
-        :global_tools => Settings.canvas_proxy.account_id,
-        :official_course_tools => Settings.canvas_proxy.official_courses_account_id
+        :globalTools => Settings.canvas_proxy.account_id,
+        :officialCourseTools => Settings.canvas_proxy.official_courses_account_id
       }
       public_list = {}
       list_template.each do |key, account_id|
