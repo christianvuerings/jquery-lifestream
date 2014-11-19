@@ -191,6 +191,13 @@ describe CanvasCourseGradeExportController do
       end
     end
 
+    it "should set cross origin access control headers" do
+      get :is_official_course, :format => :csv, :canvas_course_id => '1234'
+      expect(response.header["Access-Control-Allow-Origin"]).to eq "#{Settings.canvas_proxy.url_root}"
+      expect(response.header["Access-Control-Allow-Methods"]).to eq 'GET, OPTIONS, HEAD'
+      expect(response.header["Access-Control-Max-Age"]).to eq '86400'
+    end
+
     it "indicates if the course site has official sections" do
       get :is_official_course, :format => :csv, :canvas_course_id => '1234'
       expect(response.status).to eq(200)
