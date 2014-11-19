@@ -10,7 +10,8 @@ module Canvas
         'rosters' => 'lti_roster_photos',
         'user_provision' => 'lti_user_provision',
         'course_add_user' => 'lti_course_add_user',
-        'course_mediacasts' => 'lti_course_mediacasts'
+        'course_mediacasts' => 'lti_course_mediacasts',
+        'course_manage_official_sections' => 'lti_course_manage_official_sections',
       }
     end
 
