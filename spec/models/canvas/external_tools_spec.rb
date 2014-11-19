@@ -63,11 +63,11 @@ describe Canvas::ExternalTools do
       expect(Canvas::ExternalTools).to receive(:new).with(:canvas_account_id => Settings.canvas_proxy.official_courses_account_id).and_return(fake_official_apps_proxy)
       filtered_list = Canvas::ExternalTools.public_list
       expect(filtered_list).to be_an_instance_of Hash
-      expect(filtered_list.keys).to eq [:global_tools, :official_course_tools]
-      expect(filtered_list[:global_tools]['Global App #1']).to eq 123
-      expect(filtered_list[:global_tools]['Global App #2']).to eq 124
-      expect(filtered_list[:official_course_tools]['Official Courses App #1']).to eq 128
-      expect(filtered_list[:official_course_tools]['Official Courses App #2']).to eq 129
+      expect(filtered_list.keys).to eq [:globalTools, :officialCourseTools]
+      expect(filtered_list[:globalTools]['Global App #1']).to eq 123
+      expect(filtered_list[:globalTools]['Global App #2']).to eq 124
+      expect(filtered_list[:officialCourseTools]['Official Courses App #1']).to eq 128
+      expect(filtered_list[:officialCourseTools]['Official Courses App #2']).to eq 129
     end
 
     it 'includes a cached JSON endpoint for maximal efficiency' do
