@@ -174,7 +174,7 @@
       if (url.indexOf(window.location.pathname) !== -1) {
         // if course site contains official course sections
         $.get(officialCourseUrl(courseId), function(officialCourseResponse) {
-          if (officialCourseResponse.isOfficialCourse === true) {
+          if (officialCourseResponse && officialCourseResponse.isOfficialCourse === true) {
             // add link for eGrades Export LTI tool
             $.get(externalToolsUrl(), function(externalToolsHash) {
               // form link to external tool
