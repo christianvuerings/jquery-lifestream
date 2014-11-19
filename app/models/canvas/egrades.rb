@@ -9,8 +9,6 @@ module Canvas
 
     def initialize(options = {})
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
-      raise RuntimeError, "user_id required" unless options.include?(:user_id)
-      @user_id = options[:user_id]
       @canvas_course_id = options[:canvas_course_id]
     end
 
@@ -36,7 +34,7 @@ module Canvas
     end
 
     def canvas_course_students
-      proxy = Canvas::CourseUsers.new(:user_id => @user_id, :course_id => @canvas_course_id)
+      proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id)
       course_users = proxy.course_users(:cache => false)
       course_students = []
       course_users.each do |course_user|
@@ -91,7 +89,7 @@ module Canvas
     # Provides official section identifiers for sections in Canvas course
     def official_section_identifiers
       get_official_section_identifiers = Proc.new {
-        canvas_course_sections_proxy = Canvas::CourseSections.new(:user_id => @user_id, :course_id => @canvas_course_id)
+        canvas_course_sections_proxy = Canvas::CourseSections.new(:course_id => @canvas_course_id)
         sections_response = canvas_course_sections_proxy.sections_list
         return [] unless sections_response && sections_response.status == 200
         course_sections = JSON.parse(sections_response.body)
