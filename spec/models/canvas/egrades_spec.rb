@@ -1,10 +1,9 @@
 require "spec_helper"
 
 describe Canvas::Egrades do
-  let(:user_id)                   { 4868640 }
   let(:canvas_course_id)          { 1164764 }
   let(:canvas_course_section_id)  { 1312012 }
-  subject { Canvas::Egrades.new(:user_id => user_id, :canvas_course_id => canvas_course_id) }
+  subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id) }
 
   let(:canvas_course_students_list) do
     [
@@ -276,7 +275,7 @@ describe Canvas::Egrades do
     let(:course_sections) { [{'sis_section_id' => 'SEC:2014-C-7309'}, {'sis_section_id' => 'SEC:2014-C-6211'}] }
     let(:failed_response) { double(status: 500, body: '') }
     let(:success_response) { double(status: 200, body: JSON.generate(course_sections))}
-    subject { Canvas::Egrades.new(:user_id => user_id, :canvas_course_id => 767330) }
+    subject { Canvas::Egrades.new(:canvas_course_id => 767330) }
 
     context "when course sections request fails" do
       before { allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(failed_response) }
