@@ -179,7 +179,7 @@
             $.get(externalToolsUrl(), function(externalToolsHash) {
               // form link to external tool
               var officialCoursesExternalToolHash = externalToolsHash.officialCourseTools;
-              var gradesExportLtiId = officialCoursesExternalToolHash['eGrades Export'];
+              var gradesExportLtiId = officialCoursesExternalToolHash['Download eGrades'];
               var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
 
               if (gradesExportLtiId !== undefined) {
