@@ -1,8 +1,14 @@
 .cc-page-course-grade-export {
   margin: 10px;
 
+  .cc-page-course-grade-export-notice {
+    color: #f00;
+    margin-bottom: 5px;
+    padding: 5px 0 0 20px;
+  }
+
   .cc-page-course-grade-export-container {
-    padding: 20px;
+    padding: 10px 0 0 20px;
     width: 190px;
 
     a.cc-page-course-grade-export-download-button {
