@@ -54,6 +54,7 @@ Calcentral::Application.routes.draw do
   get '/canvas/lti_course_add_user' => 'canvas_lti#lti_course_add_user', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_mediacasts' => 'canvas_lti#lti_course_mediacasts', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_grade_export' => 'canvas_lti#lti_course_grade_export', :defaults => { :format => 'xml' }
+  get '/canvas/lti_course_manage_official_sections' => 'canvas_lti#lti_course_manage_official_sections', :defaults => { :format => 'xml' }
   # A Canvas course ID of "embedded" means to retrieve from session properties.
   get '/api/academics/canvas/course_user_roles' => 'canvas_course_add_user#course_user_roles', :defaults => { :format => 'json' }
   get '/api/academics/canvas/external_tools' => 'canvas#external_tools', :defaults => { :format => 'json' }

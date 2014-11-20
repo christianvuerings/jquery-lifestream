@@ -89,6 +89,10 @@
       templateUrl: 'canvas_embedded/course_mediacasts.html',
       isEmbedded: true
     }).
+    when('/canvas/embedded/course_manage_official_sections', {
+      templateUrl: 'canvas_embedded/course_manage_official_sections.html',
+      controller: 'CanvasCourseManageOfficialSectionsController'
+    }).
     when('/canvas/embedded/course_grade_export', {
       templateUrl: 'canvas_embedded/course_grade_export.html',
       controller: 'CanvasCourseGradeExportController'

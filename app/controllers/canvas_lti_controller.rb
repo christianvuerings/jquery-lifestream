@@ -84,4 +84,8 @@ class CanvasLtiController < ApplicationController
     respond_to :xml
   end
 
+  def lti_course_manage_official_sections
+    respond_to :xml
+  end
+
 end
