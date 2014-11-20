@@ -2,17 +2,36 @@
 <html lang="en" data-ng-app="calcentral" data-ng-controller="CalcentralController">
 <head>
   <meta charset="utf-8" />
+
+  <title data-ng-bind="title">CalCentral</title>
+
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui" />
   <meta name="description" content="CalCentral is a new resource for the UC Berkeley community." />
-  <title data-ng-bind="title">CalCentral</title>
+
+  <!-- Set a web app capable website -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="CalCentral">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- https://mathiasbynens.be/notes/touch-icons -->
+  <%= favicon_link_tag 'app_icons/icon-small@2x.png', :rel => 'apple-touch-icon', :type => '' %>
+  <%= favicon_link_tag 'app_icons/icon-72.png', :rel => 'apple-touch-icon', :sizes => '72x72', :type => '' %>
+  <%= favicon_link_tag 'app_icons/icon-76.png', :rel => 'apple-touch-icon', :sizes => '76x76', :type => '' %>
+  <%= favicon_link_tag 'app_icons/icon-60@2x.png', :rel => 'apple-touch-icon', :sizes => '120x120', :type => '' %>
+  <%= favicon_link_tag 'app_icons/icon-72@2x.png', :rel => 'apple-touch-icon', :sizes => '144x144', :type => '' %>
+  <%= favicon_link_tag 'app_icons/icon-76@2x.png', :rel => 'apple-touch-icon', :sizes => '152x152', :type => '' %>
+  <%= favicon_link_tag 'app_icons/icon-60@3x.png', :rel => 'apple-touch-icon', :sizes => '180x180', :type => '' %>
+  <%= favicon_link_tag 'app_icons/192.png', :rel => 'icon', :sizes => '192x192', :type => '' %>
+
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= favicon_link_tag 'favicon_32x32.png', :rel => 'icon', :type => 'image/png', :sizes => '32x32' %>
+  <%= favicon_link_tag 'favicon_16x16.png', :rel => 'icon', :type => 'image/png', :sizes => '16x16' %>
 
   <noscript><meta http-equiv="Refresh" content="0; URL=/enable-javascript.html"></noscript>
 
   <base href="/" />
-
-  <%= favicon_link_tag 'favicon.ico' %>
-  <%= favicon_link_tag 'favicon.png', :rel => 'icon', :type => 'image/png' %>
 
   <!-- Pass rails variables to JS -->
   <script>
