@@ -5,7 +5,7 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, $http, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, canvasCourseProvisionFactory, $scope, $timeout) {
     apiService.util.setTitle('bCourses Course Provision');
 
     var statusProcessor = function() {
@@ -39,14 +39,7 @@
     };
 
     var fetchStatus = function(callback) {
-      var statusRequest = {
-        url: '/api/academics/canvas/course_provision/status.json',
-        method: 'GET',
-        params: {
-          job_id: $scope.job_id
-        }
-      };
-      $http(statusRequest).success(function(data) {
+      canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id).success(function(data) {
         angular.extend($scope, data);
         $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
         callback();
@@ -167,7 +160,8 @@
             newCourse.admin_term_slug = $scope.currentAdminSemester;
           }
         }
-        $http.post('/api/academics/canvas/course_provision/create', newCourse)
+
+        canvasCourseProvisionFactory.courseCreate(newCourse)
           .success(courseSiteJobCreated)
           .error(function() {
             angular.extend($scope, {
@@ -186,23 +180,7 @@
         currentWorkflowStep: 'selecting',
         isLoading: true
       });
-      var feedUrl = '/api/academics/canvas/course_provision';
-      var feedParams = {};
-      if ($scope.is_admin) {
-        if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
-          feedUrl = '/api/academics/canvas/course_provision_as/' + $scope.admin_acting_as;
-        } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
-          feedParams = {
-            'admin_by_ccns[]': $scope.admin_by_ccns.match(/\w+/g),
-            'admin_term_slug': $scope.currentAdminSemester
-          };
-        }
-      }
-      $http({
-        url: feedUrl,
-        method: 'GET',
-        params: feedParams
-      }).success(function(data) {
+      canvasCourseProvisionFactory.getFeed($scope.is_admin, $scope.adminMode, $scope.admin_acting_as, $scope.admin_by_ccns, $scope.currentAdminSemester).success(function(data) {
         angular.extend($scope, data);
         fillCourseSites($scope.teachingSemesters);
         apiService.util.iframeUpdateHeight();
