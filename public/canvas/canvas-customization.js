@@ -140,23 +140,25 @@
   var addStartANewCourseButton = function() {
     var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
     $.get(externalToolsUrl, function(externalToolsHash) {
-      var createCourseSiteId = externalToolsHash['Course Provisioning for Users'];
-      var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
+      if (externalToolsHash && externalToolsHash.globalTools) {
+        var createCourseSiteId = externalToolsHash.globalTools['Course Provisioning for Users'];
+        var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
 
-      var $headerWithAddCourseSiteButton = $('<div/>', {
-        style: 'float:right;'
-      }).html(
-        $('<button/>', {
-          text: 'Create a Course Site',
-          class: 'btn btn-primary',
-          click: function() {
-            window.location.href = linkUrl;
-          }
-        })
-      );
-      var $contentArea = $('div#content');
-      if (typeof($contentArea) !== 'undefined') {
-        $contentArea.prepend($headerWithAddCourseSiteButton);
+        var $headerWithAddCourseSiteButton = $('<div/>', {
+          style: 'float:right;'
+        }).html(
+          $('<button/>', {
+            text: 'Create a Course Site',
+            class: 'btn btn-primary',
+            click: function() {
+              window.location.href = linkUrl;
+            }
+          })
+        );
+        var $contentArea = $('div#content');
+        if (typeof($contentArea) !== 'undefined') {
+          $contentArea.prepend($headerWithAddCourseSiteButton);
+        }
       }
     });
   };
@@ -177,22 +179,23 @@
           if (officialCourseResponse && officialCourseResponse.isOfficialCourse === true) {
             // add link for eGrades Export LTI tool
             $.get(externalToolsUrl(), function(externalToolsHash) {
-              // form link to external tool
-              var officialCoursesExternalToolHash = externalToolsHash.officialCourseTools;
-              var gradesExportLtiId = officialCoursesExternalToolHash['Download eGrades'];
-              var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
+              if (externalToolsHash && externalToolsHash.officialCourseTools) {
+                // form link to external tool
+                var gradesExportLtiId = externalToolsHash.officialCourseTools['Download eGrades'];
+                var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
 
-              if (gradesExportLtiId !== undefined) {
-                // add 'Download eGrades (.csv)' option to gradebook drop down menu
-                var $downloadScoresListItem = $('a#download_csv').parent();
-                var downloadEGradesItem = [
-                  '<li class="ui-menu-item" role="presentation">',
-                  '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
-                  'Download eGrades (.csv)',
-                  '</a>',
-                  '</li>'
-                ].join('');
-                $downloadScoresListItem.after(downloadEGradesItem);
+                if (gradesExportLtiId !== undefined) {
+                  // add 'Download eGrades (.csv)' option to gradebook drop down menu
+                  var $downloadScoresListItem = $('a#download_csv').parent();
+                  var downloadEGradesItem = [
+                    '<li class="ui-menu-item" role="presentation">',
+                    '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
+                    'Download eGrades (.csv)',
+                    '</a>',
+                    '</li>'
+                  ].join('');
+                  $downloadScoresListItem.after(downloadEGradesItem);
+                }
               }
             });
           }
