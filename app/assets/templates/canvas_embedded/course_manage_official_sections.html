@@ -1,3 +1,35 @@
 <div class="cc-page-course-manage-official-sections">
-  <h1>Manage Official Sections</h1>
+
+  <div data-ng-hide="feedFetched" data-cc-spinner-directive></div>
+
+  <div data-ng-show="feedFetched">
+
+    <div class="row collapse">
+      <div class="medium-5 columns">
+
+        <ul class="cc-button-group cc-even-2" role="tablist">
+          <li>
+            <button class="cc-button" data-ng-click="showTab('existing')" role="tab">Course Sections</button>
+          </li>
+          <li>
+            <button class="cc-button" data-ng-click="showTab('available')" role="tab">Available To Add</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div data-ng-show="tabs.existing" class="row collapse">
+      <div class="medium-12 columns">
+        <h1>Existing Sections area</h1>
+      </div>
+    </div>
+
+    <div data-ng-show="tabs.available" class="row collapse">
+      <div class="medium-12 columns">
+        <h1>Available Sections area</h1>
+      </div>
+    </div>
+
+  </div>
+
 </div>
