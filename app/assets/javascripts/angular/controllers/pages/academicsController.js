@@ -125,43 +125,16 @@
       return oldestFutureSemester;
     };
 
-    var findTeachingSemester = function(semesters, semester) {
-      for (var i = 0; i < semesters.length; i++) {
-        if (semester.slug === semesters[i].slug) {
-          return true;
+    var hasTeachingClasses = function(teachingSemesters) {
+      if (teachingSemesters) {
+        for (var i = 0; i < teachingSemesters.length; i++) {
+          var semester = teachingSemesters[i];
+          if (semester.classes.length > 0) {
+            return true;
+          }
         }
       }
       return false;
-    };
-
-    var parseTeaching = function(teachingSemesters) {
-      if (!teachingSemesters) {
-        return {};
-      }
-
-      var teaching = {};
-      for (var i = 0; i < teachingSemesters.length; i++) {
-        var semester = teachingSemesters[i];
-        for (var j = 0; j < semester.classes.length; j++) {
-          var course = semester.classes[j];
-          if (!teaching[course.slug]) {
-            teaching[course.slug] = {
-              course_code: course.course_code,
-              title: course.title,
-              slug: course.slug,
-              semesters: []
-            };
-          }
-          var semesterItem = {
-            name: semester.name,
-            slug: semester.slug
-          };
-          if (!findTeachingSemester(teaching[course.slug].semesters, semesterItem)) {
-            teaching[course.slug].semesters.push(semesterItem);
-          }
-        }
-      }
-      return teaching;
     };
 
     var countSectionItem = function(selectedCourse, sectionItem) {
@@ -302,8 +275,7 @@
       $scope.isLSStudent = isLSStudent($scope.collegeAndLevel);
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
-      $scope.teaching = parseTeaching(data.teachingSemesters);
-      $scope.teachingLength = Object.keys($scope.teaching).length;
+      $scope.hasTeachingClasses = hasTeachingClasses(data.teachingSemesters);
       if (data.teachingSemesters) {
         $scope.pastSemestersTeachingCount = pastSemestersCount(data.teachingSemesters);
         $scope.pastSemestersTeachingLimit = data.teachingSemesters.length - $scope.pastSemestersTeachingCount + 1;
@@ -313,7 +285,7 @@
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
       if (semesterSlug) {
         fillSemesterSpecificPage(semesterSlug, data);
-      } else if ($scope.teachingLength && (!data.semesters || (data.semesters.length === 0))) {
+      } else if ($scope.hasTeachingClasses && (!data.semesters || (data.semesters.length === 0))) {
         // Show the current semester, or the most recent semester, since otherwise the instructor
         // landing page will be grimly bare.
         $scope.selectedTeachingSemester = chooseDefaultSemester(data.teachingSemesters);

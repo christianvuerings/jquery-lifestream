@@ -8,6 +8,11 @@
     "college": "ENGR",
     "major": "Civil Engineering"
   },
+  "gpaUnits": {
+    "cumulativeGpa": 2.4,
+    "totalUnits": 65.6,
+    "totalUnitsAttempted": 55
+  },
   "requirements": [
     {
       "name": "UC Entry Level Writing",
