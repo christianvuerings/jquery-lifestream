@@ -18,7 +18,7 @@
 
     <div class="medium-4 columns cc-academics-row-margin">
       <div data-ng-include src="'academics_semesters.html'" data-ng-if="api.user.profile.hasStudentHistory && semesters.length"></div>
-      <div data-ng-include src="'academics_teaching.html'" data-ng-if="api.user.profile.roles.faculty || teachingLength"></div>
+      <div data-ng-include src="'academics_teaching.html'" data-ng-if="api.user.profile.roles.faculty || hasTeachingClasses"></div>
     </div>
 
     <div class="medium-4 columns cc-column-last">
