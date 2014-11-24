@@ -17,13 +17,13 @@ gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.5'
 
-gem 'activerecord-jdbc-adapter', '~> 1.3.11'
+gem 'activerecord-jdbc-adapter', '~> 1.3.13'
 
 # Postgresql adapter
-gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.11'
+gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.13'
 
 # H2 adapter
-gem 'activerecord-jdbch2-adapter', '~> 1.3.11'
+gem 'activerecord-jdbch2-adapter', '~> 1.3.13'
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -136,7 +136,7 @@ gem 'natural-sort-js', '~> 0.7.0'
 
 # Use ngannotate in the Rails asset pipeline.
 # https://github.com/olov/ng-annotate
-gem 'ngannotate-rails', '~> 0.10.1'
+gem 'ngannotate-rails', '~> 0.13.0'
 
 # Use your angular templates with rails' asset pipeline
 # https://github.com/pitr/angular-rails-templates
@@ -181,11 +181,11 @@ end
 group :development do
   # Automatically reloads your browser when 'view' files are modified.
   # https://github.com/guard/guard-livereload
-  gem 'guard-livereload', '~> 2.3.1', require: false
+  gem 'guard-livereload', '~> 2.4.0', require: false
 end
 
 group :test do
-  gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.11'
+  gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.13'
   gem 'page-object', '~> 1.0.2'
 end
 
