@@ -17,7 +17,7 @@ gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.5'
 
-gem 'activerecord-jdbc-adapter', '~> 1.3.11'
+gem 'activerecord-jdbc-adapter', '~> 1.3.13'
 
 # Postgresql adapter
 gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.11'
