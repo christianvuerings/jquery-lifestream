@@ -20,7 +20,7 @@ gem 'rails-perftest', '~>0.0.5'
 gem 'activerecord-jdbc-adapter', '~> 1.3.13'
 
 # Postgresql adapter
-gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.11'
+gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.13'
 
 # H2 adapter
 gem 'activerecord-jdbch2-adapter', '~> 1.3.11'
