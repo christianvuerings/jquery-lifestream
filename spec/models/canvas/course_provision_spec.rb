@@ -4,6 +4,8 @@ describe Canvas::CourseProvision do
   let(:instructor_id) { rand(99999).to_s }
   let(:user_id) { rand(99999).to_s }
   let(:canvas_admin_id) { rand(99999).to_s }
+  let(:canvas_course_id) { rand(999999).to_s }
+  let(:official_sections) { [{:term_yr=>"2013", :term_cd=>"C", :ccn=>"7309"}] }
   let(:superuser_id) { rand(99999).to_s }
   let(:teaching_semesters) {
     [
@@ -75,6 +77,26 @@ describe Canvas::CourseProvision do
     subject { Canvas::CourseProvision.new(nil) }
     its(:user_authorized?) { should eq false }
     its(:user_admin?) { should eq false }
+  end
+
+  context 'when manging existing course sections' do
+    context 'when not admin acting as a user' do
+      before { allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections) }
+      subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
+      context 'when an instructor' do
+        let(:uid) { instructor_id }
+        its(:user_authorized?) { should eq true }
+        it "should provide sections feed with canvas course info included" do
+          feed = subject.get_feed
+          expect(feed[:is_admin]).to eq false
+          expect(feed[:admin_acting_as]).to be_nil
+          expect(feed[:teachingSemesters]).to eq teaching_semesters
+          expect(feed[:admin_semesters]).to be_nil
+          expect(feed[:canvas_course]).to be_an_instance_of Hash
+          expect(feed[:canvas_course][:officialSections]).to eq official_sections
+        end
+      end
+    end
   end
 
   context 'when admin acting as a user' do
@@ -185,6 +207,25 @@ describe Canvas::CourseProvision do
       expect(cpcs).to receive(:background).ordered.and_return(cpcs)
       expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
       result = subject.create_course_site("Intro to Biomedicine", "BIOENG 101 LEC", "fall-2013", ["1136", "1204"])
+    end
+  end
+
+  describe "#get_course_info" do
+    context "when canvas_course_id not present" do
+      subject { Canvas::CourseProvision.new(instructor_id) }
+      it "should raise an error" do
+        expect { subject.get_course_info }.to raise_error(RuntimeError, "canvas_course_id option not present")
+      end
+    end
+    context 'when managing sections for existing course site' do
+      subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+      let(:official_sections) { [{:term_yr=>"2013", :term_cd=>"C", :ccn=>"7309"}] }
+      it "should return course information" do
+        allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
+        result = subject.get_course_info
+        expect(result).to be_an_instance_of Hash
+        expect(result[:officialSections]).to eq [{:term_yr=>"2013", :term_cd=>"C", :ccn=>"7309"}]
+      end
     end
   end
 
