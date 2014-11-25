@@ -27,9 +27,17 @@
 
     $scope.fetchFeed = function() {
       $scope.isLoading = true;
-      canvasCourseProvisionFactory.getFeed(false, false, false, [], false).success(function(data) {
-        $scope.teachingSemesters = data.teachingSemesters;
-        $scope.feedFetched = true;
+      canvasCourseProvisionFactory.getSections(false, false, false, [], false).then(function(sectionsFeed){
+        if (sectionsFeed.status !== 200) {
+          $scope.isLoading = false;
+          $scope.feedFetchError = true;
+        } else {
+          if (sectionsFeed.data) {
+            angular.extend($scope, sectionsFeed.data);
+            $scope.isCourseCreator = $scope.is_admin || $scope.classCount > 0;
+            $scope.feedFetched = true;
+          }
+        }
       });
     };
 
