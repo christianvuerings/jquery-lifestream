@@ -79,7 +79,7 @@ gem 'link_header', '~> 0.0.7'
 # for simplified relational data management
 gem 'rails_admin', '0.6.5'
 
-gem 'bootstrap-sass', '~> 3.3.0.1'
+gem 'bootstrap-sass', '~> 3.3.1.0'
 
 # TorqueBox app server
 gem 'torquebox', '~> 3.1.1'
@@ -155,8 +155,8 @@ group :development, :test , :testext do
   gem 'rspec-mocks', '~> 3.1.3'
   gem 'rspec-support', '~> 3.1.2'
   gem 'rspec-its', '~> 1.1.0'
-  gem 'rspec-collection_matchers', '~> 1.0.0'
-  gem 'minitest-reporters', '~> 1.0.7'
+  gem 'rspec-collection_matchers', '~> 1.1.2'
+  gem 'minitest-reporters', '~> 1.0.8'
 
   # We need to specify the latest webdriver here, to support the latest firefox
   gem 'selenium-webdriver', '~> 2.44.0'
@@ -194,7 +194,7 @@ group :test, :testext do
   # TODO: Use gem 'rspec_junit_formatter', '~> 0.2.x' when deprecated concern of CLC-3565 is resolved.
   gem 'rspec_junit_formatter', :git => 'https://github.com/sj26/rspec_junit_formatter.git'
 
-  gem 'webmock', '~> 1.20.3'
+  gem 'webmock', '~> 1.20.4'
 end
 
 group :shell_debug do
