@@ -91,16 +91,7 @@ module Canvas
 
     # Provides official section identifiers for sections in Canvas course
     def official_section_identifiers
-      get_official_section_identifiers = Proc.new {
-        canvas_course_sections_proxy = Canvas::CourseSections.new(:course_id => @canvas_course_id)
-        sections_response = canvas_course_sections_proxy.sections_list
-        return [] unless sections_response && sections_response.status == 200
-        course_sections = JSON.parse(sections_response.body)
-        course_sections.reject! {|s| !s.include?('sis_section_id') || s['sis_section_id'].blank? }
-        course_sections.collect! {|s| Canvas::Proxy.sis_section_id_to_ccn_and_term(s['sis_section_id']) }
-        course_sections.compact
-      }
-      @official_section_ids ||= get_official_section_identifiers.call
+      @official_section_ids ||= Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
     end
 
     # Returns true if course site contains official sections
@@ -121,4 +112,3 @@ module Canvas
 
   end
 end
-

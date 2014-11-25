@@ -281,30 +281,12 @@ describe Canvas::Egrades do
   end
 
   context "when providing official section identifiers existing within course" do
-    let(:course_sections) { [{'sis_section_id' => 'SEC:2014-C-7309'}, {'sis_section_id' => 'SEC:2014-C-6211'}] }
-    let(:failed_response) { double(status: 500, body: '') }
-    let(:success_response) { double(status: 200, body: JSON.generate(course_sections))}
+    let(:success_response) { [{:term_yr => '2014', :term_cd => 'C', :ccn => '7309'}, {:term_yr => '2014', :term_cd => 'C', :ccn => '6211'}] }
     subject { Canvas::Egrades.new(:canvas_course_id => 767330) }
 
-    context "when course sections request fails" do
-      before { allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(failed_response) }
-      it "returns empty array" do
-        expect(subject.official_section_identifiers).to eq []
-      end
-    end
-
-    context "when course sections request returns sections" do
-      before { allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(success_response) }
-      it "returns ccn and term for canvas course sections" do
-        sis_section_ids = subject.official_section_identifiers
-        expect(sis_section_ids).to be_an_instance_of Array
-        expect(sis_section_ids.count).to eq 2
-        expect(sis_section_ids[0]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '7309'})
-        expect(sis_section_ids[1]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '6211'})
-      end
-
+    context "when official sections returned" do
       it "returns course sections if already obtained" do
-        expect_any_instance_of(Canvas::CourseSections).to receive(:sections_list).once.and_return(success_response)
+        expect_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).once.and_return(success_response)
         result_1 = subject.official_section_identifiers
         expect(result_1).to be_an_instance_of Array
         expect(result_1.count).to eq 2
@@ -317,18 +299,6 @@ describe Canvas::Egrades do
         expect(result_2[0]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '7309'})
         expect(result_2[1]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '6211'})
       end
-
-      context "when course sections returned includes invalid section ids" do
-        let(:course_sections) { [{'sis_section_id' => 'SEC:2014-C-7309'}, {'sis_section_id' => nil}, {'sis_section_id' => 'SEC:2014-C-6211'}, {'sis_section_id' => '2014-C-3623'}] }
-        it "filters out invalid section ids" do
-          sis_section_ids = subject.official_section_identifiers
-          expect(sis_section_ids).to be_an_instance_of Array
-          expect(sis_section_ids.count).to eq 2
-          expect(sis_section_ids[0]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '7309'})
-          expect(sis_section_ids[1]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '6211'})
-        end
-      end
-
     end
   end
 

@@ -20,4 +20,40 @@ describe Canvas::CourseSections do
     expect(sections[1]['sis_section_id']).to eq "SEC:2013-C-7309"
   end
 
+  context "when providing official section identifiers existing within course" do
+    let(:course_sections) { [{'sis_section_id' => 'SEC:2014-C-7309'}, {'sis_section_id' => 'SEC:2014-C-6211'}] }
+    let(:failed_response) { double('course sections response', :status => 500, :body => '') }
+    let(:success_response) { double('course sections response', :status => 200, :body => JSON.generate(course_sections))}
+
+    context "when course sections request fails" do
+      before { allow(subject).to receive(:sections_list).and_return(failed_response) }
+      it "returns empty array" do
+        expect(subject.official_section_identifiers).to eq []
+      end
+    end
+
+    context "when course sections request returns sections" do
+      before { allow(subject).to receive(:sections_list).and_return(success_response) }
+      it "returns ccn and term for canvas course sections" do
+        sis_section_ids = subject.official_section_identifiers
+        expect(sis_section_ids).to be_an_instance_of Array
+        expect(sis_section_ids.count).to eq 2
+        expect(sis_section_ids[0]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '7309'})
+        expect(sis_section_ids[1]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '6211'})
+      end
+
+      context "when course sections returned includes invalid section ids" do
+        let(:course_sections) { [{'sis_section_id' => 'SEC:2014-C-7309'}, {'sis_section_id' => nil}, {'sis_section_id' => 'SEC:2014-C-6211'}, {'sis_section_id' => '2014-C-3623'}] }
+        it "filters out invalid section ids" do
+          sis_section_ids = subject.official_section_identifiers
+          expect(sis_section_ids).to be_an_instance_of Array
+          expect(sis_section_ids.count).to eq 2
+          expect(sis_section_ids[0]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '7309'})
+          expect(sis_section_ids[1]).to eq({:term_yr => '2014', :term_cd => 'C', :ccn => '6211'})
+        end
+      end
+
+    end
+  end
+
 end
