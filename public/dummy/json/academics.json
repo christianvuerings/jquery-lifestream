@@ -1018,44 +1018,46 @@
       "course_code": "Education 140"
     }
   ],
-  "telebears": {
-    "term": "Spring",
-    "year": 2014,
-    "slug": "spring-2014",
-    "adviserCodeRequired": {
-      "required": true,
-      "message": "Before your Tele-BEARS appointment you need to get a code from your adviser"
-    },
-    "phases": [
-      {
-        "period": "Tele-BEARS Phase I",
-        "startTime": {
-          "epoch": 1365442200,
-          "dateTime": "2013-04-08T09:30:00-08:00",
-          "dateString": "4/08"
-        },
-        "endTime": {
-          "epoch": 1365528600,
-          "dateTime": "2013-04-09T09:30:00-08:00",
-          "dateString":"4/09"
-        }
+  "telebears": [
+    {
+      "term": "Spring",
+      "year": 2014,
+      "slug": "spring-2014",
+      "adviserCodeRequired": {
+        "required": true,
+        "message": "Before your Tele-BEARS appointment you need to get a code from your adviser"
       },
-      {
-        "period": "Tele-BEARS Phase II",
-        "startTime": {
-          "epoch": 1373389200,
-          "dateTime": "2013-07-09T09:00:00-08:00",
-          "dateString": "7/09"
+      "phases": [
+        {
+          "period": "Tele-BEARS Phase I",
+          "startTime": {
+            "epoch": 1365442200,
+            "dateTime": "2013-10-13T09:30:00-08:00",
+            "dateString": "10/13"
+          },
+          "endTime": {
+            "epoch": 1365528600,
+            "dateTime": "2013-10-14T09:30:00-08:00",
+            "dateString": "10/14"
+          }
         },
-        "endTime": {
-          "epoch": 1373475600,
-          "dateTime": "2013-07-10T09:00:00-08:00",
-          "dateString": "7/10"
+        {
+          "period": "Tele-BEARS Phase II",
+          "startTime": {
+            "epoch": 1373389200,
+            "dateTime": "2014-02-09T09:00:00-08:00",
+            "dateString": "2/09"
+          },
+          "endTime": {
+            "epoch": 1373475600,
+            "dateTime": "2014-02-10T09:00:00-08:00",
+            "dateString": "2/10"
+          }
         }
-      }
-    ],
-    "url": "http://registrar.berkeley.edu/tbfaqs.html"
-  },
+      ],
+      "url": "http://registrar.berkeley.edu/tbfaqs.html"
+    }
+  ],
   "lastModified": {
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
     "timestamp": {

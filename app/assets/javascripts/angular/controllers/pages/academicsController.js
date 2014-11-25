@@ -221,6 +221,7 @@
       if (!checkPageExists(selectedSemester)) {
         return;
       }
+      var selectedTelebears = findSemester(data.telebears, semesterSlug, selectedTelebears);
       updatePrevNextSemester([data.semesters, data.teachingSemesters], selectedSemester);
 
       $scope.selectedSemester = selectedSemester;
@@ -235,6 +236,9 @@
       }
       $scope.selectedStudentSemester = selectedStudentSemester;
       $scope.selectedTeachingSemester = selectedTeachingSemester;
+      if (selectedTelebears) {
+        $scope.telebearsSemesters = [selectedTelebears];
+      }
 
       // Get selected course from URL params and extract data from selected semester schedule
       if ($routeParams.classSlug) {
@@ -285,14 +289,15 @@
       var semesterSlug = ($routeParams.semesterSlug || $routeParams.teachingSemesterSlug);
       if (semesterSlug) {
         fillSemesterSpecificPage(semesterSlug, data);
-      } else if ($scope.hasTeachingClasses && (!data.semesters || (data.semesters.length === 0))) {
-        // Show the current semester, or the most recent semester, since otherwise the instructor
-        // landing page will be grimly bare.
-        $scope.selectedTeachingSemester = chooseDefaultSemester(data.teachingSemesters);
-        $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
-      }
-
-      $scope.telebears = data.telebears;
+      } else {
+        $scope.telebearsSemesters = data.telebears;
+        if ($scope.hasTeachingClasses && (!data.semesters || (data.semesters.length === 0))) {
+          // Show the current semester, or the most recent semester, since otherwise the instructor
+          // landing page will be grimly bare.
+          $scope.selectedTeachingSemester = chooseDefaultSemester(data.teachingSemesters);
+          $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
+        }
+      };
     };
 
     $scope.currentSelection = 'Class Info';

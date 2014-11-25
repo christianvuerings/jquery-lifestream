@@ -6,6 +6,7 @@ describe Berkeley::Term do
     let(:db_row) {{
       'term_yr' => '2014',
       'term_cd' => 'C',
+      'term_status' => 'CS',
       'term_status_desc' => 'Current Summer',
       'term_name' => 'Summer',
       'term_start_date' => Time.gm(2014, 5, 27),
@@ -15,6 +16,7 @@ describe Berkeley::Term do
     its(:year) {should eq 2014}
     its(:code) {should eq 'C'}
     its(:name) {should eq 'Summer'}
+    its(:sis_term_status) {should eq 'CS'}
     its(:classes_start) {should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime}
     its(:classes_end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
     its(:instruction_end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
@@ -26,6 +28,7 @@ describe Berkeley::Term do
     let(:db_row) {{
       'term_yr' => '2014',
       'term_cd' => 'D',
+      'term_status' => 'FT',
       'term_status_desc' => 'Future Term',
       'term_name' => 'Fall',
       'term_start_date' => Time.gm(2014, 8, 28),
@@ -35,6 +38,7 @@ describe Berkeley::Term do
     its(:year) {should eq 2014}
     its(:code) {should eq 'D'}
     its(:name) {should eq 'Fall'}
+    its(:sis_term_status) {should eq 'FT'}
     its(:classes_start) {should eq Time.zone.parse('2014-08-28 00:00:00').to_datetime}
     its(:classes_end) {should eq Time.zone.parse('2014-12-05 23:59:59').to_datetime}
     its(:instruction_end) {should eq Time.zone.parse('2014-12-12 23:59:59').to_datetime}
@@ -46,6 +50,7 @@ describe Berkeley::Term do
     let(:db_row) {{
       'term_yr' => '2014',
       'term_cd' => 'B',
+      'term_status' => 'CT',
       'term_status_desc' => 'Current Term',
       'term_name' => 'Spring',
       'term_start_date' => Time.gm(2014, 1, 21),
@@ -55,6 +60,7 @@ describe Berkeley::Term do
     its(:year) {should eq 2014}
     its(:code) {should eq 'B'}
     its(:name) {should eq 'Spring'}
+    its(:sis_term_status) {should eq 'CT'}
     its(:classes_start) {should eq Time.zone.parse('2014-01-21 00:00:00').to_datetime}
     its(:classes_end) {should eq Time.zone.parse('2014-05-02 23:59:59').to_datetime}
     its(:instruction_end) {should eq Time.zone.parse('2014-05-09 23:59:59').to_datetime}
