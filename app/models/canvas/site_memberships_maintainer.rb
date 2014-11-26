@@ -31,6 +31,10 @@ module Canvas
       known_users = []
       worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users, :batch_mode => true)
       worker.refresh_sections_in_course
+      if enrollments_rows.empty?
+        logger.warn("No memberships found for course site #{sis_course_id}")
+        return
+      end
       logger.warn("Importing #{enrollments_rows.size} memberships for #{known_users.size} users to course site #{sis_course_id}")
       enrollments_csv = worker.make_enrollments_csv(enrollments_csv_filename, enrollments_rows)
       response = Canvas::SisImport.new.import_enrollments(enrollments_csv)
