@@ -4,10 +4,19 @@ module MyAcademics
     include AcademicsModule, ClassLogger, DatedFeed
 
     def merge(data)
-      data[:telebears] = {}
+      telebears_list = []
+      telebears_terms.each do |term_id|
+        if (parsed = parse_xml_feed(term_id))
+          telebears_list.push(parsed)
+        end
+      end
+      data[:telebears] = telebears_list
+    end
 
-      doc = Bearfacts::Telebears.new({:user_id => @uid}).get[:xml_doc]
-      return if doc.blank? || doc.at_css("telebearsAppointment").blank?
+    def parse_xml_feed(term_id)
+      doc = Bearfacts::Telebears.new({user_id: @uid, term_id: term_id}).get()[:xml_doc]
+      return if doc.blank? || doc.at_css("telebearsAppointment").blank? ||
+        doc.at_css("telebearsAppointment authReleaseCode").blank?
 
       term, year = %w(termName termYear).map { |key| doc.at_css("telebearsAppointment").attr(key) }
       year = Integer(year, 10) rescue nil
@@ -19,7 +28,7 @@ module MyAcademics
       phases = parse_appointment_phases(doc.css("telebearsAppointment telebearsAppointmentPhase") || [])
       slug = "#{term.downcase}-#{year}"
 
-      data[:telebears] = {
+      {
         term: term,
         year: year,
         slug: slug,
@@ -27,6 +36,22 @@ module MyAcademics
         phases: phases.compact,
         url: "http://registrar.berkeley.edu/tbfaqs.html"
       }
+    end
+
+    def include_current_term?
+      all_terms = terms.campus.values
+      if (ct_idx = all_terms.index{|t| t.sis_term_status == 'CT'})
+        return DateTime.now.in_time_zone < all_terms[ct_idx].classes_start
+      end
+      false
+    end
+
+    def telebears_terms
+      if include_current_term?
+        ['CT', 'FT']
+      else
+        ['FT']
+      end
     end
 
     private
@@ -39,9 +64,9 @@ module MyAcademics
           value = phase.css(key).text.strip
           next "" unless value.present?
           value.squish!
-          # According to telebears, we're suppose to assume the time == our system time zone (PST).
+          # According to telebears, we're suppose to assume the time == our system time zone.
           # Forcing the timezone on the parsing causes DST translation problems.
-          value = Time.strptime(value, "%A %m/%d/%y %I:%M %p").to_datetime
+          value = strptime_in_time_zone(value, "%A %m/%d/%y %I:%M %p")
           format_date(value)
         end
         next unless period.present?

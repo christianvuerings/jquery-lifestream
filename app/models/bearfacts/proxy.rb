@@ -11,12 +11,16 @@ module Bearfacts
       super(Settings.bearfacts_proxy, options)
     end
 
+    def instance_key
+      @uid
+    end
+
     def self.expires_in
       self.bearfacts_derived_expiration
     end
 
     def request(path, vcr_cassette, params = {})
-      raw_response = self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
+      raw_response = self.class.smart_fetch_from_cache({id: instance_key, user_message_on_exception: "Remote server unreachable"}) do
         request_internal(path, vcr_cassette, params)
       end
       parsed_response = {}
@@ -51,7 +55,8 @@ module Bearfacts
       else
         url = "#{Settings.bearfacts_proxy.base_url}#{path}"
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
-        response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake, {:match_requests_on => [:method, :path]}) {
+        response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake,
+          {match_requests_on: [:method, :path, custom_vcr_matcher]}) {
           token_params = {token: Settings.bearfacts_proxy.token}
           if (Settings.bearfacts_proxy.app_id.present? && Settings.bearfacts_proxy.app_key.present?)
             token_params.merge!({app_id: Settings.bearfacts_proxy.app_id,
@@ -72,5 +77,13 @@ module Bearfacts
         }
       end
     end
+
+    # Allows for request parameter matches (AKA "VCR is complicated and horrible").
+    def custom_vcr_matcher
+      Proc.new do |a, b|
+        true
+      end
+    end
+
   end
 end
