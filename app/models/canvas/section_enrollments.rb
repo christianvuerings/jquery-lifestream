@@ -54,7 +54,7 @@ module Canvas
     # See https://canvas.instructure.com/doc/api/enrollments.html#method.enrollments_api.index
     def request_enrollments_list
       all_enrollments = []
-      params = "per_page=30"
+      params = "per_page=100"
       while params do
         response = request_uncached(
           "sections/#{@section_id}/enrollments?#{params}",

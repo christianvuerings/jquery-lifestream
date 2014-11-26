@@ -11,7 +11,7 @@ module Canvas
     def full_students_list
       self.class.fetch_from_cache @course_id do
         all_students = []
-        params = "enrollment_type=student&include[]=enrollments&per_page=30"
+        params = "enrollment_type=student&include[]=enrollments&per_page=100"
         while params do
           response = request_uncached(
             "courses/#{@course_id}/users?#{params}",
