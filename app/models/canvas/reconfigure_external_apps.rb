@@ -12,6 +12,7 @@ module Canvas
         'course_add_user' => 'lti_course_add_user',
         'course_mediacasts' => 'lti_course_mediacasts',
         'course_manage_official_sections' => 'lti_course_manage_official_sections',
+        'course_grade_export' => 'lti_course_grade_export'
       }
     end
 
