@@ -64,9 +64,11 @@ describe 'Calendar Integration Full Stack', testext: true do
       expect(event_on_google).to be
       json = JSON.parse(event_on_google.body)
       expect(json['location']).to eq '117 Dwinelle Hall, UC Berkeley'
+      expect(json['start']['dateTime']).to eq '2013-09-02T14:00:00-07:00'
+      expect(json['end']['dateTime']).to eq '2013-09-02T15:00:00-07:00'
 
       # EVENT UPDATES ------------------------------------------------------------------------------------
-      # now change the class location
+      # change the class location and time
       Calendar::Queries.stub(:get_all_courses).and_return(
         [{
            'term_yr' => 2013,
@@ -77,9 +79,9 @@ describe 'Calendar Integration Full Stack', testext: true do
            'building_name' => 'FOOTHILL',
            'room_number' => '100',
            'meeting_days' => ' M W',
-           'meeting_start_time' => '0200',
+           'meeting_start_time' => '0400',
            'meeting_start_time_ampm_flag' => 'P',
-           'meeting_end_time' => '0300',
+           'meeting_end_time' => '0500',
            'meeting_end_time_ampm_flag' => 'P'
          }])
 
@@ -111,6 +113,57 @@ describe 'Calendar Integration Full Stack', testext: true do
       expect(event_on_google).to be
       json = JSON.parse(event_on_google.body)
       expect(json['location']).to eq '100 Foothill Student Housing, UC Berkeley'
+      expect(json['start']['dateTime']).to eq '2013-09-02T16:00:00-07:00'
+      expect(json['end']['dateTime']).to eq '2013-09-02T17:00:00-07:00'
+
+      # EVENT SECOND UPDATES --------------------------------------------------------------------------------
+      # now change the class location once more and make sure it succeeds.
+      Calendar::Queries.stub(:get_all_courses).and_return(
+        [{
+           'term_yr' => 2013,
+           'term_cd' => 'D',
+           'course_cntl_num' => 12345,
+           'course_name' => 'Testing 1A',
+           'multi_entry_cd' => '',
+           'building_name' => 'Dwinelle',
+           'room_number' => '155',
+           'meeting_days' => ' M W',
+           'meeting_start_time' => '0400',
+           'meeting_start_time_ampm_flag' => 'P',
+           'meeting_end_time' => '0500',
+           'meeting_end_time_ampm_flag' => 'P'
+         }])
+
+      # now preprocess again. This will create an UPDATE transction for the existing event.
+      queued = Calendar::Preprocessor.new.get_entries
+      expect(queued.length).to eq 1
+      expect(queued[0].ccn).to eq 12345
+      expect(queued[0].transaction_type).to eq Calendar::QueuedEntry::UPDATE_TRANSACTION
+      queued.each do |entry|
+        entry.save
+      end
+
+      entries = Calendar::QueuedEntry.all
+      expect(entries.length).to eq 1
+
+      # now export again
+      exported = Calendar::Exporter.new.ship_entries entries
+      expect(exported).to be_truthy
+
+      third_job = Calendar::Job.limit(1).order(id: :desc).first
+      expect(third_job.error_count).to eq 0
+      expect(third_job.total_entry_count).to eq 1
+
+      # now make sure the event on google has the updated location
+      saved_entry = Calendar::LoggedEntry.where({job_id: third_job.id}).first
+      expect(saved_entry).to be
+      event_id = saved_entry.event_id
+      event_on_google = get_proxy.get_event event_id
+      expect(event_on_google).to be
+      json = JSON.parse(event_on_google.body)
+      expect(json['location']).to eq '155 Dwinelle Hall, UC Berkeley'
+      expect(json['start']['dateTime']).to eq '2013-09-02T16:00:00-07:00'
+      expect(json['end']['dateTime']).to eq '2013-09-02T17:00:00-07:00'
 
       # EVENT DELETES ------------------------------------------------------------------------------------
       # now take the user off the whitelist
@@ -134,9 +187,9 @@ describe 'Calendar Integration Full Stack', testext: true do
       exported = Calendar::Exporter.new.ship_entries entries
       expect(exported).to be_truthy
 
-      third_job = Calendar::Job.limit(1).order(id: :desc).first
-      expect(third_job.error_count).to eq 0
-      expect(third_job.total_entry_count).to eq 1
+      fourth_job = Calendar::Job.limit(1).order(id: :desc).first
+      expect(fourth_job.error_count).to eq 0
+      expect(fourth_job.total_entry_count).to eq 1
 
       # after EVENT DELETES -----------------------------------------------------------------------------
       # now preprocess again. This should produce an empty list (since the event has already been deleted,
