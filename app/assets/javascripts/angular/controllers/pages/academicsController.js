@@ -297,7 +297,7 @@
           $scope.selectedTeachingSemester = chooseDefaultSemester(data.teachingSemesters);
           $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
         }
-      };
+      }
     };
 
     $scope.currentSelection = 'Class Info';
