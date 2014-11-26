@@ -1,0 +1,15 @@
+{
+  "name": "calcentral",
+  "description": "UC Berkeley portal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ets-berkeley-edu/calcentral.git"
+  },
+  "author": "",
+  "license": "ECL 2.0",
+  "homepage": "https://github.com/ets-berkeley-edu/calcentral",
+  "devDependencies": {
+    "jscs": "^1.8.0",
+    "jshint": "^2.5.10"
+  }
+}

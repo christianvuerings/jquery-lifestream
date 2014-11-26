@@ -42,6 +42,9 @@ app/assets/stylesheets/application.css
 # Ignore the coverage directory (for checking in, otherwise useful)
 /coverage
 
+# Ignore node modules
+/node_modules
+
 # Ignore processed VCR files
 /fixtures/vcr_cassettes/*.json
 
