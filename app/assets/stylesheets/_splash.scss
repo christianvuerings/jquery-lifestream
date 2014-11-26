@@ -73,7 +73,7 @@ $cc-color-splash-blue-dark: #025a86;
       padding-bottom: 100px;
     }
     &::before {
-      @include background(linear-gradient($cc-color-white, $cc-color-white-transparant));
+      background: linear-gradient($cc-color-white, $cc-color-white-transparant);
       content: " ";
       height: 40px;
       left: 0;
@@ -82,7 +82,7 @@ $cc-color-splash-blue-dark: #025a86;
       width: 100%;
     }
     &::after {
-      @include background(linear-gradient($cc-color-white-transparant, $cc-color-white));
+      background: linear-gradient($cc-color-white-transparant, $cc-color-white);
       bottom: 0;
       content: " ";
       height: 100px;
@@ -107,8 +107,8 @@ $cc-color-splash-blue-dark: #025a86;
     margin: 20px 10px 0;
   }
   .cc-page-splash-info-image, .cc-page-splash-video>button, .cc-page-splash-video>div {
-    @include box-shadow(3px 3px 5px $cc-color-placeholder);
     border: 1px solid $cc-color-button-border;
+    box-shadow: 3px 3px 5px $cc-color-placeholder;
     margin-bottom: 20px;
   }
   .cc-page-splash-info-image {

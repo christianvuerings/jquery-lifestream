@@ -2,7 +2,9 @@
 .cc-widget-activities {
 
   a {
-    @include hyphenation;
+    hyphens: auto;
+    word-break: break-all;
+    word-break: break-word;
   }
 
   .cc-widget-title .cc-select {

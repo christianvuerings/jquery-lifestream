@@ -28,8 +28,8 @@
   }
   .cc-offcanvas-left, .cc-offcanvas-right {
     @include cc-column-sameheight-nopadding;
-    @include single-transition(margin, .2s, ease);
-    -webkit-transform: translatez(0);
+    transition: margin .2s ease;
+    will-change: transform;
   }
   .cc-offcanvas-left {
     float: left;

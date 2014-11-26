@@ -1,6 +1,6 @@
 // HTML
 html {
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 // Body
@@ -88,6 +88,7 @@ form {
   input[type="password"],
   input[type="text"],
   textarea {
+    -moz-appearance: none;
     -webkit-appearance: none;
     background: $cc-color-white;
     border: 1px solid $cc-color-button-border;
@@ -115,14 +116,7 @@ form {
     resize: vertical;
   }
 
-  // Placeholder selector duplication intentional, re: http://bit.ly/ZnuZFo
-  input:-moz-placeholder {
-    color: $cc-color-placeholder;
-  }
-  input:-ms-input-placeholder {
-    color: $cc-color-placeholder;
-  }
-  ::-moz-placeholder {
+  ::placeholder {
     color: $cc-color-placeholder;
   }
 
