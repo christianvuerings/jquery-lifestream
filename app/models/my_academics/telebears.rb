@@ -64,9 +64,9 @@ module MyAcademics
           value = phase.css(key).text.strip
           next "" unless value.present?
           value.squish!
-          # According to telebears, we're suppose to assume the time == our system time zone (PST).
+          # According to telebears, we're suppose to assume the time == our system time zone.
           # Forcing the timezone on the parsing causes DST translation problems.
-          value = Time.strptime(value, "%A %m/%d/%y %I:%M %p").to_datetime
+          value = strptime_in_time_zone(value, "%A %m/%d/%y %I:%M %p")
           format_date(value)
         end
         next unless period.present?
