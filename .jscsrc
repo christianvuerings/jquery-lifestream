@@ -112,11 +112,13 @@
   "requireSpaceAfterLineComment": true,
   "requireSpaceBeforeBinaryOperators": true,
   "requireSpaceBeforeBlockStatements": true,
+  "requireSpaceBeforeKeywords": [
+    "else",
+    "while",
+    "catch"
+  ],
   "requireSpaceBeforeObjectValues": true,
   "requireSpacesInAnonymousFunctionExpression": {
-    "beforeOpeningCurlyBrace": true
-  },
-  "requireSpacesInNamedFunctionExpression": {
     "beforeOpeningCurlyBrace": true
   },
   "requireSpacesInConditionalExpression": {
@@ -124,6 +126,9 @@
     "beforeConsequent": true,
     "afterConsequent": true,
     "beforeAlternate": true
+  },
+  "requireSpacesInNamedFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
   },
   "requireSpacesInFunction": {
     "beforeOpeningCurlyBrace": true
@@ -141,7 +146,6 @@
   },
   "validateLineBreaks": "LF",
   "validateIndentation": 2,
-  "validateParameterSeparator": ", ",
   "validateQuoteMarks": "'"
 }
 
