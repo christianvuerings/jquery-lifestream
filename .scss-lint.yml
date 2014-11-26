@@ -7,6 +7,9 @@ linters:
     enabled: false
   NestingDepth:
     max_depth: 5
+  PropertySpelling:
+    extra_properties:
+     - text-size-adjust
   SelectorDepth:
     enabled: false
   SingleLinePerSelector:
