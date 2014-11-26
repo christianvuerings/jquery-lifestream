@@ -1,13 +1,13 @@
 // Buttons
 button {
-  @include box-shadow(none);
+  box-shadow: none;
   font-family: $body-font-family;
   &:hover, &:focus {
     cursor: pointer;
     text-decoration: underline;
   }
   &:active {
-    @include box-shadow(none);
+    box-shadow: none;
   }
 }
 
@@ -17,9 +17,6 @@ button {
     font-size: 13px;
     font-weight: normal;
     padding: 7px 12px;
-  }
-  &.selected {
-    @include background(linear-gradient(#7ec9df, #35b5d4));
   }
   &.button.small {
     font-size: 13px;
@@ -33,7 +30,7 @@ button {
 }
 
 .cc-button {
-  @include background-with-css2-fallback(linear-gradient($cc-color-white, $cc-color-button-regular), $cc-color-white);
+  background: linear-gradient($cc-color-white, $cc-color-button-regular), $cc-color-white;
   border: 1px solid $cc-color-button-border;
   border-radius: 5px;
   color: $cc-color-medium-grey;
@@ -44,7 +41,7 @@ button {
   line-height: 1;
   padding: 6px 10px;
   &:focus, &:hover {
-    @include background-with-css2-fallback(linear-gradient($cc-color-white, $cc-color-button-hover), $cc-color-button-hover);
+    background: linear-gradient($cc-color-white, $cc-color-button-hover), $cc-color-button-hover;
     color: $cc-color-medium-grey;
     text-decoration: none;
   }
@@ -70,9 +67,9 @@ button {
     color: $cc-color-white;
   }
   &.cc-button-large {
-    @include background-with-css2-fallback(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-bottom), $cc-color-button-action-large-bottom);
+    background: linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-bottom), $cc-color-button-action-large-bottom;
     &:focus, &:hover {
-      @include background(linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-hover));
+      background: linear-gradient($cc-color-button-action-large-top, $cc-color-button-action-large-hover);
     }
   }
 }
@@ -100,11 +97,11 @@ button {
   padding: 8px 10px;
 }
 .cc-button-selected {
-  @include background-with-css2-fallback(linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected);
+  background: linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected;
   color: $cc-color-white;
   z-index: 1;
   &:focus, &:hover {
-    @include background-with-css2-fallback(linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected);
+    background: linear-gradient($cc-color-button-grey, $cc-color-button-selected), $cc-color-button-selected;
     color: $cc-color-white;
   }
   i {

@@ -31,13 +31,13 @@
   }
 
   .cc-page-button-grey {
-    @include background(linear-gradient($bc-color-button-grey-gradient-1, $bc-color-button-grey-gradient-2));
+    background: linear-gradient($bc-color-button-grey-gradient-1, $bc-color-button-grey-gradient-2);
     border: 1px solid $bc-color-button-grey-border;
     color: $bc-color-button-grey-text;
   }
 
   .cc-page-provision-confirmation {
-    @include background(linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2));
+    background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
     border-radius: 5px;
     padding: 20px;
     .cc-page-provision-roster-list {
@@ -199,7 +199,7 @@
   }
 
   .cc-page-provision-form-button {
-    @include background(linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2));
+    background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
   }
 
   .cc-page-provision-progress-bar-container {
@@ -208,7 +208,7 @@
   }
 
   .cc-page-provision-progress-bar {
-    @include background(linear-gradient($bc-color-progressbar-bg-gradient1, $bc-color-progressbar-bg-gradient2));
+    background: linear-gradient($bc-color-progressbar-bg-gradient1, $bc-color-progressbar-bg-gradient2);
     border: 2px solid #c6c7c7;
     border-radius: 5px;
     height: 25px;
@@ -217,7 +217,7 @@
   }
 
   .cc-page-provision-progress-bar-value {
-    @include background(linear-gradient($bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2));
+    background: linear-gradient($bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2);
     height: 100%;
   }
 

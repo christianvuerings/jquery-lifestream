@@ -1,6 +1,6 @@
 // Icon
 .cc-widget-mycalendar {
-  @include user-select("none");
+  user-select: none;
 
   // List
   .cc-widget-mycalendar-datelist {
