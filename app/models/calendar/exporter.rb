@@ -58,14 +58,10 @@ module Calendar
                   # entry not found on Google, fall back to creating it
                   queue_entry.transaction_type = Calendar::QueuedEntry::CREATE_TRANSACTION
                 else
-                  existing_attendees = []
-                  if response.present? && response.body && (existing_json = safe_json(response.body))
-                    existing_attendees = existing_json['attendees']
-                  end
                   logger.info "Updating event #{queue_entry.event_id} for ccn = #{queue_entry.year}-#{queue_entry.term_cd}-#{queue_entry.ccn}, multi_entry_cd = #{queue_entry.multi_entry_cd}"
-                  merge_attendee_responses(queue_entry, existing_attendees)
+                  merge_existing_data(queue_entry, response)
                   @update_proxy.queue_event(queue_entry.event_id, queue_entry.event_data, Proc.new { |update_response|
-                    record_response(job, queue_entry, response)
+                    record_response(job, queue_entry, update_response)
                   })
                 end
               })
@@ -136,7 +132,13 @@ module Calendar
       queue_entry.delete
     end
 
-    def merge_attendee_responses(queue_entry, existing_attendees)
+    def merge_existing_data(queue_entry, response)
+      if response.present? && response.body && (existing_json = safe_json(response.body))
+        existing_attendees = existing_json['attendees']
+      else
+        return
+      end
+
       # if a user accepted or declined an event, that changes their 'attendees' array element on Google's servers.
       # we'll use the state of the attendees element on the Google side as our value for each attendee we're sending over.
       # if a user is on the Google list but not on our list, that means they've been dropped from the class, and we
@@ -155,6 +157,11 @@ module Calendar
             new_attendees[i] = hash_of_responses[email]
           end
         end
+
+        # increment the sequence value, or else updates will return HTTP 400 "Invalid sequence value" errors.
+        # see https://jira.ets.berkeley.edu/jira/browse/CLC-4511
+        sequence = existing_json['sequence'] || 0
+        new_data['sequence'] = sequence + 1
 
         queue_entry.event_data = JSON.pretty_generate new_data
       end
