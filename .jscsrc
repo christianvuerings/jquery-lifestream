@@ -47,6 +47,7 @@
     "app/assets/javascripts/angularlib/**",
     "app/assets/javascripts/lib/**",
     "coverage/**",
+    "node_modules/**",
     "public/dummy/js/videos.js",
     "vendor/**"
   ],
