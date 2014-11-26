@@ -7,10 +7,10 @@ describe Canvas::Egrades do
 
   let(:canvas_course_students_list) do
     [
-      {:sis_login_id => "872584", :sis_user_id => "2004491", :final_score => 34.9, :final_grade => "F", :pnp_flag => "N"},
-      {:sis_login_id => "4000123", :sis_user_id => "UID:4000123", :final_score => 89.5, :final_grade => "B", :pnp_flag => "N"},
-      {:sis_login_id => "872527", :sis_user_id => "2004445", :final_score => 99.5, :final_grade => "A+", :pnp_flag => "Y"},
-      {:sis_login_id => "872529", :sis_user_id => "2004421", :final_score => 69.6, :final_grade => "D-", :pnp_flag => "N"},
+      {:sis_login_id => "872584", :sis_user_id => "UID:872527", :final_score => 34.9, :final_grade => "F", :pnp_flag => "N", :student_id => "2004491"},
+      {:sis_login_id => "4000123", :sis_user_id => "UID:4000123", :final_score => 89.5, :final_grade => "B", :pnp_flag => "N", :student_id => "24000123"},
+      {:sis_login_id => "872527", :sis_user_id => "2004445", :final_score => 99.5, :final_grade => "A+", :pnp_flag => "Y", :student_id => "2004445"},
+      {:sis_login_id => "872529", :sis_user_id => "2004421", :final_score => 69.6, :final_grade => "D-", :pnp_flag => "N", :student_id => "2004421"},
     ]
   end
 
@@ -23,19 +23,19 @@ describe Canvas::Egrades do
       expect(official_grades_csv.count).to eq 4
       official_grades_csv.each do |grade|
         expect(grade).to be_an_instance_of CSV::Row
-        expect(grade['uid']).to be_an_instance_of String
+        expect(grade['student_id']).to be_an_instance_of String
         expect(grade['grade']).to be_an_instance_of String
         expect(grade['comment']).to be_an_instance_of String
       end
-      expect(official_grades_csv[0]['uid']).to eq "872584"
+      expect(official_grades_csv[0]['student_id']).to eq "2004491"
       expect(official_grades_csv[0]['grade']).to eq "F"
       expect(official_grades_csv[0]['comment']).to eq ""
 
-      expect(official_grades_csv[2]['uid']).to eq "872527"
+      expect(official_grades_csv[2]['student_id']).to eq "2004445"
       expect(official_grades_csv[2]['grade']).to eq "A+"
       expect(official_grades_csv[2]['comment']).to eq "Opted for P/NP Grade"
 
-      expect(official_grades_csv[3]['uid']).to eq "872529"
+      expect(official_grades_csv[3]['student_id']).to eq "2004421"
       expect(official_grades_csv[3]['grade']).to eq "D-"
       expect(official_grades_csv[3]['comment']).to eq ""
     end
@@ -70,6 +70,15 @@ describe Canvas::Egrades do
       expect(result[0][:pnp_flag]).to eq "N"
       expect(result[1][:pnp_flag]).to eq "N"
       expect(result[2][:pnp_flag]).to eq "Y"
+    end
+
+    it "includes student IDs" do
+      result = subject.official_student_grades('C', '2014', '7309')
+      expect(result).to be_an_instance_of Array
+      expect(result.count).to eq 3
+      expect(result[0][:student_id]).to eq '2004491'
+      expect(result[1][:student_id]).to eq '2004445'
+      expect(result[2][:student_id]).to eq '2004421'
     end
   end
 

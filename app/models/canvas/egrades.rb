@@ -15,22 +15,25 @@ module Canvas
     def official_student_grades_csv(term_cd, term_yr, ccn)
       official_students = official_student_grades(term_cd, term_yr, ccn)
       CSV.generate do |csv|
-        csv << ['uid','grade','comment']
+        csv << ['student_id','grade','comment']
         official_students.each do |student|
           comment = (student[:pnp_flag] == "Y") ? "Opted for P/NP Grade" : ""
-          uid = student[:sis_login_id]
+          student_id = student[:student_id]
           grade = student[:final_grade]
-          csv << [uid, grade, comment]
+          csv << [student_id, grade, comment]
         end
       end
     end
 
     def official_student_grades(term_cd, term_yr, ccn)
       enrolled_students = CampusOracle::Queries.get_enrolled_students(ccn, term_yr, term_cd)
-      pnp_flags = enrolled_students.inject({}) {|flags, student| flags[student['ldap_uid']] = student['pnp_flag']; flags }
-      enrollee_ldap_uid_set = pnp_flags.keys.to_set
-      official_students = canvas_course_students.select {|student| enrollee_ldap_uid_set.include?(student[:sis_login_id]) }
-      official_students.collect {|student| student[:pnp_flag] = pnp_flags[student[:sis_login_id]]; student }
+      campus_attributes = enrolled_students.index_by {|s| s['ldap_uid']}
+      official_students = canvas_course_students.select {|student| campus_attributes[student[:sis_login_id]] }
+      official_students.each do |student|
+        campus_data = campus_attributes[student[:sis_login_id]]
+        student[:pnp_flag] = campus_data['pnp_flag']
+        student[:student_id] = campus_data['student_id']
+      end
     end
 
     def canvas_course_students
