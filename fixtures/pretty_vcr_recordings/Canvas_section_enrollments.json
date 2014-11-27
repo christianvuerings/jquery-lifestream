@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.beta.instructure.com/api/v1/sections/1004321/enrollments?per_page=30",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/sections/1004321/enrollments?per_page=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

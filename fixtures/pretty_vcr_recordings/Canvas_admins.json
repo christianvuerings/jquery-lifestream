@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/admins?per_page=30",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/admins?per_page=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""

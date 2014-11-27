@@ -20,7 +20,7 @@ module Canvas
 
     def request_admins_list(account_id)
       all_admins = []
-      params = "per_page=30"
+      params = "per_page=100"
       account_id ||= settings.account_id
       while params do
         response = request_uncached(

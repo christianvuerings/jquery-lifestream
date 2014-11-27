@@ -25,7 +25,7 @@ module Canvas
     # See https://canvas.instructure.com/doc/api/courses.html#method.courses.users
     def request_course_users
       all_users = []
-      params = "include[]=enrollments&per_page=30"
+      params = "include[]=enrollments&per_page=100"
       while params do
         response = request_uncached(
           "courses/#{@course_id}/users?#{params}",

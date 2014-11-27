@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/767330/users?enrollment_type=student&include%5B%5D=enrollments&per_page=30",
+        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/767330/users?enrollment_type=student&include%5B%5D=enrollments&per_page=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
