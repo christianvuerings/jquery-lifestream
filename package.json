@@ -9,7 +9,7 @@
   "license": "ECL 2.0",
   "homepage": "https://github.com/ets-berkeley-edu/calcentral",
   "devDependencies": {
-    "jscs": "^1.8.0",
+    "jscs": "^1.8.1",
     "jshint": "^2.5.10"
   }
 }
