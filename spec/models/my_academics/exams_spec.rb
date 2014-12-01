@@ -12,9 +12,9 @@ describe "MyAcademics::Exams" do
     feed[:examSchedule].should_not be_nil
     feed[:examSchedule][0][:course_code].should == "Psychology C120"
     feed[:examSchedule][0][:time].should == "8:00 AM"
-    feed[:examSchedule][0][:location][:rawLocation].should == "390 HEARST MIN"
-    feed[:examSchedule][0][:location]["roomNumber"].should == "390"
-    feed[:examSchedule][0][:location]["display"].should == "Hearst Memorial Mining Building"
+    feed[:examSchedule][0][:locations][0][:raw].should == "390 HEARST MIN"
+    feed[:examSchedule][0][:locations][0]["roomNumber"].should == "390"
+    feed[:examSchedule][0][:locations][0]["display"].should == "Hearst Memorial Mining Building"
     # Make sure the date epoch matches the expected date.
     Time.at(feed[:examSchedule][0][:date][:epoch]).to_s.start_with?('2013-05-14').should be_truthy
     # making sure sorting works in right order
@@ -30,7 +30,7 @@ describe "MyAcademics::Exams" do
     MyAcademics::Exams.new("865826").merge(feed)
 
     feed[:examSchedule].should_not be_nil
-    feed[:examSchedule][0][:location][:rawLocation].should == "F295 HAAS"
+    feed[:examSchedule][0][:locations][0][:raw].should == "F295 HAAS"
   end
 
   it "should not return any exam schedules for exam information not matching current_year and term" do

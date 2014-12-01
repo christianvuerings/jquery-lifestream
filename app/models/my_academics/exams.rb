@@ -23,19 +23,21 @@ module MyAcademics
         end
         ampm = to_text(exam_data.css("startTimeAmPmFlag")) == 'A' ? 'AM' : 'PM'
         time = "#{to_time(exam_data.css("startTime"))} #{ampm}"
-        raw_location = to_text exam.css("location")
-        location = {
-          :rawLocation => raw_location
+        locations = (to_array exam.css("location")).map { |raw_location|
+          location = {
+            raw: raw_location
+          }
+          location_data = Berkeley::Buildings.get(raw_location)
+          unless location_data.nil?
+            location = location.merge(location_data)
+          end
+          location
         }
-        location_data = Berkeley::Buildings.get(raw_location)
-        unless location_data.nil?
-          location = location.merge(location_data)
-        end
         course_code = "#{to_text(exam_data.css("deptName"))} #{to_text(exam_data.css("coursePrefixNum"))}#{to_text(exam_data.css("courseRootNum"))}"
         exams << {
           :date => format_date(exam_datetime, "%a %B %-d"),
           :time => time,
-          :location => location,
+          :locations => locations,
           :course_code => course_code
         }
       end

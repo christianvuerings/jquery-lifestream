@@ -7,6 +7,8 @@ module Berkeley
       if bldg.nil?
         # try again stripping off what might be a room number from the front of the string
         name = name.gsub(/^\d*/, "").strip
+        # Try stripping of the instructor name at the end - 220 HEARST GYM (Instructor: SHABEL, A B)
+        name = name.gsub(/\(.+\)/, "").strip
         bldg = self.buildings[name]
         unless bldg.nil?
           room_number = building_name.match(/^\d*/)[0]

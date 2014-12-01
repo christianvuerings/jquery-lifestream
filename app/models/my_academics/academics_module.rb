@@ -13,6 +13,14 @@ module MyAcademics
       end
     end
 
+    def to_array(element)
+      if element.blank?
+        return ""
+      else
+        return element.to_a.map{ |a| a.text.strip }
+      end
+    end
+
     def to_time(element)
       str = to_text(element)
       num = str.gsub(/^0/, "")

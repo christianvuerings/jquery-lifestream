@@ -21,6 +21,11 @@ describe Berkeley::Buildings do
     Berkeley::Buildings.get("2224 PIEDMNT")["roomNumber"].should be_nil
   end
 
+  it "should look up 220 HEARST GYM (Instructor: SHABEL, A B) with a room number and remove the instructor" do
+    Berkeley::Buildings.get("220 HEARST GYM (Instructor: SHABEL, A B)")["display"].should == "Hearst Gym"
+    Berkeley::Buildings.get("220 HEARST GYM (Instructor: SHABEL, A B)")["roomNumber"].should == "220"
+  end
+
   it "should return nil on a nonexistent building" do
     Berkeley::Buildings.get("Barad Dur").should be_nil
   end
