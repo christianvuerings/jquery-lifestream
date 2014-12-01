@@ -147,6 +147,7 @@
   },
   "validateLineBreaks": "LF",
   "validateIndentation": 2,
+  "validateParameterSeparator": ", ",
   "validateQuoteMarks": "'"
 }
 
