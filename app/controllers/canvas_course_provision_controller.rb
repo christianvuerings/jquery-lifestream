@@ -34,10 +34,12 @@ class CanvasCourseProvisionController < ApplicationController
   end
 
   def options_from_params
+    params['canvas_course_id'] ||= session[:canvas_course_id]
     params.select {|k, v| [
       'admin_acting_as',
       'admin_by_ccns',
-      'admin_term_slug'
+      'admin_term_slug',
+      'canvas_course_id'
     ].include?(k)}.symbolize_keys
   end
 

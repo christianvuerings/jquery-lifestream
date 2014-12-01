@@ -12,7 +12,7 @@
       $scope.tabs = {
         existing : true,
         available : false
-      }
+      };
     };
 
     $scope.showTab = function(requestedTabName) {
