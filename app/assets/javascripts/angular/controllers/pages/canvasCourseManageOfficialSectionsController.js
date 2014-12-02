@@ -17,11 +17,7 @@
 
     $scope.showTab = function(requestedTabName) {
       angular.forEach($scope.tabs, function(tabStatus, tabName) {
-        if (tabName === requestedTabName) {
-          $scope.tabs[tabName] = true;
-        } else {
-          $scope.tabs[tabName] = false;
-        }
+        $scope.tabs[tabName] = (tabName === requestedTabName);
       });
     };
 
