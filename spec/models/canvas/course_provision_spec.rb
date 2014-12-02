@@ -5,7 +5,7 @@ describe Canvas::CourseProvision do
   let(:user_id) { rand(99999).to_s }
   let(:canvas_admin_id) { rand(99999).to_s }
   let(:canvas_course_id) { rand(999999).to_s }
-  let(:official_sections) { [{:term_yr=>"2013", :term_cd=>"C", :ccn=>"7309"}] }
+  let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'C', :ccn=>'7309'}] }
   let(:superuser_id) { rand(99999).to_s }
   let(:teaching_semesters) {
     [
@@ -14,13 +14,13 @@ describe Canvas::CourseProvision do
         :slug => 'fall-2013',
         :classes => [
           {
-            :course_code => "ENGIN 7",
-            :dept => "ENGIN",
-            :slug => "engin-7",
-            :title => "Introduction to Computer Programming for Scientists and Engineers",
-            :role => "Instructor",
+            :course_code => 'ENGIN 7',
+            :dept => 'ENGIN',
+            :slug => 'engin-7',
+            :title => 'Introduction to Computer Programming for Scientists and Engineers',
+            :role => 'Instructor',
             :sections => [
-              { :ccn => "#{rand(99999)}", :instruction_format => "DIS", :is_primary_section => false, :section_label => "DIS 102", :section_number => "102" }
+              { :ccn => "#{rand(99999)}", :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
             ]
           }
         ]
@@ -48,13 +48,13 @@ describe Canvas::CourseProvision do
         :slug => 'spring-2014',
         :classes => [
           {
-            :course_code => "ENGIN 7",
-            :dept => "ENGIN",
-            :slug => "engin-7",
-            :title => "Introduction to Computer Programming for Scientists and Engineers",
+            :course_code => 'ENGIN 7',
+            :dept => 'ENGIN',
+            :slug => 'engin-7',
+            :title => 'Introduction to Computer Programming for Scientists and Engineers',
             :sections => [
-              { :ccn => by_ccns[0], :instruction_format => "LEC", :is_primary_section => true, :section_label => "LEC 003", :section_number => "003" },
-              { :ccn => by_ccns[1], :instruction_format => "DIS", :is_primary_section => false, :section_label => "DIS 103", :section_number => "103" }
+              { :ccn => by_ccns[0], :instruction_format => 'LEC', :is_primary_section => true, :section_label => 'LEC 003', :section_number => '003' },
+              { :ccn => by_ccns[1], :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 103', :section_number => '103' }
             ]
           }
         ]
@@ -73,7 +73,7 @@ describe Canvas::CourseProvision do
     end
   end
 
-  context "when uid is not present" do
+  context 'when uid is not present' do
     subject { Canvas::CourseProvision.new(nil) }
     its(:user_authorized?) { should eq false }
     its(:user_admin?) { should eq false }
@@ -86,7 +86,7 @@ describe Canvas::CourseProvision do
       context 'when an instructor' do
         let(:uid) { instructor_id }
         its(:user_authorized?) { should eq true }
-        it "should provide sections feed with canvas course info included" do
+        it 'should provide sections feed with canvas course info included' do
           feed = subject.get_feed
           expect(feed[:is_admin]).to eq false
           expect(feed[:admin_acting_as]).to be_nil
@@ -109,7 +109,7 @@ describe Canvas::CourseProvision do
     context 'when a Canvas admin' do
       let(:uid) { canvas_admin_id }
       its(:user_authorized?) { should be_truthy }
-      it "should find courses" do
+      it 'should find courses' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_truthy
         expect(feed[:admin_acting_as]).to eq instructor_id
@@ -127,7 +127,7 @@ describe Canvas::CourseProvision do
     context 'when a normal user' do
       let(:uid) {user_id}
       its(:user_authorized?) { should be_truthy }
-      it "should have empty feed" do
+      it 'should have empty feed' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to eq false
         expect(feed[:admin_acting_as]).to be_nil
@@ -138,7 +138,7 @@ describe Canvas::CourseProvision do
     context 'when an instructor' do
       let(:uid) { instructor_id }
       its(:user_authorized?) { should eq true }
-      it "should have courses" do
+      it 'should have courses' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to eq false
         expect(feed[:admin_acting_as]).to be_nil
@@ -166,7 +166,7 @@ describe Canvas::CourseProvision do
     context 'when a Canvas admin' do
       let(:uid) { canvas_admin_id }
       its(:user_authorized?) { should be_truthy }
-      it "should find courses" do
+      it 'should find courses' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_truthy
         expect(feed[:admin_acting_as]).to be_nil
@@ -180,7 +180,7 @@ describe Canvas::CourseProvision do
     end
   end
 
-  describe "#create_course_site" do
+  describe '#create_course_site' do
     subject     { Canvas::CourseProvision.new(instructor_id) }
     let(:cpcs)  { double() }
     before do
@@ -191,40 +191,40 @@ describe Canvas::CourseProvision do
       allow(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
     end
 
-    it "returns nil if instructor does not have access to CCNs" do
+    it 'returns nil if instructor does not have access to CCNs' do
       expect(subject).to receive(:user_authorized?).and_return(false)
-      expect(subject.create_course_site("Intro to Biomedicine", "BIOENG 101 LEC", "fall-2013", ["1136", "1204"])).to be_nil
+      expect(subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])).to be_nil
     end
 
-    it "returns canvas course provision job id" do
+    it 'returns canvas course provision job id' do
       expect(subject).to receive(:user_authorized?).and_return(true)
-      result = subject.create_course_site("Intro to Biomedicine", "BIOENG 101 LEC", "fall-2013", ["1136", "1204"])
+      result = subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])
       expect(result).to eq 'canvas.courseprovision.1234.1383330151057'
     end
 
-    it "saves state of job before sending to bg job queue" do
+    it 'saves state of job before sending to bg job queue' do
       expect(cpcs).to receive(:save).ordered.and_return(true)
       expect(cpcs).to receive(:background).ordered.and_return(cpcs)
       expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
-      result = subject.create_course_site("Intro to Biomedicine", "BIOENG 101 LEC", "fall-2013", ["1136", "1204"])
+      result = subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])
     end
   end
 
-  describe "#get_course_info" do
-    context "when canvas_course_id not present" do
+  describe '#get_course_info' do
+    context 'when canvas_course_id not present' do
       subject { Canvas::CourseProvision.new(instructor_id) }
-      it "should raise an error" do
-        expect { subject.get_course_info }.to raise_error(RuntimeError, "canvas_course_id option not present")
+      it 'should raise an error' do
+        expect { subject.get_course_info }.to raise_error(RuntimeError, 'canvas_course_id option not present')
       end
     end
     context 'when managing sections for existing course site' do
       subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
-      let(:official_sections) { [{:term_yr=>"2013", :term_cd=>"C", :ccn=>"7309"}] }
-      it "should return course information" do
+      let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'C', :ccn=>'7309'}] }
+      it 'should return course information' do
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
         result = subject.get_course_info
         expect(result).to be_an_instance_of Hash
-        expect(result[:officialSections]).to eq [{:term_yr=>"2013", :term_cd=>"C", :ccn=>"7309"}]
+        expect(result[:officialSections]).to eq official_sections
       end
     end
   end
