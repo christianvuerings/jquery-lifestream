@@ -1,3 +1,41 @@
-<div class="cc-page-course-manage-official-sections">
-  <h1>Manage Official Sections</h1>
+<div class="cc-page-course-official-sections">
+
+  <div data-ng-hide="feedFetched" data-cc-spinner-directive></div>
+
+  <div data-ng-show="feedFetched && isCourseCreator">
+
+    <div class="row collapse">
+      <div class="medium-5 columns">
+        <ul class="cc-button-group cc-even-2" role="tablist">
+          <li>
+            <button class="cc-button" data-ng-click="showTab('existing')" role="tab">Course Sections</button>
+          </li>
+          <li>
+            <button class="cc-button" data-ng-click="showTab('available')" role="tab">Available To Add</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div data-ng-show="tabs.existing" class="row collapse">
+      <div class="medium-12 columns">
+        <h1>Existing Sections area</h1>
+      </div>
+    </div>
+
+    <div data-ng-show="tabs.available" class="row collapse">
+      <div class="medium-12 columns">
+        <h1>Available Sections area</h1>
+      </div>
+    </div>
+
+  </div>
+
+  <div data-ng-show="feedFetched && !isCourseCreator" class="cc-page-official-sections-student-warning">
+    <i class="fa fa-warning"></i>
+    <span>This function is currently only available to instructors.</span>
+  </div>
+
+  <div data-ng-include src="'canvas_embedded/canvas_feed_error.html'"></div>
+
 </div>

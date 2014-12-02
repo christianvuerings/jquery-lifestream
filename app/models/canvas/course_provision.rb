@@ -11,18 +11,21 @@ module Canvas
       @admin_acting_as = options[:admin_acting_as]
       @admin_by_ccns = options[:admin_by_ccns]
       @admin_term_slug = options[:admin_term_slug]
+      @canvas_course_id = options[:canvas_course_id]
     end
 
     # Must be protected by a call to "user_authorized?"!
     def get_feed
       return nil unless user_authorized?
-      self.class.fetch_from_cache instance_key do
+      feed = self.class.fetch_from_cache instance_key do
         if @admin_term_slug && @admin_by_ccns
           get_feed_by_ccns_internal
         else
           get_feed_internal
         end
       end
+      feed.merge!({:canvas_course => get_course_info}) if @canvas_course_id.present?
+      feed
     end
 
     def instance_key
@@ -46,6 +49,13 @@ module Canvas
       cpcs.background.create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
       self.class.expire instance_key unless @admin_by_ccns
       cpcs.job_id
+    end
+
+    def get_course_info
+      raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
+      {
+        :officialSections => Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
+      }
     end
 
     def get_feed_internal

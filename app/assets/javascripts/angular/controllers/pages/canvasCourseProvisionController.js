@@ -5,7 +5,7 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, $http, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, canvasCourseProvisionFactory, $scope, $timeout) {
     apiService.util.setTitle('bCourses Course Provision');
 
     var statusProcessor = function() {
@@ -39,14 +39,7 @@
     };
 
     var fetchStatus = function(callback) {
-      var statusRequest = {
-        url: '/api/academics/canvas/course_provision/status.json',
-        method: 'GET',
-        params: {
-          job_id: $scope.job_id
-        }
-      };
-      $http(statusRequest).success(function(data) {
+      canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id).success(function(data) {
         angular.extend($scope, data);
         $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
         callback();
@@ -93,15 +86,6 @@
         newSelectedCourses.push(course);
       });
       $scope.currentCourses = newSelectedCourses;
-    };
-
-    var countClasses = function() {
-      $scope.classCount = 0;
-      if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
-        angular.forEach($scope.teachingSemesters, function(semester) {
-          $scope.classCount += semester.classes.length;
-        });
-      }
     };
 
     var selectedCcns = function() {
@@ -167,7 +151,8 @@
             newCourse.admin_term_slug = $scope.currentAdminSemester;
           }
         }
-        $http.post('/api/academics/canvas/course_provision/create', newCourse)
+
+        canvasCourseProvisionFactory.courseCreate(newCourse)
           .success(courseSiteJobCreated)
           .error(function() {
             angular.extend($scope, {
@@ -186,38 +171,35 @@
         currentWorkflowStep: 'selecting',
         isLoading: true
       });
-      var feedUrl = '/api/academics/canvas/course_provision';
-      var feedParams = {};
-      if ($scope.is_admin) {
-        if ($scope.adminMode !== 'by_ccn' && $scope.admin_acting_as) {
-          feedUrl = '/api/academics/canvas/course_provision_as/' + $scope.admin_acting_as;
-        } else if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
-          feedParams = {
-            'admin_by_ccns[]': $scope.admin_by_ccns.match(/\w+/g),
-            'admin_term_slug': $scope.currentAdminSemester
-          };
+      var feedRequestOptions = {
+        isAdmin: $scope.is_admin,
+        adminMode: $scope.adminMode,
+        adminActingAs: $scope.admin_acting_as,
+        adminByCcns: $scope.admin_by_ccns,
+        currentAdminSemester: $scope.currentAdminSemester
+      };
+      canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed) {
+        if (sectionsFeed.status !== 200) {
+          $scope.isLoading = false;
+          $scope.feedFetchError = true;
+        } else {
+          if (sectionsFeed.data) {
+            angular.extend($scope, sectionsFeed.data);
+            fillCourseSites($scope.teachingSemesters);
+            apiService.util.iframeUpdateHeight();
+            if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
+              $scope.switchSemester($scope.teachingSemesters[0]);
+            }
+            if (!$scope.currentAdminSemester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
+              $scope.switchAdminSemester($scope.admin_semesters[0]);
+            }
+            if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
+              selectAllSections();
+            }
+            $scope.isCourseCreator = $scope.is_admin || $scope.classCount > 0;
+            $scope.feedFetched = true;
+          }
         }
-      }
-      $http({
-        url: feedUrl,
-        method: 'GET',
-        params: feedParams
-      }).success(function(data) {
-        angular.extend($scope, data);
-        fillCourseSites($scope.teachingSemesters);
-        apiService.util.iframeUpdateHeight();
-        if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
-          $scope.switchSemester($scope.teachingSemesters[0]);
-        }
-        if (!$scope.currentAdminSemester && $scope.admin_semesters && $scope.admin_semesters.length > 0) {
-          $scope.switchAdminSemester($scope.admin_semesters[0]);
-        }
-        if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
-          selectAllSections();
-        }
-        countClasses();
-        $scope.isCourseCreator = $scope.is_admin || $scope.classCount > 0;
-        $scope.feedFetched = true;
       });
     };
 

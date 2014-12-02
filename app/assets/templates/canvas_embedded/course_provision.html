@@ -271,9 +271,11 @@
 
   </div>
 
-  <div data-ng-show="feedFetched && !isCourseCreator" class="cc-page-provision-student-warning">
+  <div data-ng-show="feedFetched && !isCourseCreator" class="cc-page-unexpected-error-notice">
     <i class="fa fa-warning"></i>
     <span>This function is currently only available to instructors.</span>
   </div>
+
+  <div data-ng-include src="'canvas_feed_error.html'"></div>
 
 </div>
