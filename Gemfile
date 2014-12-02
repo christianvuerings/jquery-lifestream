@@ -101,7 +101,7 @@ gem 'icalendar', '~> 2.2.0'
 ##################
 
 # Our very own library for angular dependency!
-gem 'angular-gem', '1.3.4'
+gem 'angular-gem', '1.3.5'
 
 # Datepicker
 gem 'pikaday-gem', '~> 1.2.0'
@@ -109,7 +109,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 # CSS Framework
 # https://github.com/zurb/foundation
 gem 'sass-rails', '~> 4.0.4'
-gem 'autoprefixer-rails', '~> 4.0.1'
+gem 'autoprefixer-rails', '~> 4.0.1.1'
 gem 'foundation-rails', '~> 5.4.5.0'
 
 # Closure Compiler Gem for JS compression
@@ -135,7 +135,7 @@ gem 'natural-sort-js', '~> 0.7.0'
 
 # Use ngannotate in the Rails asset pipeline.
 # https://github.com/olov/ng-annotate
-gem 'ngannotate-rails', '~> 0.13.0'
+gem 'ngannotate-rails', '~> 0.14.0'
 
 # Use your angular templates with rails' asset pipeline
 # https://github.com/pitr/angular-rails-templates
