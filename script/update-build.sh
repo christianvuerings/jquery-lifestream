@@ -58,3 +58,6 @@ find /var/www/html/calcentral/assets -type f -mtime +$MAX_ASSET_AGE_IN_DAYS -del
 
 echo "Copying bCourses static files into /var/www/html/calcentral" | $LOGIT
 cp -Rvf public/canvas /var/www/html/calcentral/ | $LOGIT
+
+echo "Copying OAuth static files into /var/www/html/calcentral" | $LOGIT
+cp -Rvf public/oauth /var/www/html/calcentral/ | $LOGIT
