@@ -6,7 +6,6 @@
    * Canvas Course Provision Factory - API Interface for 'Create a Course Site' and 'Official Sections' LTI Tools
    */
   angular.module('calcentral.factories').factory('canvasCourseProvisionFactory', function($http) {
-
     var classCount = function(teachingSemesters) {
       var count = 0;
       if (teachingSemesters && teachingSemesters.length > 0) {
