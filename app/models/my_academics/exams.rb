@@ -9,21 +9,21 @@ module MyAcademics
       doc = proxy.get[:xml_doc]
 
       #Bearfacts proxy will return nil on >= 400 errors.
-      return data unless doc.present? && matches_current_year_term?(doc.css("studentFinalExamSchedules"))
+      return data unless doc.present? && matches_current_year_term?(doc.css('studentFinalExamSchedules'))
       exams = []
 
-      doc.css("studentFinalExamSchedule").each do |exam|
-        exam_data = exam.css("studentFinalExamScheduleKey")
+      doc.css('studentFinalExamSchedule').each do |exam|
+        exam_data = exam.css('studentFinalExamScheduleKey')
         begin
-          exam_datetime = Date.parse(to_text(exam_data.css("examDate"))).in_time_zone.to_datetime
+          exam_datetime = Date.parse(to_text(exam_data.css('examDate'))).in_time_zone.to_datetime
         rescue ArgumentError => e
           # skip this exam if it has no parseable date
           Rails.logger.warn "#{self.class.name} Error parsing date in final exams feed for user #{@uid}: #{e.message}. Exam data is #{exam_data.to_s}"
           next
         end
-        ampm = to_text(exam_data.css("startTimeAmPmFlag")) == 'A' ? 'AM' : 'PM'
+        ampm = to_text(exam_data.css('startTimeAmPmFlag')) == 'A' ? 'AM' : 'PM'
         time = "#{to_time(exam_data.css("startTime"))} #{ampm}"
-        locations = (to_array exam.css("location")).map { |raw_location|
+        locations = (to_array exam.css('location')).map { |raw_location|
           location = {
             raw: raw_location
           }
@@ -35,7 +35,7 @@ module MyAcademics
         }
         course_code = "#{to_text(exam_data.css("deptName"))} #{to_text(exam_data.css("coursePrefixNum"))}#{to_text(exam_data.css("courseRootNum"))}"
         exams << {
-          :date => format_date(exam_datetime, "%a %B %-d"),
+          :date => format_date(exam_datetime, '%a %B %-d'),
           :time => time,
           :locations => locations,
           :course_code => course_code
@@ -49,8 +49,8 @@ module MyAcademics
 
     def matches_current_year_term?(nodeset)
       begin
-        term_year = nodeset.attribute("termYear").value.to_i
-        term_code = nodeset.attribute("termCode").value
+        term_year = nodeset.attribute('termYear').value.to_i
+        term_code = nodeset.attribute('termCode').value
         return (current_term.code == term_code && current_term.year == term_year)
       rescue NoMethodError, ArgumentError => e
         Rails.logger.warn "#{self.class.name}: Error parsing studentFinalExamSchedules #{nodeset} for termYear and termCode - #{e.message}"
