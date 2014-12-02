@@ -109,7 +109,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 # CSS Framework
 # https://github.com/zurb/foundation
 gem 'sass-rails', '~> 4.0.4'
-gem 'autoprefixer-rails', '~> 4.0.1'
+gem 'autoprefixer-rails', '~> 4.0.1.1'
 gem 'foundation-rails', '~> 5.4.5.0'
 
 # Closure Compiler Gem for JS compression
