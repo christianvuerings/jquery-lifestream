@@ -4,38 +4,169 @@
 
   <div data-ng-show="feedFetched && isCourseCreator">
 
-    <div class="row collapse">
-      <div class="medium-5 columns">
-        <ul class="cc-button-group cc-even-2" role="tablist">
-          <li>
-            <button class="cc-button" data-ng-click="showTab('existing')" role="tab">Course Sections</button>
-          </li>
-          <li>
-            <button class="cc-button" data-ng-click="showTab('available')" role="tab">Available To Add</button>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <div data-ng-show="currentWorkflowStep === 'selecting'">
 
-    <div data-ng-show="tabs.existing" class="row collapse">
-      <div class="medium-12 columns">
-        <h1>Existing Sections area</h1>
-      </div>
-    </div>
+      <div data-ng-show="jobStatus" class="cc-page-course-official-sections-job-status">
 
-    <div data-ng-show="tabs.available" class="row collapse">
-      <div class="medium-12 columns">
-        <h1>Available Sections area</h1>
+        <div data-ng-show="jobStatus === 'sectionRemovalCompleted'">
+          <div class="cc-notice-box cc-notice-success cc-radius">
+            Success : Sections Successfully Removed
+            <i class="cc-left fa fa-check-circle cc-icon-green"></i>
+          </div>
+        </div>
+
+        <div data-ng-show="jobStatus === 'sectionAdditionCompleted'">
+          <div class="cc-notice-box cc-notice-success cc-radius">
+            Success : Sections Successfully Added
+            <i class="cc-left fa fa-check-circle cc-icon-green"></i>
+          </div>
+        </div>
+
+        <div data-ng-show="jobStatus === 'jobNotFoundError'">
+          <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
+        </div>
+
+        <div data-ng-show="jobStatus === 'sectionRemovalError'">
+          <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
+        </div>
+
+        <div data-ng-show="jobStatus === 'sectionAdditionError'">
+          <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-5 columns">
+          <ul class="cc-button-group cc-even-2" role="tablist">
+            <li>
+              <button class="cc-button" data-ng-class="{'cc-button-selected': tabs.existing}" data-ng-click="showTab('existing')" role="tab">Course Sections</button>
+            </li>
+            <li>
+              <button class="cc-button" data-ng-class="{'cc-button-selected': tabs.available}" data-ng-click="showTab('available')" role="tab">Available To Add</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-ng-show="tabs.existing" class="row collapse cc-page-course-official-sections-tab-area">
+        <div class="medium-12 columns">
+
+          <h3>Current Official Sections</h3>
+          <form data-ng-submit="showDeleteConfirmation()" class="cc-page-course-official-form">
+            <div>
+              <ul>
+                <li data-ng-repeat="section in canvasCourse.officialSections">
+                  <input type="checkbox"
+                         id="cc-page-course-official-sections-checkbox-{{$index}}"
+                         data-ng-model="section.selected">
+                  <label for="cc-page-course-official-sections-checkbox-{{$index}}"
+                    class="cc-page-course-official-sections-label"
+                    data-ng-bind-template="{{section.name}} ({{section.ccn}})">
+                  </label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="cc-page-course-official-sections-form-actions">
+              <button class="cc-button cc-button-blue" type="submit">Remove Sections &gt;&gt;</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <div data-ng-show="tabs.available" class="row collapse cc-page-course-official-sections-tab-area">
+        <div class="medium-12 columns">
+          <h3>Add More Official Sections</h3>
+          <div data-ng-hide="currentCourses && currentCourses.length > 0" class="cc-page-provision-no-courses">
+            You are currently not listed as the instructor of record for any courses, so you cannot add sections to this site.
+          </div>
+          <div data-ng-show="currentCourses && currentCourses.length > 0">
+            <form data-ng-submit="showAddConfirmation()" class="cc-page-course-official-form">
+              <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>
+              <div class="cc-page-course-official-sections-form-actions">
+                <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Add Sections &gt;&gt;</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <div data-ng-show="feedFetched && !isCourseCreator" class="cc-page-official-sections-student-warning">
-    <i class="fa fa-warning"></i>
-    <span>This function is currently only available to instructors.</span>
+  <div data-ng-show="currentWorkflowStep === 'deleteConfirmation'">
+    <div class="cc-page-course-official-sections-confirmation">
+      <div data-ng-if="currentSectionsSelected().length === 1">
+        <strong>You are about to remove 1 roster to this course site:</strong>
+      </div>
+      <div data-ng-if="currentSectionsSelected().length > 1">
+        <strong>You are about to remove the following <span data-ng-bind="currentSectionsSelected().length"></span> rosters to this course site:</strong>
+      </div>
+      <ul class="cc-page-course-official-sections-roster-list">
+        <li data-ng-repeat="section in currentSectionsSelected()">
+          <span data-ng-bind="section.name"></span> (<span data-ng-bind="section.ccn"></span>)
+        </li>
+      </ul>
+    </div>
+
+    <form data-ng-submit="removeSections()" class="cc-page-course-official-form cc-page-course-official-sections-labels-form">
+      <button class="cc-button cc-button-blue cc-page-course-official-sections-form-button" type="submit">Remove Sections</button>
+      <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
+    </form>
   </div>
 
-  <div data-ng-include src="'canvas_embedded/canvas_feed_error.html'"></div>
+  <div data-ng-show="currentWorkflowStep === 'addConfirmation'">
+    <div class="cc-page-course-official-sections-confirmation">
+      <div data-ng-if="selectedSections(currentCourses).length === 1">
+        <strong>You are about to add the following roster to the current course site:</strong>
+      </div>
+      <div data-ng-if="selectedSections(currentCourses).length > 1">
+        <strong>You are about to add the following <span data-ng-bind="selectedSections(currentCourses).length"></span> rosters to the current course site::</strong>
+      </div>
+      <ul class="cc-page-course-official-sections-roster-list">
+        <li data-ng-repeat="section in selectedSections(currentCourses)">
+          <span data-ng-bind="section.courseTitle"></span> - <span data-ng-bind="section.courseCode"></span> <span data-ng-bind="section.section_label"></span> (<span data-ng-bind="section.ccn"></span>)
+        </li>
+      </ul>
+    </div>
+
+    <form data-ng-submit="addSections()" class="cc-page-course-official-form cc-page-course-official-sections-labels-form">
+      <button class="cc-button cc-button-blue cc-page-course-official-sections-form-button" type="submit">Add Sections</button>
+      <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
+    </form>
+  </div>
+
+  <div data-ng-show="currentWorkflowStep === 'monitoringRemovalJob'">
+
+    <div data-ng-hide="jobStatus" class="cc-page-course-official-sections-pending-request">
+      <i class="fa fa-spinner fa-spin"></i>
+      Sending request...
+    </div>
+
+    <div data-ng-show="jobStatus === 'New'" class="cc-page-course-official-sections-pending-request">
+      <i class="fa fa-spinner fa-spin"></i>
+      Section addition request sent. Awaiting processing....
+    </div>
+
+    <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
+  </div>
+
+  <div data-ng-show="currentWorkflowStep === 'monitoringAdditionJob'">
+
+    <div data-ng-hide="jobStatus" class="cc-page-course-official-sections-pending-request">
+      <i class="fa fa-spinner fa-spin"></i>
+      Sending request...
+    </div>
+
+    <div data-ng-show="jobStatus === 'New'" class="cc-page-course-official-sections-pending-request">
+      <i class="fa fa-spinner fa-spin"></i>
+      Section addition request sent. Awaiting processing....
+    </div>
+
+    <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
+  </div>
+
+  <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>
 
 </div>

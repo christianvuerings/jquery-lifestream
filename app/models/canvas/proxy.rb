@@ -112,6 +112,15 @@ module Canvas
       end
     end
 
+    def self.sis_term_id_to_term(sis_term_id)
+      if (parsed = /TERM:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])$/.match(sis_term_id))
+        {
+          term_yr: parsed[:term_yr],
+          term_cd: parsed[:term_cd],
+        }
+      end
+    end
+
     def self.term_to_sis_id(term_yr, term_cd)
       "TERM:#{term_yr}-#{term_cd}"
     end

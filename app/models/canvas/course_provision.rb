@@ -15,9 +15,9 @@ module Canvas
     end
 
     # Must be protected by a call to "user_authorized?"!
-    def get_feed
+    def get_feed(force_write = false)
       return nil unless user_authorized?
-      feed = self.class.fetch_from_cache instance_key do
+      feed = self.class.fetch_from_cache(instance_key, force_write) do
         if @admin_term_slug && @admin_by_ccns
           get_feed_by_ccns_internal
         else
@@ -43,7 +43,6 @@ module Canvas
 
     def create_course_site(site_name, site_course_code, term_slug, ccns)
       return nil unless user_authorized?
-      working_uid = @admin_acting_as || @uid
       cpcs = Canvas::ProvideCourseSite.new(working_uid)
       cpcs.save
       cpcs.background.create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
@@ -51,15 +50,40 @@ module Canvas
       cpcs.job_id
     end
 
+    def remove_sections(sis_section_ids)
+      return nil unless user_authorized?
+      raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
+      cpcs = Canvas::ProvideCourseSite.new(working_uid)
+      cpcs.save
+      cpcs.background.remove_sections(@canvas_course_id, sis_section_ids)
+      self.class.expire instance_key unless @admin_by_ccns
+      cpcs.job_id
+    end
+
+    def add_sections(term_code, term_year, ccns)
+      return nil unless user_authorized?
+      raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
+      cpcs = Canvas::ProvideCourseSite.new(working_uid)
+      cpcs.save
+      cpcs.background.add_sections(@canvas_course_id, term_code, term_year, ccns)
+      self.class.expire instance_key unless @admin_by_ccns
+      cpcs.job_id
+    end
+
     def get_course_info
       raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
-      {
-        :officialSections => Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
-      }
+      course_info = {}
+      course = Canvas::Course.new(:canvas_course_id => @canvas_course_id).course
+      course_info[:canvasCourseId] = @canvas_course_id
+      course_info[:name] = course['name']
+      course_info[:courseCode] = course['course_code']
+      course_info[:term] = Canvas::Proxy.sis_term_id_to_term(course['term']['sis_term_id'])
+      course_info[:term][:name] = course['term']['name']
+      course_info[:officialSections] = Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
+      course_info
     end
 
     def get_feed_internal
-      working_uid = @admin_acting_as || @uid
       worker = Canvas::ProvideCourseSite.new(working_uid)
       feed = {
         is_admin: user_admin?,
@@ -92,6 +116,10 @@ module Canvas
         @admin_term_slug.nil?
       )
       )
+    end
+
+    def working_uid
+      @admin_acting_as || @uid
     end
 
   end

@@ -110,10 +110,6 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   }
 
-  .cc-radius {
-    border-radius: 3px;
-  }
-
   .cc-notice-success {
     background-color: $bc-color-success-background;
     border: 1px solid $bc-color-success-border;
@@ -134,6 +130,129 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   .cc-page-unexpected-error-notice {
     margin: 10px 0;
+  }
+
+  .cc-radius {
+    border-radius: 3px;
+  }
+
+  .cc-template-background-job-error {
+    background-color: $bc-color-notice-red-bg;
+    border: 1px solid $bc-color-notice-red-border;
+    border-radius: 5px;
+    padding: 20px;
+    i {
+      margin-right: 5px;
+    }
+    > div {
+      margin-top: 5px;
+    }
+    p {
+      color: $bc-color-grey-text;
+      font-size: 15px;
+      margin: 0 10px 10px 0;
+    }
+    ul {
+      font-size: 15px;
+      list-style: disc inside none;
+      margin: 5px 20px;
+    }
+
+    .cc-template-background-job-error-paragraph {
+      margin-bottom: 10px;
+    }
+
+    .cc-template-background-job-error-icon {
+      color: $bc-color-notice-red-header;
+      font-size: 17px;
+      line-height: 27px;
+    }
+
+    .cc-template-background-job-error-header {
+      color: $bc-color-notice-red-header;
+      font-size: 17px;
+    }
+  }
+
+  .cc-template-progress-bar {
+    .cc-template-progress-bar-container {
+      margin: 35px auto;
+      width: 75%;
+    }
+
+    .cc-template-progress-bar-display {
+      background: linear-gradient($bc-color-progressbar-bg-gradient1, $bc-color-progressbar-bg-gradient2);
+      border: 2px solid #c6c7c7;
+      border-radius: 5px;
+      height: 25px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cc-template-progress-bar-status {
+      color: #2f2e2e;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: bold;
+      left: 50%;
+      line-height: 25px;
+      margin-left: -75px;
+      position: absolute;
+      text-align: center;
+      width: 150px;
+    }
+
+    .cc-template-progress-bar-value {
+      background: linear-gradient($bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2);
+      height: 100%;
+    }
+  }
+
+  .cc-template-canvas-manage-sections {
+
+    .cc-template-canvas-manage-sections-margin {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .cc-template-canvas-manage-sections-form-course {
+      margin: 0 0 20px;
+    }
+
+    .cc-template-canvas-manage-sections-roster-area {
+      background: $bc-color-roster-background;
+      border: 1px solid $bc-color-roster-background;
+      padding: 10px 5px;
+    }
+
+    .cc-template-canvas-manage-sections-form-select-all-option {
+      font-size: 12px;
+      font-weight: bold;
+      margin: 6px 0 0 7px;
+    }
+
+    .cc-template-canvas-manage-sections-label {
+      display: inline;
+      margin-left: 1em;
+      text-align: left;
+    }
+
+    .cc-template-canvas-manage-sections-has-sites-message {
+      margin: 5px 0 0 23px;
+    }
+
+    .cc-template-canvas-manage-sections-label-sited {
+      color: $cc-color-berkeley-south-hall;
+    }
+
+    .cc-template-canvas-manage-sections-sites {
+      margin-left: 40px;
+    }
+
+    .cc-template-canvas-manage-sections-sited-icon {
+      color: $cc-color-berkeley-south-hall;
+      margin-right: 10px;
+    }
   }
 
 }
