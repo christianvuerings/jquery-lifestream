@@ -36,10 +36,6 @@
     <span>This function is currently only available to instructors.</span>
   </div>
 
-  <div data-ng-show="!feedFetched && feedFetchError" class="cc-page-unexpected-error-notice">
-    <i class="fa fa-warning"></i>
-    <span>An unexpected error has occurred with this tool.</span>
-    <p class="cc-page-course-official-sections-contact-support">Please contact <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> for further assistance.</p>
-  </div>
+  <div data-ng-include src="'canvas_embedded/canvas_feed_error.html'"></div>
 
 </div>
