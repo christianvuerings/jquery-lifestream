@@ -23,7 +23,15 @@
 
     $scope.fetchFeed = function() {
       $scope.isLoading = true;
-      canvasCourseProvisionFactory.getSections(false, false, false, [], false).then(function(sectionsFeed){
+
+      var feedRequestOptions = {
+        isAdmin: false,
+        adminMode: false,
+        adminActingAs: false,
+        adminByCcns: [],
+        currentAdminSemester: false
+      };
+      canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed){
         if (sectionsFeed.status !== 200) {
           $scope.isLoading = false;
           $scope.feedFetchError = true;

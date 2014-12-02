@@ -47,16 +47,16 @@
       return feedResponse;
     };
 
-    var getSections = function(isAdmin, adminMode, adminActingAs, adminByCcns, currentAdminSemester) {
+    var getSections = function(feedRequestOptions) {
       var feedUrl = '/api/academics/canvas/course_provision';
       var feedParams = {};
-      if (isAdmin) {
-        if (adminMode !== 'by_ccn' && adminActingAs) {
-          feedUrl = '/api/academics/canvas/course_provision_as/' + adminActingAs;
-        } else if (adminMode === 'by_ccn' && adminByCcns) {
+      if (feedRequestOptions.isAdmin) {
+        if (feedRequestOptions.adminMode !== 'by_ccn' && feedRequestOptions.adminActingAs) {
+          feedUrl = '/api/academics/canvas/course_provision_as/' + feedRequestOptions.adminActingAs;
+        } else if (feedRequestOptions.adminMode === 'by_ccn' && feedRequestOptions.adminByCcns) {
           feedParams = {
-            'admin_by_ccns[]': adminByCcns.match(/\w+/g),
-            'admin_term_slug': currentAdminSemester
+            'admin_by_ccns[]': feedRequestOptions.adminByCcns.match(/\w+/g),
+            'admin_term_slug': feedRequestOptions.currentAdminSemester
           };
         }
       }

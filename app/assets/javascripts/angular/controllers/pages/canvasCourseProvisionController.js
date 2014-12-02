@@ -171,7 +171,14 @@
         currentWorkflowStep: 'selecting',
         isLoading: true
       });
-      canvasCourseProvisionFactory.getSections($scope.is_admin, $scope.adminMode, $scope.admin_acting_as, $scope.admin_by_ccns, $scope.currentAdminSemester).then(function(sectionsFeed){
+      var feedRequestOptions = {
+        isAdmin: $scope.is_admin,
+        adminMode: $scope.adminMode,
+        adminActingAs: $scope.admin_acting_as,
+        adminByCcns: $scope.admin_by_ccns,
+        currentAdminSemester: $scope.currentAdminSemester
+      };
+      canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed){
         if (sectionsFeed.status !== 200) {
           $scope.isLoading = false;
           $scope.feedFetchError = true;
