@@ -1,40 +1,60 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function($compile) {
+  angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function() {
+    /**
+     * buildingLinkName is used in the location name handed to Google Maps.
+     * Need to pre-process in case it includes special chars. We are guaranteed
+     * to have a raw building name, but not a pretty display name
+     */
+    var buildingLinkName = function(location) {
+      if (location.display) {
+        location.buildingLinkName = encodeURIComponent(location.display);
+      } else {
+        location.buildingLinkName = location.raw;
+      }
+    };
+
+    /**
+     * Tooltip title is similar, but without URI encoding and with room number
+     */
+    var buildingTooltipName = function(location) {
+      var buildingTooltipName = location.roomNumber + ' ';
+      if (location.display) {
+        location.buildingTooltipName = buildingTooltipName + location.display;
+      } else {
+        location.buildingTooltipName += buildingTooltipName + location.raw;
+      }
+    };
+
+    var createElement = function(location) {
+      buildingLinkName(location);
+      buildingTooltipName(location);
+      var element = document.createElement('div');
+      if (location.lat && location.lon) {
+        element.innerHTML = '<a href="https://maps.google.com/maps?q=' + location.lat + ',' + location.lon + '+(' + location.buildingLinkName + ')" title="' + location.buildingTooltipName + '">' + location.raw + ' <i class="cc-icon fa fa-map-marker"></i></a>';
+      } else {
+        element.innerHTML = '<span>' + location.raw + '</span>';
+      }
+      return element;
+    };
+
+    var createElements = function(locations) {
+      return locations.map(createElement);
+    };
+
     return {
       restrict: 'A',
+      scope: {
+        locations: '='
+      },
       link: function(scope, elm) {
-        if (!scope || !scope.exam || !scope.exam.location) {
+        if (!scope || !scope.locations) {
           return;
         }
 
-        // buildingLinkName is used in the location name handed to Google Maps.
-        // Need to pre-process in case it includes special chars. We are guaranteed
-        // to have a raw building name, but not a pretty display name
-        if (scope.exam.location.display) {
-          scope.exam.location.buildingLinkName = encodeURIComponent(scope.exam.location.display);
-        } else {
-          scope.exam.location.buildingLinkName = scope.exam.location.rawLocation;
-        }
-
-        // Tooltip title is similar, but without URI encoding and with room number
-        var buildingTooltipName = scope.exam.location.roomNumber;
-        if (scope.exam.location.display) {
-          buildingTooltipName += ' ' + scope.exam.location.display;
-        } else {
-          buildingTooltipName += ' ' + scope.exam.location.rawLocation;
-        }
-        scope.exam.location.buildingTooltipName = buildingTooltipName;
-
-        // Link to map only if we have both lat and lon; otherwise just display building name
-        var element = '';
-        if (scope.exam.location.lat && scope.exam.location.lon) {
-          element = $compile('<a data-ng-href="https://maps.google.com/maps?q={{exam.location.lat}},{{exam.location.lon}}+({{exam.location.buildingLinkName}})" title="{{exam.location.buildingTooltipName}}">{{exam.location.rawLocation}} <i class="cc-icon fa fa-map-marker"></i></a>')(scope);
-        } else {
-          element = $compile('<span>{{exam.location.rawLocation}}</span>')(scope);
-        }
-        elm.append(element);
+        var elements = createElements(scope.locations);
+        elm.append(elements);
       }
     };
   });
