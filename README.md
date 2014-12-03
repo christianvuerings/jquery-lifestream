@@ -194,6 +194,9 @@ You can even run Spork right inside [IntelliJ RubyMine or IDEA](http://www.jetbr
 Front-end linting can be done by running the following commands:
 
 ```bash
+rm -rf node_modules
+npm install -g jshint
+npm install -g jscs
 jshint .
 jscs .
 ```
