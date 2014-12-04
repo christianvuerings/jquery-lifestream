@@ -12,7 +12,7 @@ require_relative 'pages/api_my_fin_aid_page'
 require_relative 'pages/my_finances_pages'
 require_relative 'pages/my_finances_landing_page'
 
-describe 'My Finances', :testui => true do
+describe 'My Finances financial aid messages', :testui => true do
 
   if ENV["UI_TEST"]
 
@@ -20,18 +20,13 @@ describe 'My Finances', :testui => true do
 
     begin
       driver = WebDriverUtils.driver
-      output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
-      unless File.exists?(output_dir)
-        FileUtils.mkdir_p(output_dir)
-      end
-      test_output = Rails.root.join(output_dir, 'my_finances_data_finaid.csv')
-      logger.info('Opening output CSV')
+      test_output = UserUtils.initialize_output_csv(self)
+      test_users = UserUtils.open_test_uid_csv
+
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Finances Tab', 'Has Messages', 'Has Dupe Messages', 'Has Popover Alert', 'Has Alert Msg',
-                          'Has Info Msg', 'Has Message Msg', 'Has Financial Msg', 'Has Dated Msg', 'Error Occurred']
+                          'Has Info Msg', 'Has Message Msg', 'Has Financial Msg', 'Has Dated Msg', 'Error?']
       end
-      logger.info('Loading test users')
-      test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
 
       test_users.each do |user|
         if user['finAid']

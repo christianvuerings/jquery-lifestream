@@ -18,18 +18,13 @@ describe 'My Academics Tele-BEARS card', :testui => true do
 
     begin
       driver = WebDriverUtils.driver
-      output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
-      unless File.exists?(output_dir)
-        FileUtils.mkdir_p(output_dir)
-      end
-      test_output = Rails.root.join(output_dir, 'my_academics_data_telebears.csv')
-      logger.info 'Opening output CSV'
+      test_output = UserUtils.initialize_output_csv(self)
+      test_users = UserUtils.open_test_uid_csv
+
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Has Tele-BEARS', 'Adviser Message', 'Phase I Start', 'Phase I End', 'Phase II Start',
                           'Phase II End', 'Error Occurred']
       end
-      logger.info 'Loading test users'
-      test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
 
       test_users.each do |user|
         if user['teleBears']

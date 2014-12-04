@@ -11,7 +11,7 @@ require_relative 'pages/api_my_financials_page'
 require_relative 'pages/my_finances_pages'
 require_relative 'pages/my_finances_details_page'
 
-describe 'My Finances Details', :testui => true do
+describe 'My Finances activity details', :testui => true do
 
   if ENV["UI_TEST"]
 
@@ -19,18 +19,13 @@ describe 'My Finances Details', :testui => true do
 
     begin
       driver = WebDriverUtils.driver
-      output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
-      unless File.exists?(output_dir)
-        FileUtils.mkdir_p(output_dir)
-      end
-      test_output = Rails.root.join(output_dir, 'my_finances_data_transactions.csv')
-      logger.info('Opening output CSV')
+      test_output = UserUtils.initialize_output_csv(self)
+      test_users = UserUtils.open_test_uid_csv
+
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Has Adjustment', 'Has Award', 'Has Charge', 'Has Payment', 'Has Refund', 'Has Waiver',
-                          'Has Unapplied Award', 'Has Partial Payment', 'Has Potential Disburse']
+                          'Has Unapplied Award', 'Has Partial Payment', 'Has Potential Disburse', 'Error?']
       end
-      logger.info('Loading test users')
-      test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
 
       test_users.each do |user|
         if user['financesDetails']
@@ -59,6 +54,7 @@ describe 'My Finances Details', :testui => true do
               has_unapplied_award = false
               has_partial_payment = false
               has_potential_disburse = false
+              threw_error = false
 
               my_finances_page.select_transactions_filter('All Transactions')
               my_finances_page.keep_showing_more
@@ -550,15 +546,15 @@ describe 'My Finances Details', :testui => true do
                   end
                 end
               end
-
-              CSV.open(test_output, 'a+') do |user_info_csv|
-                user_info_csv << [uid, has_adjustment, has_award, has_charge, has_payment, has_refund, has_waiver,
-                                  has_unapplied_award, has_partial_payment,has_potential_disburse]
-              end
             end
-
           rescue => e
             logger.error e.message + "\n" + e.backtrace.join("\n")
+            threw_error = true
+          ensure
+            CSV.open(test_output, 'a+') do |user_info_csv|
+              user_info_csv << [uid, has_adjustment, has_award, has_charge, has_payment, has_refund, has_waiver,
+                                has_unapplied_award, has_partial_payment,has_potential_disburse, threw_error]
+            end
           end
         end
       end

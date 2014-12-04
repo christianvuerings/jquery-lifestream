@@ -9,6 +9,7 @@ class UserUtils
 
   include PageObject
   include CalCentralPages
+  include ClassLogger
 
   def self.basic_auth_pass
     Settings.developer_auth.password
@@ -40,6 +41,21 @@ class UserUtils
 
   def self.qa_gmail_password
     Settings.ui_selenium.ets_qa_gmail_password
+  end
+
+  def self.initialize_output_csv(spec)
+    output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
+    output_file = spec.inspect + '.csv'
+    logger.info("Initializing test output CSV named #{output_file}")
+    unless File.exists?(output_dir)
+      FileUtils.mkdir_p(output_dir)
+    end
+    Rails.root.join(output_dir, output_file)
+  end
+
+  def self.open_test_uid_csv
+    logger.info('Loading test UIDs')
+    JSON.parse(File.read(WebDriverUtils.live_users))['users']
   end
 
 end

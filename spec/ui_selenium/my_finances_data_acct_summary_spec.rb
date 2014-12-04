@@ -12,7 +12,7 @@ require_relative 'pages/api_my_financials_page'
 require_relative 'pages/my_finances_pages'
 require_relative 'pages/my_finances_details_page'
 
-describe 'My Finances', :testui => true do
+describe 'My Finances Billing Summary', :testui => true do
 
   if ENV["UI_TEST"]
 
@@ -20,18 +20,13 @@ describe 'My Finances', :testui => true do
 
     begin
       driver = WebDriverUtils.driver
-      output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
-      if !File.exists?(output_dir)
-        FileUtils.mkdir_p(output_dir)
-      end
-      test_output = Rails.root.join(output_dir, 'my_finances_data_acct_summary.csv')
-      logger.info('Opening output CSV')
+      test_output = UserUtils.initialize_output_csv(self)
+      test_users = UserUtils.open_test_uid_csv
+
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Finances Tab', 'CARS Data', 'Acct Bal', 'Amt Due Now', 'Past Due', 'Future Activity',
-                          'On DPP', 'Norm Install', 'DPP Past Due']
+                          'On DPP', 'Norm Install', 'DPP Past Due', 'Error?']
       end
-      logger.info('Loading test users')
-      test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
 
       test_users.each do |user|
         if user['finances']
@@ -46,6 +41,7 @@ describe 'My Finances', :testui => true do
           is_dpp = false
           has_dpp_balance = false
           is_dpp_past_due = false
+          threw_error = false
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
@@ -74,7 +70,7 @@ describe 'My Finances', :testui => true do
               end
               it 'shows an account balance that is equal to the sum of the amount due now plus the amount not yet due for UID ' + uid do
                 expect(BigDecimal.new(fin_api_page.account_balance_str)).to eql(BigDecimal.new(fin_api_page.min_amt_due_str) +
-                                                                                BigDecimal.new(fin_api_page.future_activity_str))
+                                                                                    BigDecimal.new(fin_api_page.future_activity_str))
               end
               if fin_api_page.account_balance >= 0
                 it 'shows an account balance that is greater than or equal to the minimum amount due now for UID ' + uid do
@@ -213,13 +209,14 @@ describe 'My Finances', :testui => true do
               end
             end
 
-            CSV.open(test_output, 'a+') do |user_info_csv|
-              user_info_csv << [uid, has_finances_tab, has_cars_data, acct_bal, amt_due_now, has_past_due_amt, has_future_activity,
-                                is_dpp, has_dpp_balance, is_dpp_past_due]
-            end
-
           rescue => e
             logger.error e.message + "\n" + e.backtrace.join("\n")
+            threw_error = true
+          ensure
+            CSV.open(test_output, 'a+') do |user_info_csv|
+              user_info_csv << [uid, has_finances_tab, has_cars_data, acct_bal, amt_due_now, has_past_due_amt, has_future_activity,
+                                is_dpp, has_dpp_balance, is_dpp_past_due, threw_error]
+            end
           end
         end
       end

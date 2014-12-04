@@ -6,6 +6,7 @@ require_relative 'util/web_driver_utils'
 require_relative 'util/user_utils'
 require_relative 'pages/cal_central_pages'
 require_relative 'pages/splash_page'
+require_relative 'pages/my_dashboard_page'
 require_relative 'pages/api_my_financials_page'
 require_relative 'pages/my_finances_pages'
 require_relative 'pages/my_finances_details_page'
@@ -25,6 +26,8 @@ describe 'My Finances details page', :testui => true do
       splash_page.click_sign_in_button(@driver)
       @cal_net_page = CalNetPages::CalNetAuthPage.new(@driver)
       @cal_net_page.login(UserUtils.oski_username, UserUtils.oski_password)
+      @my_dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
+      @my_dashboard_page.my_finances_link_element.when_visible(WebDriverUtils.page_load_timeout)
       @fin_api_page = ApiMyFinancialsPage.new(@driver)
       @fin_api_page.get_json(@driver)
       @my_finances_details_page = CalCentralPages::MyFinancesPages::MyFinancesDetailsPage.new(@driver)
