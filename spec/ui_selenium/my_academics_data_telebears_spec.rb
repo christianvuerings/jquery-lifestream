@@ -18,126 +18,106 @@ describe 'My Academics Tele-BEARS card', :testui => true do
 
     begin
       driver = WebDriverUtils.driver
-      output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
-      unless File.exists?(output_dir)
-        FileUtils.mkdir_p(output_dir)
-      end
-      test_output = Rails.root.join(output_dir, 'my_academics_data_telebears.csv')
-      logger.info 'Opening output CSV'
+      test_output = UserUtils.initialize_output_csv(self)
+      test_users = UserUtils.open_test_uid_csv
+
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'Has Tele-BEARS', 'Adviser Message', 'Phase I Start', 'Phase I End', 'Phase II Start',
-                          'Phase II End', 'Error Occurred']
+        user_info_csv << ['UID', 'Has Tele-BEARS', 'Adviser Messages', 'Phase Starts', 'Phase Endings', 'Error Occurred']
       end
+
       logger.info 'Loading test users'
       test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
-
+      testable_users = []
       test_users.each do |user|
         if user['teleBears']
           uid = user['uid'].to_s
           logger.info("UID is #{uid}")
           has_tele_bears = false
-          code_required_api = nil
-          phase_one_start_api = nil
-          phase_one_end_api = nil
-          phase_two_start_api = nil
-          phase_two_end_api = nil
+          api_adviser_code_msgs = nil
+          api_phase_starts = nil
+          api_phase_endings = nil
           threw_error = false
 
           begin
-            splash_page = CalCentralPages::SplashPage.new driver
-            splash_page.load_page driver
+            splash_page = CalCentralPages::SplashPage.new(driver)
+            splash_page.load_page(driver)
             splash_page.basic_auth(driver, uid)
-            academics_api = ApiMyAcademicsPage.new driver
-            academics_api.get_json driver
-            if academics_api.has_tele_bears
+            academics_api = ApiMyAcademicsPage.new(driver)
+            academics_api.get_json(driver)
+            my_academics_page = CalCentralPages::MyAcademicsPage::MyAcademicsTeleBearsCard.new driver
+            my_academics_page.load_page(driver)
+            my_academics_page.page_heading_element.when_visible(WebDriverUtils.academics_timeout)
+            api_appts_for_all_semesters = academics_api.tele_bears
+            if api_appts_for_all_semesters.length > 0
               has_tele_bears = true
-              code_required_api = academics_api.tele_bears_code_required
-              code_required_msg_api = academics_api.tele_bears_code_message
-              phase_one_start_api = academics_api.tele_bears_phase_start academics_api.tele_bears_phases[0]
-              phase_one_end_api = academics_api.tele_bears_phase_end academics_api.tele_bears_phases[0]
-              phase_two_start_api = academics_api.tele_bears_phase_start academics_api.tele_bears_phases[1]
-              phase_two_end_api = academics_api.tele_bears_phase_end academics_api.tele_bears_phases[1]
+              testable_users.push(uid)
+              api_adviser_code_reqts = academics_api.tele_bears_adviser_codes(api_appts_for_all_semesters)
+              api_adviser_code_msgs = academics_api.tele_bears_adviser_code_msgs(api_appts_for_all_semesters)
+              api_phase_starts = academics_api.tele_bears_phase_starts(api_appts_for_all_semesters)
+              api_phase_endings = academics_api.tele_bears_phase_endings(api_appts_for_all_semesters)
 
               # Appointments on main My Academics page
-              my_academics_page = CalCentralPages::MyAcademicsPage::MyAcademicsTeleBearsCard.new driver
-              my_academics_page.load_page driver
-              my_academics_page.adviser_code_msg_element.when_visible WebDriverUtils.academics_timeout
-              has_more_info_link_acad = my_academics_page.more_info_link?
-              has_red_code_icon_acad = my_academics_page.code_required_icon?
-              has_green_code_icon_acad = my_academics_page.code_not_required_icon?
-              code_required_msg_acad = my_academics_page.adviser_code_msg
-              phase_one_start_acad = my_academics_page.phase_one_start_time
-              phase_one_end_acad = my_academics_page.phase_one_end_time
-              phase_two_start_acad = my_academics_page.phase_two_start_time
-              phase_two_end_acad = my_academics_page.phase_two_end_time
-              if code_required_api == true
-                it "shows a red code-required icon on My Academics for UID #{uid}" do
-                  expect(has_red_code_icon_acad).to be true
-                end
-              else
-                it "shows a green code-required icon on My Academics for UID #{uid}" do
-                  expect(has_green_code_icon_acad).to be true
-                end
+              my_academics_page.tele_bears_card_heading_element.when_visible(WebDriverUtils.academics_timeout)
+              acad_has_more_info_link = my_academics_page.more_info_link_elements.length
+              acad_adviser_code_reqts = my_academics_page.all_telebears_adviser_icons
+              acad_adviser_code_msgs = my_academics_page.all_telebears_adviser_msgs
+              acad_phase_starts = my_academics_page.all_phase_start_times
+              acad_phase_endings = my_academics_page.all_phase_end_times
+              it "shows the right code-required icons on My Academics for UID #{uid}" do
+                expect(acad_adviser_code_reqts.sort).to eql(api_adviser_code_reqts.sort)
               end
-              it "shows the code-required message on My Academics for UID #{uid}" do
-                expect(code_required_msg_acad).to eql(code_required_msg_api)
+              it "shows the right code-required messages on My Academics for UID #{uid}" do
+                expect(acad_adviser_code_msgs.sort).to eql(api_adviser_code_msgs.sort)
               end
-              it "shows the right phase one start time on My Academics for #{uid}" do
-                expect(phase_one_start_acad).to eql(phase_one_start_api)
+              it "shows the right phase start dates and times on My Academics for #{uid}" do
+                expect(acad_phase_starts.sort).to eql(api_phase_starts.sort)
               end
-              it "shows the right phase one end time on My Academics for #{uid}" do
-                expect(phase_one_end_acad).to eql(phase_one_end_api)
+              it "shows the right phase ending dates and times on My Academics for #{uid}" do
+                expect(acad_phase_endings.sort).to eql(api_phase_endings.sort)
               end
-              it "shows the right phase two start time on My Academics for #{uid}" do
-                expect(phase_two_start_acad).to eql(phase_two_start_api)
-              end
-              it "shows the right phase two end time on My Academics for #{uid}" do
-                expect(phase_two_end_acad).to eql(phase_two_end_api)
-              end
-              it "shows a More Info link on My Academics for UID #{uid}" do
-                expect(has_more_info_link_acad).to be true
+              it "shows one More Info link on My Academics for UID #{uid}" do
+                expect(acad_has_more_info_link).to eql(1)
               end
 
-              # Appointments on semester page
-              tele_bears_term = academics_api.tele_bears_term_year
-              if my_academics_page.has_student_semester_link(driver, tele_bears_term)
-                my_academics_page.click_first_student_semester
-                my_academics_page.adviser_code_msg_element.when_visible WebDriverUtils.academics_timeout
-                has_more_info_link_semester = my_academics_page.more_info_link?
-                has_red_code_icon_semester = my_academics_page.code_required_icon?
-                has_green_code_icon_semester = my_academics_page.code_not_required_icon?
-                code_required_msg_semester = my_academics_page.adviser_code_msg
-                phase_one_start_semester = my_academics_page.phase_one_start_time
-                phase_one_end_semester = my_academics_page.phase_one_end_time
-                phase_two_start_semester = my_academics_page.phase_two_start_time
-                phase_two_end_semester = my_academics_page.phase_two_end_time
-                if code_required_api == true
-                  it "shows a red code-required icon on the semester page for UID #{uid}" do
-                    expect(has_red_code_icon_semester).to be true
+              # Appointments on semester pages
+              api_appts_for_all_semesters.each do |term|
+                semester_appts = []
+                semester_appts.push(term)
+                term_year = academics_api.tele_bears_term_year(semester_appts[0])
+                if my_academics_page.has_student_semester_link(driver, term_year)
+                  api_semester_adv_code_reqts = academics_api.tele_bears_adviser_codes(semester_appts)
+                  api_semester_adv_code_msg = academics_api.tele_bears_adviser_code_msgs(semester_appts)
+                  api_semester_phase_starts = academics_api.tele_bears_phase_starts(semester_appts)
+                  api_semester_phase_endings = academics_api.tele_bears_phase_endings(semester_appts)
+
+                  my_academics_page.load_semester_page(driver, academics_api.tele_bears_semester_slug(semester_appts[0]))
+                  my_academics_page.tele_bears_card_heading_element.when_visible WebDriverUtils.academics_timeout
+                  acad_semester_more_info_link = my_academics_page.more_info_semester_link?
+                  acad_semester_adv_code_reqts = my_academics_page.all_telebears_adviser_icons
+                  acad_semester_adv_code_msgs = my_academics_page.all_telebears_adviser_msgs
+                  acad_semester_phase_starts = my_academics_page.all_phase_start_times
+                  acad_semester_phase_endings = my_academics_page.all_phase_end_times
+                  it "shows the right code-required icons on My Academics for UID #{uid}" do
+                    expect(acad_semester_adv_code_reqts.sort).to eql(api_semester_adv_code_reqts.sort)
                   end
-                else
-                  it "shows a green code-required icon on the semester page for UID #{uid}" do
-                    expect(has_green_code_icon_semester).to be true
+                  it "shows the right code-required messages on My Academics for UID #{uid}" do
+                    expect(acad_semester_adv_code_msgs.sort).to eql(api_semester_adv_code_msg.sort)
+                  end
+                  it "shows the right phase start dates and times on My Academics for #{uid}" do
+                    expect(acad_semester_phase_starts.sort).to eql(api_semester_phase_starts.sort)
+                  end
+                  it "shows the right phase ending dates and times on My Academics for #{uid}" do
+                    expect(acad_semester_phase_endings.sort).to eql(api_semester_phase_endings.sort)
+                  end
+                  it "shows a More Info link on My Academics for UID #{uid}" do
+                    expect(acad_semester_more_info_link).to be true
                   end
                 end
-                it "shows the code-required message on the semester page for UID #{uid}" do
-                  expect(code_required_msg_semester).to eql(code_required_msg_api)
-                end
-                it "shows the right phase one start time on the semester page for #{uid}" do
-                  expect(phase_one_start_semester).to eql(phase_one_start_api)
-                end
-                it "shows the right phase one end time on the semester page for #{uid}" do
-                  expect(phase_one_end_semester).to eql(phase_one_end_api)
-                end
-                it "shows the right phase two start time on the semester page for #{uid}" do
-                  expect(phase_two_start_semester).to eql(phase_two_start_api)
-                end
-                it "shows the right phase two end time on the semester page for #{uid}" do
-                  expect(phase_two_end_semester).to eql(phase_two_end_api)
-                end
-                it "shows a More Info link on the semester page for UID #{uid}" do
-                  expect(has_more_info_link_semester).to be true
-                end
+              end
+            else
+              has_tele_bears_card = my_academics_page.tele_bears_card_heading?
+              it "shows no Tele-BEARS information for UID #{uid}" do
+                expect(has_tele_bears_card).to be false
               end
             end
           rescue => e
@@ -151,9 +131,13 @@ describe 'My Academics Tele-BEARS card', :testui => true do
           end
         end
       end
+
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n")
     ensure
+      it 'has Tele-BEARS info for at least one of the test UIDs' do
+        expect(testable_users.length).to be > 0
+      end
       logger.info 'Quitting the browser'
       driver.quit
     end
