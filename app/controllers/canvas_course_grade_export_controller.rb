@@ -11,13 +11,16 @@ class CanvasCourseGradeExportController < ApplicationController
     authorize canvas_course, :can_export_grades?
   end
 
+  # GET /api/academics/canvas/egrade_export/download.csv
   def download_egrades_csv
     raise Errors::BadRequestError, "term_cd required" unless params[:term_cd]
     raise Errors::BadRequestError, "term_yr required" unless params[:term_yr]
     raise Errors::BadRequestError, "ccn required" unless params[:ccn]
+    raise Errors::BadRequestError, "type required" unless params[:type]
+    raise Errors::BadRequestError, "invalid value for 'type' parameter" unless Canvas::Egrades::GRADE_TYPES.include?(params[:type])
     canvas_course_id = session[:canvas_course_id].to_i
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
-    official_student_grades = egrades_worker.official_student_grades_csv(params[:term_cd], params[:term_yr], params[:ccn])
+    official_student_grades = egrades_worker.official_student_grades_csv(params[:term_cd], params[:term_yr], params[:ccn], params[:type])
     respond_to do |format|
       format.csv { render csv: official_student_grades.to_s, filename: "course_#{canvas_course_id}_grades" }
     end
