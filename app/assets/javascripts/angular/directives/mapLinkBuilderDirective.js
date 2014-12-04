@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function() {
+  angular.module('calcentral.directives').directive('ccMapLinkBuilderDirective', function($compile) {
     /**
      * buildingLinkName is used in the location name handed to Google Maps.
      * Need to pre-process in case it includes special chars. We are guaranteed
@@ -55,6 +55,10 @@
 
         var elements = createElements(scope.locations);
         elm.append(elements);
+
+        // We need to compile so other directives
+        // (e.g. outboundLink) are invoked as well
+        $compile(elm.contents())(scope);
       }
     };
   });
