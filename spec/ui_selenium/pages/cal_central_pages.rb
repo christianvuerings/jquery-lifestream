@@ -98,14 +98,15 @@ module CalCentralPages
   end
 
   def wait_for_status_popover
-    if status_loading_element.visible?
-      status_loading_element.when_not_visible(timeout=WebDriverUtils.page_event_timeout)
-    end
+    logger.debug('Waiting for status popover to be present')
+    status_icon_element.when_present(timeout=WebDriverUtils.page_event_timeout)
   end
 
   def open_status_popover
+    logger.debug('Waiting for status popover to become visible')
     status_icon_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     unless status_popover_heading_element.visible?
+      logger.debug('Clicking status popover to open the content')
       status_icon
     end
   end

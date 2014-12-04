@@ -12,7 +12,7 @@ require_relative 'pages/api_my_badges_page'
 require_relative 'pages/api_my_status_page'
 require_relative 'pages/api_my_academics_page'
 
-describe 'Status and Blocks information', :testui => true do
+describe 'My Academics Status and Blocks', :testui => true do
 
   if ENV["UI_TEST"]
 
@@ -20,17 +20,12 @@ describe 'Status and Blocks information', :testui => true do
 
     begin
       driver = WebDriverUtils.driver
-      output_dir = Rails.root.join('tmp', 'ui_selenium_ouput')
-      unless File.exists?(output_dir)
-        FileUtils.mkdir_p(output_dir)
-      end
-      test_output = Rails.root.join(output_dir, 'my_academics_data_status_blocks.csv')
-      logger.info('Opening output CSV')
+      test_output = UserUtils.initialize_output_csv(self)
+      test_users = UserUtils.open_test_uid_csv
+
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'Student', 'Registered', 'Resident', 'Active Block', 'Block Types', 'Block History', 'Errors']
+        user_info_csv << ['UID', 'Student', 'Registered', 'Resident', 'Active Block', 'Block Types', 'Block History', 'Error?']
       end
-      logger.info('Loading test users')
-      test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
 
       test_users.each do |user|
         if user['status']
