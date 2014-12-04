@@ -1,32 +1,50 @@
 .cc-page-course-grade-export {
   margin: 10px;
 
-  .cc-page-course-grade-export-notice {
-    color: #f00;
-    margin-bottom: 5px;
-    padding: 5px 0 0 20px;
+  // Reset to avoid default Foundation form styling
+  p {
+    margin-bottom: 10px;
   }
 
-  .cc-page-course-grade-export-container {
-    padding: 10px 0 0 20px;
-    width: 190px;
+  .cc-page-course-grade-export-download-button-container {
+    border: $bc-color-off-black 1px solid;
+    margin: 10px;
+  }
 
-    a.cc-page-course-grade-export-download-button {
-      padding: 10px 22px;
-    }
+  a.cc-page-course-grade-export-download-button {
+    display: block;
+    margin: 10px;
+    padding: 10px 22px;
+    text-align: center;
+  }
 
-    .cc-page-course-grade-export-grade-link {
-      margin: 15px 0;
-      text-align: center;
-    }
+  .cc-page-course-grade-export-download-description {
+    min-height: 90px;
+    padding: 4px 10px;
+    text-align: center;
+  }
+
+  .cc-page-course-grade-export-download-header {
+    padding: 4px 10px;
+    text-align: center;
+  }
+
+  .cc-page-course-grade-export-more-info-container {
+    margin: 10px;
+  }
+
+  .cc-page-course-grade-export-notice {
+    color: $bc-color-notice-red-header;
+  }
+
+  .cc-page-course-grade-export-section-select {
+    margin: 10px;
   }
 
   .cc-page-course-grade-export-error-display {
     padding: 20px;
-
     .cc-page-course-grade-export-warning {
       color: $bc-color-notice-warning;
     }
-
   }
 }
