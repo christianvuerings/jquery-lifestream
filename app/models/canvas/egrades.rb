@@ -7,19 +7,22 @@ module Canvas
   class Egrades
     extend Cache::Cacheable
 
+    GRADE_TYPES = ['final','current']
+
     def initialize(options = {})
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
     end
 
-    def official_student_grades_csv(term_cd, term_yr, ccn)
+    def official_student_grades_csv(term_cd, term_yr, ccn, type)
+      raise ArgumentError, 'type argument must be \'final\' or \'current\'' unless GRADE_TYPES.include?(type)
       official_students = official_student_grades(term_cd, term_yr, ccn)
       CSV.generate do |csv|
         csv << ['student_id','grade','comment']
         official_students.each do |student|
           comment = (student[:pnp_flag] == "Y") ? "Opted for P/NP Grade" : ""
           student_id = student[:student_id]
-          grade = student[:final_grade]
+          grade = student["#{type}_grade".to_sym].to_s
           csv << [student_id, grade, comment]
         end
       end
