@@ -8,8 +8,8 @@
     http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
-    <blti:title>Download eGrades</blti:title>
-    <blti:description>Exports Course Grades to eGrades CSV file</blti:description>
+    <blti:title>Download E-Grades</blti:title>
+    <blti:description>Exports Course Grades to E-Grades CSV file</blti:description>
     <blti:icon>NO ICO</blti:icon>
     <blti:launch_url><%= launch_url('course_grade_export') %></blti:launch_url>
     <blti:extensions platform="canvas.instructure.com">
@@ -17,7 +17,7 @@
       <lticm:property name="privacy_level">public</lticm:property>
       <lticm:options name="course_navigation">
         <lticm:property name="url"><%= launch_url('course_grade_export') %></lticm:property>
-        <lticm:property name="text">Download eGrades</lticm:property>
+        <lticm:property name="text">Download E-Grades</lticm:property>
         <lticm:property name="visibility">admins</lticm:property>
         <lticm:property name="default">disabled</lticm:property>
         <lticm:property name="enabled">true</lticm:property>
