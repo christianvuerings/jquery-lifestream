@@ -25,6 +25,9 @@ describe 'My Academics Tele-BEARS card', :testui => true do
         user_info_csv << ['UID', 'Has Tele-BEARS', 'Adviser Messages', 'Phase Starts', 'Phase Endings', 'Error Occurred']
       end
 
+      logger.info 'Loading test users'
+      test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
+      testable_users = []
       test_users.each do |user|
         if user['teleBears']
           uid = user['uid'].to_s
@@ -122,8 +125,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
             threw_error = true
           ensure
             CSV.open(test_output, 'a+') do |user_info_csv|
-              user_info_csv << [uid, has_tele_bears, code_required_api, phase_one_start_api, phase_one_end_api, phase_two_start_api,
-                                phase_two_end_api, threw_error]
+              user_info_csv << [uid, has_tele_bears, api_adviser_code_msgs, api_phase_starts, api_phase_endings, threw_error]
             end
           end
         end
