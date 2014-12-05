@@ -22,9 +22,9 @@
         // wait until after the user presses the Add People button because the dialog isn't in the DOM yet
         clickable_element.click(function() {
           // apply modification after obtaining 'Find a Person to Add' tool LTI application ID
-          var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
-          $.get(externalToolsUrl, function(externalToolsHash) {
-            var findAPersonToAddToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' + externalToolsHash['Find a Person to Add'];
+          $.get(externalToolsUrl(), function(externalToolsHash) {
+            var findAPersonToAddToolHref = window.ENV.COURSE_ROOT_URL + '/external_tools/' +
+              externalToolId(externalToolsHash, 'globalTools', 'Find a Person to Add');
 
             // increase the height of the Add People Dialog
             $('#ui-id-2').height(450);
@@ -138,10 +138,9 @@
    * Adds 'Start a New Course' link to page
    */
   var addStartANewCourseButton = function() {
-    var externalToolsUrl = calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
-    $.get(externalToolsUrl, function(externalToolsHash) {
-      if (externalToolsHash && externalToolsHash.globalTools) {
-        var createCourseSiteId = externalToolsHash.globalTools['Course Provisioning for Users'];
+    $.get(externalToolsUrl(), function(externalToolsHash) {
+      var createCourseSiteId = externalToolId(externalToolsHash, 'globalTools', 'Course Provisioning for Users');
+      if (createCourseSiteId) {
         var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
 
         var $headerWithAddCourseSiteButton = $('<div/>', {
@@ -164,7 +163,7 @@
   };
 
   /**
-   * Adds E-Grade Export to Canvas Gradebook feature
+   * Adds E-Grades Export to Canvas Gradebook feature
    */
   var addEGradeExportOption = function() {
     // obtain course context id
@@ -177,25 +176,22 @@
         // if course site contains official course sections
         $.get(officialCourseUrl(courseId), function(officialCourseResponse) {
           if (officialCourseResponse && officialCourseResponse.isOfficialCourse === true) {
-            // add link for E-Grades Export LTI tool
+            // add link for eGrades Export LTI tool
             $.get(externalToolsUrl(), function(externalToolsHash) {
-              if (externalToolsHash && externalToolsHash.officialCourseTools) {
+              var gradesExportLtiId = externalToolId(externalToolsHash, 'officialCourseTools', 'Download E-Grades');
+              if (gradesExportLtiId) {
                 // form link to external tool
-                var gradesExportLtiId = externalToolsHash.officialCourseTools['Download E-Grades'];
-                var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
-
-                if (gradesExportLtiId !== undefined) {
-                  // add 'Download E-Grades (.csv)' option to gradebook drop down menu
-                  var $downloadScoresListItem = $('a#download_csv').parent();
-                  var downloadEGradesItem = [
-                    '<li class="ui-menu-item" role="presentation">',
-                    '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
-                    'Download E-Grades (.csv)',
-                    '</a>',
-                    '</li>'
-                  ].join('');
-                  $downloadScoresListItem.after(downloadEGradesItem);
-                }
+                var linkUrl = window.ENV.COURSE_ROOT_URL + '/external_tools/' + gradesExportLtiId;
+                // add 'Download E-Grades (.csv)' option to gradebook drop down menu
+                var $downloadScoresListItem = $('a#download_csv').parent();
+                var downloadEGradesItem = [
+                  '<li class="ui-menu-item" role="presentation">',
+                  '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
+                  'Download E-Grades (.csv)',
+                  '</a>',
+                  '</li>'
+                ].join('');
+                $downloadScoresListItem.after(downloadEGradesItem);
               }
             });
           }
@@ -218,6 +214,17 @@
    */
   var externalToolsUrl = function() {
     return calcentralRootUrl() + '/api/academics/canvas/external_tools.json';
+  };
+
+  /**
+   * Safe search of External Tools API
+   */
+  var externalToolId = function(externalToolsHash, toolType, toolName) {
+    if (externalToolsHash && externalToolsHash[toolType]) {
+      return externalToolsHash[toolType][toolName];
+    } else {
+      return false;
+    }
   };
 
   /**
