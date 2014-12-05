@@ -6,7 +6,7 @@
    * Canvas Add User to Course LTI app controller
    */
   angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, $http, $scope) {
-    apiService.util.setTitle('eGrade Export');
+    apiService.util.setTitle('E-Grade Export');
 
     $scope.appState = 'initializing';
 
@@ -44,7 +44,7 @@
           getExportOptions();
         } else {
           $scope.appState = 'error';
-          $scope.errorStatus = 'You must be a teacher in this bCourses course to export to eGrades CSV.';
+          $scope.errorStatus = 'You must be a teacher in this bCourses course to export to E-Grades CSV.';
         }
       }).error(function(data) {
         $scope.userAuthorized = false;

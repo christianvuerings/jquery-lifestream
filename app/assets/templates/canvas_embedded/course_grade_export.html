@@ -1,23 +1,63 @@
 <div class="cc-page-course-grade-export">
 
   <div data-ng-if="appState === 'ready'">
+    <div class="row collapse">
+      <div class="medium-12 columns">
+        <h1>Download E-Grades (.csv)</h1>
+        <p>There are two options for downloading grades for use with E-Grades.</p>
 
-    <p class="cc-page-course-grade-export-notice">
-      Please click "Download eGrades" only once. It may require up to 2 minutes to complete for courses with more than 200 enrolled students.
-    </p>
-
-    <div class="cc-page-course-grade-export-container">
-      <p>
-        Select Section: <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
-      </p>
-
-      <a data-ng-href="/api/academics/canvas/egrade_export/download.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}" target="_self" class="cc-button cc-page-course-grade-export-download-button">Download eGrades</a>
-
-      <div class="cc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
-        <a data-ng-click="goToGradebook()">Back to Gradebook</a>
+        <p class="cc-page-course-grade-export-notice">
+          Please click to download the CSV file only once. It may require up to 2 minutes to complete for courses with more than 200 enrolled students.
+        </p>
       </div>
     </div>
 
+    <div class="row collapse">
+      <div class="medium-2 columns">
+        <div class="cc-page-course-grade-export-section-select">
+          <label for="course-sections" class="">Select Section:</label>
+          <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row collapse">
+      <div class="medium-4 columns">
+        <div class="cc-page-course-grade-export-download-button-container">
+          <h2 class="cc-page-course-grade-export-download-header">Current Grades Download</h2>
+          <p class="cc-page-course-grade-export-download-description">
+            Current grades download ignores unsubmitted assignments when calculating grades.
+            Use this download when you want to excuse unsubmitted assignments.
+          </p>
+          <a data-ng-href="/api/academics/canvas/egrade_export/download.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=current" target="_self" class="cc-button cc-page-course-grade-export-download-button">Current Grades Download</a>
+        </div>
+      </div>
+
+      <div class="medium-4 columns end">
+        <div class="cc-page-course-grade-export-download-button-container">
+          <h2 class="cc-page-course-grade-export-download-header">Final Grades Download</h2>
+          <p class="cc-page-course-grade-export-download-description">
+            Final grades download counts unsubmitted assignments as zeroes when calculating grades.
+            Use this download when you want to include all unsubmitted assignments as part of the grade.
+          </p>
+          <a data-ng-href="/api/academics/canvas/egrade_export/download.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=final" target="_self" class="cc-button cc-page-course-grade-export-download-button">Final Grades Download</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row collapse">
+      <div class="medium-12 columns">
+        <p class="cc-page-course-grade-export-more-info-container">
+          For more information, see <a href="http://ets.berkeley.edu/bcourses/how-do-i-submit-grades-e-grades-bcourses">How do I Submit Grades to E-Grades from bCourses?</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="row collapse">
+      <div class="medium-12 columns cc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
+        <button class="cc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</a>
+      </div>
+    </div>
   </div>
 
   <div data-ng-if="appState === 'error'" class="cc-page-course-grade-export-error-display">
@@ -39,7 +79,7 @@
         ACTION REQUIRED!
       </p>
       <p>
-        Letter grades are required by the eGrades system. A grading scheme must be applied to calculate
+        Letter grades are required by the E-Grades system. A grading scheme must be applied to calculate
         student letter grades.
       </p>
       <p>

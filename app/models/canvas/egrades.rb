@@ -7,19 +7,22 @@ module Canvas
   class Egrades
     extend Cache::Cacheable
 
+    GRADE_TYPES = ['final','current']
+
     def initialize(options = {})
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
     end
 
-    def official_student_grades_csv(term_cd, term_yr, ccn)
+    def official_student_grades_csv(term_cd, term_yr, ccn, type)
+      raise ArgumentError, 'type argument must be \'final\' or \'current\'' unless GRADE_TYPES.include?(type)
       official_students = official_student_grades(term_cd, term_yr, ccn)
       CSV.generate do |csv|
         csv << ['student_id','grade','comment']
         official_students.each do |student|
           comment = (student[:pnp_flag] == "Y") ? "Opted for P/NP Grade" : ""
           student_id = student[:student_id]
-          grade = student[:final_grade]
+          grade = student["#{type}_grade".to_sym].to_s
           csv << [student_id, grade, comment]
         end
       end
@@ -49,20 +52,24 @@ module Canvas
           :sis_login_id => course_user['sis_login_id'],
           :name => course_user['name'],
           :final_score => user_grade[:final_score],
-          :final_grade => user_grade[:final_grade]
+          :final_grade => user_grade[:final_grade],
+          :current_score => user_grade[:current_score],
+          :current_grade => user_grade[:current_grade],
         }
       end
       course_students
     end
 
-    # Extracts final score and grade from enrollments
+    # Extracts scores and grades from enrollments
     def student_grade(enrollments)
-      grade = { :final_score => nil, :final_grade => nil }
+      grade = { :current_score => nil, :current_grade => nil, :final_score => nil, :final_grade => nil }
       return grade if enrollments.to_a.empty?
       enrollments.reject! {|e| e['type'] != 'StudentEnrollment' || !e.include?('grades') }
       return grade if enrollments.to_a.empty?
       grades = enrollments[0]['grades']
       # multiple student enrollments carry identical grades for course user in canvas
+      grade[:current_score] = grades['current_score'] if grades.include?('current_score')
+      grade[:current_grade] = grades['current_grade'] if grades.include?('current_grade')
       grade[:final_score] = grades['final_score'] if grades.include?('final_score')
       grade[:final_grade] = grades['final_grade'] if grades.include?('final_grade')
       grade

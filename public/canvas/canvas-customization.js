@@ -164,7 +164,7 @@
   };
 
   /**
-   * Adds eGrade Export to Canvas Gradebook feature
+   * Adds E-Grade Export to Canvas Gradebook feature
    */
   var addEGradeExportOption = function() {
     // obtain course context id
@@ -177,20 +177,20 @@
         // if course site contains official course sections
         $.get(officialCourseUrl(courseId), function(officialCourseResponse) {
           if (officialCourseResponse && officialCourseResponse.isOfficialCourse === true) {
-            // add link for eGrades Export LTI tool
+            // add link for E-Grades Export LTI tool
             $.get(externalToolsUrl(), function(externalToolsHash) {
               if (externalToolsHash && externalToolsHash.officialCourseTools) {
                 // form link to external tool
-                var gradesExportLtiId = externalToolsHash.officialCourseTools['Download eGrades'];
+                var gradesExportLtiId = externalToolsHash.officialCourseTools['Download E-Grades'];
                 var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
 
                 if (gradesExportLtiId !== undefined) {
-                  // add 'Download eGrades (.csv)' option to gradebook drop down menu
+                  // add 'Download E-Grades (.csv)' option to gradebook drop down menu
                   var $downloadScoresListItem = $('a#download_csv').parent();
                   var downloadEGradesItem = [
                     '<li class="ui-menu-item" role="presentation">',
                     '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
-                    'Download eGrades (.csv)',
+                    'Download E-Grades (.csv)',
                     '</a>',
                     '</li>'
                   ].join('');

@@ -7,17 +7,45 @@ describe Canvas::Egrades do
 
   let(:canvas_course_students_list) do
     [
-      {:sis_login_id => "872584", :sis_user_id => "UID:872527", :final_score => 34.9, :final_grade => "F", :pnp_flag => "N", :student_id => "2004491"},
-      {:sis_login_id => "4000123", :sis_user_id => "UID:4000123", :final_score => 89.5, :final_grade => "B", :pnp_flag => "N", :student_id => "24000123"},
-      {:sis_login_id => "872527", :sis_user_id => "2004445", :final_score => 99.5, :final_grade => "A+", :pnp_flag => "Y", :student_id => "2004445"},
-      {:sis_login_id => "872529", :sis_user_id => "2004421", :final_score => 69.6, :final_grade => "D-", :pnp_flag => "N", :student_id => "2004421"},
+      {:sis_login_id => "872584", :sis_user_id => "UID:872527", :final_score => 34.9, :final_grade => "F", :current_score => 72.3, :current_grade => "C", :pnp_flag => "N", :student_id => "2004491"},
+      {:sis_login_id => "4000123", :sis_user_id => "UID:4000123", :final_score => 89.5, :final_grade => "B", :current_score => 89.5, :current_grade => "B", :pnp_flag => "N", :student_id => "24000123"},
+      {:sis_login_id => "872527", :sis_user_id => "2004445", :final_score => 99.5, :final_grade => "A+", :current_score => 99.5, :current_grade => "A+", :pnp_flag => "Y", :student_id => "2004445"},
+      {:sis_login_id => "872529", :sis_user_id => "2004421", :final_score => 69.6, :final_grade => "D-", :current_score => 73.1, :current_grade => "C", :pnp_flag => "N", :student_id => "2004421"},
     ]
   end
 
   context "when serving official student grades csv" do
     before { allow(subject).to receive(:official_student_grades).with('C', '2014', '7309').and_return(canvas_course_students_list) }
-    it "returns information relevant to egrades csv export" do
-      official_grades_csv_string = subject.official_student_grades_csv('C', '2014', '7309')
+    it "raises error when called with invalid type argument" do
+      expect { subject.official_student_grades_csv('C', '2014', '7309', 'finished') }.to raise_error(ArgumentError, 'type argument must be \'final\' or \'current\'')
+    end
+
+    it "returns current grades" do
+      official_grades_csv_string = subject.official_student_grades_csv('C', '2014', '7309', 'current')
+      expect(official_grades_csv_string).to be_an_instance_of String
+      official_grades_csv = CSV.parse(official_grades_csv_string, {headers: true})
+      expect(official_grades_csv.count).to eq 4
+      official_grades_csv.each do |grade|
+        expect(grade).to be_an_instance_of CSV::Row
+        expect(grade['student_id']).to be_an_instance_of String
+        expect(grade['grade']).to be_an_instance_of String
+        expect(grade['comment']).to be_an_instance_of String
+      end
+      expect(official_grades_csv[0]['student_id']).to eq "2004491"
+      expect(official_grades_csv[0]['grade']).to eq "C"
+      expect(official_grades_csv[0]['comment']).to eq ""
+
+      expect(official_grades_csv[2]['student_id']).to eq "2004445"
+      expect(official_grades_csv[2]['grade']).to eq "A+"
+      expect(official_grades_csv[2]['comment']).to eq "Opted for P/NP Grade"
+
+      expect(official_grades_csv[3]['student_id']).to eq "2004421"
+      expect(official_grades_csv[3]['grade']).to eq "C"
+      expect(official_grades_csv[3]['comment']).to eq ""
+    end
+
+    it "returns final grades" do
+      official_grades_csv_string = subject.official_student_grades_csv('C', '2014', '7309', 'final')
       expect(official_grades_csv_string).to be_an_instance_of String
       official_grades_csv = CSV.parse(official_grades_csv_string, {headers: true})
       expect(official_grades_csv.count).to eq 4
@@ -87,32 +115,45 @@ describe Canvas::Egrades do
       result = subject.canvas_course_students
       expect(result).to be_an_instance_of Array
       expect(result.count).to eq 6
+
       # Student with Grade
       expect(result[0][:sis_login_id]).to eq "4000123"
       expect(result[0][:sis_user_id]).to eq "UID:4000123"
       expect(result[0][:final_score]).to eq 34.9
       expect(result[0][:final_grade]).to eq "F"
+      expect(result[0][:current_score]).to eq 34.9
+      expect(result[0][:current_grade]).to eq "F"
       # Teacher Enrollment
       expect(result[1][:sis_login_id]).to eq "4000169"
       expect(result[1][:final_score]).to eq nil
       expect(result[1][:final_grade]).to eq nil
+      expect(result[1][:current_score]).to eq nil
+      expect(result[1][:current_grade]).to eq nil
       # Student with No Grade
       expect(result[2][:sis_login_id]).to eq "4000309"
       expect(result[2][:final_score]).to eq nil
       expect(result[2][:final_grade]).to eq nil
+      expect(result[2][:current_score]).to eq nil
+      expect(result[2][:current_grade]).to eq nil
       # Student with Grade
       expect(result[3][:sis_login_id]).to eq "4000189"
       expect(result[3][:final_score]).to eq 89.9
       expect(result[3][:final_grade]).to eq "B+"
+      expect(result[3][:current_score]).to eq 89.9
+      expect(result[3][:current_grade]).to eq "B+"
       # Student with Grade
       expect(result[4][:sis_login_id]).to eq "4000199"
       expect(result[4][:final_score]).to eq 69.5
       expect(result[4][:final_grade]).to eq "D-"
+      expect(result[4][:current_score]).to eq 71.8
+      expect(result[4][:current_grade]).to eq "C"
       # Student with Grade
       expect(result[5][:sis_login_id]).to eq "4000272"
       expect(result[5][:sis_user_id]).to eq "20629333"
       expect(result[5][:final_score]).to eq 10.5
       expect(result[5][:final_grade]).to eq "F-"
+      expect(result[5][:current_score]).to eq 10.5
+      expect(result[5][:current_grade]).to eq "F-"
     end
 
     it "should not source data from cache" do
@@ -127,9 +168,9 @@ describe Canvas::Egrades do
         "type"=>"StudentEnrollment",
         "role"=>"StudentEnrollment",
         "grades"=>{
-          "current_score"=>95.0,
+          "current_score"=>96.5,
           "final_score"=>95.0,
-          "current_grade"=>"A",
+          "current_grade"=>"A+",
           "final_grade"=>"A"
         }
       }
@@ -139,6 +180,8 @@ describe Canvas::Egrades do
     it "returns empty grade hash when enrollments are empty" do
       result = subject.student_grade([])
       expect(result).to be_an_instance_of Hash
+      expect(result[:current_score]).to eq nil
+      expect(result[:current_grade]).to eq nil
       expect(result[:final_score]).to eq nil
       expect(result[:final_grade]).to eq nil
     end
@@ -147,22 +190,30 @@ describe Canvas::Egrades do
       waitlist_student_enrollment.delete('grades')
       result = subject.student_grade([ta_enrollment, waitlist_student_enrollment])
       expect(result).to be_an_instance_of Hash
+      expect(result[:current_score]).to eq nil
+      expect(result[:current_grade]).to eq nil
       expect(result[:final_score]).to eq nil
       expect(result[:final_grade]).to eq nil
     end
 
     it "returns blank grade score when not present" do
+      student_enrollment['grades'].delete('current_score')
       student_enrollment['grades'].delete('final_score')
       result = subject.student_grade([student_enrollment])
       expect(result).to be_an_instance_of Hash
+      expect(result[:current_score]).to eq nil
+      expect(result[:current_grade]).to eq "A+"
       expect(result[:final_score]).to eq nil
       expect(result[:final_grade]).to eq "A"
     end
 
     it "returns blank letter grade when not present" do
+      student_enrollment['grades'].delete('current_grade')
       student_enrollment['grades'].delete('final_grade')
       result = subject.student_grade([student_enrollment])
       expect(result).to be_an_instance_of Hash
+      expect(result[:current_score]).to eq 96.5
+      expect(result[:current_grade]).to eq nil
       expect(result[:final_score]).to eq 95.0
       expect(result[:final_grade]).to eq nil
     end
@@ -170,6 +221,8 @@ describe Canvas::Egrades do
     it "returns grade when student enrollment is present" do
       result = subject.student_grade([ta_enrollment, waitlist_student_enrollment, student_enrollment])
       expect(result).to be_an_instance_of Hash
+      expect(result[:current_score]).to eq 96.5
+      expect(result[:current_grade]).to eq "A+"
       expect(result[:final_score]).to eq 95.0
       expect(result[:final_grade]).to eq "A"
     end
