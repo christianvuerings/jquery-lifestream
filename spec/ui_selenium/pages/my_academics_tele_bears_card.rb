@@ -12,14 +12,53 @@ module CalCentralPages
     include CalCentralPages
     include ClassLogger
 
-    link(:more_info_link, :xpath => '//h3[contains(.,"Tele-BEARS for")]//a[contains(.,"More Info")]')
-    div(:code_required_icon, :xpath => '//div[@class="cc-clearfix cc-academics-adviser-message-container ng-scope"]//i[@class="cc-left fa fa-exclamation-circle cc-icon-red"]')
-    div(:code_not_required_icon, :xpath => '//div[@class="cc-clearfix cc-academics-adviser-message-container ng-scope"]//i[@class="cc-left fa fa-check-circle cc-icon-green"]')
-    div(:adviser_code_msg, :xpath => '//div[@data-ng-bind="telebears.adviserCodeRequired.message"]')
-    div(:phase_one_start_time, :xpath => '//h4[text()="Tele-BEARS Phase I"]/following-sibling::ul//div[@data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
-    div(:phase_one_end_time, :xpath => '//h4[text()="Tele-BEARS Phase I"]/following-sibling::ul//div[@data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
-    div(:phase_two_start_time, :xpath => '//h4[text()="Tele-BEARS Phase II"]/following-sibling::ul//div[@data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
-    div(:phase_two_end_time, :xpath => '//h4[text()="Tele-BEARS Phase II"]/following-sibling::ul//div[@data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
+    h2(:tele_bears_card_heading, :xpath => '//h2[text()="Tele-BEARS"]')
+    elements(:semester_heading, :h3, :xpath => '//h3[contains(.,"Tele-BEARS for")]')
+    elements(:more_info_link, :link, :xpath => '//h3[contains(text(),"Tele-BEARS for")]//a[contains(text(),"More Info")][@href="http://registrar.berkeley.edu/tbfaqs.html"]')
+    link(:more_info_semester_link, :xpath => '//a[contains(text(),"More Info")][@href="http://registrar.berkeley.edu/tbfaqs.html"]')
+    elements(:adviser_code_icon, :image, :xpath => '//div[@class="cc-clearfix cc-academics-adviser-message-container ng-scope"]//i')
+    elements(:adviser_code_msg, :div, :xpath => '//div[@data-ng-bind="telebears.adviserCodeRequired.message"]')
+    elements(:phase_start_time, :div, :xpath => '//h4[contains(.,"Tele-BEARS Phase ")]/following-sibling::ul//div[@data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
+    elements(:phase_end_time, :div, :xpath => '//h4[contains(.,"Tele-BEARS Phase ")]/following-sibling::ul//div[@data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
 
+    def all_telebears_semesters
+      semester_headings = []
+      semester_heading_elements.each { |heading| semester_headings.push(heading.text)  }
+      semester_headings
+    end
+
+    def all_telebears_adviser_icons
+      icons = []
+      adviser_code_icon_elements.each do |icon|
+        icon_type = icon.attribute('class')
+        if icon_type == 'cc-left fa fa-exclamation-circle cc-icon-red'
+          icon_type = true
+        elsif icon_type == 'cc-left fa fa-check-circle cc-icon-green'
+          icon_type = false
+        else
+          icon_type = nil
+        end
+        icons.push(icon_type)
+      end
+      icons
+    end
+
+    def all_telebears_adviser_msgs
+      messages = []
+      adviser_code_msg_elements.each { |msg| messages.push(msg.text) }
+      messages
+    end
+
+    def all_phase_start_times
+      start_times = []
+      phase_start_time_elements.each { |time| start_times.push(time.text) }
+      start_times
+    end
+
+    def all_phase_end_times
+      end_times = []
+      phase_end_time_elements.each { |time| end_times.push(time.text) }
+      end_times
+    end
   end
 end

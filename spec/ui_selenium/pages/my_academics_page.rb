@@ -36,5 +36,10 @@ module CalCentralPages
       first_student_semester_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       first_student_semester_link
     end
+
+    def load_semester_page(driver, semester)
+      logger.info("Loading semester page for #{semester}")
+      driver.get(WebDriverUtils.base_url + '/academics/semester/' + semester)
+    end
   end
 end

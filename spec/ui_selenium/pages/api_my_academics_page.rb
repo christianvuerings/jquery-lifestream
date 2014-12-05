@@ -119,37 +119,71 @@ class ApiMyAcademicsPage
 
   # TELE-BEARS
 
+  def tele_bears
+    @parsed['telebears']
+  end
+
   def has_tele_bears
     begin
-      tele_bears_phases.length > 0
+      tele_bears.length > 0
       true
     rescue
       false
     end
   end
 
-  def tele_bears_term_year
-    @parsed['telebears']['term'] + ' ' + @parsed['telebears']['year'].to_s
+  def tele_bears_phases(semesters)
+    all_phases = []
+    semesters.each { |semester| all_phases.concat(semester['phases']) }
+    all_phases
   end
 
-  def tele_bears_code_required
-    @parsed['telebears']['adviserCodeRequired']['required']
+  def tele_bears_term_year(semester)
+    semester['term'] + ' ' + semester['year'].to_s
   end
 
-  def tele_bears_code_message
-    @parsed['telebears']['adviserCodeRequired']['message']
+  def tele_bears_term_years(semesters)
+    term_years = []
+    semesters.each { |semester| term_years.concat(semester['term'] + ' ' + semester['year'].to_s) }
+    term_years
   end
 
-  def tele_bears_phases
-    @parsed['telebears']['phases']
+  def tele_bears_semester_slug(semester)
+    semester['slug']
   end
 
-  def tele_bears_phase_period(phase)
-    phase['period']
+  def tele_bears_adviser_codes(semesters)
+    code_reqts = []
+    semesters.each { |semester| code_reqts.push(semester['adviserCodeRequired']['required']) }
+    code_reqts
+  end
+
+  def tele_bears_adviser_code_msgs(semesters)
+    code_msgs = []
+    semesters.each { |semester| code_msgs.push(semester['adviserCodeRequired']['message']) }
+    code_msgs
+  end
+
+  def tele_bears_phase_starts(semesters)
+    epochs = []
+    tele_bears_phases(semesters).each { |item| epochs.push(item['startTime']['epoch'].to_s) }
+    phase_starts = []
+    epochs.each { |epoch| phase_starts.push(tele_bears_date_time(epoch)) }
+    phase_starts
+  end
+
+  def tele_bears_phase_endings(semesters)
+    epochs = []
+    tele_bears_phases(semesters).each { |item| epochs.push(item['endTime']['epoch'].to_s) }
+    phase_ends = []
+    epochs.each { |item| phase_ends.push(tele_bears_date_time(item)) }
+    phase_ends
   end
 
   def tele_bears_date_time(epoch)
     date = (Time.strptime(epoch, '%s')).strftime("%a %b %-d")
+    # date = epoch.strftime("%a %b %-d")
+    # time = epoch.strftime("%-l:%M %p")
     time = (Time.strptime(epoch, '%s')).strftime("%-l:%M %p")
     if time == '12:00 PM'
       date_time = date + ' | ' + 'Noon'
@@ -157,15 +191,5 @@ class ApiMyAcademicsPage
       date_time = date + ' | ' + time
     end
     date_time
-  end
-
-  def tele_bears_phase_start(phase)
-    epoch = phase['startTime']['epoch'].to_s
-    tele_bears_date_time(epoch)
-  end
-
-  def tele_bears_phase_end(phase)
-    epoch = phase['endTime']['epoch'].to_s
-    tele_bears_date_time(epoch)
   end
 end
