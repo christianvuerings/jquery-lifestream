@@ -17,17 +17,15 @@ describe 'My Academics Tele-BEARS card', :testui => true do
     include ClassLogger
 
     begin
-      driver = WebDriverUtils.driver
-      test_output = UserUtils.initialize_output_csv(self)
       test_users = UserUtils.open_test_uid_csv
+      testable_users = []
+      test_output = UserUtils.initialize_output_csv(self)
 
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Has Tele-BEARS', 'Adviser Messages', 'Phase Starts', 'Phase Endings', 'Error Occurred']
       end
 
-      logger.info 'Loading test users'
-      test_users = JSON.parse(File.read(WebDriverUtils.live_users))['users']
-      testable_users = []
+      driver = WebDriverUtils.driver
       test_users.each do |user|
         if user['teleBears']
           uid = user['uid'].to_s
@@ -47,14 +45,14 @@ describe 'My Academics Tele-BEARS card', :testui => true do
             my_academics_page = CalCentralPages::MyAcademicsPage::MyAcademicsTeleBearsCard.new driver
             my_academics_page.load_page(driver)
             my_academics_page.page_heading_element.when_visible(WebDriverUtils.academics_timeout)
-            api_appts_for_all_semesters = academics_api.tele_bears
-            if api_appts_for_all_semesters.length > 0
+            api_all_appts = academics_api.tele_bears
+            if api_all_appts.length > 0
               has_tele_bears = true
               testable_users.push(uid)
-              api_adviser_code_reqts = academics_api.tele_bears_adviser_codes(api_appts_for_all_semesters)
-              api_adviser_code_msgs = academics_api.tele_bears_adviser_code_msgs(api_appts_for_all_semesters)
-              api_phase_starts = academics_api.tele_bears_phase_starts(api_appts_for_all_semesters)
-              api_phase_endings = academics_api.tele_bears_phase_endings(api_appts_for_all_semesters)
+              api_adviser_code_reqts = academics_api.tele_bears_adviser_codes(api_all_appts)
+              api_adviser_code_msgs = academics_api.tele_bears_adviser_code_msgs(api_all_appts)
+              api_phase_starts = academics_api.tele_bears_phase_starts(api_all_appts)
+              api_phase_endings = academics_api.tele_bears_phase_endings(api_all_appts)
 
               # Appointments on main My Academics page
               my_academics_page.tele_bears_card_heading_element.when_visible(WebDriverUtils.academics_timeout)
@@ -79,19 +77,19 @@ describe 'My Academics Tele-BEARS card', :testui => true do
                 expect(acad_has_more_info_link).to eql(1)
               end
 
-              # Appointments on semester pages
-              api_appts_for_all_semesters.each do |term|
-                semester_appts = []
-                semester_appts.push(term)
-                term_year = academics_api.tele_bears_term_year(semester_appts[0])
+              # Appointments on My Academics semester pages
+              api_all_appts.each do |term|
+                term_year = academics_api.tele_bears_term_year(term)
+                term_appts = []
+                term_appts.push(term)
                 if my_academics_page.has_student_semester_link(driver, term_year)
-                  api_semester_adv_code_reqts = academics_api.tele_bears_adviser_codes(semester_appts)
-                  api_semester_adv_code_msg = academics_api.tele_bears_adviser_code_msgs(semester_appts)
-                  api_semester_phase_starts = academics_api.tele_bears_phase_starts(semester_appts)
-                  api_semester_phase_endings = academics_api.tele_bears_phase_endings(semester_appts)
-
-                  my_academics_page.load_semester_page(driver, academics_api.tele_bears_semester_slug(semester_appts[0]))
+                  my_academics_page.load_semester_page(driver, academics_api.tele_bears_semester_slug(term))
                   my_academics_page.tele_bears_card_heading_element.when_visible WebDriverUtils.academics_timeout
+                  api_semester_adv_code_reqts = academics_api.tele_bears_adviser_codes(term_appts)
+                  api_semester_adv_code_msg = academics_api.tele_bears_adviser_code_msgs(term_appts)
+                  api_semester_phase_starts = academics_api.tele_bears_phase_starts(term_appts)
+                  api_semester_phase_endings = academics_api.tele_bears_phase_endings(term_appts)
+
                   acad_semester_more_info_link = my_academics_page.more_info_semester_link?
                   acad_semester_adv_code_reqts = my_academics_page.all_telebears_adviser_icons
                   acad_semester_adv_code_msgs = my_academics_page.all_telebears_adviser_msgs
@@ -134,11 +132,11 @@ describe 'My Academics Tele-BEARS card', :testui => true do
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n")
     ensure
+      logger.info 'Quitting the browser'
+      driver.quit
       it 'has Tele-BEARS info for at least one of the test UIDs' do
         expect(testable_users.length).to be > 0
       end
-      logger.info 'Quitting the browser'
-      driver.quit
     end
   end
 end
