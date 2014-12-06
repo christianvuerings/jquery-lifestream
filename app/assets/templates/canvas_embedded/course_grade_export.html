@@ -74,22 +74,27 @@
 
     <!-- No Grading Standard Enabled -->
     <div data-ng-if="!errorStatus && noGradingStandardEnabled">
-      <p>
-        <i class="fa fa-warning cc-page-course-grade-export-warning"></i>
-        ACTION REQUIRED!
-      </p>
-      <p>
-        Letter grades are required by the E-Grades system. A grading scheme must be applied to calculate
-        student letter grades.
-      </p>
-      <p>
-        Please edit and enable the grading scheme in the <a data-ng-click="goToCourseDetails()">course details</a> page for this course site.
-        You may need to choose an alternative grading scheme for your course site other than the default scheme. Once this
-        step is completed, return here and try again.
-      </p>
-      <p>
-        For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
-      </p>
+      <h1>Download E-Grades (.csv)</h1>
+      <div class="row collapse">
+        <div class="medium-12 columns">
+          <p>
+            <i class="fa fa-warning cc-page-course-grade-export-warning"></i>
+            ACTION REQUIRED!
+          </p>
+          <p>
+            Letter grades are required by the E-Grades system. A grading scheme must be applied to calculate
+            student letter grades.
+          </p>
+          <p>
+            Please edit and enable the grading scheme in the <a data-ng-click="goToCourseDetails()">course details</a> page for this course site.
+            You may need to choose an alternative grading scheme for your course site other than the default scheme. Once this
+            step is completed, return here and try again.
+          </p>
+          <p>
+            For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
+          </p>
+        </div>
+      </div>
     </div>
 
 
