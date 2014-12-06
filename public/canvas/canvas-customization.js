@@ -181,7 +181,7 @@
               var gradesExportLtiId = externalToolId(externalToolsHash, 'officialCourseTools', 'Download E-Grades');
               if (gradesExportLtiId) {
                 // form link to external tool
-                var linkUrl = window.ENV.COURSE_ROOT_URL + '/external_tools/' + gradesExportLtiId;
+                var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
                 // add 'Download E-Grades (.csv)' option to gradebook drop down menu
                 var $downloadScoresListItem = $('a#download_csv').parent();
                 var downloadEGradesItem = [
