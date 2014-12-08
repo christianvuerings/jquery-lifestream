@@ -17,6 +17,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
     include ClassLogger
 
     begin
+      driver = WebDriverUtils.driver
       test_users = UserUtils.open_test_uid_csv
       testable_users = []
       test_output = UserUtils.initialize_output_csv(self)
@@ -25,7 +26,6 @@ describe 'My Academics Tele-BEARS card', :testui => true do
         user_info_csv << ['UID', 'Has Tele-BEARS', 'Adviser Messages', 'Phase Starts', 'Phase Endings', 'Error Occurred']
       end
 
-      driver = WebDriverUtils.driver
       test_users.each do |user|
         if user['teleBears']
           uid = user['uid'].to_s
