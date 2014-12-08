@@ -1,7 +1,9 @@
 class CanvasCourseGradeExportController < ApplicationController
 
-  before_filter :api_authenticate_401, :except => [:is_official_course]
-  before_filter :authorize_exporting_grades, :except => [:is_official_course]
+  before_action :api_authenticate_401, :except => [:is_official_course]
+  before_action :authorize_exporting_grades, :except => [:is_official_course]
+  before_action :disable_xframe_options, :only => [:download_egrades_csv]
+  skip_before_action :set_x_frame_options_header
   rescue_from StandardError, with: :handle_exception
   rescue_from Errors::ClientError, with: :handle_client_error
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
