@@ -44,7 +44,7 @@ gem 'faraday_middleware', '~> 0.9.1'
 gem 'httparty', '~> 0.13.3'
 
 # OAuth2 support
-gem 'signet', '~> 0.5.1'
+gem 'signet', '~> 0.6.0'
 gem 'google-api-client', '~> 0.7.1'
 
 # LTI support
