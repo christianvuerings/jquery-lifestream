@@ -35,8 +35,8 @@ module OecSpecHelper
     }
   end
 
-  def get_csv(dept_name, timestamp)
-    export = Oec::Courses.new(dept_name).export(random_time)
+  def get_csv(dept_name)
+    export = Oec::Courses.new(dept_name).export
     CSV.read(export[:filename])
   end
 

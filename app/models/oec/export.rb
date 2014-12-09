@@ -2,11 +2,11 @@ module Oec
   class Export < CsvExport
 
     def initialize
-      super(Settings.oec)
+      super Settings.oec
     end
 
-    def export(timestamp = DateTime.now.strftime('%F'))
-      output_filename = output_filename(base_file_name, timestamp)
+    def export
+      output_filename = "#{export_directory}/#{base_file_name}.csv"
       output = CSV.open(
         output_filename, 'wb',
         {
@@ -14,7 +14,6 @@ module Oec
           write_headers: true
         }
       )
-
       append_records output
       output.close
       {
@@ -23,15 +22,15 @@ module Oec
     end
 
     def base_file_name
-      # subclasses override to define filename
+      # subclasses override
     end
 
     def headers
-      # subclasses override to define headers
+      # subclasses override
     end
 
     def append_records(output_file)
-      # subclasses override this to do work
+      # subclasses override
     end
 
     def record_to_csv_row(record)

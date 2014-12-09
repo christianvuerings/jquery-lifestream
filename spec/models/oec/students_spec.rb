@@ -1,7 +1,5 @@
 describe Oec::Students do
 
-  let!(:random_time) { Time.now.to_f.to_s.gsub('.', '') }
-
   context 'the exported file in the tmp directory' do
     let!(:spec_file) { CSV.read('fixtures/oec/students.csv') }
     let!(:ccns) { [12345, 67890] }
@@ -22,7 +20,7 @@ describe Oec::Students do
       Oec::Queries.stub(:get_all_students).with(ccns).and_return(all_students_query)
     }
 
-    let!(:export) { Oec::Students.new(ccns, []).export(random_time) }
+    let!(:export) { Oec::Students.new(ccns, []).export }
 
     subject { CSV.read(export[:filename]) }
     it {

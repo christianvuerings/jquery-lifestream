@@ -1,17 +1,7 @@
 module Oec
-  class CoursesWrapper
+  class BiologyPostProcessor
 
-    def create_csv_file_per_dept
-      timestamp = DateTime.now.strftime '%FT%T.%L%z'
-      Settings.oec.departments.each do |dept_name|
-        Oec::Courses.new(dept_name).export timestamp
-      end
-      post_process_biology timestamp
-      Rails.logger.warn "OEC CSV export completed. Timestamp: #{timestamp}"
-      timestamp
-    end
-
-    def post_process_biology(timestamp)
+    def post_process
       header_row = nil
       biology_rows = []
       integbi_rows = []
@@ -19,8 +9,8 @@ module Oec
       biology_dept_name = 'BIOLOGY'
       integbi_dept_name = 'INTEGBI'
       mcellbi_dept_name = 'MCELLBI'
-      biology = Oec::Courses.new biology_dept_name
-      filename = biology.output_filename(biology.base_file_name, timestamp)
+      biology = Oec::Courses.new(biology_dept_name)
+      filename = biology.output_filename(biology.base_file_name, nil)
       CSV.read(filename).each_with_index do | row, index |
         if index == 0
           header_row = row
@@ -34,24 +24,23 @@ module Oec
           biology_rows << row
         end
       end
-      ExportWrapper.new(biology_dept_name, header_row, biology_rows, true).export timestamp
-      ExportWrapper.new(integbi_dept_name, header_row, integbi_rows, false).export timestamp
-      ExportWrapper.new(mcellbi_dept_name, header_row, mcellbi_rows, false).export timestamp
+      ExportWrapper.new(biology_dept_name, header_row, biology_rows, true).export
+      ExportWrapper.new(integbi_dept_name, header_row, integbi_rows, false).export
+      ExportWrapper.new(mcellbi_dept_name, header_row, mcellbi_rows, false).export
     end
-
   end
 
   class ExportWrapper < Oec::Courses
 
     def initialize(dept_name, header_row, rows, overwrite_file = false)
-      super dept_name
+      super(dept_name)
       @header_row = header_row
       @rows = rows
       @overwrite_file = overwrite_file
     end
 
-    def export(timestamp = nil)
-      output_filename = output_filename(base_file_name, timestamp)
+    def export
+      output_filename = output_filename(base_file_name, nil)
       output = CSV.open(
         output_filename, @overwrite_file ? 'wb' : 'a',
         {
