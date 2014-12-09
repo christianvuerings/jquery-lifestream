@@ -11,4 +11,8 @@ class CsvExport
     "#{@export_dir}/#{basename}-#{timestamp}.csv"
   end
 
+  def export_directory
+    @export_dir
+  end
+
 end

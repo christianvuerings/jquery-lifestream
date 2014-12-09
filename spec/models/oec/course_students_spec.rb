@@ -18,7 +18,7 @@ describe Oec::CourseStudents do
       Oec::Queries.stub(:get_all_course_students).with(ccns).and_return(all_course_students_query)
     }
 
-    let!(:export) { Oec::CourseStudents.new(ccns, []).export(random_time) }
+    let!(:export) { Oec::CourseStudents.new(ccns, []).export }
 
     subject { CSV.read(export[:filename]) }
     it {
@@ -26,4 +26,5 @@ describe Oec::CourseStudents do
       should eq(spec_file)
     }
   end
+
 end

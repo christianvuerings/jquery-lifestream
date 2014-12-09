@@ -2,20 +2,35 @@ namespace :oec do
 
   desc 'Export courses.csv file'
   task :courses => :environment do
-    timestamp = Oec::CoursesWrapper.new.create_csv_file_per_dept
-    Rails.logger.warn "OEC courses export completed. Timestamp: #{timestamp}"
+    export_dir = Oec::Export.new.export_directory
+    if Dir.glob("#{export_dir}/*.csv").length > 0
+      raise "Before running this task you must clear old CSV files out of #{export_dir} "
+    end
+    dept_set = Settings.oec.departments.to_set
+    dept_set.each do |dept_name|
+      Oec::Courses.new(dept_name).export
+    end
+    if dept_set.include? 'BIOLOGY'
+      Oec::BiologyPostProcessor.new.post_process
+    end
+    Rails.logger.warn "OEC course CSVs files created in directory: #{export_dir}"
   end
 
   desc 'Generate student files based on courses.csv input'
   task :students => :environment do
-    timestamp = DateTime.now.strftime('%FT%T.%L%z')
-    Settings.oec.departments.each do |dept_name|
-      reader = Oec::FileReader.new("tmp/oec/#{dept_name.gsub(/\s/, '_')}_courses.csv")
+    dept_set = Settings.oec.departments.to_set
+    if dept_set.include? 'BIOLOGY'
+      dept_set.add 'INTEGBI'
+      dept_set.add 'MCELLBI'
+    end
+    export_dir = Oec::Export.new.export_directory
+    dept_set.each do |dept_name|
+      reader = Oec::FileReader.new("#{export_dir}/#{dept_name.gsub(/\s/, '_')}_courses.csv")
       [Oec::Students, Oec::CourseStudents].each do |klass|
-        klass.new(reader.ccns, reader.gsi_ccns).export(timestamp)
+        klass.new(reader.ccns, reader.gsi_ccns).export
       end
     end
-    Rails.logger.warn "OEC students export completed. Timestamp: #{timestamp}"
+    Rails.logger.warn "OEC student CSVs files created in directory: #{export_dir}"
   end
 
 end
