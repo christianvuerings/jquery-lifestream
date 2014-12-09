@@ -1,8 +1,5 @@
 class UserApiController < ApplicationController
 
-  skip_before_action :set_x_frame_options_header
-  before_action :disable_xframe_options, :only => [:am_i_logged_in]
-
   extend Cache::Cacheable
 
   def self.expire(id = nil)
