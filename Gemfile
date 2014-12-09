@@ -37,14 +37,14 @@ gem 'omniauth-cas', '~> 1.1.0'
 gem 'net-ldap', '~> 0.9.0'
 
 # secure_headers provides x-frame, csp and other http headers
-gem 'secure_headers', '~> 1.3.4'
+gem 'secure_headers', '~> 1.4.0'
 
 gem 'faraday', '~> 0.9.0'
 gem 'faraday_middleware', '~> 0.9.1'
 gem 'httparty', '~> 0.13.3'
 
 # OAuth2 support
-gem 'signet', '~> 0.5.1'
+gem 'signet', '~> 0.6.0'
 gem 'google-api-client', '~> 0.7.1'
 
 # LTI support
@@ -94,14 +94,14 @@ gem 'pundit', '~> 0.3.0'
 
 gem 'cancan', '~> 1.6.10'
 
-gem 'icalendar', '~> 2.2.0'
+gem 'icalendar', '~> 2.2.1'
 
 ##################
 # Front-end Gems #
 ##################
 
 # Our very own library for angular dependency!
-gem 'angular-gem', '1.3.5'
+gem 'angular-gem', '1.3.6'
 
 # Datepicker
 gem 'pikaday-gem', '~> 1.2.0'
@@ -109,7 +109,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 # CSS Framework
 # https://github.com/zurb/foundation
 gem 'sass-rails', '~> 4.0.4'
-gem 'autoprefixer-rails', '~> 4.0.1.1'
+gem 'autoprefixer-rails', '~> 4.0.2'
 gem 'foundation-rails', '~> 5.4.5.0'
 
 # Closure Compiler Gem for JS compression
@@ -135,7 +135,7 @@ gem 'natural-sort-js', '~> 0.7.0'
 
 # Use ngannotate in the Rails asset pipeline.
 # https://github.com/olov/ng-annotate
-gem 'ngannotate-rails', '~> 0.14.0'
+gem 'ngannotate-rails', '~> 0.14.1'
 
 # Use your angular templates with rails' asset pipeline
 # https://github.com/pitr/angular-rails-templates
@@ -185,7 +185,7 @@ end
 
 group :test do
   gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.13'
-  gem 'page-object', '~> 1.0.2'
+  gem 'page-object', '~> 1.0.3'
 end
 
 group :test, :testext do
