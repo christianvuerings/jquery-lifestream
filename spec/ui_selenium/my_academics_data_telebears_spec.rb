@@ -128,15 +128,15 @@ describe 'My Academics Tele-BEARS card', :testui => true do
           end
         end
       end
+      it 'has Tele-BEARS info for at least one of the test UIDs' do
+        expect(testable_users.length).to be > 0
+      end
 
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n")
     ensure
       logger.info 'Quitting the browser'
       driver.quit
-      it 'has Tele-BEARS info for at least one of the test UIDs' do
-        expect(testable_users.length).to be > 0
-      end
     end
   end
 end
