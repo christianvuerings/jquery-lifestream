@@ -6,7 +6,7 @@ module Oec
       def settings.export_directory
         term = Settings.oec.current_terms_codes[0]
         today = DateTime.now.strftime('%F')
-        "#{Settings.oec.export_directory}/data/#{term.year}-#{term.code}/raw/#{today}"
+        "#{Settings.oec.export_home}/data/#{term.year}-#{term.code}/raw/#{today}"
       end
       super settings
     end
