@@ -2,10 +2,6 @@ namespace :oec do
 
   desc 'Export courses.csv file'
   task :courses => :environment do
-    export_dir = Oec::Export.new.export_directory
-    if Dir.glob("#{export_dir}/*.csv").length > 0
-      raise "Before running this task you must clear old CSV files out of #{export_dir} "
-    end
     dept_set = Settings.oec.departments.to_set
     dept_set.each do |dept_name|
       Oec::Courses.new(dept_name).export
@@ -13,7 +9,7 @@ namespace :oec do
     if dept_set.include? 'BIOLOGY'
       Oec::BiologyPostProcessor.new.post_process
     end
-    Rails.logger.warn "OEC course CSVs files created in directory: #{export_dir}"
+    Rails.logger.warn "OEC course CSVs files created in directory: #{Oec::Export.new.export_directory}"
   end
 
   desc 'Generate student files based on courses.csv input'
