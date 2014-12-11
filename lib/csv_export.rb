@@ -1,7 +1,7 @@
 class CsvExport
 
-  def initialize(settings)
-    @export_dir = settings.export_directory
+  def initialize(export_dir)
+    @export_dir = export_dir
     if !File.exists?(@export_dir)
       FileUtils.mkdir_p(@export_dir)
     end
