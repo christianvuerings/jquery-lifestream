@@ -164,6 +164,7 @@ module Oec
         i.instructor_func,
         '23' AS blue_role,
         null AS evaluate,
+        null AS dept_form,
         null AS evaluation_type,
         null AS modular_course,
         null AS start_date,
