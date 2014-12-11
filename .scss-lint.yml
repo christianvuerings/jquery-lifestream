@@ -3,6 +3,8 @@ exclude: 'app/assets/stylesheets/rails_admin/**'
 linters:
   Comment:
     exclude: 'app/assets/stylesheets/application.scss'
+  DuplicateProperty:
+    enabled: false
   EmptyLineBetweenBlocks:
     enabled: false
   NestingDepth:

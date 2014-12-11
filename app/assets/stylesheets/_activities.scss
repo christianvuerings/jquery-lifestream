@@ -3,6 +3,7 @@
 
   a {
     hyphens: auto;
+    // This apparent duplicate property is needed for cross-browser compatibility.
     word-break: break-all;
     word-break: break-word;
   }
