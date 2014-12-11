@@ -13,7 +13,7 @@ module Canvas
     }
 
     def initialize
-      super(Settings.canvas_proxy)
+      super(Settings.canvas_proxy.export_directory)
     end
 
     def accumulate_user_data(user_ids, users_csv)
