@@ -16,10 +16,14 @@ module Oec
     end
 
     def append_records(output)
-      if @ccns.length > 0
-        Oec::Queries.get_all_students(@ccns).each do |student|
-          output << record_to_csv_row(student)
-        end
+      ccn_set = @ccns.to_set
+      ccn_set.merge @gsi_ccns
+      append_student_records(output, ccn_set) unless ccn_set.empty?
+    end
+
+    def append_student_records(output, ccns)
+      Oec::Queries.get_all_students(ccns).each do |student|
+        output << record_to_csv_row(student)
       end
     end
 
