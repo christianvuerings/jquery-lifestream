@@ -254,24 +254,27 @@
   });
 
   /**
-   * We use this functionality to do dynamic height for iframes in bCourses
-   * The CalCentral iframe is sending over an event to the parent window in bCourses.
-   * That event contains the height of the iframe
+   * We use window events to resize the LTI iframe, to ask the parent page to scroll
+   * to the top, and to change the location of the parent window. The resize
+   * is handled by Instructure's public/javascripts/tool_inline.js file, and it
+   * determines the message format we use. Our own JavaScript handles the other
+   * event types.
    * @param {Object} e Event that is sent over from the iframe
    */
   window.onmessage = function(e) {
-    if (e && e.data && e.data.height) {
-      document.getElementById('tool_content').style.height = e.data.height + 'px';
-      var tool_wrappers = document.getElementsByClassName('tool_content_wrapper');
-      if (tool_wrappers && tool_wrappers.length > 0 && tool_wrappers[0].style) {
-        tool_wrappers[0].style.height = '';
+    if (e && e.data) {
+      try {
+        var message = JSON.parse(e.data);
+        if (message.subject === 'changeParent') {
+          if (message.scrollToTop) {
+            window.scrollTo(0, 0);
+          }
+          if (message.parentLocation) {
+            window.location = message.parentLocation;
+          }
+        }
+      } catch (err) {
       }
-    }
-    if (e && e.data && e.data.scrollToTop) {
-      window.scrollTo(0, 0);
-    }
-    if (e && e.data && e.data.parentLocation) {
-      window.location = e.data.parentLocation;
     }
   };
 })(window, window.document, window.$);

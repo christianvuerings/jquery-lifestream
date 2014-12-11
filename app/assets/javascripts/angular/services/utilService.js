@@ -95,14 +95,15 @@
     };
 
     /**
-     * Update the iframe height on a regular basis
+     * Update the iframe height on a regular basis to avoid embedded scrollbars on
+     * bCourses LTI tools. The message is formatted to be received by a listener
+     * in Canvas's public/javascripts/tool_inline.js file.
      */
     var iframeUpdateHeight = function() {
       if (isInIframe) {
         $window.setInterval(function updateHeight() {
-          iframePostMessage({
-            height: document.body.scrollHeight
-          });
+          var message = {subject: 'lti.frameResize', height: document.body.scrollHeight};
+          iframePostMessage(JSON.stringify(message));
         }, 250);
       }
     };
@@ -112,9 +113,7 @@
      */
     var iframeScrollToTop = function() {
       if (isInIframe) {
-        iframePostMessage({
-          scrollToTop: true
-        });
+        iframePostMessage(JSON.stringify({subject: 'changeParent', scrollToTop: true}));
       }
     };
 
@@ -123,9 +122,7 @@
      */
     var iframeParentLocation = function(location) {
       if (isInIframe) {
-        iframePostMessage({
-          parentLocation: location
-        });
+        iframePostMessage(JSON.stringify({subject: 'changeParent', parentLocation: location}));
       }
     };
 
