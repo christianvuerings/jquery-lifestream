@@ -2,13 +2,9 @@ module Oec
   class Export < CsvExport
 
     def initialize
-      settings = Object.new
-      def settings.export_directory
-        term = Settings.oec.current_terms_codes[0]
-        today = DateTime.now.strftime('%F')
-        "#{Settings.oec.export_home}/data/#{term.year}-#{term.code}/raw/#{today}"
-      end
-      super settings
+      term = Settings.oec.current_terms_codes[0]
+      today = DateTime.now.strftime('%F')
+      super "#{Settings.oec.export_home}/data/#{term.year}-#{term.code}/raw/#{today}"
     end
 
     def export
