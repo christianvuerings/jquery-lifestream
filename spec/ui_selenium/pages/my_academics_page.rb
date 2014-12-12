@@ -41,5 +41,10 @@ module CalCentralPages
       logger.info("Loading semester page for #{semester}")
       driver.get(WebDriverUtils.base_url + '/academics/semester/' + semester)
     end
+
+    def click_semester_link(driver, semester)
+      logger.info("Clicking link for #{semester}")
+      driver.find_element(:link_text => semester).click
+    end
   end
 end
