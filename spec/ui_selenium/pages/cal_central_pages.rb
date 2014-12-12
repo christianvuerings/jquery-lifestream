@@ -106,7 +106,7 @@ module CalCentralPages
 
   def status_popover_visible?
     begin
-      status_icon_element.when_visible(timeout-WebDriverUtils.page_event_timeout)
+      status_icon_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
       true
     rescue
       false
