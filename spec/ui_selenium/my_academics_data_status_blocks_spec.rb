@@ -58,7 +58,7 @@ describe 'My Academics Status and Blocks', :testui => true do
               academics_api_page.get_json(driver)
               dashboard_page = CalCentralPages::MyDashboardPage.new(driver)
               dashboard_page.load_page(driver)
-              dashboard_page.wait_for_status_popover
+              dashboard_page.wait_for_ajax(timeout=WebDriverUtils.page_event_timeout)
               has_no_standing = academics_api_page.has_no_standing
               has_popover = dashboard_page.status_icon_element.visible?
               if has_no_standing

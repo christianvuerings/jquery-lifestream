@@ -8,6 +8,8 @@ module CalCentralPages
   include PageObject
   include ClassLogger
 
+  PageObject.javascript_framework = (:angularjs)
+
   # Header
   link(:my_dashboard_link, :text => 'My Dashboard')
   link(:my_academics_link, :text => 'My Academics')
@@ -153,7 +155,6 @@ module CalCentralPages
     self.basic_auth_uid_input = uid
     self.basic_auth_password_input = UserUtils.basic_auth_pass
     basic_auth_login_button
-    basic_auth_uid_input_element.when_not_present(timeout=WebDriverUtils.page_load_timeout)
   end
 
 end
