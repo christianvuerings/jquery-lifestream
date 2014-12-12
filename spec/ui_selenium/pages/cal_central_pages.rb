@@ -104,6 +104,15 @@ module CalCentralPages
     status_icon_element.when_present(timeout=WebDriverUtils.page_event_timeout)
   end
 
+  def status_popover_visible?
+    begin
+      status_icon_element.when_visible(timeout-WebDriverUtils.page_event_timeout)
+      true
+    rescue
+      false
+    end
+  end
+
   def open_status_popover
     logger.debug('Waiting for status popover to become visible')
     status_icon_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
