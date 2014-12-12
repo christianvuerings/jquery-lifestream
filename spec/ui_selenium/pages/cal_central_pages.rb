@@ -8,6 +8,8 @@ module CalCentralPages
   include PageObject
   include ClassLogger
 
+  PageObject.javascript_framework = (:angularjs)
+
   # Header
   link(:my_dashboard_link, :text => 'My Dashboard')
   link(:my_academics_link, :text => 'My Academics')
@@ -102,6 +104,15 @@ module CalCentralPages
     status_icon_element.when_present(timeout=WebDriverUtils.page_event_timeout)
   end
 
+  def status_popover_visible?
+    begin
+      status_icon_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+      true
+    rescue
+      false
+    end
+  end
+
   def open_status_popover
     logger.debug('Waiting for status popover to become visible')
     status_icon_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
@@ -153,7 +164,6 @@ module CalCentralPages
     self.basic_auth_uid_input = uid
     self.basic_auth_password_input = UserUtils.basic_auth_pass
     basic_auth_login_button
-    basic_auth_uid_input_element.when_not_present(timeout=WebDriverUtils.page_load_timeout)
   end
 
 end
