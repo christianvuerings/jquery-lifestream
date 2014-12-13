@@ -6,9 +6,7 @@ namespace :oec do
     dept_set.each do |dept_name|
       Oec::Courses.new(dept_name).export
     end
-    if dept_set.include? 'BIOLOGY'
-      Oec::BiologyPostProcessor.new.post_process
-    end
+    Oec::BiologyPostProcessor.new.post_process if dept_set.include? 'BIOLOGY'
     Rails.logger.warn "OEC course CSVs files created in directory: #{Oec::Export.new.export_directory}"
   end
 
@@ -27,6 +25,19 @@ namespace :oec do
       end
     end
     Rails.logger.warn "OEC student CSVs files created in directory: #{export_dir}"
+  end
+
+  desc 'Spreadsheet from dept compared against current campus data'
+  task :diff => :environment do
+    dept_name = ENV['dept_name']
+    if dept_name.to_s == ''
+      Rails.logger.warn 'Sample usage: rake oec:diff dept_name=BIOLOGY'
+    else
+      term = Settings.oec.current_terms_codes[0]
+      file_path = "#{Settings.oec.export_home}/data/#{term.year}-#{term.code}/csv/work/#{dept_name.upcase}_courses.diff"
+      Oec::SpreadsheetComparator.new(term, dept_name).write_diff_report file_path
+      Rails.logger.warn "Diff summary: #{file_path}"
+    end
   end
 
 end

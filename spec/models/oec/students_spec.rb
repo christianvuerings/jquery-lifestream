@@ -1,8 +1,10 @@
 describe Oec::Students do
 
   context 'the exported file in the tmp directory' do
+
     let!(:spec_file) { CSV.read('fixtures/oec/students.csv') }
     let!(:ccns) { [12345, 67890] }
+    let!(:gsi_ccns) { [10731] }
 
     before(:each) {
       all_students_query = []
@@ -17,10 +19,10 @@ describe Oec::Students do
           }
         end
       end
-      Oec::Queries.stub(:get_all_students).with(ccns).and_return(all_students_query)
+      Oec::Queries.stub(:get_all_students).with(ccns.concat gsi_ccns).and_return(all_students_query)
     }
 
-    let!(:export) { Oec::Students.new(ccns, []).export }
+    let!(:export) { Oec::Students.new(ccns, gsi_ccns).export }
 
     subject { CSV.read(export[:filename]) }
     it {
