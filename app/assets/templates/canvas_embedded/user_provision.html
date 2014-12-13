@@ -6,7 +6,7 @@
     </div>
     <div class="cc-widget-padding">
 
-      <form name="userImportForm" data-ng-submit="importUsers(raw_uids)">
+      <form name="userImportForm" data-ng-submit="importUsers(rawUids)">
         <div class="row">
           <div class="small-10 small-centered">
 
@@ -15,7 +15,7 @@
                 <label for="cc-page-user-provision-uid-list">UID List</label>
               </div>
               <div class="small-8 columns">
-                <textarea id="cc-page-user-provision-uid-list" name="uids" data-ng-model="raw_uids"
+                <textarea id="cc-page-user-provision-uid-list" name="uids" data-ng-model="rawUids"
                   placeholder="Paste your list of UIDs here organized one UID per a line, or separated by spaces or commas."></textarea>
 
                 <small class="error" data-ng-show="checkPerformed && userImportForm.uids.$error.required">

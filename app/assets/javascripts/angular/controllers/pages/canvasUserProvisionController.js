@@ -1,4 +1,3 @@
-/* jshint camelcase: false */
 (function(angular) {
   'use strict';
 
@@ -23,7 +22,7 @@
           url: '/api/academics/canvas/user_provision/user_import.json',
           method: 'POST',
           params: {
-            user_ids: validList
+            userIds: validList
           }
         };
 
