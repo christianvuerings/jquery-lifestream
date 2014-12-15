@@ -56,7 +56,7 @@ Calcentral::Application.routes.draw do
   get '/canvas/lti_course_grade_export' => 'canvas_lti#lti_course_grade_export', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_manage_official_sections' => 'canvas_lti#lti_course_manage_official_sections', :defaults => { :format => 'xml' }
   # A Canvas course ID of "embedded" means to retrieve from session properties.
-  get '/api/academics/canvas/course_user_roles' => 'canvas_course_add_user#course_user_roles', :defaults => { :format => 'json' }
+  get '/api/academics/canvas/course_user_roles/:canvas_course_id' => 'canvas_course_add_user#course_user_roles', :defaults => { :format => 'json' }
   get '/api/academics/canvas/external_tools' => 'canvas#external_tools', :defaults => { :format => 'json' }
   get '/api/academics/canvas/user_can_create_course_site' => 'canvas#user_can_create_course_site', :defaults => { :format => 'json' }
   get '/api/academics/canvas/egrade_export/download' => 'canvas_course_grade_export#download_egrades_csv', :defaults => { :format => 'csv' }
@@ -71,9 +71,9 @@ Calcentral::Application.routes.draw do
   post '/api/academics/canvas/course_provision/create' => 'canvas_course_provision#create_course_site', :via => :post, :as => :canvas_course_create, :defaults => { :format => 'json' }
   get '/api/academics/canvas/course_provision/status' => 'canvas_course_provision#job_status', :via => :get, :as => :canvas_course_job_status, :defaults => { :format => 'json' }
   post '/api/academics/canvas/user_provision/user_import' => 'canvas_user_provision#user_import', :as => :canvas_user_provision_import, :defaults => { :format => 'json' }
-  get '/api/academics/canvas/course_add_user/search_users' => 'canvas_course_add_user#search_users', :via => :get, :as => :canvas_course_add_user_search_users, :defaults => { :format => 'json' }
-  get '/api/academics/canvas/course_add_user/course_sections' => 'canvas_course_add_user#course_sections', :via => :get, :as => :canvas_course_add_user_course_sections, :defaults => { :format => 'json' }
-  post '/api/academics/canvas/course_add_user/add_user' => 'canvas_course_add_user#add_user', :via => :post, :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
+  get '/api/academics/canvas/course_add_user/:canvas_course_id/search_users' => 'canvas_course_add_user#search_users', :via => :get, :as => :canvas_course_add_user_search_users, :defaults => { :format => 'json' }
+  get '/api/academics/canvas/course_add_user/:canvas_course_id/course_sections' => 'canvas_course_add_user#course_sections', :via => :get, :as => :canvas_course_add_user_course_sections, :defaults => { :format => 'json' }
+  post '/api/academics/canvas/course_add_user/:canvas_course_id/add_user' => 'canvas_course_add_user#add_user', :via => :post, :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
   get '/api/canvas/media/:canvas_course_id' => 'canvas_mediacasts#get_media', :defaults => { :format => 'json' }
 
   # System utility endpoints

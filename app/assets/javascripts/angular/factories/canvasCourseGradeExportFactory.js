@@ -6,7 +6,7 @@
    */
   angular.module('calcentral.factories').factory('canvasCourseGradeExportFactory', function($http) {
     var checkAuthorization = function() {
-      return $http.get('/api/academics/canvas/course_user_roles');
+      return $http.get('/api/academics/canvas/course_user_roles/embedded');
     };
 
     var exportOptions = function() {

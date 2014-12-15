@@ -20,7 +20,7 @@ module Canvas
       end
       people.collect! do |person|
         person.delete('student_id')
-        person
+        HashConverter.camelize(person)
       end
       people
     end

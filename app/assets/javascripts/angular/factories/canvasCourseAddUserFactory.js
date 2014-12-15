@@ -1,4 +1,3 @@
-/* jshint camelcase: false */
 (function(angular) {
   'use strict';
 
@@ -7,34 +6,27 @@
    */
   angular.module('calcentral.factories').factory('canvasCourseAddUserFactory', function($http) {
     var searchUsers = function(canvasCourseId, searchText, searchType) {
-      return $http.get('/api/academics/canvas/course_add_user/search_users', {
+      return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/search_users', {
         params: {
-          canvas_course_id: canvasCourseId,
-          search_text: searchText,
-          search_type: searchType
+          searchText: searchText,
+          searchType: searchType
         }
       });
     };
 
     var courseUserRoles = function(canvasCourseId) {
-      var parameters = {};
-      if (canvasCourseId) {
-        parameters.canvas_course_id = canvasCourseId;
-      }
-      return $http.get('/api/academics/canvas/course_user_roles', {
-        params: parameters
-      });
+      return $http.get('/api/academics/canvas/course_user_roles/' + canvasCourseId);
     };
 
-    var courseSections = function() {
-      return $http.get('/api/academics/canvas/course_add_user/course_sections');
+    var courseSections = function(canvasCourseId) {
+      return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/course_sections');
     };
 
-    var addUser = function(ldapUserId, sectionId, roleId) {
-      return $http.post('/api/academics/canvas/course_add_user/add_user', {
-        ldap_user_id: ldapUserId,
-        section_id: sectionId,
-        role_id: roleId
+    var addUser = function(canvasCourseId, ldapUserId, sectionId, roleId) {
+      return $http.post('/api/academics/canvas/course_add_user/' + canvasCourseId + '/add_user', {
+        ldapUserId: ldapUserId,
+        sectionId: sectionId,
+        roleId: roleId
       });
     };
 

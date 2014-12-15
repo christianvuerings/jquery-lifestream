@@ -1,4 +1,3 @@
-/* jshint camelcase: false */
 (function(angular) {
   'use strict';
 
@@ -18,7 +17,7 @@
     };
 
     var resetImportState = function() {
-      $scope.user_added = false;
+      $scope.userAdded = false;
       $scope.showAlerts = false;
       $scope.additionSuccessMessage = false;
       $scope.additionFailureMessage = false;
@@ -26,7 +25,7 @@
 
     $scope.resetForm = function() {
       $scope.searchTextType = 'text';
-      $scope.search_text = '';
+      $scope.searchText = '';
       $scope.searchTypeNotice = '';
       $scope.showAlerts = false;
       resetSearchState();
@@ -34,7 +33,7 @@
     };
 
     var setSearchTypeNotice = function() {
-      if ($scope.search_type === 'ldap_user_id') {
+      if ($scope.searchType === 'ldapUserId') {
         $scope.searchTypeNotice = 'CalNet UIDs must be an exact match.';
       } else {
         $scope.searchTypeNotice = '';
@@ -42,11 +41,12 @@
     };
 
     // Initialize upon load
+    $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
     $scope.resetForm();
-    $scope.search_type = 'name';
+    $scope.searchType = 'name';
 
     var invalidSearchForm = function() {
-      if ($scope.search_text === '') {
+      if ($scope.searchText === '') {
         $scope.showAlerts = true;
         $scope.noSearchTextAlert = true;
         $scope.isLoading = false;
@@ -66,7 +66,7 @@
     };
 
     $scope.updateSearchTextType = function() {
-      $scope.searchTextType = (['ldap_user_id'].indexOf($scope.search_type) === -1) ? 'text' : 'number';
+      $scope.searchTextType = (['ldapUserId'].indexOf($scope.searchType) === -1) ? 'text' : 'number';
     };
 
     $scope.searchUsers = function() {
@@ -80,10 +80,10 @@
       $scope.showUsersArea = true;
       $scope.isLoading = true;
 
-      canvasCourseAddUserFactory.searchUsers($scope.canvas_course_id, $scope.search_text, $scope.search_type).success(function(data) {
+      canvasCourseAddUserFactory.searchUsers($scope.canvasCourseId, $scope.searchText, $scope.searchType).success(function(data) {
         $scope.userSearchResults = data.users;
         if (data.users.length > 0) {
-          $scope.userSearchResultsCount = Math.floor(data.users[0].result_count);
+          $scope.userSearchResultsCount = Math.floor(data.users[0].resultCount);
           if (data.users.length === 1) {
             $scope.selectedUser = data.users[0];
           }
@@ -117,13 +117,14 @@
       var submittedSection = $scope.selectedSection;
       var submittedRole = $scope.selectedRole;
 
-      canvasCourseAddUserFactory.addUser(submittedUser.ldap_uid, submittedSection.id, submittedRole.id).success(function(data) {
-        $scope.user_added = data.user_added;
-        $scope.user_added.fullName = submittedUser.first_name + ' ' + submittedUser.last_name;
-        $scope.user_added.role_name = submittedRole.name;
-        $scope.user_added.section_name = submittedSection.name;
+      canvasCourseAddUserFactory.addUser($scope.canvasCourseId, submittedUser.ldapUid, submittedSection.id, submittedRole.id).success(function(data) {
+        $scope.userAdded = data.userAdded;
+        $scope.userAdded.fullName = submittedUser.firstName + ' ' + submittedUser.lastName;
+        $scope.userAdded.roleName = submittedRole.name;
+        $scope.userAdded.sectionName = submittedSection.name;
         $scope.additionSuccessMessage = true;
         $scope.isLoading = false;
+        resetSearchState();
       }).error(function(data) {
         if (data.error) {
           $scope.errorStatus = data.error;
@@ -132,16 +133,16 @@
         }
         $scope.additionFailureMessage = true;
         $scope.isLoading = false;
+        resetSearchState();
       });
     };
 
     var checkAuthorization = function() {
-      canvasCourseAddUserFactory.courseUserRoles($routeParams.canvas_course_id).success(function(data) {
+      canvasCourseAddUserFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
         $scope.courseUserRoles = data.roles;
         $scope.grantingRoles = data.grantingRoles;
         $scope.selectedRole = $scope.grantingRoles[0];
 
-        $scope.canvasCourseId = data.courseId;
         $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
         if ($scope.userAuthorized) {
           getCourseSections();
@@ -162,8 +163,8 @@
     };
 
     var getCourseSections = function() {
-      canvasCourseAddUserFactory.courseSections().success(function(data) {
-        $scope.courseSections = data.course_sections;
+      canvasCourseAddUserFactory.courseSections($scope.canvasCourseId).success(function(data) {
+        $scope.courseSections = data.courseSections;
         $scope.selectedSection = $scope.courseSections[0];
       }).error(function(data) {
         $scope.showError = true;

@@ -46,8 +46,8 @@
         </div>
 
         <div data-ng-show="additionSuccessMessage" class="cc-notice-box cc-notice-success cc-radius">
-          <span data-ng-bind="user_added.fullName"></span> was added to the
-          &ldquo;<span data-ng-bind="user_added.section_name"></span>&rdquo; section of this course as a <span data-ng-bind="user_added.role_name"></span>.
+          <span data-ng-bind="userAdded.fullName"></span> was added to the
+          &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
           <div class="cc-notice-close-button">
             <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionSuccessMessage=''"></button>
           </div>
@@ -71,7 +71,7 @@
           <div class="row bc-horizontal-form">
             <div class="medium-5 columns">
               <label for="search-text" class="cc-visuallyhidden">Search users</label>
-              <input id="search-text" class="bc-form-entity bc-input" type="{{searchTextType}}" placeholder="Find a person to add" data-ng-model="search_text">
+              <input id="search-text" class="bc-form-entity bc-input" type="{{searchTextType}}" placeholder="Find a person to add" data-ng-model="searchText">
             </div>
 
             <div class="medium-6 columns">
@@ -80,10 +80,10 @@
                   <label for="search-type" class="bc-label bc-label-horizontal bc-form-entities">By:</label>
                 </div>
                 <div class="medium-10 columns">
-                  <select id="search-type" data-ng-model="search_type" data-ng-change="updateSearchTextType()" class="bc-form-entity">
+                  <select id="search-type" data-ng-model="searchType" data-ng-change="updateSearchTextType()" class="bc-form-entity">
                     <option value="name">Last Name, First Name</option>
                     <option value="email">Email</option>
-                    <option value="ldap_user_id">CalNet UID</option>
+                    <option value="ldapUserId">CalNet UID</option>
                   </select>
                 </div>
               </div>
@@ -150,9 +150,9 @@
                   <td>
                     <input type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
                   </td>
-                  <td data-ng-bind="user.first_name + ' ' + user.last_name"></td>
-                  <td data-ng-bind="user.ldap_uid"></td>
-                  <td data-ng-bind="user.email_address"></td>
+                  <td data-ng-bind="user.firstName + ' ' + user.lastName"></td>
+                  <td data-ng-bind="user.ldapUid"></td>
+                  <td data-ng-bind="user.emailAddress"></td>
                 </tr>
               </tbody>
             </table>

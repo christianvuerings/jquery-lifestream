@@ -108,7 +108,7 @@
       templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
     }).
-    when('/canvas/course_add_user/:canvas_course_id', {
+    when('/canvas/course_add_user/:canvasCourseId', {
       templateUrl: 'canvas_embedded/course_add_user.html',
       controller: 'CanvasCourseAddUserController'
     }).
