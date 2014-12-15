@@ -15,7 +15,7 @@ module OecSpecHelper
       'cross_listed_flag' => row[2],
       'cross_listed_name' => cross_listed_name,
       'course_title_short' => cross_listings.present? ? cross_listings[/(.*?)\s\(/, 1] : nil,
-      'dept_name' => dept_name,
+      'dept_name' => row[4],
       'catalog_id' => row[5],
       'instruction_format' => row[6],
       'section_num' => row[7],
