@@ -34,7 +34,8 @@ namespace :oec do
       Rails.logger.warn 'Sample usage: rake oec:diff dept_name=BIOLOGY'
     else
       term = Settings.oec.current_terms_codes[0]
-      file_path = "#{Settings.oec.export_home}/data/#{term.year}-#{term.code}/csv/work/#{dept_name.upcase}_courses.diff"
+      today = DateTime.now.strftime('%F')
+      file_path = "#{Settings.oec.export_home}/data/#{term.year}-#{term.code}/csv/work/#{dept_name.upcase}_courses-#{today}.diff"
       Oec::SpreadsheetComparator.new(term, dept_name).write_diff_report file_path
       Rails.logger.warn "Diff summary: #{file_path}"
     end
