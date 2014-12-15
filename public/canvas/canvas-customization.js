@@ -263,17 +263,20 @@
    */
   window.onmessage = function(e) {
     if (e && e.data) {
+      var message;
       try {
-        var message = JSON.parse(e.data);
-        if (message.subject === 'changeParent') {
-          if (message.scrollToTop) {
-            window.scrollTo(0, 0);
-          }
-          if (message.parentLocation) {
-            window.location = message.parentLocation;
-          }
-        }
+        message = JSON.parse(e.data);
       } catch (err) {
+        // The message is not for us; ignore it.
+        return;
+      }
+      if (message.subject === 'changeParent') {
+        if (message.scrollToTop) {
+          window.scrollTo(0, 0);
+        }
+        if (message.parentLocation) {
+          window.location = message.parentLocation;
+        }
       }
     }
   };
