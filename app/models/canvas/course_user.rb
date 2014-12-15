@@ -63,6 +63,11 @@ module Canvas
       roles_hash
     end
 
+    # Do not need to log a stack trace when the user is not a course site member.
+    def existence_check
+      true
+    end
+
     private
 
     # Interface to request a single users in a course

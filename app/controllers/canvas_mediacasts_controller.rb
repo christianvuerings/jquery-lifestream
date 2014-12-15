@@ -1,4 +1,5 @@
 class CanvasMediacastsController < ApplicationController
+  include SpecificToCourseSite
 
   before_filter :api_authenticate
   rescue_from StandardError, with: :handle_api_exception
@@ -11,11 +12,6 @@ class CanvasMediacastsController < ApplicationController
     raise Errors::BadRequestError, "Bad course site ID #{canvas_course_id}" if canvas_course_id.blank?
     authorize Canvas::Course.new(canvas_course_id: canvas_course_id), :can_view_course?
     render :json => Canvas::CanvasMediacasts.new(user_id: session[:user_id], course_id: canvas_course_id).get_feed
-  end
-
-  def canvas_course_id
-    id = (params[:canvas_course_id] == 'embedded') ? session[:canvas_course_id] : params[:canvas_course_id]
-    Integer(id, 10)
   end
 
 end
