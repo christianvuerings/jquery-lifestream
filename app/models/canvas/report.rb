@@ -103,7 +103,8 @@ module Canvas
     end
 
     def report_retrieval_attempts
-      40
+      # By default, we allow up to an hour for Canvas to rouse itself.
+      180
     end
 
     class ReportNotReadyException < Exception
