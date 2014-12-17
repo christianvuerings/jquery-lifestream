@@ -27,6 +27,12 @@ describe CacheController do
       expect(response.status).to eq(403)
       expect(response.body.blank?).to be_truthy
     end
+
+    it 'should not allow non-admin users to delete a specific key' do
+      expect(Rails.cache).to receive(:delete).never
+      get :delete, {key: 'Canvas::ExternalTools'}
+      expect(response.status).to eq(403)
+    end
   end
 
   context 'a superuser' do
@@ -64,6 +70,13 @@ describe CacheController do
       get :warm, {:uid => 'some_other_thing', :format => 'json'}
       expect(response.status).to eq(400)
       expect(response.body).to include('some_other_thing')
+    end
+
+    it 'should delete a specific key' do
+      expect(Rails.cache).to receive(:delete).with('Canvas::ExternalTools').and_return(true)
+      get :delete, {key: 'Canvas::ExternalTools', format: 'json'}
+      expect(response.status).to eq(200)
+      expect(response.body['deleted']).to be_truthy
     end
   end
 

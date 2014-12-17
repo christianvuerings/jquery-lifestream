@@ -78,6 +78,7 @@ Calcentral::Application.routes.draw do
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
+  get '/api/cache/delete/:key' => 'cache#delete', :defaults => { :format => 'json' }
   get '/api/cache/warm/:uid' => 'cache#warm', :defaults => { :format => 'json' }
   get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
   get '/api/refresh_logging' => 'refresh_logging#refresh_logging', :defaults => { :format => 'json' }
