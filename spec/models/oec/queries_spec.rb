@@ -1,26 +1,23 @@
 describe Oec::Queries do
+
   let(:test_ccn) do
-    if Oec::Queries.test_data?
-      '7309'
-    else
-      '11684'
-    end
+    Oec::Queries.test_data? ? '7309' : '11684'
   end
 
   context 'limiting query to OEC departments' do
     subject { CampusOracle::Connection.depts_clause('c', Settings.oec.departments) }
     it { subject.should include('STAT', 'SPANISH', 'PORTUG', 'CHEM') }
-    it { subject.should_not include('NOT') }
+    it { subject.should_not include 'NOT' }
   end
 
   context 'excluding OEC departments' do
     subject { CampusOracle::Connection.depts_clause('c', Settings.oec.departments, false) }
     it { subject.should include('STAT', 'SPANISH', 'PORTUG', 'CHEM') }
-    it { subject.should include('NOT IN') }
+    it { subject.should include 'NOT IN' }
   end
 
   context 'looking up students' do
-    subject { Oec::Queries.get_all_students([test_ccn]) }
+    subject { Oec::Queries.get_all_students [test_ccn] }
     it { should_not be_nil }
     it { subject[0]['ldap_uid'].should_not be_nil }
   end
@@ -37,7 +34,7 @@ describe Oec::Queries do
   end
 
   context 'looking up courses with crosslistings', :testext => true do
-    subject { Oec::Queries.get_courses('7309, 7366') }
+    subject { Oec::Queries.get_courses '7309, 7366' }
     it { should_not be_nil }
   end
 
@@ -48,8 +45,19 @@ describe Oec::Queries do
   end
 
   context 'looking up course_students' do
-    subject { Oec::Queries.get_all_course_students([test_ccn]) }
+    subject { Oec::Queries.get_all_course_students [test_ccn] }
     it { should_not be_nil }
     it { subject[0]['ldap_uid'].should_not be_nil }
   end
+
+  context 'looking up course data edited by STAT dept' do
+    subject { Oec::Queries.get_edited_course_data('STAT', 'fixtures/oec') }
+    it { should_not be_nil }
+    it { subject.length.should eq 6 }
+    it { subject[0]['course_id'].should eq '2013-D-87675' }
+    it { subject[0]['course_name'].should eq 'XXXXXXXXXXXXXX' }
+    it { subject[5]['course_id'].should eq '2013-D-87691' }
+    it { subject[5]['course_name'].should eq 'STAT C239A LEC 001 - STATS SOCI SCI' }
+  end
+
 end

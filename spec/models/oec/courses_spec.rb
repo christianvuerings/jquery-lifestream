@@ -1,7 +1,5 @@
 describe Oec::Courses do
 
-  let!(:random_time) { Time.now.to_f.to_s.gsub('.', '') }
-
   before(:suite) do
     cross_listed_targets = {}
     cross_listed_names = []
@@ -10,7 +8,7 @@ describe Oec::Courses do
       courses_query = []
       CSV.read('fixtures/oec/courses.csv').each_with_index do |row, index|
         if index > 0 && row[4] == dept_name
-          result_set = OecSpecHelper.convert_csv_row_to_oec_result row
+          result_set = Oec::RowConverter.new(row).hashed_row
           courses_query << result_set
           cross_listed_targets[result_set['course_cntl_num'].to_i] = result_set
           cross_listed_name = result_set['cross_listed_name']
@@ -30,37 +28,42 @@ describe Oec::Courses do
         expect(row_by_ccn).to_not be_nil
         result_set << row_by_ccn
       end
-      expect(Oec::Queries).to receive(:get_courses).with(cross_listed_name).exactly(1).times.and_return(result_set)
+      expect(Oec::Queries).to receive(:get_courses).with(cross_listed_name).exactly(1).times.and_return result_set
     end
-    expect(Oec::Queries).to receive(:get_secondary_cross_listings).with([]).and_return([]);
+    expect(Oec::Queries).to receive(:get_secondary_cross_listings).with([]).and_return []
   end
 
   context 'reading ANTHRO csv file' do
-    subject { OecSpecHelper.get_csv('ANTHRO', random_time) }
+    subject { get_csv 'ANTHRO' }
     it {
       contain_exactly('COURSE_ID', '2013-D-02567')
     }
   end
 
   context 'reading MATH csv file' do
-    subject { OecSpecHelper.get_csv('MATH', random_time) }
+    subject { get_csv 'MATH' }
     it {
       contain_exactly('COURSE_ID', '2013-D-87672', '2013-D-54432', '2013-D-87675', '2013-D-54441', '2013-D-87673', '2013-D-87691')
     }
   end
 
   context 'reading POL SCI csv file' do
-    subject { OecSpecHelper.get_csv('POL SCI', random_time) }
+    subject { get_csv 'POL SCI' }
     it {
       contain_exactly('COURSE_ID', '2013-D-72198', '2013-D-72198')
     }
   end
 
   context 'reading STAT csv file' do
-    subject { OecSpecHelper.get_csv('STAT', random_time) }
+    subject { get_csv 'STAT' }
     it {
       contain_exactly('COURSE_ID', '2013-D-87672', '2013-D-54432', '2013-D-54441', '2013-D-72199', '2013-D-87691', '2013-D-87693')
     }
+  end
+
+  def get_csv(dept_name)
+    export = Oec::Courses.new(dept_name).export
+    CSV.read export[:filename]
   end
 
 end
