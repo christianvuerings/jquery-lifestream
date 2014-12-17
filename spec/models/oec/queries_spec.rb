@@ -50,7 +50,7 @@ describe Oec::Queries do
     it { subject[0]['ldap_uid'].should_not be_nil }
   end
 
-  context 'looking up course_students' do
+  context 'looking up course data edited by STAT dept' do
     subject { Oec::Queries.get_edited_course_data('STAT', 'fixtures/oec') }
     it { should_not be_nil }
     it { subject.length.should eq 6 }

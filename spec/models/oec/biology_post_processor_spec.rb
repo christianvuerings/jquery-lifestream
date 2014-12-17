@@ -47,7 +47,7 @@ describe Oec::BiologyPostProcessor do
 
     def get_csv(dept_name)
       export = Oec::Courses.new(dept_name).export
-      CSV.read(export[:filename])
+      CSV.read export[:filename]
     end
 
   end
