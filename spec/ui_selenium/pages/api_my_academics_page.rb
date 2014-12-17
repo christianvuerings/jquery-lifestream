@@ -16,6 +16,20 @@ class ApiMyAcademicsPage
     @parsed = JSON.parse(body)
   end
 
+  def academics_date(epoch)
+    (Time.strptime(epoch, '%s')).strftime("%a %b %-d")
+  end
+
+  def academics_time(epoch)
+    time_format = (Time.strptime(epoch, '%s')).strftime("%-l:%M %p")
+    if time_format == '12:00 PM'
+      time = 'Noon'
+    else
+      time = time_format
+    end
+    time
+  end
+
   # BLOCKS
 
   def has_no_standing
@@ -117,6 +131,57 @@ class ApiMyAcademicsPage
     dates
   end
 
+  # FINAL EXAMS
+
+  def exam_schedules
+    @parsed['examSchedule']
+  end
+
+  def has_exam_schedules
+    if exam_schedules.nil? || exam_schedules.length == 0
+      false
+    elsif exam_schedules.length > 0
+      true
+    end
+  end
+
+  def exam_epochs
+    epochs = []
+    exam_schedules.each { |schedule| epochs.push(schedule['date']['epoch'].to_s) }
+    epochs
+  end
+
+  def all_exam_dates
+    dates = []
+    exam_epochs.each { |epoch| dates.push(academics_date(epoch)) }
+    dates
+  end
+
+  def all_exam_times
+    times = []
+    exam_schedules.each { |exam| times.push(exam['time']) }
+    times
+  end
+
+  def all_exam_courses
+    courses = []
+    exam_schedules.each { |schedule| courses.push(schedule['course_code']) }
+    courses
+  end
+
+  def exam_locations(exam)
+    locations = exam['locations']
+    raw_locations = []
+    locations.each { |location| raw_locations.push(location['raw'].gsub("  ", " ")) }
+    raw_locations
+  end
+
+  def all_exam_locations
+    all_locations = []
+    exam_schedules.each { |exam| all_locations.concat(exam_locations(exam)) }
+    all_locations.sort
+  end
+
   # TELE-BEARS
 
   def tele_bears
@@ -181,15 +246,6 @@ class ApiMyAcademicsPage
   end
 
   def tele_bears_date_time(epoch)
-    date = (Time.strptime(epoch, '%s')).strftime("%a %b %-d")
-    # date = epoch.strftime("%a %b %-d")
-    # time = epoch.strftime("%-l:%M %p")
-    time = (Time.strptime(epoch, '%s')).strftime("%-l:%M %p")
-    if time == '12:00 PM'
-      date_time = date + ' | ' + 'Noon'
-    else
-      date_time = date + ' | ' + time
-    end
-    date_time
+    academics_date(epoch) + ' | ' + academics_time(epoch)
   end
 end
