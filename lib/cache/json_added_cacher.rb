@@ -24,7 +24,7 @@ module Cache
       def expire(id = nil)
         super(id)
         key = cache_key(json_key(id))
-        Rails.cache.delete(key, :force => true)
+        Rails.cache.delete(key)
         Rails.logger.debug "Expired cache_key #{key}"
       end
     end
