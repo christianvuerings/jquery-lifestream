@@ -88,7 +88,6 @@ module Oec
       use_pooled_connection {
         sql = <<-SQL
         select distinct person.first_name, person.last_name,
-          person.first_name || ' ' || person.last_name AS full_name,
           person.email_address, person.ldap_uid
         from calcentral_person_info_vw person, calcentral_class_roster_vw r, calcentral_course_info_vw c
         where
@@ -175,7 +174,6 @@ module Oec
         c.course_title_short,
         p.first_name,
         p.last_name,
-        p.first_name || ' ' || p.last_name AS full_name,
         p.email_address,
         i.instructor_func,
         '23' AS blue_role,
