@@ -21,9 +21,9 @@
         return t.replace(
           /([a-z]+:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,
           function( m ) {
-            return '<a href="' + m + '">' +
-              ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m ) +
-              '</a>';
+            return $("<a></a>").attr("href", m).text(
+                ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m )
+            )[0].outerHTML;
           }
         );
       },
@@ -31,8 +31,10 @@
         return t.replace(
           /(^|[^\w]+)\@([a-zA-Z0-9_]{1,15})/g,
           function( m, m1, m2 ) {
-            return m1 + '<a href="http://twitter.com/' + m2 + '">@' +
-              m2 + '</a>';
+            var elem = ($("<a></a>")
+                     .attr("href", "https://twitter.com/" + m2)
+                     .text(m2))[0].outerHTML;
+            return m1 + elem;
           }
         );
       },
@@ -40,8 +42,11 @@
         return t.replace(
           /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
           function( m, m1, m2 ) {
-            return m1 + '<a href="https://twitter.com/hashtag/' +
-            m2 + '?src=hash">#' + m2 + '</a>';
+            var elem = ($("<a></a>")
+                     .attr("href", "https://twitter.com/hashtag/" + m2
+                          + "?src=hash")
+                     .text("#" + m2))[0].outerHTML;
+            return m1 + elem;
           }
         );
       };
