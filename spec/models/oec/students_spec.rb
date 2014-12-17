@@ -14,8 +14,7 @@ describe Oec::Students do
             'ldap_uid' => row[0],
             'first_name' => row[1],
             'last_name' => row[2],
-            'full_name' => row[3],
-            'email_address' => row[4]
+            'email_address' => row[3]
           }
         end
       end

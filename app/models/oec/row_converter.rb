@@ -26,15 +26,14 @@ module Oec
         'ldap_uid' => row[9],
         'first_name' => row[10],
         'last_name' => row[11],
-        'full_name' => row[12],
-        'email_address' => row[13],
-        'instructor_func' => row[14],
-        'blue_role' => row[15],
-        'evaluate' => row[16],
-        'evaluation_type' => row[17],
-        'modular_course' => row[18],
-        'start_date' => row[19],
-        'end_date' => row[20]
+        'email_address' => row[12],
+        'instructor_func' => row[13],
+        'blue_role' => row[14],
+        'evaluate' => row[15],
+        'evaluation_type' => row[16],
+        'modular_course' => row[17],
+        'start_date' => row[18],
+        'end_date' => row[19]
       }
     end
 
