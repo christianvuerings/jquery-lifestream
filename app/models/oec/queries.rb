@@ -135,7 +135,7 @@ module Oec
       if File.file? file_path
         CSV.read(file_path).each_with_index do |row, index|
           if index > 0
-            courses_query << OecHelper.to_oec_course_hash(row)
+            courses_query << Oec::RowConverter.new(row).hashed_row
           end
         end
       else

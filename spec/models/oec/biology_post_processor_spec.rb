@@ -7,7 +7,7 @@ describe Oec::BiologyPostProcessor do
       courses_query = []
       CSV.read('fixtures/oec/courses_wrapper.csv').each_with_index do |row, index|
         if index > 0 && row[4] == dept_name
-          courses_query << OecHelper.to_oec_course_hash(row)
+          courses_query << Oec::RowConverter.new(row).hashed_row
         end
       end
       expect(Oec::Queries).to receive(:get_courses).with(nil, dept_name).exactly(1).times.and_return courses_query

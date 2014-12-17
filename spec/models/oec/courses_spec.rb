@@ -8,7 +8,7 @@ describe Oec::Courses do
       courses_query = []
       CSV.read('fixtures/oec/courses.csv').each_with_index do |row, index|
         if index > 0 && row[4] == dept_name
-          result_set = OecHelper.to_oec_course_hash row
+          result_set = Oec::RowConverter.new(row).hashed_row
           courses_query << result_set
           cross_listed_targets[result_set['course_cntl_num'].to_i] = result_set
           cross_listed_name = result_set['cross_listed_name']
