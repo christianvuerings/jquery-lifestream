@@ -25,7 +25,7 @@ describe 'My Academics Final Exams card', :testui => true do
       test_output = UserUtils.initialize_output_csv(self)
 
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'Has Exams', 'Exam Dates', 'Exam Times', 'Exam Courses', 'Exam Locations' 'Error?']
+        user_info_csv << ['UID', 'Has Exams', 'Exam Dates', 'Exam Times', 'Exam Courses', 'Exam Locations', 'Error?']
       end
 
       test_users.each do |user|
@@ -59,10 +59,10 @@ describe 'My Academics Final Exams card', :testui => true do
                 testable_users.push(uid)
 
                 # EXAM SCHEDULES ON MY ACADEMICS LANDING PAGE
-                api_exam_dates = academics_api.exams_dates
-                api_exam_times = academics_api.exams_times
-                api_exam_courses = academics_api.exams_courses
-                api_exam_locations = academics_api.exams_locations
+                api_exam_dates = academics_api.all_exam_dates
+                api_exam_times = academics_api.all_exam_times
+                api_exam_courses = academics_api.all_exam_courses
+                api_exam_locations = academics_api.all_exam_locations
                 acad_exam_dates = my_academics_page.all_exam_dates
                 acad_exam_times = my_academics_page.all_exam_times
                 acad_exam_courses = my_academics_page.all_exam_courses
@@ -83,24 +83,9 @@ describe 'My Academics Final Exams card', :testui => true do
                 # IF LINKED LOCATIONS EXIST, VERIFY LINKS OPEN GOOGLE MAPS IN NEW WINDOW
                 acad_exam_location_links = my_academics_page.exam_location_links_elements
                 acad_exam_location_links.each do |link|
-                  begin
-                    link.click
-                    driver.switch_to.window driver.window_handles.last
-                    wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-                    wait.until { driver.find_element(:xpath => '//title[contains(.,"Google Maps")]') }
-                    driver.close
-                    driver.switch_to.window driver.window_handles.last
-                    link_works = true
-                  rescue
-                    link_works = false
-                  ensure
-                    if driver.window_handles.length > 1
-                      logger.info 'New window was not closed, closing.'
-                      driver.close
-                    end
-                    it "offers a Google Maps link on My Academics for UID #{uid}" do
-                      expect(link_works).to be true
-                    end
+                  link_works = WebDriverUtils.verify_external_link(driver, link, 'Google Maps')
+                  it "offers a Google Maps link on My Academics for UID #{uid}" do
+                    expect(link_works).to be true
                   end
                 end
 

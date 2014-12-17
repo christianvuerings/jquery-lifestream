@@ -18,6 +18,7 @@ module CalCentralPages
     elements(:exam_course_codes, :div, :xpath => '//div[@class="cc-widget-exam-schedule-content"]/strong[@data-ng-bind="exam.course_code"]')
     elements(:exam_locations, :div, :xpath => '//div[@class="cc-widget-exam-schedule-content"]/strong[@data-ng-bind="exam.course_code"]/following-sibling::div')
     elements(:exam_location_links, :link, :xpath => '//div[@data-locations="exam.locations"]//a')
+    elements(:exam_location_non_links, :span, :xpath => '//div[@data-locations="exam.locations"]/div/span')
 
     def all_exam_dates
       dates = []
@@ -39,11 +40,13 @@ module CalCentralPages
 
     def all_exam_locations
       locations = []
-      # for each course
-      # if linked exams, add em
-      # if non-linked exams, add em
-      exam_locations_elements.each { |location| locations.push(location.text.gsub("\n- opens in new window", "")) }
-      locations
+      exam_location_links_elements.each do |link|
+        locations.push(link.text.gsub("\n- opens in new window", ""))
+      end
+      exam_location_non_links_elements.each do |text|
+        locations.push(text.text)
+      end
+      locations.sort
     end
   end
 end

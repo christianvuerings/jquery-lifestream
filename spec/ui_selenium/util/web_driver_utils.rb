@@ -2,6 +2,8 @@ require 'selenium-webdriver'
 
 class WebDriverUtils
 
+  include ClassLogger
+
   def self.driver
     if Settings.ui_selenium.webDriver == 'firefox'
       Rails.logger.info('Browser is Firefox')
@@ -72,5 +74,28 @@ class WebDriverUtils
 
   def self.live_users
     File.join(CalcentralConfig.local_dir, "uids.json")
+  end
+
+  def self.verify_external_link(driver, link, expected_page_title)
+    begin
+      link.click
+      if driver.window_handles.length > 1
+        driver.switch_to.window driver.window_handles.last
+        wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
+        wait.until { driver.find_element(:xpath => "//title[contains(.,'#{expected_page_title}')]") }
+        driver.close
+        driver.switch_to.window driver.window_handles.last
+        true
+      else
+        false
+      end
+    ensure
+      if driver.window_handles.length > 1
+        logger.info 'New window was not closed, closing.'
+        driver.switch_to.window driver.window_handles.last
+        driver.close
+        driver.switch_to.window driver.window_handles.last
+      end
+    end
   end
 end

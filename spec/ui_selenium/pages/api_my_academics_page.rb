@@ -151,19 +151,19 @@ class ApiMyAcademicsPage
     epochs
   end
 
-  def exams_dates
+  def all_exam_dates
     dates = []
     exam_epochs.each { |epoch| dates.push(academics_date(epoch)) }
     dates
   end
 
-  def exams_times
+  def all_exam_times
     times = []
     exam_schedules.each { |exam| times.push(exam['time']) }
     times
   end
 
-  def exams_courses
+  def all_exam_courses
     courses = []
     exam_schedules.each { |schedule| courses.push(schedule['course_code']) }
     courses
@@ -172,14 +172,14 @@ class ApiMyAcademicsPage
   def exam_locations(exam)
     locations = exam['locations']
     raw_locations = []
-    locations.each { |location| raw_locations.push(location['raw']) }
+    locations.each { |location| raw_locations.push(location['raw'].gsub("  ", " ")) }
     raw_locations
   end
 
-  def exams_locations
-    locations = []
-    exam_schedules.each { |exam| locations.concat(exam_locations(exam)) }
-    locations
+  def all_exam_locations
+    all_locations = []
+    exam_schedules.each { |exam| all_locations.concat(exam_locations(exam)) }
+    all_locations.sort
   end
 
   # TELE-BEARS
