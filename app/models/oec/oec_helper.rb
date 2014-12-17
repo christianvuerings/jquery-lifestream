@@ -1,6 +1,6 @@
-module OecSpecHelper
+module OecHelper
 
-  def convert_csv_row_to_oec_result(row)
+  def self.to_oec_course_hash(row)
     course_id = row[0]
     split_course_id = course_id.split('-')
     cross_listings = row[3]
@@ -33,11 +33,6 @@ module OecSpecHelper
       'start_date' => row[19],
       'end_date' => row[20]
     }
-  end
-
-  def get_csv(dept_name)
-    export = Oec::Courses.new(dept_name).export
-    CSV.read(export[:filename])
   end
 
 end
