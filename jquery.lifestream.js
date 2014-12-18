@@ -2436,10 +2436,10 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
           "config": config,
           "html": $.tmpl( template.posted, {
             "tweet": linkify($('<div/>').html(status.text).text()),
-            "complete_url": 'http://twitter.com/' + config.user +
+            "complete_url": 'https://twitter.com/' + config.user +
               "/status/" + status.id
           } ),
-          "url": 'http://twitter.com/' + config.user
+          "url": 'https://twitter.com/' + config.user
         });
       }
       callback(output);
