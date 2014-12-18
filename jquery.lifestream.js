@@ -2401,13 +2401,13 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
       },
       hash = function( t ) {
         return t.replace(
-          /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
-          function( m, m1, m2 ) {
+          /(^|\B)#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)\b( |\r?\n|\r|$)/g,
+          function( m, m1, m2, m3 ) {
             var elem = ($("<a></a>")
-                     .attr("href", "https://twitter.com/hashtag/" + m2
-                          + "?src=hash")
+                     .attr("href",
+                           "https://twitter.com/hashtag/" + m2 + "?src=hash")
                      .text("#" + m2))[0].outerHTML;
-            return m1 + elem;
+            return m1 + elem + m3;
           }
         );
       };
