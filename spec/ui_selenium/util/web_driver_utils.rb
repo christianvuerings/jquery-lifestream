@@ -79,16 +79,14 @@ class WebDriverUtils
   def self.verify_external_link(driver, link, expected_page_title)
     begin
       link.click
-      if driver.window_handles.length > 1
-        driver.switch_to.window driver.window_handles.last
-        wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-        wait.until { driver.find_element(:xpath => "//title[contains(.,'#{expected_page_title}')]") }
-        driver.close
-        driver.switch_to.window driver.window_handles.last
-        true
-      else
-        false
-      end
+      driver.switch_to.window driver.window_handles.last
+      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
+      wait.until { driver.find_element(:xpath => "//title[contains(.,'#{expected_page_title}')]") }
+      driver.close
+      driver.switch_to.window driver.window_handles.last
+      true
+    rescue
+      false
     ensure
       if driver.window_handles.length > 1
         logger.info 'New window was not closed, closing.'
