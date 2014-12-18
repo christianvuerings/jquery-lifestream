@@ -1,8 +1,8 @@
 module Oec
   class Students < Export
 
-    def initialize(ccns, gsi_ccns)
-      super()
+    def initialize(ccns, gsi_ccns, export_dir)
+      super export_dir
       @ccns = ccns
       @gsi_ccns = gsi_ccns
     end
