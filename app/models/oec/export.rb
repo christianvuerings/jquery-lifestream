@@ -1,16 +1,14 @@
 module Oec
   class Export < CsvExport
 
-    def initialize
-      term = Settings.oec.current_terms_codes[0]
-      today = DateTime.now.strftime('%F')
-      super "#{Settings.oec.export_home}/data/#{term.year}-#{term.code}/raw/#{today}"
+    def initialize(export_dir)
+      super export_dir
     end
 
     def export
-      output_filename = "#{export_directory}/#{base_file_name}.csv"
+      file = output_filename
       output = CSV.open(
-        output_filename, 'wb',
+        file, 'wb',
         {
           headers: headers,
           write_headers: true
@@ -19,8 +17,12 @@ module Oec
       append_records output
       output.close
       {
-        filename: output_filename
+        filename: file
       }
+    end
+
+    def output_filename(basename = nil, timestamp = nil)
+      "#{export_directory}/#{base_file_name}.csv"
     end
 
     def base_file_name

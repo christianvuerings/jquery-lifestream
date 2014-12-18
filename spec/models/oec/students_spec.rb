@@ -21,7 +21,7 @@ describe Oec::Students do
       Oec::Queries.stub(:get_all_students).with(ccns.concat gsi_ccns).and_return(all_students_query)
     }
 
-    let!(:export) { Oec::Students.new(ccns, gsi_ccns).export }
+    let!(:export) { Oec::Students.new(ccns, gsi_ccns, 'tmp/oec').export }
 
     subject { CSV.read(export[:filename]) }
     it {

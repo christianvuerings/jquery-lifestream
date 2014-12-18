@@ -276,7 +276,6 @@ features:
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
-  export_home: 'tmp/oec'
   current_terms_codes: [{
     year: 2013,
     code: "D"

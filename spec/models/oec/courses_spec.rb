@@ -62,7 +62,7 @@ describe Oec::Courses do
   end
 
   def get_csv(dept_name)
-    export = Oec::Courses.new(dept_name).export
+    export = Oec::Courses.new(dept_name, 'tmp/oec').export
     CSV.read export[:filename]
   end
 

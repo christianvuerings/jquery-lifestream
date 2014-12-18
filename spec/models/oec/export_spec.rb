@@ -1,12 +1,11 @@
 describe Oec::Export do
 
-  describe '#load_settings' do
-    context 'building path to export directory' do
-      subject { Oec::Export.new }
+  describe '#configure' do
+    context 'setting export directory' do
+      tmp_dir = 'tmp/oec'
+      subject { Oec::Export.new tmp_dir }
       it {
-        term = Settings.oec.current_terms_codes[0]
-        today = DateTime.now.strftime('%F')
-        subject.export_directory.should eq "tmp/oec/data/#{term.year}-#{term.code}/raw/#{today}"
+        subject.export_directory.should eq tmp_dir
       }
     end
   end

@@ -1,8 +1,8 @@
 module Oec
   class Courses < Export
 
-    def initialize(dept_name)
-      super()
+    def initialize(dept_name, export_dir)
+      super export_dir
       @dept_name = dept_name
     end
 
@@ -50,7 +50,7 @@ module Oec
     def append_row(output, row, visited_row_list, course)
       # Avoid duplicate rows
       row_as_string = "#{course['course_id']}-#{course['ldap_uid']})"
-      unless visited_row_list.include?(row_as_string)
+      unless visited_row_list.include? row_as_string
         output << row
         visited_row_list << row_as_string
       end

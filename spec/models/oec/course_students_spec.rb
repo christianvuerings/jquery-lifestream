@@ -1,9 +1,7 @@
 describe Oec::CourseStudents do
 
-  let!(:random_time) { Time.now.to_f.to_s.gsub('.', '') }
-
   context 'the exported file in the tmp directory' do
-    let!(:spec_file) { CSV.read('fixtures/oec/course_students.csv') }
+    let!(:spec_file) { CSV.read 'fixtures/oec/course_students.csv' }
     let!(:ccns) { [12345, 67890] }
     before(:each) {
       all_course_students_query = []
@@ -15,15 +13,15 @@ describe Oec::CourseStudents do
           }
         end
       end
-      Oec::Queries.stub(:get_all_course_students).with(ccns).and_return(all_course_students_query)
+      Oec::Queries.stub(:get_all_course_students).with(ccns).and_return all_course_students_query
     }
 
-    let!(:export) { Oec::CourseStudents.new(ccns, []).export }
+    let!(:export) { Oec::CourseStudents.new(ccns, [], 'tmp/oec').export }
 
-    subject { CSV.read(export[:filename]) }
+    subject { CSV.read export[:filename] }
     it {
       should_not be_nil
-      should eq(spec_file)
+      should eq spec_file
     }
   end
 
