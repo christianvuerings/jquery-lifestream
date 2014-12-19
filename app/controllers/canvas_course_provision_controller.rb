@@ -26,11 +26,25 @@ class CanvasCourseProvisionController < ApplicationController
     render json: { job_request_status: "Success", job_id: job_id}.to_json
   end
 
+  # POST /api/academics/canvas/course_provision/delete_sections.json
+  def delete_sections
+    worker = Canvas::CourseProvision.new(session[:user_id], options_from_params)
+    job_id = worker.remove_sections(params[:sis_section_ids])
+    render json: { job_request_status: "Success", job_id: job_id}.to_json
+  end
+
+  # POST /api/academics/canvas/course_provision/add_sections.json
+  def add_sections
+    worker = Canvas::CourseProvision.new(session[:user_id], options_from_params)
+    job_id = worker.add_sections(params[:term_code], params[:term_year], params[:ccns])
+    render json: { job_request_status: "Success", job_id: job_id}.to_json
+  end
+
   # GET /api/academics/canvas/course_provision/status.json
   def job_status
     course_provision_job = Canvas::ProvideCourseSite.find(params[:job_id])
     render json: course_provision_job.to_json and return if course_provision_job.class == Canvas::ProvideCourseSite
-    render json: { job_id: params[:job_id], status: "Error", error: "Unable to find course provisioning job" }.to_json
+    render json: { job_id: params[:job_id], jobStatus: "jobNotFoundError", error: "Unable to find course management job" }.to_json
   end
 
   def options_from_params
@@ -39,7 +53,8 @@ class CanvasCourseProvisionController < ApplicationController
       'admin_acting_as',
       'admin_by_ccns',
       'admin_term_slug',
-      'canvas_course_id'
+      'canvas_course_id',
+      'sis_section_ids'
     ].include?(k)}.symbolize_keys
   end
 

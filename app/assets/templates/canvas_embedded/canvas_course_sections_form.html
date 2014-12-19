@@ -1,0 +1,46 @@
+<div class="cc-template-canvas-manage-sections">
+  <ul class="cc-template-canvas-manage-sections-margin">
+    <li data-ng-repeat="course in currentCourses" class="cc-template-canvas-manage-sections-form-course cc-template-canvas-manage-sections-roster-area">
+      <strong>{{course.title}}</strong><strong data-ng-if="course.course_code"> ({{course.course_code}})</strong>
+      <div class="cc-template-canvas-manage-sections-form-select-all-option" data-ng-show="course.sections.length > 1">
+        Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
+      </div>
+      <ul>
+        <li data-ng-repeat="section in course.sections">
+          <div data-ng-if="!section.sites">
+            <input type="checkbox"
+                   id="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+                   data-ng-model="section.selected">
+            <label for="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+              class="cc-template-canvas-manage-sections-label"
+              data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
+            </label>
+          </div>
+        </li>
+      </ul>
+      <div data-ng-if="course.hasSites">
+        <div class="cc-template-canvas-manage-sections-has-sites-message">
+          <span data-ng-show="course.sections.length > 1">The following sections are in use in other course sites:</span>
+          <span data-ng-show="course.sections.length === 1">The following section is in use in other course sites:</span>
+        </div>
+        <ul>
+          <li data-ng-repeat="section in course.sections">
+            <div data-ng-if="section.sites">
+              <input type="checkbox"
+                     id="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+                     data-ng-model="section.selected">
+              <label for="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+                class="cc-template-canvas-manage-sections-label cc-template-canvas-manage-sections-label-sited"
+                data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
+              </label>
+              <div data-ng-repeat="site in section.sites" class="cc-template-canvas-manage-sections-sites">
+              <i class="fa fa-cogs cc-template-canvas-manage-sections-sited-icon"></i>
+              Used in <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

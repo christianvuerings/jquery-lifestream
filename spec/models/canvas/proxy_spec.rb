@@ -97,17 +97,18 @@ describe Canvas::Proxy do
     response.should_not be_nil
   end
 
-  it "should get Sections for any known Course" do
-    client = Canvas::UserCourses.new(user_id: @user_id)
-    courses = client.courses
-    courses.each do |course|
-      sections_proxy = Canvas::CourseSections.new(course_id: course['id'])
-      sections_response = sections_proxy.sections_list
-      sections = JSON.parse(sections_response.body)
-      sections.should_not be_nil
-      sections.each do |section|
-        section['id'].blank?.should be_falsey
-      end
+  describe ".sis_term_id_to_term" do
+    it "converts sis term id to term hash" do
+      result = Canvas::Proxy.sis_term_id_to_term('TERM:2014-D')
+      expect(result).to be_an_instance_of Hash
+      expect(result[:term_yr => '2014', :term_cd => 'D'])
+    end
+
+    it "returns nil if sis term id not formatted properly" do
+      expect(Canvas::Proxy.sis_term_id_to_term('TERMS:2014-D')).to be_nil
+      expect(Canvas::Proxy.sis_term_id_to_term('TERM:20147.D')).to be_nil
+      expect(Canvas::Proxy.sis_term_id_to_term('TERM:2014-DB')).to be_nil
+      expect(Canvas::Proxy.sis_term_id_to_term('TERM:2014-d')).to be_nil
     end
   end
 

@@ -3,4 +3,60 @@
   .cc-button {
     padding: 10px;
   }
+
+  // Reset to avoid default Foundation form styling
+  .cc-page-course-official-form {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .cc-page-course-official-paragraph {
+    margin-bottom: 10px;
+  }
+
+  .cc-page-course-official-sections-job-status {
+    margin-bottom: 15px;
+  }
+
+  .cc-page-course-official-sections-form-actions {
+    margin-top: 10px;
+  }
+
+  .cc-page-course-official-sections-form-button {
+    background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
+  }
+
+  .cc-page-course-official-sections-label {
+    display: inline;
+    margin-left: 1em;
+    text-align: left;
+  }
+
+  .cc-page-course-official-sections-labels-form {
+    margin-top: 10px;
+  }
+
+  .cc-page-course-official-sections-pending-request {
+    margin: 15px auto;
+  }
+
+  .cc-page-course-official-sections-tab-area {
+    padding: 10px 5px;
+  }
+
+  .cc-page-course-official-sections-confirmation {
+    background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
+    border-radius: 5px;
+    padding: 20px;
+    .cc-page-course-official-sections-roster-list {
+      list-style-type: disc;
+      margin: 10px 0 0 39px;
+    }
+  }
+
+  .cc-page-course-official-sections-step-options {
+    padding: 20px 0;
+  }
+
 }

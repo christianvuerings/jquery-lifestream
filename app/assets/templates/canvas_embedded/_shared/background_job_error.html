@@ -1,0 +1,18 @@
+<div class="cc-template-background-job-error">
+  <p class="cc-template-background-job-error-paragraph">
+    <i class="cc-left fa fa-exclamation-circle cc-icon-red cc-template-background-job-error-icon"></i>
+    <span class="cc-template-background-job-error-header" data-ng-bind="errorConfig.header"></span>
+  </p>
+  <p class="cc-template-background-job-error-paragraph">
+    Due to technical issues encountered, our support team must <span data-ng-bind="errorConfig.supportAction"></span>.
+  </p>
+  <p class="cc-template-background-job-error-paragraph">
+    Please email us at <a href="" data-ng-click="errorEmail()">bcourseshelp@berkeley.edu</a> with:
+  </p>
+  <ul>
+    <li data-ng-repeat="info in errorConfig.supportInfo">
+      <span data-ng-bind="info"></span>
+    </li>
+    <li>The following error message: &quot;<span data-ng-bind="error"></span>&quot;</li>
+  </ul>
+</div>

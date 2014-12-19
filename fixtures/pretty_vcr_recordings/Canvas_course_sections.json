@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/767330/sections",
+        "uri": "http://ucb.beta.example.com/api/v1/courses/5/sections",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -29,56 +29,56 @@
           "message": null
         },
         "headers": {
-          "cache-control": [
-            "private, max-age=0, must-revalidate"
-          ],
-          "content-type": [
-            "application/json; charset=utf-8"
-          ],
-          "date": [
-            "Thu, 20 Jun 2013 22:09:03 GMT"
-          ],
-          "etag": [
-            "\"25fedc62aa546e344806a2ad30c60299\""
-          ],
-          "p3p": [
-            "CP=\"None, see http://www.instructure.com/privacy-policy\""
-          ],
-          "server": [
-            "Apache"
-          ],
-          "set-cookie": [
-            "canvas_session=VpfaCezEteGconeudR1o0Q.eT0Gw-nsx5vyKGphO4PGYfxu1Zdx-iCSzA5FVTYoWnEyVK0I703mGEG4WAwViCftEhmOOQdUioh0X_WDVIo9KPQiIdkUITgAAASOcR9T4JgEE6lOc0ix6jowQoDMem5IJQVyl6KOjjperLSlI6r8GXwKGKoq3ep4uWj2vEIXoZk.Fs7V1fsGUaK_b6kN2EJ0do6H12o.UcN9gA; path=/; secure; HttpOnly"
-          ],
-          "status": [
-            "200 OK"
-          ],
-          "vary": [
-            "Accept-Encoding"
-          ],
           "x-canvas-user-id": [
-            "10000003057506"
+            "10000000000002"
           ],
           "x-frame-options": [
             "SAMEORIGIN"
           ],
-          "x-request-context-id": [
-            "f1093080-bc23-0130-3150-02f885576c21"
-          ],
-          "x-runtime": [
-            "734"
-          ],
-          "x-session-id": [
-            "faa91ecba6f74030e2238f9b68c90066"
+          "content-type": [
+            "application/json; charset=utf-8"
           ],
           "x-ua-compatible": [
-            "IE=edge,chrome=1"
+            "IE=Edge"
           ],
-          "content-length": [
-            "290"
+          "etag": [
+            "\"18b00a3df56a231cc515a7278105f991\""
+          ],
+          "cache-control": [
+            "must-revalidate, private, max-age=0"
+          ],
+          "set-cookie": [
+            "_csrf_token=Ob8gNjREZOKcHORigbL0ERUbaAMMaZpkSLISNBjOpbwK%2FVJUVhIXt6pPoSq1y5h3W3ElcWIAwwwJ4npQLYbC6A%3D%3D; path=/, _normandy_session=0hW4bcShHo1XilkQyvtA5Q.UvYS3xU1zD8k0BgMvDC2wJSlYozJMyxZPn9kv1Jp0CKu5rBattvEfKnzX5wc8bflWeTFkV_doJsfIFst9TkaTTgHzaQGoRWA7BnaQ3_CBKuDO2UtTHUnsblZfroox8Vu.i3Q6ukpXLV6NHkhzi5b1815lKAk.VIn-8Q; path=/; HttpOnly"
+          ],
+          "x-session-id": [
+            "6096770e2cee78341086253799d7b3be"
+          ],
+          "x-request-context-id": [
+            "7fa03500-63a2-0132-ab88-685b358d5fc5"
+          ],
+          "x-canvas-meta": [
+            "b=399872;m=399872;u=0.14;y=0.01;d=0.00;"
+          ],
+          "x-runtime": [
+            "0.166681"
+          ],
+          "date": [
+            "Thu, 11 Dec 2014 20:30:41 GMT"
+          ],
+          "x-rack-cache": [
+            "miss"
           ],
           "connection": [
-            "keep-alive"
+            "close"
+          ],
+          "server": [
+            "thin"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "x-sakai-token": [
+
           ]
         },
         "body": {
@@ -86,125 +86,335 @@
           "string": "",
           "debug_json": [
             {
-              "course_id": 767330,
+              "course_id": 5,
               "end_at": null,
-              "id": 1237012,
-              "name": "Canvas-only Section",
+              "id": 7,
+              "name": "COMPSCI 61B DIS 111",
               "nonxlist_course_id": null,
               "start_at": null,
-              "sis_section_id": null
+              "sis_section_id": "SEC:2014-D-25932",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
             },
             {
-              "course_id": 767330,
+              "course_id": 5,
               "end_at": null,
-              "id": 1237009,
-              "name": "2013-C-7309",
+              "id": 32,
+              "name": "COMPSCI 61B LAB 023",
               "nonxlist_course_id": null,
               "start_at": null,
-              "sis_section_id": "SEC:2013-C-7309"
-            }
-          ]
-        },
-        "http_version": null
-      },
-      "recorded_at": "Thu, 20 Jun 2013 22:09:03 GMT"
-    },
-    {
-      "request": {
-        "method": "get",
-        "uri": "https://ucberkeley.test.instructure.com/api/v1/courses/833382/sections",
-        "body": {
-          "encoding": "US-ASCII",
-          "string": ""
-        },
-        "headers": {
-          "Authorization": "",
-          "Cache-Control": [
-            "no-store"
-          ],
-          "Content-Type": [
-            "application/x-www-form-urlencoded"
-          ],
-          "x-sakai-token": null
-        }
-      },
-      "response": {
-        "status": {
-          "code": 200,
-          "message": null
-        },
-        "headers": {
-          "cache-control": [
-            "private, max-age=0, must-revalidate"
-          ],
-          "content-type": [
-            "application/json; charset=utf-8"
-          ],
-          "date": [
-            "Thu, 20 Jun 2013 22:10:04 GMT"
-          ],
-          "etag": [
-            "\"3d4f9dce4c6aa25629d0f9d7ec8ccbeb\""
-          ],
-          "p3p": [
-            "CP=\"None, see http://www.instructure.com/privacy-policy\""
-          ],
-          "server": [
-            "Apache"
-          ],
-          "set-cookie": [
-            "canvas_session=jUcD4HHFRka9zLJ2l6rkwA.cHIeGljTlhkArk3xe-hX3dfOOgcYJ41q6S0NIBX98VZDqiJqrrkkBnzKhfkhwBn8zg8tSunvDglPDubNKps2zLzH23fuPykxPBeoFJA6xiUhyPXwOirj-x0Tp8zQTlZPCsnWmKqcQOD1SFLpibZSf0nOopOS8MmL1kdAJtyyed4.ucPTtoAvYl7_jKXFo4x704a96XA.UcN9vA; path=/; secure; HttpOnly"
-          ],
-          "status": [
-            "200 OK"
-          ],
-          "vary": [
-            "Accept-Encoding"
-          ],
-          "x-canvas-user-id": [
-            "10000003057506"
-          ],
-          "x-frame-options": [
-            "SAMEORIGIN"
-          ],
-          "x-request-context-id": [
-            "15284270-bc24-0130-c9a4-02f885779982"
-          ],
-          "x-runtime": [
-            "270"
-          ],
-          "x-session-id": [
-            "39db715dac732502db616957cd286ff7"
-          ],
-          "x-ua-compatible": [
-            "IE=edge,chrome=1"
-          ],
-          "content-length": [
-            "150"
-          ],
-          "connection": [
-            "keep-alive"
-          ]
-        },
-        "body": {
-          "encoding": "US-ASCII",
-          "string": "",
-          "debug_json": [
+              "sis_section_id": "SEC:2014-D-26001",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
             {
-              "course_id": 833382,
+              "course_id": 5,
               "end_at": null,
-              "id": 1237014,
-              "name": "2013-C-16171",
+              "id": 31,
+              "name": "COMPSCI 61B LAB 022",
               "nonxlist_course_id": null,
               "start_at": null,
-              "sis_section_id": "SEC:2013-C-16171"
+              "sis_section_id": "SEC:2014-D-25995",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 30,
+              "name": "COMPSCI 61B LAB 021",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25989",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 29,
+              "name": "COMPSCI 61B LAB 020",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25983",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 28,
+              "name": "COMPSCI 61B LAB 019",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25977",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 27,
+              "name": "COMPSCI 61B LAB 018",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25971",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 26,
+              "name": "COMPSCI 61B LAB 017",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25965",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 25,
+              "name": "COMPSCI 61B LAB 016",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25959",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 24,
+              "name": "COMPSCI 61B LAB 015",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25953",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 23,
+              "name": "COMPSCI 61B LAB 014",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25947",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 22,
+              "name": "COMPSCI 61B LAB 013",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25941",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 21,
+              "name": "COMPSCI 61B LAB 012",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25935",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 20,
+              "name": "COMPSCI 61B LAB 011",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25929",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 19,
+              "name": "COMPSCI 61B DIS 123",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-26004",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 18,
+              "name": "COMPSCI 61B DIS 122",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25998",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 17,
+              "name": "COMPSCI 61B DIS 121",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25992",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 16,
+              "name": "COMPSCI 61B DIS 120",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25986",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 15,
+              "name": "COMPSCI 61B DIS 119",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25980",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 14,
+              "name": "COMPSCI 61B DIS 118",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25974",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 13,
+              "name": "COMPSCI 61B DIS 117",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25968",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 12,
+              "name": "COMPSCI 61B DIS 116",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25962",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 11,
+              "name": "COMPSCI 61B DIS 115",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25956",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 10,
+              "name": "COMPSCI 61B DIS 114",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25950",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 9,
+              "name": "COMPSCI 61B DIS 113",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25944",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 8,
+              "name": "COMPSCI 61B DIS 112",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25938",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
+            },
+            {
+              "course_id": 5,
+              "end_at": null,
+              "id": 6,
+              "name": "COMPSCI 61B LEC 001",
+              "nonxlist_course_id": null,
+              "start_at": null,
+              "sis_section_id": "SEC:2014-D-25926",
+              "sis_course_id": "CRS:COMPSCI-61B-2014-D",
+              "integration_id": null,
+              "sis_import_id": 24
             }
           ]
         },
         "http_version": null
       },
-      "recorded_at": "Thu, 20 Jun 2013 22:10:04 GMT"
+      "recorded_at": "Thu, 11 Dec 2014 20:30:41 GMT"
     }
   ],
-  "recorded_with": "VCR 2.5.0"
+  "recorded_with": "VCR 2.9.3"
 }

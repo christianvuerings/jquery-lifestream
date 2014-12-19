@@ -14,7 +14,7 @@
         </button>
       </div>
 
-      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-provision-actas-form">
+      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-course-provision-form cc-page-provision-actas-form">
         <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" />
         <button class="cc-button cc-button-blue" type="submit">As instructor</button>
       </form>
@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-        <form data-ng-submit="fetchFeed()">
+        <form data-ng-submit="fetchFeed()" class="cc-page-course-provision-form">
           <textarea data-ng-model="admin_by_ccns"
             placeholder="Paste your list of CCNs here, separated by commas or spaces">
           </textarea>
@@ -92,53 +92,9 @@
 
               <div class="cc-page-provision-step-indent">
                 <p>All rosters you select below will be put in ONE, single course site.</p>
-                <form data-ng-submit="showConfirmation()">
-                  <div>
-                    <ul class="cc-page-provision-margin">
-                      <li data-ng-repeat="course in currentCourses" class="cc-page-provision-form-course cc-page-provision-roster-area">
-                        <strong>{{course.title}}</strong><strong data-ng-if="course.course_code"> ({{course.course_code}})</strong>
-                        <div class="cc-page-provision-form-select-all-option" data-ng-show="course.sections.length > 1">
-                          Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
-                        </div>
-                        <ul>
-                          <li data-ng-repeat="section in course.sections">
-                            <div data-ng-if="!section.sites">
-                              <input type="checkbox"
-                                     id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                     data-ng-model="section.selected">
-                              <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                class="cc-page-provision-section-label"
-                                data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
-                              </label>
-                            </div>
-                          </li>
-                        </ul>
-                        <div data-ng-if="course.hasSites">
-                          <div class="cc-page-provision-has-sites-message">
-                            <span data-ng-show="course.sections.length > 1">The following sections are in use in other course sites:</span>
-                            <span data-ng-show="course.sections.length === 1">The following section is in use in other course sites:</span>
-                          </div>
-                          <ul>
-                            <li data-ng-repeat="section in course.sections">
-                              <div data-ng-if="section.sites">
-                                <input type="checkbox"
-                                       id="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                       data-ng-model="section.selected">
-                                <label for="cc-page-provision-checkbox-{{$parent.$index}}-{{$index}}"
-                                  class="cc-page-provision-section-label cc-page-provision-section-sited-label"
-                                  data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
-                                </label>
-                                <div data-ng-repeat="site in section.sites" class="cc-page-provision-section-sites">
-                                <i class="fa fa-cogs cc-page-provision-section-sited-icon"></i>
-                                Used in <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+                <form data-ng-submit="showConfirmation()" class="cc-page-course-provision-form">
+
+                  <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>
 
                   <div class="cc-page-provision-form-actions">
                     <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Next &gt;&gt;</button>
@@ -152,20 +108,20 @@
 
         <div data-ng-show="currentWorkflowStep === 'confirmation'">
           <div class="cc-page-provision-confirmation">
-            <div data-ng-if="selectedSections().length === 1">
+            <div data-ng-if="selectedSections(currentCourses).length === 1">
               <strong>You are about to create 1 course site with 1 roster:</strong>
             </div>
-            <div data-ng-if="selectedSections().length > 1">
-              <strong>You are about to create 1 course site with these <span data-ng-bind="selectedSections().length"></span> rosters:</strong>
+            <div data-ng-if="selectedSections(currentCourses).length > 1">
+              <strong>You are about to create 1 course site with these <span data-ng-bind="selectedSections(currentCourses).length"></span> rosters:</strong>
             </div>
             <ul class="cc-page-provision-roster-list">
-              <li data-ng-repeat="section in selectedSections()">
+              <li data-ng-repeat="section in selectedSections(currentCourses)">
                 <span data-ng-bind="section.courseTitle"></span> - <span data-ng-bind="section.courseCode"></span> <span data-ng-bind="section.section_label"></span> (<span data-ng-bind="section.ccn"></span>)
               </li>
             </ul>
           </div>
 
-          <form data-ng-submit="createCourseSiteJob()" class="cc-page-provision-site-labels-form">
+          <form data-ng-submit="createCourseSiteJob()" class="cc-page-course-provision-form cc-page-provision-site-labels-form">
             <div class="row">
               <div class="medium-6">
 
@@ -201,40 +157,22 @@
 
         <div data-ng-show="currentWorkflowStep === 'monitoring_job'">
 
-          <div data-ng-hide="status" class="cc-page-provision-pending-request">
+          <div data-ng-hide="jobStatus" class="cc-page-provision-pending-request">
             <i class="fa fa-spinner fa-spin"></i>
             Sending request...
           </div>
 
-          <div data-ng-show="status === 'New'" class="cc-page-provision-pending-request">
+          <div data-ng-show="jobStatus === 'New'" class="cc-page-provision-pending-request">
             <i class="fa fa-spinner fa-spin"></i>
             Course provisioning request sent. Awaiting processing....
           </div>
 
-          <div data-ng-show="status">
+          <div data-ng-show="jobStatus">
 
-            <div class="cc-page-provision-progress-bar-container" data-ng-show="percentCompleteRounded">
-              <div class="cc-page-provision-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{percentCompleteRounded}}">
-                <div class="cc-page-provision-progress-bar-status">{{percentCompleteRounded}}% Complete</div>
-                <div class="cc-page-provision-progress-bar-value" data-ng-style="{'width':percentCompleteRounded + '%'}"></div>
-              </div>
-            </div>
+            <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
 
-            <div data-ng-show="status === 'Error'">
-              <div class="cc-page-provision-error">
-                <p>
-                  <i class="cc-left fa fa-exclamation-circle cc-icon-red cc-page-provision-error-icon"></i>
-                  <span class="cc-page-provision-error-header">Course Site Creation Failed: We could not create your site.</span>
-                </p>
-                <p>Due to technical issues encountered, our support team must create your course site manually.</p>
-                <p>Please email us at <a href="" data-ng-click="errorEmail()">bcourseshelp@berkeley.edu</a> with:</p>
-                <ul class="cc-page-provision-error-list">
-                  <li>The title of the course site you were trying to create</li>
-                  <li>The rosters you would like to add (e.g. BIOLOGY 1A LEC 001)</li>
-                  <li>The following error message: &quot;<span data-ng-bind="error"></span>&quot;</li>
-                </ul>
-              </div>
-
+            <div data-ng-show="jobStatus === 'courseCreationError' || jobStatus === 'jobNotFoundError'">
+              <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
               <div class="row cc-page-provision-step-options">
                 <div class="medium-12 columns">
                   <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()">&lt;&lt; Back</button>
@@ -243,7 +181,7 @@
               </div>
             </div>
 
-            <div data-ng-show="status === 'Completed'">
+            <div data-ng-show="jobStatus === 'courseCreationCompleted'">
 
               <div class="cc-notice-box cc-notice-success cc-radius">
                 Success : <span data-ng-bind="course_site.short_name"></span> site created
@@ -271,11 +209,6 @@
 
   </div>
 
-  <div data-ng-show="feedFetched && !isCourseCreator" class="cc-page-unexpected-error-notice">
-    <i class="fa fa-warning"></i>
-    <span>This function is currently only available to instructors.</span>
-  </div>
-
-  <div data-ng-include src="'canvas_feed_error.html'"></div>
+  <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>
 
 </div>

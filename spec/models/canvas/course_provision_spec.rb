@@ -1,10 +1,11 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Canvas::CourseProvision do
   let(:instructor_id) { rand(99999).to_s }
   let(:user_id) { rand(99999).to_s }
   let(:canvas_admin_id) { rand(99999).to_s }
   let(:canvas_course_id) { rand(999999).to_s }
+  let(:course_hash) { {'name' => 'JAVA for Minecraft Development', 'course_code' => 'COMPSCI 15B - SLF 001', 'term' => {'sis_term_id' => 'TERM:2014-D', 'name' => 'Fall 2014'}} }
   let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'C', :ccn=>'7309'}] }
   let(:superuser_id) { rand(99999).to_s }
   let(:teaching_semesters) {
@@ -81,7 +82,10 @@ describe Canvas::CourseProvision do
 
   context 'when manging existing course sections' do
     context 'when not admin acting as a user' do
-      before { allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections) }
+      before do
+        allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
+        allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
+      end
       subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
       context 'when an instructor' do
         let(:uid) { instructor_id }
@@ -210,6 +214,83 @@ describe Canvas::CourseProvision do
     end
   end
 
+  describe '#remove_sections' do
+    subject { Canvas::CourseProvision.new(instructor_id, :canvas_course_id => canvas_course_id) }
+    let(:sis_section_ids) { ['SEC:2014-D-16171', 'SEC:2014-D-16109', 'SEC:2014-D-10287'] }
+    let(:cpcs)  { double() }
+    before do
+      allow(cpcs).to receive(:background).and_return(cpcs)
+      allow(cpcs).to receive(:save).and_return(true)
+      allow(cpcs).to receive(:remove_sections).and_return(true)
+      allow(cpcs).to receive(:job_id).and_return('canvas.courseprovision.1234.1383330151057')
+      allow(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
+    end
+    context 'when canvas_course_id not present' do
+      subject { Canvas::CourseProvision.new(instructor_id) }
+      it 'should raise an error' do
+        expect { subject.remove_sections(sis_section_ids) }.to raise_error(RuntimeError, 'canvas_course_id option not present')
+      end
+    end
+
+    it 'returns nil if user not authorized to remove sections' do
+      expect(subject).to receive(:user_authorized?).and_return(false)
+      expect(subject.remove_sections(sis_section_ids)).to be_nil
+    end
+
+    it 'returns canvas course provision job id' do
+      expect(subject).to receive(:user_authorized?).and_return(true)
+      result = subject.remove_sections(sis_section_ids)
+      expect(result).to eq 'canvas.courseprovision.1234.1383330151057'
+    end
+
+    it 'saves state of job before sending to bg job queue' do
+      expect(cpcs).to receive(:save).ordered.and_return(true)
+      expect(cpcs).to receive(:background).ordered.and_return(cpcs)
+      expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
+      result = subject.remove_sections(sis_section_ids)
+    end
+  end
+
+  describe '#add_sections' do
+    subject { Canvas::CourseProvision.new(instructor_id, :canvas_course_id => canvas_course_id) }
+    let(:ccns) { ['16171', '16109', '10287'] }
+    let(:term_code) { 'D' }
+    let(:term_year) { '2014' }
+    let(:cpcs)  { double() }
+    before do
+      allow(cpcs).to receive(:background).and_return(cpcs)
+      allow(cpcs).to receive(:save).and_return(true)
+      allow(cpcs).to receive(:add_sections).and_return(true)
+      allow(cpcs).to receive(:job_id).and_return('canvas.courseprovision.1234.1383330151057')
+      allow(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
+    end
+
+    context 'when canvas_course_id not present' do
+      subject { Canvas::CourseProvision.new(instructor_id) }
+      it 'should raise an error' do
+        expect { subject.add_sections(term_code, term_year, ccns) }.to raise_error(RuntimeError, 'canvas_course_id option not present')
+      end
+    end
+
+    it 'returns nil if user not authorized to add sections' do
+      expect(subject).to receive(:user_authorized?).and_return(false)
+      expect(subject.add_sections(term_code, term_year, ccns)).to be_nil
+    end
+
+    it 'returns canvas course provision job id' do
+      expect(subject).to receive(:user_authorized?).and_return(true)
+      result = subject.add_sections(term_code, term_year, ccns)
+      expect(result).to eq 'canvas.courseprovision.1234.1383330151057'
+    end
+
+    it 'saves state of job before sending to bg job queue' do
+      expect(cpcs).to receive(:save).ordered.and_return(true)
+      expect(cpcs).to receive(:background).ordered.and_return(cpcs)
+      expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
+      result = subject.add_sections(term_code, term_year, ccns)
+    end
+  end
+
   describe '#get_course_info' do
     context 'when canvas_course_id not present' do
       subject { Canvas::CourseProvision.new(instructor_id) }
@@ -219,8 +300,29 @@ describe Canvas::CourseProvision do
     end
     context 'when managing sections for existing course site' do
       subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
-      let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'C', :ccn=>'7309'}] }
+      before do
+        allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
+        allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
+      end
+
       it 'should return course information' do
+        result = subject.get_course_info
+        expect(result).to be_an_instance_of Hash
+        expect(result[:canvasCourseId]).to eq canvas_course_id
+        expect(result[:name]).to eq course_hash['name']
+        expect(result[:courseCode]).to eq course_hash['course_code']
+      end
+
+      it 'should return course term' do
+        result = subject.get_course_info
+        expect(result).to be_an_instance_of Hash
+        expect(result[:term]).to be_an_instance_of Hash
+        expect(result[:term][:name]).to eq course_hash['term']['name']
+        expect(result[:term][:term_yr]).to eq '2014'
+        expect(result[:term][:term_cd]).to eq 'D'
+      end
+
+      it 'should return official sections' do
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
         result = subject.get_course_info
         expect(result).to be_an_instance_of Hash

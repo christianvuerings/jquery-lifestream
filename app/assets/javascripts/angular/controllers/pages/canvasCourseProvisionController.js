@@ -5,11 +5,11 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, canvasCourseProvisionFactory, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, canvasCourseProvisionFactory, canvasCourseProvisionService, $scope, $timeout) {
     apiService.util.setTitle('bCourses Course Provision');
 
     var statusProcessor = function() {
-      if ($scope.status === 'Processing' || $scope.status === 'New') {
+      if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
         courseSiteJobStatusLoader();
       } else {
         delete $scope.percentCompleteRounded;
@@ -25,10 +25,20 @@
       }, 2000);
     };
 
+    var setErrorText = function() {
+      $scope.errorConfig = {
+        header: 'Course Site Creation Failed: We could not create your site',
+        supportAction: 'create your course site manually',
+        supportInfo: [
+          'The title of the course site you were trying to create',
+          'The rosters you would like to add (e.g. BIOLOGY 1A LEC 001)'
+        ]
+      };
+    };
+
     var clearCourseSiteJob = function() {
       delete $scope.job_id;
-      delete $scope.job_request_status;
-      delete $scope.status;
+      delete $scope.jobStatus;
       delete $scope.completed_steps;
       delete $scope.percent_complete;
     };
@@ -46,37 +56,6 @@
       });
     };
 
-    var fillCourseSites = function(semestersFeed) {
-      angular.forEach(semestersFeed, function(semester) {
-        angular.forEach(semester.classes, function(course) {
-          course.allSelected = false;
-          course.selectToggleText = 'All';
-          var hasSites = false;
-          var ccnToSites = {};
-          angular.forEach(course.class_sites, function(site) {
-            if (site.emitter === 'bCourses') {
-              angular.forEach(site.sections, function(siteSection) {
-                hasSites = true;
-                if (!ccnToSites[siteSection.ccn]) {
-                  ccnToSites[siteSection.ccn] = [];
-                }
-                ccnToSites[siteSection.ccn].push(site);
-              });
-            }
-          });
-          if (hasSites) {
-            course.hasSites = hasSites;
-            angular.forEach(course.sections, function(section) {
-              var ccn = section.ccn;
-              if (ccnToSites[ccn]) {
-                section.sites = ccnToSites[ccn];
-              }
-            });
-          }
-        });
-      });
-    };
-
     var selectAllSections = function() {
       var newSelectedCourses = [];
       angular.forEach($scope.currentCourses, function(course) {
@@ -90,7 +69,7 @@
 
     var selectedCcns = function() {
       var ccns = [];
-      angular.forEach($scope.selectedSections(), function(section) {
+      angular.forEach($scope.selectedSections($scope.currentCourses), function(section) {
         ccns.push(section.ccn);
       });
       return ccns;
@@ -100,41 +79,20 @@
       window.top.location = 'mailto:bcourseshelp@berkeley.edu?subject=bCourses+Course+Site+Creation+Failure';
     };
 
-    $scope.selectedSections = function() {
-      var selectedSections = [];
-      angular.forEach($scope.currentCourses, function(course) {
-        angular.forEach(course.sections, function(section) {
-          if (section.selected) {
-            section.courseTitle = course.title;
-            section.courseCatalog = course.course_catalog;
-            selectedSections.push(section);
-          }
-        });
-      });
-      return selectedSections;
-    };
-
-    $scope.toggleCheckboxes = function(selectedCourse) {
-      selectedCourse.allSelected = !selectedCourse.allSelected;
-      selectedCourse.selectToggleText = selectedCourse.allSelected ? 'None' : 'All';
-      angular.forEach(selectedCourse.sections, function(section) {
-        section.selected = selectedCourse.allSelected;
-      });
-    };
-
     $scope.showSelecting = function() {
       $scope.currentWorkflowStep = 'selecting';
     };
 
     $scope.showConfirmation = function() {
       $scope.currentWorkflowStep = 'confirmation';
-      var selectedSections = $scope.selectedSections();
+      var selectedSections = $scope.selectedSections($scope.currentCourses);
       $scope.siteName = selectedSections[0].courseTitle;
       $scope.siteAbbreviation = selectedSections[0].courseCode + ' - ' + selectedSections[0].section_label;
       apiService.util.iframeScrollToTop();
     };
 
     $scope.createCourseSiteJob = function() {
+      setErrorText();
       var ccns = selectedCcns();
       if (ccns.length > 0) {
         var newCourse = {
@@ -158,7 +116,7 @@
             angular.extend($scope, {
               percentCompleteRounded: 0,
               currentWorkflowStep: 'monitoring_job',
-              status: 'Error',
+              jobStatus: 'courseCreationError',
               error: 'Failed to create course provisioning job.'
             });
           });
@@ -185,7 +143,6 @@
         } else {
           if (sectionsFeed.data) {
             angular.extend($scope, sectionsFeed.data);
-            fillCourseSites($scope.teachingSemesters);
             apiService.util.iframeUpdateHeight();
             if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
               $scope.switchSemester($scope.teachingSemesters[0]);
@@ -230,6 +187,9 @@
         teachingSemesters: []
       });
     };
+
+    $scope.selectedSections = canvasCourseProvisionService.selectedSections;
+    $scope.toggleCheckboxes = canvasCourseProvisionService.toggleCheckboxes;
 
     // Wait until user profile is fully loaded before fetching section feed
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
