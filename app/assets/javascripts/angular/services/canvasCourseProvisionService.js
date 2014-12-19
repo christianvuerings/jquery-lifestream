@@ -1,8 +1,8 @@
+/* jshint camelcase: false */
 (function(angular) {
   'use strict';
 
   angular.module('calcentral.services').service('canvasCourseProvisionService', function() {
-
     /*
      * Mechanism used to select or deselect sections in the canvas course sections form
      */

@@ -27,7 +27,7 @@
     };
 
     var fetchJobStatus = function() {
-      return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id)
+      return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id);
     };
 
     var initState = function() {
@@ -45,8 +45,8 @@
     };
 
     var setErrorText = function(errorType) {
-      switch(errorType) {
-        case 'generic':
+      switch (errorType) {
+        case 'generic': {
           $scope.errorConfig = {
             header: 'Section Removal or Addition Failed',
             supportAction: 'remove or add these sections from your course site',
@@ -56,7 +56,8 @@
             ]
           };
           break;
-        case 'sectionRemoval':
+        }
+        case 'sectionRemoval': {
           $scope.errorConfig = {
             header: 'Section Removal Failed',
             supportAction: 'remove these sections from your course site',
@@ -66,7 +67,8 @@
             ]
           };
           break;
-        case 'sectionAddition':
+        }
+        case 'sectionAddition': {
           $scope.errorConfig = {
             header: 'Section Addition Failed',
             supportAction: 'add these sections from your course site',
@@ -76,6 +78,7 @@
             ]
           };
           break;
+        }
       }
     };
 
@@ -148,7 +151,7 @@
         angular.forEach(courseSemester.classes, function(classItem, classIndex) {
           angular.forEach(classItem.sections, function(section, sectionIndex) {
             // delete sections already in course
-            if ( currentSectionCcns.indexOf(section.ccn) > -1) {
+            if (currentSectionCcns.indexOf(section.ccn) > -1) {
               delete courseSemester.classes[classIndex].sections[sectionIndex];
             }
           });
@@ -220,7 +223,7 @@
         canvasCourseId: $scope.canvasCourse.canvasCourseId,
         termCode: $scope.canvasCourse.term.term_cd,
         termYear: $scope.canvasCourse.term.term_yr,
-        ccns: selectedSectionCcns(),
+        ccns: selectedSectionCcns()
       };
       canvasCourseProvisionFactory.addSections(newSections)
         .success(monitorJob)

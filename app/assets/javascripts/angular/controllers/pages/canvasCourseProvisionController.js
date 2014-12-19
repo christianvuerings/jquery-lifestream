@@ -25,7 +25,7 @@
       }, 2000);
     };
 
-    var setErrorText = function(errorType) {
+    var setErrorText = function() {
       $scope.errorConfig = {
         header: 'Course Site Creation Failed: We could not create your site',
         supportAction: 'create your course site manually',
