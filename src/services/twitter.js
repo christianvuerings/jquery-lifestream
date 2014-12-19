@@ -40,13 +40,14 @@
       },
       hash = function( t ) {
         return t.replace(
-          /(^|\B)#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)\b( |\r?\n|\r|$)/g,
+          /<a.*?<\/a>|(^|\r?\n|\r|\n|)#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)(\r?\n|\r|\n||$)/g,
           function( m, m1, m2, m3 ) {
+            if (typeof m2 == "undefined") return m;
             var elem = ($("<a></a>")
                      .attr("href",
                            "https://twitter.com/hashtag/" + m2 + "?src=hash")
                      .text("#" + m2))[0].outerHTML;
-            return m1 + elem + m3;
+            return (m1 + elem + m3);
           }
         );
       };
