@@ -87,7 +87,7 @@
      */
     var currentCcns = function() {
       var ccns = [];
-      angular.forEach($scope.currentSections, function(section) {
+      angular.forEach($scope.canvasCourse.officialSections, function(section) {
         ccns.push(section.ccn);
       });
       return ccns;
@@ -141,20 +141,33 @@
     var setCurrentCourses = function(teachingSemesters) {
       var courseSemester = false;
       var currentSectionCcns = currentCcns();
+
+      // identify semester matching current course site
       angular.forEach(teachingSemesters, function(semester) {
         if ((semester.termYear === $scope.canvasCourse.term.term_yr) && (semester.termCode === $scope.canvasCourse.term.term_cd)) {
           courseSemester = semester;
         }
       });
 
+      // remove sections (ccns) already in existing course site
       if (courseSemester) {
         angular.forEach(courseSemester.classes, function(classItem, classIndex) {
-          angular.forEach(classItem.sections, function(section, sectionIndex) {
-            // delete sections already in course
-            if (currentSectionCcns.indexOf(section.ccn) > -1) {
-              delete courseSemester.classes[classIndex].sections[sectionIndex];
+          var availableSections = [];
+          angular.forEach(classItem.sections, function(section) {
+            if (currentSectionCcns.indexOf(section.ccn) === -1) {
+              availableSections.push(section);
             }
           });
+          courseSemester.classes[classIndex].sections = availableSections;
+
+          // reset hasSites setting if all site sections gone
+          var hasSites = false;
+          angular.forEach(availableSections, function(section) {
+            if (section.sites && section.sites.length > 0) {
+              hasSites = true;
+            }
+          });
+          courseSemester.classes[classIndex].hasSites = hasSites;
         });
         $scope.currentCourses = courseSemester.classes;
       } else {
