@@ -9,9 +9,9 @@
         <li data-ng-repeat="section in course.sections">
           <div data-ng-if="!section.sites">
             <input type="checkbox"
-                   id="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+                   id="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
                    data-ng-model="section.selected">
-            <label for="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+            <label for="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
               class="cc-template-canvas-manage-sections-label"
               data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
             </label>
@@ -27,9 +27,9 @@
           <li data-ng-repeat="section in course.sections">
             <div data-ng-if="section.sites">
               <input type="checkbox"
-                     id="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+                     id="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
                      data-ng-model="section.selected">
-              <label for="cc-template-canvas-manage-sections-checkbox-{{$parent.$index}}-{{$index}}"
+              <label for="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
                 class="cc-template-canvas-manage-sections-label cc-template-canvas-manage-sections-label-sited"
                 data-ng-bind-template="{{section.courseCode}} {{section.section_label}} ({{section.ccn}})">
               </label>
