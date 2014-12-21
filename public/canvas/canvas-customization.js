@@ -3,6 +3,33 @@
   'use strict';
 
   /**
+   * Adds Alternative Media collapsible information panel to 'Files' section
+   */
+   var addAltMediaPanel = function() {
+    var pathnameMatch = window.location.pathname.match(/^\/courses\/(\d+)\/files/);
+    if (pathnameMatch !== null) {
+      var canvasCourseId = pathnameMatch[1];
+      var altMediaPanel = [
+        '<div class="cc-alt-media-alert-container">',
+        '  <div class="alert alert-info cc-alt-media-alert">',
+        '    <span class="element_toggler" aria-controls="cc-alt-media-alert-content" aria-expanded="false" aria-label="Lorem Ipsum ..." role="button">',
+        '      <i class="icon-arrow-right"></i> <strong>Alternative Media and Copyright Information</strong>',
+        '    </span>',
+        '    <div id="cc-alt-media-alert-content" style="display: none;">',
+        '      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit, ante id vestibulum fermentum, eros purus fringilla neque, eu pharetra nulla elit eu tortor. Ut fermentum gravida nibh, nec finibus nunc. Aenean ullamcorper convallis leo, interdum semper metus. Aenean at dapibus elit, eu pharetra nunc. Quisque sed maximus augue. Proin commodo.</p>',
+        '      <p>',
+        '        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit, ante id vestibulum fermentum, eros purus fringilla neque, eu pharetra nulla elit eu tortor. Ut fermentum gravida nibh, nec finibus.',
+        '        <a href="#" target="_blank">Read More</a>',
+        '      </p>',
+        '    </div>',
+        '  </div>',
+        '</div>'
+      ].join('');
+      $('nav#breadcrumbs').append(altMediaPanel);
+    }
+   };
+
+  /**
    * Adds info alert to the 'People' feature
    * on the 'People' page within a course, show additional info to support adding guests
    */
@@ -251,6 +278,7 @@
     authorizeViewAddCourseButton();
     addPeopleInfoAlert();
     addEGradeExportOption();
+    addAltMediaPanel();
   });
 
   /**

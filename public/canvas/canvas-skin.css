@@ -93,3 +93,17 @@
 button#start_new_course.btn.button-sidebar-wide {
   display: none;
 }
+
+.cc-alt-media-alert-container {
+  padding: 0 1em;
+}
+
+.cc-alt-media-alert {
+  margin-bottom: 0px;
+}
+
+#cc-alt-media-alert-content {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+}
