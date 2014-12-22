@@ -2401,14 +2401,22 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
       },
       hash = function( t ) {
         return t.replace(
-          /<a.*?<\/a>|(^|\r?\n|\r|\n|)#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)(\r?\n|\r|\n||$)/g,
-          function( m, m1, m2, m3 ) {
-            if (typeof m2 == "undefined") return m;
-            var elem = ($("<a></a>")
-                     .attr("href",
-                           "https://twitter.com/hashtag/" + m2 + "?src=hash")
-                     .text("#" + m2))[0].outerHTML;
-            return (m1 + elem + m3);
+          /<a.*?<\/a>|(^|\r?\n|\r|\n|)(#|\$)([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)(\r?\n|\r|\n||$)/g,
+          function( m, m1, m2, m3, m4 ) {
+            if (typeof m3 == "undefined") return m;
+            var elem = "";
+            if (m2 == "#") {
+                elem = ($("<a></a>")
+                        .attr("href",
+                            "https://twitter.com/hashtag/" + m3 + "?src=hash")
+                        .text("#" + m3))[0].outerHTML;
+            } else if (m2 == "$") {
+                elem = ($("<a></a>")
+                        .attr("href",
+                            "https://twitter.com/search?q=%24" + m3 + "&src=hash")
+                        .text("$" + m3))[0].outerHTML;
+            }
+            return (m1 + elem + m4);
           }
         );
       };
