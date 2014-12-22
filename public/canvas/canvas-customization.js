@@ -5,29 +5,29 @@
   /**
    * Adds Alternative Media collapsible information panel to 'Files' section
    */
-   var addAltMediaPanel = function() {
+  var addAltMediaPanel = function() {
     var pathnameMatch = window.location.pathname.match(/^\/courses\/(\d+)\/files/);
     if (pathnameMatch !== null) {
-      var canvasCourseId = pathnameMatch[1];
       var altMediaPanel = [
         '<div class="cc-alt-media-alert-container">',
         '  <div class="alert alert-info cc-alt-media-alert">',
         '    <span class="element_toggler" aria-controls="cc-alt-media-alert-content" aria-expanded="false" aria-label="Lorem Ipsum ..." role="button">',
-        '      <i class="icon-arrow-right"></i> <strong>Alternative Media and Copyright Information</strong>',
+        '      <i class="icon-arrow-right"></i> <strong>Instructors: Making Course Materials accessible</strong>',
         '    </span>',
         '    <div id="cc-alt-media-alert-content" style="display: none;">',
-        '      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit, ante id vestibulum fermentum, eros purus fringilla neque, eu pharetra nulla elit eu tortor. Ut fermentum gravida nibh, nec finibus nunc. Aenean ullamcorper convallis leo, interdum semper metus. Aenean at dapibus elit, eu pharetra nunc. Quisque sed maximus augue. Proin commodo.</p>',
-        '      <p>',
-        '        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit, ante id vestibulum fermentum, eros purus fringilla neque, eu pharetra nulla elit eu tortor. Ut fermentum gravida nibh, nec finibus.',
-        '        <a href="#" target="_blank">Read More</a>',
-        '      </p>',
+        '      <ul>',
+        '        <li>Without course instructor assistance, the University cannot meet its mission and responsibility to <a href="http://www.ucop.edu/electronic-accessibility/index.html" target="_blank">make online content accessible to students with disabilities</a></li>',
+        '        <li><a href="http://www.dsp.berkeley.edu/what-inaccessible-content" target="_blank">How to improve the accessibility of your online content</a></li>',
+        '        <li><a href="https://ets.berkeley.edu/sensusaccess" target="_blank">SensusAccess</a> -- your online partner in making documents accessible</li>',
+        '        <li>Need Help? <a href="mailto:Assistive-technology@berkeley.edu" target="_blank">Contact Us</a></li>',
+        '      </ul>',
         '    </div>',
         '  </div>',
         '</div>'
       ].join('');
       $('nav#breadcrumbs').append(altMediaPanel);
     }
-   };
+  };
 
   /**
    * Adds info alert to the 'People' feature
