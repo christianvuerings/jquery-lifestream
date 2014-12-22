@@ -2394,7 +2394,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
           function( m, m1, m2 ) {
             var elem = ($("<a></a>")
                      .attr("href", "https://twitter.com/" + m2)
-                     .text(m2))[0].outerHTML;
+                     .text("@" + m2))[0].outerHTML;
             return m1 + elem;
           }
         );
