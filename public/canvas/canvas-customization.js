@@ -12,10 +12,10 @@
       var altMediaPanel = [
         '<div class="cc-alt-media-alert-container">',
         '  <div class="alert alert-info cc-alt-media-alert">',
-        '    <span class="element_toggler" aria-controls="cc-alt-media-alert-content" aria-expanded="false" aria-label="Lorem Ipsum ..." role="button">',
+        '    <span class="element_toggler" aria-controls="cc-alt-media-alert-content" aria-expanded="false" aria-label="View Instructions" role="button">',
         '      <i class="icon-arrow-right"></i> <strong>Instructors: Making Course Materials accessible</strong>',
         '    </span>',
-        '    <div id="cc-alt-media-alert-content" style="display: none;">',
+        '    <div id="cc-alt-media-alert-content" class="hide">',
         '      <ul>',
         '        <li>Without course instructor assistance, the University cannot meet its mission and responsibility to <a href="http://www.ucop.edu/electronic-accessibility/index.html" target="_blank">make online content accessible to students with disabilities</a></li>',
         '        <li><a href="http://www.dsp.berkeley.edu/what-inaccessible-content" target="_blank">How to improve the accessibility of your online content</a></li>',
