@@ -3,6 +3,34 @@
   'use strict';
 
   /**
+   * Adds Alternative Media collapsible information panel to 'Files' section
+   */
+  var addAltMediaPanel = function() {
+    var courseFilesPathPattern = /^\/courses\/(\d+)\/files/;
+    var isCourseFilesPath = courseFilesPathPattern.test(window.location.pathname);
+    if (isCourseFilesPath) {
+      var altMediaPanel = [
+        '<div class="cc-alt-media-alert-container">',
+        '  <div class="alert alert-info cc-alt-media-alert">',
+        '    <span class="element_toggler" aria-controls="cc-alt-media-alert-content" aria-expanded="false" aria-label="View Instructions" role="button">',
+        '      <i class="icon-arrow-right"></i> <strong>Instructors: Making Course Materials accessible</strong>',
+        '    </span>',
+        '    <div id="cc-alt-media-alert-content" class="hide">',
+        '      <ul>',
+        '        <li>Without course instructor assistance, the University cannot meet its mission and responsibility to <a href="http://www.ucop.edu/electronic-accessibility/index.html" target="_blank">make online content accessible to students with disabilities</a></li>',
+        '        <li><a href="http://www.dsp.berkeley.edu/what-inaccessible-content" target="_blank">How to improve the accessibility of your online content</a></li>',
+        '        <li><a href="https://ets.berkeley.edu/sensusaccess" target="_blank">SensusAccess</a> -- your online partner in making documents accessible</li>',
+        '        <li>Need Help? <a href="mailto:Assistive-technology@berkeley.edu" target="_blank">Contact Us</a></li>',
+        '      </ul>',
+        '    </div>',
+        '  </div>',
+        '</div>'
+      ].join('');
+      $('nav#breadcrumbs').append(altMediaPanel);
+    }
+  };
+
+  /**
    * Adds info alert to the 'People' feature
    * on the 'People' page within a course, show additional info to support adding guests
    */
@@ -251,6 +279,7 @@
     authorizeViewAddCourseButton();
     addPeopleInfoAlert();
     addEGradeExportOption();
+    addAltMediaPanel();
   });
 
   /**
