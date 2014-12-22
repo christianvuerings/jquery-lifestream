@@ -6,8 +6,9 @@
    * Adds Alternative Media collapsible information panel to 'Files' section
    */
   var addAltMediaPanel = function() {
-    var pathnameMatch = window.location.pathname.match(/^\/courses\/(\d+)\/files/);
-    if (pathnameMatch !== null) {
+    var courseFilesPathPattern = /^\/courses\/(\d+)\/files/;
+    var isCourseFilesPath = courseFilesPathPattern.test(window.location.pathname);
+    if (isCourseFilesPath) {
       var altMediaPanel = [
         '<div class="cc-alt-media-alert-container">',
         '  <div class="alert alert-info cc-alt-media-alert">',
