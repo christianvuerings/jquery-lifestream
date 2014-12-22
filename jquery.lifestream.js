@@ -2380,7 +2380,7 @@ $.fn.lifestream.feeds.tumblr = function( config, callback ) {
 
       var link = function( t ) {
         return t.replace(
-          /([a-z]+:\/\/)([-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,
+          /([a-z]+:\/\/)([-A-Z0-9+&@#\/%?=~_|(\)!:,.;]*[-A-Z0-9+&@#\/%=~_|(\)])/ig,
           function( m, m1, m2 ) {
             return $("<a></a>").attr("href", m).text(
                 ( ( m2.length > 35 ) ? m2.substr( 0, 34 ) + '...' : m2 )
