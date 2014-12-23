@@ -15,6 +15,13 @@ module Rosters
       end
     end
 
+    # Serves feed without student email address included
+    def get_feed_filtered
+      feed = get_feed
+      feed[:students].each {|student| student.delete(:email) }
+      feed
+    end
+
     def photo_data_or_file(student_id)
       roster = get_feed
       return nil if roster.nil?
