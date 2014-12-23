@@ -76,6 +76,20 @@ class WebDriverUtils
     File.join(CalcentralConfig.local_dir, "uids.json")
   end
 
+  def self.ui_date_rendered_format(date)
+    today = Date.today
+    if date.strftime("%Y") == today.strftime("%Y")
+      date_format = date.strftime("%m/%d")
+    else
+      date_format = date.strftime("%m/%d/%Y")
+    end
+    date_format
+  end
+
+  def self.ui_date_input_format(date)
+    date.strftime("%m/%d/%Y")
+  end
+
   def self.verify_external_link(driver, link, expected_page_title)
     begin
       link.click
