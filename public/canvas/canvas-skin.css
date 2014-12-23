@@ -106,3 +106,16 @@ button#start_new_course.btn.button-sidebar-wide {
   margin-left: 20px;
   margin-top: 10px;
 }
+
+/* Remove some problematic links from the Canvas "Help" popup list. */
+/* Copied from https://github.com/kajigga/canvas-contrib/blob/master/Branding/CSS/hide_help_links/hide_help_links.css */
+
+/* Hide "Ask Your Instructor a Question" */
+#help-dialog-options a[href="#teacher_feedback"] {
+  display:none !important;
+}
+
+/* Hide "Report a Problem" */
+#help-dialog-options a[href="#create_ticket"] {
+  display:none !important;
+}
