@@ -27,10 +27,10 @@ describe Textbooks::Proxy do
       }).get }
 
       context 'valid section numbers and term slug' do
-        let(:course_catalog) { '109G' }
-        let(:dept) { 'POL SCI' }
+        let(:course_catalog) { '130' }
+        let(:dept) { 'COLWRIT' }
         let(:section_numbers) { ['001'] }
-        let(:slug) { 'fall-2014' }
+        let(:slug) { 'spring-2015' }
         it 'produces the expected textbook feed' do
           it_is_a_normal_server_response
           it_has_at_least_one_title
@@ -44,10 +44,10 @@ describe Textbooks::Proxy do
       end
 
       context 'an unknown section number' do
-        let(:course_catalog) { '109G' }
-        let(:dept) { 'POL SCI' }
-        let(:section_numbers) { ['123123'] }
-        let(:slug) { 'fall-2014' }
+        let(:course_catalog) { '130A' }
+        let(:dept) { 'MCELLBI' }
+        let(:section_numbers) { ['101'] }
+        let(:slug) { 'spring-2015' }
         it 'returns a helpful message' do
           it_is_a_normal_server_response
           feed = subject[:books]
@@ -56,10 +56,10 @@ describe Textbooks::Proxy do
       end
 
       context 'multiple section numbers' do
-        let(:course_catalog) { '109G' }
-        let(:dept) { 'POL SCI' }
-        let(:section_numbers) { ['001', '002'] }
-        let(:slug) { 'fall-2014' }
+        let(:course_catalog) { '130A' }
+        let(:dept) { 'MCELLBI' }
+        let(:section_numbers) { ['101', '001'] }
+        let(:slug) { 'spring-2015' }
         it 'finds the one with books' do
           it_is_a_normal_server_response
           it_has_at_least_one_title
