@@ -15,7 +15,7 @@ class CanvasRostersController < RostersController
 
   # GET /api/academics/rosters/canvas/:canvas_course_id
   def get_feed
-    feed = Canvas::CanvasRosters.new(session[:user_id], course_id: canvas_course_id).get_feed
+    feed = Canvas::CanvasRosters.new(session[:user_id], course_id: canvas_course_id).get_feed_filtered
     render :json => feed.to_json
   end
 

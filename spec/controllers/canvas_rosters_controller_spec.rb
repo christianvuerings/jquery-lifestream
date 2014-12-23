@@ -48,13 +48,13 @@ describe CanvasRostersController do
     session[:user_id] = user_id
     session[:canvas_course_id] = canvas_course_id
     allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(true)
-    allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed).and_return(roster_feed)
+    allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed_filtered).and_return(roster_feed)
   end
 
   context "when serving course rosters feed" do
 
     it_should_behave_like "an api endpoint" do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed_filtered).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :get_feed, canvas_course_id: 'embedded' }
     end
 
@@ -113,7 +113,7 @@ describe CanvasRostersController do
 
   context "when serving course enrollee photo" do
     it_should_behave_like "an api endpoint" do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:photo_data_or_file).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :photo, canvas_course_id: canvas_course_id, person_id: student_id }
     end
 
