@@ -51,6 +51,7 @@ module Rosters
               student_id: enr['student_id'],
               first_name: enr['first_name'],
               last_name: enr['last_name'],
+              email: enr['student_email_address'],
               enroll_status: enr['enroll_status'],
               section_ccns: [section[:ccn]],
               photo_bytes: enr['photo_bytes']

@@ -64,14 +64,16 @@ describe 'Rosters::Campus' do
             'enroll_status' => 'E',
             'student_id' => enrolled_student_student_id,
             'first_name' => 'First Name',
-            'last_name' => 'Last Name'
+            'last_name' => 'Last Name',
+            'student_email_address' => "#{enrolled_student_login_id}@example.com",
         },
         {
             'ldap_uid' => waitlisted_student_login_id,
             'enroll_status' => 'W',
             'student_id' => waitlisted_student_student_id,
             'first_name' => 'First Name',
-            'last_name' => 'Last Name'
+            'last_name' => 'Last Name',
+            'student_email_address' => "#{waitlisted_student_login_id}@example.com",
         }
     ]
   end
@@ -96,6 +98,7 @@ describe 'Rosters::Campus' do
     expect(student[:student_id]).to eq enrolled_student_student_id
     expect(student[:first_name].blank?).to be_falsey
     expect(student[:last_name].blank?).to be_falsey
+    expect(student[:email].blank?).to be_falsey
     expect(student[:sections].length).to eq 2
     expect(student[:profile_url].blank?).to be_falsey
   end

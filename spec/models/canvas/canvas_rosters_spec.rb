@@ -72,14 +72,16 @@ describe Canvas::CanvasRosters do
           'enroll_status' => 'E',
           'student_id' => official_student_in_canvas_student_id,
           'first_name' => "Thurston",
-          'last_name' => "Howell #{official_student_in_canvas_login_id}"
+          'last_name' => "Howell #{official_student_in_canvas_login_id}",
+          'student_email_address' => "#{official_student_in_canvas_login_id}@example.com"
         },
         {
           'ldap_uid' => official_student_not_in_canvas_login_id,
           'enroll_status' => 'E',
           'student_id' => official_student_not_in_canvas_student_id,
           'first_name' => "Clarence",
-          'last_name' => "Williams #{official_student_not_in_canvas_login_id}"
+          'last_name' => "Williams #{official_student_not_in_canvas_login_id}",
+          'student_email_address' => "#{official_student_in_canvas_login_id}@example.com"
         }
       ]
     )
@@ -93,6 +95,7 @@ describe Canvas::CanvasRosters do
     student[:student_id].should == official_student_in_canvas_student_id
     student[:first_name].blank?.should be_falsey
     student[:last_name].blank?.should be_falsey
+    student[:email].blank?.should be_falsey
     student[:sections].length.should == 2
     student[:profile_url].blank?.should be_falsey
   end
