@@ -7,11 +7,11 @@
   angular.module('calcentral.factories').factory('rosterFactory', function($http) {
     /**
      * Get the roster information
-     * @param {String} mode 'canvas' or 'campus'
-     * @param {String} id ID of the course
+     * @param {String} context 'canvas' or 'campus'
+     * @param {String} courseId ID of the course
      */
-    var getRoster = function(mode, id) {
-      var url = '/api/academics/rosters/' + mode + '/' + id;
+    var getRoster = function(context, courseId) {
+      var url = '/api/academics/rosters/' + context + '/' + courseId;
       return $http.get(url);
     };
 

@@ -10,12 +10,13 @@
       </select>
     </div>
     <div class="cc-right">
-      <button class="cc-button">
+      <a data-ng-href="/api/academics/rosters/{{ context }}/csv/{{ courseId }}.csv" target="_self"
+      class="cc-button">
         <i class="fa fa-download"></i> Export
-      </button>
-      <button class="cc-button cc-button-blue">
+      </a>
+      <a class="cc-button cc-button-blue">
         <i class="fa fa-print"></i> Print
-      </button>
+      </a>
     </div>
   </form>
 
