@@ -4,6 +4,15 @@
   padding: 20px;
 
   @media print {
+    padding: 0;
+
+    .cc-page-roster-list {
+      li {
+        margin-top: 15px;
+        page-break-inside: avoid;
+      }
+    }
+
     .cc-roster-search {
       display: none;
     }
