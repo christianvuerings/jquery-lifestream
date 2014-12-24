@@ -3,6 +3,12 @@
   overflow: hidden;
   padding: 20px;
 
+  @media print {
+    .cc-roster-search {
+      display: none;
+    }
+  }
+
   .cc-roster-search {
     background: transparent;
     border: 0;
