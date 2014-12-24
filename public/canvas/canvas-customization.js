@@ -319,10 +319,13 @@
 
       // Events that will cause changes to the parent container
       if (message.subject === 'changeParent') {
+        // Scroll to the specified position
         if (message.scrollTo !== undefined) {
           window.scrollTo(0, message.scrollTo);
+        // Scroll to the top of the current window
         } else if (message.scrollToTop) {
           window.scrollTo(0, 0);
+        // Change the current location
         } else if (message.parentLocation) {
           window.location = message.parentLocation;
         }
@@ -331,8 +334,8 @@
         // Only respond when the source iFrame is present
         if (ev.source) {
           var scrollPosition = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
-          var message = {scrollPosition: scrollPosition}
-          ev.source.postMessage(JSON.stringify(message), '*');
+          var response = {scrollPosition: scrollPosition};
+          ev.source.postMessage(JSON.stringify(response), '*');
         }
       }
     }
