@@ -2,6 +2,13 @@ module Rosters
   class Common
     extend Cache::Cacheable
 
+    # Roles used with Canvas SIS Import API
+    ENROLL_STATUS_TO_CSV_ROLE = {
+      'E' => 'Student',
+      'W' => 'Waitlist Student',
+      'C' => 'Concurrent Student'
+    }
+
     def initialize(uid, options={})
       @uid = uid
       @course_id = options[:course_id]
@@ -20,6 +27,21 @@ module Rosters
       feed = get_feed
       feed[:students].each {|student| student.delete(:email) }
       feed
+    end
+
+    # Serves rosters in CSV format
+    def get_csv
+      CSV.generate do |csv|
+        csv << ['Name','Student ID','User ID','Role','Email Address']
+        get_feed[:students].each do |student|
+          name = student[:last_name] + ', ' + student[:first_name]
+          user_id = student[:login_id]
+          student_id = student[:student_id]
+          email_address = student[:email]
+          role = ENROLL_STATUS_TO_CSV_ROLE[student[:enroll_status]]
+          csv << [name, student_id, user_id, role, email_address]
+        end
+      end
     end
 
     def photo_data_or_file(student_id)
