@@ -19,6 +19,14 @@ class CanvasRostersController < RostersController
     render :json => feed.to_json
   end
 
+  # GET /api/academics/rosters/canvas/csv/:canvas_course_id.csv
+  def get_csv
+    rosters_csv = Canvas::CanvasRosters.new(session[:user_id], course_id: canvas_course_id).get_csv
+    respond_to do |format|
+      format.csv { render csv: rosters_csv.to_s, filename: "course_#{canvas_course_id}_rosters" }
+    end
+  end
+
   # GET /canvas/:canvas_course_id/photo/:person_id
   def photo
     course_id = params[:canvas_course_id]
