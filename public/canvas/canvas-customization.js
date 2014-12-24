@@ -283,28 +283,59 @@
   });
 
   /**
-   * We use window events to resize the LTI iframe, to ask the parent page to scroll
-   * to the top, and to change the location of the parent window. The resize
-   * is handled by Instructure's public/javascripts/tool_inline.js file, and it
-   * determines the message format we use. Our own JavaScript handles the other
-   * event types.
-   * @param {Object} e Event that is sent over from the iframe
+   * We use window events to interact between the LTI iFrame and the parent container.
+   * Resizing the iFrame based on its content is handled by Instructure's `public/javascripts/tool_inline.js`
+   * file, and it determines the message format we use.
+   *
+   * We include the following custom event types:
+   *
+   *  - Scroll the parent container to a specified position:
+   *    `{subject: 'changeParent', scrollTo: <scrollPosition>}`
+   *
+   *  - Scroll the parent container to the top of the screen:
+   *    `{subject: 'changeParent', scrollToTop: true}`
+   *
+   *  - Change the location of the parent container:
+   *    `{subject: 'changeParent', parentLocation: <newLocation>}`
+   *
+   *  - Get the scroll position of the parent container:
+   *    `{subject: 'getScrollPosition'}`
+   *    This will respond with a window event back to the LTI iFrame with the following message:
+   *    `{scrollPosition: <currentScrollPosition>}`
+   *
+   * @param  {Object}    ev         Event that is sent over from the iframe
+   * @param  {String}    ev.data    The message sent with the event. Note that this is expected to be a stringified JSON object
    */
-  window.onmessage = function(e) {
-    if (e && e.data) {
+  window.onmessage = function(ev) {
+    // Parse the provided event message
+    if (ev && ev.data) {
       var message;
       try {
-        message = JSON.parse(e.data);
+        message = JSON.parse(ev.data);
       } catch (err) {
-        // The message is not for us; ignore it.
+        // The message is not for us; ignore it
         return;
       }
+
+      // Events that will cause changes to the parent container
       if (message.subject === 'changeParent') {
-        if (message.scrollToTop) {
+        // Scroll to the specified position
+        if (message.scrollTo !== undefined) {
+          window.scrollTo(0, message.scrollTo);
+        // Scroll to the top of the current window
+        } else if (message.scrollToTop) {
           window.scrollTo(0, 0);
-        }
-        if (message.parentLocation) {
+        // Change the current location
+        } else if (message.parentLocation) {
           window.location = message.parentLocation;
+        }
+      // Retrieve the current scroll position of the parent container
+      } else if (message.subject === 'getScrollPosition') {
+        // Only respond when the source iFrame is present
+        if (ev.source) {
+          var scrollPosition = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
+          var response = {scrollPosition: scrollPosition};
+          ev.source.postMessage(JSON.stringify(response), '*');
         }
       }
     }
