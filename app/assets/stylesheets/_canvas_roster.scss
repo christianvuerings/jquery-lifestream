@@ -9,7 +9,11 @@
     border-bottom: 1px solid $cc-color-button-border;
     margin: 0 0 15px;
     overflow: hidden;
-    padding: 0 0 15px;
+    padding: 7px 0 15px;
+
+    .cc-button-spaced {
+      margin: 0 5px;
+    }
 
     .cc-roster-input {
       background: $cc-color-white;
@@ -17,7 +21,7 @@
       border-radius: 5px;
       font-size: 12px;
       margin: 0 15px 0 0;
-      padding: 5px 10px 5px 5px;
+      padding: 4px 10px 5px 4px;
       width: 200px;
     }
     .cc-select {
