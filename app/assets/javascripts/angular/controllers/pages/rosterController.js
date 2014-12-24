@@ -22,6 +22,10 @@
       });
     };
 
+    $scope.print = function() {
+      apiService.util.printPage();
+    };
+
     getRoster();
   });
 })(window.angular);
