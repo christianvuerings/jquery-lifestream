@@ -33,7 +33,7 @@ describe CanvasRostersController do
           :first_name => 'Kate',
           :last_name => 'Kathimyer',
           :email => 'kkathimyer@example.com',
-          :enroll_status => 'E',
+          :enroll_status => 'W',
           :id => 4911017,
           :sections => [{:id => 1394824}],
           :profile_url => 'https://ucberkeley.beta.instructure.com/courses/1224681/users/4911017',
@@ -72,18 +72,18 @@ describe CanvasRostersController do
         expect(response_csv.count).to eq 2
 
         expect(response_csv[0]).to be_an_instance_of CSV::Row
-        expect(response_csv[0]['Name']).to eq 'Sam Samwich'
+        expect(response_csv[0]['Name']).to eq 'Samwich, Sam'
         expect(response_csv[0]['User ID']).to eq '1038892'
         expect(response_csv[0]['Student ID']).to eq '24899123'
         expect(response_csv[0]['Email Address']).to eq 'sam.samwich@example.com'
         expect(response_csv[0]['Role']).to eq 'Student'
 
         expect(response_csv[1]).to be_an_instance_of CSV::Row
-        expect(response_csv[1]['Name']).to eq 'Kate Kathimyer'
+        expect(response_csv[1]['Name']).to eq 'Kathimyer, Kate'
         expect(response_csv[1]['User ID']).to eq '1006997'
         expect(response_csv[1]['Student ID']).to eq '23973124'
         expect(response_csv[1]['Email Address']).to eq 'kkathimyer@example.com'
-        expect(response_csv[1]['Role']).to eq 'Student'
+        expect(response_csv[1]['Role']).to eq 'Waitlist Student'
       end
     end
 
