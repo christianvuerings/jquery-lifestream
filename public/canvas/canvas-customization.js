@@ -13,7 +13,7 @@
         '<div class="cc-alt-media-alert-container">',
         '  <div class="alert alert-info cc-alt-media-alert">',
         '    <span class="element_toggler" aria-controls="cc-alt-media-alert-content" aria-expanded="false" aria-label="View Instructions" role="button">',
-        '      <i class="icon-arrow-right"></i> <strong>Instructors: Making Course Materials accessible</strong>',
+        '      <i class="icon-arrow-right"></i> <strong>Instructors: Making Course Materials Accessible</strong>',
         '    </span>',
         '    <div id="cc-alt-media-alert-content" class="hide">',
         '      <ul>',
@@ -26,7 +26,38 @@
         '  </div>',
         '</div>'
       ].join('');
-      $('nav#breadcrumbs').append(altMediaPanel);
+
+      var addAltMediaNotice = function() {
+        // breadcrumbs always present in old and 'Better File Browsing' modes
+        var $breadcrumbs = $('nav#breadcrumbs');
+        if ($breadcrumbs.data('calcentral-alt-media-notice-applied') !== 'true') {
+          $breadcrumbs.append(altMediaPanel);
+          $breadcrumbs.data('calcentral-alt-media-notice-applied', 'true');
+        }
+      };
+
+      var checkCounter = 0;
+      var pageLoadedCheck = function() {
+        checkCounter = checkCounter + 1;
+        var $newFilesContent = $('header.ef-header');
+        var $oldFilesContent = $('#files_structure');
+        // limit the page to 10 seconds to initialize page state
+        if (checkCounter < 10) {
+          if ($newFilesContent.length > 0 || $oldFilesContent.length > 0) {
+            addAltMediaNotice();
+          } else {
+            noticeApplicator();
+          }
+        }
+      };
+
+      var noticeApplicator = function() {
+        window.setTimeout(function() {
+          pageLoadedCheck();
+        }, 1000);
+      };
+
+      noticeApplicator();
     }
   };
 
