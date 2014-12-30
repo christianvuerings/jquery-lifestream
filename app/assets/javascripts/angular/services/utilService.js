@@ -134,6 +134,10 @@
       return string.replace(/\/|%2F/g, '_slash_');
     };
 
+    var printPage = function() {
+      $window.print();
+    };
+
     var uidPattern = /^[0-9]{1,9}$/;
 
     // Expose methods
@@ -147,6 +151,7 @@
       hideOffCanvasMenu: hideOffCanvasMenu,
       naturalSort: naturalSort,
       preventBubble: preventBubble,
+      printPage: printPage,
       redirect: redirect,
       setTitle: setTitle,
       supportsLocalStorage: supportsLocalStorage,

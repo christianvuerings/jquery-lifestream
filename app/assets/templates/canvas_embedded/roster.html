@@ -9,6 +9,15 @@
         <option value="{{section.id}}" data-ng-repeat="section in sections">{{section.name}}</option>
       </select>
     </div>
+    <div class="cc-right">
+      <a data-ng-href="/api/academics/rosters/{{context}}/csv/{{courseId}}.csv" target="_self"
+      class="cc-button cc-button-spaced">
+        <i class="fa fa-download"></i> Export
+      </a>
+      <a class="cc-button cc-button-blue cc-button-spaced" data-ng-click="apiService.util.printPage()">
+        <i class="fa fa-print"></i> Print
+      </a>
+    </div>
   </form>
 
   <ul class="cc-page-roster-list">
@@ -23,8 +32,8 @@
           <div class="cc-image-responsive cc-page-roster-image-unavailable" title="Photo unavailable"></div>
         </a>
       </div>
-      <div class="cc-ellipsis" data-ng-bind="student.first_name"></div>
-      <div class="cc-ellipsis"><strong data-ng-bind="student.last_name"></strong></div>
+      <div class="cc-page-roster-student-name" data-ng-bind="student.first_name"></div>
+      <div class="cc-page-roster-student-name"><strong data-ng-bind="student.last_name"></strong></div>
       <div data-ng-bind="student.student_id"></div>
     </li>
   </ul>

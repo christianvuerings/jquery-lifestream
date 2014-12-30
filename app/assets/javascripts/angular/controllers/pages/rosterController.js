@@ -10,10 +10,10 @@
     }
 
     var getRoster = function() {
-      var mode = $scope.campusCourseId ? 'campus' : 'canvas';
-      var id = $scope.campusCourseId || $routeParams.canvasCourseId || 'embedded';
+      $scope.context = $scope.campusCourseId ? 'campus' : 'canvas';
+      $scope.courseId = $scope.campusCourseId || $routeParams.canvasCourseId || 'embedded';
 
-      rosterFactory.getRoster(mode, id).success(function(data) {
+      rosterFactory.getRoster($scope.context, $scope.courseId).success(function(data) {
         angular.extend($scope, data);
         apiService.util.iframeUpdateHeight();
       }).error(function(data, status) {

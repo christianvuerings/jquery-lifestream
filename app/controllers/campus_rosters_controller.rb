@@ -14,8 +14,16 @@ class CampusRostersController < RostersController
 
   # GET /api/academics/rosters/campus/:campus_course_id
   def get_feed
-    feed = Rosters::Campus.new(session[:user_id], course_id: params[:campus_course_id]).get_feed
+    feed = Rosters::Campus.new(session[:user_id], course_id: params[:campus_course_id]).get_feed_filtered
     render :json => feed.to_json
+  end
+
+  # GET /api/academics/rosters/campus/csv/:canvas_course_id.csv
+  def get_csv
+    rosters_csv = Rosters::Campus.new(session[:user_id], course_id: params[:campus_course_id]).get_csv
+    respond_to do |format|
+      format.csv { render csv: rosters_csv.to_s, filename: "course_#{params[:campus_course_id]}_rosters" }
+    end
   end
 
   # GET /campus/:campus_course_id/photo/:person_id

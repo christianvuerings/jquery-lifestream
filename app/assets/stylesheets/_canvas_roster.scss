@@ -6,9 +6,14 @@
   .cc-roster-search {
     background: transparent;
     border: 0;
-    margin: 0 0 20px;
+    border-bottom: 1px solid $cc-color-button-border;
+    margin: 0 0 15px;
     overflow: hidden;
-    padding: 0;
+    padding: 7px 0 15px;
+
+    .cc-button-spaced {
+      margin: 0 5px;
+    }
 
     .cc-roster-input {
       background: $cc-color-white;
@@ -16,7 +21,7 @@
       border-radius: 5px;
       font-size: 12px;
       margin: 0 15px 0 0;
-      padding: 5px 10px 5px 5px;
+      padding: 4px 10px 5px 4px;
       width: 200px;
     }
     .cc-select {
@@ -30,7 +35,7 @@
       float: left;
       padding: 5px;
       text-align: center;
-      width: 180px;
+      width: 173px;
 
       img {
         height: 96px;
@@ -38,12 +43,21 @@
       }
     }
   }
+
   .cc-page-roster-image-unavailable {
     background-image: asset-url("svg/photo_unavailable_official_72x96.svg");
     height: 96px;
     margin: 0 auto;
     max-width: 72px;
   }
+
+  .cc-page-roster-student-name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   @media print {
     .cc-page-roster-image-unavailable:before {
       content: asset-url("svg/photo_unavailable_official_72x96.svg");
@@ -52,6 +66,26 @@
       a[href]:after {
         content: "";
       }
+    }
+
+    padding: 0;
+
+    .cc-page-roster-student-name {
+      display: block;
+      overflow: visible;
+      text-overflow: string;
+      white-space: pre-wrap;
+    }
+
+    .cc-page-roster-list {
+      li {
+        margin-top: 15px;
+        page-break-inside: avoid;
+      }
+    }
+
+    .cc-roster-search {
+      display: none;
     }
   }
 }
