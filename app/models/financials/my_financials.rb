@@ -50,7 +50,7 @@ module Financials
         no_billing_data_response
       else
         {
-          body: user_message_on_exception,
+          body: default_message_on_exception,
           statusCode: response.code
         }
       end
