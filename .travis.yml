@@ -2,6 +2,10 @@ language: ruby
 bundler_args: --without development testext production --deployment --jobs=4 --retry=5
 cache: bundler
 
+before_install:
+  - rvm uninstall jruby
+  - rvm use jruby-1.7.13 --install
+
 rvm:
   - "jruby-19mode"
 
