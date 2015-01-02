@@ -55,7 +55,7 @@ describe 'The My Dashboard task manager', :testui => true do
 
       it 'allows a user to cancel the creation of a new task' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Cancel Task', today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task('Cancel Task', WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.click_cancel_new_task_button
         @to_do_card.cancel_new_task_button_element.when_not_visible(timeout=task_wait)
         expect(@to_do_card.today_task_one?).to be false
@@ -63,7 +63,7 @@ describe 'The My Dashboard task manager', :testui => true do
 
       it 'requires that a new task have a title' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task(nil, today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task(nil, WebDriverUtils.ui_date_input_format(today), nil)
         expect(@to_do_card.add_new_task_button_element.enabled?).to be false
         @to_do_card.click_cancel_new_task_button
       end
@@ -78,12 +78,74 @@ describe 'The My Dashboard task manager', :testui => true do
 
       it 'allows a user to create a task without a note' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Note-less task', today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task('Note-less task', WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.click_add_task_button
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.today_task_one_notes_input_element.when_visible(timeout=task_wait)
         expect(@to_do_card.today_task_one_notes_input).to eql('')
+      end
+      it 'allows the user to show more overdue tasks in ascending date order' do
+        (1..11).each do |i|
+          date = today - i
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("task #{i.to_s}", WebDriverUtils.ui_date_input_format(date), nil)
+          @to_do_card.click_add_task_button
+          if i > 1 && (i-1) % 10 == 0
+            @to_do_card.overdue_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
+            @to_do_card.overdue_show_more_button
+          end
+          wait_for_task.until { @to_do_card.overdue_task_one_title == "task #{i.to_s}" }
+          wait_for_task.until { @to_do_card.overdue_task_one_date == WebDriverUtils.ui_date_display_format(date) }
+          expect(@to_do_card.overdue_task_count).to eql(i.to_s)
+        end
+      end
+
+      it 'allows the user to show more tasks due today in ascending creation sequence' do
+        (1..11).each do |i|
+          date = today
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("task #{i.to_s}", WebDriverUtils.ui_date_input_format(date), nil)
+          @to_do_card.click_add_task_button
+          if i > 1 && (i-1) % 10 == 0
+            @to_do_card.today_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
+            @to_do_card.today_show_more_button
+          end
+          wait_for_task.until { @to_do_card.last_today_task_title == "task #{i.to_s}" }
+          wait_for_task.until { @to_do_card.last_today_task_date == WebDriverUtils.ui_date_display_format(date) }
+          expect(@to_do_card.today_task_count).to eql(i.to_s)
+        end
+      end
+
+      it 'allows the user to show more tasks due in the future in ascending date order' do
+        (1..11).each do |i|
+          date = today + i
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("task #{i.to_s}", WebDriverUtils.ui_date_input_format(date), nil)
+          @to_do_card.click_add_task_button
+          if i > 1 && (i-1) % 10 == 0
+            @to_do_card.future_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
+            @to_do_card.future_show_more_button
+          end
+          wait_for_task.until { @to_do_card.last_future_task_title == "task #{i.to_s}" }
+          wait_for_task.until { @to_do_card.last_future_task_date == WebDriverUtils.ui_date_display_format(date) }
+          expect(@to_do_card.future_task_count).to eql(i.to_s)
+        end
+      end
+
+      it 'allows the user to show more unscheduled tasks in descending creation sequence' do
+        (1..11).each do |i|
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("task #{i.to_s}", nil, nil)
+          @to_do_card.click_add_task_button
+          if i > 1 && (i-1) % 10 == 0
+            @to_do_card.unsched_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
+            @to_do_card.unsched_show_more_button
+          end
+          wait_for_task.until { @to_do_card.unsched_task_one_title == "task #{i.to_s}" }
+          wait_for_task.until { @to_do_card.unsched_task_one_date == WebDriverUtils.ui_date_display_format(today) }
+          expect(@to_do_card.unsched_task_count).to eql(i.to_s)
+        end
       end
     end
 
@@ -91,7 +153,7 @@ describe 'The My Dashboard task manager', :testui => true do
 
       it 'allows a user to edit the title of an existing task' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Original Title', today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task('Original Title', WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.click_add_task_button
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_present(timeout=task_wait)
@@ -105,7 +167,7 @@ describe 'The My Dashboard task manager', :testui => true do
 
       it 'requires that an edited task have a title' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Task Must Have a Title', today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task('Task Must Have a Title', WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.click_add_task_button
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
@@ -123,13 +185,13 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.toggle_unsched_task_one_detail
         @to_do_card.click_unsched_task_one_edit_button
-        @to_do_card.edit_unsched_task_one(nil, yesterday.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_unsched_task_one(nil, WebDriverUtils.ui_date_input_format(yesterday), nil)
         @to_do_card.save_unsched_task_one_edits
         @to_do_card.unsched_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.overdue_task_one_element.when_visible(timeout=task_wait)
         expect(@to_do_card.overdue_task_one_title).to eql('Unscheduled task that will be due yesterday')
-        expect(@to_do_card.overdue_task_one_date).to eql(yesterday.strftime("%m/%d"))
+        expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_date_display_format(yesterday))
       end
 
       it 'allows a user to make an unscheduled task due today' do
@@ -139,13 +201,13 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.toggle_unsched_task_one_detail
         @to_do_card.click_unsched_task_one_edit_button
-        @to_do_card.edit_unsched_task_one(nil, today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_unsched_task_one(nil, WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.save_unsched_task_one_edits
         @to_do_card.unsched_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
         expect(@to_do_card.today_task_one_title).to eql('Unscheduled task that will be due today')
-        expect(@to_do_card.today_task_one_date).to eql(today.strftime("%m/%d"))
+        expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
       end
 
       it 'allows a user to make an unscheduled task due in the future' do
@@ -155,18 +217,18 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.toggle_unsched_task_one_detail
         @to_do_card.click_unsched_task_one_edit_button
-        @to_do_card.edit_unsched_task_one(nil, tomorrow.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_unsched_task_one(nil, WebDriverUtils.ui_date_input_format(tomorrow), nil)
         @to_do_card.save_unsched_task_one_edits
         @to_do_card.unsched_task_one_element.when_not_present(timeout=task_wait)
         @to_do_card.click_scheduled_tasks_tab
         @to_do_card.future_task_one_element.when_visible(timeout=task_wait)
         expect(@to_do_card.future_task_one_title).to eql('Unscheduled task that will be scheduled for tomorrow')
-        expect(@to_do_card.future_task_one_date).to eql(tomorrow.strftime("%m/%d"))
+        expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_date_display_format(tomorrow))
       end
 
       it 'allows a user to make an overdue task unscheduled' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Overdue task that will be unscheduled', yesterday.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task('Overdue task that will be unscheduled', WebDriverUtils.ui_date_input_format(yesterday), nil)
         @to_do_card.click_add_task_button
         @to_do_card.toggle_overdue_task_one_detail
         @to_do_card.click_overdue_task_one_edit_button
@@ -176,12 +238,12 @@ describe 'The My Dashboard task manager', :testui => true do
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.unsched_task_one_element.when_visible(timeout=task_wait)
         expect(@to_do_card.unsched_task_one_title).to eql('Overdue task that will be unscheduled')
-        expect(@to_do_card.unsched_task_one_date).to eql(today.strftime("%m/%d"))
+        expect(@to_do_card.unsched_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
       end
 
       it 'requires that an edited task have a valid date format' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Today task', today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task('Today task', WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.click_add_task_button
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
@@ -232,227 +294,111 @@ describe 'The My Dashboard task manager', :testui => true do
 
       it 'allows a user to edit multiple scheduled tasks at once' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Overdue task', yesterday.strftime("%m/%d/%Y"), 'Overdue task notes')
+        @to_do_card.edit_new_task('Overdue task', WebDriverUtils.ui_date_input_format(yesterday), 'Overdue task notes')
         @to_do_card.click_add_task_button
         @to_do_card.overdue_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Today task', today.strftime("%m/%d/%Y"), 'Today task notes')
+        @to_do_card.edit_new_task('Today task', WebDriverUtils.ui_date_input_format(today), 'Today task notes')
         @to_do_card.click_add_task_button
         @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Future task', tomorrow.strftime("%m/%d/%Y"), 'Future task notes')
+        @to_do_card.edit_new_task('Future task', WebDriverUtils.ui_date_input_format(tomorrow), 'Future task notes')
         @to_do_card.click_add_task_button
         @to_do_card.future_task_one_element.when_visible(timeout=task_wait)
         @to_do_card.toggle_overdue_task_one_detail
         @to_do_card.click_overdue_task_one_edit_button
-        @to_do_card.edit_overdue_task_one('Overdue task edited', (yesterday - 1).strftime("%m/%d/%Y"), 'Overdue task notes edited')
+        @to_do_card.edit_overdue_task_one('Overdue task edited', WebDriverUtils.ui_date_input_format(yesterday - 1), 'Overdue task notes edited')
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
         @to_do_card.toggle_future_task_one_detail
         @to_do_card.click_future_task_one_edit_button
-        @to_do_card.edit_future_task_one('Future task edited', (tomorrow + 1).strftime("%m/%d/%Y"), 'Future task notes edited')
+        @to_do_card.edit_future_task_one('Future task edited', WebDriverUtils.ui_date_input_format(tomorrow + 1), 'Future task notes edited')
         @to_do_card.edit_today_task_one('Today task edited', nil, 'Today task notes edited')
         @to_do_card.save_overdue_task_one_edits
         @to_do_card.save_future_task_one_edits
         @to_do_card.save_today_task_one_edits
         @to_do_card.toggle_overdue_task_one_detail
         wait_for_task.until { @to_do_card.overdue_task_one_title == 'Overdue task edited' }
-        expect(@to_do_card.overdue_task_one_date).to eql((yesterday - 1).strftime("%m/%d"))
+        expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_date_display_format(yesterday - 1))
         @to_do_card.overdue_task_one_notes_element.when_visible(timeout=task_wait)
         expect(@to_do_card.overdue_task_one_notes).to eql('Overdue task notes edited')
         @to_do_card.toggle_today_task_one_detail
         wait_for_task.until { @to_do_card.today_task_one_title == 'Today task edited' }
-        expect(@to_do_card.today_task_one_date).to eql(today.strftime("%m/%d"))
+        expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
         @to_do_card.today_task_one_notes_element.when_visible(timeout=task_wait)
         expect(@to_do_card.today_task_one_notes).to eql('Today task notes edited')
         @to_do_card.toggle_future_task_one_detail
         wait_for_task.until { @to_do_card.future_task_one_title == 'Future task edited' }
-        expect(@to_do_card.future_task_one_date).to eql((tomorrow + 1).strftime("%m/%d"))
+        expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_date_display_format(tomorrow + 1))
         @to_do_card.future_task_one_notes_element.when_visible(timeout=task_wait)
         expect(@to_do_card.future_task_one_notes).to eql('Future task notes edited')
       end
 
       it 'allows a user to cancel the edit of an existing task' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('The original task title', today.strftime("%m/%d/%Y"), 'The original task notes')
+        @to_do_card.edit_new_task('The original task title', WebDriverUtils.ui_date_input_format(today), 'The original task notes')
         @to_do_card.click_add_task_button
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.click_today_task_one_edit_button
-        @to_do_card.edit_today_task_one('The edited task title', tomorrow.strftime("%m/%d/%Y"), 'The edited task notes')
+        @to_do_card.edit_today_task_one('The edited task title', WebDriverUtils.ui_date_input_format(tomorrow), 'The edited task notes')
         @to_do_card.cancel_today_task_one_edits
         @to_do_card.toggle_today_task_one_detail
         @to_do_card.today_task_one_notes_element.when_visible(timeout=task_wait)
         expect(@to_do_card.today_task_one_title).to eql('The original task title')
-        expect(@to_do_card.today_task_one_date).to eql(today.strftime("%m/%d"))
+        expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
         expect(@to_do_card.today_task_one_notes).to eql('The original task notes')
       end
     end
 
-    it 'allows the user to show more overdue tasks in ascending date order' do
-      (1..11).each do |i|
-        date = today - i
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('task ' + i.to_s, date.strftime("%m/%d/%Y"), nil)
-        @to_do_card.click_add_task_button
-        if i > 1 && (i-1) % 10 == 0
-          @to_do_card.overdue_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-          @to_do_card.overdue_show_more_button
-        end
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"][' + i.to_s + ']') }
-        expect(@to_do_card.overdue_task_count).to eql(i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//strong').text).to eql('task ' + i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text).to eql(date.strftime("%m/%d"))
-      end
-    end
+    context 'when completing tasks' do
 
-    it 'allows the user to show more tasks due today in ascending creation sequence' do
-      (1..11).each do |i|
-        date = today
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('task ' + i.to_s, date.strftime("%m/%d/%Y"), nil)
-        @to_do_card.click_add_task_button
-        if i > 1 && (i-1) % 10 == 0
-          @to_do_card.today_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-          @to_do_card.today_show_more_button
-        end
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']') }
-        expect(@to_do_card.today_task_count).to eql(i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']//strong').text).to eql('task ' + i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][' + i.to_s + ']//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text).to eql(date.strftime("%m/%d"))
-      end
-    end
-
-    it 'allows the user to show more tasks due in the future in ascending date order' do
-      (1..11).each do |i|
-        date = today + i
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('task ' + i.to_s, date.strftime("%m/%d/%Y"), nil)
-        @to_do_card.click_add_task_button
-        if i > 1 && (i-1) % 10 == 0
-          Rails.logger.info('Clicking show more button')
-          @to_do_card.future_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-          @to_do_card.future_show_more_button
-        end
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']') }
-        expect(@to_do_card.future_task_count).to eql(i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']//strong').text).to eql('task ' + i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][' + i.to_s + ']//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]').text).to eql(date.strftime("%m/%d"))
-      end
-    end
-
-    it 'allows the user to show more unscheduled tasks in descending creation sequence' do
-      (1..11).each do |i|
-        date = today
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('task ' + i.to_s, nil, nil)
-        @to_do_card.click_add_task_button
-        if i > 1 && (i-1) % 10 == 0
-          @to_do_card.unsched_show_more_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-          @to_do_card.unsched_show_more_button
-        end
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"][' + i.to_s + ']') }
-        expect(@to_do_card.unsched_task_count).to eql(i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//strong').text).to eql('task ' + i.to_s)
-        expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//div[@data-ng-show="task.updatedDate && task.bucket === \'Unscheduled\'"]/span').text).to eql(today.strftime("%m/%d"))
-      end
-    end
-
-    it 'allows the user to show more completed tasks sorted first by descending task date and then by descending task creation date' do
+      it 'allows the user to show more completed tasks sorted first by descending task date and then by descending task creation date' do
+      expected_task_titles = []
       @to_do_card.click_scheduled_tasks_tab
       (1..3).each do |i|
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('overdue task ' + i.to_s, yesterday.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task("overdue task #{i.to_s}", WebDriverUtils.ui_date_input_format(yesterday), nil)
         @to_do_card.click_add_task_button
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//strong[contains(.,"overdue task ' + i.to_s + '")]') }
+        wait_for_task.until { @to_do_card.overdue_task_one_title == "overdue task #{i.to_s}" }
+        expected_task_titles.push(@to_do_card.overdue_task_one_title)
         @to_do_card.complete_overdue_task_one
       end
       (1..3).each do |i|
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('today task ' + i.to_s, today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task("today task #{i.to_s}", WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.click_add_task_button
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"]//strong[contains(.,"today task ' + i.to_s + '")]') }
+        wait_for_task.until { @to_do_card.today_task_one_title == "today task #{i.to_s}" }
+        expected_task_titles.push(@to_do_card.today_task_one_title)
         @to_do_card.complete_today_task_one
       end
       (1..3).each do |i|
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('future task ' + i.to_s, tomorrow.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task("future task #{i.to_s}", WebDriverUtils.ui_date_input_format(tomorrow), nil)
         @to_do_card.click_add_task_button
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"]//strong[contains(.,"future task ' + i.to_s + '")]') }
+        wait_for_task.until { @to_do_card.future_task_one_title == "future task #{i.to_s}" }
+        expected_task_titles.push(@to_do_card.future_task_one_title)
         @to_do_card.complete_future_task_one
       end
       @to_do_card.click_unscheduled_tasks_tab
       (1..3).each do |i|
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('unscheduled task ' + i.to_s, nil, nil)
+        @to_do_card.edit_new_task("unscheduled task #{i.to_s}", nil, nil)
         @to_do_card.click_add_task_button
-        wait_for_task.until { @driver.find_element(:xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//strong[contains(.,"unscheduled task ' + i.to_s + '")]') }
+        wait_for_task.until { @to_do_card.unsched_task_one_title == "unscheduled task #{i.to_s}" }
+        expected_task_titles.push(@to_do_card.unsched_task_one_title)
         @to_do_card.complete_unsched_task_one
       end
       @to_do_card.click_completed_tasks_tab
       @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
       expect(@to_do_card.completed_task_count).to eql('12')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][1]//strong').text).to include('unscheduled task 3')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][2]//strong').text).to include('unscheduled task 2')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][3]//strong').text).to include('unscheduled task 1')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][4]//strong').text).to include('future task 3')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][5]//strong').text).to include('future task 2')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][6]//strong').text).to include('future task 1')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][7]//strong').text).to include('today task 3')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][8]//strong').text).to include('today task 2')
-      expect( @driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][9]//strong').text).to include('today task 1')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][10]//strong').text).to include('overdue task 3')
       @to_do_card.completed_show_more_button
       @to_do_card.completed_show_more_button_element.when_not_visible(timeout=task_wait)
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][11]//strong').text).to include('overdue task 2')
-      expect(@driver.find_element(:xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"][12]//strong').text).to include('overdue task 1')
+      expect(@to_do_card.all_completed_task_titles).to eql(expected_task_titles.reverse!)
     end
-
-    context 'when completing tasks' do
-
-      it 'allows the user to mark an overdue task as completed' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Overdue to be completed', yesterday.strftime("%m/%d/%Y"), nil)
-        @to_do_card.click_add_task_button
-        @to_do_card.complete_overdue_task_one
-        @to_do_card.click_completed_tasks_tab
-        @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        expect(@to_do_card.completed_task_one_title).to eql('Overdue to be completed')
-      end
-
-      it 'allows the user to mark a current task as completed' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Today to be completed', today.strftime("%m/%d/%Y"), nil)
-        @to_do_card.click_add_task_button
-        @to_do_card.complete_today_task_one
-        @to_do_card.click_completed_tasks_tab
-        @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        expect(@to_do_card.completed_task_one_title).to eql('Today to be completed')
-      end
-
-      it 'allows the user to mark a future task as completed' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Future to be completed', tomorrow.strftime("%m/%d/%Y"), nil)
-        @to_do_card.click_add_task_button
-        @to_do_card.complete_future_task_one
-        @to_do_card.click_completed_tasks_tab
-        @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        expect(@to_do_card.completed_task_one_title).to eql('Future to be completed')
-      end
-
-      it 'allows the user to mark an unscheduled task as completed' do
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Unscheduled to be completed', nil, nil)
-        @to_do_card.click_add_task_button
-        @to_do_card.click_unscheduled_tasks_tab
-        @to_do_card.complete_unsched_task_one
-        @to_do_card.click_completed_tasks_tab
-        @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-        expect(@to_do_card.completed_task_one_title).to eql('Unscheduled to be completed')
-      end
 
       it 'allows the user to mark a completed tasks as un-completed' do
         @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task('Today to be completed', today.strftime("%m/%d/%Y"), nil)
+        @to_do_card.edit_new_task('Today to be completed', WebDriverUtils.ui_date_input_format(today), nil)
         @to_do_card.click_add_task_button
         @to_do_card.complete_today_task_one
         @to_do_card.click_completed_tasks_tab

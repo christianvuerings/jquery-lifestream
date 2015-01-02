@@ -44,6 +44,8 @@ module CalCentralPages
     div(:overdue_task_one_notes, :xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//div[@data-ng-bind-html="task.notes | linky"]')
     text_field(:overdue_task_one_notes_input, :xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"]//textarea[@data-ng-model="addEditTask.notes"]')
     button(:overdue_show_more_button, :xpath => '//div[@data-cc-show-more-limit="overdueLimit"]/button')
+    div(:last_overdue_task_title, :xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"][last()]//strong')
+    div(:last_overdue_task_date, :xpath => '//li[@data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"][last()]//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]')
 
     # TASKS: TODAY
     span(:today_task_count, :xpath => '//span[@data-ng-bind="dueTodayTasks.length"]')
@@ -62,6 +64,8 @@ module CalCentralPages
     text_field(:today_task_one_notes_input, :xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"]//textarea[@data-ng-model="addEditTask.notes"]')
     button(:today_show_more_button, :xpath => '//div[@data-cc-show-more-limit="dueTodayLimit"]/button')
     paragraph(:today_task_date_validation_error, :xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"]//p[@data-ng-show="cc_widget_tasks_form.add_task_due_date.$error.ccDateValidator"]')
+    div(:last_today_task_title, :xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][last()]//strong')
+    div(:last_today_task_date, :xpath => '//li[@data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"][last()]//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]')
 
     # TASKS: FUTURE
     span(:future_task_count, :xpath => '//span[@data-ng-bind="futureTasks.length"]')
@@ -78,6 +82,8 @@ module CalCentralPages
     div(:future_task_one_notes, :xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"]//div[@data-ng-bind-html="task.notes | linky"]')
     text_field(:future_task_one_notes_input, :xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"]//textarea[@data-ng-model="addEditTask.notes"]')
     button(:future_show_more_button, :xpath => '//div[@data-cc-show-more-limit="futureLimit"]/button')
+    div(:last_future_task_title, :xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][last()]//strong')
+    div(:last_future_task_date, :xpath => '//li[@data-ng-repeat="task in futureTasks | limitTo: futureLimit"][last()]//div[@class="cc-widget-tasks-col cc-widget-tasks-col-date"]/span[2]')
 
     # TASKS: UNSCHEDULED
     span(:unsched_task_count, :xpath => '//span[@data-ng-bind="unscheduledTasks.length"]')
@@ -94,6 +100,8 @@ module CalCentralPages
     div(:unsched_task_one_notes, :xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//div[@data-ng-bind-html="task.notes | linky"]')
     text_field(:unsched_task_one_notes_input, :xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"]//textarea[@data-ng-model="addEditTask.notes"]')
     button(:unsched_show_more_button, :xpath => '//div[@data-cc-show-more-limit="unscheduledLimit"]/button')
+    div(:last_unsched_task_title, :xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"][last()]//strong')
+    div(:last_unsched_task_date, :xpath => '//li[@data-ng-repeat="task in unscheduledTasks | limitTo:unscheduledLimit"][last()]//div[@data-ng-show="task.updatedDate && task.bucket === \'Unscheduled\'"]/span')
 
     # TASKS: COMPLETED
     button(:delete_completed_tasks_button, :xpath => '//button[contains(.,"Delete completed tasks")]')
@@ -108,6 +116,7 @@ module CalCentralPages
     text_field(:completed_task_one_date_input, :xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"]//input[@name="add_task_due_date"]')
     text_field(:completed_task_one_notes_input, :xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"]//textarea[@data-ng-model="addEditTask.notes"]')
     button(:completed_show_more_button, :xpath => '//div[@data-cc-show-more-limit="completedLimit"]/button')
+    elements(:completed_task_titles, :list_item, :xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"]//div[@data-ng-hide="editorEnabled"]//strong')
 
     # TASK TABS
 
@@ -158,6 +167,7 @@ module CalCentralPages
       add_new_task_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       add_new_task_button
       add_new_task_button_element.when_not_visible(timeout=WebDriverUtils.google_task_timeout)
+      logger.info('Task added')
     end
 
     def click_cancel_new_task_button
@@ -198,6 +208,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first overdue task')
       overdue_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       overdue_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_overdue_task_one_edits
@@ -212,17 +223,20 @@ module CalCentralPages
       task_count = overdue_task_count.to_i
       check_overdue_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { overdue_task_count.to_i == (task_count - 1) }
+      logger.info('Task completed')
     end
 
     def delete_all_overdue_tasks(driver)
       scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       scheduled_tasks_tab
       while overdue_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = overdue_task_count.to_i
         toggle_overdue_task_one_detail
         overdue_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         overdue_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { overdue_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -259,6 +273,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first task due today')
       today_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       today_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_today_task_one_edits
@@ -273,17 +288,20 @@ module CalCentralPages
       task_count = today_task_count.to_i
       check_today_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { today_task_count.to_i == (task_count - 1) }
+      logger.info('Task completed')
     end
 
     def delete_all_today_tasks(driver)
       scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       scheduled_tasks_tab
       while today_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = today_task_count.to_i
         toggle_today_task_one_detail
         today_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         today_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { today_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -320,6 +338,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first future task')
       future_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       future_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_future_task_one_edits
@@ -334,17 +353,20 @@ module CalCentralPages
       task_count = future_task_count.to_i
       check_future_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { future_task_count.to_i == (task_count - 1) }
+      logger.info('Task edited')
     end
 
     def delete_all_future_tasks(driver)
       scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       scheduled_tasks_tab
       while future_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = future_task_count.to_i
         toggle_future_task_one_detail
         future_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         future_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { future_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -381,6 +403,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first unscheduled task')
       unsched_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unsched_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_unsched_task_one_edits
@@ -395,17 +418,20 @@ module CalCentralPages
       task_count = unsched_task_count.to_i
       check_unsched_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { unsched_task_count.to_i == (task_count - 1) }
+      logger.info('Task completed')
     end
 
     def delete_all_unscheduled_tasks(driver)
       unsched_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       unsched_tasks_tab
       while unsched_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = unsched_task_count.to_i
         toggle_unsched_task_one_detail
         unsched_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         unsched_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { unsched_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -415,15 +441,24 @@ module CalCentralPages
       logger.info('Un-completing the first completed task')
       completed_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       uncheck_completed_task_one_cbx
+      logger.info('Task un-completed')
+    end
+
+    def all_completed_task_titles
+      titles = []
+      completed_task_titles_elements.each { |title| titles.push(title.text)}
+      titles
     end
 
     def delete_all_completed_tasks(driver)
       completed_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       completed_tasks_tab
       while completed_task_one_toggle? do
+        logger.info('Deleting task')
         delete_completed_tasks_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         delete_completed_tasks_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { !completed_task_one_toggle? }
+        logger.info('Task deleted')
       end
     end
 
