@@ -16,6 +16,12 @@ GIT
       rspec (>= 2, < 4)
       rspec-core (!= 2.12.0)
 
+GIT
+  remote: https://github.com/sporkrb/spork.git
+  revision: 224df492657e617a0c93c0319e78f0eefee5b636
+  specs:
+    spork (1.0.0rc4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -376,7 +382,6 @@ GEM
     slop (3.6.0)
     spoon (0.0.4)
       ffi
-    spork (1.0.0rc4)
     spork-rails (4.0.0)
       rails (>= 3.0.0, < 5)
       spork (>= 1.0rc0)
@@ -521,6 +526,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.44.0)
   signet (~> 0.6.0)
   simplecov (~> 0.9.1)
+  spork!
   spork-rails (~> 4.0.0)
   therubyrhino (~> 2.0.4)
   torquebox (~> 3.1.1)
