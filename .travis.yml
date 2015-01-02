@@ -2,16 +2,12 @@ language: ruby
 bundler_args: --without development testext production --deployment --jobs=4 --retry=5
 cache: bundler
 
-before_install:
-  - rvm uninstall jruby
-  - rvm use jruby-1.7.13 --install
-
 rvm:
-  - "jruby-19mode"
+  - jruby-1.7.13
 
 matrix:
   include:
-    - { rvm: jruby-19mode }
+    - { rvm: jruby-1.7.13 }
 
 env:
   - JRUBY_OPTS="--client -Xcext.enabled=false -J-Xmx900m" DISPLAY=:99.0 LOGGER_LEVEL=WARN
