@@ -174,6 +174,7 @@ group :development, :test , :testext do
   gem 'headless', '~> 1.0.2'
 
   # Spork can speed up multiple test runs.
+  gem 'spork', :git => 'https://github.com/sporkrb/spork.git'
   gem 'spork-rails', '~> 4.0.0'
 end
 
