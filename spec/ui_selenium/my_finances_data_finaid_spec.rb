@@ -21,7 +21,7 @@ describe 'My Finances financial aid messages', :testui => true do
     begin
       driver = WebDriverUtils.driver
       test_output = UserUtils.initialize_output_csv(self)
-      test_users = UserUtils.open_test_uid_csv
+      test_users = UserUtils.load_test_users
 
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Finances Tab', 'Has Messages', 'Has Dupe Messages', 'Has Popover Alert', 'Has Alert Msg',
