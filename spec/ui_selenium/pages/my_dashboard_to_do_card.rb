@@ -167,6 +167,7 @@ module CalCentralPages
       add_new_task_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       add_new_task_button
       add_new_task_button_element.when_not_visible(timeout=WebDriverUtils.google_task_timeout)
+      logger.info('Task added')
     end
 
     def click_cancel_new_task_button
@@ -207,6 +208,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first overdue task')
       overdue_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       overdue_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_overdue_task_one_edits
@@ -221,17 +223,20 @@ module CalCentralPages
       task_count = overdue_task_count.to_i
       check_overdue_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { overdue_task_count.to_i == (task_count - 1) }
+      logger.info('Task completed')
     end
 
     def delete_all_overdue_tasks(driver)
       scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       scheduled_tasks_tab
       while overdue_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = overdue_task_count.to_i
         toggle_overdue_task_one_detail
         overdue_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         overdue_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { overdue_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -268,6 +273,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first task due today')
       today_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       today_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_today_task_one_edits
@@ -282,17 +288,20 @@ module CalCentralPages
       task_count = today_task_count.to_i
       check_today_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { today_task_count.to_i == (task_count - 1) }
+      logger.info('Task completed')
     end
 
     def delete_all_today_tasks(driver)
       scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       scheduled_tasks_tab
       while today_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = today_task_count.to_i
         toggle_today_task_one_detail
         today_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         today_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { today_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -329,6 +338,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first future task')
       future_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       future_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_future_task_one_edits
@@ -343,17 +353,20 @@ module CalCentralPages
       task_count = future_task_count.to_i
       check_future_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { future_task_count.to_i == (task_count - 1) }
+      logger.info('Task edited')
     end
 
     def delete_all_future_tasks(driver)
       scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       scheduled_tasks_tab
       while future_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = future_task_count.to_i
         toggle_future_task_one_detail
         future_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         future_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { future_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -390,6 +403,7 @@ module CalCentralPages
       logger.info('Clicking save button for the first unscheduled task')
       unsched_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       unsched_task_one_save_button
+      logger.info('Task edited')
     end
 
     def cancel_unsched_task_one_edits
@@ -404,17 +418,20 @@ module CalCentralPages
       task_count = unsched_task_count.to_i
       check_unsched_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { unsched_task_count.to_i == (task_count - 1) }
+      logger.info('Task completed')
     end
 
     def delete_all_unscheduled_tasks(driver)
       unsched_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       unsched_tasks_tab
       while unsched_task_one_toggle? do
+        logger.info('Deleting task')
         task_count = unsched_task_count.to_i
         toggle_unsched_task_one_detail
         unsched_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         unsched_task_one_delete_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { unsched_task_count.to_i == (task_count - 1) }
+        logger.info('Task deleted')
       end
     end
 
@@ -424,6 +441,7 @@ module CalCentralPages
       logger.info('Un-completing the first completed task')
       completed_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       uncheck_completed_task_one_cbx
+      logger.info('Task un-completed')
     end
 
     def all_completed_task_titles
@@ -436,9 +454,11 @@ module CalCentralPages
       completed_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       completed_tasks_tab
       while completed_task_one_toggle? do
+        logger.info('Deleting task')
         delete_completed_tasks_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
         delete_completed_tasks_button
         wait_until(WebDriverUtils.google_task_timeout, nil) { !completed_task_one_toggle? }
+        logger.info('Task deleted')
       end
     end
 

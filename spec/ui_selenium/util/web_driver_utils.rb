@@ -76,7 +76,7 @@ class WebDriverUtils
     File.join(CalcentralConfig.local_dir, "uids.json")
   end
 
-  def self.ui_date_rendered_format(date)
+  def self.ui_date_display_format(date)
     today = Date.today
     if date.strftime("%Y") == today.strftime("%Y")
       date_format = date.strftime("%m/%d")

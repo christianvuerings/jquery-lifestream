@@ -303,7 +303,7 @@ ui_selenium:
   webDriver: firefox
 
   googleOauthTimeout: 20
-  googleTaskTimeout: 10
+  googleTaskTimeout: 12
   pageEventTimeout: 3
   pageLoadTimeout: 12
   liveUpdateTimeoutDelta: 180
