@@ -18,7 +18,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
 
     begin
       driver = WebDriverUtils.driver
-      test_users = UserUtils.open_test_uid_csv
+      test_users = UserUtils.load_test_users
       testable_users = []
       test_output = UserUtils.initialize_output_csv(self)
 

@@ -30,11 +30,26 @@ class ApiMyAcademicsPage
     time
   end
 
-  # BLOCKS
+  def colleges_and_majors
+    @parsed['collegeAndLevel']['colleges']
+  end
+
+  def colleges
+    colleges = []
+    colleges_and_majors.each { |college| colleges.push(college['college'])}
+    colleges
+  end
+
+  def majors
+    majors = []
+    colleges_and_majors.each { |major| majors.push(major['major']) }
+  end
 
   def has_no_standing
     @parsed['collegeAndLevel']['empty']
   end
+
+  # BLOCKS
 
   def active_blocks
     @parsed['regblocks']['activeBlocks']

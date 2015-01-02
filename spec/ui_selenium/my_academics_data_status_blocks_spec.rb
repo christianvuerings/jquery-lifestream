@@ -21,7 +21,7 @@ describe 'My Academics Status and Blocks', :testui => true do
     begin
       driver = WebDriverUtils.driver
       test_output = UserUtils.initialize_output_csv(self)
-      test_users = UserUtils.open_test_uid_csv
+      test_users = UserUtils.load_test_users
 
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Student', 'Registered', 'Resident', 'Active Block', 'Block Types', 'Block History', 'Error?']
