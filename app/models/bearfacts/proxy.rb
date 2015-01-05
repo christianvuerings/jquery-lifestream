@@ -57,13 +57,18 @@ module Bearfacts
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
         response = FakeableProxy.wrap_request(APP_ID + "_" + vcr_cassette, @fake,
           {match_requests_on: [:method, :path, custom_vcr_matcher]}) {
-          token_params = {token: Settings.bearfacts_proxy.token}
+          request_options = {
+            query: params.merge({
+                token: Settings.bearfacts_proxy.token
+              })
+          }
           if (Settings.bearfacts_proxy.app_id.present? && Settings.bearfacts_proxy.app_key.present?)
-            token_params.merge!({app_id: Settings.bearfacts_proxy.app_id,
-                                 app_key: Settings.bearfacts_proxy.app_key, })
+            request_options[:headers] = {
+              'app_id' => Settings.bearfacts_proxy.app_id,
+              'app_key' => Settings.bearfacts_proxy.app_key
+            }
           end
-
-          get_response(url, query: params.merge(token_params))
+          get_response(url, request_options)
         }
 
         if response.code >= 400

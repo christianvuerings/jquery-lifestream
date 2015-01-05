@@ -18,7 +18,7 @@ module Finaid
       request_internal("myfinaid")
     end
 
-    def request_internal(vcr_cassette, params = {})
+    def request_internal(vcr_cassette)
       student_id = lookup_student_id
       if student_id.nil?
         logger.info "Lookup of student_id for uid #@uid failed, cannot call Myfinaid API"
@@ -31,19 +31,17 @@ module Finaid
         vcr_opts = {:match_requests_on => [:method, :path, VCR.request_matchers.uri_without_params(:token, :app_id, :app_key)]}
         logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}, aidYear = #{@term_year}; cache expiration #{self.class.expires_in}"
         response = FakeableProxy.wrap_request(vcr_id = APP_ID + "_" + vcr_cassette, @fake, vcr_opts) {
-          query_params = {
+          request_options = {query: {
             token: @settings.token,
             aidYear: @term_year
-          }
+          }}
           if (@settings.app_id.present? && @settings.app_key.present?)
-            query_params.merge!({app_id: @settings.app_id,
-                                 app_key: @settings.app_key, })
+            request_options[:headers] = {
+              'app_id' => @settings.app_id,
+              'app_key' => @settings.app_key
+            }
           end
-
-          get_response(
-            url,
-            query: params.merge(query_params)
-          )
+          get_response(url, request_options)
         }
         if response.code >= 400
           raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}", nil)
