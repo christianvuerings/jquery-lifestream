@@ -6,8 +6,14 @@ class BootstrapController < ApplicationController
   layout 'application'
   caches_action :index, :layout => false
 
+  # index redirects to / if client is being wacky and asking for a format other than HTML.
   def index
-    respond_to :html
+    respond_to do |format|
+      format.html
+      format.all do
+        redirect_to root_path
+      end
+    end
   end
 
   # CalCentral cannot fully trust a user session which was initiated via an LTI embedded app,
