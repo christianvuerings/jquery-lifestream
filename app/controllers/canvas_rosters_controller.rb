@@ -4,6 +4,8 @@ class CanvasRostersController < RostersController
 
   before_filter :api_authenticate
   before_filter :authorize_viewing_rosters
+  before_action :disable_xframe_options, :only => [:get_csv]
+  skip_before_action :set_x_frame_options_header
   rescue_from StandardError, with: :handle_api_exception
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
