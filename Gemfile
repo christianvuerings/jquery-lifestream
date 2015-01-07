@@ -60,7 +60,7 @@ gem 'dalli', '~> 2.7.2'
 gem 'log4r', '~> 1.1'
 
 # for easier non-DB-backed models
-gem 'active_attr', '~> 0.8.4'
+gem 'active_attr', '~> 0.8.5'
 
 # for production deployment
 gem 'jruby-activemq', '~> 5.5.1'
