@@ -36,8 +36,7 @@
           $('.element_toggler[aria-controls]').on('click', function() {
             var $icon = $(this).find('i[class*="icon-arrow"]');
             if ($icon.length) {
-              $icon.toggleClass('icon-arrow-down');
-              $icon.toggleClass('icon-arrow-right');
+              $icon.toggleClass('icon-arrow-down icon-arrow-right');
             }
           });
           $breadcrumbs.data('calcentral-alt-media-notice-applied', 'true');
