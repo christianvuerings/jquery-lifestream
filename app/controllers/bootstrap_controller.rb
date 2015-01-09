@@ -11,7 +11,7 @@ class BootstrapController < ApplicationController
     respond_to do |format|
       format.html
       format.all do
-        redirect_to root_path
+        redirect_to url_for_path '/404'
       end
     end
   end
