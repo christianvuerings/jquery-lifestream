@@ -32,6 +32,14 @@
         var $breadcrumbs = $('nav#breadcrumbs');
         if ($breadcrumbs.data('calcentral-alt-media-notice-applied') !== 'true') {
           $breadcrumbs.append(altMediaPanel);
+          // apply icon toggler - see CLC-4654
+          $('.element_toggler[aria-controls]').on('click', function() {
+            var $icon = $(this).find('i[class*="icon-arrow"]');
+            if ($icon.length) {
+              $icon.toggleClass('icon-arrow-down');
+              $icon.toggleClass('icon-arrow-right');
+            }
+          });
           $breadcrumbs.data('calcentral-alt-media-notice-applied', 'true');
         }
       };
