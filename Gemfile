@@ -34,6 +34,9 @@ gem 'json', '~> 1.8.0'
 gem 'omniauth-cas', '~> 1.1.0'
 
 # LDAP
+# Upgrade to >0.10.1 because of
+# https://github.com/ruby-ldap/ruby-net-ldap/issues/175
+# https://jira.ets.berkeley.edu/jira/browse/CLC-4726
 gem 'net-ldap', '~> 0.9.0'
 
 # secure_headers provides x-frame, csp and other http headers
@@ -60,7 +63,7 @@ gem 'dalli', '~> 2.7.2'
 gem 'log4r', '~> 1.1'
 
 # for easier non-DB-backed models
-gem 'active_attr', '~> 0.8.4'
+gem 'active_attr', '~> 0.8.5'
 
 # for production deployment
 gem 'jruby-activemq', '~> 5.5.1'
@@ -94,7 +97,7 @@ gem 'pundit', '~> 0.3.0'
 
 gem 'cancan', '~> 1.6.10'
 
-gem 'icalendar', '~> 2.2.1'
+gem 'icalendar', '~> 2.2.2'
 
 ##################
 # Front-end Gems #
@@ -109,7 +112,7 @@ gem 'pikaday-gem', '~> 1.2.0'
 # CSS Framework
 # https://github.com/zurb/foundation
 gem 'sass-rails', '~> 4.0.4'
-gem 'autoprefixer-rails', '~> 4.0.2'
+gem 'autoprefixer-rails', '~> 4.0.2.2'
 gem 'foundation-rails', '~> 5.4.5.0'
 
 # Closure Compiler Gem for JS compression
