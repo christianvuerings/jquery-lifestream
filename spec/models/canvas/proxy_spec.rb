@@ -140,6 +140,35 @@ describe Canvas::Proxy do
         expect(subject[2].slug).to eq 'spring-2014'
       end
     end
+    context 'when a campus term is not defined in Canvas' do
+      before do
+        stub_terms = [
+          {'end_at'=>nil,
+           'id'=>1818,
+           'name'=>'Default Term',
+           'start_at'=>nil,
+           'workflow_state'=>'active',
+           'sis_term_id'=>nil},
+          {'end_at'=>nil,
+           'id'=>5168,
+           'name'=>'Spring 2014',
+           'start_at'=>nil,
+           'workflow_state'=>'active',
+           'sis_term_id'=>'TERM:2014-B'},
+          {'end_at'=>nil,
+           'id'=>5266,
+           'name'=>'Summer 2014',
+           'start_at'=>nil,
+           'workflow_state'=>'active',
+           'sis_term_id'=>'TERM:2014-C'}
+        ]
+        allow(Canvas::Terms).to receive(:fetch).and_return(stub_terms)
+      end
+      let(:fake_now) {DateTime.parse('2014-02-10')}
+      it 'does not include the campus term undefined in Canvas' do
+        expect(subject.select{|term| term.slug == 'fall-2014'}).to be_empty
+      end
+    end
   end
 
 end

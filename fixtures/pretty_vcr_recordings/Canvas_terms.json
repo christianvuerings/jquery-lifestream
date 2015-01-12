@@ -1,0 +1,193 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "must-revalidate, private, max-age=0"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Mon, 12 Jan 2015 21:13:30 GMT"
+          ],
+          "etag": [
+            "\"edbad24b0ce13376d45551502a6e27d7\""
+          ],
+          "link": [
+            "<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=10>; rel=\"current\",<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=10>; rel=\"first\",<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=10>; rel=\"last\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "_csrf_token=x; path=/; secure, canvas_session=yzkcDenOv9pV_Pc7tCUSrw.qxbSXu6qo1lkmLudH6p02s__lRISKVJC7Q8nQOWtF7MXnmf2qILC9IFNKygnyaPSYdSIljRGxhMCIRPbY0WKIK7Fw1dd7uv1I5kq--zo6RYNNaiQoo_Qji9kj0nKjXW_.SZkdYEiNf4n9GfU884OLPq6PPFI.VLQ4-g; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;g=yGkEvpxAPyTeKLHaHOxZqJNjMXbA5ZV86ZZ6139o;s=19;c=cluster19;z=us-east-1c;b=1071344;m=1071408;u=0.16;y=0.00;d=0.06;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-rack-cache": [
+            "miss"
+          ],
+          "x-request-context-id": [
+            "c834c560-7ccd-0132-fdcd-02f8856d54b5"
+          ],
+          "x-runtime": [
+            "0.329385"
+          ],
+          "x-session-id": [
+            "20d32d307d3d8663f3c769feb42a7166"
+          ],
+          "x-ua-compatible": [
+            "IE=Edge,chrome=1"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "x-sakai-token": [
+
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "enrollment_terms": [
+              {
+                "end_at": "2013-05-31T07:00:00Z",
+                "id": 3791,
+                "name": "Fall 2012",
+                "start_at": "2012-08-23T07:00:00Z",
+                "workflow_state": "active",
+                "sis_term_id": "2012-D"
+              },
+              {
+                "end_at": "2013-05-31T07:00:00Z",
+                "id": 4223,
+                "name": "Spring 2013",
+                "start_at": "2013-01-01T08:00:00Z",
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2013-B"
+              },
+              {
+                "end_at": "2013-08-30T07:00:00Z",
+                "id": 4694,
+                "name": "Summer 2013",
+                "start_at": "2013-04-01T07:00:00Z",
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2013-C"
+              },
+              {
+                "end_at": null,
+                "id": 4821,
+                "name": "Fall 2013",
+                "start_at": "2013-08-22T07:00:00Z",
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2013-D"
+              },
+              {
+                "end_at": null,
+                "id": 1818,
+                "name": "Default Term",
+                "start_at": null,
+                "workflow_state": "active",
+                "sis_term_id": null
+              },
+              {
+                "end_at": null,
+                "id": 5168,
+                "name": "Spring 2014",
+                "start_at": null,
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2014-B"
+              },
+              {
+                "end_at": null,
+                "id": 5266,
+                "name": "Summer 2014",
+                "start_at": null,
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2014-C"
+              },
+              {
+                "end_at": null,
+                "id": 5267,
+                "name": "Fall 2014",
+                "start_at": null,
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2014-D"
+              },
+              {
+                "end_at": null,
+                "id": 5343,
+                "name": "Spring 2015",
+                "start_at": null,
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2015-B"
+              },
+              {
+                "end_at": null,
+                "id": 5476,
+                "name": "Summer 2015",
+                "start_at": null,
+                "workflow_state": "active",
+                "sis_term_id": "TERM:2015-C"
+              }
+            ]
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Mon, 12 Jan 2015 21:13:30 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.9.3"
+}

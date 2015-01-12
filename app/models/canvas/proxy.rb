@@ -87,13 +87,26 @@ module Canvas
 
     def self.canvas_current_terms
       terms = []
-      campus_terms = Berkeley::Terms.fetch
-      if (future_term = campus_terms.future) && future_term.name == 'Fall'
+      terms_from_campus = Berkeley::Terms.fetch
+      terms_from_canvas = Canvas::Terms.fetch
+
+      # Get current and next term, and optionally future fall term, from campus data
+      if (future_term = terms_from_campus.future) && future_term.name == 'Fall'
         terms.push future_term
       end
-      terms.push campus_terms.next if campus_terms.next
-      terms.push campus_terms.current
-      terms
+      terms.push terms_from_campus.next if terms_from_campus.next
+      terms.push terms_from_campus.current
+
+      # Return subset of terms that have SIS ids in Canvas, warn on missing SIS ids
+      sis_ids_from_canvas = terms_from_canvas.map{|term| term['sis_term_id']}
+      terms.reject do |term|
+        if !sis_ids_from_canvas.include? term_to_sis_id(term.year, term.code)
+          logger.warn("SIS ID #{term_to_sis_id(term.year, term.code)} not found in Canvas")
+          true
+        else
+          false
+        end
+      end
     end
 
     def self.current_sis_term_ids

@@ -214,6 +214,7 @@ cache:
     Canvas::UserCourses: <%= 30.minutes %>
     Canvas::Groups: <%= 30.minutes %>
     Canvas::UserActivityStream: <%= 10.minutes %>
+    Canvas::Terms: <%= 8.hours %>
     Canvas::Todo: <%= 20.minutes %>
     Canvas::UpcomingEvents: <%= 20.minutes %>
 
