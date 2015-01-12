@@ -74,7 +74,9 @@ describe Calendar::Queries do
       before(:each) { Settings.terms.stub(:fake_now).and_return(DateTime.parse('2014-10-10')) }
       it 'should return Fall 2014' do
         expect(subject[0].slug).to eq 'fall-2014'
-        expect(subject.length).to eq 1
+        if Calendar::Queries.test_data?
+          expect(subject.length).to eq 1
+        end
       end
     end
   end
