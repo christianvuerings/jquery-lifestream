@@ -107,7 +107,7 @@ module Calendar
 
     def record_response(job, queue_entry, response)
       event_id = queue_entry.event_id
-      if response.body && (json = safe_json(response.body))
+      if response.body && response.body.strip.length > 0 && (json = safe_json(response.body))
         event_id = json['id'] if json['id']
       end
       log_entry = Calendar::LoggedEntry.create(
