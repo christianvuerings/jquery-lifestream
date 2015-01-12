@@ -22,6 +22,8 @@ module Berkeley
     # "CS" or "FS", and lack some SIS support. This quirk becomes important when configuring
     # certain queries, notably Tele-BEARS appointments.
     attr_reader :sis_term_status
+    # returns true for the Summer term, false otherwise
+    attr_reader :is_summer
 
     def initialize(db_row)
       term_cd = db_row['term_cd']
@@ -37,10 +39,12 @@ module Berkeley
         @start = @classes_start
         @end = @instruction_end
         @classes_end = @instruction_end
+        @is_summer = true
       else
         @start = @classes_start.advance(days: -7)
         @end = @instruction_end.advance(days: 7)
         @classes_end = @instruction_end.advance(days: -7)
+        @is_summer = false
       end
     end
 

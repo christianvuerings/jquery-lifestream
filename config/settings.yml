@@ -287,10 +287,6 @@ class_calendar:
   slice_pause_duration: 600
   access_token: secret
   refresh_token: secret
-  current_terms_codes: [{
-      year: 2013,
-      code: "D"
-    }]
   departments: [ 'BIOLOGY', 'CHEM' ]
 
 ui_selenium:
