@@ -36,59 +36,6 @@
     color: $bc-color-button-grey-text;
   }
 
-  .cc-page-provision-confirmation {
-    background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
-    border-radius: 5px;
-    padding: 20px;
-    .cc-page-provision-roster-list {
-      list-style-type: disc;
-      margin: 10px 0 0 39px;
-    }
-  }
-
-  .cc-page-provision-site-labels-form {
-    margin-top: 10px;
-  }
-
-  .cc-page-provision-pending-request {
-    margin: 15px auto;
-  }
-
-  .cc-page-provision-no-courses {
-    color: $bc-color-headers;
-    font-family: $bc-header-font-family;
-    font-size: 14px;
-    font-weight: normal;
-    padding: 20px;
-  }
-
-  .cc-page-provision-select-rosters {
-    border-top: 1px solid $bc-color-top-border;
-    padding: 10px 0;
-  }
-
-  .cc-page-provision-step-indent {
-    padding-left: 18px;
-  }
-
-  .cc-page-provision-step-options {
-    padding: 20px 0;
-  }
-
-  .cc-page-provision-form-actions {
-    background: $bc-color-roster-background;
-    border: 1px solid $bc-color-roster-background;
-    padding: 10px 5px;
-  }
-
-  .cc-page-provision-acting-as {
-    height: 24px;
-  }
-
-  .cc-page-provision-student-warning {
-    margin: 10px 0;
-  }
-
   .cc-page-provision-actas-form {
     background: $cc-color-white;
     input[type="text"] {
@@ -98,8 +45,13 @@
     }
   }
 
-  .cc-page-provision-success-intro {
-    margin: 15px 0 0;
+  .cc-page-provision-acting-as {
+    height: 24px;
+  }
+
+  .cc-page-provision-admin-mode-switch {
+    margin-bottom: 20px;
+    outline: none;
   }
 
   .cc-page-provision-choices {
@@ -116,8 +68,28 @@
     }
   }
 
+  .cc-page-provision-confirmation {
+    background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
+    border-radius: 5px;
+    padding: 20px;
+    .cc-page-provision-roster-list {
+      list-style-type: disc;
+      margin: 10px 0 0 39px;
+    }
+  }
+
   .cc-page-provision-error-notice {
     background-color: $bc-color-notice-red-bg;
+  }
+
+  .cc-page-provision-form-actions {
+    background: $bc-color-roster-background;
+    border: 1px solid $bc-color-roster-background;
+    padding: 10px 5px;
+  }
+
+  .cc-page-provision-form-button {
+    background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
   }
 
   .cc-page-provision-margin {
@@ -125,8 +97,52 @@
     overflow: hidden;
   }
 
-  .cc-page-provision-form-button {
-    background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
+  .cc-page-provision-site-labels-form {
+    margin-top: 10px;
+  }
+
+  .cc-page-provision-no-courses {
+    color: $bc-color-headers;
+    font-family: $bc-header-font-family;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 20px;
+  }
+
+  .cc-page-provision-pending-request {
+    margin: 15px auto;
+  }
+
+  .cc-page-provision-select-rosters {
+    border-top: 1px solid $bc-color-top-border;
+    padding: 10px 0;
+  }
+
+  .cc-page-provision-step-indent {
+    padding-left: 18px;
+  }
+
+  .cc-page-provision-step-options {
+    padding: 20px 0;
+  }
+
+  .cc-page-provision-student-warning {
+    margin: 10px 0;
+  }
+
+  .cc-page-provision-success-intro {
+    margin: 15px 0 0;
+  }
+
+  .cc-page-provision-term-button {
+    outline: none;
+    width: 135px;
+  }
+
+  .cc-page-provision-term-button-element {
+    float: left;
+    margin-bottom: 5px;
+    width: 140px;
   }
 
 }

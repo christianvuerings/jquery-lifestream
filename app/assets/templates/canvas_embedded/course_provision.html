@@ -7,7 +7,7 @@
     <div data-ng-show="is_admin">
 
       <div class="cc-widget">
-        <button class="cc-button"
+        <button class="cc-button cc-page-provision-admin-mode-switch"
                 data-ng-click="toggleAdminMode()">
           <span data-ng-show="adminMode !== 'by_ccn'">Switch to CCN input</span>
           <span data-ng-show="adminMode === 'by_ccn'">Switch to acting as instructor</span>
@@ -23,9 +23,9 @@
         <div data-ng-show="admin_semesters && admin_semesters.length > 0">
           <div class="row collapse">
             <div class="medium-5 columns">
-              <ul class="cc-button-group cc-even-{{admin_semesters.length}} cc-page-provision-margin" role="tablist">
-                <li data-ng-repeat="semester in admin_semesters">
-                  <button class="cc-button"
+              <ul role="tablist">
+                <li class="cc-page-provision-term-button-element" data-ng-repeat="semester in admin_semesters">
+                  <button class="cc-button cc-page-provision-term-button"
                           data-ng-click="switchAdminSemester(semester)"
                           data-ng-class="{'cc-button-selected':(currentAdminSemester==semester.slug)}"
                           aria-selected="{{currentAdminSemester==semester.slug}}"
@@ -73,9 +73,9 @@
 
                 <div class="medium-5 columns">
                   <div class="cc-page-provision-step-indent">
-                    <ul class="cc-button-group cc-even-{{teachingSemesters.length}} cc-page-provision-margin" role="tablist">
-                      <li data-ng-repeat="semester in teachingSemesters">
-                        <button class="cc-button"
+                    <ul role="tablist">
+                      <li class="cc-page-provision-term-button-element" data-ng-repeat="semester in teachingSemesters">
+                        <button class="cc-button cc-page-provision-term-button"
                                 data-ng-click="switchSemester(semester)"
                                 data-ng-class="{'cc-button-selected':(currentSemester==semester.slug)}"
                                 aria-selected="{{currentSemester==semester.slug}}"
