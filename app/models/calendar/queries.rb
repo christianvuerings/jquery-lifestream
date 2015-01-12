@@ -17,7 +17,7 @@ module Calendar
       where c.term_yr = sched.term_yr
         and c.term_cd = sched.term_cd
         and c.course_cntl_num = sched.course_cntl_num
-        #{terms_query_clause('c', Settings.class_calendar.current_terms_codes)}
+        #{terms_query_clause('c', terms)}
         #{this_depts_clause}
       order by c.course_cntl_num, sched.print_cd asc nulls last, sched.multi_entry_cd
         SQL
@@ -54,6 +54,28 @@ module Calendar
         result = connection.select_all(sql)
       }
       stringify_ints! result
+    end
+
+    # include the current and next term, but skip any summer terms (since we don't have the necessary
+    # sub-term data to calendarize summer classes).
+    def self.terms
+      terms = []
+      current_term = Berkeley::Terms.fetch.current
+      if current_term.is_summer
+        terms << Berkeley::Terms.fetch.next
+        terms << Berkeley::Terms.fetch.future
+      else
+        terms << Berkeley::Terms.fetch.current
+        next_term = Berkeley::Terms.fetch.next
+        if next_term.present?
+          if next_term.is_summer
+            terms << Berkeley::Terms.fetch.future
+          else
+            terms << next_term
+          end
+        end
+      end
+      terms
     end
 
     private

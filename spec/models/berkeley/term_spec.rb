@@ -16,6 +16,7 @@ describe Berkeley::Term do
     its(:year) {should eq 2014}
     its(:code) {should eq 'C'}
     its(:name) {should eq 'Summer'}
+    its(:is_summer) {should eq true}
     its(:sis_term_status) {should eq 'CS'}
     its(:classes_start) {should eq Time.zone.parse('2014-05-27 00:00:00').to_datetime}
     its(:classes_end) {should eq Time.zone.parse('2014-08-15 23:59:59').to_datetime}
@@ -38,6 +39,7 @@ describe Berkeley::Term do
     its(:year) {should eq 2014}
     its(:code) {should eq 'D'}
     its(:name) {should eq 'Fall'}
+    its(:is_summer) {should eq false}
     its(:sis_term_status) {should eq 'FT'}
     its(:classes_start) {should eq Time.zone.parse('2014-08-28 00:00:00').to_datetime}
     its(:classes_end) {should eq Time.zone.parse('2014-12-05 23:59:59').to_datetime}
@@ -60,6 +62,7 @@ describe Berkeley::Term do
     its(:year) {should eq 2014}
     its(:code) {should eq 'B'}
     its(:name) {should eq 'Spring'}
+    its(:is_summer) {should eq false}
     its(:sis_term_status) {should eq 'CT'}
     its(:classes_start) {should eq Time.zone.parse('2014-01-21 00:00:00').to_datetime}
     its(:classes_end) {should eq Time.zone.parse('2014-05-02 23:59:59').to_datetime}
