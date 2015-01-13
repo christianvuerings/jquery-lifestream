@@ -1,7 +1,14 @@
 <div class="cc-template-canvas-manage-sections">
   <ul class="cc-template-canvas-manage-sections-margin">
     <li data-ng-repeat="course in currentCourses" class="cc-template-canvas-manage-sections-form-course cc-template-canvas-manage-sections-roster-area">
-      <strong>{{course.title}}</strong><strong data-ng-if="course.course_code"> ({{course.course_code}})</strong>
+      <strong>{{course.title}}</strong>
+      <span data-ng-if="course.sections">
+        (<span data-ng-pluralize count="course.sections.length"
+                 when="{'0': 'No sections',
+                     'one': '1 section',
+                     'other': '{{course.sections.length}} sections'}">
+        </span>)
+      </span>
       <div class="cc-template-canvas-manage-sections-form-select-all-option" data-ng-show="course.sections.length > 1">
         Select: <button class="cc-button-link" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
       </div>
