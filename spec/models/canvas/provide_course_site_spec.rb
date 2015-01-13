@@ -7,8 +7,8 @@ describe Canvas::ProvideCourseSite do
   let(:site_course_code) { 'ENGIN 7' }
   let(:canvas_course_id) { rand(99999).to_s }
   let(:current_terms) { [
+    {:yr=>"2014", :cd=>"D", :slug=>"fall-2014", :name=>"Fall 2014"},
     {:yr=>"2015", :cd=>"B", :slug=>"spring-2015", :name=>"Spring 2015"},
-    {:yr=>"2014", :cd=>"D", :slug=>"fall-2014", :name=>"Fall 2014"}
   ] }
   subject     { Canvas::ProvideCourseSite.new(uid) }
 
@@ -665,6 +665,27 @@ describe Canvas::ProvideCourseSite do
     it 'should raise exception if user id not initialized' do
       subject.instance_eval { @uid = nil }
       expect { subject.candidate_courses_list }.to raise_error(RuntimeError, 'User ID not found for candidate')
+    end
+
+    it 'should map academic semester data to ordered canvas terms' do
+      fake_feed = {
+        :teachingSemesters => [
+          {name: "Summer 2015", slug: "summer-2015", termCode: "C", termYear: "2015", timeBucket: "future", classes: []},
+          {name: "Spring 2015", slug: "spring-2015", termCode: "B", termYear: "2015", timeBucket: "future", classes: []},
+          {name: "Fall 2014", slug: "fall-2014", termCode: "D", termYear: "2014", timeBucket: "current", classes: []},
+        ]
+      }
+      allow(subject).to receive(:current_terms).and_return(current_terms)
+      allow_any_instance_of(MyAcademics::Merged).to receive(:get_feed).and_return(fake_feed)
+      result = subject.candidate_courses_list
+      expect(result).to be_a Array
+      expect(result.count).to eq 2
+      expect(result[0][:slug]).to eq 'fall-2014'
+      expect(result[0][:timeBucket]).to eq 'current'
+      expect(result[0][:classes]).to eq []
+      expect(result[1][:slug]).to eq 'spring-2015'
+      expect(result[1][:timeBucket]).to eq 'future'
+      expect(result[1][:classes]).to eq []
     end
 
     it 'should get properly formatted candidate course list from fake Oracle MV', :if => CampusOracle::Connection.test_data? do
