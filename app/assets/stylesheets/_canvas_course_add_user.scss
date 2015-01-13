@@ -22,23 +22,17 @@
     color: $bc-color-off-black !important;
   }
 
-  .bc-fa-blue {
-    color: $bc-color-help-link-blue;
-  }
-
-  .bc-user-search-notice-container {
-    margin: 4px 1px;
-    min-height: 15px;
-    .bc-user-search-notice-button {
-      color: $bc-color-help-link-blue;
-      font-size: 12px;
+  .bc-user-search-notice {
+    font-size: 13px;
+    dl {
+      margin-bottom: 0;
     }
-    .bc-notice-left-margin {
-      margin-left: 16px;
+    dt {
+      font-weight: bold;
+      margin-bottom: 5px;
     }
-    .bc-user-search-notice {
-      font-size: 14px;
-      margin: 10px 0 20px;
+    dd {
+      margin-left: 15px;
     }
   }
 

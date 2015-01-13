@@ -92,6 +92,26 @@
 
               <div class="cc-page-provision-step-indent">
                 <p>All official sections you select below will be put in ONE, single course site.</p>
+
+                <div class="cc-page-help-notice cc-page-course-provision-help-notice">
+                  <i class="fa fa-question-circle cc-left cc-page-help-notice-icon"></i>
+                  <div class="cc-page-help-notice-left-margin">
+                    <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">
+                      Need help deciding which rosters to select?
+                    </button>
+                    <div class="cc-page-help-notice-content" data-ng-show="toggle.displayHelp">
+                      <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
+                      <ol>
+                        <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
+                        <li>Create multiple course sites, perhaps with one for each section.</li>
+                      </ol>
+                      <p>Read about the pros and cons of each choice in thie Help document:
+                        <a href="#">Which official sections should I include in my course site?</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <form data-ng-submit="showConfirmation()" class="cc-page-course-provision-form">
 
                   <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>

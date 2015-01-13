@@ -92,6 +92,18 @@
     background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
   }
 
+  .cc-page-course-provision-help-notice {
+    margin-bottom: 20px;
+    ol {
+      margin-bottom: 10px;
+      margin-left: 20px;
+    }
+
+    p {
+      margin-bottom: 7px;
+    }
+  }
+
   .cc-page-provision-margin {
     margin: 0;
     overflow: hidden;
