@@ -4,6 +4,10 @@
 .pika-single {
   position: absolute;
   width: 260px;
+  .pika-next, .pika-prev {
+    padding: 15px;
+    text-indent: 40px;
+  }
   table {
     thead {
       background: none;
