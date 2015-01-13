@@ -5,7 +5,7 @@ describe Canvas::RepairSections do
   let! (:fake_import_proxy) { Canvas::SisImport.new(fake: true) }
 
   context 'when working from fake proxies' do
-    let (:fake_term) { Canvas::Proxy.current_sis_term_ids[1] }
+    let (:fake_term) { Canvas::Proxy.current_sis_term_ids[0] }
     before {Canvas::SectionsReport.stub(:new).and_return(fake_sections_report_proxy)}
     before {Canvas::SisImport.stub(:new).and_return(fake_import_proxy)}
     it 'adds a missing SIS course ID' do

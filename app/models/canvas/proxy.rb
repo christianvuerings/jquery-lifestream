@@ -91,11 +91,11 @@ module Canvas
       terms_from_canvas = Canvas::Terms.fetch
 
       # Get current and next term, and optionally future fall term, from campus data
+      terms.push terms_from_campus.current
+      terms.push terms_from_campus.next if terms_from_campus.next
       if (future_term = terms_from_campus.future) && future_term.name == 'Fall'
         terms.push future_term
       end
-      terms.push terms_from_campus.next if terms_from_campus.next
-      terms.push terms_from_campus.current
 
       # Return subset of terms that have SIS ids in Canvas, warn on missing SIS ids
       sis_ids_from_canvas = terms_from_canvas.map{|term| term['sis_term_id']}
