@@ -289,9 +289,13 @@ module Canvas
 
       academics_feed = MyAcademics::Merged.new(@uid).get_feed
       if (teaching_semesters = academics_feed[:teachingSemesters])
-        courses_list = teaching_semesters.select do |teaching_semester|
-          terms_filter.index { |term| teaching_semester[:slug] == term[:slug] }
-        end
+        courses_list = terms_filter.collect do |term|
+          if term_index = teaching_semesters.index {|semester| semester[:slug] == term[:slug] }
+            teaching_semesters[term_index]
+          else
+            nil
+          end
+        end.compact
         handle_cross_listed_courses(courses_list)
         courses_list
       else
