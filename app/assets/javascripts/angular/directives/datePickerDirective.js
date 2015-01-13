@@ -68,6 +68,9 @@
               if (className.indexOf('pika-select') !== -1 ||
                 className.indexOf('pika-next') !== -1 ||
                 className.indexOf('pika-prev') !== -1 ||
+                // We need to add the following 2 classes for android devices
+                className.indexOf('pika-single') !== -1 ||
+                className.indexOf('pika-title') !== -1 ||
                 tagName === 'OPTION') {
                 return;
               }
