@@ -72,7 +72,7 @@
     background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
     border-radius: 5px;
     padding: 20px;
-    .cc-page-provision-roster-list {
+    .cc-page-provision-section-list {
       list-style-type: disc;
       margin: 10px 0 0 39px;
     }
@@ -113,7 +113,7 @@
     margin: 15px auto;
   }
 
-  .cc-page-provision-select-rosters {
+  .cc-page-provision-select-sections {
     border-top: 1px solid $bc-color-top-border;
     padding: 10px 0;
   }
