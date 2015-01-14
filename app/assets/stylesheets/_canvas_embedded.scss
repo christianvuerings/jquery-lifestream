@@ -30,6 +30,8 @@ $bc-color-progressbar-bg-gradient2: #c5d8e2;
 $bc-color-progressbar-fg-gradient1: #88cef7;
 $bc-color-progressbar-fg-gradient2: #4baff6;
 $bc-color-roster-background: #edf0f2;
+$bc-color-section-list-border: #d1d5d8;
+$bc-color-section-list-secondary-bg: #f7f9f8;
 $bc-color-success-border: #d6e9c6;
 $bc-color-success-background: #dff0d8;
 $bc-color-success-foreground: #468847;
@@ -210,25 +212,44 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   .cc-template-canvas-manage-sections {
 
+    .cc-template-canvas-manage-sections-section-list {
+      border: $bc-color-section-list-border 1px solid;
+      border-bottom: 0;
+      margin: 0;
+      .cc-template-canvas-manage-sections-section {
+        background-color: $bc-color-white;
+        border-bottom: $bc-color-section-list-border 1px solid;
+        padding: 9px;
+      }
+      .cc-template-canvas-manage-sections-section-secondary {
+        background-color: $bc-color-section-list-secondary-bg;
+      }
+    }
+
     .cc-template-canvas-manage-sections-margin {
       margin: 0;
       overflow: hidden;
     }
 
     .cc-template-canvas-manage-sections-form-course {
-      margin: 0 0 20px;
-    }
-
-    .cc-template-canvas-manage-sections-roster-area {
       background: $bc-color-roster-background;
       border: 1px solid $bc-color-roster-background;
-      padding: 10px 5px;
+      margin: 0 0 20px;
+      padding: 15px;
+    }
+
+    .cc-template-canvas-manage-sections-form-course-title {
+      margin-bottom: 7px;
     }
 
     .cc-template-canvas-manage-sections-form-select-all-option {
       font-size: 12px;
-      font-weight: bold;
-      margin: 6px 0 0 7px;
+      font-weight: normal;
+      margin: 6px 0 4px 2px;
+    }
+
+    .cc-template-canvas-manage-sections-form-select-all-option-button {
+      outline: none;
     }
 
     .cc-template-canvas-manage-sections-label {
