@@ -53,7 +53,7 @@ class UserUtils
     Rails.root.join(output_dir, output_file)
   end
 
-  def self.open_test_uid_csv
+  def self.load_test_users
     logger.info('Loading test UIDs')
     JSON.parse(File.read(WebDriverUtils.live_users))['users']
   end
