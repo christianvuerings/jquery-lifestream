@@ -121,7 +121,7 @@
             </ul>
           </div>
 
-          <form data-ng-submit="createCourseSiteJob()" class="cc-page-course-provision-form cc-page-provision-site-labels-form">
+          <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="cc-page-course-provision-form cc-page-provision-site-labels-form">
             <div class="row">
               <div class="medium-6">
 
@@ -130,7 +130,11 @@
                     <label for="siteName" class="right">Site Name:</label>
                   </div>
                   <div class="medium-8 columns">
-                    <input type="text" id="siteName" data-ng-model="siteName" data-ng-required="true">
+                    <input type="text" name="siteName" id="siteName" data-ng-model="siteName" data-ng-required="true">
+                    <div ng-if="createCourseSiteForm.siteName.$error.required" class="cc-notice-box cc-notice-error cc-radius">
+                      <i class="cc-left fa fa-exclamation-circle cc-icon-red"></i>
+                      Please fill out a site name.
+                    </div>
                   </div>
                 </div>
                 <div class="row">
@@ -144,7 +148,7 @@
 
                 <div class="row">
                   <div class="medium-offset-4 medium-8 columns">
-                    <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Create Course Site</button>
+                    <button ng-disabled="createCourseSiteForm.$invalid" class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Create Course Site</button>
                     <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
                   </div>
                 </div>
