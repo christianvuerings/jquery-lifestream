@@ -32,6 +32,7 @@ $bc-color-progressbar-fg-gradient2: #4baff6;
 $bc-color-roster-background: #edf0f2;
 $bc-color-section-list-border: #d1d5d8;
 $bc-color-section-list-secondary-bg: #f7f9f8;
+$bc-color-section-list-alert: #7e4702;
 $bc-color-success-border: #d6e9c6;
 $bc-color-success-background: #dff0d8;
 $bc-color-success-foreground: #468847;
@@ -252,6 +253,55 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       outline: none;
     }
 
+    .cc-template-canvas-manage-sections-checkbox {
+      float: left;
+      text-align: center;
+      width: 30px;
+    }
+
+    .cc-template-canvas-manage-sections-course-code {
+      float: left;
+      width: 115px;
+    }
+
+    .cc-template-canvas-manage-sections-row {
+      overflow: auto;
+      width: 100%;
+    }
+
+    .cc-template-canvas-manage-sections-sites-row {
+      margin-top: 10px;
+    }
+
+    .cc-template-canvas-manage-sections-section-label {
+      float: left;
+      width: 75px;
+    }
+
+    .cc-template-canvas-manage-sections-section-ccn {
+      float: left;
+      width: 70px;
+    }
+
+    .cc-template-canvas-manage-sections-section-timestamps {
+      float: left;
+      width: 155px;
+    }
+
+    .cc-template-canvas-manage-sections-section-locations {
+      float: left;
+      width: 150px;
+    }
+
+    .cc-template-canvas-manage-sections-section-instructors {
+      float: left;
+      width: 190px;
+    }
+
+    .cc-template-canvas-manage-sections-in-use {
+      clear: both;
+    }
+
     .cc-template-canvas-manage-sections-label {
       display: inline;
       margin-left: 1em;
@@ -263,16 +313,17 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .cc-template-canvas-manage-sections-label-sited {
-      color: $cc-color-berkeley-south-hall;
+      color: $bc-color-section-list-alert;
     }
 
     .cc-template-canvas-manage-sections-sites {
-      margin-left: 40px;
+      color: $bc-color-section-list-alert;
+      margin-left: 43px;
     }
 
     .cc-template-canvas-manage-sections-sited-icon {
-      color: $cc-color-berkeley-south-hall;
-      margin-right: 10px;
+      color: $bc-color-section-list-alert;
+      margin-right: 4px;
     }
   }
 
