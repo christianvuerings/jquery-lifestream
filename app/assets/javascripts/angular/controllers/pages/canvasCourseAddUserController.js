@@ -33,7 +33,7 @@
     };
 
     var setSearchTypeNotice = function() {
-      if ($scope.searchType === 'ldapUserId') {
+      if ($scope.searchType === 'ldap_user_id') {
         $scope.searchTypeNotice = 'CalNet UIDs must be an exact match.';
       } else {
         $scope.searchTypeNotice = '';
@@ -66,7 +66,7 @@
     };
 
     $scope.updateSearchTextType = function() {
-      $scope.searchTextType = (['ldapUserId'].indexOf($scope.searchType) === -1) ? 'text' : 'number';
+      $scope.searchTextType = (['ldap_user_id'].indexOf($scope.searchType) === -1) ? 'text' : 'number';
     };
 
     $scope.searchUsers = function() {
