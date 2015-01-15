@@ -60,7 +60,7 @@ describe 'My Academics L&S Advising card', :testui => true do
                 has_advising_card = my_academics.advising_card_heading?
                 if academics_api.colleges.include?('College of Letters & Science')
                   is_l_and_s = true
-                   it "appears for UID #{uid}" do
+                  it "appears for UID #{uid}" do
                     expect(has_advising_card).to be true
                   end
                   my_academics.advising_card_spinner_element.when_not_visible(timeout=WebDriverUtils.academics_timeout)
