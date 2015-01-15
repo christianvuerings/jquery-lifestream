@@ -57,8 +57,12 @@ describe 'My Academics L&S Advising card', :testui => true do
                 my_academics = CalCentralPages::MyAcademicsPage::MyAcademicsAdvisingCard.new(driver)
                 my_academics.load_page(driver)
                 my_academics.page_heading_element.when_visible(WebDriverUtils.academics_timeout)
+                has_advising_card = my_academics.advising_card_heading?
                 if academics_api.colleges.include?('College of Letters & Science')
                   is_l_and_s = true
+                   it "appears for UID #{uid}" do
+                    expect(has_advising_card).to be true
+                  end
                   my_academics.advising_card_spinner_element.when_not_visible(timeout=WebDriverUtils.academics_timeout)
 
                   # FUTURE APPOINTMENTS
@@ -197,7 +201,6 @@ describe 'My Academics L&S Advising card', :testui => true do
                     expect(has_new_appt_link).to be true
                   end
                 else
-                  has_advising_card = my_academics.advising_card_heading?
                   it "does not appear for UID #{uid}" do
                     expect(has_advising_card).to be false
                   end
