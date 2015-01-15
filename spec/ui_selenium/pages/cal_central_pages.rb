@@ -163,8 +163,9 @@ module CalCentralPages
     basic_auth_uid_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     self.basic_auth_uid_input = uid
     self.basic_auth_password_input = UserUtils.basic_auth_pass
+    login = basic_auth_login_button_element
     basic_auth_login_button
-    basic_auth_login_button_element.when_not_present(timeout=WebDriverUtils.page_load_timeout)
+    login.when_not_present(timeout=WebDriverUtils.page_load_timeout)
   end
 
 end

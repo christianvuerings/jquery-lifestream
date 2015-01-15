@@ -16,57 +16,75 @@ class ApiMyAdvisingPage
     @parsed = JSON.parse(body)
   end
 
-  def college_advisor
-    @parsed['caseloadAdviser']['firstName'] + @parsed['caseloadAdviser']['lastName']
+  def college_adviser
+    if @parsed['caseloadAdviser'] == ''
+      nil
+    else
+      @parsed['caseloadAdviser']['firstName'].to_s + ' ' + @parsed['caseloadAdviser']['lastName'].to_s
+    end
   end
 
   def all_future_appts
     @parsed['futureAppointments']
   end
 
+  def all_future_appt_epochs
+    epochs = []
+    all_future_appts.each { |appt| epochs.push((appt['dateTime'] / 1000).to_s) }
+    epochs
+  end
+
   def all_future_appt_dates
     dates = []
-      all_future_appts.each { |date| dates.push(date[]) }
+    all_future_appt_epochs.each { |epoch| dates.push(WebDriverUtils.ui_date_display_format(Time.strptime(epoch, '%s'))) }
     dates
   end
 
   def all_future_appt_times
     times = []
-
+    all_future_appt_epochs.each do |epoch|
+      time_format = (Time.strptime(epoch, '%s')).strftime("%-l:%M %p")
+      if time_format == '12:00 PM'
+        time = 'Noon'
+      else
+        time = time_format
+      end
+      times.push(time)
+    end
     times
   end
 
-  def all_future_appt_advisors
-    advisors = []
-      all_future_appts.each { |advisor| advisors.push(advisor['staff']['name']) }
-    advisors
+  def all_future_appt_advisers
+    advisers = []
+    all_future_appts.each { |appt| advisers.push(appt['staff']['name']) }
+    advisers
   end
 
   def all_future_appt_methods
     methods = []
-      all_future_appts.each { |method| methods.push(method['method']) }
+    all_future_appts.each { |appt| methods.push(appt['method'].upcase) }
     methods
   end
 
   def all_future_appt_locations
     locations = []
-      all_future_appts.each { |location| locations.push(location['location']) }
+    all_future_appts.each { |appt| locations.push(appt['location'].gsub("  ", " ").upcase) }
     locations
   end
 
-  def all_past_appts
+  def all_prev_appts
     @parsed['pastAppointments']
   end
 
-  def all_past_appt_dates
+  def all_prev_appt_dates
     dates = []
-    all_past_appts.each { |date| dates.push(date['dateTime'].(Time.strptime(epoch, '%s')).strftime("%m/%d/%y")) }
+    all_prev_appts.each { |appt| dates.push((Time.strptime((appt['dateTime'] / 1000).to_s, '%s')).strftime("%m/%d/%y")) }
     dates
   end
 
-  def all_past_appt_advisors
+  def all_prev_appt_advisers
     names = []
-    all_past_appts.each { |name| names.push(name['name']) }
+    all_prev_appts.each { |name| names.push(name['staff']['name']) }
     names
   end
 
