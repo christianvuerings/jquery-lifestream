@@ -92,6 +92,9 @@
     };
 
     $scope.createCourseSiteJob = function() {
+      if ($scope.createCourseSiteForm.$invalid) {
+        return;
+      }
       setErrorText();
       var ccns = selectedCcns();
       if (ccns.length > 0) {
