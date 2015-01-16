@@ -68,10 +68,9 @@
     };
 
     var selectedCcns = function() {
-      var ccns = [];
       $scope.updateSelected();
-      angular.forEach($scope.selectedSectionsList, function(section) {
-        ccns.push(section.ccn);
+      var ccns = $scope.selectedSectionsList.map(function(s) {
+        return s.ccn;
       });
       return ccns;
     };
