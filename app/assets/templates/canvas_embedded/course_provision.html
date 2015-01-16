@@ -97,7 +97,8 @@
                   <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>
 
                   <div class="cc-page-provision-form-actions">
-                    <button class="cc-button cc-button-blue cc-page-provision-form-button" type="submit">Next &gt;&gt;</button>
+                    <button class="cc-button cc-button-blue cc-page-provision-form-button"
+                      type="submit" data-ng-disabled="selectedSectionsList.length == 0">Next &gt;&gt;</button>
                   </div>
 
                 </form>
