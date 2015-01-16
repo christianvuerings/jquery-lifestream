@@ -99,7 +99,7 @@ module MyAcademics
             "into Tele-BEARS for your appointment"
         }
       else
-        logger.warn "Unidentified adviser code value: #{code}"
+        logger.warn "Unidentified adviser code value for UID #{@uid}: #{code}"
         default
       end
     end
