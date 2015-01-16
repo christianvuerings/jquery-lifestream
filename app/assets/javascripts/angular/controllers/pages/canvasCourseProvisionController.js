@@ -65,6 +65,7 @@
         newSelectedCourses.push(course);
       });
       $scope.currentCourses = newSelectedCourses;
+      $scope.updateSelected();
     };
 
     var selectedCcns = function() {
@@ -173,6 +174,7 @@
         currentAdminSemester: semester.slug,
         selectedSectionsList: []
       });
+      $scope.updateSelected();
     };
 
     $scope.switchSemester = function(semester) {
@@ -181,6 +183,7 @@
         currentCourses: semester.classes,
         selectedSectionsList: []
       });
+      $scope.updateSelected();
     };
 
     $scope.toggleAdminMode = function() {
