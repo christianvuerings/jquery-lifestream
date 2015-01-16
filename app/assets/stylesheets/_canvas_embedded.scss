@@ -139,6 +139,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     border-radius: 3px;
   }
 
+  // Error display for remote background jobs
   .cc-template-background-job-error {
     background-color: $bc-color-notice-red-bg;
     border: 1px solid $bc-color-notice-red-border;
@@ -177,6 +178,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
   }
 
+  // Progress Bar
   .cc-template-progress-bar {
     .cc-template-progress-bar-container {
       margin: 35px auto;
@@ -211,6 +213,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
   }
 
+  // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
   .cc-template-canvas-manage-sections {
 
     .cc-template-canvas-manage-sections-section-list {
@@ -333,6 +336,34 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     .cc-template-canvas-manage-sections-sited-icon {
       color: $bc-color-section-list-alert;
       margin-right: 4px;
+    }
+  }
+
+  // Collapsed help notice area
+  .cc-page-help-notice {
+    margin: 4px 1px;
+    min-height: 15px;
+
+    .cc-page-help-notice-icon {
+      color: $bc-color-help-link-blue;
+      font-size: 15px;
+      margin-top: 2px;
+    }
+
+    .cc-page-help-notice-toggle-button {
+      color: $bc-color-help-link-blue;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .cc-page-help-notice-left-margin {
+      margin-left: 16px;
+    }
+
+    .cc-page-help-notice-content {
+      border: $bc-color-button-grey-border solid 1px;
+      margin: 10px 0 20px;
+      padding: 10px;
     }
   }
 

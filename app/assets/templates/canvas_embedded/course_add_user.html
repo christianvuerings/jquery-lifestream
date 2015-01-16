@@ -99,33 +99,34 @@
 
     </div>
 
-    <div class="bc-user-search-notice-container">
-      <i class="fa fa-question-circle cc-left bc-fa-blue"></i>
-      <div class="bc-notice-left-margin">
-        <button class="cc-button-link bc-user-search-notice-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">Need help finding someone?</button>
-        <div class="bc-user-search-notice" data-ng-show="toggle.displayHelp">
+    <div class="cc-page-help-notice">
+      <i class="fa fa-question-circle cc-left cc-page-help-notice-icon"></i>
+      <div class="cc-page-help-notice-left-margin">
+        <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">
+          Need help finding someone?
+        </button>
+        <div class="cc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp">
           <!-- Note: This help text content is also maintained in the public/canvas/canvas-customization.js script -->
-          <dl>
-            <dt>UC Berkeley Faculty, Staff and Students</dt>
-            <dd>
+          <dl class="bc-user-search-notice-description-list">
+            <dt class="bc-user-search-notice-description-term">UC Berkeley Faculty, Staff and Students</dt>
+            <dd class="bc-user-search-notice-description">
               UC Berkeley faculty, staff and students <em>(regular and concurrent enrollment)</em> can be found in the
               <a href="http://directory.berkeley.edu/">CalNet Directory</a>
               and be added to your site using their CalNet UID or official email address.
             </dd>
-            <dt>Guests</dt>
-            <dd>
+            <dt class="bc-user-search-notice-description-term">Guests</dt>
+            <dd class="bc-user-search-notice-description">
               Peers from other institutions or guests from the community must be sponsored with a
               <a href="https://idc.berkeley.edu/guests/">CalNet Guest Account</a>.
               Do NOT request a CalNet Guest Account for concurrent enrollment students.
             </dd>
-            <dt>More Information</dt>
-            <dd>
+            <dt class="bc-user-search-notice-description-term">More Information</dt>
+            <dd class="bc-user-search-notice-description">
               Go to the
-              <a href="http://ets.berkeley.edu/bcourses/faq/adding-people">bCourses FAQ</a>
+              <a href="http://ets.berkeley.edu/bcourses/how-add-people-your-course">bCourses FAQ</a>
               for more information about adding people to bCourse sites.
             </dd>
           </dl>
-
         </div>
       </div>
     </div>

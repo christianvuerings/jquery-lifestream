@@ -53,7 +53,7 @@
         <div class="cc-notice-text">
           <h4>Daily Scheduled Maintenance from 8 - 9 AM</h4>
           During our daily scheduled maintenance, Instructors may experience delays of up to 10 minutes before sites are created.
-          <br>For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status" target="_blank">bCourses System Status.</a>
+          <br>For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status">bCourses System Status.</a>
         </div>
       </div>
 
@@ -92,6 +92,26 @@
 
               <div class="cc-page-provision-step-indent">
                 <p>All official sections you select below will be put in ONE, single course site.</p>
+
+                <div class="cc-page-help-notice cc-page-course-provision-help-notice">
+                  <i class="fa fa-question-circle cc-left cc-page-help-notice-icon"></i>
+                  <div class="cc-page-help-notice-left-margin">
+                    <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">
+                      Need help deciding which rosters to select?
+                    </button>
+                    <div class="cc-page-help-notice-content" data-ng-if="toggle.displayHelp">
+                      <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
+                      <ol class="cc-page-course-provision-help-notice-ordered-list">
+                        <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
+                        <li>Create multiple course sites, perhaps with one for each section.</li>
+                      </ol>
+                      <p class="cc-page-course-provision-help-notice-paragraph">Read about the pros and cons of each choice in thie Help document:
+                        <a href="http://ets.berkeley.edu/bcourses/official-sections-to-include">Which official sections should I include in my course site?</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <form data-ng-submit="showConfirmation()" class="cc-page-course-provision-form">
 
                   <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>
