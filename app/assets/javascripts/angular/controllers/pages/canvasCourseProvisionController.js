@@ -69,7 +69,8 @@
 
     var selectedCcns = function() {
       var ccns = [];
-      angular.forEach($scope.selectedSections($scope.currentCourses), function(section) {
+      $scope.updateSelected();
+      angular.forEach($scope.selectedSectionsList, function(section) {
         ccns.push(section.ccn);
       });
       return ccns;
@@ -84,11 +85,15 @@
     };
 
     $scope.showConfirmation = function() {
+      $scope.updateSelected();
       $scope.currentWorkflowStep = 'confirmation';
-      var selectedSections = $scope.selectedSections($scope.currentCourses);
-      $scope.siteName = selectedSections[0].courseTitle;
-      $scope.siteAbbreviation = selectedSections[0].courseCode + ' - ' + selectedSections[0].section_label;
+      $scope.siteName = $scope.selectedSectionsList[0].courseTitle;
+      $scope.siteAbbreviation = $scope.selectedSectionsList[0].courseCode + ' - ' + $scope.selectedSectionsList[0].section_label;
       apiService.util.iframeScrollToTop();
+    };
+
+    $scope.updateSelected = function() {
+      $scope.selectedSectionsList = $scope.selectedSections($scope.currentCourses);
     };
 
     $scope.createCourseSiteJob = function() {
@@ -130,7 +135,8 @@
       clearCourseSiteJob();
       angular.extend($scope, {
         currentWorkflowStep: 'selecting',
-        isLoading: true
+        isLoading: true,
+        selectedSectionsList: []
       });
       var feedRequestOptions = {
         isAdmin: $scope.is_admin,
@@ -165,14 +171,16 @@
 
     $scope.switchAdminSemester = function(semester) {
       angular.extend($scope, {
-        currentAdminSemester: semester.slug
+        currentAdminSemester: semester.slug,
+        selectedSectionsList: []
       });
     };
 
     $scope.switchSemester = function(semester) {
       angular.extend($scope, {
         currentSemester: semester.slug,
-        currentCourses: semester.classes
+        currentCourses: semester.classes,
+        selectedSectionsList: []
       });
     };
 
