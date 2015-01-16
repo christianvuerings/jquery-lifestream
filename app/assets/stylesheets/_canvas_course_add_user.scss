@@ -24,14 +24,14 @@
 
   .bc-user-search-notice {
     font-size: 13px;
-    dl {
+    .bc-user-search-notice-description-list {
       margin-bottom: 0;
     }
-    dt {
+    .bc-user-search-notice-description-term {
       font-weight: bold;
       margin-bottom: 5px;
     }
-    dd {
+    .bc-user-search-notice-description {
       margin-left: 15px;
     }
   }
