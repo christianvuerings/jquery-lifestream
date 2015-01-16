@@ -92,10 +92,6 @@
       apiService.util.iframeScrollToTop();
     };
 
-    $scope.updateSelected = function() {
-      $scope.selectedSectionsList = $scope.selectedSections($scope.currentCourses);
-    };
-
     $scope.createCourseSiteJob = function() {
       if ($scope.createCourseSiteForm.$invalid) {
         return;
@@ -169,6 +165,14 @@
       });
     };
 
+    /*
+     * Selects all sections for a course and updates all detected as selected
+     */
+    $scope.toggleCourseSectionsWithUpdate = function(course) {
+      $scope.toggleCheckboxes(course);
+      $scope.updateSelected();
+    };
+
     $scope.switchAdminSemester = function(semester) {
       angular.extend($scope, {
         currentAdminSemester: semester.slug,
@@ -199,6 +203,10 @@
         adminMode: adminMode,
         teachingSemesters: []
       });
+    };
+
+    $scope.updateSelected = function() {
+      $scope.selectedSectionsList = $scope.selectedSections($scope.currentCourses);
     };
 
     $scope.selectedSections = canvasCourseProvisionService.selectedSections;
