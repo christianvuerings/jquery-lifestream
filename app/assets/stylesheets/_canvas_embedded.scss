@@ -239,10 +239,6 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       padding: 15px;
     }
 
-    .cc-template-canvas-manage-sections-form-course-title {
-      margin-bottom: 7px;
-    }
-
     .cc-template-canvas-manage-sections-form-select-all-option {
       font-size: 12px;
       font-weight: normal;
@@ -257,6 +253,19 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       float: left;
       text-align: center;
       width: 30px;
+    }
+
+    .cc-template-canvas-manage-sections-form-collapse-icon {
+      font-size: 18px;
+      margin-left: 2px;
+    }
+
+    .cc-template-canvas-manage-sections-form-collapsible-container {
+      margin-top: 7px;
+    }
+
+    .cc-template-canvas-manage-sections-form-course-title {
+      margin-left: 10px;
     }
 
     .cc-template-canvas-manage-sections-course-code {

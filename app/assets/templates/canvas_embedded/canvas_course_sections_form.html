@@ -2,8 +2,10 @@
   <ul class="cc-template-canvas-manage-sections-margin">
 
     <li data-ng-repeat="course in currentCourses" class="cc-template-canvas-manage-sections-form-course">
-      <div class="cc-template-canvas-manage-sections-form-course-title">
-        <strong data-ng-bind="course.title"></strong>
+      <div data-ng-click="course.collapsed = !course.collapsed">
+        <i class="fa cc-left cc-template-canvas-manage-sections-form-collapse-icon"
+          data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
+        <strong class="cc-template-canvas-manage-sections-form-course-title" data-ng-bind="course.title"></strong>
         <span data-ng-if="course.sections">
           (<span data-ng-pluralize count="course.sections.length"
                    when="{'0': 'No sections',
@@ -13,49 +15,51 @@
         </span>
       </div>
 
-      <div class="cc-template-canvas-manage-sections-form-select-all-option" data-ng-show="course.sections.length > 1">
-        Select: <button class="cc-button-link cc-template-canvas-manage-sections-form-select-all-option-button" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
-      </div>
+      <div class="cc-template-canvas-manage-sections-form-collapsible-container" data-ng-hide="course.collapsed">
+        <div class="cc-template-canvas-manage-sections-form-select-all-option" data-ng-show="course.sections.length > 1">
+          Select: <button class="cc-button-link cc-template-canvas-manage-sections-form-select-all-option-button" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
+        </div>
 
-      <div data-ng-if="course.sections.length > 0">
-        <ul class="cc-template-canvas-manage-sections-section-list">
-          <li data-ng-repeat="section in course.sections" class="cc-template-canvas-manage-sections-section" data-ng-class="{'cc-template-canvas-manage-sections-section-secondary': !section.is_primary_section }">
+        <div data-ng-if="course.sections.length > 0">
+          <ul class="cc-template-canvas-manage-sections-section-list">
+            <li data-ng-repeat="section in course.sections" class="cc-template-canvas-manage-sections-section" data-ng-class="{'cc-template-canvas-manage-sections-section-secondary': !section.is_primary_section }">
 
-            <div class="cc-template-canvas-manage-sections-row">
-              <div class="cc-template-canvas-manage-sections-checkbox">
-                <input class="cc-template-canvas-manage-sections-checkbox-input"
-                  type="checkbox"
-                  id="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
-                  data-ng-model="section.selected" data-ng-click="updateSelected()">
+              <div class="cc-template-canvas-manage-sections-row">
+                <div class="cc-template-canvas-manage-sections-checkbox">
+                  <input class="cc-template-canvas-manage-sections-checkbox-input"
+                    type="checkbox"
+                    id="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
+                    data-ng-model="section.selected" data-ng-click="updateSelected()">
+                </div>
+
+                <div class="cc-template-canvas-manage-sections-course-code">
+                  <label for="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
+                    class="cc-template-canvas-manage-sections-label">
+                    <strong data-ng-bind="section.courseCode"></strong>
+                  </label>
+                </div>
+                <div class="cc-template-canvas-manage-sections-section-label" data-ng-bind="section.section_label"></div>
+                <div class="cc-template-canvas-manage-sections-section-ccn" data-ng-bind="section.ccn"></div>
+                <div class="cc-template-canvas-manage-sections-section-timestamps show-for-medium-up">
+                  <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
+                </div>
+                <div class="cc-template-canvas-manage-sections-section-locations show-for-medium-up">
+                  <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.roomNumber}} {{schedule.buildingName}}"></div>
+                </div>
+                <div class="cc-template-canvas-manage-sections-section-instructors show-for-large-up">
+                  <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
+                </div>
               </div>
 
-              <div class="cc-template-canvas-manage-sections-course-code">
-                <label for="cc-template-canvas-manage-sections-checkbox-{{course.course_id}}-{{section.ccn}}"
-                  class="cc-template-canvas-manage-sections-label">
-                  <strong data-ng-bind="section.courseCode"></strong>
-                </label>
+              <div class="cc-template-canvas-manage-sections-row cc-template-canvas-manage-sections-sites-row" data-ng-if="section.sites">
+                <div data-ng-repeat="site in section.sites" class="cc-template-canvas-manage-sections-sites">
+                  <i class="fa fa-warning cc-template-canvas-manage-sections-sited-icon"></i>
+                  This section is already in use by <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
+                </div>
               </div>
-              <div class="cc-template-canvas-manage-sections-section-label" data-ng-bind="section.section_label"></div>
-              <div class="cc-template-canvas-manage-sections-section-ccn" data-ng-bind="section.ccn"></div>
-              <div class="cc-template-canvas-manage-sections-section-timestamps show-for-medium-up">
-                <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
-              </div>
-              <div class="cc-template-canvas-manage-sections-section-locations show-for-medium-up">
-                <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.roomNumber}} {{schedule.buildingName}}"></div>
-              </div>
-              <div class="cc-template-canvas-manage-sections-section-instructors show-for-large-up">
-                <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
-              </div>
-            </div>
-
-            <div class="cc-template-canvas-manage-sections-row cc-template-canvas-manage-sections-sites-row" data-ng-if="section.sites">
-              <div data-ng-repeat="site in section.sites" class="cc-template-canvas-manage-sections-sites">
-                <i class="fa fa-warning cc-template-canvas-manage-sections-sited-icon"></i>
-                This section is already in use by <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
-              </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
 
     </li>
