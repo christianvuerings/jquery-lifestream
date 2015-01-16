@@ -462,7 +462,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-        select term_century || term_yr as term_yr, term_cd, trim(term_status_desc) as term_status_desc,
+        select term_century || term_yr as term_yr, term_cd, term_status, trim(term_status_desc) as term_status_desc,
           trim(term_name) as term_name, current_tb_term_flag, term_start_date, term_end_date
         from calcentral_term_info_vw
         order by term_start_date desc

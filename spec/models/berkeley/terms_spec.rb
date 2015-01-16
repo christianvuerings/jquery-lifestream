@@ -11,6 +11,7 @@ describe Berkeley::Terms do
       subject.campus.each do |slug, term|
         expect(term).to be_is_a Berkeley::Term
         expect(slug).to eq term.slug
+        expect(term.sis_term_status).to be_present
         if previous_term
           expect(term.start).to be < previous_term.start
           expect(term.end).to be < previous_term.end
