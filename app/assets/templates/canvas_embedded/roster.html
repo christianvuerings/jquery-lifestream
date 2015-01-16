@@ -22,14 +22,14 @@
 
   <ul class="cc-page-roster-list">
     <li data-ng-repeat="student in students | filter:search | filter:studentInSectionFilter | orderBy:'last_name'">
-      <div data-ng-show="student.photo">
-        <a data-ng-href="{{student.profile_url}}">
-          <img data-ng-src="{{student.photo}}" width="72" height="96" />
+      <div data-ng-if="student.profile_url">
+        <a data-ng-href="student.profile_url" target="_top">
+          <div data-ng-include="'canvas_embedded/roster_photo.html'"></div>
         </a>
       </div>
-      <div data-ng-hide="student.photo">
-        <a data-ng-href="{{student.profile_url}}">
-          <div class="cc-image-responsive cc-page-roster-image-unavailable" title="Photo unavailable"></div>
+      <div data-ng-if="!student.profile_url">
+        <a data-ng-href="{{origin}}/{{context}}/{{courseId}}/profile/{{student.login_id}}" target="_top">
+          <div data-ng-include="'canvas_embedded/roster_photo.html'"></div>
         </a>
       </div>
       <div class="cc-page-roster-student-name" data-ng-bind="student.first_name"></div>
