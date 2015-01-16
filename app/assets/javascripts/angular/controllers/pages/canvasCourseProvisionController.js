@@ -65,6 +65,7 @@
         newSelectedCourses.push(course);
       });
       $scope.currentCourses = newSelectedCourses;
+      $scope.updateSelected();
     };
 
     var selectedCcns = function() {
