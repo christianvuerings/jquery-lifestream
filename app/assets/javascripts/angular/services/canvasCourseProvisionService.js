@@ -14,6 +14,9 @@
       });
     };
 
+    /*
+     * Returns currently selected sections
+     */
     var selectedSections = function(currentCourses) {
       var selectedSections = [];
       angular.forEach(currentCourses, function(course) {
