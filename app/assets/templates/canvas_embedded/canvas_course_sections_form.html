@@ -15,7 +15,7 @@
         </span>
       </div>
 
-      <div class="cc-template-canvas-manage-sections-form-collapsible-container" data-ng-hide="course.collapsed">
+      <div class="cc-template-canvas-manage-sections-form-collapsible-container" data-ng-if="!course.collapsed">
         <div class="cc-template-canvas-manage-sections-form-select-all-option" data-ng-show="course.sections.length > 1">
           Select: <button class="cc-button-link cc-template-canvas-manage-sections-form-select-all-option-button" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCheckboxes(course)"></button>
         </div>
