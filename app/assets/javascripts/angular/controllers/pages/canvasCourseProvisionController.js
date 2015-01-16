@@ -174,6 +174,7 @@
         currentAdminSemester: semester.slug,
         selectedSectionsList: []
       });
+      $scope.updateSelected();
     };
 
     $scope.switchSemester = function(semester) {
@@ -182,6 +183,7 @@
         currentCourses: semester.classes,
         selectedSectionsList: []
       });
+      $scope.updateSelected();
     };
 
     $scope.toggleAdminMode = function() {
