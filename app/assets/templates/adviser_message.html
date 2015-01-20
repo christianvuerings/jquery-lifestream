@@ -1,5 +1,21 @@
 <div class="cc-clearfix cc-academics-adviser-message-container">
   <i class="cc-left fa" data-ng-class="{true:'fa-exclamation-circle cc-icon-red',false:'fa-check-circle cc-icon-green'}[telebears.adviserCodeRequired.required]">
   </i>
-  <div class="cc-academics-adviser-message" data-ng-bind="telebears.adviserCodeRequired.message"></div>
+  <div class="cc-academics-adviser-message" data-ng-switch="telebears.adviserCodeRequired.type">
+    <span data-ng-switch-when="adviser">
+      Before your Tele-BEARS appointment you need to get a code from your adviser.
+    </span>
+    <span data-ng-switch-when="revoked">
+      Your access to Tele-BEARS has been revoked!
+      Please contact Cal Student Central <a href="http://studentcentral.berkeley.edu/open-case">online</a>,
+      visit the office at 120 Sproul Hall, or call 510-664-9181.
+    </span>
+    <span data-ng-switch-when="calso">
+      To get into Tele-BEARS for your appointment, you need to get an adviser code from CalSO.
+      Contact <a href="http://uga.berkeley.edu/nss/">New Student Services</a> at 510-642-4970 for more information.
+    </span>
+    <span data-ng-switch-default>
+      You do not need an adviser code for this semester.
+    </span>
+  </div>
 </div>

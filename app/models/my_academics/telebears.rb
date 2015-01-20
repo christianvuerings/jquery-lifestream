@@ -81,22 +81,26 @@ module MyAcademics
     def decode_adviser_code_required(code)
       default = {
         required: false,
-        message: "You do not need an adviser code for this semester"
+        type: 'none'
       }
 
       case code
-      when "P"
+      when 'P'
         default
-      when "A"
+      when 'A'
         {
           required: true,
-          message: "Before your Tele-BEARS appointment you need to get a code from your adviser"
+          type: 'adviser'
         }
-      when "C"
+      when 'C'
         {
           required: true,
-          message: "At CalSO you need to get an adviser code. You need this code to get " \
-            "into Tele-BEARS for your appointment"
+          type: 'calso'
+        }
+      when 'N'
+        {
+          required: true,
+          type: 'revoked'
         }
       else
         logger.warn "Unidentified adviser code value for UID #{@uid}: #{code}"
