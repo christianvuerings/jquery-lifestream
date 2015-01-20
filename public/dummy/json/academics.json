@@ -1025,7 +1025,7 @@
       "slug": "spring-2014",
       "adviserCodeRequired": {
         "required": true,
-        "message": "Before your Tele-BEARS appointment you need to get a code from your adviser"
+        "type": "revoked"
       },
       "phases": [
         {

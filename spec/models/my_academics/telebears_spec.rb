@@ -73,7 +73,7 @@ describe MyAcademics::Telebears do
         expect(telebears[:year]).to eq 2013
         expect(telebears[:slug]).to eq 'fall-2013'
         expect(telebears[:adviserCodeRequired][:required]).to be_truthy
-        expect(telebears[:adviserCodeRequired][:message]).to eq 'Before your Tele-BEARS appointment you need to get a code from your adviser'
+        expect(telebears[:adviserCodeRequired][:type]).to eq 'adviser'
         expect(telebears[:phases].length).to eq 2
         expect(telebears[:url]).to be_present
       end
@@ -102,21 +102,28 @@ describe MyAcademics::Telebears do
         let(:fake_code) {'P'}
         it 'describes the code' do
           expect(adviser_code_required[:required]).to eq false
-          expect(adviser_code_required[:message]).to match /do not need/
+          expect(adviser_code_required[:type]).to eq 'none'
         end
       end
       context 'CalSO' do
         let(:fake_code) {'C'}
         it 'describes the code' do
           expect(adviser_code_required[:required]).to eq true
-          expect(adviser_code_required[:message]).to match /CalSO/
+          expect(adviser_code_required[:type]).to eq 'calso'
         end
       end
       context 'required' do
         let(:fake_code) {'A'}
         it 'describes the code' do
           expect(adviser_code_required[:required]).to eq true
-          expect(adviser_code_required[:message]).to match /you need to get a code/
+          expect(adviser_code_required[:type]).to eq 'adviser'
+        end
+      end
+      context 'access revoked' do
+        let(:fake_code) {'N'}
+        it 'describes the code' do
+          expect(adviser_code_required[:required]).to eq true
+          expect(adviser_code_required[:type]).to eq 'revoked'
         end
       end
       context 'unknown code' do
@@ -124,7 +131,7 @@ describe MyAcademics::Telebears do
         it 'returns the default' do
           expect(Rails.logger).to receive(:warn).at_least(1).times
           expect(adviser_code_required[:required]).to eq false
-          expect(adviser_code_required[:message]).to match /do not need/
+          expect(adviser_code_required[:type]).to eq 'none'
         end
       end
     end
