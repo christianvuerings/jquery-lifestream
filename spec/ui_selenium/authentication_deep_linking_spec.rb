@@ -5,6 +5,7 @@ require_relative 'util/web_driver_utils'
 require_relative 'util/user_utils'
 require_relative 'pages/cal_net_auth_page'
 require_relative 'pages/cal_central_pages'
+require_relative 'pages/splash_page'
 require_relative 'pages/my_dashboard_page'
 require_relative 'pages/my_dashboard_to_do_card'
 require_relative 'pages/my_academics_page'
@@ -46,7 +47,8 @@ describe 'Logging in with deep linking', :testui => true do
       my_academics_page.click_first_student_semester
       semester_page = @driver.current_url
       my_academics_page.click_logout_link
-      cal_net_auth_page.logout_conf_heading_element.when_present(timeout=WebDriverUtils.page_load_timeout)
+      splash_page = CalCentralPages::SplashPage.new(@driver)
+      splash_page.wait_for_expected_title?
       @driver.get(semester_page)
       cal_net_auth_page.login(user, password)
       expect(@driver.current_url).to eql(semester_page)

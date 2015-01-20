@@ -29,8 +29,7 @@ describe 'Opting out', :testui => true do
       cal_net_page.login(UserUtils.oski_username, UserUtils.oski_password)
       dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
       dashboard_page.opt_out(@driver)
-      cal_net_page.logout_conf_heading_element.when_present(WebDriverUtils.page_load_timeout)
-      splash_page.load_page(@driver)
+      splash_page.wait_for_expected_title?
       splash_page.click_sign_in_button(@driver)
       cal_net_page.login(UserUtils.oski_username, UserUtils.oski_password)
       dashboard_page.recent_activity_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
