@@ -1,0 +1,139 @@
+require 'spec_helper'
+require 'selenium-webdriver'
+require 'page-object'
+require_relative 'util/web_driver_utils'
+require_relative 'util/user_utils'
+require_relative 'pages/cal_net_auth_page'
+require_relative 'pages/cal_central_pages'
+require_relative 'pages/splash_page'
+require_relative 'pages/my_dashboard_page'
+require_relative 'pages/my_dashboard_to_do_card'
+require_relative 'pages/my_dashboard_up_next_card'
+require_relative 'pages/google_page'
+
+describe 'My Dashboard Up Next card', :testui => true do
+
+  if ENV["UI_TEST"]
+
+    include ClassLogger
+
+    today = Time.now
+    id = today.to_i.to_s
+
+    before(:all) do
+      @driver = WebDriverUtils.driver
+
+      splash_page = CalCentralPages::SplashPage.new(@driver)
+      splash_page.load_page(@driver)
+      splash_page.click_sign_in_button(@driver)
+      cal_net_auth_page = CalNetPages::CalNetAuthPage.new(@driver)
+      cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
+      settings_page = CalCentralPages::SettingsPage.new(@driver)
+      settings_page.load_page(@driver)
+      settings_page.disconnect_bconnected(@driver)
+
+      @google = GooglePage.new(@driver)
+      @google.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
+
+      # On Up Next card, get initial set of today's events
+      @up_next_card = CalCentralPages::MyDashboardPage::MyDashboardUpNextCard.new(@driver)
+      @up_next_card.load_page(@driver)
+      @up_next_card.events_list_element.when_present(timeout=WebDriverUtils.page_load_timeout)
+      @up_next_card.day_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+      logger.info("Up Next card shows #{@up_next_card.day} #{@up_next_card.date}")
+      @initial_event_times = @up_next_card.all_event_times
+      @initial_event_summaries = @up_next_card.all_event_summaries
+      @initial_event_locations = @up_next_card.all_event_locations
+      @initial_event_start_times = @up_next_card.all_event_start_times
+      @initial_event_end_times = @up_next_card.all_event_end_times
+      @initial_event_organizers = @up_next_card.all_event_organizers
+      logger.info("#{@initial_event_times}")
+      logger.info("#{@initial_event_summaries}")
+      logger.info("#{@initial_event_locations}")
+      logger.info("#{@initial_event_start_times}")
+      logger.info("#{@initial_event_end_times}")
+      logger.info("#{@initial_event_organizers}")
+
+      # Put a new event on Google calendar
+      @google.load_calendar(@driver)
+      @event_title = "Event #{id}"
+      @event_location = "#{id} DWINELLE"
+      event = @google.send_invite(@event_title, @event_location)
+      @event_start_time = event[0]
+      @event_end_time = event[1]
+      logger.info("Event start time is #{@event_start_time.strftime("%-m/%e/%y %l:%M %P")}")
+      logger.info("Event end time is #{@event_end_time.strftime("%-m/%e/%y %l:%M %P")}")
+
+      # On the Dashboard, check for the new event.  If not there, wait for a live update to occur.
+      @up_next_card.load_page(@driver)
+      @up_next_card.events_list_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
+      unless @up_next_card.all_event_summaries.include?(@event_title)
+        @up_next_card.click_live_update_button(WebDriverUtils.mail_live_update_timeout)
+      end
+    end
+
+    after(:all) do
+      @driver.quit
+    end
+
+    context 'for Google calendar events' do
+
+      it 'shows today\'s date' do
+        expect(@up_next_card.day).to eql(today.strftime("%A"))
+        expect(@up_next_card.date).to eql(today.strftime("%^b %e"))
+      end
+
+      it 'shows today\'s event times' do
+        logger.info("#{@up_next_card.all_event_times}")
+        expect(@up_next_card.all_event_times).to eql(@initial_event_times + [@event_start_time.strftime("%l:%M\n%p").gsub(' ', '')])
+      end
+
+      it 'shows today\'s event summaries' do
+        logger.info("#{@up_next_card.all_event_summaries}")
+        expect(@up_next_card.all_event_summaries).to eql(@initial_event_summaries + [@event_title])
+      end
+
+      it 'shows today\'s event locations' do
+        logger.info("#{@up_next_card.all_event_locations}")
+        expect(@up_next_card.all_event_locations).to eql(@initial_event_locations + [@event_location])
+      end
+
+      context 'when expanded' do
+
+        it 'shows today\'s event start times' do
+          logger.info("#{@up_next_card.all_event_start_times}")
+          expect(@up_next_card.all_event_start_times).to eql(@initial_event_start_times + [@event_start_time.strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')])
+        end
+
+        it 'shows today\'s event end times' do
+          logger.info("#{@up_next_card.all_event_end_times}")
+          expect(@up_next_card.all_event_end_times).to eql (@initial_event_end_times + [@event_end_time.strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')])
+        end
+
+        it 'shows today\'s event organizers' do
+          logger.info("#{@up_next_card.all_event_organizers}")
+          expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers + ['ETS Quality'])
+        end
+
+      end
+
+      context 'when viewing an event in bCal' do
+
+        before(:all) do
+          @up_next_card.click_bcal_link(@driver, id)
+          @driver.switch_to.window(@driver.window_handles.last)
+          @google.event_title_displayed_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+        end
+
+        it 'shows the Google calendar event detail' do
+          expect(@google.event_title_displayed).to eql(@event_title)
+        end
+
+        after(:all) do
+          @driver.switch_to.window(@driver.window_handles.first)
+        end
+
+      end
+    end
+  end
+end

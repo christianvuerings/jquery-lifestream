@@ -8,15 +8,17 @@ require_relative 'pages/cal_central_pages'
 require_relative 'pages/splash_page'
 require_relative 'pages/my_dashboard_page'
 require_relative 'pages/my_dashboard_to_do_card'
+require_relative 'pages/my_dashboard_up_next_card'
 require_relative 'pages/google_page'
 
 describe 'My Dashboard bConnected live updates', :testui => true do
 
   if ENV["UI_TEST"]
-    
+
     include ClassLogger
 
-    id = Time.now.to_i.to_s
+    today = Time.now
+    id = today.to_i.to_s
 
     before(:all) do
       @driver = WebDriverUtils.driver
@@ -30,58 +32,66 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       settings_page.load_page(@driver)
       settings_page.disconnect_bconnected(@driver)
 
-      # Get initial count of unread email and unscheduled tasks
       @google = GooglePage.new(@driver)
       @google.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
+
+      # On To Do card, get initial count of unscheduled tasks
       @to_do_card = CalCentralPages::MyDashboardPage::MyDashboardToDoCard.new(@driver)
       @to_do_card.click_unscheduled_tasks_tab
       @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       @initial_task_count = @to_do_card.unsched_task_count.to_i
-      logger.info('Unscheduled task count is ' + @initial_task_count.to_s)
+      logger.info("Unscheduled task count is #{@initial_task_count.to_s}")
+
+      # On email badge, get initial count of unread emails
       @dashboard = CalCentralPages::MyDashboardPage.new(@driver)
       @dashboard.email_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       @initial_mail_count = @dashboard.email_count.to_i
-      logger.info('Unread email count is ' + @initial_mail_count.to_s)
+      logger.info("Unread email count is #{@initial_mail_count.to_s}")
 
-      # As test user, send email to self and create new unscheduled task
+      # Send email to self and create new unscheduled task.
       @google.load_gmail(@driver)
-      @google.send_email(@driver, UserUtils.qa_gmail_username, 'Test email ' + id, 'This is the subject of test email ' + id)
+      @email_subject = "Test email #{id}"
+      @email_summary = "This is the subject of test email #{id}"
+      @google.send_email(@driver, UserUtils.qa_gmail_username, @email_subject, @email_summary)
+      @task_title = "Test task #{id}"
       @google.load_calendar(@driver)
-      @google.create_unsched_task(@driver, 'Test task ' + id)
+      @google.create_unsched_task(@driver, @task_title)
+
+      # On the Dashboard, wait for the live update to occur
       @dashboard.load_page(@driver)
       @dashboard.click_live_update_button(WebDriverUtils.mail_live_update_timeout)
     end
 
-    after (:all) do
+    after(:all) do
       @driver.quit
     end
 
     context 'for Google mail' do
 
-      it 'shows a user an updated count of email messages' do
+      it 'shows an updated count of email messages' do
         expect(@dashboard.email_count).to eql((@initial_mail_count + 1).to_s)
       end
 
-      it 'shows a user a snippet of a new email message' do
+      it 'shows a snippet of a new email message' do
         @dashboard.show_unread_email
-        expect(@dashboard.email_one_sender).to eql("me")
-        expect(@dashboard.email_one_subject).to eql('Test email ' + id)
-        expect(@dashboard.email_one_summary).to eql('This is the subject of test email ' + id)
+        expect(@dashboard.email_one_sender).to eql('me')
+        expect(@dashboard.email_one_subject).to eql(@email_subject)
+        expect(@dashboard.email_one_summary).to eql(@email_summary)
       end
     end
 
     context 'for Google tasks' do
 
-      it 'shows a user an updated count of tasks' do
+      it 'shows an updated count of tasks' do
         @to_do_card.click_unscheduled_tasks_tab
         @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
         expect(@to_do_card.unsched_task_count).to eql((@initial_task_count + 1).to_s)
       end
 
-      it 'shows a user the content of a new task' do
+      it 'shows the content of a new task' do
         @to_do_card.click_unscheduled_tasks_tab
-        expect(@to_do_card.unsched_task_one_title).to eql('Test task ' + id)
-        expect(@to_do_card.unsched_task_one_date).to eql(Date.today.strftime("%m/%d"))
+        expect(@to_do_card.unsched_task_one_title).to eql(@task_title)
+        expect(@to_do_card.unsched_task_one_date).to eql(today.strftime("%m/%d"))
       end
     end
   end

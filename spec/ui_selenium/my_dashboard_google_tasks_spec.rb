@@ -353,48 +353,48 @@ describe 'The My Dashboard task manager', :testui => true do
     context 'when completing tasks' do
 
       it 'allows the user to show more completed tasks sorted first by descending task date and then by descending task creation date' do
-      expected_task_titles = []
-      @to_do_card.click_scheduled_tasks_tab
-      (1..3).each do |i|
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task("overdue task #{i.to_s}", WebDriverUtils.ui_date_input_format(yesterday), nil)
-        @to_do_card.click_add_task_button
-        wait_for_task.until { @to_do_card.overdue_task_one_title == "overdue task #{i.to_s}" }
-        expected_task_titles.push(@to_do_card.overdue_task_one_title)
-        @to_do_card.complete_overdue_task_one
+        expected_task_titles = []
+        @to_do_card.click_scheduled_tasks_tab
+        (1..3).each do |i|
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("overdue task #{i.to_s}", WebDriverUtils.ui_date_input_format(yesterday), nil)
+          @to_do_card.click_add_task_button
+          wait_for_task.until { @to_do_card.overdue_task_one_title == "overdue task #{i.to_s}" }
+          expected_task_titles.push(@to_do_card.overdue_task_one_title)
+          @to_do_card.complete_overdue_task_one
+        end
+        (1..3).each do |i|
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("today task #{i.to_s}", WebDriverUtils.ui_date_input_format(today), nil)
+          @to_do_card.click_add_task_button
+          wait_for_task.until { @to_do_card.today_task_one_title == "today task #{i.to_s}" }
+          expected_task_titles.push(@to_do_card.today_task_one_title)
+          @to_do_card.complete_today_task_one
+        end
+        (1..3).each do |i|
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("future task #{i.to_s}", WebDriverUtils.ui_date_input_format(tomorrow), nil)
+          @to_do_card.click_add_task_button
+          wait_for_task.until { @to_do_card.future_task_one_title == "future task #{i.to_s}" }
+          expected_task_titles.push(@to_do_card.future_task_one_title)
+          @to_do_card.complete_future_task_one
+        end
+        @to_do_card.click_unscheduled_tasks_tab
+        (1..3).each do |i|
+          @to_do_card.click_new_task_button
+          @to_do_card.edit_new_task("unscheduled task #{i.to_s}", nil, nil)
+          @to_do_card.click_add_task_button
+          wait_for_task.until { @to_do_card.unsched_task_one_title == "unscheduled task #{i.to_s}" }
+          expected_task_titles.push(@to_do_card.unsched_task_one_title)
+          @to_do_card.complete_unsched_task_one
+        end
+        @to_do_card.click_completed_tasks_tab
+        @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
+        expect(@to_do_card.completed_task_count).to eql('12')
+        @to_do_card.completed_show_more_button
+        @to_do_card.completed_show_more_button_element.when_not_visible(timeout=task_wait)
+        expect(@to_do_card.all_completed_task_titles).to eql(expected_task_titles.reverse!)
       end
-      (1..3).each do |i|
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task("today task #{i.to_s}", WebDriverUtils.ui_date_input_format(today), nil)
-        @to_do_card.click_add_task_button
-        wait_for_task.until { @to_do_card.today_task_one_title == "today task #{i.to_s}" }
-        expected_task_titles.push(@to_do_card.today_task_one_title)
-        @to_do_card.complete_today_task_one
-      end
-      (1..3).each do |i|
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task("future task #{i.to_s}", WebDriverUtils.ui_date_input_format(tomorrow), nil)
-        @to_do_card.click_add_task_button
-        wait_for_task.until { @to_do_card.future_task_one_title == "future task #{i.to_s}" }
-        expected_task_titles.push(@to_do_card.future_task_one_title)
-        @to_do_card.complete_future_task_one
-      end
-      @to_do_card.click_unscheduled_tasks_tab
-      (1..3).each do |i|
-        @to_do_card.click_new_task_button
-        @to_do_card.edit_new_task("unscheduled task #{i.to_s}", nil, nil)
-        @to_do_card.click_add_task_button
-        wait_for_task.until { @to_do_card.unsched_task_one_title == "unscheduled task #{i.to_s}" }
-        expected_task_titles.push(@to_do_card.unsched_task_one_title)
-        @to_do_card.complete_unsched_task_one
-      end
-      @to_do_card.click_completed_tasks_tab
-      @to_do_card.completed_task_one_element.when_visible(timeout=task_wait)
-      expect(@to_do_card.completed_task_count).to eql('12')
-      @to_do_card.completed_show_more_button
-      @to_do_card.completed_show_more_button_element.when_not_visible(timeout=task_wait)
-      expect(@to_do_card.all_completed_task_titles).to eql(expected_task_titles.reverse!)
-    end
 
       it 'allows the user to mark a completed tasks as un-completed' do
         @to_do_card.click_new_task_button
