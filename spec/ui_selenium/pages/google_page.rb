@@ -35,17 +35,16 @@ class GooglePage
   link(:mail_sent_link, :id => "link_vsm")
 
   # CALENDAR
-  button(:create_event_button, :xpath => '//div[]text()="Create"')
+  button(:create_event_button, :xpath => '//div[text()="Create"]')
   text_area(:event_title, :xpath => '//input[@title="Event title"]')
   text_area(:event_start_date, :xpath => '//input[@title="From date"]')
   text_area(:event_start_time, :xpath => '//input[@title="From time"]')
   text_area(:event_end_time, :xpath => '//input[@title="Until time"]')
   text_area(:event_end_date, :xpath => '//input[@title="Until date"]')
-  text_area(:guest, :xpath => '//input[@title="Enter email addresses"]')
-  button(:add_guest, :xpath => '//div[text()="Add"]')
+  text_area(:event_location, :xpath => '//input[@placeholder="Enter a location"]')
   button(:save_event, :xpath => '//div[text()="Save"]')
-  button(:send_no_invites, :name => 'no')
-  div(:event_added, :xpath => '//div[contains(text(),"Added"]')
+  div(:event_added, :xpath => '//div[contains(text(),"Added")]')
+  div(:event_title_displayed, :xpath => '//div[@class="ui-sch-schmedit"]')
 
   # TASKS
   button(:toggle_tasks_visibility, :xpath => '//div[@title="Tasks"]')
@@ -102,13 +101,13 @@ class GooglePage
 
   def log_out_google(driver, gmail_user)
     logger.info('Logging out of Google')
-    driver.find_element(:xpath, '//a[contains(@title,"' + gmail_user + '")]').click
+    driver.find_element(:xpath, "//a[contains(@title,#{gmail_user})]").click
     sign_out_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     sign_out_link
   end
 
   def send_email(driver, recipient, subject, body)
-    logger.info('Sending an email with the subject ' + subject)
+    logger.info("Sending an email with the subject #{subject}")
     compose_email_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     compose_email_button
     new_message_heading_element.when_present(timeout=WebDriverUtils.page_event_timeout)
@@ -125,26 +124,28 @@ class GooglePage
     mail_sent_link_element.when_present(timeout=WebDriverUtils.page_event_timeout)
   end
 
-  def send_invite(driver, event, invitee)
-    logger.info('Creating event with the subject ' + event)
+  def send_invite(event_name, location)
+    logger.info("Creating event with the subject #{event_name}")
     create_event_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     create_event_button
     event_title_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    self.event_title = event
-    self.guest = invitee
-    add_guest
-    wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
-    wait.until { driver.find_element(:xpath, '//div[contains(@title,' + invitee + ')]') }
+    event_title
+    self.event_title = event_name
+    event_location_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+    event_location
+    self.event_location = location
+    sleep(WebDriverUtils.page_event_timeout)
+    start_time = Time.strptime(event_start_time, "%l:%M%P")
+    end_time = Time.strptime(event_end_time, "%l:%M%P")
     save_event
-    send_no_invites_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    send_no_invites
     event_added_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+    [start_time, end_time]
   end
 
   def create_unsched_task(driver, title)
-    logger.info('Creating task with title "' + title + '"')
+    logger.info("Creating task with title #{title}")
     toggle_tasks_visibility_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    if !tasks_heading_element.visible?
+    unless tasks_heading_element.visible?
       toggle_tasks_visibility
       tasks_heading_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     end
