@@ -1,0 +1,9 @@
++/-,KEY,DB_COURSE_NAME,COURSE_NAME,DB_FIRST_NAME,FIRST_NAME,DB_LAST_NAME,LAST_NAME,DB_EMAIL_ADDRESS,EMAIL_ADDRESS,DB_INSTRUCTOR_FUNC,INSTRUCTOR_FUNC
+-,2015-B-111-11,Course 1,,John,,Doe,,john@berkeley.edu,,1,
++,2015-B-2222-22,,"Course 2, edited",,Jim,,Two,,jim@berkeley.edu,,1
+-,2015-B-2222,Course 2,,,,,,,,,
+ ,2015-B-33333-33,Course 3,Course 3,John,Johnny,Three,Tres,john@berkeley.edu,johnny@berkeley.edu,1,2
+-,2015-B-33333-333,Course 3,,Joan,,Trois,,joan@berkeley.edu,,1,
++,2015-B-44444-444,,Course 4,,Jerome,,Quatre,,jerome@berkeley.edu,,2
++,2015-B-55555-55,,Course 5,,Joel,,Five,,joel@berkeley.edu,,2
++,2015-B-666,,Course 6,,,,,,,,
