@@ -33,6 +33,7 @@ $bc-color-roster-background: #edf0f2;
 $bc-color-section-list-border: #d1d5d8;
 $bc-color-section-list-secondary-bg: #f7f9f8;
 $bc-color-section-list-alert: #7e4702;
+$bc-color-section-list-alert-grey: #777;
 $bc-color-success-border: #d6e9c6;
 $bc-color-success-background: #dff0d8;
 $bc-color-success-foreground: #468847;
@@ -325,18 +326,16 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       margin: 5px 0 0 23px;
     }
 
-    .cc-template-canvas-manage-sections-label-sited {
-      color: $bc-color-section-list-alert;
-    }
-
     .cc-template-canvas-manage-sections-sites {
-      color: $bc-color-section-list-alert;
+      color: $bc-color-section-list-alert-grey;
       margin-left: 43px;
     }
 
     .cc-template-canvas-manage-sections-sited-icon {
-      color: $bc-color-section-list-alert;
+      color: $bc-color-help-link-blue;
+      font-size: 15px;
       margin-right: 4px;
+      margin-top: 2px;
     }
   }
 
