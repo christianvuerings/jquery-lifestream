@@ -118,6 +118,7 @@ describe Canvas::CanvasRosters do
       expect(student[:last_name].blank?).to be_falsey
       expect(student[:email].blank?).to be_falsey
       expect(student[:sections].length).to eq 2
+      expect(student[:section_ccns].length).to eq 2
       expect(student[:profile_url].blank?).to be_falsey
     end
   end

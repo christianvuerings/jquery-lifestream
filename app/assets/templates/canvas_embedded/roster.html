@@ -4,7 +4,7 @@
     <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
 
     <div class="cc-select cc-left">
-      <select data-ng-model="search.sections">
+      <select data-ng-model="searchSection">
         <option value="">All Sections</option>
         <option value="{{section.id}}" data-ng-repeat="section in sections">{{section.name}}</option>
       </select>
@@ -21,7 +21,7 @@
   </form>
 
   <ul class="cc-page-roster-list">
-    <li data-ng-repeat="student in students | filter:search | orderBy:'last_name'">
+    <li data-ng-repeat="student in students | filter:search | filter:studentInSectionFilter | orderBy:'last_name'">
       <div data-ng-show="student.photo">
         <a data-ng-href="{{student.profile_url}}">
           <img data-ng-src="{{student.photo}}" width="72" height="96" />
