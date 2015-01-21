@@ -59,14 +59,16 @@ describe 'My Dashboard Up Next card', :testui => true do
       @event_title = "Event #{id}"
       @event_location = "#{id} DWINELLE"
       event = @google.send_invite(@event_title, @event_location)
-      @event_start_time = event[0]
-      @event_end_time = event[1]
-      logger.info("Event start time is #{@event_start_time.strftime("%-m/%e/%y %l:%M %P")}")
-      logger.info("Event end time is #{@event_end_time.strftime("%-m/%e/%y %l:%M %P")}")
+      @event_time = event[0].strftime("%l:%M\n%p").gsub(' ', '')
+      @event_start_time = event[0].strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')
+      @event_end_time = event[1].strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')
+      logger.info("Event start time is #{@event_start_time}")
+      logger.info("Event end time is #{@event_end_time}")
 
-      # On the Dashboard, check for the new event.  If not there, wait for a live update to occur.
+      # On the Dashboard, wait a moment for the new event.  If not there, wait for a live update to occur.
       @up_next_card.load_page(@driver)
       @up_next_card.events_list_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
+      sleep(WebDriverUtils.page_event_timeout)
       unless @up_next_card.all_event_summaries.include?(@event_title)
         @up_next_card.click_live_update_button(WebDriverUtils.mail_live_update_timeout)
       end
@@ -85,34 +87,34 @@ describe 'My Dashboard Up Next card', :testui => true do
 
       it 'shows event times' do
         logger.info("#{@up_next_card.all_event_times}")
-        expect(@up_next_card.all_event_times).to eql(@initial_event_times + [@event_start_time.strftime("%l:%M\n%p").gsub(' ', '')])
+        expect(@up_next_card.all_event_times).to eql(@initial_event_times.push(@event_time).sort)
       end
 
       it 'shows event summaries' do
         logger.info("#{@up_next_card.all_event_summaries}")
-        expect(@up_next_card.all_event_summaries).to eql(@initial_event_summaries + [@event_title])
+        expect(@up_next_card.all_event_summaries).to eql(@initial_event_summaries.push(@event_title).sort)
       end
 
       it 'shows event locations' do
         logger.info("#{@up_next_card.all_event_locations}")
-        expect(@up_next_card.all_event_locations).to eql(@initial_event_locations + [@event_location])
+        expect(@up_next_card.all_event_locations).to eql(@initial_event_locations.push(@event_location).sort)
       end
 
       context 'when expanded' do
 
         it 'shows event start times' do
           logger.info("#{@up_next_card.all_event_start_times}")
-          expect(@up_next_card.all_event_start_times).to eql(@initial_event_start_times + [@event_start_time.strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')])
+          expect(@up_next_card.all_event_start_times).to eql(@initial_event_start_times.push(@event_start_time).sort)
         end
 
         it 'shows event end times' do
           logger.info("#{@up_next_card.all_event_end_times}")
-          expect(@up_next_card.all_event_end_times).to eql (@initial_event_end_times + [@event_end_time.strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')])
+          expect(@up_next_card.all_event_end_times).to eql (@initial_event_end_times.push(@event_end_time).sort)
         end
 
         it 'shows event organizers' do
           logger.info("#{@up_next_card.all_event_organizers}")
-          expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers + ['ETS Quality'])
+          expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers.push('ETS Quality').sort)
         end
 
       end

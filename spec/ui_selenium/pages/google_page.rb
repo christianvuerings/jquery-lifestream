@@ -128,19 +128,13 @@ class GooglePage
     logger.info("Creating event with the subject #{event_name}")
     create_event_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     create_event_button
-    # Enter title and location, and then verify that the input for each sticks.  Google and page-object don't always play nice.
     event_title_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     event_title
     self.event_title = event_name
-    unless event_title == event_name
-      self.event_title = event_name
-    end
     event_location_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     event_location
     self.event_location = location
-    unless event_location == location
-      self.event_location = location
-    end
+    sleep(WebDriverUtils.page_event_timeout)
     start_time = Time.strptime(event_start_time, "%l:%M%P")
     end_time = Time.strptime(event_end_time, "%l:%M%P")
     save_event
