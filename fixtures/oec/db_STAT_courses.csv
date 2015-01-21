@@ -1,6 +1,6 @@
 COURSE_ID,COURSE_NAME,CROSS_LISTED_FLAG,CROSS_LISTED_NAME,DEPT_NAME,CATALOG_ID,INSTRUCTION_FORMAT,SECTION_NUM,PRIMARY_SECONDARY_CD,LDAP_UID,FIRST_NAME,LAST_NAME,EMAIL_ADDRESS,INSTRUCTOR_FUNC,BLUE_ROLE,EVALUATE,DEPT_FORM,EVALUATION_TYPE,MODULAR_COURSE,START_DATE,END_DATE
-2013-D-87672,CourseName,N,,STAT,C205A,LEC,001,P,10316,John,Doe,john@berkeley.edu,1,23,,,,,,,
-2013-D-87675,CourseName,N,,STAT,C206A,LEC,001,P,10316,John,Doe,john@berkeley.edu,,23,,,,,,,
-2013-D-87690,CourseName,N,,STAT,C239A,LEC,001,P,10316,John,Doe,john@berkeley.edu,1,23,,,,,,,
-2013-D-87693,CourseName,N,,STAT,C239A,DIS,001,P,10316,John,Doe,john@berkeley.edu,1,23,,,,,,,
-2013-D-87691,CourseName,N,,STAT,C239A,LEC,001,P,10316,John,Doe,john@berkeley.edu,1,23,,,,,,,
+2015-B-111,Course 1,N,,STAT,1,LEC,001,P,11,John,Doe,john@berkeley.edu,1,23,,,,,,,
+2015-B-33333,Course 3,N,,STAT,3,LEC,001,P,33,John,Three,john@berkeley.edu,1,23,,,,,,,
+2015-B-33333,Course 3,N,,STAT,3,LEC,001,P,333,Joan,Trois,joan@berkeley.edu,1,23,,,,,,,
+2015-B-2222,Course 2,N,,STAT,2,LEC,001,P,,,,,,23,,,,,,,
+2015-B-44444,Course 4,N,,STAT,4,DIS,002,P,44,Jonas,Doe,jonas@berkeley.edu,1,23,,,,,,,

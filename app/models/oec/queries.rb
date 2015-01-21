@@ -128,12 +128,12 @@ module Oec
       stringify_ints! result
     end
 
-    def self.get_edited_course_data(dept_name, revision)
-      file_path = "#{revision}/#{dept_name}_courses.csv"
+    def self.get_edited_courses(source_dir, dept_name)
+      file_path = "#{source_dir}/edited_#{dept_name}_courses.csv"
       courses_query = []
       if File.file? file_path
         CSV.read(file_path).each_with_index do |row, index|
-          if index > 0
+          if index > 0 && row.length > 0
             courses_query << Oec::RowConverter.new(row).hashed_row
           end
         end

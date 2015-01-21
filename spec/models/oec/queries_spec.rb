@@ -51,13 +51,13 @@ describe Oec::Queries do
   end
 
   context 'looking up course data edited by STAT dept' do
-    subject { Oec::Queries.get_edited_course_data('STAT', 'fixtures/oec') }
+    subject { Oec::Queries.get_edited_courses('fixtures/oec', 'STAT') }
     it { should_not be_nil }
     it { subject.length.should eq 6 }
-    it { subject[0]['course_id'].should eq '2013-D-87675' }
-    it { subject[0]['course_name'].should eq 'XXXXXXXXXXXXXX' }
-    it { subject[5]['course_id'].should eq '2013-D-87691' }
-    it { subject[5]['course_name'].should eq 'STAT C239A LEC 001 - STATS SOCI SCI' }
+    it { subject[0]['course_id'].should eq '2015-B-666' }
+    it { subject[0]['course_name'].should eq 'Course 6' }
+    it { subject[5]['course_id'].should eq '2015-B-2222' }
+    it { subject[5]['course_name'].should eq 'Course 2, edited' }
   end
 
 end
