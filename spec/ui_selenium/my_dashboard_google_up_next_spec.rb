@@ -78,46 +78,46 @@ describe 'My Dashboard Up Next card', :testui => true do
 
     context 'for Google calendar events' do
 
-      it 'shows today\'s date' do
+      it 'shows the current date' do
         expect(@up_next_card.day).to eql(today.strftime("%A"))
         expect(@up_next_card.date).to eql(today.strftime("%^b %e"))
       end
 
-      it 'shows today\'s event times' do
+      it 'shows event times' do
         logger.info("#{@up_next_card.all_event_times}")
         expect(@up_next_card.all_event_times).to eql(@initial_event_times + [@event_start_time.strftime("%l:%M\n%p").gsub(' ', '')])
       end
 
-      it 'shows today\'s event summaries' do
+      it 'shows event summaries' do
         logger.info("#{@up_next_card.all_event_summaries}")
         expect(@up_next_card.all_event_summaries).to eql(@initial_event_summaries + [@event_title])
       end
 
-      it 'shows today\'s event locations' do
+      it 'shows event locations' do
         logger.info("#{@up_next_card.all_event_locations}")
         expect(@up_next_card.all_event_locations).to eql(@initial_event_locations + [@event_location])
       end
 
       context 'when expanded' do
 
-        it 'shows today\'s event start times' do
+        it 'shows event start times' do
           logger.info("#{@up_next_card.all_event_start_times}")
           expect(@up_next_card.all_event_start_times).to eql(@initial_event_start_times + [@event_start_time.strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')])
         end
 
-        it 'shows today\'s event end times' do
+        it 'shows event end times' do
           logger.info("#{@up_next_card.all_event_end_times}")
           expect(@up_next_card.all_event_end_times).to eql (@initial_event_end_times + [@event_end_time.strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')])
         end
 
-        it 'shows today\'s event organizers' do
+        it 'shows event organizers' do
           logger.info("#{@up_next_card.all_event_organizers}")
           expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers + ['ETS Quality'])
         end
 
       end
 
-      context 'when viewing an event in bCal' do
+      context 'when opening an event in bCal' do
 
         before(:all) do
           @up_next_card.click_bcal_link(@driver, id)
@@ -125,7 +125,7 @@ describe 'My Dashboard Up Next card', :testui => true do
           @google.event_title_displayed_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
         end
 
-        it 'shows the Google calendar event detail' do
+        it 'shows the event detail in Google calendar' do
           expect(@google.event_title_displayed).to eql(@event_title)
         end
 

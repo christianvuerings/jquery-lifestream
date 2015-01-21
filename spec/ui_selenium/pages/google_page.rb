@@ -42,10 +42,7 @@ class GooglePage
   text_area(:event_end_time, :xpath => '//input[@title="Until time"]')
   text_area(:event_end_date, :xpath => '//input[@title="Until date"]')
   text_area(:event_location, :xpath => '//input[@placeholder="Enter a location"]')
-  text_area(:guest, :xpath => '//input[@title="Enter email addresses"]')
-  button(:add_guest, :xpath => '//div[text()="Add"]')
   button(:save_event, :xpath => '//div[text()="Save"]')
-  button(:send_no_invites, :name => 'no')
   div(:event_added, :xpath => '//div[contains(text(),"Added")]')
   div(:event_title_displayed, :xpath => '//div[@class="ui-sch-schmedit"]')
 
