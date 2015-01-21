@@ -38,16 +38,45 @@
                     <strong data-ng-bind="section.courseCode"></strong>
                   </label>
                 </div>
-                <div class="cc-template-canvas-manage-sections-section-label" data-ng-bind="section.section_label"></div>
-                <div class="cc-template-canvas-manage-sections-section-ccn" data-ng-bind="section.ccn"></div>
+
+                <div class="cc-template-canvas-manage-sections-section-label" data-ng-bind="section.section_label">
+                  <span data-ng-if="section.section_label" data-ng-bind="section.section_label"></span>
+                  <span data-ng-if="!section.section_label">&nbsp;</span>
+                </div>
+
+                <div class="cc-template-canvas-manage-sections-section-ccn">
+                  <span data-ng-if="section.ccn" data-ng-bind="section.ccn"></span>
+                  <span data-ng-if="!section.ccn">&nbsp;</span>
+                </div>
+
                 <div class="cc-template-canvas-manage-sections-section-timestamps show-for-medium-up">
-                  <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
+                  <div data-ng-if="section.schedules && section.schedules.length > 0">
+                    <div data-ng-repeat="schedule in section.schedules">
+                      <span data-ng-if="schedule.schedule" data-ng-bind="schedule.schedule"></span>
+                      <span data-ng-if="!schedule.schedule">&nbsp;</span>
+                    </div>
+                  </div>
+                  <div data-ng-if="!section.schedules || section.schedules.length == 0">&nbsp;</div>
                 </div>
+
                 <div class="cc-template-canvas-manage-sections-section-locations show-for-medium-up">
-                  <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.roomNumber}} {{schedule.buildingName}}"></div>
+                  <div data-ng-if="section.schedules && section.schedules.length > 0">
+                    <div data-ng-repeat="schedule in section.schedules">
+                      <span data-ng-if="schedule.roomNumber || schedule.buildingName" data-ng-bind-template="{{schedule.roomNumber}} {{schedule.buildingName}}"></span>
+                      <span data-ng-if="!schedule.roomNumber && !schedule.buildingName">&nbsp;</span>
+                    </div>
+                  </div>
+                  <div data-ng-if="!section.schedules || section.schedules.length == 0">&nbsp;</div>
                 </div>
+
                 <div class="cc-template-canvas-manage-sections-section-instructors show-for-large-up">
-                  <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
+                  <div data-ng-if="section.instructors && section.instructors.length > 0">
+                    <div data-ng-repeat="instructor in section.instructors">
+                      <span data-ng-if="instructor.name" data-ng-bind="instructor.name"></span>
+                      <span data-ng-if="!instructor.name">&nbsp;</span>
+                    </div>
+                  </div>
+                  <div data-ng-if="!section.instructors || section.instructors.length == 0">&nbsp;</div>
                 </div>
               </div>
 
