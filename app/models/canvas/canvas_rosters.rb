@@ -57,6 +57,7 @@ module Canvas
           campus_student[:id] = canvas_student['id']
           if (canvas_enrollments = canvas_student['enrollments']) && !canvas_enrollments.blank?
             campus_student[:sections] = canvas_enrollments.collect { |enr| {id: enr['course_section_id']} }
+            campus_student[:section_ccns] = canvas_enrollments.collect { |enr| enr['course_section_id'] }
             campus_student[:profile_url] = canvas_enrollments[0]['html_url']
           end
           campus_student[:login_id] = login_id
