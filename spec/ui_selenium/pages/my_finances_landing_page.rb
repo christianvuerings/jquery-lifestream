@@ -17,6 +17,17 @@ module CalCentralPages
 
       # CAL 1 CARD CARD
       h2(:cal_1_card_heading, :xpath => '//h2[text()="Cal 1 Card"]')
+      div(:cal_1_card_content, :xpath => '//div[@data-ng-if=\'api.user.profile.features.cal1card\']//ul')
+      list_item(:card_lost_msg, :xpath => '//li[contains(.,"Your Cal 1 Card is reported as lost.")]')
+      list_item(:card_found_msg, :xpath => '//li[@data-ng-if="cal1cardLost === \'Lost\'"]')
+      div(:debit_account_header, :xpath => '//div[@class="cc-cal1card-header"]')
+      span(:debit_balance, :xpath => '//span[@data-ng-bind="debit + \'\' | currency"]')
+      link(:manage_debit_card, :xpath => '//div[contains(.,"Debit Account")]/following-sibling::a[contains(.,"Manage Your Card")]')
+      link(:learn_about_debit_card, :xpath => '//div[contains(.,"You don\'t have a debit account")]/following-sibling::a[contains(.,"Learn more about Cal 1 Card")]')
+      span(:meal_points_plan, :xpath => '//span[@data-ng-bind="mealpointsPlan"]')
+      span(:meal_points_balance, :xpath => '//span[@data-ng-bind="mealpoints | number"]')
+      link(:manage_meal_card, :xpath => '//div[contains(.,"Meal Plan")]/following-sibling::a[contains(.,"Manage Your Points")]')
+      link(:learn_about_meal_plan, :xpath => '//div[contains(.,"You don\'t have a meal plan")]/following-sibling::a[contains(.,"Learn more about Meal Plans")]')
 
       # FINANCIAL RESOURCES CARD
       h2(:fin_resources_heading, :xpath => '//h2[text()="Financial Resources"]')
@@ -57,13 +68,17 @@ module CalCentralPages
         driver.get(WebDriverUtils.base_url + '/finances')
       end
 
-      def wait_for_fin_resources_links
-        fin_resources_list_element.when_visible(timeout=WebDriverUtils.fin_resources_links_timeout)
-      end
-
       def click_details_link
         details_link
         activity_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+      end
+
+      def wait_for_cal_1_card
+        cal_1_card_content_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+      end
+
+      def wait_for_fin_resources_links
+        fin_resources_list_element.when_visible(timeout=WebDriverUtils.fin_resources_links_timeout)
       end
 
       def wait_for_fin_aid
