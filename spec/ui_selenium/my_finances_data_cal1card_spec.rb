@@ -74,7 +74,11 @@ describe 'My Finances Cal1Card', :testui => true do
                   expect(has_manage_debit_link).to be true
                 end
               else
+                my_finances_balance = my_finances_page.debit_balance?
                 has_learn_about_debit = WebDriverUtils.verify_external_link(driver, my_finances_page.learn_about_debit_card_element, 'Cal 1 Card: Home')
+                it "shows no debit account balance for UID #{uid}" do
+                  expect(my_finances_balance).to be false
+                end
                 it "shows a link to learn about debit accounts at Cal 1 Card for UID #{uid}" do
                   expect(has_learn_about_debit).to be true
                 end
@@ -105,7 +109,15 @@ describe 'My Finances Cal1Card', :testui => true do
                   expect(has_manage_points_link).to be true
                 end
               else
+                my_finances_points = my_finances_page.meal_points_balance?
+                my_finances_plan = my_finances_page.meal_points_plan?
                 has_learn_about_meals = WebDriverUtils.verify_external_link(driver, my_finances_page.learn_about_meal_plan_element, 'Caldining')
+                it "shows no meal point balance for UID #{uid}" do
+                  expect(my_finances_points).to be false
+                end
+                it "shows no meal plan type for UID #{uid}" do
+                  expect(my_finances_plan).to be false
+                end
                 it "shows a link to learn about meal lans at Cal 1 Card for UID #{uid}" do
                   expect(has_learn_about_meals).to be true
                 end
