@@ -278,10 +278,10 @@ youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
   current_terms_codes: [{
-    year: 2013,
-    code: "D"
+    year: 2015,
+    code: "B"
   }]
-  departments: [ 'STAT', 'SPANISH', 'PORTUG', 'CHEM' ]
+  departments: [ 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'EPS', 'ILA', 'INFO', 'INTEGBI', 'MCELLBI', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
 
 class_calendar:
   slice_size: 10000

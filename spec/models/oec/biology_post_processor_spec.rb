@@ -20,33 +20,33 @@ describe Oec::BiologyPostProcessor do
     context 'reading BIOLOGY csv file' do
       subject { get_csv 'BIOLOGY' }
       it {
-        contain_exactly('COURSE_ID', '2013-D-87672')
+        contain_exactly('COURSE_ID', '2015-B-87672')
       }
     end
 
     context 'reading INTEGBI csv file' do
       subject { get_csv 'INTEGBI' }
       it {
-        contain_exactly('COURSE_ID', '2013-D-54432', '2013-D-87675')
+        contain_exactly('COURSE_ID', '2015-B-54432', '2015-B-87675')
       }
     end
 
     context 'reading MCELLBI csv file' do
       subject { get_csv 'MCELLBI' }
       it {
-        contain_exactly('COURSE_ID', '2013-D-54441', '2013-D-87690', '2013-D-87693', '2013-D-87691')
+        contain_exactly('COURSE_ID', '2015-B-54441', '2015-B-87690', '2015-B-87693', '2015-B-87691')
       }
     end
 
     context 'reading POL SCI csv file' do
       subject { get_csv 'POL SCI' }
       it {
-        contain_exactly('COURSE_ID', '2013-D-72198')
+        contain_exactly('COURSE_ID', '2015-B-72198')
       }
     end
 
     def get_csv(dept_name)
-      export = Oec::Courses.new(dept_name).export
+      export = Oec::Courses.new(dept_name, 'tmp/oec').export
       CSV.read export[:filename]
     end
 

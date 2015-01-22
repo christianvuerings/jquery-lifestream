@@ -36,28 +36,28 @@ describe Oec::Courses do
   context 'reading ANTHRO csv file' do
     subject { get_csv 'ANTHRO' }
     it {
-      contain_exactly('COURSE_ID', '2013-D-02567')
+      contain_exactly('COURSE_ID', '2015-B-02567')
     }
   end
 
   context 'reading MATH csv file' do
     subject { get_csv 'MATH' }
     it {
-      contain_exactly('COURSE_ID', '2013-D-87672', '2013-D-54432', '2013-D-87675', '2013-D-54441', '2013-D-87673', '2013-D-87691')
+      contain_exactly('COURSE_ID', '2015-B-87672', '2015-B-54432', '2015-B-87675', '2015-B-54441', '2015-B-87673', '2015-B-87691')
     }
   end
 
   context 'reading POL SCI csv file' do
     subject { get_csv 'POL SCI' }
     it {
-      contain_exactly('COURSE_ID', '2013-D-72198', '2013-D-72198')
+      contain_exactly('COURSE_ID', '2015-B-72198', '2015-B-72198')
     }
   end
 
   context 'reading STAT csv file' do
     subject { get_csv 'STAT' }
     it {
-      contain_exactly('COURSE_ID', '2013-D-87672', '2013-D-54432', '2013-D-54441', '2013-D-72199', '2013-D-87691', '2013-D-87693')
+      contain_exactly('COURSE_ID', '2015-B-87672', '2015-B-54432', '2015-B-54441', '2015-B-72199', '2015-B-87691', '2015-B-87693')
     }
   end
 

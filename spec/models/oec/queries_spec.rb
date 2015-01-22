@@ -1,7 +1,7 @@
 describe Oec::Queries do
 
   let(:test_ccn) do
-    Oec::Queries.test_data? ? '7309' : '11684'
+    Oec::Queries.test_data? ? '7309' : '7203'
   end
 
   context 'limiting query to OEC departments' do
