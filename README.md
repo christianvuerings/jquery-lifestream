@@ -28,7 +28,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
     Install homebrew with the following command:
     ```bash
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
     Run the following command in terminal after installation:
     ```bash
@@ -300,7 +300,7 @@ This is necessary when your application can't be CAS authenticated or when you'r
 
     ```bash
     developer_auth:
-      enabled: false
+      enabled: true
       password: topsecret!
     ```
 
