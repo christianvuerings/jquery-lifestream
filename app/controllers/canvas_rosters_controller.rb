@@ -37,4 +37,13 @@ class CanvasRostersController < RostersController
     serve_photo
   end
 
+  # GET /canvas/:canvas_course_id/profile/:person_id
+  def profile
+    user_id = Integer(params[:person_id], 10)
+    if (profile_url = Canvas::CanvasRosters.new(session[:user_id], course_id: canvas_course_id).profile_url_for_ldap_id(user_id))
+      redirect_to profile_url
+    else
+      redirect_to url_for_path '/404'
+    end
+  end
 end

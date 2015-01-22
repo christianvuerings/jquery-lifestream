@@ -4,326 +4,263 @@ describe Canvas::CanvasRosters do
 
   let(:teacher_login_id) { rand(99999).to_s }
   let(:course_id) { rand(99999) }
-  let(:a_section_id) { rand(99999) }
-  let(:a_section_ccn) { rand(999).to_s }
-  let(:a_section_sis_id) { "SEC:2013-C-#{a_section_ccn}" }
-  let(:b_section_id) { rand(99999) }
-  let(:b_section_ccn) { rand(999).to_s }
-  let(:b_section_sis_id) { "SEC:2013-C-#{b_section_ccn}" }
-  let(:enrolled_student_canvas_id) { rand(99999) }
-  let(:enrolled_student_login_id) { rand(99999).to_s }
-  let(:enrolled_student_student_id) { rand(99999).to_s }
-  let(:waitlisted_student_canvas_id) { rand(99999) }
-  let(:waitlisted_student_login_id) { rand(99999).to_s }
-  let(:waitlisted_student_student_id) { rand(99999).to_s }
-  let(:unofficial_student_canvas_id) { rand(99999) }
-  let(:unofficial_student_login_id) { rand(99999).to_s }
 
-  context 'when returning rosters feed' do
-    let(:linked_section_id) { rand(99999) }
-    let(:linked_section_ccn) { rand(999).to_s }
-    let(:linked_section_sis_id) { "SEC:2013-C-#{linked_section_ccn}" }
-    let(:unlinked_section_id) { rand(99999) }
-    let(:official_student_in_canvas_id) { rand(99999) }
-    let(:official_student_in_canvas_login_id) { rand(99999).to_s }
-    let(:official_student_in_canvas_student_id) { rand(99999).to_s }
-    let(:unofficial_student_in_canvas_id) { rand(99999) }
-    let(:unofficial_student_in_canvas_login_id) { rand(99999).to_s }
-    let(:official_student_not_in_canvas_login_id) { rand(99999).to_s }
-    let(:official_student_not_in_canvas_student_id) { rand(99999) }
+  let(:lecture_section_id) { rand(99999) }
+  let(:lecture_section_ccn) { rand(9999).to_s }
+  let(:lecture_section_sis_id) { "SEC:2013-C-#{lecture_section_ccn}" }
+
+  let(:discussion_section_id) { rand(99999) }
+  let(:discussion_section_ccn) { rand(9999).to_s }
+  let(:discussion_section_sis_id) { "SEC:2013-C-#{discussion_section_ccn}" }
+
+  subject { Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id) }
+
+  context 'when students are enrolled in multiple sections' do
+    let(:student_in_discussion_section_login_id) { rand(99999).to_s }
+    let(:student_in_discussion_section_student_id) { rand(99999).to_s }
+
+    let(:student_not_in_discussion_section_login_id) { rand(99999).to_s }
+    let(:student_not_in_discussion_section_student_id) { rand(99999).to_s }
 
     before do
       stub_teacher_status(teacher_login_id, course_id)
-      allow_any_instance_of(Canvas::CourseStudents).to receive(:full_students_list).and_return(
+      allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(
         [
           {
-            'id' => official_student_in_canvas_id,
-            'login_id' => official_student_in_canvas_login_id,
-            'enrollments' => [
-              {
-                'course_section_id' => unlinked_section_id,
-                'enrollment_state' => 'active',
-                'role' => 'StudentEnrollment',
-                'html_url' => "https://example.com/courses/#{course_id}/users/#{official_student_in_canvas_id}"
-              },
-              {
-                'course_section_id' => linked_section_id,
-                'enrollment_state' => 'active',
-                'role' => 'StudentEnrollment',
-                'html_url' => "https://example.com/courses/#{course_id}/users/#{official_student_in_canvas_id}"
-              }
-            ]
+            course_id: course_id,
+            id: lecture_section_id,
+            name: 'An Official Lecture Section',
+            sis_section_id: lecture_section_sis_id,
+            term_yr: "2013",
+            term_cd: "C",
+            ccn: lecture_section_ccn
           },
           {
-            'id' => unofficial_student_in_canvas_id,
-            'login_id' => unofficial_student_in_canvas_login_id,
-            'enrollments' => [
-              {
-                'course_section_id' => linked_section_id,
-                'enrollment_state' => 'active',
-                'role' => 'StudentEnrollment',
-                'html_url' => "https://example.com/courses/#{course_id}/users/#{unofficial_student_in_canvas_id}"
-              }
-            ]
+            course_id: course_id,
+            id: discussion_section_id,
+            name: 'An Official Discussion Section',
+            sis_section_id: discussion_section_sis_id,
+            term_yr: "2013",
+            term_cd: "C",
+            ccn: discussion_section_ccn
           }
         ]
       )
-      allow(Canvas::CourseSections).to receive(:new).with({course_id: course_id}).and_return(
-        stub_proxy(:sections_list, [
-          {
-            course_id: course_id,
-            id: linked_section_id,
-            name: 'An Official Section',
-            sis_section_id: linked_section_sis_id
-          },
-          {
-            course_id: course_id,
-            id: unlinked_section_id,
-            name: 'An Unofficial Section'
-          }
-        ])
-      )
-      allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(linked_section_ccn, '2013', 'C').and_return(
+      allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(lecture_section_ccn, '2013', 'C').and_return(
         [
           {
-            'ldap_uid' => official_student_in_canvas_login_id,
+            'ldap_uid' => student_in_discussion_section_login_id,
             'enroll_status' => 'E',
-            'student_id' => official_student_in_canvas_student_id,
+            'student_id' => student_in_discussion_section_student_id,
             'first_name' => "Thurston",
-            'last_name' => "Howell #{official_student_in_canvas_login_id}",
-            'student_email_address' => "#{official_student_in_canvas_login_id}@example.com"
+            'last_name' => "Howell #{student_in_discussion_section_login_id}",
+            'student_email_address' => "#{student_in_discussion_section_login_id}@example.com"
           },
           {
-            'ldap_uid' => official_student_not_in_canvas_login_id,
+            'ldap_uid' => student_not_in_discussion_section_login_id,
             'enroll_status' => 'E',
-            'student_id' => official_student_not_in_canvas_student_id,
+            'student_id' => student_not_in_discussion_section_student_id,
             'first_name' => 'Clarence',
-            'last_name' => "Williams #{official_student_not_in_canvas_login_id}",
-            'student_email_address' => "#{official_student_in_canvas_login_id}@example.com"
+            'last_name' => "Williams #{student_not_in_discussion_section_login_id}",
+            'student_email_address' => "#{student_not_in_discussion_section_login_id}@example.com"
+          }
+        ]
+      )
+      allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(discussion_section_ccn, '2013', 'C').and_return(
+        [
+          {
+            'ldap_uid' => student_in_discussion_section_login_id,
+            'enroll_status' => 'E',
+            'student_id' => student_in_discussion_section_student_id,
+            'first_name' => "Thurston",
+            'last_name' => "Howell #{student_in_discussion_section_login_id}",
+            'student_email_address' => "#{student_in_discussion_section_login_id}@example.com"
           }
         ]
       )
     end
 
-    it 'should return a list of officially enrolled students for a unlinked Canvas course site' do
-      model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
-      feed = model.get_feed
+    it 'should return enrollments for each section' do
+      feed = subject.get_feed
       expect(feed[:canvas_course][:id]).to eq course_id
       expect(feed[:sections].length).to eq 2
-      expect(feed[:students].length).to eq 1
-      student = feed[:students][0]
-      expect(student[:id]).to eq official_student_in_canvas_id
-      expect(student[:student_id]).to eq official_student_in_canvas_student_id
-      expect(student[:first_name].blank?).to be_falsey
-      expect(student[:last_name].blank?).to be_falsey
-      expect(student[:email].blank?).to be_falsey
-      expect(student[:sections].length).to eq 2
-      expect(student[:section_ccns].length).to eq 2
-      expect(student[:profile_url].blank?).to be_falsey
+      expect(feed[:students].length).to eq 2
+
+      student_in_discussion_section = feed[:students].find{|student| student[:student_id] == student_in_discussion_section_student_id}
+      expect(student_in_discussion_section).to_not be_nil
+      expect(student_in_discussion_section[:id]).to eq student_in_discussion_section_login_id
+      expect(student_in_discussion_section[:login_id]).to eq student_in_discussion_section_login_id
+      expect(student_in_discussion_section[:first_name]).to_not be_blank
+      expect(student_in_discussion_section[:last_name]).to_not be_blank
+      expect(student_in_discussion_section[:email]).to_not be_blank
+      expect(student_in_discussion_section[:sections].length).to eq 2
+      expect(student_in_discussion_section[:section_ccns].length).to eq 2
+
+      student_not_in_discussion_section = feed[:students].find{|student| student[:student_id] == student_not_in_discussion_section_student_id}
+      expect(student_not_in_discussion_section).to_not be_nil
+      expect(student_not_in_discussion_section[:id]).to eq student_not_in_discussion_section_login_id
+      expect(student_not_in_discussion_section[:login_id]).to eq student_not_in_discussion_section_login_id
+      expect(student_not_in_discussion_section[:first_name]).to_not be_blank
+      expect(student_not_in_discussion_section[:last_name]).to_not be_blank
+      expect(student_not_in_discussion_section[:email]).to_not be_blank
+      expect(student_not_in_discussion_section[:sections].length).to eq 1
+      expect(student_not_in_discussion_section[:section_ccns].length).to eq 1
     end
   end
 
-  # A course-enabled LTI tool will be enabled even when a course site has no
-  # SIS ID or no associated campus sections. Only students who are officially
-  # enrolled in an associated campus section should appear in the roster.
-  it "should return an empty list for an unlinked Canvas course site" do
-    stub_teacher_status(teacher_login_id, course_id)
-    section_id = rand(99999)
-    Canvas::CourseStudents.any_instance.stub(:full_students_list).and_return(
-      [
+  context 'when students are waitlisted' do
+    let(:enrolled_student_login_id) { rand(99999).to_s }
+    let(:enrolled_student_student_id) { rand(99999).to_s }
+
+    let(:waitlisted_student_login_id) { rand(99999).to_s }
+    let(:waitlisted_student_student_id) { rand(99999).to_s }
+
+    it 'should show official photo links for students who are not waitlisted in all sections' do
+      stub_teacher_status(teacher_login_id, course_id)
+      allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(
+        [
+          {
+            course_id: course_id,
+            id: lecture_section_id,
+            name: 'An Official Lecture Section',
+            sis_section_id: lecture_section_sis_id,
+            term_yr: "2013",
+            term_cd: "C",
+            ccn: lecture_section_ccn
+          },
+          {
+            course_id: course_id,
+            id: discussion_section_id,
+            name: 'An Official Discussion Section',
+            sis_section_id: discussion_section_sis_id,
+            term_yr: "2013",
+            term_cd: "C",
+            ccn: discussion_section_ccn
+          }
+        ]
+      )
+
+      # A student may be waitlisted in a secondary section but enrolled in a primary section.
+      allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(lecture_section_ccn, '2013', 'C').and_return(
+        [
+          {
+            'ldap_uid' => enrolled_student_login_id,
+            'enroll_status' => 'E',
+            'student_id' => enrolled_student_student_id,
+            'photo_bytes' => '8203.0'
+          },
+          {
+            'ldap_uid' => waitlisted_student_login_id,
+            'enroll_status' => 'W',
+            'student_id' => waitlisted_student_student_id,
+            'photo_bytes' => '7834.1'
+          }
+        ]
+      )
+      allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(discussion_section_ccn, '2013', 'C').and_return(
+        [
+          {
+            'ldap_uid' => enrolled_student_login_id,
+            'enroll_status' => 'W',
+            'student_id' => enrolled_student_student_id,
+            'photo_bytes' => '8203.0'
+          },
+          {
+            'ldap_uid' => waitlisted_student_login_id,
+            'enroll_status' => 'W',
+            'student_id' => waitlisted_student_student_id,
+            'photo_bytes' => '7834.1'
+          }
+        ]
+      )
+      feed = subject.get_feed
+      expect(feed[:sections].length).to eq 2
+      expect(feed[:students].length).to eq 2
+
+      enrolled_student = feed[:students].find {|student| student[:login_id] == enrolled_student_login_id}
+      expect(enrolled_student).to_not be_nil
+      expect(enrolled_student[:photo]).to_not be_blank
+
+      waitlisted_student = feed[:students].find {|student| student[:login_id] == waitlisted_student_login_id}
+      expect(waitlisted_student).to_not be_nil
+      expect(waitlisted_student[:photo]).to be_nil
+    end
+
+    it 'should only download photo data for officially fully enrolled students' do
+      stub_teacher_status(teacher_login_id, course_id)
+      allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(
+        [
+          {
+            course_id: course_id,
+            id: lecture_section_id,
+            name: 'An Official Lecture Section',
+            sis_section_id: lecture_section_sis_id,
+            term_yr: "2013",
+            term_cd: "C",
+            ccn: lecture_section_ccn
+          }
+        ]
+      )
+      allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(lecture_section_ccn, '2013', 'C').and_return(
+        [
+          {
+            'ldap_uid' => enrolled_student_login_id,
+            'enroll_status' => 'E',
+            'student_id' => enrolled_student_student_id,
+            'photo_bytes' => '8203.0'
+          },
+          {
+            'ldap_uid' => waitlisted_student_login_id,
+            'enroll_status' => 'W',
+            'student_id' => waitlisted_student_student_id,
+            'photo_bytes' => '7834.1'
+          }
+        ]
+      )
+      photo_data = rand(99999999)
+      allow(CampusOracle::Queries).to receive(:get_photo).with(enrolled_student_login_id).and_return(
         {
-          'id' => 1234,
-          'login_id' => 4321,
-          'enrollments' => [
-            {
-              'course_section_id' => section_id,
-              "enrollment_state" => "active",
-              "role" => "StudentEnrollment"
-            }
-          ]
+          'bytes' => 42,
+          'photo' => photo_data
         }
-      ]
-    )
-    Canvas::CourseSections.stub(:new).with({course_id: course_id}).and_return(
-      stub_proxy(:sections_list, [
-        {
-          course_id: course_id,
-          id: section_id,
-          name: 'not-an-official-section'
-        }
-      ])
-    )
-    model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
-    feed = model.get_feed
-    feed[:canvas_course][:id].should == course_id
-    feed[:sections].length.should == 1
-    feed[:sections][0][:id].should == section_id
-    feed[:sections][0][:name].should == 'not-an-official-section'
-    feed[:sections][0][:sis_id].should be_nil
-    feed[:students].empty?.should be_truthy
+      )
+      enrolled_photo = subject.photo_data_or_file(enrolled_student_login_id)
+      expect(enrolled_photo[:data]).to eq photo_data
+      expect(enrolled_photo[:size]).to eq 42
+      expect(enrolled_photo[:filename]).to be_nil
+      waitlisted_photo = subject.photo_data_or_file(waitlisted_student_login_id)
+      expect(waitlisted_photo).to be_nil
+    end
   end
 
-  it "should show official photo links for students who are not waitlisted in all sections" do
-    stub_teacher_status(teacher_login_id, course_id)
-    Canvas::CourseStudents.any_instance.stub(:full_students_list).and_return(
-      [
-        {
-          'id' => enrolled_student_canvas_id,
-          'login_id' => enrolled_student_login_id,
-          'enrollments' => [
-            {
-              'course_section_id' => a_section_id,
-              "enrollment_state" => "active",
-              "role" => "StudentEnrollment"
-            }
-          ]
-        },
-        {
-          'id' => waitlisted_student_canvas_id,
-          'login_id' => waitlisted_student_login_id,
-          'enrollments' => [
-            {
-              'course_section_id' => a_section_id,
-              "enrollment_state" => "active",
-              "role" => "StudentEnrollment"
-            }
-          ]
-        }
-      ]
-    )
-    Canvas::CourseSections.stub(:new).with({course_id: course_id}).and_return(
-      stub_proxy(:sections_list, [
-        {
-          course_id: course_id,
-          id: a_section_id,
-          name: 'An Official Section',
-          sis_section_id: a_section_sis_id
-        },
-        {
-          course_id: course_id,
-          id: b_section_id,
-          name: 'Another Official Section',
-          sis_section_id: b_section_sis_id
-        }
-      ])
-    )
-    # A student may be waitlisted in a secondary section but enrolled in a primary section.
-    CampusOracle::Queries.stub(:get_enrolled_students).with(a_section_ccn, '2013', 'C').and_return(
-      [
-        {
-          'ldap_uid' => enrolled_student_login_id,
-          'enroll_status' => 'W',
-          'student_id' => enrolled_student_student_id
-        },
-        {
-          'ldap_uid' => waitlisted_student_login_id,
-          'enroll_status' => 'W',
-          'student_id' => waitlisted_student_student_id
-        }
-      ]
-    )
-    CampusOracle::Queries.stub(:get_enrolled_students).with(b_section_ccn, '2013', 'C').and_return(
-      [
-        {
-          'ldap_uid' => enrolled_student_login_id,
-          'enroll_status' => 'E',
-          'student_id' => enrolled_student_student_id
-        },
-        {
-          'ldap_uid' => waitlisted_student_login_id,
-          'enroll_status' => 'W',
-          'student_id' => waitlisted_student_student_id
-        }
-      ]
-    )
-    model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
-    feed = model.get_feed
-    feed[:sections].length.should == 2
-    feed[:students].length.should == 2
-    feed[:students].index {|student| student[:id] == waitlisted_student_canvas_id &&
-        student[:photo].nil?
-    }.should_not be_nil
-  end
+  context 'when profile URL requested for LDAP ID' do
+    let(:student_canvas_id) { rand(999999) }
+    let(:student_sis_login_id) { rand(999999).to_s }
+    let(:student_sis_user_id) { rand(999999).to_s }
 
-  it "should only download photo data for officially fully enrolled students" do
-    stub_teacher_status(teacher_login_id, course_id)
-    Canvas::CourseStudents.any_instance.stub(:full_students_list).and_return(
-      [
+    before do
+      allow_any_instance_of(Canvas::SisUserProfile).to receive(:get).and_return(
         {
-          'id' => enrolled_student_canvas_id,
-          'login_id' => enrolled_student_login_id,
-          'enrollments' => [
-            {
-              'course_section_id' => a_section_id,
-              "enrollment_state" => "active",
-              "role" => "StudentEnrollment"
-            }
-          ]
-        },
-        {
-          'id' => waitlisted_student_canvas_id,
-          'login_id' => waitlisted_student_login_id,
-          'enrollments' => [
-            {
-              'course_section_id' => a_section_id,
-              "enrollment_state" => "active",
-              "role" => "StudentEnrollment"
-            }
-          ]
-        },
-        {
-          'id' => unofficial_student_canvas_id,
-          'login_id' => unofficial_student_login_id,
-          'enrollments' => [
-            {
-              'course_section_id' => a_section_id,
-              "enrollment_state" => "active",
-              "role" => "StudentEnrollment"
-            }
-          ]
+           'id' => student_canvas_id,
+           'login_id' => student_sis_login_id,
+           'sis_user_id' => student_sis_user_id,
+           'sis_login_id' => student_sis_login_id
         }
-      ]
-    )
-    allow(Canvas::CourseSections).to receive(:new).with({course_id: course_id}).and_return(
-      stub_proxy(:sections_list, [
-        {
-          course_id: course_id,
-          id: a_section_id,
-          name: 'An Official Section',
-          sis_section_id: a_section_sis_id
-        }
-      ])
-    )
-    allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(a_section_ccn, '2013', 'C').and_return(
-      [
-        {
-          'ldap_uid' => enrolled_student_login_id,
-          'enroll_status' => 'E',
-          'student_id' => enrolled_student_student_id
-        },
-        {
-          'ldap_uid' => waitlisted_student_login_id,
-          'enroll_status' => 'W',
-          'student_id' => waitlisted_student_student_id
-        }
-      ]
-    )
-    photo_data = rand(99999999)
-    allow(CampusOracle::Queries).to receive(:get_photo).with(enrolled_student_login_id).and_return(
-      {
-        'bytes' => 42,
-        'photo' => photo_data
-      }
-    )
-    model = Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id)
-    enrolled_photo = model.photo_data_or_file(enrolled_student_canvas_id)
-    expect(enrolled_photo[:data]).to eq photo_data
-    expect(enrolled_photo[:size]).to eq 42
-    expect(enrolled_photo[:filename]).to be_nil
-    waitlisted_photo = model.photo_data_or_file(waitlisted_student_canvas_id)
-    expect(waitlisted_photo).to be_nil
-    unofficial_photo = model.photo_data_or_file(unofficial_student_canvas_id)
-    expect(unofficial_photo).to be_nil
+      )
+    end
+
+    it 'returns a correctly formatted URL' do
+      profile_url = subject.profile_url_for_ldap_id(student_sis_login_id)
+      expect(profile_url).to eq "#{Settings.canvas_proxy.url_root}/courses/#{course_id}/users/#{student_canvas_id}"
+    end
+
+    context 'when no logins match LDAP ID' do
+      before { allow_any_instance_of(Canvas::SisUserProfile).to receive(:get).and_return nil }
+      it 'returns nil' do
+        profile_url = subject.profile_url_for_ldap_id(student_sis_login_id)
+        expect(profile_url).to eq nil
+      end
+    end
   end
 
   def stub_teacher_status(teacher_login_id, canvas_course_id)

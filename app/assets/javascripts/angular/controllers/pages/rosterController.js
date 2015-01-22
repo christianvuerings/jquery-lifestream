@@ -5,7 +5,7 @@
   /**
    * Canvas roster photos LTI app controller
    */
-  angular.module('calcentral.controllers').controller('RosterController', function(apiService, rosterFactory, $routeParams, $scope) {
+  angular.module('calcentral.controllers').controller('RosterController', function(apiService, rosterFactory, $routeParams, $scope, $window) {
     if ($routeParams.canvasCourseId) {
       apiService.util.setTitle('Roster Photos');
     }
@@ -14,12 +14,14 @@
       if (!$scope.searchSection) {
         return true;
       }
-      return (student.section_ccns.indexOf($scope.searchSection) !== -1);
+      var section_ccn = parseInt($scope.searchSection, 10);
+      return (student.section_ccns.indexOf(section_ccn) !== -1);
     };
 
     var getRoster = function() {
       $scope.context = $scope.campusCourseId ? 'campus' : 'canvas';
       $scope.courseId = $scope.campusCourseId || $routeParams.canvasCourseId || 'embedded';
+      $scope.origin = $window.location.origin;
 
       rosterFactory.getRoster($scope.context, $scope.courseId).success(function(data) {
         angular.extend($scope, data);

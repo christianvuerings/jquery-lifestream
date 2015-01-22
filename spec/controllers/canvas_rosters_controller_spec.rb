@@ -25,7 +25,6 @@ describe CanvasRostersController do
           :id => 4886773,
           :section_ccns => [1394824],
           :sections => [{:id => 1394824}],
-          :profile_url => 'https://ucberkeley.beta.instructure.com/courses/1224681/users/4886773',
           :login_id => '1038892',
           :photo => '/canvas/1224681/photo/4886773'
         },
@@ -38,7 +37,6 @@ describe CanvasRostersController do
           :id => 4911017,
           :section_ccns => [1394824],
           :sections => [{:id => 1394824}],
-          :profile_url => 'https://ucberkeley.beta.instructure.com/courses/1224681/users/4911017',
           :login_id => '1006997',
           :photo => '/canvas/1224681/photo/4911017'
         },
@@ -191,6 +189,53 @@ describe CanvasRostersController do
       end
     end
 
+  end
+
+  context 'when serving profile URL' do
+    it_should_behave_like 'an api endpoint' do
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:profile_url_for_ldap_id).and_raise(RuntimeError, "Something went wrong") }
+      let(:make_request) { get :profile, canvas_course_id: canvas_course_id, person_id: student_id }
+    end
+
+    it_should_behave_like 'a user authenticated api endpoint' do
+      let(:make_request) { get :profile, canvas_course_id: canvas_course_id, person_id: student_id }
+    end
+
+    context 'when user is authorized' do
+      let(:canvas_student_id) { rand(999999) }
+      let(:canvas_profile_url) { "http://ucberkeley.beta.instructure.com/courses/#{canvas_student_id}/users/#{canvas_student_id}" }
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:profile_url_for_ldap_id).and_return(canvas_profile_url) }
+      it 'should redirect to a Canvas profile URL' do
+        get :profile, canvas_course_id: canvas_course_id, person_id: student_id
+        expect(response).to redirect_to canvas_profile_url
+      end
+    end
+
+    context 'when profile URL not found' do
+      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:profile_url_for_ldap_id).and_return(nil) }
+      it 'should redirect to 404' do
+        get :profile, canvas_course_id: canvas_course_id, person_id: student_id
+        expect(response).to redirect_to('/404')
+      end
+    end
+
+    context 'when user is not authorized' do
+      before { allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(false) }
+      it 'should respond with an empty HTTP 403' do
+        get :profile, canvas_course_id: canvas_course_id, person_id: student_id
+        expect(response.status).to eq 403
+        expect(response.body).to eq ' '
+      end
+    end
+
+    context 'when Canvas course ID is not present' do
+      before { session[:canvas_course_id] = nil }
+      it 'should respond with an empty HTTP 403' do
+        get :profile, canvas_course_id: 'embedded', person_id: student_id
+        expect(response.status).to eq 403
+        expect(response.body).to eq ' '
+      end
+    end
   end
 
 end
