@@ -26,7 +26,7 @@ describe 'My Finances Cal1Card', :testui => true do
 
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Has Meal Plan', 'Has Points', 'Has Non-Res Meal Plan', 'Has Debit Account', 'Has Balance',
-                          'Card Lost', 'Card Found' 'Error?']
+                          'Card Lost', 'Card Found', 'Error?']
       end
 
       test_users.each do |user|
@@ -64,8 +64,8 @@ describe 'My Finances Cal1Card', :testui => true do
                 if cal1card_api.debit_balance.to_i > 0
                   has_debit_balance = true
                 end
-                api_balance = "$#{cal1card_api.debit_balance}"
-                my_finances_balance = my_finances_page.debit_balance
+                api_balance = cal1card_api.debit_balance
+                my_finances_balance = my_finances_page.debit_balance.delete('$, ')
                 has_manage_debit_link = WebDriverUtils.verify_external_link(driver, my_finances_page.manage_debit_card_element, 'Cal 1 Card: Home')
                 it "shows the debit account balance for UID #{uid}" do
                   expect(my_finances_balance).to eql(api_balance)
@@ -92,7 +92,7 @@ describe 'My Finances Cal1Card', :testui => true do
                 end
                 api_points = cal1card_api.meal_points_balance
                 api_plan = cal1card_api.meal_points_plan
-                my_finances_points = my_finances_page.meal_points_balance
+                my_finances_points = my_finances_page.meal_points_balance.delete(', ')
                 my_finances_plan = my_finances_page.meal_points_plan
                 has_manage_points_link = WebDriverUtils.verify_external_link(driver, my_finances_page.manage_meal_card_element, 'Caldining')
                 it "shows the meal point balance for UID #{uid}" do
@@ -137,6 +137,9 @@ describe 'My Finances Cal1Card', :testui => true do
             end
           end
         end
+      end
+      it 'has Cal 1 Card info for at least one of the test UIDs' do
+        expect(testable_users.length).to be > 0
       end
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n ")

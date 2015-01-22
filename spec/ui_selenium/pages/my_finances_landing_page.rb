@@ -18,7 +18,7 @@ module CalCentralPages
       # CAL 1 CARD CARD
       h2(:cal_1_card_heading, :xpath => '//h2[text()="Cal 1 Card"]')
       div(:cal_1_card_content, :xpath => '//div[@data-ng-if=\'api.user.profile.features.cal1card\']//ul')
-      list_item(:card_lost_msg, :xpath => '//li[contains(text(),"Your Cal 1 Card is reported as lost."]')
+      list_item(:card_lost_msg, :xpath => '//li[contains(.,"Your Cal 1 Card is reported as lost.")]')
       list_item(:card_found_msg, :xpath => '//li[@data-ng-if="cal1cardLost === \'Lost\'"]')
       div(:debit_account_header, :xpath => '//div[@class="cc-cal1card-header"]')
       span(:debit_balance, :xpath => '//span[@data-ng-bind="debit + \'\' | currency"]')

@@ -35,7 +35,7 @@ class ApiMyCal1CardPage
   end
 
   def debit_balance
-    @parsed['debit']
+    (sprintf '%.2f', @parsed['debit'].to_f).to_s
   end
 
   def has_meal_plan?
