@@ -11,7 +11,7 @@ describe CanvasRostersController do
       :canvas_course => {"id" => 27},
       :sections => [
         {
-          :id => section_ccn,
+          :ccn => section_ccn,
           :name => 'COMPSCI 47C SLF 001',
           :sis_id => 'SEC:2014-D-25749'
         }
