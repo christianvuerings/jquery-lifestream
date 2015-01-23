@@ -15,7 +15,7 @@ module Canvas
       official_sections = Canvas::CourseSections.new(course_id: @canvas_course_id).official_section_identifiers
       return feed unless official_sections
       official_sections.each do |official_section|
-        canvas_section_id = official_section['id']
+        canvas_section_id = official_section['id'].to_s
         sis_id = official_section['sis_section_id']
         feed[:sections] << {
           id: canvas_section_id,

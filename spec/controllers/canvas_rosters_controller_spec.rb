@@ -4,13 +4,14 @@ require "support/canvas_shared_examples"
 describe CanvasRostersController do
   let(:user_id)           { Settings.canvas_proxy.test_user_id }
   let(:canvas_course_id)  { '767330' }
+  let(:section_ccn)       { '1394824' }
   let(:student_id)        { rand(99999) }
   let(:roster_feed) do
     {
       :canvas_course => {"id" => 27},
       :sections => [
         {
-          :id => 34,
+          :id => section_ccn,
           :name => 'COMPSCI 47C SLF 001',
           :sis_id => 'SEC:2014-D-25749'
         }
@@ -23,8 +24,8 @@ describe CanvasRostersController do
           :email => 'sam.samwich@example.com',
           :enroll_status => 'E',
           :id => 4886773,
-          :section_ccns => [1394824],
-          :sections => [{:id => 1394824}],
+          :section_ccns => [section_ccn],
+          :sections => [{:id => section_ccn}],
           :login_id => '1038892',
           :photo => '/canvas/1224681/photo/4886773'
         },
@@ -35,8 +36,8 @@ describe CanvasRostersController do
           :email => 'kkathimyer@example.com',
           :enroll_status => 'W',
           :id => 4911017,
-          :section_ccns => [1394824],
-          :sections => [{:id => 1394824}],
+          :section_ccns => [section_ccn],
+          :sections => [{:id => section_ccn}],
           :login_id => '1006997',
           :photo => '/canvas/1224681/photo/4911017'
         },

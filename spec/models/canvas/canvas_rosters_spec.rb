@@ -95,6 +95,7 @@ describe Canvas::CanvasRosters do
       expect(student_in_discussion_section[:email]).to_not be_blank
       expect(student_in_discussion_section[:sections].length).to eq 2
       expect(student_in_discussion_section[:section_ccns].length).to eq 2
+      expect(student_in_discussion_section[:section_ccns].first).to be_a String
 
       student_not_in_discussion_section = feed[:students].find{|student| student[:student_id] == student_not_in_discussion_section_student_id}
       expect(student_not_in_discussion_section).to_not be_nil
@@ -105,6 +106,7 @@ describe Canvas::CanvasRosters do
       expect(student_not_in_discussion_section[:email]).to_not be_blank
       expect(student_not_in_discussion_section[:sections].length).to eq 1
       expect(student_not_in_discussion_section[:section_ccns].length).to eq 1
+      expect(student_not_in_discussion_section[:section_ccns].first).to be_a String
     end
   end
 
