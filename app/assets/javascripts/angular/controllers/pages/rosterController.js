@@ -14,8 +14,7 @@
       if (!$scope.searchSection) {
         return true;
       }
-      var section_ccn = $scope.searchSection.ccn;
-      return (student.section_ccns.indexOf(section_ccn) !== -1);
+      return (student.section_ccns.indexOf($scope.searchSection.ccn) !== -1);
     };
 
     var getRoster = function() {
