@@ -25,6 +25,8 @@ module Rosters
         end
       end
 
+      feed[:campus_course].merge!(name: selected_course[:name])
+
       term_yr = selected_course[:term_yr]
       term_cd = selected_course[:term_cd]
       dept_name = selected_course[:dept]
@@ -32,7 +34,7 @@ module Rosters
 
       selected_course[:sections].each do |section|
         feed[:sections] << {
-          id: section[:ccn],
+          ccn: section[:ccn],
           name: "#{dept_name} #{catid} #{section[:section_label]}"
         }
 

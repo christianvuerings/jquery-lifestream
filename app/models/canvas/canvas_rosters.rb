@@ -11,14 +11,20 @@ module Canvas
         students: []
       }
       campus_enrollment_map = {}
+
+      course_info = Canvas::Course.new(canvas_course_id: @canvas_course_id).course
+      return feed unless course_info
+      feed[:canvas_course][:name] = course_info['name']
+
       # Look up Canvas course sections associated with official campus sections.
       official_sections = Canvas::CourseSections.new(course_id: @canvas_course_id).official_section_identifiers
       return feed unless official_sections
       official_sections.each do |official_section|
-        canvas_section_id = official_section['id'].to_s
+        canvas_section_id = official_section['id']
+        section_ccn = official_section[:ccn]
         sis_id = official_section['sis_section_id']
         feed[:sections] << {
-          id: canvas_section_id,
+          ccn: section_ccn,
           name: official_section['name'],
           sis_id: sis_id
         }
@@ -26,8 +32,8 @@ module Canvas
         section_enrollments = CampusOracle::Queries.get_enrolled_students(official_section[:ccn], official_section[:term_yr], official_section[:term_cd])
         section_enrollments.each do |enr|
           if (existing_entry = campus_enrollment_map[enr['ldap_uid']])
-            existing_entry[:sections] << {id: canvas_section_id}
-            existing_entry[:section_ccns] << canvas_section_id
+            existing_entry[:sections] << {id: section_ccn}
+            existing_entry[:section_ccns] << section_ccn
             # We include waitlisted students in the roster. However, we do not show the official photo if the student
             # is waitlisted in ALL sections.
             if existing_entry[:enroll_status] == 'W' &&
@@ -42,8 +48,8 @@ module Canvas
               email: enr['student_email_address'],
               enroll_status: enr['enroll_status'],
               photo_bytes: enr['photo_bytes'],
-              sections: [{id: canvas_section_id}],
-              section_ccns: [canvas_section_id]
+              sections: [{id: section_ccn}],
+              section_ccns: [section_ccn]
             }
           end
         end
