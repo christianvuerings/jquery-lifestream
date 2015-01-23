@@ -341,6 +341,10 @@
    *    This will respond with a window event back to the LTI iFrame with the following message:
    *    `{scrollPosition: <currentScrollPosition>}`
    *
+   *  - If the iFrame is so enormous as to hit the 5000px limit in Instructure's code,
+   *    resize it ourselves.
+   *    `{subject: 'resizeLargeFrame', height: <height>}`
+   *
    * @param  {Object}    ev         Event that is sent over from the iframe
    * @param  {String}    ev.data    The message sent with the event. Note that this is expected to be a stringified JSON object
    */
@@ -375,6 +379,10 @@
           var response = {scrollPosition: scrollPosition};
           ev.source.postMessage(JSON.stringify(response), '*');
         }
+      // Resize frame if too large for Instructure's `public/javascripts/tool_inline.js`
+      } else if (message.subject === 'resizeLargeFrame' && message.height) {
+        $('#tool_content').height(message.height);
+        $('.tool_content_wrapper').height('auto');
       }
     }
   };
