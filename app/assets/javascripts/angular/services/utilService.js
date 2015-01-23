@@ -97,12 +97,15 @@
     /**
      * Update the iframe height on a regular basis to avoid embedded scrollbars on
      * bCourses LTI tools. The message is formatted to be received by a listener
-     * in Canvas's public/javascripts/tool_inline.js file.
+     * in Canvas's public/javascripts/tool_inline.js file; unless it exceeds the
+     * Canvas 5000px limit, in which case our own listener handles it.
      */
     var iframeUpdateHeight = function() {
       if (isInIframe) {
+        var frameHeight = document.body.scrollHeight;
+        var messageSubject = frameHeight > 5000 ? 'resizeLargeFrame' : 'lti.frameResize';
         $window.setInterval(function updateHeight() {
-          var message = {subject: 'lti.frameResize', height: document.body.scrollHeight};
+          var message = {subject: messageSubject, height: frameHeight};
           iframePostMessage(JSON.stringify(message));
         }, 250);
       }
