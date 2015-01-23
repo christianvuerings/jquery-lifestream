@@ -14,6 +14,27 @@ describe Canvas::CanvasRosters do
   let(:discussion_section_ccn) { rand(9999).to_s }
   let(:discussion_section_sis_id) { "SEC:2013-C-#{discussion_section_ccn}" }
 
+  let(:section_identifiers) {[
+    {
+      'course_id' => course_id,
+      'id' => lecture_section_id,
+      'name' => 'An Official Lecture Section',
+      'sis_section_id' => lecture_section_sis_id,
+      :term_yr => "2013",
+      :term_cd => "C",
+      :ccn => lecture_section_ccn
+    },
+    {
+      'course_id' => course_id,
+      'id' => discussion_section_id,
+      'name' => 'An Official Discussion Section',
+      'sis_section_id' => discussion_section_sis_id,
+      :term_yr => "2013",
+      :term_cd => "C",
+      :ccn => discussion_section_ccn
+    }
+  ]}
+
   subject { Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id) }
 
   before do
@@ -38,28 +59,7 @@ describe Canvas::CanvasRosters do
 
     before do
       stub_teacher_status(teacher_login_id, course_id)
-      allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(
-        [
-          {
-            course_id: course_id,
-            id: lecture_section_id,
-            name: 'An Official Lecture Section',
-            sis_section_id: lecture_section_sis_id,
-            term_yr: "2013",
-            term_cd: "C",
-            ccn: lecture_section_ccn
-          },
-          {
-            course_id: course_id,
-            id: discussion_section_id,
-            name: 'An Official Discussion Section',
-            sis_section_id: discussion_section_sis_id,
-            term_yr: "2013",
-            term_cd: "C",
-            ccn: discussion_section_ccn
-          }
-        ]
-      )
+      allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(section_identifiers)
       allow(CampusOracle::Queries).to receive(:get_enrolled_students).with(lecture_section_ccn, '2013', 'C').and_return(
         [
           {
@@ -99,6 +99,12 @@ describe Canvas::CanvasRosters do
       expect(feed[:canvas_course][:id]).to eq course_id
       expect(feed[:canvas_course][:name]).to eq "An Official Course"
       expect(feed[:sections].length).to eq 2
+      expect(feed[:sections][0][:name]).to eq section_identifiers[0]['name']
+      expect(feed[:sections][0][:ccn]).to eq section_identifiers[0][:ccn]
+      expect(feed[:sections][0][:sis_id]).to eq section_identifiers[0]['sis_section_id']
+      expect(feed[:sections][1][:name]).to eq section_identifiers[1]['name']
+      expect(feed[:sections][1][:ccn]).to eq section_identifiers[1][:ccn]
+      expect(feed[:sections][1][:sis_id]).to eq section_identifiers[1]['sis_section_id']
       expect(feed[:students].length).to eq 2
 
       student_in_discussion_section = feed[:students].find{|student| student[:student_id] == student_in_discussion_section_student_id}

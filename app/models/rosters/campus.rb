@@ -34,7 +34,7 @@ module Rosters
 
       selected_course[:sections].each do |section|
         feed[:sections] << {
-          id: section[:ccn],
+          ccn: section[:ccn],
           name: "#{dept_name} #{catid} #{section[:section_label]}"
         }
 

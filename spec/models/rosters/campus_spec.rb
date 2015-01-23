@@ -93,7 +93,10 @@ describe 'Rosters::Campus' do
     expect(feed[:campus_course][:id]).to eq campus_course_id
     expect(feed[:campus_course][:name]).to eq fake_campus["#{term_slug}"][0][:name]
     expect(feed[:sections].length).to eq 2
+    expect(feed[:sections][0][:ccn]).to eq ccn1
     expect(feed[:sections][0][:name]).to eq "INFO #{catid} LEC 001"
+    expect(feed[:sections][1][:ccn]).to eq ccn2
+    expect(feed[:sections][1][:name]).to eq "INFO #{catid} LAB 001"
     expect(feed[:students].length).to eq 2
 
     student = feed[:students][0]
