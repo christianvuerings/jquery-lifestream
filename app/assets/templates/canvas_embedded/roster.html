@@ -1,12 +1,17 @@
 <div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
 
-  <h2 class="cc-roster-header" data-ng-bind-template="{{course.name}} - {{filterDescription}}"></h2>
+  <h2 class="cc-roster-header">
+    <span data-ng-bind="course.name"></span> -
+    <span data-ng-if="searchSection.name" data-ng-bind="searchSection.name"></span>
+    <span data-ng-if="!searchSection.name">All Sections</span>
+    <span data-ng-if="search.$" data-ng-bind-template=" - Matching '{{search.$}}'"></span>
+  </h2>
 
   <form class="cc-roster-search" data-ng-hide="errorStatus">
-    <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" data-ng-change="updateFilterDescription()" />
+    <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
 
     <div class="cc-select cc-left">
-      <select data-ng-options="section as section.name for section in sections track by section.ccn" ng-model="searchSection" data-ng-change="updateFilterDescription()">
+      <select data-ng-options="section as section.name for section in sections track by section.ccn" ng-model="searchSection">
         <option value="">All Sections</option>
       </select>
     </div>
