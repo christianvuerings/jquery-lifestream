@@ -14,7 +14,7 @@
       if (!$scope.searchSection) {
         return true;
       }
-      var section_ccn = parseInt($scope.searchSection.id, 10);
+      var section_ccn = $scope.searchSection.ccn;
       return (student.section_ccns.indexOf(section_ccn) !== -1);
     };
 
