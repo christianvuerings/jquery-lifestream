@@ -18,8 +18,8 @@ module Oec
     def append_records(output)
       campus_records = campus_data_to_hash @dept_name
       length = campus_records.length
+      Rails.logger.warn "#{length} records in campus db for #{@dept_name}"
       if length > 0
-        Rails.logger.warn "#{length} records in campus db for #{@dept_name}"
         keys_matching = []
         edited_courses = Oec::Queries.get_edited_courses(@source_dir, @dept_name)
         edited_courses.each do |edited_course|
@@ -57,7 +57,7 @@ module Oec
         end
         Rails.logger.warn "Diff results written to: #{export_directory}"
       else
-        raise "No campus data where dept_name = #{@dept_name}"
+        Rails.logger.warn "No campus data where dept_name = #{@dept_name}"
       end
     end
 
