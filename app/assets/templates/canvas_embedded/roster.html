@@ -23,7 +23,7 @@
   <ul class="cc-page-roster-list">
     <li data-ng-repeat="student in students | filter:search | filter:studentInSectionFilter | orderBy:'last_name'">
       <div data-ng-if="student.profile_url">
-        <a data-ng-href="student.profile_url" target="_top">
+        <a data-ng-href="{{student.profile_url}}" target="_top">
           <div data-ng-include="'canvas_embedded/roster_photo.html'"></div>
         </a>
       </div>
