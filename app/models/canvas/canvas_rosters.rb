@@ -11,6 +11,11 @@ module Canvas
         students: []
       }
       campus_enrollment_map = {}
+
+      course_info = Canvas::Course.new(canvas_course_id: @canvas_course_id).course
+      return feed unless course_info
+      feed[:canvas_course][:name] = course_info['name']
+
       # Look up Canvas course sections associated with official campus sections.
       official_sections = Canvas::CourseSections.new(course_id: @canvas_course_id).official_section_identifiers
       return feed unless official_sections

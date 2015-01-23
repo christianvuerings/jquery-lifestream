@@ -4,6 +4,7 @@ describe Canvas::CanvasRosters do
 
   let(:teacher_login_id) { rand(99999).to_s }
   let(:course_id) { rand(99999) }
+  let(:catid) {"#{rand(999)}"}
 
   let(:lecture_section_id) { rand(99999) }
   let(:lecture_section_ccn) { rand(9999).to_s }
@@ -14,6 +15,19 @@ describe Canvas::CanvasRosters do
   let(:discussion_section_sis_id) { "SEC:2013-C-#{discussion_section_ccn}" }
 
   subject { Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id) }
+
+  before do
+    allow_any_instance_of(Canvas::Course).to receive(:course).and_return({
+      "account_id"=>rand(9999),
+      "course_code"=>"INFO #{catid} - LEC 001",
+      "id"=>course_id,
+      "name"=>"An Official Course",
+      "term"=>{
+        "id"=>rand(9999), "name"=>"Summer 2013", "sis_term_id"=>"TERM:2013-C"
+      },
+      "sis_course_id"=>"CRS:INFO-#{catid}-2013-C",
+    })
+  end
 
   context 'when students are enrolled in multiple sections' do
     let(:student_in_discussion_section_login_id) { rand(99999).to_s }
@@ -83,6 +97,7 @@ describe Canvas::CanvasRosters do
     it 'should return enrollments for each section' do
       feed = subject.get_feed
       expect(feed[:canvas_course][:id]).to eq course_id
+      expect(feed[:canvas_course][:name]).to eq "An Official Course"
       expect(feed[:sections].length).to eq 2
       expect(feed[:students].length).to eq 2
 
