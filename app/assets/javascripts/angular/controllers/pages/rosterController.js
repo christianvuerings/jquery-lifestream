@@ -14,7 +14,8 @@
       if (!$scope.searchSection) {
         return true;
       }
-      return (student.section_ccns.indexOf($scope.searchSection) !== -1);
+      var section_ccn = parseInt($scope.searchSection.id, 10);
+      return (student.section_ccns.indexOf(section_ccn) !== -1);
     };
 
     var getRoster = function() {
@@ -24,6 +25,7 @@
 
       rosterFactory.getRoster($scope.context, $scope.courseId).success(function(data) {
         angular.extend($scope, data);
+        $scope.course = $scope[$scope.context + '_course'];
         apiService.util.iframeUpdateHeight();
       }).error(function(data, status) {
         angular.extend($scope, data);

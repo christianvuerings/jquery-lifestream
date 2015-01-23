@@ -1,12 +1,13 @@
 <div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
 
+  <h2 class="cc-roster-header" data-ng-bind-template="{{course.name}} - {{searchSection.name || 'All Sections'}}"></h2>
+
   <form class="cc-roster-search" data-ng-hide="errorStatus">
     <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
 
     <div class="cc-select cc-left">
-      <select data-ng-model="searchSection">
+      <select data-ng-options="section as section.name for section in sections track by section.id" ng-model="searchSection">
         <option value="">All Sections</option>
-        <option value="{{section.id}}" data-ng-repeat="section in sections">{{section.name}}</option>
       </select>
     </div>
     <div class="cc-right">
