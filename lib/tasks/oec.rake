@@ -3,6 +3,7 @@ namespace :oec do
   hr = "\n" + '-------------------------------------------------------------' + "\n"
   src_dir = ENV['src'].to_s == '' ? Dir.pwd : ENV['src']
   dest_dir = ENV['dest'].to_s == '' ? Dir.pwd : ENV['dest']
+  biology_dept_name = 'BIOLOGY'
 
   desc 'Export courses.csv file'
   task :courses => :environment do
@@ -10,14 +11,14 @@ namespace :oec do
     dept_set.each do |dept_name|
       Oec::Courses.new(dept_name, dest_dir).export
     end
-    Oec::BiologyPostProcessor.new(dest_dir).post_process if dept_set.include? 'BIOLOGY'
+    Oec::BiologyPostProcessor.new(dest_dir).post_process if dept_set.include? biology_dept_name
     Rails.logger.warn "#{hr}File(s) wrote to #{dest_dir}#{hr}"
   end
 
   desc 'Generate student files based on courses.csv input'
   task :students => :environment do
     dept_set = Settings.oec.departments.to_set
-    if dept_set.include? 'BIOLOGY'
+    if dept_set.include? biology_dept_name
       dept_set.add 'INTEGBI'
       dept_set.add 'MCELLBI'
     end
@@ -30,9 +31,11 @@ namespace :oec do
           klass.new(reader.ccns, reader.gsi_ccns, dest_dir).export
         end
         Rails.logger.warn "#{hr}Files wrote to #{dest_dir}#{hr}"
+      elsif dept_name == biology_dept_name
+        Rails.logger.info "As expected, #{biology_dept_name} CSV not found. BIO entries are in MCELLBI, etc."
       else
         Rails.logger.warn <<-eos
-        #{hr}[ERROR] File not found: #{csv_file}
+        #{hr}File not found: #{csv_file}
         Usage: rake oec:students [src=/path/to/source/] [dest=/export/path/]#{hr}
         eos
         raise ArgumentError, "Directory does not exist or is missing expected CSV file(s): #{src_dir}"
