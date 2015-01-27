@@ -7,7 +7,7 @@ describe Rosters::Common do
   let(:section_id) { rand(99999).to_s }
   let(:fake_feed) do
     {
-      :sections => [{ :id => section_id, :name => 'COMPSCI 9G SLF 001' }],
+      :sections => [{:id => section_id, :name => 'COMPSCI 9G SLF 001'}],
       :students => [
         {
           :enroll_status => 'E',
@@ -51,15 +51,14 @@ describe Rosters::Common do
       ]
     }
   end
-
+  subject { Rosters::Common.new(teacher_login_id, course_id: course_id) }
 
   context 'when serving roster feed based content' do
     before { allow_any_instance_of(Rosters::Common).to receive(:get_feed_internal).and_return(fake_feed) }
 
     describe '#get_feed_filtered' do
       it 'should return feed without student email addresses' do
-        model = Rosters::Common.new(teacher_login_id, course_id: course_id)
-        feed = model.get_feed_filtered
+        feed = subject.get_feed_filtered
         feed[:students].length.should == 3
         expect(feed[:students][0].has_key?(:email)).to eq false
         expect(feed[:students][1].has_key?(:email)).to eq false
@@ -69,8 +68,7 @@ describe Rosters::Common do
 
     describe '#get_csv' do
       it "returns rosters csv" do
-        model = Rosters::Common.new(teacher_login_id, course_id: course_id)
-        rosters_csv_string = model.get_csv
+        rosters_csv_string = subject.get_csv
         expect(rosters_csv_string).to be_an_instance_of String
         rosters_csv = CSV.parse(rosters_csv_string, {headers: true})
         expect(rosters_csv.count).to eq 3
@@ -96,6 +94,22 @@ describe Rosters::Common do
         expect(rosters_csv[2]['Email Address']).to eq 'mfox@example.com'
         expect(rosters_csv[2]['Role']).to eq 'Concurrent Student'
       end
+    end
+  end
+
+  describe '#index_by_attribute' do
+    it 'returns hash of arrays indexed by item attributes' do
+      sections = [
+        {:ccn => 123, :title => 'Course with CCN 123'},
+        {:ccn => 124, :title => 'Course with CCN 124'},
+        {:ccn => 125, :title => 'Course with CCN 125'},
+      ]
+      result = subject.index_by_attribute(sections, :ccn)
+      expect(result).to be_an_instance_of Hash
+      expect(result.keys).to eq [123, 124, 125]
+      expect(result[123]).to eq sections[0]
+      expect(result[124]).to eq sections[1]
+      expect(result[125]).to eq sections[2]
     end
   end
 
