@@ -102,9 +102,9 @@
      */
     var iframeUpdateHeight = function() {
       if (isInIframe) {
-        var frameHeight = document.body.scrollHeight;
-        var messageSubject = frameHeight > 5000 ? 'resizeLargeFrame' : 'lti.frameResize';
         $window.setInterval(function updateHeight() {
+          var frameHeight = document.body.scrollHeight;
+          var messageSubject = frameHeight > 5000 ? 'resizeLargeFrame' : 'lti.frameResize';
           var message = {subject: messageSubject, height: frameHeight};
           iframePostMessage(JSON.stringify(message));
         }, 250);
