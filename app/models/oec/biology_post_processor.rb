@@ -6,35 +6,38 @@ module Oec
     end
 
     def post_process
-      biology_dept_name = 'BIOLOGY'
-      biology = Oec::Courses.new(biology_dept_name, @export_dir)
+      biology_dept = 'BIOLOGY'
+      biology = Oec::Courses.new(biology_dept, @export_dir)
       path_to_biology_csv = biology.output_filename
       if File.exist? path_to_biology_csv
         header_row = nil
-        biology_rows = []
-        integbi_rows = []
-        mcellbi_rows = []
-        integbi_dept_name = 'INTEGBI'
-        mcellbi_dept_name = 'MCELLBI'
+        integbi_dept = 'INTEGBI'
+        mcellbi_dept = 'MCELLBI'
+        sorted_dept_rows = {}
         CSV.read(path_to_biology_csv).each_with_index do | row, index |
           dept_name = row[4]
           course_name = row[1]
           if index == 0
             header_row = row
-          elsif course_name.match("#{biology_dept_name} 1A[L]?").present? || dept_name.include?('INTEGBI')
-            row[4] = integbi_dept_name
-            integbi_rows << row
-          elsif course_name.match("#{biology_dept_name} 1B[L]?").present? || dept_name.include?('MCELLBI')
-            row[4] = mcellbi_dept_name
-            mcellbi_rows << row
           else
-            biology_rows << row
+            if course_name.match("#{biology_dept} 1A[L]?").present? || dept_name.include?(mcellbi_dept)
+              row[4] = mcellbi_dept
+            elsif course_name.match("#{biology_dept} 1B[L]?").present? || dept_name.include?(integbi_dept)
+              row[4] = integbi_dept
+            end
+            updated_dept_name = row[4]
+            sorted_dept_rows[updated_dept_name] ||= []
+            sorted_dept_rows[updated_dept_name] << row
           end
         end
         File.delete path_to_biology_csv
-        ExportWrapper.new(biology_dept_name, header_row, biology_rows, @export_dir, true).export if biology_rows.length > 0
-        ExportWrapper.new(integbi_dept_name, header_row, integbi_rows, @export_dir, false).export if integbi_rows.length > 0
-        ExportWrapper.new(mcellbi_dept_name, header_row, mcellbi_rows, @export_dir, false).export if mcellbi_rows.length > 0
+        export_rules = { biology_dept => true, integbi_dept => false, mcellbi_dept => false }
+        export_rules.each do | next_dept_name, overwrite_file |
+          rows = sorted_dept_rows[next_dept_name]
+          if rows && rows.length > 0
+            ExportWrapper.new(next_dept_name, header_row, rows, @export_dir, overwrite_file).export
+          end
+        end
       end
     end
   end
