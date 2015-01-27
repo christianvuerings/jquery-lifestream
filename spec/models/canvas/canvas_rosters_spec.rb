@@ -115,6 +115,12 @@ describe Canvas::CanvasRosters do
       expect(student_in_discussion_section[:last_name]).to_not be_blank
       expect(student_in_discussion_section[:email]).to_not be_blank
       expect(student_in_discussion_section[:sections].length).to eq 2
+      expect(student_in_discussion_section[:sections][0][:ccn]).to eq lecture_section_ccn
+      expect(student_in_discussion_section[:sections][0][:name]).to eq "An Official Lecture Section"
+      expect(student_in_discussion_section[:sections][0][:sis_id]).to eq lecture_section_sis_id
+      expect(student_in_discussion_section[:sections][1][:ccn]).to eq discussion_section_ccn
+      expect(student_in_discussion_section[:sections][1][:name]).to eq "An Official Discussion Section"
+      expect(student_in_discussion_section[:sections][1][:sis_id]).to eq discussion_section_sis_id
       expect(student_in_discussion_section[:section_ccns].length).to eq 2
       expect(student_in_discussion_section[:section_ccns].first).to be_a String
 
@@ -126,6 +132,9 @@ describe Canvas::CanvasRosters do
       expect(student_not_in_discussion_section[:last_name]).to_not be_blank
       expect(student_not_in_discussion_section[:email]).to_not be_blank
       expect(student_not_in_discussion_section[:sections].length).to eq 1
+      expect(student_not_in_discussion_section[:sections][0][:ccn]).to eq lecture_section_ccn
+      expect(student_not_in_discussion_section[:sections][0][:name]).to eq "An Official Lecture Section"
+      expect(student_not_in_discussion_section[:sections][0][:sis_id]).to eq lecture_section_sis_id
       expect(student_not_in_discussion_section[:section_ccns].length).to eq 1
       expect(student_not_in_discussion_section[:section_ccns].first).to be_a String
     end
