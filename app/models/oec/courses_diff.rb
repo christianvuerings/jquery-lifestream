@@ -8,7 +8,7 @@ module Oec
     end
 
     def base_file_name
-      "diff_#{@dept_name.gsub(/\s/, '_')}_courses"
+      "#{@dept_name.gsub(/\s/, '_')}_courses_confirmed"
     end
 
     def headers
