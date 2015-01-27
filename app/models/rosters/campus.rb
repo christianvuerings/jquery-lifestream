@@ -61,6 +61,10 @@ module Rosters
           end
         end
       end
+
+      # Create sections hash indexed by CCN
+      sections_index = index_by_attribute(feed[:sections], :ccn)
+
       return feed if campus_enrollment_map.empty?
       campus_enrollment_map.keys.each do |id|
         campus_student = campus_enrollment_map[id]
@@ -69,7 +73,7 @@ module Rosters
         campus_student[:profile_url] = 'https://calnet.berkeley.edu/directory/details.pl?uid=' + id
         campus_student[:sections] = []
         campus_student[:section_ccns].each do |section_ccn|
-          campus_student[:sections].push({id: section_ccn})
+          campus_student[:sections].push(sections_index[section_ccn])
         end
         if campus_student[:enroll_status] == 'E' && campus_student[:photo_bytes]
           campus_student[:photo] = "/campus/#{@campus_course_id}/photo/#{id}"
