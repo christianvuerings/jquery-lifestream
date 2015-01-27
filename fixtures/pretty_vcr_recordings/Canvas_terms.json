@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?per_page=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -42,7 +42,7 @@
             "\"edbad24b0ce13376d45551502a6e27d7\""
           ],
           "link": [
-            "<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=10>; rel=\"current\",<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=10>; rel=\"first\",<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=10>; rel=\"last\""
+            "<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=100>; rel=\"current\",<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=100>; rel=\"first\",<https://ucberkeley.beta.instructure.com/api/v1/accounts/90242/terms?page=1&per_page=100>; rel=\"last\""
           ],
           "p3p": [
             "CP=\"None, see http://www.instructure.com/privacy-policy\""
