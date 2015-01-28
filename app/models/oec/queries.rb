@@ -53,7 +53,6 @@ module Oec
       left outer join calcentral_class_schedule_vw s ON (s.course_cntl_num = c.course_cntl_num AND s.term_yr = c.term_yr AND s.term_cd = c.term_cd)
       where 1=1
         #{terms_query_clause('c', Settings.oec.current_terms_codes)}
-        #{depts_clause('c', Settings.oec.departments, false)}
         and c.primary_secondary_cd = 'S'
         and s.building_name IS NOT NULL and s.room_number IS NOT NULL and s.meeting_days IS NOT NULL and s.meeting_start_time IS NOT NULL
         and #{self.get_location_time_uid_ref('s')} IN

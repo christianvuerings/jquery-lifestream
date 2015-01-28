@@ -9,7 +9,9 @@ namespace :oec do
   task :courses => :environment do
     dept_set = Settings.oec.departments.to_set
     dept_set.each do |dept_name|
-      Oec::Courses.new(dept_name, dest_dir).export
+      exporter = Oec::Courses.new(dept_name, dest_dir)
+      exporter.export
+      Rails.logger.info "#{hr}#{dept_name} course data written to #{dest_dir}/#{exporter.base_file_name}.csv#{hr}"
     end
     Oec::BiologyPostProcessor.new(dest_dir).post_process if dept_set.include? biology_dept_name
     Rails.logger.warn "#{hr}File(s) wrote to #{dest_dir}#{hr}"
