@@ -19,10 +19,12 @@ module Oec
           course_name = row[1]
           if index == 0
             header_row = row
+          elsif dept_name.include?(mcellbi_dept) || dept_name.include?(integbi_dept)
+            Rails.logger.warn "#{row[0]} #{row[1]} #{biology.base_file_name} skipped. Course is listed #{dept_name} CSV file."
           else
-            if course_name.match("#{biology_dept} 1A[L]?").present? || dept_name.include?(mcellbi_dept)
+            if course_name.match("#{biology_dept} 1A[L]?").present?
               row[4] = mcellbi_dept
-            elsif course_name.match("#{biology_dept} 1B[L]?").present? || dept_name.include?(integbi_dept)
+            elsif course_name.match("#{biology_dept} 1B[L]?").present?
               row[4] = integbi_dept
             end
             updated_dept_name = row[4]

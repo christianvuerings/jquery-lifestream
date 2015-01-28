@@ -7,14 +7,15 @@ namespace :oec do
 
   desc 'Export courses.csv file'
   task :courses => :environment do
+    files_created = []
     dept_set = Settings.oec.departments.to_set
     dept_set.each do |dept_name|
       exporter = Oec::Courses.new(dept_name, dest_dir)
       exporter.export
-      Rails.logger.info "#{hr}#{dept_name} course data written to #{dest_dir}/#{exporter.base_file_name}.csv#{hr}"
+      files_created << "#{dest_dir}/#{exporter.base_file_name}.csv"
     end
     Oec::BiologyPostProcessor.new(dest_dir).post_process if dept_set.include? biology_dept_name
-    Rails.logger.warn "#{hr}File(s) wrote to #{dest_dir}#{hr}"
+    Rails.logger.warn "#{hr}Files created:#{"\n " + files_created.join("\n ")}#{hr}"
   end
 
   desc 'Generate student files based on courses.csv input'
