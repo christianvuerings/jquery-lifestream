@@ -71,7 +71,7 @@ module Rosters
     end
 
     def sections_to_name_string(sections)
-      sections.map {|section| section[:name]}.join(', ')
+      sections.map {|section| section[:name]}.sort.join(', ')
     end
 
   end
