@@ -4,10 +4,16 @@ describe Rosters::Common do
 
   let(:teacher_login_id) { rand(99999).to_s }
   let(:course_id) { rand(99999) }
-  let(:section_id) { rand(99999).to_s }
+  let(:section_id_one) { rand(99999).to_s }
+  let(:section_id_two) { rand(99999).to_s }
+  let(:section_id_three) { rand(99999).to_s }
   let(:fake_feed) do
     {
-      :sections => [{:id => section_id, :name => 'COMPSCI 9G SLF 001'}],
+      :sections => [
+        {:ccn => section_id_one, :name => 'COMPSCI 9G SLF 001'},
+        {:ccn => section_id_two, :name => 'COMPSCI 9G SLF 002'},
+        {:ccn => section_id_three, :name => 'COMPSCI 9G SLF 003'},
+      ],
       :students => [
         {
           :enroll_status => 'E',
@@ -17,7 +23,9 @@ describe Rosters::Common do
           :first_name => 'Jack',
           :last_name => 'Nicholson',
           :email => 'jnicholson@example.com',
-          :sections => [{:id => section_id}],
+          :sections => [
+            {:ccn => section_id_one, :name => 'COMPSCI 9G SLF 001'}
+          ],
           :photo => '/canvas/1/photo/9016',
           :photo_bytes => '8203.0',
           :profile_url => 'http://example.com/courses/733/users/9016',
@@ -30,7 +38,10 @@ describe Rosters::Common do
           :first_name => 'Seth',
           :last_name => 'Rogen',
           :email => 'srogen@example.com',
-          :sections => [{:id => section_id}],
+          :sections => [
+            {:ccn => section_id_one, :name => 'COMPSCI 9G SLF 001'},
+            {:ccn => section_id_two, :name => 'COMPSCI 9G SLF 002'}
+          ],
           :photo => '/canvas/1/photo/9017',
           :photo_bytes => '9203.1',
           :profile_url => 'http://example.com/courses/733/users/9017',
@@ -43,7 +54,9 @@ describe Rosters::Common do
           :first_name => 'Michael',
           :last_name => 'Fox',
           :email => 'mfox@example.com',
-          :sections => [{:id => section_id}],
+          :sections => [
+            {:ccn => section_id_three, :name => 'COMPSCI 9G SLF 003'}
+          ],
           :photo => '/canvas/1/photo/9018',
           :photo_bytes => '7802.0',
           :profile_url => 'http://example.com/courses/733/users/9018',
@@ -79,6 +92,7 @@ describe Rosters::Common do
         expect(rosters_csv[0]['Student ID']).to eq '289017'
         expect(rosters_csv[0]['Email Address']).to eq 'jnicholson@example.com'
         expect(rosters_csv[0]['Role']).to eq 'Student'
+        expect(rosters_csv[0]['Sections']).to eq 'COMPSCI 9G SLF 001'
 
         expect(rosters_csv[1]).to be_an_instance_of CSV::Row
         expect(rosters_csv[1]['Name']).to eq 'Rogen, Seth'
@@ -86,6 +100,7 @@ describe Rosters::Common do
         expect(rosters_csv[1]['Student ID']).to eq '289018'
         expect(rosters_csv[1]['Email Address']).to eq 'srogen@example.com'
         expect(rosters_csv[1]['Role']).to eq 'Waitlist Student'
+        expect(rosters_csv[1]['Sections']).to eq 'COMPSCI 9G SLF 001, COMPSCI 9G SLF 002'
 
         expect(rosters_csv[2]).to be_an_instance_of CSV::Row
         expect(rosters_csv[2]['Name']).to eq 'Fox, Michael'
@@ -93,6 +108,7 @@ describe Rosters::Common do
         expect(rosters_csv[2]['Student ID']).to eq '289019'
         expect(rosters_csv[2]['Email Address']).to eq 'mfox@example.com'
         expect(rosters_csv[2]['Role']).to eq 'Concurrent Student'
+        expect(rosters_csv[2]['Sections']).to eq 'COMPSCI 9G SLF 003'
       end
     end
   end
@@ -100,9 +116,9 @@ describe Rosters::Common do
   describe '#index_by_attribute' do
     it 'returns hash of arrays indexed by item attributes' do
       sections = [
-        {:ccn => 123, :title => 'Course with CCN 123'},
-        {:ccn => 124, :title => 'Course with CCN 124'},
-        {:ccn => 125, :title => 'Course with CCN 125'},
+        {:ccn => 123, :name => 'Course with CCN 123'},
+        {:ccn => 124, :name => 'Course with CCN 124'},
+        {:ccn => 125, :name => 'Course with CCN 125'},
       ]
       result = subject.index_by_attribute(sections, :ccn)
       expect(result).to be_an_instance_of Hash
@@ -110,6 +126,21 @@ describe Rosters::Common do
       expect(result[123]).to eq sections[0]
       expect(result[124]).to eq sections[1]
       expect(result[125]).to eq sections[2]
+    end
+  end
+
+  describe '#sections_to_name_string' do
+    it 'returns section names in string format' do
+      sections = [
+        {:ccn => 123, :name => 'Course with CCN 123'},
+        {:ccn => 124, :name => 'Course with CCN 124'},
+      ]
+      result = subject.sections_to_name_string([sections[0]])
+      expect(result).to eq "Course with CCN 123"
+      result = subject.sections_to_name_string([sections[1]])
+      expect(result).to eq "Course with CCN 124"
+      result = subject.sections_to_name_string(sections)
+      expect(result).to eq "Course with CCN 123, Course with CCN 124"
     end
   end
 
