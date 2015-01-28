@@ -32,7 +32,7 @@
             <div class="cc-ellipsis cc-widget-mycalendar-datelist-location cc-text-light" data-ng-bind="item.location" data-ng-if="item.location"></div>
           </div>
           <div class="cc-widget-mycalendar-more" data-ng-if="item.show">
-            <div class="cc-widget-mycalendar-startend">
+            <div class="cc-widget-mycalendar-startend cc-clearfix-container">
               <div data-ng-switch data-on="item.isAllDay">
                 <div data-ng-switch-when="true"><p data-ng-bind="item.start.epoch * 1000 | date:'EEE, MMMM d'"></p></div>
                 <div data-ng-switch-when="false">
@@ -43,15 +43,18 @@
                 </div>
               </div>
             </div>
+            <div data-ng-if="item.hangoutLink" class="cc-widget-mycalendar-hangout">
+              <i class="fa fa-video-camera"></i> <a data-ng-href="{{item.hangoutLink}}" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Up Next', 'Hangout', item.hangoutLink)">Join Hangout</a>
+            </div>
             <span class="cc-widget-mycalendar-header">Organizer:</span>
             <p class="cc-widget-mycalendar-indent" data-ng-bind="item.organizer"></p>
-            <span data-ng-if="item.attendees" class="cc-widget-mycalendar-header">Invitees:</span>
-            <ul class="cc-widget-mycalendar-list-attendees cc-widget-mycalendar-indent">
+            <span data-ng-if="item.attendees.length" class="cc-widget-mycalendar-header">Invitees:</span>
+            <ul class="cc-widget-mycalendar-list-attendees cc-widget-mycalendar-indent" data-ng-if="item.attendees.length">
               <li data-ng-repeat="attendee in item.attendees track by $index" class="cc-ellipsis" data-ng-bind="attendee"></li>
             </ul>
-            <p class="cc-widget-mycalendar-indent">
-              <a class="cc-button" data-ng-href="{{item.html_link}}" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Up Next', 'bCal', item.html_link)">View in bCal</a>
-            </p>
+            <div>
+              <a class="cc-button" data-ng-href="{{item.htmlLink}}" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Up Next', 'bCal', item.htmlLink)">View in bCal</a>
+            </div>
           </div>
         </div>
       </li>

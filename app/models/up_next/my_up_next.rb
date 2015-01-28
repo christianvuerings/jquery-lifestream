@@ -118,9 +118,10 @@ module UpNext
           formatted_entry = {
             :attendees => handle_attendees(entry["attendees"]),
             :organizer => handle_organizer(entry["organizer"]),
-            :html_link => entry["htmlLink"] || "",
+            :htmlLink => entry["htmlLink"] || "",
             :status => entry["status"] || "",
-            :summary => entry["summary"] || ""
+            :summary => entry["summary"] || "",
+            :hangoutLink => entry["hangoutLink"] || ""
           }
 
           formatted_entry.merge! handle_location(entry["location"])
