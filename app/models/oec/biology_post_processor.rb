@@ -22,14 +22,14 @@ module Oec
           elsif dept_name.include?(mcellbi_dept) || dept_name.include?(integbi_dept)
             Rails.logger.warn "#{row[0]} #{row[1]} #{biology.base_file_name} skipped. Course is listed #{dept_name} CSV file."
           else
+            target_csv = biology_dept
             if course_name.match("#{biology_dept} 1A[L]?").present?
-              row[4] = mcellbi_dept
+              target_csv = row[4] = mcellbi_dept
             elsif course_name.match("#{biology_dept} 1B[L]?").present?
-              row[4] = integbi_dept
+              target_csv = row[4] = integbi_dept
             end
-            updated_dept_name = row[4]
-            sorted_dept_rows[updated_dept_name] ||= []
-            sorted_dept_rows[updated_dept_name] << row
+            sorted_dept_rows[target_csv] ||= []
+            sorted_dept_rows[target_csv] << row
           end
         end
         File.delete path_to_biology_csv
