@@ -13,19 +13,28 @@ describe Finaid::MyFinAid do
   let(:documented_types) { %w(alert financial message info) }
 
   describe 'expected feed structure on remote proxy' do
-    it 'should have a successful response code and message' do
-      feed = fake_oski_finaid_current.get.try(:[], :body)
-      content = Nokogiri::XML(feed) { |config| config.strict }
-      content.css('Response Code').text.strip.should == '0000'
-      content.css('Response Message').text.strip.should == 'Success'
+    context 'when student is Oski' do
+      let!(:feed) { fake_oski_finaid_current.get }
+
+      it 'should have a successful response code and message' do
+        expect(feed['SSIDOC']['Response']['Code'].to_text).to eq '0000'
+        expect(feed['SSIDOC']['Response']['Message'].to_text).to eq 'Success'
+      end
+
+      it 'should include multiple documents and diagnostics' do
+        expect(feed['SSIDOC']['FALifecycle']['TrackData']['TrackDocs']['Document'].to_a.count).to be > 1
+        expect(feed['SSIDOC']['FALifecycle']['DiagnosticData']['Diagnostic'].to_a.count).to be > 1
+      end
     end
-    it 'should have a unsuccessful response code and message for registered test students', :testext => true do
-      Finaid::Proxy.any_instance.stub(:lookup_student_id).and_return('97450293475029347520394785')
-      proxy = Finaid::Proxy.new({user_id: '300849', term_year: this_term_year})
-      feed = proxy.get.try(:[], :body)
-      content = Nokogiri::XML(feed, &:strict)
-      content.css('Response Code').text.should == 'B0023'
-      content.css('Response Message').text.strip.should == 'FAILED - BIO record does not exist'
+
+    context 'when student is a registered test student', :testext => true do
+      before { allow_any_instance_of(Finaid::Proxy).to receive(:lookup_student_id).and_return('97450293475029347520394785') }
+      let!(:feed) { Finaid::Proxy.new({user_id: '300849', term_year: this_term_year}).get }
+
+      it 'should have a unsuccessful response code and message' do
+        expect(feed['SSIDOC']['Response']['Code'].to_text).to eq 'B0023'
+        expect(feed['SSIDOC']['Response']['Message'].to_text).to eq 'FAILED - BIO record does not exist'
+      end
     end
   end
 
@@ -49,9 +58,10 @@ describe Finaid::MyFinAid do
       before { allow(Finaid::TimeRange).to receive(:cutoff_date).and_return(Time.zone.parse('Wed, 27 Feb 2013 16:50:47 PST -08:00')) }
       it 'should not include messages that are more than one year old' do
         activities = []
-        feed = '<SSIDOC><TrackDocs><Document><Name>Selective Service Verification</Name><Date>2013-03-07</Date></Document><Document><Name>Free Application for Federal Student Aid (FAFSA)</Name><Date>2013-01-28</Date></Document></TrackDocs></SSIDOC>'
-        content = Nokogiri::XML(feed, &:strict)
-        documents = content.css('TrackDocs Document')
+        feed_xml = '<SSIDOC><TrackDocs><Document><Name>Selective Service Verification</Name><Date>2013-03-07</Date></Document><Document><Name>Free Application for Federal Student Aid (FAFSA)</Name><Date>2013-01-28</Date></Document></TrackDocs></SSIDOC>'
+        feed = FeedWrapper.new(MultiXml.parse(feed_xml))
+        documents = feed['SSIDOC']['TrackDocs']['Document'].as_collection
+
         Rails.logger.should_receive(:info).once.with(/Document is too old to be shown/)
         subject.append_documents!(documents, '2013-2014', activities)
         activities.length.should == 1

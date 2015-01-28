@@ -34,37 +34,29 @@ module Finaid
       return unless proxies.present? && proxies.first.lookup_student_id.present?
 
       proxies.each do |proxy|
-        next unless feed = proxy.get.try(:[], :body)
-        begin
-          content = Nokogiri::XML(feed, &:strict)
-        rescue Nokogiri::XML::SyntaxError
-          next
-        end
-
-        next unless valid_xml_response?(content)
+        next unless feed = proxy.get
+        next unless feed_available?(feed)
 
         academic_year = term_year_to_s(proxy.term_year)
+        diagnostics = feed['SSIDOC']['FALifecycle']['DiagnosticData']['Diagnostic'].as_collection
+        documents = feed['SSIDOC']['FALifecycle']['TrackData']['TrackDocs']['Document'].as_collection
 
-        append_diagnostics!(content.css("DiagnosticData Diagnostic"), academic_year, activities)
-        append_documents!(content.css("TrackDocs Document"), academic_year, activities)
+        append_diagnostics!(diagnostics, academic_year, activities)
+        append_documents!(documents, academic_year, activities)
       end
     end
 
     def append_documents!(documents, academic_year, activities)
       cutoff_date = TimeRange.cutoff_date
       documents.each do |document|
-        title = document.css("Name").text.strip
-
-        date = parsed_date(document.css("Date").text.strip)
+        title = document['Name'].to_text
+        date = document['Date'].to_date
         if date.present? && (date < cutoff_date)
           logger.info "Document is too old to be shown: #{date.inspect} < #{cutoff_date}"
           next
         end
         date = format_date(date) if date.present?
-
-        summary = document.css("Supplemental Usage Content[Type='TXT']").text.strip
-        url = document.css("Supplemental Usage Content[Type='URL']").text.strip
-        url = "https://myfinaid.berkeley.edu" if url.blank?
+        summary, url = get_supplemental_usage(document)
 
         result = {
           id: '',
@@ -78,7 +70,7 @@ module Finaid
         }
 
         begin
-          raw_status = document.css("Status").text.strip
+          raw_status = document['Status'].to_text
           append_status(date, raw_status, result)
         rescue ArgumentError
           logger.error "Unable to decode finAid status for document: #{document.inspect} date: #{date.inspect}, status: #{raw_status.inspect}"
@@ -91,13 +83,12 @@ module Finaid
 
     def append_diagnostics!(diagnostics, academic_year, activities)
       diagnostics.each do |diagnostic|
-        next unless diagnostic.css("Categories Category[Name='CAT01']").text.try(:strip) == 'W'
-        title = diagnostic.css("Message").text.strip
-        url = diagnostic.css("Supplemental Usage Content[Type='URL']").text.strip
-        url = "https://myfinaid.berkeley.edu" if url.blank?
-        summary = diagnostic.css("Usage Content[Type='TXT']").text.strip
-        category = diagnostic.attribute('Category').try('value')
+        categories = diagnostic['Categories']['Category'].as_collection
+        next unless categories.find_by('Name', 'CAT01').content == 'W'
 
+        title = diagnostic['Message'].to_text
+        category = diagnostic['Category'].to_text
+        summary, url = get_supplemental_usage(diagnostic)
         next unless (title.present? && summary.present?)
 
         activities << {
@@ -158,20 +149,27 @@ module Finaid
       end
     end
 
-    def parsed_date(date_string='')
-      Date.parse(date_string).in_time_zone.to_datetime rescue ""
+    def get_supplemental_usage(element)
+      usage_contents = element['Supplemental']['Usage']['Content'].as_collection
+      summary = usage_contents.find_by('Type', 'TXT').content
+      url = usage_contents.find_by('Type', 'URL').content("https://myfinaid.berkeley.edu")
+      [summary, url]
     end
 
     def term_year_to_s(term_year)
       "#{term_year.to_i-1}-#{term_year}"
     end
 
-    def valid_xml_response?(xmldoc)
-      code = xmldoc.css('Response Code').text.strip
-      message = xmldoc.css('Response Message').text.strip
-      return true if code == '0000'
-      logger.warn("Feed not available for UID (#{@uid}). Code: #{code}, Message: #{message}")
-      false
+    def feed_available?(feed)
+      response_data = feed['SSIDOC']['Response']
+      code = response_data['Code'].to_text('[No Code]')
+      message = response_data['Message'].to_text('[No Message]')
+      if code == '0000'
+        true
+      else
+        logger.warn("Feed not available for UID (#{@uid}). Code: #{code}, Message: #{message}")
+        false
+      end
     end
 
   end
