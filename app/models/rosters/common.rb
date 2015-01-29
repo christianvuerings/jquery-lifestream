@@ -62,12 +62,8 @@ module Rosters
       end
     end
 
-    def index_by_attribute(array_of_hashes, attribute)
-      index = {}
-      array_of_hashes.each do |hash|
-        index[hash[attribute]] = hash
-      end
-      return index
+    def index_by_attribute(array_of_hashes, key)
+      Hash[array_of_hashes.map { |s| [s[key], s] }]
     end
 
     def sections_to_name_string(sections)
