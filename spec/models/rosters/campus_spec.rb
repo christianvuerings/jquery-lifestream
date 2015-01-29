@@ -106,6 +106,10 @@ describe 'Rosters::Campus' do
     expect(student[:last_name].blank?).to be_falsey
     expect(student[:email].blank?).to be_falsey
     expect(student[:sections].length).to eq 2
+    expect(student[:sections][0][:ccn]).to eq ccn1
+    expect(student[:sections][0][:name]).to eq "INFO #{catid} LEC 001"
+    expect(student[:sections][1][:ccn]).to eq ccn2
+    expect(student[:sections][1][:name]).to eq "INFO #{catid} LAB 001"
     expect(student[:profile_url].blank?).to be_falsey
   end
 

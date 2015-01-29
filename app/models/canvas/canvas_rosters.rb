@@ -55,12 +55,22 @@ module Canvas
         end
       end
 
+      # Create sections hash indexed by CCN
+      sections_index = index_by_attribute(feed[:sections], :ccn)
+
       campus_enrollment_map.each do |ldap_uid, campus_student|
         campus_student[:id] = ldap_uid
         campus_student[:login_id] = ldap_uid
         if campus_student[:enroll_status] == 'E' && campus_student[:photo_bytes]
           campus_student[:photo] = "/canvas/#{@canvas_course_id}/photo/#{ldap_uid}"
         end
+
+        # Populate sections
+        campus_student[:sections] = []
+        campus_student[:section_ccns].each do |section_ccn|
+          campus_student[:sections].push(sections_index[section_ccn])
+        end
+
         feed[:students] << campus_student
       end
 
