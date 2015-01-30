@@ -3,17 +3,12 @@ class BootstrapController < ApplicationController
   before_filter :get_settings, :initialize_calcentral_config
   before_filter :check_lti_only
   before_filter :check_databases_alive, :warmup_live_updates
-  layout 'application'
+  layout false
   caches_action :index, :layout => false
 
-  # index redirects to / if client is being wacky and asking for a format other than HTML.
+  # Always redirect to public/index.html and let the front-end handle the routes
   def index
-    respond_to do |format|
-      format.html
-      format.all do
-        redirect_to url_for_path '/404'
-      end
-    end
+    render "public/index.html"
   end
 
   # CalCentral cannot fully trust a user session which was initiated via an LTI embedded app,
