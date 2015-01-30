@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="calcentral" data-ng-controller="CalcentralController">
+<head>
+  <meta charset="utf-8" />
+
+  <title data-ng-bind="title">CalCentral</title>
+
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui" />
+  <meta name="description" content="CalCentral is a new resource for the UC Berkeley community." />
+
+  <!-- Set a web app capable website -->
+  <meta name="apple-mobile-web-app-capable" content="no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="CalCentral">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- https://mathiasbynens.be/notes/touch-icons -->
+  <link href="/assets/images/app_icons/icon-small@2x.png" rel="apple-touch-icon" />
+  <link href="/assets/images/app_icons/icon-72.png" rel="apple-touch-icon" sizes="72x72" />
+  <link href="/assets/images/app_icons/icon-76.png" rel="apple-touch-icon" sizes="76x76" />
+  <link href="/assets/images/app_icons/icon-60@2x.png" rel="apple-touch-icon" sizes="120x120" />
+  <link href="/assets/images/app_icons/icon-72@2x.png" rel="apple-touch-icon" sizes="144x144" />
+  <link href="/assets/images/app_icons/icon-76@2x.png" rel="apple-touch-icon" sizes="152x152" />
+  <link href="/assets/images/app_icons/icon-60@3x.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/assets/images/app_icons/192.png" rel="icon" sizes="192x192" />
+
+  <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+  <link href="/assets/images/favicon_16x16.png" rel="icon" sizes="16x16" type="image/png" />
+  <link href="/assets/images/favicon_32x32.png" rel="icon" sizes="32x32" type="image/png" />
+
+  <link rel="manifest" href="manifest.json">
+
+  <noscript><meta http-equiv="Refresh" content="0; URL=/enable-javascript.html"></noscript>
+
+  <base href="/" />
+
+  <script>
+    /**
+     * Expose the CalCentral config to the JS code
+     * Includes
+     *   csrf tokens
+     *   uid
+     *   google analytics id
+     *   app version
+     *   hostname
+     */
+    (function() {
+      'use strict';
+
+      // Create a new Ajax request
+      var request = new XMLHttpRequest();
+
+      // Callback when the Ajax request is loaded
+      var loaded = function() {
+        // Only set the calcentralConfig variable when the request was succesful
+        if (request.readyState === 4 && request.status === 200) {
+          window.calcentralConfig = JSON.parse(this.responseText);
+        }
+      };
+
+      // Add the onload listner
+      request.onload = loaded;
+      // The false option will make sure the request happens synchronously.
+      request.open('GET', '/api/calcentral_config', false);
+      // Send the XHR request
+      request.send();
+    })();
+  </script>
+
+  <link href="/assets/stylesheets/application.css" rel="stylesheet" />
+  <script src="/assets/javascripts/application.js"></script>
+</head>
+
+<body
+  data-ng-class="{'cc-page-splash':(controllerName==='SplashController'),'cc-offcanvas-show':(offCanvasMenu.show)}"
+  data-ng-show="api.user.events.isLoaded"
+  data-cc-iosfix-directive>
+
+  <div data-ng-include="'accessibility.html'"></div>
+  <div data-ng-include="'ieold.html'"></div>
+  <div data-ng-include="'launcher.html'"></div>
+
+  <div class="cc-off-canvas-container" data-ng-swipe-left="offCanvasMenu.show=false">
+    <div class="cc-offcanvas-left cc-print-hide" id="cc-navigation">
+      <div data-ng-include="'navigation.html'"></div>
+    </div>
+
+    <div class="cc-offcanvas-right">
+      <div
+      class="row cc-container-main"
+      data-ng-class="{'collapse':(controllerName === 'DashboardController' || controllerName === 'AcademicsController')}"
+      id="cc-main-content"
+      role="main">
+        <div data-ng-include="'alerts.html'"></div>
+        <div class="cc-clearfix-container" data-ng-view></div>
+      </div>
+      <div data-ng-include="'footer.html'"></div>
+    </div>
+  </div>
+  <div data-ng-include="'actingas.html'"></div>
+
+</body>
+</html>
