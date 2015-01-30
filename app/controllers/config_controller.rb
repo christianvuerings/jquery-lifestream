@@ -1,4 +1,4 @@
-class CalcentralConfigController < ApplicationController
+class ConfigController < ApplicationController
   before_filter :get_settings, :initialize_calcentral_config
 
   def get
