@@ -39,6 +39,10 @@ class AuthenticationStatePolicy
     !Rails.env.production? || can_administrate?
   end
 
+  def can_create_canvas_project_site?
+    can_administrate_canvas? || CampusOracle::UserAttributes.new(:user_id => @user.user_id).is_staff_or_faculty?
+  end
+
   def can_create_canvas_course_site?
     can_administrate_canvas? || Canvas::CurrentTeacher.new(@user.user_id).user_currently_teaching?
   end

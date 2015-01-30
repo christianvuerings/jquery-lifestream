@@ -145,6 +145,28 @@ describe AuthenticationStatePolicy do
     end
   end
 
+  describe '#can_create_canvas_project_site?' do
+    let(:user_id) { average_joe_uid }
+    subject { AuthenticationState.new(session_state).policy.can_create_canvas_project_site? }
+    context 'when user is not a staff or faculty member' do
+      before { allow_any_instance_of(CampusOracle::UserAttributes).to receive(:is_staff_or_faculty?).and_return(false) }
+      it { should eq false }
+    end
+    context 'when user is teaching courses in a current term' do
+      before { allow_any_instance_of(CampusOracle::UserAttributes).to receive(:is_staff_or_faculty?).and_return(true) }
+      it { should eq true }
+    end
+    context 'when user is a canvas root account administrator' do
+      before { allow(Canvas::Admins).to receive(:new).and_return(double(admin_user?: true)) }
+      it { should eq true }
+    end
+    context 'when user is a calcentral administrator' do
+      let(:user_id) {superuser_uid}
+      it { should eq true }
+    end
+
+  end
+
   describe '#can_create_canvas_course_site?' do
     let(:user_id) {average_joe_uid}
     subject { AuthenticationState.new(session_state).policy.can_create_canvas_course_site? }
