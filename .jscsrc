@@ -43,12 +43,11 @@
   "disallowTrailingComma": true,
   "disallowTrailingWhitespace": true,
   "excludeFiles": [
-    "app/assets/javascripts/application.js",
-    "app/assets/javascripts/angularlib/**",
-    "app/assets/javascripts/lib/**",
+    "src/assets/javascripts/angularlib/**",
+    "src/assets/javascripts/lib/**",
+    "public/assets/**",
     "coverage/**",
     "node_modules/**",
-    "public/dummy/js/videos.js",
     "vendor/**"
   ],
   "requireBlocksOnNewline": true,
