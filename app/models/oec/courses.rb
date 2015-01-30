@@ -17,6 +17,7 @@ module Oec
     def append_records(output)
       visited_row_set = Set.new
       secondary_ccn_array = []
+      departments_using_oec = Settings.oec.departments
       Oec::Queries.get_courses(nil, @dept_name).each do |course|
         row = record_to_csv_row course
         # No practical way to combine these fields in SQL, so we'll do it here in Ruby.
@@ -25,10 +26,15 @@ module Oec
           cross_listings = Oec::Queries.get_courses course['cross_listed_name']
           cross_listings.each do |crosslist|
             cross_list_row = record_to_csv_row crosslist
-            cross_list_row['CROSS_LISTED_NAME'] = "#{crosslist['course_title_short']} (#{crosslist['cross_listed_name']})"
-            cross_list_row.delete 'COURSE_TITLE_SHORT'
-            append_row(output, cross_list_row, visited_row_set, crosslist)
-            append_secondary_ccn(secondary_ccn_array, course)
+            crosslist_dept_name = crosslist['dept_name']
+            if crosslist['cross_listed_flag'].to_s == '' && !departments_using_oec.include?(crosslist_dept_name)
+              Rails.logger.warn "#{@dept_name}.csv: Omit cross-listed #{crosslist['course_id']} of non-participating #{crosslist_dept_name} dept"
+            else
+              cross_list_row['CROSS_LISTED_NAME'] = "#{crosslist['course_title_short']} (#{crosslist['cross_listed_name']})"
+              cross_list_row.delete 'COURSE_TITLE_SHORT'
+              append_row(output, cross_list_row, visited_row_set, crosslist)
+              append_secondary_ccn(secondary_ccn_array, course)
+            end
           end
           row.delete 'COURSE_TITLE_SHORT'
         else
