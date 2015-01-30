@@ -25,14 +25,16 @@ namespace :oec do
       dept_set.add 'INTEGBI'
       dept_set.add 'MCELLBI'
     end
+    students_csv_created = false
     dept_set.each do |dept_name|
       filename = "#{dept_name.gsub(/\s/, '_')}_courses.csv"
       csv_file = "#{src_dir}/#{filename}"
       if File.exists? csv_file
         reader = Oec::FileReader.new csv_file
         [Oec::Students, Oec::CourseStudents].each do |klass|
-          klass.new(reader.ccns, reader.gsi_ccns, dest_dir).export
+          klass.new(reader.ccns, reader.gsi_ccns, dest_dir).export !students_csv_created
         end
+        students_csv_created = true
         Rails.logger.warn "#{hr}Files wrote to #{dest_dir}#{hr}"
       elsif dept_name == biology_dept_name
         Rails.logger.info "As expected, #{biology_dept_name} CSV not found. BIO entries are in MCELLBI, etc."

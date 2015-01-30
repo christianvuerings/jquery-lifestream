@@ -37,7 +37,7 @@ module Oec
         export_rules.each do | next_dept_name, overwrite_file |
           rows = sorted_dept_rows[next_dept_name]
           if rows && rows.length > 0
-            ExportWrapper.new(next_dept_name, header_row, rows, @export_dir, overwrite_file).export
+            ExportWrapper.new(next_dept_name, header_row, rows, @export_dir).export overwrite_file
           end
         end
       end
@@ -46,27 +46,10 @@ module Oec
 
   class ExportWrapper < Oec::Courses
 
-    def initialize(dept_name, header_row, rows, export_dir, overwrite_file = false)
+    def initialize(dept_name, header_row, rows, export_dir)
       super(dept_name, export_dir)
       @header_row = header_row
       @rows = rows
-      @overwrite_file = overwrite_file
-    end
-
-    def export
-      file = output_filename
-      output = CSV.open(
-        file, @overwrite_file ? 'wb' : 'a',
-        {
-          headers: headers,
-          write_headers: @overwrite_file
-        }
-      )
-      append_records output
-      output.close
-      {
-        filename: file
-      }
     end
 
     def headers

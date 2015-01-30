@@ -5,13 +5,13 @@ module Oec
       super export_dir
     end
 
-    def export
+    def export(overwrite_file = true)
       file = output_filename
       output = CSV.open(
-        file, 'wb',
+        file, overwrite_file ? 'wb' : 'a',
         {
           headers: headers,
-          write_headers: true
+          write_headers: overwrite_file
         }
       )
       append_records output
@@ -21,7 +21,7 @@ module Oec
       }
     end
 
-    def output_filename(basename = nil, timestamp = nil)
+    def output_filename
       "#{export_directory}/#{base_file_name}.csv"
     end
 
