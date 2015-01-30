@@ -11,6 +11,7 @@
 * [JDBC Oracle driver](http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html)
 * [Java 7 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [JRuby 1.7.x](http://jruby.org/)
+* [Node.js >=0.10.30](http://nodejs.org/)
 * [PostgreSQL](http://www.postgresql.org/)
 * [Rails 3.2.x](http://rubyonrails.org/download)
 * [Rubygems](http://rubyforge.org/frs/?group_id=126)
@@ -142,6 +143,19 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     # e.g. rake superuser:create UID=61889
     ```
 
+1. Install the frond-end tools
+
+    ```bash
+    npm install
+    npm install -g gulp
+    ```
+
+1. Start the front-end build & watch for changes
+
+    ```bash
+    gulp build
+    ```
+
 1. Start the server:
 
     ```bash
@@ -197,21 +211,12 @@ Front-end linting can be done by running the following commands:
 rm -rf node_modules
 npm install -g jshint
 npm install -g jscs
+gulp build
 jshint .
 jscs .
 ```
 
 This will check for any potential JavaScript issues and whether you formatted the code correctly.
-
-## LiveReload
-
-Enabling [LiveReload](http://livereload.com/) results in the browser refreshing without having to do a manual reload.
-
-1. [Install the LiveReload application](http://feedback.livereload.com/knowledgebase/articles/67441-how-do-i-start-using-livereload).
-1. [Install the browser extension](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions).
-1. Add the `calcentral` directory to the LiveReload application.
-1. Load CalCentral in the browser.
-1. Enable the LiveReload browser extension.
 
 ## Role-Aware Testing
 
@@ -249,10 +254,10 @@ These features may be invisible when logged in as yourself. In particular:
     RAILS_ENV="production" rake db:schema:load db:seed
     ```
 
-1. Precompile the assets: [(more info)](http://stackoverflow.com/questions/7275636/rails-3-1-0-actionviewtemplateerrror-application-css-isnt-precompiled)
+1. Precompile the front-end assets
 
     ```bash
-    bundle exec rake assets:precompile
+    gulp build --env production
     ```
 
 1. Start the server in production mode:
@@ -263,10 +268,10 @@ These features may be invisible when logged in as yourself. In particular:
 
 1. If you're not able to connect to Google or Canvas, export the data in the oauth2 from your development db and import them into the same table in your production db.
 
-1. After testing, remove the static assets and generated pages:
+1. After testing, remove the static assets:
 
     ```bash
-    bundle exec rake assets:clean
+    gulp build-clean
     ```
 
 ### Start the server with TorqueBox
