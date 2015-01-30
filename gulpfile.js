@@ -25,9 +25,6 @@
   // Are we in production mode?
   var isProduction = options.env === 'production';
 
-  // Running on bamboo?
-  var isBamboo = process.env.USER === 'bamboo';
-
   // List all the used paths
   var paths = {
     // Source files
@@ -110,31 +107,10 @@
 
   /**
    * Images task
-   *   Optimize images (production)
    *   Copy files
    */
   gulp.task('images', function() {
-    var imagemin = require('gulp-imagemin');
-    var pngquant = require('imagemin-pngquant');
-
     return gulp.src(paths.src.img)
-      .pipe(
-        // Only run on production and not on bamboo
-        // Optipng doesn't seem to compile on CentOS 5
-        // https://github.com/imagemin/optipng-bin/issues/48
-        // https://github.com/imagemin/optipng-bin/issues/40
-        gulpif(isProduction && !isBamboo,
-          imagemin({
-            progressive: true,
-            svgoPlugins: [{
-              removeViewBox: false
-            }],
-            use: [
-              pngquant()
-            ]
-          })
-        )
-      )
       .pipe(gulp.dest(paths.dist.img));
   });
 
