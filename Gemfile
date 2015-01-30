@@ -99,50 +99,14 @@ gem 'cancan', '~> 1.6.10'
 
 gem 'icalendar', '~> 2.2.2'
 
-##################
-# Front-end Gems #
-##################
+##################################
+# Front-end Gems for Rails Admin #
+##################################
 
-# Our very own library for angular dependency!
-gem 'angular-gem', '1.3.8'
-
-# Datepicker
-gem 'pikaday-gem', '~> 1.2.0'
-
-# CSS Framework
-# https://github.com/zurb/foundation
-gem 'sass-rails', '~> 4.0.4'
-gem 'autoprefixer-rails', '~> 4.0.2.2'
-gem 'foundation-rails', '~> 5.4.5.0'
 
 # Closure Compiler Gem for JS compression
 # https://github.com/documentcloud/closure-compiler
 gem 'closure-compiler', '~> 1.1.11'
-
-# so that Javascript minification will work on platforms lacking a JS runtime (Linux)
-gem 'therubyrhino', '~> 2.0.4'
-
-# Font awesome - an icon font
-# https://github.com/bokmann/font-awesome-rails
-gem 'font-awesome-rails', '~> 4.2.0.0'
-
-# Moment.js
-# https://github.com/derekprior/momentjs-rails
-gem 'momentjs-rails', '~> 2.8.3'
-
-# Raven.js - library for JS error logging
-gem 'ravenjs-gem', '~> 1.1.16'
-
-# Natural Sort JS - library for natural sorting in JS
-gem 'natural-sort-js', '~> 0.7.0'
-
-# Use ngannotate in the Rails asset pipeline.
-# https://github.com/olov/ng-annotate
-gem 'ngannotate-rails', '~> 0.14.1'
-
-# Use your angular templates with rails' asset pipeline
-# https://github.com/pitr/angular-rails-templates
-gem 'angular-rails-templates', '~> 0.1.3'
 
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
