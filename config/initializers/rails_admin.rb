@@ -125,6 +125,29 @@ RailsAdmin.config do |config|
 
   config.model 'User::Auth' do
     label 'User Authorizations'
+    list do
+      field :uid do
+        column_width 60
+      end
+      field :is_superuser do
+        column_width 20
+      end
+      field :is_author do
+        column_width 20
+      end
+      field :is_viewer do
+        column_width 20
+      end
+      field :active do
+        column_width 20
+      end
+      field :created_at do
+        column_width 130
+      end
+      field :updated_at do
+        column_width 130
+      end
+    end
   end
 
   config.model 'Finaid::FinAidYear' do
