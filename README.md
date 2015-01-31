@@ -59,14 +59,17 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
     psql postgres
     create database calcentral_development;
-    create user calcentral_development with password 'secret';
+    create user calcentral_development with password 'secret' createdb;
     grant all privileges on database calcentral_development to calcentral_development;
+    alter database calcentral_development owner to calcentral_development;
     create database calcentral;
-    create user calcentral with password 'secret';
+    create user calcentral with password 'secret' createdb;
     grant all privileges on database calcentral to calcentral;
+    alter database calcentral owner to calcentral;
     create database calcentral_test;
-    create user calcentral_test with password 'secret';
+    create user calcentral_test with password 'secret' createdb;
     grant all privileges on database calcentral_test to calcentral_test;
+    alter database calcentral_test owner to calcentral_test;
     ```
 
     **Note**: At this point, exit out of postgres. To do this, type "\q" and then press ENTER.
