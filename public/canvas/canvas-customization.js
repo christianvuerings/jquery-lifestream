@@ -182,18 +182,18 @@
   };
 
   /**
-   * Adds 'Create a Course Site' button to Dashboard and Course Index page
+   * Adds 'Create a Site' button to Dashboard and Course Index page
    * if the user is authorized to do so
    * @return {Boolean}
    */
-  var authorizeViewAddCourseButton = function() {
+  var authorizeViewAddSiteButton = function() {
     // run only on dashboard and course index pages
     if (['/', '/courses', '/courses.html'].indexOf(window.location.pathname) !== -1) {
       if (window.ENV.current_user_id) {
-        var userCanCreateCourseSiteUrl = calcentralRootUrl() + '/api/academics/canvas/user_can_create_course_site?canvas_user_id=' + window.ENV.current_user_id;
-        $.get(userCanCreateCourseSiteUrl, function(authResult) {
-          if (authResult.canCreateCourseSite) {
-            addStartANewCourseButton();
+        var userCanCreateSiteUrl = calcentralRootUrl() + '/api/academics/canvas/user_can_create_site?canvas_user_id=' + window.ENV.current_user_id;
+        $.get(userCanCreateSiteUrl, function(authResult) {
+          if (authResult.canCreateSite) {
+            addCreateASiteButton();
           }
         });
       }
@@ -201,19 +201,19 @@
   };
 
   /**
-   * Adds 'Start a New Course' link to page
+   * Adds 'Create a Site' button to page
    */
-  var addStartANewCourseButton = function() {
+  var addCreateASiteButton = function() {
     $.get(externalToolsUrl(), function(externalToolsHash) {
       var createCourseSiteId = externalToolId(externalToolsHash, 'globalTools', 'Course Provisioning for Users');
       if (createCourseSiteId) {
         var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
 
-        var $headerWithAddCourseSiteButton = $('<div/>', {
+        var $headerWithAddASiteButton = $('<div/>', {
           style: 'float:right;'
         }).html(
           $('<button/>', {
-            text: 'Create a Course Site',
+            text: 'Create a Site',
             class: 'btn btn-primary',
             click: function() {
               window.location.href = linkUrl;
@@ -222,7 +222,7 @@
         );
         var $contentArea = $('div#content');
         if (typeof($contentArea) !== 'undefined') {
-          $contentArea.prepend($headerWithAddCourseSiteButton);
+          $contentArea.prepend($headerWithAddASiteButton);
         }
       }
     });
@@ -314,7 +314,7 @@
     // allowfullscreen for webcast videos
     $('#tool_content').attr('allowfullscreen','');
 
-    authorizeViewAddCourseButton();
+    authorizeViewAddSiteButton();
     addPeopleInfoAlert();
     addEGradeExportOption();
     addAltMediaPanel();
