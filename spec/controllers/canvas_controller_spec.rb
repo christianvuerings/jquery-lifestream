@@ -36,29 +36,44 @@ describe CanvasController do
     end
   end
 
-  context "when identifying if a user can provision course sites" do
+  context "when identifying if a user can provision course or project sites" do
     it_should_behave_like "an api endpoint" do
-      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_course_site?).and_raise(RuntimeError, "Something went wrong") }
-      let(:make_request) { get :user_can_create_course_site, :canvas_user_id => canvas_user_id }
+      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_site?).and_raise(RuntimeError, "Something went wrong") }
+      let(:make_request) { get :user_can_create_site, :canvas_user_id => canvas_user_id }
     end
 
     context "when user is not authorized to create course site" do
-      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_course_site?).and_return(false) }
-      it "returns false" do
-        get :user_can_create_course_site, :canvas_user_id => canvas_user_id
+      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_site?).and_return(false) }
+      it 'includes Access-Control-Allow-Origin header' do
+        get :user_can_create_site, :canvas_user_id => canvas_user_id
+        expect(response.status).to eq(200)
+        expect(response.headers).to be_an_instance_of Hash
+        expect(response.headers['Access-Control-Allow-Origin']).to eq 'http://localhost:12345'
+      end
+
+      it 'returns false' do
+        get :user_can_create_site, :canvas_user_id => canvas_user_id
         expect(response.status).to eq(200)
         response_json = JSON.parse(response.body)
-        expect(response_json['canCreateCourseSite']).to be_falsey
+        expect(response_json['canCreateSite']).to eq false
       end
     end
 
     context "when user is authorized to create course site" do
-      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_course_site?).and_return(true) }
+      before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_site?).and_return(true) }
+
+      it 'includes Access-Control-Allow-Origin header' do
+        get :user_can_create_site, :canvas_user_id => canvas_user_id
+        expect(response.status).to eq(200)
+        expect(response.headers).to be_an_instance_of Hash
+        expect(response.headers['Access-Control-Allow-Origin']).to eq 'http://localhost:12345'
+      end
+
       it "returns true" do
-        get :user_can_create_course_site, :canvas_user_id => canvas_user_id
+        get :user_can_create_site, :canvas_user_id => canvas_user_id
         expect(response.status).to eq(200)
         response_json = JSON.parse(response.body)
-        expect(response_json['canCreateCourseSite']).to be_truthy
+        expect(response_json['canCreateSite']).to eq true
       end
     end
 

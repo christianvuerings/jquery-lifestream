@@ -1,7 +1,7 @@
 class CanvasController < ApplicationController
   include ClassLogger
 
-  before_filter :set_cross_origin_access_control_headers, :only => [:external_tools, :user_can_create_course_site]
+  before_filter :set_cross_origin_access_control_headers, :only => [:external_tools, :user_can_create_site]
   rescue_from StandardError, with: :handle_api_exception
   rescue_from Errors::ClientError, with: :handle_client_error
 
@@ -17,10 +17,10 @@ class CanvasController < ApplicationController
     render json: Canvas::ExternalTools.public_list_as_json
   end
 
-  # Indicates if a Canvas user is authorized to provision course sites
-  # GET /api/academics/canvas/user_can_create_course_site
-  def user_can_create_course_site
-    authorization = Canvas::PublicAuthorizer.new(params[:canvas_user_id]).can_create_course_site?
-    render json: {'canCreateCourseSite' => authorization}.to_json
+  # Indicates if a Canvas user is authorized to provision course or project sites
+  # GET /api/academics/canvas/user_can_create_site
+  def user_can_create_site
+    authorization = Canvas::PublicAuthorizer.new(params[:canvas_user_id]).can_create_site?
+    render json: {'canCreateSite' => authorization}.to_json
   end
 end
