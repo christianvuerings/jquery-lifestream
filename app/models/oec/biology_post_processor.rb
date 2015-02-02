@@ -23,9 +23,9 @@ module Oec
             Rails.logger.warn "#{row[0]} #{row[1]} #{biology.base_file_name} skipped. Course is listed #{dept_name} CSV file."
           else
             target_csv = biology_dept
-            if course_name.match("#{biology_dept} 1A[L]?").present?
+            if course_name.match(' 1A[L]?').present?
               target_csv = row[4] = mcellbi_dept
-            elsif course_name.match("#{biology_dept} 1B[L]?").present?
+            elsif course_name.match(' 1B[L]?').present?
               target_csv = row[4] = integbi_dept
             end
             sorted_dept_rows[target_csv] ||= []
