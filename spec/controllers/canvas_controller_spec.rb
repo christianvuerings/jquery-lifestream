@@ -20,19 +20,16 @@ describe CanvasController do
       let(:make_request) { get :external_tools }
     end
 
+    it_should_behave_like "a cross-domain endpoint" do
+      let(:make_request) { get :external_tools }
+    end
+
     it "returns public list of external tools" do
       get :external_tools
       expect(response.status).to eq(200)
       response_json = JSON.parse(response.body)
       expect(response_json).to be_an_instance_of Hash
       expect(response_json.keys).to eq ['global_tools', 'official_course_tools']
-    end
-
-    it "should set cross origin access control headers" do
-      get :external_tools
-      expect(response.header["Access-Control-Allow-Origin"]).to eq "#{Settings.canvas_proxy.url_root}"
-      expect(response.header["Access-Control-Allow-Methods"]).to eq 'GET, OPTIONS, HEAD'
-      expect(response.header["Access-Control-Max-Age"]).to eq '86400'
     end
   end
 
@@ -44,11 +41,9 @@ describe CanvasController do
 
     context "when user is not authorized to create course site" do
       before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_site?).and_return(false) }
-      it 'includes Access-Control-Allow-Origin header' do
-        get :user_can_create_site, :canvas_user_id => canvas_user_id
-        expect(response.status).to eq(200)
-        expect(response.headers).to be_an_instance_of Hash
-        expect(response.headers['Access-Control-Allow-Origin']).to eq Settings.canvas_proxy.url_root
+
+      it_should_behave_like "a cross-domain endpoint" do
+        let(:make_request) { get :user_can_create_site, :canvas_user_id => canvas_user_id }
       end
 
       it 'returns false' do
@@ -62,11 +57,8 @@ describe CanvasController do
     context "when user is authorized to create course site" do
       before { allow_any_instance_of(Canvas::PublicAuthorizer).to receive(:can_create_site?).and_return(true) }
 
-      it 'includes Access-Control-Allow-Origin header' do
-        get :user_can_create_site, :canvas_user_id => canvas_user_id
-        expect(response.status).to eq(200)
-        expect(response.headers).to be_an_instance_of Hash
-        expect(response.headers['Access-Control-Allow-Origin']).to eq Settings.canvas_proxy.url_root
+      it_should_behave_like "a cross-domain endpoint" do
+        let(:make_request) { get :user_can_create_site, :canvas_user_id => canvas_user_id }
       end
 
       it "returns true" do

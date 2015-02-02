@@ -53,3 +53,13 @@ shared_examples "an endpoint" do
     end
   end
 end
+
+shared_examples "a cross-domain endpoint" do
+  it "sets cross origin access control headers" do
+    make_request
+    expect(response.headers).to be_an_instance_of Hash
+    expect(response.headers['Access-Control-Allow-Origin']).to eq Settings.canvas_proxy.url_root
+    expect(response.header["Access-Control-Allow-Methods"]).to eq 'GET, OPTIONS, HEAD'
+    expect(response.header["Access-Control-Max-Age"]).to eq '86400'
+  end
+end
