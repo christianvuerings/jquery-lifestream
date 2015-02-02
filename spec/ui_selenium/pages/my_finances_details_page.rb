@@ -78,14 +78,11 @@ module CalCentralPages
       end
 
       def visible_transaction_dates
-        date_strings = Array.new
-        transaction_table_element.each do |row|
-          date = row[0].text
-          date_strings.push(date)
-        end
-        dates_minus_header = date_strings.drop(1)
+        date_strings = []
+        transaction_table_element.each { |row| date_strings.push(row[0].text) }
+        dates_minus_heading = date_strings.drop(1)
         dates = []
-        dates_minus_header.each { |date| dates.push(Time.strptime(date, '%m/%d/%y')) }
+        dates_minus_heading.each { |date| dates.push(Time.strptime(date, '%m/%d/%y')) }
         dates
       end
 
