@@ -52,5 +52,12 @@ module CampusOracle
       @cal_residency_translator ||= Notifications::CalResidencyTranslator.new
     end
 
+    def is_staff_or_faculty?
+      if feed = get_feed
+        return true if get_feed[:roles] && (get_feed[:roles][:faculty] || get_feed[:roles][:staff])
+      end
+      false
+    end
+
   end
 end
