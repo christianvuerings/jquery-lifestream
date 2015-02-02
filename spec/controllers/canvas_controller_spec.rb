@@ -48,7 +48,7 @@ describe CanvasController do
         get :user_can_create_site, :canvas_user_id => canvas_user_id
         expect(response.status).to eq(200)
         expect(response.headers).to be_an_instance_of Hash
-        expect(response.headers['Access-Control-Allow-Origin']).to eq 'http://localhost:12345'
+        expect(response.headers['Access-Control-Allow-Origin']).to eq Settings.canvas_proxy.url_root
       end
 
       it 'returns false' do
@@ -66,7 +66,7 @@ describe CanvasController do
         get :user_can_create_site, :canvas_user_id => canvas_user_id
         expect(response.status).to eq(200)
         expect(response.headers).to be_an_instance_of Hash
-        expect(response.headers['Access-Control-Allow-Origin']).to eq 'http://localhost:12345'
+        expect(response.headers['Access-Control-Allow-Origin']).to eq Settings.canvas_proxy.url_root
       end
 
       it "returns true" do
