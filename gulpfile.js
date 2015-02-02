@@ -298,7 +298,7 @@
       [
         'public/assets/',
         'public/index.html',
-        'public/bcourses_embedded.html',
+        'public/bcourses_embedded.html'
       ], callback);
   });
 
