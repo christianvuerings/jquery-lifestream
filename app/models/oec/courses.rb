@@ -16,7 +16,6 @@ module Oec
 
     def append_records(output)
       visited_row_set = Set.new
-      secondary_ccn_array = []
       departments_using_oec = Settings.oec.departments
       Oec::Queries.get_courses(nil, @dept_name).each do |course|
         row = record_to_csv_row course
@@ -24,41 +23,37 @@ module Oec
         if course['cross_listed_name'].present?
           # get all the cross listings of this course, even if they're in departments not part of our filter.
           cross_listings = Oec::Queries.get_courses course['cross_listed_name']
-          cross_listings.each do |crosslist|
-            cross_list_row = record_to_csv_row crosslist
-            crosslist_dept_name = crosslist['dept_name']
-            if crosslist['cross_listed_flag'].to_s == '' && !departments_using_oec.include?(crosslist_dept_name)
-              Rails.logger.warn "#{@dept_name}.csv: Omit cross-listed #{crosslist['course_id']} of non-participating #{crosslist_dept_name} dept"
+          cross_listings.each do |cross_listing|
+            cross_list_row = record_to_csv_row cross_listing
+            cross_listed_dept = cross_listing['dept_name']
+            if cross_listing['cross_listed_flag'].to_s == '' && !departments_using_oec.include?(cross_listed_dept)
+              Rails.logger.warn "#{@dept_name}.csv: Omit cross-listed #{cross_listing['course_id']} of non-participating #{cross_listed_dept} dept"
             else
-              cross_list_row['CROSS_LISTED_NAME'] = "#{crosslist['course_title_short']} (#{crosslist['cross_listed_name']})"
+              cross_list_row['CROSS_LISTED_NAME'] = "#{cross_listing['course_title_short']} (#{cross_listing['cross_listed_name']})"
               cross_list_row.delete 'COURSE_TITLE_SHORT'
-              append_row(output, cross_list_row, visited_row_set, crosslist)
-              append_secondary_ccn(secondary_ccn_array, course)
+              append_row(output, cross_list_row, visited_row_set, cross_listing)
             end
           end
           row.delete 'COURSE_TITLE_SHORT'
         else
           row.delete 'COURSE_TITLE_SHORT'
           append_row(output, row, visited_row_set, course)
-          append_secondary_ccn(secondary_ccn_array, course)
         end
       end
-      Oec::Queries.get_secondary_cross_listings(secondary_ccn_array).each do |course|
-        row = record_to_csv_row course
-        append_row(output, row, visited_row_set, course)
-      end
     end
 
-    def append_secondary_ccn(secondary_ccn_set, course)
-      secondary_ccn_set << course['course_cntl_num'] if course['primary_secondary_cd'] == 'S'
-    end
-
-    def append_row(output, row, visited_row_list, course)
+    def append_row(output, row, visited_row_set, course)
       # Avoid duplicate rows
       row_as_string = "#{course['course_id']}-#{course['ldap_uid']})"
-      unless visited_row_list.include? row_as_string
+      unless visited_row_set.include? row_as_string
         output << row
-        visited_row_list << row_as_string
+        visited_row_set << row_as_string
+        if course['primary_secondary_cd'] == 'S'
+          Oec::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
+            row = record_to_csv_row cross_listed_course
+            append_row(output, row, visited_row_set, cross_listed_course)
+          end
+        end
       end
     end
 
