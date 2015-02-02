@@ -60,8 +60,8 @@ describe 'My Dashboard Up Next card', :testui => true do
       @event_location = "#{id} DWINELLE"
       event = @google.send_invite(@event_title, @event_location)
       @event_time = event[0].strftime("%l:%M\n%p").gsub(' ', '')
-      @event_start_time = event[0].strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')
-      @event_end_time = event[1].strftime("%-m/%e/%y %l:%M %P").gsub('  ', ' ')
+      @event_start_time = event[0].strftime("%-m/%-d/%y %l:%M %P").gsub('  ', ' ')
+      @event_end_time = event[1].strftime("%-m/%-d/%y %l:%M %P").gsub('  ', ' ')
       logger.info("Event start time is #{@event_start_time}")
       logger.info("Event end time is #{@event_end_time}")
 
@@ -82,7 +82,7 @@ describe 'My Dashboard Up Next card', :testui => true do
 
       it 'shows the current date' do
         expect(@up_next_card.day).to eql(today.strftime("%A"))
-        expect(@up_next_card.date).to eql(today.strftime("%^b %e"))
+        expect(@up_next_card.date).to eql(today.strftime("%^b %-d"))
       end
 
       it 'shows event times' do
@@ -109,7 +109,7 @@ describe 'My Dashboard Up Next card', :testui => true do
 
         it 'shows event end times' do
           logger.info("#{@up_next_card.all_event_end_times}")
-          expect(@up_next_card.all_event_end_times).to eql (@initial_event_end_times.push(@event_end_time).sort)
+          expect(@up_next_card.all_event_end_times).to eql(@initial_event_end_times.push(@event_end_time).sort)
         end
 
         it 'shows event organizers' do
