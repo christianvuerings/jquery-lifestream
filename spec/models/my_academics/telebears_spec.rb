@@ -61,7 +61,7 @@ describe MyAcademics::Telebears do
     subject { MyAcademics::Telebears.new(oski_uid).merge(@feed ||= {foo: 'baz'}); @feed }
     before(:each) do
       Bearfacts::Telebears.stub(:new).and_return(fake_oski_feed)
-      @fake_feed_body = fake_oski_feed.get[:xml_doc]
+      @fake_feed_body = fake_oski_feed.get[:feed]
     end
 
     context 'original fake oski feed' do
@@ -93,9 +93,8 @@ describe MyAcademics::Telebears do
 
     describe 'adviserCodeRequired translation' do
       before do
-        code = @fake_feed_body.at_css("telebearsAppointment authReleaseCode")
-        code.content =  fake_code
-        allow_any_instance_of(Bearfacts::Telebears).to receive(:get).and_return({xml_doc: @fake_feed_body})
+        @fake_feed_body['telebearsAppointment'].unwrap['authReleaseCode'] = fake_code
+        allow_any_instance_of(Bearfacts::Telebears).to receive(:get).and_return({feed: @fake_feed_body})
       end
       let(:adviser_code_required) { subject[:telebears][0][:adviserCodeRequired] }
       context 'default' do

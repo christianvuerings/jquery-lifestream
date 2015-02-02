@@ -2,23 +2,9 @@ require "spec_helper"
 
 describe Bearfacts::Schedule do
 
-  it "should get Oski Bear's schedule from fake vcr recordings" do
-    client = Bearfacts::Schedule.new({:user_id => "61889", :fake => true})
-    response = client.get
-    response.should_not be_nil
-    response[:xml_doc].should_not be_nil
-  end
-
-  it "should fail gracefully on a user whose student_id can't be found" do
-    client = Bearfacts::Schedule.new({:user_id => "0", :fake => true})
-    response = client.get
-    response[:noStudentId].should be_truthy
-  end
-
-  it "should get Oski Bear's schedule from a real server", :testext => true do
-    client = Bearfacts::Schedule.new({:user_id => "61889", :fake => false})
-    response = client.get
-    response.should_not be_nil
+  it_should_behave_like 'a student data proxy' do
+    let!(:proxy_class) { Bearfacts::Schedule }
+    let!(:feed_key) { 'studentClassSchedules' }
   end
 
 end

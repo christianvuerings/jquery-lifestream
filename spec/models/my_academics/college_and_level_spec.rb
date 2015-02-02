@@ -91,7 +91,7 @@ describe "MyAcademics::CollegeAndLevel" do
     let(:feed) {{}}
     before do
       allow(Bearfacts::Profile).to receive(:new).with(user_id: uid).and_return(double(get: {
-        xml_doc: Nokogiri::XML(xml_body)
+        feed: FeedWrapper.new(MultiXml.parse(xml_body))
       }))
     end
     subject do

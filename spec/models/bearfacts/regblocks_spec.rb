@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe Bearfacts::Regblocks do
 
+  it_should_behave_like 'a student data proxy' do
+    let!(:proxy_class) { Bearfacts::Regblocks }
+    let!(:feed_key) { nil }
+  end
+
   context 'getting oskis regblocks from fake data set' do
     subject { Bearfacts::Regblocks.new({user_id: '61889', fake: true}).get }
 
@@ -19,20 +24,6 @@ describe Bearfacts::Regblocks do
         block[:status].should == 'Released'
         block[:type].should_not be_nil
       end
-    end
-  end
-
-  context 'with a non-student input' do
-    subject { Bearfacts::Regblocks.new({user_id: '0', fake: true}).get }
-    it 'should fail gracefully on a user whose student_id cannot be found' do
-      subject[:noStudentId].should be_truthy
-    end
-  end
-
-  context 'getting data from a real server', testext: true do
-    subject { Bearfacts::Regblocks.new({user_id: '61889', fake: false}).get }
-    it 'should get Oskis reg blocks' do
-      subject.should_not be_nil
     end
   end
 

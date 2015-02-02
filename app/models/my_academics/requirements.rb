@@ -4,30 +4,24 @@ module MyAcademics
     include AcademicsModule
 
     def merge(data)
-      profile_proxy = Bearfacts::Profile.new({:user_id => @uid})
-      doc = profile_proxy.get[:xml_doc]
-      return data if doc.blank?
+      feed = Bearfacts::Profile.new({:user_id => @uid}).get[:feed]
+      return if feed.nil?
 
-      requirements = []
-      req_nodes = doc.css("underGradReqProfile")
-      req_nodes.children().each do |node|
-        name = node.name
-        status = node.text.upcase == "REQT SATISFIED" ? "met" : ""
-        # translate requirement names to English
-        case node.name.upcase
-          when "SUBJECTA"
-            name = "UC Entry Level Writing"
-          when "AMERICANHISTORY"
-            name = "American History"
-          when "AMERICANINSTITUTIONS"
-            name = "American Institutions"
-          when "AMERICANCULTURES"
-            name = "American Cultures"
-        end
+      requirements = feed['studentProfile']['underGradReqProfile'].map do |requirement|
+        req_name, req_value = requirement.to_a
 
-        requirements << {
-          name: name,
-          status: status
+        display_name = case req_name.upcase
+                 when 'SUBJECTA' then 'UC Entry Level Writing'
+                 when 'AMERICANHISTORY' then 'American History'
+                 when 'AMERICANINSTITUTIONS' then 'American Institutions'
+                 when 'AMERICANCULTURES' then 'American Cultures'
+                 else req_name
+               end
+        display_status = req_value.upcase == 'REQT SATISFIED' ? 'met' : ''
+
+        {
+          name: display_name,
+          status: display_status
         }
       end
 
