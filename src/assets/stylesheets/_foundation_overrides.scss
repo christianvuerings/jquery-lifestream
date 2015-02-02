@@ -1,0 +1,15 @@
+// Foundation overrides
+$body-font-color: #474747;
+$body-font-family: Arial, sans-serif;
+$header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$primary-color: #2683bc;
+
+
+// Responsive
+$small-breakpoint: (767px);
+$medium-breakpoint: (768px);
+$screen: "only screen";
+$small-up: $screen;
+$small-only: "#{$screen} and (max-width: #{$small-breakpoint})";
+$medium-up: "#{$screen} and (min-width:#{$medium-breakpoint})";
+$medium-only: "#{$screen} and (min-width:#{$medium-breakpoint})";

@@ -10,7 +10,7 @@
   width: 100%;
   z-index: 1;
   &:before {
-    background: asset-data-url('svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($cc-color-white, $cc-color-button-regular);
+    background: url('../images/svg/select_arrow_20x28.svg') no-repeat right center, linear-gradient($cc-color-white, $cc-color-button-regular);
     content: '';
     display: block;
     height: 100%;

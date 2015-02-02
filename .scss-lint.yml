@@ -1,8 +1,8 @@
-exclude: 'app/assets/stylesheets/rails_admin/**'
+exclude:
+  - 'app/assets/stylesheets/rails_admin/**'
+  - 'src/assets/stylesheets/lib/**'
 
 linters:
-  Comment:
-    exclude: 'app/assets/stylesheets/application.scss'
   DuplicateProperty:
     enabled: false
   EmptyLineBetweenBlocks:

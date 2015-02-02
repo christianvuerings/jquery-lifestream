@@ -115,13 +115,14 @@ class ApplicationController < ActionController::Base
   end
 
   def initialize_calcentral_config
-    @calcentral_config ||= {
-      "applicationVersion" => ServerRuntime.get_settings["versions"]["application"],
-      "clientHostname" => ServerRuntime.get_settings["hostname"],
-      "googleAnalyticsId" => Settings.google_analytics_id,
-      "sentryUrl" => Settings.sentry_url
-    }.to_json.html_safe
     @uid = session[:user_id] ? session[:user_id].to_s : ''
+    @calcentral_config ||= {
+      applicationVersion: ServerRuntime.get_settings['versions']['application'],
+      clientHostname: ServerRuntime.get_settings['hostname'],
+      googleAnalyticsId: Settings.google_analytics_id,
+      sentryUrl: Settings.sentry_url,
+      uid: @uid
+    }
   end
 
   def access_log
