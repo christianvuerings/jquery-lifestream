@@ -6,7 +6,7 @@ class CanvasLtiController < ApplicationController
   before_filter :get_settings, :initialize_calcentral_config
   skip_before_action :verify_authenticity_token, :set_x_frame_options_header
   before_action :disable_xframe_options
-  layout 'application'
+  layout false
   helper_method :launch_url
 
   def authenticate
@@ -37,7 +37,7 @@ class CanvasLtiController < ApplicationController
     if lti
       authenticate_by_lti(lti)
       logger.warn("Session authenticated by LTI; user = #{session[:user_id]}")
-      render
+      render "public/bcourses_embedded.html"
     else
       logger.error("Error parsing LTI request; returning error message")
       # TODO Test the result of a redirect or an error status return.
