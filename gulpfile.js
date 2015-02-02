@@ -29,6 +29,10 @@
   var paths = {
     // Source files
     src: {
+      // Main bCourses Embedded file
+      bcoursesEmbedded: 'src/bcourses_embedded.html',
+      // Main bCourses Embedded Rev'ed file
+      bcoursesEmbeddedRev: 'public/assets/bcourses_embedded.html',
       // CSS files
       css: [
         // CSS Framework
@@ -219,22 +223,28 @@
   });
 
   /**
-   * Index task
+   * Index & bCourses task
    */
   gulp.task('index', ['images', 'templates', 'js', 'css', 'fonts'], function() {
-    return gulp.src(paths.src.index)
+    return gulp.src([
+        paths.src.bcoursesEmbedded,
+        paths.src.index
+      ])
       .pipe(gulp.dest('public'));
   });
 
   /**
-   * Mode the index file back to the main public directory. (production)
+   * Mode the index & bCourses file back to the main public directory. (production)
    */
   gulp.task('revmove', function() {
     if (!isProduction) {
       return;
     }
 
-    return gulp.src(paths.src.indexRev)
+    return gulp.src([
+        paths.src.bcoursesEmbeddedRev,
+        paths.src.indexRev
+      ])
       .pipe(gulp.dest('public'));
   });
 
@@ -251,6 +261,7 @@
 
     return gulp.src([
         'public/assets/**',
+        'public/bcourses_embedded.html',
         'public/index.html'
       ])
       .pipe(revall({
@@ -286,7 +297,8 @@
     del(
       [
         'public/assets/',
-        'public/index.html'
+        'public/index.html',
+        'public/bcourses_embedded.html'
       ], callback);
   });
 
