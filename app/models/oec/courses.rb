@@ -42,16 +42,16 @@ module Oec
       end
     end
 
-    def append_row(output, row, visited_row_set, course)
+    def append_row(output, row, visited_row_set, course, check_secondary_cross_listings = true)
       # Avoid duplicate rows
       row_as_string = "#{course['course_id']}-#{course['ldap_uid']})"
       unless visited_row_set.include? row_as_string
         output << row
         visited_row_set << row_as_string
-        if course['primary_secondary_cd'] == 'S'
+        if course['primary_secondary_cd'] == 'S' && check_secondary_cross_listings
           Oec::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
-            row = record_to_csv_row cross_listed_course
-            append_row(output, row, visited_row_set, cross_listed_course)
+            row_for_cross_listing = record_to_csv_row cross_listed_course
+            append_row(output, row_for_cross_listing, visited_row_set, cross_listed_course, false)
           end
         end
       end
