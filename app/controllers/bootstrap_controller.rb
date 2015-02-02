@@ -4,7 +4,6 @@ class BootstrapController < ApplicationController
   before_filter :check_lti_only
   before_filter :check_databases_alive, :warmup_live_updates
   layout false
-  caches_action :index, :layout => false
 
   # Always redirect to public/index.html and let the front-end handle the routes
   def index
