@@ -67,7 +67,7 @@
           // Libraries (google analytics)
           'src/assets/javascripts/lib/**/*.js',
           // Human Sorting in JavaScript
-          'node_modules/js-natural-sort/naturalSort.js',
+          'node_modules/js-natural-sort/dist/naturalSort.js',
           // Remote JavaScript error logging
           // TODO - update to official version when
           // https://github.com/getsentry/raven-js/issues/197 is resolved
