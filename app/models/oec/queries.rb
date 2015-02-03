@@ -5,12 +5,16 @@ module Oec
     def self.get_courses(course_cntl_nums = nil, dept = nil)
       course_cntl_nums_clause = course_cntl_nums.present? ? self.query_in_chunks('c.course_cntl_num', course_cntl_nums.split(',')) : ''
       this_depts_clause = course_cntl_nums.present? ? '' : depts_clause('c', [ dept ])
-      select_list = self.get_all_courses_select_list
       result = []
       use_pooled_connection {
         sql = <<-SQL
       select
-        #{select_list}
+        #{self.get_all_courses_select_list},
+        (
+          select listagg(course_cntl_num, ', ') within group (order by course_cntl_num)
+          from calcentral_cross_listing_vw
+          where term_yr = c.term_yr and term_cd = c.term_cd and crosslist_hash = x.crosslist_hash
+        ) AS cross_listed_name
       from calcentral_course_info_vw c
       left outer join calcentral_cross_listing_vw x ON ( x.term_yr = c.term_yr and x.term_cd = c.term_cd and x.course_cntl_num = c.course_cntl_num )
       left outer join calcentral_course_instr_vw i ON (i.course_cntl_num = c.course_cntl_num AND i.term_yr = c.term_yr AND i.term_cd = c.term_cd)
@@ -21,15 +25,6 @@ module Oec
         #{this_depts_clause}
         #{course_cntl_nums_clause}
         and r.enroll_status != 'D'
-        and exists (
-          select r.course_cntl_num
-          from calcentral_class_roster_vw r
-          where r.enroll_status != 'D'
-            and r.term_yr = c.term_yr
-            and r.term_cd = c.term_cd
-            and r.course_cntl_num = c.course_cntl_num
-            and rownum < 2
-          )
       order by c.catalog_id, c.course_cntl_num, p.ldap_uid
         SQL
         result = connection.select_all(sql)
@@ -40,12 +35,12 @@ module Oec
     # This SQL query defines informally cross-listed sections as secondary sections which share a meeting time and place
     # and which include enrolled students.
     def self.get_secondary_cross_listings(secondary_ccn_array = [])
-      select_list = self.get_all_courses_select_list(false)
       result = []
       use_pooled_connection {
         sql = <<-SQL
       select
-        #{select_list}
+        #{self.get_all_courses_select_list},
+        null AS cross_listed_name
       from calcentral_course_info_vw c
       left outer join calcentral_course_instr_vw i ON (i.course_cntl_num = c.course_cntl_num AND i.term_yr = c.term_yr AND i.term_cd = c.term_cd)
       left outer join calcentral_person_info_vw p ON (p.ldap_uid = i.instructor_ldap_uid)
@@ -66,15 +61,6 @@ module Oec
             #{'and 0=1' unless secondary_ccn_array.present?}
         )
         and r.enroll_status != 'D'
-        and exists (
-          select r.course_cntl_num
-          from calcentral_class_roster_vw r
-          where r.enroll_status != 'D'
-            and r.term_yr = c.term_yr
-            and r.term_cd = c.term_cd
-            and r.course_cntl_num = c.course_cntl_num
-            and rownum < 2
-          )
       order by c.catalog_id, c.course_cntl_num, p.ldap_uid
         SQL
         result = connection.select_all(sql)
@@ -146,25 +132,12 @@ module Oec
     private
 
     # Shared SQL fragment
-    def self.get_all_courses_select_list(query_cross_listed = true)
-      select_list = <<-eos
+    def self.get_all_courses_select_list
+      <<-eos
         distinct c.term_yr, c.term_cd, c.course_cntl_num, p.ldap_uid,
         c.term_yr || '-' || c.term_cd || '-' || lpad(c.course_cntl_num, 5, '0') AS course_id,
         c.dept_name || ' ' || c.catalog_id || ' ' || c.instruction_format || ' ' || c.section_num || ' ' || c.course_title_short AS course_name,
         c.cross_listed_flag,
-      eos
-      if query_cross_listed
-        select_list << <<-eos
-          (
-            select listagg(course_cntl_num, ', ') within group (order by course_cntl_num)
-            from calcentral_cross_listing_vw
-            where term_yr = c.term_yr and term_cd = c.term_cd and crosslist_hash = x.crosslist_hash
-          ) AS cross_listed_name,
-        eos
-      else
-        select_list << ' null AS cross_listed_name, '
-      end
-      select_list << <<-eos
         c.dept_name,
         c.catalog_id,
         c.instruction_format,
@@ -175,6 +148,15 @@ module Oec
         p.last_name,
         p.email_address,
         i.instructor_func,
+        (
+          select count(*)
+          from calcentral_class_roster_vw r
+          where r.enroll_status != 'D'
+            and r.term_yr = c.term_yr
+            and r.term_cd = c.term_cd
+            and r.course_cntl_num = c.course_cntl_num
+            and rownum < 2
+        ) as enrollment_count,
         '23' AS blue_role,
         null AS evaluate,
         null AS dept_form,

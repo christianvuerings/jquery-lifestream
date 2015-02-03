@@ -46,8 +46,12 @@ module Oec
       # Avoid duplicate rows
       row_as_string = "#{course['course_id']}-#{course['ldap_uid']})"
       unless visited_row_set.include? row_as_string
-        output << row
-        visited_row_set << row_as_string
+        enrollment_count = course['enrollment_count'].to_i
+        Rails.logger.warn "#{@dept_name}.csv: #{course['course_id']}, #{course['dept_name']} #{course['catalog_id']} - enrollment_count=#{enrollment_count}"
+        if enrollment_count > 0 || /c/ =~ course['catalog_id']
+          output << row
+          visited_row_set << row_as_string
+        end
         if course['primary_secondary_cd'] == 'S' && check_secondary_cross_listings
           Oec::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
             row_for_cross_listing = record_to_csv_row cross_listed_course
