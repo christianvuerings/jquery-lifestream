@@ -44,10 +44,17 @@ module Oec
 
     def append_row(output, row, visited_row_set, course, check_secondary_cross_listings = true)
       # Avoid duplicate rows
-      row_as_string = "#{course['course_id']}-#{course['ldap_uid']})"
+      course_id = course['course_id']
+      row_as_string = "#{course_id}-#{course['ldap_uid']})"
       unless visited_row_set.include? row_as_string
-        output << row
-        visited_row_set << row_as_string
+        enrollment_count = course['enrollment_count'].to_i
+        catalog_id = course['catalog_id']
+        if enrollment_count > 0
+          output << row
+          visited_row_set << row_as_string
+        else
+          Rails.logger.warn "#{@dept_name}.csv: Skipping #{course_id}, #{course['dept_name']} #{catalog_id} because enrollment_count=#{enrollment_count}"
+        end
         if course['primary_secondary_cd'] == 'S' && check_secondary_cross_listings
           Oec::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
             row_for_cross_listing = record_to_csv_row cross_listed_course
