@@ -13,6 +13,9 @@
       <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
         You are not currently considered an active student.
       </p>
+      <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.concurrentEnrollmentStudent">
+        You are a concurrent enrollment student. For more information check the <a href="http://extension.berkeley.edu/static/studentservices/concurrent/">UC Berkeley Extension</a> website.
+      </p>
       <div data-ng-if="api.user.profile.roles.student">
         <p data-ng-if="api.user.profile.roles.registered">
           You are registered as a student but not currently considered active by all campus services.
@@ -36,7 +39,7 @@
     </div>
   </div>
 
-  <div class="cc-widget-padding" data-ng-if="collegeAndLevel.standing">
+  <div class="cc-widget-padding">
 
     <div class="cc-left cc-widget-profile-picture">
       <div data-ng-if="api.user.profile.hasPhoto">
@@ -63,15 +66,15 @@
       </div>
     </div>
 
-    <div class="cc-table cc-table-top-border cc-clearfix">
+    <div class="cc-table cc-table-top-border cc-clearfix" ng-if="collegeAndLevel.standing || gpaUnits.totalUnits !== null">
       <table>
-        <thead>
+        <thead data-ng-if="collegeAndLevel.standing">
           <tr>
             <th width="87px">General</th>
             <th class="cc-table-subheader" scope="col">Standing</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-ng-if="collegeAndLevel.standing">
           <tr>
             <td></td>
             <td><strong data-ng-bind="collegeAndLevel.standing"></strong></td>
@@ -79,7 +82,8 @@
         </tbody>
         <thead data-ng-if="gpaUnits.totalUnits !== null">
           <tr>
-            <th></th>
+            <th width="87px" data-ng-if="!collegeAndLevel.standing">General</th>
+            <th data-ng-if="collegeAndLevel.standing"></th>
             <th class="cc-table-subheader" scope="col">Units</th>
           </tr>
         </thead>
@@ -92,7 +96,7 @@
       </table>
     </div>
 
-    <div class="cc-table cc-table-top-border">
+    <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.level">
       <table>
         <thead>
           <tr>

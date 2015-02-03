@@ -33,7 +33,8 @@ module CampusOracle
           :exStudent => result['affiliations'].include?("STUDENT-STATUS-EXPIRED"),
           :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
           :staff => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF"),
-          :guest => result['affiliations'].include?("GUEST-TYPE-COLLABORATOR")
+          :guest => result['affiliations'].include?("GUEST-TYPE-COLLABORATOR"),
+          :concurrentEnrollmentStudent => result['affiliations'].include?("AFFILIATE-TYPE-CONCURR ENROLL")
         }
         result
       else
