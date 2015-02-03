@@ -68,13 +68,13 @@
 
     <div class="cc-table cc-table-top-border cc-clearfix" ng-if="collegeAndLevel.standing || gpaUnits.totalUnits !== null">
       <table>
-        <thead>
+        <thead data-ng-if="collegeAndLevel.standing">
           <tr>
             <th width="87px">General</th>
             <th class="cc-table-subheader" scope="col">Standing</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-ng-if="collegeAndLevel.standing">
           <tr>
             <td></td>
             <td><strong data-ng-bind="collegeAndLevel.standing"></strong></td>
@@ -82,7 +82,8 @@
         </tbody>
         <thead data-ng-if="gpaUnits.totalUnits !== null">
           <tr>
-            <th></th>
+            <th width="87px" data-ng-if="!collegeAndLevel.standing">General</th>
+            <th data-ng-if="collegeAndLevel.standing"></th>
             <th class="cc-table-subheader" scope="col">Units</th>
           </tr>
         </thead>
