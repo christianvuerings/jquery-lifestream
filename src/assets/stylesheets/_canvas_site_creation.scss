@@ -1,0 +1,95 @@
+.cc-page-site-creation {
+  background: $cc-color-white;
+  padding: 10px 20px;
+
+  .cc-page-site-creation-container {
+    margin-bottom: 20px;
+  }
+
+  .cc-page-site-creation-features-container {
+    margin: 0 20px 0 20px;
+  }
+
+  .cc-page-site-creation-features-divider {
+    border-top: $bc-color-button-grey-border solid 1px;
+    margin: 30px 0 30px 0;
+  }
+
+  .cc-page-site-creation-header {
+    color: $bc-color-off-black;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: normal;
+  }
+
+  .cc-page-site-creation-header2 {
+    font-size: 23.5px;
+    line-height: 40px;
+    margin: 15px 0 16px;
+  }
+
+  .cc-page-site-creation-header3 {
+    font-size: 19.5px;
+    margin: 0 0 13px 0;
+  }
+
+  .cc-page-site-creation-header5 {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .cc-page-site-creation-feature-icon-container {
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .cc-page-site-creation-feature-icon-box {
+    background-color: $bc-color-feature-icon-box-background;
+    border: $bc-color-feature-icon-box-border solid 1px;
+    border-radius: 4px;
+    height: 150px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    width: 190px;
+  }
+
+  .cc-page-site-creation-feature-icon {
+    font-size: 95px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cc-page-site-creation-feature-details {
+    margin: 0;
+  }
+
+  .cc-page-site-creation-feature-button {
+    background-color: #0099e0;
+    border: 1px solid #006594;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+
+    position: relative;
+    padding: 8px 14px;
+    line-height: 20px;
+    margin: 15px 0 0 0;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+  }
+
+  @media #{$small-only} {
+    .cc-page-site-creation-feature-details {
+      text-align: center;
+    }
+  }
+
+}
