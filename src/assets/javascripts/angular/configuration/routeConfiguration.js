@@ -81,6 +81,10 @@
       templateUrl: 'canvas_embedded/site_create_index.html',
       controller: 'CanvasSiteCreationController'
     }).
+    when('/canvas/embedded/create_project_site', {
+      templateUrl: 'canvas_embedded/create_project_site.html',
+      controller: 'CanvasCreateProjectSiteController'
+    }).
     when('/canvas/embedded/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
