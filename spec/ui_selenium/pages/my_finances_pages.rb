@@ -21,7 +21,7 @@ module CalCentralPages
     unordered_list(:billing_summary_list, :xpath => '//ul[@data-ng-show="myfinances.summary"]')
     div(:dpp_balance_element, :xpath => '//div[@data-cc-amount-directive="myfinances.summary.dppBalance"]')
     div(:dpp_normal_install_element, :xpath => '//div[@data-cc-amount-directive="myfinances.summary.dppNormalInstallmentAmount"]')
-    div(:dpp_text, :xpath => '//div[contains(text(),"1: Reflected in charges with DPP listed in Activity")]')
+    div(:dpp_text, :xpath => '//div[contains(text(),"1: Reflected in charges with DPP")]')
     label(:amt_due_now_label, :xpath => '//strong[@data-cc-amount-directive="myfinances.summary.minimumAmountDue"]/../../preceding-sibling::div/strong[1]')
     div(:amt_due_now_element, :xpath => '//div[@class="cc-page-myfinances-amount"]/strong[@data-cc-amount-directive="myfinances.summary.minimumAmountDue"]')
     span(:past_due_amt_element, :xpath => '//span[@data-cc-amount-directive="myfinances.summary.totalPastDueAmount"]')
