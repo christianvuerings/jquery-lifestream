@@ -19,12 +19,10 @@ module Oec
       left outer join calcentral_cross_listing_vw x ON ( x.term_yr = c.term_yr and x.term_cd = c.term_cd and x.course_cntl_num = c.course_cntl_num )
       left outer join calcentral_course_instr_vw i ON (i.course_cntl_num = c.course_cntl_num AND i.term_yr = c.term_yr AND i.term_cd = c.term_cd)
       left outer join calcentral_person_info_vw p ON (p.ldap_uid = i.instructor_ldap_uid)
-      left outer join calcentral_class_roster_vw r ON (r.course_cntl_num = c.course_cntl_num AND r.term_yr = c.term_yr AND r.term_cd = c.term_cd)
       where 1=1
         #{terms_query_clause('c', Settings.oec.current_terms_codes)}
         #{this_depts_clause}
         #{course_cntl_nums_clause}
-        and r.enroll_status != 'D'
       order by c.catalog_id, c.course_cntl_num, p.ldap_uid
         SQL
         result = connection.select_all(sql)
@@ -44,7 +42,6 @@ module Oec
       from calcentral_course_info_vw c
       left outer join calcentral_course_instr_vw i ON (i.course_cntl_num = c.course_cntl_num AND i.term_yr = c.term_yr AND i.term_cd = c.term_cd)
       left outer join calcentral_person_info_vw p ON (p.ldap_uid = i.instructor_ldap_uid)
-      left outer join calcentral_class_roster_vw r ON (r.course_cntl_num = c.course_cntl_num AND r.term_yr = c.term_yr AND r.term_cd = c.term_cd)
       left outer join calcentral_class_schedule_vw s ON (s.course_cntl_num = c.course_cntl_num AND s.term_yr = c.term_yr AND s.term_cd = c.term_cd)
       where 1=1
         #{terms_query_clause('c', Settings.oec.current_terms_codes)}
@@ -60,7 +57,6 @@ module Oec
             #{self.query_in_chunks('l.course_cntl_num', secondary_ccn_array) if secondary_ccn_array.present?}
             #{'and 0=1' unless secondary_ccn_array.present?}
         )
-        and r.enroll_status != 'D'
       order by c.catalog_id, c.course_cntl_num, p.ldap_uid
         SQL
         result = connection.select_all(sql)
