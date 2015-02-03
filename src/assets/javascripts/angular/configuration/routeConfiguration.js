@@ -77,6 +77,10 @@
       templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
     }).
+    when('/canvas/embedded/site_creation', {
+      templateUrl: 'canvas_embedded/site_create_index.html',
+      controller: 'CanvasSiteCreationController'
+    }).
     when('/canvas/embedded/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'

@@ -205,11 +205,11 @@
    */
   var addCreateASiteButton = function() {
     $.get(externalToolsUrl(), function(externalToolsHash) {
-      var createCourseSiteId = externalToolId(externalToolsHash, 'globalTools', 'Course Provisioning for Users');
-      if (createCourseSiteId) {
-        var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createCourseSiteId;
+      var createSiteId = externalToolId(externalToolsHash, 'globalTools', 'Create a Site');
+      if (createSiteId) {
+        var linkUrl = '/users/' + window.ENV.current_user_id + '/external_tools/' + createSiteId;
 
-        var $headerWithAddASiteButton = $('<div/>', {
+        var $headerWithCreateASiteButton = $('<div/>', {
           style: 'float:right;'
         }).html(
           $('<button/>', {
@@ -222,7 +222,7 @@
         );
         var $contentArea = $('div#content');
         if (typeof($contentArea) !== 'undefined') {
-          $contentArea.prepend($headerWithAddASiteButton);
+          $contentArea.prepend($headerWithCreateASiteButton);
         }
       }
     });
