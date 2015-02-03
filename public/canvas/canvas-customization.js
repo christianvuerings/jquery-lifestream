@@ -267,6 +267,20 @@
   };
 
   /**
+   * Removes 'Create a Site' option from the User Settings navigation menu
+   */
+
+  var removeCreateSiteUserNav = function() {
+    // run only on user profile settings page
+    if (window.location.pathname === '/profile/settings') {
+      var $createSiteLink = $('nav ul#section-tabs li.section a:contains("Create a Site")');
+      if ($createSiteLink && $createSiteLink.length) {
+        $createSiteLink.parent().remove();
+      }
+    }
+  };
+
+  /**
    * Obtains hostname for this script from embedded script element
    */
   var calcentralRootUrl = function() {
@@ -318,6 +332,7 @@
     addPeopleInfoAlert();
     addEGradeExportOption();
     addAltMediaPanel();
+    removeCreateSiteUserNav();
   });
 
   /**
