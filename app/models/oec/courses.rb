@@ -49,7 +49,7 @@ module Oec
       unless visited_row_set.include? row_as_string
         enrollment_count = course['enrollment_count'].to_i
         catalog_id = course['catalog_id']
-        if enrollment_count > 0 || catalog_id.start_with?('C')
+        if enrollment_count > 0
           output << row
           visited_row_set << row_as_string
         else

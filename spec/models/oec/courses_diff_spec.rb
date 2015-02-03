@@ -10,8 +10,11 @@ describe Oec::CoursesDiff do
         mock_data = "#{src_dir}/db_#{dept_name}_courses.csv"
         courses_query = []
         CSV.read(mock_data).each_with_index do |row, index|
-          if row.length > 0
-            courses_query << Oec::RowConverter.new(row).hashed_row if index > 0
+          if index > 0 && row.length > 0
+            hashed_row = Oec::RowConverter.new(row).hashed_row
+            # Arbitrary, non-zero enrollment
+            hashed_row['enrollment_count'] = 50
+            courses_query << hashed_row
           end
         end
         expect(Oec::Queries).to receive(:get_courses).with(nil, dept_name).exactly(1).times.and_return courses_query
