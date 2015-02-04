@@ -14,19 +14,19 @@ module MyAcademics
     end
 
     def parse_xml_feed(term_id)
-      doc = Bearfacts::Telebears.new({user_id: @uid, term_id: term_id}).get()[:xml_doc]
-      return if doc.blank? || doc.at_css("telebearsAppointment").blank? ||
-        doc.at_css("telebearsAppointment authReleaseCode").blank?
+      feed = Bearfacts::Telebears.new({user_id: @uid, term_id: term_id}).get[:feed]
+      return if feed.blank?
 
-      term, year = %w(termName termYear).map { |key| doc.at_css("telebearsAppointment").attr(key) }
-      year = Integer(year, 10) rescue nil
-
-      return unless term.present? && year.present?
-
-      auth_release_code = doc.at_css("telebearsAppointment authReleaseCode").text.strip rescue return
-      adviser_code_required = decode_adviser_code_required(auth_release_code)
-      phases = parse_appointment_phases(doc.css("telebearsAppointment telebearsAppointmentPhase") || [])
+      term = feed['telebearsAppointment']['termName'].to_text
+      year = feed['telebearsAppointment']['termYear'].to_text.to_i
+      return if term.blank? && year.zero?
       slug = "#{term.downcase}-#{year}"
+
+      auth_release_code = feed['telebearsAppointment']['authReleaseCode'].to_text
+      return if auth_release_code.blank?
+      adviser_code_required = decode_adviser_code_required auth_release_code
+
+      phases = parse_appointment_phases feed['telebearsAppointment']['telebearsAppointmentPhase'].to_a
 
       {
         term: term,
@@ -57,11 +57,10 @@ module MyAcademics
     private
     def parse_appointment_phases(phases)
       phases.map do |phase|
-        period = phase.css("period").text.strip
         # Dates come through in a fairly ugly format
         # <startDate>Monday    04/08/13 09:30 AM</startDate>
         startTime, endTime = %w(startDate endDate).map do |key|
-          value = phase.css(key).text.strip
+          value = phase[key]
           next "" unless value.present?
           value.squish!
           # According to telebears, we're suppose to assume the time == our system time zone.
@@ -69,6 +68,8 @@ module MyAcademics
           value = strptime_in_time_zone(value, "%A %m/%d/%y %I:%M %p")
           format_date(value)
         end
+
+        period = phase['period']
         next unless period.present?
         {
           period: "#{period}",

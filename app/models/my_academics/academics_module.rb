@@ -5,37 +5,6 @@ module MyAcademics
       @uid = uid
     end
 
-    def to_text(element)
-      if element.blank?
-        return ''
-      else
-        return element.text.strip
-      end
-    end
-
-    def to_array(element)
-      if element.blank?
-        return ''
-      else
-        return element.to_a.map{ |a| a.text.strip }
-      end
-    end
-
-    def to_time(element)
-      str = to_text(element)
-      num = str.gsub(/^0/, '')
-      formatted = num.insert(num.length - 2, ':')
-      formatted
-    end
-
-    def make_slug(text)
-      if text.blank?
-        ''
-      else
-        text.downcase.gsub(/[^a-z0-9]+/, '-').chomp('-')
-      end
-    end
-
     # Link campus course data to the corresponding Academics class info page.
     # This URL is internally routed by JavaScript code rather than Rails.
     def class_to_url(campus_course)

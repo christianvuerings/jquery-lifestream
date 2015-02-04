@@ -2,60 +2,57 @@
 module MyAcademics
   class Exams
     include AcademicsModule
+    include ClassLogger
     include DatedFeed
 
     def merge(data = {})
       proxy = Bearfacts::Exams.new({:user_id => @uid})
-      doc = proxy.get[:xml_doc]
+      feed = proxy.get[:feed]
+      return unless feed.present? && matches_current_year_term?(feed)
 
-      #Bearfacts proxy will return nil on >= 400 errors.
-      return data unless doc.present? && matches_current_year_term?(doc.css('studentFinalExamSchedules'))
       exams = []
 
-      doc.css('studentFinalExamSchedule').each do |exam|
-        exam_data = exam.css('studentFinalExamScheduleKey')
-        begin
-          exam_datetime = Date.parse(to_text(exam_data.css('examDate'))).in_time_zone.to_datetime
-        rescue ArgumentError => e
-          # skip this exam if it has no parseable date
-          Rails.logger.warn "#{self.class.name} Error parsing date in final exams feed for user #{@uid}: #{e.message}. Exam data is #{exam_data.to_s}"
+      feed['studentFinalExamSchedules']['studentFinalExamSchedule'].as_collection.each do |exam|
+        exam_data = exam['studentFinalExamScheduleKey']
+
+        exam_datetime = exam_data['examDate'].to_date
+        if exam_datetime.blank?
+          logger.warn "Error parsing date in final exams feed for user #{@uid}, exam data: #{exam_data.unwrap}"
           next
         end
-        ampm = to_text(exam_data.css('startTimeAmPmFlag')) == 'A' ? 'AM' : 'PM'
-        time = "#{to_time(exam_data.css("startTime"))} #{ampm}"
-        locations = (to_array exam.css('location')).map { |raw_location|
-          location = {
-            raw: raw_location
-          }
-          location_data = Berkeley::Buildings.get(raw_location)
-          unless location_data.nil?
-            location = location.merge(location_data)
-          end
-          location
-        }
-        course_code = "#{to_text(exam_data.css("deptName"))} #{to_text(exam_data.css("coursePrefixNum"))}#{to_text(exam_data.css("courseRootNum"))}"
+
+        ampm = exam_data['startTimeAmPmFlag'].to_text == 'A' ? 'AM' : 'PM'
+        time = "#{exam_data['startTime'].to_time} #{ampm}"
+
+        raw_locations = exam['studentFinalExamLocation'].as_collection.inject([]) { |arr, loc| arr.concat loc['location'].to_a  }
+        locations = raw_locations.map do |raw_location|
+          location_data = Berkeley::Buildings.get(raw_location) || {}
+          {raw: raw_location}.merge(location_data)
+        end
+
+        course_code = "#{exam_data['deptName'].to_text} #{exam_data['coursePrefixNum'].to_text}#{exam_data['courseRootNum'].to_text}"
+
         exams << {
-          :date => format_date(exam_datetime, '%a %B %-d'),
-          :time => time,
-          :locations => locations,
-          :course_code => course_code
+          date: format_date(exam_datetime, '%a %B %-d'),
+          time: time,
+          locations: locations,
+          course_code: course_code
         }
       end
-      exams.sort! { |a, b| a[:date][:epoch] <=> b[:date][:epoch] }
-      data[:examSchedule] = exams
+
+      data[:examSchedule] = exams.sort { |a, b| a[:date][:epoch] <=> b[:date][:epoch] }
     end
 
     private
 
-    def matches_current_year_term?(nodeset)
-      begin
-        term_year = nodeset.attribute('termYear').value.to_i
-        term_code = nodeset.attribute('termCode').value
-        return (current_term.code == term_code && current_term.year == term_year)
-      rescue NoMethodError, ArgumentError => e
-        Rails.logger.warn "#{self.class.name}: Error parsing studentFinalExamSchedules #{nodeset} for termYear and termCode - #{e.message}"
-        return false
+    def matches_current_year_term?(feed)
+      term_year = feed['studentFinalExamSchedules']['termYear'].to_text
+      term_code = feed['studentFinalExamSchedules']['termCode'].to_text
+      if term_year.blank? || term_code.blank?
+        logger.warn "Error parsing termYear and termCode from feed: #{feed.unwrap}"
       end
+      current_term.code == term_code && current_term.year == term_year.to_i
     end
+
   end
 end

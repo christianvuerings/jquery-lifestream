@@ -12,7 +12,6 @@ describe "MyAcademics::Requirements" do
 
     oski_requirements = feed[:requirements]
     oski_requirements.length.should == 4
-
   end
 
   context "failing bearfacts proxy" do
