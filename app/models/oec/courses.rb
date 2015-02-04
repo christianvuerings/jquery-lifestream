@@ -4,6 +4,7 @@ module Oec
     def initialize(dept_name, export_dir)
       super export_dir
       @dept_name = dept_name
+      @departments_using_oec = Settings.oec.departments
     end
 
     def base_file_name
@@ -16,7 +17,6 @@ module Oec
 
     def append_records(output)
       visited_row_set = Set.new
-      departments_using_oec = Settings.oec.departments
       Oec::Queries.get_courses(nil, @dept_name).each do |course|
         row = record_to_csv_row course
         # No practical way to combine these fields in SQL, so we'll do it here in Ruby.
@@ -25,10 +25,7 @@ module Oec
           cross_listings = Oec::Queries.get_courses course['cross_listed_name']
           cross_listings.each do |cross_listing|
             cross_list_row = record_to_csv_row cross_listing
-            cross_listed_dept = cross_listing['dept_name']
-            if cross_listing['cross_listed_flag'].to_s == '' && !departments_using_oec.include?(cross_listed_dept)
-              Rails.logger.warn "#{@dept_name}.csv: Omit cross-listed #{cross_listing['course_id']} of non-participating #{cross_listed_dept} dept"
-            else
+            if should_include_cross_listing? cross_listing
               cross_list_row['CROSS_LISTED_NAME'] = "#{cross_listing['course_title_short']} (#{cross_listing['cross_listed_name']})"
               cross_list_row.delete 'COURSE_TITLE_SHORT'
               append_row(output, cross_list_row, visited_row_set, cross_listing)
@@ -57,11 +54,21 @@ module Oec
         end
         if course['primary_secondary_cd'] == 'S' && check_secondary_cross_listings
           Oec::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
-            row_for_cross_listing = record_to_csv_row cross_listed_course
-            append_row(output, row_for_cross_listing, visited_row_set, cross_listed_course, false)
+            if should_include_cross_listing? cross_listed_course
+              row_for_cross_listing = record_to_csv_row cross_listed_course
+              append_row(output, row_for_cross_listing, visited_row_set, cross_listed_course, false)
+            end
           end
         end
       end
+    end
+
+    def should_include_cross_listing?(cross_listing)
+      include_cross_listing = cross_listing['cross_listed_flag'].to_s != '' || @departments_using_oec.include?(cross_listing['dept_name'])
+      unless include_cross_listing
+        Rails.logger.warn "#{@dept_name}.csv: Omit cross_listing #{cross_listing['course_id']} of non-participating #{cross_listing['dept_name']} dept"
+      end
+      include_cross_listing
     end
 
   end
