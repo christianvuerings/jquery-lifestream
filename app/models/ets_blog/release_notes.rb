@@ -9,31 +9,27 @@ module EtsBlog
 
     def get_latest_release_notes
       self.class.fetch_from_cache do
-        logger.info "Fetching release notes from blog, cache expiration #{self.class.expires_in}"
         begin
-          if @fake
-            raw_xml = File.read(Rails.root.join('fixtures', 'xml', 'release_notes_feed.xml').to_s)
-          else
-            response = get_response @settings.feed_url
-            raw_xml = response.body
-          end
+          logger.info "Fetching release notes from blog, cache expiration #{self.class.expires_in}"
+          response = if @fake
+                       MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'release_notes_feed.xml').to_s)
+                     else
+                       #HTTParty won't parse automatically because the application/xml header is missing
+                       MultiXml.parse get_response(@settings.feed_url)
+                     end
 
-          doc = Nokogiri::XML(raw_xml)
-          entry = doc.xpath('//item').first
+          entry = response['rss']['channel']['item'].first
 
-          # Process pub date string
-          ds = entry.xpath('pubDate').text
-          d = Date.parse(ds)
-          # Process and strip description
-          snippet = entry.xpath('description').text
-          snippet = Nokogiri::HTML(snippet).text # To strip all HTML tags, first convert to Nokogiri HTML node
-          snippet = snippet.gsub(/read more$/, '') # Trim off text appended to description by Drupal
-          snippet = snippet.gsub(/\n/, '')
+          d = Date.parse entry['pubDate']
+          snippet = ActionController::Base.helpers.strip_tags(entry['description'])
+          snippet = CGI.unescape_html(snippet).gsub('&nbsp;', ' ') #unescape_html doesn't convert spaces
+          snippet.squish!
+          snippet.gsub!(/read more$/, '') # Trim off text appended to description by Drupal
           {
             entries: [
               {
-                title: entry.xpath('title').text,
-                link: entry.xpath('link').text,
+                title: entry['title'],
+                link: entry['link'],
                 date: d.strftime('%b %d'),
                 snippet: snippet
               }]
