@@ -2,6 +2,7 @@ module Textbooks
   class Proxy < BaseProxy
 
     include ClassLogger
+    include SafeJsonParser
 
     APP_ID = 'textbooks'
 
@@ -19,7 +20,7 @@ module Textbooks
     def google_book(isbn)
       google_book_url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn
       google_response = {}
-      response = get_response(google_book_url)
+      response = get_response(google_book_url).parsed_response
 
       if response['totalItems'] > 0
         item = response['items'][0]
@@ -147,7 +148,7 @@ module Textbooks
       if response.code >= 400
         raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
       end
-      JSON.parse(response.body)
+      response.parsed_response
     end
 
     def fake_list(section_numbers)
@@ -156,7 +157,7 @@ module Textbooks
       unless File.exists?(path)
         raise Errors::ProxyError.new("Unrecorded textbook response #{path}")
       end
-      JSON.parse(File.read(path))
+      safe_json File.read(path)
     end
 
   end
