@@ -12,8 +12,8 @@ describe Canvas::SiteCreation do
 
       it 'returns false for all authorizations' do
         expect(subject).to be_an_instance_of Hash
-        expect(subject[:can_create_course_site]).to eq false
-        expect(subject[:can_create_project_site]).to eq false
+        expect(subject[:canCreateCourseSite]).to eq false
+        expect(subject[:canCreateProjectSite]).to eq false
       end
     end
 
@@ -22,16 +22,16 @@ describe Canvas::SiteCreation do
 
       it 'indicates the user can create a project site' do
         expect(subject).to be_an_instance_of Hash
-        expect(subject[:can_create_course_site]).to eq false
-        expect(subject[:can_create_project_site]).to eq true
+        expect(subject[:canCreateCourseSite]).to eq false
+        expect(subject[:canCreateProjectSite]).to eq true
       end
 
       context 'when user has official sections in current or upcoming term' do
         before { allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return(true) }
         it 'indicates the user can create a course site' do
           expect(subject).to be_an_instance_of Hash
-          expect(subject[:can_create_course_site]).to eq true
-          expect(subject[:can_create_project_site]).to eq true
+          expect(subject[:canCreateCourseSite]).to eq true
+          expect(subject[:canCreateProjectSite]).to eq true
         end
       end
     end
