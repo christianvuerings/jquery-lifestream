@@ -98,7 +98,7 @@ module Oec
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
           #{self.query_in_chunks('c.course_cntl_num', course_cntl_nums)}
-          and r.enroll_status != 'D'
+          and (r.enroll_status = 'E' OR r.enroll_status = 'C')
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
           and r.course_cntl_num = c.course_cntl_num
