@@ -4,23 +4,23 @@
   /**
    * Canvas 'Create a Site' overview index controller
    */
-  angular.module('calcentral.controllers').controller('CanvasSiteCreationController', function(apiService, canvasSiteCreationFactory, $route, $scope, $window) {
+  angular.module('calcentral.controllers').controller('CanvasSiteCreationController', function(apiService, canvasSiteCreationFactory, $location, $route, $scope) {
     apiService.util.setTitle('Create a Site Overview');
 
 
     $scope.linkToCreateCourseSite = function() {
       if ($route.current.isEmbedded) {
-        $window.location = '/canvas/embedded/create_course_site';
+        $location.path('/canvas/embedded/create_course_site');
       } else {
-        $window.location =  '/canvas/create_course_site';
+        $location.path('/canvas/create_course_site');
       }
     };
 
     $scope.linkToCreateProjectSite = function() {
       if ($route.current.isEmbedded) {
-        $window.location = '/canvas/embedded/create_project_site';
+        $location.path('/canvas/embedded/create_project_site');
       } else {
-        $window.location = '/canvas/create_project_site';
+        $location.path('/canvas/create_project_site');
       }
     };
 
