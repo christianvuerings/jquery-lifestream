@@ -1,0 +1,38 @@
+// Canvas Button Styles
+.bc-canvas-button {
+  background: #f7f7f7;
+  color: #333;
+  border: 1px solid #d1d1d1;
+  border-radius: 3px;
+  transition: background-color 0.2s ease-in-out;
+  display: inline-block;
+  position: relative;
+  padding: 8px 14px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  text-rendering: auto;
+  text-shadow: none;
+  &[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.bc-canvas-button-primary {
+  background: #0099e0;
+  color: #fff;
+  border: 1px solid #006594;
+  &:hover, &:active {
+    background: #007db7;
+    border-color: #525252;
+    box-shadow: none;
+  }
+}

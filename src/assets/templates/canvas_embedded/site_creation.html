@@ -30,7 +30,7 @@
         <div class="small-12 medium-3 columns">
           <div class="cc-page-site-creation-feature-icon-container">
             <div class="cc-page-site-creation-feature-icon-box">
-              <i class="fa fa-graduation-cap cc-page-site-creation-feature-icon"></i>
+              <i class="fa fa-graduation-cap cc-page-site-creation-feature-icon" data-ng-class="{'cc-page-site-creation-feature-icon-disabled':(!authorizations.canCreateCourseSite)}"></i>
             </div>
           </div>
         </div>
@@ -38,10 +38,15 @@
         <div class="small-12 medium-5 columns end">
           <div class="cc-page-site-creation-feature-details">
             <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">Course Sites</h3>
-            <h5 class="cc-page-site-creation-header cc-page-site-creation-header5">
+            <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="authorizations.canCreateCourseSite">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
             </h5>
-            <a data-ng-href="{{createCourseSiteUrl()}}" class="cc-page-site-creation-feature-button">Create a Course Site</a>
+            <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="!authorizations.canCreateCourseSite">
+              It appears that you do not have permissions to create a Course Site in the current or upcoming terms.
+              If you still wish to request a Course Site, please contact the
+              <a href="http://ets.berkeley.edu/bcourses/support" target="_blank">bCourses Helpdesk</a>.
+            </h5>
+            <button data-ng-disabled="!authorizations.canCreateCourseSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateCourseSite()">Create a Course Site</button>
           </div>
         </div>
 
@@ -67,7 +72,7 @@
             <h5 class="cc-page-site-creation-header cc-page-site-creation-header5">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
             </h5>
-            <a data-ng-href="{{createProjectSiteUrl()}}" class="cc-page-site-creation-feature-button">Create a Project Site</a>
+            <button data-ng-disabled="!authorizations.canCreateProjectSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateProjectSite()">Create a Project Site</button>
           </div>
         </div>
 

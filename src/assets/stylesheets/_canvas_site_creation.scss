@@ -60,34 +60,33 @@
   }
 
   .cc-page-site-creation-feature-icon {
+    color: $bc-color-headers;
     font-size: 95px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .cc-page-site-creation-feature-icon-disabled {
+    color: $bc-color-feature-icon-color;
   }
 
   .cc-page-site-creation-feature-details {
     margin: 0;
   }
 
-  .cc-page-site-creation-feature-button {
-    background-color: #0099e0;
-    border: 1px solid #006594;
-    border-radius: 3px;
-    color: #fff;
-    display: inline-block;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-variant: normal;
-    font-weight: normal;
+  .cc-page-site-creation-feature-button-margin {
+    margin-top: 17px;
+  }
 
-    position: relative;
-    padding: 8px 14px;
-    line-height: 20px;
-    margin: 15px 0 0 0;
-    text-align: center;
-    vertical-align: middle;
-    text-decoration: none;
+  .cc-page-site-creation-feature-button-primary {
+    background: #0099e0;
+    color: #fff;
+    border: 1px solid #006594;
+    &:hover, &:active {
+      background: #007db7;
+      border-color: #525252;
+      box-shadow: none;
+    }
   }
 
   @media #{$small-only} {
