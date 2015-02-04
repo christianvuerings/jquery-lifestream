@@ -25,7 +25,7 @@ shared_examples 'a student data proxy' do
 
   it 'should get Oski data from real server', :testext => true do
     response = real_proxy('61889').get
-    expect_feed(response, feed_key)
+    expect(response).to be_present
   end
 
   context 'connection failure' do
