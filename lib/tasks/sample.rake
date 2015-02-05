@@ -11,7 +11,7 @@ namespace :sample do
     users = []
     User::Data.find_in_batches(batch_size: 500) do |group|
       group.each do |user|
-        users << user.uid.strip.to_i
+        users << user.uid.strip.to_i if user.uid.present?
       end
     end
     users = users.shuffle
