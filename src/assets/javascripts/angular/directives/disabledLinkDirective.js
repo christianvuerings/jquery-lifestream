@@ -9,8 +9,6 @@
    * <a href="https://twitter.com/redconfetti" cc-disabled="foo === 'bar'">redconfetti</a>
    */
   angular.module('calcentral.directives').directive('a', function($parse) {
-    var linkDisabledClass = 'cc-link-disabled';
-
     return {
       restrict: 'E',
       // We need a very high priority, otherwise ngClick events still fire
@@ -36,11 +34,11 @@
           // Also watch for changes in the disabled property
           scope.$watch(disabled, function(val) {
             if (val) {
-              element.addClass(linkDisabledClass);
               attrs.$set('aria-disabled', 'true');
+              attrs.$set('disabled', 'true');
             } else {
-              element.removeClass(linkDisabledClass);
               attrs.$set('aria-disabled', 'false');
+              element.removeAttr('disabled');
             }
           });
         }
