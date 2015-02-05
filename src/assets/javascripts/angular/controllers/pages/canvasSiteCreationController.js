@@ -7,7 +7,6 @@
   angular.module('calcentral.controllers').controller('CanvasSiteCreationController', function(apiService, canvasSiteCreationFactory, $location, $route, $scope) {
     apiService.util.setTitle('Create a Site Overview');
 
-
     $scope.linkToCreateCourseSite = function() {
       if ($route.current.isEmbedded) {
         $location.path('/canvas/embedded/create_course_site');
@@ -32,7 +31,7 @@
       canvasSiteCreationFactory.getAuthorizations()
         .success(function(data) {
           $scope.feedRequestCompleted = true;
-          if (!data && (typeof(data.canCreateCourseSite) === 'undefined' ) || (typeof(data.canCreateProjectSite) === 'undefined' )) {
+          if (!data && (typeof(data.canCreateCourseSite) === 'undefined') || (typeof(data.canCreateProjectSite) === 'undefined')) {
             setAuthorizationError('failure');
           } else {
             $scope.authorizations = data;

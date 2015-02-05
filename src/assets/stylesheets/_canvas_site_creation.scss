@@ -11,12 +11,12 @@
   }
 
   .cc-page-site-creation-features-container {
-    margin: 0 20px 0 20px;
+    margin: 0 20px;
   }
 
   .cc-page-site-creation-features-divider {
     border-top: $bc-color-button-grey-border solid 1px;
-    margin: 30px 0 30px 0;
+    margin: 30px 0;
   }
 
   .cc-page-site-creation-header {
@@ -33,7 +33,7 @@
 
   .cc-page-site-creation-header3 {
     font-size: 19.5px;
-    margin: 0 0 13px 0;
+    margin: 0 0 13px;
   }
 
   .cc-page-site-creation-header5 {
@@ -52,9 +52,9 @@
     background-color: $bc-color-feature-icon-box-background;
     border: $bc-color-feature-icon-box-border solid 1px;
     border-radius: 4px;
+    display: table-cell;
     height: 150px;
     text-align: center;
-    display: table-cell;
     vertical-align: middle;
     width: 190px;
   }
@@ -76,17 +76,6 @@
 
   .cc-page-site-creation-feature-button-margin {
     margin-top: 17px;
-  }
-
-  .cc-page-site-creation-feature-button-primary {
-    background: #0099e0;
-    color: #fff;
-    border: 1px solid #006594;
-    &:hover, &:active {
-      background: #007db7;
-      border-color: #525252;
-      box-shadow: none;
-    }
   }
 
   @media #{$small-only} {
