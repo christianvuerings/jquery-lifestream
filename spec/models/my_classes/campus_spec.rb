@@ -3,6 +3,7 @@ require 'spec_helper'
 describe MyClasses::Campus do
   let(:user_id) {rand(99999).to_s}
   let(:catid) {"#{rand(999)}B"}
+  let(:course_code) { "ECON #{catid}" }
   let(:course_id) {"econ-#{catid}-#{term_yr}-#{term_cd}"}
   let(:term_yr) {2013}
   let(:term_cd) {'D'}
@@ -18,7 +19,7 @@ describe MyClasses::Campus do
     term_cd: term_cd,
     catid: catid,
     dept: 'ECON',
-    course_code: "ECON #{catid}",
+    course_code: course_code,
     emitter: 'Campus',
     name: 'Retire in Only 85 Years',
     role: 'Student',
@@ -35,8 +36,9 @@ describe MyClasses::Campus do
     it 'sets the usual fields' do
       subject.each do |course|
         expect(course[:emitter]).to eq CampusOracle::UserCourses::APP_ID
-        expect(course[:catid]).to eq fake_campus_course[:catid]
-        expect(course[:course_code]).to eq fake_campus_course[:course_code]
+        expect(course[:listings].length).to eq 1
+        expect(course[:listings].first[:catid]).to eq catid
+        expect(course[:listings].first[:course_code]).to eq course_code
         expect(course[:site_url].blank?).to be_falsey
         expect(course[:sections]).to_not be_empty
       end
@@ -82,7 +84,7 @@ describe MyClasses::Campus do
       it 'treats them as two different classes with the same URL' do
         expect(subject[0][:id]).to_not eq subject[1][:id]
         [subject, fake_sections].transpose.each do |course, enrollment|
-          expect(course[:courseCodeSection]).to eq "#{enrollment[:instruction_format]} #{enrollment[:section_number]}"
+          expect(course[:listings].first[:courseCodeSection]).to eq "#{enrollment[:instruction_format]} #{enrollment[:section_number]}"
           expect(course[:sections].size).to eq 1
           expect(course[:sections][0][:ccn]).to eq enrollment[:ccn]
           if (enrollment[:waitlistPosition] > 0)
@@ -92,6 +94,12 @@ describe MyClasses::Campus do
         end
       end
     end
+  end
+
+  context 'cross-listed courses', if: CampusOracle::Connection.test_data? do
+    include_context 'instructor for crosslisted courses'
+    subject { MyClasses::Campus.new("212388").fetch }
+    it_should_behave_like 'a feed including crosslisted courses'
   end
 
 end

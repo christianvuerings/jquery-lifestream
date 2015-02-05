@@ -278,7 +278,6 @@ module Canvas
 
     def candidate_courses_list
       raise RuntimeError, 'User ID not found for candidate' if @uid.blank?
-      terms_filter = current_terms
 
       # Get all sections for which this user is an instructor, sorted in a useful fashion.
       # Since this mostly matches what's shown by MyAcademics::Teaching for a given semester,
@@ -289,72 +288,12 @@ module Canvas
 
       academics_feed = MyAcademics::Merged.new(@uid).get_feed
       if (teaching_semesters = academics_feed[:teachingSemesters])
-        courses_list = terms_filter.collect do |term|
-          if term_index = teaching_semesters.index {|semester| semester[:slug] == term[:slug] }
-            teaching_semesters[term_index]
-          else
-            nil
-          end
-        end.compact
-        handle_cross_listed_courses(courses_list)
-        courses_list
+        current_teaching_semesters = current_terms.collect do |term|
+          teaching_semesters.find {|semester| semester[:slug] == term[:slug] }
+        end
+        current_teaching_semesters.compact
       else
         []
-      end
-    end
-
-    # Merge all sections of cross-listed courses into a single "course" item. This may change the
-    # structure and ordering of the original MyAcademics::Teaching feed.
-    # TODO Group cross-listed courses in the CalCentral UX as well.
-    def handle_cross_listed_courses(basic_terms_courses_list)
-      basic_terms_courses_list.each do |term_and_courses|
-        original_classes = term_and_courses[:classes]
-        new_classes = []
-        cross_listing_to_class = {}
-        original_classes.each do |course|
-          # Denormalize the course code into its sections to simplify client-side code.
-          course_code = course[:course_code]
-          course_sections = course[:sections]
-          cross_listing_hash = nil
-          course_sections.each do |section|
-            section[:courseCode] = course_code
-            # Campus data's current way of indicating cross-listing relies on links
-            # between the primary sections of each course.
-            cross_listing_hash = section[:cross_listing_hash] if section[:cross_listing_hash].present?
-          end
-          if cross_listing_hash.present?
-            # If the cross-listed course is already in the reorganized feed, append this
-            # bunch of sections to it.
-            if (existing_cross_listed_class = cross_listing_to_class[cross_listing_hash])
-              existing_cross_listed_class[:sections].concat(course_sections)
-              existing_cross_listed_class[:course_code] = nil
-              merge_class_sites(existing_cross_listed_class, course)
-            else
-              course[:crossListingHash] = cross_listing_hash
-              cross_listing_to_class[cross_listing_hash] = course
-              new_classes.append(course)
-            end
-          else
-            new_classes.append(course)
-          end
-        end
-        # Overwrite the original classes list for the term.
-        term_and_courses[:classes] = new_classes
-      end
-    end
-
-    def merge_class_sites(to_class, from_class)
-      if (from_site_list = from_class[:class_sites])
-        to_class[:class_sites] ||= []
-        to_site_list = to_class[:class_sites]
-        from_site_list.each do |from_site|
-          from_site_id = from_site[:id]
-          if (matching_site_index = to_site_list.index {|s| s[:id] == from_site_id})
-            to_site_list[matching_site_index][:sections].concat(from_site[:sections])
-          else
-            to_site_list.append(from_site)
-          end
-        end
       end
     end
 
@@ -371,7 +310,7 @@ module Canvas
         (term_yr, term_cd) = term_key.split("-")
         semester = my_academics.semester_info(term_yr, term_cd)
         feed[term_key].each do |course|
-          semester[:classes] << my_academics.class_info(course)
+          semester[:classes] << my_academics.course_info_with_multiple_listings(course)
         end
         courses_list << semester unless semester[:classes].empty?
       end

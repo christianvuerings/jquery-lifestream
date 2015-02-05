@@ -11,21 +11,25 @@
       for (var j = 0; j < classesHash.otherClasses.length; j++) {
         for (var k = 0; k < classesHash.otherClasses[j].courses.length; k++) {
           var course = classesHash.otherClasses[j].courses[k];
-          if (!classesHash.campusClasses[course.id].subclasses) {
-            classesHash.campusClasses[course.id].subclasses = [];
+          if (!classesHash.campusClassesById[course.id].subclasses) {
+            classesHash.campusClassesById[course.id].subclasses = [];
           }
-          classesHash.campusClasses[course.id].subclasses.push(classesHash.otherClasses[j]);
+          classesHash.campusClassesById[course.id].subclasses.push(classesHash.otherClasses[j]);
         }
       }
       return classesHash;
     };
 
     var splitClasses = function(classes) {
-      var campusClasses = {};
+      var campusClasses = [];
+      var campusClassesById = {};
       var otherClasses = [];
       for (var i = 0; i < classes.length; i++) {
         if (classes[i].emitter === 'Campus') {
-          campusClasses[classes[i].id] = classes[i];
+          campusClasses.push(classes[i]);
+          for (var j = 0; j < classes[i].listings.length; j++) {
+            campusClassesById[classes[i].listings[j].id] = classes[i];
+          }
         } else {
           otherClasses.push(classes[i]);
         }
@@ -33,6 +37,7 @@
 
       return {
         'campusClasses': campusClasses,
+        'campusClassesById': campusClassesById,
         'otherClasses': otherClasses
       };
     };

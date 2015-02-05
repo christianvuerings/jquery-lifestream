@@ -14,9 +14,8 @@ module MyAcademics
         teaching_semester = semester_info(term_yr, term_cd)
         feed[term_key].each do |course|
           next unless course[:role] == 'Instructor'
-          teaching_semester[:classes] << class_info(course).merge({
-              role: course[:role]
-          })
+          course_info = course_info_with_multiple_listings course
+          append_with_merged_crosslistings(teaching_semester[:classes], course_info)
         end
         teaching_semesters << teaching_semester unless teaching_semester[:classes].empty?
       end

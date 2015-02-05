@@ -253,7 +253,7 @@
             initMultiplePrimaries(course);
             $scope.selectedCourse = course;
             if (isOnlyInstructor) {
-              $scope.campusCourseId = course.course_id;
+              $scope.campusCourseId = course.listings[0].course_id;
             }
             break;
           }
