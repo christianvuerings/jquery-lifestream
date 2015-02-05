@@ -16,14 +16,14 @@
       <div class="small-12 medium-5 columns end">
         <div class="cc-page-site-creation-feature-details">
           <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">Course Sites</h3>
-          <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="authorizations.canCreateCourseSite">
+          <h4 class="cc-page-site-creation-header cc-page-site-creation-header4" data-ng-if="authorizations.canCreateCourseSite">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
-          </h5>
-          <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="!authorizations.canCreateCourseSite">
+          </h4>
+          <h4 class="cc-page-site-creation-header cc-page-site-creation-header4" data-ng-if="!authorizations.canCreateCourseSite">
             It appears that you do not have permissions to create a Course Site in the current or upcoming terms.
             If you still wish to request a Course Site, please contact the
             <a href="http://ets.berkeley.edu/bcourses/support">bCourses Helpdesk</a>.
-          </h5>
+          </h4>
           <button data-ng-disabled="!authorizations.canCreateCourseSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateCourseSite()">Create a Course Site</button>
         </div>
       </div>
@@ -43,9 +43,9 @@
       <div class="small-12 medium-5 columns end">
         <div class="cc-page-site-creation-feature-details">
           <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">Project Sites</h3>
-          <h5 class="cc-page-site-creation-header cc-page-site-creation-header5">
+          <h4 class="cc-page-site-creation-header cc-page-site-creation-header4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
-          </h5>
+          </h4>
           <button data-ng-disabled="!authorizations.canCreateProjectSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateProjectSite()">Create a Project Site</button>
         </div>
       </div>
