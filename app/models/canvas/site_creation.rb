@@ -9,8 +9,10 @@ module Canvas
     def authorizations
       policy = AuthenticationState.new(user_id: @uid).policy
       {
-        :canCreateCourseSite => policy.can_create_canvas_course_site?,
-        :canCreateProjectSite => policy.can_create_canvas_project_site?,
+        :authorizations => {
+          :canCreateCourseSite => policy.can_create_canvas_course_site?,
+          :canCreateProjectSite => policy.can_create_canvas_project_site?,
+        }
       }
     end
   end

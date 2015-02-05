@@ -1,4 +1,3 @@
-/* jshint camelcase: false */
 (function(angular) {
   'use strict';
 

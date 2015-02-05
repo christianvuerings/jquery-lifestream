@@ -1,14 +1,65 @@
-<div data-ng-controller="CanvasSiteCreationController" class="cc-page-site-creation">
+<div data-ng-controller="CanvasSiteCreationController" class="cc-page-site-creation" data-cc-spinner-directive>
 
-  <div data-ng-hide="feedRequestCompleted" data-cc-spinner-directive></div>
+  <div data-ng-if="!authorizationError" class="cc-page-site-creation-container">
 
-  <div data-ng-if="feedRequestCompleted && authorizationError" class="cc-page-site-creation-authorization-error">
+    <h2 class="cc-page-site-creation-header cc-page-site-creation-header2">Create a Site</h2>
+
+    <div class="row">
+      <div class="small-12 medium-3 columns">
+        <div class="cc-page-site-creation-feature-icon-container">
+          <div class="cc-page-site-creation-feature-icon-box">
+            <i class="fa fa-graduation-cap cc-page-site-creation-feature-icon" data-ng-class="{'cc-page-site-creation-feature-icon-disabled':(!authorizations.canCreateCourseSite)}"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="small-12 medium-5 columns end">
+        <div class="cc-page-site-creation-feature-details">
+          <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">Course Sites</h3>
+          <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="authorizations.canCreateCourseSite">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
+          </h5>
+          <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="!authorizations.canCreateCourseSite">
+            It appears that you do not have permissions to create a Course Site in the current or upcoming terms.
+            If you still wish to request a Course Site, please contact the
+            <a href="http://ets.berkeley.edu/bcourses/support">bCourses Helpdesk</a>.
+          </h5>
+          <button data-ng-disabled="!authorizations.canCreateCourseSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateCourseSite()">Create a Course Site</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cc-page-site-creation-features-divider"></div>
+
+    <div class="row">
+      <div class="small-12 medium-3 columns">
+        <div class="cc-page-site-creation-feature-icon-container">
+          <div class="cc-page-site-creation-feature-icon-box">
+            <i class="fa fa-cubes cc-page-site-creation-feature-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="small-12 medium-5 columns end">
+        <div class="cc-page-site-creation-feature-details">
+          <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">Project Sites</h3>
+          <h5 class="cc-page-site-creation-header cc-page-site-creation-header5">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
+          </h5>
+          <button data-ng-disabled="!authorizations.canCreateProjectSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateProjectSite()">Create a Project Site</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div data-ng-if="authorizationError" class="cc-page-site-creation-authorization-error">
     <div data-ng-if="authorizationError === 'failure'">
       <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">
         <i class="fa fa-warning"></i>
         Error: There was an issue authorizing your access to this tool.
       </h3>
-      <p>Please contact <a href="http://ets.berkeley.edu/bcourses/support" target="_blank">bCourses support</a> for further assistance.</p>
+      <p>Please contact <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> for further assistance.</p>
     </div>
 
     <div data-ng-if="authorizationError === 'unauthorized'">
@@ -18,66 +69,5 @@
       </h2>
       <p>Only staff and faculty members are authorized to use this tool.</p>
     </div>
-  </div>
-
-  <div data-ng-if="feedRequestCompleted && authorized" class="cc-page-site-creation-container">
-
-    <h2 class="cc-page-site-creation-header cc-page-site-creation-header2">Create a Site</h2>
-
-    <div class="row">
-      <div class="large-12">
-
-        <div class="small-12 medium-3 columns">
-          <div class="cc-page-site-creation-feature-icon-container">
-            <div class="cc-page-site-creation-feature-icon-box">
-              <i class="fa fa-graduation-cap cc-page-site-creation-feature-icon" data-ng-class="{'cc-page-site-creation-feature-icon-disabled':(!authorizations.canCreateCourseSite)}"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="small-12 medium-5 columns end">
-          <div class="cc-page-site-creation-feature-details">
-            <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">Course Sites</h3>
-            <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="authorizations.canCreateCourseSite">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
-            </h5>
-            <h5 class="cc-page-site-creation-header cc-page-site-creation-header5" data-ng-if="!authorizations.canCreateCourseSite">
-              It appears that you do not have permissions to create a Course Site in the current or upcoming terms.
-              If you still wish to request a Course Site, please contact the
-              <a href="http://ets.berkeley.edu/bcourses/support" target="_blank">bCourses Helpdesk</a>.
-            </h5>
-            <button data-ng-disabled="!authorizations.canCreateCourseSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateCourseSite()">Create a Course Site</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="cc-page-site-creation-features-divider"></div>
-
-    <div class="row">
-      <div class="large-12">
-
-        <div class="small-12 medium-3 columns">
-          <div class="cc-page-site-creation-feature-icon-container">
-            <div class="cc-page-site-creation-feature-icon-box">
-              <i class="fa fa-cubes cc-page-site-creation-feature-icon"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="small-12 medium-5 columns end">
-          <div class="cc-page-site-creation-feature-details">
-            <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">Project Sites</h3>
-            <h5 class="cc-page-site-creation-header cc-page-site-creation-header5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
-            </h5>
-            <button data-ng-disabled="!authorizations.canCreateProjectSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateProjectSite()">Create a Project Site</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
   </div>
 </div>
