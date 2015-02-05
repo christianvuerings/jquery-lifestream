@@ -9,8 +9,10 @@ namespace :sample do
   task :students => :environment do
 
     users = []
-    User::Data.all.each do |user|
-      users << user.uid.strip.to_i
+    User::Data.find_in_batches(batch_size: 500) do |group|
+      group.each do |user|
+        users << user.uid.strip.to_i
+      end
     end
     users = users.shuffle
 
