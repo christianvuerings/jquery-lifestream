@@ -15,7 +15,7 @@ describe Canvas::ExternalTools do
   it "should return external tools list" do
     list = subject.external_tools_list
     expect(list).to be_an_instance_of Array
-    expect(list.count).to eq 6
+    expect(list.count).to eq 5
     expect(list[0]['id']).to eq 24486
     expect(list[0]['name']).to eq "Attendance Tool"
     expect(list[0]['url']).to eq "https://rollcall.instructure.com/launch"
