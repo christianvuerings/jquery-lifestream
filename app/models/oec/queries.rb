@@ -110,7 +110,7 @@ module Oec
     end
 
     def self.get_edited_courses(source_dir, dept_name)
-      file_path = "#{source_dir}/edited_#{dept_name}_courses.csv"
+      file_path = "#{source_dir}/#{dept_name.upcase.gsub(/\s/, '_')}_courses_confirmed.csv"
       courses_query = []
       if File.file? file_path
         CSV.read(file_path).each_with_index do |row, index|

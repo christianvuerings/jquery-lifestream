@@ -56,7 +56,8 @@ namespace :oec do
     if dept_name.to_s == ''
       Rails.logger.warn "#{hr}Usage: rake oec:diff dept_name=BIOLOGY [src=/path/to/files] [dest=/export/path/]#{hr}"
     else
-      Oec::CoursesDiff.new(dept_name, src_dir, dest_dir).export
+      # Replace underscores in dept_name
+      Oec::CoursesDiff.new(dept_name.upcase.gsub(/_/, ' '), src_dir, dest_dir).export
       Rails.logger.warn "#{hr}File wrote to #{dest_dir}#{hr}"
     end
   end

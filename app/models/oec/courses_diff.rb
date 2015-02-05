@@ -4,11 +4,11 @@ module Oec
     def initialize(dept_name, source_dir, export_dir)
       super export_dir
       @source_dir = source_dir
-      @dept_name = dept_name.upcase
+      @dept_name = dept_name
     end
 
     def base_file_name
-      "#{@dept_name.gsub(/\s/, '_')}_courses_confirmed"
+      "diff_#{@dept_name.gsub(/\s/, '_')}_courses"
     end
 
     def headers
