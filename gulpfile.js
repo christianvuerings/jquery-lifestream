@@ -11,7 +11,10 @@
   // Read options from the command line
   var minimist = require('minimist');
 
-  // Base options for the command line
+  // Rename files
+  var rename = require('gulp-rename');
+
+ // Base options for the command line
   var baseOptions = {
     string: 'env',
     default: {
@@ -29,10 +32,8 @@
   var paths = {
     // Source files
     src: {
-      // Main bCourses Embedded file
-      bcoursesEmbedded: 'src/bcourses_embedded.html',
-      // Main bCourses Embedded Rev'ed file
-      bcoursesEmbeddedRev: 'public/assets/bcourses_embedded.html',
+      // Public assets
+      assetsPublic: 'public/assets/**',
       // CSS files
       css: [
         // CSS Framework
@@ -56,10 +57,7 @@
       ],
       // Images
       img: 'src/assets/images/**/*.*',
-      // Main index.html file
-      index: 'src/index.html',
-      // Main index.html rev'ed file
-      indexRev: 'public/assets/index.html',
+      // JavaScript
       js: {
         external: [
           // Date parsing
@@ -94,6 +92,23 @@
         templates: [
           'public/assets/templates/templates.js'
         ]
+      },
+      // Main templates (not used for inclusing in AngularJS templates)
+      mainTemplates: {
+        // base file
+        base: 'src/base.html',
+        // bCourses Embedded file
+        bcoursesEmbedded: 'src/bcourses_embedded.html',
+        // bCourses Embedded public file
+        bcoursesEmbeddedPublic: 'public/bcourses_embedded.html',
+        // index.html file
+        index: 'src/index.html',
+        // index.html public file
+        indexPublic: 'public/index.html',
+        // html files in public/assets
+        publicAssets: 'public/assets/*.html',
+        // All html files in the source
+        source: 'public/*.html'
       },
       // List the HTML template files
       // Will be converted into templates.js
@@ -226,11 +241,45 @@
    * Index & bCourses task
    */
   gulp.task('index', ['images', 'templates', 'js', 'css', 'fonts'], function() {
-    return gulp.src([
-        paths.src.bcoursesEmbedded,
-        paths.src.index
-      ])
-      .pipe(gulp.dest('public'));
+    // Plug-in to inject html into other html
+    var inject = require('gulp-inject');
+
+    // Combine the index and bCourses streams
+    var streamqueue = require('streamqueue');
+
+    // Options for the injection
+    var injectOptions = {
+      // Which tag to look for the in base html
+      starttag: '<!-- inject:body:{{ext}} -->',
+      transform: function(filePath, file) {
+        // Return file contents as string
+        return file.contents.toString('utf8');
+      }
+    };
+
+    // Run the 2 index & bCourses stream in parallell
+    return streamqueue({
+        objectMode: true
+      },
+      gulp.src(paths.src.mainTemplates.base)
+        .pipe(inject(
+          gulp.src(paths.src.mainTemplates.index),
+          injectOptions
+        ))
+        .pipe(rename({
+          basename: 'index'
+        }))
+        .pipe(gulp.dest('public')),
+      gulp.src(paths.src.mainTemplates.base)
+        .pipe(inject(
+          gulp.src(paths.src.mainTemplates.bcoursesEmbedded),
+          injectOptions
+        ))
+        .pipe(rename({
+          basename: 'bcourses_embedded'
+        }))
+        .pipe(gulp.dest('public'))
+      );
   });
 
   /**
@@ -241,10 +290,7 @@
       return;
     }
 
-    return gulp.src([
-        paths.src.bcoursesEmbeddedRev,
-        paths.src.indexRev
-      ])
+    return gulp.src(paths.src.mainTemplates.publicAssets)
       .pipe(gulp.dest('public'));
   });
 
@@ -260,9 +306,9 @@
     var revall = require('gulp-rev-all');
 
     return gulp.src([
-        'public/assets/**',
-        'public/bcourses_embedded.html',
-        'public/index.html'
+        paths.src.assetsPublic,
+        paths.src.mainTemplates.bcoursesEmbeddedPublic,
+        paths.src.mainTemplates.indexPublic
       ])
       .pipe(revall({
         ignore: [
@@ -296,9 +342,9 @@
     var del = require('del');
     del(
       [
-        'public/assets/',
-        'public/index.html',
-        'public/bcourses_embedded.html'
+        paths.src.assetsPublic,
+        paths.src.mainTemplates.bcoursesEmbeddedPublic,
+        paths.src.mainTemplates.indexPublic
       ], callback);
   });
 
@@ -311,7 +357,7 @@
       return;
     }
 
-    gulp.watch(paths.src.index, ['index']);
+    gulp.watch(paths.src.mainTemplates.source, ['index']);
     gulp.watch(paths.src.cssWatch, ['css']);
     gulp.watch(paths.src.fonts, ['fonts']);
     gulp.watch(paths.src.js.internal, ['js']);
