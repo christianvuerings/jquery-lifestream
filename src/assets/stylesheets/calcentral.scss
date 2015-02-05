@@ -73,6 +73,7 @@
 
 // Canvas external apps
 @import "canvas_embedded";
+@import "canvas_emulated";
 @import "canvas_course_add_user";
 @import "canvas_course_grade_export";
 @import "canvas_course_manage_official_sections";
@@ -80,7 +81,7 @@
 @import "canvas_create_project_site";
 @import "canvas_user_provision";
 @import "canvas_roster";
-@import "canvas_site_create_index";
+@import "canvas_site_creation";
 
 // My Finances
 @import "cal1card";

@@ -71,27 +71,38 @@
     }).
     when('/canvas/embedded/course_provision_account_navigation', {
       templateUrl: 'canvas_embedded/course_provision.html',
-      controller: 'CanvasCourseProvisionController'
+      controller: 'CanvasCourseProvisionController',
+      isEmbedded: true
     }).
     when('/canvas/embedded/course_provision_user_navigation', {
       templateUrl: 'canvas_embedded/course_provision.html',
-      controller: 'CanvasCourseProvisionController'
+      controller: 'CanvasCourseProvisionController',
+      isEmbedded: true
     }).
     when('/canvas/embedded/site_creation', {
-      templateUrl: 'canvas_embedded/site_create_index.html',
-      controller: 'CanvasSiteCreationController'
+      templateUrl: 'canvas_embedded/site_creation.html',
+      controller: 'CanvasSiteCreationController',
+      isEmbedded: true
+    }).
+    when('/canvas/embedded/create_course_site', {
+      templateUrl: 'canvas_embedded/course_provision.html',
+      controller: 'CanvasCourseProvisionController',
+      isEmbedded: true
     }).
     when('/canvas/embedded/create_project_site', {
       templateUrl: 'canvas_embedded/create_project_site.html',
-      controller: 'CanvasCreateProjectSiteController'
+      controller: 'CanvasCreateProjectSiteController',
+      isEmbedded: true
     }).
     when('/canvas/embedded/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',
-      controller: 'CanvasUserProvisionController'
+      controller: 'CanvasUserProvisionController',
+      isEmbedded: true
     }).
     when('/canvas/embedded/course_add_user', {
       templateUrl: 'canvas_embedded/course_add_user.html',
-      controller: 'CanvasCourseAddUserController'
+      controller: 'CanvasCourseAddUserController',
+      isEmbedded: true
     }).
     when('/canvas/embedded/course_mediacasts', {
       templateUrl: 'canvas_embedded/course_mediacasts.html',
@@ -99,18 +110,28 @@
     }).
     when('/canvas/embedded/course_manage_official_sections', {
       templateUrl: 'canvas_embedded/course_manage_official_sections.html',
-      controller: 'CanvasCourseManageOfficialSectionsController'
+      controller: 'CanvasCourseManageOfficialSectionsController',
+      isEmbedded: true
     }).
     when('/canvas/embedded/course_grade_export', {
       templateUrl: 'canvas_embedded/course_grade_export.html',
-      controller: 'CanvasCourseGradeExportController'
+      controller: 'CanvasCourseGradeExportController',
+      isEmbedded: true
     }).
     when('/canvas/rosters/:canvasCourseId', {
       templateUrl: 'canvas_embedded/roster.html'
     }).
-    when('/canvas/course_provision', {
+    when('/canvas/site_creation', {
+      templateUrl: 'canvas_embedded/site_creation.html',
+      controller: 'CanvasSiteCreationController'
+    }).
+    when('/canvas/create_course_site', {
       templateUrl: 'canvas_embedded/course_provision.html',
       controller: 'CanvasCourseProvisionController'
+    }).
+    when('/canvas/create_project_site', {
+      templateUrl: 'canvas_embedded/create_project_site.html',
+      controller: 'CanvasCreateProjectSiteController'
     }).
     when('/canvas/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',

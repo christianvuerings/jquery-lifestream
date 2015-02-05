@@ -1,0 +1,38 @@
+// Canvas Colors
+$bc-canvas-button-border: #d1d1d1;
+$bc-canvas-button-primary-background: #0099e0;
+$bc-canvas-button-primary-border: #006594;
+$bc-canvsa-button-primary-hover-background: #007db7;
+$bc-canvsa-button-primary-hover-border: #525252;
+
+// Canvas Button Styles
+.bc-canvas-button {
+  background: $bc-color-feature-icon-box-background;
+  border: 1px solid $bc-canvas-button-border;
+  border-radius: 3px;
+  color: $bc-color-off-black;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+  overflow: hidden;
+  padding: 8px 14px;
+  transition: background-color .2s ease-in-out;
+  &[disabled] {
+    color: $bc-color-white;
+    cursor: not-allowed;
+    opacity: .5;
+    pointer-events: none;
+  }
+}
+
+.bc-canvas-button-primary {
+  background: $bc-canvas-button-primary-background;
+  border: 1px solid $bc-canvas-button-primary-border;
+  color: $bc-color-white;
+  &:hover, &:active {
+    background: $bc-canvsa-button-primary-hover-background;
+    border-color: $bc-canvsa-button-primary-hover-border;
+    box-shadow: none;
+  }
+}
