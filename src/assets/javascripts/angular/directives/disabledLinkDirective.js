@@ -6,7 +6,7 @@
    * - Adds the correct ARIA roles
    *
    * e.g.
-   * <a href="https://twitter.com/redconfetti" disabled="foo === 'bar'">redconfetti</a>
+   * <a href="https://twitter.com/redconfetti" cc-disabled="foo === 'bar'">redconfetti</a>
    */
   angular.module('calcentral.directives').directive('a', function($parse) {
     var linkDisabledClass = 'cc-link-disabled';
@@ -18,9 +18,9 @@
       // Also make sure ngClick events aren't fired
       require: '?ngClick',
       link: function(scope, element, attrs) {
-        if (attrs.disabled) {
+        if (attrs.ccDisabled) {
           // Parse the disabled property
-          var disabled = $parse(attrs.disabled);
+          var disabled = $parse(attrs.ccDisabled);
 
           // Disable the click event
           element.bind('click', function(e) {
