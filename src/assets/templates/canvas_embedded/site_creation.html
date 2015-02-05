@@ -24,7 +24,9 @@
             If you still wish to request a Course Site, please contact the
             <a href="http://ets.berkeley.edu/bcourses/support">bCourses Helpdesk</a>.
           </h4>
-          <button data-ng-disabled="!authorizations.canCreateCourseSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateCourseSite()">Create a Course Site</button>
+          <div class="cc-page-site-creation-feature-button-wrapper">
+            <a data-cc-disabled="!authorizations.canCreateCourseSite" data-ng-href="{{linkToCreateCourseSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Course Site</a>
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +48,9 @@
           <h4 class="cc-page-site-creation-header cc-page-site-creation-header4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
           </h4>
-          <button data-ng-disabled="!authorizations.canCreateProjectSite" class="bc-canvas-button bc-canvas-button-primary cc-page-site-creation-feature-button-margin" data-ng-click="linkToCreateProjectSite()">Create a Project Site</button>
+          <div class="cc-page-site-creation-feature-button-wrapper">
+            <a data-cc-disabled="!authorizations.canCreateProjectSite" data-ng-href="{{linkToCreateProjectSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Project Site</a>
+          </div>
         </div>
       </div>
     </div>

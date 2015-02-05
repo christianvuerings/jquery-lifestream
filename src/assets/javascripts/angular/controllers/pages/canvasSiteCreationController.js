@@ -7,13 +7,8 @@
   angular.module('calcentral.controllers').controller('CanvasSiteCreationController', function(apiService, canvasSiteCreationFactory, $location, $route, $scope) {
     apiService.util.setTitle('Create a Site Overview');
 
-    $scope.linkToCreateCourseSite = function() {
-      $location.path($route.current.isEmbedded ? '/canvas/embedded/create_course_site' : '/canvas/create_course_site');
-    };
-
-    $scope.linkToCreateProjectSite = function() {
-      $location.path($route.current.isEmbedded ? '/canvas/embedded/create_project_site' : '/canvas/create_project_site');
-    };
+    $scope.linkToCreateCourseSite = $route.current.isEmbedded ? '/canvas/embedded/create_course_site' : '/canvas/create_course_site';
+    $scope.linkToCreateProjectSite = $route.current.isEmbedded ? '/canvas/embedded/create_project_site' : '/canvas/create_project_site';
 
     var setAuthorizationError = function(type) {
       $scope.authorizationError = type;

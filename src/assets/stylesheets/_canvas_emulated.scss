@@ -19,6 +19,7 @@ $bc-canvsa-button-primary-hover-border: #525252;
   padding: 8px 14px;
   transition: background-color .2s ease-in-out;
   &[disabled] {
+    color: $bc-color-white;
     cursor: not-allowed;
     opacity: .5;
     pointer-events: none;
