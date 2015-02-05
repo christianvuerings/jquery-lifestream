@@ -23,10 +23,10 @@ module Oec
         keys_matching = []
         edited_courses = Oec::Queries.get_edited_courses(@source_dir, @dept_name)
         edited_courses.each do |edited_course|
-          Rails.logger.warn "Next edited_course: #{edited_course.to_s}"
-          course_id = edited_course['course_id']
-          ldap_uid = edited_course['ldap_uid'].to_s
-          primary_key = ldap_uid == '' ? "#{course_id}" : "#{course_id}-#{ldap_uid}"
+          course_id = edited_course['course_id'].split('_')[0]
+          Rails.logger.warn "Edited #{@dept_name}.csv has #{course_id}: #{edited_course.to_s}"
+          ldap_uid = edited_course['ldap_uid']
+          primary_key = ldap_uid.blank? ? course_id : "#{course_id}-#{ldap_uid}"
           if campus_records.has_key? primary_key
             keys_matching << primary_key
             db_record = campus_records[primary_key]
