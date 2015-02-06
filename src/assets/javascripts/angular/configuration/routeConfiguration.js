@@ -69,16 +69,6 @@
     when('/canvas/embedded/rosters', {
       templateUrl: 'canvas_embedded/roster.html'
     }).
-    when('/canvas/embedded/course_provision_account_navigation', {
-      templateUrl: 'canvas_embedded/course_provision.html',
-      controller: 'CanvasCourseProvisionController',
-      isEmbedded: true
-    }).
-    when('/canvas/embedded/course_provision_user_navigation', {
-      templateUrl: 'canvas_embedded/course_provision.html',
-      controller: 'CanvasCourseProvisionController',
-      isEmbedded: true
-    }).
     when('/canvas/embedded/site_creation', {
       templateUrl: 'canvas_embedded/site_creation.html',
       controller: 'CanvasSiteCreationController',

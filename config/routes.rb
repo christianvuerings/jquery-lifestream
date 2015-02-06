@@ -48,8 +48,6 @@ Calcentral::Application.routes.draw do
   # Canvas embedded application support.
   post '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
   get '/canvas/lti_roster_photos' => 'canvas_lti#lti_roster_photos', :defaults => { :format => 'xml' }
-  get '/canvas/lti_course_provision_account_navigation' => 'canvas_lti#lti_course_provision_account_navigation', :defaults => { :format => 'xml' }
-  get '/canvas/lti_course_provision_user_navigation' => 'canvas_lti#lti_course_provision_user_navigation', :defaults => { :format => 'xml' }
   get '/canvas/lti_site_creation' => 'canvas_lti#lti_site_creation', :defaults => { :format => 'xml' }
   get '/canvas/lti_user_provision' => 'canvas_lti#lti_user_provision', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_add_user' => 'canvas_lti#lti_course_add_user', :defaults => { :format => 'xml' }
