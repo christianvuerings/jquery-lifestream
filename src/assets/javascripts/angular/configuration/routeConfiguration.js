@@ -75,8 +75,8 @@
       isEmbedded: true
     }).
     when('/canvas/embedded/create_course_site', {
-      templateUrl: 'canvas_embedded/course_provision.html',
-      controller: 'CanvasCourseProvisionController',
+      templateUrl: 'canvas_embedded/create_course_site.html',
+      controller: 'CanvasCreateCourseSiteController',
       isEmbedded: true
     }).
     when('/canvas/embedded/create_project_site', {
@@ -116,8 +116,8 @@
       controller: 'CanvasSiteCreationController'
     }).
     when('/canvas/create_course_site', {
-      templateUrl: 'canvas_embedded/course_provision.html',
-      controller: 'CanvasCourseProvisionController'
+      templateUrl: 'canvas_embedded/create_course_site.html',
+      controller: 'CanvasCreateCourseSiteController'
     }).
     when('/canvas/create_project_site', {
       templateUrl: 'canvas_embedded/create_project_site.html',
