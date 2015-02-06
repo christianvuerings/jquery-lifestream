@@ -1,0 +1,261 @@
+// Maintenance Notice
+.cc-maintenance-notice {
+  color: $bc-color-off-black;
+  font-size: 13px;
+  margin: 8px 6px;
+  min-height: 20px;
+
+  .fa-lg {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .cc-notice-text {
+    line-height: 18px;
+    margin-left: 45px;
+    h4 {
+      color: #333;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+      margin: 4px 0;
+    }
+  }
+}
+
+// ***********************************
+// bCourses Shared Template Styles
+// ***********************************
+
+// Error display for remote background jobs
+.cc-template-background-job-error {
+  background-color: $bc-color-notice-red-bg;
+  border: 1px solid $bc-color-notice-red-border;
+  border-radius: 5px;
+  padding: 20px;
+  i {
+    margin-right: 5px;
+  }
+  > div {
+    margin-top: 5px;
+  }
+  p {
+    color: $bc-color-grey-text;
+    font-size: 15px;
+    margin: 0 10px 10px 0;
+  }
+  ul {
+    font-size: 15px;
+    list-style: disc inside none;
+    margin: 5px 20px;
+  }
+
+  .cc-template-background-job-error-paragraph {
+    margin-bottom: 10px;
+  }
+
+  .cc-template-background-job-error-icon {
+    color: $bc-color-notice-red-header;
+    font-size: 17px;
+    line-height: 27px;
+  }
+
+  .cc-template-background-job-error-header {
+    color: $bc-color-notice-red-header;
+    font-size: 17px;
+  }
+}
+
+// Progress Bar
+.cc-template-progress-bar {
+  .cc-template-progress-bar-container {
+    margin: 35px auto;
+    width: 75%;
+  }
+
+  .cc-template-progress-bar-display {
+    background: linear-gradient($bc-color-progressbar-bg-gradient1, $bc-color-progressbar-bg-gradient2);
+    border: 2px solid #c6c7c7;
+    border-radius: 5px;
+    height: 25px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .cc-template-progress-bar-status {
+    color: #2f2e2e;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    left: 50%;
+    line-height: 25px;
+    margin-left: -75px;
+    position: absolute;
+    text-align: center;
+    width: 150px;
+  }
+
+  .cc-template-progress-bar-value {
+    background: linear-gradient($bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2);
+    height: 100%;
+  }
+}
+
+// Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
+.cc-template-canvas-manage-sections {
+
+  .cc-template-canvas-manage-sections-section-list {
+    border: $bc-color-section-list-border 1px solid;
+    border-bottom: 0;
+    margin: 0;
+    .cc-template-canvas-manage-sections-section {
+      background-color: $bc-color-white;
+      border-bottom: $bc-color-section-list-border 1px solid;
+      padding: 9px;
+    }
+    .cc-template-canvas-manage-sections-section-secondary {
+      background-color: $bc-color-section-list-secondary-bg;
+    }
+  }
+
+  .cc-template-canvas-manage-sections-margin {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .cc-template-canvas-manage-sections-form-course {
+    background: $bc-color-roster-background;
+    border: 1px solid $bc-color-roster-background;
+    cursor: pointer;
+    margin: 0 0 20px;
+    padding: 15px;
+  }
+
+  .cc-template-canvas-manage-sections-form-select-all-option {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 6px 0 4px 2px;
+  }
+
+  .cc-template-canvas-manage-sections-form-select-all-option-button {
+    outline: none;
+  }
+
+  .cc-template-canvas-manage-sections-checkbox {
+    float: left;
+    text-align: center;
+    width: 30px;
+  }
+
+  .cc-template-canvas-manage-sections-form-collapse-icon {
+    font-size: 18px;
+    margin-left: 2px;
+  }
+
+  .cc-template-canvas-manage-sections-form-collapsible-container {
+    margin-top: 7px;
+  }
+
+  .cc-template-canvas-manage-sections-form-course-title {
+    margin-left: 10px;
+  }
+
+  .cc-template-canvas-manage-sections-course-code {
+    float: left;
+    width: 115px;
+  }
+
+  .cc-template-canvas-manage-sections-row {
+    overflow: auto;
+    width: 100%;
+  }
+
+  .cc-template-canvas-manage-sections-sites-row {
+    margin-top: 10px;
+  }
+
+  .cc-template-canvas-manage-sections-section-label {
+    float: left;
+    min-height: 1px;
+    width: 75px;
+  }
+
+  .cc-template-canvas-manage-sections-section-ccn {
+    float: left;
+    min-height: 1px;
+    width: 70px;
+  }
+
+  .cc-template-canvas-manage-sections-section-timestamps {
+    float: left;
+    min-height: 1px;
+    width: 155px;
+  }
+
+  .cc-template-canvas-manage-sections-section-locations {
+    float: left;
+    min-height: 1px;
+    width: 150px;
+  }
+
+  .cc-template-canvas-manage-sections-section-instructors {
+    float: left;
+    min-height: 1px;
+    width: 190px;
+  }
+
+  .cc-template-canvas-manage-sections-in-use {
+    clear: both;
+  }
+
+  .cc-template-canvas-manage-sections-label {
+    display: inline;
+    margin-left: 1em;
+    text-align: left;
+  }
+
+  .cc-template-canvas-manage-sections-has-sites-message {
+    margin: 5px 0 0 23px;
+  }
+
+  .cc-template-canvas-manage-sections-sites {
+    color: $bc-color-section-list-alert-grey;
+    margin-left: 43px;
+  }
+
+  .cc-template-canvas-manage-sections-sited-icon {
+    color: $bc-color-help-link-blue;
+    font-size: 15px;
+    margin-right: 4px;
+    margin-top: 2px;
+  }
+}
+
+// Collapsed / Toggled Help Notice
+.cc-page-help-notice {
+  margin: 4px 1px;
+  min-height: 15px;
+
+  .cc-page-help-notice-icon {
+    color: $bc-color-help-link-blue;
+    font-size: 15px;
+    margin-top: 2px;
+  }
+
+  .cc-page-help-notice-toggle-button {
+    color: $bc-color-help-link-blue;
+    font-size: 13px;
+    outline: none;
+  }
+
+  .cc-page-help-notice-left-margin {
+    margin-left: 16px;
+  }
+
+  .cc-page-help-notice-content {
+    border: $bc-color-button-grey-border solid 1px;
+    margin: 10px 0 20px;
+    padding: 10px;
+  }
+}
+
