@@ -212,12 +212,10 @@
         var $headerWithCreateASiteButton = $('<div/>', {
           style: 'float:right;'
         }).html(
-          $('<button/>', {
+          $('<a/>', {
+            href: linkUrl,
             text: 'Create a Site',
-            class: 'btn btn-primary',
-            click: function() {
-              window.location.href = linkUrl;
-            }
+            class: 'btn btn-primary'
           })
         );
         var $contentArea = $('div#content');

@@ -5,8 +5,8 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseProvisionController', function(apiService, canvasCourseProvisionFactory, canvasCourseProvisionService, $scope, $timeout) {
-    apiService.util.setTitle('bCourses Course Provision');
+  angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasCourseProvisionService, $scope, $timeout) {
+    apiService.util.setTitle('Create a Course Site');
 
     var statusProcessor = function() {
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {

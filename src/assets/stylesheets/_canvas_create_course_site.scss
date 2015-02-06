@@ -1,4 +1,4 @@
-.cc-page-course-provision {
+.cc-page-create-course-site {
   background: $cc-color-white;
   padding: 10px 20px;
 
@@ -24,7 +24,7 @@
   }
 
   // Reset to avoid default Foundation form styling
-  .cc-page-course-provision-form {
+  .cc-page-create-course-site-form {
     background: transparent;
     border: 0;
     padding: 0;
@@ -36,7 +36,7 @@
     color: $bc-color-button-grey-text;
   }
 
-  .cc-page-provision-actas-form {
+  .cc-page-create-course-site-actas-form {
     background: $cc-color-white;
     input[type="text"] {
       margin: 2px 10px 0 0;
@@ -45,16 +45,12 @@
     }
   }
 
-  .cc-page-provision-acting-as {
-    height: 24px;
-  }
-
-  .cc-page-provision-admin-mode-switch {
+  .cc-page-create-course-site-admin-mode-switch {
     margin-bottom: 20px;
     outline: none;
   }
 
-  .cc-page-provision-choices {
+  .cc-page-create-course-site-choices {
     overflow: hidden;
     li {
       border-left: 1px solid $cc-color-popover-border;
@@ -68,52 +64,47 @@
     }
   }
 
-  .cc-page-provision-confirmation {
+  .cc-page-create-course-site-confirmation {
     background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
     border-radius: 5px;
     padding: 20px;
-    .cc-page-provision-section-list {
+    .cc-page-create-course-site-section-list {
       list-style-type: disc;
       margin: 10px 0 0 39px;
     }
   }
 
-  .cc-page-provision-error-notice {
-    background-color: $bc-color-notice-red-bg;
-  }
-
-  .cc-page-provision-form-actions {
+  .cc-page-create-course-site-form-actions {
     background: $bc-color-roster-background;
     border: 1px solid $bc-color-roster-background;
     padding: 10px 5px;
   }
 
-  .cc-page-provision-form-button {
+  .cc-page-create-course-site-form-button {
     background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
   }
 
-  .cc-page-course-provision-help-notice {
+  .cc-page-create-course-site-hidden {
+    display: none;
+  }
+
+  .cc-page-create-course-site-help-notice {
     margin-bottom: 20px;
-    .cc-page-course-provision-help-notice-ordered-list {
+    .cc-page-create-course-site-help-notice-ordered-list {
       margin-bottom: 10px;
       margin-left: 20px;
     }
 
-    .cc-page-course-provision-help-notice-paragraph {
+    .cc-page-create-course-site-help-notice-paragraph {
       margin-bottom: 7px;
     }
   }
 
-  .cc-page-provision-margin {
-    margin: 0;
-    overflow: hidden;
-  }
-
-  .cc-page-provision-site-labels-form {
+  .cc-page-create-course-site-site-labels-form {
     margin-top: 10px;
   }
 
-  .cc-page-provision-no-courses {
+  .cc-page-create-course-site-no-courses {
     color: $bc-color-headers;
     font-family: $bc-header-font-family;
     font-size: 14px;
@@ -121,37 +112,33 @@
     padding: 20px;
   }
 
-  .cc-page-provision-pending-request {
+  .cc-page-create-course-site-pending-request {
     margin: 15px auto;
   }
 
-  .cc-page-provision-select-sections {
+  .cc-page-create-course-site-select-sections {
     border-top: 1px solid $bc-color-top-border;
     padding: 10px 0;
   }
 
-  .cc-page-provision-step-indent {
+  .cc-page-create-course-site-step-indent {
     padding-left: 18px;
   }
 
-  .cc-page-provision-step-options {
+  .cc-page-create-course-site-step-options {
     padding: 20px 0;
   }
 
-  .cc-page-provision-student-warning {
-    margin: 10px 0;
-  }
-
-  .cc-page-provision-success-intro {
+  .cc-page-create-course-site-success-intro {
     margin: 15px 0 0;
   }
 
-  .cc-page-provision-term-button {
+  .cc-page-create-course-site-term-button {
     outline: none;
     width: 135px;
   }
 
-  .cc-page-provision-term-button-element {
+  .cc-page-create-course-site-term-button-element {
     float: left;
     margin-bottom: 5px;
     width: 140px;
