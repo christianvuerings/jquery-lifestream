@@ -131,7 +131,6 @@
       clearCourseSiteJob();
       angular.extend($scope, {
         currentWorkflowStep: 'selecting',
-        isLoading: true,
         selectedSectionsList: []
       });
       var feedRequestOptions = {
@@ -159,7 +158,6 @@
               selectAllSections();
             }
             $scope.isCourseCreator = $scope.is_admin || $scope.classCount > 0;
-            $scope.feedFetched = true;
           }
         }
       });

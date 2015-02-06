@@ -4,23 +4,31 @@
   font-size: 13px;
   margin: 8px 6px;
   min-height: 20px;
+}
 
-  .fa-lg {
-    font-size: 36px;
-    line-height: 44px;
-  }
+.cc-notice-text-container {
+  line-height: 18px;
+  margin-left: 45px;
+}
 
-  .cc-notice-text {
-    line-height: 18px;
-    margin-left: 45px;
-    h4 {
-      color: #333;
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 20px;
-      margin: 4px 0;
-    }
-  }
+.cc-notice-text-header {
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  margin: 4px 0;
+}
+
+.cc-notice-icon {
+  color: $bc-color-gold;
+  float: left;
+  font-size: 36px;
+  line-height: 44px;
+}
+
+// Error / Notices
+.cc-page-error-notice {
+  margin: 10px 0;
 }
 
 // ***********************************

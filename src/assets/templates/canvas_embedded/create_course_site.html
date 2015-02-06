@@ -1,8 +1,6 @@
-<div class="cc-page-create-course-site">
+<div class="cc-page-create-course-site" data-cc-spinner-directive>
 
-  <div data-ng-hide="feedFetched" data-cc-spinner-directive></div>
-
-  <div data-ng-show="feedFetched && isCourseCreator">
+  <div data-ng-show="isCourseCreator">
 
     <div data-ng-show="is_admin">
 
@@ -50,9 +48,9 @@
     <div>
 
       <div class="cc-maintenance-notice">
-        <i class="fa fa-exclamation-triangle cc-icon-gold fa-lg cc-left"></i>
-        <div class="cc-notice-text">
-          <h4>Daily Scheduled Maintenance from 8 - 9 AM</h4>
+        <i class="fa fa-exclamation-triangle cc-notice-icon"></i>
+        <div class="cc-notice-text-container">
+          <p class="cc-notice-text-header">Daily Scheduled Maintenance from 8 - 9 AM</p>
           During our daily scheduled maintenance, Instructors may experience delays of up to 10 minutes before sites are created.
           <br>For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status">bCourses System Status.</a>
         </div>
