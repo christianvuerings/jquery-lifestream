@@ -116,8 +116,8 @@
 
                   <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>
 
-                  <div class="cc-page-create-course-site-form-actions">
-                    <button class="cc-button cc-button-blue cc-page-create-course-site-form-button"
+                  <div class="cc-page-site-provisioning-form-actions">
+                    <button class="bc-canvas-button bc-canvas-button-primary"
                       type="submit" data-ng-disabled="selectedSectionsList.length == 0">Next &gt;&gt;</button>
                   </div>
 
@@ -169,7 +169,7 @@
 
                 <div class="row">
                   <div class="medium-offset-4 medium-8 columns">
-                    <button ng-disabled="createCourseSiteForm.$invalid" class="cc-button cc-button-blue cc-page-create-course-site-form-button" type="submit">Create Course Site</button>
+                    <button ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit">Create Course Site</button>
                     <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
                   </div>
                 </div>
@@ -201,7 +201,7 @@
               <div class="row cc-page-create-course-site-step-options">
                 <div class="medium-12 columns">
                   <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()">&lt;&lt; Back</button>
-                  <button class="cc-button cc-button-blue cc-page-create-course-site-form-button" type="button" data-ng-click="fetchFeed()">Start Over</button>
+                  <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()">Start Over</button>
                 </div>
               </div>
             </div>

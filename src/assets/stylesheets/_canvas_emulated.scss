@@ -2,8 +2,10 @@
 $bc-canvas-button-border: #d1d1d1;
 $bc-canvas-button-primary-background: #0099e0;
 $bc-canvas-button-primary-border: #006594;
-$bc-canvsa-button-primary-hover-background: #007db7;
-$bc-canvsa-button-primary-hover-border: #525252;
+$bc-canvas-button-primary-hover-background: #007db7;
+$bc-canvas-button-primary-hover-border: #525252;
+$bc-canvas-button-hover-background: #e8e8e8;
+$bc-canvas-button-hover-border: #d1d1d1;
 
 // Canvas Button Styles
 .bc-canvas-button {
@@ -18,6 +20,11 @@ $bc-canvsa-button-primary-hover-border: #525252;
   overflow: hidden;
   padding: 8px 14px;
   transition: background-color .2s ease-in-out;
+  &:hover, &:active {
+    background: $bc-canvas-button-hover-background;
+    border-color: $bc-canvas-button-hover-border;
+    color: $bc-color-grey-text;
+  }
   &[disabled] {
     color: $bc-color-white;
     cursor: not-allowed;
@@ -31,8 +38,8 @@ $bc-canvsa-button-primary-hover-border: #525252;
   border: 1px solid $bc-canvas-button-primary-border;
   color: $bc-color-white;
   &:hover, &:active {
-    background: $bc-canvsa-button-primary-hover-background;
-    border-color: $bc-canvsa-button-primary-hover-border;
+    background: $bc-canvas-button-primary-hover-background;
+    border-color: $bc-canvas-button-primary-hover-border;
     box-shadow: none;
   }
 }
