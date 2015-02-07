@@ -1,7 +1,8 @@
-<div class="cc-page-create-course-site" data-cc-spinner-directive>
+<div class="cc-page-create-course-site">
 
-  <div data-ng-show="isCourseCreator">
+  <div data-ng-hide="feedFetched" data-cc-spinner-directive></div>
 
+  <div data-ng-show="feedFetched && !authorizationError">
     <div data-ng-show="is_admin">
 
       <div class="cc-widget">
@@ -230,7 +231,6 @@
       </div>
 
     </div>
-
   </div>
 
   <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>

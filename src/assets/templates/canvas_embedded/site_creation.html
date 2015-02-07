@@ -1,7 +1,6 @@
 <div class="cc-page-site-creation" data-cc-spinner-directive>
 
-  <div data-ng-if="!authorizationError" class="cc-page-site-creation-container">
-
+  <div data-ng-if="!authorizationError">
     <h2 class="cc-page-site-creation-header cc-page-site-creation-header2">Create a Site</h2>
 
     <div class="row">
@@ -54,24 +53,7 @@
         </div>
       </div>
     </div>
-
   </div>
 
-  <div data-ng-if="authorizationError" class="cc-page-site-creation-authorization-error">
-    <div data-ng-if="authorizationError === 'failure'">
-      <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">
-        <i class="fa fa-warning"></i>
-        Error: There was an issue authorizing your access to this tool.
-      </h3>
-      <p>Please contact <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> for further assistance.</p>
-    </div>
-
-    <div data-ng-if="authorizationError === 'unauthorized'">
-      <h3 class="cc-page-site-creation-header cc-page-site-creation-header3">
-        <i class="fa fa-warning"></i>
-        Access Denied
-      </h3>
-      <p>Only staff and faculty members are authorized to use this tool.</p>
-    </div>
-  </div>
+  <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>
 </div>
