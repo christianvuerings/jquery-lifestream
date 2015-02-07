@@ -50,7 +50,7 @@ module Oec
           output << row
           visited_row_set << row_as_string
         else
-          Rails.logger.debug "#{@dept_name}.csv: Skipping #{course_id}, #{course['dept_name']} #{catalog_id} because enrollment_count=#{enrollment_count}"
+          Rails.logger.info "#{@dept_name}.csv: Skipping #{course_id}, #{course['dept_name']} #{catalog_id} because enrollment_count=#{enrollment_count}"
         end
         if course['primary_secondary_cd'] == 'S' && check_secondary_cross_listings
           Oec::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
@@ -66,7 +66,7 @@ module Oec
     def should_include_cross_listing?(cross_listing)
       include_cross_listing = cross_listing['cross_listed_flag'].to_s != '' || @departments_using_oec.include?(cross_listing['dept_name'])
       unless include_cross_listing
-        Rails.logger.debug "#{@dept_name}.csv: Omit cross_listing #{cross_listing['course_id']} of non-participating #{cross_listing['dept_name']} dept"
+        Rails.logger.info "#{@dept_name}.csv: Omit cross_listing #{cross_listing['course_id']} of non-participating #{cross_listing['dept_name']} dept"
       end
       include_cross_listing
     end
