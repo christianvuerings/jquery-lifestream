@@ -7,8 +7,7 @@
   angular.module('calcentral.controllers').controller('CanvasSiteCreationController', function(apiService, canvasSiteCreationFactory, $location, $route, $scope) {
     apiService.util.setTitle('Create a Site Overview');
 
-    $scope.accessDeniedError = "This feature is only available to faculty and staff.";
-
+    $scope.accessDeniedError = 'This feature is only available to faculty and staff.';
     $scope.linkToCreateCourseSite = $route.current.isEmbedded ? '/canvas/embedded/create_course_site' : '/canvas/create_course_site';
     $scope.linkToCreateProjectSite = $route.current.isEmbedded ? '/canvas/embedded/create_project_site' : '/canvas/create_project_site';
 
