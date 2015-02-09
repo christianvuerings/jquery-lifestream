@@ -19,6 +19,23 @@ module Canvas
       end
     end
 
+    def create(account_id, course_name, course_code, term_id, sis_course_id)
+      request_params = {
+        'account_id' => account_id,
+        'course' => {
+          'name' => course_name,
+          'course_code' => course_code,
+          'term_id' => term_id,
+          'sis_course_id' => sis_course_id
+        }
+      }
+      request_options = {
+        :method => :post,
+        :body => request_params,
+      }
+      response = request_uncached("accounts/#{account_id}/courses", "_course_creation", request_options)
+    end
+
     private
 
     def request_course

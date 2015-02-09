@@ -51,4 +51,59 @@ describe Canvas::Course do
     end
   end
 
+  context 'when creating course site' do
+    let(:api_path) { "accounts/#{canvas_account_id}/courses" }
+    let(:vcr_id) { "_course_creation" }
+    let(:course_name) { 'Project X' }
+    let(:course_code) { 'Project X' }
+    let(:canvas_account_id) { rand(999999).to_s }
+    let(:sis_course_id) { 'PROJ:' + rand(999999).to_s }
+    let(:term_id) { rand(9999).to_s }
+    let(:request_options) do
+      {
+        :method => :post,
+        :body => {
+          'account_id' => canvas_account_id,
+          'course' => {
+            'name' => 'Project X',
+            'course_code' => 'Project X',
+            'term_id' => term_id,
+            'sis_course_id' => sis_course_id
+          }
+        }
+      }
+    end
+    let(:response_body) do
+      {
+        'id' => rand(99999),
+        'account_id' => canvas_account_id,
+        'course_code' => course_code,
+        'enrollment_term_id' => term_id,
+        'name' => course_name,
+        'sis_course_id' => sis_course_id,
+        'workflow_state' => 'unpublished'
+      }
+    end
+    let(:response_object) { double(status: 200, body: response_body.to_json)}
+
+    it 'formats proper request' do
+      expect(subject).to receive(:request_uncached).with(api_path, vcr_id, request_options).and_return(response_object)
+      result = subject.create(canvas_account_id, 'Project X', 'Project X', term_id, sis_course_id)
+    end
+
+    it 'returns response object' do
+      allow(subject).to receive(:request_uncached).with(api_path, vcr_id, request_options).and_return(response_object)
+      result = subject.create(canvas_account_id, 'Project X', 'Project X', term_id, sis_course_id)
+      expect(result.status).to eq 200
+      course_details = JSON.parse(result.body)
+      expect(course_details).to be_an_instance_of Hash
+      expect(course_details['name']).to eq course_name
+      expect(course_details['account_id']).to eq canvas_account_id
+      expect(course_details['course_code']).to eq course_code
+      expect(course_details['enrollment_term_id']).to eq term_id
+      expect(course_details['sis_course_id']).to eq sis_course_id
+      expect(course_details['workflow_state']).to eq 'unpublished'
+    end
+  end
+
 end
