@@ -7,7 +7,7 @@
   </div>
 
   <div data-cc-spinner-directive>
-    <form name="cc_page_myfinances_account_filter" class="cc-page-myfinances-account-filter">
+    <form name="cc_page_myfinances_account_filter" class="cc-page-myfinances-account-filter" action="/">
       <div class="row">
         <div class="cc-page-myfinances-filter-label">
           <div class="cc-left cc-page-myfinances-filter-element">
@@ -23,10 +23,16 @@
               </select>
             </div>
             <div class="cc-left cc-select cc-page-myfinances-filter-element" data-ng-if="choice === 'term'">
+              <label for="cc-page-myfinances-select-term" class="cc-visuallyhidden">
+                Term
+              </label>
               <select data-ng-model="search.transTerm" id="cc-page-myfinances-select-term" data-ng-options="t.value as t.label for t in myfinances.terms" data-ng-change="searchTerm = search.transTerm">
               </select>
             </div>
             <div class="cc-left cc-page-myfinances-filter-element" data-ng-show="choice === 'daterange'">
+              <label for="cc-page-myfinances-date-start" class="cc-visuallyhidden">
+                Start date
+              </label>
               <input type="text"
                 class="cc-page-myfinances-date-input"
                 data-ng-model="startDate"
@@ -39,6 +45,9 @@
               </button>
             </div>
             <div class="cc-left cc-page-myfinances-filter-element" data-ng-show="choice === 'daterange'">
+              <label for="cc-page-myfinances-date-end" class="cc-visuallyhidden">
+                End date
+              </label>
               <input type="text"
                 class="cc-page-myfinances-date-input"
                 data-ng-model="endDate"
@@ -54,7 +63,7 @@
               <label class="cc-hidden cc-page-myfinances-print-label cc-print-show cc-left">
                 <strong>Search: </strong>
               </label>
-              <input type="text" placeholder="Search..." data-ng-model="search.$">
+              <input type="text" placeholder="Search..." data-ng-model="search.$" aria-label="Search" name="search">
             </div>
             <div class="cc-clearfix">
               <p class="cc-alert cc-alert-text" role="alert" data-ng-show="cc_page_myfinances_account_filter.cc_page_myfinances_date_start.$error.ccDateValidator">
@@ -78,22 +87,22 @@
       <table>
         <thead>
           <tr>
-            <th width="15%" data-ng-click="changeSorting('transDate')">
+            <th width="15%" data-ng-click="changeSorting('transDate')" scope="col">
               Date <i data-ng-class="getSortClass('transDate')"></i>
             </th>
-            <th width="35%" data-ng-click="changeSorting('transDesc')">
+            <th width="35%" data-ng-click="changeSorting('transDesc')" scope="col">
               Description <i data-ng-class="getSortClass('transDesc')"></i>
             </th>
-            <th width="30%" data-ng-click="changeSorting('transBalanceAmountFloat')" class="cc-table-right cc-table-right-spacing">
+            <th width="30%" data-ng-click="changeSorting('transBalanceAmountFloat')" class="cc-table-right cc-table-right-spacing" scope="col">
               <i data-ng-class="getSortClass('transBalanceAmountFloat')"></i> Amount
             </th>
-            <th width="10%" data-ng-click="changeSorting('transType')" data-ng-if="!myfinances.summary.hasDPPTransactions">
+            <th width="10%" data-ng-click="changeSorting('transType')" data-ng-if="!myfinances.summary.hasDPPTransactions" scope="col">
               Type <i data-ng-class="getSortClass('transType')"></i>
             </th>
-            <th width="10%" data-ng-click="changeSorting('isDPP')" class="cc-table-center" data-ng-if="myfinances.summary.hasDPPTransactions">
+            <th width="10%" data-ng-click="changeSorting('isDPP')" class="cc-table-center" data-ng-if="myfinances.summary.hasDPPTransactions" scope="col">
               DPP <i data-ng-class="getSortClass('isDPP')"></i>
             </th>
-            <th width="15%" data-ng-click="changeSorting('isDueNow')" class="cc-table-center">Due
+            <th width="15%" data-ng-click="changeSorting('isDueNow')" class="cc-table-center" scope="col">Due
               <i data-ng-class="getSortClass('isDueNow')"></i>
             </th>
           </tr>
