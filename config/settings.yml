@@ -68,6 +68,9 @@ canvas_proxy:
   official_courses_account_id: '129410'
   lti_sub_accounts:
     - '129410'
+  projects_account_id: '129407'
+  projects_term_id: '5494'
+  projects_owner_role_id: '1766'
   export_directory: 'tmp/canvas'
   lti_key: 'someMumboJumbo'
   lti_secret: 'someMumboJumbo'
