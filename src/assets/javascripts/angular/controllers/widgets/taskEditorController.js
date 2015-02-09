@@ -13,7 +13,7 @@
       // Shift the scope to match scope of the add_task form
       $scope.addEditTask = {
         'title': $scope.task.title,
-        'dueDate': $scope.task.dueDate,
+        'dueDate': $scope.task.dueDate || '',
         'notes': $scope.task.notes
       };
 

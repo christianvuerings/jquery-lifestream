@@ -3,9 +3,11 @@
 
   angular.module('calcentral.services').service('taskAdderService', function($http, $q, apiService) {
     var taskPanelState = {
-      'isProcessing': false,
-      'showAddTask': false,
-      'newTask': {}
+      isProcessing: false,
+      showAddTask: false,
+      newTask: {
+        dueDate: ''
+      }
     };
 
     var getState = function() {
@@ -14,12 +16,6 @@
 
     var getTaskState = function() {
       return taskPanelState.newTask;
-    };
-
-    var setTaskState = function(task) {
-      taskPanelState.newTask.title = task.title;
-      taskPanelState.newTask.notes = task.notes;
-      taskPanelState.newTask.dueDate = task.dueDate;
     };
 
     var resetState = function() {
@@ -78,7 +74,6 @@
       getState: getState,
       getTaskState: getTaskState,
       resetState: resetState,
-      setTaskState: setTaskState,
       toggleAddTask: toggleAddTask
     };
   });
