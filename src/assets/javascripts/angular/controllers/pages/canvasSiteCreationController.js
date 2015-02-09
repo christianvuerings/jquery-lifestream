@@ -29,5 +29,6 @@
     };
 
     loadAuthorizations();
+    apiService.util.iframeScrollToTop();
   });
 })(window.angular);
