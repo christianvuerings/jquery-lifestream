@@ -8,7 +8,7 @@ $.fn.lifestream.feeds.delicious = function( config, callback ) {
     config.template);
 
   $.ajax({
-    url: "https://feeds.delicious.com/v2/json/" + config.user,
+    url: "https://api.del.icio.us/v2/json/" + config.user,
     dataType: "jsonp",
     success: function( data ) {
       var output = [], i = 0, j;
