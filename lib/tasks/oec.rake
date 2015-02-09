@@ -39,12 +39,14 @@ namespace :oec do
   desc 'Spreadsheet from dept is compared with campus data'
   task :diff => :environment do
     dept_name = ENV['dept_name']
-    if dept_name.to_s == ''
+    if dept_name.blank?
       Rails.logger.warn "#{hr}Usage: rake oec:diff dept_name=BIOLOGY [src=/path/to/files] [dest=/export/path/]#{hr}"
     else
-      # Replace underscores in dept_name
-      Oec::CoursesDiff.new(dept_name.upcase.gsub(/_/, ' '), src_dir, dest_dir).export
-      Rails.logger.warn "#{hr}File wrote to #{dest_dir}#{hr}"
+      # Replace underscores in dept_name, if necessary
+      courses_diff = Oec::CoursesDiff.new(dept_name.upcase.gsub(/_/, ' '), src_dir, dest_dir)
+      courses_diff.export
+      summary = courses_diff.was_difference_found ? "#{hr}Find summary in #{courses_diff.output_filename}#{hr}" : "#{hr}No diff found in #{dept_name} csv.#{hr}"
+      Rails.logger.warn summary
     end
   end
 

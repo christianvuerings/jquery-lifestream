@@ -1,10 +1,14 @@
 module Oec
   class CoursesDiff < Export
 
+    # true if course data provided by dept representative differs from campus db data
+    attr_reader :was_difference_found
+
     def initialize(dept_name, source_dir, export_dir)
       super export_dir
       @source_dir = source_dir
       @dept_name = dept_name
+      @was_difference_found = false
     end
 
     def base_file_name
@@ -24,7 +28,6 @@ module Oec
         edited_courses = Oec::Queries.get_edited_courses(@source_dir, @dept_name)
         edited_courses.each do |edited_course|
           course_id = edited_course['course_id'].split('_')[0]
-          Rails.logger.warn "Edited #{@dept_name}.csv has #{course_id}: #{edited_course.to_s}"
           ldap_uid = edited_course['ldap_uid']
           primary_key = ldap_uid.blank? ? course_id : "#{course_id}-#{ldap_uid}"
           if campus_records.has_key? primary_key
@@ -35,15 +38,15 @@ module Oec
               db_value = db_record[column_name].to_s
               if db_value.casecmp(file_value) != 0
                 diff = get_diff_row(primary_key, edited_course, db_record)
-                Rails.logger.warn "Diff found: #{diff.to_s}"
-                output << record_to_csv_row(diff)
+                Rails.logger.info "Diff found: #{diff.to_s}"
+                output << get_csv_row(diff)
                 break
               end
             end
           else
             Rails.logger.warn "No campus data found for #{primary_key}"
             diff = get_diff_row(primary_key, edited_course, nil)
-            output << record_to_csv_row(diff)
+            output << get_csv_row(diff)
           end
         end
         campus_records.each do |course_id, db_record|
@@ -51,15 +54,21 @@ module Oec
           primary_key = ldap_uid == '' ? "#{course_id}" : "#{course_id}-#{ldap_uid}"
           unless keys_matching.include? primary_key
             diff = get_diff_row(primary_key, nil, db_record)
-            output << record_to_csv_row(diff)
+            output << get_csv_row(diff)
             Rails.logger.warn "edited_course does NOT contain course_id=#{primary_key}"
           end
         end
-        Rails.logger.warn "Diff results written to: #{export_directory}"
       else
         Rails.logger.warn "No campus data where dept_name = #{@dept_name}"
       end
     end
+
+    def get_csv_row(diff)
+      @was_difference_found = true
+      record_to_csv_row diff
+    end
+
+    private
 
     def get_diff_row(primary_key, edited_course, db_record)
       row = {}
