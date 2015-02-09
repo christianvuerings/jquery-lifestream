@@ -56,7 +56,7 @@ namespace :oec do
   def get_path_arg(arg_name)
     path = ENV[arg_name]
     return Rake.original_dir if path.blank?
-    path.start_with?('.') ? File.expand_path(path, Rake.original_dir) : Pathname.new(path).realpath
+    path.start_with?('/') ? path : File.expand_path(path, Rake.original_dir)
   end
 
 end
