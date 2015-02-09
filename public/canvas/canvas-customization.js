@@ -229,6 +229,7 @@
   /**
    * Adds E-Grades Export to Canvas Gradebook feature
    */
+  /* jshint ignore:start */
   var addEGradeExportOption = function() {
     // obtain course context id
     if (window.ENV && window.ENV.GRADEBOOK_OPTIONS && window.ENV.GRADEBOOK_OPTIONS.context_id) {
@@ -263,6 +264,7 @@
       }
     }
   };
+  /* jshint ignore:end */
 
   /**
    * Removes 'Create a Site' option from the User Settings navigation menu
@@ -308,9 +310,11 @@
   /**
    * Provides URL for Official Course API
    */
+  /* jshint ignore:start */
   var officialCourseUrl = function(courseId) {
     return calcentralRootUrl() + '/api/academics/canvas/egrade_export/is_official_course.json?canvas_course_id=' + courseId;
   };
+  /* jshint ignore:end */
 
   /**
    * bCourses customizations
@@ -328,7 +332,8 @@
 
     authorizeViewAddSiteButton();
     addPeopleInfoAlert();
-    addEGradeExportOption();
+    // Temporarily disable E-Grades customization due to change in Canvas layout (CLC-4833).
+    // addEGradeExportOption();
     addAltMediaPanel();
     removeCreateSiteUserNav();
   });
