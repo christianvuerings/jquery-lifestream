@@ -4,10 +4,8 @@
     <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Create a Project Site</h2>
 
     <div class="cc-page-site-provisioning-form-actions">
-      <button class="bc-canvas-button"
-          type="reset">Cancel</button>
-      <button class="bc-canvas-button bc-canvas-button-primary"
-          type="submit">Create a Project Site</button>
+      <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset">Cancel</a>
+      <button data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" type="submit">Create a Project Site</a>
     </div>
 
   </div>

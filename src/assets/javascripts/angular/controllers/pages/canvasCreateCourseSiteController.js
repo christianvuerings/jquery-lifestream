@@ -5,9 +5,11 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasCourseProvisionService, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $route, $scope, $timeout) {
     apiService.util.setTitle('Create a Course Site');
-    $scope.accessDeniedError = "This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.";
+
+    $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
+    $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
 
     var statusProcessor = function() {
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
@@ -212,8 +214,8 @@
       $scope.selectedSectionsList = $scope.selectedSections($scope.currentCourses);
     };
 
-    $scope.selectedSections = canvasCourseProvisionService.selectedSections;
-    $scope.toggleCheckboxes = canvasCourseProvisionService.toggleCheckboxes;
+    $scope.selectedSections = canvasSiteCreationService.selectedSections;
+    $scope.toggleCheckboxes = canvasSiteCreationService.toggleCheckboxes;
 
     // Wait until user profile is fully loaded before fetching section feed
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {

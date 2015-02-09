@@ -4,10 +4,14 @@
   /**
    * Canvas 'Create a Site' overview index controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCreateProjectSiteController', function(apiService, canvasSiteCreationFactory, $scope) {
+  angular.module('calcentral.controllers').controller('CanvasCreateProjectSiteController', function(apiService, canvasSiteCreationFactory, canvasSiteCreationService, $route, $scope) {
     apiService.util.setTitle('Create a Project Site');
 
-    $scope.accessDeniedError = "This feature is only available to faculty and staff.";
+    $scope.accessDeniedError = 'This feature is only available to faculty and staff.';
+    $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
+
+    $scope.createProjectSite = function() {
+    };
 
     var loadAuthorization = function() {
       canvasSiteCreationFactory.getAuthorizations()
