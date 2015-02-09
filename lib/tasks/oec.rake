@@ -45,7 +45,7 @@ namespace :oec do
       # Replace underscores in dept_name, if necessary
       courses_diff = Oec::CoursesDiff.new(dept_name.upcase.gsub(/_/, ' '), src_dir, dest_dir)
       courses_diff.export
-      summary = courses_diff.diff_found? ? "#{hr}Find summary in #{courses_diff.output_filename}#{hr}" : "#{hr}No diff found in #{dept_name} csv.#{hr}"
+      summary = courses_diff.was_difference_found ? "#{hr}Find summary in #{courses_diff.output_filename}#{hr}" : "#{hr}No diff found in #{dept_name} csv.#{hr}"
       Rails.logger.warn summary
     end
   end

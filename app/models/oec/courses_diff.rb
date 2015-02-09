@@ -1,10 +1,14 @@
 module Oec
   class CoursesDiff < Export
 
+    # true if course data provided by dept representative differs from campus db data
+    attr_reader :was_difference_found
+
     def initialize(dept_name, source_dir, export_dir)
       super export_dir
       @source_dir = source_dir
       @dept_name = dept_name
+      @was_difference_found = false
     end
 
     def base_file_name
@@ -60,12 +64,8 @@ module Oec
     end
 
     def get_csv_row(diff)
-      @difference_found = true
+      @was_difference_found = true
       record_to_csv_row diff
-    end
-
-    def diff_found?
-      @difference_found
     end
 
     private

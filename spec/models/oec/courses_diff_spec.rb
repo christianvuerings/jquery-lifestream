@@ -1,6 +1,7 @@
 describe Oec::CoursesDiff do
 
   let!(:dept_names) { %w{STAT BIOLOGY POL\ SCI} }
+
   let!(:src_dir) { 'fixtures/oec' }
 
   context 'comparing diff to expected CSV file' do
@@ -30,7 +31,8 @@ describe Oec::CoursesDiff do
         expect(diff.base_file_name).to include dept_name_path
         actual_diff = CSV.read diff.export[:filename]
         expected_diff = CSV.read "#{src_dir}/expected_diff_#{dept_name_path}_courses.csv"
-        expect(actual_diff.length).to eq expected_diff.length
+        expect(expected_diff.length).to eq actual_diff.length
+        expect(expected_diff.length > 0).to eq diff.was_difference_found
       end
     }
   end
