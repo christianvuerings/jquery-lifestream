@@ -1,13 +1,17 @@
 {
   "classes": [
     {
-      "id": "BIOLOGY:1A:2013-C",
       "name": "General Biology Lecture",
-      "course_code": "BIOLOGY 1A",
       "term_yr": "2013",
       "term_cd": "C",
-      "dept": "BIOLOGY",
-      "catid": "1A",
+      "listings": [
+        {
+          "id": "BIOLOGY:1A:2013-C",
+          "course_code": "BIOLOGY 1A",
+          "dept": "BIOLOGY",
+          "catid": "1A"
+        }
+      ],
       "site_url": "/academics/semester/summer-2013/class/biology-1a",
       "sections": [
         {
@@ -27,13 +31,17 @@
       "emitter": "Campus"
     },
     {
-      "id": "LAW:2089S:2013-C",
       "name": "Fundamentals of U.S. Law",
-      "course_code": "LAW 2089S",
+      "listings": [
+        {
+          "id": "LAW:2089S:2013-C",
+          "course_code": "LAW 2089S",
+          "dept": "LAW",
+          "catid": "2089S"
+        }
+      ],
       "term_yr": "2013",
       "term_cd": "C",
-      "dept": "LAW",
-      "catid": "2089S",
       "site_url": "/academics/semester/summer-2013/class/law-2089s",
       "sections": [
         {
@@ -48,14 +56,18 @@
       "emitter": "Campus"
     },
     {
-      "id": "phys_ed:11_004:2013-C",
       "name": "Physical Education Activities",
-      "course_code": "PHYS ED 11",
-      "courseCodeSection": "LAB 004",
+      "listings": [
+        {
+          "id": "phys_ed:11_004:2013-C",
+          "course_code": "PHYS ED 11",
+          "courseCodeSection": "LAB 004",
+          "dept": "PHYS ED",
+          "catid": "11"
+        }
+      ],
       "term_yr": "2013",
       "term_cd": "C",
-      "dept": "PHYS ED",
-      "catid": "11",
       "site_url": "/academics/semester/summer-2013/class/phys_ed-11",
       "sections": [
         {
@@ -70,14 +82,18 @@
       "emitter": "Campus"
     },
     {
-      "id": "phys_ed:11_022:2013-C",
       "name": "Physical Education Activities",
-      "course_code": "PHYS ED 11",
-      "courseCodeSection": "LAB 022",
+      "listings": [
+        {
+          "id": "phys_ed:11_022:2013-C",
+          "course_code": "PHYS ED 11",
+          "courseCodeSection": "LAB 022",
+          "dept": "PHYS ED",
+          "catid": "11"
+        }
+      ],
       "term_yr": "2013",
       "term_cd": "C",
-      "dept": "PHYS ED",
-      "catid": "11",
       "site_url": "/academics/semester/summer-2013/class/phys_ed-11",
       "sections": [
         {
@@ -105,6 +121,178 @@
           "id": "phys_ed:11_022:2013-C"
         }
       ]
+    },
+    {
+      "name": "General Biology and the Cambrian Biota",
+      "listings": [
+        {
+          "id": "BIOLOGY:123A:2013-C",
+          "course_code": "BIOLOGY 123A",
+          "dept": "BIOLOGY",
+          "catid": "123A"
+        },
+        {
+          "id": "INTEGBI:183A:2013-C",
+          "course_code": "INTEGBI 183A",
+          "dept": "INTEGBI",
+          "catid": "183A"
+        }
+      ],
+      "term_yr": "2013",
+      "term_cd": "C",
+      "site_url": "/academics/semester/summer-2013/class/biology-123a",
+      "scheduledSectionCount": 3,
+      "scheduledSections": [
+        {
+          "format": "lecture",
+          "count": 1
+        },
+        {
+          "format": "discussion",
+          "count": 1
+        },
+        {
+          "format": "laboratory",
+          "count": 1
+        }
+      ],
+      "sections": [
+        {
+          "ccn": "27606",
+          "courseCode": "BIOLOGY 123A",
+          "instruction_format": "LEC",
+          "section_label": "LEC 002",
+          "section_number": "002",
+          "is_primary_section": true,
+          "schedules": [
+            {
+              "buildingName": "PIMENTAL",
+              "roomNumber": "1",
+              "schedule": "MWF 8:00A-9:00A"
+            }
+          ],
+          "instructors": [
+            {
+              "name": "Mary Salinger",
+              "email": "mary@example.edu",
+              "uid": "9898989"
+            }
+          ]
+        },
+        {
+          "ccn": "27619",
+          "courseCode": "BIOLOGY 123A",
+          "instruction_format": "LAB",
+          "section_label": "LAB 201",
+          "section_number": "201",
+          "is_primary_section": false,
+          "instructors": [
+            {
+              "name": "Mary Salinger",
+              "email": "mary@example.edu",
+              "uid": "9898989"
+            }
+          ],
+          "schedules": [
+            {
+              "buildingName": "LECONTE",
+              "roomNumber": "0004",
+              "schedule": "F 12:00P-1:00P"
+            }
+          ]
+        },
+        {
+          "section_label": "DIS 008",
+          "ccn": "49713",
+          "courseCode": "BIOLOGY 123A",
+          "instruction_format": "DIS",
+          "section_number": "008",
+          "is_primary_section": false,
+          "schedules": [],
+          "instructors": [
+            {
+              "name": "Oski Bear",
+              "email": "oski@example.edu",
+              "uid": "61889"
+            },
+            {
+              "name": "Mary Salinger",
+              "email": "mary@example.edu",
+              "uid": "9898989"
+            }
+          ]
+        },
+        {
+          "ccn": "37606",
+          "courseCode": "INTEGBI 183A",
+          "instruction_format": "LEC",
+          "section_label": "LEC 002",
+          "section_number": "002",
+          "scheduledWithCcn": "27606",
+          "is_primary_section": true,
+          "schedules": [
+            {
+              "buildingName": "PIMENTAL",
+              "roomNumber": "1",
+              "schedule": "MWF 8:00A-9:00A"
+            }
+          ],
+          "instructors": [
+            {
+              "name": "Mary Salinger",
+              "email": "mary@example.edu",
+              "uid": "9898989"
+            }
+          ]
+        },
+        {
+          "ccn": "37619",
+          "courseCode": "INTEGBI 183A",
+          "instruction_format": "LAB",
+          "section_label": "LAB 201",
+          "section_number": "201",
+          "scheduledWithCcn": "29713",
+          "is_primary_section": false,
+          "instructors": [
+            {
+              "name": "Mary Salinger",
+              "email": "mary@example.edu",
+              "uid": "9898989"
+            }
+          ],
+          "schedules": [
+            {
+              "buildingName": "LECONTE",
+              "roomNumber": "0004",
+              "schedule": "F 12:00P-1:00P"
+            }
+          ]
+        },
+        {
+          "section_label": "DIS 008",
+          "ccn": "59713",
+          "courseCode": "INTEGBI 183A",
+          "instruction_format": "DIS",
+          "section_number": "008",
+          "is_primary_section": false,
+          "schedules": [],
+          "scheduledWithCcn": "49713",
+          "instructors": [
+            {
+              "name": "Oski Bear",
+              "email": "oski@example.edu",
+              "uid": "61889"
+            },
+            {
+              "name": "Mary Salinger",
+              "email": "mary@example.edu",
+              "uid": "9898989"
+            }
+          ]
+        }
+      ],
+      "role": "Instructor",
+      "emitter": "Campus"
     },
     {
       "shortDescription": "Lessons from the Cambrian Explosion",

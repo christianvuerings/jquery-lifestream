@@ -807,11 +807,19 @@
       "termYear": "2013",
       "classes": [
         {
-          "course_code": "BIO 123A",
-          "dept": "BIO",
           "role": "GSI",
-          "slug": "bio-123a",
+          "slug": "biology-123a",
           "title": "General Biology and the Cambrian Biota",
+          "listings": [
+            {
+              "course_code": "BIOLOGY 123A",
+              "dept": "BIOLOGY"
+            },
+            {
+              "course_code": "INTEGBI 183A",
+              "dept": "INTEGBI"
+            }
+          ],
           "class_sites": [
             {
               "id": "11866397",
@@ -843,9 +851,25 @@
               ]
             }
           ],
+          "scheduledSectionCount": 3,
+          "scheduledSections": [
+            {
+              "format": "lecture",
+              "count": 1
+            },
+            {
+              "format": "discussion",
+              "count": 1
+            },
+            {
+              "format": "laboratory",
+              "count": 1
+            }
+          ],
           "sections": [
             {
               "ccn": "27606",
+              "courseCode": "BIOLOGY 123A",
               "instruction_format": "LEC",
               "section_label": "LEC 002",
               "section_number": "002",
@@ -859,14 +883,15 @@
               ],
               "instructors": [
                 {
-                  "name": "David Weisblatd",
-                  "email": "dw@example.edu",
-                  "uid": "21345"
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
                 }
               ]
             },
             {
               "ccn": "27619",
+              "courseCode": "BIOLOGY 123A",
               "instruction_format": "LAB",
               "section_label": "LAB 201",
               "section_number": "201",
@@ -889,6 +914,7 @@
             {
               "section_label": "DIS 008",
               "ccn": "49713",
+              "courseCode": "BIOLOGY 123A",
               "instruction_format": "DIS",
               "section_number": "008",
               "is_primary_section": false,
@@ -905,9 +931,77 @@
                   "uid": "9898989"
                 }
               ]
+            },
+            {
+              "ccn": "37606",
+              "courseCode": "INTEGBI 183A",
+              "instruction_format": "LEC",
+              "section_label": "LEC 002",
+              "section_number": "002",
+              "scheduledWithCcn": "27606",
+              "is_primary_section": true,
+              "schedules": [
+                {
+                  "buildingName": "PIMENTAL",
+                  "roomNumber": "1",
+                  "schedule": "MWF 8:00A-9:00A"
+                }
+              ],
+              "instructors": [
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ]
+            },
+            {
+              "ccn": "37619",
+              "courseCode": "INTEGBI 183A",
+              "instruction_format": "LAB",
+              "section_label": "LAB 201",
+              "section_number": "201",
+              "scheduledWithCcn": "29713",
+              "is_primary_section": false,
+              "instructors": [
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ],
+              "schedules": [
+                {
+                  "buildingName": "LECONTE",
+                  "roomNumber": "0004",
+                  "schedule": "F 12:00P-1:00P"
+                }
+              ]
+            },
+            {
+              "section_label": "DIS 008",
+              "ccn": "59713",
+              "courseCode": "INTEGBI 183A",
+              "instruction_format": "DIS",
+              "section_number": "008",
+              "is_primary_section": false,
+              "schedules": [],
+              "scheduledWithCcn": "49713",
+              "instructors": [
+                {
+                  "name": "Oski Bear",
+                  "email": "oski@example.edu",
+                  "uid": "61889"
+                },
+                {
+                  "name": "Mary Salinger",
+                  "email": "mary@example.edu",
+                  "uid": "9898989"
+                }
+              ]
             }
           ],
-          "url": "/academics/teaching-semester/summer-2013/class/bio-123a"
+          "url": "/academics/teaching-semester/summer-2013/class/biology-123a"
         }
       ]
     },
@@ -918,14 +1012,26 @@
       "termYear": "2013",
       "classes": [
         {
-          "course_code": "BIO 123A",
-          "dept": "BIO",
           "role": "Instructor",
           "slug": "bio-123a",
           "title": "General Biology and the Cambrian Biota",
+          "listings": [
+            {
+              "course_code": "BIO 123A",
+              "dept": "BIO"
+            }
+          ],
+          "scheduledSectionCount": 1,
+          "scheduledSections": [
+            {
+              "format": "lecture",
+              "count": 1
+            }
+          ],
           "sections": [
             {
               "ccn": "27607",
+              "courseCode": "BIOLOGY 123A",
               "instruction_format": "LEC",
               "section_label": "LEC 003",
               "section_number": "003",

@@ -74,18 +74,27 @@
           <thead>
             <th scope="col" class="cc-table-right-spacing">Course Number</th>
             <th scope="col">Title</th>
+            <th scope="col" class="show-for-medium-up">Sections</th>
           </thead>
           <tbody data-ng-if="selectedTeachingSemester.classes.length" data-ng-repeat="course in selectedTeachingSemester.classes">
             <tr data-ng-class-even="'cc-academics-even'">
               <td class="cc-table-right-spacing cc-academics-course-number">
-                <a data-ng-href="{{course.url}}"
-                   data-ng-bind="course.course_code">
-                </a>
-                <div data-ng-repeat="section in course.sections">
-                  <span data-ng-bind="section.section_label"></span>
+                <div data-ng-repeat="listing in course.listings">
+                  <a data-ng-href="{{course.url}}"
+                     data-ng-bind="listing.course_code">
+                  </a>
+                </div>
+                <div class="show-for-small-only">
+                  <span data-ng-bind="course.scheduledSectionCount"></span>
+                  <span data-ng-pluralize count="course.scheduledSectionCount" when="{'1': 'section', 'other': 'sections'}">sections</span>
                 </div>
               </td>
               <td data-ng-bind="course.title"></td>
+              <td class="show-for-medium-up">
+                <div data-ng-repeat="scheduledSection in course.scheduledSections">
+                  <span data-ng-bind="scheduledSection.count"></span> <span data-ng-bind="scheduledSection.format"></span>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -25,29 +25,32 @@ module MyAcademics
       }
     end
 
-    def class_info(campus_course)
-      {
-        course_code: campus_course[:course_code],
-        dept: campus_course[:dept],
-        courseCatalog: campus_course[:course_catalog],
-        dept_desc: campus_course[:dept_desc],
-        slug: campus_course[:slug],
+    def course_info(campus_course)
+      campus_course.slice(:role, :sections, :slug).merge({
         title: campus_course[:name],
-        sections: campus_course[:sections],
-        course_id: campus_course[:id],
         url: class_to_url(campus_course)
-      }
+      }).merge course_listing(campus_course)
+    end
+
+    def course_info_with_multiple_listings(campus_course)
+      campus_course.slice(:role, :sections, :slug).merge({
+        listings: [ course_listing(campus_course) ],
+        title: campus_course[:name],
+        url: class_to_url(campus_course)
+      })
+    end
+
+    def course_listing(campus_course)
+      campus_course.slice(:course_code, :dept, :dept_desc).merge({
+        courseCatalog: campus_course[:course_catalog],
+        course_id: campus_course[:id]
+      })
     end
 
     def course_site_entry(course_site)
-      {
-        emitter: course_site[:emitter],
-        id: course_site[:id],
-        name: course_site[:name],
-        shortDescription: course_site[:shortDescription],
+      course_site.slice(:emitter, :id, :name, :shortDescription, :site_url).merge({
         siteType: 'course',
-        site_url: course_site[:site_url]
-      }
+      })
     end
 
     def current_term
@@ -88,5 +91,77 @@ module MyAcademics
       other_sites << course_site_entry(course_site)
     end
 
+    def append_with_merged_crosslistings(term, course_info)
+      working_course = course_info.deep_dup
+      cross_listing_hash = nil
+      working_course[:sections].each do |section|
+        section[:courseCode] = working_course[:listings].first[:course_code]
+        # Campus data's current way of indicating cross-listing relies on links
+        # between the primary sections of each course.
+        cross_listing_hash = section[:cross_listing_hash] if section[:cross_listing_hash].present?
+      end
+      if cross_listing_hash.present?
+        # If the cross-listed course is already in the feed, append section and listing data.
+        if (existing_cross_listed_course = term.find { |course| course[:crossListingHash] == cross_listing_hash })
+          existing_cross_listed_course[:listings].concat working_course[:listings]
+          working_course[:sections].each do |section|
+            schedule_info = section.except(:ccn, :courseCode)
+            if (co_scheduled_section = existing_cross_listed_course[:sections].find{|s| s.except(:ccn, :courseCode) == schedule_info})
+              section[:scheduledWithCcn] = co_scheduled_section[:ccn]
+            end
+          end
+          existing_cross_listed_course[:sections].concat working_course[:sections]
+          #Since courses have only one slug and URL, keep consistent by using the first alphabetically.
+          if working_course[:slug] < existing_cross_listed_course[:slug]
+            existing_cross_listed_course[:slug] = working_course[:slug]
+            existing_cross_listed_course[:url] = working_course[:url]
+          end
+        else
+          working_course[:crossListingHash] = cross_listing_hash
+          append_with_scheduled_section_count(term, working_course)
+        end
+      else
+        append_with_scheduled_section_count(term, working_course)
+      end
+    end
+
+    def append_with_scheduled_section_count(term, course_info)
+      scheduled_section_count = 0
+      scheduled_sections = Hash.new(0)
+      course_info[:sections].each do |section|
+        next if section[:scheduledWithCcn].present?
+        scheduled_section_count += 1
+        scheduled_sections[section[:instruction_format]] += 1
+      end
+      course_info[:scheduledSectionCount] = scheduled_section_count
+      course_info[:scheduledSections] = scheduled_sections.map do |format, count|
+        {
+          format: decode_instruction_format(format),
+          count: count
+        }
+      end
+      term << course_info
+    end
+
+    def decode_instruction_format(format)
+      case format
+        when 'COL' then 'colloquium'
+        when 'DIS' then 'discussion'
+        when 'FLD' then 'field study'
+        when 'GRP' then 'group study'
+        when 'IND' then 'independent study'
+        when 'INT' then 'internship'
+        when 'LAB' then 'laboratory'
+        when 'LEC' then 'lecture'
+        when 'REC' then 'recitation'
+        when 'SEM' then 'seminar'
+        when 'SES' then 'session'
+        when 'STD' then 'studio'
+        when 'SUP' then 'supplemental'
+        when 'TUT' then 'tutorial'
+        when 'WBL' then 'web-based lecture'
+        else format
+      end
+    end
   end
 end

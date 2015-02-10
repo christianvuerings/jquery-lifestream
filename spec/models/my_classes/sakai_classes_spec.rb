@@ -7,7 +7,9 @@ describe MyClasses::SakaiClasses do
   let(:course_id) {"econ-#{rand(999)}B"}
   let(:campus_courses) do
     [{
-      id: course_id,
+      listings: [{
+        id: course_id
+      }],
       term_yr: '2013',
       term_cd: 'D',
       sections: [{

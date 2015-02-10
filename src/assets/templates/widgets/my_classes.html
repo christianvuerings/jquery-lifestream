@@ -19,16 +19,15 @@
               <span class="cc-ellipsis" data-ng-bind="class.name"></span>
             </a>
             <div data-ng-switch-default>
-              <div class="cc-ellipsis">
+              <div class="cc-ellipsis cc-widget-classes-title" data-ng-repeat="listing in class.listings">
                 <a data-ng-click="api.analytics.trackExternalLink('My Classes', class.emitter, class.site_url)"
                    data-ng-href="{{class.site_url}}">
-                  <strong data-ng-bind="class.course_code" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
-                  <strong data-ng-bind="class.courseCodeSection" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
+                  <strong data-ng-bind="listing.course_code" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
+                  <strong data-ng-bind="listing.courseCodeSection" data-ng-class="{'cc-italic': class.waitlistPosition}"></strong>
                 </a>
-                <span class="cc-text-light" data-ng-show="class.waitlistPosition" data-ng-bind-template="- #{{ class.waitlistPosition }} on the wait list"></span>
               </div>
-              <div class="cc-ellipsis cc-text-light cc-widget-classes-subtitle" data-ng-class="{'cc-italic': class.waitlistPosition}" data-ng-show="!!class.name" data-ng-bind="class.name">
-              </div>
+              <span class="cc-text-light" data-ng-show="class.waitlistPosition" data-ng-bind-template="- #{{ class.waitlistPosition }} on the wait list"></span>
+              <div class="cc-ellipsis cc-text-light cc-widget-classes-subtitle" data-ng-class="{'cc-italic': class.waitlistPosition}" data-ng-show="!!class.name" data-ng-bind="class.name"></div>
               <ul class="cc-widget-sublist">
                 <li data-ng-repeat="subclass in class.subclasses">
                   <div class="cc-icon" data-ng-class="{'bSpace':'cc-icon-bspace', 'bCourses':'cc-icon-bcourses'}[subclass.emitter]">

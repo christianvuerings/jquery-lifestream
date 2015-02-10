@@ -8,17 +8,25 @@ module MyClasses
       all_courses = CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
       semester_key = "#{current_term.year}-#{current_term.code}"
       if all_courses[semester_key]
-        # Ask My Academics for the URL to this class info page in My Academics.
+        # Ask My Academics for the URL to this class info page in My Academics, and to merge
+        # any crosslisted courses for non-students.
         my_academics = MyAcademics::Semesters.new(@uid)
+        listing_specific_properties = [:catid, :course_catalog, :course_code, :dept, :dept_desc, :id]
         all_courses[semester_key].each do |course|
-          course[:site_url] = my_academics.class_to_url(course)
-          append_class_info(course, classes)
+          course_info = course.except *listing_specific_properties
+          course_info[:listings] = [ course.slice(*listing_specific_properties) ]
+          course_info[:site_url] = my_academics.class_to_url course
+          if course[:role] == 'Student'
+            append_class_info(classes, course_info)
+          else
+            my_academics.append_with_merged_crosslistings(classes, course_info)
+          end
         end
       end
       classes
     end
 
-    def append_class_info(campus_course, class_list)
+    def append_class_info(class_list, campus_course)
       if campus_course[:role] != 'Student'
         class_list << campus_course
         return
@@ -36,7 +44,7 @@ module MyClasses
           working_course = campus_course.deep_dup
           if split_primaries
             working_course[:id] = "#{campus_course[:id]}-#{section[:section_number]}"
-            working_course[:courseCodeSection] = "#{section[:instruction_format]} #{section[:section_number]}"
+            working_course[:listings].first[:courseCodeSection] = "#{section[:instruction_format]} #{section[:section_number]}"
           end
           if section[:waitlistPosition] && section[:waitlistPosition] > 0
             working_course[:enroll_limit] = section[:enroll_limit]

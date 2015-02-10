@@ -694,7 +694,7 @@ describe Canvas::ProvideCourseSite do
       expect(terms_feed[0][:name]).to eq 'Fall 2013'
       feed = terms_feed[0][:classes]
       expect(feed.length).to eq 2
-      bio1a = feed.select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]
+      bio1a = feed.select {|course| course[:listings].first[:course_code] == 'BIOLOGY 1A'}[0]
       expect(bio1a.empty?).to be_falsey
       expect(bio1a[:title]).to eq 'General Biology Lecture'
       expect(bio1a[:role]).to eq 'Instructor'
@@ -703,68 +703,9 @@ describe Canvas::ProvideCourseSite do
       expect(bio1a[:sections][1][:is_primary_section]).to be_falsey
       expect(bio1a[:sections][2][:is_primary_section]).to be_falsey
 
-      cogsci = feed.select {|course| course[:course_code] == 'COG SCI C147'}[0]
+      cogsci = feed.select {|course| course[:listings].first[:course_code] == 'COG SCI C147'}[0]
       expect(cogsci.empty?).to be_falsey
       expect(cogsci[:title]).to eq 'Language Disorders'
-    end
-
-    context 'cross-listed courses', :if => CampusOracle::Connection.test_data? do
-      let(:uid) {'212388'}
-      subject {Canvas::ProvideCourseSite.new('212388').candidate_courses_list[0][:classes]}
-      it 'groups cross-listed courses' do
-        expect(subject.size).to eq 2
-        crosslisted_course = subject[0]
-        expect(crosslisted_course[:title]).to eq 'Introduction to the Study of Buddhism'
-        expect(crosslisted_course[:course_code]).to be_blank
-        expect(crosslisted_course[:crossListingHash]).to be_present
-        crosslisted_sections = crosslisted_course[:sections]
-        expect(crosslisted_sections.size).to eq 6
-        expect(crosslisted_sections.select {|s| s[:courseCode].blank?}).to be_empty
-        non_crosslisted_course = subject[1]
-        expect(non_crosslisted_course[:course_code]).to be_present
-        expect(non_crosslisted_course[:crossListingHash]).to be_blank
-      end
-      it 'merges class sites for cross-listed courses' do
-        allow_any_instance_of(MyAcademics::CanvasSites).to receive(:merge) do |data|
-          data[:teachingSemesters][0][:classes].each do |course|
-            case course[:course_code]
-              when 'BUDDSTD C50'
-                course[:class_sites] = [
-                  {
-                    id: 'thebigun',
-                    sections: [{ccn: '07853'}, {ccn: '07856'}]
-                  }
-                ]
-              when 'COG SCI C500'
-                course[:class_sites] = [
-                  {
-                    id: 'indie',
-                    sections: [{ccn: '83000'}]
-                  }
-                ]
-              when 'S,SEASN C52'
-                course[:class_sites] = [
-                  {
-                    id: 'onesecondary',
-                    sections: [{ccn: '83214'}]
-                  },
-                  {
-                    id: 'thebigun',
-                    sections: [{ccn: '83212'}, {ccn: '83485'}]
-                  }
-                ]
-            end
-          end
-        end
-        crosslisted_sites = subject[0][:class_sites]
-        expect(crosslisted_sites.size).to eq 2
-        singleton_site = crosslisted_sites.select {|s| s[:id] == 'onesecondary'}.first
-        expect(singleton_site[:sections].size).to eq 1
-        merged_site = crosslisted_sites.select {|s| s[:id] == 'thebigun'}.first
-        expect(merged_site[:sections].size).to eq 4
-        non_crosslisted_sites = subject[1][:class_sites]
-        expect(non_crosslisted_sites.size).to eq 1
-      end
     end
   end
 
@@ -1107,7 +1048,7 @@ describe Canvas::ProvideCourseSite do
       classes_list = semesters_list[0][:classes]
       expect(classes_list.length).to eq 2
       bio_class = classes_list[0]
-      expect(bio_class[:course_code]).to eq 'BIOLOGY 1A'
+      expect(bio_class[:listings].first[:course_code]).to eq 'BIOLOGY 1A'
       sections = bio_class[:sections]
       expect(sections.length).to eq 2
       expect(sections[0][:ccn].to_i).to eq 7309

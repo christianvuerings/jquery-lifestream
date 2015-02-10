@@ -22,7 +22,7 @@ module MyClasses::ClassesModule
         campus_courses.each do |campus|
           if campus[:term_yr] == term_yr && campus[:term_cd]
             if campus[:sections].index {|s| candidate_ccns.include?(s[:ccn].to_i)}.present?
-              linked_campus << {id: campus[:id]}
+              linked_campus << {id: campus[:listings].first[:id]}
             end
           end
         end

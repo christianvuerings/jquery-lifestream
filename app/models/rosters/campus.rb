@@ -9,55 +9,59 @@ module Rosters
         sections: [],
         students: []
       }
-      campus_enrollment_map = {}
-
       all_courses = CampusOracle::UserCourses::All.new({user_id: @uid}).get_all_campus_courses
-      selected_course = {}
 
-      all_courses.keys.each do |term|
-        semester_courses = all_courses[term]
-        match = semester_courses.index do |semester_course|
-          (semester_course[:id] == @campus_course_id) &&
-            (semester_course[:role] == 'Instructor')
-        end
-        if !match.nil?
-          selected_course = semester_courses[match]
+      selected_term, selected_course = nil
+      all_courses.each do |term, courses|
+        if (course = courses.find {|c| (c[:id] == @campus_course_id) && (c[:role] == 'Instructor') })
+          selected_term = term
+          selected_course = course
+          break
         end
       end
 
+      return feed if selected_course.nil?
       feed[:campus_course].merge!(name: selected_course[:name])
 
-      term_yr = selected_course[:term_yr]
-      term_cd = selected_course[:term_cd]
-      dept_name = selected_course[:dept]
-      catid = selected_course[:catid]
+      crosslisted_courses = []
+      if (crosslisted_section = selected_course[:sections].find { |section| section[:cross_listing_hash].present? })
+        crosslisting_hash = crosslisted_section[:cross_listing_hash]
+        crosslisted_courses = all_courses[selected_term].select do |course|
+          course[:sections].find { |section| section[:cross_listing_hash] == crosslisting_hash }
+        end
+      else
+        crosslisted_courses << selected_course
+      end
 
-      selected_course[:sections].each do |section|
-        feed[:sections] << {
-          ccn: section[:ccn],
-          name: "#{dept_name} #{catid} #{section[:section_label]}"
-        }
+      campus_enrollment_map = {}
+      crosslisted_courses.each do |course|
+        course[:sections].each do |section|
+          feed[:sections] << {
+            ccn: section[:ccn],
+            name: "#{course[:dept]} #{course[:catid]} #{section[:section_label]}"
+          }
 
-        section_enrollments = CampusOracle::Queries.get_enrolled_students(section[:ccn], term_yr, term_cd)
-        section_enrollments.each do |enr|
-          if (existing_entry = campus_enrollment_map[enr['ldap_uid']])
-            # We include waitlisted students in the roster. However, we do not show the official photo if the student
-            # is waitlisted in ALL sections.
-            if existing_entry[:enroll_status] == 'W' &&
-              enr['enroll_status'] == 'E'
-              existing_entry[:enroll_status] = 'E'
+          section_enrollments = CampusOracle::Queries.get_enrolled_students(section[:ccn], course[:term_yr], course[:term_cd])
+          section_enrollments.each do |enr|
+            if (existing_entry = campus_enrollment_map[enr['ldap_uid']])
+              # We include waitlisted students in the roster. However, we do not show the official photo if the student
+              # is waitlisted in ALL sections.
+              if existing_entry[:enroll_status] == 'W' &&
+                enr['enroll_status'] == 'E'
+                existing_entry[:enroll_status] = 'E'
+              end
+              campus_enrollment_map[enr['ldap_uid']][:section_ccns] |= [section[:ccn]]
+            else
+              campus_enrollment_map[enr['ldap_uid']] = {
+                student_id: enr['student_id'],
+                first_name: enr['first_name'],
+                last_name: enr['last_name'],
+                email: enr['student_email_address'],
+                enroll_status: enr['enroll_status'],
+                section_ccns: [section[:ccn]],
+                photo_bytes: enr['photo_bytes']
+              }
             end
-            campus_enrollment_map[enr['ldap_uid']][:section_ccns] |= [section[:ccn]]
-          else
-            campus_enrollment_map[enr['ldap_uid']] = {
-              student_id: enr['student_id'],
-              first_name: enr['first_name'],
-              last_name: enr['last_name'],
-              email: enr['student_email_address'],
-              enroll_status: enr['enroll_status'],
-              section_ccns: [section[:ccn]],
-              photo_bytes: enr['photo_bytes']
-            }
           end
         end
       end
