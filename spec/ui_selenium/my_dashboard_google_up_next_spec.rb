@@ -44,12 +44,14 @@ describe 'My Dashboard Up Next card', :testui => true do
       @initial_event_times = @up_next_card.all_event_times
       @initial_event_summaries = @up_next_card.all_event_summaries
       @initial_event_locations = @up_next_card.all_event_locations
+      @initial_hangout_link_count = @up_next_card.hangout_link_count
       @initial_event_start_times = @up_next_card.all_event_start_times
       @initial_event_end_times = @up_next_card.all_event_end_times
       @initial_event_organizers = @up_next_card.all_event_organizers
       logger.info("#{@initial_event_times}")
       logger.info("#{@initial_event_summaries}")
       logger.info("#{@initial_event_locations}")
+      logger.info("There are #{@initial_hangout_link_count.to_s} video links")
       logger.info("#{@initial_event_start_times}")
       logger.info("#{@initial_event_end_times}")
       logger.info("#{@initial_event_organizers}")
@@ -101,6 +103,10 @@ describe 'My Dashboard Up Next card', :testui => true do
       end
 
       context 'when expanded' do
+
+        it 'shows event video hangout links' do
+          expect(@up_next_card.hangout_link_count).to eql(@initial_hangout_link_count + 1)
+        end
 
         it 'shows event start times' do
           logger.info("#{@up_next_card.all_event_start_times}")
