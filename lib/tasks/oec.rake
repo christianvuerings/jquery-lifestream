@@ -12,8 +12,10 @@ namespace :oec do
       exporter.export
       files_created << "#{dest_dir}/#{exporter.base_file_name}.csv"
     end
-    Oec::BiologyPostProcessor.new(dest_dir).post_process if dept_set.include? 'BIOLOGY'
-    Rails.logger.warn "#{hr}Files created:#{"\n " + files_created.join("\n ")}#{hr}"
+    biology_relationship_matchers = { 'MCELLBI' => ' 1A[L]?', 'INTEGBI' => ' 1B[L]?' }
+    post_processor = Oec::BiologyPostProcessor.new('BIOLOGY', biology_relationship_matchers, dest_dir, dest_dir)
+    post_processor.post_process
+    Rails.logger.warn "#{hr}Find CSV files in directory: #{dest_dir}#{hr}"
   end
 
   desc 'Generate student files based on courses.csv input'
@@ -26,7 +28,7 @@ namespace :oec do
       [Oec::Students, Oec::CourseStudents].each do |klass|
         klass.new(reader.ccns, reader.gsi_ccns, dest_dir).export
       end
-      Rails.logger.warn "#{hr}Files wrote to #{dest_dir}#{hr}"
+      Rails.logger.warn "#{hr}Find CSV files in directory: #{dest_dir}#{hr}"
     else
       Rails.logger.warn <<-eos
       #{hr}File not found: #{csv_file}
@@ -46,8 +48,12 @@ namespace :oec do
       dest_dir = get_path_arg 'dest'
       courses_diff = Oec::CoursesDiff.new(dept_name.upcase.gsub(/_/, ' '), src_dir, dest_dir)
       courses_diff.export
-      summary = courses_diff.was_difference_found ? "#{hr}Find summary in #{courses_diff.output_filename}#{hr}" : "#{hr}No diff found in #{dept_name} csv.#{hr}"
-      Rails.logger.warn summary
+      if courses_diff.was_difference_found
+        Rails.logger.warn "#{hr}Find summary in #{courses_diff.output_filename}#{hr}"
+      else
+        File.delete courses_diff.output_filename
+        Rails.logger.warn "#{hr}No diff found in #{dept_name} csv.#{hr}"
+      end
     end
   end
 
