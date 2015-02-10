@@ -1,0 +1,72 @@
+{
+  "users": {
+    "saved": [
+      {
+        "ldap_uid": "5555555",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email_address": "johndoe@berkeley.edu",
+        "student_id": "98765321",
+        "affiliations": "EMPLOYEE-TYPE-ACADEMIC,STUDENT-TYPE-REGISTERED"
+      },
+      {
+        "ldap_uid": "4545453",
+        "first_name": "Jack",
+        "last_name": "Weaver",
+        "email_address": "jackweaver@berkeley.edu",
+        "student_id": null,
+        "affiliations": "EMPLOYEE-TYPE-STAFF"
+      },
+      {
+        "ldap_uid": "1337999",
+        "first_name": "Adam",
+        "last_name": "Smith",
+        "email_address": "adamsmith@berkeley.edu",
+        "student_id": "77777771",
+        "affiliations": "EMPLOYEE-TYPE-STAFF,STUDENT-TYPE-REGISTERED"
+      }
+    ],
+    "recent": [
+      {
+        "ldap_uid": "6543210",
+        "first_name": "Jessica",
+        "last_name": "Doe",
+        "email_address": "jessicadoe@berkeley.edu",
+        "student_id": "44332211",
+        "affiliations": "EMPLOYEE-TYPE-ACADEMIC,STUDENT-TYPE-REGISTERED"
+      },
+      {
+        "ldap_uid": "8877661",
+        "first_name": "Rebecca",
+        "last_name": "Black",
+        "email_address": "rebeccablack@berkeley.edu",
+        "student_id": "11333377",
+        "affiliations": "EMPLOYEE-TYPE-ACADEMIC,STUDENT-TYPE-REGISTERED"
+      },
+      {
+        "ldap_uid": "5555555",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email_address": "johndoe@berkeley.edu",
+        "student_id": "98765321",
+        "affiliations": "EMPLOYEE-TYPE-ACADEMIC,STUDENT-TYPE-REGISTERED"
+      },
+      {
+        "ldap_uid": "4545453",
+        "first_name": "Jack",
+        "last_name": "Weaver",
+        "email_address": "jackweaver@berkeley.edu",
+        "student_id": null,
+        "affiliations": "EMPLOYEE-TYPE-STAFF"
+      },
+      {
+        "ldap_uid": "1337999",
+        "first_name": "Adam",
+        "last_name": "Smith",
+        "email_address": "adamsmith@berkeley.edu",
+        "student_id": "77777771",
+        "affiliations": "EMPLOYEE-TYPE-STAFF,STUDENT-TYPE-REGISTERED"
+      }
+    ]
+  }
+}

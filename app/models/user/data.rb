@@ -4,6 +4,9 @@ module User
 
     self.table_name = 'user_data'
 
+    has_many :saved_uids, :class_name => 'User::SavedUid', :foreign_key => 'owner_id'
+    has_many :recent_uids, :class_name => 'User::RecentUid', :foreign_key => 'owner_id'
+
     after_initialize :log_access
     attr_accessible :preferred_name, :uid, :first_login_at
 

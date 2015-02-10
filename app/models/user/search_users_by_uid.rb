@@ -4,11 +4,23 @@ module User
 
     def initialize(options={})
       @id = options[:id]
+      @ids = options[:ids]
     end
 
     def search_users_by_uid
-      self.class.fetch_from_cache "#{@id}" do
-        CampusOracle::Queries.find_people_by_uid(@id)
+      search_batch([@id])
+    end
+
+    def search_users_by_uid_batch
+      search_batch(@ids)
+    end
+
+    private
+
+    def search_batch(uids)
+      cache_key = uids.sort.join('-')
+      self.class.fetch_from_cache "#{cache_key}" do
+        CampusOracle::Queries.get_basic_people_attributes(uids)
       end
     end
 
