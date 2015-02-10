@@ -9,13 +9,14 @@ module Oec
     end
 
     def post_process
-      path_to_biology_csv = path_to_csv @biology_dept_name
+      biology = Oec::Courses.new(@biology_dept_name, @src_dir)
+      path_to_biology_csv = biology.output_filename
       if File.exist? path_to_biology_csv
         files_to_archive = { @biology_dept_name => path_to_biology_csv }
         uids_in_target_files = {}
         sorted_dept_rows = {}
         @biology_relationship_matchers.keys.each do |target_dept_name|
-          path_to_target_csv = path_to_csv target_dept_name
+          path_to_target_csv = Oec::Courses.new(target_dept_name, @src_dir).output_filename
           files_to_archive[target_dept_name] = path_to_target_csv
           uids_in_target_files[target_dept_name] = []
           CSV.read(path_to_target_csv).each_with_index do |row, index|
@@ -25,28 +26,23 @@ module Oec
             end
           end
         end
-        header_row = nil
         CSV.read(path_to_biology_csv).each_with_index do |row, index|
-          unless preexisting_uid?(get_row_uid(row), uids_in_target_files, files_to_archive.keys)
+          unless preexisting_uid?(get_row_uid(row), uids_in_target_files, files_to_archive.keys) || index == 0
             course_name = row[1]
-            if index == 0
-              header_row = row
-            else
-              target_csv = @biology_dept_name
-              @biology_relationship_matchers.each do |dept_name, pattern|
-                if course_name.match(pattern).present?
-                  target_csv = row[4] = dept_name
-                end
+            target_csv = @biology_dept_name
+            @biology_relationship_matchers.each do |dept_name, pattern|
+              if course_name.match(pattern).present?
+                target_csv = row[4] = dept_name
               end
-              put_row_per_dept(sorted_dept_rows, target_csv, row)
             end
+            put_row_per_dept(sorted_dept_rows, target_csv, row)
           end
         end
         files_to_archive.each do | next_dept_name, path_to_csv |
           FileUtils.mv(path_to_csv, "#{path_to_csv}.OBSOLETE")
           rows = sorted_dept_rows[next_dept_name]
           if rows && rows.length > 0
-            ExportWrapper.new(next_dept_name, header_row, rows, @dest_dir).export
+            ExportWrapper.new(next_dept_name, biology.headers, rows, @dest_dir).export
           end
         end
       else
@@ -74,10 +70,6 @@ module Oec
 
     def get_row_uid(row)
       "#{row[0]}-#{row[9]}"
-    end
-
-    def path_to_csv(dept_name)
-      Oec::Courses.new(dept_name, @src_dir).output_filename
     end
 
   end
