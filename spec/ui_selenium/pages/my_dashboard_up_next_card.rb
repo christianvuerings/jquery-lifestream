@@ -19,6 +19,7 @@ module CalCentralPages
     elements(:event_summary, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//strong[@data-ng-bind="item.summary"]')
     elements(:event_location, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//div[@data-ng-bind="item.location"]')
     elements(:event_detail_toggle, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//div[@data-ng-click="api.widget.toggleShow($event, items, item, \'Up Next\')"]')
+    div(:hangout_link, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//a[contains(.,"Join Hangout")]')
     div(:event_start_time, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]//div[@data-ng-bind="item.start.epoch * 1000 | date:\'short\' | lowercase"]')
     div(:event_end_time, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]//div[@data-ng-bind="item.end.epoch * 1000 | date:\'short\' | lowercase"]')
     paragraph(:event_organizer, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]//p[@data-ng-bind="item.organizer"]')
@@ -40,6 +41,18 @@ module CalCentralPages
       locations = []
       event_location_elements.each { |location| locations.push(location.text) }
       locations.sort
+    end
+
+    def hangout_link_count
+      links = []
+      event_detail_toggle_elements.each do |toggle|
+        toggle.click
+        hangout_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+        links.push(hangout_link)
+        toggle.click
+        hangout_link_element.when_not_visible(timeout=WebDriverUtils.page_event_timeout)
+      end
+      links.length
     end
 
     def all_event_start_times

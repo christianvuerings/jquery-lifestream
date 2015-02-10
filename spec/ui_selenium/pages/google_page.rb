@@ -42,6 +42,7 @@ class GooglePage
   text_area(:event_end_time, :xpath => '//input[@title="Until time"]')
   text_area(:event_end_date, :xpath => '//input[@title="Until date"]')
   text_area(:event_location, :xpath => '//input[@placeholder="Enter a location"]')
+  button(:add_video_link, :xpath => '//span[text()="Add video call"]')
   button(:save_event, :xpath => '//div[text()="Save"]')
   div(:event_added, :xpath => '//div[contains(text(),"Added")]')
   div(:event_title_displayed, :xpath => '//div[@class="ui-sch-schmedit"]')
@@ -134,6 +135,7 @@ class GooglePage
     event_location_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     event_location
     self.event_location = location
+    add_video_link
     sleep(WebDriverUtils.page_event_timeout)
     start_time = Time.strptime(event_start_time, "%l:%M%P")
     end_time = Time.strptime(event_end_time, "%l:%M%P")
