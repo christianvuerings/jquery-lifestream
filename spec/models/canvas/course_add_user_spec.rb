@@ -1,16 +1,17 @@
 require "spec_helper"
 
 describe Canvas::CourseAddUser do
-
+  let(:ldap_uid) { '1044850' }
+  let(:canvas_user_id) { 3332221 }
   let(:canvas_user_profile) {
     {
-      "id"=>3332221,
+      "id"=>canvas_user_id,
       "name"=>"Bryanna D. Amerson",
       "short_name"=>"Bryanna Amerson",
       "sortable_name"=>"Amerson, Bryanna",
-      "sis_user_id"=>"300123",
-      "sis_login_id"=>"300123",
-      "login_id"=>"300123",
+      "sis_user_id"=>ldap_uid,
+      "sis_login_id"=>ldap_uid,
+      "login_id"=>ldap_uid,
       "avatar_url"=>"https://secure.gravatar.com/avatar/1234567-avatar-50.png",
       "title"=>nil,
       "bio"=>nil,
@@ -26,7 +27,7 @@ describe Canvas::CourseAddUser do
   end
 
   let(:person_hash) { {
-    "ldap_uid"=>"1044850",
+    "ldap_uid"=>ldap_uid,
     "first_name"=>"Bryan",
     "last_name"=>"Cranston",
     "email_address"=>"bryan.cranston@example.com",
@@ -139,7 +140,7 @@ describe Canvas::CourseAddUser do
   context "when adding user to a course section" do
     before do
       allow_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(["260506"]).and_return(true)
-      allow_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
+      allow_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, "StudentEnrollment", 'active', false).and_return(true)
     end
 
     it "raises exception when ldap_user_id is not a string" do
@@ -157,8 +158,37 @@ describe Canvas::CourseAddUser do
     end
 
     it "adds user to canvas course section using canvas user id" do
-      expect_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(3332221, "StudentEnrollment", 'active', false).and_return(true)
+      expect_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, "StudentEnrollment", 'active', false).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
+      expect(result).to be_truthy
+    end
+  end
+
+  context "when adding user to a course" do
+    let(:custom_role_id) { Settings.canvas_proxy.projects_owner_role_id }
+    let(:enrollment_type) { 'TeacherEnrollment' }
+    let(:canvas_course_id) { '864215' }
+    let(:enrollment_state) { 'active' }
+    before do
+      allow_any_instance_of(Canvas::SisUserProfile).to receive(:new).with(:user_id => ldap_uid).and_return(double(get: canvas_user_profile))
+      allow_any_instance_of(Canvas::UserProvision).to receive(:import_users).with([ldap_uid]).and_return(true)
+      allow_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(true)
+    end
+
+    it "adds user to canvas" do
+      expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with([ldap_uid]).and_return(true)
+      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id)
+    end
+
+    it "enrolls user to canvas course" do
+      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(true)
+      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id)
+      expect(result).to be_truthy
+    end
+
+    it "adds user to canvas with custom role id option" do
+      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {:role_id => custom_role_id}).and_return(true)
+      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id, :role_id => custom_role_id)
       expect(result).to be_truthy
     end
   end
