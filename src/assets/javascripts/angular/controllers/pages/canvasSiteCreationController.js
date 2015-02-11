@@ -15,16 +15,16 @@
       canvasSiteCreationFactory.getAuthorizations()
         .success(function(data) {
           if (!data && (typeof(data.authorizations.canCreateCourseSite) === 'undefined') || (typeof(data.authorizations.canCreateProjectSite) === 'undefined')) {
-            $scope.authorizationError = 'failure';
+            $scope.displayError = 'failure';
           } else {
             angular.extend($scope, data);
             if ($scope.authorizations.canCreateCourseSite === false && $scope.authorizations.canCreateProjectSite === false) {
-              $scope.authorizationError = 'unauthorized';
+              $scope.displayError = 'unauthorized';
             }
           }
         })
         .error(function() {
-          $scope.authorizationError = 'failure';
+          $scope.displayError = 'failure';
         });
     };
 

@@ -148,7 +148,7 @@
         $scope.feedFetched = true;
         if (sectionsFeed.status !== 200) {
           $scope.isLoading = false;
-          $scope.authorizationError = 'failure';
+          $scope.displayError = 'failure';
         } else {
           if (sectionsFeed.data) {
             angular.extend($scope, sectionsFeed.data);
@@ -163,7 +163,7 @@
               selectAllSections();
             }
             if (!($scope.is_admin || $scope.classCount > 0)) {
-              $scope.authorizationError = 'unauthorized';
+              $scope.displayError = 'unauthorized';
             }
           }
         }
