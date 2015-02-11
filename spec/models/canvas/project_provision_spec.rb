@@ -36,6 +36,7 @@ describe Canvas::ProjectProvision do
     let(:account_id) { Settings.canvas_proxy.projects_account_id }
     let(:term_id) { Settings.canvas_proxy.projects_term_id }
     let(:url_root) { Settings.canvas_proxy.url_root }
+    let(:custom_role_id) { Settings.canvas_proxy.projects_owner_role_id }
     let(:project_name) { 'Test Project' }
     let(:unique_sis_project_id) { '67f4b934525501cb' }
     let(:new_course) do
@@ -53,7 +54,8 @@ describe Canvas::ProjectProvision do
 
     before do
       allow(subject).to receive(:unique_sis_project_id).and_return(unique_sis_project_id)
-      allow_any_instance_of(Canvas::Course).to receive(:create).and_return(valid_course)
+      allow_any_instance_of(Canvas::Course).to receive(:create).and_return(success_response)
+      allow(Canvas::CourseAddUser).to receive(:add_user_to_course).and_return(true)
     end
 
     it 'raises exception if error encountered with API request' do
@@ -67,6 +69,11 @@ describe Canvas::ProjectProvision do
       expect(result).to be_an_instance_of Hash
       expect(result[:projectSiteId]).to eq 23
       expect(result[:projectSiteUrl]).to eq url_root + '/courses/' + result[:projectSiteId].to_s
+    end
+
+    it 'enrolls user in course site' do
+      expect(Canvas::CourseAddUser).to receive(:add_user_to_course).with(user_id, 'TeacherEnrollment', new_course['id'], {:role_id => custom_role_id}).and_return(true)
+      result = subject.create_project(project_name)
     end
   end
 end
