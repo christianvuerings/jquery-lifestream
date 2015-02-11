@@ -4,10 +4,10 @@ module Oec
     # true if course data provided by dept representative differs from campus db data
     attr_reader :was_difference_found
 
-    def initialize(dept_name, source_dir, export_dir)
+    def initialize(dept_name, data_corrected_by_dept, export_dir)
       super export_dir
-      @source_dir = source_dir
       @dept_name = dept_name
+      @data_corrected_by_dept = data_corrected_by_dept
       @was_difference_found = false
     end
 
@@ -25,8 +25,7 @@ module Oec
       Rails.logger.warn "#{length} records in campus db for #{@dept_name}"
       if length > 0
         keys_matching = []
-        edited_courses = Oec::Queries.get_edited_courses(@source_dir, @dept_name)
-        edited_courses.each do |edited_course|
+        @data_corrected_by_dept.each do |edited_course|
           course_id = edited_course['course_id'].split('_')[0]
           ldap_uid = edited_course['ldap_uid']
           primary_key = ldap_uid.blank? ? course_id : "#{course_id}-#{ldap_uid}"

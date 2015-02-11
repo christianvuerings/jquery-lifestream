@@ -39,24 +39,50 @@ namespace :oec do
 
   desc 'Spreadsheet from dept is compared with campus data'
   task :diff => :environment do
-    dept_name = ENV['dept_name']
-    if dept_name.blank?
-      Rails.logger.warn "#{hr}Usage: rake oec:diff dept_name=BIOLOGY [src=/path/to/files] [dest=/export/path/]#{hr}"
-    else
-      src_dir = get_path_arg 'src'
-      dest_dir = get_path_arg 'dest'
-      courses_diff = Oec::CoursesDiff.new(dept_name.upcase.gsub(/_/, ' '), src_dir, dest_dir)
+    src_dir = get_path_arg 'src'
+    dest_dir = get_path_arg 'dest'
+    summaries = []
+    get_confirmed_csv_file_hash(src_dir).each do |dept_name, confirmed_csv_file|
+      data_corrected_by_dept = []
+      CSV.read(confirmed_csv_file).each_with_index do |row, index|
+        data_corrected_by_dept << Oec::RowConverter.new(row).hashed_row if index > 0 && row.length > 0
+      end
+      Rails.logger.warn "CSV file #{confirmed_csv_file} contains #{data_corrected_by_dept.length} records"
+      courses_diff = Oec::CoursesDiff.new(dept_name, data_corrected_by_dept, dest_dir)
       courses_diff.export
       if courses_diff.was_difference_found
-        Rails.logger.warn "#{hr}Find summary in #{courses_diff.output_filename}#{hr}"
+        summaries << "#{dept_name}: #{courses_diff.output_filename}"
       else
         File.delete courses_diff.output_filename
-        Rails.logger.warn "#{hr}No diff found in #{dept_name} csv.#{hr}"
+        summaries << "#{dept_name}: Confirmed CSV matches campus data. No diff to report."
       end
+    end
+    if summaries.length > 0
+      Rails.logger.warn "#{hr}#{summaries.join("\n")}#{hr}"
+    else
+      Rails.logger.warn "#{hr}Nonesuch 'confirmed' CSV files found in #{src_dir}#{hr}"
     end
   end
 
   private
+
+  def get_confirmed_csv_file_hash(src_dir)
+    confirmed_csv_file_hash = {}
+    departments = ENV['departments'].to_s.strip.upcase.split(/\s*,\s*/).reject &:empty?
+    csv_filename_suffix = '_courses_confirmed.csv'
+    pattern = "#{src_dir}/*#{csv_filename_suffix}"
+    Rails.logger.debug "Find files matching #{pattern}"
+    Dir[pattern].each do |filename|
+      dept_name = filename.split('/')[-1].chomp(csv_filename_suffix).gsub(/_/, ' ').upcase
+      Rails.logger.debug "Source directory contains #{filename} (owned by #{dept_name})"
+      if departments.empty? || departments.include?(dept_name)
+        confirmed_csv_file_hash[dept_name] = filename
+        departments.delete dept_name
+      end
+    end
+    Rails.logger.warn "Confirmed CSV file(s) NOT found for departments: #{departments.to_a}" if departments.length > 0
+    confirmed_csv_file_hash
+  end
 
   def get_path_arg(arg_name)
     path = ENV[arg_name]

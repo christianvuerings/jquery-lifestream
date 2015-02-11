@@ -109,22 +109,6 @@ module Oec
       stringify_ints! result
     end
 
-    def self.get_edited_courses(source_dir, dept_name)
-      file_path = "#{source_dir}/#{dept_name.upcase.gsub(/\s/, '_')}_courses_confirmed.csv"
-      courses_query = []
-      if File.file? file_path
-        CSV.read(file_path).each_with_index do |row, index|
-          if index > 0 && row.length > 0
-            courses_query << Oec::RowConverter.new(row).hashed_row
-          end
-        end
-      else
-        raise "File not found: #{file_path}"
-      end
-      Rails.logger.warn "CSV file #{file_path} generated #{courses_query.length} records"
-      courses_query
-    end
-
     private
 
     # Shared SQL fragment

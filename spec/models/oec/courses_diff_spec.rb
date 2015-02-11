@@ -27,7 +27,11 @@ describe Oec::CoursesDiff do
       dept_names.each do |dept_name|
         Rails.logger.info "Evaluating diff where dept_name = #{dept_name}"
         dept_name_path = dept_name.gsub(/\s/, '_')
-        diff = Oec::CoursesDiff.new(dept_name, src_dir, 'tmp/oec')
+        data_corrected_by_dept = []
+        CSV.read("#{src_dir}/#{dept_name_path}_courses_confirmed.csv").each_with_index do |row, index|
+          data_corrected_by_dept << Oec::RowConverter.new(row).hashed_row if index > 0 && row.length > 0
+        end
+        diff = Oec::CoursesDiff.new(dept_name, data_corrected_by_dept, 'tmp/oec')
         expect(diff.base_file_name).to include dept_name_path
         actual_diff = CSV.read diff.export[:filename]
         expected_diff = CSV.read "#{src_dir}/expected_diff_#{dept_name_path}_courses.csv"
