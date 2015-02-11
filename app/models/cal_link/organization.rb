@@ -33,7 +33,7 @@ module CalLink
       end
       Rails.logger.debug "#{self.class.name}: Remote server status #{response.code}, Body = #{response.body}"
       {
-        :body => safe_json(response.body),
+        :body => response.parsed_response,
         :statusCode => response.code
       }
     end

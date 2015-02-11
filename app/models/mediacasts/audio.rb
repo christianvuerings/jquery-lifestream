@@ -29,7 +29,7 @@ module Mediacasts
       end
       logger.debug "Remote server status #{response.code}, Body = #{response.body}"
       {
-        :audio => filter_audio(response.body)
+        audio: filter_audio(response)
       }
     end
 
@@ -45,16 +45,17 @@ module Mediacasts
     end
 
     def filter_audio(response)
-      doc = Nokogiri::XML(response, &:strict)
-      items = doc.xpath('//item').map do |i|
+      rss = MultiXml.parse response.body
+      items = rss['rss']['channel']['item'].map do |i|
         # Older versions of the RSS have an empty link tag
         # so we need to use the enclosure tag instead
-        url = i.xpath('enclosure/@url').text
-        url = convert_to_https(url)
+        url = convert_to_https(i['enclosure']['url'])
+        title = i['title']
+        title = title.first if title.is_a? Array
         {
           :downloadUrl => get_download_url(url),
           :playUrl => url,
-          :title => i.xpath('title').text
+          :title => title
         }
       end
       items.reverse
