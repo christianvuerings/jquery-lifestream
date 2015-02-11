@@ -6,14 +6,13 @@ namespace :oec do
   task :courses => :environment do
     dest_dir = get_path_arg 'dest'
     files_created = []
-    dept_set = Settings.oec.departments.to_set
-    dept_set.each do |dept_name|
+    Oec::DepartmentRegistry.new.each do |dept_name|
       exporter = Oec::Courses.new(dept_name, dest_dir)
       exporter.export
       files_created << "#{dest_dir}/#{exporter.base_file_name}.csv"
     end
-    biology_relationship_matchers = { 'MCELLBI' => ' 1A[L]?', 'INTEGBI' => ' 1B[L]?' }
-    post_processor = Oec::BiologyPostProcessor.new('BIOLOGY', biology_relationship_matchers, dest_dir, dest_dir)
+    debug_mode = ENV['debug'].to_s =~ /true/i
+    post_processor = Oec::BiologyPostProcessor.new(dest_dir, dest_dir, debug_mode)
     post_processor.post_process
     Rails.logger.warn "#{hr}Find CSV files in directory: #{dest_dir}#{hr}"
   end
