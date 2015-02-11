@@ -10,17 +10,20 @@
     </div>
     <div data-ng-if="collegeAndLevel.empty || collegeAndLevel.noStudentId">
       <h3>Standing</h3>
-      <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
-        You are not currently considered an active student.
-      </p>
-      <p data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.concurrentEnrollmentStudent">
-        You are a concurrent enrollment student.
-
+      <div data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
+        <p>
+          You are not currently considered an active student.
+        </p>
+      </div>
+      <div data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.concurrentEnrollmentStudent">
+        <p>
+          You are a concurrent enrollment student.
+        </p>
         <ul class="cc-list-bullets">
           <li>If you are a UC Extension student, more information is available at <a href="http://extension.berkeley.edu/static/studentservices/concurrent/">UC Berkeley Extension</a>.</li>
           <li>If you are an EAP student, more information is available at the <a href="http://internationaloffice.berkeley.edu/students/exchange/main">Berkeley International Office</a>.</li>
         </ul>
-      </p>
+      </div>
       <div data-ng-if="api.user.profile.roles.student">
         <p data-ng-if="api.user.profile.roles.registered">
           You are registered as a student but not currently considered active by all campus services.
