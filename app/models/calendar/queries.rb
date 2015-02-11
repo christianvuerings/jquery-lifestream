@@ -8,7 +8,7 @@ module Calendar
       use_pooled_connection {
         sql = <<-SQL
       select
-        c.term_yr, c.term_cd, c.course_cntl_num,
+        c.term_yr, c.term_cd, c.course_cntl_num, c.sub_term_cd,
         c.dept_name || ' ' || c.catalog_id || ' ' || c.instruction_format || ' ' || c.section_num AS course_name,
         sched.building_name, sched.room_number, sched.meeting_days, sched.meeting_start_time,
         sched.meeting_start_time_ampm_flag, sched.meeting_end_time, sched.meeting_end_time_ampm_flag,
@@ -56,26 +56,8 @@ module Calendar
       stringify_ints! result
     end
 
-    # include the current and next term, but skip any summer terms (since we don't have the necessary
-    # sub-term data to calendarize summer classes).
     def self.terms
-      terms = []
-      current_term = Berkeley::Terms.fetch.current
-      if current_term.is_summer
-        terms << Berkeley::Terms.fetch.next
-        terms << Berkeley::Terms.fetch.future
-      else
-        terms << Berkeley::Terms.fetch.current
-        next_term = Berkeley::Terms.fetch.next
-        if next_term.present?
-          if next_term.is_summer
-            terms << Berkeley::Terms.fetch.future
-          else
-            terms << next_term
-          end
-        end
-      end
-      terms
+      [Berkeley::Terms.fetch.current, Berkeley::Terms.fetch.next]
     end
 
     private

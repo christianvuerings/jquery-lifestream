@@ -78,6 +78,22 @@ describe Calendar::Preprocessor do
         expect(subject[0].transaction_type).to eq 'U'
       end
     end
+    context 'when a student on the whitelist is enrolled in a summer course', if: Calendar::Queries.test_data? do
+      before(:each) {
+        Calendar::User.create({uid: '300939'})
+        Settings.terms.stub(:fake_now).and_return(DateTime.parse('2014-03-10'))
+        Berkeley::SummerSubTerm.create(
+          year: 2014, sub_term_code: 5, start: Date.new(2014, 5, 26), end: Date.new(2014, 7, 2))
+      }
+      it 'has the meeting place and times for the summer Biology course from test data' do
+        json = JSON.parse(subject[0].event_data)
+        expect(json['location']).to eq '2030 Valley Life Sciences Building, UC Berkeley'
+        expect(json['start']['dateTime']).to eq '2014-05-26T16:00:00.000-07:00'
+        expect(json['end']['dateTime']).to eq '2014-05-26T17:00:00.000-07:00'
+        expect(json['recurrence'][0]).to eq 'RRULE:FREQ=WEEKLY;UNTIL=20140703T065959Z;BYDAY=MO'
+      end
+      it_behaves_like 'it has a non-empty array of ClassCalendarQueue entries'
+    end
     context 'when a preprocess task has been run twice without running export', if: Calendar::Queries.test_data? do
       let!(:old_entry_id) {
         old_entry = Calendar::QueuedEntry.create(

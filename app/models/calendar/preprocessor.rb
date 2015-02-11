@@ -20,6 +20,15 @@ module Calendar
           logger.error "Could not determine term #{this_term_slug} for course #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}"
           next
         end
+        if term.is_summer
+          subterm = Berkeley::SummerSubTerm.where(year: course['term_yr'], sub_term_code: course['sub_term_cd'])
+          if subterm.present? && subterm.first.present?
+            term = subterm.first
+          else
+            logger.error "Could not determine subterm #{course['sub_term_cd']} for course #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}"
+            next
+          end
+        end
         logger.info "Preprocessing #{course['course_name']} ccn = #{course['term_yr']}-#{course['term_cd']}-#{course['course_cntl_num']}, multi_entry_cd = #{course['multi_entry_cd']}, term = #{term.slug}"
 
         attendees = attendees(course['term_yr'], course['term_cd'], course['course_cntl_num'])
@@ -135,4 +144,3 @@ module Calendar
 
   end
 end
- 
