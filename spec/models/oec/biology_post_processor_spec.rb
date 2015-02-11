@@ -4,7 +4,7 @@ describe Oec::BiologyPostProcessor do
 
   before do
     export_dir = 'tmp/oec'
-    dept_names = %w(BIOLOGY INTEGBI MCELLBI 'POL SCI')
+    dept_names = %w(BIOLOGY INTEGBI MCELLBI POL\ SCI)
     expect(Settings.oec).to receive(:departments).at_least(:once).and_return dept_names
     dept_names.each do |dept_name|
       courses_query = []
@@ -17,8 +17,7 @@ describe Oec::BiologyPostProcessor do
       export = Oec::Courses.new(dept_name, export_dir).export
       csv_file_hash[dept_name] = CSV.read export[:filename]
     end
-    biology_post_processor_patterns = { 'MCELLBI' => ' 1A[L]?', 'INTEGBI' => ' 1B[L]?' }
-    Oec::BiologyPostProcessor.new('BIOLOGY', biology_post_processor_patterns, export_dir, export_dir).post_process
+    Oec::BiologyPostProcessor.new(export_dir, export_dir).post_process
   end
 
   context 'Biology 1A and 1B entries moved to MCELLBI and INTEGBI, respectively' do
