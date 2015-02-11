@@ -3,10 +3,30 @@
   <div data-ng-show="!authorizationError">
     <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Create a Project Site</h2>
 
-    <div class="cc-page-site-provisioning-form-actions">
-      <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset">Cancel</a>
-      <button data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" type="submit">Create a Project Site</a>
-    </div>
+    <form class="cc-page-form bc-canvas-form">
+
+      <div class="row cc-page-create-project-form-fields">
+        <div class="small-12">
+          <div class="row">
+            <div class="small-12 medium-3 columns">
+              <div class="cc-page-create-project-site-form-area-container">
+                <label for="cc-page-create-project-site-name" class="cc-page-create-project-site-form-label">Project Site Name</label>
+              </div>
+            </div>
+            <div class="small-12 medium-4 columns end">
+              <div class="cc-page-create-project-site-form-area-container">
+                <input type="text" id="cc-page-create-project-site-name" name="projectSiteName" data-ng-model="projectSiteName" placeholder="Enter a name for your site" class="bc-canvas-form-input-text">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cc-page-site-provisioning-form-actions">
+        <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset">Cancel</a>
+        <button data-ng-disabled="!projectSiteName" data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" type="submit">Create a Project Site</a>
+      </div>
+    </form>
 
   </div>
 

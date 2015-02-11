@@ -43,3 +43,20 @@ $bc-canvas-button-hover-border: #d1d1d1;
     box-shadow: none;
   }
 }
+
+.bc-canvas-form {
+  label {
+    padding: 9px 0;
+  }
+  input[type="text"] {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #555;
+    display: inline-block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+}
