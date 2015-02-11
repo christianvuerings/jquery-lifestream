@@ -39,10 +39,10 @@ module Mediacasts
                   "Connection failed: #{response.code} #{response.body}",
                   PROXY_ERROR)
         end
-        data = safe_json response.body
+        data = response.parsed_response
       end
 
-      if !data
+      if !data || !(data.is_a? Hash)
         raise Errors::ProxyError.new(
                 "Error occurred converting response to json: #{response.body}",
                 PROXY_ERROR)
