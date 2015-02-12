@@ -286,15 +286,17 @@ module Canvas
       # by user_id + term_yr + term_cd. But since we currently only cache at the level of the full
       # merged model, we're probably better off selecting the desired teaching-semester from that bigger feed.
 
+      semesters = []
       academics_feed = MyAcademics::Merged.new(@uid).get_feed
       if (teaching_semesters = academics_feed[:teachingSemesters])
-        current_teaching_semesters = current_terms.collect do |term|
-          teaching_semesters.find {|semester| semester[:slug] == term[:slug] }
+        current_terms.each do |term|
+          if (teaching_semester = teaching_semesters.find {|semester| semester[:slug] == term[:slug]})
+            teaching_semester[:classes].each { |course| course.merge! course[:listings].first }
+            semesters << teaching_semester
+          end
         end
-        current_teaching_semesters.compact
-      else
-        []
       end
+      semesters
     end
 
     # When an admin specifies CCNs directly, we cannot repurpose an existing MyAcademics::Teaching feed.
@@ -310,7 +312,7 @@ module Canvas
         (term_yr, term_cd) = term_key.split("-")
         semester = my_academics.semester_info(term_yr, term_cd)
         feed[term_key].each do |course|
-          semester[:classes] << my_academics.course_info_with_multiple_listings(course)
+          semester[:classes] << my_academics.course_info(course)
         end
         courses_list << semester unless semester[:classes].empty?
       end
