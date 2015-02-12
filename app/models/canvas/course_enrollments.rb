@@ -3,7 +3,6 @@ module Canvas
 
     ENROLLMENT_STATES = ['active', 'invited']
     ENROLLMENT_TYPES = ['StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', 'DesignerEnrollment']
-    PROJECT_ENROLLMENT_TYPES = ['Owner', 'Maintainer', 'Member']
 
     def initialize(options = {})
       super(options)
