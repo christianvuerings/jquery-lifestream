@@ -18,7 +18,8 @@ module Financials
       FakeableProxy.wrap_request(APP_ID + "_financials", @fake, {match_requests_on: [:method, :path]}) {
         get_response(
           url,
-          digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password}
+          digest_auth: {username: Settings.financials_proxy.username, password: Settings.financials_proxy.password},
+          on_error: {rescue_status: 404}
         )
       }
     end

@@ -145,9 +145,6 @@ module Textbooks
         }
       )
       logger.debug "Remote server status #{response.code}; url = #{url}"
-      if response.code >= 400
-        raise Errors::ProxyError.new("Currently, we can't reach the bookstore. Check again later for updates, or contact your instructor directly.")
-      end
       response.parsed_response
     end
 

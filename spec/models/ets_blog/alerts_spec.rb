@@ -77,4 +77,8 @@ describe EtsBlog::Alerts do
     end
   end
 
+  it_should_behave_like 'a proxy logging errors' do
+    subject { EtsBlog::Alerts.new(fake: false).get_latest }
+  end
+
 end

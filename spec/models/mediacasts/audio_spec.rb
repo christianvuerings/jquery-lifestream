@@ -32,8 +32,11 @@ describe Mediacasts::Audio do
     end
 
     context "on remote server errors" do
+      let! (:body) { 'An unknown error occurred.' }
+      let! (:status) { 506 }
+      include_context 'expecting logs from server errors'
       before(:each) {
-        stub_request(:any, rss_url).to_return(status: 506)
+        stub_request(:any, rss_url).to_return(status: status, body: body)
       }
       it "should return a 503 status code" do
         proxy_response = proxy.get

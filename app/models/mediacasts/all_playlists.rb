@@ -31,21 +31,20 @@ module Mediacasts
         data = safe_json File.read(Rails.root.join('fixtures', 'json', 'webcasts.json').to_s)
       else
         response = get_response(
-            @settings.base_url,
-            basic_auth: {username: @settings.username, password: @settings.password}
+          @settings.base_url,
+          basic_auth: {username: @settings.username, password: @settings.password},
+          on_error: {return_feed: PROXY_ERROR}
         )
-        if response.code >= 400
-          raise Errors::ProxyError.new(
-                  "Connection failed: #{response.code} #{response.body}",
-                  PROXY_ERROR)
-        end
         data = response.parsed_response
       end
 
       if !data || !(data.is_a? Hash)
         raise Errors::ProxyError.new(
-                "Error occurred converting response to json: #{response.body}",
-                PROXY_ERROR)
+            'Error occurred converting response to json',
+            response: response,
+            url: @settings.base_url,
+            return_feed: PROXY_ERROR
+          )
       end
 
       processed_playlists = {

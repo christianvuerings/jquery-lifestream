@@ -57,11 +57,6 @@ module Bearfacts
           end
           get_response(url, request_options)
         }
-
-        if response.code >= 400
-          raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}")
-        end
-
         logger.debug "Remote server status #{response.code}, Body = #{response.body}"
         {
           body: response.parsed_response,

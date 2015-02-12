@@ -17,20 +17,17 @@ module Financials
       if student_id.blank?
         # don't continue if student id can't be found.
         logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API"
-        feed = no_billing_data_response
+        no_billing_data_response
       else
         response = Financials::Proxy.new(user_id: @uid, student_id: student_id).get
-        feed = parse_response(response)
+        parse_response(response)
       end
-      status_code = feed[:statusCode]
-      if (status_code >= 400) && (status_code != 404)
-        raise Errors::ProxyError.new("Connection failed for UID #{@uid}: #{status_code} #{feed[:body]}", feed)
-      end
-      feed
     end
 
     def parse_response(response)
-      if response.code < 400
+      if response.code == 404
+        no_billing_data_response
+      else
         body = safe_json(response.body)
         if body && (student = body['student'])
           feed = {
@@ -46,13 +43,6 @@ module Financials
             statusCode: response.code
           }
         end
-      elsif response.code == 404
-        no_billing_data_response
-      else
-        {
-          body: default_message_on_exception,
-          statusCode: response.code
-        }
       end
     end
 

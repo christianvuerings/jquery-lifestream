@@ -19,4 +19,8 @@ describe CalLink::Organization do
     data[:body].should_not be_nil
   end
 
+  it_should_behave_like 'a proxy logging errors' do
+    subject { CalLink::Organization.new(org_id: '65797', fake: false).get_organization }
+  end
+
 end

@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe Advising::MyAdvising do
-  let (:fake_oski_model) { Advising::MyAdvising.new('61889', fake: true) }
-  let (:real_oski_model) { Advising::MyAdvising.new('61889', fake: false) }
+  let (:uid) { '61889' }
+  let (:fake_oski_model) { Advising::MyAdvising.new(uid, fake: true) }
+  let (:real_oski_model) { Advising::MyAdvising.new(uid, fake: false) }
   let (:advising_uri) { URI.parse(Settings.advising_proxy.base_url) }
 
   describe 'proper caching behaviors' do
@@ -48,8 +49,10 @@ describe Advising::MyAdvising do
       end
 
       context 'error on remote server (5xx errors)' do
+        let!(:status) { 506 }
+        include_context 'expecting logs from server errors'
         before do
-          stub_request(:any, /.*#{advising_uri.hostname}.*/).to_return(status: 506)
+          stub_request(:any, /.*#{advising_uri.hostname}.*/).to_return(status: status)
         end
         it 'reports an error' do
           feed = subject.get_feed

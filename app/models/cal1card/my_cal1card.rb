@@ -33,14 +33,7 @@ module Cal1card
           url,
           basic_auth: {username: @settings.username, password: @settings.password}
         )
-        if response.code >= 400
-          raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}", {
-            body: "An error occurred retrieving data for Cal 1 Card. Please try again later.",
-            statusCode: response.code
-          })
-        else
-          feed = response.parsed_response
-        end
+        feed = response.parsed_response
         logger.debug "Cal1Card remote response: #{response.inspect}"
       end
       camelized = HashConverter.camelize feed

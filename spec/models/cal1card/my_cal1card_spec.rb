@@ -43,12 +43,14 @@ describe Cal1card::MyCal1card do
     end
 
     context "error on remote server (5xx errors)" do
-      before(:each) {
-        stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_return(status: 506)
-      }
+      let!(:status) { 506 }
+      let!(:uid) { oski_uid }
+      include_context 'expecting logs from server errors'
+      before(:each) { stub_request(:any, /.*#{cal1card_uri.hostname}.*/).to_return(status: status) }
+
       it 'reports an error' do
         expect(subject[:body]).to eq('An error occurred retrieving data for Cal 1 Card. Please try again later.')
-        expect(subject[:statusCode]).to eq 506
+        expect(subject[:statusCode]).to eq 503
       end
     end
   end
