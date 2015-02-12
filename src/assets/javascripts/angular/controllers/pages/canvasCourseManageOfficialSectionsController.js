@@ -5,7 +5,7 @@
   /**
    * Canvas Manage Official Sections LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialSectionsController', function(apiService, canvasCourseProvisionFactory, canvasCourseProvisionService, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialSectionsController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $scope, $timeout) {
     apiService.util.setTitle('Manage Official Sections');
 
     var statusProcessor = function(data) {
@@ -270,8 +270,8 @@
       });
     };
 
-    $scope.selectedSections = canvasCourseProvisionService.selectedSections;
-    $scope.toggleCheckboxes = canvasCourseProvisionService.toggleCheckboxes;
+    $scope.selectedSections = canvasSiteCreationService.selectedSections;
+    $scope.toggleCheckboxes = canvasSiteCreationService.toggleCheckboxes;
 
     // Wait until user profile is fully loaded before fetching section feed
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {

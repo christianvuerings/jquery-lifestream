@@ -1,6 +1,6 @@
 .cc-page-create-course-site {
   background: $cc-color-white;
-  padding: 10px 20px;
+  padding: 20px;
 
   .cc-button {
     padding: 10px;
@@ -21,13 +21,6 @@
   h3 {
     font-size: 18px;
     margin: 10px 0;
-  }
-
-  // Reset to avoid default Foundation form styling
-  .cc-page-create-course-site-form {
-    background: transparent;
-    border: 0;
-    padding: 0;
   }
 
   .cc-page-button-grey {
@@ -72,16 +65,6 @@
       list-style-type: disc;
       margin: 10px 0 0 39px;
     }
-  }
-
-  .cc-page-create-course-site-form-actions {
-    background: $bc-color-roster-background;
-    border: 1px solid $bc-color-roster-background;
-    padding: 10px 5px;
-  }
-
-  .cc-page-create-course-site-form-button {
-    background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
   }
 
   .cc-page-create-course-site-help-notice {

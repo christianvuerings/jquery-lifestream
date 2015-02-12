@@ -1,4 +1,24 @@
 .cc-page-create-project-site {
   background: $cc-color-white;
-  padding: 10px 20px;
+  padding: 20px;
+
+  .cc-page-create-project-site-form-label {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+  }
+
+  .cc-page-create-project-site-form-area-container {
+    margin: 10px;
+  }
+
+  .cc-page-create-project-form-fields {
+    margin-bottom: 52px;
+  }
+
+  @media #{$small-only} {
+    .cc-page-create-project-site-form-label {
+      text-align: left;
+    }
+  }
 }

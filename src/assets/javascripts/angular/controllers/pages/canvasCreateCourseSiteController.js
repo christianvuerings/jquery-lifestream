@@ -5,8 +5,11 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasCourseProvisionService, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $route, $scope, $timeout) {
     apiService.util.setTitle('Create a Course Site');
+
+    $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
+    $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
 
     var statusProcessor = function() {
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
@@ -130,8 +133,8 @@
     $scope.fetchFeed = function() {
       clearCourseSiteJob();
       angular.extend($scope, {
-        currentWorkflowStep: 'selecting',
         isLoading: true,
+        currentWorkflowStep: 'selecting',
         selectedSectionsList: []
       });
       var feedRequestOptions = {
@@ -142,9 +145,10 @@
         currentAdminSemester: $scope.currentAdminSemester
       };
       canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed) {
+        $scope.feedFetched = true;
         if (sectionsFeed.status !== 200) {
           $scope.isLoading = false;
-          $scope.feedFetchError = true;
+          $scope.displayError = 'failure';
         } else {
           if (sectionsFeed.data) {
             angular.extend($scope, sectionsFeed.data);
@@ -158,8 +162,9 @@
             if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
               selectAllSections();
             }
-            $scope.isCourseCreator = $scope.is_admin || $scope.classCount > 0;
-            $scope.feedFetched = true;
+            if (!($scope.is_admin || $scope.classCount > 0)) {
+              $scope.displayError = 'unauthorized';
+            }
           }
         }
       });
@@ -209,8 +214,8 @@
       $scope.selectedSectionsList = $scope.selectedSections($scope.currentCourses);
     };
 
-    $scope.selectedSections = canvasCourseProvisionService.selectedSections;
-    $scope.toggleCheckboxes = canvasCourseProvisionService.toggleCheckboxes;
+    $scope.selectedSections = canvasSiteCreationService.selectedSections;
+    $scope.toggleCheckboxes = canvasSiteCreationService.toggleCheckboxes;
 
     // Wait until user profile is fully loaded before fetching section feed
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {

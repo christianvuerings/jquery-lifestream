@@ -2,8 +2,7 @@
 
   <div data-ng-hide="feedFetched" data-cc-spinner-directive></div>
 
-  <div data-ng-show="feedFetched && isCourseCreator">
-
+  <div data-ng-show="feedFetched && !displayError">
     <div data-ng-show="is_admin">
 
       <div class="cc-widget">
@@ -14,7 +13,7 @@
         </button>
       </div>
 
-      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-create-course-site-form cc-page-create-course-site-actas-form">
+      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-form cc-page-create-course-site-actas-form">
         <label for="people-search" class="cc-visuallyhidden">Search People</label>
         <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" role="search" id="people-search" />
         <button class="cc-button cc-button-blue" type="submit">As instructor</button>
@@ -38,7 +37,7 @@
             </div>
           </div>
         </div>
-        <form data-ng-submit="fetchFeed()" class="cc-page-create-course-site-form">
+        <form data-ng-submit="fetchFeed()" class="cc-page-form">
           <textarea data-ng-model="admin_by_ccns"
             placeholder="Paste your list of CCNs here, separated by commas or spaces">
           </textarea>
@@ -50,15 +49,15 @@
     <div>
 
       <div class="cc-maintenance-notice">
-        <i class="fa fa-exclamation-triangle cc-icon-gold fa-lg cc-left"></i>
-        <div class="cc-notice-text">
-          <h4>Daily Scheduled Maintenance from 8 - 9 AM</h4>
+        <i class="fa fa-exclamation-triangle cc-notice-icon"></i>
+        <div class="cc-notice-text-container">
+          <p class="cc-notice-text-header">Daily Scheduled Maintenance from 8 - 9 AM</p>
           During our daily scheduled maintenance, Instructors may experience delays of up to 10 minutes before sites are created.
           <br>For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status">bCourses System Status.</a>
         </div>
       </div>
 
-      <h2>Create a Course Site</h2>
+      <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Create a Course Site</h2>
 
       <div class="cc-page-create-course-site-select-sections">
 
@@ -113,12 +112,13 @@
                   </div>
                 </div>
 
-                <form data-ng-submit="showConfirmation()" class="cc-page-create-course-site-form">
+                <form data-ng-submit="showConfirmation()" class="cc-page-form">
 
                   <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>
 
-                  <div class="cc-page-create-course-site-form-actions">
-                    <button class="cc-button cc-button-blue cc-page-create-course-site-form-button"
+                  <div class="cc-page-site-provisioning-form-actions">
+                    <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset">Cancel</a>
+                    <button class="bc-canvas-button bc-canvas-button-primary"
                       type="submit" data-ng-disabled="selectedSectionsList.length == 0">Next &gt;&gt;</button>
                   </div>
 
@@ -143,7 +143,7 @@
             </ul>
           </div>
 
-          <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="cc-page-create-course-site-form cc-page-create-course-site-site-labels-form">
+          <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="cc-page-form cc-page-create-course-site-site-labels-form">
             <div class="row">
               <div class="medium-6">
 
@@ -170,7 +170,7 @@
 
                 <div class="row">
                   <div class="medium-offset-4 medium-8 columns">
-                    <button ng-disabled="createCourseSiteForm.$invalid" class="cc-button cc-button-blue cc-page-create-course-site-form-button" type="submit">Create Course Site</button>
+                    <button ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit">Create Course Site</button>
                     <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
                   </div>
                 </div>
@@ -202,7 +202,7 @@
               <div class="row cc-page-create-course-site-step-options">
                 <div class="medium-12 columns">
                   <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()">&lt;&lt; Back</button>
-                  <button class="cc-button cc-button-blue cc-page-create-course-site-form-button" type="button" data-ng-click="fetchFeed()">Start Over</button>
+                  <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()">Start Over</button>
                 </div>
               </div>
             </div>
@@ -232,7 +232,6 @@
       </div>
 
     </div>
-
   </div>
 
   <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>

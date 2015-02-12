@@ -45,6 +45,7 @@ $bc-color-warning-border: #fbeed5;
 $bc-color-warning-background: #fcf8e3;
 $bc-color-warning-foreground: #c09853;
 $bc-color-white: #fff;
+$bc-color-gold: #f1a91e;
 
 // bCourses Fonts
 $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -108,10 +109,6 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: $bc-color-error-background;
     border: 1px solid $bc-color-error-border;
     color: $bc-color-error-foreground;
-  }
-
-  .cc-page-unexpected-error-notice {
-    margin: 10px 0;
   }
 
   .cc-radius {
