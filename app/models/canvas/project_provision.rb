@@ -27,7 +27,7 @@ module Canvas
       Rails.logger.debug "#{self.class.name}: Remote server status #{response.status}, Body = #{response.body}"
       course_details = safe_json(response.body)
       enrollment = Canvas::CourseAddUser.add_user_to_course(@uid, 'TeacherEnrollment', course_details['id'], :role_id => Settings.canvas_proxy.projects_owner_role_id)
-      return {:projectSiteId => course_details['id'], :projectSiteUrl => Settings.canvas_proxy.url_root + '/courses/' + course_details['id'].to_s, :enrollment => enrollment.inspect}
+      return {:projectSiteId => course_details['id'], :projectSiteUrl => Settings.canvas_proxy.url_root + '/courses/' + course_details['id'].to_s, :enrollment_id => enrollment['id']}
     end
   end
 end
