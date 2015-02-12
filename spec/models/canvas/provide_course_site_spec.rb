@@ -696,6 +696,7 @@ describe Canvas::ProvideCourseSite do
       expect(feed.length).to eq 2
       bio1a = feed.select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]
       expect(bio1a.empty?).to be_falsey
+      expect(bio1a[:sections].first[:courseCode]).to eq bio1a[:course_code]
       expect(bio1a[:title]).to eq 'General Biology Lecture'
       expect(bio1a[:role]).to eq 'Instructor'
       expect(bio1a[:dept]).to eq 'BIOLOGY'
@@ -1050,6 +1051,7 @@ describe Canvas::ProvideCourseSite do
       expect(classes_list.length).to eq 2
       bio_class = classes_list[0]
       expect(bio_class[:course_code]).to eq 'BIOLOGY 1A'
+      expect(bio_class[:sections].first[:courseCode]).to eq 'BIOLOGY 1A'
       expect(bio_class[:dept]).to eq 'BIOLOGY'
       sections = bio_class[:sections]
       expect(sections.length).to eq 2

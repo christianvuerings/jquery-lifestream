@@ -312,7 +312,9 @@ module Canvas
         (term_yr, term_cd) = term_key.split("-")
         semester = my_academics.semester_info(term_yr, term_cd)
         feed[term_key].each do |course|
-          semester[:classes] << my_academics.course_info(course)
+          course_info = my_academics.course_info course
+          course_info[:sections].each { |section| section[:courseCode] = course_info[:course_code] }
+          semester[:classes] << course_info
         end
         courses_list << semester unless semester[:classes].empty?
       end
